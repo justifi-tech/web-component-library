@@ -27,10 +27,6 @@ jobs:
         run: |
           yarn build
 
-      - name: Rollup Staging Build
-        run: |
-          yarn build:prod
-
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
