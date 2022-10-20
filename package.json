@@ -1,7 +1,7 @@
 {
-  "name": "stencil-webcomponents",
+  "name": "justifi-webcomponents",
   "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "description": "JustiFi Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
