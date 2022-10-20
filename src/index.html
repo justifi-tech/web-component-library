@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+
+  <script type="module" src="/build/stencil-webcomponents.esm.js"></script>
+  <script nomodule src="/build/stencil-webcomponents.js"></script>
+</head>
+
+<body>
+  <h1>Card Form</h1>
+  <hr>
+  <justifi-card-form></justifi-card-form>
+  <button type="submit" id="submit-button">Tokenize</button>
+  <br>
+  <br>
+  <br>
+  <h1>Payments List</h1>
+  <hr>
+  <justifi-payments-list accountId="acc_5wEk41rFZVPsqK5xQ7K0eG"
+    auth='{"token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1sOG5PRENmNVgtZ25zaEFUWGdLWCJ9.eyJodHRwczovL2FwaS5qdXN0aWZpLmFpL3YxL21ldGFkYXRhIjp7ImFjY291bnRfaWQiOiJhY2NfNXdFazQxckZaVlBzcUs1eFE3SzBlRyIsImFjY291bnRfdHlwZSI6InRlc3QifSwiaXNzIjoiaHR0cHM6Ly9qdXN0aWZpLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoidzNkVllZVFU1V2JuQXBQcWpRVXcyM2k0TnNtVGJrSDRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vYXBpLmp1c3RpZmkuYWkvdjEiLCJpYXQiOjE2NjA3NjQwNjUsImV4cCI6MTY2MDg1MDQ2NSwiYXpwIjoidzNkVllZVFU1V2JuQXBQcWpRVXcyM2k0TnNtVGJrSDQiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6W119.Q4xDmSKhMW5RTRe4-LZhqpYz_46YpZRWKzqx6c6Aiui13QpiN2eeAnCXxTeGc5hXqP0jzdXljXu8AT3mvs9aO8M9L39gf6zaoXWiOUCtTsVHjsocRT-5iGWXeWc36mxabQllmDeixyWrdoM3zJeo7pvPM1v_uIPQTgMtTHn0NdAZeOWkLLGggJu1lDkyWwuomU202l4sCoGTtD-1Q4uqTgSmpbZsTDdCjJ4SnS8N7tWIr9Ilk_6K2qoUUJyyZLyjcvDNGPvzK4MsyLIL7IQqjwaKZhXWT0Udn6tJGgaI5-U_VC5uSEW8wUc26mvwcjJEhSrGz9NaLf9FarYgA0EOGQ" }'>
+  </justifi-payments-list>
+  <br>
+  <br>
+  <br>
+</body>
+
+<script>
+  (function () {
+    var cardForm = document.querySelector('justifi-card-form');
+    var submitButton = document.querySelector('#submit-button');
+
+    cardForm.addEventListener('cardFormChange', function () {
+      console.log('justifi-card-form changed');
+    });
+
+    cardForm.addEventListener('cardFormBlur', function () {
+      console.log('justifi-card-form blur');
+    });
+
+    cardForm.addEventListener('cardFormReady', function () {
+      console.log('justifi-card-form ready');
+    });
+
+    cardForm.addEventListener('cardFormTokenize', function (data) {
+      console.log('justifi-card-form tokenized: ', data);
+    });
+
+    submitButton.addEventListener('click', (event) => {
+      console.log('tokenize button clicked');
+      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' });
+    });
+  })();
+</script>
+
+</html>
