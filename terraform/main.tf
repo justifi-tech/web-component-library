@@ -9,7 +9,7 @@ module "s3" {
 module "gh" {
   source      = "./modules/gh"
   environment = var.ENVIRONMENT
-  repo        = local.application_name
+  repo        = "web-component-library"
 
   # Setting our app secrets for GH Actions
   aws_bucket_name       = module.s3.bucket_name
