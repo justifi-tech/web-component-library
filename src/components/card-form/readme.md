@@ -14,9 +14,12 @@
 
 ## Events
 
-| Event           | Description | Type                            |
-| --------------- | ----------- | ------------------------------- |
-| `cardFormEvent` |             | `CustomEvent<CustomEvent<any>>` |
+| Event              | Description | Type                          |
+| ------------------ | ----------- | ----------------------------- |
+| `cardFormBlur`     |             | `CustomEvent<any>`            |
+| `cardFormChange`   |             | `CustomEvent<any>`            |
+| `cardFormReady`    |             | `CustomEvent<any>`            |
+| `cardFormTokenize` |             | `CustomEvent<{ data: any; }>` |
 
 
 ## Methods
