@@ -84,7 +84,7 @@ export class CardForm {
           src={this.iframeOrigin || 'https://js.justifi.ai'}
           ref={(el) => this.iframeElement = el as HTMLIFrameElement}>
         </iframe>
-      </Host>
+      </Host >
     );
   }
 }
