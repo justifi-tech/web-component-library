@@ -24,10 +24,3 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
-
-
-# Terraform
-terraform/.terraform
-terraform/.terraform*
-.env.staging
-.env.production
