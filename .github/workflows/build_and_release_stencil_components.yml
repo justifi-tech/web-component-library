@@ -2,6 +2,7 @@
 
 name: Build and release StencilJS components
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
