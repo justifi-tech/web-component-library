@@ -9,6 +9,10 @@ on:
     paths:
       - stencil-library/**
 
+defaults:
+  run:
+    working-directory: stencil-library
+
 jobs:
   build:
     name: Build
