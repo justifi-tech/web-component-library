@@ -9,14 +9,13 @@ on:
     paths:
       - stencil-library/**
 
-defaults:
-  run:
-    working-directory: stencil-library
-
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: stencil-library
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
