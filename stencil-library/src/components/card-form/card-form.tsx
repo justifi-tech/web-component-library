@@ -29,19 +29,19 @@ export class CardForm {
   }
 
   private dispatchMessageEvent(messageEvent: MessageEvent) {
-    const messageType = messageEvent.data.eventType;
+    const messagePayload = messageEvent.data;
+    const messageType = messagePayload.eventType;
+    const messageData = messagePayload.data;
+
     switch (messageType) {
       case DispatchedEventTypes.ready:
-        this.cardFormReady.emit();
+        this.cardFormReady.emit(messageData);
         break;
       case DispatchedEventTypes.change:
-        this.cardFormChange.emit();
+        this.cardFormChange.emit(messageData);
         break;
       case DispatchedEventTypes.blur:
-        this.cardFormBlur.emit();
-        break;
-      case DispatchedEventTypes.tokenize:
-        this.cardFormTokenize.emit({ data: messageEvent.data.eventType });
+        this.cardFormBlur.emit(messageData);
         break;
       default:
         break;
