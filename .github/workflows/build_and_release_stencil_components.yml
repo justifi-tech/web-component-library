@@ -1,0 +1,49 @@
+# https://medium.com/trackstack/deploying-a-react-app-to-aws-s3-with-github-actions-b1cb9ba75c95
+
+name: Build and release StencilJS components
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - stencil-library/**
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: stencil-library
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: 'stencil-library/.nvmrc'
+          registry-url: 'https://npm.pkg.github.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
+
+      - name: Yarn Install
+        run: |
+          yarn install
+
+      - name: Typescript Compiling Build
+        run: |
+          yarn build
+      - name: Publish to GitHub Registry
+        run: |
+          pkg_name=$(cat package.json | jq -r '.name')
+          pkg_version=$(cat package.json | jq -r '.version')
+          branch=${GITHUB_REF##*/}
+
+          if [[ $branch != "main" ]]; then
+            yarn version --new-version "$pkg_version-beta$GITHUB_RUN_NUMBER" --no-git-tag-version
+            yarn publish --tag beta --access private
+          else
+            yarn publish --access private
+          fi
