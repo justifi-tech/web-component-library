@@ -5,7 +5,7 @@ export const config: Config = {
   namespace: 'justifi-webcomponents',
   outputTargets: [
     react({
-      componentCorePackage: 'justifi-webcomponents',
+      componentCorePackage: '@justifi-tech/justifi-webcomponents',
       proxiesFile: '../react-library/src/components/stencil-generated/index.ts',
       includeDefineCustomElements: true,
     }),
