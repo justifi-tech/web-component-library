@@ -37,13 +37,5 @@ jobs:
           yarn build
       - name: Publish to GitHub Registry
         run: |
-          pkg_name=$(cat package.json | jq -r '.name')
-          pkg_version=$(cat package.json | jq -r '.version')
-          branch=${GITHUB_REF##*/}
+          yarn publish --verbose --no-git-tag-version
 
-          if [[ $branch != "main" ]]; then
-            yarn version --new-version "$pkg_version-beta$GITHUB_RUN_NUMBER" --no-git-tag-version
-            yarn publish --tag beta --access private
-          else
-            yarn publish --access private
-          fi

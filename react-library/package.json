@@ -1,12 +1,11 @@
 {
-  "name": "justifi-react-components",
+  "name": "@justifi-tech/justifi-react-components",
   "sideEffects": false,
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.2",
   "description": "React specific wrapper for JustiFi web components",
   "repository": {
     "type": "git",
-    "url": "https://github.com/<org>/<repo>.git"
+    "url": "https://github.com/justifi-tech/web-component-library.git"
   },
   "scripts": {
     "build": "yarn run clean && yarn run compile",
@@ -21,6 +20,10 @@
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "access": "restricted",
+    "registry":"https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@types/jest": "23.3.9",
     "@types/node": "^15.12.2",
@@ -33,7 +36,9 @@
     "react-dom": "^17.0.2",
     "typescript": "^3.3.4000"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@justifi-tech/justifi-webcomponents": "^0.0.2"
+  },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
