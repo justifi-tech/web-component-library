@@ -15,8 +15,7 @@
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry":"https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   },
   "files": [
     "dist/",
