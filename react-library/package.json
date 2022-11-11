@@ -21,7 +21,7 @@
     "dist/"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
     "@types/jest": "23.3.9",
