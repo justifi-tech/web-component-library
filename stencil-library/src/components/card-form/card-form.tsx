@@ -48,7 +48,11 @@ export class CardForm {
     }
   }
 
-  private triggerTokenization(clientKey: string, account: string, paymentMethodMetadata: any) {
+  private triggerTokenization(
+    clientKey: string,
+    paymentMethodMetadata: any,
+    account?: string
+  ) {
     if (this.iframeElement && this.iframeElement.contentWindow) {
       this.iframeElement.contentWindow.postMessage({
         eventType: DispatchedEventTypes.tokenize,
@@ -62,8 +66,8 @@ export class CardForm {
   @Method()
   async tokenize(
     clientKey: string,
-    account: string,
-    paymentMethodMetadata: any
+    paymentMethodMetadata: any,
+    account?: string
   ) {
     return new Promise((resolve) => {
       const tokenizeEventListener = (event: MessageEvent) => {
@@ -72,7 +76,7 @@ export class CardForm {
         resolve(event.data.data);
       };
       window.addEventListener('message', tokenizeEventListener);
-      this.triggerTokenization(clientKey, account, paymentMethodMetadata);
+      this.triggerTokenization(clientKey, paymentMethodMetadata, account);
     });
   };
 

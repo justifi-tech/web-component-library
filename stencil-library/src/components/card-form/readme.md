@@ -24,7 +24,7 @@
 
 ## Methods
 
-### `tokenize(clientKey: string, account: string, paymentMethodMetadata: any) => Promise<unknown>`
+### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<unknown>`
 
 
 
