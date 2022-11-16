@@ -38,4 +38,6 @@ jobs:
       - name: Publish to GitHub Registry
         run: |
           yarn publish --verbose --no-git-tag-version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
 

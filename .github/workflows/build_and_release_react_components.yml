@@ -25,8 +25,6 @@ jobs:
         with:
           node-version-file: 'react-library/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
 
       - name: Yarn Install
         run: |
@@ -38,3 +36,5 @@ jobs:
       - name: Publish to GitHub Registry
         run: |
             yarn publish --verbose --no-git-tag-version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
