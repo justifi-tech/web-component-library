@@ -1,7 +1,7 @@
 {
-  "name": "@justifi-tech/justifi-react-components",
+  "name": "@justifi/react-components",
   "sideEffects": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "React specific wrapper for JustiFi web components",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "dist/"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
     "@types/jest": "23.3.9",
@@ -36,7 +36,7 @@
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "@justifi-tech/justifi-webcomponents": "^0.0.6"
+    "@justifi/webcomponents": "^0.0.6"
   },
   "peerDependencies": {
     "react": "^17.0.2",
