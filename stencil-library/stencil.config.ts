@@ -2,10 +2,10 @@ import { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 
 export const config: Config = {
-  namespace: 'justifi-webcomponents',
+  namespace: 'webcomponents',
   outputTargets: [
     react({
-      componentCorePackage: '@justifi-tech/justifi-webcomponents',
+      componentCorePackage: '@justifi/webcomponents',
       proxiesFile: '../react-library/src/components/stencil-generated/index.ts',
       includeDefineCustomElements: true,
     }),

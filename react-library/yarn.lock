@@ -32,10 +32,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@justifi-tech/justifi-webcomponents@^0.0.2":
-  version "0.0.2"
-  resolved "https://npm.pkg.github.com/download/@justifi-tech/justifi-webcomponents/0.0.2/8eaff6f43345bcdee5f20d79e517dbd8596fafca#8eaff6f43345bcdee5f20d79e517dbd8596fafca"
-  integrity sha512-xgXrqo5gbfY/LgRdAK06fhTOaJw/rmgOO8HlSFX+PHKE5RNLBnPg+V/6SxoDubqPvkK+d7eerMLrlsd+DOXf1g==
+"@justifi/webcomponents@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@justifi/webcomponents/-/webcomponents-0.0.6.tgz#160cd16022af58d8678d33f4fe617c87478dda4f"
+  integrity sha512-XUXm9rqD0EGB9bIJVcz5MXd88IAbK2JNSQymz8uOqIKn5wklQwTk0RoiStF8hQUwM7a7jeUwFrgw0b+q9U2XlQ==
   dependencies:
     "@stencil/core" "^2.13.0"
     "@stencil/react-output-target" "^0.3.1"
