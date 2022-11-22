@@ -10,7 +10,7 @@ enum DispatchedEventTypes {
 @Component({
   tag: 'justifi-card-form',
   styleUrl: 'card-form.css',
-  shadow: true,
+  shadow: false,
 })
 export class CardForm {
   @Prop() iframeOrigin: string;
