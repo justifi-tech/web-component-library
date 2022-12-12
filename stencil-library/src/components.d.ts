@@ -6,7 +6,13 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface JustifiBankAccountForm {
+        "iframeOrigin": string;
+    }
     interface JustifiCardForm {
+        "iframeOrigin": string;
+    }
+    interface JustifiPaymentMethodForm {
         "iframeOrigin": string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<unknown>;
     }
@@ -15,16 +21,36 @@ export namespace Components {
         "auth": { token?: string };
     }
 }
+export interface JustifiBankAccountFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLJustifiBankAccountFormElement;
+}
 export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiCardFormElement;
 }
+export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLJustifiPaymentMethodFormElement;
+}
 declare global {
+    interface HTMLJustifiBankAccountFormElement extends Components.JustifiBankAccountForm, HTMLStencilElement {
+    }
+    var HTMLJustifiBankAccountFormElement: {
+        prototype: HTMLJustifiBankAccountFormElement;
+        new (): HTMLJustifiBankAccountFormElement;
+    };
     interface HTMLJustifiCardFormElement extends Components.JustifiCardForm, HTMLStencilElement {
     }
     var HTMLJustifiCardFormElement: {
         prototype: HTMLJustifiCardFormElement;
         new (): HTMLJustifiCardFormElement;
+    };
+    interface HTMLJustifiPaymentMethodFormElement extends Components.JustifiPaymentMethodForm, HTMLStencilElement {
+    }
+    var HTMLJustifiPaymentMethodFormElement: {
+        prototype: HTMLJustifiPaymentMethodFormElement;
+        new (): HTMLJustifiPaymentMethodFormElement;
     };
     interface HTMLJustifiPaymentsListElement extends Components.JustifiPaymentsList, HTMLStencilElement {
     }
@@ -33,11 +59,20 @@ declare global {
         new (): HTMLJustifiPaymentsListElement;
     };
     interface HTMLElementTagNameMap {
+        "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
+        "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
         "justifi-payments-list": HTMLJustifiPaymentsListElement;
     }
 }
 declare namespace LocalJSX {
+    interface JustifiBankAccountForm {
+        "iframeOrigin"?: string;
+        "onBankAccountFormBlur"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
+        "onBankAccountFormChange"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
+        "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
+        "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
+    }
     interface JustifiCardForm {
         "iframeOrigin"?: string;
         "onCardFormBlur"?: (event: JustifiCardFormCustomEvent<any>) => void;
@@ -45,12 +80,21 @@ declare namespace LocalJSX {
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
     }
+    interface JustifiPaymentMethodForm {
+        "iframeOrigin"?: string;
+        "onPaymentMethodFormBlur"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
+        "onPaymentMethodFormChange"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
+        "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
+        "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
+    }
     interface JustifiPaymentsList {
         "accountId"?: string;
         "auth"?: { token?: string };
     }
     interface IntrinsicElements {
+        "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-card-form": JustifiCardForm;
+        "justifi-payment-method-form": JustifiPaymentMethodForm;
         "justifi-payments-list": JustifiPaymentsList;
     }
 }
@@ -58,7 +102,9 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
+            "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
             "justifi-payments-list": LocalJSX.JustifiPaymentsList & JSXBase.HTMLAttributes<HTMLJustifiPaymentsListElement>;
         }
     }
