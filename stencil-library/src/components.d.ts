@@ -8,9 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface JustifiBankAccountForm {
         "iframeOrigin": string;
+        "tokenize": (...args: any) => Promise<void>;
     }
     interface JustifiCardForm {
         "iframeOrigin": string;
+        "tokenize": (...args: any) => Promise<void>;
     }
     interface JustifiPaymentMethodForm {
         "iframeOrigin": string;

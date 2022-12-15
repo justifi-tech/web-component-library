@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, State, Method } from '@stencil/core';
 
 @Component({
   tag: 'justifi-card-form',
@@ -11,9 +11,23 @@ export class CardForm {
   @Event() cardFormBlur: EventEmitter;
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
 
+  // This should be typed to justifi-payment-method-form,
+  // but couldn't figure it out without exposing an entire type for the component
+  private childRef?: any;
+
+  // This might not be the ideal approach, but it's the simplest approach I could find
+  @Method()
+  tokenize(...args: any) {
+    if (!this.childRef) {
+      throw new Error('Cannot call tokenize');
+    }
+    this.childRef.tokenize(...args);
+  }
+
   render() {
     return (
       <justifi-payment-method-form
+        ref={el => (this.childRef = el)}
         iframe-origin={this.iframeOrigin || 'https://js.justifi.ai/card'}
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-change={this.cardFormChange}
