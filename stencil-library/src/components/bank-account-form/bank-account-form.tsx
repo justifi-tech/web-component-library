@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Listen } from '@stencil/core';
 
 @Component({
   tag: 'justifi-bank-account-form',
@@ -10,6 +10,26 @@ export class BankAccountForm {
   @Event() bankAccountFormChange: EventEmitter;
   @Event() bankAccountFormBlur: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
+
+  @Listen('paymentMethodFormReady')
+  readyHandler(event: CustomEvent) {
+    this.bankAccountFormReady.emit(event);
+  }
+
+  @Listen('paymentMethodFormChange')
+  changeHandler(event: CustomEvent) {
+    this.bankAccountFormChange.emit(event);
+  }
+
+  @Listen('paymentMethodFormBlur')
+  blurHandler(event: CustomEvent) {
+    this.bankAccountFormBlur.emit(event);
+  }
+
+  @Listen('paymentMethodFormTokenize')
+  tokenizeHandler(event: { data: any }) {
+    this.bankAccountFormTokenize.emit(event);
+  }
 
   render() {
     return (

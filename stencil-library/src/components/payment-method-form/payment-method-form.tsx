@@ -14,10 +14,10 @@ enum DispatchedEventTypes {
 })
 export class PaymentMethodForm {
   @Prop() iframeOrigin: string;
-  @Event() paymentMethodFormReady: EventEmitter;
-  @Event() paymentMethodFormChange: EventEmitter;
-  @Event() paymentMethodFormBlur: EventEmitter;
-  @Event() paymentMethodFormTokenize: EventEmitter<{ data: any }>;
+  @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
+  @Event({ bubbles: true }) paymentMethodFormChange: EventEmitter;
+  @Event({ bubbles: true }) paymentMethodFormBlur: EventEmitter;
+  @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   iframeElement!: HTMLIFrameElement;
 
   connectedCallback() {
