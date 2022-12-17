@@ -1,18 +1,18 @@
 // import { newSpecPage } from '@stencil/core/testing';
-// import { CardForm } from '../card-form';
+// import { BankAccountForm } from '../bank-account-form';
 
-// describe('card-form', () => {
+// describe('bank-account-form', () => {
 //   it('renders', async () => {
 //     const page = await newSpecPage({
-//       components: [CardForm],
-//       html: `<card-form></card-form>`,
+//       components: [BankAccountForm],
+//       html: `<bank-account-form></bank-account-form>`,
 //     });
 //     expect(page.root).toEqualHtml(`
-//       <card-form>
+//       <bank-account-form>
 //         <mock:shadow-root>
 //           <slot></slot>
 //         </mock:shadow-root>
-//       </card-form>
+//       </bank-account-form>
 //     `);
 //   });
 // });
