@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, Listen, State, Method } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Listen, Method } from '@stencil/core';
 
 @Component({
   tag: 'justifi-bank-account-form',
