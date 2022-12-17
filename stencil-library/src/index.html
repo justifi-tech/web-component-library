@@ -53,14 +53,14 @@
       console.log('justifi-card-form ready');
     });
 
-    cardForm.addEventListener('cardFormTokenize', function (data) {
-      console.log('justifi-card-form tokenized: ', data);
+    cardSubmitButton.addEventListener('click', (event) => {
+      console.log('card form tokenize button clicked');
+      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+        .then((data) => {
+          console.log('justifi-card-form tokenized: ', data);
+        });
     });
 
-    cardSubmitButton.addEventListener('click', (event) => {
-      console.log('tokenize button clicked');
-      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' });
-    });
 
     // Bank account form component
     var bankAccountForm = document.querySelector('justifi-bank-account-form');
@@ -78,13 +78,12 @@
       console.log('justifi-card-form ready');
     });
 
-    bankAccountForm.addEventListener('bankAccountFormTokenize', function (data) {
-      console.log('justifi-card-form tokenized: ', data);
-    });
-
     bankAccountSubmitButton.addEventListener('click', (event) => {
-      console.log('tokenize button clicked');
-      bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' });
+      console.log('bank account tokenize button clicked');
+      bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+        .then((data) => {
+          console.log('justifi-bank-account-form tokenized: ', data);
+        });
     });
   })();
 </script>

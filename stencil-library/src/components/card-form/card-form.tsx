@@ -17,11 +17,11 @@ export class CardForm {
 
   // This might not be the ideal approach, but it's the simplest approach I could find
   @Method()
-  tokenize(...args: any) {
+  async tokenize(...args: any) {
     if (!this.childRef) {
       throw new Error('Cannot call tokenize');
     }
-    this.childRef.tokenize(...args);
+    return this.childRef.tokenize(...args);
   }
 
   render() {
