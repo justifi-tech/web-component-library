@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, State, Method } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Method } from '@stencil/core';
 
 @Component({
   tag: 'justifi-card-form',
