@@ -28,7 +28,7 @@ describe('justifi-card-form', () => {
     `);
   });
 
-  it('has a tokenize method witch calls tokenize on justifi-payment-method-form', async () => {
+  it('has a tokenize method which calls tokenize on justifi-payment-method-form', async () => {
     const cardForm = new CardForm();
     expect(cardForm.tokenize).toBeDefined();
 
