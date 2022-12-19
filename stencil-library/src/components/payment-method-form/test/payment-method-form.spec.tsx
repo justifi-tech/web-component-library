@@ -17,21 +17,15 @@ describe('justifi-payment-method-form', () => {
   it('has a tokenize method which calls triggerTokenization', async () => {
     const paymentMethodForm = new PaymentMethodForm();
     expect(paymentMethodForm.tokenize).toBeDefined();
-
+    const clientKey = 'abc123';
+    const paymentMethodMetadata = {};
+    const accountId = 'def456';
     const triggerTokenizationSpy = jest.spyOn((paymentMethodForm as any), 'triggerTokenization');
-    paymentMethodForm.tokenize('abc123', {});
-    expect(triggerTokenizationSpy).toHaveBeenCalled();
-  });
 
-  it('has a triggerTokenization method which sends a message via postMessage to iframe', async () => {
-    const paymentMethodForm = new PaymentMethodForm();
-    expect(paymentMethodForm.tokenize).toBeDefined();
+    paymentMethodForm.tokenize(clientKey, paymentMethodMetadata);
+    expect(triggerTokenizationSpy).toHaveBeenCalledWith(clientKey, paymentMethodMetadata, undefined);
 
-    // mock iframe
-    paymentMethodForm.iframeElement = document.createElement('iframe');
-    paymentMethodForm.iframeElement.contentWindow.postMessage = () => { };
-
-    const postMessageSpy = jest.spyOn((paymentMethodForm.iframeElement as any), 'contentWindow.postMessage');
-    expect(postMessageSpy).toHaveBeenCalledWith('');
+    paymentMethodForm.tokenize(clientKey, paymentMethodMetadata, accountId);
+    expect(triggerTokenizationSpy).toHaveBeenCalledWith(clientKey, paymentMethodMetadata, accountId);
   });
 });
