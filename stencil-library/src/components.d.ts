@@ -8,15 +8,15 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface JustifiBankAccountForm {
         "iframeOrigin": string;
-        "tokenize": (...args: any) => Promise<any>;
+        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
     }
     interface JustifiCardForm {
         "iframeOrigin": string;
-        "tokenize": (...args: any) => Promise<any>;
+        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {
         "iframeOrigin": string;
-        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<unknown>;
+        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
     }
     interface JustifiPaymentsList {
         "accountId": string;

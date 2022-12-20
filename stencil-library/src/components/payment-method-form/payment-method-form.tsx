@@ -68,7 +68,7 @@ export class PaymentMethodForm {
     clientKey: string,
     paymentMethodMetadata: any,
     account?: string
-  ) {
+  ): Promise<any> {
     return new Promise((resolve) => {
       const tokenizeEventListener = (event: MessageEvent) => {
         if (event.data.eventType !== DispatchedEventTypes.tokenize) return;

@@ -1,5 +1,6 @@
 import { Component, Event, Prop, h, EventEmitter, Method } from '@stencil/core';
 
+
 @Component({
   tag: 'justifi-card-form',
   styleUrl: 'card-form.css',
@@ -12,13 +13,10 @@ export class CardForm {
   @Event() cardFormBlur: EventEmitter;
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
 
-  // This should be typed to justifi-payment-method-form,
-  // but couldn't figure it out without exposing an entire type for the component
-  private childRef?: any;
+  private childRef?: HTMLJustifiPaymentMethodFormElement;
 
-  // This might not be the ideal approach, but it's the simplest approach I could find
   @Method()
-  async tokenize(...args: any) {
+  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) {
     if (!this.childRef) {
       throw new Error('Cannot call tokenize');
     }
@@ -28,7 +26,9 @@ export class CardForm {
   render() {
     return (
       <justifi-payment-method-form
-        ref={el => (this.childRef = el)}
+        ref={el => {
+          if (el) { this.childRef = el }
+        }}
         iframe-origin={this.iframeOrigin || 'https://js.justifi.ai/card'}
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-change={this.cardFormChange}

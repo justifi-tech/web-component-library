@@ -31,13 +31,10 @@ export class BankAccountForm {
     this.bankAccountFormTokenize.emit(event);
   }
 
-  // This should be typed to justifi-payment-method-form,
-  // but couldn't figure it out without exposing an entire type for the component
-  private childRef?: any;
+  private childRef?: HTMLJustifiPaymentMethodFormElement;
 
-  // This might not be the ideal approach, but it's the simplest approach I could find
   @Method()
-  async tokenize(...args: any) {
+  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) {
     if (!this.childRef) {
       throw new Error('Cannot call tokenize');
     }
