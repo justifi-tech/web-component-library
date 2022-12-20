@@ -2,6 +2,7 @@ import { Component, Event, Prop, h, EventEmitter, Method } from '@stencil/core';
 
 @Component({
   tag: 'justifi-card-form',
+  styleUrl: 'card-form.css',
   shadow: false,
 })
 export class CardForm {
