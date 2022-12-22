@@ -1,9 +1,3 @@
-:host {
-  display: block;
-}
-
-iframe {
-  border: none;
+justifi-card-form iframe {
   height: 55px;
-  width: 100%;
 }

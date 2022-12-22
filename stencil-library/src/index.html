@@ -14,7 +14,14 @@
   <h1>Card Form</h1>
   <hr>
   <justifi-card-form></justifi-card-form>
-  <button type="submit" id="submit-button">Tokenize</button>
+  <button type="submit" id="card-submit-button">Tokenize</button>
+  <br>
+  <br>
+  <br>
+  <h1>Bank Account Form</h1>
+  <hr>
+  <justifi-bank-account-form></justifi-bank-account-form>
+  <button type="submit" id="bank-submit-button">Tokenize</button>
   <br>
   <br>
   <br>
@@ -30,8 +37,9 @@
 
 <script>
   (function () {
+    // Card form component
     var cardForm = document.querySelector('justifi-card-form');
-    var submitButton = document.querySelector('#submit-button');
+    var cardSubmitButton = document.querySelector('#card-submit-button');
 
     cardForm.addEventListener('cardFormChange', function () {
       console.log('justifi-card-form changed');
@@ -45,13 +53,37 @@
       console.log('justifi-card-form ready');
     });
 
-    cardForm.addEventListener('cardFormTokenize', function (data) {
-      console.log('justifi-card-form tokenized: ', data);
+    cardSubmitButton.addEventListener('click', (event) => {
+      console.log('card form tokenize button clicked');
+      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+        .then((data) => {
+          console.log('justifi-card-form tokenized: ', data);
+        });
     });
 
-    submitButton.addEventListener('click', (event) => {
-      console.log('tokenize button clicked');
-      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' });
+
+    // Bank account form component
+    var bankAccountForm = document.querySelector('justifi-bank-account-form');
+    var bankAccountSubmitButton = document.querySelector('#bank-submit-button');
+
+    bankAccountForm.addEventListener('bankAccountFormChange', function () {
+      console.log('justifi-card-form changed');
+    });
+
+    bankAccountForm.addEventListener('bankAccountFormBlur', function () {
+      console.log('justifi-card-form blur');
+    });
+
+    bankAccountForm.addEventListener('bankAccountFormReady', function () {
+      console.log('justifi-card-form ready');
+    });
+
+    bankAccountSubmitButton.addEventListener('click', (event) => {
+      console.log('bank account tokenize button clicked');
+      bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+        .then((data) => {
+          console.log('justifi-bank-account-form tokenized: ', data);
+        });
     });
   })();
 </script>
