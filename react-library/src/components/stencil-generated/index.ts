@@ -3,7 +3,7 @@
 /* auto-generated react proxies */
 import { createReactComponent } from './react-component-lib';
 
-import type { JSX } from '@justifi/webcomponents/dist/types/components';
+import type { JSX } from '@justifi/webcomponents';
 
 import { defineCustomElements } from '@justifi/webcomponents/loader';
 
