@@ -14,26 +14,39 @@
 
 ## Events
 
-| Event              | Description | Type                          |
-| ------------------ | ----------- | ----------------------------- |
-| `cardFormBlur`     |             | `CustomEvent<any>`            |
-| `cardFormChange`   |             | `CustomEvent<any>`            |
-| `cardFormReady`    |             | `CustomEvent<any>`            |
-| `cardFormTokenize` |             | `CustomEvent<{ data: any; }>` |
+| Event                     | Description | Type                          |
+| ------------------------- | ----------- | ----------------------------- |
+| `bankAccountFormBlur`     |             | `CustomEvent<any>`            |
+| `bankAccountFormChange`   |             | `CustomEvent<any>`            |
+| `bankAccountFormReady`    |             | `CustomEvent<any>`            |
+| `bankAccountFormTokenize` |             | `CustomEvent<{ data: any; }>` |
 
 
 ## Methods
 
-### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<unknown>`
+### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
 
 
 
 #### Returns
 
-Type: `Promise<unknown>`
+Type: `Promise<any>`
 
 
 
+
+## Dependencies
+
+### Depends on
+
+- [justifi-payment-method-form](../payment-method-form)
+
+### Graph
+```mermaid
+graph TD;
+  justifi-bank-account-form --> justifi-payment-method-form
+  style justifi-bank-account-form fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
