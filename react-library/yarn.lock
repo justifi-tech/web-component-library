@@ -32,10 +32,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@justifi/webcomponents@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@justifi/webcomponents/-/webcomponents-0.0.6.tgz#160cd16022af58d8678d33f4fe617c87478dda4f"
-  integrity sha512-XUXm9rqD0EGB9bIJVcz5MXd88IAbK2JNSQymz8uOqIKn5wklQwTk0RoiStF8hQUwM7a7jeUwFrgw0b+q9U2XlQ==
+"@justifi/webcomponents@0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@justifi/webcomponents/-/webcomponents-0.0.11.tgz#29459faac610dfeea0ae4a75ec49ba157e3fe860"
+  integrity sha512-Tqj6y4p2I+j7GDpSjrAHV6wj3Da3jh8xEBGeVaOK7kxd0yzzgMpaYYKtMRPV9NBzGsE7Lyq0u5hvYgx35onWig==
   dependencies:
     "@stencil/core" "^2.13.0"
     "@stencil/react-output-target" "^0.3.1"
