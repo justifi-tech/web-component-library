@@ -1,5 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, Method } from '@stencil/core';
-
+import { Component, Event, Prop, h, EventEmitter, Method, Listen } from '@stencil/core';
 
 @Component({
   tag: 'justifi-card-form',
@@ -12,6 +11,26 @@ export class CardForm {
   @Event() cardFormChange: EventEmitter;
   @Event() cardFormBlur: EventEmitter;
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
+
+  @Listen('paymentMethodFormReady')
+  readyHandler(event: CustomEvent) {
+    this.cardFormReady.emit(event);
+  }
+
+  @Listen('paymentMethodFormChange')
+  changeHandler(event: CustomEvent) {
+    this.cardFormChange.emit(event);
+  }
+
+  @Listen('paymentMethodFormBlur')
+  blurHandler(event: CustomEvent) {
+    this.cardFormBlur.emit(event);
+  }
+
+  @Listen('paymentMethodFormTokenize')
+  tokenizeHandler(event: { data: any }) {
+    this.cardFormTokenize.emit(event);
+  }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
 
