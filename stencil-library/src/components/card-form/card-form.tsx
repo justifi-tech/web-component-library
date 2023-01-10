@@ -2,7 +2,6 @@ import { Component, Event, Prop, h, EventEmitter, Method, Listen } from '@stenci
 
 @Component({
   tag: 'justifi-card-form',
-  styleUrl: 'card-form.css',
   shadow: false,
 })
 export class CardForm {

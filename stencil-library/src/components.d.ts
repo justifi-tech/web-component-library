@@ -87,6 +87,7 @@ declare namespace LocalJSX {
         "onPaymentMethodFormBlur"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormChange"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
+        "onPaymentMethodFormResize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
     }
     interface JustifiPaymentsList {

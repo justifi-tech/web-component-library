@@ -1,10 +1,11 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
+import { Component, Event, Host, Prop, h, EventEmitter, Method, State } from '@stencil/core';
 
 enum DispatchedEventTypes {
   blur = 'blur',
   change = 'change',
   ready = 'ready',
-  tokenize = 'tokenize'
+  tokenize = 'tokenize',
+  resize = 'resize'
 }
 
 @Component({
@@ -18,6 +19,9 @@ export class PaymentMethodForm {
   @Event({ bubbles: true }) paymentMethodFormChange: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormBlur: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
+  @Event({ bubbles: true }) paymentMethodFormResize: EventEmitter<{ data: any }>;
+  @State() height: number = 55;
+
   iframeElement!: HTMLIFrameElement;
 
   connectedCallback() {
@@ -43,9 +47,17 @@ export class PaymentMethodForm {
       case DispatchedEventTypes.blur:
         this.paymentMethodFormBlur.emit(messageData);
         break;
+      case DispatchedEventTypes.resize:
+        this.handleResize(messageData);
+        break;
       default:
         break;
     }
+  }
+
+  private handleResize(messageData) {
+    console.log('messageData', messageData);
+    this.height = messageData.height;
   }
 
   private triggerTokenization(
@@ -85,6 +97,7 @@ export class PaymentMethodForm {
       <Host>
         <iframe
           id="justifi-payment-method-form"
+          height={this.height}
           src={this.iframeOrigin}
           ref={(el) => this.iframeElement = el as HTMLIFrameElement}>
         </iframe>
