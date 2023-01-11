@@ -41,14 +41,6 @@
     var cardForm = document.querySelector('justifi-card-form');
     var cardSubmitButton = document.querySelector('#card-submit-button');
 
-    cardForm.addEventListener('cardFormChange', function () {
-      console.log('justifi-card-form changed');
-    });
-
-    cardForm.addEventListener('cardFormBlur', function () {
-      console.log('justifi-card-form blur');
-    });
-
     cardForm.addEventListener('cardFormReady', function () {
       console.log('justifi-card-form ready');
     });
@@ -66,16 +58,8 @@
     var bankAccountForm = document.querySelector('justifi-bank-account-form');
     var bankAccountSubmitButton = document.querySelector('#bank-submit-button');
 
-    bankAccountForm.addEventListener('bankAccountFormChange', function () {
-      console.log('justifi-card-form changed');
-    });
-
-    bankAccountForm.addEventListener('bankAccountFormBlur', function () {
-      console.log('justifi-card-form blur');
-    });
-
     bankAccountForm.addEventListener('bankAccountFormReady', function () {
-      console.log('justifi-card-form ready');
+      console.log('justifi-bank-account-form ready');
     });
 
     bankAccountSubmitButton.addEventListener('click', (event) => {

@@ -1,11 +1,5 @@
 import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
-
-enum DispatchedEventTypes {
-  blur = 'blur',
-  change = 'change',
-  ready = 'ready',
-  tokenize = 'tokenize'
-}
+import { MessageEventType } from '../MessageEventTypes';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -13,10 +7,9 @@ enum DispatchedEventTypes {
   shadow: false,
 })
 export class PaymentMethodForm {
-  @Prop() iframeOrigin: string;
+  @Prop() paymentMethodFormType: 'card' | 'bankAccount';
+  @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
-  @Event({ bubbles: true }) paymentMethodFormChange: EventEmitter;
-  @Event({ bubbles: true }) paymentMethodFormBlur: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   iframeElement!: HTMLIFrameElement;
 
@@ -33,18 +26,8 @@ export class PaymentMethodForm {
     const messageType = messagePayload.eventType;
     const messageData = messagePayload.data;
 
-    switch (messageType) {
-      case DispatchedEventTypes.ready:
-        this.paymentMethodFormReady.emit(messageData);
-        break;
-      case DispatchedEventTypes.change:
-        this.paymentMethodFormChange.emit(messageData);
-        break;
-      case DispatchedEventTypes.blur:
-        this.paymentMethodFormBlur.emit(messageData);
-        break;
-      default:
-        break;
+    if (messageType === MessageEventType[this.paymentMethodFormType].ready) {
+      this.paymentMethodFormReady.emit(messageData);
     }
   }
 
@@ -55,7 +38,7 @@ export class PaymentMethodForm {
   ) {
     if (this.iframeElement && this.iframeElement.contentWindow) {
       this.iframeElement.contentWindow.postMessage({
-        eventType: DispatchedEventTypes.tokenize,
+        eventType: MessageEventType[this.paymentMethodFormType].tokenize,
         clientKey: clientKey,
         paymentMethodMetadata: paymentMethodMetadata,
         account: account
@@ -71,7 +54,7 @@ export class PaymentMethodForm {
   ): Promise<any> {
     return new Promise((resolve) => {
       const tokenizeEventListener = (event: MessageEvent) => {
-        if (event.data.eventType !== DispatchedEventTypes.tokenize) return;
+        if (event.data.eventType !== MessageEventType[this.paymentMethodFormType].tokenize) return;
         window.removeEventListener('message', tokenizeEventListener);
         resolve(event.data.data);
       };
@@ -80,12 +63,21 @@ export class PaymentMethodForm {
     });
   };
 
+  private getIframeSrc() {
+    // let iframeSrc = `https://js.justifi.ai/v2/${this.paymentMethodFormType}`;
+    let iframeSrc = `http://localhost:3003/v2/${this.paymentMethodFormType}`;
+    if (this.paymentMethodFormValidationStrategy) {
+      iframeSrc += `?validationStrategy=${this.paymentMethodFormValidationStrategy}`
+    }
+    return iframeSrc;
+  }
+
   render() {
     return (
       <Host>
         <iframe
-          id="justifi-payment-method-form"
-          src={this.iframeOrigin}
+          id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
+          src={this.getIframeSrc()}
           ref={(el) => this.iframeElement = el as HTMLIFrameElement}>
         </iframe>
       </Host >

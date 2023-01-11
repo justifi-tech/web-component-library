@@ -7,15 +7,16 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface JustifiBankAccountForm {
-        "iframeOrigin": string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiCardForm {
-        "iframeOrigin": string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentMethodForm {
-        "iframeOrigin": string;
+        "paymentMethodFormType": 'card' | 'bankAccount';
+        "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
     }
     interface JustifiPaymentsList {
@@ -69,25 +70,20 @@ declare global {
 }
 declare namespace LocalJSX {
     interface JustifiBankAccountForm {
-        "iframeOrigin"?: string;
-        "onBankAccountFormBlur"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
-        "onBankAccountFormChange"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
+        "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiCardForm {
-        "iframeOrigin"?: string;
-        "onCardFormBlur"?: (event: JustifiCardFormCustomEvent<any>) => void;
-        "onCardFormChange"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
+        "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentMethodForm {
-        "iframeOrigin"?: string;
-        "onPaymentMethodFormBlur"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
-        "onPaymentMethodFormChange"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
+        "paymentMethodFormType"?: 'card' | 'bankAccount';
+        "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentsList {
         "accountId"?: string;
