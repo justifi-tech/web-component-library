@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface JustifiBankAccountForm {
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiCardForm {
@@ -18,6 +19,7 @@ export namespace Components {
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "validate": () => Promise<any>;
     }
     interface JustifiPaymentsList {
         "accountId": string;
@@ -72,6 +74,7 @@ declare namespace LocalJSX {
     interface JustifiBankAccountForm {
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
+        "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiCardForm {

@@ -8,6 +8,7 @@ export class BankAccountForm {
   @Prop() validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Event() bankAccountFormReady: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
+  @Event() bankAccountFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
@@ -19,6 +20,11 @@ export class BankAccountForm {
     this.bankAccountFormTokenize.emit(event);
   }
 
+  @Listen('paymentMethodFormValidate')
+  validateHandler(event: { data: any }) {
+    this.bankAccountFormValidate.emit(event);
+  }
+
   private childRef?: HTMLJustifiPaymentMethodFormElement;
 
   @Method()
@@ -27,6 +33,14 @@ export class BankAccountForm {
       throw new Error('Cannot call tokenize');
     }
     return this.childRef.tokenize(...args);
+  }
+
+  @Method()
+  async validate() {
+    if (!this.childRef) {
+      throw new Error('Cannot call validate');
+    }
+    return this.childRef.validate();
   }
 
   render() {

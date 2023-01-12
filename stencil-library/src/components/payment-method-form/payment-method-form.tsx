@@ -63,6 +63,22 @@ export class PaymentMethodForm {
     });
   };
 
+  @Method()
+  async validate(): Promise<any> {
+    return new Promise((resolve) => {
+      const validateEventListener = (event: MessageEvent) => {
+        if (event.data.eventType !== MessageEventType[this.paymentMethodFormType].validate) return;
+        window.removeEventListener('message', validateEventListener);
+        resolve(event.data.data);
+      };
+      window.addEventListener('message', validateEventListener);
+
+      this.iframeElement.contentWindow.postMessage({
+        eventType: MessageEventType[this.paymentMethodFormType].validate
+      }, '*');
+    });
+  };
+
   private getIframeSrc() {
     // let iframeSrc = `https://js.justifi.ai/v2/${this.paymentMethodFormType}`;
     let iframeSrc = `http://localhost:3003/v2/${this.paymentMethodFormType}`;

@@ -22,6 +22,7 @@
   <hr>
   <justifi-bank-account-form></justifi-bank-account-form>
   <button type="submit" id="bank-submit-button">Tokenize</button>
+  <button type="submit" id="bank-validate-button">Validate</button>
   <br>
   <br>
   <br>
@@ -57,6 +58,7 @@
     // Bank account form component
     var bankAccountForm = document.querySelector('justifi-bank-account-form');
     var bankAccountSubmitButton = document.querySelector('#bank-submit-button');
+    var bankAccountValidateButton = document.querySelector('#bank-validate-button');
 
     bankAccountForm.addEventListener('bankAccountFormReady', function () {
       console.log('justifi-bank-account-form ready');
@@ -67,6 +69,14 @@
       bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
         .then((data) => {
           console.log('justifi-bank-account-form tokenized: ', data);
+        });
+    });
+
+    bankAccountValidateButton.addEventListener('click', (event) => {
+      console.log('bank account validate button clicked');
+      bankAccountForm.validate('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+        .then((data) => {
+          console.log('justifi-bank-account-form validated. Is valid? ', data.isValid);
         });
     });
   })();
