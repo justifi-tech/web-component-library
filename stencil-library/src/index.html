@@ -15,6 +15,7 @@
   <hr>
   <justifi-card-form></justifi-card-form>
   <button type="submit" id="card-submit-button">Tokenize</button>
+  <button type="submit" id="card-validate-button">Validate</button>
   <br>
   <br>
   <br>
@@ -41,6 +42,7 @@
     // Card form component
     var cardForm = document.querySelector('justifi-card-form');
     var cardSubmitButton = document.querySelector('#card-submit-button');
+    var cardValidateButton = document.querySelector('#card-validate-button');
 
     cardForm.addEventListener('cardFormReady', function () {
       console.log('justifi-card-form ready');
@@ -51,6 +53,14 @@
       cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
         .then((data) => {
           console.log('justifi-card-form tokenized: ', data);
+        });
+    });
+
+    cardValidateButton.addEventListener('click', (event) => {
+      console.log('card validate button clicked');
+      cardForm.validate('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+        .then((data) => {
+          console.log('justifi-card-form validated. Is valid? ', data.isValid);
         });
     });
 

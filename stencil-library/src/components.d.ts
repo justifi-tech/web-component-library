@@ -13,6 +13,7 @@ export namespace Components {
     }
     interface JustifiCardForm {
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentMethodForm {
@@ -80,6 +81,7 @@ declare namespace LocalJSX {
     interface JustifiCardForm {
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
+        "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentMethodForm {
