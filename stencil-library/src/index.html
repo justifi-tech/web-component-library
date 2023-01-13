@@ -50,7 +50,7 @@
 
     cardSubmitButton.addEventListener('click', (event) => {
       console.log('card form tokenize button clicked');
-      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { email: 'test@email.com' })
+      cardForm.tokenize('CLIENT_KEY', {}, 'ACCOUNT_ID')
         .then((data) => {
           console.log('justifi-card-form tokenized: ', data);
         });
@@ -76,7 +76,7 @@
 
     bankAccountSubmitButton.addEventListener('click', (event) => {
       console.log('bank account tokenize button clicked');
-      bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { email: 'test@email.com' })
+      bankAccountForm.tokenize('CLIENT_KEY', {}, 'ACCOUNT_ID')
         .then((data) => {
           console.log('justifi-bank-account-form tokenized: ', data);
         });
