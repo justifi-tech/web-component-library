@@ -31,7 +31,7 @@ export class PaymentMethodForm {
     }
   }
 
-  private async postMessageWithResponseListener(eventType: string, message?: any): Promise<any> {
+  private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
     return new Promise((resolve) => {
       const responseListener = (event: MessageEvent) => {
         if (event.data.eventType !== eventType) return;
@@ -42,7 +42,7 @@ export class PaymentMethodForm {
 
       this.iframeElement.contentWindow.postMessage({
         eventType: eventType,
-        message: message
+        ...payload
       }, '*');
     });
   }
@@ -50,14 +50,13 @@ export class PaymentMethodForm {
   @Method()
   async tokenize(clientKey: string, paymentMethodMetadata: any, account?: string): Promise<any> {
     const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
-    const message = {
-      eventType: MessageEventType[this.paymentMethodFormType].tokenize,
+    const payload = {
       clientKey: clientKey,
       paymentMethodMetadata: paymentMethodMetadata,
       account: account
     };
 
-    return this.postMessageWithResponseListener(eventType, message);
+    return this.postMessageWithResponseListener(eventType, payload);
   };
 
   @Method()
