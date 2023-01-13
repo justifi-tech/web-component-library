@@ -50,7 +50,7 @@
 
     cardSubmitButton.addEventListener('click', (event) => {
       console.log('card form tokenize button clicked');
-      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+      cardForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { email: 'test@email.com' })
         .then((data) => {
           console.log('justifi-card-form tokenized: ', data);
         });
@@ -58,7 +58,7 @@
 
     cardValidateButton.addEventListener('click', (event) => {
       console.log('card validate button clicked');
-      cardForm.validate('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+      cardForm.validate()
         .then((data) => {
           console.log('justifi-card-form validated. Is valid? ', data.isValid);
         });
@@ -76,7 +76,7 @@
 
     bankAccountSubmitButton.addEventListener('click', (event) => {
       console.log('bank account tokenize button clicked');
-      bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+      bankAccountForm.tokenize('CLIENT_KEY', 'ACCOUNT_ID', { email: 'test@email.com' })
         .then((data) => {
           console.log('justifi-bank-account-form tokenized: ', data);
         });
@@ -84,7 +84,7 @@
 
     bankAccountValidateButton.addEventListener('click', (event) => {
       console.log('bank account validate button clicked');
-      bankAccountForm.validate('CLIENT_KEY', 'ACCOUNT_ID', { metadata_key: 'metadata_value' })
+      bankAccountForm.validate()
         .then((data) => {
           console.log('justifi-bank-account-form validated. Is valid? ', data.isValid);
         });
