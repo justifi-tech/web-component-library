@@ -1,5 +1,5 @@
 import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
-import { MessageEventType } from '../MessageEventTypes';
+import { MessageEventType } from './message-event-types';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -31,52 +31,38 @@ export class PaymentMethodForm {
     }
   }
 
-  private triggerTokenization(
-    clientKey: string,
-    paymentMethodMetadata: any,
-    account?: string
-  ) {
-    if (this.iframeElement && this.iframeElement.contentWindow) {
+  private async postMessageWithResponseListener(eventType: string, message?: any): Promise<any> {
+    return new Promise((resolve) => {
+      const responseListener = (event: MessageEvent) => {
+        if (event.data.eventType !== eventType) return;
+        window.removeEventListener('message', responseListener);
+        resolve(event.data.data);
+      };
+      window.addEventListener('message', responseListener);
+
       this.iframeElement.contentWindow.postMessage({
-        eventType: MessageEventType[this.paymentMethodFormType].tokenize,
-        clientKey: clientKey,
-        paymentMethodMetadata: paymentMethodMetadata,
-        account: account
+        eventType: eventType,
+        message: message
       }, '*');
-    }
+    });
   }
 
   @Method()
-  async tokenize(
-    clientKey: string,
-    paymentMethodMetadata: any,
-    account?: string
-  ): Promise<any> {
-    return new Promise((resolve) => {
-      const tokenizeEventListener = (event: MessageEvent) => {
-        if (event.data.eventType !== MessageEventType[this.paymentMethodFormType].tokenize) return;
-        window.removeEventListener('message', tokenizeEventListener);
-        resolve(event.data.data);
-      };
-      window.addEventListener('message', tokenizeEventListener);
-      this.triggerTokenization(clientKey, paymentMethodMetadata, account);
-    });
+  async tokenize(clientKey: string, paymentMethodMetadata: any, account?: string): Promise<any> {
+    const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
+    const message = {
+      eventType: MessageEventType[this.paymentMethodFormType].tokenize,
+      clientKey: clientKey,
+      paymentMethodMetadata: paymentMethodMetadata,
+      account: account
+    };
+
+    return this.postMessageWithResponseListener(eventType, message);
   };
 
   @Method()
   async validate(): Promise<any> {
-    return new Promise((resolve) => {
-      const validateEventListener = (event: MessageEvent) => {
-        if (event.data.eventType !== MessageEventType[this.paymentMethodFormType].validate) return;
-        window.removeEventListener('message', validateEventListener);
-        resolve(event.data.data);
-      };
-      window.addEventListener('message', validateEventListener);
-
-      this.iframeElement.contentWindow.postMessage({
-        eventType: MessageEventType[this.paymentMethodFormType].validate
-      }, '*');
-    });
+    return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
   };
 
   private getIframeSrc() {
