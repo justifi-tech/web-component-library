@@ -65,8 +65,7 @@ export class PaymentMethodForm {
   };
 
   private getIframeSrc() {
-    // let iframeSrc = `https://js.justifi.ai/v2/${this.paymentMethodFormType}`;
-    let iframeSrc = `http://localhost:3003/v2/${this.paymentMethodFormType}`;
+    let iframeSrc = `https://js.justifi.ai/v2/${this.paymentMethodFormType}`;
     if (this.paymentMethodFormValidationStrategy) {
       iframeSrc += `?validationStrategy=${this.paymentMethodFormValidationStrategy}`
     }
