@@ -1,4 +1,4 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
+import { Component, Event, Host, Prop, h, EventEmitter, Method, State } from '@stencil/core';
 import { MessageEventType } from './message-event-types';
 
 @Component({
@@ -11,6 +11,8 @@ export class PaymentMethodForm {
   @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
+  @State() height: number = 55;
+
   iframeElement!: HTMLIFrameElement;
 
   connectedCallback() {
@@ -21,13 +23,17 @@ export class PaymentMethodForm {
     window.removeEventListener('message', this.dispatchMessageEvent.bind(this));
   }
 
-  private dispatchMessageEvent(messageEvent: MessageEvent) {
+  private dispatchMessageEvent(messageEvent: MessageEvent) {    
     const messagePayload = messageEvent.data;
     const messageType = messagePayload.eventType;
     const messageData = messagePayload.data;
 
     if (messageType === MessageEventType[this.paymentMethodFormType].ready) {
       this.paymentMethodFormReady.emit(messageData);
+    }
+
+    if (messageType === MessageEventType[this.paymentMethodFormType].resize) {
+      this.height = messageData.height;
     }
   }
 
@@ -78,7 +84,8 @@ export class PaymentMethodForm {
         <iframe
           id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
           src={this.getIframeSrc()}
-          ref={(el) => this.iframeElement = el as HTMLIFrameElement}>
+          ref={(el) => this.iframeElement = el as HTMLIFrameElement}
+          height={this.height}>
         </iframe>
       </Host >
     );
