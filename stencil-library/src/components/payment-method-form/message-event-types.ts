@@ -3,10 +3,12 @@ export const MessageEventType = {
     ready: 'justifi.card.ready',
     tokenize: 'justifi.card.tokenize',
     validate: 'justifi.card.validate',
+    resize: 'justifi.card.resize',
   },
   bankAccount: {
-    ready: 'justifi.bank_account.ready',
-    tokenize: 'justifi.bank_account.tokenize',
-    validate: 'justifi.bank_account.validate',
+    ready: 'justifi.bankAccount.ready',
+    tokenize: 'justifi.bankAccount.tokenize',
+    validate: 'justifi.bankAccount.validate',
+    resize: 'justifi.bankAccount.resize',
   }
 }
