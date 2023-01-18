@@ -5,19 +5,10 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property       | Attribute       | Description | Type     | Default     |
-| -------------- | --------------- | ----------- | -------- | ----------- |
-| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
-
-
 ## Events
 
 | Event              | Description | Type                          |
 | ------------------ | ----------- | ----------------------------- |
-| `cardFormBlur`     |             | `CustomEvent<any>`            |
-| `cardFormChange`   |             | `CustomEvent<any>`            |
 | `cardFormReady`    |             | `CustomEvent<any>`            |
 | `cardFormTokenize` |             | `CustomEvent<{ data: any; }>` |
 

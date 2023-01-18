@@ -1,11 +1,5 @@
 import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
-
-enum DispatchedEventTypes {
-  blur = 'blur',
-  change = 'change',
-  ready = 'ready',
-  tokenize = 'tokenize'
-}
+import { MessageEventType } from './message-event-types';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -13,10 +7,9 @@ enum DispatchedEventTypes {
   shadow: false,
 })
 export class PaymentMethodForm {
-  @Prop() iframeOrigin: string;
+  @Prop() paymentMethodFormType: 'card' | 'bankAccount';
+  @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
-  @Event({ bubbles: true }) paymentMethodFormChange: EventEmitter;
-  @Event({ bubbles: true }) paymentMethodFormBlur: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   iframeElement!: HTMLIFrameElement;
 
@@ -33,59 +26,58 @@ export class PaymentMethodForm {
     const messageType = messagePayload.eventType;
     const messageData = messagePayload.data;
 
-    switch (messageType) {
-      case DispatchedEventTypes.ready:
-        this.paymentMethodFormReady.emit(messageData);
-        break;
-      case DispatchedEventTypes.change:
-        this.paymentMethodFormChange.emit(messageData);
-        break;
-      case DispatchedEventTypes.blur:
-        this.paymentMethodFormBlur.emit(messageData);
-        break;
-      default:
-        break;
+    if (messageType === MessageEventType[this.paymentMethodFormType].ready) {
+      this.paymentMethodFormReady.emit(messageData);
     }
   }
 
-  private triggerTokenization(
-    clientKey: string,
-    paymentMethodMetadata: any,
-    account?: string
-  ) {
-    if (this.iframeElement && this.iframeElement.contentWindow) {
+  private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
+    return new Promise((resolve) => {
+      const responseListener = (event: MessageEvent) => {
+        if (event.data.eventType !== eventType) return;
+        window.removeEventListener('message', responseListener);
+        resolve(event.data.data);
+      };
+      window.addEventListener('message', responseListener);
+
       this.iframeElement.contentWindow.postMessage({
-        eventType: DispatchedEventTypes.tokenize,
-        clientKey: clientKey,
-        paymentMethodMetadata: paymentMethodMetadata,
-        account: account
+        eventType: eventType,
+        ...payload
       }, '*');
-    }
+    });
   }
 
   @Method()
-  async tokenize(
-    clientKey: string,
-    paymentMethodMetadata: any,
-    account?: string
-  ): Promise<any> {
-    return new Promise((resolve) => {
-      const tokenizeEventListener = (event: MessageEvent) => {
-        if (event.data.eventType !== DispatchedEventTypes.tokenize) return;
-        window.removeEventListener('message', tokenizeEventListener);
-        resolve(event.data.data);
-      };
-      window.addEventListener('message', tokenizeEventListener);
-      this.triggerTokenization(clientKey, paymentMethodMetadata, account);
-    });
+  async tokenize(clientKey: string, paymentMethodMetadata: any, account?: string): Promise<any> {
+    const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
+    const payload = {
+      clientKey: clientKey,
+      paymentMethodMetadata: paymentMethodMetadata,
+      account: account
+    };
+
+    return this.postMessageWithResponseListener(eventType, payload);
   };
+
+  @Method()
+  async validate(): Promise<any> {
+    return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
+  };
+
+  private getIframeSrc() {
+    let iframeSrc = `https://js.justifi.ai/v2/${this.paymentMethodFormType}`;
+    if (this.paymentMethodFormValidationStrategy) {
+      iframeSrc += `?validationStrategy=${this.paymentMethodFormValidationStrategy}`
+    }
+    return iframeSrc;
+  }
 
   render() {
     return (
       <Host>
         <iframe
-          id="justifi-payment-method-form"
-          src={this.iframeOrigin}
+          id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
+          src={this.getIframeSrc()}
           ref={(el) => this.iframeElement = el as HTMLIFrameElement}>
         </iframe>
       </Host >

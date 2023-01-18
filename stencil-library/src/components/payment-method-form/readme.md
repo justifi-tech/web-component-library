@@ -7,17 +7,15 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default     |
-| -------------- | --------------- | ----------- | -------- | ----------- |
-| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
+| Property                | Attribute                  | Description | Type                       | Default     |
+| ----------------------- | -------------------------- | ----------- | -------------------------- | ----------- |
+| `paymentMethodFormType` | `payment-method-form-type` |             | `"bank-account" \| "card"` | `undefined` |
 
 
 ## Events
 
 | Event                       | Description | Type                          |
 | --------------------------- | ----------- | ----------------------------- |
-| `paymentMethodFormBlur`     |             | `CustomEvent<any>`            |
-| `paymentMethodFormChange`   |             | `CustomEvent<any>`            |
 | `paymentMethodFormReady`    |             | `CustomEvent<any>`            |
 | `paymentMethodFormTokenize` |             | `CustomEvent<{ data: any; }>` |
 

@@ -5,30 +5,24 @@ import { Component, Event, Prop, h, EventEmitter, Listen, Method } from '@stenci
   shadow: false,
 })
 export class BankAccountForm {
-  @Prop() iframeOrigin: string;
+  @Prop() validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Event() bankAccountFormReady: EventEmitter;
-  @Event() bankAccountFormChange: EventEmitter;
-  @Event() bankAccountFormBlur: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
+  @Event() bankAccountFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
     this.bankAccountFormReady.emit(event);
   }
 
-  @Listen('paymentMethodFormChange')
-  changeHandler(event: CustomEvent) {
-    this.bankAccountFormChange.emit(event);
-  }
-
-  @Listen('paymentMethodFormBlur')
-  blurHandler(event: CustomEvent) {
-    this.bankAccountFormBlur.emit(event);
-  }
-
   @Listen('paymentMethodFormTokenize')
   tokenizeHandler(event: { data: any }) {
     this.bankAccountFormTokenize.emit(event);
+  }
+
+  @Listen('paymentMethodFormValidate')
+  validateHandler(event: { data: any }) {
+    this.bankAccountFormValidate.emit(event);
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
@@ -41,17 +35,24 @@ export class BankAccountForm {
     return this.childRef.tokenize(...args);
   }
 
+  @Method()
+  async validate() {
+    if (!this.childRef) {
+      throw new Error('Cannot call validate');
+    }
+    return this.childRef.validate();
+  }
+
   render() {
     return (
       <justifi-payment-method-form
         ref={el => {
           if (el) { this.childRef = el }
         }}
-        iframe-origin={this.iframeOrigin || 'https://js.justifi.ai/bank-account'}
+        payment-method-form-type="bankAccount"
         payment-method-form-ready={this.bankAccountFormReady}
-        payment-method-form-change={this.bankAccountFormChange}
-        payment-method-form-blur={this.bankAccountFormBlur}
         payment-method-form-tokenize={this.bankAccountFormTokenize}
+        payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
       />
     );
   }
