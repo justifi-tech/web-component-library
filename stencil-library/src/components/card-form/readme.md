@@ -5,17 +5,35 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property             | Attribute             | Description | Type                                                           | Default     |
+| -------------------- | --------------------- | ----------- | -------------------------------------------------------------- | ----------- |
+| `validationStrategy` | `validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
+
+
 ## Events
 
-| Event              | Description | Type                          |
-| ------------------ | ----------- | ----------------------------- |
-| `cardFormReady`    |             | `CustomEvent<any>`            |
-| `cardFormTokenize` |             | `CustomEvent<{ data: any; }>` |
+| Event              | Description | Type                                            |
+| ------------------ | ----------- | ----------------------------------------------- |
+| `cardFormReady`    |             | `CustomEvent<any>`                              |
+| `cardFormTokenize` |             | `CustomEvent<{ data: any; }>`                   |
+| `cardFormValidate` |             | `CustomEvent<{ data: { isValid: boolean; }; }>` |
 
 
 ## Methods
 
 ### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `validate() => Promise<any>`
 
 
 

@@ -7,24 +7,33 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default     |
-| -------------- | --------------- | ----------- | -------- | ----------- |
-| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
+| Property             | Attribute             | Description | Type                                                           | Default     |
+| -------------------- | --------------------- | ----------- | -------------------------------------------------------------- | ----------- |
+| `validationStrategy` | `validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 
 ## Events
 
-| Event                     | Description | Type                          |
-| ------------------------- | ----------- | ----------------------------- |
-| `bankAccountFormBlur`     |             | `CustomEvent<any>`            |
-| `bankAccountFormChange`   |             | `CustomEvent<any>`            |
-| `bankAccountFormReady`    |             | `CustomEvent<any>`            |
-| `bankAccountFormTokenize` |             | `CustomEvent<{ data: any; }>` |
+| Event                     | Description | Type                                            |
+| ------------------------- | ----------- | ----------------------------------------------- |
+| `bankAccountFormReady`    |             | `CustomEvent<any>`                              |
+| `bankAccountFormTokenize` |             | `CustomEvent<{ data: any; }>`                   |
+| `bankAccountFormValidate` |             | `CustomEvent<{ data: { isValid: boolean; }; }>` |
 
 
 ## Methods
 
 ### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `validate() => Promise<any>`
 
 
 
