@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property                | Attribute                  | Description | Type                       | Default     |
-| ----------------------- | -------------------------- | ----------- | -------------------------- | ----------- |
-| `paymentMethodFormType` | `payment-method-form-type` |             | `"bank-account" \| "card"` | `undefined` |
+| Property                              | Attribute                                 | Description | Type                                                           | Default     |
+| ------------------------------------- | ----------------------------------------- | ----------- | -------------------------------------------------------------- | ----------- |
+| `paymentMethodFormType`               | `payment-method-form-type`                |             | `"bankAccount" \| "card"`                                      | `undefined` |
+| `paymentMethodFormValidationStrategy` | `payment-method-form-validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 
 ## Events
@@ -23,6 +24,16 @@
 ## Methods
 
 ### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `validate() => Promise<any>`
 
 
 
