@@ -5,13 +5,16 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Theme } from "./components/payment-method-form/theme";
 export namespace Components {
     interface JustifiBankAccountForm {
+        "styleOverrides"?: string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiCardForm {
+        "styleOverrides"?: string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
@@ -19,6 +22,7 @@ export namespace Components {
     interface JustifiPaymentMethodForm {
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "paymentMethodStyleOverrides": Theme;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
     }
@@ -76,12 +80,14 @@ declare namespace LocalJSX {
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
+        "styleOverrides"?: string;
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiCardForm {
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
+        "styleOverrides"?: string;
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentMethodForm {
@@ -89,6 +95,7 @@ declare namespace LocalJSX {
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "paymentMethodFormType"?: 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "paymentMethodStyleOverrides"?: Theme;
     }
     interface JustifiPaymentsList {
         "accountId"?: string;
