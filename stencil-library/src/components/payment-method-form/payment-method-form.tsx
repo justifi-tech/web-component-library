@@ -1,5 +1,6 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method, State } from '@stencil/core';
+import { Component, Event, Host, Prop, h, EventEmitter, Method, State, Watch } from '@stencil/core';
 import { MessageEventType } from './message-event-types';
+import { Theme } from './theme';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -9,6 +10,7 @@ import { MessageEventType } from './message-event-types';
 export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
   @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop() paymentMethodStyleOverrides: Theme;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   @State() height: number = 55;
@@ -23,7 +25,21 @@ export class PaymentMethodForm {
     window.removeEventListener('message', this.dispatchMessageEvent.bind(this));
   }
 
-  private dispatchMessageEvent(messageEvent: MessageEvent) {    
+  componentShouldUpdate() {
+    this.sendStyleOverrides();
+  }
+
+  @Watch('paymentMethodStyleOverrides')
+  sendStyleOverrides() {
+    if (this.paymentMethodStyleOverrides) {
+      this.postMessage(
+        MessageEventType[this.paymentMethodFormType].styleOverrides,
+        { styleOverrides: this.paymentMethodStyleOverrides }
+      );
+    }
+  }
+
+  private dispatchMessageEvent(messageEvent: MessageEvent) {
     const messagePayload = messageEvent.data;
     const messageType = messagePayload.eventType;
     const messageData = messagePayload.data;
@@ -37,6 +53,12 @@ export class PaymentMethodForm {
     }
   }
 
+  private postMessage(eventType: string, payload?: any) {
+    if (this.iframeElement) {
+      this.iframeElement.contentWindow.postMessage({ eventType: eventType, ...payload }, '*');
+    }
+  };
+
   private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
     return new Promise((resolve) => {
       const responseListener = (event: MessageEvent) => {
@@ -45,11 +67,7 @@ export class PaymentMethodForm {
         resolve(event.data.data);
       };
       window.addEventListener('message', responseListener);
-
-      this.iframeElement.contentWindow.postMessage({
-        eventType: eventType,
-        ...payload
-      }, '*');
+      this.postMessage(eventType, payload);
     });
   }
 
