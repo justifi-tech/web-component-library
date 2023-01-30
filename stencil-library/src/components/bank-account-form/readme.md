@@ -1,4 +1,4 @@
-# justifi-card-form
+# justifi-bank-account-form
 
 
 
