@@ -1,8 +1,10 @@
-# Links
-- [stencil-library](https://github.com/justifi-tech/web-component-library/tree/framework-monorepo-structure/stencil-library)
-- [react-library](https://github.com/justifi-tech/web-component-library/tree/framework-monorepo-structure/react-library)
+# Documentation
+- [Web component library](https://github.com/justifi-tech/web-component-library/tree/framework-monorepo-structure/stencil-library)
+  - [justifi-card-form](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/card-form#justifi-card-form)
+- [React component library](https://github.com/justifi-tech/web-component-library/tree/framework-monorepo-structure/react-library)
 
-# Important:
+
+# For contributors:
 In order for `react-library` to build, you must first create a yarn symlink to `stencil-library` because it is a dependency.
 
 To do this, do the following:
