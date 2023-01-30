@@ -9,6 +9,7 @@
 
 | Property             | Attribute             | Description | Type                                                           | Default     |
 | -------------------- | --------------------- | ----------- | -------------------------------------------------------------- | ----------- |
+| `styleOverrides`     | `style-overrides`     |             | `string`                                                       | `undefined` |
 | `validationStrategy` | `validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 
