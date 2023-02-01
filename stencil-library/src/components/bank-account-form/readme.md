@@ -79,10 +79,21 @@
 
     bankAccountSubmitButton.addEventListener('click', (event) => {
       console.log('bank account form tokenize button clicked');
-      bankAccountForm.tokenize('CLIENT_KEY', {}, 'ACCOUNT_ID')
+      // All of this information would come from your form instead of being hard coded
+      // Account / routing number are collected on our iframe
+      const paymentMethodData = {
+        name: 'John Doe', // can also pass account_owner_name
+        account_type: 'checking', // checking or savings
+        account_owner_type: 'individual' // individual or company
+      };
+      // ACCOUNT_ID is optional, currently required for platforms
+      // ACCOUNT_ID is the seller account for which you are tokenizing
+      bankAccountForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')
         .then((data) => {
+          // This is where you can submit the form and use the payment method token
+          // on your backend
           console.log('justifi-bank-account-form tokenized: ', data);
-        });
+        })
     });
 
     bankAccountValidateButton.addEventListener('click', (event) => {
