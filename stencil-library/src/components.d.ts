@@ -22,7 +22,7 @@ export namespace Components {
     interface JustifiPaymentMethodForm {
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-        "paymentMethodStyleOverrides": Theme;
+        "paymentMethodStyleOverrides": Theme | undefined;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
     }
@@ -95,7 +95,7 @@ declare namespace LocalJSX {
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "paymentMethodFormType"?: 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-        "paymentMethodStyleOverrides"?: Theme;
+        "paymentMethodStyleOverrides"?: Theme | undefined;
     }
     interface JustifiPaymentsList {
         "accountId"?: string;
