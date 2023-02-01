@@ -34,8 +34,10 @@ export class CardForm {
 
   @Watch('styleOverrides')
   parseStyleOverrides() {
-    const parsedStyleOverrides = JSON.parse(this.styleOverrides);
-    this.internalStyleOverrides = parsedStyleOverrides;
+    if (this.styleOverrides) {
+      const parsedStyleOverrides = JSON.parse(this.styleOverrides);
+      this.internalStyleOverrides = parsedStyleOverrides;
+    }
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
