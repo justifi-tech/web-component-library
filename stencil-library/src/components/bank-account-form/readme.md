@@ -1,5 +1,8 @@
 # justifi-bank-account-form
 
+<img width="363" alt="Screen Shot 2023-02-01 at 3 14 56 PM" src="https://user-images.githubusercontent.com/3867103/216165019-022ee74d-16fe-44e3-a430-1a027a061805.png">
+
+
 ## Example
 ```html
 <!DOCTYPE html>
