@@ -1,6 +1,6 @@
 # justifi-payment-method-form
 
-
+This component is intended for internal use by `justifi-card-form` and `justifi-bank-account-form`
 
 <!-- Auto Generated Below -->
 
