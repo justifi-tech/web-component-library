@@ -79,8 +79,24 @@
 
     cardSubmitButton.addEventListener('click', (event) => {
       console.log('card form tokenize button clicked');
-      cardForm.tokenize('CLIENT_KEY', {}, 'ACCOUNT_ID')
+      // All of this information would come from your form instead of being hard coded
+      // Card number, expiration and cvv are collected on our iframe
+      const paymentMethodData = {
+        name: 'John Doe',
+        address_line1: '123 Broadway', // optional
+        address_line2: '', // optional
+        address_city: 'Minneapolis', // optional
+        address_state: 'MN', // optional
+        address_postal_code: '55413', 
+        address_country: 'US', // optional
+        metadata: { something: "somevalue" } // optional
+      };
+      // ACCOUNT_ID is optional, currently required for platforms
+      // ACCOUNT_ID is the seller account for which you are tokenizing
+      cardForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')
         .then((data) => {
+          // This is where you can submit the form and use the payment method token
+          // on your backend
           console.log('justifi-card-form tokenized: ', data);
         });
     });
