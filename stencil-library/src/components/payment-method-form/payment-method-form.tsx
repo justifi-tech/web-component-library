@@ -10,7 +10,7 @@ import { Theme } from './theme';
 export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
   @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-  @Prop() paymentMethodStyleOverrides: Theme;
+  @Prop() paymentMethodStyleOverrides: Theme | undefined;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   @State() height: number = 55;

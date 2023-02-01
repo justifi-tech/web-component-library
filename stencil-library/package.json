@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "JustiFi Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
