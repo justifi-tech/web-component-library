@@ -5,8 +5,10 @@ export interface Theme {
     formControlSpacingVertical?: string,
   },
   formLabel?: {
-    fontWeight?: string,
+    color?: string,
     fontFamily?: string,
+    fontSize?: string,
+    fontWeight?: string,
     margin?: string
   },
   formControl?: {
