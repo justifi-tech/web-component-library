@@ -6,25 +6,21 @@ necessary to organize and feel free to link and reference other PRs as
 necessary, but also include them in the links section below as a quick
 reference.
 
-**Guidelines:**
-
-* Keep Pull Request titles short and to the point, ideally under 72 characters
-* Provide as much context/info in the description as necessary to get the
-  reviewer up to the same domain knowledge level as yourself
-* Keep code changes as short as possible and implementing a single
-  feature/fix/refactoring, when possible
+Keep code changes as short as possible and implementing a single feature/fix/refactoring, when possible
 -->
 
-Type of Change
+Developer To Dos
 --------------
 
-* [ ] Bug fix (non-breaking change which fixes an issue)
-* [ ] New feature (non-breaking change which adds functionality)
-* [ ] Breaking change (would cause existing functionality to not work as expected)
-* [ ] This change requires a documentation update
-* [ ] This change is in scope for PCI
-* [ ] This requires approval from UX
-* [ ] This requires approval from Marketing
+* Increment the version number for relevant packages
+  - [ ] This is a new MAJOR version (incompatible API changes were made)
+  - [ ] This is a new MINOR version (functionality was added in a backwards compatible manner)
+  - [ ] This is a new PATCH version (backwards compatible bug fixes)
+* Update the CHANGELOG.md with a summary of the changes
+  - If this is a MAJOR version, what are the breaking API changes? Was anything added to the API?
+  - If this is a MINOR version, what feature was added? Why would consumers want this new version?
+  - If this is a PATCH version, what was fixed?
+* Update the appropriate documentation. Keep in mind that this mono repository has README files at the repository, project, and component levels. We want developers to be able to find what they need from the main README, so make sure to add links to component documentation if adding something new.
 
 
 Links

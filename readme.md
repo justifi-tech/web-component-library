@@ -4,6 +4,9 @@
   - [justifi-card-form](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/card-form#justifi-card-form)
 
 # For contributors:
+
+Follow the semantic versioning guidelines found [here](https://semver.org/)
+
 In order for `react-library` to build, you must first create a yarn symlink to `stencil-library` because it is a dependency.
 
 To do this, do the following:
