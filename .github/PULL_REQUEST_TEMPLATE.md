@@ -9,7 +9,7 @@ reference.
 Keep code changes as short as possible and implementing a single feature/fix/refactoring, when possible
 -->
 
-Developer To Dos
+Developer considerations
 --------------
 
 * Increment the version number for relevant packages
