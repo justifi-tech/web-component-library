@@ -12,3 +12,6 @@ In order for `react-library` to build, you must first create a yarn symlink to `
 To do this, do the following:
 - From the `stencil-library` directory, run `yarn link`
 - From the `react-library` run `yarn link "@justifi/webcomponents"`
+- From the `stencil-library` directory, run `yarn build`
+- From the `react-library` run `yarn build`
+- Finally, from the `stencil-library` directory, run `yarn start` to render the web-components in your browser for live development. 
