@@ -22,6 +22,7 @@
     "loader/"
   ],
   "scripts": {
+    "release": "release-it",
     "build": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
@@ -33,6 +34,7 @@
     "@stencil/react-output-target": "^0.3.1",
     "date-fns": "^2.29.3",
     "dinero.js": "^1.9.1",
+    "release-it": "^15.6.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
