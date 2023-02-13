@@ -3,6 +3,11 @@
     "commitMessage": "chore: release v${version}"
   },
   "github": {
-    "release": true
+    "release": true,
+    "assets": ["dist/*.zip"],
+    "autoGenerate": true
+  },
+  "git": {
+    "changelog": "npm run auto-changelog --stdout --commit-limit false --unreleased"
   }
 }

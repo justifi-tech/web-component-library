@@ -8,6 +8,7 @@
     "url": "https://github.com/justifi-tech/web-component-library.git"
   },
   "scripts": {
+    "release": "release-it",
     "build": "yarn run clean && yarn run compile",
     "clean": "rm -rf dist",
     "compile": "yarn run tsc",
@@ -28,6 +29,7 @@
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
+    "auto-changelog": "^2.4.0",
     "jest": "^23.0.0",
     "jest-dom": "^3.0.2",
     "np": "^3.1.0",
