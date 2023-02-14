@@ -26,6 +26,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
+    "release-it": "^15.6.0",
     "@types/jest": "23.3.9",
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.34",
@@ -39,8 +40,7 @@
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "@justifi/webcomponents": "0.0.14",
-    "release-it": "^15.6.0"
+    "@justifi/webcomponents": "0.0.14"
   },
   "peerDependencies": {
     "react": "^17.0.2",
