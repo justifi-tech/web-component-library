@@ -7,6 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Theme } from "./components/payment-method-form/theme";
 export namespace Components {
+    interface BillingForm {
+    }
     interface JustifiBankAccountForm {
         "styleOverrides"?: string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
@@ -44,6 +46,12 @@ export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     target: HTMLJustifiPaymentMethodFormElement;
 }
 declare global {
+    interface HTMLBillingFormElement extends Components.BillingForm, HTMLStencilElement {
+    }
+    var HTMLBillingFormElement: {
+        prototype: HTMLBillingFormElement;
+        new (): HTMLBillingFormElement;
+    };
     interface HTMLJustifiBankAccountFormElement extends Components.JustifiBankAccountForm, HTMLStencilElement {
     }
     var HTMLJustifiBankAccountFormElement: {
@@ -69,6 +77,7 @@ declare global {
         new (): HTMLJustifiPaymentsListElement;
     };
     interface HTMLElementTagNameMap {
+        "billing-form": HTMLBillingFormElement;
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
@@ -76,6 +85,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface BillingForm {
+    }
     interface JustifiBankAccountForm {
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
@@ -102,6 +113,7 @@ declare namespace LocalJSX {
         "auth"?: { token?: string };
     }
     interface IntrinsicElements {
+        "billing-form": BillingForm;
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
@@ -112,6 +124,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "billing-form": LocalJSX.BillingForm & JSXBase.HTMLAttributes<HTMLBillingFormElement>;
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
