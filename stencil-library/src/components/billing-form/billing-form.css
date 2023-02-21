@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+
+label {
+  display: block;
+}
+
+input {
+  margin-bottom: 8px;
+}
