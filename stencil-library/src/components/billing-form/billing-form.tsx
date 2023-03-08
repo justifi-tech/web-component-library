@@ -49,7 +49,6 @@ export class BillingForm {
       billingFieldsClone[name] = target.value;
       this.billingFields = billingFieldsClone;
     }
-
   }
 
   async validate() {
@@ -82,19 +81,34 @@ export class BillingForm {
               return <div>{error}</div>;
             })}
           </div>
-          <br />
+
           <label>Apartment, Suite, etc. (optional)</label>
           <input name="address_line2" type="text" onInput={(event) => this.setFormValue(event)} />
-          <br />
+
           <label>City</label>
           <input name="address_city" type="text" onInput={(event) => this.setFormValue(event)} />
-          <br />
+          <div style={{ color: 'red' }}>
+            {this.billingFieldErrors.address_city.map((error) => {
+              return <div>{error}</div>;
+            })}
+          </div>
+
           <label>State</label>
           <input name="address_state" type="text" onInput={(event) => this.setFormValue(event)} />
-          <br />
+          <div style={{ color: 'red' }}>
+            {this.billingFieldErrors.address_state.map((error) => {
+              return <div>{error}</div>;
+            })}
+          </div>
+
           <label>ZIP</label>
           <input name="address_postal_code" type="text" onInput={(event) => this.setFormValue(event)} />
-          <br />
+          <div style={{ color: 'red' }}>
+            {this.billingFieldErrors.address_postal_code.map((error) => {
+              return <div>{error}</div>;
+            })}
+          </div>
+
           <button onClick={() => this.validate()}>Validate</button>
         </fieldset>
       </Host>
