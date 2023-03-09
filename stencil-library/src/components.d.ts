@@ -32,6 +32,12 @@ export namespace Components {
         "accountId": string;
         "auth": { token?: string };
     }
+    interface TextField {
+        "defaultValue": string;
+        "error": string;
+        "label": string;
+        "name": string;
+    }
 }
 export interface JustifiBankAccountFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -44,6 +50,10 @@ export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
 export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiPaymentMethodFormElement;
+}
+export interface TextFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLTextFieldElement;
 }
 declare global {
     interface HTMLBillingFormElement extends Components.BillingForm, HTMLStencilElement {
@@ -76,12 +86,19 @@ declare global {
         prototype: HTMLJustifiPaymentsListElement;
         new (): HTMLJustifiPaymentsListElement;
     };
+    interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
+    }
+    var HTMLTextFieldElement: {
+        prototype: HTMLTextFieldElement;
+        new (): HTMLTextFieldElement;
+    };
     interface HTMLElementTagNameMap {
         "billing-form": HTMLBillingFormElement;
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
         "justifi-payments-list": HTMLJustifiPaymentsListElement;
+        "text-field": HTMLTextFieldElement;
     }
 }
 declare namespace LocalJSX {
@@ -112,12 +129,20 @@ declare namespace LocalJSX {
         "accountId"?: string;
         "auth"?: { token?: string };
     }
+    interface TextField {
+        "defaultValue"?: string;
+        "error"?: string;
+        "label"?: string;
+        "name"?: string;
+        "onFieldReceivedInput"?: (event: TextFieldCustomEvent<{ name: string, value: string }>) => void;
+    }
     interface IntrinsicElements {
         "billing-form": BillingForm;
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
         "justifi-payments-list": JustifiPaymentsList;
+        "text-field": TextField;
     }
 }
 export { LocalJSX as JSX };
@@ -129,6 +154,7 @@ declare module "@stencil/core" {
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
             "justifi-payments-list": LocalJSX.JustifiPaymentsList & JSXBase.HTMLAttributes<HTMLJustifiPaymentsListElement>;
+            "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
         }
     }
 }

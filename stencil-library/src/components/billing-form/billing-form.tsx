@@ -1,4 +1,4 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Listen } from '@stencil/core';
 import { ValidationError } from 'yup';
 import BillingFormSchema from './billing-form-schema';
 
@@ -8,14 +8,6 @@ interface BillingFormFields {
   address_city: string;
   address_state: string;
   address_postal_code: string;
-}
-
-interface BillingFormFieldErrors {
-  address_line1: string[];
-  address_line2?: string[];
-  address_city: string[];
-  address_state: string[];
-  address_postal_code: string[];
 }
 
 @Component({
@@ -32,36 +24,29 @@ export class BillingForm {
     address_postal_code: ''
   };
 
-  @State() billingFieldErrors: BillingFormFieldErrors = {
-    address_line1: [],
-    address_line2: [],
-    address_city: [],
-    address_state: [],
-    address_postal_code: []
-  };
+  @State() billingFieldsErrors: any = {};
 
+  @Listen('fieldReceivedInput')
   setFormValue(event) {
-    const target = event.target;
-    const name = target.getAttribute('name');
+    const data = event.detail;
     const billingFieldsClone = { ...this.billingFields };
-
-    if (name) {
-      billingFieldsClone[name] = target.value;
+    if (data.name) {
+      billingFieldsClone[data.name] = data.value;
       this.billingFields = billingFieldsClone;
     }
   }
 
   async validate() {
-    const billingFieldErrorsClone = { ...this.billingFieldErrors };
+    const newErrors = {};
+
     try {
       await BillingFormSchema.validate(this.billingFields, { abortEarly: false })
     } catch (err) {
       err.inner.map((item: ValidationError) => {
-        const fieldName = item.path;
-        billingFieldErrorsClone[fieldName] = item?.errors;
-        this.billingFieldErrors = billingFieldErrorsClone;
-        console.log('this.billingFieldErrors', this.billingFieldErrors);
+        newErrors[item.path] = item.message;
       });
+
+      this.billingFieldsErrors = newErrors;
     }
   }
 
@@ -69,45 +54,40 @@ export class BillingForm {
     return (
       <Host>
         <fieldset>
-          <label>Street Address</label>
-          <input
+          <text-field
             name="address_line1"
-            type="text"
-            onInput={(event) => this.setFormValue(event)}
-            value={this.billingFields.address_line1}
-          />
-          <div style={{ color: 'red' }}>
-            {this.billingFieldErrors.address_line1.map((error) => {
-              return <div>{error}</div>;
-            })}
-          </div>
+            label="Street Address"
+            defaultValue={this.billingFields.address_line1}
+            error={this.billingFieldsErrors.address_line1}>
+          </text-field>
 
-          <label>Apartment, Suite, etc. (optional)</label>
-          <input name="address_line2" type="text" onInput={(event) => this.setFormValue(event)} />
+          <text-field
+            name="address_line2"
+            label="Apartment, Suite, etc. (optional)"
+            defaultValue={this.billingFields.address_line2}
+            error={this.billingFieldsErrors.address_line2}>
+          </text-field>
 
-          <label>City</label>
-          <input name="address_city" type="text" onInput={(event) => this.setFormValue(event)} />
-          <div style={{ color: 'red' }}>
-            {this.billingFieldErrors.address_city.map((error) => {
-              return <div>{error}</div>;
-            })}
-          </div>
+          <text-field
+            name="address_city"
+            label="City"
+            defaultValue={this.billingFields.address_city}
+            error={this.billingFieldsErrors.address_city}>
+          </text-field>
 
-          <label>State</label>
-          <input name="address_state" type="text" onInput={(event) => this.setFormValue(event)} />
-          <div style={{ color: 'red' }}>
-            {this.billingFieldErrors.address_state.map((error) => {
-              return <div>{error}</div>;
-            })}
-          </div>
+          <text-field
+            name="address_state"
+            label="State"
+            defaultValue={this.billingFields.address_state}
+            error={this.billingFieldsErrors.address_state}>
+          </text-field>
 
-          <label>ZIP</label>
-          <input name="address_postal_code" type="text" onInput={(event) => this.setFormValue(event)} />
-          <div style={{ color: 'red' }}>
-            {this.billingFieldErrors.address_postal_code.map((error) => {
-              return <div>{error}</div>;
-            })}
-          </div>
+          <text-field
+            name="address_postal_code"
+            label="ZIP"
+            defaultValue={this.billingFields.address_postal_code}
+            error={this.billingFieldsErrors.address_postal_code}>
+          </text-field>
 
           <button onClick={() => this.validate()}>Validate</button>
         </fieldset>
