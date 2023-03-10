@@ -24,7 +24,7 @@ This component is intended for internal use by `justifi-card-form` and `justifi-
 
 ## Methods
 
-### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
 
 
 

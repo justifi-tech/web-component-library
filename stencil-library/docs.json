@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-03T18:33:47",
+  "timestamp": "2023-03-09T18:17:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -72,7 +72,7 @@
             "type": "Promise<any>",
             "docs": ""
           },
-          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
+          "signature": "tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
           "parameters": [],
           "docs": "",
           "docsTags": []
@@ -214,7 +214,7 @@
             "type": "Promise<any>",
             "docs": ""
           },
-          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
+          "signature": "tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
           "parameters": [],
           "docs": "",
           "docsTags": []
@@ -376,7 +376,7 @@
             "type": "Promise<any>",
             "docs": ""
           },
-          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
+          "signature": "tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
           "parameters": [],
           "docs": "",
           "docsTags": []
