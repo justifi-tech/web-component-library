@@ -24,7 +24,6 @@
     var billingFormSubmitButton = document.querySelector('#justifi-billing-form-submit');
     billingFormSubmitButton.addEventListener('click', async (event) => {
       const billingFormValidation = await billingForm.validate();
-      console.log('billing form valid?', billingFormValidation.isValid);
     });
   })();
 </script>

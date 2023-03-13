@@ -51,6 +51,8 @@ export class BillingForm {
       });
     }
 
+    this.billingFieldsErrors = newErrors;
+
     return { isValid: isValid };
   }
 
