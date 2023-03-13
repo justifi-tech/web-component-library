@@ -41,7 +41,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
     "@pxtrn/storybook-addon-docs-stencil": "^6.4.1",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
@@ -53,7 +52,6 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/jest": "^27.0.3",
     "auto-changelog": "^2.4.0",
-    "babel-loader": "^8.3.0",
     "concurrently": "^7.6.0",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
