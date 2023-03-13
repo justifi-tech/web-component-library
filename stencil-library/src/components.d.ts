@@ -5,15 +5,17 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ValidationError } from "yup";
 import { Theme } from "./components/payment-method-form/theme";
 export namespace Components {
-    interface BillingForm {
-    }
     interface JustifiBankAccountForm {
         "styleOverrides"?: string;
         "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+    }
+    interface JustifiBillingForm {
+        "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {
         "styleOverrides"?: string;
@@ -32,7 +34,14 @@ export namespace Components {
         "accountId": string;
         "auth": { token?: string };
     }
-    interface TextField {
+    interface SelectInput {
+        "defaultValue": string;
+        "error": string;
+        "label": string;
+        "name": string;
+        "options": { label: string, value: string }[];
+    }
+    interface TextInput {
         "defaultValue": string;
         "error": string;
         "label": string;
@@ -51,22 +60,26 @@ export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiPaymentMethodFormElement;
 }
-export interface TextFieldCustomEvent<T> extends CustomEvent<T> {
+export interface SelectInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLTextFieldElement;
+    target: HTMLSelectInputElement;
+}
+export interface TextInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLTextInputElement;
 }
 declare global {
-    interface HTMLBillingFormElement extends Components.BillingForm, HTMLStencilElement {
-    }
-    var HTMLBillingFormElement: {
-        prototype: HTMLBillingFormElement;
-        new (): HTMLBillingFormElement;
-    };
     interface HTMLJustifiBankAccountFormElement extends Components.JustifiBankAccountForm, HTMLStencilElement {
     }
     var HTMLJustifiBankAccountFormElement: {
         prototype: HTMLJustifiBankAccountFormElement;
         new (): HTMLJustifiBankAccountFormElement;
+    };
+    interface HTMLJustifiBillingFormElement extends Components.JustifiBillingForm, HTMLStencilElement {
+    }
+    var HTMLJustifiBillingFormElement: {
+        prototype: HTMLJustifiBillingFormElement;
+        new (): HTMLJustifiBillingFormElement;
     };
     interface HTMLJustifiCardFormElement extends Components.JustifiCardForm, HTMLStencilElement {
     }
@@ -86,30 +99,37 @@ declare global {
         prototype: HTMLJustifiPaymentsListElement;
         new (): HTMLJustifiPaymentsListElement;
     };
-    interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
+    interface HTMLSelectInputElement extends Components.SelectInput, HTMLStencilElement {
     }
-    var HTMLTextFieldElement: {
-        prototype: HTMLTextFieldElement;
-        new (): HTMLTextFieldElement;
+    var HTMLSelectInputElement: {
+        prototype: HTMLSelectInputElement;
+        new (): HTMLSelectInputElement;
+    };
+    interface HTMLTextInputElement extends Components.TextInput, HTMLStencilElement {
+    }
+    var HTMLTextInputElement: {
+        prototype: HTMLTextInputElement;
+        new (): HTMLTextInputElement;
     };
     interface HTMLElementTagNameMap {
-        "billing-form": HTMLBillingFormElement;
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
+        "justifi-billing-form": HTMLJustifiBillingFormElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
         "justifi-payments-list": HTMLJustifiPaymentsListElement;
-        "text-field": HTMLTextFieldElement;
+        "select-input": HTMLSelectInputElement;
+        "text-input": HTMLTextInputElement;
     }
 }
 declare namespace LocalJSX {
-    interface BillingForm {
-    }
     interface JustifiBankAccountForm {
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "styleOverrides"?: string;
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+    }
+    interface JustifiBillingForm {
     }
     interface JustifiCardForm {
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
@@ -129,32 +149,42 @@ declare namespace LocalJSX {
         "accountId"?: string;
         "auth"?: { token?: string };
     }
-    interface TextField {
+    interface SelectInput {
         "defaultValue"?: string;
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: TextFieldCustomEvent<{ name: string, value: string }>) => void;
+        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string, value: string }>) => void;
+        "options"?: { label: string, value: string }[];
+    }
+    interface TextInput {
+        "defaultValue"?: string;
+        "error"?: string;
+        "label"?: string;
+        "name"?: string;
+        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string, value: string }>) => void;
     }
     interface IntrinsicElements {
-        "billing-form": BillingForm;
         "justifi-bank-account-form": JustifiBankAccountForm;
+        "justifi-billing-form": JustifiBillingForm;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
         "justifi-payments-list": JustifiPaymentsList;
-        "text-field": TextField;
+        "select-input": SelectInput;
+        "text-input": TextInput;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "billing-form": LocalJSX.BillingForm & JSXBase.HTMLAttributes<HTMLBillingFormElement>;
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
+            "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
             "justifi-payments-list": LocalJSX.JustifiPaymentsList & JSXBase.HTMLAttributes<HTMLJustifiPaymentsListElement>;
-            "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
+            "select-input": LocalJSX.SelectInput & JSXBase.HTMLAttributes<HTMLSelectInputElement>;
+            "text-input": LocalJSX.TextInput & JSXBase.HTMLAttributes<HTMLTextInputElement>;
         }
     }
 }

@@ -1,11 +1,11 @@
 import { Component, Host, h, Event, Prop, State, EventEmitter } from '@stencil/core';
 
 @Component({
-  tag: 'text-field',
-  styleUrl: 'text-field.css',
+  tag: 'text-input',
+  styleUrl: 'text-input.css',
   shadow: true,
 })
-export class TextField {
+export class TextInput {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() defaultValue: string;

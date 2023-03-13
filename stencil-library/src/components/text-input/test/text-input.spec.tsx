@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { TextField } from '../text-field';
+import { TextInput } from '../text-input';
 
-describe('text-field', () => {
+describe('text-input', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [TextField],
-      html: `<text-field></text-field>`,
+      components: [TextInput],
+      html: `<text-input></text-input>`,
     });
     expect(page.root).toEqualHtml(`
-      <text-field>
+      <text-input>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </text-field>
+      </text-input>
     `);
   });
 });

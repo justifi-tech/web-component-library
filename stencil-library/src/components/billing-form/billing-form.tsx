@@ -1,6 +1,7 @@
-import { Component, Host, h, State, Listen } from '@stencil/core';
+import { Component, Host, h, State, Listen, Method } from '@stencil/core';
 import { ValidationError } from 'yup';
 import BillingFormSchema from './billing-form-schema';
+import StateOptions from './state-options';
 
 interface BillingFormFields {
   address_line1: string;
@@ -11,7 +12,7 @@ interface BillingFormFields {
 }
 
 @Component({
-  tag: 'billing-form',
+  tag: 'justifi-billing-form',
   styleUrl: 'billing-form.css',
   shadow: true,
 })
@@ -36,60 +37,57 @@ export class BillingForm {
     }
   }
 
+  @Method()
   async validate() {
     const newErrors = {};
+    let isValid: boolean = true;
 
     try {
       await BillingFormSchema.validate(this.billingFields, { abortEarly: false })
     } catch (err) {
+      isValid = false;
       err.inner.map((item: ValidationError) => {
         newErrors[item.path] = item.message;
       });
-
-      this.billingFieldsErrors = newErrors;
     }
+
+    return { isValid: isValid };
   }
 
   render() {
     return (
       <Host>
         <fieldset>
-          <text-field
+          <text-input
             name="address_line1"
             label="Street Address"
             defaultValue={this.billingFields.address_line1}
-            error={this.billingFieldsErrors.address_line1}>
-          </text-field>
+            error={this.billingFieldsErrors.address_line1} />
 
-          <text-field
+          <text-input
             name="address_line2"
             label="Apartment, Suite, etc. (optional)"
             defaultValue={this.billingFields.address_line2}
-            error={this.billingFieldsErrors.address_line2}>
-          </text-field>
+            error={this.billingFieldsErrors.address_line2} />
 
-          <text-field
+          <text-input
             name="address_city"
             label="City"
             defaultValue={this.billingFields.address_city}
-            error={this.billingFieldsErrors.address_city}>
-          </text-field>
+            error={this.billingFieldsErrors.address_city} />
 
-          <text-field
+          <select-input
             name="address_state"
             label="State"
+            options={StateOptions}
             defaultValue={this.billingFields.address_state}
-            error={this.billingFieldsErrors.address_state}>
-          </text-field>
+            error={this.billingFieldsErrors.address_state} />
 
-          <text-field
+          <text-input
             name="address_postal_code"
             label="ZIP"
             defaultValue={this.billingFields.address_postal_code}
-            error={this.billingFieldsErrors.address_postal_code}>
-          </text-field>
-
-          <button onClick={() => this.validate()}>Validate</button>
+            error={this.billingFieldsErrors.address_postal_code} />
         </fieldset>
       </Host>
     );
