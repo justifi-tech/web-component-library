@@ -24,6 +24,7 @@ const paymentMethodData = {
 
 // IMPORTANT:
 // Only use named functions when binding to event handlers. Otherwise, they will be bound multiple times
+// Going forward, we could create a decorator that binds events
 const handleValidateClick = () => {
   const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
   cardForm.validate();
@@ -44,6 +45,8 @@ const addEvents = () => {
   addEventListener('cardFormReady', handleReadyClick);
 }
 
+
+// This should be abstracted away, included as a decorator and styled properly
 const buttons = `
   <style>
     .button-bar {
@@ -100,11 +103,9 @@ const storyStyleOverrides = {
 };
 
 const Template = ({ includeButtons, styleOverrides }: { includeButtons: boolean, styleOverrides?: object }) => {
-  // // Alternate way of doing it
-  // const cardForm = document.createElement('justifi-card-form') as HTMLJustifiCardFormElement;
-
   const parsedStyleOverrides = styleOverrides ? JSON.stringify(styleOverrides) : null;
 
+  // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
     <div>
       <justifi-card-form style-overrides='${parsedStyleOverrides || ''}' />
@@ -117,20 +118,6 @@ export const Basic = Template.bind({});
 Basic.args = {
   includeButtons: true
 }
-
-// export const Embedded = () => {
-//   return `
-//     <style>
-//       #wrapper {
-//         background-color: #aaaaaa;
-//       }
-//     </style>
-//     <div id="wrapper" style="width: 50%;">
-//       ${Template.bind({})}
-//     </div>
-//     ${buttons}
-//   `;
-// };
 
 export const Embedded = Template.bind({});
 Embedded.args = {
