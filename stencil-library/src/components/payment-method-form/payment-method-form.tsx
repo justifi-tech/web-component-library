@@ -72,10 +72,10 @@ export class PaymentMethodForm {
   }
 
   @Method()
-  async tokenize(clientKey: string, paymentMethodMetadata: any, account?: string): Promise<any> {
+  async tokenize(clientId: string, paymentMethodMetadata: any, account?: string): Promise<any> {
     const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
     const payload = {
-      clientKey: clientKey,
+      clientId: clientId,
       paymentMethodMetadata: paymentMethodMetadata,
       account: account
     };

@@ -142,7 +142,7 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ## Methods
 
-### `tokenize(clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
 
 
 

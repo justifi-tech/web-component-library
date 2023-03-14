@@ -36,7 +36,7 @@ describe('justifi-card-form', () => {
     (cardForm as any).childRef = { tokenize: () => { } };
     const childRefTokenizeSpy = jest.spyOn((cardForm as any).childRef, 'tokenize');
 
-    cardForm.tokenize('clientKey', { paymentMethod: 'metadata' }, 'accountId');
+    cardForm.tokenize('clientId', { paymentMethod: 'metadata' }, 'accountId');
     expect(childRefTokenizeSpy).toHaveBeenCalled();
   });
 });
