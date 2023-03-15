@@ -10,7 +10,7 @@ import { Theme } from "./components/payment-method-form/theme";
 export namespace Components {
     interface JustifiBankAccountForm {
         "styleOverrides"?: string;
-        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
@@ -19,7 +19,7 @@ export namespace Components {
     }
     interface JustifiCardForm {
         "styleOverrides"?: string;
-        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
@@ -30,7 +30,7 @@ export namespace Components {
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides": Theme | undefined;
-        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "tokenize": (clientKey: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
     }
     interface JustifiPaymentsList {
