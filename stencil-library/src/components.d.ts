@@ -23,6 +23,9 @@ export namespace Components {
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    interface JustifiPaymentForm {
+        "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+    }
     interface JustifiPaymentMethodForm {
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
@@ -87,6 +90,12 @@ declare global {
         prototype: HTMLJustifiCardFormElement;
         new (): HTMLJustifiCardFormElement;
     };
+    interface HTMLJustifiPaymentFormElement extends Components.JustifiPaymentForm, HTMLStencilElement {
+    }
+    var HTMLJustifiPaymentFormElement: {
+        prototype: HTMLJustifiPaymentFormElement;
+        new (): HTMLJustifiPaymentFormElement;
+    };
     interface HTMLJustifiPaymentMethodFormElement extends Components.JustifiPaymentMethodForm, HTMLStencilElement {
     }
     var HTMLJustifiPaymentMethodFormElement: {
@@ -115,6 +124,7 @@ declare global {
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-billing-form": HTMLJustifiBillingFormElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
+        "justifi-payment-form": HTMLJustifiPaymentFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
         "justifi-payments-list": HTMLJustifiPaymentsListElement;
         "select-input": HTMLSelectInputElement;
@@ -136,6 +146,9 @@ declare namespace LocalJSX {
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "styleOverrides"?: string;
+        "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+    }
+    interface JustifiPaymentForm {
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentMethodForm {
@@ -168,6 +181,7 @@ declare namespace LocalJSX {
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-billing-form": JustifiBillingForm;
         "justifi-card-form": JustifiCardForm;
+        "justifi-payment-form": JustifiPaymentForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
         "justifi-payments-list": JustifiPaymentsList;
         "select-input": SelectInput;
@@ -181,6 +195,7 @@ declare module "@stencil/core" {
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
             "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
+            "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
             "justifi-payments-list": LocalJSX.JustifiPaymentsList & JSXBase.HTMLAttributes<HTMLJustifiPaymentsListElement>;
             "select-input": LocalJSX.SelectInput & JSXBase.HTMLAttributes<HTMLSelectInputElement>;

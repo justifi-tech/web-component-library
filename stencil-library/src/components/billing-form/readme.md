@@ -7,13 +7,13 @@
 
 ## Methods
 
-### `validate() => Promise<void>`
+### `validate() => Promise<{ isValid: boolean; }>`
 
 
 
 #### Returns
 
-Type: `Promise<void>`
+Type: `Promise<{ isValid: boolean; }>`
 
 
 
