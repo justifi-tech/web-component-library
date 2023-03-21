@@ -1,12 +1,22 @@
-import { Component, Event, EventEmitter, h } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
+
+const PaymentMethodLabels = {
+  bankAccount: 'Bank Account',
+  card: 'Card'
+}
 
 @Component({
   tag: 'justifi-payment-method-selector',
   shadow: false,
 })
 export class PaymentMethodSelector {
+  @Prop() paymentMethods: PaymentMethodTypes[] = [];
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
+
+  connectedCallback() {
+    console.log(this.paymentMethods);
+  }
 
   onChangeHandler(event: any) {
     this.paymentMethodSelected.emit(event.target.value);
@@ -15,26 +25,20 @@ export class PaymentMethodSelector {
   render() {
     return (
       <div>
-        <div>
-          <input
-            id="cc"
-            type="radio"
-            name="paymentMethodType"
-            value={PaymentMethodTypes.card}
-            onChange={(event: any) => this.onChangeHandler(event)}
-            checked />
-          <label htmlFor="cc">Card</label>
-        </div>
-        <div>
-          <input
-            id="ach"
-            type="radio"
-            name="paymentMethodType"
-            onChange={(event: any) => this.onChangeHandler(event)}
-            value={PaymentMethodTypes.bankAccount}
-          />
-          <label htmlFor="ach">Bank Account</label>
-        </div>
+        {this.paymentMethods.map((paymentMethodType: PaymentMethodTypes) => {
+          return (
+            <div>
+              <input
+                id={paymentMethodType}
+                type="radio"
+                name="paymentMethodType"
+                value={paymentMethodType}
+                onChange={(event: any) => this.onChangeHandler(event)}
+                checked />
+              <label htmlFor={paymentMethodType}>{PaymentMethodLabels[paymentMethodType]}</label>
+            </div>
+          );
+        })}
       </div>
     );
   };

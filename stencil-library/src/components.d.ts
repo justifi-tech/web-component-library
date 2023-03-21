@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ValidationError } from "yup";
 import { Theme } from "./components/payment-method-form/theme";
+import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
         "styleOverrides"?: string;
@@ -24,8 +25,8 @@ export namespace Components {
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
-        "bankAccountOnly": boolean;
-        "creditCardOnly": boolean;
+        "bankAccount"?: boolean;
+        "card"?: boolean;
     }
     interface JustifiPaymentMethodForm {
         "paymentMethodFormType": 'card' | 'bankAccount';
@@ -35,6 +36,7 @@ export namespace Components {
         "validate": () => Promise<any>;
     }
     interface JustifiPaymentMethodSelector {
+        "paymentMethods": PaymentMethodTypes[];
     }
     interface JustifiPaymentsList {
         "accountId": string;
@@ -163,8 +165,8 @@ declare namespace LocalJSX {
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
-        "bankAccountOnly"?: boolean;
-        "creditCardOnly"?: boolean;
+        "bankAccount"?: boolean;
+        "card"?: boolean;
     }
     interface JustifiPaymentMethodForm {
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
@@ -175,6 +177,7 @@ declare namespace LocalJSX {
     }
     interface JustifiPaymentMethodSelector {
         "onPaymentMethodSelected"?: (event: JustifiPaymentMethodSelectorCustomEvent<any>) => void;
+        "paymentMethods"?: PaymentMethodTypes[];
     }
     interface JustifiPaymentsList {
         "accountId"?: string;

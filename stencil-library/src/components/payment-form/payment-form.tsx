@@ -6,9 +6,23 @@ import { PaymentMethodTypes } from '../../api';
   shadow: false,
 })
 export class PaymentForm {
-  @Prop() bankAccountOnly: boolean;
-  @Prop() creditCardOnly: boolean;
-  @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
+  @Prop() bankAccount?: boolean;
+  @Prop() card?: boolean;
+  @State() selectedPaymentMethodType: PaymentMethodTypes;
+  @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
+
+  connectedCallback() {
+    if (this.card) {
+      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
+    }
+    if (this.bankAccount) {
+      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.bankAccount);
+    }
+    if (!this.allowedPaymentMethodTypes.length) {
+      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
+    }
+    this.selectedPaymentMethodType = this.allowedPaymentMethodTypes[0];
+  }
 
   @Listen('paymentMethodSelected')
   paymentMethodSelectedHandler(event: CustomEvent) {
@@ -16,25 +30,13 @@ export class PaymentForm {
     this.selectedPaymentMethodType = paymentMethodType;
   }
 
-  // @Watch('bankAccount')
-  // watchBankAccountHandler(newValue: boolean) {
-  //   if (!newValue && this.creditCard) this.selectedPaymentMethodType = PaymentMethodTypes.card;
-  // }
-
-  // @Watch('creditCard')
-  // watchCreditCardHandler(newValue: boolean) {
-  //   if (!newValue && this.bankAccount) this.selectedPaymentMethodType = PaymentMethodTypes.bankAccount;
-  // }
-
-  setSelectedPaymentMethodType(type: PaymentMethodTypes) {
-    this.selectedPaymentMethodType = type;
-  }
-
   render() {
     return (
       <Host>
         <form>
-          {(!this.creditCardOnly && !this.bankAccountOnly) && <justifi-payment-method-selector></justifi-payment-method-selector>}
+          {(this.allowedPaymentMethodTypes.length > 1) && (
+            <justifi-payment-method-selector paymentMethods={this.allowedPaymentMethodTypes}></justifi-payment-method-selector>
+          )}
           <justifi-payment-method-form payment-method-form-type={this.selectedPaymentMethodType} />
           <justifi-billing-form></justifi-billing-form>
           <button type="submit">Submit</button>
