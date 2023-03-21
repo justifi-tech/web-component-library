@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Watch } from '@stencil/core';
+import { Component, Prop, h, Host, State, Watch, Listen } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 
 @Component({
@@ -6,9 +6,15 @@ import { PaymentMethodTypes } from '../../api';
   shadow: false,
 })
 export class PaymentForm {
-  @Prop() bankAccount: boolean;
-  @Prop() creditCard: boolean;
+  @Prop() bankAccountOnly: boolean;
+  @Prop() creditCardOnly: boolean;
   @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
+
+  @Listen('paymentMethodSelected')
+  paymentMethodSelectedHandler(event: CustomEvent) {
+    const paymentMethodType: PaymentMethodTypes = event.detail;
+    this.selectedPaymentMethodType = paymentMethodType;
+  }
 
   // @Watch('bankAccount')
   // watchBankAccountHandler(newValue: boolean) {
@@ -24,40 +30,12 @@ export class PaymentForm {
     this.selectedPaymentMethodType = type;
   }
 
-  paymentMethodTypeSelector() {
-    return (
-      <div>
-        <div>
-          <input
-            id="cc"
-            type="radio"
-            name="paymentMethodType"
-            value={PaymentMethodTypes.card}
-            onChange={(e: any) => this.setSelectedPaymentMethodType(e.target.value)}
-            checked />
-          <label htmlFor="cc">Card</label>
-        </div>
-        <div>
-          <input
-            id="ach"
-            type="radio"
-            name="paymentMethodType"
-            value={PaymentMethodTypes.bankAccount}
-            onChange={(e: any) => this.setSelectedPaymentMethodType(e.target.value)}
-          />
-          <label htmlFor="ach">Bank Account</label>
-        </div>
-      </div>
-    );
-  };
-
   render() {
     return (
       <Host>
         <form>
-          {(this.creditCard && this.bankAccount) && this.paymentMethodTypeSelector()}
-          {(this.creditCard) && <justifi-card-form></justifi-card-form>}
-          {(this.bankAccount) && <justifi-bank-account></justifi-bank-account>}
+          {(!this.creditCardOnly && !this.bankAccountOnly) && <justifi-payment-method-selector></justifi-payment-method-selector>}
+          <justifi-payment-method-form payment-method-form-type={this.selectedPaymentMethodType} />
           <justifi-billing-form></justifi-billing-form>
           <button type="submit">Submit</button>
         </form>
