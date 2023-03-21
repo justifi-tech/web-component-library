@@ -14,10 +14,6 @@ export class PaymentMethodSelector {
   @Prop() paymentMethods: PaymentMethodTypes[] = [];
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
 
-  connectedCallback() {
-    console.log(this.paymentMethods);
-  }
-
   onChangeHandler(event: any) {
     this.paymentMethodSelected.emit(event.target.value);
   }
