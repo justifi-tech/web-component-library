@@ -2,6 +2,14 @@ import { object, string } from 'yup';
 
 export const RegExZip = /^\d{5}/;
 
+export interface BillingFormFields {
+  address_line1: string;
+  address_line2?: string;
+  address_city: string;
+  address_state: string;
+  address_postal_code: string;
+}
+
 const BillingFormSchema = object({
   // name: string().required('Enter name'),
   address_line1: string().required('Enter street address'),

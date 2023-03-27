@@ -1,15 +1,7 @@
 import { Component, Host, h, State, Listen, Method } from '@stencil/core';
 import { ValidationError } from 'yup';
-import BillingFormSchema from './billing-form-schema';
+import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from './state-options';
-
-interface BillingFormFields {
-  address_line1: string;
-  address_line2?: string;
-  address_city: string;
-  address_state: string;
-  address_postal_code: string;
-}
 
 @Component({
   tag: 'justifi-billing-form',
@@ -54,6 +46,11 @@ export class BillingForm {
     this.billingFieldsErrors = newErrors;
 
     return { isValid: isValid };
+  }
+
+  @Method()
+  async getValues() {
+    return this.billingFields;
   }
 
   render() {
