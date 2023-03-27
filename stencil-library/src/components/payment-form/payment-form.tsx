@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Watch, Listen } from '@stencil/core';
+import { Component, Prop, h, Host, State, Listen } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 
 @Component({
@@ -10,6 +10,9 @@ export class PaymentForm {
   @Prop() card?: boolean;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
+
+  private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
+  private billingFormRef?: HTMLJustifiBillingFormElement;
 
   connectedCallback() {
     if (this.card) {
@@ -30,6 +33,20 @@ export class PaymentForm {
     this.selectedPaymentMethodType = paymentMethodType;
   }
 
+  async submitForm(event: Event) {
+    event.preventDefault();
+    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
+
+    const billingFormValidation = await this.billingFormRef.validate();
+    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+    if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
+
+    // const billingFormFieldValues = await this.billingFormRef.getValues();
+    // const paymentMethodMetadata = { payment_intent_id: '', ...billingFormFieldValues };
+    // const tokenizeResponse = this.paymentMethodFormRef.tokenize();
+    // submit payment with token
+  }
+
   render() {
     return (
       <Host>
@@ -37,9 +54,12 @@ export class PaymentForm {
           {(this.allowedPaymentMethodTypes.length > 1) && (
             <justifi-payment-method-selector paymentMethods={this.allowedPaymentMethodTypes}></justifi-payment-method-selector>
           )}
-          <justifi-payment-method-form payment-method-form-type={this.selectedPaymentMethodType} />
-          <justifi-billing-form></justifi-billing-form>
-          <button type="submit">Submit</button>
+          <justifi-payment-method-form
+            payment-method-form-type={this.selectedPaymentMethodType}
+            ref={el => { if (el) { this.paymentMethodFormRef = el } }}
+          />
+          <justifi-billing-form ref={el => { if (el) { this.billingFormRef = el } }} />
+          <button type="submit" onClick={(event: Event) => this.submitForm(event)}>Submit</button>
         </form>
       </Host>
     );

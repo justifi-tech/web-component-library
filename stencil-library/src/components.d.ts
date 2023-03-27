@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ValidationError } from "yup";
+import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { Theme } from "./components/payment-method-form/theme";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
@@ -16,6 +17,7 @@ export namespace Components {
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
+        "getValues": () => Promise<BillingFormFields>;
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {
