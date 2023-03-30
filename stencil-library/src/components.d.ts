@@ -29,6 +29,7 @@ export namespace Components {
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "submit": (args: any) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {
         "paymentMethodFormType": 'card' | 'bankAccount';
@@ -65,6 +66,10 @@ export interface JustifiBankAccountFormCustomEvent<T> extends CustomEvent<T> {
 export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiCardFormElement;
+}
+export interface JustifiPaymentFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLJustifiPaymentFormElement;
 }
 export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -169,6 +174,7 @@ declare namespace LocalJSX {
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "onPaymentMethodTokenize"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
     }
     interface JustifiPaymentMethodForm {
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;

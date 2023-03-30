@@ -12,10 +12,29 @@
 
 <body>
   <justifi-payment-form bank-account="true" card="true"></justifi-payment-form>
+  <button type="submit" id="payment-form-submit">Submit</button>
 </body>
 
 <script>
   (function () {
+    var paymentForm = document.querySelector('justifi-payment-form');
+    var paymentFormSubmit = document.querySelector('#payment-form-submit');
+
+    paymentFormSubmit.addEventListener('click', (event) => {
+      console.log('card form tokenize button clicked');
+      // All of this information would come from your form instead of being hard coded
+      const paymentMethodData = {
+        name: 'John Doe',
+        metadata: { something: "somevalue" } // optional
+      };
+      // ACCOUNT_ID is optional, currently required for platforms
+      // ACCOUNT_ID is the seller account for which you are tokenizing
+      paymentForm.submit('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')
+        .then((data) => {
+          // This is where you can the payment with the payment method token on your backend
+          console.log('justifi-payment-form tokenized: ', data);
+        });
+    });
   })();
 </script>
 

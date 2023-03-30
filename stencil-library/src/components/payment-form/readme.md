@@ -37,10 +37,30 @@
 
 ## Properties
 
-| Property             | Attribute             | Description | Type                                                           | Default     |
-| -------------------- | --------------------- | ----------- | -------------------------------------------------------------- | ----------- |
-| `validationStrategy` | `validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
+| Property         | Attribute | Description | Type                   | Default |
+| ---------------- | --------- | ----------- | ---------------------- | ------- |
+| `paymentMethods` | --        |             | `PaymentMethodTypes[]` | `[]`    |
 
+
+## Events
+
+| Event                   | Description | Type               |
+| ----------------------- | ----------- | ------------------ |
+| `paymentMethodSelected` |             | `CustomEvent<any>` |
+
+
+## Dependencies
+
+### Used by
+
+ - [justifi-payment-form](.)
+
+### Graph
+```mermaid
+graph TD;
+  justifi-payment-form --> justifi-payment-method-selector
+  style justifi-payment-method-selector fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

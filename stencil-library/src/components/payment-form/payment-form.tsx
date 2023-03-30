@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Listen } from '@stencil/core';
+import { Component, Event, Prop, h, Host, State, Listen, EventEmitter, Method } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 
 @Component({
@@ -10,6 +10,8 @@ export class PaymentForm {
   @Prop() card?: boolean;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
+  @Event() paymentMethodTokenize: EventEmitter<{ data: any }>;
+
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
@@ -33,18 +35,22 @@ export class PaymentForm {
     this.selectedPaymentMethodType = paymentMethodType;
   }
 
-  async submitForm(event: Event) {
-    event.preventDefault();
+  @Method()
+  async submit(args: any) {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
-    // const billingFormFieldValues = await this.billingFormRef.getValues();
-    // const paymentMethodMetadata = { payment_intent_id: '', ...billingFormFieldValues };
-    // const tokenizeResponse = this.paymentMethodFormRef.tokenize();
-    // submit payment with token
+    const billingFormFieldValues = await this.billingFormRef.getValues();
+
+    const paymentMethodMetadata = { ...billingFormFieldValues };
+
+    console.log('paymentMethodMetadata', paymentMethodMetadata);
+
+
+    return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodMetadata, args.account);
   }
 
   render() {
@@ -59,7 +65,6 @@ export class PaymentForm {
             ref={el => { if (el) { this.paymentMethodFormRef = el } }}
           />
           <justifi-billing-form ref={el => { if (el) { this.billingFormRef = el } }} />
-          <button type="submit" onClick={(event: Event) => this.submitForm(event)}>Submit</button>
         </form>
       </Host>
     );

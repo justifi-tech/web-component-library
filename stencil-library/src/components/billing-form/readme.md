@@ -7,6 +7,16 @@
 
 ## Methods
 
+### `getValues() => Promise<BillingFormFields>`
+
+
+
+#### Returns
+
+Type: `Promise<BillingFormFields>`
+
+
+
 ### `validate() => Promise<{ isValid: boolean; }>`
 
 
@@ -20,6 +30,10 @@ Type: `Promise<{ isValid: boolean; }>`
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-payment-form](../payment-form)
+
 ### Depends on
 
 - [text-input](../text-input)
@@ -30,6 +44,7 @@ Type: `Promise<{ isValid: boolean; }>`
 graph TD;
   justifi-billing-form --> text-input
   justifi-billing-form --> select-input
+  justifi-payment-form --> justifi-billing-form
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
