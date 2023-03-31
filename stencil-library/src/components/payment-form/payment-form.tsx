@@ -47,9 +47,6 @@ export class PaymentForm {
 
     const paymentMethodMetadata = { ...billingFormFieldValues };
 
-    console.log('paymentMethodMetadata', paymentMethodMetadata);
-
-
     return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodMetadata, args.account);
   }
 
