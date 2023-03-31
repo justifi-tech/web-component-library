@@ -14,7 +14,9 @@
     "clean": "rm -rf dist",
     "compile": "yarn run tsc",
     "tsc": "tsc -p .",
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "storybook": "start-storybook -p 6008",
+    "build-storybook": "build-storybook"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -26,12 +28,23 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@types/node": "^18.15.11",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
     "auto-changelog": "^2.4.0",
+    "babel-loader": "^8.3.0",
     "np": "^3.1.0",
     "react": "^17.0.2",
+    "react-docgen-typescript-plugin": "^1.0.5",
     "react-dom": "^17.0.2",
     "release-it": "^15.6.0",
     "typescript": "^5.0.2"
