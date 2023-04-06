@@ -9,7 +9,6 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/stencil-webcomponents/stencil-webcomponents.esm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"

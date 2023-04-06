@@ -15,7 +15,7 @@
 
   <!--
     If you are including the components via CDN the src should be the following:
-    https://unpkg.com/@justifi/webcomponents@<version>/dist/webcomponents/webcomponents.esm.js
+    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js
   -->
   <script type="module" src="/build/webcomponents.esm.js"></script>
   <script nomodule src="/build/webcomponents.js"></script>
