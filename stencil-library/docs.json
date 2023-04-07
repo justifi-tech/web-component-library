@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-06T19:28:48",
+  "timestamp": "2023-04-07T15:39:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -159,6 +159,17 @@
       "props": [],
       "methods": [
         {
+          "name": "getValues",
+          "returns": {
+            "type": "Promise<BillingFormFields>",
+            "docs": ""
+          },
+          "signature": "getValues() => Promise<BillingFormFields>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
           "name": "validate",
           "returns": {
             "type": "Promise<{ isValid: boolean; }>",
@@ -181,7 +192,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "justifi-payment-form"
+      ],
       "dependencies": [
         "text-input",
         "select-input"
@@ -190,6 +203,9 @@
         "justifi-billing-form": [
           "text-input",
           "select-input"
+        ],
+        "justifi-payment-form": [
+          "justifi-billing-form"
         ]
       }
     },
@@ -345,48 +361,89 @@
       "usage": {},
       "props": [
         {
-          "name": "validationStrategy",
-          "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
+          "name": "bankAccount",
+          "type": "boolean",
           "mutable": false,
-          "attr": "validation-strategy",
+          "attr": "bank-account",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "value": "all",
-              "type": "string"
-            },
-            {
-              "value": "onBlur",
-              "type": "string"
-            },
-            {
-              "value": "onChange",
-              "type": "string"
-            },
-            {
-              "value": "onSubmit",
-              "type": "string"
-            },
-            {
-              "value": "onTouched",
-              "type": "string"
+              "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "card",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "card",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": true,
           "required": false
         }
       ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
+      "methods": [
+        {
+          "name": "submit",
+          "returns": {
+            "type": "Promise<any>",
+            "docs": ""
+          },
+          "signature": "submit(args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "paymentMethodTokenize",
+          "detail": "{ data: any; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "paymentMethodSelected",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "justifi-payment-method-selector",
+        "justifi-payment-method-form",
+        "justifi-billing-form"
+      ],
+      "dependencyGraph": {
+        "justifi-payment-form": [
+          "justifi-payment-method-selector",
+          "justifi-payment-method-form",
+          "justifi-billing-form"
+        ],
+        "justifi-billing-form": [
+          "text-input",
+          "select-input"
+        ]
+      }
     },
     {
       "filePath": "./src/components/payment-method-form/payment-method-form.tsx",
@@ -517,7 +574,8 @@
       "parts": [],
       "dependents": [
         "justifi-bank-account-form",
-        "justifi-card-form"
+        "justifi-card-form",
+        "justifi-payment-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -526,6 +584,61 @@
         ],
         "justifi-card-form": [
           "justifi-payment-method-form"
+        ],
+        "justifi-payment-form": [
+          "justifi-payment-method-form"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/payment-form/payment-method-selector.tsx",
+      "encapsulation": "none",
+      "tag": "justifi-payment-method-selector",
+      "readme": "# justifi-payment-form\n\n\n## Examples\n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-payment-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>PaymentForm</h1>\n  <hr>\n  <justifi-payment-form></justifi-payment-form>\n</body>\n\n<script>\n  (function () {})();\n</script>\n\n</html>\n```\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "paymentMethods",
+          "type": "PaymentMethodTypes[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "PaymentMethodTypes[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "paymentMethodSelected",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "justifi-payment-form"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "justifi-payment-form": [
+          "justifi-payment-method-selector"
         ]
       }
     },

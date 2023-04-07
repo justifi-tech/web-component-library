@@ -29,7 +29,11 @@
       };
       // ACCOUNT_ID is optional, currently required for platforms
       // ACCOUNT_ID is the seller account for which you are tokenizing
-      paymentForm.submit('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')
+      paymentForm.submit({
+        clientId: 'CLIENT_ID',
+        paymentMethodData: paymentMethodData,
+        accountId: 'ACCOUNT_ID'
+      })
         .then((data) => {
           // This is where you can the payment with the payment method token on your backend
           console.log('justifi-payment-form tokenized: ', data);

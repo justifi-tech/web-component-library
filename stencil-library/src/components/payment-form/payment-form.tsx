@@ -36,7 +36,7 @@ export class PaymentForm {
   }
 
   @Method()
-  async submit(args: any) {
+  async submit(args: { clientId: string, paymentMethodData: any, accountId?: string }) {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
@@ -45,9 +45,9 @@ export class PaymentForm {
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
 
-    const paymentMethodMetadata = { ...billingFormFieldValues };
+    const paymentMethodData = { ...args.paymentMethodData, ...billingFormFieldValues };
 
-    return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodMetadata, args.account);
+    return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodData, args.accountId);
   }
 
   render() {

@@ -29,7 +29,7 @@ export namespace Components {
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
         "card"?: boolean;
-        "submit": (args: any) => Promise<any>;
+        "submit": (args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {
         "paymentMethodFormType": 'card' | 'bankAccount';
