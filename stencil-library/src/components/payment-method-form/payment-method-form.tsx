@@ -1,6 +1,7 @@
 import { Component, Event, Host, Prop, h, EventEmitter, Method, State, Watch } from '@stencil/core';
 import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
+import packageJson from '../../../package.json';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -76,8 +77,9 @@ export class PaymentMethodForm {
     const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
     const payload = {
       clientId: clientId,
+      componentVersion: packageJson.version,
       paymentMethodMetadata: paymentMethodMetadata,
-      account: account
+      account: account,
     };
 
     return this.postMessageWithResponseListener(eventType, payload);

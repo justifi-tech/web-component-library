@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "JustiFi Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -9,7 +9,6 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/stencil-webcomponents/stencil-webcomponents.esm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
@@ -25,10 +24,13 @@
     "auto-changelog": "auto-changelog",
     "release": "release-it --no-npm",
     "build": "stencil build --docs",
-    "start": "stencil build --dev --watch --serve",
+    "start": "concurrently -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
+    "start-stencil": "stencil build --watch --serve --no-open",
     "test": "stencil test --spec --e2e",
     "test:watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@stencil/core": "^2.13.0",
@@ -39,8 +41,18 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@pxtrn/storybook-addon-docs-stencil": "^6.4.1",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/html": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@types/jest": "^27.0.3",
     "auto-changelog": "^2.4.0",
+    "concurrently": "^7.6.0",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^10.0.0",
