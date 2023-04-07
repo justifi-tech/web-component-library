@@ -55,7 +55,9 @@ export class PaymentForm {
       <Host>
         <form>
           {(this.allowedPaymentMethodTypes.length > 1) && (
-            <justifi-payment-method-selector paymentMethods={this.allowedPaymentMethodTypes}></justifi-payment-method-selector>
+            <justifi-payment-method-selector
+              paymentMethodTypes={this.allowedPaymentMethodTypes}
+              selectedPaymentMethodType={this.selectedPaymentMethodType} />
           )}
           <justifi-payment-method-form
             payment-method-form-type={this.selectedPaymentMethodType}

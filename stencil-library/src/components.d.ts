@@ -39,7 +39,8 @@ export namespace Components {
         "validate": () => Promise<any>;
     }
     interface JustifiPaymentMethodSelector {
-        "paymentMethods": PaymentMethodTypes[];
+        "paymentMethodTypes": PaymentMethodTypes[];
+        "selectedPaymentMethodType": PaymentMethodTypes;
     }
     interface JustifiPaymentsList {
         "accountId": string;
@@ -185,7 +186,8 @@ declare namespace LocalJSX {
     }
     interface JustifiPaymentMethodSelector {
         "onPaymentMethodSelected"?: (event: JustifiPaymentMethodSelectorCustomEvent<any>) => void;
-        "paymentMethods"?: PaymentMethodTypes[];
+        "paymentMethodTypes"?: PaymentMethodTypes[];
+        "selectedPaymentMethodType"?: PaymentMethodTypes;
     }
     interface JustifiPaymentsList {
         "accountId"?: string;

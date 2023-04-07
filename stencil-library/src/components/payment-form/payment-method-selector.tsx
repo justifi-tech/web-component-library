@@ -11,7 +11,8 @@ const PaymentMethodLabels = {
   shadow: false,
 })
 export class PaymentMethodSelector {
-  @Prop() paymentMethods: PaymentMethodTypes[] = [];
+  @Prop() paymentMethodTypes: PaymentMethodTypes[] = [];
+  @Prop() selectedPaymentMethodType: PaymentMethodTypes;
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
 
   defaultRadioButtonOption!: HTMLInputElement;
@@ -20,14 +21,10 @@ export class PaymentMethodSelector {
     this.paymentMethodSelected.emit(event.target.value);
   }
 
-  componentDidRender() {
-    this.defaultRadioButtonOption.checked = true;
-  }
-
   render() {
     return (
       <div>
-        {this.paymentMethods.map((paymentMethodType: PaymentMethodTypes) => {
+        {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) => {
           return (
             <div>
               <input
@@ -36,11 +33,7 @@ export class PaymentMethodSelector {
                 name="paymentMethodType"
                 value={paymentMethodType}
                 onChange={(event: any) => this.onChangeHandler(event)}
-                ref={(el) => {
-                  if (paymentMethodType === this.paymentMethods[0]) {
-                    this.defaultRadioButtonOption = el as HTMLInputElement
-                  }
-                }}
+                checked={this.selectedPaymentMethodType === paymentMethodType}
               />
               <label htmlFor={paymentMethodType}>{PaymentMethodLabels[paymentMethodType]}</label>
             </div>

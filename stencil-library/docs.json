@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-07T16:49:35",
+  "timestamp": "2023-04-07T19:25:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -600,7 +600,7 @@
       "usage": {},
       "props": [
         {
-          "name": "paymentMethods",
+          "name": "paymentMethodTypes",
           "type": "PaymentMethodTypes[]",
           "mutable": false,
           "reflectToAttr": false,
@@ -610,6 +610,25 @@
           "values": [
             {
               "type": "PaymentMethodTypes[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedPaymentMethodType",
+          "type": "PaymentMethodTypes.bankAccount | PaymentMethodTypes.card",
+          "mutable": false,
+          "attr": "selected-payment-method-type",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "PaymentMethodTypes.bankAccount"
+            },
+            {
+              "type": "PaymentMethodTypes.card"
             }
           ],
           "optional": false,
