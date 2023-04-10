@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-10T16:35:37",
+  "timestamp": "2023-04-10T16:50:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -406,17 +406,7 @@
           "docsTags": []
         }
       ],
-      "events": [
-        {
-          "event": "paymentMethodTokenize",
-          "detail": "{ data: any; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [
         {
           "event": "paymentMethodSelected",

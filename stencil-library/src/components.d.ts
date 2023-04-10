@@ -68,10 +68,6 @@ export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiCardFormElement;
 }
-export interface JustifiPaymentFormCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLJustifiPaymentFormElement;
-}
 export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiPaymentMethodFormElement;
@@ -175,7 +171,6 @@ declare namespace LocalJSX {
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
         "card"?: boolean;
-        "onPaymentMethodTokenize"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
     }
     interface JustifiPaymentMethodForm {
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;

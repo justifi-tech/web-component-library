@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, Host, State, Listen, EventEmitter, Method } from '@stencil/core';
+import { Component, Prop, h, Host, State, Listen, Method } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 
 @Component({
@@ -10,7 +10,6 @@ export class PaymentForm {
   @Prop() card?: boolean;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
-  @Event() paymentMethodTokenize: EventEmitter<{ data: any }>;
 
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
