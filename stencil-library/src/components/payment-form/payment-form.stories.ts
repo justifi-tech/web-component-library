@@ -36,11 +36,11 @@ const addEvents = () => {
   addEventListener('cardFormReady', handleReadyClick);
 }
 
-const Template = () => {
+const Template = (args: { 'bank-account': boolean, card: boolean }) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
     <div>
-      <justifi-payment-form />
+      <justifi-payment-form card=${args.card} bank-account=${args['bank-account']} />
     </div>
     <div>
       <button id="submit-button">Submit</button>
@@ -50,5 +50,6 @@ const Template = () => {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  includeButtons: true
-}
+  'bank-account': true,
+  card: true
+};
