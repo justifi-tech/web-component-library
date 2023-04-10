@@ -8,7 +8,7 @@ export default {
     },
   },
   decorators: [
-    (story) => `
+    (story, { args }) => `
       ${story()}
       <script>${addEvents()}</script>
     `,
@@ -51,5 +51,8 @@ const Template = (args: { 'bank-account': boolean, card: boolean }) => {
 export const Basic = Template.bind({});
 Basic.args = {
   'bank-account': true,
-  card: true
+  card: true,
+  clientId: '',
+  paymentMethodData: {},
+  accountId: ''
 };
