@@ -1,23 +1,12 @@
-const paymentMethodData = {
-  name: 'John Doe',
-  metadata: { something: "somevalue" } // optional
-};
-
-// IMPORTANT:
-// Only use named functions when binding to event handlers. Otherwise, they will be bound multiple times
-// Going forward, we could create a decorator that binds events
-const handleSubmitClick = async () => {
-  console.log('handleSubmitClick');
-  const paymentForm = document.querySelector('justifi-payment-form') as HTMLJustifiPaymentFormElement;
-  const tokenizeResponse = await paymentForm.submit({ clientId: '123', paymentMethodData: paymentMethodData });
-  console.log(tokenizeResponse);
-}
-const handleReadyClick = () => {
-  const submitButton = document.querySelector('#submit-button');
-  submitButton?.addEventListener('click', handleSubmitClick);
+interface PaymentFormStoryArgs {
+  'bank-account': boolean,
+  card: boolean,
+  clientId: string,
+  paymentMethodData: any,
+  accountId: string
 }
 
-const Template = (args: { 'bank-account': boolean, card: boolean }) => {
+const Template = (args: PaymentFormStoryArgs) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
     <div>
@@ -26,6 +15,22 @@ const Template = (args: { 'bank-account': boolean, card: boolean }) => {
     <div>
       <button id="submit-button">Submit</button>
     </div>
+    <script>
+    (async () => {
+      await customElements.whenDefined('justifi-payment-form');
+      const paymentForm = document.querySelector('justifi-payment-form');
+      const submitButton = document.querySelector('#submit-button');
+
+      submitButton?.addEventListener('click', async () => {
+        const tokenizeResponse = await paymentForm.submit({
+          clientId: ${args.clientId},
+          paymentMethodData: ${JSON.stringify(args.paymentMethodData)},
+          accountId: ${args.accountId || '\"\"'}
+        });
+        console.log('tokenizeResponse:', tokenizeResponse);
+      });
+    })()
+    </script>
   `);
 };
 
@@ -48,19 +53,19 @@ export default {
     accountId: {
       control: 'text',
       table: {
-        category: 'Tokenize Args'
+        category: 'Tokenize Arguments'
       }
     },
     clientId: {
       control: 'text',
       table: {
-        category: 'Tokenize Args'
+        category: 'Tokenize Arguments'
       }
     },
     paymentMethodData: {
       control: 'object',
       table: {
-        category: 'Tokenize Args'
+        category: 'Tokenize Arguments'
       }
     },
   },
@@ -70,11 +75,7 @@ export default {
     },
   },
   decorators: [
-    (story, { args }) => `
-      ${story()}
-      ${JSON.stringify(args)}
-      <script>${handleReadyClick()}</script>
-    `,
+    (story) => story(),
   ],
 };
 
