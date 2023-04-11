@@ -23,9 +23,9 @@ const Template = (args: PaymentFormStoryArgs) => {
 
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
-          clientId: ${args.clientId || '\"\"'},
+          clientId: '${args.clientId}',
           paymentMethodData: ${JSON.stringify(args.paymentMethodData)},
-          accountId: ${args.accountId || '\"\"'}
+          accountId: '${args.accountId}'
         });
         console.log('tokenizeResponse:', tokenizeResponse);
       });
