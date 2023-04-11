@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-11T15:05:05",
+  "timestamp": "2023-04-11T21:36:08",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -158,6 +158,17 @@
       "usage": {},
       "props": [],
       "methods": [
+        {
+          "name": "fill",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "fill(fields: BillingFormFields) => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
         {
           "name": "getValues",
           "returns": {
@@ -394,6 +405,17 @@
         }
       ],
       "methods": [
+        {
+          "name": "fillBillingForm",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "fillBillingForm(fields: BillingFormFields) => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
         {
           "name": "submit",
           "returns": {

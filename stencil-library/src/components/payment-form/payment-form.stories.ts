@@ -3,7 +3,8 @@ interface PaymentFormStoryArgs {
   card: boolean,
   clientId: string,
   paymentMethodData: any,
-  accountId: string
+  accountId: string,
+  address_line1: string
 }
 
 const Template = (args: PaymentFormStoryArgs) => {
@@ -21,9 +22,13 @@ const Template = (args: PaymentFormStoryArgs) => {
       const paymentForm = document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
 
+      paymentForm.fillBillingForm({
+        address_line1: ${args.address_line1 || '\"\"'}
+      });
+
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
-          clientId: ${args.clientId},
+          clientId: ${args.clientId || '\"\"'},
           paymentMethodData: ${JSON.stringify(args.paymentMethodData)},
           accountId: ${args.accountId || '\"\"'}
         });
@@ -68,6 +73,12 @@ export default {
         category: 'Tokenize Arguments'
       }
     },
+    address_line1: {
+      control: 'text',
+      table: {
+        category: 'Billing Form'
+      }
+    }
   },
   parameters: {
     actions: {
@@ -85,5 +96,6 @@ Basic.args = {
   card: true,
   clientId: '',
   paymentMethodData: {},
-  accountId: ''
+  accountId: '',
+  address_line1: ''
 };

@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ValidationError } from "yup";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
+import { ValidationError } from "yup";
 import { Theme } from "./components/payment-method-form/theme";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
@@ -17,6 +17,7 @@ export namespace Components {
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
+        "fill": (fields: BillingFormFields) => Promise<void>;
         "getValues": () => Promise<BillingFormFields>;
         "validate": () => Promise<{ isValid: boolean; }>;
     }
@@ -29,6 +30,7 @@ export namespace Components {
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "fillBillingForm": (fields: BillingFormFields) => Promise<void>;
         "submit": (args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {

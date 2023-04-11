@@ -7,6 +7,16 @@
 
 ## Methods
 
+### `fill(fields: BillingFormFields) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `getValues() => Promise<BillingFormFields>`
 
 

@@ -30,6 +30,11 @@ export class BillingForm {
   }
 
   @Method()
+  async fill(fields: BillingFormFields) {
+    this.billingFields = { ...fields };
+  }
+
+  @Method()
   async validate() {
     const newErrors = {};
     let isValid: boolean = true;

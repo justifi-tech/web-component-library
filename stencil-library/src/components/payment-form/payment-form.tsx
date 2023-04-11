@@ -1,5 +1,6 @@
 import { Component, Prop, h, Host, State, Listen, Method } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
+import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -32,6 +33,11 @@ export class PaymentForm {
   paymentMethodSelectedHandler(event: CustomEvent) {
     const paymentMethodType: PaymentMethodTypes = event.detail;
     this.selectedPaymentMethodType = paymentMethodType;
+  }
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    this.billingFormRef.fill(fields);
   }
 
   @Method()
