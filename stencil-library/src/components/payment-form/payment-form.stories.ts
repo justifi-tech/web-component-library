@@ -4,7 +4,6 @@ interface PaymentFormStoryArgs {
   clientId: string,
   paymentMethodData: any,
   accountId: string,
-  address_line1: string
 }
 
 const Template = (args: PaymentFormStoryArgs) => {
@@ -21,10 +20,6 @@ const Template = (args: PaymentFormStoryArgs) => {
       await customElements.whenDefined('justifi-payment-form');
       const paymentForm = document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
-
-      paymentForm.fillBillingForm({
-        address_line1: ${args.address_line1 || '\"\"'}
-      });
 
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
@@ -73,12 +68,6 @@ export default {
         category: 'Tokenize Arguments'
       }
     },
-    address_line1: {
-      control: 'text',
-      table: {
-        category: 'Billing Form'
-      }
-    }
   },
   parameters: {
     actions: {
@@ -96,6 +85,5 @@ Basic.args = {
   card: true,
   clientId: '',
   paymentMethodData: {},
-  accountId: '',
-  address_line1: ''
+  accountId: ''
 };
