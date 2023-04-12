@@ -1,9 +1,9 @@
 {
-  "timestamp": "2023-04-11T22:59:53",
+  "timestamp": "2023-04-12T16:06:23",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.20.0",
-    "typescriptVersion": "4.8.4"
+    "version": "2.22.3",
+    "typescriptVersion": "4.9.4"
   },
   "components": [
     {
@@ -15,6 +15,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "iframeOrigin",
+          "type": "string",
+          "mutable": false,
+          "attr": "iframe-origin",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
         {
           "name": "styleOverrides",
           "type": "string",
@@ -230,6 +246,22 @@
       "usage": {},
       "props": [
         {
+          "name": "iframeOrigin",
+          "type": "string",
+          "mutable": false,
+          "attr": "iframe-origin",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
           "name": "styleOverrides",
           "type": "string",
           "mutable": false,
@@ -402,6 +434,22 @@
           ],
           "optional": true,
           "required": false
+        },
+        {
+          "name": "iframeOrigin",
+          "type": "string",
+          "mutable": false,
+          "attr": "iframe-origin",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
         }
       ],
       "methods": [
@@ -466,6 +514,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "iframeOrigin",
+          "type": "string",
+          "mutable": false,
+          "attr": "iframe-origin",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
         {
           "name": "paymentMethodFormType",
           "type": "\"bankAccount\" | \"card\"",

@@ -9,9 +9,9 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
   @Prop() card?: boolean;
+  @Prop() iframeOrigin?: string;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
-
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
@@ -66,6 +66,7 @@ export class PaymentForm {
           )}
           <justifi-payment-method-form
             payment-method-form-type={this.selectedPaymentMethodType}
+            iframe-origin={this.iframeOrigin}
             ref={el => { if (el) { this.paymentMethodFormRef = el } }}
           />
           <justifi-billing-form ref={el => { if (el) { this.billingFormRef = el } }} />

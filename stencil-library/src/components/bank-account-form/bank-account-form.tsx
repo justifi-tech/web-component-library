@@ -8,6 +8,7 @@ import { Theme } from '../payment-method-form/theme';
 export class BankAccountForm {
   @Prop() validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() styleOverrides?: string;
+  @Prop() iframeOrigin?: string;
   @State() internalStyleOverrides: Theme;
   @Event() bankAccountFormReady: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
@@ -64,6 +65,7 @@ export class BankAccountForm {
         ref={el => {
           if (el) { this.childRef = el }
         }}
+        iframe-origin={this.iframeOrigin}
         payment-method-form-type="bankAccount"
         payment-method-form-ready={this.bankAccountFormReady}
         payment-method-form-tokenize={this.bankAccountFormTokenize}

@@ -11,6 +11,7 @@ import { Theme } from "./components/payment-method-form/theme";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
+        "iframeOrigin"?: string;
         "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
@@ -22,6 +23,7 @@ export namespace Components {
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {
+        "iframeOrigin"?: string;
         "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
@@ -31,9 +33,11 @@ export namespace Components {
         "bankAccount"?: boolean;
         "card"?: boolean;
         "fillBillingForm": (fields: BillingFormFields) => Promise<void>;
+        "iframeOrigin"?: string;
         "submit": (args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {
+        "iframeOrigin"?: string;
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides": Theme | undefined;
@@ -155,6 +159,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface JustifiBankAccountForm {
+        "iframeOrigin"?: string;
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
@@ -164,6 +169,7 @@ declare namespace LocalJSX {
     interface JustifiBillingForm {
     }
     interface JustifiCardForm {
+        "iframeOrigin"?: string;
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
@@ -173,8 +179,10 @@ declare namespace LocalJSX {
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "iframeOrigin"?: string;
     }
     interface JustifiPaymentMethodForm {
+        "iframeOrigin"?: string;
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "paymentMethodFormType"?: 'card' | 'bankAccount';

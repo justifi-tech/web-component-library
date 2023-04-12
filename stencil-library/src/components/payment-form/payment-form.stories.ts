@@ -4,6 +4,7 @@ interface PaymentFormStoryArgs {
   clientId: string,
   paymentMethodData: any,
   accountId: string,
+  iframeOrigin: string
 }
 
 const Template = (args: PaymentFormStoryArgs) => {
@@ -20,6 +21,8 @@ const Template = (args: PaymentFormStoryArgs) => {
       await customElements.whenDefined('justifi-payment-form');
       const paymentForm = document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
+
+      paymentForm.iframeOrigin = 'http://localhost:3003/v2';
 
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
@@ -85,5 +88,6 @@ Basic.args = {
   card: true,
   clientId: '',
   paymentMethodData: {},
-  accountId: ''
+  accountId: '',
+  iframeOrigin: ''
 };
