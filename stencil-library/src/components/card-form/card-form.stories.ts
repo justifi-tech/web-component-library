@@ -1,7 +1,7 @@
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-import { FormButtons } from "../../../storybook-utils";
+import { FormButtons, handleReady } from "../../../storybook-utils";
 
 export default {
   title: 'Components/CardForm',
@@ -23,31 +23,8 @@ export default {
   ],
 };
 
-const paymentMethodData = {
-  name: 'John Doe',
-};
-
-// IMPORTANT:
-// Only use named functions when binding to event handlers. Otherwise, they will be bound multiple times
-// Going forward, we could create a decorator that binds events
-const handleValidateClick = () => {
-  const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
-  cardForm.validate();
-  console.log('validate');
-}
-const handleTokenizeClick = async () => {
-  const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
-  const tokenizeResponse = await cardForm.tokenize('CLIENT_ID', paymentMethodData);
-  console.log(tokenizeResponse);
-}
-const handleReadyClick = () => {
-  const validateBtn = document.querySelector('#validate-btn');
-  const tokenizeBtn = document.querySelector('#tokenize-btn');
-  validateBtn?.addEventListener('click', handleValidateClick);
-  tokenizeBtn?.addEventListener('click', handleTokenizeClick);
-}
 const addEvents = () => {
-  addEventListener('cardFormReady', handleReadyClick);
+  addEventListener('cardFormReady', handleReady);
 }
 
 const storyStyleOverrides = {
@@ -88,13 +65,18 @@ const storyStyleOverrides = {
   }
 };
 
-const Template = ({ includeButtons = true, styleOverrides }: { includeButtons: boolean, styleOverrides?: object }) => {
+const Template = ({
+  includeButtons = true,
+  styleOverrides
+}: {
+  includeButtons: boolean,
+  styleOverrides?: object
+}) => {
   const parsedStyleOverrides = styleOverrides ? JSON.stringify(styleOverrides) : null;
 
-  // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
     <div>
-      <justifi-card-form style-overrides='${parsedStyleOverrides || ''}' />
+      <justifi-card-form data-testid="card-form-iframe" style-overrides='${parsedStyleOverrides || ''}' />
     </div>
     ${includeButtons ? FormButtons : ''}
   `);
@@ -123,17 +105,27 @@ Styled.args = {
 
 export const Completed = Template.bind({});
 Completed.play = async ({ canvasElement, step }) => {
-  const canvas = within(canvasElement);
+  // Need to wait for iFrame to load
+  addEventListener('cardFormReady', async () => {
+    const canvas = within(canvasElement);
 
-  // await step('Enter credentials', async () => {
-  //   userEvent.type(canvas.getByTestId('email'), 'hi@example.com');
-  //   userEvent.type(canvas.getByTestId('password'), 'supersecret');
-  // });
+    await step('CardForm is rendered', async () => {
+      expect(canvas.getByTestId('card-form-iframe')).toBeDefined()
+    });
 
-  await step('Submit form', async () => {
-    userEvent.click(canvas.getByRole('button', { name: 'Validate' }));
+    await step('Validate form when empty shows errors', async () => {
+      userEvent.click(canvas.getByRole('button', { name: 'Validate' }));
+    });
+
+    // Expect errors to show up, but can't figure out how to get them
+
+    await step('Call tokenize with empty form shows errors', async () => {
+      userEvent.click(canvas.getByRole('button', { name: 'Tokenize' }));
+    });
+
+    // Expect errors to show up, but can't figure out how to get them
+
+    // Fill form
   });
-
-  // await waitFor(() => expect(canvas.getByText('Enter card number')).toBeDefined());
 };
 
