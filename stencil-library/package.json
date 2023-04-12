@@ -29,8 +29,8 @@
     "test": "stencil test --spec --e2e",
     "test:watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@stencil/core": "^2.13.0",
@@ -41,22 +41,27 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
     "@pxtrn/storybook-addon-docs-stencil": "^6.4.1",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack4": "^6.5.16",
-    "@storybook/html": "^6.5.16",
-    "@storybook/manager-webpack4": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-actions": "^7.0.4",
+    "@storybook/addon-essentials": "^7.0.4",
+    "@storybook/addon-interactions": "^7.0.4",
+    "@storybook/addon-links": "^7.0.4",
+    "@storybook/html": "^7.0.4",
+    "@storybook/html-webpack5": "^7.0.4",
+    "@storybook/jest": "^0.1.0",
+    "@storybook/testing-library": "^0.1.0",
     "@types/jest": "^27.0.3",
     "auto-changelog": "^2.4.0",
     "concurrently": "^7.6.0",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^10.0.0",
-    "release-it": "^15.6.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "release-it": "^15.6.0",
+    "storybook": "^7.0.4"
   },
   "license": "MIT"
 }

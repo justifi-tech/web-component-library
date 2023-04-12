@@ -1,3 +1,8 @@
+import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
+
+import { FormButtons } from "../../../storybook-utils";
+
 export default {
   title: 'Components/CardForm',
   component: 'justifi-card-form',
@@ -45,25 +50,6 @@ const addEvents = () => {
   addEventListener('cardFormReady', handleReadyClick);
 }
 
-
-// This should be abstracted away, included as a decorator and styled properly
-const buttons = `
-  <style>
-    .button-bar {
-      display: flex;
-      aligin-items: center;
-      padding: 10px;
-    }
-    .button-bar button {
-      margin-right: 10px;
-    }
-  </style>
-  <div class="button-bar">
-    <button id="validate-btn">Validate</button>
-    <button id="tokenize-btn">Tokenize</button>
-  </div>
-`
-
 const storyStyleOverrides = {
   "layout": {
     "padding": "100px",
@@ -102,7 +88,7 @@ const storyStyleOverrides = {
   }
 };
 
-const Template = ({ includeButtons, styleOverrides }: { includeButtons: boolean, styleOverrides?: object }) => {
+const Template = ({ includeButtons = true, styleOverrides }: { includeButtons: boolean, styleOverrides?: object }) => {
   const parsedStyleOverrides = styleOverrides ? JSON.stringify(styleOverrides) : null;
 
   // The <div> here should be replaced by a `display` property in the cardForm potentially
@@ -110,19 +96,13 @@ const Template = ({ includeButtons, styleOverrides }: { includeButtons: boolean,
     <div>
       <justifi-card-form style-overrides='${parsedStyleOverrides || ''}' />
     </div>
-    ${includeButtons ? buttons : ''}
+    ${includeButtons ? FormButtons : ''}
   `);
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  includeButtons: true
-}
 
 export const Embedded = Template.bind({});
-Embedded.args = {
-  includeButtons: true
-}
 Embedded.decorators = [
   (story) => `
     <style>
@@ -140,4 +120,20 @@ export const Styled = Template.bind({});
 Styled.args = {
   styleOverrides: storyStyleOverrides
 }
+
+export const Completed = Template.bind({});
+Completed.play = async ({ canvasElement, step }) => {
+  const canvas = within(canvasElement);
+
+  // await step('Enter credentials', async () => {
+  //   userEvent.type(canvas.getByTestId('email'), 'hi@example.com');
+  //   userEvent.type(canvas.getByTestId('password'), 'supersecret');
+  // });
+
+  await step('Submit form', async () => {
+    userEvent.click(canvas.getByRole('button', { name: 'Validate' }));
+  });
+
+  // await waitFor(() => expect(canvas.getByText('Enter card number')).toBeDefined());
+};
 
