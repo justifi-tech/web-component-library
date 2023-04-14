@@ -1,3 +1,6 @@
+import { userEvent, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
+
 export default {
   title: 'Components/CardForm',
   component: 'justifi-card-form',
@@ -18,36 +21,28 @@ export default {
   ],
 };
 
-const paymentMethodData = {
-  name: 'John Doe',
-};
-
-// IMPORTANT:
-// Only use named functions when binding to event handlers. Otherwise, they will be bound multiple times
-// Going forward, we could create a decorator that binds events
-const handleValidateClick = () => {
-  const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
-  cardForm.validate();
-  console.log('validate');
+const handleValidateClick = async (cardForm: HTMLJustifiCardFormElement) => {
+  const valid = await cardForm.validate();
+  console.log(valid);
 }
-const handleTokenizeClick = async () => {
-  const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
+const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData) => {
   const tokenizeResponse = await cardForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
 }
-const handleReadyClick = () => {
+const handleReady = () => {
+  console.log('card form is ready');
+  const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
-  validateBtn?.addEventListener('click', handleValidateClick);
-  tokenizeBtn?.addEventListener('click', handleTokenizeClick);
+  validateBtn?.addEventListener('click', () => { handleValidateClick(cardForm) });
+  tokenizeBtn?.addEventListener('click', () => { handleTokenizeClick(cardForm, {}) });
 }
+
 const addEvents = () => {
-  addEventListener('cardFormReady', handleReadyClick);
+  addEventListener('cardFormReady', handleReady);
 }
 
-
-// This should be abstracted away, included as a decorator and styled properly
-const buttons = `
+const FormButtons = `
   <style>
     .button-bar {
       display: flex;
@@ -102,27 +97,26 @@ const storyStyleOverrides = {
   }
 };
 
-const Template = ({ includeButtons, styleOverrides }: { includeButtons: boolean, styleOverrides?: object }) => {
+const Template = ({
+  includeButtons = true,
+  styleOverrides
+}: {
+  includeButtons: boolean,
+  styleOverrides?: object
+}) => {
   const parsedStyleOverrides = styleOverrides ? JSON.stringify(styleOverrides) : null;
 
-  // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
     <div>
-      <justifi-card-form style-overrides='${parsedStyleOverrides || ''}' />
+      <justifi-card-form data-testid="card-form-iframe" style-overrides='${parsedStyleOverrides || ''}' />
     </div>
-    ${includeButtons ? buttons : ''}
+    ${includeButtons ? FormButtons : ''}
   `);
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  includeButtons: true
-}
 
 export const Embedded = Template.bind({});
-Embedded.args = {
-  includeButtons: true
-}
 Embedded.decorators = [
   (story) => `
     <style>
@@ -140,4 +134,30 @@ export const Styled = Template.bind({});
 Styled.args = {
   styleOverrides: storyStyleOverrides
 }
+
+export const Completed = Template.bind({});
+Completed.play = async ({ canvasElement, step }) => {
+  // Need to wait for iFrame to load
+  addEventListener('cardFormReady', async () => {
+    const canvas = within(canvasElement);
+
+    await step('CardForm is rendered', async () => {
+      expect(canvas.getByTestId('card-form-iframe')).toBeDefined()
+    });
+
+    await step('Validate form when empty shows errors', async () => {
+      userEvent.click(canvas.getByRole('button', { name: 'Validate' }));
+    });
+
+    // Expect errors to show up, but can't figure out how to get them
+
+    await step('Call tokenize with empty form shows errors', async () => {
+      userEvent.click(canvas.getByRole('button', { name: 'Tokenize' }));
+    });
+
+    // Expect errors to show up, but can't figure out how to get them
+
+    // Fill form
+  });
+};
 
