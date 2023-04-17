@@ -5,33 +5,48 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
 import { Theme } from "./components/payment-method-form/theme";
+import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
+        "iframeOrigin"?: string;
         "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
+        "fill": (fields: BillingFormFields) => Promise<void>;
+        "getValues": () => Promise<BillingFormFields>;
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {
+        "iframeOrigin"?: string;
         "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
-        "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "bankAccount"?: boolean;
+        "card"?: boolean;
+        "fillBillingForm": (fields: BillingFormFields) => Promise<void>;
+        "iframeOrigin"?: string;
+        "submit": (args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {
+        "iframeOrigin"?: string;
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides": Theme | undefined;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
+    }
+    interface JustifiPaymentMethodSelector {
+        "paymentMethodTypes": PaymentMethodTypes[];
+        "selectedPaymentMethodType": PaymentMethodTypes;
     }
     interface JustifiPaymentsList {
         "accountId": string;
@@ -62,6 +77,10 @@ export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
 export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiPaymentMethodFormElement;
+}
+export interface JustifiPaymentMethodSelectorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLJustifiPaymentMethodSelectorElement;
 }
 export interface SelectInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -102,6 +121,12 @@ declare global {
         prototype: HTMLJustifiPaymentMethodFormElement;
         new (): HTMLJustifiPaymentMethodFormElement;
     };
+    interface HTMLJustifiPaymentMethodSelectorElement extends Components.JustifiPaymentMethodSelector, HTMLStencilElement {
+    }
+    var HTMLJustifiPaymentMethodSelectorElement: {
+        prototype: HTMLJustifiPaymentMethodSelectorElement;
+        new (): HTMLJustifiPaymentMethodSelectorElement;
+    };
     interface HTMLJustifiPaymentsListElement extends Components.JustifiPaymentsList, HTMLStencilElement {
     }
     var HTMLJustifiPaymentsListElement: {
@@ -126,6 +151,7 @@ declare global {
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-form": HTMLJustifiPaymentFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
+        "justifi-payment-method-selector": HTMLJustifiPaymentMethodSelectorElement;
         "justifi-payments-list": HTMLJustifiPaymentsListElement;
         "select-input": HTMLSelectInputElement;
         "text-input": HTMLTextInputElement;
@@ -133,6 +159,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface JustifiBankAccountForm {
+        "iframeOrigin"?: string;
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
@@ -142,6 +169,7 @@ declare namespace LocalJSX {
     interface JustifiBillingForm {
     }
     interface JustifiCardForm {
+        "iframeOrigin"?: string;
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
@@ -149,14 +177,22 @@ declare namespace LocalJSX {
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
-        "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "bankAccount"?: boolean;
+        "card"?: boolean;
+        "iframeOrigin"?: string;
     }
     interface JustifiPaymentMethodForm {
+        "iframeOrigin"?: string;
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "paymentMethodFormType"?: 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides"?: Theme | undefined;
+    }
+    interface JustifiPaymentMethodSelector {
+        "onPaymentMethodSelected"?: (event: JustifiPaymentMethodSelectorCustomEvent<any>) => void;
+        "paymentMethodTypes"?: PaymentMethodTypes[];
+        "selectedPaymentMethodType"?: PaymentMethodTypes;
     }
     interface JustifiPaymentsList {
         "accountId"?: string;
@@ -183,6 +219,7 @@ declare namespace LocalJSX {
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-form": JustifiPaymentForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
+        "justifi-payment-method-selector": JustifiPaymentMethodSelector;
         "justifi-payments-list": JustifiPaymentsList;
         "select-input": SelectInput;
         "text-input": TextInput;
@@ -197,6 +234,7 @@ declare module "@stencil/core" {
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
+            "justifi-payment-method-selector": LocalJSX.JustifiPaymentMethodSelector & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodSelectorElement>;
             "justifi-payments-list": LocalJSX.JustifiPaymentsList & JSXBase.HTMLAttributes<HTMLJustifiPaymentsListElement>;
             "select-input": LocalJSX.SelectInput & JSXBase.HTMLAttributes<HTMLSelectInputElement>;
             "text-input": LocalJSX.TextInput & JSXBase.HTMLAttributes<HTMLTextInputElement>;

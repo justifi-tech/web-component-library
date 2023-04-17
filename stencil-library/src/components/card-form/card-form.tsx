@@ -8,6 +8,7 @@ import { Theme } from '../payment-method-form/theme';
 export class CardForm {
   @Prop() validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() styleOverrides?: string;
+  @Prop() iframeOrigin?: string;
   @State() internalStyleOverrides: Theme;
   @Event() cardFormReady: EventEmitter;
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
@@ -64,6 +65,7 @@ export class CardForm {
         ref={el => {
           if (el) { this.childRef = el }
         }}
+        iframe-origin={this.iframeOrigin}
         payment-method-form-type="card"
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-tokenize={this.cardFormTokenize}

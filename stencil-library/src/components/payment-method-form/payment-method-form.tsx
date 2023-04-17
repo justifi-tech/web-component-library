@@ -12,6 +12,7 @@ export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
   @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() paymentMethodStyleOverrides: Theme | undefined;
+  @Prop() iframeOrigin?: string;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   @State() height: number = 55;
@@ -91,7 +92,9 @@ export class PaymentMethodForm {
   };
 
   private getIframeSrc() {
-    let iframeSrc = `https://js.justifi.ai/v2/${this.paymentMethodFormType}`;
+    const productionIframeOrigin = 'https://js.justifi.ai/v2';
+    const iframeOrigin = this.iframeOrigin || productionIframeOrigin;
+    let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     if (this.paymentMethodFormValidationStrategy) {
       iframeSrc += `?validationStrategy=${this.paymentMethodFormValidationStrategy}`
     }
