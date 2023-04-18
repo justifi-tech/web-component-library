@@ -59,7 +59,6 @@ export default {
     environment: {
       name: 'Environment',
       type: { name: 'string', required: false },
-      defaultValue: 'staging',
       control: {
         type: 'select',
       },
@@ -112,5 +111,6 @@ Basic.args = {
   card: true,
   clientId: '',
   paymentMethodData: {},
-  accountId: ''
+  accountId: '',
+  environment: 'production'
 };
