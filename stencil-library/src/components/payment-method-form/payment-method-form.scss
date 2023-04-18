@@ -1,0 +1,11 @@
+@import "../base.scss";
+@import "forms";
+
+:host {
+  display: block;
+}
+
+justifi-payment-method-form iframe {
+  border: none;
+  width: 100%;
+}
