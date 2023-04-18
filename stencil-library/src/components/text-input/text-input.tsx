@@ -21,9 +21,10 @@ export class TextInput {
 
   render() {
     return (
-      <Host>
-        <label class="form-label">{this.label}</label>
+      <Host exportparts="label">
+        <label part="label" class="form-label">{this.label}</label>
         <input
+          part="input"
           name={this.name}
           type="text"
           class={this.error ? 'form-control is-invalid' : 'form-control'}
