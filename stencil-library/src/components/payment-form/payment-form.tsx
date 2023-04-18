@@ -58,7 +58,7 @@ export class PaymentForm {
 
   render() {
     return (
-      <Host exportparts="label">
+      <Host exportparts="label,input">
         <form>
           {(this.allowedPaymentMethodTypes.length > 1) && (
             <justifi-payment-method-selector

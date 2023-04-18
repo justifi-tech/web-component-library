@@ -60,7 +60,7 @@ export class BillingForm {
 
   render() {
     return (
-      <Host exportparts="label">
+      <Host exportparts="label,input">
         <fieldset>
           <text-input
             name="address_line1"

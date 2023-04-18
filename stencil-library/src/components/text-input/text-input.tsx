@@ -21,7 +21,7 @@ export class TextInput {
 
   render() {
     return (
-      <Host exportparts="label">
+      <Host exportparts="label,input">
         <label part="label" class="form-label">{this.label}</label>
         <input
           part="input"

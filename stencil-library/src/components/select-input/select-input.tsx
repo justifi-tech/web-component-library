@@ -22,9 +22,10 @@ export class SelectInput {
 
   render() {
     return (
-      <Host>
-        <label class="form-label">{this.label}</label>
+      <Host exportparts="label,input">
+        <label part="label" class="form-label">{this.label}</label>
         <select
+          part="input"
           class="form-select"
           name={this.name}
           onInput={(event) => this.onInput(event)}>
