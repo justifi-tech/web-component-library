@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-18T16:38:05",
+  "timestamp": "2023-04-18T17:47:36",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -172,7 +172,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "legend",
+          "type": "string",
+          "mutable": false,
+          "attr": "legend",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        }
+      ],
       "methods": [
         {
           "name": "fill",

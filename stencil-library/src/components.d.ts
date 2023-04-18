@@ -20,6 +20,7 @@ export namespace Components {
     interface JustifiBillingForm {
         "fill": (fields: BillingFormFields) => Promise<void>;
         "getValues": () => Promise<BillingFormFields>;
+        "legend"?: string;
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {
@@ -167,6 +168,7 @@ declare namespace LocalJSX {
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
+        "legend"?: string;
     }
     interface JustifiCardForm {
         "iframeOrigin"?: string;

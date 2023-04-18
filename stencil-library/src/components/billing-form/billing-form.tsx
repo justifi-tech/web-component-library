@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Listen, Method } from '@stencil/core';
+import { Component, Host, h, State, Listen, Method, Prop } from '@stencil/core';
 import { ValidationError } from 'yup';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from './state-options';
@@ -9,6 +9,7 @@ import StateOptions from './state-options';
   shadow: true,
 })
 export class BillingForm {
+  @Prop() legend?: string;
   @State() billingFields: BillingFormFields = {
     address_line1: '',
     address_line2: '',
@@ -58,40 +59,57 @@ export class BillingForm {
     return this.billingFields;
   }
 
+  legendBlock = (
+    <div class="row gy-3">
+      <div class="col-12">
+        <legend>{this.legend}</legend>
+      </div>
+    </div>
+  );
+
   render() {
     return (
       <Host exportparts="label,input">
         <fieldset>
-          <text-input
-            name="address_line1"
-            label="Street Address"
-            defaultValue={this.billingFields.address_line1}
-            error={this.billingFieldsErrors.address_line1} />
-
-          <text-input
-            name="address_line2"
-            label="Apartment, Suite, etc. (optional)"
-            defaultValue={this.billingFields.address_line2}
-            error={this.billingFieldsErrors.address_line2} />
-
-          <text-input
-            name="address_city"
-            label="City"
-            defaultValue={this.billingFields.address_city}
-            error={this.billingFieldsErrors.address_city} />
-
-          <select-input
-            name="address_state"
-            label="State"
-            options={StateOptions}
-            defaultValue={this.billingFields.address_state}
-            error={this.billingFieldsErrors.address_state} />
-
-          <text-input
-            name="address_postal_code"
-            label="ZIP"
-            defaultValue={this.billingFields.address_postal_code}
-            error={this.billingFieldsErrors.address_postal_code} />
+          {this.legend && this.legendBlock}
+          <div class="row gy-3">
+            <div class="col-12">
+              <text-input
+                name="address_line1"
+                label="Street Address"
+                defaultValue={this.billingFields.address_line1}
+                error={this.billingFieldsErrors.address_line1} />
+            </div>
+            <div class="col-12">
+              <text-input
+                name="address_line2"
+                label="Apartment, Suite, etc. (optional)"
+                defaultValue={this.billingFields.address_line2}
+                error={this.billingFieldsErrors.address_line2} />
+            </div>
+            <div class="col-12">
+              <text-input
+                name="address_city"
+                label="City"
+                defaultValue={this.billingFields.address_city}
+                error={this.billingFieldsErrors.address_city} />
+            </div>
+            <div class="col-12">
+              <select-input
+                name="address_state"
+                label="State"
+                options={StateOptions}
+                defaultValue={this.billingFields.address_state}
+                error={this.billingFieldsErrors.address_state} />
+            </div>
+            <div class="col-12">
+              <text-input
+                name="address_postal_code"
+                label="ZIP"
+                defaultValue={this.billingFields.address_postal_code}
+                error={this.billingFieldsErrors.address_postal_code} />
+            </div>
+          </div>
         </fieldset>
       </Host>
     );

@@ -13,8 +13,17 @@
 </head>
 
 <body>
-  <justifi-payment-form bank-account="true" card="true"></justifi-payment-form>
-  <button class="btn btn-primary" type="submit" id="payment-form-submit">Submit</button>
+  <div class="container py-4">
+    <h1>Make a payment</h1>
+    <div class="row gy-3">
+      <div class="col-12">
+        <justifi-payment-form bank-account="true" card="true"></justifi-payment-form>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit" id="payment-form-submit">Submit</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 <style>

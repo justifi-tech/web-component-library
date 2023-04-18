@@ -1,10 +1,6 @@
-@import "functions";
-@import "variables";
-@import "maps";
-@import "mixins";
-@import "utilities";
-@import "root";
-@import "reboot";
+@import "../base";
+
+@import "grid";
 
 :host {
   display: block;
