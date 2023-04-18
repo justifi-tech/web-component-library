@@ -10,12 +10,21 @@ interface PaymentFormStoryArgs {
 const Template = (args: PaymentFormStoryArgs) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
-    <div>
-      <justifi-payment-form card=${args.card} bank-account=${args['bank-account']} />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <div class="container py-4" style="max-width: 400px;">
+      <h1>Make a payment</h1>
+      <div class="row gy-3">
+        <div class="col-12">
+          <justifi-payment-form card=${args.card} bank-account=${args['bank-account']} />
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit" id="submit-button">Submit</button>
+        </div>
+      </div>
     </div>
-    <div>
-      <button id="submit-button">Submit</button>
-    </div>
+
     <script>
     (async () => {
       await customElements.whenDefined('justifi-payment-form');
