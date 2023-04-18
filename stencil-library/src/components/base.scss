@@ -3,9 +3,4 @@
 @import "maps";
 @import "mixins";
 @import "utilities";
-@import "root";
 @import "reboot";
-
-:host {
-  display: block;
-}
