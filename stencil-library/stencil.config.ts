@@ -32,4 +32,9 @@ export const config: Config = {
       }]
     },
   ],
+  // Uncomment to develop if needed
+  // testing: {
+  //   browserHeadless: false,
+  //   browserSlowMo: 2000,
+  // }
 };

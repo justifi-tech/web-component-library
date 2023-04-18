@@ -10,7 +10,9 @@ import packageJson from '../../../package.json';
 })
 export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
-  @Prop() paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({
+    mutable: true,
+  }) paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() paymentMethodStyleOverrides: Theme | undefined;
   @Prop() iframeOrigin?: string;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;

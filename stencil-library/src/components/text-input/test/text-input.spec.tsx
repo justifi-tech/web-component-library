@@ -10,7 +10,8 @@ describe('text-input', () => {
     expect(page.root).toEqualHtml(`
       <text-input>
         <mock:shadow-root>
-          <slot></slot>
+          <label></label>
+          <input type="text">
         </mock:shadow-root>
       </text-input>
     `);

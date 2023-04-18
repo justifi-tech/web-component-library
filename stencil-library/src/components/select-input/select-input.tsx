@@ -1,4 +1,4 @@
-import { Component, Host, h, Event, Prop, State, EventEmitter } from '@stencil/core';
+import { Component, Event, Host, Prop, h, EventEmitter, Method, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'select-input',
@@ -26,10 +26,11 @@ export class SelectInput {
         <label>{this.label}</label>
         <select
           name={this.name}
-          onInput={(event) => this.onInput(event)}>
-          {this.options.map((option) => {
-            return (<option value={option.value}>{option.label}</option>);
-          })}
+          onInput={(event) => this.onInput(event)}
+        >
+          {this.options.map((option) =>
+            <option value={option.value}>{option.label}</option>
+          )}
         </select>
         {this.error && <div style={{ color: 'red' }}>{this.error}</div>}
       </Host>

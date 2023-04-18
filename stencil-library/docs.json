@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-12T20:13:26",
+  "timestamp": "2023-04-17T20:25:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.22.3",
@@ -50,7 +50,7 @@
         {
           "name": "validationStrategy",
           "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
-          "mutable": false,
+          "mutable": true,
           "attr": "validation-strategy",
           "reflectToAttr": false,
           "docs": "",
@@ -554,7 +554,7 @@
         {
           "name": "paymentMethodFormValidationStrategy",
           "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
-          "mutable": false,
+          "mutable": true,
           "attr": "payment-method-form-validation-strategy",
           "reflectToAttr": false,
           "docs": "",
