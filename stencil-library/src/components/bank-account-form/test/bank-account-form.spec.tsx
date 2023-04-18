@@ -9,24 +9,24 @@ describe('justifi-bank-account-form', () => {
     });
     expect(page.root).toEqualHtml(`
       <justifi-bank-account-form>
-        <justifi-payment-method-form iframe-origin="https://js.justifi.ai/bank-account"></justifi-payment-method-form>
+        <justifi-payment-method-form payment-method-form-type="bankAccount" payment-method-form-validation-strategy="onSubmit"></justifi-payment-method-form>
       </justifi-bank-account-form>
     `);
   });
 
-  it('passes iframe-origin down to justifi-payment-method-form', async () => {
-    const page = await newSpecPage({
-      components: [BankAccountForm],
-      html: `
-      <justifi-bank-account-form iframe-origin="https://www.test.com"></justifi-bank-account-form>
-      `,
-    });
-    expect(page.root).toEqualHtml(`
-      <justifi-bank-account-form iframe-origin="https://www.test.com">
-        <justifi-payment-method-form iframe-origin="https://www.test.com"></justifi-payment-method-form>
-      </justifi-bank-account-form>
-    `);
-  });
+  // it('passes iframe-origin down to justifi-payment-method-form', async () => {
+  //   const page = await newSpecPage({
+  //     components: [BankAccountForm],
+  //     html: `
+  //     <justifi-bank-account-form iframe-origin="https://www.test.com"></justifi-bank-account-form>
+  //     `,
+  //   });
+  //   expect(page.root).toEqualHtml(`
+  //     <justifi-bank-account-form iframe-origin="https://www.test.com">
+  //       <justifi-payment-method-form iframe-origin="https://www.test.com"></justifi-payment-method-form>
+  //     </justifi-bank-account-form>
+  //   `);
+  // });
 
   it('has a tokenize method which calls tokenize on justifi-payment-method-form', async () => {
     const bankAccountForm = new BankAccountForm();

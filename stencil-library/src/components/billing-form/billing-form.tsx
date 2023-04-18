@@ -60,11 +60,7 @@ export class BillingForm {
   }
 
   legendBlock = (
-    <div class="row gy-3">
-      <div class="col-12">
-        <legend>{this.legend}</legend>
-      </div>
-    </div>
+    <legend>{this.legend}</legend>
   );
 
   render() {
