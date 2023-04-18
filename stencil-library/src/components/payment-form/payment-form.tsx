@@ -1,6 +1,15 @@
 import { Component, Prop, h, Host, State, Listen, Method } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { Theme } from '../payment-method-form/theme';
+
+const layoutSpacing = '4px';
+
+const styleOverrides: Theme = {
+  layout: {
+    padding: layoutSpacing
+  }
+};
 
 @Component({
   tag: 'justifi-payment-form',
@@ -69,6 +78,8 @@ export class PaymentForm {
           )}
           <div class="col-12">
             <justifi-payment-method-form
+              style={{ margin: `0 -${layoutSpacing}` }}
+              paymentMethodStyleOverrides={styleOverrides}
               payment-method-form-type={this.selectedPaymentMethodType}
               iframe-origin={this.iframeOrigin}
               ref={el => { if (el) { this.paymentMethodFormRef = el } }}
