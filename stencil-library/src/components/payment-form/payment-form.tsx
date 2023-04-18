@@ -4,7 +4,8 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-form',
-  shadow: false,
+  shadow: true,
+  styleUrl: 'payment-form.scss'
 })
 export class PaymentForm {
   @Prop() bankAccount?: boolean;

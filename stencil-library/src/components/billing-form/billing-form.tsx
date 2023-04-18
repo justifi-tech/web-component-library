@@ -5,7 +5,7 @@ import StateOptions from './state-options';
 
 @Component({
   tag: 'justifi-billing-form',
-  styleUrl: 'billing-form.css',
+  styleUrl: 'billing-form.scss',
   shadow: true,
 })
 export class BillingForm {

@@ -2,7 +2,7 @@ import { Component, Host, h, Event, Prop, State, EventEmitter } from '@stencil/c
 
 @Component({
   tag: 'text-input',
-  styleUrl: 'text-input.css',
+  styleUrl: 'text-input.scss',
   shadow: true,
 })
 export class TextInput {
@@ -22,14 +22,15 @@ export class TextInput {
   render() {
     return (
       <Host>
-        <label>{this.label}</label>
+        <label class="form-label">{this.label}</label>
         <input
           name={this.name}
           type="text"
+          class={this.error ? 'form-control is-invalid' : 'form-control'}
           onInput={(event) => this.onInput(event)}
           value={this.internalValue || this.defaultValue}
         />
-        {this.error && <div style={{ color: 'red' }}>{this.error}</div>}
+        {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
     );
   }

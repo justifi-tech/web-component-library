@@ -15,6 +15,12 @@
   <button type="submit" id="payment-form-submit">Submit</button>
 </body>
 
+<style>
+  text-input::part(label) {
+    color: red;
+  }
+</style>
+
 <script>
   (function () {
     var paymentForm = document.querySelector('justifi-payment-form');
