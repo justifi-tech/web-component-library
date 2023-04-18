@@ -1,9 +1,9 @@
 {
-  "timestamp": "2023-04-17T20:25:43",
+  "timestamp": "2023-04-18T20:24:00",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.22.3",
-    "typescriptVersion": "4.9.4"
+    "version": "2.20.0",
+    "typescriptVersion": "4.8.4"
   },
   "components": [
     {
@@ -18,7 +18,7 @@
         {
           "name": "iframeOrigin",
           "type": "string",
-          "mutable": false,
+          "mutable": true,
           "attr": "iframe-origin",
           "reflectToAttr": false,
           "docs": "",
@@ -34,7 +34,7 @@
         {
           "name": "styleOverrides",
           "type": "string",
-          "mutable": false,
+          "mutable": true,
           "attr": "style-overrides",
           "reflectToAttr": false,
           "docs": "",
@@ -172,7 +172,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "legend",
+          "type": "string",
+          "mutable": false,
+          "attr": "legend",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        }
+      ],
       "methods": [
         {
           "name": "fill",
@@ -248,7 +265,7 @@
         {
           "name": "iframeOrigin",
           "type": "string",
-          "mutable": false,
+          "mutable": true,
           "attr": "iframe-origin",
           "reflectToAttr": false,
           "docs": "",
@@ -264,7 +281,7 @@
         {
           "name": "styleOverrides",
           "type": "string",
-          "mutable": false,
+          "mutable": true,
           "attr": "style-overrides",
           "reflectToAttr": false,
           "docs": "",
@@ -280,7 +297,7 @@
         {
           "name": "validationStrategy",
           "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
-          "mutable": false,
+          "mutable": true,
           "attr": "validation-strategy",
           "reflectToAttr": false,
           "docs": "",

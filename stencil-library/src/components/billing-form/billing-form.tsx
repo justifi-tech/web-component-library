@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Listen, Method } from '@stencil/core';
+import { Component, Host, h, State, Listen, Method, Prop } from '@stencil/core';
 import { ValidationError } from 'yup';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from './state-options';
@@ -9,6 +9,7 @@ import StateOptions from './state-options';
   shadow: true,
 })
 export class BillingForm {
+  @Prop() legend?: string;
   @State() billingFields: BillingFormFields = {
     address_line1: '',
     address_line2: '',
@@ -58,10 +59,15 @@ export class BillingForm {
     return this.billingFields;
   }
 
+  legendBlock = (
+    <legend>{this.legend}</legend>
+  );
+
   render() {
     return (
       <Host>
         <fieldset>
+          {this.legend && this.legendBlock}
           <text-input
             name="address_line1"
             label="Street Address"

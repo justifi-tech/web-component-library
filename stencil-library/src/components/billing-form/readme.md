@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type     | Default     |
+| -------- | --------- | ----------- | -------- | ----------- |
+| `legend` | `legend`  |             | `string` | `undefined` |
+
+
 ## Methods
 
 ### `fill(fields: BillingFormFields) => Promise<void>`

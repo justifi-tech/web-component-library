@@ -69,7 +69,10 @@ export class PaymentForm {
             iframe-origin={this.iframeOrigin}
             ref={el => { if (el) { this.paymentMethodFormRef = el } }}
           />
-          <justifi-billing-form ref={el => { if (el) { this.billingFormRef = el } }} />
+          <justifi-billing-form
+            legend="Billing Info"
+            ref={el => { if (el) { this.billingFormRef = el } }}
+          />
         </form>
       </Host>
     );
