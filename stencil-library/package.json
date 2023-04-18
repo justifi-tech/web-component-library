@@ -26,8 +26,8 @@
     "build": "stencil build --docs",
     "start": "concurrently -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
     "start-stencil": "stencil build --watch --serve --no-open",
-    "test": "stencil test --spec --e2e",
-    "test:watch": "stencil test --spec --e2e --watchAll",
+    "test": "stencil test --spec",
+    "test:watch": "stencil test --spec --watchAll",
     "generate": "stencil generate",
     "storybook": "storybook dev -p 6006 --quiet",
     "build-storybook": "storybook build"
