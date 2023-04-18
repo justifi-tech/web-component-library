@@ -8,6 +8,7 @@ const PaymentMethodLabels = {
 
 @Component({
   tag: 'justifi-payment-method-selector',
+  styleUrl: 'payment-method-selector.scss',
   shadow: false,
 })
 export class PaymentMethodSelector {
@@ -23,7 +24,7 @@ export class PaymentMethodSelector {
 
   render() {
     return (
-      <div>
+      <div class="form-check">
         {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) => {
           return (
             <div>
@@ -34,8 +35,11 @@ export class PaymentMethodSelector {
                 value={paymentMethodType}
                 onChange={(event: any) => this.onChangeHandler(event)}
                 checked={this.selectedPaymentMethodType === paymentMethodType}
+                class="form-check-input"
               />
-              <label htmlFor={paymentMethodType}>{PaymentMethodLabels[paymentMethodType]}</label>
+              <label htmlFor={paymentMethodType} class="form-check-label">
+                {PaymentMethodLabels[paymentMethodType]}
+              </label>
             </div>
           );
         })}
