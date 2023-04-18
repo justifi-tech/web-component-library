@@ -4,7 +4,8 @@ interface PaymentFormStoryArgs {
   clientId: string,
   paymentMethodData: any,
   accountId: string,
-  iframeOrigin: string
+  iframeOrigin: string,
+  environment: string
 }
 
 const Template = (args: PaymentFormStoryArgs) => {
@@ -12,7 +13,6 @@ const Template = (args: PaymentFormStoryArgs) => {
   return (`
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
     <div class="container py-4" style="max-width: 400px;">
       <h1>Make a payment</h1>
       <div class="row gy-3">
@@ -31,7 +31,13 @@ const Template = (args: PaymentFormStoryArgs) => {
       const paymentForm = document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
 
-      paymentForm.iframeOrigin = 'http://localhost:3003/v2';
+      const iframeOrigins = {
+        development: 'http://localhost:3003/v2',
+        staging: 'https://js.justifi-staging.com/v2',
+        production: 'https://js.justifi.ai/v2',
+      };
+
+      paymentForm.iframeOrigin = iframeOrigins['${args.environment}'];
 
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
@@ -50,6 +56,15 @@ export default {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
   argTypes: {
+    environment: {
+      name: 'Environment',
+      type: { name: 'string', required: false },
+      defaultValue: 'staging',
+      control: {
+        type: 'select',
+      },
+      options: ['development', 'staging', 'production']
+    },
     'bank-account': {
       control: 'boolean',
       table: {
@@ -97,6 +112,5 @@ Basic.args = {
   card: true,
   clientId: '',
   paymentMethodData: {},
-  accountId: '',
-  iframeOrigin: ''
+  accountId: ''
 };

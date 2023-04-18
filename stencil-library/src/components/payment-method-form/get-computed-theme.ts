@@ -3,8 +3,6 @@ import { Theme } from "./theme";
 const getComputedTheme = (labelElement, inputElement) => {
   if (!inputElement || !labelElement) return;
 
-  console.log(document.styleSheets[0].rules[0])
-
   // default state styles
   const labelStyles = getComputedStyle(labelElement);
   const inputStyles = getComputedStyle(inputElement);
