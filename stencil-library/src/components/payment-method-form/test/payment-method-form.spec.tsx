@@ -1,4 +1,4 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method, State, Watch } from '@stencil/core';
+import { h, } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentMethodForm } from '../payment-method-form';
 

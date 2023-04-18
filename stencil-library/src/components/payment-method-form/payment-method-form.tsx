@@ -5,7 +5,7 @@ import packageJson from '../../../package.json';
 
 @Component({
   tag: 'justifi-payment-method-form',
-  styleUrl: 'payment-method-form.css',
+  styleUrl: 'payment-method-form.scss',
   shadow: false,
 })
 export class PaymentMethodForm {
