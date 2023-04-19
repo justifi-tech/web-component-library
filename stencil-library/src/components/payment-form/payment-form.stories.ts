@@ -17,7 +17,11 @@ const Template = (args: PaymentFormStoryArgs) => {
       <h1>Make a payment</h1>
       <div class="row gy-3">
         <div class="col-12">
-          <justifi-payment-form card=${args.card} bank-account=${args['bank-account']} />
+          <justifi-payment-form
+            card=${args.card}
+            bank-account=${args['bank-account']}
+            iframe-origin=${args['iframe-origin']}
+          />
         </div>
         <div class="col-12">
           <button class="btn btn-primary" type="submit" id="submit-button">Submit</button>
@@ -28,16 +32,7 @@ const Template = (args: PaymentFormStoryArgs) => {
     <script>
     (async () => {
       await customElements.whenDefined('justifi-payment-form');
-      const paymentForm = document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
-
-      const iframeOrigins = {
-        development: 'http://localhost:3003/v2',
-        staging: 'https://js.justifi-staging.com/v2',
-        production: 'https://js.justifi.ai/v2',
-      };
-
-      paymentForm.iframeOrigin = iframeOrigins['${args.environment}'];
 
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
@@ -56,42 +51,37 @@ export default {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
   argTypes: {
-    environment: {
-      name: 'Environment',
-      type: { name: 'string', required: false },
-      control: {
-        type: 'select',
+    'iframe-origin': {
+      options: ['development', 'staging', 'production'],
+      mapping: {
+        development: 'http://localhost:3003/v2',
+        staging: 'https://js.justifi-staging.com/v2',
+        production: 'https://js.justifi.ai/v2',
       },
-      options: ['development', 'staging', 'production']
+      control: { type: 'select' },
     },
     'bank-account': {
       control: 'boolean',
-      table: {
-        category: 'Props'
-      }
     },
     card: {
       control: 'boolean',
-      table: {
-        category: 'Props'
-      }
     },
     accountId: {
       control: 'text',
       table: {
-        category: 'Tokenize Arguments'
+        category: 'Submit arguments'
       }
     },
     clientId: {
       control: 'text',
       table: {
-        category: 'Tokenize Arguments'
+        category: 'Submit arguments'
       }
     },
     paymentMethodData: {
       control: 'object',
       table: {
-        category: 'Tokenize Arguments'
+        category: 'Submit arguments'
       }
     },
   },
@@ -112,5 +102,5 @@ Basic.args = {
   clientId: '',
   paymentMethodData: {},
   accountId: '',
-  environment: 'production'
+  'iframe-origin': 'development'
 };
