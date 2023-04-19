@@ -82,6 +82,7 @@ export class PaymentForm {
               paymentMethodStyleOverrides={styleOverrides}
               payment-method-form-type={this.selectedPaymentMethodType}
               iframe-origin={this.iframeOrigin}
+              useComputedTheme={true}
               ref={el => { if (el) { this.paymentMethodFormRef = el } }}
             />
           </div>

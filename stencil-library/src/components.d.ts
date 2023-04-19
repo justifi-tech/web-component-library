@@ -43,6 +43,7 @@ export namespace Components {
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides": Theme | undefined;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "useComputedTheme"?: boolean;
         "validate": () => Promise<any>;
     }
     interface JustifiPaymentMethodSelector {
@@ -190,6 +191,7 @@ declare namespace LocalJSX {
         "paymentMethodFormType"?: 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides"?: Theme | undefined;
+        "useComputedTheme"?: boolean;
     }
     interface JustifiPaymentMethodSelector {
         "onPaymentMethodSelected"?: (event: JustifiPaymentMethodSelectorCustomEvent<any>) => void;

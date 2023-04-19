@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-19T15:46:22",
+  "timestamp": "2023-04-19T20:21:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -615,6 +615,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "useComputedTheme",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "use-computed-theme",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": true,
+          "required": false
         }
       ],
       "methods": [
@@ -664,7 +680,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "input",
+          "docs": ""
+        },
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "justifi-bank-account-form",
         "justifi-card-form",

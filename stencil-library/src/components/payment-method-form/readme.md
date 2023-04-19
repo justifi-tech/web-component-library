@@ -13,6 +13,7 @@ This component is intended for internal use by `justifi-card-form` and `justifi-
 | `paymentMethodFormType`               | `payment-method-form-type`                |             | `"bankAccount" \| "card"`                                      | `undefined` |
 | `paymentMethodFormValidationStrategy` | `payment-method-form-validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 | `paymentMethodStyleOverrides`         | --                                        |             | `Theme`                                                        | `undefined` |
+| `useComputedTheme`                    | `use-computed-theme`                      |             | `boolean`                                                      | `undefined` |
 
 
 ## Events
@@ -44,6 +45,14 @@ Type: `Promise<any>`
 Type: `Promise<any>`
 
 
+
+
+## Shadow Parts
+
+| Part      | Description |
+| --------- | ----------- |
+| `"input"` |             |
+| `"label"` |             |
 
 
 ## Dependencies
