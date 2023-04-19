@@ -32,6 +32,7 @@ const Template = (args: PaymentFormStoryArgs) => {
     <script>
     (async () => {
       await customElements.whenDefined('justifi-payment-form');
+      const paymentForm =  document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
 
       submitButton?.addEventListener('click', async () => {
