@@ -3,6 +3,7 @@ import { object, string } from 'yup';
 export const RegExZip = /^\d{5}/;
 
 export interface BillingFormFields {
+  name: string;
   address_line1: string;
   address_line2?: string;
   address_city: string;
@@ -11,7 +12,7 @@ export interface BillingFormFields {
 }
 
 const BillingFormSchema = object({
-  // name: string().required('Enter name'),
+  name: string().required('Enter name'),
   address_line1: string().required('Enter street address'),
   address_line2: string(),
   address_city: string().required('Enter city'),

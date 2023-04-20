@@ -31,11 +31,13 @@ export namespace Components {
         "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
+        "accountId"?: string;
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "clientId": string;
+        "email": string;
         "fillBillingForm": (fields: BillingFormFields) => Promise<void>;
         "iframeOrigin"?: string;
-        "submit": (args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>;
     }
     interface JustifiPaymentMethodForm {
         "iframeOrigin"?: string;
@@ -43,7 +45,6 @@ export namespace Components {
         "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides": Theme | undefined;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
-        "useComputedTheme"?: boolean;
         "validate": () => Promise<any>;
     }
     interface JustifiPaymentMethodSelector {
@@ -75,6 +76,10 @@ export interface JustifiBankAccountFormCustomEvent<T> extends CustomEvent<T> {
 export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiCardFormElement;
+}
+export interface JustifiPaymentFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLJustifiPaymentFormElement;
 }
 export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -180,9 +185,13 @@ declare namespace LocalJSX {
         "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
+        "accountId"?: string;
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "clientId"?: string;
+        "email"?: string;
         "iframeOrigin"?: string;
+        "onOnSubmit"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
     }
     interface JustifiPaymentMethodForm {
         "iframeOrigin"?: string;
@@ -191,7 +200,6 @@ declare namespace LocalJSX {
         "paymentMethodFormType"?: 'card' | 'bankAccount';
         "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides"?: Theme | undefined;
-        "useComputedTheme"?: boolean;
     }
     interface JustifiPaymentMethodSelector {
         "onPaymentMethodSelected"?: (event: JustifiPaymentMethodSelectorCustomEvent<any>) => void;

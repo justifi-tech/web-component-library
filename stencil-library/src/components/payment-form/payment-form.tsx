@@ -1,7 +1,8 @@
-import { Component, Prop, h, Host, State, Listen, Method } from '@stencil/core';
+import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Theme } from '../payment-method-form/theme';
+import getComputedTheme from '../payment-method-form/get-computed-theme';
 
 const layoutSpacing = '4px';
 
@@ -17,11 +18,15 @@ const styleOverrides: Theme = {
   styleUrl: 'payment-form.scss'
 })
 export class PaymentForm {
+  @Prop() clientId: string;
+  @Prop() email: string;
+  @Prop() iframeOrigin?: string;
+  @Prop() accountId?: string;
   @Prop() bankAccount?: boolean;
   @Prop() card?: boolean;
-  @Prop() iframeOrigin?: string;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
+  @Event() onSubmit: EventEmitter<{ data: any }>;
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
@@ -50,8 +55,7 @@ export class PaymentForm {
     this.billingFormRef.fill(fields);
   }
 
-  @Method()
-  async submit(args: { clientId: string, paymentMethodData: any, accountId?: string }) {
+  async submit() {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
@@ -60,9 +64,15 @@ export class PaymentForm {
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
 
-    const paymentMethodData = { ...args.paymentMethodData, ...billingFormFieldValues };
+    const paymentMethodData = { email: this.email, ...billingFormFieldValues };
 
-    return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodData, args.accountId);
+    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
+      this.clientId,
+      paymentMethodData,
+      this.accountId
+    );
+
+    this.onSubmit.emit(tokenizeResponse);
   }
 
   render() {
@@ -82,7 +92,6 @@ export class PaymentForm {
               paymentMethodStyleOverrides={styleOverrides}
               payment-method-form-type={this.selectedPaymentMethodType}
               iframe-origin={this.iframeOrigin}
-              useComputedTheme={true}
               ref={el => { if (el) { this.paymentMethodFormRef = el } }}
             />
           </div>
@@ -91,6 +100,9 @@ export class PaymentForm {
               legend="Billing Info"
               ref={el => { if (el) { this.billingFormRef = el } }}
             />
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" onClick={() => this.submit()}>Submit</button>
           </div>
         </form>
       </Host>

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-19T20:21:19",
+  "timestamp": "2023-04-19T22:33:26",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -421,6 +421,22 @@
       "usage": {},
       "props": [
         {
+          "name": "accountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
           "name": "bankAccount",
           "type": "boolean",
           "mutable": false,
@@ -453,6 +469,38 @@
           "required": false
         },
         {
+          "name": "clientId",
+          "type": "string",
+          "mutable": false,
+          "attr": "client-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "mutable": false,
+          "attr": "email",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "iframeOrigin",
           "type": "string",
           "mutable": false,
@@ -480,20 +528,19 @@
           "parameters": [],
           "docs": "",
           "docsTags": []
-        },
+        }
+      ],
+      "events": [
         {
-          "name": "submit",
-          "returns": {
-            "type": "Promise<any>",
-            "docs": ""
-          },
-          "signature": "submit(args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>",
-          "parameters": [],
+          "event": "onSubmit",
+          "detail": "{ data: any; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
           "docs": "",
           "docsTags": []
         }
       ],
-      "events": [],
       "listeners": [
         {
           "event": "paymentMethodSelected",
@@ -615,22 +662,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "useComputedTheme",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "use-computed-theme",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": true,
-          "required": false
         }
       ],
       "methods": [
@@ -680,16 +711,7 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [
-        {
-          "name": "input",
-          "docs": ""
-        },
-        {
-          "name": "label",
-          "docs": ""
-        }
-      ],
+      "parts": [],
       "dependents": [
         "justifi-bank-account-form",
         "justifi-card-form",
