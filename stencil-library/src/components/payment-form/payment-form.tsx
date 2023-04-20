@@ -2,7 +2,7 @@ import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } 
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Theme } from '../payment-method-form/theme';
-import getComputedTheme from '../payment-method-form/get-computed-theme';
+import getComputedTheme from './get-computed-theme';
 
 const layoutSpacing = '4px';
 
@@ -30,6 +30,7 @@ export class PaymentForm {
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
+  private computedTheme = getComputedTheme();
 
   connectedCallback() {
     if (this.card) {
@@ -42,6 +43,7 @@ export class PaymentForm {
       this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
     }
     this.selectedPaymentMethodType = this.allowedPaymentMethodTypes[0];
+    getComputedTheme();
   }
 
   @Listen('paymentMethodSelected')
@@ -55,7 +57,8 @@ export class PaymentForm {
     this.billingFormRef.fill(fields);
   }
 
-  async submit() {
+  async submit(event) {
+    event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
@@ -89,7 +92,7 @@ export class PaymentForm {
           <div class="col-12">
             <justifi-payment-method-form
               style={{ margin: `0 -${layoutSpacing}` }}
-              paymentMethodStyleOverrides={styleOverrides}
+              paymentMethodStyleOverrides={{ ...this.computedTheme, ...styleOverrides }}
               payment-method-form-type={this.selectedPaymentMethodType}
               iframe-origin={this.iframeOrigin}
               ref={el => { if (el) { this.paymentMethodFormRef = el } }}
@@ -102,7 +105,7 @@ export class PaymentForm {
             />
           </div>
           <div class="col-12">
-            <button class="btn btn-primary" onClick={() => this.submit()}>Submit</button>
+            <button class="btn btn-primary" onClick={(event) => this.submit(event)}>Submit</button>
           </div>
         </form>
       </Host>

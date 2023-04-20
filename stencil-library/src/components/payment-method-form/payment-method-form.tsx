@@ -2,7 +2,6 @@ import { Component, Event, Host, Prop, h, EventEmitter, Method, State, Watch } f
 import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
 import packageJson from '../../../package.json';
-import getComputedTheme from './get-computed-theme';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -14,7 +13,6 @@ export class PaymentMethodForm {
     mutable: true,
   }) paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
-  @Prop() useComputedTheme?: boolean;
   @Prop() paymentMethodStyleOverrides: Theme | undefined;
   @Prop() iframeOrigin?: string;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
@@ -40,15 +38,7 @@ export class PaymentMethodForm {
 
   @Watch('paymentMethodStyleOverrides')
   sendStyleOverrides() {
-    if (this.useComputedTheme) {
-      const computedTheme = getComputedTheme(this.formLabel, this.formControl, this.formControlInvalid);
-      console.log('combined styles:', { ...computedTheme, ...this.paymentMethodStyleOverrides })
-      this.postMessage(
-        MessageEventType[this.paymentMethodFormType].styleOverrides,
-        { styleOverrides: { ...computedTheme, ...this.paymentMethodStyleOverrides } }
-      );
-    }
-    else if (this.paymentMethodStyleOverrides) {
+    if (this.paymentMethodStyleOverrides) {
       this.postMessage(
         MessageEventType[this.paymentMethodFormType].styleOverrides,
         { styleOverrides: this.paymentMethodStyleOverrides }
@@ -119,11 +109,6 @@ export class PaymentMethodForm {
   render() {
     return (
       <Host exportparts="label,input">
-        <div style={{ height: '0', visibility: 'hidden' }}>
-          <div part="label" class="form-label" ref={(el) => this.formLabel = el as HTMLInputElement}></div>
-          <input part="input" class="form-control" ref={(el) => this.formControl = el as HTMLInputElement} />
-          <input part="input" class="form-control is-invalid" ref={(el) => this.formControlInvalid = el as HTMLInputElement} />
-        </div>
         <iframe
           id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
           src={this.getIframeSrc()}

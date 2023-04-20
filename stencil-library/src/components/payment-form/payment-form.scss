@@ -1,7 +1,7 @@
-@import "../base";
-
 @import "grid";
+@import "buttons";
 
 :host {
+  @include host-base-styles;
   display: block;
 }

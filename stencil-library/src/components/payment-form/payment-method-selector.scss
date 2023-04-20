@@ -1,4 +1,5 @@
-@import "../base";
 @import "forms";
 
-:host {}
+:host {
+  @include host-base-styles;
+}

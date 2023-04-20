@@ -5,6 +5,16 @@ import { reactOutputTarget as react } from '@stencil/react-output-target';
 export const config: Config = {
   namespace: 'webcomponents',
   plugins: [sass({
+    injectGlobalPaths: [
+      './node_modules/bootstrap/scss/_functions.scss',
+      './node_modules/bootstrap/scss/_variables.scss',
+      './node_modules/bootstrap/scss/_maps.scss',
+      './node_modules/bootstrap/scss/_mixins.scss',
+      './node_modules/bootstrap/scss/_utilities.scss',
+      './node_modules/bootstrap/scss/_reboot.scss',
+      './node_modules/bootstrap/scss/_root.scss',
+      './src/components/utilities.scss'
+    ],
     includePaths: ['./node_modules/bootstrap/scss/']
   })],
   outputTargets: [
