@@ -15,6 +15,7 @@ export class PaymentMethodForm {
   }) paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() paymentMethodStyleOverrides: Theme | undefined;
   @Prop() iframeOrigin?: string;
+  @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   @State() height: number = 55;
@@ -99,6 +100,9 @@ export class PaymentMethodForm {
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     if (this.paymentMethodFormValidationStrategy) {
       iframeSrc += `?validationStrategy=${this.paymentMethodFormValidationStrategy}`
+    }
+    if(this.singleLine) {
+      iframeSrc += `?singleLine=${this.singleLine}`
     }
     return iframeSrc;
   }

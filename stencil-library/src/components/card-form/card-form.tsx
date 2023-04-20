@@ -9,6 +9,7 @@ export class CardForm {
   @Prop({mutable: true}) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop({mutable: true}) styleOverrides?: string;
   @Prop({mutable: true}) iframeOrigin?: string;
+  @Prop() singleLine: boolean;
   @State() internalStyleOverrides: Theme;
   @Event() cardFormReady: EventEmitter;
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
@@ -67,6 +68,7 @@ export class CardForm {
         }}
         iframe-origin={this.iframeOrigin}
         payment-method-form-type="card"
+        single-line={true}
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-tokenize={this.cardFormTokenize}
         payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
