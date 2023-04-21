@@ -16,7 +16,7 @@ inputs:
   build_command:
     description: 'Specifies the command to run after npm ci for the build'
     required: false
-    default: 'npm run build'
+    default: 'yarn build-storybook'
 outputs:
   page_url:
     description: "The URL of the page"
