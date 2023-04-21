@@ -1,8 +1,23 @@
 import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 
 export const config: Config = {
   namespace: 'webcomponents',
+  globalStyle: './src/styles/root.scss',
+  plugins: [sass({
+    injectGlobalPaths: [
+      './node_modules/bootstrap/scss/_functions.scss',
+      './node_modules/bootstrap/scss/_variables.scss',
+      './node_modules/bootstrap/scss/_maps.scss',
+      './node_modules/bootstrap/scss/_mixins.scss',
+      './node_modules/bootstrap/scss/_utilities.scss',
+      './node_modules/bootstrap/scss/_reboot.scss',
+      './node_modules/bootstrap/scss/_root.scss',
+      './src/styles/_mixins.scss'
+    ],
+    includePaths: ['./node_modules/bootstrap/scss/']
+  })],
   outputTargets: [
     react({
       componentCorePackage: '@justifi/webcomponents',

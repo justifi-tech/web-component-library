@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-18T20:24:00",
+  "timestamp": "2023-04-21T20:55:48",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -413,7 +413,7 @@
     },
     {
       "filePath": "./src/components/payment-form/payment-form.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "justifi-payment-form",
       "readme": "# justifi-payment-form\n\n\n## Examples\n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-payment-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>PaymentForm</h1>\n  <hr>\n  <justifi-payment-form></justifi-payment-form>\n</body>\n\n<script>\n  (function () {})();\n</script>\n\n</html>\n```\n",
       "docs": "",
