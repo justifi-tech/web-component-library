@@ -66,7 +66,7 @@ export class BillingForm {
 
   render() {
     return (
-      <Host exportparts="label,input">
+      <Host exportparts="label,input,input-invalid">
         <fieldset>
           {this.legend && this.legendBlock}
           <div class="row gy-3">

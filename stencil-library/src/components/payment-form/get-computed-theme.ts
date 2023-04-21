@@ -4,6 +4,9 @@ const getComputedTheme = () => {
   const computedStyles = getComputedStyle(document.body);
 
   const computedTheme: Theme = {
+    layout: {
+      padding: computedStyles.getPropertyValue('--jfi-layout-padding')
+    },
     formControl: {
       backgroundColor: computedStyles.getPropertyValue('--jfi-form-control-background-color'),
       borderColor: computedStyles.getPropertyValue('--jfi-form-control-border-color'),
@@ -41,8 +44,6 @@ const getComputedTheme = () => {
       fontSize: computedStyles.getPropertyValue('--jfi-error-message-font-size'),
     }
   };
-
-  console.log('computedTheme', computedTheme);
 
   return computedTheme;
 }

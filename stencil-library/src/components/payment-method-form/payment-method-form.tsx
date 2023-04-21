@@ -109,6 +109,7 @@ export class PaymentMethodForm {
   render() {
     return (
       <Host exportparts="label,input">
+        <div class="label"></div>
         <iframe
           id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
           src={this.getIframeSrc()}

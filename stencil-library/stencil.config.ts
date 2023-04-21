@@ -4,6 +4,7 @@ import { reactOutputTarget as react } from '@stencil/react-output-target';
 
 export const config: Config = {
   namespace: 'webcomponents',
+  globalStyle: './src/styles/root.scss',
   plugins: [sass({
     injectGlobalPaths: [
       './node_modules/bootstrap/scss/_functions.scss',
@@ -13,7 +14,7 @@ export const config: Config = {
       './node_modules/bootstrap/scss/_utilities.scss',
       './node_modules/bootstrap/scss/_reboot.scss',
       './node_modules/bootstrap/scss/_root.scss',
-      './src/components/utilities.scss'
+      './src/styles/utilities.scss'
     ],
     includePaths: ['./node_modules/bootstrap/scss/']
   })],

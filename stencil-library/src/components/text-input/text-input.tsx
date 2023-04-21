@@ -21,10 +21,10 @@ export class TextInput {
 
   render() {
     return (
-      <Host exportparts="label,input">
+      <Host exportparts="label,input,input-invalid">
         <label part="label" class="form-label">{this.label}</label>
         <input
-          part="input"
+          part={`input ${this.error && 'input-invalid'}`}
           name={this.name}
           type="text"
           class={this.error ? 'form-control is-invalid' : 'form-control'}
