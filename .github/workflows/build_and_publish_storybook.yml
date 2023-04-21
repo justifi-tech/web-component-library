@@ -23,6 +23,7 @@ jobs:
       shell: bash
       run: |
         echo "::group::Build"
+        rm -rf node_modules
         yarn install --frozen-lockfile
         yarn build-storybook
         echo "::endgroup::"
