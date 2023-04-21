@@ -68,7 +68,7 @@ export class CardForm {
         }}
         iframe-origin={this.iframeOrigin}
         payment-method-form-type="card"
-        single-line={true}
+        single-line={this.singleLine}
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-tokenize={this.cardFormTokenize}
         payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
