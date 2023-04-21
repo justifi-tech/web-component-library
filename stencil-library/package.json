@@ -30,7 +30,7 @@
     "test:watch": "stencil test --spec --watchAll",
     "generate": "stencil generate",
     "storybook": "storybook dev -p 6006 --quiet",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build -o ../docs"
   },
   "dependencies": {
     "@stencil/core": "^2.13.0",
