@@ -1,0 +1,51 @@
+# Taken and modified from https://github.com/bitovi/github-actions-react-to-ghp/blob/main/action.yaml
+name: 'Deploy React to GitHub Pages'
+description: 'Build and deploy react code to GitHub pages'
+branding:
+  icon: upload-cloud
+  color: red
+inputs:
+  checkout:
+    description: 'Specifies if this action should checkout the code'
+    required: false
+    default: 'true'
+  path:
+    description: 'Specifies the path of the static assets after building'
+    required: false
+    default: 'dist'
+  build_command:
+    description: 'Specifies the command to run after npm ci for the build'
+    required: false
+    default: 'npm run build'
+outputs:
+  page_url:
+    description: "The URL of the page"
+    value: ${{ steps.deploy.outputs.page_url }}
+
+  
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Checkout if required
+      if: ${{ inputs.checkout == 'true' }}
+      uses: actions/checkout@v3
+
+    - name: 'Build'
+      shell: bash
+      run: |
+        echo "::group::Build"
+        yarn ci
+        ${{ inputs.build_command }}
+        echo "::endgroup::"
+    - name: 'upload'
+      uses: actions/upload-pages-artifact@v1.0.4
+      with: 
+        path: ${{ inputs.path }}
+
+    - id: deploy
+      name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v1
+      with:
+        token: ${{ github.token }}
