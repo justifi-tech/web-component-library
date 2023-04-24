@@ -22,8 +22,6 @@ const Template = (args: PaymentFormStoryArgs) => {
       const paymentForm = document.querySelector('justifi-payment-form');
       const submitButton = document.querySelector('#submit-button');
 
-      paymentForm.iframeOrigin = 'http://localhost:3003/v2';
-
       submitButton?.addEventListener('click', async () => {
         const tokenizeResponse = await paymentForm.submit({
           clientId: '${args.clientId}',
