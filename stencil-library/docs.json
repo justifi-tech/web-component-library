@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-21T20:29:26",
+  "timestamp": "2023-04-24T15:04:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -276,6 +276,22 @@
             }
           ],
           "optional": true,
+          "required": false
+        },
+        {
+          "name": "singleLine",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "single-line",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
           "required": false
         },
         {
@@ -658,6 +674,22 @@
           "values": [
             {
               "type": "Theme"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "singleLine",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "single-line",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,

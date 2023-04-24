@@ -26,9 +26,9 @@ export class SelectInput {
         <label part="label" class="form-label">{this.label}</label>
         <select
           part={`input ${this.error ? 'input-invalid' : ''}`}
-          class="form-select"
           name={this.name}
           onInput={(event) => this.onInput(event)}
+          class={this.error ? 'form-select is-invalid' : 'form-select'}
         >
           {this.options.map((option) =>
             <option value={option.value}>{option.label}</option>

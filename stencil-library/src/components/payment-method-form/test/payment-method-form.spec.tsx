@@ -1,4 +1,4 @@
-import { h, } from '@stencil/core';
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentMethodForm } from '../payment-method-form';
 

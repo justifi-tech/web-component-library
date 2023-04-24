@@ -14,7 +14,7 @@ export const config: Config = {
       './node_modules/bootstrap/scss/_utilities.scss',
       './node_modules/bootstrap/scss/_reboot.scss',
       './node_modules/bootstrap/scss/_root.scss',
-      './src/styles/utilities.scss'
+      './src/styles/_mixins.scss'
     ],
     includePaths: ['./node_modules/bootstrap/scss/']
   })],

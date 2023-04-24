@@ -5,8 +5,8 @@ import getComputedTheme from './get-computed-theme';
 
 @Component({
   tag: 'justifi-payment-form',
+  styleUrl: 'payment-form.scss',
   shadow: true,
-  styleUrl: 'payment-form.scss'
 })
 export class PaymentForm {
   @Prop() clientId: string;

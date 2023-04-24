@@ -15,6 +15,7 @@ export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
   @Prop() paymentMethodStyleOverrides: Theme | undefined;
   @Prop() iframeOrigin?: string;
+  @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   @State() height: number = 55;
@@ -96,14 +97,30 @@ export class PaymentMethodForm {
     return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
   };
 
+  private composeQueryParams(values: string[]) {
+    const queryParams = values.map((value) => {
+      if (value === values[0]) {
+        return value = `?${value}`
+      } else {
+        return value = `&${value}`
+      }
+    })
+    return queryParams.join('');
+  }
+
   private getIframeSrc() {
     const productionIframeOrigin = 'https://js.justifi.ai/v2';
     const iframeOrigin = this.iframeOrigin || productionIframeOrigin;
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
+    let paramsList = [];
     if (this.paymentMethodFormValidationStrategy) {
-      iframeSrc += `?validationStrategy=${this.paymentMethodFormValidationStrategy}`
+      paramsList.push(`validationMode=${this.paymentMethodFormValidationStrategy}`)
     }
-    return iframeSrc;
+    if(this.singleLine) {
+      paramsList.push(`singleLine=${this.singleLine}`)
+    }
+
+    return iframeSrc.concat(this.composeQueryParams(paramsList));
   }
 
   render() {

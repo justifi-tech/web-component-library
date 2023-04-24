@@ -27,9 +27,9 @@ export class TextInput {
           part={`input ${this.error && 'input-invalid'}`}
           name={this.name}
           type="text"
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
           onInput={(event) => this.onInput(event)}
           value={this.internalValue || this.defaultValue}
+          class={this.error ? 'form-control is-invalid' : 'form-control'}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
