@@ -4,7 +4,7 @@ import { expect } from '@storybook/jest';
 interface CardFormStoryArgs {
   iframeOrigin: string,
   singleLine: boolean,
-  styleOverrides: object,
+  cssVariables: string,
   validationMode: string
 }
 
@@ -20,12 +20,6 @@ export default {
     },
     singleLine: {
       control: 'boolean',
-      table: {
-        category: 'Props'
-      }
-    },
-    styleOverrides: {
-      control: 'object',
       table: {
         category: 'Props'
       }
@@ -94,15 +88,18 @@ const FormButtons = `
 `
 
 const Template = (args: CardFormStoryArgs) => {
-  const parsedStyleOverrides = args.styleOverrides ? JSON.stringify(args.styleOverrides) : null;
   const includeButtons = true;
 
   return (`
     <div>
+      <style>
+      :root {
+        ${args.cssVariables}
+      }
+      </style>
       <justifi-card-form 
         data-testid="card-form-iframe" 
         validation-mode='${args.validationMode || 'onSubmit'}'
-        style-overrides='${parsedStyleOverrides || ''}' 
         iframe-origin='${args.iframeOrigin || ''}'
         single-line='${args.singleLine}'
       />
