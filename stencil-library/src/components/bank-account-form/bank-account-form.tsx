@@ -5,7 +5,8 @@ import { Component, Event, Prop, h, EventEmitter, Listen, Method } from '@stenci
   shadow: false,
 })
 export class BankAccountForm {
-  @Prop({ mutable: true }) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) styleOverrides?: string;
   @Prop({ mutable: true }) iframeOrigin?: string;
   @Event() bankAccountFormReady: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
@@ -54,7 +55,7 @@ export class BankAccountForm {
         payment-method-form-type="bankAccount"
         payment-method-form-ready={this.bankAccountFormReady}
         payment-method-form-tokenize={this.bankAccountFormTokenize}
-        payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
+        payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
       />
     );
   }

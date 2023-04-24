@@ -5,7 +5,7 @@ import { Component, Event, Prop, h, EventEmitter, Method, Listen } from '@stenci
   shadow: false,
 })
 export class CardForm {
-  @Prop({ mutable: true }) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop({ mutable: true }) iframeOrigin?: string;
   @Prop() singleLine: boolean;
   @Event() cardFormReady: EventEmitter;
@@ -56,7 +56,7 @@ export class CardForm {
         single-line={this.singleLine}
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-tokenize={this.cardFormTokenize}
-        payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
+        payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
       />
     );
   }

@@ -1,18 +1,18 @@
 # justifi-payment-method-form
 
-This component is intended for internal use by `justifi-card-form` and `justifi-bank-account-form`
+
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property                              | Attribute                                 | Description | Type                                                           | Default     |
-| ------------------------------------- | ----------------------------------------- | ----------- | -------------------------------------------------------------- | ----------- |
-| `iframeOrigin`                        | `iframe-origin`                           |             | `string`                                                       | `undefined` |
-| `paymentMethodFormType`               | `payment-method-form-type`                |             | `"bankAccount" \| "card"`                                      | `undefined` |
-| `paymentMethodFormValidationStrategy` | `payment-method-form-validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
-| `singleLine`                          | `single-line`                             |             | `boolean`                                                      | `undefined` |
+| Property                          | Attribute                             | Description | Type                                                           | Default     |
+| --------------------------------- | ------------------------------------- | ----------- | -------------------------------------------------------------- | ----------- |
+| `iframeOrigin`                    | `iframe-origin`                       |             | `string`                                                       | `undefined` |
+| `paymentMethodFormType`           | `payment-method-form-type`            |             | `"bankAccount" \| "card"`                                      | `undefined` |
+| `paymentMethodFormValidationMode` | `payment-method-form-validation-mode` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
+| `singleLine`                      | `single-line`                         |             | `boolean`                                                      | `undefined` |
 
 
 ## Events

@@ -13,7 +13,7 @@ export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
   @Prop({
     mutable: true,
-  }) paymentMethodFormValidationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  }) paymentMethodFormValidationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() iframeOrigin?: string;
   @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
@@ -111,8 +111,8 @@ export class PaymentMethodForm {
     const iframeOrigin = this.iframeOrigin || productionIframeOrigin;
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
-    if (this.paymentMethodFormValidationStrategy) {
-      paramsList.push(`validationMode=${this.paymentMethodFormValidationStrategy}`)
+    if (this.paymentMethodFormValidationMode) {
+      paramsList.push(`validationMode=${this.paymentMethodFormValidationMode}`)
     }
     if (this.singleLine) {
       paramsList.push(`singleLine=${this.singleLine}`)
