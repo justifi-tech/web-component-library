@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T19:10:32",
+  "timestamp": "2023-04-24T19:38:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -895,7 +895,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "input",
+          "docs": ""
+        },
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "justifi-billing-form"
       ],
@@ -995,7 +1004,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "input",
+          "docs": ""
+        },
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "justifi-billing-form"
       ],

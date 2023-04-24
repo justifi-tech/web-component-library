@@ -22,11 +22,12 @@ export class SelectInput {
 
   render() {
     return (
-      <Host>
-        <label class="form-label">{this.label}</label>
+      <Host exportparts="input,label">
+        <label part="label" class="form-label">{this.label}</label>
         <select
           name={this.name}
           onInput={(event) => this.onInput(event)}
+          part="input"
           class={this.error ? 'form-select is-invalid' : 'form-select'}
         >
           {this.options.map((option) =>
