@@ -5,7 +5,9 @@ const getComputedTheme = () => {
 
   const computedTheme: Theme = {
     layout: {
-      padding: computedStyles.getPropertyValue('--jfi-layout-padding')
+      padding: computedStyles.getPropertyValue('--jfi-layout-padding'),
+      formControlSpacingHorizontal: computedStyles.getPropertyValue('--jfi-layout-form-control-spacing-x'),
+      formControlSpacingVertical: computedStyles.getPropertyValue('--jfi-layout-form-control-spacing-y'),
     },
     formControl: {
       backgroundColor: computedStyles.getPropertyValue('--jfi-form-control-background-color'),
