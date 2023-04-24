@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T19:02:51",
+  "timestamp": "2023-04-24T19:22:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -48,10 +48,10 @@
           "required": false
         },
         {
-          "name": "validationStrategy",
+          "name": "validationMode",
           "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
           "mutable": true,
-          "attr": "validation-strategy",
+          "attr": "validation-mode",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -311,10 +311,10 @@
           "required": false
         },
         {
-          "name": "validationStrategy",
+          "name": "validationMode",
           "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
           "mutable": true,
-          "attr": "validation-strategy",
+          "attr": "validation-mode",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -585,10 +585,10 @@
           "required": false
         },
         {
-          "name": "paymentMethodFormValidationStrategy",
+          "name": "paymentMethodFormValidationMode",
           "type": "\"all\" | \"onBlur\" | \"onChange\" | \"onSubmit\" | \"onTouched\"",
           "mutable": true,
-          "attr": "payment-method-form-validation-strategy",
+          "attr": "payment-method-form-validation-mode",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],

@@ -125,12 +125,12 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ## Properties
 
-| Property             | Attribute             | Description | Type                                                           | Default     |
-| -------------------- | --------------------- | ----------- | -------------------------------------------------------------- | ----------- |
-| `iframeOrigin`       | `iframe-origin`       |             | `string`                                                       | `undefined` |
-| `singleLine`         | `single-line`         |             | `boolean`                                                      | `undefined` |
-| `styleOverrides`     | `style-overrides`     |             | `string`                                                       | `undefined` |
-| `validationStrategy` | `validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
+| Property         | Attribute         | Description | Type                                                           | Default     |
+| ---------------- | ----------------- | ----------- | -------------------------------------------------------------- | ----------- |
+| `iframeOrigin`   | `iframe-origin`   |             | `string`                                                       | `undefined` |
+| `singleLine`     | `single-line`     |             | `boolean`                                                      | `undefined` |
+| `styleOverrides` | `style-overrides` |             | `string`                                                       | `undefined` |
+| `validationMode` | `validation-mode` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 
 ## Events

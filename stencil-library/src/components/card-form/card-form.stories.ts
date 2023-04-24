@@ -1,9 +1,43 @@
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
+interface CardFormStoryArgs {
+  iframeOrigin: string,
+  singleLine: boolean,
+  styleOverrides: object,
+  validationMode: string
+}
+
 export default {
   title: 'Components/CardForm',
-  component: 'justifi-card-form',
+  component: 'justifi-payment-method-form',
+  argTypes: {
+    iframeOrigin: {
+      control: 'text',
+      table: {
+        category: 'Props'
+      }
+    },
+    singleLine: {
+      control: 'boolean',
+      table: {
+        category: 'Props'
+      }
+    },
+    styleOverrides: {
+      control: 'object',
+      table: {
+        category: 'Props'
+      }
+    },
+    validationMode: {
+      control: { type: 'select'},
+      options: ['onSubmit', 'onBlur', 'onChange', 'onTouched', 'all'],
+      table: {
+        category: 'Props'
+      }
+    }
+  },
   parameters: {
     actions: {
       handles: [
@@ -97,24 +131,30 @@ const storyStyleOverrides = {
   }
 };
 
-const Template = ({
-  includeButtons = true,
-  styleOverrides
-}: {
-  includeButtons: boolean,
-  styleOverrides?: object
-}) => {
-  const parsedStyleOverrides = styleOverrides ? JSON.stringify(styleOverrides) : null;
+const Template = (args: CardFormStoryArgs) => {
+  const parsedStyleOverrides = args.styleOverrides ? JSON.stringify(args.styleOverrides) : null;
+  const includeButtons = true;
 
   return (`
     <div>
-      <justifi-card-form data-testid="card-form-iframe" style-overrides='${parsedStyleOverrides || ''}' />
+      <justifi-card-form 
+        data-testid="card-form-iframe" 
+        validation-mode='${args.validationMode || 'onSubmit'}'
+        style-overrides='${parsedStyleOverrides || ''}' 
+        iframe-origin='${args.iframeOrigin}'
+        single-line='${args.singleLine}'
+      />
     </div>
     ${includeButtons ? FormButtons : ''}
   `);
 };
 
 export const Basic = Template.bind({});
+Basic.args = {
+  iframeOrigin: '',
+  singleLine: false,
+  validationMode: 'onSubmit'
+}
 
 export const Embedded = Template.bind({});
 Embedded.decorators = [
@@ -132,7 +172,7 @@ Embedded.decorators = [
 
 export const Styled = Template.bind({});
 Styled.args = {
-  styleOverrides: storyStyleOverrides
+  styleOverrides: storyStyleOverrides,
 }
 
 export const Completed = Template.bind({});
