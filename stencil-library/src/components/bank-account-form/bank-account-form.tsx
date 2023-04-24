@@ -1,5 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, Listen, Method, State } from '@stencil/core';
-import { Theme } from '../payment-method-form/theme';
+import { Component, Event, Prop, h, EventEmitter, Listen, Method } from '@stencil/core';
 
 @Component({
   tag: 'justifi-bank-account-form',
@@ -8,7 +7,6 @@ import { Theme } from '../payment-method-form/theme';
 export class BankAccountForm {
   @Prop({ mutable: true }) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop({ mutable: true }) iframeOrigin?: string;
-  @State() internalStyleOverrides: Theme;
   @Event() bankAccountFormReady: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
   @Event() bankAccountFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
