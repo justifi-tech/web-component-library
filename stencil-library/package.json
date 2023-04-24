@@ -29,7 +29,7 @@
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "generate": "stencil generate",
-    "storybook": "storybook dev -p 6006 --quiet",
+    "storybook": "REACT_APP_ENV=dev storybook dev -p 6006 --quiet",
     "build-storybook": "storybook build -o ../docs"
   },
   "dependencies": {

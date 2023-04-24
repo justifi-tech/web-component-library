@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T22:06:57",
+  "timestamp": "2023-04-24T21:10:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -21,7 +21,7 @@
           "mutable": true,
           "attr": "iframe-origin",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "URL for the rendered iFrame. End-users need not use this.",
           "docsTags": [],
           "values": [
             {
@@ -37,7 +37,7 @@
           "mutable": true,
           "attr": "style-overrides",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "JSON formatted styles",
           "docsTags": [],
           "values": [
             {
@@ -53,7 +53,7 @@
           "mutable": true,
           "attr": "validation-mode",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "When to trigger validation of the form.",
           "docsTags": [],
           "values": [
             {
@@ -90,7 +90,7 @@
           },
           "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
           "parameters": [],
-          "docs": "",
+          "docs": "Makes a tokenization request to the iframe",
           "docsTags": []
         },
         {
@@ -101,7 +101,7 @@
           },
           "signature": "validate() => Promise<any>",
           "parameters": [],
-          "docs": "",
+          "docs": "Runs a validation on the form and shows errors if any",
           "docsTags": []
         }
       ],
@@ -112,8 +112,13 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
-          "docsTags": []
+          "docs": "Triggered when iframe has loaded",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-bank-account-form#bankAccountFormReady"
+            }
+          ]
         },
         {
           "event": "bankAccountFormTokenize",
@@ -121,8 +126,13 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
-          "docsTags": []
+          "docs": "Triggered when the tokenize method is called on the component",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-bank-account-form#bankAccountFormTokenize"
+            }
+          ]
         },
         {
           "event": "bankAccountFormValidate",
@@ -130,8 +140,13 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
-          "docsTags": []
+          "docs": "Triggered when the validate method is called on the component",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-bank-account-form#bankAccountFormValidate"
+            }
+          ]
         }
       ],
       "listeners": [
@@ -257,8 +272,8 @@
       "filePath": "./src/components/card-form/card-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-card-form",
-      "readme": "# justifi-card-form\n\n\n",
-      "docs": "",
+      "readme": "# tag: <justifi-card-form />\n\n----------------------------------------\n\n## Example usage\n<details>\n  <summary>Show Examples</summary>\n  \n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-card-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>Card Form</h1>\n  <hr>\n  <!--\n    The 'style-overrides' prop takes a stringified instance of Theme. The type and all optional\n    members for Theme can be found here:\n    https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts\n  -->\n  <justifi-card-form style-overrides='{\n    \"layout\":{\n      \"padding\":\"0\",\n      \"formControlSpacingHorizontal\":\".5rem\",\n      \"formControlSpacingVertical\":\"1rem\"\n    },\n    \"formLabel\":{\n      \"fontWeight\":700,\n      \"fontFamily\":\"sans-serif\",\n      \"margin\":\"0 0 .5rem 0\"\n    },\n    \"formControl\":{\n      \"backgroundColor\":\"#F4F4F6\",\n      \"backgroundColorHover\":\"#EEEEF5\",\n      \"borderColor\":\"rgba(0, 0, 0, 0.42)\",\n      \"borderColorHover\":\"rgba(0, 0, 0, 0.62)\",\n      \"borderColorFocus\":\"#fccc32\",\n      \"borderColorError\":\"#C12727\",\n      \"borderWidth\":\"0px\",\n      \"borderBottomWidth\":\"1px\",\n      \"borderRadius\":\"4px 4px 0 0\",\n      \"borderStyle\":\"solid\",\n      \"boxShadowErrorFocus\":\"none\",\n      \"boxShadowFocus\":\"none\",\n      \"color\":\"#212529\",\n      \"fontSize\":\"1rem\",\n      \"fontWeight\":\"400\",\n      \"lineHeight\":\"2\",\n      \"margin\":\"0\",\n      \"padding\":\".5rem .875rem\"\n    },\n    \"errorMessage\":{\n      \"color\":\"#C12727\",\n      \"margin\":\".25rem 0 0 0\",\n      \"fontSize\":\".875rem\"\n    }\n  }'></justifi-card-form>\n  <button type=\"submit\" id=\"card-submit-button\">Tokenize</button>\n  <button type=\"submit\" id=\"card-validate-button\">Validate</button>\n</body>\n\n<script>\n  (function () {\n    var cardForm = document.querySelector('justifi-card-form');\n    var cardSubmitButton = document.querySelector('#card-submit-button');\n    var cardValidateButton = document.querySelector('#card-validate-button');\n\n    cardForm.addEventListener('cardFormReady', function () {\n      console.log('justifi-card-form ready');\n    });\n\n    cardSubmitButton.addEventListener('click', (event) => {\n      console.log('card form tokenize button clicked');\n      // All of this information would come from your form instead of being hard coded\n      // Card number, expiration and cvv are collected on our iframe\n      const paymentMethodData = {\n        name: 'John Doe',\n        address_line1: '123 Broadway', // optional\n        address_line2: '', // optional\n        address_city: 'Minneapolis', // optional\n        address_state: 'MN', // optional\n        address_postal_code: '55413', \n        address_country: 'US', // optional\n        metadata: { something: \"somevalue\" } // optional\n      };\n      // ACCOUNT_ID is optional, currently required for platforms\n      // ACCOUNT_ID is the seller account for which you are tokenizing\n      cardForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')\n        .then((data) => {\n          // This is where you can submit the form and use the payment method token\n          // on your backend\n          console.log('justifi-card-form tokenized: ', data);\n        });\n    });\n\n    cardValidateButton.addEventListener('click', (event) => {\n      console.log('card validate button clicked');\n      cardForm.validate()\n        .then((data) => {\n          console.log('justifi-card-form validated. Is valid? ', data.isValid);\n        });\n    });\n  })();\n</script>\n\n</html>\n```\n\n</details>\n\n----------------------------------------\n\n## Styling\nThe `style-overrides` attribute below requires type `string`, but should be a stringified [`Theme`](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts)\n",
+      "docs": "----------------------------------------",
       "docsTags": [],
       "usage": {},
       "props": [
@@ -268,7 +283,7 @@
           "mutable": true,
           "attr": "iframe-origin",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "URL for the rendered iFrame. End-users need not use this.",
           "docsTags": [],
           "values": [
             {
@@ -284,8 +299,9 @@
           "mutable": false,
           "attr": "single-line",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Boolean indicating if the Card Form should render in a single line",
           "docsTags": [],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -300,7 +316,7 @@
           "mutable": true,
           "attr": "validation-mode",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "When to trigger validation of the form.",
           "docsTags": [],
           "values": [
             {
@@ -337,18 +353,18 @@
           },
           "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
           "parameters": [],
-          "docs": "",
+          "docs": "Makes a tokenization request to the iframe",
           "docsTags": []
         },
         {
           "name": "validate",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<{ isValid: boolean; }>",
             "docs": ""
           },
-          "signature": "validate() => Promise<any>",
+          "signature": "validate() => Promise<{ isValid: boolean; }>",
           "parameters": [],
-          "docs": "",
+          "docs": "Runs a validation on the form and shows errors if any",
           "docsTags": []
         }
       ],
@@ -359,8 +375,13 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
-          "docsTags": []
+          "docs": "Triggered when iframe has loaded",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-card-form#cardFormReady"
+            }
+          ]
         },
         {
           "event": "cardFormTokenize",
@@ -368,8 +389,13 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
-          "docsTags": []
+          "docs": "Triggered when the tokenize method is called on the component",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-card-form#cardFormTokenize"
+            }
+          ]
         },
         {
           "event": "cardFormValidate",
@@ -377,8 +403,13 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
-          "docsTags": []
+          "docs": "Triggered when the validate method is called on the component",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-card-form#cardFormTokenize"
+            }
+          ]
         }
       ],
       "listeners": [

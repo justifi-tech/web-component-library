@@ -1,6 +1,5 @@
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
-
 interface CardFormStoryArgs {
   iframeOrigin: string,
   singleLine: boolean,
@@ -12,9 +11,10 @@ export default {
   title: 'Components/CardForm',
   component: 'justifi-payment-method-form',
   argTypes: {
-    iframeOrigin: {
+    'iframe-origin': {
       control: 'text',
       table: {
+        disable: process.env.NODE_ENV !== 'development' ? true : false,
         category: 'Props'
       }
     },
@@ -97,11 +97,11 @@ const Template = (args: CardFormStoryArgs) => {
         ${args.cssVariables}
       }
       </style>
-      <justifi-card-form 
-        data-testid="card-form-iframe" 
-        validation-mode='${args.validationMode || 'onSubmit'}'
-        iframe-origin='${args.iframeOrigin || ''}'
-        single-line='${args.singleLine}'
+      <justifi-card-form
+        data-testid="card-form-iframe"
+        validation-mode='${args['validation-mode'] || 'onSubmit'}'
+        iframe-origin='${args['iframe-origin'] || ''}'
+        single-line='${args['single-line']}'
       />
     </div>
     ${includeButtons ? FormButtons : ''}

@@ -7,27 +7,27 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type                                                           | Default     |
-| ---------------- | ----------------- | ----------- | -------------------------------------------------------------- | ----------- |
-| `iframeOrigin`   | `iframe-origin`   |             | `string`                                                       | `undefined` |
-| `styleOverrides` | `style-overrides` |             | `string`                                                       | `undefined` |
-| `validationMode` | `validation-mode` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
+| Property         | Attribute         | Description                                               | Type                                                           | Default     |
+| ---------------- | ----------------- | --------------------------------------------------------- | -------------------------------------------------------------- | ----------- |
+| `iframeOrigin`   | `iframe-origin`   | URL for the rendered iFrame. End-users need not use this. | `string`                                                       | `undefined` |
+| `styleOverrides` | `style-overrides` | JSON formatted styles                                     | `string`                                                       | `undefined` |
+| `validationMode` | `validation-mode` | When to trigger validation of the form.                   | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 
 ## Events
 
-| Event                     | Description | Type                                            |
-| ------------------------- | ----------- | ----------------------------------------------- |
-| `bankAccountFormReady`    |             | `CustomEvent<any>`                              |
-| `bankAccountFormTokenize` |             | `CustomEvent<{ data: any; }>`                   |
-| `bankAccountFormValidate` |             | `CustomEvent<{ data: { isValid: boolean; }; }>` |
+| Event                     | Description                                                   | Type                                            |
+| ------------------------- | ------------------------------------------------------------- | ----------------------------------------------- |
+| `bankAccountFormReady`    | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
+| `bankAccountFormTokenize` | Triggered when the tokenize method is called on the component | `CustomEvent<{ data: any; }>`                   |
+| `bankAccountFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<{ data: { isValid: boolean; }; }>` |
 
 
 ## Methods
 
 ### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
 
-
+Makes a tokenization request to the iframe
 
 #### Returns
 
@@ -37,7 +37,7 @@ Type: `Promise<any>`
 
 ### `validate() => Promise<any>`
 
-
+Runs a validation on the form and shows errors if any
 
 #### Returns
 
