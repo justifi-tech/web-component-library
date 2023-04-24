@@ -123,7 +123,6 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | Property             | Attribute             | Description | Type                                                           | Default     |
 | -------------------- | --------------------- | ----------- | -------------------------------------------------------------- | ----------- |
 | `iframeOrigin`       | `iframe-origin`       |             | `string`                                                       | `undefined` |
-| `styleOverrides`     | `style-overrides`     |             | `string`                                                       | `undefined` |
 | `validationStrategy` | `validation-strategy` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 

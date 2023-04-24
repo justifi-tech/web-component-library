@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, Listen, Method, Watch, State } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Listen, Method, State } from '@stencil/core';
 import { Theme } from '../payment-method-form/theme';
 
 @Component({
@@ -6,9 +6,8 @@ import { Theme } from '../payment-method-form/theme';
   shadow: false,
 })
 export class BankAccountForm {
-  @Prop({mutable: true}) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-  @Prop({mutable: true}) styleOverrides?: string;
-  @Prop({mutable: true}) iframeOrigin?: string;
+  @Prop({ mutable: true }) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) iframeOrigin?: string;
   @State() internalStyleOverrides: Theme;
   @Event() bankAccountFormReady: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
@@ -27,18 +26,6 @@ export class BankAccountForm {
   @Listen('paymentMethodFormValidate')
   validateHandler(event: { data: any }) {
     this.bankAccountFormValidate.emit(event);
-  }
-
-  componentWillLoad() {
-    this.parseStyleOverrides();
-  }
-
-  @Watch('styleOverrides')
-  parseStyleOverrides() {
-    if (this.styleOverrides) {
-      const parsedStyleOverrides = JSON.parse(this.styleOverrides);
-      this.internalStyleOverrides = parsedStyleOverrides;
-    }
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
@@ -70,7 +57,6 @@ export class BankAccountForm {
         payment-method-form-ready={this.bankAccountFormReady}
         payment-method-form-tokenize={this.bankAccountFormTokenize}
         payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
-        paymentMethodStyleOverrides={this.internalStyleOverrides}
       />
     );
   }

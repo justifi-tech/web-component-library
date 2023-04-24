@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T15:04:00",
+  "timestamp": "2023-04-24T18:45:37",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -20,22 +20,6 @@
           "type": "string",
           "mutable": true,
           "attr": "iframe-origin",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": true,
-          "required": false
-        },
-        {
-          "name": "styleOverrides",
-          "type": "string",
-          "mutable": true,
-          "attr": "style-overrides",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -292,22 +276,6 @@
             }
           ],
           "optional": false,
-          "required": false
-        },
-        {
-          "name": "styleOverrides",
-          "type": "string",
-          "mutable": true,
-          "attr": "style-overrides",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": true,
           "required": false
         },
         {
@@ -612,21 +580,6 @@
             {
               "value": "onTouched",
               "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "paymentMethodStyleOverrides",
-          "type": "Theme",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Theme"
             }
           ],
           "optional": false,
