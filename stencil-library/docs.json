@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T21:49:45",
+  "timestamp": "2023-04-24T22:03:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -913,10 +913,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "input",
-          "docs": ""
-        },
-        {
           "name": "label",
           "docs": ""
         }
@@ -1021,10 +1017,6 @@
       "styles": [],
       "slots": [],
       "parts": [
-        {
-          "name": "input",
-          "docs": ""
-        },
         {
           "name": "label",
           "docs": ""
