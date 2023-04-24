@@ -7,7 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
-import { Theme } from "./components/payment-method-form/theme";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
@@ -26,7 +25,6 @@ export namespace Components {
     interface JustifiCardForm {
         "iframeOrigin"?: string;
         "singleLine": boolean;
-        "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
@@ -42,7 +40,6 @@ export namespace Components {
         "iframeOrigin"?: string;
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-        "paymentMethodStyleOverrides": Theme | undefined;
         "singleLine": boolean;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
@@ -178,7 +175,6 @@ declare namespace LocalJSX {
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "singleLine"?: boolean;
-        "styleOverrides"?: string;
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
@@ -192,7 +188,6 @@ declare namespace LocalJSX {
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "paymentMethodFormType"?: 'card' | 'bankAccount';
         "paymentMethodFormValidationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-        "paymentMethodStyleOverrides"?: Theme | undefined;
         "singleLine"?: boolean;
     }
     interface JustifiPaymentMethodSelector {

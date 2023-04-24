@@ -1,15 +1,13 @@
-import { Component, Event, Prop, h, EventEmitter, Listen, Method, Watch, State } from '@stencil/core';
-import { Theme } from '../payment-method-form/theme';
+import { Component, Event, Prop, h, EventEmitter, Listen, Method } from '@stencil/core';
 
 @Component({
   tag: 'justifi-bank-account-form',
   shadow: false,
 })
 export class BankAccountForm {
-  @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-  @Prop({mutable: true}) styleOverrides?: string;
-  @Prop({mutable: true}) iframeOrigin?: string;
-  @State() internalStyleOverrides: Theme;
+  @Prop({ mutable: true }) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) styleOverrides?: string;
+  @Prop({ mutable: true }) iframeOrigin?: string;
   @Event() bankAccountFormReady: EventEmitter;
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
   @Event() bankAccountFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
@@ -27,18 +25,6 @@ export class BankAccountForm {
   @Listen('paymentMethodFormValidate')
   validateHandler(event: { data: any }) {
     this.bankAccountFormValidate.emit(event);
-  }
-
-  componentWillLoad() {
-    this.parseStyleOverrides();
-  }
-
-  @Watch('styleOverrides')
-  parseStyleOverrides() {
-    if (this.styleOverrides) {
-      const parsedStyleOverrides = JSON.parse(this.styleOverrides);
-      this.internalStyleOverrides = parsedStyleOverrides;
-    }
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
@@ -70,7 +56,6 @@ export class BankAccountForm {
         payment-method-form-ready={this.bankAccountFormReady}
         payment-method-form-tokenize={this.bankAccountFormTokenize}
         payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
-        paymentMethodStyleOverrides={this.internalStyleOverrides}
       />
     );
   }

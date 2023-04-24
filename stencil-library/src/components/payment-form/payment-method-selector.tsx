@@ -37,7 +37,9 @@ export class PaymentMethodSelector {
                 checked={this.selectedPaymentMethodType === paymentMethodType}
                 class="form-check-input"
               />
-              <label htmlFor={paymentMethodType}>{PaymentMethodLabels[paymentMethodType]}</label>
+              <label htmlFor={paymentMethodType} class="form-check-label">
+                {PaymentMethodLabels[paymentMethodType]}
+              </label>
             </div>
           );
         })}

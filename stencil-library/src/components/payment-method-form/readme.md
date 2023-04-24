@@ -1,6 +1,6 @@
 # justifi-payment-method-form
 
-This component is intended for internal use by `justifi-card-form` and `justifi-bank-account-form`
+
 
 <!-- Auto Generated Below -->
 
@@ -12,7 +12,6 @@ This component is intended for internal use by `justifi-card-form` and `justifi-
 | `iframeOrigin`                    | `iframe-origin`                       |             | `string`                                                       | `undefined` |
 | `paymentMethodFormType`           | `payment-method-form-type`            |             | `"bankAccount" \| "card"`                                      | `undefined` |
 | `paymentMethodFormValidationMode` | `payment-method-form-validation-mode` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
-| `paymentMethodStyleOverrides`     | --                                    |             | `Theme`                                                        | `undefined` |
 | `singleLine`                      | `single-line`                         |             | `boolean`                                                      | `undefined` |
 
 
