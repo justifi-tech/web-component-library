@@ -1,0 +1,6 @@
+@import "grid";
+
+:host {
+  @include host-base-styles;
+  display: block;
+}

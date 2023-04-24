@@ -2,7 +2,7 @@ import { Component, Event, Host, Prop, h, EventEmitter, State } from '@stencil/c
 
 @Component({
   tag: 'select-input',
-  styleUrl: 'select-input.css',
+  styleUrl: 'select-input.scss',
   shadow: true,
 })
 export class SelectInput {
@@ -23,16 +23,17 @@ export class SelectInput {
   render() {
     return (
       <Host>
-        <label>{this.label}</label>
+        <label class="form-label">{this.label}</label>
         <select
           name={this.name}
           onInput={(event) => this.onInput(event)}
+          class={this.error ? 'form-select is-invalid' : 'form-select'}
         >
           {this.options.map((option) =>
             <option value={option.value}>{option.label}</option>
           )}
         </select>
-        {this.error && <div style={{ color: 'red' }}>{this.error}</div>}
+        {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
     );
   }

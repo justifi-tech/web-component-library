@@ -4,7 +4,8 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-form',
-  shadow: false,
+  styleUrl: 'payment-form.scss',
+  shadow: true,
 })
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
@@ -58,21 +59,27 @@ export class PaymentForm {
   render() {
     return (
       <Host>
-        <form>
+        <form class="row gy-3">
           {(this.allowedPaymentMethodTypes.length > 1) && (
-            <justifi-payment-method-selector
-              paymentMethodTypes={this.allowedPaymentMethodTypes}
-              selectedPaymentMethodType={this.selectedPaymentMethodType} />
+            <div class="col-12">
+              <justifi-payment-method-selector
+                paymentMethodTypes={this.allowedPaymentMethodTypes}
+                selectedPaymentMethodType={this.selectedPaymentMethodType} />
+            </div>
           )}
-          <justifi-payment-method-form
-            payment-method-form-type={this.selectedPaymentMethodType}
-            iframe-origin={this.iframeOrigin}
-            ref={el => { if (el) { this.paymentMethodFormRef = el } }}
-          />
-          <justifi-billing-form
-            legend="Billing Info"
-            ref={el => { if (el) { this.billingFormRef = el } }}
-          />
+          <div class="col-12">
+            <justifi-payment-method-form
+              payment-method-form-type={this.selectedPaymentMethodType}
+              iframe-origin={this.iframeOrigin}
+              ref={el => { if (el) { this.paymentMethodFormRef = el } }}
+            />
+          </div>
+          <div class="col-12">
+            <justifi-billing-form
+              legend="Billing Info"
+              ref={el => { if (el) { this.billingFormRef = el } }}
+            />
+          </div>
         </form>
       </Host>
     );
