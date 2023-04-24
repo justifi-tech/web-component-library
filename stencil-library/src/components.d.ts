@@ -15,7 +15,7 @@ export namespace Components {
         "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
-        "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
         "fill": (fields: BillingFormFields) => Promise<void>;
@@ -29,7 +29,7 @@ export namespace Components {
         "styleOverrides"?: string;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
         "validate": () => Promise<any>;
-        "validationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
@@ -41,7 +41,7 @@ export namespace Components {
     interface JustifiPaymentMethodForm {
         "iframeOrigin"?: string;
         "paymentMethodFormType": 'card' | 'bankAccount';
-        "paymentMethodFormValidationStrategy": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "paymentMethodFormValidationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides": Theme | undefined;
         "singleLine": boolean;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
@@ -167,7 +167,7 @@ declare namespace LocalJSX {
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "styleOverrides"?: string;
-        "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
         "legend"?: string;
@@ -179,7 +179,7 @@ declare namespace LocalJSX {
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         "singleLine"?: boolean;
         "styleOverrides"?: string;
-        "validationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
         "bankAccount"?: boolean;
@@ -191,7 +191,7 @@ declare namespace LocalJSX {
         "onPaymentMethodFormReady"?: (event: JustifiPaymentMethodFormCustomEvent<any>) => void;
         "onPaymentMethodFormTokenize"?: (event: JustifiPaymentMethodFormCustomEvent<{ data: any }>) => void;
         "paymentMethodFormType"?: 'card' | 'bankAccount';
-        "paymentMethodFormValidationStrategy"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "paymentMethodFormValidationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "paymentMethodStyleOverrides"?: Theme | undefined;
         "singleLine"?: boolean;
     }

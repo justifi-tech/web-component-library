@@ -6,7 +6,7 @@ import { Theme } from '../payment-method-form/theme';
   shadow: false,
 })
 export class BankAccountForm {
-  @Prop({mutable: true}) validationStrategy: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop({mutable: true}) styleOverrides?: string;
   @Prop({mutable: true}) iframeOrigin?: string;
   @State() internalStyleOverrides: Theme;
@@ -69,7 +69,7 @@ export class BankAccountForm {
         payment-method-form-type="bankAccount"
         payment-method-form-ready={this.bankAccountFormReady}
         payment-method-form-tokenize={this.bankAccountFormTokenize}
-        payment-method-form-validation-strategy={this.validationStrategy || 'onSubmit'}
+        payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
         paymentMethodStyleOverrides={this.internalStyleOverrides}
       />
     );
