@@ -66,6 +66,7 @@ const Template = (args: PaymentFormStoryArgs) => {
       :root {
         ${args.cssVariables}
       }
+    </style>
     <script>
     (async () => {
       await customElements.whenDefined('justifi-payment-form');

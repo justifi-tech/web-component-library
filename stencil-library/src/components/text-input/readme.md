@@ -26,7 +26,6 @@
 
 | Part      | Description |
 | --------- | ----------- |
-| `"input"` |             |
 | `"label"` |             |
 
 
