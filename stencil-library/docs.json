@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-25T19:10:17",
+  "timestamp": "2023-04-25T20:21:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -22,22 +22,6 @@
           "attr": "iframe-origin",
           "reflectToAttr": false,
           "docs": "URL for the rendered iFrame. End-users need not use this.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": true,
-          "required": false
-        },
-        {
-          "name": "styleOverrides",
-          "type": "string",
-          "mutable": true,
-          "attr": "style-overrides",
-          "reflectToAttr": false,
-          "docs": "JSON formatted styles",
           "docsTags": [],
           "values": [
             {

@@ -13,11 +13,6 @@ export class BankAccountForm {
   @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
 
   /**
-   * JSON formatted styles
-   */
-  @Prop({mutable: true}) styleOverrides?: string;
-
-  /**
    * URL for the rendered iFrame. End-users need not use this.
    */
   @Prop({mutable: true}) iframeOrigin?: string;
