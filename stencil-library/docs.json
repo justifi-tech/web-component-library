@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T21:10:00",
+  "timestamp": "2023-04-25T18:52:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -308,6 +308,22 @@
             }
           ],
           "optional": false,
+          "required": false
+        },
+        {
+          "name": "styleOverrides",
+          "type": "string",
+          "mutable": true,
+          "attr": "style-overrides",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
           "required": false
         },
         {
