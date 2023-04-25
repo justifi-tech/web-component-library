@@ -1,4 +1,4 @@
-# justifi-bank-account-form
+# tag: <justifi-bank-account-form />
 
 
 
@@ -10,7 +10,6 @@
 | Property         | Attribute         | Description                                               | Type                                                           | Default     |
 | ---------------- | ----------------- | --------------------------------------------------------- | -------------------------------------------------------------- | ----------- |
 | `iframeOrigin`   | `iframe-origin`   | URL for the rendered iFrame. End-users need not use this. | `string`                                                       | `undefined` |
-| `styleOverrides` | `style-overrides` | JSON formatted styles                                     | `string`                                                       | `undefined` |
 | `validationMode` | `validation-mode` | When to trigger validation of the form.                   | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 

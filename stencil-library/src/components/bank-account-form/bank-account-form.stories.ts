@@ -1,14 +1,14 @@
+const isDev = process.env.NODE_ENV === 'development';
+
 export default {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
-  parameters: {
-
-  },
-  // Hide the iframe-origin prop so it's not shown in the docs or the stories
   argTypes: {
     'iframe-origin': {
+      control: 'text',
       table: {
-        disable: true
+        disable: isDev ? false : true,
+        category: 'props',
       }
     },
   },
@@ -58,12 +58,16 @@ const FormButtons = `
   </div>
 `
 
-const Template = ({ includeButtons = true }: { includeButtons: boolean }) => {
+const Template = (args: any) => {
   return (`
     <div>
-      <justifi-bank-account-form data-testid="bank-account-form-iframe" />
+      <justifi-bank-account-form
+        data-testid="bank-account-form-iframe"
+        validation-mode='${args['validation-mode'] || 'onSubmit'}'
+        iframe-origin='${args['iframe-origin'] || ''}'
+      />
     </div>
-    ${includeButtons ? FormButtons : ''}
+    ${FormButtons}
   `);
 };
 

@@ -15,10 +15,6 @@ export namespace Components {
          */
         "iframeOrigin"?: string;
         /**
-          * JSON formatted styles
-         */
-        "styleOverrides"?: string;
-        /**
           * Makes a tokenization request to the iframe
          */
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
@@ -208,10 +204,6 @@ declare namespace LocalJSX {
           * @event justifi-bank-account-form#bankAccountFormValidate
          */
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
-        /**
-          * JSON formatted styles
-         */
-        "styleOverrides"?: string;
         /**
           * When to trigger validation of the form.
          */
