@@ -10,10 +10,25 @@ import { ValidationError } from "yup";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
+        /**
+          * URL for the rendered iFrame. End-users need not use this.
+         */
         "iframeOrigin"?: string;
+        /**
+          * JSON formatted styles
+         */
         "styleOverrides"?: string;
+        /**
+          * Makes a tokenization request to the iframe
+         */
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        /**
+          * Runs a validation on the form and shows errors if any
+         */
         "validate": () => Promise<any>;
+        /**
+          * When to trigger validation of the form.
+         */
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
@@ -23,10 +38,25 @@ export namespace Components {
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {
+        /**
+          * URL for the rendered iFrame. End-users need not use this.
+         */
         "iframeOrigin"?: string;
+        /**
+          * Boolean indicating if the Card Form should render in a single line
+         */
         "singleLine": boolean;
+        /**
+          * Makes a tokenization request to the iframe
+         */
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
-        "validate": () => Promise<any>;
+        /**
+          * Runs a validation on the form and shows errors if any
+         */
+        "validate": () => Promise<{ isValid: boolean; }>;
+        /**
+          * When to trigger validation of the form.
+         */
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
@@ -159,22 +189,64 @@ declare global {
 }
 declare namespace LocalJSX {
     interface JustifiBankAccountForm {
+        /**
+          * URL for the rendered iFrame. End-users need not use this.
+         */
         "iframeOrigin"?: string;
+        /**
+          * Triggered when iframe has loaded
+          * @event justifi-bank-account-form#bankAccountFormReady
+         */
         "onBankAccountFormReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
+        /**
+          * Triggered when the tokenize method is called on the component
+          * @event justifi-bank-account-form#bankAccountFormTokenize
+         */
         "onBankAccountFormTokenize"?: (event: JustifiBankAccountFormCustomEvent<{ data: any }>) => void;
+        /**
+          * Triggered when the validate method is called on the component
+          * @event justifi-bank-account-form#bankAccountFormValidate
+         */
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
+        /**
+          * JSON formatted styles
+         */
         "styleOverrides"?: string;
+        /**
+          * When to trigger validation of the form.
+         */
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
         "legend"?: string;
     }
     interface JustifiCardForm {
+        /**
+          * URL for the rendered iFrame. End-users need not use this.
+         */
         "iframeOrigin"?: string;
+        /**
+          * Triggered when iframe has loaded
+          * @event justifi-card-form#cardFormReady
+         */
         "onCardFormReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
+        /**
+          * Triggered when the tokenize method is called on the component
+          * @event justifi-card-form#cardFormTokenize
+         */
         "onCardFormTokenize"?: (event: JustifiCardFormCustomEvent<{ data: any }>) => void;
+        /**
+          * Triggered when the validate method is called on the component
+          * @event justifi-card-form#cardFormTokenize
+         */
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
+        /**
+          * Boolean indicating if the Card Form should render in a single line
+         */
         "singleLine"?: boolean;
+        /**
+          * When to trigger validation of the form.
+         */
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
