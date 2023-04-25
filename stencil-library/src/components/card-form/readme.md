@@ -135,7 +135,6 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | ---------------- | ----------------- | ------------------------------------------------------------------ | -------------------------------------------------------------- | ----------- |
 | `iframeOrigin`   | `iframe-origin`   | URL for the rendered iFrame. End-users need not use this.          | `string`                                                       | `undefined` |
 | `singleLine`     | `single-line`     | Boolean indicating if the Card Form should render in a single line | `boolean`                                                      | `false`     |
-| `styleOverrides` | `style-overrides` |                                                                    | `string`                                                       | `undefined` |
 | `validationMode` | `validation-mode` | When to trigger validation of the form.                            | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 

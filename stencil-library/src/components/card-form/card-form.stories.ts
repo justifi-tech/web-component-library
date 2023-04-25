@@ -59,6 +59,8 @@ const FormButtons = `
     }
     .button-bar button {
       margin-right: 10px;
+      border-radius: 3px;
+      border: 1px solid black;
     }
   </style>
   <div class="button-bar">
@@ -73,7 +75,7 @@ const Template = (args: CardFormStoryArgs) => {
     <div>
       <style>
       :root {
-        ${args['css-variables']}
+        ${args['css-variables'] || ''}
       }
       </style>
       <justifi-card-form

@@ -11,8 +11,6 @@ export class CardForm {
    */
   @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
 
-  @Prop({mutable: true}) styleOverrides?: string;
-
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */

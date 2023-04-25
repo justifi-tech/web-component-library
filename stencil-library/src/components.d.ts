@@ -46,7 +46,6 @@ export namespace Components {
           * Boolean indicating if the Card Form should render in a single line
          */
         "singleLine": boolean;
-        "styleOverrides"?: string;
         /**
           * Makes a tokenization request to the iframe
          */
@@ -245,7 +244,6 @@ declare namespace LocalJSX {
           * Boolean indicating if the Card Form should render in a single line
          */
         "singleLine"?: boolean;
-        "styleOverrides"?: string;
         /**
           * When to trigger validation of the form.
          */
