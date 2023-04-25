@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-24T22:06:57",
+  "timestamp": "2023-04-25T16:08:31",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -421,6 +421,22 @@
       "usage": {},
       "props": [
         {
+          "name": "accountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
           "name": "bankAccount",
           "type": "boolean",
           "mutable": false,
@@ -453,6 +469,38 @@
           "required": false
         },
         {
+          "name": "clientId",
+          "type": "string",
+          "mutable": false,
+          "attr": "client-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "mutable": false,
+          "attr": "email",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
           "name": "iframeOrigin",
           "type": "string",
           "mutable": false,
@@ -460,6 +508,23 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "submitButtonText",
+          "type": "string",
+          "mutable": false,
+          "attr": "submit-button-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'Submit'",
           "values": [
             {
               "type": "string"
@@ -480,20 +545,19 @@
           "parameters": [],
           "docs": "",
           "docsTags": []
-        },
+        }
+      ],
+      "events": [
         {
-          "name": "submit",
-          "returns": {
-            "type": "Promise<any>",
-            "docs": ""
-          },
-          "signature": "submit(args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>",
-          "parameters": [],
+          "event": "onSubmitted",
+          "detail": "{ data: any; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
           "docs": "",
           "docsTags": []
         }
       ],
-      "events": [],
       "listeners": [
         {
           "event": "paymentMethodSelected",

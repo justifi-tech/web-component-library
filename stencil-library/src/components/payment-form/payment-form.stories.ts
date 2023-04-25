@@ -59,9 +59,6 @@ const Template = (args: PaymentFormStoryArgs) => {
     <div>
       <justifi-payment-form card=${args.card} bank-account=${args['bank-account']} />
     </div>
-    <div>
-      <button id="submit-button">Submit</button>
-    </div>
     <style>
       :root {
         ${args.cssVariables}
@@ -71,16 +68,6 @@ const Template = (args: PaymentFormStoryArgs) => {
     (async () => {
       await customElements.whenDefined('justifi-payment-form');
       const paymentForm = document.querySelector('justifi-payment-form');
-      const submitButton = document.querySelector('#submit-button');
-
-      submitButton?.addEventListener('click', async () => {
-        const tokenizeResponse = await paymentForm.submit({
-          clientId: '${args.clientId}',
-          paymentMethodData: ${JSON.stringify(args.paymentMethodData)},
-          accountId: '${args.accountId}'
-        });
-        console.log('tokenizeResponse:', tokenizeResponse);
-      });
     })()
     </script>
   `);

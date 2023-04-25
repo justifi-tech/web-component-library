@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Listen, Method } from '@stencil/core';
+import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 
@@ -10,7 +10,12 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
   @Prop() card?: boolean;
+  @Prop() email?: string;
   @Prop() iframeOrigin?: string;
+  @Prop() clientId: string;
+  @Prop() accountId?: string;
+  @Prop() submitButtonText?: string = 'Submit';
+  @Event() onSubmitted: EventEmitter<{ data: any }>;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
 
@@ -41,8 +46,8 @@ export class PaymentForm {
     this.billingFormRef.fill(fields);
   }
 
-  @Method()
-  async submit(args: { clientId: string, paymentMethodData: any, accountId?: string }) {
+  async submit(event) {
+    event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
@@ -51,9 +56,15 @@ export class PaymentForm {
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
 
-    const paymentMethodData = { ...args.paymentMethodData, ...billingFormFieldValues };
+    const paymentMethodData = { email: this.email, ...billingFormFieldValues };
 
-    return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodData, args.accountId);
+    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
+      this.clientId,
+      paymentMethodData,
+      this.accountId
+    );
+
+    this.onSubmitted.emit(tokenizeResponse);
   }
 
   render() {
@@ -79,6 +90,14 @@ export class PaymentForm {
               legend="Billing Info"
               ref={el => { if (el) { this.billingFormRef = el } }}
             />
+          </div>
+          <div class="col-12">
+            <button
+              onClick={(event) => this.submit(event)}
+              type="submit"
+              class="btn btn-primary">
+              {this.submitButtonText}
+            </button>
           </div>
         </form>
       </Host>
