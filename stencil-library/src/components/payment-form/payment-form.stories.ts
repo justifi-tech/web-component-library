@@ -103,5 +103,20 @@ Styled.args = {
   --jfi-error-message-color: #C12727;
   --jfi-error-message-margin: .25rem 0 0 0;
   --jfi-error-message-font-size: .875rem;
+  --jfi-btn-primary-bg-color: rgb(63, 63, 71);
+  --jfi-btn-padding: 8px 16px;
+  --jfi-btn-font-family: inherit;
+  --jfi-btn-font-size: 14px;
+  --jfi-btn-line-height: 20px;
+  --jfi-btn-white-space: no-break;
+  --jfi-btn-border-width: 0;
+  --jfi-btn-font-weight: 600;
+  --jfi-btn-text-transform: uppercase;
+  --jfi-btn-box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+  --jfi-btn-focus-box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+  --jfi-btn-disabled-opacity: .5;
+  --jfi-btn-active-box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+  --jfi-btn-border-radius: 0;
+  --jfi-btn-transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   `)
 }
