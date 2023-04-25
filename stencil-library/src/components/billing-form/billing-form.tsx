@@ -11,6 +11,7 @@ import StateOptions from './state-options';
 export class BillingForm {
   @Prop() legend?: string;
   @State() billingFields: BillingFormFields = {
+    name: '',
     address_line1: '',
     address_line2: '',
     address_city: '',
@@ -69,6 +70,13 @@ export class BillingForm {
         <fieldset>
           {this.legend && this.legendBlock}
           <div class="row gy-3">
+            <div class="col-12">
+              <text-input
+                name="name"
+                label="Full Name"
+                defaultValue={this.billingFields.name}
+                error={this.billingFieldsErrors.name} />
+            </div>
             <div class="col-12">
               <text-input
                 name="address_line1"
