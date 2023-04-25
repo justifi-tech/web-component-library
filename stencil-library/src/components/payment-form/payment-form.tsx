@@ -14,7 +14,7 @@ export class PaymentForm {
   @Prop() iframeOrigin?: string;
   @Prop() clientId: string;
   @Prop() accountId?: string;
-  @Prop() submitButtonText?: string = 'Submit';
+  @Prop() submitButtonText?: string;
   @Event() onSubmitted: EventEmitter<{ data: any }>;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
@@ -52,12 +52,11 @@ export class PaymentForm {
 
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
-
     const paymentMethodData = { email: this.email, ...billingFormFieldValues };
-
     const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
       this.clientId,
       paymentMethodData,
@@ -96,7 +95,7 @@ export class PaymentForm {
               onClick={(event) => this.submit(event)}
               type="submit"
               class="btn btn-primary">
-              {this.submitButtonText}
+              {this.submitButtonText || 'Submit'}
             </button>
           </div>
         </form>

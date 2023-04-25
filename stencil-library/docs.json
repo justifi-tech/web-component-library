@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-25T16:08:31",
+  "timestamp": "2023-04-25T19:43:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -524,7 +524,6 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "'Submit'",
           "values": [
             {
               "type": "string"
