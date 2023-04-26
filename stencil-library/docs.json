@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-25T20:21:34",
+  "timestamp": "2023-04-26T05:06:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -10,7 +10,7 @@
       "filePath": "./src/components/bank-account-form/bank-account-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-bank-account-form",
-      "readme": "# justifi-bank-account-form\n\n\n",
+      "readme": "# tag: <justifi-bank-account-form />\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
