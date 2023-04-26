@@ -54,30 +54,3 @@ justifi-payment-method-form {
     box-shadow: var(--jfi-form-control-box-shadow-error-focus);
   }
 }
-
-.btn.btn-primary {
-  background-color: var(--jfi-btn-primary-bg-color);
-  padding: var(--jfi-btn-padding);
-  font-family: var(--jfi-btn-font-family);
-  font-size: var(--jfi-btn-font-size);
-  font-weight: var(--jfi-btn-font-weight);
-  line-height: var(--jfi-btn-line-height);
-  white-space: var(--jfi-btn-white-space);
-  border-width: var(--jfi-btn-border-width);
-  border-radius: var(--jfi-btn-border-radius);
-  box-shadow: var(--jfi-btn-box-shadow);
-  transition: var(--jfi-btn-transition);
-  text-transform: var(--jfi-btn-text-transform);
-
-  &[disabled] {
-    opacity: --jfi-btn-disabled-opacity;
-  }
-
-  &:focus {
-    box-shadow: var(--jfi-btn-focus-box-shadow);
-  }
-
-  &:active {
-    box-shadow: var(--jfi-btn-active-box-shadow);
-  }
-}
