@@ -56,11 +56,15 @@ export namespace Components {
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
+        "accountId"?: string;
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "clientId": string;
+        "email"?: string;
+        "enableSubmitButton": () => Promise<void>;
         "fillBillingForm": (fields: BillingFormFields) => Promise<void>;
         "iframeOrigin"?: string;
-        "submit": (args: { clientId: string; paymentMethodData: any; accountId?: string; }) => Promise<any>;
+        "submitButtonText"?: string;
     }
     interface JustifiPaymentMethodForm {
         "iframeOrigin"?: string;
@@ -99,6 +103,10 @@ export interface JustifiBankAccountFormCustomEvent<T> extends CustomEvent<T> {
 export interface JustifiCardFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiCardFormElement;
+}
+export interface JustifiPaymentFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLJustifiPaymentFormElement;
 }
 export interface JustifiPaymentMethodFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -242,9 +250,14 @@ declare namespace LocalJSX {
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiPaymentForm {
+        "accountId"?: string;
         "bankAccount"?: boolean;
         "card"?: boolean;
+        "clientId"?: string;
+        "email"?: string;
         "iframeOrigin"?: string;
+        "onSubmitted"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
+        "submitButtonText"?: string;
     }
     interface JustifiPaymentMethodForm {
         "iframeOrigin"?: string;

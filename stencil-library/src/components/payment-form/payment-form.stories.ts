@@ -1,45 +1,24 @@
+const isDev = process.env.NODE_ENV === 'development';
+
 interface PaymentFormStoryArgs {
   'bank-account': boolean,
   card: boolean,
-  clientId: string,
-  paymentMethodData: any,
-  accountId: string,
-  iframeOrigin: string,
-  cssVariables: string
+  email: string,
+  'client-id': string,
+  'account-id': string,
+  'submit-button-text': string,
+  cssVariables: string,
 }
 
 export default {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
   argTypes: {
-    'bank-account': {
-      control: 'boolean',
-      table: {
-        category: 'Props'
-      }
-    },
-    card: {
-      control: 'boolean',
-      table: {
-        category: 'Props'
-      }
-    },
-    accountId: {
+    'iframe-origin': {
       control: 'text',
       table: {
-        category: 'Tokenize Arguments'
-      }
-    },
-    clientId: {
-      control: 'text',
-      table: {
-        category: 'Tokenize Arguments'
-      }
-    },
-    paymentMethodData: {
-      control: 'object',
-      table: {
-        category: 'Tokenize Arguments'
+        disable: isDev ? false : true,
+        category: 'props',
       }
     },
   },
@@ -57,10 +36,15 @@ const Template = (args: PaymentFormStoryArgs) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return (`
     <div>
-      <justifi-payment-form card=${args.card} bank-account=${args['bank-account']} />
-    </div>
-    <div>
-      <button id="submit-button">Submit</button>
+      <justifi-payment-form
+        card=${args.card}
+        bank-account='${args['bank-account']}'
+        email='${args.email}'
+        client-id='${args['client-id']}'
+        account-id='${args['account-id']}'
+        submit-button-text='${args['submit-button-text']}'
+        iframe-origin='${args['iframe-origin']}'
+      />
     </div>
     <style>
       :root {
@@ -71,15 +55,11 @@ const Template = (args: PaymentFormStoryArgs) => {
     (async () => {
       await customElements.whenDefined('justifi-payment-form');
       const paymentForm = document.querySelector('justifi-payment-form');
-      const submitButton = document.querySelector('#submit-button');
-
-      submitButton?.addEventListener('click', async () => {
-        const tokenizeResponse = await paymentForm.submit({
-          clientId: '${args.clientId}',
-          paymentMethodData: ${JSON.stringify(args.paymentMethodData)},
-          accountId: '${args.accountId}'
-        });
-        console.log('tokenizeResponse:', tokenizeResponse);
+      paymentForm.addEventListener('submitted', async (event) => {
+        // here is where you would submit a payment with the token
+        console.log(event.detail);
+        // after the payment succeeds or fails, the form submit button can be enabled again
+        await paymentForm.enableSubmitButton();
       });
     })()
     </script>
@@ -90,10 +70,11 @@ export const Basic = Template.bind({});
 Basic.args = {
   'bank-account': true,
   card: true,
-  clientId: '',
-  paymentMethodData: {},
-  accountId: '',
-  iframeOrigin: ''
+  email: '',
+  'client-id': '',
+  'account-id': '',
+  'submit-button-text': '',
+  'iframe-origin': ''
 };
 
 export const Styled = Template.bind({});

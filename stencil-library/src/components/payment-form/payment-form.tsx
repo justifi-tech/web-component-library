@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Listen, Method } from '@stencil/core';
+import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 
@@ -10,7 +10,13 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
   @Prop() card?: boolean;
+  @Prop() email?: string;
   @Prop() iframeOrigin?: string;
+  @Prop() clientId: string;
+  @Prop() accountId?: string;
+  @Prop() submitButtonText?: string;
+  @Event() submitted: EventEmitter<{ data: any }>;
+  @State() submitButtonEnabled: boolean = true;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
 
@@ -42,18 +48,30 @@ export class PaymentForm {
   }
 
   @Method()
-  async submit(args: { clientId: string, paymentMethodData: any, accountId?: string }) {
+  async enableSubmitButton() {
+    this.submitButtonEnabled = true;
+  }
+
+  async submit(event) {
+    event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
+    this.submitButtonEnabled = false;
+
     const billingFormFieldValues = await this.billingFormRef.getValues();
+    const paymentMethodData = { email: this.email, ...billingFormFieldValues };
+    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
+      this.clientId,
+      paymentMethodData,
+      this.accountId
+    );
 
-    const paymentMethodData = { ...args.paymentMethodData, ...billingFormFieldValues };
-
-    return this.paymentMethodFormRef.tokenize(args.clientId, paymentMethodData, args.accountId);
+    this.submitted.emit(tokenizeResponse);
   }
 
   render() {
@@ -79,6 +97,15 @@ export class PaymentForm {
               legend="Billing Info"
               ref={el => { if (el) { this.billingFormRef = el } }}
             />
+          </div>
+          <div class="col-12">
+            <button
+              onClick={(event) => this.submit(event)}
+              disabled={!this.submitButtonEnabled}
+              type="submit"
+              class="btn btn-primary">
+              {this.submitButtonText || 'Submit'}
+            </button>
           </div>
         </form>
       </Host>
