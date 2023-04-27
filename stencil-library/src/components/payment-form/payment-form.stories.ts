@@ -38,12 +38,12 @@ const Template = (args: PaymentFormStoryArgs) => {
     <div>
       <justifi-payment-form
         card=${args.card}
-        bank-account='${args['bank-account'] || ''}'
-        email='${args.email || ''}'
-        client-id='${args['client-id'] || ''}'
-        account-id='${args['account-id'] || ''}'
-        submit-button-text='${args['submit-button-text'] || ''}'
-        iframe-origin='${args['iframe-origin'] || ''}'
+        bank-account='${args['bank-account']}'
+        email='${args.email}'
+        client-id='${args['client-id']}'
+        account-id='${args['account-id']}'
+        submit-button-text='${args['submit-button-text']}'
+        iframe-origin='${args['iframe-origin']}'
       />
     </div>
     <style>
@@ -68,6 +68,11 @@ export const Basic = Template.bind({});
 Basic.args = {
   'bank-account': true,
   card: true,
+  email: '',
+  'client-id': '',
+  'account-id': '',
+  'submit-button-text': '',
+  'iframe-origin': ''
 };
 
 export const Styled = Template.bind({});
