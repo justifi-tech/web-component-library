@@ -55,9 +55,11 @@ const Template = (args: PaymentFormStoryArgs) => {
     (async () => {
       await customElements.whenDefined('justifi-payment-form');
       const paymentForm = document.querySelector('justifi-payment-form');
-      paymentForm.addEventListener('onSubmitted', (data) => {
+      paymentForm.addEventListener('submitted', async (event) => {
         // here is where you would submit a payment with the token
-        console.log('data');
+        console.log(event.detail);
+        // after the payment succeeds or fails, the form submit button can be enabled again
+        await paymentForm.enableSubmitButton();
       });
     })()
     </script>

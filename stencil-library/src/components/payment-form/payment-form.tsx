@@ -15,7 +15,8 @@ export class PaymentForm {
   @Prop() clientId: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
-  @Event() onSubmitted: EventEmitter<{ data: any }>;
+  @Event() submitted: EventEmitter<{ data: any }>;
+  @State() submitButtonEnabled: boolean = true;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
 
@@ -46,6 +47,11 @@ export class PaymentForm {
     this.billingFormRef.fill(fields);
   }
 
+  @Method()
+  async enableSubmitButton() {
+    this.submitButtonEnabled = true;
+  }
+
   async submit(event) {
     event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
@@ -55,6 +61,8 @@ export class PaymentForm {
 
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
+    this.submitButtonEnabled = false;
+
     const billingFormFieldValues = await this.billingFormRef.getValues();
     const paymentMethodData = { email: this.email, ...billingFormFieldValues };
     const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
@@ -63,7 +71,7 @@ export class PaymentForm {
       this.accountId
     );
 
-    this.onSubmitted.emit(tokenizeResponse);
+    this.submitted.emit(tokenizeResponse);
   }
 
   render() {
@@ -93,6 +101,7 @@ export class PaymentForm {
           <div class="col-12">
             <button
               onClick={(event) => this.submit(event)}
+              disabled={!this.submitButtonEnabled}
               type="submit"
               class="btn btn-primary">
               {this.submitButtonText || 'Submit'}

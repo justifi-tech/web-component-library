@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-27T19:14:56",
+  "timestamp": "2023-04-27T19:46:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -535,6 +535,17 @@
       ],
       "methods": [
         {
+          "name": "enableSubmitButton",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "enableSubmitButton() => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
           "name": "fillBillingForm",
           "returns": {
             "type": "Promise<void>",
@@ -548,7 +559,7 @@
       ],
       "events": [
         {
-          "event": "onSubmitted",
+          "event": "submitted",
           "detail": "{ data: any; }",
           "bubbles": true,
           "cancelable": true,

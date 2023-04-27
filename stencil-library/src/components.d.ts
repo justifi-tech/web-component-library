@@ -35,6 +35,7 @@ export namespace Components {
         "card"?: boolean;
         "clientId": string;
         "email"?: string;
+        "enableSubmitButton": () => Promise<void>;
         "fillBillingForm": (fields: BillingFormFields) => Promise<void>;
         "iframeOrigin"?: string;
         "submitButtonText"?: string;
@@ -191,7 +192,7 @@ declare namespace LocalJSX {
         "clientId"?: string;
         "email"?: string;
         "iframeOrigin"?: string;
-        "onOnSubmitted"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
+        "onSubmitted"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
         "submitButtonText"?: string;
     }
     interface JustifiPaymentMethodForm {
