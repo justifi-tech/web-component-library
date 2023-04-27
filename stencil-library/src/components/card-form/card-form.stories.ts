@@ -1,44 +1,24 @@
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
-
 interface CardFormStoryArgs {
-  iframeOrigin: string,
-  singleLine: boolean,
-  cssVariables: string,
-  validationMode: string
+  'iframe-origin': string,
+  'single-line': boolean,
+  'validation-mode': string,
+  'css-variables': string
 }
+
+const isDev = process.env.NODE_ENV === 'development';
 
 export default {
   title: 'Components/CardForm',
-  component: 'justifi-payment-method-form',
+  component: 'justifi-card-form',
   argTypes: {
-    iframeOrigin: {
+    'iframe-origin': {
       control: 'text',
       table: {
-        category: 'Props'
+        disable: isDev ? false : true,
+        category: 'props',
       }
-    },
-    singleLine: {
-      control: 'boolean',
-      table: {
-        category: 'Props'
-      }
-    },
-    validationMode: {
-      control: { type: 'select' },
-      options: ['onSubmit', 'onBlur', 'onChange', 'onTouched', 'all'],
-      table: {
-        category: 'Props'
-      }
-    }
-  },
-  parameters: {
-    actions: {
-      handles: [
-        'cardFormReady',
-        'cardFormValidate',
-        'cardFormTokenize'
-      ],
     },
   },
   decorators: [
@@ -79,13 +59,14 @@ const FormButtons = `
     }
     .button-bar button {
       margin-right: 10px;
+      border-radius: 3px;
+      border: 1px solid black;
     }
   </style>
   <div class="button-bar">
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
-  </div>
-`
+  </div>`
 
 const Template = (args: CardFormStoryArgs) => {
   const includeButtons = true;
@@ -94,14 +75,14 @@ const Template = (args: CardFormStoryArgs) => {
     <div>
       <style>
       :root {
-        ${args.cssVariables}
+        ${args['css-variables'] || ''}
       }
       </style>
-      <justifi-card-form 
-        data-testid="card-form-iframe" 
-        validation-mode='${args.validationMode || 'onSubmit'}'
-        iframe-origin='${args.iframeOrigin || ''}'
-        single-line='${args.singleLine}'
+      <justifi-card-form
+        data-testid="card-form-iframe"
+        validation-mode='${args['validation-mode'] || 'onSubmit'}'
+        iframe-origin='${args['iframe-origin'] || ''}'
+        single-line='${args['single-line']}'
       />
     </div>
     ${includeButtons ? FormButtons : ''}
@@ -110,24 +91,9 @@ const Template = (args: CardFormStoryArgs) => {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  iframeOrigin: '',
-  singleLine: false,
-  validationMode: 'onSubmit'
-}
-
-export const Embedded = Template.bind({});
-Embedded.decorators = [
-  (story) => `
-    <style>
-      #wrapper {
-        background-color: #aaaaaa;
-      }
-    </style>
-    <div id="wrapper" style="width: 50%;">
-      ${story()}
-    </div>
-  `,
-]
+  'validation-mode': 'onSubmit',
+  'single-line': false,
+};
 
 export const Styled = Template.bind({});
 Styled.args = {

@@ -16,6 +16,7 @@ export const parameters = {
   },
   controls: {
     hideNoControlsWarning: true,
+    expanded: true,
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
