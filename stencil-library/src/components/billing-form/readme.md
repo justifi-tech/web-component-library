@@ -1,4 +1,4 @@
-# billing-form
+# tag: <billing-form />
 
 
 
@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `legend` | `legend`  |             | `string` | `undefined` |
+| Property | Attribute | Description                      | Type     | Default     |
+| -------- | --------- | -------------------------------- | -------- | ----------- |
+| `legend` | `legend`  | (Optional) A label for the form. | `string` | `undefined` |
 
 
 ## Methods

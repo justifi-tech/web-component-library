@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-27T20:39:39",
+  "timestamp": "2023-04-27T21:33:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -167,7 +167,7 @@
       "filePath": "./src/components/billing-form/billing-form.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-billing-form",
-      "readme": "# billing-form\n\n\n",
+      "readme": "# tag: <billing-form />\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -178,7 +178,7 @@
           "mutable": false,
           "attr": "legend",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "(Optional) A label for the form.",
           "docsTags": [],
           "values": [
             {

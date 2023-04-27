@@ -9,6 +9,9 @@ import StateOptions from './state-options';
   shadow: true,
 })
 export class BillingForm {
+  /**
+   * (Optional) A label for the form.
+   */
   @Prop() legend?: string;
   @State() billingFields: BillingFormFields = {
     name: '',
@@ -60,9 +63,7 @@ export class BillingForm {
     return this.billingFields;
   }
 
-  legendBlock = (
-    <legend>{this.legend}</legend>
-  );
+  legendBlock = <legend>{this.legend}</legend>;
 
   render() {
     return (
