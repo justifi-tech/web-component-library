@@ -79,6 +79,13 @@ Basic.args = {
 
 export const Styled = Template.bind({});
 Styled.args = {
+  'bank-account': true,
+  card: true,
+  email: '',
+  'client-id': '',
+  'account-id': '',
+  'submit-button-text': '',
+  'iframe-origin': '',
   cssVariables: (`
   --jfi-layout-padding: 0;
   --jfi-layout-form-control-spacing-x: .5rem;
