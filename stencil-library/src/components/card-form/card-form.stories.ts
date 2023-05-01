@@ -97,9 +97,7 @@ Basic.args = {
 
 export const SingleLine = Template.bind({});
 SingleLine.args = {
-  iframeOrigin: '',
-  singleLine: true,
-  validationMode: 'onSubmit'
+  'single-line': true,
 }
 
 export const Embedded = Template.bind({});
