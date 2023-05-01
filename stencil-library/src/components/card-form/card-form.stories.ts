@@ -156,6 +156,13 @@ Basic.args = {
   validationMode: 'onSubmit'
 }
 
+export const SingleLine = Template.bind({});
+SingleLine.args = {
+  iframeOrigin: '',
+  singleLine: true,
+  validationMode: 'onSubmit'
+}
+
 export const Embedded = Template.bind({});
 Embedded.decorators = [
   (story) => `
