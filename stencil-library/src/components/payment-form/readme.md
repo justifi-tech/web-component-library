@@ -1,4 +1,6 @@
-# justifi-payment-form
+<h1>
+  <code><justifi-payment-form /></code>
+</h1>
 
 
 ## Examples

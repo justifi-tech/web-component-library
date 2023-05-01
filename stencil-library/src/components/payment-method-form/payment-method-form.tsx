@@ -1,7 +1,8 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method, State, Watch } from '@stencil/core';
+import { Component, Event, Host, Prop, h, EventEmitter, Method, State } from '@stencil/core';
 import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
 import packageJson from '../../../package.json';
+import getComputedTheme from './get-computed-theme';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -13,12 +14,13 @@ export class PaymentMethodForm {
   @Prop({
     mutable: true,
   }) paymentMethodFormValidationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-  @Prop() paymentMethodStyleOverrides: Theme | undefined;
   @Prop() iframeOrigin?: string;
   @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
   @State() height: number = 55;
+
+  private computedTheme: Theme = getComputedTheme();
 
   iframeElement!: HTMLIFrameElement;
 
@@ -34,12 +36,11 @@ export class PaymentMethodForm {
     this.sendStyleOverrides();
   }
 
-  @Watch('paymentMethodStyleOverrides')
   sendStyleOverrides() {
-    if (this.paymentMethodStyleOverrides) {
+    if (this.computedTheme) {
       this.postMessage(
         MessageEventType[this.paymentMethodFormType].styleOverrides,
-        { styleOverrides: this.paymentMethodStyleOverrides }
+        { styleOverrides: this.computedTheme }
       );
     }
   }
@@ -113,7 +114,7 @@ export class PaymentMethodForm {
     if (this.paymentMethodFormValidationMode) {
       paramsList.push(`validationMode=${this.paymentMethodFormValidationMode}`)
     }
-    if(this.singleLine) {
+    if (this.singleLine) {
       paramsList.push(`singleLine=${this.singleLine}`)
     }
 

@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, Method, Listen, State, Watch } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Method, Listen, State } from '@stencil/core';
 import { Theme } from '../payment-method-form/theme';
 
 @Component({
@@ -6,13 +6,39 @@ import { Theme } from '../payment-method-form/theme';
   shadow: false,
 })
 export class CardForm {
+  /**
+   * When to trigger validation of the form.
+   */
   @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-  @Prop({mutable: true}) styleOverrides?: string;
+
+  /**
+   * URL for the rendered iFrame. End-users need not use this.
+   */
   @Prop({mutable: true}) iframeOrigin?: string;
-  @Prop() singleLine: boolean;
+
+  /**
+   * Boolean indicating if the Card Form should render in a single line
+   */
+  @Prop() singleLine: boolean = false;
   @State() internalStyleOverrides: Theme;
+
+  /**
+   * Triggered when iframe has loaded
+   * @event justifi-card-form#cardFormReady
+  */
+
   @Event() cardFormReady: EventEmitter;
+
+  /**
+   * Triggered when the tokenize method is called on the component
+   * @event justifi-card-form#cardFormTokenize
+  */
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
+
+  /**
+   * Triggered when the validate method is called on the component
+   * @event justifi-card-form#cardFormTokenize
+  */
   @Event() cardFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
@@ -30,30 +56,24 @@ export class CardForm {
     this.cardFormValidate.emit(event);
   }
 
-  componentWillLoad() {
-    this.parseStyleOverrides();
-  }
-
-  @Watch('styleOverrides')
-  parseStyleOverrides() {
-    if (this.styleOverrides) {
-      const parsedStyleOverrides = JSON.parse(this.styleOverrides);
-      this.internalStyleOverrides = parsedStyleOverrides;
-    }
-  }
-
   private childRef?: HTMLJustifiPaymentMethodFormElement;
 
+  /**
+   *  Makes a tokenization request to the iframe
+  */
   @Method()
-  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) {
+  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>): Promise<any> {
     if (!this.childRef) {
       throw new Error('Cannot call tokenize');
     }
     return this.childRef.tokenize(...args);
   }
 
+  /**
+   *  Runs a validation on the form and shows errors if any
+  */
   @Method()
-  async validate() {
+  async validate(): Promise<{ isValid: boolean }> {
     if (!this.childRef) {
       throw new Error('Cannot call validate');
     }
@@ -72,7 +92,6 @@ export class CardForm {
         payment-method-form-ready={this.cardFormReady}
         payment-method-form-tokenize={this.cardFormTokenize}
         payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
-        paymentMethodStyleOverrides={this.internalStyleOverrides}
       />
     );
   }

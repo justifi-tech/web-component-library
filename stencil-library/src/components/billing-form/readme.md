@@ -1,15 +1,15 @@
-# billing-form
-
-
+<h1>
+  <code><billing-form /></code>
+</h1>
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `legend` | `legend`  |             | `string` | `undefined` |
+| Property | Attribute | Description                      | Type     | Default     |
+| -------- | --------- | -------------------------------- | -------- | ----------- |
+| `legend` | `legend`  | (Optional) A label for the form. | `string` | `undefined` |
 
 
 ## Methods

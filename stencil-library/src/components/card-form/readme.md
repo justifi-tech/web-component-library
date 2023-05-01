@@ -1,9 +1,13 @@
-# justifi-card-form
+<h1>
+  <code><justifi-card-form /></code>
+</h1>
 
-<img width="364" alt="Screen Shot 2023-02-01 at 3 14 32 PM" src="https://user-images.githubusercontent.com/3867103/216165095-5c9f8206-190e-4dff-91ea-a8583f2c011b.png">
+----------------------------------------
 
-
-## Examples
+## Example usage
+<details>
+  <summary>Show Examples</summary>
+  
 ```html
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -117,6 +121,10 @@
 </html>
 ```
 
+</details>
+
+----------------------------------------
+
 ## Styling
 The `style-overrides` attribute below requires type `string`, but should be a stringified [`Theme`](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts)
 
@@ -125,42 +133,41 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ## Properties
 
-| Property         | Attribute         | Description | Type                                                           | Default     |
-| ---------------- | ----------------- | ----------- | -------------------------------------------------------------- | ----------- |
-| `iframeOrigin`   | `iframe-origin`   |             | `string`                                                       | `undefined` |
-| `singleLine`     | `single-line`     |             | `boolean`                                                      | `undefined` |
-| `styleOverrides` | `style-overrides` |             | `string`                                                       | `undefined` |
-| `validationMode` | `validation-mode` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
+| Property         | Attribute         | Description                                                        | Type                                                           | Default     |
+| ---------------- | ----------------- | ------------------------------------------------------------------ | -------------------------------------------------------------- | ----------- |
+| `iframeOrigin`   | `iframe-origin`   | URL for the rendered iFrame. End-users need not use this.          | `string`                                                       | `undefined` |
+| `singleLine`     | `single-line`     | Boolean indicating if the Card Form should render in a single line | `boolean`                                                      | `false`     |
+| `validationMode` | `validation-mode` | When to trigger validation of the form.                            | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
 
 ## Events
 
-| Event              | Description | Type                                            |
-| ------------------ | ----------- | ----------------------------------------------- |
-| `cardFormReady`    |             | `CustomEvent<any>`                              |
-| `cardFormTokenize` |             | `CustomEvent<{ data: any; }>`                   |
-| `cardFormValidate` |             | `CustomEvent<{ data: { isValid: boolean; }; }>` |
+| Event              | Description                                                   | Type                                            |
+| ------------------ | ------------------------------------------------------------- | ----------------------------------------------- |
+| `cardFormReady`    | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
+| `cardFormTokenize` | Triggered when the tokenize method is called on the component | `CustomEvent<{ data: any; }>`                   |
+| `cardFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<{ data: { isValid: boolean; }; }>` |
 
 
 ## Methods
 
 ### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
 
-
-
-#### Returns
-
-Type: `Promise<any>`
-
-
-
-### `validate() => Promise<any>`
-
-
+Makes a tokenization request to the iframe
 
 #### Returns
 
 Type: `Promise<any>`
+
+
+
+### `validate() => Promise<{ isValid: boolean; }>`
+
+Runs a validation on the form and shows errors if any
+
+#### Returns
+
+Type: `Promise<{ isValid: boolean; }>`
 
 
 

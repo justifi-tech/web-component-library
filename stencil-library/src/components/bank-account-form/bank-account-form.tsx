@@ -1,17 +1,40 @@
-import { Component, Event, Prop, h, EventEmitter, Listen, Method, Watch, State } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Listen, Method, State } from '@stencil/core';
 import { Theme } from '../payment-method-form/theme';
 
 @Component({
   tag: 'justifi-bank-account-form',
   shadow: false,
 })
+
 export class BankAccountForm {
+  /**
+   * When to trigger validation of the form.
+   */
   @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-  @Prop({mutable: true}) styleOverrides?: string;
+
+  /**
+   * URL for the rendered iFrame. End-users need not use this.
+   */
   @Prop({mutable: true}) iframeOrigin?: string;
+
   @State() internalStyleOverrides: Theme;
-  @Event() bankAccountFormReady: EventEmitter;
+
+  /**
+   * Triggered when iframe has loaded
+   * @event justifi-bank-account-form#bankAccountFormReady
+  */
+  @Event() bankAccountFormReady: EventEmitter<any>;
+
+  /**
+   * Triggered when the tokenize method is called on the component
+   * @event justifi-bank-account-form#bankAccountFormTokenize
+  */
   @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
+
+  /**
+   * Triggered when the validate method is called on the component
+   * @event justifi-bank-account-form#bankAccountFormValidate
+  */
   @Event() bankAccountFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
@@ -29,20 +52,11 @@ export class BankAccountForm {
     this.bankAccountFormValidate.emit(event);
   }
 
-  componentWillLoad() {
-    this.parseStyleOverrides();
-  }
-
-  @Watch('styleOverrides')
-  parseStyleOverrides() {
-    if (this.styleOverrides) {
-      const parsedStyleOverrides = JSON.parse(this.styleOverrides);
-      this.internalStyleOverrides = parsedStyleOverrides;
-    }
-  }
-
   private childRef?: HTMLJustifiPaymentMethodFormElement;
 
+  /**
+   *  Makes a tokenization request to the iframe
+  */
   @Method()
   async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) {
     if (!this.childRef) {
@@ -51,6 +65,9 @@ export class BankAccountForm {
     return this.childRef.tokenize(...args);
   }
 
+  /**
+   *  Runs a validation on the form and shows errors if any
+  */
   @Method()
   async validate() {
     if (!this.childRef) {
@@ -70,7 +87,6 @@ export class BankAccountForm {
         payment-method-form-ready={this.bankAccountFormReady}
         payment-method-form-tokenize={this.bankAccountFormTokenize}
         payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
-        paymentMethodStyleOverrides={this.internalStyleOverrides}
       />
     );
   }

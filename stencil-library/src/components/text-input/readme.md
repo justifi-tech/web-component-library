@@ -22,6 +22,13 @@
 | `fieldReceivedInput` |             | `CustomEvent<{ name: string; value: string; }>` |
 
 
+## Shadow Parts
+
+| Part      | Description |
+| --------- | ----------- |
+| `"label"` |             |
+
+
 ## Dependencies
 
 ### Used by

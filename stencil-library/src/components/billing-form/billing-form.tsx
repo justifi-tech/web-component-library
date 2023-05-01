@@ -9,8 +9,12 @@ import StateOptions from './state-options';
   shadow: true,
 })
 export class BillingForm {
+  /**
+   * (Optional) A label for the form.
+   */
   @Prop() legend?: string;
   @State() billingFields: BillingFormFields = {
+    name: '',
     address_line1: '',
     address_line2: '',
     address_city: '',
@@ -59,16 +63,21 @@ export class BillingForm {
     return this.billingFields;
   }
 
-  legendBlock = (
-    <legend>{this.legend}</legend>
-  );
+  legendBlock = <legend>{this.legend}</legend>;
 
   render() {
     return (
-      <Host>
+      <Host exportparts="label,input,input-invalid">
         <fieldset>
           {this.legend && this.legendBlock}
           <div class="row gy-3">
+            <div class="col-12">
+              <text-input
+                name="name"
+                label="Full Name"
+                defaultValue={this.billingFields.name}
+                error={this.billingFieldsErrors.name} />
+            </div>
             <div class="col-12">
               <text-input
                 name="address_line1"

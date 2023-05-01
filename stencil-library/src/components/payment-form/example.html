@@ -8,36 +8,61 @@
 
   <script type="module" src="../../build/webcomponents.esm.js"></script>
   <script nomodule src="../../build/webcomponents.js"></script>
+  <link rel="stylesheet" href="../../build/webcomponents.css" />
 </head>
 
 <body>
   <justifi-payment-form bank-account="true" card="true"></justifi-payment-form>
-  <button type="submit" id="payment-form-submit">Submit</button>
 </body>
+
+<style>
+  :root {
+    /* All of the available CSS variables are listed below */
+    /*
+    --jfi-layout-padding: initial;
+    --jfi-layout-form-control-spacing-x: initial;
+    --jfi-layout-form-control-spacing-y: initial;
+    --jfi-form-control-background-color: initial;
+    --jfi-form-control-border-color: initial;
+    --jfi-form-control-border-color-focus: initial;
+    --jfi-form-control-border-color-error: initial;
+    --jfi-form-control-border-width: initial;
+    --jfi-form-control-border-bottom-width: initial;
+    --jfi-form-control-border-left-width: initial;
+    --jfi-form-control-border-right-width: initial;
+    --jfi-form-control-border-top-width: initial;
+    --jfi-form-control-border-radius: initial;
+    --jfi-form-control-border-style: initial;
+    --jfi-form-control-box-shadow: initial;
+    --jfi-form-control-box-shadow-error: initial;
+    --jfi-form-control-box-shadow-error-focus: initial;
+    --jfi-form-control-box-shadow-focus: initial;
+    --jfi-form-control-color: initial;
+    --jfi-form-control-color-focus: initial;
+    --jfi-form-control-font-size: initial;
+    --jfi-form-control-font-weight: initial;
+    --jfi-form-control-line-height: initial;
+    --jfi-form-control-margin: initial;
+    --jfi-form-control-padding: initial;
+    --jfi-form-label-color: initial;
+    --jfi-form-label-font-family: initial;
+    --jfi-form-label-font-size: initial;
+    --jfi-form-label-font-weight: initial;
+    --jfi-form-label-margin: initial;
+    --jfi-error-message-color: initial;
+    --jfi-error-message-margin: initial;
+    --jfi-error-message-font-size: initial;
+  */
+  }
+</style>
 
 <script>
   (function () {
     var paymentForm = document.querySelector('justifi-payment-form');
-    var paymentFormSubmit = document.querySelector('#payment-form-submit');
 
-    paymentFormSubmit.addEventListener('click', (event) => {
-      console.log('card form tokenize button clicked');
-      // All of this information would come from your form instead of being hard coded
-      const paymentMethodData = {
-        name: 'John Doe',
-        metadata: { something: "somevalue" } // optional
-      };
-      // ACCOUNT_ID is optional, currently required for platforms
-      // ACCOUNT_ID is the seller account for which you are tokenizing
-      paymentForm.submit({
-        clientId: 'CLIENT_ID',
-        paymentMethodData: paymentMethodData,
-        accountId: 'ACCOUNT_ID'
-      })
-        .then((data) => {
-          // This is where you can make the payment request with the payment method token on your backend
-          console.log('justifi-payment-form tokenized: ', data);
-        });
+    paymentForm.addEventListener('onSubmitted', (data) => {
+      // here is where you would submit a payment with the token
+      console.log('data');
     });
   })();
 </script>
