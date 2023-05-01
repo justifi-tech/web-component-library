@@ -95,6 +95,25 @@ Basic.args = {
   'single-line': false,
 };
 
+export const SingleLine = Template.bind({});
+SingleLine.args = {
+  'single-line': true,
+}
+
+export const Embedded = Template.bind({});
+Embedded.decorators = [
+  (story) => `
+    <style>
+      #wrapper {
+        background-color: #aaaaaa;
+      }
+    </style>
+    <div id="wrapper" style="width: 50%;">
+      ${story()}
+    </div>
+  `,
+]
+
 export const Styled = Template.bind({});
 Styled.args = {
   cssVariables: (`
