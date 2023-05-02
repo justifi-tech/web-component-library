@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 
 const PaymentMethodLabels = {
@@ -9,7 +9,7 @@ const PaymentMethodLabels = {
 @Component({
   tag: 'justifi-payment-method-selector',
   styleUrl: 'payment-method-selector.scss',
-  shadow: false,
+  shadow: true,
 })
 export class PaymentMethodSelector {
   @Prop() paymentMethodTypes: PaymentMethodTypes[] = [];
@@ -24,25 +24,27 @@ export class PaymentMethodSelector {
 
   render() {
     return (
-      <div class="form-check">
-        {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) => {
-          return (
-            <div>
-              <input
-                id={paymentMethodType}
-                type="radio"
-                name="paymentMethodType"
-                value={paymentMethodType}
-                onChange={(event: any) => this.onChangeHandler(event)}
-                checked={this.selectedPaymentMethodType === paymentMethodType}
-                class="form-check-input"
-              />
-              <label htmlFor={paymentMethodType} class="form-check-label">
-                {PaymentMethodLabels[paymentMethodType]}
-              </label>
-            </div>
-          );
-        })}
+      <div
+        class="btn-group"
+        role="group"
+        aria-label="Radio toggle group for payment method"
+      >
+        {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) =>
+          <Fragment>
+            <input
+              id={paymentMethodType}
+              type="radio"
+              name="paymentMethodType"
+              value={paymentMethodType}
+              onChange={(event: any) => this.onChangeHandler(event)}
+              checked={this.selectedPaymentMethodType === paymentMethodType}
+              class="btn-check jfi-btn-radio"
+            />
+            <label htmlFor={paymentMethodType} class="btn btn-outline-primary jfi-btn-radio-label">
+              {PaymentMethodLabels[paymentMethodType]}
+            </label>
+          </Fragment>
+        )}
       </div>
     );
   };
