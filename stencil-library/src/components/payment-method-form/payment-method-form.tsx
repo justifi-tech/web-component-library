@@ -60,7 +60,7 @@ export class PaymentMethodForm {
   }
 
   private postMessage(eventType: string, payload?: any) {
-    if (this.iframeElement) {
+    if (this.iframeElement && this.iframeElement.contentWindow) {
       this.iframeElement.contentWindow.postMessage({ eventType: eventType, ...payload }, '*');
     }
   };
