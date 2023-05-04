@@ -60,9 +60,7 @@ export class PaymentMethodForm {
   }
 
   private postMessage(eventType: string, payload?: any) {
-    if (this.iframeElement && this.iframeElement.contentWindow) {
-      this.iframeElement.contentWindow.postMessage({ eventType: eventType, ...payload }, '*');
-    }
+    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, '*');
   };
 
   private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
