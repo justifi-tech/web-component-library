@@ -28,12 +28,23 @@ export namespace Components {
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
     interface JustifiBillingForm {
+        /**
+          * Method for filling the form with provided data
+          * @argument fields - The fields to fill the form with
+         */
         "fill": (fields: BillingFormFields) => Promise<void>;
+        /**
+          * Returns the values of the form as an object
+          * @returns The values of the form
+         */
         "getValues": () => Promise<BillingFormFields>;
         /**
           * (Optional) A label for the form.
          */
         "legend"?: string;
+        /**
+          * Run validation on the form
+         */
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiCardForm {

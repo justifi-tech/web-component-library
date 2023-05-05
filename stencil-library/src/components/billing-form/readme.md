@@ -16,7 +16,7 @@
 
 ### `fill(fields: BillingFormFields) => Promise<void>`
 
-
+Method for filling the form with provided data
 
 #### Returns
 
@@ -26,17 +26,17 @@ Type: `Promise<void>`
 
 ### `getValues() => Promise<BillingFormFields>`
 
-
+Returns the values of the form as an object
 
 #### Returns
 
 Type: `Promise<BillingFormFields>`
 
-
+The values of the form
 
 ### `validate() => Promise<{ isValid: boolean; }>`
 
-
+Run validation on the form
 
 #### Returns
 

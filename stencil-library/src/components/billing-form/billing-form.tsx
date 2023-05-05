@@ -34,11 +34,18 @@ export class BillingForm {
     }
   }
 
+  /**
+   * Method for filling the form with provided data
+   * @argument {BillingFormFields} fields - The fields to fill the form with
+   */
   @Method()
   async fill(fields: BillingFormFields) {
     this.billingFields = { ...fields };
   }
 
+  /**
+   * Run validation on the form
+   */
   @Method()
   async validate() {
     const newErrors = {};
@@ -58,8 +65,12 @@ export class BillingForm {
     return { isValid: isValid };
   }
 
+  /**
+   * Returns the values of the form as an object
+   * @returns {Promise<BillingFormFields>} The values of the form
+   */
   @Method()
-  async getValues() {
+  async getValues(): Promise<BillingFormFields> {
     return this.billingFields;
   }
 

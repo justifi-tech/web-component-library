@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-05T16:46:01",
+  "timestamp": "2023-05-05T16:07:13",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -198,19 +198,29 @@
           },
           "signature": "fill(fields: BillingFormFields) => Promise<void>",
           "parameters": [],
-          "docs": "",
-          "docsTags": []
+          "docs": "Method for filling the form with provided data",
+          "docsTags": [
+            {
+              "name": "argument",
+              "text": "fields - The fields to fill the form with"
+            }
+          ]
         },
         {
           "name": "getValues",
           "returns": {
             "type": "Promise<BillingFormFields>",
-            "docs": ""
+            "docs": "The values of the form"
           },
           "signature": "getValues() => Promise<BillingFormFields>",
           "parameters": [],
-          "docs": "",
-          "docsTags": []
+          "docs": "Returns the values of the form as an object",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "The values of the form"
+            }
+          ]
         },
         {
           "name": "validate",
@@ -220,7 +230,7 @@
           },
           "signature": "validate() => Promise<{ isValid: boolean; }>",
           "parameters": [],
-          "docs": "",
+          "docs": "Run validation on the form",
           "docsTags": []
         }
       ],
