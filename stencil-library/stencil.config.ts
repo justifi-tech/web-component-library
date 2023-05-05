@@ -12,7 +12,6 @@ export const config: Config = {
       './node_modules/bootstrap/scss/_maps.scss',
       './node_modules/bootstrap/scss/_mixins.scss',
       './node_modules/bootstrap/scss/_utilities.scss',
-      './node_modules/bootstrap/scss/_reboot.scss',
       './node_modules/bootstrap/scss/_root.scss',
       './src/styles/_mixins.scss'
     ],
