@@ -9,12 +9,12 @@ export class CardForm {
   /**
    * When to trigger validation of the form.
    */
-  @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
 
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */
-  @Prop({mutable: true}) iframeOrigin?: string;
+  @Prop({ mutable: true }) iframeOrigin?: string;
 
   /**
    * Boolean indicating if the Card Form should render in a single line

@@ -2,6 +2,51 @@ import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } 
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 
+
+interface CreateCardPaymentMethodData {
+  signature: string,
+  customer_id: string,
+  account_id: string,
+  card: {
+    id: string,
+    name: string,
+    acct_last_four: number,
+    brand: string,
+    token: string,
+    month: string,
+    year: string,
+    metadata: any,
+    address_line1_check: string,
+    address_postal_code_check: string
+  }
+}
+
+interface CreateBankAccountPaymentMethodData {
+  signature: string,
+  customer_id: string,
+  account_id: string,
+  bank_account: {
+    id: string,
+    account_owner_name: string,
+    account_type: 'checking' | 'savings',
+    bank_name: string,
+    acct_last_four: number,
+    token: string,
+    metadata: any
+  }
+}
+
+interface PaymentMethodCreateResponse {
+  id: string,
+  type: 'payment_method',
+  data?: CreateBankAccountPaymentMethodData | CreateCardPaymentMethodData,
+  error?: {
+    code: string,
+    message: string
+  },
+  page_info: string
+}
+
 @Component({
   tag: 'justifi-payment-form',
   styleUrl: 'payment-form.scss',
@@ -52,7 +97,7 @@ export class PaymentForm {
     this.submitButtonEnabled = true;
   }
 
-  async submit(event) {
+  async submit(event): Promise<PaymentMethodCreateResponse> {
     event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
