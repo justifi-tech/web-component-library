@@ -1,0 +1,126 @@
+import { Canvas, Meta, Story, Source } from '@storybook/addon-docs';
+import { Markdown } from '@storybook/blocks';
+import dedent from 'ts-dedent';
+import { extractVersionFromPackage } from './utils.js'
+import MarkdownIt from 'markdown-it';
+import Changelog from '../CHANGELOG.md';
+
+<Meta title="Introduction" />
+
+# Introduction to JustiFi Web Component Library
+
+{/* This function would be potentially dangerous in the context of a private repository */}
+{/* In this case since the repo is public, the package.json file is public already */}
+Latest Version: <code>{extractVersionFromPackage()}</code>
+
+# Index
+
+- [Usage](#usage)
+- [Default Styling](#default-styling)
+- [React](#react)
+- [Changelog](#changelog)
+
+
+# Usage
+
+The components can be used as HTML Web Components or as React components.
+
+## HTML Web Components
+
+The simplest way to use the Web Components is to include the following script within your HTML. This loads all the components into the browsers custom component registry.
+
+<Source
+  language='html'
+  dark
+  format={false}
+  code={dedent`
+    <script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.esm.js'></script>
+  `}
+/>
+
+Then, you can use the custom elements as normal `HTML` tags.
+
+<Source
+  language='html'
+  dark
+  format={false}
+  code={dedent`
+    <justifi-payment-form attr="value" />
+  `}
+/>
+
+It can also be installed as a package with `npm` or `yarn`
+
+<Source
+  language='bash'
+  dark
+  format={false}
+  code={dedent`
+    npm install --save @justifi/webcomponents
+  `}
+/>
+
+### Default styling
+
+In both cases, you most likely will also want to include the `CSS` file for the components to have their default styling (that you can override).
+
+It can be included from the CDN, which is easier to start with, but won't update as the version changes in the package installed in you `package.json`:
+
+<Source
+  language='html'
+  dark
+  format={false}
+  code={dedent`
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.css" />
+  `}
+/>
+
+If you want to include it from the `node_modules` you'll need to get this file to the static directory of your built app in your pipeline:
+
+<Source
+  language='html'
+  dark
+  format={false}
+  code={dedent`
+    <link rel="stylesheet" href="path/to/your/static/assets/webcomponents.css" />
+  `}
+/>
+
+
+## React
+
+To use the React version of the web components, you need to install the package:
+
+<Source
+  language='bash'
+  dark
+  format={false}
+  code={dedent`
+    npm install --save @justifi/react-components
+  `}
+/>
+
+Then import it and use it as a normal React component, for a more in-depth explanation you can search the sidebar for the component you want to use:
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+    import { JustifiCardForm } from '@justifi/react-components';
+
+    <JustifiCardForm
+      ref={cardFormRef}
+      onCardFormReady={onPaymentMethodReady}
+    />
+  `}
+/>
+
+---
+
+# Changelog
+
+<details>
+  <summary>Show</summary>
+  <Markdown>{Changelog}</Markdown>
+</details>
