@@ -1,51 +1,7 @@
 import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-
-
-interface CreateCardPaymentMethodData {
-  signature: string,
-  customer_id: string,
-  account_id: string,
-  card: {
-    id: string,
-    name: string,
-    acct_last_four: number,
-    brand: string,
-    token: string,
-    month: string,
-    year: string,
-    metadata: any,
-    address_line1_check: string,
-    address_postal_code_check: string
-  }
-}
-
-interface CreateBankAccountPaymentMethodData {
-  signature: string,
-  customer_id: string,
-  account_id: string,
-  bank_account: {
-    id: string,
-    account_owner_name: string,
-    account_type: 'checking' | 'savings',
-    bank_name: string,
-    acct_last_four: number,
-    token: string,
-    metadata: any
-  }
-}
-
-interface PaymentMethodCreateResponse {
-  id: string,
-  type: 'payment_method',
-  data?: CreateBankAccountPaymentMethodData | CreateCardPaymentMethodData,
-  error?: {
-    code: string,
-    message: string
-  },
-  page_info: string
-}
+import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -60,7 +16,7 @@ export class PaymentForm {
   @Prop() clientId: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
-  @Event() submitted: EventEmitter<{ data: any }>;
+  @Event() submitted: EventEmitter<{ data: CreatePaymentMethodResponse }>;
   @State() submitButtonEnabled: boolean = true;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
@@ -97,7 +53,7 @@ export class PaymentForm {
     this.submitButtonEnabled = true;
   }
 
-  async submit(event): Promise<PaymentMethodCreateResponse> {
+  async submit(event) {
     event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
@@ -116,7 +72,7 @@ export class PaymentForm {
       this.accountId
     );
 
-    this.submitted.emit(tokenizeResponse);
+    this.submitted.emit({ data: tokenizeResponse });
   }
 
   render() {

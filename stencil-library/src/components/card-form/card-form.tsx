@@ -1,4 +1,5 @@
 import { Component, Event, Prop, h, EventEmitter, Method, Listen, State } from '@stencil/core';
+import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../payment-method-form/theme';
 
 @Component({
@@ -62,7 +63,7 @@ export class CardForm {
    *  Makes a tokenization request to the iframe
   */
   @Method()
-  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>): Promise<any> {
+  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>): Promise<CreatePaymentMethodResponse> {
     if (!this.childRef) {
       throw new Error('Cannot call tokenize');
     }
