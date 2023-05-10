@@ -28,13 +28,14 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@justifi/webcomponents@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@justifi/webcomponents/-/webcomponents-0.2.0.tgz#5c087fd19cb228d6ef1855b440de1eecc1db08b8"
-  integrity sha512-y9Zsa3oeGZJ4mP+yfxpCpexEY8rwNefeFUAyDKYzWTfkUqc+m+X8EMA+ByZ6vv/khnqP0Sf5+H9eoU+CcFn4bA==
+"@justifi/webcomponents@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@justifi/webcomponents/-/webcomponents-3.0.4.tgz#966b7c0023773f9e64dc8054a976bf9f1605ce03"
+  integrity sha512-tt3Kk62gsENA3LDIl16OymwkvuGZw0k/622Fl7jjFoLSyHkkVp9WhyrvcXJ6R9bxDRSCyN+nhDsmql6FTUM7Nw==
   dependencies:
     "@stencil/core" "^2.13.0"
     "@stencil/react-output-target" "^0.3.1"
+    bootstrap "^5.2.3"
     date-fns "^2.29.3"
     dinero.js "^1.9.1"
     uuid "^9.0.0"
@@ -528,6 +529,11 @@ bl@^5.0.0:
     buffer "^6.0.3"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
+
+bootstrap@^5.2.3:
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.3.tgz#54739f4414de121b9785c5da3c87b37ff008322b"
+  integrity sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ==
 
 boxen@^5.0.0:
   version "5.1.2"

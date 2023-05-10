@@ -1,7 +1,7 @@
 {
   "name": "@justifi/react-components",
   "sideEffects": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React specific wrapper for JustiFi web components",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@justifi/webcomponents": "^0.2.0"
+    "@justifi/webcomponents": "^3.0.4"
   },
   "peerDependencies": {
     "react": "^18.2.0",
