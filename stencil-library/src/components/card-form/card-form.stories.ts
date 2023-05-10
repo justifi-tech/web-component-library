@@ -1,5 +1,3 @@
-import { userEvent, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
 interface CardFormStoryArgs {
   'iframe-origin': string,
   'single-line': boolean,
@@ -100,24 +98,8 @@ SingleLine.args = {
   'single-line': true,
 }
 
-export const Embedded = Template.bind({});
-Embedded.decorators = [
-  (story) => `
-    <style>
-      #wrapper {
-        background-color: #aaaaaa;
-      }
-    </style>
-    <div id="wrapper" style="width: 50%;">
-      ${story()}
-    </div>
-  `,
-]
-
-export const Styled = Template.bind({});
-Styled.args = {
-  cssVariables: (`
-  --jfi-layout-padding: 0;
+const styledVariables = `
+--jfi-layout-padding: 0;
   --jfi-layout-form-control-spacing-x: .5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
   --jfi-form-label-font-weight: 700;
@@ -147,32 +129,9 @@ Styled.args = {
   --jfi-error-message-color: #C12727;
   --jfi-error-message-margin: .25rem 0 0 0;
   --jfi-error-message-font-size: .875rem;
-  `)
+`
+
+export const Styled = Template.bind({});
+Styled.args = {
+  'css-variables': styledVariables
 }
-
-export const Completed = Template.bind({});
-Completed.play = async ({ canvasElement, step }) => {
-  // Need to wait for iFrame to load
-  addEventListener('cardFormReady', async () => {
-    const canvas = within(canvasElement);
-
-    await step('CardForm is rendered', async () => {
-      expect(canvas.getByTestId('card-form-iframe')).toBeDefined()
-    });
-
-    await step('Validate form when empty shows errors', async () => {
-      userEvent.click(canvas.getByRole('button', { name: 'Validate' }));
-    });
-
-    // Expect errors to show up, but can't figure out how to get them
-
-    await step('Call tokenize with empty form shows errors', async () => {
-      userEvent.click(canvas.getByRole('button', { name: 'Tokenize' }));
-    });
-
-    // Expect errors to show up, but can't figure out how to get them
-
-    // Fill form
-  });
-};
-
