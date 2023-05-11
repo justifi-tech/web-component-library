@@ -103,7 +103,7 @@ export class PaymentForm {
               onClick={(event) => this.submit(event)}
               disabled={!this.submitButtonEnabled}
               type="submit"
-              class="btn btn-primary">
+              class="btn btn-primary jfi-submit-button">
               {this.submitButtonText || 'Submit'}
             </button>
           </div>

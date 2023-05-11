@@ -1,6 +1,38 @@
 @import "forms";
+@import "buttons";
+@import "button-group";
 
 :host {
   @include host-base-styles;
   display: block;
+}
+
+.jfi-btn-radio + .jfi-btn-radio-label {
+  color: var(--jfi-radio-button-color);
+  background-color: var(--jfi-radio-button-background-color);
+  border-color: var(--jfi-radio-button-border-color);
+  padding: var(--jfi-radio-button-padding);
+  font-size: var(--jfi-radio-button-font-size);
+}
+
+.jfi-btn-radio:focus + .jfi-btn-radio-label {
+  box-shadow: var(--jfi-box-shadow-focus);
+}
+
+.jfi-btn-radio + .jfi-btn-radio-label:hover {
+  color: var(--jfi-radio-button-color-hover);
+  border-color: var(--jfi-radio-button-border-color-hover);
+  background-color: var(--jfi-radio-button-background-color-hover);
+}
+
+.jfi-btn-radio:checked + .jfi-btn-radio-label:hover {
+  color: var(--jfi-radio-button-color-selected-hover);
+  border-color: var(--jfi-radio-button-border-color-selected-hover);
+  background-color: var(--jfi-radio-button-background-color-selected-hover);
+}
+
+.jfi-btn-radio:checked + .jfi-btn-radio-label {
+  color: var(--jfi-radio-button-color-selected);
+  background-color: var(--jfi-radio-button-background-color-selected);
+  border-color: var(--jfi-radio-button-border-color-selected);
 }
