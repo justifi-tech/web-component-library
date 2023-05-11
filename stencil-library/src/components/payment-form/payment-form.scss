@@ -76,3 +76,10 @@ justifi-payment-method-form {
   background-color: var(--jfi-submit-button-background-color-focus);
   border-color: var(--jfi-submit-button-border-color-focus);
 }
+
+// Extra selector for specificity
+.btn.jfi-submit-button:active {
+  color: var(--jfi-submit-button-color-active);
+  background-color: var(--jfi-submit-button-background-color-active);
+  border-color: var(--jfi-submit-button-border-color-active);
+}
