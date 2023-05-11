@@ -16,7 +16,7 @@ export class PaymentForm {
   @Prop() clientId: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
-  @Event() submitted: EventEmitter<{ data: CreatePaymentMethodResponse }>;
+  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
   @State() submitButtonEnabled: boolean = true;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
@@ -72,7 +72,7 @@ export class PaymentForm {
       this.accountId
     );
 
-    this.submitted.emit({ data: tokenizeResponse });
+    this.submitted.emit(tokenizeResponse);
   }
 
   render() {

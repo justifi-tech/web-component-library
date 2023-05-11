@@ -274,7 +274,7 @@ declare namespace LocalJSX {
         "clientId"?: string;
         "email"?: string;
         "iframeOrigin"?: string;
-        "onSubmitted"?: (event: JustifiPaymentFormCustomEvent<{ data: CreatePaymentMethodResponse }>) => void;
+        "onSubmitted"?: (event: JustifiPaymentFormCustomEvent<CreatePaymentMethodResponse>) => void;
         "submitButtonText"?: string;
     }
     interface JustifiPaymentMethodForm {
