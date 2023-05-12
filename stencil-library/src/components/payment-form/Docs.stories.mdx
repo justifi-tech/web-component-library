@@ -1,0 +1,16 @@
+import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag } from '../../../storybook-pages/utils.ts'
+import example from './example.js';
+
+<Meta
+  title="Components/PaymentForm"
+  Components="justifi-payment-form"
+/>
+
+<Title />
+Component to render an entire form including a switch to use a credit card or bank account, a submit button and all fields required for proper use.
+<ArgTypes />
+
+# Example Usage
+-----
+<Source dark language="html" code={example} />

@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>justifi-billing-form component</title>
-
-  <script type="module" src="../../build/webcomponents.esm.js"></script>
-  <script nomodule src="../../build/webcomponents.js"></script>
-</head>
-
-<body>
+export default
+`<body>
   <justifi-billing-form></justifi-billing-form>
   <button id="justifi-billing-form-submit">Submit</button>
 </body>
@@ -27,5 +16,4 @@
     });
   })();
 </script>
-
-</html>
+`;

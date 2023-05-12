@@ -1,6 +1,6 @@
-<h1>
-  <code><billing-form /></code>
-</h1>
+# justifi-billing-form
+
+
 
 <!-- Auto Generated Below -->
 

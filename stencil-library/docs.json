@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-11T19:59:37",
+  "timestamp": "2023-05-12T16:58:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -10,8 +10,8 @@
       "filePath": "./src/components/bank-account-form/bank-account-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-bank-account-form",
-      "readme": "<h1>\n  <code><justifi-bank-account-form /></code>\n</h1>\n\n\n",
-      "docs": "<h1>\n  <code><justifi-bank-account-form /></code>\n</h1>",
+      "readme": "# justifi-bank-account-form\n\n\n",
+      "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
@@ -167,8 +167,8 @@
       "filePath": "./src/components/billing-form/billing-form.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-billing-form",
-      "readme": "<h1>\n  <code><billing-form /></code>\n</h1>\n",
-      "docs": "<h1>\n  <code><billing-form /></code>\n</h1>",
+      "readme": "# justifi-billing-form\n\n\n",
+      "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [

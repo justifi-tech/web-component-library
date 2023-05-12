@@ -1,6 +1,4 @@
-<h1>
-  <code><justifi-bank-account-form /></code>
-</h1>
+# justifi-bank-account-form
 
 
 

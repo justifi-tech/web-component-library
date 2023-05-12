@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>bank-account-form</title>
-
-  <script type="module" src="../../build/webcomponents.esm.js"></script>
-  <script nomodule src="../../build/webcomponents.js"></script>
-</head>
-
-<body>
+export default
+`<body>
   <justifi-bank-account-form></justifi-bank-account-form>
   <button type="submit" id="bank-submit-button">Tokenize</button>
   <button type="submit" id="bank-validate-button">Validate</button>
@@ -55,5 +44,4 @@
     });
   })();
 </script>
-
-</html>
+`
