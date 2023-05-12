@@ -1,5 +1,7 @@
-import { defineCustomElements } from '../loader';
+import React from 'react';
+import { Title, Subtitle, Description, Primary, Controls } from '@storybook/blocks';
 import { setStencilDocJson, extractArgTypesFactory } from '@pxtrn/storybook-addon-docs-stencil';
+import { defineCustomElements } from '../loader';
 import docJson from '../docs.json';
 import '../dist/webcomponents/webcomponents.css'
 
@@ -13,6 +15,15 @@ export const parameters = {
   actions: { argTypesRegex: "^on.*" },
   docs: {
     extractArgTypes: extractArgTypesFactory({ dashCase: true }),
+    page: () => (
+      <>
+        <Title />
+        <Subtitle />
+        <Description />
+        <Primary />
+        <Controls />
+      </>
+    )
   },
   controls: {
     hideNoControlsWarning: true,

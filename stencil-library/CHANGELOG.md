@@ -13,6 +13,25 @@ Migration notes:
 - Errors - instead of getting errors via `data.errors[0]`, which was an error code, you will now need to use `data.error.code`. There is also now a human readable message (`data.error.message`)
 - Success/created payment method - instead of getting the token via `data.token`, it is nested within a full payment method response. In order to get the token you will need to use `data.card.token` or `data.bank_account.token` depending on what payment method type is being tokenized
 
+#### 3.3.5
+> 11 May 2023
+
+- Add `:active` state to Submit button for `PaymentForm`
+
+#### 3.2.5
+> 11 May 2023
+
+- Add styling and variables for radio buttons and submit button in `PaymentForm`
+#### 3.1.5
+> 04 May 2023
+
+- Add missing dependencies.
+
+#### 3.1.4
+> 04 May 2023
+
+- Fix missing url to show recently added introduction page.
+
 #### 3.0.4
 > 08 May 2023
 

@@ -6,6 +6,9 @@
   --jfi-layout-form-control-spacing-x: .5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
 
+  // colors
+  --jfi-primary-color: #{$primary};
+
   // form control
   --jfi-form-control-background-color: #{$input-bg};
   --jfi-form-control-border-color: #{$input-border-color};
@@ -29,6 +32,39 @@
   --jfi-form-control-line-height: #{$input-line-height};
   --jfi-form-control-margin: 0;
   --jfi-form-control-padding: #{$input-padding-y $input-padding-x};
+
+  // form radio group
+  --jfi-radio-button-color: var(--jfi-primary-color);
+  --jfi-radio-button-background-color: transparent;
+  --jfi-radio-button-color-selected: white;
+  --jfi-radio-button-background-color-selected: var(--jfi-primary-color);
+  --jfi-radio-button-border-color: var(--jfi-primary-color);
+  --jfi-radio-button-border-color-selected: var(--jfi-primary-color);
+  --jfi-radio-button-padding: #{$input-padding-y $input-padding-x};
+  --jfi-radio-button-font-size: #{$input-font-size};
+  --jfi-radio-button-color-hover: var(--jfi-primary-color);
+  --jfi-radio-button-color-selected-hover: white;
+  --jfi-radio-button-background-color-hover: transparent;
+  --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
+  --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
+  --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
+
+  // submit button
+  --jfi-submit-button-color: white;
+  --jfi-submit-button-background-color: var(--jfi-primary-color);
+  --jfi-submit-button-border-color: var(--jfi-primary-color);
+  --jfi-submit-button-padding: #{$input-padding-y $input-padding-x};
+  --jfi-submit-button-font-size: #{$input-font-size};
+  --jfi-submit-button-border-radius: #{$border-radius};
+  --jfi-submit-button-color-hover: white;
+  --jfi-submit-button-background-color-hover: var(--jfi-primary-color);
+  --jfi-submit-button-border-color-hover: var(--jfi-primary-color);
+  --jfi-submit-button-color-focus: white;
+  --jfi-submit-button-background-color-focus: var(--jfi-primary-color);
+  --jfi-submit-button-border-color-focus: var(--jfi-primary-color);
+  --jfi-submit-button-color-active: white;
+  --jfi-submit-button-background-color-active: var(--jfi-primary-color);
+  --jfi-submit-button-border-color-active: var(--jfi-primary-color);
 
   // form label
   --jfi-form-label-color: #{$body-color};
