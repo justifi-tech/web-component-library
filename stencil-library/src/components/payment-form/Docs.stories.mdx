@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
-import { filterDocsByTag } from '../../../storybook-pages/utils.ts'
+import { filterDocsByTag } from '../../../storybook-pages/utils.tsx'
 import example from './example.js';
 
 <Meta
@@ -9,7 +9,21 @@ import example from './example.js';
 
 <Title />
 Component to render an entire form including a switch to use a credit card or bank account, a submit button and all fields required for proper use.
-<ArgTypes />
+
+# Index
+
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+- [Example usage](#example-usage)
+
+# Props, events and methods
+-----
+<ArgTypes exclude={['css-variables']} />
+
+# Styling
+-----
+The `<justifi-payment-form>` can be customized only through overriding `CSS variables`.
+The full list of variables that can be overriden is listed in the [Introduction](/docs/introduction--docs#styling-components-with-variables).
 
 # Example Usage
 -----

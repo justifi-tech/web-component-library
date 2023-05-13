@@ -3,6 +3,11 @@ import { ValidationError } from 'yup';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from './state-options';
 
+/**
+ * @exportedPart label: Label for inputs
+ * @exportedPart input: The input fields
+ * @exportedPart input-invalid: Invalid state for inputs
+ */
 @Component({
   tag: 'justifi-billing-form',
   styleUrl: 'billing-form.scss',
@@ -75,7 +80,6 @@ export class BillingForm {
   }
 
   legendBlock = <legend>{this.legend}</legend>;
-
   render() {
     return (
       <Host exportparts="label,input,input-invalid">

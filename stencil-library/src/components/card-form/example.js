@@ -1,5 +1,11 @@
-export default
-`<body>
+import { head } from "../../../storybook-pages/example-parts";
+
+export default `<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+${head('justifi-card-form')}
+
+<body>
   <justifi-card-form></justifi-card-form>
   <button type="submit" id="card-submit-button">Tokenize</button>
   <button type="submit" id="card-validate-button">Validate</button>
@@ -49,4 +55,5 @@ export default
     });
   })();
 </script>
-`
+
+</html>`

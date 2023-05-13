@@ -1,5 +1,11 @@
-export default
-`<body>
+import { head } from "../../../storybook-pages/example-parts"
+
+export default `<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+${head('bank-account-form')}
+
+<body>
   <justifi-bank-account-form></justifi-bank-account-form>
   <button type="submit" id="bank-submit-button">Tokenize</button>
   <button type="submit" id="bank-validate-button">Validate</button>
@@ -44,4 +50,5 @@ export default
     });
   })();
 </script>
-`
+
+</html>`

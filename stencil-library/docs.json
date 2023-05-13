@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-12T16:58:33",
+  "timestamp": "2023-05-13T18:01:46",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -169,7 +169,20 @@
       "tag": "justifi-billing-form",
       "readme": "# justifi-billing-form\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "exportedPart",
+          "text": "label: Label for inputs"
+        },
+        {
+          "name": "exportedPart",
+          "text": "input: The input fields"
+        },
+        {
+          "name": "exportedPart",
+          "text": "input-invalid: Invalid state for inputs"
+        }
+      ],
       "usage": {},
       "props": [
         {

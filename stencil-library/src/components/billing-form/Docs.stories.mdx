@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
-import { filterDocsByTag } from '../../../storybook-pages/utils.ts'
+import { filterDocsByTag, ExportedParts } from '../../../storybook-pages/utils.tsx'
 import example from './example.js';
 
 <Meta
@@ -9,7 +9,25 @@ import example from './example.js';
 
 <Title />
 Component to render the all the extra fields normally used with either a credit card form or bank account form.
-<ArgTypes />
+
+# Index
+
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+  - [Exported Parts](#exported-parts)
+- [Example usage](#example-usage)
+
+# Props, events and methods
+-----
+<ArgTypes exclude={['css-variables']} />
+
+# Styling
+-----
+The `<justifi-billing-form>` can be customized both by overriding `CSS variables` or by using the exported `parts`.
+The full list of variables that can be overriden is listed in the [Introduction](/docs/introduction--docs#styling-components-with-variables).
+
+## Exported parts
+<ExportedParts component='justifi-billing-form' tags={filterDocsByTag("justifi-billing-form").docsTags.map(part => part.text)} />
 
 # Example Usage
 -----

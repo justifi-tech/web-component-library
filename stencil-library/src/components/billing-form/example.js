@@ -1,5 +1,11 @@
-export default
-`<body>
+import { head } from "../../../storybook-pages/example-parts"
+
+export default `<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+${head('justifi-billing-form')}
+
+<body>
   <justifi-billing-form></justifi-billing-form>
   <button id="justifi-billing-form-submit">Submit</button>
 </body>
@@ -16,4 +22,5 @@ export default
     });
   })();
 </script>
-`;
+
+</html>`
