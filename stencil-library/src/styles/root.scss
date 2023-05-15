@@ -1,15 +1,15 @@
 @import "root";
 
 :root {
-  // layout
+  /* layout */
   --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: .5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
 
-  // colors
+  /* colors */
   --jfi-primary-color: #{$primary};
 
-  // form control
+  /* form control */
   --jfi-form-control-background-color: #{$input-bg};
   --jfi-form-control-border-color: #{$input-border-color};
   --jfi-form-control-border-color-focus: #{$input-focus-border-color};
@@ -33,7 +33,7 @@
   --jfi-form-control-margin: 0;
   --jfi-form-control-padding: #{$input-padding-y $input-padding-x};
 
-  // form radio group
+  /* form radio group */
   --jfi-radio-button-color: var(--jfi-primary-color);
   --jfi-radio-button-background-color: transparent;
   --jfi-radio-button-color-selected: white;
@@ -49,7 +49,7 @@
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
 
-  // submit button
+  /* submit button */
   --jfi-submit-button-color: white;
   --jfi-submit-button-background-color: var(--jfi-primary-color);
   --jfi-submit-button-border-color: var(--jfi-primary-color);
@@ -66,14 +66,14 @@
   --jfi-submit-button-background-color-active: var(--jfi-primary-color);
   --jfi-submit-button-border-color-active: var(--jfi-primary-color);
 
-  // form label
+  /* form label */
   --jfi-form-label-color: #{$body-color};
   --jfi-form-label-font-family: #{$font-family-base};
   --jfi-form-label-font-size: #{$font-size-base};
   --jfi-form-label-font-weight: 400;
   --jfi-form-label-margin: 0 0 #{$form-label-margin-bottom} 0;
 
-  // validation messages
+  /* validation messages */
   --jfi-error-message-color: #{$form-feedback-invalid-color};
   --jfi-error-message-margin: #{$form-feedback-margin-top} 0 0 0;
   --jfi-error-message-font-size: #{$form-feedback-font-size};
