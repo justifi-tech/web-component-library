@@ -1,4 +1,5 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import dedent from 'ts-dedent';
 import { filterDocsByTag } from '../../../storybook-pages/utils.tsx'
 import example from './example.js';
 
@@ -23,7 +24,48 @@ Component to render an entire form including a switch to use a credit card or ba
 # Styling
 -----
 The `<justifi-payment-form>` can be customized only through overriding `CSS variables`.
-The full list of variables that can be overriden is listed in the [Introduction](/docs/introduction--docs#styling-components-with-variables).
+
+Some of the `CSS variables` specific to this component are listed below:
+<Source
+  language='css'
+  dark
+  code={dedent`
+  /* form radio group */
+  --jfi-radio-button-color
+  --jfi-radio-button-background-color
+  --jfi-radio-button-color-selected
+  --jfi-radio-button-background-color-selected
+  --jfi-radio-button-border-color
+  --jfi-radio-button-border-color-selected
+  --jfi-radio-button-padding
+  --jfi-radio-button-font-size
+  --jfi-radio-button-color-hover
+  --jfi-radio-button-color-selected-hover
+  --jfi-radio-button-background-color-hover
+  --jfi-radio-button-background-color-selected-hover
+  --jfi-radio-button-border-color-selected-hover
+  --jfi-radio-button-border-color-hover
+
+  /* submit button */
+  --jfi-submit-button-color
+  --jfi-submit-button-background-color
+  --jfi-submit-button-border-color
+  --jfi-submit-button-padding
+  --jfi-submit-button-font-size
+  --jfi-submit-button-border-radius
+  --jfi-submit-button-color-hover
+  --jfi-submit-button-background-color-hover
+  --jfi-submit-button-border-color-hover
+  --jfi-submit-button-color-focus
+  --jfi-submit-button-background-color-focus
+  --jfi-submit-button-border-color-focus
+  --jfi-submit-button-color-active
+  --jfi-submit-button-background-color-active
+  --jfi-submit-button-border-color-active
+  `}
+/>
+
+#### The full list of variables that can be overriden is listed in the [Introduction](/docs/introduction--docs#styling-components-with-variables).
 
 # Example Usage
 -----

@@ -129,88 +129,87 @@ The following components need to be styled by overriding `CSS variables`, since 
 
 This is a complete list of variables as defined in this project's `root.scss`:
 
-_Note: The syntax `#{$variable}` is used to interpolate variables from bootstrap_
-
 <Source
   language='css'
   dark
   code={dedent`
   /* layout */
-  --jfi-layout-padding: 4px;
-  --jfi-layout-form-control-spacing-x: .5rem;
-  --jfi-layout-form-control-spacing-y: 1rem;
+  --jfi-layout-padding
+  --jfi-layout-form-control-spacing-x
+  --jfi-layout-form-control-spacing-y
 
   /* colors */
-  --jfi-primary-color: #{$primary};
+  --jfi-primary-color
 
   /* form control */
-  --jfi-form-control-background-color: #{$input-bg};
-  --jfi-form-control-border-color: #{$input-border-color};
-  --jfi-form-control-border-color-focus: #{$input-focus-border-color};
-  --jfi-form-control-border-color-error: #{$form-feedback-invalid-color};
-  --jfi-form-control-border-width: 1px;
-  --jfi-form-control-border-bottom-width: 1px;
-  --jfi-form-control-border-left-width: 1px;
-  --jfi-form-control-border-right-width: 1px;
-  --jfi-form-control-border-top-width: 1px;
-  --jfi-form-control-border-radius: #{$border-radius};
-  --jfi-form-control-border-style: solid;
-  --jfi-form-control-box-shadow: none;
-  --jfi-form-control-box-shadow-error: none;
-  --jfi-form-control-box-shadow-error-focus: #{0 0 0 0.25rem rgba($form-feedback-invalid-color, 0.25)};
-  --jfi-form-control-box-shadow-focus: #{$input-focus-box-shadow};
-  --jfi-form-control-color: #{$input-color};
-  --jfi-form-control-color-focus: #{input-color-focus};
-  --jfi-form-control-font-size: #{$input-font-size};
-  --jfi-form-control-font-weight: #{$input-font-weight};
-  --jfi-form-control-line-height: #{$input-line-height};
-  --jfi-form-control-margin: 0;
-  --jfi-form-control-padding: #{$input-padding-y $input-padding-x};
-
-  /* form radio group */
-  --jfi-radio-button-color: var(--jfi-primary-color);
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-color-selected: white;
-  --jfi-radio-button-background-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-border-color: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-padding: #{$input-padding-y $input-padding-x};
-  --jfi-radio-button-font-size: #{$input-font-size};
-  --jfi-radio-button-color-hover: var(--jfi-primary-color);
-  --jfi-radio-button-color-selected-hover: white;
-  --jfi-radio-button-background-color-hover: transparent;
-  --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
-
-  /* submit button */
-  --jfi-submit-button-color: white;
-  --jfi-submit-button-background-color: var(--jfi-primary-color);
-  --jfi-submit-button-border-color: var(--jfi-primary-color);
-  --jfi-submit-button-padding: #{$input-padding-y $input-padding-x};
-  --jfi-submit-button-font-size: #{$input-font-size};
-  --jfi-submit-button-border-radius: #{$border-radius};
-  --jfi-submit-button-color-hover: white;
-  --jfi-submit-button-background-color-hover: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-hover: var(--jfi-primary-color);
-  --jfi-submit-button-color-focus: white;
-  --jfi-submit-button-background-color-focus: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-focus: var(--jfi-primary-color);
-  --jfi-submit-button-color-active: white;
-  --jfi-submit-button-background-color-active: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-active: var(--jfi-primary-color);
+  --jfi-form-control-background-color
+  --jfi-form-control-border-color
+  --jfi-form-control-border-color-focus
+  --jfi-form-control-border-color-error
+  --jfi-form-control-border-width
+  --jfi-form-control-border-bottom-width
+  --jfi-form-control-border-left-width
+  --jfi-form-control-border-right-width
+  --jfi-form-control-border-top-width
+  --jfi-form-control-border-radius
+  --jfi-form-control-border-style
+  --jfi-form-control-box-shadow
+  --jfi-form-control-box-shadow-error
+  --jfi-form-control-box-shadow-error-focus
+  --jfi-form-control-box-shadow-focus
+  --jfi-form-control-color
+  --jfi-form-control-color-focus
+  --jfi-form-control-font-size
+  --jfi-form-control-font-weight
+  --jfi-form-control-line-height
+  --jfi-form-control-margin
+  --jfi-form-control-padding
 
   /* form label */
-  --jfi-form-label-color: #{$body-color};
-  --jfi-form-label-font-family: #{$font-family-base};
-  --jfi-form-label-font-size: #{$font-size-base};
-  --jfi-form-label-font-weight: 400;
-  --jfi-form-label-margin: 0 0 #{$form-label-margin-bottom} 0;
+  --jfi-form-label-color
+  --jfi-form-label-font-family
+  --jfi-form-label-font-size
+  --jfi-form-label-font-weight
+  --jfi-form-label-margin
 
   /* validation messages */
-  --jfi-error-message-color: #{$form-feedback-invalid-color};
-  --jfi-error-message-margin: #{$form-feedback-margin-top} 0 0 0;
-  --jfi-error-message-font-size: #{$form-feedback-font-size};
+  --jfi-error-message-color
+  --jfi-error-message-margin
+  --jfi-error-message-font-size
+
+  /* Below only used in justifi-payment-form */
+  /* form radio group */
+  --jfi-radio-button-color
+  --jfi-radio-button-background-color
+  --jfi-radio-button-color-selected
+  --jfi-radio-button-background-color-selected
+  --jfi-radio-button-border-color
+  --jfi-radio-button-border-color-selected
+  --jfi-radio-button-padding
+  --jfi-radio-button-font-size
+  --jfi-radio-button-color-hover
+  --jfi-radio-button-color-selected-hover
+  --jfi-radio-button-background-color-hover
+  --jfi-radio-button-background-color-selected-hover
+  --jfi-radio-button-border-color-selected-hover
+  --jfi-radio-button-border-color-hover
+
+  /* submit button */
+  --jfi-submit-button-color
+  --jfi-submit-button-background-color
+  --jfi-submit-button-border-color
+  --jfi-submit-button-padding
+  --jfi-submit-button-font-size
+  --jfi-submit-button-border-radius
+  --jfi-submit-button-color-hover
+  --jfi-submit-button-background-color-hover
+  --jfi-submit-button-border-color-hover
+  --jfi-submit-button-color-focus
+  --jfi-submit-button-background-color-focus
+  --jfi-submit-button-border-color-focus
+  --jfi-submit-button-color-active
+  --jfi-submit-button-background-color-active
+  --jfi-submit-button-border-color-active
   `}
 />
 
