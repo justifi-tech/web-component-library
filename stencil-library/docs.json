@@ -69,10 +69,10 @@
         {
           "name": "tokenize",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<CreatePaymentMethodResponse>",
             "docs": ""
           },
-          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
+          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>",
           "parameters": [],
           "docs": "Makes a tokenization request to the iframe",
           "docsTags": []
@@ -342,10 +342,10 @@
         {
           "name": "tokenize",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<CreatePaymentMethodResponse>",
             "docs": ""
           },
-          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
+          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>",
           "parameters": [],
           "docs": "Makes a tokenization request to the iframe",
           "docsTags": []
@@ -585,7 +585,7 @@
       "events": [
         {
           "event": "submitted",
-          "detail": "{ data: any; }",
+          "detail": "BankAccountCreateResponse | CardCreateResponse",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -721,10 +721,10 @@
         {
           "name": "tokenize",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<CreatePaymentMethodResponse>",
             "docs": ""
           },
-          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>",
+          "signature": "tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>",
           "parameters": [],
           "docs": "",
           "docsTags": []

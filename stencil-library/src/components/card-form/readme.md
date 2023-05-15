@@ -151,13 +151,13 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ## Methods
 
-### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
 
 Makes a tokenization request to the iframe
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<CreatePaymentMethodResponse>`
 
 
 

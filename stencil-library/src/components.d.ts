@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
 import { PaymentMethodTypes } from "./api";
@@ -17,7 +18,7 @@ export namespace Components {
         /**
           * Makes a tokenization request to the iframe
          */
-        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>;
         /**
           * Runs a validation on the form and shows errors if any
          */
@@ -59,7 +60,7 @@ export namespace Components {
         /**
           * Makes a tokenization request to the iframe
          */
-        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>;
         /**
           * Runs a validation on the form and shows errors if any
          */
@@ -85,7 +86,7 @@ export namespace Components {
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
         "singleLine": boolean;
-        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>;
+        "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>;
         "validate": () => Promise<any>;
     }
     interface JustifiPaymentMethodSelector {
@@ -273,7 +274,7 @@ declare namespace LocalJSX {
         "clientId"?: string;
         "email"?: string;
         "iframeOrigin"?: string;
-        "onSubmitted"?: (event: JustifiPaymentFormCustomEvent<{ data: any }>) => void;
+        "onSubmitted"?: (event: JustifiPaymentFormCustomEvent<CreatePaymentMethodResponse>) => void;
         "submitButtonText"?: string;
     }
     interface JustifiPaymentMethodForm {

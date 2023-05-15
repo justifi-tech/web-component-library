@@ -1,6 +1,7 @@
 import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -15,7 +16,7 @@ export class PaymentForm {
   @Prop() clientId: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
-  @Event() submitted: EventEmitter<{ data: any }>;
+  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
   @State() submitButtonEnabled: boolean = true;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];

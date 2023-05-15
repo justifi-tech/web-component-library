@@ -3,6 +3,7 @@ import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
 import packageJson from '../../../package.json';
 import getComputedTheme from './get-computed-theme';
+import { CreatePaymentMethodResponse } from './payment-method-responses';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -76,7 +77,7 @@ export class PaymentMethodForm {
   }
 
   @Method()
-  async tokenize(clientId: string, paymentMethodMetadata: any, account?: string): Promise<any> {
+  async tokenize(clientId: string, paymentMethodMetadata: any, account?: string): Promise<CreatePaymentMethodResponse> {
     const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
     const payload = {
       clientId: clientId,

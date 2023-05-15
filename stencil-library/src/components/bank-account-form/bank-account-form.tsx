@@ -1,4 +1,5 @@
 import { Component, Event, Prop, h, EventEmitter, Listen, Method, State } from '@stencil/core';
+import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../payment-method-form/theme';
 
 @Component({
@@ -10,12 +11,12 @@ export class BankAccountForm {
   /**
    * When to trigger validation of the form.
    */
-  @Prop({mutable: true}) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  @Prop({ mutable: true }) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
 
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */
-  @Prop({mutable: true}) iframeOrigin?: string;
+  @Prop({ mutable: true }) iframeOrigin?: string;
 
   @State() internalStyleOverrides: Theme;
 
@@ -58,7 +59,7 @@ export class BankAccountForm {
    *  Makes a tokenization request to the iframe
   */
   @Method()
-  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) {
+  async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>): Promise<CreatePaymentMethodResponse> {
     if (!this.childRef) {
       throw new Error('Cannot call tokenize');
     }
