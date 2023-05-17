@@ -1029,16 +1029,16 @@
           "required": false
         },
         {
-          "name": "auth",
-          "type": "{ token?: string; }",
+          "name": "authToken",
+          "type": "string",
           "mutable": false,
+          "attr": "auth-token",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "{}",
           "values": [
             {
-              "type": "{ token?: string; }"
+              "type": "string"
             }
           ],
           "optional": false,

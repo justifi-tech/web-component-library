@@ -1,0 +1,7 @@
+@import "reboot";
+@import "tables";
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
