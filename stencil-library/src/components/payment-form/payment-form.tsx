@@ -65,7 +65,7 @@ export class PaymentForm {
     this.submitButtonEnabled = false;
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
-    const paymentMethodData = { email: this.email, ...billingFormFieldValues };
+    const paymentMethodData = { email: this.email, paymentMethod: { ...billingFormFieldValues }};
     const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
       this.clientId,
       paymentMethodData,
