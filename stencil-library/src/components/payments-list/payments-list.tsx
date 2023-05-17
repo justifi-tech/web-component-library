@@ -4,34 +4,45 @@ import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 
 @Component({
   tag: 'justifi-payments-list',
-  styleUrl: 'payments-list.css',
+  styleUrl: 'payments-list.scss',
   shadow: true,
 })
 export class PaymentsList {
   @Prop() accountId: string;
-  @Prop() auth: { token?: string } = {};
+  @Prop() authToken: string;
   @State() payments: Payment[] = [];
 
   @Watch('accountId')
-  @Watch('auth')
+  @Watch('authToken')
   requestPropsChanged() {
+    console.log('this.authToken', this.authToken);
     this.fetchData();
   }
 
   fetchData(): void {
     const accountId = this.accountId;
     const endpoint = `account/${accountId}/payments`;
-    Api(this.auth.token).get(endpoint)
+    Api(this.authToken).get(endpoint)
       .then((response: IApiResponseCollection<Payment[]>) => {
         const data = response.data.map((dataItem) => new Payment(dataItem));
         this.payments = data;
       });
   };
 
+  showEmptyState() {
+    return this.payments.length < 1;
+  }
+
+  emptyState = (
+    <tr>
+      <td colSpan={8} style={{ textAlign: 'center' }}>No payments to show</td>
+    </tr>
+  );
+
   render() {
     return (
       <Host>
-        <table class="justifi-table">
+        <table class="table">
           <thead>
             <tr>
               <th scope="col" title="The date and time each payment was made">Made on</th>
@@ -45,6 +56,7 @@ export class PaymentsList {
             </tr>
           </thead>
           <tbody>
+            {this.showEmptyState() && this.emptyState}
             {this.payments.map((payment) => {
               <tr>
                 <td>

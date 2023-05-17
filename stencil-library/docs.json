@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-15T18:11:05",
+  "timestamp": "2023-05-17T16:19:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -893,16 +893,16 @@
           "required": false
         },
         {
-          "name": "auth",
-          "type": "{ token?: string; }",
+          "name": "authToken",
+          "type": "string",
           "mutable": false,
+          "attr": "auth-token",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "{}",
           "values": [
             {
-              "type": "{ token?: string; }"
+              "type": "string"
             }
           ],
           "optional": false,

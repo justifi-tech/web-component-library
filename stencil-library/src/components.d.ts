@@ -95,7 +95,7 @@ export namespace Components {
     }
     interface JustifiPaymentsList {
         "accountId": string;
-        "auth": { token?: string };
+        "authToken": string;
     }
     interface SelectInput {
         "defaultValue": string;
@@ -292,7 +292,7 @@ declare namespace LocalJSX {
     }
     interface JustifiPaymentsList {
         "accountId"?: string;
-        "auth"?: { token?: string };
+        "authToken"?: string;
     }
     interface SelectInput {
         "defaultValue"?: string;
