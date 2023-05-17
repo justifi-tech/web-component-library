@@ -13,7 +13,7 @@ ${head('justifi-payment-form')}
   (function () {
     var paymentForm = document.querySelector('justifi-payment-form');
 
-    paymentForm.addEventListener('onSubmitted', (data) => {
+    paymentForm.addEventListener('submitted', (data) => {
       // here is where you would submit a payment with the token
       console.log('data');
     });
