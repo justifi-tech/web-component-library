@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-22T20:02:15",
+  "timestamp": "2023-05-22T20:07:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -283,7 +283,56 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "hideSubmit",
+          "type": "string",
+          "mutable": false,
+          "attr": "hide-submit",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "legend",
+          "type": "string",
+          "mutable": false,
+          "attr": "legend",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "submitButtonText",
+          "type": "string",
+          "mutable": false,
+          "attr": "submit-button-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],

@@ -49,6 +49,9 @@ export namespace Components {
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiBusinessRepresentative {
+        "hideSubmit"?: string;
+        "legend"?: string;
+        "submitButtonText"?: string;
     }
     interface JustifiCardForm {
         /**
@@ -248,6 +251,9 @@ declare namespace LocalJSX {
         "legend"?: string;
     }
     interface JustifiBusinessRepresentative {
+        "hideSubmit"?: string;
+        "legend"?: string;
+        "submitButtonText"?: string;
     }
     interface JustifiCardForm {
         /**

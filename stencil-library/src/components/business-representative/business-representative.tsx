@@ -1,4 +1,4 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Prop } from '@stencil/core';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -6,6 +6,9 @@ import { Component, Host, h, State } from '@stencil/core';
   shadow: true,
 })
 export class BusinessRepresentative {
+  @Prop() hideSubmit?: string;
+  @Prop() submitButtonText?: string;
+  @Prop() legend?: string;
   // "name": "Person Name",
   // "title": "Mr.",
   // "email": "person.name@justifi.ai",
@@ -54,7 +57,7 @@ export class BusinessRepresentative {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          <legend>Business Entity</legend>
+          <legend>{(this.legend) ? this.legend : 'Business Entity'}</legend>
           <div class="row gx-2 gy-2">
             <div class="col-8">
               <text-input
@@ -109,9 +112,13 @@ export class BusinessRepresentative {
               </div>
             </div>
 
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+            {(this.hideSubmit) ? '' : (
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                  {(this.submitButtonText) ? this.submitButtonText : 'Submit'}
+                </button>
+              </div>
+            )}
           </div>
         </fieldset>
       </Host >
