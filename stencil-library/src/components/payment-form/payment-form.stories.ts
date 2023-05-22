@@ -127,6 +127,7 @@ Styled.args = {
   --jfi-submit-button-color-active: white;
   --jfi-submit-button-background-color-active: var(--jfi-primary-color);
   --jfi-submit-button-border-color-active: var(--jfi-primary-color);
+  --jfi-submit-button-width: 100%;
 
   --jfi-radio-button-color: var(--jfi-primary-color);
   --jfi-radio-button-background-color: transparent;
