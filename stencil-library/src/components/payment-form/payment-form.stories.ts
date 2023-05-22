@@ -143,5 +143,6 @@ Styled.args = {
   --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
+  --jfi-radio-button-group-width: 100%;
   `)
 }

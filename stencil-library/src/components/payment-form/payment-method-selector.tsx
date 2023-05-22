@@ -25,7 +25,7 @@ export class PaymentMethodSelector {
   render() {
     return (
       <div
-        class="btn-group"
+        class="btn-group jfi-btn-radio-group"
         role="group"
         aria-label="Radio toggle group for payment method"
       >

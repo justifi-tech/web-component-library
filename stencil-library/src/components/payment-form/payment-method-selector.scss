@@ -36,3 +36,8 @@
   background-color: var(--jfi-radio-button-background-color-selected);
   border-color: var(--jfi-radio-button-border-color-selected);
 }
+
+.jfi-btn-radio-group {
+  display: inline-flex;
+  width: var(--jfi-radio-button-group-width);
+}
