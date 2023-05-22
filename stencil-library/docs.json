@@ -1,11 +1,29 @@
 {
-  "timestamp": "2023-05-17T16:19:24",
+  "timestamp": "2023-05-19T21:08:49",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
     "typescriptVersion": "4.8.4"
   },
   "components": [
+    {
+      "filePath": "./src/components/business-information/business-information.tsx",
+      "encapsulation": "shadow",
+      "tag": "business-information",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
     {
       "filePath": "./src/components/bank-account-form/bank-account-form.tsx",
       "encapsulation": "none",
