@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-15T18:11:05",
+  "timestamp": "2023-05-22T20:02:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -272,6 +272,33 @@
         ],
         "justifi-payment-form": [
           "justifi-billing-form"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/business-representative/business-representative.tsx",
+      "encapsulation": "shadow",
+      "tag": "justifi-business-representative",
+      "readme": "# justifi-business-representative\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "text-input",
+        "select-input"
+      ],
+      "dependencyGraph": {
+        "justifi-business-representative": [
+          "text-input",
+          "select-input"
         ]
       }
     },
@@ -1030,11 +1057,15 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form"
+        "justifi-billing-form",
+        "justifi-business-representative"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
+          "select-input"
+        ],
+        "justifi-business-representative": [
           "select-input"
         ]
       }
@@ -1135,11 +1166,15 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form"
+        "justifi-billing-form",
+        "justifi-business-representative"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
+          "text-input"
+        ],
+        "justifi-business-representative": [
           "text-input"
         ]
       }
