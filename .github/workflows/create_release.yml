@@ -106,7 +106,7 @@ jobs:
           git push origin main
 
   build_and_push_stencil:
-    name: Build & Push Stencil
+    name: Build & Publish Stencil
     runs-on: ubuntu-latest
     needs: create_release
     defaults:
@@ -129,6 +129,10 @@ jobs:
       - name: Typescript Compiling Build
         run: |
           yarn build
+
+      - name: Stencil Link
+        run: yarn link
+
       - name: Publish to GitHub Registry
         run: |
           #yarn publish --verbose --no-git-tag-version --access public
@@ -137,7 +141,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
 
   build_and_push_react:
-    name: Build & Push React
+    name: Build & Publish React
     runs-on: ubuntu-latest
     needs: [create_release, build_and_push_stencil]
     defaults:
@@ -156,6 +160,9 @@ jobs:
       - name: Yarn Install
         run: |
           yarn install
+
+      - name: Link webcomponents
+        run: yarn link "@justifi/webcomponents"
 
       - name: Typescript Compiling Build
         run: |
