@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
+import { BusinessAddressFormFields } from "./components/business-address/business-address-schema";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
@@ -47,6 +48,9 @@ export namespace Components {
           * Run validation on the form
          */
         "validate": () => Promise<{ isValid: boolean; }>;
+    }
+    interface JustifiBusinessAddress {
+        "submit": () => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>;
     }
     interface JustifiCardForm {
         /**
@@ -152,6 +156,12 @@ declare global {
         prototype: HTMLJustifiBillingFormElement;
         new (): HTMLJustifiBillingFormElement;
     };
+    interface HTMLJustifiBusinessAddressElement extends Components.JustifiBusinessAddress, HTMLStencilElement {
+    }
+    var HTMLJustifiBusinessAddressElement: {
+        prototype: HTMLJustifiBusinessAddressElement;
+        new (): HTMLJustifiBusinessAddressElement;
+    };
     interface HTMLJustifiCardFormElement extends Components.JustifiCardForm, HTMLStencilElement {
     }
     var HTMLJustifiCardFormElement: {
@@ -197,6 +207,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-billing-form": HTMLJustifiBillingFormElement;
+        "justifi-business-address": HTMLJustifiBusinessAddressElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-form": HTMLJustifiPaymentFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
@@ -237,6 +248,8 @@ declare namespace LocalJSX {
           * (Optional) A label for the form.
          */
         "legend"?: string;
+    }
+    interface JustifiBusinessAddress {
     }
     interface JustifiCardForm {
         /**
@@ -312,6 +325,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-billing-form": JustifiBillingForm;
+        "justifi-business-address": JustifiBusinessAddress;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-form": JustifiPaymentForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
@@ -327,6 +341,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
             "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
+            "justifi-business-address": LocalJSX.JustifiBusinessAddress & JSXBase.HTMLAttributes<HTMLJustifiBusinessAddressElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;

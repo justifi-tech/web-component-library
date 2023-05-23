@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-15T18:11:05",
+  "timestamp": "2023-05-23T20:38:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -272,6 +272,45 @@
         ],
         "justifi-payment-form": [
           "justifi-billing-form"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/business-address/business-address.tsx",
+      "encapsulation": "shadow",
+      "tag": "justifi-business-address",
+      "readme": "# justifi-business-address\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [
+        {
+          "name": "submit",
+          "returns": {
+            "type": "Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+            "docs": ""
+          },
+          "signature": "submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "text-input",
+        "select-input"
+      ],
+      "dependencyGraph": {
+        "justifi-business-address": [
+          "text-input",
+          "select-input"
         ]
       }
     },
@@ -1030,11 +1069,15 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form"
+        "justifi-billing-form",
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
+          "select-input"
+        ],
+        "justifi-business-address": [
           "select-input"
         ]
       }
@@ -1135,11 +1178,15 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form"
+        "justifi-billing-form",
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
+          "text-input"
+        ],
+        "justifi-business-address": [
           "text-input"
         ]
       }
