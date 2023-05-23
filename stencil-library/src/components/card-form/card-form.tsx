@@ -26,20 +26,20 @@ export class CardForm {
   /**
    * Triggered when iframe has loaded
    * @event justifi-card-form#cardFormReady
-  */
+   */
 
   @Event() cardFormReady: EventEmitter;
 
   /**
    * Triggered when the tokenize method is called on the component
    * @event justifi-card-form#cardFormTokenize
-  */
+   */
   @Event() cardFormTokenize: EventEmitter<{ data: any }>;
 
   /**
    * Triggered when the validate method is called on the component
    * @event justifi-card-form#cardFormTokenize
-  */
+   */
   @Event() cardFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
@@ -61,7 +61,7 @@ export class CardForm {
 
   /**
    *  Makes a tokenization request to the iframe
-  */
+   */
   @Method()
   async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>): Promise<CreatePaymentMethodResponse> {
     if (!this.childRef) {
@@ -72,7 +72,7 @@ export class CardForm {
 
   /**
    *  Runs a validation on the form and shows errors if any
-  */
+   */
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
     if (!this.childRef) {
@@ -85,7 +85,9 @@ export class CardForm {
     return (
       <justifi-payment-method-form
         ref={el => {
-          if (el) { this.childRef = el }
+          if (el) {
+            this.childRef = el;
+          }
         }}
         iframe-origin={this.iframeOrigin}
         payment-method-form-type="card"

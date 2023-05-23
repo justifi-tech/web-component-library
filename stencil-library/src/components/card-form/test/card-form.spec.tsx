@@ -33,7 +33,7 @@ describe('justifi-card-form', () => {
     expect(cardForm.tokenize).toBeDefined();
 
     // mock childRef
-    (cardForm as any).childRef = { tokenize: () => { } };
+    (cardForm as any).childRef = { tokenize: () => {} };
     const childRefTokenizeSpy = jest.spyOn((cardForm as any).childRef, 'tokenize');
 
     cardForm.tokenize('clientId', { paymentMethod: 'metadata' }, 'accountId');

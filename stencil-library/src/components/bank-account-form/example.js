@@ -1,4 +1,4 @@
-import { head } from "../../../storybook-pages/example-parts"
+import { head } from '../../../storybook-pages/example-parts';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -51,4 +51,4 @@ ${head('bank-account-form')}
   })();
 </script>
 
-</html>`
+</html>`;

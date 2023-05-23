@@ -1,13 +1,13 @@
 const isDev = process.env.NODE_ENV === 'development';
 
 interface PaymentFormStoryArgs {
-  'bank-account': boolean,
-  card: boolean,
-  email: string,
-  'client-id': string,
-  'account-id': string,
-  'submit-button-text': string,
-  cssVariables: string,
+  'bank-account': boolean;
+  'card': boolean;
+  'email': string;
+  'client-id': string;
+  'account-id': string;
+  'submit-button-text': string;
+  'cssVariables': string;
 }
 
 export default {
@@ -19,14 +19,14 @@ export default {
       table: {
         disable: isDev ? false : true,
         category: 'props',
-      }
+      },
     },
   },
 };
 
 const Template = (args: PaymentFormStoryArgs) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
-  return (`
+  return `
     <div>
       <justifi-payment-form
         card=${args.card}
@@ -55,30 +55,30 @@ const Template = (args: PaymentFormStoryArgs) => {
       });
     })()
     </script>
-  `);
+  `;
 };
 
 export const Basic = Template.bind({});
 Basic.args = {
   'bank-account': true,
-  card: true,
-  email: '',
+  'card': true,
+  'email': '',
   'client-id': '',
   'account-id': '',
   'submit-button-text': '',
-  'iframe-origin': ''
+  'iframe-origin': '',
 };
 
 export const Styled = Template.bind({});
 Styled.args = {
   'bank-account': true,
-  card: true,
-  email: '',
+  'card': true,
+  'email': '',
   'client-id': '',
   'account-id': '',
   'submit-button-text': '',
   'iframe-origin': '',
-  cssVariables: (`
+  'cssVariables': `
   --jfi-primary-color: #212529;
 
   --jfi-layout-padding: 0;
@@ -145,5 +145,5 @@ Styled.args = {
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
   --jfi-radio-button-group-width: 100%;
-  `)
-}
+  `,
+};

@@ -7,18 +7,20 @@ describe('select-input', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [SelectInput],
-      template: () => <select-input
-        options={[
-          {
-            label: 'Option 1',
-            value: 'option1'
-          },
-          {
-            label: 'Option 2',
-            value: 'option2'
-          },
-        ]}
-      ></select-input>,
+      template: () => (
+        <select-input
+          options={[
+            {
+              label: 'Option 1',
+              value: 'option1',
+            },
+            {
+              label: 'Option 2',
+              value: 'option2',
+            },
+          ]}
+        ></select-input>
+      ),
     });
     expect(page.root).toEqualHtml(`
       <select-input>

@@ -1,6 +1,6 @@
-@import "forms";
-@import "buttons";
-@import "button-group";
+@import 'forms';
+@import 'buttons';
+@import 'button-group';
 
 :host {
   @include host-base-styles;

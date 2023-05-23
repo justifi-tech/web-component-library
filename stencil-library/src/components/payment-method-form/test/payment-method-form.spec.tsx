@@ -6,7 +6,7 @@ describe('justifi-payment-method-form', () => {
   it('renders an iframe', async () => {
     const page = await newSpecPage({
       components: [PaymentMethodForm],
-      template: () => (<justifi-payment-method-form paymentMethodFormType="card"></justifi-payment-method-form>),
+      template: () => <justifi-payment-method-form paymentMethodFormType="card"></justifi-payment-method-form>,
     });
     expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>

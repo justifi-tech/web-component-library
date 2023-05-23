@@ -31,13 +31,13 @@ const mockPayments = [
       items: [
         {
           name: 'Pullover',
-          amount: 4500
+          amount: 4500,
         },
         {
           name: 'Jeans',
-          amount: 5567
-        }
-      ]
+          amount: 5567,
+        },
+      ],
     },
     payment_intent_id: null,
     payment_method: {
@@ -48,12 +48,12 @@ const mockPayments = [
         id: 'pm_7f66GJQoSofG3s9nOHPgaq',
         name: 'Nick Name',
         token: 'fake-token',
-        updated_at: '2022-01-13T14:19:11.803Z'
-      }
+        updated_at: '2022-01-13T14:19:11.803Z',
+      },
     },
     refunded: false,
     status: PaymentStatuses.succeeded,
-    updated_at: '2022-01-10T15:29:58.940Z'
+    updated_at: '2022-01-10T15:29:58.940Z',
   }),
   // payment 1: fully refunded
   new Payment({
@@ -85,12 +85,12 @@ const mockPayments = [
         id: 'pm_7f66GJQoSofG3s9nOHPgaq',
         name: 'Good Customer',
         token: 'fake-token',
-        updated_at: '2021-01-13T14:19:11.803Z'
-      }
+        updated_at: '2021-01-13T14:19:11.803Z',
+      },
     },
     refunded: true,
     status: PaymentStatuses.fully_refunded,
-    updated_at: '2021-01-10T15:29:58.940Z'
+    updated_at: '2021-01-10T15:29:58.940Z',
   }),
   // payment 2: partially refunded
   new Payment({
@@ -122,12 +122,12 @@ const mockPayments = [
         id: 'pm_7f66GJQoSofG3s9nOHPgaq',
         name: 'Sal Gleason',
         token: 'fake-token',
-        updated_at: '2021-11-13T14:19:11.803Z'
-      }
+        updated_at: '2021-11-13T14:19:11.803Z',
+      },
     },
     refunded: true,
     status: PaymentStatuses.partially_refunded,
-    updated_at: '2022-01-10T15:29:58.940Z'
+    updated_at: '2022-01-10T15:29:58.940Z',
   }),
   // payment 3: disputed
   new Payment({
@@ -143,17 +143,19 @@ const mockPayments = [
     currency: 'usd',
     description: 'Rustic Marble Pants',
     disputed: true,
-    disputes: [{
-      amount_cents: 10000,
-      created_at: '2021-09-10T16:34:47.940Z',
-      currency: 'usd',
-      gateway_ref_id: 'dp_4f67775b-d6e0-4c4a-afb0-6ecf2d0df1a8',
-      id: 'ed5dfa9d-b29d-4658-b76d-fff0c592171f',
-      payment_id: '41ebfb2a-f8c8-4cee-9eca-cb7d86e863bc',
-      reason: null,
-      status: 'needs_response',
-      updated_at: '2021-09-10T16:34:47.940Z'
-    }],
+    disputes: [
+      {
+        amount_cents: 10000,
+        created_at: '2021-09-10T16:34:47.940Z',
+        currency: 'usd',
+        gateway_ref_id: 'dp_4f67775b-d6e0-4c4a-afb0-6ecf2d0df1a8',
+        id: 'ed5dfa9d-b29d-4658-b76d-fff0c592171f',
+        payment_id: '41ebfb2a-f8c8-4cee-9eca-cb7d86e863bc',
+        reason: null,
+        status: 'needs_response',
+        updated_at: '2021-09-10T16:34:47.940Z',
+      },
+    ],
     error_code: null,
     error_description: null,
     fee_amount: 35,
@@ -169,12 +171,12 @@ const mockPayments = [
         id: 'pm_7f66GJQoSofG3s9nOHPgaq',
         name: 'Sal Gleason',
         token: 'fake-token',
-        updated_at: '2021-09-13T14:19:11.803Z'
-      }
+        updated_at: '2021-09-13T14:19:11.803Z',
+      },
     },
     refunded: false,
     status: PaymentStatuses.disputed,
-    updated_at: '2021-09-10T15:29:58.940Z'
+    updated_at: '2021-09-10T15:29:58.940Z',
   }),
   // payment 4: failed
   new Payment({
@@ -206,13 +208,13 @@ const mockPayments = [
         id: 'pm_5uyevnE6o1yl55nRgPWXXL',
         name: 'Minnie Bernhard',
         token: 'fake-token',
-        updated_at: '2022-01-18T15:07:15.975Z'
+        updated_at: '2022-01-18T15:07:15.975Z',
       },
     },
     refunded: false,
     status: PaymentStatuses.failed,
-    updated_at: '2022-01-18T12:54:44.822Z'
-  })
+    updated_at: '2022-01-18T12:54:44.822Z',
+  }),
 ];
 
 export default mockPayments;
