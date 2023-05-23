@@ -66,6 +66,7 @@ export class BusinessRepresentative {
                 defaultValue={this.representativeFields?.name}
                 error={this.representativeFieldsErrors?.name} />
             </div>
+
             <div class="col-4">
               <select-input
                 name="title"
@@ -110,6 +111,10 @@ export class BusinessRepresentative {
                   Is this the owner?
                 </label>
               </div>
+            </div>
+
+            <div class="col-12">
+              <justifi-business-address />
             </div>
 
             {(this.hideSubmit) ? '' : (
