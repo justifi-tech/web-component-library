@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-23T20:38:09",
+  "timestamp": "2023-05-24T05:18:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -298,7 +298,13 @@
         }
       ],
       "events": [],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "fieldReceivedInput",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],

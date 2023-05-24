@@ -16,8 +16,9 @@
     (() => {
       const addressForm = document.querySelector('justifi-business-address');
       const submitButton = document.getElementById('submit');
-      submitButton.addEventListener('click', () => {
-        addressForm.submit();
+      submitButton.addEventListener('click', async () => {
+        const form = await addressForm.submit();
+        console.log(form);
       });
     })()
   </script>
