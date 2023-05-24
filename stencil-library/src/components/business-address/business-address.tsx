@@ -1,5 +1,7 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Method, Listen } from '@stencil/core';
+import { ValidationError } from 'yup';
 import StateOptions from '../billing-form/state-options';
+import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-schema';
 
 @Component({
   tag: 'justifi-business-address',
@@ -7,7 +9,7 @@ import StateOptions from '../billing-form/state-options';
   shadow: true,
 })
 export class BusinessAddress {
-  @State() businessAddress = {
+  @State() businessAddress: BusinessAddressFormFields = {
     line1: '',
     line2: '',
     city: '',
@@ -16,6 +18,35 @@ export class BusinessAddress {
     country: ''
   };
   @State() businessAddressErrors: any = {};
+
+  @Listen('fieldReceivedInput')
+  setFormValue(event) {
+    const data = event.detail;
+    const businessAddressClone = { ...this.businessAddress };
+    if (data.name) {
+      businessAddressClone[data.name] = data.value;
+      this.businessAddress = businessAddressClone;
+    }
+  }
+
+  @Method()
+  async submit() {
+    const newErrors = {};
+    let isValid: boolean = true;
+
+    try {
+      await BusinessAddressFormSchema.validate(this.businessAddress, { abortEarly: false });
+    } catch (err) {
+      isValid = false;
+      err.inner.map((item: ValidationError) => {
+        newErrors[item.path] = item.message;
+      });
+    }
+
+    this.businessAddressErrors = newErrors;
+
+    return { isValid: isValid, values: this.businessAddress }
+  };
 
   render() {
     return (

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-23T04:09:56",
+  "timestamp": "2023-05-24T20:10:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -284,9 +284,27 @@
       "docsTags": [],
       "usage": {},
       "props": [],
-      "methods": [],
+      "methods": [
+        {
+          "name": "submit",
+          "returns": {
+            "type": "Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+            "docs": ""
+          },
+          "signature": "submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "fieldReceivedInput",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],
