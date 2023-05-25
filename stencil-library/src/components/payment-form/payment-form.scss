@@ -1,6 +1,6 @@
-@import "reboot";
-@import "grid";
-@import "buttons";
+@import 'reboot';
+@import 'grid';
+@import 'buttons';
 
 :host {
   @include host-base-styles;
@@ -62,8 +62,9 @@ justifi-payment-method-form {
   border-color: var(--jfi-submit-button-border-color);
   padding: var(--jfi-submit-button-padding);
   font-size: var(--jfi-submit-button-font-size);
-  border-radius: var(--jfi-submit-button-border-radius);  
+  border-radius: var(--jfi-submit-button-border-radius);
   width: var(--jfi-submit-button-width);
+  box-shadow: var(--jfi-submit-button-box-shadow);
 }
 
 .jfi-submit-button:hover {
