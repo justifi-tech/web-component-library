@@ -20,6 +20,8 @@ jobs:
     name: Create Release 
     runs-on: ubuntu-latest
     steps:
+        # Move it back to checkout once this issue is solved
+        # https://github.com/actions/checkout/issues/701
       - name: Checkout with fetch-depth=50 and fetch-tags=true
         uses: RobertWieczoreck/checkout@add-fetch-tags-option
         with:
