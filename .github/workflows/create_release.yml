@@ -20,8 +20,11 @@ jobs:
     name: Create Release 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout with fetch-depth=50 and fetch-tags=true
+        uses: RobertWieczoreck/checkout@add-fetch-tags-option
+        with:
+          fetch-depth: 50
+          fetch-tags: true
 
       - name: Setup git credentials
         run: |
@@ -85,7 +88,7 @@ jobs:
       - name: Create Auto-Changelog
         id: createAutoChangelog
         run: |
-          yarn --cwd stencil-library/ run auto-changelog --commit-limit false --latest-version ${{ env.CURRENT_VERSION }} -o ../CHANGELOG.md --template changelog-template.hbs
+          yarn --cwd stencil-library/ run auto-changelog --latest-version ${{ env.NEXT_RELEASE_VERSION }} --starting-version ${{ env.CURRENT_VERSION }} --template changelog-template.hbs
 
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
@@ -100,7 +103,7 @@ jobs:
 
       - name: Commit CHANGELOG.md
         run: |
-          yarn --cwd stencil-library/ run auto-changelog --commit-limit false --latest-version ${{ env.CURRENT_VERSION }} -o ../CHANGELOG.md --template changelog-template.hbs
+          yarn --cwd stencil-library/ run auto-changelog --template changelog-template.hbs
           git add CHANGELOG.md 
           git commit -m "docs: update CHANGELOG.md for ${{ github.ref_name }}"
           git push origin main
