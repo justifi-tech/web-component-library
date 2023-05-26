@@ -9,23 +9,23 @@ export function formatCurrency(amount: number, withSymbol = true): string {
     return Dinero({ amount: amount, currency: 'USD' }).toFormat(formattedString);
   }
 
-  return (amount < 0) ? `(${format(-amount)})` : format(amount);
-};
+  return amount < 0 ? `(${format(-amount)})` : format(amount);
+}
 
 export function formatDate(dateString: string | Date): string {
   if (!dateString) return '';
   const date = new Date(dateString);
   return format(date, 'MMM d, yyyy');
-};
+}
 
 export function formatTime(dateString: string): string {
   if (!dateString) return '';
   const date = new Date(dateString);
   return format(date, 'h:mmaaa');
-};
+}
 
 export function formatTimeSeconds(dateString: string): string {
   if (!dateString) return '';
   const date = new Date(dateString);
   return format(date, 'h:mm:ssaaa');
-};
+}

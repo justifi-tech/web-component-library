@@ -12,5 +12,5 @@ export const MessageEventType = {
     validate: 'justifi.bankAccount.validate',
     resize: 'justifi.bankAccount.resize',
     styleOverrides: 'justifi.bankAccount.styleOverrides',
-  }
-}
+  },
+};

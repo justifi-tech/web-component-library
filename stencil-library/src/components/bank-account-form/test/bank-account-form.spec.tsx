@@ -33,7 +33,7 @@ describe('justifi-bank-account-form', () => {
     expect(bankAccountForm.tokenize).toBeDefined();
 
     // mock childRef
-    (bankAccountForm as any).childRef = { tokenize: () => { } };
+    (bankAccountForm as any).childRef = { tokenize: () => {} };
     const childRefTokenizeSpy = jest.spyOn((bankAccountForm as any).childRef, 'tokenize');
 
     bankAccountForm.tokenize('clientId', { paymentMethod: 'metadata' }, 'accountId');

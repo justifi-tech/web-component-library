@@ -1,9 +1,6 @@
 # text-field
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -14,13 +11,11 @@
 | `label`        | `label`         |             | `string` | `undefined` |
 | `name`         | `name`          |             | `string` | `undefined` |
 
-
 ## Events
 
 | Event                | Description | Type                                            |
 | -------------------- | ----------- | ----------------------------------------------- |
 | `fieldReceivedInput` |             | `CustomEvent<{ name: string; value: string; }>` |
-
 
 ## Shadow Parts
 
@@ -28,15 +23,15 @@
 | --------- | ----------- |
 | `"label"` |             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [justifi-billing-form](../billing-form)
- - [justifi-business-address](../business-address)
+- [justifi-billing-form](../billing-form)
+- [justifi-business-address](../business-address)
 
 ### Graph
+
 ```mermaid
 graph TD;
   justifi-billing-form --> text-input
@@ -44,6 +39,6 @@ graph TD;
   style text-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

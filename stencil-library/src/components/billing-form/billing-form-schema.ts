@@ -3,7 +3,7 @@ import { object, string } from 'yup';
 export const RegExZip = /^\d{5}/;
 
 export interface BillingFormFields {
-  name: string,
+  name: string;
   address_line1: string;
   address_line2?: string;
   address_city: string;
@@ -17,10 +17,7 @@ const BillingFormSchema = object({
   address_line2: string(),
   address_city: string().required('Enter city'),
   address_state: string().required('Choose state'),
-  address_postal_code: string()
-    .required('Enter ZIP')
-    .matches(RegExZip, 'Enter a valid ZIP')
-    .min(5, 'Enter a valid ZIP')
+  address_postal_code: string().required('Enter ZIP').matches(RegExZip, 'Enter a valid ZIP').min(5, 'Enter a valid ZIP'),
 });
 
 export default BillingFormSchema;

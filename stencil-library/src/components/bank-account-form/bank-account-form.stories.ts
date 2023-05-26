@@ -41,18 +41,18 @@ export default {
       table: {
         disable: isDev ? false : true,
         category: 'props',
-      }
+      },
     },
     'css-variables': {
       control: 'text',
       table: {
         category: 'props',
-        defaultValue: CSSVars
+        defaultValue: CSSVars,
       },
-    }
+    },
   },
   decorators: [
-    (story) => `
+    story => `
       ${story()}
       <script>${addEvents()}</script>
     `,
@@ -62,23 +62,27 @@ export default {
 const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
   const valid = await bankForm.validate();
   console.log(valid);
-}
+};
 const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
   const tokenizeResponse = await bankForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
-}
+};
 const handleReady = () => {
   console.log('bank account form is ready');
   const bankForm = document.querySelector('justifi-bank-account-form') as HTMLJustifiBankAccountFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
-  validateBtn?.addEventListener('click', () => { handleValidateClick(bankForm) });
-  tokenizeBtn?.addEventListener('click', () => { handleTokenizeClick(bankForm, {}) });
-}
+  validateBtn?.addEventListener('click', () => {
+    handleValidateClick(bankForm);
+  });
+  tokenizeBtn?.addEventListener('click', () => {
+    handleTokenizeClick(bankForm, {});
+  });
+};
 
 const addEvents = () => {
   addEventListener('bankAccountFormReady', handleReady);
-}
+};
 
 const FormButtons = `
   <style>
@@ -95,10 +99,10 @@ const FormButtons = `
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
   </div>
-`
+`;
 
 const Template = (args: any) => {
-  return (`
+  return `
     <div>
       <style>
       :root {
@@ -112,12 +116,12 @@ const Template = (args: any) => {
       />
     </div>
     ${FormButtons}
-  `);
+  `;
 };
 
 export const Basic = Template.bind({});
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'css-variables': CSSVars
-}
+  'css-variables': CSSVars,
+};

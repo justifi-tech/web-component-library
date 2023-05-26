@@ -66,11 +66,7 @@ export class PaymentForm {
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
     const paymentMethodData = { email: this.email, ...billingFormFieldValues };
-    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
-      this.clientId,
-      paymentMethodData,
-      this.accountId
-    );
+    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
 
     this.submitted.emit(tokenizeResponse);
   }
@@ -79,32 +75,34 @@ export class PaymentForm {
     return (
       <Host>
         <form class="row gy-3">
-          {(this.allowedPaymentMethodTypes.length > 1) && (
+          {this.allowedPaymentMethodTypes.length > 1 && (
             <div class="col-12">
-              <justifi-payment-method-selector
-                paymentMethodTypes={this.allowedPaymentMethodTypes}
-                selectedPaymentMethodType={this.selectedPaymentMethodType} />
+              <justifi-payment-method-selector paymentMethodTypes={this.allowedPaymentMethodTypes} selectedPaymentMethodType={this.selectedPaymentMethodType} />
             </div>
           )}
           <div class="col-12">
             <justifi-payment-method-form
               payment-method-form-type={this.selectedPaymentMethodType}
               iframe-origin={this.iframeOrigin}
-              ref={el => { if (el) { this.paymentMethodFormRef = el } }}
+              ref={el => {
+                if (el) {
+                  this.paymentMethodFormRef = el;
+                }
+              }}
             />
           </div>
           <div class="col-12">
             <justifi-billing-form
               legend="Billing Info"
-              ref={el => { if (el) { this.billingFormRef = el } }}
+              ref={el => {
+                if (el) {
+                  this.billingFormRef = el;
+                }
+              }}
             />
           </div>
           <div class="col-12">
-            <button
-              onClick={(event) => this.submit(event)}
-              disabled={!this.submitButtonEnabled}
-              type="submit"
-              class="btn btn-primary jfi-submit-button">
+            <button onClick={event => this.submit(event)} disabled={!this.submitButtonEnabled} type="submit" class="btn btn-primary jfi-submit-button">
               {this.submitButtonText || 'Submit'}
             </button>
           </div>

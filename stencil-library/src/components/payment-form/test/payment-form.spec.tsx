@@ -12,5 +12,4 @@ describe('justifi-payment-form', () => {
       </payment-form>
     `);
   });
-
 });

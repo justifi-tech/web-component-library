@@ -1,8 +1,8 @@
 interface CardFormStoryArgs {
-  'iframe-origin': string,
-  'single-line': boolean,
-  'validation-mode': string,
-  'css-variables': string
+  'iframe-origin': string;
+  'single-line': boolean;
+  'validation-mode': string;
+  'css-variables': string;
 }
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -16,11 +16,11 @@ export default {
       table: {
         disable: isDev ? false : true,
         category: 'props',
-      }
+      },
     },
   },
   decorators: [
-    (story) => `
+    story => `
       ${story()}
       <script>${addEvents()}</script>
     `,
@@ -30,23 +30,27 @@ export default {
 const handleValidateClick = async (cardForm: HTMLJustifiCardFormElement) => {
   const valid = await cardForm.validate();
   console.log(valid);
-}
+};
 const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData) => {
   const tokenizeResponse = await cardForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
-}
+};
 const handleReady = () => {
   console.log('card form is ready');
   const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
-  validateBtn?.addEventListener('click', () => { handleValidateClick(cardForm) });
-  tokenizeBtn?.addEventListener('click', () => { handleTokenizeClick(cardForm, {}) });
-}
+  validateBtn?.addEventListener('click', () => {
+    handleValidateClick(cardForm);
+  });
+  tokenizeBtn?.addEventListener('click', () => {
+    handleTokenizeClick(cardForm, {});
+  });
+};
 
 const addEvents = () => {
   addEventListener('cardFormReady', handleReady);
-}
+};
 
 const FormButtons = `
   <style>
@@ -64,12 +68,12 @@ const FormButtons = `
   <div class="button-bar">
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
-  </div>`
+  </div>`;
 
 const Template = (args: CardFormStoryArgs) => {
   const includeButtons = true;
 
-  return (`
+  return `
     <div>
       <style>
       :root {
@@ -84,7 +88,7 @@ const Template = (args: CardFormStoryArgs) => {
       />
     </div>
     ${includeButtons ? FormButtons : ''}
-  `);
+  `;
 };
 
 export const Basic = Template.bind({});
@@ -96,7 +100,7 @@ Basic.args = {
 export const SingleLine = Template.bind({});
 SingleLine.args = {
   'single-line': true,
-}
+};
 
 const styledVariables = `
 --jfi-layout-padding: 0;
@@ -129,9 +133,9 @@ const styledVariables = `
   --jfi-error-message-color: #C12727;
   --jfi-error-message-margin: .25rem 0 0 0;
   --jfi-error-message-font-size: .875rem;
-`
+`;
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'css-variables': styledVariables
-}
+  'css-variables': styledVariables,
+};

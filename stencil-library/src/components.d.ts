@@ -106,7 +106,7 @@ export namespace Components {
         "error": string;
         "label": string;
         "name": string;
-        "options": { label: string, value: string }[];
+        "options": { label: string; value: string }[];
     }
     interface TextInput {
         "defaultValue": string;
@@ -312,15 +312,15 @@ declare namespace LocalJSX {
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string, value: string }>) => void;
-        "options"?: { label: string, value: string }[];
+        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string; value: string }>) => void;
+        "options"?: { label: string; value: string }[];
     }
     interface TextInput {
         "defaultValue"?: string;
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string, value: string }>) => void;
+        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string; value: string }>) => void;
     }
     interface IntrinsicElements {
         "justifi-bank-account-form": JustifiBankAccountForm;

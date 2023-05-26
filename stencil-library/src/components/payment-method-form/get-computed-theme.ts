@@ -1,4 +1,4 @@
-import { Theme } from "./theme";
+import { Theme } from './theme';
 
 const getComputedTheme = () => {
   const computedStyles = getComputedStyle(document.body);
@@ -44,10 +44,10 @@ const getComputedTheme = () => {
       color: computedStyles.getPropertyValue('--jfi-error-message-color'),
       margin: computedStyles.getPropertyValue('--jfi-error-message-margin'),
       fontSize: computedStyles.getPropertyValue('--jfi-error-message-font-size'),
-    }
+    },
   };
 
   return computedTheme;
-}
+};
 
 export default getComputedTheme;

@@ -1,9 +1,6 @@
 # justifi-payments-list
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -12,7 +9,6 @@
 | `accountId` | `account-id` |             | `string`              | `undefined` |
 | `auth`      | --           |             | `{ token?: string; }` | `{}`        |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
