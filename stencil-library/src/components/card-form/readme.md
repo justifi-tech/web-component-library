@@ -132,6 +132,7 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property         | Attribute         | Description                                                        | Type                                                           | Default     |
@@ -140,6 +141,7 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | `singleLine`     | `single-line`     | Boolean indicating if the Card Form should render in a single line | `boolean`                                                      | `false`     |
 | `validationMode` | `validation-mode` | When to trigger validation of the form.                            | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 
+
 ## Events
 
 | Event              | Description                                                   | Type                                            |
@@ -147,6 +149,7 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | `cardFormReady`    | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
 | `cardFormTokenize` | Triggered when the tokenize method is called on the component | `CustomEvent<{ data: any; }>`                   |
 | `cardFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<{ data: { isValid: boolean; }; }>` |
+
 
 ## Methods
 
@@ -158,6 +161,8 @@ Makes a tokenization request to the iframe
 
 Type: `Promise<CreatePaymentMethodResponse>`
 
+
+
 ### `validate() => Promise<{ isValid: boolean; }>`
 
 Runs a validation on the form and shows errors if any
@@ -166,6 +171,9 @@ Runs a validation on the form and shows errors if any
 
 Type: `Promise<{ isValid: boolean; }>`
 
+
+
+
 ## Dependencies
 
 ### Depends on
@@ -173,13 +181,12 @@ Type: `Promise<{ isValid: boolean; }>`
 - [justifi-payment-method-form](../payment-method-form)
 
 ### Graph
-
 ```mermaid
 graph TD;
   justifi-card-form --> justifi-payment-method-form
   style justifi-card-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*
