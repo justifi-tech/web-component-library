@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Prop } from '@stencil/core';
+import { Component, Host, h, State } from '@stencil/core';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -6,36 +6,6 @@ import { Component, Host, h, State, Prop } from '@stencil/core';
   shadow: true,
 })
 export class BusinessRepresentative {
-  @Prop() hideSubmit?: string;
-  @Prop() submitButtonText?: string;
-  @Prop() legend?: string;
-  // "name": "Person Name",
-  // "title": "Mr.",
-  // "email": "person.name@justifi.ai",
-  // "phone": "6124011111",
-  // "dob_day": "01",
-  // "dob_month": "01",
-  // "dob_year": "1980",
-  // "identification_number": "123456789",
-  // "is_owner": true,
-  // 
-  //
-  // Allow metadata to be passed on submit?
-  // "metadata": {
-  //   "language": "english",
-  //   "social_network": "@person"
-  // },
-  //
-  //
-  // Make this a component / nested field set
-  // "address": {
-  //   "line1": "123 Example St",
-  //   "line2": "Suite 101",
-  //   "city": "Minneapolis",
-  //   "state": "MN",
-  //   "postal_code": "55555",
-  //   "country": "USA"
-  // }
   @State() representativeFields = {
     name: '',
     title: '',
@@ -57,7 +27,7 @@ export class BusinessRepresentative {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          <legend>{(this.legend) ? this.legend : 'Business Entity'}</legend>
+          <legend>Representative</legend>
           <div class="row gx-2 gy-2">
             <div class="col-8">
               <text-input
@@ -108,7 +78,7 @@ export class BusinessRepresentative {
                   class="form-check-input"
                   onChange={() => this.toggleIsOwner()} />
                 <label class="form-check-label" htmlFor="is_owner_checkbox">
-                  Is this the owner?
+                  Is this an owner?
                 </label>
               </div>
             </div>
@@ -116,14 +86,6 @@ export class BusinessRepresentative {
             <div class="col-12">
               <justifi-business-address />
             </div>
-
-            {(this.hideSubmit) ? '' : (
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary">
-                  {(this.submitButtonText) ? this.submitButtonText : 'Submit'}
-                </button>
-              </div>
-            )}
           </div>
         </fieldset>
       </Host >

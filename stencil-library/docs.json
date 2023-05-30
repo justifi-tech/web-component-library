@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-24T20:10:40",
+  "timestamp": "2023-05-30T20:38:37",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -276,7 +276,7 @@
       }
     },
     {
-      "filePath": "./src/components/business-address/business-address.tsx",
+      "filePath": "./src/components/business-info/business-address/business-address.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-business-address",
       "readme": "# justifi-business-address\n\n\n",
@@ -326,63 +326,26 @@
       }
     },
     {
-      "filePath": "./src/components/business-representative/business-representative.tsx",
+      "filePath": "./src/components/business-info/business-info.tsx",
       "encapsulation": "shadow",
-      "tag": "justifi-business-representative",
-      "readme": "# justifi-business-representative\n\n\n",
+      "tag": "justifi-business-info",
       "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
+      "docsTags": [
         {
-          "name": "hideSubmit",
-          "type": "string",
-          "mutable": false,
-          "attr": "hide-submit",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": true,
-          "required": false
+          "name": "exportedPart",
+          "text": "label: Label for inputs"
         },
         {
-          "name": "legend",
-          "type": "string",
-          "mutable": false,
-          "attr": "legend",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": true,
-          "required": false
+          "name": "exportedPart",
+          "text": "input: The input fields"
         },
         {
-          "name": "submitButtonText",
-          "type": "string",
-          "mutable": false,
-          "attr": "submit-button-text",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": true,
-          "required": false
+          "name": "exportedPart",
+          "text": "input-invalid: Invalid state for inputs"
         }
       ],
+      "usage": {},
+      "props": [],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -390,6 +353,42 @@
       "slots": [],
       "parts": [],
       "dependents": [],
+      "dependencies": [
+        "justifi-business-representative"
+      ],
+      "dependencyGraph": {
+        "justifi-business-info": [
+          "justifi-business-representative"
+        ],
+        "justifi-business-representative": [
+          "text-input",
+          "select-input",
+          "justifi-business-address"
+        ],
+        "justifi-business-address": [
+          "text-input",
+          "select-input"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/business-info/business-representative/business-representative.tsx",
+      "encapsulation": "shadow",
+      "tag": "justifi-business-representative",
+      "readme": "# justifi-business-representative\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "justifi-business-info"
+      ],
       "dependencies": [
         "text-input",
         "select-input",
@@ -404,6 +403,9 @@
         "justifi-business-address": [
           "text-input",
           "select-input"
+        ],
+        "justifi-business-info": [
+          "justifi-business-representative"
         ]
       }
     },
