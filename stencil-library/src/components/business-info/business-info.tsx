@@ -11,16 +11,34 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class BusinessInfo {
+  private businessRepresentativeFormRef?: HTMLJustifiBusinessRepresentativeElement;
+
+  async submit(event) {
+    event.preventDefault();
+    const businessForm = await this.businessRepresentativeFormRef.getForm();
+    console.log('businessForm', businessForm);
+  };
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <fieldset>
+        <h1>Business Information</h1>
+        <form>
           <div class="row gy-3">
             <div class="col-12">
-              <justifi-business-representative></justifi-business-representative>
+              <justifi-business-representative
+                ref={el => this.businessRepresentativeFormRef = el}
+              >
+              </justifi-business-representative>
+            </div>
+            <div class="col-12">
+              <button
+                onClick={(event) => this.submit(event)}
+                class="btn btn-primary"
+                type="submit">Submit</button>
             </div>
           </div>
-        </fieldset>
+        </form>
       </Host>
     );
   }

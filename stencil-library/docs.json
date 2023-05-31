@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-30T20:38:37",
+  "timestamp": "2023-05-31T19:40:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -329,6 +329,7 @@
       "filePath": "./src/components/business-info/business-info.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-business-info",
+      "readme": "# justifi-business-info\n\n\n",
       "docs": "",
       "docsTags": [
         {
@@ -380,9 +381,27 @@
       "docsTags": [],
       "usage": {},
       "props": [],
-      "methods": [],
+      "methods": [
+        {
+          "name": "getForm",
+          "returns": {
+            "type": "Promise<{ isValid: boolean; values: IBusinessRepresentative; }>",
+            "docs": ""
+          },
+          "signature": "getForm() => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "fieldReceivedInput",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],

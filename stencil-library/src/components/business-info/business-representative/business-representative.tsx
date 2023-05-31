@@ -1,4 +1,5 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Method, Listen } from '@stencil/core';
+import { IBusinessRepresentative } from '../../../api/BusinessRepresentative';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -6,7 +7,7 @@ import { Component, Host, h, State } from '@stencil/core';
   shadow: true,
 })
 export class BusinessRepresentative {
-  @State() representativeFields = {
+  @State() representativeFields: IBusinessRepresentative = {
     name: '',
     title: '',
     email: '',
@@ -16,11 +17,39 @@ export class BusinessRepresentative {
     dob_year: '',
     identification_number: '',
     is_owner: false,
+    metadata: {},
+    address: {
+      line1: '',
+      line2: '',
+      city: '',
+      state: '',
+      postal_code: '',
+      country: ''
+    }
   };
   @State() representativeFieldsErrors: any = {};
 
-  toggleIsOwner() {
+  private toggleIsOwner() {
     this.representativeFields.is_owner = !this.representativeFields.is_owner
+  }
+
+  @Listen('fieldReceivedInput')
+  setFormValue(event) {
+    const data = event.detail;
+    const billingFieldsClone = { ...this.representativeFields };
+    const splitName = data.name.split('.');
+    if (splitName.length > 1) {
+      billingFieldsClone[splitName[0]][splitName[1]] = data.value;
+    }
+    else if (data.name) {
+      billingFieldsClone[data.name] = data.value;
+    }
+    this.representativeFields = billingFieldsClone;
+  }
+
+  @Method()
+  async getForm(): Promise<{ isValid: boolean, values: IBusinessRepresentative }> {
+    return { isValid: false, values: this.representativeFields };
   }
 
   render() {

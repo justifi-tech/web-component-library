@@ -35,13 +35,15 @@
 ### Used by
 
  - [justifi-billing-form](../billing-form)
- - [justifi-business-address](../business-address)
+ - [justifi-business-address](../business-info/business-address)
+ - [justifi-business-representative](../business-info/business-representative)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-billing-form --> select-input
   justifi-business-address --> select-input
+  justifi-business-representative --> select-input
   style select-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

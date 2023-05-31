@@ -11,5 +11,5 @@ export interface IBusinessRepresentative {
   identification_number: string,
   is_owner: boolean,
   metadata: any,
-  legal_address: IBusinessAddress,
+  address: IBusinessAddress,
 }

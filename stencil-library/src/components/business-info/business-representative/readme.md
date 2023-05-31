@@ -5,21 +5,29 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Methods
 
-| Property           | Attribute            | Description | Type     | Default     |
-| ------------------ | -------------------- | ----------- | -------- | ----------- |
-| `hideSubmit`       | `hide-submit`        |             | `string` | `undefined` |
-| `legend`           | `legend`             |             | `string` | `undefined` |
-| `submitButtonText` | `submit-button-text` |             | `string` | `undefined` |
+### `getForm() => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>`
+
+
+
+#### Returns
+
+Type: `Promise<{ isValid: boolean; values: IBusinessRepresentative; }>`
+
+
 
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-business-info](..)
+
 ### Depends on
 
-- [text-input](../text-input)
-- [select-input](../select-input)
+- [text-input](../../text-input)
+- [select-input](../../select-input)
 - [justifi-business-address](../business-address)
 
 ### Graph
@@ -30,6 +38,7 @@ graph TD;
   justifi-business-representative --> justifi-business-address
   justifi-business-address --> text-input
   justifi-business-address --> select-input
+  justifi-business-info --> justifi-business-representative
   style justifi-business-representative fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

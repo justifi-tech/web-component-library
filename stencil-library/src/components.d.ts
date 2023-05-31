@@ -9,6 +9,7 @@ import { CreatePaymentMethodResponse } from "./components/payment-method-form/pa
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
 import { BusinessAddressFormFields } from "./components/business-info/business-address/business-address-schema";
+import { IBusinessRepresentative } from "./api/BusinessRepresentative";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
@@ -55,6 +56,7 @@ export namespace Components {
     interface JustifiBusinessInfo {
     }
     interface JustifiBusinessRepresentative {
+        "getForm": () => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>;
     }
     interface JustifiCardForm {
         /**
