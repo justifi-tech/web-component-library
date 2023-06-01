@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
+import { Api, IApiResponseCollection } from '../../api';
 
 /**
  * @exportedPart label: Label for inputs
@@ -18,7 +19,20 @@ export class BusinessInfo {
   async submit(event) {
     event.preventDefault();
     const businessRepresentativeForm = await this.businessRepresentativeFormRef.getForm();
-    console.log('businessRepresentativeForm', businessRepresentativeForm);
+    this.sendData(businessRepresentativeForm);
+  };
+
+  fetchData(): void {
+    // fetch data and pre-fill form
+  };
+
+  sendData(data): void {
+    // const accountId = this.accountId;
+    const endpoint = `/entities/business`;
+    Api(this.authToken).patch(endpoint, data)
+      .then((response: IApiResponseCollection<any>) => {
+        console.log(response);
+      });
   };
 
   render() {
