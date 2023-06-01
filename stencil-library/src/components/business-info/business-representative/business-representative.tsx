@@ -41,7 +41,11 @@ export class BusinessRepresentative {
   setFormValue(event) {
     const data = event.detail;
     const billingFieldsClone = { ...this.representativeFields };
-    if (data.name) {
+    const splitName = data.name.split('.');
+    if (splitName.length > 1) {
+      billingFieldsClone[splitName[0]][splitName[1]] = data.value;
+    }
+    else if (data.name) {
       billingFieldsClone[data.name] = data.value;
     }
     this.representativeFields = billingFieldsClone;
@@ -50,8 +54,6 @@ export class BusinessRepresentative {
   @Method()
   async getForm(): Promise<{ isValid: boolean, values: IBusinessRepresentative }> {
     const addressForm = await this.addressFormRef.getForm();
-    this.representativeFields.address = addressForm.values;
-
     const newErrors = {};
     let isValid: boolean = true;
 

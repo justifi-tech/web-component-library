@@ -54,7 +54,7 @@ export class BusinessAddress {
         <div class="row gx-2 gy-2">
           <div class="col-12">
             <text-input
-              name="line1"
+              name="address.line1"
               label="Street Address"
               defaultValue={this.businessAddress?.line1}
               error={this.businessAddressErrors?.line1} />
@@ -62,7 +62,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <text-input
-              name="line2"
+              name="address.line2"
               label="Apartment, Suite, etc. (optional)"
               defaultValue={this.businessAddress?.line2}
               error={this.businessAddressErrors?.line2} />
@@ -70,7 +70,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <text-input
-              name="city"
+              name="address.city"
               label="City"
               defaultValue={this.businessAddress?.city}
               error={this.businessAddressErrors?.city} />
@@ -78,7 +78,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <select-input
-              name="state"
+              name="address.state"
               label="State"
               options={StateOptions}
               defaultValue={this.businessAddress.state}
@@ -87,7 +87,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <text-input
-              name="postal_code"
+              name="address.postal_code"
               label="Postal Code"
               defaultValue={this.businessAddress?.postal_code}
               error={this.businessAddressErrors?.postal_code} />
