@@ -1,5 +1,7 @@
 import { Component, Host, h, State, Method, Listen } from '@stencil/core';
-import { IBusinessRepresentative } from '../../../api/BusinessRepresentative';
+import { ValidationError } from 'yup';
+import RepresentativeFormSchema, { IBusinessRepresentative } from './business-representative-schema';
+
 
 @Component({
   tag: 'justifi-business-representative',
@@ -29,6 +31,8 @@ export class BusinessRepresentative {
   };
   @State() representativeFieldsErrors: any = {};
 
+  private addressFormRef?: HTMLJustifiBusinessAddressElement;
+
   private toggleIsOwner() {
     this.representativeFields.is_owner = !this.representativeFields.is_owner
   }
@@ -37,11 +41,7 @@ export class BusinessRepresentative {
   setFormValue(event) {
     const data = event.detail;
     const billingFieldsClone = { ...this.representativeFields };
-    const splitName = data.name.split('.');
-    if (splitName.length > 1) {
-      billingFieldsClone[splitName[0]][splitName[1]] = data.value;
-    }
-    else if (data.name) {
+    if (data.name) {
       billingFieldsClone[data.name] = data.value;
     }
     this.representativeFields = billingFieldsClone;
@@ -49,7 +49,24 @@ export class BusinessRepresentative {
 
   @Method()
   async getForm(): Promise<{ isValid: boolean, values: IBusinessRepresentative }> {
-    return { isValid: false, values: this.representativeFields };
+    const addressForm = await this.addressFormRef.getForm();
+    this.representativeFields.address = addressForm.values;
+
+    const newErrors = {};
+    let isValid: boolean = true;
+
+    try {
+      await RepresentativeFormSchema.validate(this.representativeFields, { abortEarly: false });
+    } catch (err) {
+      isValid = false;
+      err.inner.map((item: ValidationError) => {
+        newErrors[item.path] = item.message;
+      });
+    }
+
+    this.representativeFieldsErrors = newErrors;
+
+    return { isValid: isValid && addressForm.isValid, values: this.representativeFields }
   }
 
   render() {
@@ -92,6 +109,34 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12">
+              <label part="label" class="form-label">Birth Date</label>
+            </div>
+
+            <div class="col-4">
+              <text-input
+                name="dob_day"
+                label="Day"
+                defaultValue={this.representativeFields?.dob_day}
+                error={this.representativeFieldsErrors?.dob_day} />
+            </div>
+
+            <div class="col-4">
+              <text-input
+                name="dob_month"
+                label="Month"
+                defaultValue={this.representativeFields?.dob_month}
+                error={this.representativeFieldsErrors?.dob_month} />
+            </div>
+
+            <div class="col-4">
+              <text-input
+                name="dob_year"
+                label="Year"
+                defaultValue={this.representativeFields?.dob_year}
+                error={this.representativeFieldsErrors?.dob_year} />
+            </div>
+
+            <div class="col-12">
               <text-input
                 name="identification_number"
                 label="EIN/SSN"
@@ -113,7 +158,7 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12">
-              <justifi-business-address />
+              <justifi-business-address ref={el => this.addressFormRef = el} />
             </div>
           </div>
         </fieldset>

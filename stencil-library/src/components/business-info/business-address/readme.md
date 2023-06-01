@@ -7,7 +7,7 @@
 
 ## Methods
 
-### `submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
+### `getForm() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
 
 
 

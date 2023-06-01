@@ -1,7 +1,7 @@
 import { Component, Host, h, State, Method, Listen } from '@stencil/core';
 import { ValidationError } from 'yup';
 import StateOptions from '../../billing-form/state-options';
-import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-schema';
+import BusinessAddressFormSchema, { IBusinessAddress } from './business-address-schema';
 
 @Component({
   tag: 'justifi-business-address',
@@ -9,7 +9,7 @@ import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business
   shadow: true,
 })
 export class BusinessAddress {
-  @State() businessAddress: BusinessAddressFormFields = {
+  @State() businessAddress: IBusinessAddress = {
     line1: '',
     line2: '',
     city: '',
@@ -30,7 +30,7 @@ export class BusinessAddress {
   }
 
   @Method()
-  async submit() {
+  async getForm() {
     const newErrors = {};
     let isValid: boolean = true;
 
@@ -54,7 +54,7 @@ export class BusinessAddress {
         <div class="row gx-2 gy-2">
           <div class="col-12">
             <text-input
-              name="address.line1"
+              name="line1"
               label="Street Address"
               defaultValue={this.businessAddress?.line1}
               error={this.businessAddressErrors?.line1} />
@@ -62,7 +62,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <text-input
-              name="address.line2"
+              name="line2"
               label="Apartment, Suite, etc. (optional)"
               defaultValue={this.businessAddress?.line2}
               error={this.businessAddressErrors?.line2} />
@@ -70,7 +70,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <text-input
-              name="address.city"
+              name="city"
               label="City"
               defaultValue={this.businessAddress?.city}
               error={this.businessAddressErrors?.city} />
@@ -78,7 +78,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <select-input
-              name="address.state"
+              name="state"
               label="State"
               options={StateOptions}
               defaultValue={this.businessAddress.state}
@@ -87,7 +87,7 @@ export class BusinessAddress {
 
           <div class="col-12">
             <text-input
-              name="address.postal_code"
+              name="postal_code"
               label="Postal Code"
               defaultValue={this.businessAddress?.postal_code}
               error={this.businessAddressErrors?.postal_code} />

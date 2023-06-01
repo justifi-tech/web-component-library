@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-31T19:40:50",
+  "timestamp": "2023-06-01T19:00:31",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -286,12 +286,12 @@
       "props": [],
       "methods": [
         {
-          "name": "submit",
+          "name": "getForm",
           "returns": {
-            "type": "Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+            "type": "Promise<{ isValid: boolean; values: IBusinessAddress; }>",
             "docs": ""
           },
-          "signature": "submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+          "signature": "getForm() => Promise<{ isValid: boolean; values: IBusinessAddress; }>",
           "parameters": [],
           "docs": "",
           "docsTags": []
@@ -404,7 +404,12 @@
       ],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "justifi-business-info"
       ],

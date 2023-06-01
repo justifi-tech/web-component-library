@@ -15,8 +15,8 @@ export class BusinessInfo {
 
   async submit(event) {
     event.preventDefault();
-    const businessForm = await this.businessRepresentativeFormRef.getForm();
-    console.log('businessForm', businessForm);
+    const businessRepresentativeForm = await this.businessRepresentativeFormRef.getForm();
+    console.log('businessRepresentativeForm', businessRepresentativeForm);
   };
 
   render() {

@@ -8,8 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
-import { BusinessAddressFormFields } from "./components/business-info/business-address/business-address-schema";
-import { IBusinessRepresentative } from "./api/BusinessRepresentative";
+import { IBusinessAddress } from "./components/business-info/business-address/business-address-schema";
+import { IBusinessRepresentative } from "./components/business-info/business-representative/business-representative-schema";
 import { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
@@ -51,7 +51,7 @@ export namespace Components {
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiBusinessAddress {
-        "submit": () => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>;
+        "getForm": () => Promise<{ isValid: boolean; values: IBusinessAddress; }>;
     }
     interface JustifiBusinessInfo {
     }
