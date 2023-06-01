@@ -109,14 +109,10 @@ jobs:
           git add CHANGELOG.md 
           git commit -m "docs: update CHANGELOG.md for ${{ github.ref_name }}"
           git push origin main
-
-  build_and_push_stencil:
-    name: Build & Publish Stencil
+  build_and_publish:
+    name: Build & Publish
     runs-on: ubuntu-latest
     needs: create_release
-    defaults:
-      run:
-        working-directory: stencil-library
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -127,33 +123,19 @@ jobs:
           node-version-file: 'stencil-library/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn Install
-        run: |
-          yarn install
-
-      - name: Typescript Compiling Build
-        run: |
-          yarn build
-
-      - name: Stencil Link
-        run: yarn link
+      # Compile & Link Stencil
+      - name: Install stencil-library
+        run: yarn --cwd stencil-library/ install
+      - name: Compile
+        run: yarn --cwd stencil-library/ build
+      - name: Link Stencil
+        run: yarn --cwd stencil-library/ link
 
       - name: Publish to GitHub Registry
         run: |
           yarn publish --verbose --no-git-tag-version --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
-
-  build_and_push_react:
-    name: Build & Publish React
-    runs-on: ubuntu-latest
-    needs: [create_release, build_and_push_stencil]
-    defaults:
-      run:
-        working-directory: react-library
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -161,19 +143,15 @@ jobs:
           node-version-file: 'react-library/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn Install
-        run: |
-          yarn install
-
+      # Compile React & Link Webcomponents
+      - name: Install react-library
+        run: yarn --cwd react-library/ install
       - name: Link webcomponents
-        run: yarn link "@justifi/webcomponents"
-
-      - name: Typescript Compiling Build
-        run: |
-          yarn build
+        run: yarn --cwd react-library/ link "@justifi/webcomponents"
+      - name: Compile
+        run: yarn --cwd react-library/ build
       - name: Publish to GitHub Registry
         run: |
           yarn publish --verbose --no-git-tag-version --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
-
