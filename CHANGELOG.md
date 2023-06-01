@@ -1,3 +1,12 @@
+# 4.0.5
+[2023-06-01]
+
+### Commits
+
+- ci: version bump to 4.0.5 [`e14abc0`](https://github.com/justifi-tech/web-component-library/commit/e14abc0416d8275a1f29cf3b778d12a9372369a9)
+- refactor: yarn --cwd for multiple packages release [`92b2763`](https://github.com/justifi-tech/web-component-library/commit/92b276321e685edaf9aef60721dd042aa7d5f245)
+- docs: update CHANGELOG.md for main [`790a19f`](https://github.com/justifi-tech/web-component-library/commit/790a19fd351f215eb5c645d4828f8cdcf6a52267)
+
 # 4.0.4
 [2023-06-01]
 
