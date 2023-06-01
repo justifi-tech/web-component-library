@@ -10,6 +10,11 @@ import { BillingFormFields } from "./components/billing-form/billing-form-schema
 import { ValidationError } from "yup";
 import { BusinessAddressFormFields } from "./components/business-address/business-address-schema";
 import { PaymentMethodTypes } from "./api";
+export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
+export { BillingFormFields } from "./components/billing-form/billing-form-schema";
+export { ValidationError } from "yup";
+export { BusinessAddressFormFields } from "./components/business-address/business-address-schema";
+export { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
         /**
@@ -29,6 +34,11 @@ export namespace Components {
          */
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface JustifiBillingForm {
         /**
           * Method for filling the form with provided data
@@ -150,6 +160,11 @@ declare global {
         prototype: HTMLJustifiBankAccountFormElement;
         new (): HTMLJustifiBankAccountFormElement;
     };
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface HTMLJustifiBillingFormElement extends Components.JustifiBillingForm, HTMLStencilElement {
     }
     var HTMLJustifiBillingFormElement: {
@@ -243,6 +258,11 @@ declare namespace LocalJSX {
          */
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface JustifiBillingForm {
         /**
           * (Optional) A label for the form.
@@ -340,6 +360,11 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
+            /**
+             * @exportedPart label: Label for inputs
+             * @exportedPart input: The input fields
+             * @exportedPart input-invalid: Invalid state for inputs
+             */
             "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
             "justifi-business-address": LocalJSX.JustifiBusinessAddress & JSXBase.HTMLAttributes<HTMLJustifiBusinessAddressElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
