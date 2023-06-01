@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
 
 /**
  * @exportedPart label: Label for inputs
@@ -11,6 +11,8 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class BusinessInfo {
+  @Prop() authToken: string;
+  @Prop() accountId: string;
   private businessRepresentativeFormRef?: HTMLJustifiBusinessRepresentativeElement;
 
   async submit(event) {

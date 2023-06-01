@@ -54,6 +54,8 @@ export namespace Components {
         "getForm": () => Promise<{ isValid: boolean; values: IBusinessAddress; }>;
     }
     interface JustifiBusinessInfo {
+        "accountId": string;
+        "authToken": string;
     }
     interface JustifiBusinessRepresentative {
         "getForm": () => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>;
@@ -272,6 +274,8 @@ declare namespace LocalJSX {
     interface JustifiBusinessAddress {
     }
     interface JustifiBusinessInfo {
+        "accountId"?: string;
+        "authToken"?: string;
     }
     interface JustifiBusinessRepresentative {
     }

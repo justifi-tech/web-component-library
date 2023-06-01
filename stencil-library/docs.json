@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-01T19:10:21",
+  "timestamp": "2023-06-01T21:06:51",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.20.0",
@@ -346,7 +346,40 @@
         }
       ],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "accountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "authToken",
+          "type": "string",
+          "mutable": false,
+          "attr": "auth-token",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
