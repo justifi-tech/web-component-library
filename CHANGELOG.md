@@ -1,3 +1,12 @@
+# 4.0.6
+[2023-06-01]
+
+### Commits
+
+- docs: update CHANGELOG.md for main [`5103c55`](https://github.com/justifi-tech/web-component-library/commit/5103c5519ba89a51ad84932445a7c58e4dff93cd)
+- ci: version bump to 4.0.6 [`9378eb8`](https://github.com/justifi-tech/web-component-library/commit/9378eb845899680da5a997d78cef0062cea6df11)
+- fix: typo on create_release.yml workflow [`92e6618`](https://github.com/justifi-tech/web-component-library/commit/92e66183d6b3231f9d8d03a057a2a86fe1ea5e4a)
+
 # 4.0.5
 [2023-06-01]
 
