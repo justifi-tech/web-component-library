@@ -1,8 +1,8 @@
 export interface IPagination {
-  has_previous: boolean,
-  has_next: boolean,
-  start_cursor: string,
-  end_cursor: string
+  has_previous: boolean;
+  has_next: boolean;
+  start_cursor: string;
+  end_cursor: string;
 }
 
 export class Pagination implements IPagination {

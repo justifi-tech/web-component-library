@@ -1,13 +1,13 @@
 const isDev = process.env.NODE_ENV === 'development';
 
 interface PaymentFormStoryArgs {
-  'bank-account': boolean,
-  card: boolean,
-  email: string,
-  'client-id': string,
-  'account-id': string,
-  'submit-button-text': string,
-  cssVariables: string,
+  'bank-account': boolean;
+  'card': boolean;
+  'email': string;
+  'client-id': string;
+  'account-id': string;
+  'submit-button-text': string;
+  'cssVariables': string;
 }
 
 export default {
@@ -19,14 +19,14 @@ export default {
       table: {
         disable: isDev ? false : true,
         category: 'props',
-      }
+      },
     },
   },
 };
 
 const Template = (args: PaymentFormStoryArgs) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
-  return (`
+  return `
     <div>
       <justifi-payment-form
         card=${args.card}
@@ -55,30 +55,30 @@ const Template = (args: PaymentFormStoryArgs) => {
       });
     })()
     </script>
-  `);
+  `;
 };
 
 export const Basic = Template.bind({});
 Basic.args = {
   'bank-account': true,
-  card: true,
-  email: '',
+  'card': true,
+  'email': '',
   'client-id': '',
   'account-id': '',
   'submit-button-text': '',
-  'iframe-origin': ''
+  'iframe-origin': '',
 };
 
 export const Styled = Template.bind({});
 Styled.args = {
   'bank-account': true,
-  card: true,
-  email: '',
+  'card': true,
+  'email': '',
   'client-id': '',
   'account-id': '',
   'submit-button-text': '',
   'iframe-origin': '',
-  cssVariables: (`
+  'cssVariables': `
   --jfi-primary-color: #212529;
 
   --jfi-layout-padding: 0;
@@ -113,11 +113,11 @@ Styled.args = {
   --jfi-error-message-font-size: .875rem;
 
   --jfi-submit-button-color: white;
-  --jfi-submit-button-background-color: var(--jfi-primary-color);
+  --jfi-submit-button-background-color: #3F3F47;
   --jfi-submit-button-border-color: var(--jfi-primary-color);
   --jfi-submit-button-padding: 0.375rem 0.75rem;
   --jfi-submit-button-font-size: 1rem;
-  --jfi-submit-button-border-radius: 4px;
+  --jfi-submit-button-border-radius: 1px;
   --jfi-submit-button-color-hover: white;
   --jfi-submit-button-background-color-hover: var(--jfi-primary-color);
   --jfi-submit-button-border-color-hover: var(--jfi-primary-color);
@@ -127,6 +127,8 @@ Styled.args = {
   --jfi-submit-button-color-active: white;
   --jfi-submit-button-background-color-active: var(--jfi-primary-color);
   --jfi-submit-button-border-color-active: var(--jfi-primary-color);
+  --jfi-submit-button-width: 100%;
+  --jfi-submit-button-box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 
   --jfi-radio-button-color: var(--jfi-primary-color);
   --jfi-radio-button-background-color: transparent;
@@ -142,5 +144,6 @@ Styled.args = {
   --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
-  `)
-}
+  --jfi-radio-button-group-width: 100%;
+  `,
+};

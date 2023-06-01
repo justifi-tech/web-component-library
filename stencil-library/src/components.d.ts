@@ -8,7 +8,13 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
+import { BusinessAddressFormFields } from "./components/business-address/business-address-schema";
 import { PaymentMethodTypes } from "./api";
+export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
+export { BillingFormFields } from "./components/billing-form/billing-form-schema";
+export { ValidationError } from "yup";
+export { BusinessAddressFormFields } from "./components/business-address/business-address-schema";
+export { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
         /**
@@ -28,6 +34,11 @@ export namespace Components {
          */
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface JustifiBillingForm {
         /**
           * Method for filling the form with provided data
@@ -47,6 +58,9 @@ export namespace Components {
           * Run validation on the form
          */
         "validate": () => Promise<{ isValid: boolean; }>;
+    }
+    interface JustifiBusinessAddress {
+        "submit": () => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>;
     }
     interface JustifiCardForm {
         /**
@@ -102,7 +116,7 @@ export namespace Components {
         "error": string;
         "label": string;
         "name": string;
-        "options": { label: string, value: string }[];
+        "options": { label: string; value: string }[];
     }
     interface TextInput {
         "defaultValue": string;
@@ -146,11 +160,22 @@ declare global {
         prototype: HTMLJustifiBankAccountFormElement;
         new (): HTMLJustifiBankAccountFormElement;
     };
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface HTMLJustifiBillingFormElement extends Components.JustifiBillingForm, HTMLStencilElement {
     }
     var HTMLJustifiBillingFormElement: {
         prototype: HTMLJustifiBillingFormElement;
         new (): HTMLJustifiBillingFormElement;
+    };
+    interface HTMLJustifiBusinessAddressElement extends Components.JustifiBusinessAddress, HTMLStencilElement {
+    }
+    var HTMLJustifiBusinessAddressElement: {
+        prototype: HTMLJustifiBusinessAddressElement;
+        new (): HTMLJustifiBusinessAddressElement;
     };
     interface HTMLJustifiCardFormElement extends Components.JustifiCardForm, HTMLStencilElement {
     }
@@ -197,6 +222,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-billing-form": HTMLJustifiBillingFormElement;
+        "justifi-business-address": HTMLJustifiBusinessAddressElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-form": HTMLJustifiPaymentFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
@@ -232,11 +258,18 @@ declare namespace LocalJSX {
          */
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface JustifiBillingForm {
         /**
           * (Optional) A label for the form.
          */
         "legend"?: string;
+    }
+    interface JustifiBusinessAddress {
     }
     interface JustifiCardForm {
         /**
@@ -299,19 +332,20 @@ declare namespace LocalJSX {
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string, value: string }>) => void;
-        "options"?: { label: string, value: string }[];
+        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string; value: string }>) => void;
+        "options"?: { label: string; value: string }[];
     }
     interface TextInput {
         "defaultValue"?: string;
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string, value: string }>) => void;
+        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string; value: string }>) => void;
     }
     interface IntrinsicElements {
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-billing-form": JustifiBillingForm;
+        "justifi-business-address": JustifiBusinessAddress;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-form": JustifiPaymentForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
@@ -326,7 +360,13 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
+            /**
+             * @exportedPart label: Label for inputs
+             * @exportedPart input: The input fields
+             * @exportedPart input-invalid: Invalid state for inputs
+             */
             "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
+            "justifi-business-address": LocalJSX.JustifiBusinessAddress & JSXBase.HTMLAttributes<HTMLJustifiBusinessAddressElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;

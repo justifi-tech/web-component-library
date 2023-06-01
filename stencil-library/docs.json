@@ -1,16 +1,16 @@
 {
-  "timestamp": "2023-05-15T18:11:05",
+  "timestamp": "2023-06-01T19:41:34",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.20.0",
-    "typescriptVersion": "4.8.4"
+    "version": "3.3.0",
+    "typescriptVersion": "5.0.4"
   },
   "components": [
     {
       "filePath": "./src/components/bank-account-form/bank-account-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-bank-account-form",
-      "readme": "# justifi-bank-account-form\n\n\n",
+      "readme": "# justifi-bank-account-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -167,7 +167,7 @@
       "filePath": "./src/components/billing-form/billing-form.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-billing-form",
-      "readme": "# justifi-billing-form\n\n\n",
+      "readme": "# justifi-billing-form\n",
       "docs": "",
       "docsTags": [
         {
@@ -276,11 +276,56 @@
       }
     },
     {
+      "filePath": "./src/components/business-address/business-address.tsx",
+      "encapsulation": "shadow",
+      "tag": "justifi-business-address",
+      "readme": "# justifi-business-address\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [
+        {
+          "name": "submit",
+          "returns": {
+            "type": "Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+            "docs": ""
+          },
+          "signature": "submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [
+        {
+          "event": "fieldReceivedInput",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "text-input",
+        "select-input"
+      ],
+      "dependencyGraph": {
+        "justifi-business-address": [
+          "text-input",
+          "select-input"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/card-form/card-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-card-form",
-      "readme": "<h1>\n  <code><justifi-card-form /></code>\n</h1>\n\n----------------------------------------\n\n## Example usage\n<details>\n  <summary>Show Examples</summary>\n  \n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-card-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>Card Form</h1>\n  <hr>\n  <!--\n    The 'style-overrides' prop takes a stringified instance of Theme. The type and all optional\n    members for Theme can be found here:\n    https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts\n  -->\n  <justifi-card-form style-overrides='{\n    \"layout\":{\n      \"padding\":\"0\",\n      \"formControlSpacingHorizontal\":\".5rem\",\n      \"formControlSpacingVertical\":\"1rem\"\n    },\n    \"formLabel\":{\n      \"fontWeight\":700,\n      \"fontFamily\":\"sans-serif\",\n      \"margin\":\"0 0 .5rem 0\"\n    },\n    \"formControl\":{\n      \"backgroundColor\":\"#F4F4F6\",\n      \"backgroundColorHover\":\"#EEEEF5\",\n      \"borderColor\":\"rgba(0, 0, 0, 0.42)\",\n      \"borderColorHover\":\"rgba(0, 0, 0, 0.62)\",\n      \"borderColorFocus\":\"#fccc32\",\n      \"borderColorError\":\"#C12727\",\n      \"borderWidth\":\"0px\",\n      \"borderBottomWidth\":\"1px\",\n      \"borderRadius\":\"4px 4px 0 0\",\n      \"borderStyle\":\"solid\",\n      \"boxShadowErrorFocus\":\"none\",\n      \"boxShadowFocus\":\"none\",\n      \"color\":\"#212529\",\n      \"fontSize\":\"1rem\",\n      \"fontWeight\":\"400\",\n      \"lineHeight\":\"2\",\n      \"margin\":\"0\",\n      \"padding\":\".5rem .875rem\"\n    },\n    \"errorMessage\":{\n      \"color\":\"#C12727\",\n      \"margin\":\".25rem 0 0 0\",\n      \"fontSize\":\".875rem\"\n    }\n  }'></justifi-card-form>\n  <button type=\"submit\" id=\"card-submit-button\">Tokenize</button>\n  <button type=\"submit\" id=\"card-validate-button\">Validate</button>\n</body>\n\n<script>\n  (function () {\n    var cardForm = document.querySelector('justifi-card-form');\n    var cardSubmitButton = document.querySelector('#card-submit-button');\n    var cardValidateButton = document.querySelector('#card-validate-button');\n\n    cardForm.addEventListener('cardFormReady', function () {\n      console.log('justifi-card-form ready');\n    });\n\n    cardSubmitButton.addEventListener('click', (event) => {\n      console.log('card form tokenize button clicked');\n      // All of this information would come from your form instead of being hard coded\n      // Card number, expiration and cvv are collected on our iframe\n      const paymentMethodData = {\n        name: 'John Doe',\n        address_line1: '123 Broadway', // optional\n        address_line2: '', // optional\n        address_city: 'Minneapolis', // optional\n        address_state: 'MN', // optional\n        address_postal_code: '55413', \n        address_country: 'US', // optional\n        metadata: { something: \"somevalue\" } // optional\n      };\n      // ACCOUNT_ID is optional, currently required for platforms\n      // ACCOUNT_ID is the seller account for which you are tokenizing\n      cardForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')\n        .then((data) => {\n          // This is where you can submit the form and use the payment method token\n          // on your backend\n          console.log('justifi-card-form tokenized: ', data);\n        });\n    });\n\n    cardValidateButton.addEventListener('click', (event) => {\n      console.log('card validate button clicked');\n      cardForm.validate()\n        .then((data) => {\n          console.log('justifi-card-form validated. Is valid? ', data.isValid);\n        });\n    });\n  })();\n</script>\n\n</html>\n```\n\n</details>\n\n----------------------------------------\n\n## Styling\nThe `style-overrides` attribute below requires type `string`, but should be a stringified [`Theme`](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts)\n",
-      "docs": "<h1>\n  <code><justifi-card-form /></code>\n</h1>\n\n----------------------------------------",
+      "readme": "<h1>\n  <code><justifi-card-form /></code>\n</h1>\n\n---\n\n## Example usage\n\n<details>\n  <summary>Show Examples</summary>\n  \n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-card-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>Card Form</h1>\n  <hr>\n  <!--\n    The 'style-overrides' prop takes a stringified instance of Theme. The type and all optional\n    members for Theme can be found here:\n    https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts\n  -->\n  <justifi-card-form style-overrides='{\n    \"layout\":{\n      \"padding\":\"0\",\n      \"formControlSpacingHorizontal\":\".5rem\",\n      \"formControlSpacingVertical\":\"1rem\"\n    },\n    \"formLabel\":{\n      \"fontWeight\":700,\n      \"fontFamily\":\"sans-serif\",\n      \"margin\":\"0 0 .5rem 0\"\n    },\n    \"formControl\":{\n      \"backgroundColor\":\"#F4F4F6\",\n      \"backgroundColorHover\":\"#EEEEF5\",\n      \"borderColor\":\"rgba(0, 0, 0, 0.42)\",\n      \"borderColorHover\":\"rgba(0, 0, 0, 0.62)\",\n      \"borderColorFocus\":\"#fccc32\",\n      \"borderColorError\":\"#C12727\",\n      \"borderWidth\":\"0px\",\n      \"borderBottomWidth\":\"1px\",\n      \"borderRadius\":\"4px 4px 0 0\",\n      \"borderStyle\":\"solid\",\n      \"boxShadowErrorFocus\":\"none\",\n      \"boxShadowFocus\":\"none\",\n      \"color\":\"#212529\",\n      \"fontSize\":\"1rem\",\n      \"fontWeight\":\"400\",\n      \"lineHeight\":\"2\",\n      \"margin\":\"0\",\n      \"padding\":\".5rem .875rem\"\n    },\n    \"errorMessage\":{\n      \"color\":\"#C12727\",\n      \"margin\":\".25rem 0 0 0\",\n      \"fontSize\":\".875rem\"\n    }\n  }'></justifi-card-form>\n  <button type=\"submit\" id=\"card-submit-button\">Tokenize</button>\n  <button type=\"submit\" id=\"card-validate-button\">Validate</button>\n</body>\n\n<script>\n  (function () {\n    var cardForm = document.querySelector('justifi-card-form');\n    var cardSubmitButton = document.querySelector('#card-submit-button');\n    var cardValidateButton = document.querySelector('#card-validate-button');\n\n    cardForm.addEventListener('cardFormReady', function () {\n      console.log('justifi-card-form ready');\n    });\n\n    cardSubmitButton.addEventListener('click', (event) => {\n      console.log('card form tokenize button clicked');\n      // All of this information would come from your form instead of being hard coded\n      // Card number, expiration and cvv are collected on our iframe\n      const paymentMethodData = {\n        name: 'John Doe',\n        address_line1: '123 Broadway', // optional\n        address_line2: '', // optional\n        address_city: 'Minneapolis', // optional\n        address_state: 'MN', // optional\n        address_postal_code: '55413', \n        address_country: 'US', // optional\n        metadata: { something: \"somevalue\" } // optional\n      };\n      // ACCOUNT_ID is optional, currently required for platforms\n      // ACCOUNT_ID is the seller account for which you are tokenizing\n      cardForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')\n        .then((data) => {\n          // This is where you can submit the form and use the payment method token\n          // on your backend\n          console.log('justifi-card-form tokenized: ', data);\n        });\n    });\n\n    cardValidateButton.addEventListener('click', (event) => {\n      console.log('card validate button clicked');\n      cardForm.validate()\n        .then((data) => {\n          console.log('justifi-card-form validated. Is valid? ', data.isValid);\n        });\n    });\n  })();\n</script>\n\n</html>\n```\n\n</details>\n\n---\n\n## Styling\n\nThe `style-overrides` attribute below requires type `string`, but should be a stringified [`Theme`](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts)\n",
+      "docs": "<h1>\n  <code><justifi-card-form /></code>\n</h1>\n\n---",
       "docsTags": [],
       "usage": {},
       "props": [
@@ -453,7 +498,7 @@
       "filePath": "./src/components/payment-form/payment-form.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-payment-form",
-      "readme": "<h1>\n  <code><justifi-payment-form /></code>\n</h1>\n\n\n## Examples\n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-payment-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>PaymentForm</h1>\n  <hr>\n  <justifi-payment-form></justifi-payment-form>\n</body>\n\n<script>\n  (function () {})();\n</script>\n\n</html>\n```\n",
+      "readme": "<h1>\n  <code><justifi-payment-form /></code>\n</h1>\n\n## Examples\n\n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n    <title>justifi-payment-form: Simple example</title>\n\n    <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n    <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n    <script nomodule src=\"/build/webcomponents.js\"></script>\n  </head>\n\n  <body>\n    <h1>PaymentForm</h1>\n    <hr />\n    <justifi-payment-form></justifi-payment-form>\n  </body>\n\n  <script>\n    (function () {})();\n  </script>\n</html>\n```\n",
       "docs": "<h1>\n  <code><justifi-payment-form /></code>\n</h1>",
       "docsTags": [],
       "usage": {},
@@ -638,7 +683,7 @@
       "filePath": "./src/components/payment-method-form/payment-method-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-payment-method-form",
-      "readme": "# justifi-payment-method-form\n\n\n",
+      "readme": "# justifi-payment-method-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -800,7 +845,7 @@
       "filePath": "./src/components/payment-form/payment-method-selector.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-payment-method-selector",
-      "readme": "<h1>\n  <code><justifi-payment-form /></code>\n</h1>\n\n\n## Examples\n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n  <title>justifi-payment-form: Simple example</title>\n\n  <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n  <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n  <script nomodule src=\"/build/webcomponents.js\"></script>\n</head>\n\n<body>\n  <h1>PaymentForm</h1>\n  <hr>\n  <justifi-payment-form></justifi-payment-form>\n</body>\n\n<script>\n  (function () {})();\n</script>\n\n</html>\n```\n",
+      "readme": "<h1>\n  <code><justifi-payment-form /></code>\n</h1>\n\n## Examples\n\n```html\n<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0\" />\n    <title>justifi-payment-form: Simple example</title>\n\n    <!--\n    If you are including the components via CDN the src should be the following:\n    https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js\n  -->\n    <script type=\"module\" src=\"/build/webcomponents.esm.js\"></script>\n    <script nomodule src=\"/build/webcomponents.js\"></script>\n  </head>\n\n  <body>\n    <h1>PaymentForm</h1>\n    <hr />\n    <justifi-payment-form></justifi-payment-form>\n  </body>\n\n  <script>\n    (function () {})();\n  </script>\n</html>\n```\n",
       "docs": "<h1>\n  <code><justifi-payment-form /></code>\n</h1>",
       "docsTags": [],
       "usage": {},
@@ -871,7 +916,7 @@
       "filePath": "./src/components/payments-list/payments-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-payments-list",
-      "readme": "# justifi-payments-list\n\n\n",
+      "readme": "# justifi-payments-list\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -923,7 +968,7 @@
       "filePath": "./src/components/select-input/select-input.tsx",
       "encapsulation": "shadow",
       "tag": "select-input",
-      "readme": "# text-field\n\n\n",
+      "readme": "# text-field\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -1030,11 +1075,15 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form"
+        "justifi-billing-form",
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
+          "select-input"
+        ],
+        "justifi-business-address": [
           "select-input"
         ]
       }
@@ -1043,7 +1092,7 @@
       "filePath": "./src/components/text-input/text-input.tsx",
       "encapsulation": "shadow",
       "tag": "text-input",
-      "readme": "# text-field\n\n\n",
+      "readme": "# text-field\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -1135,11 +1184,15 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form"
+        "justifi-billing-form",
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
+          "text-input"
+        ],
+        "justifi-business-address": [
           "text-input"
         ]
       }

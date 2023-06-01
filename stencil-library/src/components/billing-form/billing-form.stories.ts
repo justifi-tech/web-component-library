@@ -5,12 +5,12 @@ export default {
 };
 
 type Args = {
-  legend: string;
-  "css-variables"?: string;
-}
+  'legend': string;
+  'css-variables'?: string;
+};
 
 const Template = (args: Args) => {
-  return (`
+  return `
     <div>
       <style>
         :root {
@@ -23,17 +23,17 @@ const Template = (args: Args) => {
 
       />
     </div>
-  `);
+  `;
 };
 
 export const Basic = Template.bind({});
 Basic.args = {
   legend: 'Billing Form',
-}
+};
 
 export const Styled = Template.bind({});
 Styled.args = {
-  legend: 'Styled Billing Form',
+  'legend': 'Styled Billing Form',
   'css-variables': `
     --jfi-layout-padding: 0;
     --jfi-layout-form-control-spacing-x: .5rem;
@@ -65,5 +65,5 @@ Styled.args = {
     --jfi-error-message-color: #C12727;
     --jfi-error-message-margin: .25rem 0 0 0;
     --jfi-error-message-font-size: .875rem;
-  `
-}
+  `,
+};
