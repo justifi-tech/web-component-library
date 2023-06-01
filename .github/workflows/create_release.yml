@@ -1,0 +1,179 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        type: choice
+        description: Select release type
+        options:
+          - patch
+          - minor
+          - major
+
+env:
+  STENCIL_VERSION_FILE: stencil-library/package.json
+  VERSION_EXTRACT_PATTERN: '"version": "([^"]+)",'
+
+jobs:
+  create_release:
+    name: Create Release 
+    runs-on: ubuntu-latest
+    steps:
+        # Move it back to checkout once this issue is solved
+        # https://github.com/actions/checkout/issues/701
+      - name: Checkout with fetch-depth=50 and fetch-tags=true
+        uses: RobertWieczoreck/checkout@add-fetch-tags-option
+        with:
+          fetch-depth: 50
+          fetch-tags: true
+
+      - name: Setup git credentials
+        run: |
+          git config user.name 'Act as JustiFi Machina'
+          git config user.email 'justifi.machina@justifi.ai'
+          git config user.password ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate versions
+        uses: HardNorth/github-version-generate@v1.2.0
+        with:
+          version-source: file
+          version-file: ${{ env.STENCIL_VERSION_FILE }}
+          version-file-extraction-pattern: ${{ env.VERSION_EXTRACT_PATTERN }}
+
+      # Compile & Link Stencil
+      - name: Install stencil-library
+        run: yarn --cwd stencil-library/ install
+      - name: Compile
+        run: yarn --cwd stencil-library/ build
+      - name: Link Stencil
+        run: yarn --cwd stencil-library/ link
+
+      # Compile React & Link Webcomponents
+      - name: Install react-library
+        run: yarn --cwd react-library/ install
+      - name: Link webcomponents
+        run: yarn --cwd react-library/ link "@justifi/webcomponents"
+      - name: Compile
+        run: yarn --cwd react-library/ build
+
+      - name: "Setup Node.js"
+        uses: "actions/setup-node@v1"
+        with:
+          node-version: 18
+
+      - name: "Automated Version Bump Stencil"
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          version-type: ${{ env.release_type }}
+          skip-commit: 'true'
+          skip-push: 'true'
+          skip-tag: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'stencil-library/'
+
+      - name: "Setup Node.js"
+        uses: "actions/setup-node@v1"
+        with:
+          node-version: 18
+
+      - name: "Automated Version Bump React"
+        uses: "phips28/gh-action-bump-version@master"
+        id: versionBump
+        with:
+          version-type: ${{ env.release_type }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'react-library/'
+
+      - name: Create Auto-Changelog
+        id: createAutoChangelog
+        run: |
+          yarn --cwd stencil-library/ run auto-changelog --latest-version ${{ env.NEXT_RELEASE_VERSION }} --starting-version ${{ env.CURRENT_VERSION }} --template changelog-template.hbs
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true
+          draft: true
+          makeLatest: true
+          name: "Release v${{ steps.versionBump.outputs.newTag }}"
+          tag: ${{ steps.versionBump.outputs.newTag }}
+          bodyFile: CHANGELOG.md
+          token: ${{ github.token }}
+
+      - name: Commit CHANGELOG.md
+        run: |
+          yarn --cwd stencil-library/ run auto-changelog --template changelog-template.hbs
+          git add CHANGELOG.md 
+          git commit -m "docs: update CHANGELOG.md for ${{ github.ref_name }}"
+          git push origin main
+
+  build_and_push_stencil:
+    name: Build & Publish Stencil
+    runs-on: ubuntu-latest
+    needs: create_release
+    defaults:
+      run:
+        working-directory: stencil-library
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: 'stencil-library/.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Yarn Install
+        run: |
+          yarn install
+
+      - name: Typescript Compiling Build
+        run: |
+          yarn build
+
+      - name: Stencil Link
+        run: yarn link
+
+      - name: Publish to GitHub Registry
+        run: |
+          yarn publish --verbose --no-git-tag-version --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+
+  build_and_push_react:
+    name: Build & Publish React
+    runs-on: ubuntu-latest
+    needs: [create_release, build_and_push_stencil]
+    defaults:
+      run:
+        working-directory: react-library
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: 'react-library/.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Yarn Install
+        run: |
+          yarn install
+
+      - name: Link webcomponents
+        run: yarn link "@justifi/webcomponents"
+
+      - name: Typescript Compiling Build
+        run: |
+          yarn build
+      - name: Publish to GitHub Registry
+        run: |
+          yarn publish --verbose --no-git-tag-version --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+
