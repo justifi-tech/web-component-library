@@ -130,10 +130,9 @@ jobs:
         run: yarn --cwd stencil-library/ build
       - name: Link Stencil
         run: yarn --cwd stencil-library/ link
-
       - name: Publish to GitHub Registry
         run: |
-          yarn publish --verbose --no-git-tag-version --access public
+          yarn --cwd publish --verbose --no-git-tag-version --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
 
@@ -152,6 +151,6 @@ jobs:
         run: yarn --cwd react-library/ build
       - name: Publish to GitHub Registry
         run: |
-          yarn publish --verbose --no-git-tag-version --access public
+          yarn --cwd publish --verbose --no-git-tag-version --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
