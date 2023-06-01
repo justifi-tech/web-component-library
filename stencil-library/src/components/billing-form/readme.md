@@ -2,11 +2,13 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property | Attribute | Description                      | Type     | Default     |
 | -------- | --------- | -------------------------------- | -------- | ----------- |
 | `legend` | `legend`  | (Optional) A label for the form. | `string` | `undefined` |
+
 
 ## Methods
 
@@ -17,6 +19,8 @@ Method for filling the form with provided data
 #### Returns
 
 Type: `Promise<void>`
+
+
 
 ### `getValues() => Promise<BillingFormFields>`
 
@@ -36,11 +40,14 @@ Run validation on the form
 
 Type: `Promise<{ isValid: boolean; }>`
 
+
+
+
 ## Dependencies
 
 ### Used by
 
-- [justifi-payment-form](../payment-form)
+ - [justifi-payment-form](../payment-form)
 
 ### Depends on
 
@@ -48,7 +55,6 @@ Type: `Promise<{ isValid: boolean; }>`
 - [select-input](../select-input)
 
 ### Graph
-
 ```mermaid
 graph TD;
   justifi-billing-form --> text-input
@@ -57,6 +63,6 @@ graph TD;
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

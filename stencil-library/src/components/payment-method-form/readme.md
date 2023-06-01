@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property                          | Attribute                             | Description | Type                                                           | Default     |
@@ -11,6 +12,7 @@
 | `paymentMethodFormValidationMode` | `payment-method-form-validation-mode` |             | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined` |
 | `singleLine`                      | `single-line`                         |             | `boolean`                                                      | `undefined` |
 
+
 ## Events
 
 | Event                       | Description | Type                          |
@@ -18,30 +20,39 @@
 | `paymentMethodFormReady`    |             | `CustomEvent<any>`            |
 | `paymentMethodFormTokenize` |             | `CustomEvent<{ data: any; }>` |
 
+
 ## Methods
 
 ### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
+
+
 
 #### Returns
 
 Type: `Promise<CreatePaymentMethodResponse>`
 
+
+
 ### `validate() => Promise<any>`
+
+
 
 #### Returns
 
 Type: `Promise<any>`
 
+
+
+
 ## Dependencies
 
 ### Used by
 
-- [justifi-bank-account-form](../bank-account-form)
-- [justifi-card-form](../card-form)
-- [justifi-payment-form](../payment-form)
+ - [justifi-bank-account-form](../bank-account-form)
+ - [justifi-card-form](../card-form)
+ - [justifi-payment-form](../payment-form)
 
 ### Graph
-
 ```mermaid
 graph TD;
   justifi-bank-account-form --> justifi-payment-method-form
@@ -50,6 +61,6 @@ graph TD;
   style justifi-payment-method-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*
