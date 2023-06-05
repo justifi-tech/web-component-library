@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Method, Listen } from '@stencil/core';
+import { Component, Host, h, State, Method, Listen, Prop } from '@stencil/core';
 import { ValidationError } from 'yup';
 import RepresentativeFormSchema, { IBusinessRepresentative } from './business-representative-schema';
 
@@ -9,6 +9,7 @@ import RepresentativeFormSchema, { IBusinessRepresentative } from './business-re
   shadow: true,
 })
 export class BusinessRepresentative {
+  @Prop() representative?: IBusinessRepresentative;
   @State() representativeFields: IBusinessRepresentative = {
     name: '',
     title: '',
@@ -35,6 +36,10 @@ export class BusinessRepresentative {
 
   private toggleIsOwner() {
     this.representativeFields.is_owner = !this.representativeFields.is_owner
+  }
+
+  componentDidMount() {
+    this.representativeFields = this.representative;
   }
 
   @Listen('fieldReceivedInput')
