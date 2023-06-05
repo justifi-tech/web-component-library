@@ -1,10 +1,11 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
+
 
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputs
+ * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
   tag: 'justifi-business-info',
@@ -13,23 +14,32 @@ import { Api, IApiResponseCollection } from '../../api';
 })
 export class BusinessInfo {
   @Prop() authToken: string;
-  @Prop() accountId: string;
+  @Prop() businessId?: string;
+  @State() businessInfo: any;
+
+  private endpoint: string = '/entities/business';
   private businessRepresentativeFormRef?: HTMLJustifiBusinessRepresentativeElement;
 
   async submit(event) {
     event.preventDefault();
     const businessRepresentativeForm = await this.businessRepresentativeFormRef.getForm();
-    this.sendData(businessRepresentativeForm);
+    console.log('businessRepresentativeForm', businessRepresentativeForm);
   };
 
-  fetchData(): void {
+  componentDidMount() {
+    if (this.businessId) {
+      this.fetchData();
+    }
+  }
+
+  async fetchData(): Promise<void> {
     // fetch data and pre-fill form
+    const businessInfo = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
+    console.log(businessInfo);
   };
 
-  sendData(data): void {
-    // const accountId = this.accountId;
-    const endpoint = `/entities/business`;
-    Api(this.authToken).patch(endpoint, data)
+  async sendData(data): Promise<void> {
+    Api(this.authToken).patch(this.endpoint, data)
       .then((response: IApiResponseCollection<any>) => {
         console.log(response);
       });
@@ -43,6 +53,7 @@ export class BusinessInfo {
           <div class="row gy-3">
             <div class="col-12">
               <justifi-business-representative
+                representative={this.businessInfo?.representative}
                 ref={el => this.businessRepresentativeFormRef = el}
               >
               </justifi-business-representative>
