@@ -33,7 +33,6 @@ export class BusinessInfo {
 
   private endpoint: string = 'entities/business';
 
-
   componentDidMount() {
     if (this.businessId) {
       this.fetchBusinessInfo();

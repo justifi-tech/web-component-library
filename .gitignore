@@ -4,3 +4,4 @@ UserInterfaceState.xcuserstate
 .env
 /docs
 node_modules
+/stencil-library/env_config.ts

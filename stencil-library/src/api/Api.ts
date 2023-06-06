@@ -39,7 +39,7 @@ const Api = (authToken: string) => {
     const response = await fetch(requestUrl, {
       method: method,
       headers: await getAuthorizationHeader(),
-      body: body,
+      body: JSON.stringify(body),
       signal: signal,
     });
 
