@@ -47,63 +47,63 @@ export const BusinessStructureOptions: { label: string, value: BusinessStructure
     value: '',
   },
   {
-    label: 'sole_proprietorship',
+    label: 'Sole Proprietorship',
     value: 'sole_proprietorship',
   },
   {
-    label: 'single_llc',
+    label: 'LLC (Single)',
     value: 'single_llc',
   },
   {
-    label: 'multi_llc',
+    label: 'LLC (Multiple)',
     value: 'multi_llc',
   },
   {
-    label: 'private_partnership',
+    label: 'Private Partnership',
     value: 'private_partnership',
   },
   {
-    label: 'private_corporation',
+    label: 'Private Corporation',
     value: 'private_corporation',
   },
   {
-    label: 'unincorporated_association',
+    label: 'Unincorporated Association',
     value: 'unincorporated_association',
   },
   {
-    label: 'public_partnership',
+    label: 'Public Partnership',
     value: 'public_partnership',
   },
   {
-    label: 'public_corporation',
+    label: 'Public Corporation',
     value: 'public_corporation',
   },
   {
-    label: 'incorporated',
+    label: 'Incorporated',
     value: 'incorporated',
   },
   {
-    label: 'unincorporated',
+    label: 'Unincorporated',
     value: 'unincorporated',
   },
   {
-    label: 'government_unit',
+    label: 'Government Unit',
     value: 'government_unit',
   },
   {
-    label: 'government_instrumentality',
+    label: 'Government Instrumentality',
     value: 'government_instrumentality',
   },
   {
-    label: 'tax_exempt_government_instrumentality',
+    label: 'Tax Exempt Government Instrumentality',
     value: 'tax_exempt_government_instrumentality',
   },
 ];
 
 const BusinessInfoSchema = object({
   legal_name: string().required('Enter legal name'),
-  website_url: string().required('Enter website url'),
-  email: string().required('Enter email'),
+  website_url: string().url('Enter valid website url').required('Enter website url'),
+  email: string().email('Enter valid email').required('Enter email'),
   phone: string().required('Enter phone number'),
   doing_business_as: string().required('Enter doing business as'),
   business_type: string().required('Select business type'),
