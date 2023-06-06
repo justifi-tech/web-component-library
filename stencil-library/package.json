@@ -27,6 +27,7 @@
     "start-stencil": "stencil build --watch --serve --no-open",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
+    "test:e2e": "stencil test --e2e",
     "generate": "stencil generate",
     "storybook": "storybook dev -p 6006 --quiet",
     "build-storybook": "storybook build -o ../docs"
