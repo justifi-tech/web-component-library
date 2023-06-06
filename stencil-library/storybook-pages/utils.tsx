@@ -42,4 +42,23 @@ const ExportedPartUsage = ({ tag, component }: { tag: string; component: string 
   />
 );
 
-export { extractVersionFromPackage, filterDocsByTag, ExportedParts };
+const SummaryElement = ({ title, children }) =>
+  <details style={{
+    fontFamily: 'var(--bs-font-sans-serif)',
+    color: '#2E3438',
+    fontSize: '14px',
+    cursor: 'pointer'
+  }}>
+    <summary>
+      <b>{title}</b>
+    </summary>
+
+    {children}
+  </details>
+
+export {
+  extractVersionFromPackage,
+  filterDocsByTag,
+  ExportedParts,
+  SummaryElement
+};
