@@ -86,7 +86,7 @@ export class BusinessInfo {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
-        <form>
+        <form onSubmit={(event) => this.submit(event)}>
           <div class="row gy-3">
             <div class="col-12">
               <text-input
@@ -148,7 +148,6 @@ export class BusinessInfo {
             </div>
             <div class="col-12">
               <button
-                onClick={(event) => this.submit(event)}
                 class="btn btn-primary"
                 type="submit">Submit</button>
             </div>
