@@ -62,6 +62,16 @@ export namespace Components {
     interface JustifiBusinessAddress {
         "submit": () => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>;
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputfs
+     */
+    interface JustifiBusinessInfo {
+        "authToken": string;
+        "businessId"?: string;
+        "submit": (event: any) => Promise<void>;
+    }
     interface JustifiCardForm {
         /**
           * URL for the rendered iFrame. End-users need not use this.
@@ -177,6 +187,17 @@ declare global {
         prototype: HTMLJustifiBusinessAddressElement;
         new (): HTMLJustifiBusinessAddressElement;
     };
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputfs
+     */
+    interface HTMLJustifiBusinessInfoElement extends Components.JustifiBusinessInfo, HTMLStencilElement {
+    }
+    var HTMLJustifiBusinessInfoElement: {
+        prototype: HTMLJustifiBusinessInfoElement;
+        new (): HTMLJustifiBusinessInfoElement;
+    };
     interface HTMLJustifiCardFormElement extends Components.JustifiCardForm, HTMLStencilElement {
     }
     var HTMLJustifiCardFormElement: {
@@ -223,6 +244,7 @@ declare global {
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-billing-form": HTMLJustifiBillingFormElement;
         "justifi-business-address": HTMLJustifiBusinessAddressElement;
+        "justifi-business-info": HTMLJustifiBusinessInfoElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-form": HTMLJustifiPaymentFormElement;
         "justifi-payment-method-form": HTMLJustifiPaymentMethodFormElement;
@@ -270,6 +292,15 @@ declare namespace LocalJSX {
         "legend"?: string;
     }
     interface JustifiBusinessAddress {
+    }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputfs
+     */
+    interface JustifiBusinessInfo {
+        "authToken"?: string;
+        "businessId"?: string;
     }
     interface JustifiCardForm {
         /**
@@ -346,6 +377,7 @@ declare namespace LocalJSX {
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-billing-form": JustifiBillingForm;
         "justifi-business-address": JustifiBusinessAddress;
+        "justifi-business-info": JustifiBusinessInfo;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-form": JustifiPaymentForm;
         "justifi-payment-method-form": JustifiPaymentMethodForm;
@@ -367,6 +399,12 @@ declare module "@stencil/core" {
              */
             "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
             "justifi-business-address": LocalJSX.JustifiBusinessAddress & JSXBase.HTMLAttributes<HTMLJustifiBusinessAddressElement>;
+            /**
+             * @exportedPart label: Label for inputs
+             * @exportedPart input: The input fields
+             * @exportedPart input-invalid: Invalid state for inputfs
+             */
+            "justifi-business-info": LocalJSX.JustifiBusinessInfo & JSXBase.HTMLAttributes<HTMLJustifiBusinessInfoElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
