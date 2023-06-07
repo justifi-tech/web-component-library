@@ -1,0 +1,159 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+import CSSVars from './css-variables.tsx';
+import { SummaryElement } from './utils.tsx';
+
+<Meta title="React" />
+
+# Justifi React web components
+
+# Index
+
+- [Usage](#usage)
+- [Usage details](#usage-details)
+  - [Props Names](#props-names)
+  - [Listening to events](#listening-to-events)
+  - [Calling methods](#calling-methods)
+- [Styling](#styling)
+  - [Components styled with variables](#components-styled-with-variables)
+  - [Styling exported parts](#styling-exported-parts)
+
+# Usage
+
+To use the React version of the web components, you need to install the package:
+
+<Source
+  language="bash"
+  dark
+  format={false}
+  code={dedent`
+    npm install --save @justifi/react-components
+  `}
+/>
+
+Then import it and use it as a normal React component, for a more in-depth explanation you can search the sidebar for the component you want to use:
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+    import { JustifiCardForm } from '@justifi/react-components';
+
+    <JustifiCardForm
+      ref={cardFormRef}
+      onCardFormReady={onPaymentMethodReady}
+    />
+  `}
+/>
+
+# Usage details
+
+## Props Names
+
+The same props listed on any components page are available, but where they are `hyphen-cased` for the vanilla HTML web components,
+they are `camelCased` in the React version.
+
+For example for `single-line` in the `justifi-card-form`, the React version would use the `singleLine` prop in `JustifiCardForm`.
+
+## Listening to events
+
+For components that list events in their docs page, you can listen to those events passing a callback as a value for that prop.
+
+The prop name is `on` plus the name of the event capitalized: for example, for `cardFormReady`, the component would allow a prop called `onCardFormReady`.
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+    import { JustifiCardForm } from '@justifi/react-components';
+
+    <JustifiCardForm
+      onCardFormReady={(event) => {
+        // CardForm is ready!
+        // Do stuff
+      }}
+    />
+  `}
+/>
+
+## Calling methods
+
+In order to call methods of the component, a React ref needs to be used.
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+    import { JustifiCardForm } from '@justifi/react-components';
+
+    const MyComponent = () => {
+      const justifiCardFormRef = useRef(null);
+
+      const onSomeEventHandler = () => {
+        // The ref needs to be typed as any
+        const cardForm = (cardFormRef as any).current;
+
+        const tokenizeResponse = await cardForm.tokenize(clientId, paymentMethodMetadata, subAccountID);
+        // Do stuff with the tokenized payment method, like submitting a payment
+      }
+
+      <JustifiCardForm
+        onSomeEvent={onSomeEventHandler}
+        ref={justifiCardFormRef}
+      />
+    }
+  `}
+/>
+
+# Styling
+
+Styling works similarly to the vanilla web components.
+
+## Components styled with variables
+
+The following components can only be styled through CSS variables:
+
+- [BankAccountForm](?path=/docs/components-bankaccountform--docs)
+- [CardForm](?path=/docs/components-cardform--docs)
+- [PaymentForm](?path=/docs/components-paymentform--docs)
+
+You can easily override the variables in a `<style>` tag in any place of your App, both in the `<head>` of your root `index.html` or at any component level.
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+    <YourComponent>
+      <style>
+        :root {
+          --jfi-variable: 'override value';
+        }
+      </style>
+
+      <JustifiPaymentForm />
+    </YourComponent>
+  `}
+/>
+
+<SummaryElement title="See full list of CSS variables available">
+  <CSSVars />
+</SummaryElement>
+
+## Styling exported parts
+
+For components that are not in an iFrame, you'll find a list of `exportedparts` on their docs page.
+
+<Source
+  language="css"
+  dark
+  code={dedent`
+    /* Given an exportedpart of "label" for example */
+    the-component-tag:part(label) {
+      /* Your custom css */
+    }
+  `}
+/>
