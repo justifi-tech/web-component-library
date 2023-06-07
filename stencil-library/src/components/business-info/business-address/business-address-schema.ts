@@ -2,7 +2,7 @@ import { object, string } from 'yup';
 
 export const RegExZip = /^\d{5}/;
 
-export interface BusinessAddressFormFields {
+export interface IBusinessAddress {
   line1: string;
   line2?: string;
   city: string;
