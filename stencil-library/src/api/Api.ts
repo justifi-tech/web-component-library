@@ -23,7 +23,7 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
 }
 
 const Api = (authToken: string) => {
-  const apiOrigin = 'http://localhost:3000';
+  const apiOrigin = 'https://justifi.ai';
 
   async function getAuthorizationHeader() {
     return {
