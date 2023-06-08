@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import { reactOutputTarget as react } from '@stencil/react-output-target';
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 export const config: Config = {
   namespace: 'webcomponents',
@@ -20,10 +21,14 @@ export const config: Config = {
     }),
   ],
   outputTargets: [
-    react({
+    reactOutputTarget({
       componentCorePackage: '@justifi/webcomponents',
       proxiesFile: '../react-library/src/components/stencil-generated/index.ts',
       includeDefineCustomElements: true,
+    }),
+    vueOutputTarget({
+      componentCorePackage: '@justifi/webcomponents',
+      proxiesFile: '../vue-library/src/lib/components.ts'
     }),
     {
       type: 'dist',
