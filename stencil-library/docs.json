@@ -321,6 +321,97 @@
       }
     },
     {
+      "filePath": "./src/components/business-info/business-info.tsx",
+      "encapsulation": "shadow",
+      "tag": "justifi-business-info",
+      "readme": "# justifi-business-info\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "exportedPart",
+          "text": "label: Label for inputs"
+        },
+        {
+          "name": "exportedPart",
+          "text": "input: The input fields"
+        },
+        {
+          "name": "exportedPart",
+          "text": "input-invalid: Invalid state for inputfs"
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "authToken",
+          "type": "string",
+          "mutable": false,
+          "attr": "auth-token",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "businessId",
+          "type": "string",
+          "mutable": false,
+          "attr": "business-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "submit",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "submit(event: any) => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [
+        {
+          "event": "fieldReceivedInput",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "text-input",
+        "select-input"
+      ],
+      "dependencyGraph": {
+        "justifi-business-info": [
+          "text-input",
+          "select-input"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/card-form/card-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-card-form",
@@ -1076,7 +1167,8 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address"
+        "justifi-business-address",
+        "justifi-business-info"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1084,6 +1176,9 @@
           "select-input"
         ],
         "justifi-business-address": [
+          "select-input"
+        ],
+        "justifi-business-info": [
           "select-input"
         ]
       }
@@ -1185,7 +1280,8 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address"
+        "justifi-business-address",
+        "justifi-business-info"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1193,6 +1289,9 @@
           "text-input"
         ],
         "justifi-business-address": [
+          "text-input"
+        ],
+        "justifi-business-info": [
           "text-input"
         ]
       }
