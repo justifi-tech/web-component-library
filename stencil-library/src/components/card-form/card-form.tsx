@@ -84,6 +84,7 @@ export class CardForm {
   render() {
     return (
       <justifi-payment-method-form
+        key={new Date().getTime()}
         ref={el => {
           if (el) {
             this.childRef = el;

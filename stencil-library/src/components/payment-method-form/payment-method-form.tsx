@@ -1,4 +1,4 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method, State } from '@stencil/core';
+import { Component, Event, Prop, h, EventEmitter, Method, State } from '@stencil/core';
 import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
 import packageJson from '../../../package.json';
@@ -120,14 +120,12 @@ export class PaymentMethodForm {
 
   render() {
     return (
-      <Host>
-        <iframe
-          id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
-          src={this.getIframeSrc()}
-          ref={el => (this.iframeElement = el as HTMLIFrameElement)}
-          height={this.height}
-        ></iframe>
-      </Host>
+      <iframe
+        id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
+        src={this.getIframeSrc()}
+        ref={el => (this.iframeElement = el as HTMLIFrameElement)}
+        height={this.height}
+      ></iframe>
     );
   }
 }
