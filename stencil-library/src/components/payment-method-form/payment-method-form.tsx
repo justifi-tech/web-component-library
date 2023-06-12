@@ -115,7 +115,6 @@ export class PaymentMethodForm {
       paramsList.push(`singleLine=${this.singleLine}`);
     }
 
-    // try new URLSearchParams(values).toString();
     return iframeSrc.concat(this.composeQueryParams(paramsList));
   }
 
