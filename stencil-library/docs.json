@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-13T06:08:07",
+  "timestamp": "2023-06-13T16:37:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -1042,7 +1042,28 @@
       "tag": "justifi-payments-list",
       "readme": "# justifi-payments-list\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "exportedPart",
+          "text": "table-head: Head of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-body: Body of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "loading-state: Row for loading state"
+        },
+        {
+          "name": "exportedPart",
+          "text": "error-state: Row for Error state"
+        },
+        {
+          "name": "exportedPart",
+          "text": "empty-state: Row for Emtpy state"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -1083,7 +1104,28 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "empty-state",
+          "docs": ""
+        },
+        {
+          "name": "error-state",
+          "docs": ""
+        },
+        {
+          "name": "loading-state",
+          "docs": ""
+        },
+        {
+          "name": "table-body",
+          "docs": ""
+        },
+        {
+          "name": "table-head",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
