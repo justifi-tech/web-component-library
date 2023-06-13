@@ -9,24 +9,85 @@ describe('justifi-payment-method-form', () => {
       template: () => <justifi-payment-method-form paymentMethodFormType="card"></justifi-payment-method-form>,
     });
     expect(page.root).toEqualHtml(`
+    <justifi-payment-method-form>
+      <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
+    </justifi-payment-method-form>
+  `);
+  });
+
+  it('renders a card iframe when paymentMethodFormType is card', async () => {
+    const page = await newSpecPage({
+      components: [PaymentMethodForm],
+      template: () => <justifi-payment-method-form paymentMethodFormType="card"></justifi-payment-method-form>,
+    });
+    expect(page.root).toEqualHtml(`
+    <justifi-payment-method-form>
+      <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
+    </justifi-payment-method-form>
+  `);
+  });
+
+  it('renders a bank iframe when paymentMethodFormType is bank', async () => {
+    const page = await newSpecPage({
+      components: [PaymentMethodForm],
+      template: () => <justifi-payment-method-form paymentMethodFormType="bankAccount"></justifi-payment-method-form>,
+    });
+    expect(page.root).toEqualHtml(`
+    <justifi-payment-method-form>
+      <iframe height="55" id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount"></iframe>
+    </justifi-payment-method-form>
+  `);
+  });
+
+  it('renders a card iframe with validationMode when paymentMethodFormType is card and paymentMethodFormValidationMode is set', async () => {
+    const page = await newSpecPage({
+      components: [PaymentMethodForm],
+      template: () => <justifi-payment-method-form paymentMethodFormType="bankAccount" paymentMethodFormValidationMode="onChange"></justifi-payment-method-form>,
+    });
+
+    expect(page.root).toEqualHtml(`
+      <justifi-payment-method-form>
+        <iframe height="55" id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount?validationMode=onChange"></iframe>
+      </justifi-payment-method-form>
+    `);
+  });
+
+  it('renders a card iframe with validationMode when paymentMethodFormType is card and paymentMethodFormValidationMode is set', async () => {
+    const page = await newSpecPage({
+      components: [PaymentMethodForm],
+      template: () => <justifi-payment-method-form paymentMethodFormType="bankAccount" paymentMethodFormValidationMode="onBlur"></justifi-payment-method-form>,
+    });
+
+    expect(page.root).toEqualHtml(`
+      <justifi-payment-method-form>
+        <iframe height="55" id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount?validationMode=onBlur"></iframe>
+      </justifi-payment-method-form>
+    `);
+  });
+
+  it('renders a card iframe with iframeOrigin when paymentMethodFormType is card and iframeOrigin is set', async () => {
+    const page = await newSpecPage({
+      components: [PaymentMethodForm],
+      template: () => <justifi-payment-method-form paymentMethodFormType="card" iframeOrigin="https://js.justifi.ai/v2"></justifi-payment-method-form>,
+    });
+
+    expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
         <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
       </justifi-payment-method-form>
     `);
   });
 
-  // it('has a tokenize method which calls triggerTokenization', async () => {
-  //   const paymentMethodForm = new PaymentMethodForm();
-  //   expect(paymentMethodForm.tokenize).toBeDefined();
-  //   const clientId = 'abc123';
-  //   const paymentMethodMetadata = {};
-  //   const accountId = 'def456';
-  //   const tokenizeSpy = jest.spyOn(paymentMethodForm, 'tokenize');
+  it('renders a card iframe with singleLine when paymentMethodFormType is card and singleLine is set', async () => {
+    const page = await newSpecPage({
+      components: [PaymentMethodForm],
+      template: () => <justifi-payment-method-form paymentMethodFormType="card" singleLine={true}></justifi-payment-method-form>,
+    });
 
-  //   paymentMethodForm.tokenize(clientId, paymentMethodMetadata);
-  //   expect(tokenizeSpy).toHaveBeenCalledWith(clientId, paymentMethodMetadata, undefined);
-
-  //   paymentMethodForm.tokenize(clientId, paymentMethodMetadata, accountId);
-  //   expect(tokenizeSpy).toHaveBeenCalledWith(clientId, paymentMethodMetadata, accountId);
-  // });
+    expect(page.root).toEqualHtml(`
+      <justifi-payment-method-form>
+        <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card?singleLine=true"></iframe>
+      </justifi-payment-method-form>
+    `);
+  });
 });
