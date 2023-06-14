@@ -36,9 +36,9 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-info --> text-input
-  justifi-business-info --> select-input
-  style justifi-business-info fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-form --> text-input
+  justifi-business-form --> select-input
+  style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

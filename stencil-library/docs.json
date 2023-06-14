@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-14T16:28:26",
+  "timestamp": "2023-06-14T19:21:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -276,7 +276,7 @@
       }
     },
     {
-      "filePath": "./src/components/business-info/business-address/business-address.tsx",
+      "filePath": "./src/components/business-form/business-address/business-address.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-business-address",
       "readme": "# justifi-business-address\n\n\n",
@@ -326,9 +326,9 @@
       }
     },
     {
-      "filePath": "./src/components/business-info/business-info.tsx",
+      "filePath": "./src/components/business-form/business-form.tsx",
       "encapsulation": "shadow",
-      "tag": "justifi-business-info",
+      "tag": "justifi-business-form",
       "readme": "# justifi-business-info\n\n\n",
       "docs": "",
       "docsTags": [
@@ -410,14 +410,14 @@
         "select-input"
       ],
       "dependencyGraph": {
-        "justifi-business-info": [
+        "justifi-business-form": [
           "text-input",
           "select-input"
         ]
       }
     },
     {
-      "filePath": "./src/components/business-info/business-representative/business-representative.tsx",
+      "filePath": "./src/components/business-form/business-representative/business-representative.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-business-representative",
       "readme": "# justifi-business-representative\n\n\n",
@@ -1245,7 +1245,7 @@
       "dependents": [
         "justifi-billing-form",
         "justifi-business-address",
-        "justifi-business-info",
+        "justifi-business-form",
         "justifi-business-representative"
       ],
       "dependencies": [],
@@ -1256,7 +1256,7 @@
         "justifi-business-address": [
           "select-input"
         ],
-        "justifi-business-info": [
+        "justifi-business-form": [
           "select-input"
         ],
         "justifi-business-representative": [
@@ -1362,7 +1362,7 @@
       "dependents": [
         "justifi-billing-form",
         "justifi-business-address",
-        "justifi-business-info",
+        "justifi-business-form",
         "justifi-business-representative"
       ],
       "dependencies": [],
@@ -1373,7 +1373,7 @@
         "justifi-business-address": [
           "text-input"
         ],
-        "justifi-business-info": [
+        "justifi-business-form": [
           "text-input"
         ],
         "justifi-business-representative": [

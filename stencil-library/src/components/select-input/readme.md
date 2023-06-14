@@ -33,16 +33,16 @@
 ### Used by
 
  - [justifi-billing-form](../billing-form)
- - [justifi-business-address](../business-info/business-address)
- - [justifi-business-info](../business-info)
- - [justifi-business-representative](../business-info/business-representative)
+ - [justifi-business-address](../business-form/business-address)
+ - [justifi-business-form](../business-form)
+ - [justifi-business-representative](../business-form/business-representative)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-billing-form --> select-input
   justifi-business-address --> select-input
-  justifi-business-info --> select-input
+  justifi-business-form --> select-input
   justifi-business-representative --> select-input
   style select-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

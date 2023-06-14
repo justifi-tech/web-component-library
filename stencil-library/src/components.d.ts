@@ -8,14 +8,14 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
-import { IBusinessAddress } from "./components/business-info/business-address/business-address-schema";
-import { IBusinessRepresentative } from "./components/business-info/business-representative/business-representative-schema";
+import { IBusinessAddress } from "./components/business-form/business-address/business-address-schema";
+import { IBusinessRepresentative } from "./components/business-form/business-representative/business-representative-schema";
 import { PaymentMethodTypes } from "./api";
 export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 export { BillingFormFields } from "./components/billing-form/billing-form-schema";
 export { ValidationError } from "yup";
-export { IBusinessAddress } from "./components/business-info/business-address/business-address-schema";
-export { IBusinessRepresentative } from "./components/business-info/business-representative/business-representative-schema";
+export { IBusinessAddress } from "./components/business-form/business-address/business-address-schema";
+export { IBusinessRepresentative } from "./components/business-form/business-representative/business-representative-schema";
 export { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
@@ -69,7 +69,7 @@ export namespace Components {
      * @exportedPart input: The input fields
      * @exportedPart input-invalid: Invalid state for inputfs
      */
-    interface JustifiBusinessInfo {
+    interface JustifiBusinessForm {
         "authToken": string;
         "businessId"?: string;
         "submit": (event: any) => Promise<void>;
@@ -198,11 +198,11 @@ declare global {
      * @exportedPart input: The input fields
      * @exportedPart input-invalid: Invalid state for inputfs
      */
-    interface HTMLJustifiBusinessInfoElement extends Components.JustifiBusinessInfo, HTMLStencilElement {
+    interface HTMLJustifiBusinessFormElement extends Components.JustifiBusinessForm, HTMLStencilElement {
     }
-    var HTMLJustifiBusinessInfoElement: {
-        prototype: HTMLJustifiBusinessInfoElement;
-        new (): HTMLJustifiBusinessInfoElement;
+    var HTMLJustifiBusinessFormElement: {
+        prototype: HTMLJustifiBusinessFormElement;
+        new (): HTMLJustifiBusinessFormElement;
     };
     interface HTMLJustifiBusinessRepresentativeElement extends Components.JustifiBusinessRepresentative, HTMLStencilElement {
     }
@@ -256,7 +256,7 @@ declare global {
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-billing-form": HTMLJustifiBillingFormElement;
         "justifi-business-address": HTMLJustifiBusinessAddressElement;
-        "justifi-business-info": HTMLJustifiBusinessInfoElement;
+        "justifi-business-form": HTMLJustifiBusinessFormElement;
         "justifi-business-representative": HTMLJustifiBusinessRepresentativeElement;
         "justifi-card-form": HTMLJustifiCardFormElement;
         "justifi-payment-form": HTMLJustifiPaymentFormElement;
@@ -311,7 +311,7 @@ declare namespace LocalJSX {
      * @exportedPart input: The input fields
      * @exportedPart input-invalid: Invalid state for inputfs
      */
-    interface JustifiBusinessInfo {
+    interface JustifiBusinessForm {
         "authToken"?: string;
         "businessId"?: string;
     }
@@ -393,7 +393,7 @@ declare namespace LocalJSX {
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-billing-form": JustifiBillingForm;
         "justifi-business-address": JustifiBusinessAddress;
-        "justifi-business-info": JustifiBusinessInfo;
+        "justifi-business-form": JustifiBusinessForm;
         "justifi-business-representative": JustifiBusinessRepresentative;
         "justifi-card-form": JustifiCardForm;
         "justifi-payment-form": JustifiPaymentForm;
@@ -421,7 +421,7 @@ declare module "@stencil/core" {
              * @exportedPart input: The input fields
              * @exportedPart input-invalid: Invalid state for inputfs
              */
-            "justifi-business-info": LocalJSX.JustifiBusinessInfo & JSXBase.HTMLAttributes<HTMLJustifiBusinessInfoElement>;
+            "justifi-business-form": LocalJSX.JustifiBusinessForm & JSXBase.HTMLAttributes<HTMLJustifiBusinessFormElement>;
             "justifi-business-representative": LocalJSX.JustifiBusinessRepresentative & JSXBase.HTMLAttributes<HTMLJustifiBusinessRepresentativeElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;
             "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;

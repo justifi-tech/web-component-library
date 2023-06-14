@@ -11,7 +11,7 @@ defineCustomElements();
 export const JustifiBankAccountForm = /*@__PURE__*/createReactComponent<JSX.JustifiBankAccountForm, HTMLJustifiBankAccountFormElement>('justifi-bank-account-form');
 export const JustifiBillingForm = /*@__PURE__*/createReactComponent<JSX.JustifiBillingForm, HTMLJustifiBillingFormElement>('justifi-billing-form');
 export const JustifiBusinessAddress = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessAddress, HTMLJustifiBusinessAddressElement>('justifi-business-address');
-export const JustifiBusinessInfo = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessInfo, HTMLJustifiBusinessInfoElement>('justifi-business-info');
+export const JustifiBusinessForm = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessForm, HTMLJustifiBusinessFormElement>('justifi-business-form');
 export const JustifiBusinessRepresentative = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessRepresentative, HTMLJustifiBusinessRepresentativeElement>('justifi-business-representative');
 export const JustifiCardForm = /*@__PURE__*/createReactComponent<JSX.JustifiCardForm, HTMLJustifiCardFormElement>('justifi-card-form');
 export const JustifiPaymentForm = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentForm, HTMLJustifiPaymentFormElement>('justifi-payment-form');

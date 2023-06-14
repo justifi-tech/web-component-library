@@ -10,10 +10,10 @@
 </head>
 
 <body>
-  <justifi-business-info auth-token="" business-id=""></justifi-business-info>
+  <justifi-business-form auth-token="" business-id=""></justifi-business-form>
   <script>
     (() => {
-      const businessInfoElement = document.querySelector('justifi-business-info');
+      const businessInfoElement = document.querySelector('justifi-business-form');
       businessInfoElement.addEventListener('submitted', async (data) => {
         console.log(data);
       });
