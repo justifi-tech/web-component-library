@@ -10,23 +10,25 @@ export class TextInput {
   @Prop() label: string;
   @Prop() defaultValue: string;
   @Prop() error: string;
-  @Event() fieldReceivedInput: EventEmitter<{ name: string, value: string }>;
+  @Event() fieldReceivedInput: EventEmitter<{ name: string; value: string }>;
   @State() internalValue = '';
 
   onInput(event) {
     const target = event.target;
     const name = target.getAttribute('name');
     this.fieldReceivedInput.emit({ name: name, value: target.value });
-  };
+  }
 
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label">{this.label}</label>
+        <label part="label" class="form-label">
+          {this.label}
+        </label>
         <input
           name={this.name}
           type="text"
-          onInput={(event) => this.onInput(event)}
+          onInput={event => this.onInput(event)}
           value={this.internalValue || this.defaultValue}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
@@ -35,5 +37,4 @@ export class TextInput {
       </Host>
     );
   }
-
 }

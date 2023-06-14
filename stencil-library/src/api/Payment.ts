@@ -1,11 +1,11 @@
 export enum CaptureStrategy {
   automatic = 'automatic',
-  manual = 'manual'
+  manual = 'manual',
 }
 
 export enum PaymentMethodTypes {
   card = 'card',
-  bankAccount = 'bankAccount'
+  bankAccount = 'bankAccount',
 }
 
 export enum PaymentStatuses {
@@ -15,76 +15,68 @@ export enum PaymentStatuses {
   failed = 'failed',
   disputed = 'disputed',
   fully_refunded = 'fully_refunded',
-  partially_refunded = 'partially_refunded'
+  partially_refunded = 'partially_refunded',
 }
 
 export enum PaymentDisputedStatuses {
   // if a dispute is 'won', we don't show a dispute status, just general status
   lost = 'lost',
-  open = 'open'
+  open = 'open',
 }
 
 export interface IPaymentMethod {
-  card?: ICard
+  card?: ICard;
 }
 
-export type CardBrand =
-  'american_express' |
-  'diners_club' |
-  'discover' |
-  'jcb' |
-  'mastercard' |
-  'china_unionpay' |
-  'visa' |
-  'unknown';
+export type CardBrand = 'american_express' | 'diners_club' | 'discover' | 'jcb' | 'mastercard' | 'china_unionpay' | 'visa' | 'unknown';
 
 export interface ICard {
-  id: string,
-  acct_last_four: string,
-  name: string,
-  brand: CardBrand,
-  token: string,
-  created_at: string,
-  updated_at: string
+  id: string;
+  acct_last_four: string;
+  name: string;
+  brand: CardBrand;
+  token: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface IDispute {
-  amount_cents: number,
-  created_at: string,
-  currency: string,
-  gateway_ref_id: string,
-  id: string,
-  payment_id: string,
-  reason: null
-  status: string,
-  updated_at: string
+  amount_cents: number;
+  created_at: string;
+  currency: string;
+  gateway_ref_id: string;
+  id: string;
+  payment_id: string;
+  reason: null;
+  status: string;
+  updated_at: string;
 }
 
 export interface IPayment {
-  id: string,
-  account_id: string,
-  amount: number,
-  amount_disputed: number,
-  amount_refundable: number,
-  amount_refunded: number,
+  id: string;
+  account_id: string;
+  amount: number;
+  amount_disputed: number;
+  amount_refundable: number;
+  amount_refunded: number;
   balance: number;
-  captured: boolean,
-  capture_strategy: CaptureStrategy,
-  currency: 'usd',
-  description: string,
-  disputed: boolean,
-  disputes: IDispute[],
-  error_code: string | null,
-  error_description: string | null,
-  fee_amount: number,
-  is_test: boolean,
-  metadata: Object | null,
-  payment_method: IPaymentMethod,
-  payment_intent_id: string | null,
-  refunded: boolean,
-  status: PaymentStatuses,
-  created_at: string,
-  updated_at: string
+  captured: boolean;
+  capture_strategy: CaptureStrategy;
+  currency: 'usd';
+  description: string;
+  disputed: boolean;
+  disputes: IDispute[];
+  error_code: string | null;
+  error_description: string | null;
+  fee_amount: number;
+  is_test: boolean;
+  metadata: Object | null;
+  payment_method: IPaymentMethod;
+  payment_intent_id: string | null;
+  refunded: boolean;
+  status: PaymentStatuses;
+  created_at: string;
+  updated_at: string;
 }
 
 export class Payment implements IPayment {
@@ -141,9 +133,7 @@ export class Payment implements IPayment {
   }
 
   get disputedStatus(): PaymentDisputedStatuses | null {
-    const lost = this.disputes.some(
-      (dispute) => dispute.status === PaymentDisputedStatuses.lost
-    );
+    const lost = this.disputes.some(dispute => dispute.status === PaymentDisputedStatuses.lost);
     // if a dispute is 'won', we don't show a dispute status, just general status
     if (!this.disputed) {
       return null;

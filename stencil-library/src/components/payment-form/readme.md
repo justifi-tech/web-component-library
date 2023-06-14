@@ -2,35 +2,33 @@
   <code><justifi-payment-form /></code>
 </h1>
 
-
 ## Examples
+
 ```html
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>justifi-payment-form: Simple example</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>justifi-payment-form: Simple example</title>
-
-  <!--
+    <!--
     If you are including the components via CDN the src should be the following:
     https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js
   -->
-  <script type="module" src="/build/webcomponents.esm.js"></script>
-  <script nomodule src="/build/webcomponents.js"></script>
-</head>
+    <script type="module" src="/build/webcomponents.esm.js"></script>
+    <script nomodule src="/build/webcomponents.js"></script>
+  </head>
 
-<body>
-  <h1>PaymentForm</h1>
-  <hr>
-  <justifi-payment-form></justifi-payment-form>
-</body>
+  <body>
+    <h1>PaymentForm</h1>
+    <hr />
+    <justifi-payment-form></justifi-payment-form>
+  </body>
 
-<script>
-  (function () {})();
-</script>
-
+  <script>
+    (function () {})();
+  </script>
 </html>
 ```
 

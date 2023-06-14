@@ -5,21 +5,39 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property     | Attribute     | Description | Type     | Default     |
+| ------------ | ------------- | ----------- | -------- | ----------- |
+| `authToken`  | `auth-token`  |             | `string` | `undefined` |
+| `businessId` | `business-id` |             | `string` | `undefined` |
+
+
+## Methods
+
+### `submit(event: any) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
 
 ### Depends on
 
-- [justifi-business-representative](business-representative)
+- [text-input](../text-input)
+- [select-input](../select-input)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-info --> justifi-business-representative
-  justifi-business-representative --> text-input
-  justifi-business-representative --> select-input
-  justifi-business-representative --> justifi-business-address
-  justifi-business-address --> text-input
-  justifi-business-address --> select-input
+  justifi-business-info --> text-input
+  justifi-business-info --> select-input
   style justifi-business-info fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

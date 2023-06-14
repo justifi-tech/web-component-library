@@ -3,8 +3,8 @@ import { PaymentMethodTypes } from '../../api';
 
 const PaymentMethodLabels = {
   bankAccount: 'Bank Account',
-  card: 'Card'
-}
+  card: 'Card',
+};
 
 @Component({
   tag: 'justifi-payment-method-selector',
@@ -24,12 +24,8 @@ export class PaymentMethodSelector {
 
   render() {
     return (
-      <div
-        class="btn-group"
-        role="group"
-        aria-label="Radio toggle group for payment method"
-      >
-        {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) =>
+      <div class="btn-group jfi-btn-radio-group" role="group" aria-label="Radio toggle group for payment method">
+        {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) => (
           <Fragment>
             <input
               id={paymentMethodType}
@@ -44,8 +40,8 @@ export class PaymentMethodSelector {
               {PaymentMethodLabels[paymentMethodType]}
             </label>
           </Fragment>
-        )}
+        ))}
       </div>
     );
-  };
+  }
 }

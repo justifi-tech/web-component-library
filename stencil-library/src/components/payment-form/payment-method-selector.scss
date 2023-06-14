@@ -1,6 +1,6 @@
-@import "forms";
-@import "buttons";
-@import "button-group";
+@import 'forms';
+@import 'buttons';
+@import 'button-group';
 
 :host {
   @include host-base-styles;
@@ -35,4 +35,9 @@
   color: var(--jfi-radio-button-color-selected);
   background-color: var(--jfi-radio-button-background-color-selected);
   border-color: var(--jfi-radio-button-border-color-selected);
+}
+
+.jfi-btn-radio-group {
+  display: inline-flex;
+  width: var(--jfi-radio-button-group-width);
 }

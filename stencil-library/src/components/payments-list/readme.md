@@ -1,7 +1,5 @@
 # justifi-payments-list
 
-
-
 <!-- Auto Generated Below -->
 
 

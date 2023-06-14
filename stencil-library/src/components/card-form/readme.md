@@ -2,9 +2,10 @@
   <code><justifi-card-form /></code>
 </h1>
 
-----------------------------------------
+---
 
 ## Example usage
+
 <details>
   <summary>Show Examples</summary>
   
@@ -123,9 +124,10 @@
 
 </details>
 
-----------------------------------------
+---
 
 ## Styling
+
 The `style-overrides` attribute below requires type `string`, but should be a stringified [`Theme`](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/payment-method-form/theme.ts)
 
 <!-- Auto Generated Below -->

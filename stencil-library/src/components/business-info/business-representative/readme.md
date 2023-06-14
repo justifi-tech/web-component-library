@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property         | Attribute | Description | Type                      | Default     |
+| ---------------- | --------- | ----------- | ------------------------- | ----------- |
+| `representative` | --        |             | `IBusinessRepresentative` | `undefined` |
+
+
 ## Methods
 
 ### `getForm() => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>`
@@ -18,11 +25,14 @@ Type: `Promise<{ isValid: boolean; values: IBusinessRepresentative; }>`
 
 
 
+## Shadow Parts
+
+| Part      | Description |
+| --------- | ----------- |
+| `"label"` |             |
+
+
 ## Dependencies
-
-### Used by
-
- - [justifi-business-info](..)
 
 ### Depends on
 
@@ -38,7 +48,6 @@ graph TD;
   justifi-business-representative --> justifi-business-address
   justifi-business-address --> text-input
   justifi-business-address --> select-input
-  justifi-business-info --> justifi-business-representative
   style justifi-business-representative fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

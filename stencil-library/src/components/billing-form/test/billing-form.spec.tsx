@@ -21,7 +21,7 @@ describe('Billing Form', () => {
       </justifi-billing-form>
     `);
   });
-  it ('has a validate method and is calllable', () => {
+  it('has a validate method and is calllable', () => {
     const billingForm = new BillingForm();
     expect(billingForm.validate).toBeDefined();
 

@@ -20,4 +20,4 @@ ${head('justifi-payment-form')}
   })();
 </script>
 
-</html>`
+</html>`;

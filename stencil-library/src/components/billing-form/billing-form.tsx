@@ -24,7 +24,7 @@ export class BillingForm {
     address_line2: '',
     address_city: '',
     address_state: '',
-    address_postal_code: ''
+    address_postal_code: '',
   };
 
   @State() billingFieldsErrors: any = {};
@@ -57,7 +57,7 @@ export class BillingForm {
     let isValid: boolean = true;
 
     try {
-      await BillingFormSchema.validate(this.billingFields, { abortEarly: false })
+      await BillingFormSchema.validate(this.billingFields, { abortEarly: false });
     } catch (err) {
       isValid = false;
       err.inner.map((item: ValidationError) => {
@@ -79,7 +79,7 @@ export class BillingForm {
     return this.billingFields;
   }
 
-  legendBlock = <legend>{this.legend}</legend>;
+  legendBlock = (<legend>{this.legend}</legend>);
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
@@ -87,32 +87,21 @@ export class BillingForm {
           {this.legend && this.legendBlock}
           <div class="row gy-3">
             <div class="col-12">
-              <text-input
-                name="name"
-                label="Full Name"
-                defaultValue={this.billingFields.name}
-                error={this.billingFieldsErrors.name} />
+              <text-input name="name" label="Full Name" defaultValue={this.billingFields.name} error={this.billingFieldsErrors.name} />
             </div>
             <div class="col-12">
-              <text-input
-                name="address_line1"
-                label="Street Address"
-                defaultValue={this.billingFields.address_line1}
-                error={this.billingFieldsErrors.address_line1} />
+              <text-input name="address_line1" label="Street Address" defaultValue={this.billingFields.address_line1} error={this.billingFieldsErrors.address_line1} />
             </div>
             <div class="col-12">
               <text-input
                 name="address_line2"
                 label="Apartment, Suite, etc. (optional)"
                 defaultValue={this.billingFields.address_line2}
-                error={this.billingFieldsErrors.address_line2} />
+                error={this.billingFieldsErrors.address_line2}
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="address_city"
-                label="City"
-                defaultValue={this.billingFields.address_city}
-                error={this.billingFieldsErrors.address_city} />
+              <text-input name="address_city" label="City" defaultValue={this.billingFields.address_city} error={this.billingFieldsErrors.address_city} />
             </div>
             <div class="col-12">
               <select-input
@@ -120,19 +109,15 @@ export class BillingForm {
                 label="State"
                 options={StateOptions}
                 defaultValue={this.billingFields.address_state}
-                error={this.billingFieldsErrors.address_state} />
+                error={this.billingFieldsErrors.address_state}
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="address_postal_code"
-                label="ZIP"
-                defaultValue={this.billingFields.address_postal_code}
-                error={this.billingFieldsErrors.address_postal_code} />
+              <text-input name="address_postal_code" label="ZIP" defaultValue={this.billingFields.address_postal_code} error={this.billingFieldsErrors.address_postal_code} />
             </div>
           </div>
         </fieldset>
       </Host>
     );
   }
-
 }

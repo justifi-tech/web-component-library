@@ -1,9 +1,9 @@
-@import "root";
+@import 'root';
 
 :root {
   /* layout */
   --jfi-layout-padding: 4px;
-  --jfi-layout-form-control-spacing-x: .5rem;
+  --jfi-layout-form-control-spacing-x: 0.5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
 
   /* colors */
@@ -65,6 +65,8 @@
   --jfi-submit-button-color-active: white;
   --jfi-submit-button-background-color-active: var(--jfi-primary-color);
   --jfi-submit-button-border-color-active: var(--jfi-primary-color);
+  --jfi-submit-button-width: auto;
+  --jfi-submit-button-box-shadow: none;
 
   /* form label */
   --jfi-form-label-color: #{$body-color};

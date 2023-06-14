@@ -1,42 +1,70 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { CardForm } from '../card-form';
+import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 
 describe('justifi-card-form', () => {
-  it('renders with justifi-payment-method-form as a child element', async () => {
+  it('should pass validationMode prop to justifi-payment-method-form', async () => {
     const page = await newSpecPage({
       components: [CardForm],
-      html: `<justifi-card-form></justifi-card-form>`,
+      html: '<justifi-card-form validation-mode="onChange" />',
     });
-    expect(page.root).toEqualHtml(`
-      <justifi-card-form>
-        <justifi-payment-method-form payment-method-form-type="card" payment-method-form-validation-strategy="onSubmit"></justifi-payment-method-form>
-      </justifi-card-form>
-    `);
+    const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
+    expect(paymentMethodForm.getAttribute('payment-method-form-validation-mode')).toBe('onChange');
   });
 
-  // it('passes iframe-origin down to justifi-payment-method-form', async () => {
-  //   const page = await newSpecPage({
-  //     components: [CardForm],
-  //     html: `
-  //     <justifi-card-form iframe-origin="https://www.test.com"></justifi-card-form>
-  //     `,
-  //   });
-  //   expect(page.root).toEqualHtml(`
-  //     <justifi-card-form iframe-origin="https://www.test.com">
-  //       <justifi-payment-method-form iframe-origin="https://www.test.com"></justifi-payment-method-form>
-  //     </justifi-card-form>
-  //   `);
-  // });
+  it('should pass iframeOrigin prop to justifi-payment-method-form', async () => {
+    const page = await newSpecPage({
+      components: [CardForm],
+      html: '<justifi-card-form iframe-origin="https://example.com" />',
+    });
 
-  it('has a tokenize method which calls tokenize on justifi-payment-method-form', async () => {
-    const cardForm = new CardForm();
-    expect(cardForm.tokenize).toBeDefined();
+    const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
+    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe('https://example.com');
+  });
 
-    // mock childRef
-    (cardForm as any).childRef = { tokenize: () => { } };
-    const childRefTokenizeSpy = jest.spyOn((cardForm as any).childRef, 'tokenize');
+  it('should pass singleLine prop to justifi-payment-method-form', async () => {
+    const page = await newSpecPage({
+      components: [CardForm],
+      html: '<justifi-card-form single-line />',
+    });
+    const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
+    expect(paymentMethodForm.getAttribute('single-line')).toBe('');
+  });
 
-    cardForm.tokenize('clientId', { paymentMethod: 'metadata' }, 'accountId');
-    expect(childRefTokenizeSpy).toHaveBeenCalled();
+  it('should call the PaymentMethodForm validate method when invoked from the CardForm component', async () => {
+    const page = await newSpecPage({
+      components: [CardForm, PaymentMethodForm],
+      html: '<justifi-card-form></justifi-card-form>',
+    });
+
+    const component = page.rootInstance;
+
+    const validateMock = jest.fn();
+    component.childRef = { validate: validateMock } as any;
+
+    await component.validate();
+
+    expect(validateMock).toHaveBeenCalled();
+  });
+
+  it('should call the PaymentMethodForm tokenize method with the right arguments when invoked from the CardForm component', async () => {
+    const page = await newSpecPage({
+      components: [CardForm, PaymentMethodForm],
+      html: '<justifi-card-form></justifi-card-form>',
+    });
+
+    const component = page.rootInstance;
+
+    const tokenizeMock = jest.fn();
+    component.childRef = { tokenize: tokenizeMock } as any;
+
+    const clientId = 'clientId';
+    const paymentMethodMetadata = { paymentMethodType: 'card' };
+    const account = 'account';
+    const tokenizeArgs = [clientId, paymentMethodMetadata, account];
+
+    await component.tokenize(...tokenizeArgs);
+
+    expect(tokenizeMock).toHaveBeenCalledWith(...tokenizeArgs);
   });
 });

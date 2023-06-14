@@ -1,7 +1,5 @@
 # justifi-bank-account-form
 
-
-
 <!-- Auto Generated Below -->
 
 

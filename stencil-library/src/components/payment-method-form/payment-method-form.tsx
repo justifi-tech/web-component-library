@@ -14,7 +14,8 @@ export class PaymentMethodForm {
   @Prop() paymentMethodFormType: 'card' | 'bankAccount';
   @Prop({
     mutable: true,
-  }) paymentMethodFormValidationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  })
+  paymentMethodFormValidationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
   @Prop() iframeOrigin?: string;
   @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
@@ -39,10 +40,7 @@ export class PaymentMethodForm {
 
   sendStyleOverrides() {
     if (this.computedTheme) {
-      this.postMessage(
-        MessageEventType[this.paymentMethodFormType].styleOverrides,
-        { styleOverrides: this.computedTheme }
-      );
+      this.postMessage(MessageEventType[this.paymentMethodFormType].styleOverrides, { styleOverrides: this.computedTheme });
     }
   }
 
@@ -62,10 +60,10 @@ export class PaymentMethodForm {
 
   private postMessage(eventType: string, payload?: any) {
     this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, '*');
-  };
+  }
 
   private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const responseListener = (event: MessageEvent) => {
         if (event.data.eventType !== eventType) return;
         window.removeEventListener('message', responseListener);
@@ -87,21 +85,21 @@ export class PaymentMethodForm {
     };
 
     return this.postMessageWithResponseListener(eventType, payload);
-  };
+  }
 
   @Method()
   async validate(): Promise<any> {
     return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
-  };
+  }
 
   private composeQueryParams(values: string[]) {
-    const queryParams = values.map((value) => {
+    const queryParams = values.map(value => {
       if (value === values[0]) {
-        return value = `?${value}`
+        return (value = `?${value}`);
       } else {
-        return value = `&${value}`
+        return (value = `&${value}`);
       }
-    })
+    });
     return queryParams.join('');
   }
 
@@ -111,10 +109,10 @@ export class PaymentMethodForm {
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
     if (this.paymentMethodFormValidationMode) {
-      paramsList.push(`validationMode=${this.paymentMethodFormValidationMode}`)
+      paramsList.push(`validationMode=${this.paymentMethodFormValidationMode}`);
     }
     if (this.singleLine) {
-      paramsList.push(`singleLine=${this.singleLine}`)
+      paramsList.push(`singleLine=${this.singleLine}`);
     }
 
     return iframeSrc.concat(this.composeQueryParams(paramsList));
@@ -126,10 +124,10 @@ export class PaymentMethodForm {
         <iframe
           id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
           src={this.getIframeSrc()}
-          ref={(el) => this.iframeElement = el as HTMLIFrameElement}
-          height={this.height}>
-        </iframe>
-      </Host >
+          ref={el => (this.iframeElement = el as HTMLIFrameElement)}
+          height={this.height}
+        ></iframe>
+      </Host>
     );
   }
 }

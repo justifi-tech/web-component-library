@@ -11,6 +11,12 @@ import { ValidationError } from "yup";
 import { IBusinessAddress } from "./components/business-info/business-address/business-address-schema";
 import { IBusinessRepresentative } from "./components/business-info/business-representative/business-representative-schema";
 import { PaymentMethodTypes } from "./api";
+export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
+export { BillingFormFields } from "./components/billing-form/billing-form-schema";
+export { ValidationError } from "yup";
+export { IBusinessAddress } from "./components/business-info/business-address/business-address-schema";
+export { IBusinessRepresentative } from "./components/business-info/business-representative/business-representative-schema";
+export { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface JustifiBankAccountForm {
         /**
@@ -30,6 +36,11 @@ export namespace Components {
          */
         "validationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface JustifiBillingForm {
         /**
           * Method for filling the form with provided data
@@ -53,12 +64,19 @@ export namespace Components {
     interface JustifiBusinessAddress {
         "getForm": () => Promise<{ isValid: boolean; values: IBusinessAddress; }>;
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputfs
+     */
     interface JustifiBusinessInfo {
-        "accountId": string;
         "authToken": string;
+        "businessId"?: string;
+        "submit": (event: any) => Promise<void>;
     }
     interface JustifiBusinessRepresentative {
         "getForm": () => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>;
+        "representative"?: IBusinessRepresentative;
     }
     interface JustifiCardForm {
         /**
@@ -114,7 +132,7 @@ export namespace Components {
         "error": string;
         "label": string;
         "name": string;
-        "options": { label: string, value: string }[];
+        "options": { label: string; value: string }[];
     }
     interface TextInput {
         "defaultValue": string;
@@ -158,6 +176,11 @@ declare global {
         prototype: HTMLJustifiBankAccountFormElement;
         new (): HTMLJustifiBankAccountFormElement;
     };
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface HTMLJustifiBillingFormElement extends Components.JustifiBillingForm, HTMLStencilElement {
     }
     var HTMLJustifiBillingFormElement: {
@@ -170,6 +193,11 @@ declare global {
         prototype: HTMLJustifiBusinessAddressElement;
         new (): HTMLJustifiBusinessAddressElement;
     };
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputfs
+     */
     interface HTMLJustifiBusinessInfoElement extends Components.JustifiBusinessInfo, HTMLStencilElement {
     }
     var HTMLJustifiBusinessInfoElement: {
@@ -265,6 +293,11 @@ declare namespace LocalJSX {
          */
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputs
+     */
     interface JustifiBillingForm {
         /**
           * (Optional) A label for the form.
@@ -273,11 +306,17 @@ declare namespace LocalJSX {
     }
     interface JustifiBusinessAddress {
     }
+    /**
+     * @exportedPart label: Label for inputs
+     * @exportedPart input: The input fields
+     * @exportedPart input-invalid: Invalid state for inputfs
+     */
     interface JustifiBusinessInfo {
-        "accountId"?: string;
         "authToken"?: string;
+        "businessId"?: string;
     }
     interface JustifiBusinessRepresentative {
+        "representative"?: IBusinessRepresentative;
     }
     interface JustifiCardForm {
         /**
@@ -340,15 +379,15 @@ declare namespace LocalJSX {
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string, value: string }>) => void;
-        "options"?: { label: string, value: string }[];
+        "onFieldReceivedInput"?: (event: SelectInputCustomEvent<{ name: string; value: string }>) => void;
+        "options"?: { label: string; value: string }[];
     }
     interface TextInput {
         "defaultValue"?: string;
         "error"?: string;
         "label"?: string;
         "name"?: string;
-        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string, value: string }>) => void;
+        "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string; value: string }>) => void;
     }
     interface IntrinsicElements {
         "justifi-bank-account-form": JustifiBankAccountForm;
@@ -370,8 +409,18 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
+            /**
+             * @exportedPart label: Label for inputs
+             * @exportedPart input: The input fields
+             * @exportedPart input-invalid: Invalid state for inputs
+             */
             "justifi-billing-form": LocalJSX.JustifiBillingForm & JSXBase.HTMLAttributes<HTMLJustifiBillingFormElement>;
             "justifi-business-address": LocalJSX.JustifiBusinessAddress & JSXBase.HTMLAttributes<HTMLJustifiBusinessAddressElement>;
+            /**
+             * @exportedPart label: Label for inputs
+             * @exportedPart input: The input fields
+             * @exportedPart input-invalid: Invalid state for inputfs
+             */
             "justifi-business-info": LocalJSX.JustifiBusinessInfo & JSXBase.HTMLAttributes<HTMLJustifiBusinessInfoElement>;
             "justifi-business-representative": LocalJSX.JustifiBusinessRepresentative & JSXBase.HTMLAttributes<HTMLJustifiBusinessRepresentativeElement>;
             "justifi-card-form": LocalJSX.JustifiCardForm & JSXBase.HTMLAttributes<HTMLJustifiCardFormElement>;

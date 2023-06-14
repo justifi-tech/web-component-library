@@ -7,13 +7,13 @@
 
 ## Methods
 
-### `getForm() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
+### `getForm() => Promise<{ isValid: boolean; values: IBusinessAddress; }>`
 
 
 
 #### Returns
 
-Type: `Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
+Type: `Promise<{ isValid: boolean; values: IBusinessAddress; }>`
 
 
 

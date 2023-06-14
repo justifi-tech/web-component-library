@@ -1,7 +1,7 @@
 import { Canvas, Meta, Story, Source } from '@storybook/addon-docs';
 import { Markdown } from '@storybook/blocks';
 import dedent from 'ts-dedent';
-import { extractVersionFromPackage } from './utils.tsx'
+import { extractVersionFromPackage } from './utils.tsx';
 import Changelog from '../CHANGELOG.md';
 
 <Meta title="Introduction" />
@@ -22,7 +22,6 @@ Latest Version: <code>{extractVersionFromPackage()}</code>
   - [Styling components with custom css](#styling-components-with-custom-css)
 - [Changelog](/docs/changelog--docs)
 
-
 # Usage
 
 The components can be used as HTML Web Components or as React components.
@@ -32,7 +31,7 @@ The components can be used as HTML Web Components or as React components.
 The simplest way to use the Web Components is to include the following script within your HTML. This loads all the components into the browsers custom component registry.
 
 <Source
-  language='html'
+  language="html"
   dark
   format={false}
   code={dedent`
@@ -43,7 +42,7 @@ The simplest way to use the Web Components is to include the following script wi
 Then, you can use the custom elements as normal `HTML` tags.
 
 <Source
-  language='html'
+  language="html"
   dark
   format={false}
   code={dedent`
@@ -54,7 +53,7 @@ Then, you can use the custom elements as normal `HTML` tags.
 It can also be installed as a package with `npm` or `yarn`
 
 <Source
-  language='bash'
+  language="bash"
   dark
   format={false}
   code={dedent`
@@ -69,7 +68,7 @@ In both cases, you most likely will also want to include the `CSS` file for the 
 It can be included from the CDN, which is easier to start with, but won't update as the version changes in the package installed in you `package.json`:
 
 <Source
-  language='html'
+  language="html"
   dark
   format={false}
   code={dedent`
@@ -80,7 +79,7 @@ It can be included from the CDN, which is easier to start with, but won't update
 If you want to include it from the `node_modules` you'll need to get this file to the static directory of your built app in your pipeline:
 
 <Source
-  language='html'
+  language="html"
   dark
   format={false}
   code={dedent`
@@ -88,13 +87,12 @@ If you want to include it from the `node_modules` you'll need to get this file t
   `}
 />
 
-
 ## React
 
 To use the React version of the web components, you need to install the package:
 
 <Source
-  language='bash'
+  language="bash"
   dark
   format={false}
   code={dedent`
@@ -115,7 +113,8 @@ Then import it and use it as a normal React component, for a more in-depth expla
       ref={cardFormRef}
       onCardFormReady={onPaymentMethodReady}
     />
-  `}
+
+`}
 />
 
 # Styling
@@ -123,6 +122,7 @@ Then import it and use it as a normal React component, for a more in-depth expla
 ## Styling components with variables
 
 The following components need to be styled by overriding `CSS variables`, since they are scoped within an iFrame:
+
 - [BankAccountForm](#)
 - [CardForm](#)
 - [PaymentForm](#)
@@ -138,79 +138,82 @@ This is a complete list of variables as defined in this project's `root.scss`:
   --jfi-layout-form-control-spacing-x
   --jfi-layout-form-control-spacing-y
 
-  /* colors */
-  --jfi-primary-color
+/_ colors _/
+--jfi-primary-color
 
-  /* form control */
-  --jfi-form-control-background-color
-  --jfi-form-control-border-color
-  --jfi-form-control-border-color-focus
-  --jfi-form-control-border-color-error
-  --jfi-form-control-border-width
-  --jfi-form-control-border-bottom-width
-  --jfi-form-control-border-left-width
-  --jfi-form-control-border-right-width
-  --jfi-form-control-border-top-width
-  --jfi-form-control-border-radius
-  --jfi-form-control-border-style
-  --jfi-form-control-box-shadow
-  --jfi-form-control-box-shadow-error
-  --jfi-form-control-box-shadow-error-focus
-  --jfi-form-control-box-shadow-focus
-  --jfi-form-control-color
-  --jfi-form-control-color-focus
-  --jfi-form-control-font-size
-  --jfi-form-control-font-weight
-  --jfi-form-control-line-height
-  --jfi-form-control-margin
-  --jfi-form-control-padding
+/_ form control _/
+--jfi-form-control-background-color
+--jfi-form-control-border-color
+--jfi-form-control-border-color-focus
+--jfi-form-control-border-color-error
+--jfi-form-control-border-width
+--jfi-form-control-border-bottom-width
+--jfi-form-control-border-left-width
+--jfi-form-control-border-right-width
+--jfi-form-control-border-top-width
+--jfi-form-control-border-radius
+--jfi-form-control-border-style
+--jfi-form-control-box-shadow
+--jfi-form-control-box-shadow-error
+--jfi-form-control-box-shadow-error-focus
+--jfi-form-control-box-shadow-focus
+--jfi-form-control-color
+--jfi-form-control-color-focus
+--jfi-form-control-font-size
+--jfi-form-control-font-weight
+--jfi-form-control-line-height
+--jfi-form-control-margin
+--jfi-form-control-padding
 
-  /* form label */
-  --jfi-form-label-color
-  --jfi-form-label-font-family
-  --jfi-form-label-font-size
-  --jfi-form-label-font-weight
-  --jfi-form-label-margin
+/_ form label _/
+--jfi-form-label-color
+--jfi-form-label-font-family
+--jfi-form-label-font-size
+--jfi-form-label-font-weight
+--jfi-form-label-margin
 
-  /* validation messages */
-  --jfi-error-message-color
-  --jfi-error-message-margin
-  --jfi-error-message-font-size
+/_ validation messages _/
+--jfi-error-message-color
+--jfi-error-message-margin
+--jfi-error-message-font-size
 
-  /* Below only used in justifi-payment-form */
-  /* form radio group */
-  --jfi-radio-button-color
-  --jfi-radio-button-background-color
-  --jfi-radio-button-color-selected
-  --jfi-radio-button-background-color-selected
-  --jfi-radio-button-border-color
-  --jfi-radio-button-border-color-selected
-  --jfi-radio-button-padding
-  --jfi-radio-button-font-size
-  --jfi-radio-button-color-hover
-  --jfi-radio-button-color-selected-hover
-  --jfi-radio-button-background-color-hover
-  --jfi-radio-button-background-color-selected-hover
-  --jfi-radio-button-border-color-selected-hover
-  --jfi-radio-button-border-color-hover
+/_ Below only used in justifi-payment-form _/
+/_ form radio group _/
+--jfi-radio-button-color
+--jfi-radio-button-background-color
+--jfi-radio-button-color-selected
+--jfi-radio-button-background-color-selected
+--jfi-radio-button-border-color
+--jfi-radio-button-border-color-selected
+--jfi-radio-button-padding
+--jfi-radio-button-font-size
+--jfi-radio-button-color-hover
+--jfi-radio-button-color-selected-hover
+--jfi-radio-button-background-color-hover
+--jfi-radio-button-background-color-selected-hover
+--jfi-radio-button-border-color-selected-hover
+--jfi-radio-button-border-color-hover
+--jfi-radio-button-group-width
 
-  /* submit button */
-  --jfi-submit-button-color
-  --jfi-submit-button-background-color
-  --jfi-submit-button-border-color
-  --jfi-submit-button-padding
-  --jfi-submit-button-font-size
-  --jfi-submit-button-border-radius
-  --jfi-submit-button-color-hover
-  --jfi-submit-button-background-color-hover
-  --jfi-submit-button-border-color-hover
-  --jfi-submit-button-color-focus
-  --jfi-submit-button-background-color-focus
-  --jfi-submit-button-border-color-focus
-  --jfi-submit-button-color-active
-  --jfi-submit-button-background-color-active
-  --jfi-submit-button-border-color-active
-  `}
+/_ submit button _/
+--jfi-submit-button-color
+--jfi-submit-button-background-color
+--jfi-submit-button-border-color
+--jfi-submit-button-padding
+--jfi-submit-button-font-size
+--jfi-submit-button-border-radius
+--jfi-submit-button-color-hover
+--jfi-submit-button-background-color-hover
+--jfi-submit-button-border-color-hover
+--jfi-submit-button-color-focus
+--jfi-submit-button-background-color-focus
+--jfi-submit-button-border-color-focus
+--jfi-submit-button-color-active
+--jfi-submit-button-background-color-active
+--jfi-submit-button-border-color-active
+--jfi-submit-button-width
+--jfi-submit-button-box-shadow
+`}
 />
 
 ## Styling components with custom css
@@ -218,7 +221,7 @@ This is a complete list of variables as defined in this project's `root.scss`:
 For every other component, you'll be able to see a list of `exportedparts` in their `Docs` page. These exported `parts` can be used in the following manner:
 
 <Source
-  language='css'
+  language="css"
   dark
   code={dedent`
     /* Given an exportedpart of "label" for example */

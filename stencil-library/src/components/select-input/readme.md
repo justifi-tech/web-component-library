@@ -1,7 +1,5 @@
 # text-field
 
-
-
 <!-- Auto Generated Below -->
 
 
@@ -36,6 +34,7 @@
 
  - [justifi-billing-form](../billing-form)
  - [justifi-business-address](../business-info/business-address)
+ - [justifi-business-info](../business-info)
  - [justifi-business-representative](../business-info/business-representative)
 
 ### Graph
@@ -43,6 +42,7 @@
 graph TD;
   justifi-billing-form --> select-input
   justifi-business-address --> select-input
+  justifi-business-info --> select-input
   justifi-business-representative --> select-input
   style select-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
