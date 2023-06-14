@@ -18,6 +18,19 @@ export { IBusinessAddress } from "./components/business-form/business-address/bu
 export { IBusinessRepresentative } from "./components/business-form/business-representative/business-representative-schema";
 export { PaymentMethodTypes } from "./api";
 export namespace Components {
+    interface FormControlSelect {
+        "error": string;
+        "label": string;
+        "name": any;
+        "onInput": (e: any) => void;
+        "options": { label: string; value: string }[];
+    }
+    interface FormControlText {
+        "error": string;
+        "label": string;
+        "name": any;
+        "onInput": (e: any) => void;
+    }
     interface JustifiBankAccountForm {
         /**
           * URL for the rendered iFrame. End-users need not use this.
@@ -170,6 +183,18 @@ export interface TextInputCustomEvent<T> extends CustomEvent<T> {
     target: HTMLTextInputElement;
 }
 declare global {
+    interface HTMLFormControlSelectElement extends Components.FormControlSelect, HTMLStencilElement {
+    }
+    var HTMLFormControlSelectElement: {
+        prototype: HTMLFormControlSelectElement;
+        new (): HTMLFormControlSelectElement;
+    };
+    interface HTMLFormControlTextElement extends Components.FormControlText, HTMLStencilElement {
+    }
+    var HTMLFormControlTextElement: {
+        prototype: HTMLFormControlTextElement;
+        new (): HTMLFormControlTextElement;
+    };
     interface HTMLJustifiBankAccountFormElement extends Components.JustifiBankAccountForm, HTMLStencilElement {
     }
     var HTMLJustifiBankAccountFormElement: {
@@ -253,6 +278,8 @@ declare global {
         new (): HTMLTextInputElement;
     };
     interface HTMLElementTagNameMap {
+        "form-control-select": HTMLFormControlSelectElement;
+        "form-control-text": HTMLFormControlTextElement;
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
         "justifi-billing-form": HTMLJustifiBillingFormElement;
         "justifi-business-address": HTMLJustifiBusinessAddressElement;
@@ -268,6 +295,19 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface FormControlSelect {
+        "error"?: string;
+        "label"?: string;
+        "name"?: any;
+        "onInput"?: (e: any) => void;
+        "options"?: { label: string; value: string }[];
+    }
+    interface FormControlText {
+        "error"?: string;
+        "label"?: string;
+        "name"?: any;
+        "onInput"?: (e: any) => void;
+    }
     interface JustifiBankAccountForm {
         /**
           * URL for the rendered iFrame. End-users need not use this.
@@ -390,6 +430,8 @@ declare namespace LocalJSX {
         "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string; value: string }>) => void;
     }
     interface IntrinsicElements {
+        "form-control-select": FormControlSelect;
+        "form-control-text": FormControlText;
         "justifi-bank-account-form": JustifiBankAccountForm;
         "justifi-billing-form": JustifiBillingForm;
         "justifi-business-address": JustifiBusinessAddress;
@@ -408,6 +450,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "form-control-select": LocalJSX.FormControlSelect & JSXBase.HTMLAttributes<HTMLFormControlSelectElement>;
+            "form-control-text": LocalJSX.FormControlText & JSXBase.HTMLAttributes<HTMLFormControlTextElement>;
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
             /**
              * @exportedPart label: Label for inputs

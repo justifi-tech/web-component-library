@@ -8,6 +8,8 @@ import type { JSX } from '@justifi/webcomponents';
 import { defineCustomElements } from '@justifi/webcomponents/loader';
 
 defineCustomElements();
+export const FormControlSelect = /*@__PURE__*/createReactComponent<JSX.FormControlSelect, HTMLFormControlSelectElement>('form-control-select');
+export const FormControlText = /*@__PURE__*/createReactComponent<JSX.FormControlText, HTMLFormControlTextElement>('form-control-text');
 export const JustifiBankAccountForm = /*@__PURE__*/createReactComponent<JSX.JustifiBankAccountForm, HTMLJustifiBankAccountFormElement>('justifi-bank-account-form');
 export const JustifiBillingForm = /*@__PURE__*/createReactComponent<JSX.JustifiBillingForm, HTMLJustifiBillingFormElement>('justifi-billing-form');
 export const JustifiBusinessAddress = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessAddress, HTMLJustifiBusinessAddressElement>('justifi-business-address');

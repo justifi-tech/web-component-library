@@ -1,7 +1,7 @@
-import { Component, Host, h, Prop, State, Listen, Method } from '@stencil/core';
-import { ValidationError } from 'yup';
+import { Component, Host, h, Prop, State, Method } from '@stencil/core';
 import { Api } from '../../api';
 import BusinessSchema, { BusinessStructureOptions, BusinessTypeOptions, Business } from './business-form-schema';
+import FormController from '../form/form-controller';
 
 
 /**
@@ -19,6 +19,7 @@ export class BusinessForm {
   @Prop() businessId?: string;
   @State() business = new Business();
   @State() businessInfoFieldsErrors: any = {};
+  @State() form = new FormController(BusinessSchema);
 
   private endpoint: string = 'entities/business';
 
@@ -38,35 +39,13 @@ export class BusinessForm {
     return Api(this.authToken).post(this.endpoint, data);
   };
 
-  @Listen('fieldReceivedInput')
-  setFormValue(event) {
-    const data = event.detail;
-    const businessClone = { ...this.business };
-    if (data.name) {
-      businessClone[data.name] = data.value;
-      this.business = businessClone;
-    }
-  }
-
   @Method()
   async submit(event) {
     event.preventDefault();
+    const validatedForm = await this.form.validate();
+    this.businessInfoFieldsErrors = validatedForm.errors;
 
-    const newErrors = {};
-    let isValid: boolean = true;
-
-    try {
-      await BusinessSchema.validate(this.business, { abortEarly: false });
-    } catch (err) {
-      isValid = false;
-      err.inner.map((item: ValidationError) => {
-        newErrors[item.path] = item.message;
-      });
-    }
-
-    this.businessInfoFieldsErrors = newErrors;
-
-    if (!isValid) return;
+    if (!validatedForm.isValid) return;
 
     const response = await this.sendBusinessInfo(this.business);
     return response;
@@ -79,62 +58,62 @@ export class BusinessForm {
         <form onSubmit={(event) => this.submit(event)}>
           <div class="row gy-3">
             <div class="col-12">
-              <text-input
-                name="legal_name"
+              <form-control-text
+                {...this.form.register('legal_name')}
                 label="Legal Name"
-                defaultValue={this.business.legal_name}
-                error={this.businessInfoFieldsErrors.legal_name} />
+                error={this.form.errors?.legal_name}
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="doing_business_as"
+              <form-control-text
+                {...this.form.register('doing_business_as')}
                 label="Doing Business As (DBA)"
-                defaultValue={this.business.doing_business_as}
-                error={this.businessInfoFieldsErrors.doing_business_as} />
+                error={this.form.errors?.doing_business_as}
+              />
             </div>
             <div class="col-12">
-              <select-input
-                name="business_type"
+              <form-control-select
+                {...this.form.register('business_type')}
                 label="Business Type"
+                error={this.form.errors?.business_type}
                 options={BusinessTypeOptions}
-                defaultValue={this.business.business_type}
-                error={this.businessInfoFieldsErrors.business_type} />
+              />
             </div>
             <div class="col-12">
-              <select-input
-                name="business_structure"
+              <form-control-select
+                {...this.form.register('business_structure')}
                 label="Business Structure"
+                error={this.form.errors?.business_structure}
                 options={BusinessStructureOptions}
-                defaultValue={this.business.business_structure}
-                error={this.businessInfoFieldsErrors.business_structure} />
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="industry"
+              <form-control-text
+                {...this.form.register('industry')}
                 label="Industry"
-                defaultValue={this.business.industry}
-                error={this.businessInfoFieldsErrors.industry} />
+                error={this.form.errors?.industry}
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="website_url"
+              <form-control-text
+                {...this.form.register('website_url')}
                 label="Website URL"
-                defaultValue={this.business.website_url}
-                error={this.businessInfoFieldsErrors.website_url} />
+                error={this.form.errors?.website_url}
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="email"
+              <form-control-text
+                {...this.form.register('email')}
                 label="Email Address"
-                defaultValue={this.business.email}
-                error={this.businessInfoFieldsErrors.email} />
+                error={this.form.errors?.email}
+              />
             </div>
             <div class="col-12">
-              <text-input
-                name="phone"
-                label="Phone"
-                defaultValue={this.business.phone}
-                error={this.businessInfoFieldsErrors.phone} />
+              <form-control-text
+                {...this.form.register('phone')}
+                label="Phone Number"
+                error={this.form.errors?.phone}
+              />
             </div>
             <div class="col-12">
               <button
