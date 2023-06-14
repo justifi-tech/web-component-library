@@ -47,6 +47,20 @@ describe('justifi-payment-form', () => {
     expect(mockComponent.selectedPaymentMethodType).toBe(PaymentMethodTypes.bankAccount);
   });
 
+  // Props Testing
+  it('should have the expected default properties', () => {
+    const paymentForm = new PaymentForm();
+
+    // Assert that the properties exist and have the expected default values
+    expect(paymentForm).toHaveProperty('bankAccount', undefined);
+    expect(paymentForm).toHaveProperty('card', undefined);
+    expect(paymentForm).toHaveProperty('email', undefined);
+    expect(paymentForm).toHaveProperty('iframeOrigin', undefined);
+    expect(paymentForm).toHaveProperty('clientId', undefined);
+    expect(paymentForm).toHaveProperty('accountId', undefined);
+    expect(paymentForm).toHaveProperty('submitButtonText', undefined);
+  });
+
   // Method Testing
   it('should correctly fill billing form when fillBillingForm method is called', async () => {
     // Mock child component
