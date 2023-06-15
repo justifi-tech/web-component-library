@@ -10,6 +10,7 @@ class FormController {
   }
 
   validate = async () => {
+    console.log(this.controller.values)
     this.controller.isValid = true;
     this.controller.errors = {};
 
@@ -25,12 +26,31 @@ class FormController {
   };
 
   register = (name) => {
+    const splitName = name.split('.');
+    const isNested = splitName.length > 1;
+    let onInput: (e: any) => void;
+    let defaultValue: string;
+
+    if (isNested) {
+      this.controller.values[splitName[0]] = {};
+      const defaultValueSection = this.defaultValues[splitName[0]]
+      if (defaultValueSection) {
+        defaultValue = defaultValueSection[splitName[1]];
+      }
+      onInput = (e) => {
+        return this.controller.values[splitName[0]][splitName[1]] = e.target.value;
+      };
+    } else {
+      defaultValue = this.defaultValues[name];
+      onInput = (e) => {
+        return this.controller.values[name] = e.target.value;
+      };
+    };
+
     return {
       name: name || '',
-      value: this.defaultValues[name] || '',
-      onInput: (e) => {
-        this.controller.values[name] = e.target.value;
-      },
+      value: defaultValue || '',
+      onInput: onInput,
     }
   };
 

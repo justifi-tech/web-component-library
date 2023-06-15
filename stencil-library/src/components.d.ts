@@ -89,6 +89,7 @@ export namespace Components {
         "submit": (event: any) => Promise<void>;
     }
     interface JustifiBusinessRepresentative {
+        "form": FormController;
         "getForm": () => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>;
         "representative"?: IBusinessRepresentative;
     }
@@ -358,6 +359,7 @@ declare namespace LocalJSX {
         "businessId"?: string;
     }
     interface JustifiBusinessRepresentative {
+        "form"?: FormController;
         "representative"?: IBusinessRepresentative;
     }
     interface JustifiCardForm {

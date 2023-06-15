@@ -116,6 +116,9 @@ export class BusinessForm {
               />
             </div>
             <div class="col-12">
+              <justifi-business-representative form={this.form}></justifi-business-representative>
+            </div>
+            <div class="col-12">
               <button
                 class="btn btn-primary"
                 type="submit">Submit</button>

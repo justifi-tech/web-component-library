@@ -1,6 +1,7 @@
 import { Component, Host, h, State, Method, Listen, Prop } from '@stencil/core';
 import { ValidationError } from 'yup';
 import RepresentativeFormSchema, { IBusinessRepresentative } from './business-representative-schema';
+import FormController from '../../form/form-controller';
 
 
 @Component({
@@ -10,6 +11,7 @@ import RepresentativeFormSchema, { IBusinessRepresentative } from './business-re
 })
 export class BusinessRepresentative {
   @Prop() representative?: IBusinessRepresentative;
+  @Prop() form: FormController;
   @State() representativeFields: IBusinessRepresentative = {
     name: '',
     title: '',
@@ -83,11 +85,11 @@ export class BusinessRepresentative {
           <legend>Representative</legend>
           <div class="row gx-2 gy-2">
             <div class="col-8">
-              <text-input
-                name="name"
+              <form-control-text
+                {...this.form.register('representative.name')}
                 label="Full Name"
-                defaultValue={this.representativeFields?.name}
-                error={this.representativeFieldsErrors?.name} />
+                error={this.form.errors?.representative?.name}
+              />
             </div>
 
             <div class="col-4">
