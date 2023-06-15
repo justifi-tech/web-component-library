@@ -30,6 +30,7 @@ export namespace Components {
         "label": string;
         "name": any;
         "onInput": (e: any) => void;
+        "value": string;
     }
     interface JustifiBankAccountForm {
         /**
@@ -307,6 +308,7 @@ declare namespace LocalJSX {
         "label"?: string;
         "name"?: any;
         "onInput"?: (e: any) => void;
+        "value"?: string;
     }
     interface JustifiBankAccountForm {
         /**

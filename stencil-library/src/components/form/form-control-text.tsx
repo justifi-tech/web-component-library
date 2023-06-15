@@ -10,6 +10,7 @@ export class TextInput {
   @Prop() name: any;
   @Prop() onInput: (e: any) => void;
   @Prop() error: string;
+  @Prop() value: string;
 
   render() {
     return (
@@ -21,6 +22,7 @@ export class TextInput {
           name={this.name}
           type="text"
           onInput={this.onInput}
+          value={this.value}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
         />

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-14T21:24:44",
+  "timestamp": "2023-06-15T23:14:35",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -115,7 +115,7 @@
       }
     },
     {
-      "filePath": "./src/components/form/form-control-text-input.tsx",
+      "filePath": "./src/components/form/form-control-text.tsx",
       "encapsulation": "shadow",
       "tag": "form-control-text",
       "docs": "",
@@ -180,6 +180,22 @@
           "values": [
             {
               "type": "(e: any) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

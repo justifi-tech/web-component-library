@@ -19,7 +19,7 @@ export class BusinessForm {
   @Prop() businessId?: string;
   @State() business = new Business();
   @State() businessInfoFieldsErrors: any = {};
-  @State() form = new FormController(BusinessSchema);
+  @State() form = new FormController({ legal_name: 'hey' }, BusinessSchema);
 
   private endpoint: string = 'entities/business';
 
@@ -58,6 +58,7 @@ export class BusinessForm {
         <form onSubmit={(event) => this.submit(event)}>
           <div class="row gy-3">
             <div class="col-12">
+              {JSON.stringify(this.form.register('legal_name'))}
               <form-control-text
                 {...this.form.register('legal_name')}
                 label="Legal Name"
