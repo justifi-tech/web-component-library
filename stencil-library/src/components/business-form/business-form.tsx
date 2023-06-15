@@ -19,7 +19,7 @@ export class BusinessForm {
   @Prop() businessId?: string;
   @State() business = new Business();
   @State() businessInfoFieldsErrors: any = {};
-  @State() form = new FormController({ legal_name: 'hey' }, BusinessSchema);
+  @State() form = new FormController({}, BusinessSchema);
 
   private endpoint: string = 'entities/business';
 
