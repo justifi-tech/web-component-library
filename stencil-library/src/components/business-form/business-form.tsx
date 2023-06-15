@@ -58,7 +58,6 @@ export class BusinessForm {
         <form onSubmit={(event) => this.submit(event)}>
           <div class="row gy-3">
             <div class="col-12">
-              {JSON.stringify(this.form.register('legal_name'))}
               <form-control-text
                 {...this.form.register('legal_name')}
                 label="Legal Name"
