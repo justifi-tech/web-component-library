@@ -4,8 +4,11 @@ import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 
 /**
    *
-   * @exportedPart table-head: Head of the table
+   * @exportedPart table-head-row: Head row
+   * @exportedPart table-head-cell: Individual head cell
    * @exportedPart table-body: Body of the table
+   * @exportedPart table-row: Row of the table
+   * @exportedPart table-cell: Individual cell of the table
    * @exportedPart loading-state: Row for loading state
    * @exportedPart error-state: Row for Error state
    * @exportedPart empty-state: Row for Emtpy state
@@ -59,22 +62,22 @@ export class PaymentsList {
   }
 
   emptyState = (
-    <tr part="empty-state">
-      <td colSpan={8} style={{ textAlign: 'center' }}>No payments to show</td>
+    <tr>
+      <td part="empty-state" colSpan={8} style={{ textAlign: 'center' }}>No payments to show</td>
     </tr>
   );
 
   errorState = () => (
-    <tr part="error-state">
-      <td colSpan={8} style={{ textAlign: 'center' }}>
-        <span>An unexpected error occurred: {this.errorMessage}</span>
+    <tr>
+      <td part="error-state" colSpan={8} style={{ textAlign: 'center' }}>
+        An unexpected error occurred: {this.errorMessage}
       </td>
     </tr>
   );
 
   loadingState = (
-    <tr part="loading-state">
-      <td colSpan={8} style={{ textAlign: 'center' }}>
+    <tr>
+      <td part="loading-state" colSpan={8} style={{ textAlign: 'center' }}>
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
@@ -84,21 +87,25 @@ export class PaymentsList {
 
   render() {
     return (
-      <Host exportparts="table-head,table-body,loading-state,error-state,empty-state">
+      <Host exportparts="
+        table-head-row,table-head-cell,table-body,
+        loading-state,error-state,empty-state,
+        table-row, table-cell
+      ">
         <table class="table">
-          <thead part='table-head'>
-            <tr>
-              <th scope="col" title="The date and time each payment was made">
+          <thead>
+            <tr part='table-head-row'>
+              <th part="table-head-cell" scope="col" title="The date and time each payment was made">
                 Made on
               </th>
-              <th scope="col" title="The dollar amount of each payment">
+              <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
                 Amount
               </th>
-              <th scope="col">Description</th>
-              <th scope="col">Cardholder</th>
-              <th scope="col">Payment Method</th>
-              <th scope="col">Status</th>
-              <th scope="col">Payment ID</th>
+              <th part="table-head-cell" scope="col">Description</th>
+              <th part="table-head-cell" scope="col">Cardholder</th>
+              <th part="table-head-cell" scope="col">Payment Method</th>
+              <th part="table-head-cell" scope="col">Status</th>
+              <th part="table-head-cell" scope="col">Payment ID</th>
             </tr>
           </thead>
           <tbody part='table-body'>
@@ -107,17 +114,17 @@ export class PaymentsList {
               this.errorMessage ? this.errorState() :
               this.showEmptyState() ? this.emptyState :
               this.payments?.map(payment =>
-                <tr>
-                  <td>
+                <tr part="table-row">
+                  <td part="table-cell">
                     <div>{formatDate(payment.created_at)}</div>
                     <div>{formatTime(payment.created_at)}</div>
                   </td>
-                  <td>{formatCurrency(payment.amount)}</td>
-                  <td>{payment.description}</td>
-                  <td>{payment.payment_method?.card?.name}</td>
-                  <td>{payment.payment_method?.card?.acct_last_four}</td>
-                  <td>{payment.status}</td>
-                  <td>{payment.id}</td>
+                  <td part="table-cell" >{formatCurrency(payment.amount)}</td>
+                  <td part="table-cell" >{payment.description}</td>
+                  <td part="table-cell" >{payment.payment_method?.card?.name}</td>
+                  <td part="table-cell" >{payment.payment_method?.card?.acct_last_four}</td>
+                  <td part="table-cell" >{payment.status}</td>
+                  <td part="table-cell" >{payment.id}</td>
                 </tr>
               )
             }

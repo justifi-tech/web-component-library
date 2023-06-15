@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-13T16:37:15",
+  "timestamp": "2023-06-15T16:13:39",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -1045,11 +1045,23 @@
       "docsTags": [
         {
           "name": "exportedPart",
-          "text": "table-head: Head of the table"
+          "text": "table-head-row: Head row"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-head-cell: Individual head cell"
         },
         {
           "name": "exportedPart",
           "text": "table-body: Body of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-row: Row of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-cell: Individual cell of the table"
         },
         {
           "name": "exportedPart",
@@ -1122,7 +1134,19 @@
           "docs": ""
         },
         {
-          "name": "table-head",
+          "name": "table-cell",
+          "docs": ""
+        },
+        {
+          "name": "table-head-cell",
+          "docs": ""
+        },
+        {
+          "name": "table-head-row",
+          "docs": ""
+        },
+        {
+          "name": "table-row",
           "docs": ""
         }
       ],

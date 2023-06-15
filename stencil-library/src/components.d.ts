@@ -127,8 +127,11 @@ export namespace Components {
         "selectedPaymentMethodType": PaymentMethodTypes;
     }
     /**
-     * @exportedPart table-head: Head of the table
+     * @exportedPart table-head-row: Head row
+     * @exportedPart table-head-cell: Individual head cell
      * @exportedPart table-body: Body of the table
+     * @exportedPart table-row: Row of the table
+     * @exportedPart table-cell: Individual cell of the table
      * @exportedPart loading-state: Row for loading state
      * @exportedPart error-state: Row for Error state
      * @exportedPart empty-state: Row for Emtpy state
@@ -239,8 +242,11 @@ declare global {
         new (): HTMLJustifiPaymentMethodSelectorElement;
     };
     /**
-     * @exportedPart table-head: Head of the table
+     * @exportedPart table-head-row: Head row
+     * @exportedPart table-head-cell: Individual head cell
      * @exportedPart table-body: Body of the table
+     * @exportedPart table-row: Row of the table
+     * @exportedPart table-cell: Individual cell of the table
      * @exportedPart loading-state: Row for loading state
      * @exportedPart error-state: Row for Error state
      * @exportedPart empty-state: Row for Emtpy state
@@ -378,8 +384,11 @@ declare namespace LocalJSX {
         "selectedPaymentMethodType"?: PaymentMethodTypes;
     }
     /**
-     * @exportedPart table-head: Head of the table
+     * @exportedPart table-head-row: Head row
+     * @exportedPart table-head-cell: Individual head cell
      * @exportedPart table-body: Body of the table
+     * @exportedPart table-row: Row of the table
+     * @exportedPart table-cell: Individual cell of the table
      * @exportedPart loading-state: Row for loading state
      * @exportedPart error-state: Row for Error state
      * @exportedPart empty-state: Row for Emtpy state
@@ -440,8 +449,11 @@ declare module "@stencil/core" {
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
             "justifi-payment-method-selector": LocalJSX.JustifiPaymentMethodSelector & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodSelectorElement>;
             /**
-             * @exportedPart table-head: Head of the table
+             * @exportedPart table-head-row: Head row
+             * @exportedPart table-head-cell: Individual head cell
              * @exportedPart table-body: Body of the table
+             * @exportedPart table-row: Row of the table
+             * @exportedPart table-cell: Individual cell of the table
              * @exportedPart loading-state: Row for loading state
              * @exportedPart error-state: Row for Error state
              * @exportedPart empty-state: Row for Emtpy state
