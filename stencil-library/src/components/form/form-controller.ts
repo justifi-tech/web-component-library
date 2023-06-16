@@ -1,7 +1,6 @@
 import { ObjectSchema, ValidationError } from "yup";
 
 class FormController {
-  private defaultValues: any = {};
   private schema: ObjectSchema<any>;
   private controller = { values: {}, isValid: false, errors: {} };
 
@@ -26,36 +25,19 @@ class FormController {
   };
 
   register = (name) => {
-    const splitName = name.split('.');
-    const isNested = splitName.length > 1;
-    let onInput: (e: any) => void;
-    let defaultValue: string;
-
-    if (isNested) {
-      this.controller.values[splitName[0]] = {};
-      const defaultValueSection = this.defaultValues[splitName[0]]
-      if (defaultValueSection) {
-        defaultValue = defaultValueSection[splitName[1]];
-      }
-      onInput = (e) => {
-        return this.controller.values[splitName[0]][splitName[1]] = e.target.value;
-      };
-    } else {
-      defaultValue = this.defaultValues[name];
-      onInput = (e) => {
-        return this.controller.values[name] = e.target.value;
-      };
-    };
-
+    const fieldNameKeys = name.split('.');
     return {
       name: name || '',
-      value: defaultValue || '',
-      onInput: onInput,
+      value: '',
+      onInput: (e) => {
+        const controllerValue = fieldNameKeys.reduceRight((obj, elem) => ({ [elem]: obj }), e.target.value);
+        this.controller.values = { ...this.controller.values, ...controllerValue };
+      },
     }
   };
 
   constructor(defaultValues: any, schema: ObjectSchema<any>) {
-    this.defaultValues = defaultValues;
+    this.controller.values = defaultValues;
     this.schema = schema;
   }
 }
