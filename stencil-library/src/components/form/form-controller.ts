@@ -1,6 +1,7 @@
 import { ObjectSchema, ValidationError } from "yup";
 
 class FormController {
+  private defaultValues: any = {};
   private schema: ObjectSchema<any>;
   private controller = { values: {}, isValid: false, errors: {} };
 
@@ -25,19 +26,38 @@ class FormController {
   };
 
   register = (name) => {
-    const fieldNameKeys = name.split('.');
+    const splitName = name.split('.');
+    let onInput: (e: any) => void;
+    let defaultValue: string;
+
+    if (splitName.length = 1) {
+      defaultValue = this.defaultValues[name];
+      onInput = (e) => {
+        return this.controller.values[name] = e.target.value;
+      };
+    }
+    else if (splitName.length = 1) {
+      this.controller.values[splitName[0]] = {};
+      const defaultValueSection = this.defaultValues[splitName[0]]
+      if (defaultValueSection) {
+        defaultValue = defaultValueSection[splitName[1]];
+      }
+      onInput = (e) => {
+        return this.controller.values[splitName[0]][splitName[1]] = e.target.value;
+      };
+    } else {
+      throw new Error('Deeply nested form controllers are not supported. Your controller name should only be nested one level deep.');
+    };
+
     return {
       name: name || '',
-      value: '',
-      onInput: (e) => {
-        const controllerValue = fieldNameKeys.reduceRight((obj, elem) => ({ [elem]: obj }), e.target.value);
-        this.controller.values = { ...this.controller.values, ...controllerValue };
-      },
+      value: defaultValue || '',
+      onInput: onInput,
     }
   };
 
   constructor(defaultValues: any, schema: ObjectSchema<any>) {
-    this.controller.values = defaultValues;
+    this.defaultValues = defaultValues;
     this.schema = schema;
   }
 }
