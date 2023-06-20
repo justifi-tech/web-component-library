@@ -26,30 +26,9 @@ class FormController {
   };
 
   register = (name) => {
-    const splitName = name.split('.');
-    let onInput: (e: any) => void;
-    let defaultValue: string;
-
-    // TODO: This is a hacky way to handle nested form controllers. We should refactor this to be more robust.
-    // We can use a recursive function to handle this, such as reduceRight() and reduce() to get and set the values dynamically.
-    // For now we only support one level of nesting, which is fine in most cases and is more performant.
-    if (splitName.length = 1) {
-      defaultValue = this.defaultValues[name];
-      onInput = (e) => {
-        return this.controller.values[name] = e.target.value;
-      };
-    }
-    else if (splitName.length = 1) {
-      this.controller.values[splitName[0]] = {};
-      const defaultValueSection = this.defaultValues[splitName[0]]
-      if (defaultValueSection) {
-        defaultValue = defaultValueSection[splitName[1]];
-      }
-      onInput = (e) => {
-        return this.controller.values[splitName[0]][splitName[1]] = e.target.value;
-      };
-    } else {
-      throw new Error('Deeply nested form controllers are not supported. Your controller name should only be nested one level deep.');
+    const defaultValue = this.defaultValues[name];
+    const onInput = (e) => {
+      return this.controller.values[name] = e.target.value;
     };
 
     return {

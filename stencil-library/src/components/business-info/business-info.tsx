@@ -55,6 +55,8 @@ export class BusinessInfo {
     const validatedForm = await this.form.validate();
     this.businessInfoFieldsErrors = validatedForm.errors;
 
+    console.log('validatedForm', validatedForm);
+
     if (!validatedForm.isValid) return;
 
     const response = await this.sendBusinessInfo(this.business);
@@ -82,7 +84,7 @@ export class BusinessInfo {
                 error={this.form.errors?.doing_business_as} />
             </div>
             <div class="col-12">
-              <select-input
+              <form-control-select
                 name="business_type"
                 label="Business Type"
                 options={BusinessTypeOptions}
@@ -90,7 +92,7 @@ export class BusinessInfo {
                 error={this.form.errors?.business_type} />
             </div>
             <div class="col-12">
-              <select-input
+              <form-control-select
                 name="business_structure"
                 label="Business Structure"
                 options={BusinessStructureOptions}
