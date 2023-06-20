@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-20T16:43:57",
+  "timestamp": "2023-06-20T17:01:51",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -207,9 +207,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "justifi-business-info"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "justifi-business-info": [
+          "form-control-text"
+        ]
+      }
     },
     {
       "filePath": "./src/components/bank-account-form/bank-account-form.tsx",
@@ -606,12 +612,12 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "text-input",
+        "form-control-text",
         "select-input"
       ],
       "dependencyGraph": {
         "justifi-business-info": [
-          "text-input",
+          "form-control-text",
           "select-input"
         ]
       }
@@ -1485,8 +1491,7 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address",
-        "justifi-business-info"
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1494,9 +1499,6 @@
           "text-input"
         ],
         "justifi-business-address": [
-          "text-input"
-        ],
-        "justifi-business-info": [
           "text-input"
         ]
       }

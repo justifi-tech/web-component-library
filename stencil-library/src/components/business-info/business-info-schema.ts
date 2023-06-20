@@ -18,16 +18,30 @@ type BusinessStructure = 'sole_proprietorship' |
   'tax_exempt_government_instrumentality' |
   '';
 
-export interface IBusinessInfo {
-  legal_name: string,
-  website_url: string,
-  email: string,
-  phone: string,
-  doing_business_as: string,
-  business_type: string,
-  business_structure: string,
-  industry: string,
-  metadata: any,
+export class Business {
+  public legal_name = '';
+  public website_url = '';
+  public email: string = '';
+  public phone: string = '';
+  public doing_business_as: string = '';
+  public business_type: string = '';
+  public business_structure: string = '';
+  public industry: string = '';
+  public metadata: any = {};
+
+  constructor(data?: any) {
+    if (data) {
+      this.legal_name = data.legal_name;
+      this.website_url = data.website_url;
+      this.email = data.email;
+      this.phone = data.phone;
+      this.doing_business_as = data.doing_business_as;
+      this.business_type = data.business_type;
+      this.business_structure = data.business_structure;
+      this.industry = data.industry;
+      this.metadata = data.metadata;
+    }
+  }
 }
 
 export const BusinessTypeOptions: { label: string, value: BusinessType }[] = [
