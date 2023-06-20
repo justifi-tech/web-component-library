@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-20T17:21:48",
+  "timestamp": "2023-06-20T23:18:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -64,14 +64,14 @@
         },
         {
           "name": "onInput",
-          "type": "(e: any) => void",
+          "type": "(e: Event) => void",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "(e: any) => void"
+              "type": "(e: Event) => void"
             }
           ],
           "optional": false,
@@ -172,14 +172,14 @@
         },
         {
           "name": "onInput",
-          "type": "(e: any) => void",
+          "type": "(e: Event) => void",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "(e: any) => void"
+              "type": "(e: Event) => void"
             }
           ],
           "optional": false,
