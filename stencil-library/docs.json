@@ -64,14 +64,14 @@
         },
         {
           "name": "onInput",
-          "type": "(e: any) => void",
+          "type": "(e: Event) => void",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "(e: any) => void"
+              "type": "(e: Event) => void"
             }
           ],
           "optional": false,
@@ -172,14 +172,14 @@
         },
         {
           "name": "onInput",
-          "type": "(e: any) => void",
+          "type": "(e: Event) => void",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "(e: any) => void"
+              "type": "(e: Event) => void"
             }
           ],
           "optional": false,

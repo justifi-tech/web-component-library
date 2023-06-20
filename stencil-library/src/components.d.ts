@@ -20,14 +20,14 @@ export namespace Components {
         "error": string;
         "label": string;
         "name": any;
-        "onInput": (e: any) => void;
+        "onInput": (e: Event) => void;
         "options": { label: string; value: string }[];
     }
     interface FormControlText {
         "error": string;
         "label": string;
         "name": any;
-        "onInput": (e: any) => void;
+        "onInput": (e: Event) => void;
         "value": string;
     }
     interface JustifiBankAccountForm {
@@ -318,14 +318,14 @@ declare namespace LocalJSX {
         "error"?: string;
         "label"?: string;
         "name"?: any;
-        "onInput"?: (e: any) => void;
+        "onInput"?: (e: Event) => void;
         "options"?: { label: string; value: string }[];
     }
     interface FormControlText {
         "error"?: string;
         "label"?: string;
         "name"?: any;
-        "onInput"?: (e: any) => void;
+        "onInput"?: (e: Event) => void;
         "value"?: string;
     }
     interface JustifiBankAccountForm {

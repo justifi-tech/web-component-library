@@ -8,17 +8,18 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class TextInput {
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() onInput: (e: any) => void;
+  @Prop() onInput: (e: Event) => void;
   @Prop() error: string;
   @Prop() options: { label: string; value: string }[];
 
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label">
+        <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <select
+          id={this.name}
           name={this.name}
           onInput={this.onInput}
           part={`input ${this.error && 'input-invalid'}`}
