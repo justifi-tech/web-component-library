@@ -20,11 +20,11 @@ export class TextInput {
         </label>
         <input
           name={this.name}
-          type="text"
           onInput={this.onInput}
           value={this.value}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
+          type="text"
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
