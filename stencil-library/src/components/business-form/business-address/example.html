@@ -10,14 +10,14 @@
 </head>
 
 <body>
-  <justifi-business-address></justifi-business-address>
+  <justifi-business-address-form></justifi-business-address-form>
   <button id="submit">Submit</button>
   <script>
     (() => {
-      const addressForm = document.querySelector('justifi-business-address');
+      const businessAddressForm = document.querySelector('justifi-business-address-form');
       const submitButton = document.getElementById('submit');
       submitButton.addEventListener('click', async () => {
-        const form = await addressForm.submit();
+        const form = await businessAddressForm.submit();
         console.log(form);
       });
     })()
