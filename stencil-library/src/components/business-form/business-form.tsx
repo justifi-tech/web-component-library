@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Listen, Method } from '@stencil/core';
 import { Api } from '../../api';
-import BusinessInfoSchema, { Business, BusinessStructureOptions, BusinessTypeOptions } from './business-info-schema';
+import BusinessFormSchema, { Business, BusinessStructureOptions, BusinessTypeOptions } from './business-form-schema';
 import FormController from '../form/form-controller';
 
 
@@ -10,42 +10,42 @@ import FormController from '../form/form-controller';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-info',
-  styleUrl: 'business-info.scss',
+  tag: 'justifi-business-form',
+  styleUrl: 'business-form.scss',
   shadow: true,
 })
-export class BusinessInfo {
+export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId?: string;
   @State() business = new Business();
-  @State() businessInfoFieldsErrors: any = {};
-  @State() form = new FormController({}, BusinessInfoSchema);
+  @State() businessFormFieldsErrors: any = {};
+  @State() form = new FormController({}, BusinessFormSchema);
 
   private endpoint: string = 'entities/business';
 
   componentDidMount() {
     if (this.businessId) {
-      this.fetchBusinessInfo();
+      this.fetchBusiness();
     }
   }
 
-  async fetchBusinessInfo(): Promise<void> {
+  async fetchBusiness(): Promise<void> {
     // fetch data and pre-fill form
-    const businessInfoPrefillData = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
-    this.business = businessInfoPrefillData;
+    const businessPrefillData = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
+    this.business = businessPrefillData;
   };
 
-  async sendBusinessInfo(data): Promise<void> {
+  async sendBusinessForm(data): Promise<void> {
     return Api(this.authToken).post(this.endpoint, data);
   };
 
   @Listen('fieldReceivedInput')
   setFormValue(event) {
     const data = event.detail;
-    const businessInfoClone = { ...this.business };
+    const businessClone = { ...this.business };
     if (data.name) {
-      businessInfoClone[data.name] = data.value;
-      this.business = businessInfoClone;
+      businessClone[data.name] = data.value;
+      this.business = businessClone;
     }
   }
 
@@ -53,13 +53,11 @@ export class BusinessInfo {
   async submit(event) {
     event.preventDefault();
     const validatedForm = await this.form.validate();
-    this.businessInfoFieldsErrors = validatedForm.errors;
-
-    console.log('validatedForm', validatedForm);
+    this.businessFormFieldsErrors = validatedForm.errors;
 
     if (!validatedForm.isValid) return;
 
-    const response = await this.sendBusinessInfo(this.business);
+    const response = await this.sendBusinessForm(this.business);
     return response;
   };
 

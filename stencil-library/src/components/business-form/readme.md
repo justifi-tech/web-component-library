@@ -30,15 +30,15 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [text-input](../text-input)
-- [select-input](../select-input)
+- [form-control-text](../form)
+- [form-control-select](../form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-info --> text-input
-  justifi-business-info --> select-input
-  style justifi-business-info fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-form --> form-control-text
+  justifi-business-form --> form-control-select
+  style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
