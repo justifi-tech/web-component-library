@@ -22,8 +22,8 @@ Type: `Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
 
 ### Depends on
 
-- [text-input](../text-input)
-- [select-input](../select-input)
+- [text-input](../../text-input)
+- [select-input](../../select-input)
 
 ### Graph
 ```mermaid

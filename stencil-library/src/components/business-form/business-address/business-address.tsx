@@ -1,6 +1,6 @@
 import { Component, Host, h, State, Method, Listen } from '@stencil/core';
 import { ValidationError } from 'yup';
-import StateOptions from '../billing-form/state-options';
+import StateOptions from '../../billing-form/state-options';
 import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-schema';
 
 @Component({

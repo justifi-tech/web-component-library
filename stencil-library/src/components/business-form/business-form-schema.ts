@@ -126,7 +126,7 @@ export const BusinessStructureOptions: { label: string, value: BusinessStructure
   },
 ];
 
-const BusinessInfoSchema = object({
+const BusinessFormSchema = object({
   legal_name: string().required('Enter legal name'),
   website_url: string().url('Enter valid website url').required('Enter website url'),
   email: string().email('Enter valid email').required('Enter email'),
@@ -137,4 +137,4 @@ const BusinessInfoSchema = object({
   industry: string().required('Enter a business industry'),
 });
 
-export default BusinessInfoSchema;
+export default BusinessFormSchema;

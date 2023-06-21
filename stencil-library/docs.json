@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-21T14:47:54",
+  "timestamp": "2023-06-21T19:18:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -10,6 +10,7 @@
       "filePath": "./src/components/form/form-control-select.tsx",
       "encapsulation": "shadow",
       "tag": "form-control-select",
+      "readme": "# form-control-text\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -105,11 +106,11 @@
         }
       ],
       "dependents": [
-        "justifi-business-info"
+        "justifi-business-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "justifi-business-info": [
+        "justifi-business-form": [
           "form-control-select"
         ]
       }
@@ -118,6 +119,7 @@
       "filePath": "./src/components/form/form-control-text.tsx",
       "encapsulation": "shadow",
       "tag": "form-control-text",
+      "readme": "# form-control-text\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -214,11 +216,11 @@
         }
       ],
       "dependents": [
-        "justifi-business-info"
+        "justifi-business-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "justifi-business-info": [
+        "justifi-business-form": [
           "form-control-text"
         ]
       }
@@ -493,7 +495,7 @@
       }
     },
     {
-      "filePath": "./src/components/business-address/business-address.tsx",
+      "filePath": "./src/components/business-form/business-address/business-address.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-business-address",
       "readme": "# justifi-business-address\n\n\n",
@@ -538,9 +540,9 @@
       }
     },
     {
-      "filePath": "./src/components/business-info/business-info.tsx",
+      "filePath": "./src/components/business-form/business-form.tsx",
       "encapsulation": "shadow",
-      "tag": "justifi-business-info",
+      "tag": "justifi-business-form",
       "readme": "# justifi-business-info\n\n\n",
       "docs": "",
       "docsTags": [
@@ -622,7 +624,7 @@
         "form-control-select"
       ],
       "dependencyGraph": {
-        "justifi-business-info": [
+        "justifi-business-form": [
           "form-control-text",
           "form-control-select"
         ]

@@ -32,7 +32,7 @@
 ### Used by
 
  - [justifi-billing-form](../billing-form)
- - [justifi-business-address](../business-address)
+ - [justifi-business-address](../business-form/business-address)
 
 ### Graph
 ```mermaid
