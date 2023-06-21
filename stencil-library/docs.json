@@ -7,6 +7,223 @@
   },
   "components": [
     {
+      "filePath": "./src/components/form/form-control-select.tsx",
+      "encapsulation": "shadow",
+      "tag": "form-control-select",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "error",
+          "type": "string",
+          "mutable": false,
+          "attr": "error",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "any",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "onInput",
+          "type": "(e: Event) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(e: Event) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "options",
+          "type": "{ label: string; value: string; }[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ label: string; value: string; }[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "justifi-business-info"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "justifi-business-info": [
+          "form-control-select"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/form/form-control-text.tsx",
+      "encapsulation": "shadow",
+      "tag": "form-control-text",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "error",
+          "type": "string",
+          "mutable": false,
+          "attr": "error",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "any",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "onInput",
+          "type": "(e: Event) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(e: Event) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "justifi-business-info"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "justifi-business-info": [
+          "form-control-text"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/bank-account-form/bank-account-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-bank-account-form",
@@ -401,13 +618,13 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "text-input",
-        "select-input"
+        "form-control-text",
+        "form-control-select"
       ],
       "dependencyGraph": {
         "justifi-business-info": [
-          "text-input",
-          "select-input"
+          "form-control-text",
+          "form-control-select"
         ]
       }
     },
@@ -1241,8 +1458,7 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address",
-        "justifi-business-info"
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1250,9 +1466,6 @@
           "select-input"
         ],
         "justifi-business-address": [
-          "select-input"
-        ],
-        "justifi-business-info": [
           "select-input"
         ]
       }
@@ -1354,8 +1567,7 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address",
-        "justifi-business-info"
+        "justifi-business-address"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1363,9 +1575,6 @@
           "text-input"
         ],
         "justifi-business-address": [
-          "text-input"
-        ],
-        "justifi-business-info": [
           "text-input"
         ]
       }

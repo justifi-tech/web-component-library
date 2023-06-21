@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Listen, Method } from '@stencil/core';
-import { ValidationError } from 'yup';
 import { Api } from '../../api';
-import BusinessInfoSchema, { BusinessStructureOptions, BusinessTypeOptions, IBusinessInfo } from './business-info-schema';
+import BusinessInfoSchema, { Business, BusinessStructureOptions, BusinessTypeOptions } from './business-info-schema';
+import FormController from '../form/form-controller';
 
 
 /**
@@ -17,19 +17,9 @@ import BusinessInfoSchema, { BusinessStructureOptions, BusinessTypeOptions, IBus
 export class BusinessInfo {
   @Prop() authToken: string;
   @Prop() businessId?: string;
-  @State() businessInfoPrefillData: any;
-  @State() businessInfo: IBusinessInfo = {
-    legal_name: '',
-    website_url: '',
-    email: '',
-    phone: '',
-    doing_business_as: '',
-    business_type: '',
-    business_structure: '',
-    industry: '',
-    metadata: {}
-  };
+  @State() business = new Business();
   @State() businessInfoFieldsErrors: any = {};
+  @State() form = new FormController({}, BusinessInfoSchema);
 
   private endpoint: string = 'entities/business';
 
@@ -41,7 +31,8 @@ export class BusinessInfo {
 
   async fetchBusinessInfo(): Promise<void> {
     // fetch data and pre-fill form
-    this.businessInfoPrefillData = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
+    const businessInfoPrefillData = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
+    this.business = businessInfoPrefillData;
   };
 
   async sendBusinessInfo(data): Promise<void> {
@@ -51,34 +42,24 @@ export class BusinessInfo {
   @Listen('fieldReceivedInput')
   setFormValue(event) {
     const data = event.detail;
-    const businessInfoClone = { ...this.businessInfo };
+    const businessInfoClone = { ...this.business };
     if (data.name) {
       businessInfoClone[data.name] = data.value;
-      this.businessInfo = businessInfoClone;
+      this.business = businessInfoClone;
     }
   }
 
   @Method()
   async submit(event) {
     event.preventDefault();
+    const validatedForm = await this.form.validate();
+    this.businessInfoFieldsErrors = validatedForm.errors;
 
-    const newErrors = {};
-    let isValid: boolean = true;
+    console.log('validatedForm', validatedForm);
 
-    try {
-      await BusinessInfoSchema.validate(this.businessInfo, { abortEarly: false });
-    } catch (err) {
-      isValid = false;
-      err.inner.map((item: ValidationError) => {
-        newErrors[item.path] = item.message;
-      });
-    }
+    if (!validatedForm.isValid) return;
 
-    this.businessInfoFieldsErrors = newErrors;
-
-    if (!isValid) return;
-
-    const response = await this.sendBusinessInfo(this.businessInfo);
+    const response = await this.sendBusinessInfo(this.business);
     return response;
   };
 
@@ -89,62 +70,62 @@ export class BusinessInfo {
         <form onSubmit={(event) => this.submit(event)}>
           <div class="row gy-3">
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="legal_name"
                 label="Legal Name"
-                defaultValue={this.businessInfoPrefillData?.legal_name}
-                error={this.businessInfoFieldsErrors.legal_name} />
+                {...this.form.register('legal_name')}
+                error={this.form.errors?.legal_name} />
             </div>
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="doing_business_as"
                 label="Doing Business As (DBA)"
-                defaultValue={this.businessInfoPrefillData?.doing_business_as}
-                error={this.businessInfoFieldsErrors.doing_business_as} />
+                {...this.form.register('doing_business_as')}
+                error={this.form.errors?.doing_business_as} />
             </div>
             <div class="col-12">
-              <select-input
+              <form-control-select
                 name="business_type"
                 label="Business Type"
                 options={BusinessTypeOptions}
-                defaultValue={this.businessInfoPrefillData?.business_type}
-                error={this.businessInfoFieldsErrors.business_type} />
+                {...this.form.register('business_type')}
+                error={this.form.errors?.business_type} />
             </div>
             <div class="col-12">
-              <select-input
+              <form-control-select
                 name="business_structure"
                 label="Business Structure"
                 options={BusinessStructureOptions}
-                defaultValue={this.businessInfoPrefillData?.business_structure}
-                error={this.businessInfoFieldsErrors.business_structure} />
+                {...this.form.register('business_structure')}
+                error={this.form.errors?.business_structure} />
             </div>
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="industry"
                 label="Industry"
-                defaultValue={this.businessInfoPrefillData?.industry}
-                error={this.businessInfoFieldsErrors.industry} />
+                {...this.form.register('industry')}
+                error={this.form.errors?.industry} />
             </div>
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="website_url"
                 label="Website URL"
-                defaultValue={this.businessInfoPrefillData?.website_url}
-                error={this.businessInfoFieldsErrors.website_url} />
+                {...this.form.register('website_url')}
+                error={this.form.errors?.website_url} />
             </div>
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="email"
                 label="Email Address"
-                defaultValue={this.businessInfoPrefillData?.email}
-                error={this.businessInfoFieldsErrors.email} />
+                {...this.form.register('email')}
+                error={this.form.errors?.email} />
             </div>
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="phone"
                 label="Phone"
-                defaultValue={this.businessInfoPrefillData?.phone}
-                error={this.businessInfoFieldsErrors.phone} />
+                {...this.form.register('phone')}
+                error={this.form.errors?.phone} />
             </div>
             <div class="col-12">
               <button
