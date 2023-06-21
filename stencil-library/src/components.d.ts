@@ -123,7 +123,8 @@ export namespace Components {
      * @exportedPart table-body: Body of the table
      * @exportedPart table-row: Row of the table
      * @exportedPart table-cell: Individual cell of the table
-     * @exportedPart loading-state: Row for loading state
+     * @exportedPart loading-state-cell: Row for loading state
+     * @exportedPart loading-state-spinner: Spinner element for loading state
      * @exportedPart error-state: Row for Error state
      * @exportedPart empty-state: Row for Emtpy state
      */
@@ -238,7 +239,8 @@ declare global {
      * @exportedPart table-body: Body of the table
      * @exportedPart table-row: Row of the table
      * @exportedPart table-cell: Individual cell of the table
-     * @exportedPart loading-state: Row for loading state
+     * @exportedPart loading-state-cell: Row for loading state
+     * @exportedPart loading-state-spinner: Spinner element for loading state
      * @exportedPart error-state: Row for Error state
      * @exportedPart empty-state: Row for Emtpy state
      */
@@ -380,7 +382,8 @@ declare namespace LocalJSX {
      * @exportedPart table-body: Body of the table
      * @exportedPart table-row: Row of the table
      * @exportedPart table-cell: Individual cell of the table
-     * @exportedPart loading-state: Row for loading state
+     * @exportedPart loading-state-cell: Row for loading state
+     * @exportedPart loading-state-spinner: Spinner element for loading state
      * @exportedPart error-state: Row for Error state
      * @exportedPart empty-state: Row for Emtpy state
      */
@@ -445,7 +448,8 @@ declare module "@stencil/core" {
              * @exportedPart table-body: Body of the table
              * @exportedPart table-row: Row of the table
              * @exportedPart table-cell: Individual cell of the table
-             * @exportedPart loading-state: Row for loading state
+             * @exportedPart loading-state-cell: Row for loading state
+             * @exportedPart loading-state-spinner: Spinner element for loading state
              * @exportedPart error-state: Row for Error state
              * @exportedPart empty-state: Row for Emtpy state
              */
