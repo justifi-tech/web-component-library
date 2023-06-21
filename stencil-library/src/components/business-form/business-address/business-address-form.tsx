@@ -1,14 +1,14 @@
 import { Component, Host, h, State, Method, Listen } from '@stencil/core';
 import { ValidationError } from 'yup';
 import StateOptions from '../../billing-form/state-options';
-import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-schema';
+import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-form-schema';
 
 @Component({
-  tag: 'justifi-business-address',
-  styleUrl: 'business-address.scss',
+  tag: 'justifi-business-address-form',
+  styleUrl: 'business-address-form.scss',
   shadow: true,
 })
-export class BusinessAddress {
+export class BusinessAddressForm {
   @State() businessAddress: BusinessAddressFormFields = {
     line1: '',
     line2: '',

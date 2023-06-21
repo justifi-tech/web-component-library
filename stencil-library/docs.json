@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-21T19:18:32",
+  "timestamp": "2023-06-21T19:28:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -506,9 +506,9 @@
       }
     },
     {
-      "filePath": "./src/components/business-form/business-address/business-address.tsx",
+      "filePath": "./src/components/business-form/business-address/business-address-form.tsx",
       "encapsulation": "shadow",
-      "tag": "justifi-business-address",
+      "tag": "justifi-business-address-form",
       "readme": "# justifi-business-address\n\n\n",
       "docs": "",
       "docsTags": [],
@@ -544,7 +544,7 @@
         "select-input"
       ],
       "dependencyGraph": {
-        "justifi-business-address": [
+        "justifi-business-address-form": [
           "text-input",
           "select-input"
         ]
@@ -1493,14 +1493,14 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address"
+        "justifi-business-address-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
           "select-input"
         ],
-        "justifi-business-address": [
+        "justifi-business-address-form": [
           "select-input"
         ]
       }
@@ -1602,14 +1602,14 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address"
+        "justifi-business-address-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
           "text-input"
         ],
-        "justifi-business-address": [
+        "justifi-business-address-form": [
           "text-input"
         ]
       }

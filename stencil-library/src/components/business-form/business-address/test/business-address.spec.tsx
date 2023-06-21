@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessAddress } from '../business-address';
+import { BusinessAddressForm } from '../business-address-form';
 
-describe('business-address', () => {
+describe('business-address-form', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [BusinessAddress],
-      html: `<business-address></business-address>`,
+      components: [BusinessAddressForm],
+      html: `<business-address-form></business-address-form>`,
     });
     expect(page.root).toEqualHtml(`
-      <business-address>
+      <business-address-form>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </business-address>
+      </business-address-form>
     `);
   });
 });
