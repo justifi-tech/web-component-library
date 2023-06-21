@@ -12,7 +12,7 @@ const filterDocsByTag = (tag: string) => {
   return DocsJson.components.filter(comp => tag === comp.tag)[0];
 };
 
-const ExportedParts = ({ tags, component }: { tags: string[]; component: string }) => {
+const ExportedParts = ({ tags, component, compact }: { tags: string[]; component: string, compact: boolean }) => {
   return (
     <ul>
       {tags.map(text => {
@@ -22,7 +22,7 @@ const ExportedParts = ({ tags, component }: { tags: string[]; component: string 
         return (
           <li key={part}>
             <strong>{part}</strong> - {description}
-            <ExportedPartUsage component={component} tag={part} />
+            <ExportedPartUsage component={component} tag={part} compact={compact} />
           </li>
         );
       })}
@@ -30,16 +30,35 @@ const ExportedParts = ({ tags, component }: { tags: string[]; component: string 
   );
 };
 
-const ExportedPartUsage = ({ tag, component }: { tag: string; component: string }) => (
+const ExportedPartUsage = ({ tag, component, compact }: { tag: string; component: string, compact?: boolean }) => (
   <Source
     dark
     language="css"
     code={dedent(`
-      ${component || '*'}::part(${tag}) {
+      ${component || '*'}::part(${tag}) ${!compact ? `{
         color: red;
-      }
+      }` : '{}'}
     `)}
   />
 );
 
-export { extractVersionFromPackage, filterDocsByTag, ExportedParts };
+const SummaryElement = ({ title, children }) =>
+  <details style={{
+    fontFamily: 'var(--bs-font-sans-serif)',
+    color: '#2E3438',
+    fontSize: '14px',
+    cursor: 'pointer'
+  }}>
+    <summary>
+      <b>{title}</b>
+    </summary>
+
+    {children}
+  </details>
+
+export {
+  extractVersionFromPackage,
+  filterDocsByTag,
+  ExportedParts,
+  SummaryElement
+};

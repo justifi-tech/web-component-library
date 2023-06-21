@@ -2,10 +2,13 @@ import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook
 import { filterDocsByTag, ExportedParts } from '../../../storybook-pages/utils.tsx';
 import example from './example.js';
 
-<Meta title="Components/BillingForm" Components="justifi-billing-form" />
+<Meta
+  title="dev/Components/PaymentsList"
+  Components="justifi-payments-list"
+/>
 
 <Title />
-Component to render all the extra fields normally used with either a credit card form or bank account form.
+Component to render a formated list of payments for the requested account.
 
 # Index
 
@@ -24,13 +27,17 @@ Component to render all the extra fields normally used with either a credit card
 
 ---
 
-The `<justifi-billing-form>` can be customized both by overriding `CSS variables` or by using the exported `parts`.
+The `<justifi-payments-list>` can be customized both by overriding `CSS variables` or by using the exported `parts`.
 
 #### The full list of variables that can be overriden is listed in the [Introduction](/docs/introduction--docs#styling-components-with-variables).
 
 ## Exported parts
 
-<ExportedParts component="justifi-billing-form" tags={filterDocsByTag('justifi-billing-form').docsTags.map(part => part.text)} />
+<ExportedParts
+  compact
+  component="justifi-payments-list"
+  tags={filterDocsByTag('justifi-payments-list').docsTags.map(part => part.text)}
+/>
 
 # Example Usage
 

@@ -131,9 +131,20 @@ export namespace Components {
         "paymentMethodTypes": PaymentMethodTypes[];
         "selectedPaymentMethodType": PaymentMethodTypes;
     }
+    /**
+     * @exportedPart table-head-row: Head row
+     * @exportedPart table-head-cell: Individual head cell
+     * @exportedPart table-body: Body of the table
+     * @exportedPart table-row: Row of the table
+     * @exportedPart table-cell: Individual cell of the table
+     * @exportedPart loading-state-cell: Row for loading state
+     * @exportedPart loading-state-spinner: Spinner element for loading state
+     * @exportedPart error-state: Row for Error state
+     * @exportedPart empty-state: Row for Emtpy state
+     */
     interface JustifiPaymentsList {
         "accountId": string;
-        "auth": { token?: string };
+        "authToken": string;
     }
     interface SelectInput {
         "defaultValue": string;
@@ -248,6 +259,17 @@ declare global {
         prototype: HTMLJustifiPaymentMethodSelectorElement;
         new (): HTMLJustifiPaymentMethodSelectorElement;
     };
+    /**
+     * @exportedPart table-head-row: Head row
+     * @exportedPart table-head-cell: Individual head cell
+     * @exportedPart table-body: Body of the table
+     * @exportedPart table-row: Row of the table
+     * @exportedPart table-cell: Individual cell of the table
+     * @exportedPart loading-state-cell: Row for loading state
+     * @exportedPart loading-state-spinner: Spinner element for loading state
+     * @exportedPart error-state: Row for Error state
+     * @exportedPart empty-state: Row for Emtpy state
+     */
     interface HTMLJustifiPaymentsListElement extends Components.JustifiPaymentsList, HTMLStencilElement {
     }
     var HTMLJustifiPaymentsListElement: {
@@ -396,9 +418,20 @@ declare namespace LocalJSX {
         "paymentMethodTypes"?: PaymentMethodTypes[];
         "selectedPaymentMethodType"?: PaymentMethodTypes;
     }
+    /**
+     * @exportedPart table-head-row: Head row
+     * @exportedPart table-head-cell: Individual head cell
+     * @exportedPart table-body: Body of the table
+     * @exportedPart table-row: Row of the table
+     * @exportedPart table-cell: Individual cell of the table
+     * @exportedPart loading-state-cell: Row for loading state
+     * @exportedPart loading-state-spinner: Spinner element for loading state
+     * @exportedPart error-state: Row for Error state
+     * @exportedPart empty-state: Row for Emtpy state
+     */
     interface JustifiPaymentsList {
         "accountId"?: string;
-        "auth"?: { token?: string };
+        "authToken"?: string;
     }
     interface SelectInput {
         "defaultValue"?: string;
@@ -455,6 +488,17 @@ declare module "@stencil/core" {
             "justifi-payment-form": LocalJSX.JustifiPaymentForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentFormElement>;
             "justifi-payment-method-form": LocalJSX.JustifiPaymentMethodForm & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodFormElement>;
             "justifi-payment-method-selector": LocalJSX.JustifiPaymentMethodSelector & JSXBase.HTMLAttributes<HTMLJustifiPaymentMethodSelectorElement>;
+            /**
+             * @exportedPart table-head-row: Head row
+             * @exportedPart table-head-cell: Individual head cell
+             * @exportedPart table-body: Body of the table
+             * @exportedPart table-row: Row of the table
+             * @exportedPart table-cell: Individual cell of the table
+             * @exportedPart loading-state-cell: Row for loading state
+             * @exportedPart loading-state-spinner: Spinner element for loading state
+             * @exportedPart error-state: Row for Error state
+             * @exportedPart empty-state: Row for Emtpy state
+             */
             "justifi-payments-list": LocalJSX.JustifiPaymentsList & JSXBase.HTMLAttributes<HTMLJustifiPaymentsListElement>;
             "select-input": LocalJSX.SelectInput & JSXBase.HTMLAttributes<HTMLSelectInputElement>;
             "text-input": LocalJSX.TextInput & JSXBase.HTMLAttributes<HTMLTextInputElement>;

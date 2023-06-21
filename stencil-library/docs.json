@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-20T23:18:59",
+  "timestamp": "2023-06-21T14:47:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -1226,7 +1226,44 @@
       "tag": "justifi-payments-list",
       "readme": "# justifi-payments-list\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "exportedPart",
+          "text": "table-head-row: Head row"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-head-cell: Individual head cell"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-body: Body of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-row: Row of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "table-cell: Individual cell of the table"
+        },
+        {
+          "name": "exportedPart",
+          "text": "loading-state-cell: Row for loading state"
+        },
+        {
+          "name": "exportedPart",
+          "text": "loading-state-spinner: Spinner element for loading state"
+        },
+        {
+          "name": "exportedPart",
+          "text": "error-state: Row for Error state"
+        },
+        {
+          "name": "exportedPart",
+          "text": "empty-state: Row for Emtpy state"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -1246,16 +1283,16 @@
           "required": false
         },
         {
-          "name": "auth",
-          "type": "{ token?: string; }",
+          "name": "authToken",
+          "type": "string",
           "mutable": false,
+          "attr": "auth-token",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "{}",
           "values": [
             {
-              "type": "{ token?: string; }"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -1267,7 +1304,44 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "empty-state",
+          "docs": ""
+        },
+        {
+          "name": "error-state",
+          "docs": ""
+        },
+        {
+          "name": "loading-state-cell",
+          "docs": ""
+        },
+        {
+          "name": "loading-state-spinner",
+          "docs": ""
+        },
+        {
+          "name": "table-body",
+          "docs": ""
+        },
+        {
+          "name": "table-cell",
+          "docs": ""
+        },
+        {
+          "name": "table-head-cell",
+          "docs": ""
+        },
+        {
+          "name": "table-head-row",
+          "docs": ""
+        },
+        {
+          "name": "table-row",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
