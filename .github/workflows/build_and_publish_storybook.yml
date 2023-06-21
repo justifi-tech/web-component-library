@@ -30,7 +30,7 @@ jobs:
         echo "::group::Build"
         rm -rf node_modules
         yarn install --frozen-lockfile
-        yarn build
+        yarn build:prod
         yarn build-storybook
         echo "::endgroup::"
 
