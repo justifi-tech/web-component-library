@@ -9,7 +9,8 @@ import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
    * @exportedPart table-body: Body of the table
    * @exportedPart table-row: Row of the table
    * @exportedPart table-cell: Individual cell of the table
-   * @exportedPart loading-state: Row for loading state
+   * @exportedPart loading-state-cell: Row for loading state
+   * @exportedPart loading-state-spinner: Spinner element for loading state
    * @exportedPart error-state: Row for Error state
    * @exportedPart empty-state: Row for Emtpy state
    *
@@ -77,8 +78,8 @@ export class PaymentsList {
 
   loadingState = (
     <tr>
-      <td part="loading-state" colSpan={8} style={{ textAlign: 'center' }}>
-        <div class="spinner-border" role="status">
+      <td part="loading-state-cell" colSpan={8} style={{ textAlign: 'center' }}>
+        <div part="loading-state-spinner" class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </td>
@@ -89,8 +90,8 @@ export class PaymentsList {
     return (
       <Host exportparts="
         table-head-row,table-head-cell,table-body,
-        loading-state,error-state,empty-state,
-        table-row, table-cell
+        loading-state-cell,loading-state-spinner,error-state,
+        empty-state,table-row,table-cell
       ">
         <table class="table">
           <thead>

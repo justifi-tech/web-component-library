@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-15T16:13:39",
+  "timestamp": "2023-06-21T14:47:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -1065,7 +1065,11 @@
         },
         {
           "name": "exportedPart",
-          "text": "loading-state: Row for loading state"
+          "text": "loading-state-cell: Row for loading state"
+        },
+        {
+          "name": "exportedPart",
+          "text": "loading-state-spinner: Spinner element for loading state"
         },
         {
           "name": "exportedPart",
@@ -1126,7 +1130,11 @@
           "docs": ""
         },
         {
-          "name": "loading-state",
+          "name": "loading-state-cell",
+          "docs": ""
+        },
+        {
+          "name": "loading-state-spinner",
           "docs": ""
         },
         {
