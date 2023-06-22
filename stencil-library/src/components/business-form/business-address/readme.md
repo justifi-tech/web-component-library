@@ -22,15 +22,15 @@ Type: `Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
 
 ### Depends on
 
-- [text-input](../text-input)
-- [select-input](../select-input)
+- [text-input](../../text-input)
+- [select-input](../../select-input)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-address --> text-input
-  justifi-business-address --> select-input
-  style justifi-business-address fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-address-form --> text-input
+  justifi-business-address-form --> select-input
+  style justifi-business-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

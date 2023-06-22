@@ -10,12 +10,15 @@
 </head>
 
 <body>
-  <justifi-business-info auth-token="" business-id=""></justifi-business-info>
+  <justifi-business-address-form></justifi-business-address-form>
+  <button id="submit">Submit</button>
   <script>
     (() => {
-      const businessInfoElement = document.querySelector('justifi-business-info');
-      businessInfoElement.addEventListener('submitted', async (data) => {
-        console.log(data);
+      const businessAddressForm = document.querySelector('justifi-business-address-form');
+      const submitButton = document.getElementById('submit');
+      submitButton.addEventListener('click', async () => {
+        const form = await businessAddressForm.submit();
+        console.log(form);
       });
     })()
   </script>
