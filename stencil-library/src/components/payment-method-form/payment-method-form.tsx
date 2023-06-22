@@ -92,6 +92,11 @@ export class PaymentMethodForm {
     return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
   }
 
+  @Method()
+  async resize(): Promise<any> {
+    this.postMessage(MessageEventType[this.paymentMethodFormType].resize);
+  }
+
   private composeQueryParams(values: string[]) {
     const queryParams = values.map(value => {
       if (value === values[0]) {
