@@ -153,13 +153,13 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ## Methods
 
-### `resize() => Promise<{ isValid: boolean; }>`
+### `resize() => Promise<void>`
 
 Manually resizes the iframe to fit the contents of the iframe
 
 #### Returns
 
-Type: `Promise<{ isValid: boolean; }>`
+Type: `Promise<void>`
 
 
 
