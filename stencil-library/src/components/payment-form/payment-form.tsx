@@ -70,6 +70,7 @@ export class PaymentForm {
     const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
 
     this.submitted.emit(tokenizeResponse);
+    this.isLoading = false;
   }
 
   render() {
@@ -106,7 +107,7 @@ export class PaymentForm {
             <button
               type="submit"
               onClick={event => this.submit(event)}
-              disabled={!this.submitButtonEnabled}
+              disabled={!this.submitButtonEnabled || this.isLoading}
               class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
             >
               {
