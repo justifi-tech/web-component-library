@@ -80,7 +80,7 @@ export class BankAccountForm {
   *  Manually resizes the iframe to fit the contents of the iframe
   */
   @Method()
-  async resize(): Promise<{ isValid: boolean }> {
+  async resize(): Promise<void> {
     if (!this.childRef) {
       throw new Error('Cannot call validate');
     }

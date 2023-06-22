@@ -24,7 +24,7 @@ export namespace Components {
         /**
           * Manually resizes the iframe to fit the contents of the iframe
          */
-        "resize": () => Promise<{ isValid: boolean; }>;
+        "resize": () => Promise<void>;
         /**
           * Makes a tokenization request to the iframe
          */
@@ -84,7 +84,7 @@ export namespace Components {
         /**
           * Manually resizes the iframe to fit the contents of the iframe
          */
-        "resize": () => Promise<{ isValid: boolean; }>;
+        "resize": () => Promise<void>;
         /**
           * Boolean indicating if the Card Form should render in a single line
          */

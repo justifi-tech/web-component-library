@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-22T17:25:03",
+  "timestamp": "2023-06-22T18:26:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -69,10 +69,10 @@
         {
           "name": "resize",
           "returns": {
-            "type": "Promise<{ isValid: boolean; }>",
+            "type": "Promise<void>",
             "docs": ""
           },
-          "signature": "resize() => Promise<{ isValid: boolean; }>",
+          "signature": "resize() => Promise<void>",
           "parameters": [],
           "docs": "Manually resizes the iframe to fit the contents of the iframe",
           "docsTags": []
@@ -502,10 +502,10 @@
         {
           "name": "resize",
           "returns": {
-            "type": "Promise<{ isValid: boolean; }>",
+            "type": "Promise<void>",
             "docs": ""
           },
-          "signature": "resize() => Promise<{ isValid: boolean; }>",
+          "signature": "resize() => Promise<void>",
           "parameters": [],
           "docs": "Manually resizes the iframe to fit the contents of the iframe",
           "docsTags": []
