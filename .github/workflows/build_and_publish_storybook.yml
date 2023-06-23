@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "main"
+      - 'main'
     paths:
       - stencil-library/**
 jobs:
@@ -12,6 +12,8 @@ jobs:
       name: github-pages
       url: ${{ steps.build-publish.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
     # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
     permissions:
       contents: read
@@ -21,26 +23,26 @@ jobs:
       run:
         working-directory: stencil-library
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: 'Build'
-      shell: bash
-      run: |
-        echo "::group::Build"
-        rm -rf node_modules
-        yarn install --frozen-lockfile
-        yarn build:prod
-        yarn build-storybook
-        echo "::endgroup::"
+      - name: 'Build'
+        shell: bash
+        run: |
+          echo "::group::Build"
+          rm -rf node_modules
+          yarn install --frozen-lockfile
+          yarn build:prod
+          yarn build-storybook
+          echo "::endgroup::"
 
-    - name: 'upload'
-      uses: actions/upload-pages-artifact@v1.0.8
-      with: 
-        path: ./docs
-        
-    - id: deploy
-      name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v2
-      with:
-        token: ${{ github.token }}
+      - name: 'upload'
+        uses: actions/upload-pages-artifact@v1.0.8
+        with:
+          path: ./docs
+
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          token: ${{ github.token }}
