@@ -8,9 +8,15 @@
 
 # Environment Variables
 
-This project uses environment variables to manage configurations for different environments like development, staging, and production. These variables are stored in `.env.dev`, `.env.staging`, and `.env.prod` files respectively.
+This project uses environment variables to manage configurations for different environments like development, staging, and production. These variables were previously stored in `.env.dev`, `.env.staging`, and `.env.prod` files respectively, but for security and configuration management reasons, these files are no longer included in the repository and have been added to the `.gitignore` file.
 
-Before building the project, make sure to set the correct environment using the `NODE_ENV` variable.
+To setup the project locally, you will need to create these `.env` files manually in the project root folder. Here is a basic setup for the `.env.dev` file (for the development environment):
+
+`IFRAME_ORIGIN=value`
+
+Repeat this process to create `.env.staging` and `.env.prod` for staging and production environments, respectively.
+
+Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. For example, if you're working in the development environment, you should set `NODE_ENV=dev`.
 
 # For contributors:
 
