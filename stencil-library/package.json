@@ -22,8 +22,10 @@
   ],
   "scripts": {
     "auto-changelog": "auto-changelog",
-    "build": "stencil build --docs",
-    "start": "concurrently -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
+    "build:dev": "NODE_ENV=dev stencil build --docs",
+    "build:staging": "NODE_ENV=staging stencil build --docs",
+    "build:prod": "NODE_ENV=prod stencil build --docs",
+    "start": "NODE_ENV=dev concurrently -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
     "start-stencil": "stencil build --watch --serve --no-open",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
@@ -73,6 +75,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "release-it": "^15.6.0",
+    "rollup-plugin-replace": "^2.2.0",
     "storybook": "^7.0.4"
   },
   "license": "MIT"
