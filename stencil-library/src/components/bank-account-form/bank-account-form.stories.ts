@@ -1,6 +1,6 @@
 const isDev = process.env.NODE_ENV === 'development';
 const CSSVars = `
---jfi-layout-padding: 0;
+--jfi-layout-padding: 4px;
 --jfi-layout-form-control-spacing-x: .5rem;
 --jfi-layout-form-control-spacing-y: 1rem;
 --jfi-form-label-font-weight: 700;
@@ -18,6 +18,7 @@ const CSSVars = `
 --jfi-form-control-border-right-width: 0;
 --jfi-form-control-border-radius: 4px 4px 0 0;
 --jfi-form-control-border-style: solid;
+--jfi-form-control-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 --jfi-form-control-box-shadow-focus: none;
 --jfi-form-control-box-shadow-error-focus: none;
 --jfi-form-control-border-style: solid;
