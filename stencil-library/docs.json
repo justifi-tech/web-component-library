@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-22T23:03:40",
+  "timestamp": "2023-06-27T18:03:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -66,6 +66,17 @@
         }
       ],
       "methods": [
+        {
+          "name": "resize",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "resize() => Promise<void>",
+          "parameters": [],
+          "docs": "Manually resizes the iframe to fit the contents of the iframe",
+          "docsTags": []
+        },
         {
           "name": "tokenize",
           "returns": {
@@ -489,6 +500,17 @@
       ],
       "methods": [
         {
+          "name": "resize",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "resize() => Promise<void>",
+          "parameters": [],
+          "docs": "Manually resizes the iframe to fit the contents of the iframe",
+          "docsTags": []
+        },
+        {
           "name": "tokenize",
           "returns": {
             "type": "Promise<CreatePaymentMethodResponse>",
@@ -867,6 +889,17 @@
         }
       ],
       "methods": [
+        {
+          "name": "resize",
+          "returns": {
+            "type": "Promise<any>",
+            "docs": ""
+          },
+          "signature": "resize() => Promise<any>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
         {
           "name": "tokenize",
           "returns": {

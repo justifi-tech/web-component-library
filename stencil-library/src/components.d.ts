@@ -22,6 +22,10 @@ export namespace Components {
          */
         "iframeOrigin"?: string;
         /**
+          * Manually resizes the iframe to fit the contents of the iframe
+         */
+        "resize": () => Promise<void>;
+        /**
           * Makes a tokenization request to the iframe
          */
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>;
@@ -78,6 +82,10 @@ export namespace Components {
          */
         "iframeOrigin"?: string;
         /**
+          * Manually resizes the iframe to fit the contents of the iframe
+         */
+        "resize": () => Promise<void>;
+        /**
           * Boolean indicating if the Card Form should render in a single line
          */
         "singleLine": boolean;
@@ -109,6 +117,7 @@ export namespace Components {
         "iframeOrigin"?: string;
         "paymentMethodFormType": 'card' | 'bankAccount';
         "paymentMethodFormValidationMode": 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+        "resize": () => Promise<any>;
         "singleLine": boolean;
         "tokenize": (clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>;
         "validate": () => Promise<any>;

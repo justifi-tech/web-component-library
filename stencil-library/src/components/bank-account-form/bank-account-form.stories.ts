@@ -68,16 +68,23 @@ const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, 
   const tokenizeResponse = await bankForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
 };
+const handleResizeClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
+  await bankForm.resize();
+};
 const handleReady = () => {
   console.log('bank account form is ready');
   const bankForm = document.querySelector('justifi-bank-account-form') as HTMLJustifiBankAccountFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
+  const resizeBtn = document.querySelector('#resize-btn');
   validateBtn?.addEventListener('click', () => {
     handleValidateClick(bankForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
     handleTokenizeClick(bankForm, {});
+  });
+  resizeBtn?.addEventListener('click', () => {
+    handleResizeClick(bankForm);
   });
 };
 
@@ -99,6 +106,7 @@ const FormButtons = `
   <div class="button-bar">
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
+    <button id="resize-btn">Resize</button>
   </div>
 `;
 
