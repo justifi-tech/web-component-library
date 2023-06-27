@@ -18,6 +18,7 @@ export class PaymentForm {
   @Prop() submitButtonText?: string;
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
   @State() submitButtonEnabled: boolean = true;
+  @State() isLoading: boolean = false;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
 
@@ -62,13 +63,14 @@ export class PaymentForm {
 
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
-    this.submitButtonEnabled = false;
+    this.isLoading = true;
 
     const billingFormFieldValues = await this.billingFormRef.getValues();
     const paymentMethodData = { email: this.email, ...billingFormFieldValues };
     const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
 
     this.submitted.emit(tokenizeResponse);
+    this.isLoading = false;
   }
 
   render() {
@@ -102,8 +104,19 @@ export class PaymentForm {
             />
           </div>
           <div class="col-12">
-            <button onClick={event => this.submit(event)} disabled={!this.submitButtonEnabled} type="submit" class="btn btn-primary jfi-submit-button">
-              {this.submitButtonText || 'Submit'}
+            <button
+              type="submit"
+              onClick={event => this.submit(event)}
+              disabled={!this.submitButtonEnabled || this.isLoading}
+              class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+            >
+              {
+                this.isLoading ?
+                <div class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div> :
+                this.submitButtonText || 'Submit'
+              }
             </button>
           </div>
         </form>

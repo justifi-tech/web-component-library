@@ -1,6 +1,10 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
+import dotenv from 'dotenv';
+import replace from 'rollup-plugin-replace';
+
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 export const config: Config = {
   namespace: 'webcomponents',
@@ -14,9 +18,14 @@ export const config: Config = {
         './node_modules/bootstrap/scss/_mixins.scss',
         './node_modules/bootstrap/scss/_utilities.scss',
         './node_modules/bootstrap/scss/_root.scss',
+        './node_modules/bootstrap/scss/_spinners.scss',
+        './node_modules/bootstrap/scss/_helpers.scss',
         './src/styles/_mixins.scss',
       ],
       includePaths: ['./node_modules/bootstrap/scss/'],
+    }),
+    replace({
+      'process.env.IFRAME_ORIGIN': JSON.stringify(process.env.IFRAME_ORIGIN),
     }),
   ],
   outputTargets: [
