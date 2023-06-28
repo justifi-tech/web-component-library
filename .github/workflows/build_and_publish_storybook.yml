@@ -32,7 +32,7 @@ jobs:
           echo "::group::Build"
           rm -rf node_modules
           yarn install --frozen-lockfile
-          yarn build:prod
+          NODE_ENV=prod IFRAME_ORIGIN=$IFRAME_ORIGIN yarn build --docs
           yarn build-storybook
           echo "::endgroup::"
 
