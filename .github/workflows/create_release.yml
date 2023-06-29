@@ -45,7 +45,7 @@ jobs:
       - name: Install stencil-library
         run: yarn --cwd stencil-library/ install
       - name: Compile
-        run: yarn --cwd stencil-library/ build
+        run: yarn --cwd stencil-library/ build:prod
       - name: Link Stencil
         run: yarn --cwd stencil-library/ link
 
@@ -127,7 +127,7 @@ jobs:
       - name: Install stencil-library
         run: yarn --cwd stencil-library/ install
       - name: Compile
-        run: yarn --cwd stencil-library/ build
+        run: yarn --cwd stencil-library/ build:prod
       - name: Link Stencil
         run: yarn --cwd stencil-library/ link
       - name: Publish to GitHub Registry

@@ -86,6 +86,9 @@ const CSSVars = () => <Source
   --jfi-submit-button-border-color-active
   --jfi-submit-button-width
   --jfi-submit-button-box-shadow
+  --jfi-submit-button-color-loading
+  --jfi-submit-button-background-color-loading
+  --jfi-submit-button-border-color-loading
   `}
 />
 
