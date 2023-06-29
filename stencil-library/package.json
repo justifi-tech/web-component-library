@@ -24,7 +24,7 @@
     "auto-changelog": "auto-changelog",
     "build:dev": "NODE_ENV=dev stencil build --docs",
     "build:staging": "NODE_ENV=staging stencil build --docs",
-    "build": "stencil build --docs",
+    "build:prod": "NODE_ENV=prod stencil build --docs",
     "start": "NODE_ENV=dev concurrently -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
     "start-stencil": "stencil build --watch --serve --no-open",
     "test": "stencil test --spec",
