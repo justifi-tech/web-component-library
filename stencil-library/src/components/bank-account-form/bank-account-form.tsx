@@ -26,6 +26,12 @@ export class BankAccountForm {
   @Event() bankAccountFormReady: EventEmitter<any>;
 
   /**
+   * Triggered when iframe has loaded
+   * @event justifi-bank-account-form#ready
+   */
+  @Event() ready: EventEmitter<any>;
+
+  /**
    * Triggered when the tokenize method is called on the component
    * @event justifi-bank-account-form#bankAccountFormTokenize
    */
@@ -39,16 +45,24 @@ export class BankAccountForm {
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
+    console.warn(`The 'bankAccountFormReady' event is deprecated in the next release and will be renamed to 'ready'`);
     this.bankAccountFormReady.emit(event);
+    this.ready.emit(event);
   }
 
   @Listen('paymentMethodFormTokenize')
   tokenizeHandler(event: { data: any }) {
+    console.warn(
+      `The 'bankAccountFormTokenize' event is deprecated in the next release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+    );
     this.bankAccountFormTokenize.emit(event);
   }
 
   @Listen('paymentMethodFormValidate')
   validateHandler(event: { data: any }) {
+    console.warn(
+      `The 'bankAccountFormValidate' event is deprecated in the next release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+    );
     this.bankAccountFormValidate.emit(event);
   }
 
@@ -77,8 +91,8 @@ export class BankAccountForm {
   }
 
   /**
-  *  Manually resizes the iframe to fit the contents of the iframe
-  */
+   *  Manually resizes the iframe to fit the contents of the iframe
+   */
   @Method()
   async resize(): Promise<void> {
     if (!this.childRef) {
