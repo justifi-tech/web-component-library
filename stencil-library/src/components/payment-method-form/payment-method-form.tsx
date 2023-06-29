@@ -92,6 +92,11 @@ export class PaymentMethodForm {
     return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
   }
 
+  @Method()
+  async resize(): Promise<any> {
+    this.postMessage(MessageEventType[this.paymentMethodFormType].resize);
+  }
+
   private composeQueryParams(values: string[]) {
     const queryParams = values.map(value => {
       if (value === values[0]) {
@@ -104,8 +109,7 @@ export class PaymentMethodForm {
   }
 
   private getIframeSrc() {
-    const productionIframeOrigin = 'https://js.justifi.ai/v2';
-    const iframeOrigin = this.iframeOrigin || productionIframeOrigin;
+    const iframeOrigin = this.iframeOrigin || process.env.IFRAME_ORIGIN;
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
     if (this.paymentMethodFormValidationMode) {

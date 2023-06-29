@@ -1,42 +1,61 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { BankAccountForm } from '../bank-account-form';
+import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 
 describe('justifi-bank-account-form', () => {
-  it('renders with justifi-payment-method-form as a child element', async () => {
+  it('should pass validationMode prop to justifi-payment-method-form', async () => {
     const page = await newSpecPage({
       components: [BankAccountForm],
-      html: `<justifi-bank-account-form></justifi-bank-account-form>`,
+      html: '<justifi-bank-account-form validation-mode="onChange" />',
     });
-    expect(page.root).toEqualHtml(`
-      <justifi-bank-account-form>
-        <justifi-payment-method-form payment-method-form-type="bankAccount" payment-method-form-validation-strategy="onSubmit"></justifi-payment-method-form>
-      </justifi-bank-account-form>
-    `);
+    const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
+    expect(paymentMethodForm.getAttribute('payment-method-form-validation-mode')).toBe('onChange');
   });
 
-  // it('passes iframe-origin down to justifi-payment-method-form', async () => {
-  //   const page = await newSpecPage({
-  //     components: [BankAccountForm],
-  //     html: `
-  //     <justifi-bank-account-form iframe-origin="https://www.test.com"></justifi-bank-account-form>
-  //     `,
-  //   });
-  //   expect(page.root).toEqualHtml(`
-  //     <justifi-bank-account-form iframe-origin="https://www.test.com">
-  //       <justifi-payment-method-form iframe-origin="https://www.test.com"></justifi-payment-method-form>
-  //     </justifi-bank-account-form>
-  //   `);
-  // });
+  it('should pass iframeOrigin prop to justifi-payment-method-form', async () => {
+    const page = await newSpecPage({
+      components: [BankAccountForm],
+      html: '<justifi-bank-account-form iframe-origin="https://example.com" />',
+    });
 
-  it('has a tokenize method which calls tokenize on justifi-payment-method-form', async () => {
-    const bankAccountForm = new BankAccountForm();
-    expect(bankAccountForm.tokenize).toBeDefined();
+    const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
+    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe('https://example.com');
+  });
 
-    // mock childRef
-    (bankAccountForm as any).childRef = { tokenize: () => {} };
-    const childRefTokenizeSpy = jest.spyOn((bankAccountForm as any).childRef, 'tokenize');
+  it('should call the PaymentMethodForm validate method when invoked from the BankAccountForm component', async () => {
+    const page = await newSpecPage({
+      components: [BankAccountForm, PaymentMethodForm],
+      html: '<justifi-bank-account-form></justifi-bank-account-form>',
+    });
 
-    bankAccountForm.tokenize('clientId', { paymentMethod: 'metadata' }, 'accountId');
-    expect(childRefTokenizeSpy).toHaveBeenCalled();
+    const component = page.rootInstance;
+
+    const validateMock = jest.fn();
+    component.childRef = { validate: validateMock } as any;
+
+    await component.validate();
+
+    expect(validateMock).toHaveBeenCalled();
+  });
+
+  it('should call the PaymentMethodForm tokenize method with the right arguments when invoked from the BankAccountForm component', async () => {
+    const page = await newSpecPage({
+      components: [BankAccountForm, PaymentMethodForm],
+      html: '<justifi-bank-account-form></justifi-bank-account-form>',
+    });
+
+    const component = page.rootInstance;
+
+    const tokenizeMock = jest.fn();
+    component.childRef = { tokenize: tokenizeMock } as any;
+
+    const clientId = 'clientId';
+    const paymentMethodMetadata = { paymentMethodType: 'bankAccount' };
+    const account = 'account';
+    const tokenizeArgs = [clientId, paymentMethodMetadata, account];
+
+    await component.tokenize(...tokenizeArgs);
+
+    expect(tokenizeMock).toHaveBeenCalledWith(...tokenizeArgs);
   });
 });

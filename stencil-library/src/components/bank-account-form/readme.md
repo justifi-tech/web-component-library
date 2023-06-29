@@ -22,6 +22,16 @@
 
 ## Methods
 
+### `resize() => Promise<void>`
+
+Manually resizes the iframe to fit the contents of the iframe
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
 
 Makes a tokenization request to the iframe

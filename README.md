@@ -6,6 +6,18 @@
 - React component library
   - Docs for this are not in place yet, but feel free to check out [sample-react-app.zip](https://github.com/justifi-tech/web-component-library/files/11125233/sample-react-app.zip)
 
+# Environment Variables
+
+This project uses environment variables to manage configurations for different environments like development, staging, and production. These variables were previously stored in `.env.dev`, `.env.staging`, and `.env.prod` files respectively, but for security and configuration management reasons, these files are no longer included in the repository and have been added to the `.gitignore` file.
+
+To setup the project locally, you will need to create these `.env` files manually in the project root folder. Here is a basic setup for the `.env.dev` file (for the development environment):
+
+`IFRAME_ORIGIN=value`
+
+Repeat this process to create `.env.staging` and `.env.prod` for staging and production environments, respectively.
+
+Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. For example, if you're working in the development environment, you should set `NODE_ENV=dev`.
+
 # For contributors:
 
 Follow the semantic versioning guidelines found [here](https://semver.org/)
@@ -24,6 +36,14 @@ To do this, do the following:
 This project uses the Stencil testing framework for unit and end-to-end (E2E) tests, along with Storybook for UI component testing and auto-changelog to maintain a changelog based on git metadata.
 
 Below are commands used for various testing and development scenarios.
+
+## Build
+
+Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. The build scripts for different environments are:
+
+- `yarn run build:dev` for development environment.
+- `yarn run build:staging` for staging environment.
+- `yarn run build:prod` for production environment.
 
 ## test
 
