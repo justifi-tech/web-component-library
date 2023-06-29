@@ -34,7 +34,7 @@ export class BusinessRepresentative {
   };
   @State() representativeFieldsErrors: any = {};
 
-  private addressFormRef?: HTMLJustifiBusinessAddressElement;
+  private addressFormRef?: HTMLJustifiBusinessAddressFormElement;
 
   private toggleIsOwner() {
     this.representativeFields.is_owner = !this.representativeFields.is_owner
