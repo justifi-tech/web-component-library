@@ -25,8 +25,14 @@ class FormController {
     return this.controller;
   };
 
+  getFormValue(obj, name: string) {
+    const path = name.split('.');
+    return path.reduce((acc, part) => acc && acc[part], obj);
+  }
+
   register = (name) => {
-    const defaultValue = this.defaultValues[name];
+    const defaultValue = this.getFormValue(this.defaultValues, name);
+
     const onInput = (e) => {
       return this.controller.values[name] = e.target.value;
     };

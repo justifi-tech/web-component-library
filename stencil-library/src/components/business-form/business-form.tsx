@@ -19,7 +19,7 @@ export class BusinessForm {
   @Prop() businessId?: string;
   @State() business = new Business();
   @State() businessFormFieldsErrors: any = {};
-  @State() form = new FormController({}, BusinessFormSchema);
+  @State() form = new FormController({ representative: { name: 'jake' } }, BusinessFormSchema);
 
   private endpoint: string = 'entities/business';
 
@@ -124,6 +124,9 @@ export class BusinessForm {
                 label="Phone"
                 {...this.form.register('phone')}
                 error={this.form.errors?.phone} />
+            </div>
+            <div class="col-12">
+              <justifi-business-representative form={this.form}></justifi-business-representative>
             </div>
             <div class="col-12">
               <button

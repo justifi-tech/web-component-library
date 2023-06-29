@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-29T16:41:38",
+  "timestamp": "2023-06-29T21:43:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -106,11 +106,15 @@
         }
       ],
       "dependents": [
-        "justifi-business-form"
+        "justifi-business-form",
+        "justifi-business-representative"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-business-form": [
+          "form-control-select"
+        ],
+        "justifi-business-representative": [
           "form-control-select"
         ]
       }
@@ -636,10 +640,16 @@
       "dependents": [],
       "dependencies": [
         "form-control-text",
-        "form-control-select"
+        "form-control-select",
+        "justifi-business-representative"
       ],
       "dependencyGraph": {
         "justifi-business-form": [
+          "form-control-text",
+          "form-control-select",
+          "justifi-business-representative"
+        ],
+        "justifi-business-representative": [
           "form-control-text",
           "form-control-select"
         ]
@@ -668,44 +678,11 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "representative",
-          "type": "IBusinessRepresentative",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "IBusinessRepresentative"
-            }
-          ],
-          "optional": true,
-          "required": false
         }
       ],
-      "methods": [
-        {
-          "name": "getForm",
-          "returns": {
-            "type": "Promise<{ isValid: boolean; values: IBusinessRepresentative; }>",
-            "docs": ""
-          },
-          "signature": "getForm() => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [],
-      "listeners": [
-        {
-          "event": "fieldReceivedInput",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [
@@ -714,17 +691,20 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "justifi-business-form"
+      ],
       "dependencies": [
         "form-control-text",
-        "select-input",
-        "text-input"
+        "form-control-select"
       ],
       "dependencyGraph": {
         "justifi-business-representative": [
           "form-control-text",
-          "select-input",
-          "text-input"
+          "form-control-select"
+        ],
+        "justifi-business-form": [
+          "justifi-business-representative"
         ]
       }
     },
@@ -1580,8 +1560,7 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address-form",
-        "justifi-business-representative"
+        "justifi-business-address-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1589,9 +1568,6 @@
           "select-input"
         ],
         "justifi-business-address-form": [
-          "select-input"
-        ],
-        "justifi-business-representative": [
           "select-input"
         ]
       }
@@ -1693,8 +1669,7 @@
       ],
       "dependents": [
         "justifi-billing-form",
-        "justifi-business-address-form",
-        "justifi-business-representative"
+        "justifi-business-address-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1702,9 +1677,6 @@
           "text-input"
         ],
         "justifi-business-address-form": [
-          "text-input"
-        ],
-        "justifi-business-representative": [
           "text-input"
         ]
       }

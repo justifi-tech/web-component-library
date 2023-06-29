@@ -9,13 +9,11 @@ import { CreatePaymentMethodResponse } from "./components/payment-method-form/pa
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
 import { ValidationError } from "yup";
 import { BusinessAddressFormFields } from "./components/business-form/business-address/business-address-form-schema";
-import { IBusinessRepresentative } from "./components/business-form/business-representative/business-representative-schema";
 import { PaymentMethodTypes } from "./api";
 export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 export { BillingFormFields } from "./components/billing-form/billing-form-schema";
 export { ValidationError } from "yup";
 export { BusinessAddressFormFields } from "./components/business-form/business-address/business-address-form-schema";
-export { IBusinessRepresentative } from "./components/business-form/business-representative/business-representative-schema";
 export { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface FormControlSelect {
@@ -94,8 +92,6 @@ export namespace Components {
     }
     interface JustifiBusinessRepresentative {
         "form": FormController;
-        "getForm": () => Promise<{ isValid: boolean; values: IBusinessRepresentative; }>;
-        "representative"?: IBusinessRepresentative;
     }
     interface JustifiCardForm {
         /**
@@ -391,7 +387,6 @@ declare namespace LocalJSX {
     }
     interface JustifiBusinessRepresentative {
         "form"?: FormController;
-        "representative"?: IBusinessRepresentative;
     }
     interface JustifiCardForm {
         /**

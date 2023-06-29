@@ -38,7 +38,7 @@ export class BusinessRepresentative {
 
             <div class="col-12">
               <form-control-text
-                {...this.form.register('representative.name')}
+                {...this.form.register('representative.email')}
                 label="Email"
                 error={this.form?.errors?.representative?.email} />
             </div>
