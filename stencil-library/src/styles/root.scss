@@ -67,6 +67,9 @@
   --jfi-submit-button-border-color-active: var(--jfi-primary-color);
   --jfi-submit-button-width: auto;
   --jfi-submit-button-box-shadow: none;
+  --jfi-submit-button-color-loading: white;
+  --jfi-submit-button-background-color-loading: var(--jfi-primary-color);
+  --jfi-submit-button-border-color-loading: var(--jfi-primary-color);
 
   /* form label */
   --jfi-form-label-color: #{$body-color};

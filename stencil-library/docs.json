@@ -286,6 +286,17 @@
       ],
       "methods": [
         {
+          "name": "resize",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "resize() => Promise<void>",
+          "parameters": [],
+          "docs": "Manually resizes the iframe to fit the contents of the iframe",
+          "docsTags": []
+        },
+        {
           "name": "tokenize",
           "returns": {
             "type": "Promise<CreatePaymentMethodResponse>",
@@ -708,6 +719,17 @@
       ],
       "methods": [
         {
+          "name": "resize",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "resize() => Promise<void>",
+          "parameters": [],
+          "docs": "Manually resizes the iframe to fit the contents of the iframe",
+          "docsTags": []
+        },
+        {
           "name": "tokenize",
           "returns": {
             "type": "Promise<CreatePaymentMethodResponse>",
@@ -1086,6 +1108,17 @@
         }
       ],
       "methods": [
+        {
+          "name": "resize",
+          "returns": {
+            "type": "Promise<any>",
+            "docs": ""
+          },
+          "signature": "resize() => Promise<any>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
         {
           "name": "tokenize",
           "returns": {

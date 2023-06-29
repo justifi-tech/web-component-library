@@ -35,16 +35,23 @@ const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, payment
   const tokenizeResponse = await cardForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
 };
+const handleResizeClick = async (cardForm: HTMLJustifiCardFormElement) => {
+  await cardForm.resize();
+};
 const handleReady = () => {
   console.log('card form is ready');
   const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
+  const resizeBtn = document.querySelector('#resize-btn');
   validateBtn?.addEventListener('click', () => {
     handleValidateClick(cardForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
     handleTokenizeClick(cardForm, {});
+  });
+  resizeBtn?.addEventListener('click', () => {
+    handleResizeClick(cardForm);
   });
 };
 
@@ -68,6 +75,7 @@ const FormButtons = `
   <div class="button-bar">
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
+    <button id="resize-btn">Resize</button>
   </div>`;
 
 const Template = (args: CardFormStoryArgs) => {
@@ -103,7 +111,7 @@ SingleLine.args = {
 };
 
 const styledVariables = `
---jfi-layout-padding: 0;
+  --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: .5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
   --jfi-form-label-font-weight: 700;
@@ -121,6 +129,7 @@ const styledVariables = `
   --jfi-form-control-border-right-width: 0;
   --jfi-form-control-border-radius: 4px 4px 0 0;
   --jfi-form-control-border-style: solid;
+  --jfi-form-control-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   --jfi-form-control-box-shadow-focus: none;
   --jfi-form-control-box-shadow-error-focus: none;
   --jfi-form-control-border-style: solid;
