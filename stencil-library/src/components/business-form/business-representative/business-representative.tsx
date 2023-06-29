@@ -1,6 +1,4 @@
-import { Component, Host, h, State, Method, Listen, Prop } from '@stencil/core';
-import { ValidationError } from 'yup';
-import RepresentativeFormSchema, { IBusinessRepresentative } from './business-representative-schema';
+import { Component, Host, h, Prop } from '@stencil/core';
 import FormController from '../../form/form-controller';
 
 
@@ -10,73 +8,11 @@ import FormController from '../../form/form-controller';
   shadow: true,
 })
 export class BusinessRepresentative {
-  @Prop() representative?: IBusinessRepresentative;
   @Prop() form: FormController;
-  @State() representativeFields: IBusinessRepresentative = {
-    name: '',
-    title: '',
-    email: '',
-    phone: '',
-    dob_day: '',
-    dob_month: '',
-    dob_year: '',
-    identification_number: '',
-    is_owner: false,
-    metadata: {},
-    address: {
-      line1: '',
-      line2: '',
-      city: '',
-      state: '',
-      postal_code: '',
-      country: ''
-    }
-  };
-  @State() representativeFieldsErrors: any = {};
 
-  private addressFormRef?: HTMLJustifiBusinessAddressFormElement;
-
-  private toggleIsOwner() {
-    this.representativeFields.is_owner = !this.representativeFields.is_owner
-  }
-
-  componentDidMount() {
-    this.representativeFields = this.representative;
-  }
-
-  @Listen('fieldReceivedInput')
-  setFormValue(event) {
-    const data = event.detail;
-    const billingFieldsClone = { ...this.representativeFields };
-    const splitName = data.name.split('.');
-    if (splitName.length > 1) {
-      billingFieldsClone[splitName[0]][splitName[1]] = data.value;
-    }
-    else if (data.name) {
-      billingFieldsClone[data.name] = data.value;
-    }
-    this.representativeFields = billingFieldsClone;
-  }
-
-  @Method()
-  async getForm(): Promise<{ isValid: boolean, values: IBusinessRepresentative }> {
-    const addressForm = await this.addressFormRef.getForm();
-    const newErrors = {};
-    let isValid: boolean = true;
-
-    try {
-      await RepresentativeFormSchema.validate(this.representativeFields, { abortEarly: false });
-    } catch (err) {
-      isValid = false;
-      err.inner.map((item: ValidationError) => {
-        newErrors[item.path] = item.message;
-      });
-    }
-
-    this.representativeFieldsErrors = newErrors;
-
-    return { isValid: isValid && addressForm.isValid, values: this.representativeFields }
-  }
+  // private toggleIsOwner() {
+  //   this.representativeFields.is_owner = !this.representativeFields.is_owner
+  // }
 
   render() {
     return (
@@ -93,28 +29,25 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-4">
-              <select-input
-                name="title"
+              <form-control-select
+                {...this.form.register('representative.title')}
                 label="Prefix"
                 options={[{ label: 'Mrs.', value: 'Mrs.' }]}
-                defaultValue={this.representativeFields?.title}
-                error={this.representativeFieldsErrors?.title} />
+                error={this.form?.errors?.representative?.title} />
             </div>
 
             <div class="col-12">
-              <text-input
-                name="email"
+              <form-control-text
+                {...this.form.register('representative.name')}
                 label="Email"
-                defaultValue={this.representativeFields?.email}
-                error={this.representativeFieldsErrors?.email} />
+                error={this.form?.errors?.representative?.email} />
             </div>
 
             <div class="col-12">
-              <text-input
-                name="phone"
+              <form-control-text
+                {...this.form.register('representative.phone')}
                 label="Phone"
-                defaultValue={this.representativeFields?.phone}
-                error={this.representativeFieldsErrors?.phone} />
+                error={this.form?.errors?.representative?.phone} />
             </div>
 
             <div class="col-12">
@@ -122,38 +55,34 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-4">
-              <text-input
-                name="dob_day"
+              <form-control-text
+                {...this.form.register('representative.dob_day')}
                 label="Day"
-                defaultValue={this.representativeFields?.dob_day}
-                error={this.representativeFieldsErrors?.dob_day} />
+                error={this.form?.errors?.representative?.dob_day} />
             </div>
 
             <div class="col-4">
-              <text-input
-                name="dob_month"
+              <form-control-text
+                {...this.form.register('representative.dob_month')}
                 label="Month"
-                defaultValue={this.representativeFields?.dob_month}
-                error={this.representativeFieldsErrors?.dob_month} />
+                error={this.form?.errors?.representative?.dob_month} />
             </div>
 
             <div class="col-4">
-              <text-input
-                name="dob_year"
+              <form-control-text
+                {...this.form.register('representative.do_year')}
                 label="Year"
-                defaultValue={this.representativeFields?.dob_year}
-                error={this.representativeFieldsErrors?.dob_year} />
+                error={this.form?.errors?.representative?.dob_year} />
             </div>
 
             <div class="col-12">
-              <text-input
+              <form-control-text
                 name="identification_number"
                 label="EIN/SSN"
-                defaultValue={this.representativeFields?.identification_number}
-                error={this.representativeFieldsErrors?.identification_number} />
+                error={this.form?.errors?.representative?.identification_number} />
             </div>
 
-            <div class="col-12">
+            {/* <div class="col-12">
               <div class="form-check">
                 <input
                   type="checkbox"
@@ -164,10 +93,10 @@ export class BusinessRepresentative {
                   Is this an owner?
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <div class="col-12">
-              <justifi-business-address ref={el => this.addressFormRef = el} />
+              <justifi-business-address />
             </div>
           </div>
         </fieldset>
