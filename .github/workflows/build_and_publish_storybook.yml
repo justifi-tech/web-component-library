@@ -6,11 +6,48 @@ on:
       - 'main'
     paths:
       - stencil-library/**
+  pull_request:
+    branches:
+      - '*'
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run unit tests
+        run: yarn test
+
+      - name: Run end-to-end tests
+        run: yarn test:e2e
+
+      - name: Build and Publish Storybook
+        run: |
+          yarn build:prod
+          yarn build-storybook
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: storybook-artifact
+          path: ./docs
+
   deploy:
+    needs: build
     environment:
       name: github-pages
-      url: ${{ steps.build-publish.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.url }}
     runs-on: ubuntu-latest
     env:
       IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
@@ -19,30 +56,17 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    defaults:
-      run:
-        working-directory: stencil-library
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 'Build'
-        shell: bash
-        run: |
-          echo "::group::Build"
-          rm -rf node_modules
-          yarn install --frozen-lockfile
-          yarn build:prod
-          yarn build-storybook
-          echo "::endgroup::"
-
-      - name: 'upload'
-        uses: actions/upload-pages-artifact@v1.0.8
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
         with:
+          name: storybook-artifact
           path: ./docs
 
-      - id: deploy
-        name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
           token: ${{ github.token }}
