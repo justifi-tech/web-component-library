@@ -62,3 +62,44 @@ Runs unit tests in watch mode. Good for development.
 Runs end-to-end tests using the Stencil's E2E testing.
 
 `yarn run test:e2e`
+
+## Deprecation Notice: Methods and Events
+
+In the upcoming release of our web component library, we are deprecating certain methods and events. These deprecations aim to improve the component's API and provide a more consistent and intuitive usage experience. Please take note of the following changes and plan your migration accordingly.
+
+### Deprecated Methods and Events:
+
+1. `bankAccountFormReady` event
+
+   - Deprecated in version 5.0.0
+   - Will be renamed to `ready` in version 6.0.0
+
+   **Reason for Deprecation:**
+   The event name `bankAccountFormReady` is being updated to `ready` to align with industry standards and improve consistency across our components.
+
+**Migration Example:**
+Before (current usage):
+
+```javascript
+element.addEventListener('bankAccountFormReady', handleReady);
+```
+
+After (migrated usage):
+
+```
+element.addEventListener('ready', handleReady);
+```
+
+Please update your event listeners accordingly to ensure compatibility with future releases.
+
+**Warning Message:** When using the deprecated `bankAccountFormReady` event, a warning will be logged in the console, indicating the upcoming change and the need for migration.
+
+**Recommended Migration Version:** 6.0.0
+
+## Additional Considerations:
+
+- Make sure to update any code, documentation, or integrations that rely on the deprecated methods and events to prevent disruptions in functionality.
+- Please note that starting from version 6.0.0, the `bankAccountFormReady` event will be completely removed from the component.
+  We highly recommend migrating to the new event name `ready` as soon as possible to ensure a smooth transition and to leverage the latest improvements in our component library.
+
+If you have any questions or need assistance with the migration process, please don't hesitate to reach out to our support team.

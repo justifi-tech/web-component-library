@@ -349,6 +349,11 @@ declare namespace LocalJSX {
          */
         "onBankAccountFormValidate"?: (event: JustifiBankAccountFormCustomEvent<{ data: { isValid: boolean } }>) => void;
         /**
+          * Triggered when iframe has loaded
+          * @event justifi-bank-account-form#ready
+         */
+        "onReady"?: (event: JustifiBankAccountFormCustomEvent<any>) => void;
+        /**
           * When to trigger validation of the form.
          */
         "validationMode"?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
@@ -395,6 +400,11 @@ declare namespace LocalJSX {
           * @event justifi-card-form#cardFormTokenize
          */
         "onCardFormValidate"?: (event: JustifiCardFormCustomEvent<{ data: { isValid: boolean } }>) => void;
+        /**
+          * Triggered when iframe has loaded
+          * @event justifi-card-form#ready
+         */
+        "onReady"?: (event: JustifiCardFormCustomEvent<any>) => void;
         /**
           * Boolean indicating if the Card Form should render in a single line
          */
