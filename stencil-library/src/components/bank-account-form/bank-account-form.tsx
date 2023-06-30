@@ -45,7 +45,7 @@ export class BankAccountForm {
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
-    console.warn(`The 'bankAccountFormReady' event is deprecated in the next release and will be renamed to 'ready'`);
+    console.warn(`The 'bankAccountFormReady' event is deprecated in the next major release and will be renamed to 'ready'`);
     this.bankAccountFormReady.emit(event);
     this.ready.emit(event);
   }
@@ -53,7 +53,7 @@ export class BankAccountForm {
   @Listen('paymentMethodFormTokenize')
   tokenizeHandler(event: { data: any }) {
     console.warn(
-      `The 'bankAccountFormTokenize' event is deprecated in the next release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+      `The 'bankAccountFormTokenize' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
     this.bankAccountFormTokenize.emit(event);
   }
@@ -61,7 +61,7 @@ export class BankAccountForm {
   @Listen('paymentMethodFormValidate')
   validateHandler(event: { data: any }) {
     console.warn(
-      `The 'bankAccountFormValidate' event is deprecated in the next release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+      `The 'bankAccountFormValidate' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
     this.bankAccountFormValidate.emit(event);
   }

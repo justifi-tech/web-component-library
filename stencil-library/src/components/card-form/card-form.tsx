@@ -51,7 +51,7 @@ export class CardForm {
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
-    console.warn(`The 'cardFormReady' event is deprecated in the next release and will be renamed to 'ready'`);
+    console.warn(`The 'cardFormReady' event is deprecated in the next major release and will be renamed to 'ready'`);
     this.cardFormReady.emit(event);
     this.ready.emit(event);
   }
@@ -59,7 +59,7 @@ export class CardForm {
   @Listen('paymentMethodFormTokenize')
   tokenizeHandler(event: { data: any }) {
     console.warn(
-      `The 'cardFormTokenize' event is deprecated in the next release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+      `The 'cardFormTokenize' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
     this.cardFormTokenize.emit(event);
   }
@@ -67,7 +67,7 @@ export class CardForm {
   @Listen('paymentMethodFormValidate')
   validateHandler(event: { data: any }) {
     console.warn(
-      `The 'cardFormValidate' event is deprecated in the next release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+      `The 'cardFormValidate' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
     this.cardFormValidate.emit(event);
   }
