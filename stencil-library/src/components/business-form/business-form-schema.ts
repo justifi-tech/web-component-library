@@ -135,6 +135,12 @@ const BusinessFormSchema = object({
   business_type: string().required('Select business type'),
   business_structure: string().required('Select business structure'),
   industry: string().required('Enter a business industry'),
+  representative: object({
+    name: string().required('Enter representative name'),
+    address: object({
+      line1: string().required('Enter address line 1'),
+    })
+  })
 });
 
 export default BusinessFormSchema;

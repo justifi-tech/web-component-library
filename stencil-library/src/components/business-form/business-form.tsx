@@ -53,6 +53,7 @@ export class BusinessForm {
   async submit(event) {
     event.preventDefault();
     const validatedForm = await this.form.validate();
+    console.log(validatedForm)
     this.businessFormFieldsErrors = validatedForm.errors;
 
     if (!validatedForm.isValid) return;
@@ -126,7 +127,10 @@ export class BusinessForm {
                 error={this.form.errors?.phone} />
             </div>
             <div class="col-12">
-              <justifi-business-representative form={this.form}></justifi-business-representative>
+              <justifi-business-representative
+                form={this.form}
+                errors={this.form.errors}>
+              </justifi-business-representative>
             </div>
             <div class="col-12">
               <button

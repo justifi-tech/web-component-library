@@ -10,7 +10,6 @@ class FormController {
   }
 
   validate = async () => {
-    console.log(this.controller.values)
     this.controller.isValid = true;
     this.controller.errors = {};
 
@@ -25,9 +24,20 @@ class FormController {
     return this.controller;
   };
 
-  getFormValue(obj, name: string) {
+  reset = () => {
+    this.controller.values = this.defaultValues;
+    this.controller.isValid = false;
+    this.controller.errors = {};
+  }
+
+  getFormError(name: string) {
     const path = name.split('.');
-    return path.reduce((acc, part) => acc && acc[part], obj);
+    return path.reduce((acc, part) => acc && acc[part], this.controller.errors);
+  }
+
+  getFormValue(name: string) {
+    const path = name.split('.');
+    return path.reduce((acc, part) => acc && acc[part], this.controller.values);
   }
 
   setFormValue(name: string, value: any) {
@@ -45,21 +55,24 @@ class FormController {
   }
 
   register = (name) => {
-    const defaultValue = this.getFormValue(this.defaultValues, name);
+    const defaultValue = this.getFormValue(name);
 
     const onInput = (e) => {
       this.setFormValue(name, e.target.value);
+      console.log(this.controller.values)
     };
 
     return {
       name: name || '',
       value: defaultValue || '',
       onInput: onInput,
+      // error: () => this.getFormError(name) || '',
     }
   };
 
   constructor(defaultValues: any, schema: ObjectSchema<any>) {
     this.defaultValues = defaultValues;
+    this.controller.values = defaultValues;
     this.schema = schema;
   }
 }

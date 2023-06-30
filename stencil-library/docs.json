@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-30T02:31:54",
+  "timestamp": "2023-06-30T03:33:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -220,11 +220,15 @@
         }
       ],
       "dependents": [
+        "justifi-business-address-form",
         "justifi-business-form",
         "justifi-business-representative"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "justifi-business-address-form": [
+          "form-control-text"
+        ],
         "justifi-business-form": [
           "form-control-text"
         ],
@@ -521,40 +525,75 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
-      "methods": [
+      "props": [
         {
-          "name": "submit",
-          "returns": {
-            "type": "Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
-            "docs": ""
-          },
-          "signature": "submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>",
-          "parameters": [],
+          "name": "errors",
+          "type": "any",
+          "mutable": false,
+          "attr": "errors",
+          "reflectToAttr": false,
           "docs": "",
-          "docsTags": []
-        }
-      ],
-      "events": [],
-      "listeners": [
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
-          "event": "fieldReceivedInput",
-          "capture": false,
-          "passive": false
+          "name": "form",
+          "type": "FormController",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "FormController"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subFormName",
+          "type": "string",
+          "mutable": false,
+          "attr": "sub-form-name",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "justifi-business-representative"
+      ],
       "dependencies": [
-        "text-input",
+        "form-control-text",
         "select-input"
       ],
       "dependencyGraph": {
         "justifi-business-address-form": [
-          "text-input",
+          "form-control-text",
           "select-input"
+        ],
+        "justifi-business-representative": [
+          "justifi-business-address-form"
         ]
       }
     },
@@ -651,7 +690,12 @@
         ],
         "justifi-business-representative": [
           "form-control-text",
-          "form-control-select"
+          "form-control-select",
+          "justifi-business-address-form"
+        ],
+        "justifi-business-address-form": [
+          "form-control-text",
+          "select-input"
         ]
       }
     },
@@ -664,6 +708,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "errors",
+          "type": "any",
+          "mutable": false,
+          "attr": "errors",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "form",
           "type": "FormController",
@@ -696,12 +756,18 @@
       ],
       "dependencies": [
         "form-control-text",
-        "form-control-select"
+        "form-control-select",
+        "justifi-business-address-form"
       ],
       "dependencyGraph": {
         "justifi-business-representative": [
           "form-control-text",
-          "form-control-select"
+          "form-control-select",
+          "justifi-business-address-form"
+        ],
+        "justifi-business-address-form": [
+          "form-control-text",
+          "select-input"
         ],
         "justifi-business-form": [
           "justifi-business-representative"
@@ -1668,15 +1734,11 @@
         }
       ],
       "dependents": [
-        "justifi-billing-form",
-        "justifi-business-address-form"
+        "justifi-billing-form"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "justifi-billing-form": [
-          "text-input"
-        ],
-        "justifi-business-address-form": [
           "text-input"
         ]
       }

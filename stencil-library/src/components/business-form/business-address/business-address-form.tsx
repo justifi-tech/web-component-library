@@ -1,7 +1,6 @@
-import { Component, Host, h, State, Method, Listen } from '@stencil/core';
-import { ValidationError } from 'yup';
+import { Component, Host, h, Prop } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
-import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-form-schema';
+import FormController from '../../form/form-controller';
 
 @Component({
   tag: 'justifi-business-address-form',
@@ -9,71 +8,36 @@ import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business
   shadow: true,
 })
 export class BusinessAddressForm {
-  @State() businessAddress: BusinessAddressFormFields = {
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    country: ''
-  };
-  @State() businessAddressErrors: any = {};
-
-  @Listen('fieldReceivedInput')
-  setFormValue(event) {
-    const data = event.detail;
-    const businessAddressClone = { ...this.businessAddress };
-    if (data.name) {
-      businessAddressClone[data.name] = data.value;
-      this.businessAddress = businessAddressClone;
-    }
-  }
-
-  @Method()
-  async submit() {
-    const newErrors = {};
-    let isValid: boolean = true;
-
-    try {
-      await BusinessAddressFormSchema.validate(this.businessAddress, { abortEarly: false });
-    } catch (err) {
-      isValid = false;
-      err.inner.map((item: ValidationError) => {
-        newErrors[item.path] = item.message;
-      });
-    }
-
-    this.businessAddressErrors = newErrors;
-
-    return { isValid: isValid, values: this.businessAddress }
-  };
+  @Prop() form: FormController;
+  @Prop() subFormName: string;
+  @Prop() errors: any;
 
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="row gx-2 gy-2">
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="line1"
               label="Street Address"
-              defaultValue={this.businessAddress?.line1}
-              error={this.businessAddressErrors?.line1} />
+              {...this.form.register(`${this.subFormName}.line1`)}
+              error={this.errors && this.errors[`${this.subFormName}.line1`]} />
           </div>
 
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="line2"
               label="Apartment, Suite, etc. (optional)"
-              defaultValue={this.businessAddress?.line2}
-              error={this.businessAddressErrors?.line2} />
+              {...this.form.register(`${this.subFormName}.line2`)}
+              error={this.errors && this.errors[`${this.subFormName}.line2`]} />
           </div>
 
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="city"
               label="City"
-              defaultValue={this.businessAddress?.city}
-              error={this.businessAddressErrors?.city} />
+              {...this.form.register(`${this.subFormName}.city`)}
+              error={this.errors && this.errors[`${this.subFormName}.city`]} />
           </div>
 
           <div class="col-12">
@@ -81,16 +45,16 @@ export class BusinessAddressForm {
               name="state"
               label="State"
               options={StateOptions}
-              defaultValue={this.businessAddress.state}
-              error={this.businessAddressErrors.state} />
+              {...this.form.register(`${this.subFormName}.state`)}
+              error={this.errors && this.errors[`${this.subFormName}.state`]} />
           </div>
 
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="postal_code"
               label="Postal Code"
-              defaultValue={this.businessAddress?.postal_code}
-              error={this.businessAddressErrors?.postal_code} />
+              {...this.form.register(`${this.subFormName}.postal_code`)}
+              error={this.errors && this.errors[`${this.subFormName}.postal_code`]} />
           </div>
         </div>
       </Host>
