@@ -30,11 +30,25 @@ class FormController {
     return path.reduce((acc, part) => acc && acc[part], obj);
   }
 
+  setFormValue(name: string, value: any) {
+    const path = name.split('.');
+    let newControllerValue = {};
+    path.reduce((acc, part, index) => {
+      if (index === path.length - 1) {
+        acc[part] = value;
+      } else {
+        acc[part] = acc[part] || {};
+      }
+      return acc[part];
+    }, newControllerValue);
+    this.controller.values = { ...this.controller.values, ...newControllerValue };
+  }
+
   register = (name) => {
     const defaultValue = this.getFormValue(this.defaultValues, name);
 
     const onInput = (e) => {
-      return this.controller.values[name] = e.target.value;
+      this.setFormValue(name, e.target.value);
     };
 
     return {
