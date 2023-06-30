@@ -1,4 +1,4 @@
-name: Build and Publish storybook to GitHub Pages
+name: Build and Publish Storybook to GitHub Pages
 
 on:
   workflow_dispatch:
@@ -6,8 +6,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'stencil-library/**'
-
+      - stencil-library/**
   pull_request:
     branches:
       - '*'
@@ -30,7 +29,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run unit tests
-        working-directory: stencil-library
+        working-directory: stencil-library/**
         run: yarn test
 
       - name: Run end-to-end tests
