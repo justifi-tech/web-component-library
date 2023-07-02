@@ -10,17 +10,22 @@ class FormController {
   }
 
   validate = async () => {
-    this.controller.isValid = true;
-    this.controller.errors = {};
+    const newController = {
+      isValid: true,
+      errors: {}
+    }
 
     try {
       await this.schema.validate(this.controller.values, { abortEarly: false });
     } catch (err) {
-      this.controller.isValid = false;
+      newController.isValid = false;
       err.inner.map((item: ValidationError) => {
-        this.controller.errors[item.path] = item.message;
+        newController.errors[item.path] = item.message;
       });
     }
+
+    this.controller = { ...this.controller, ...newController };
+
     return this.controller;
   };
 
@@ -59,13 +64,19 @@ class FormController {
 
     const onInput = (e) => {
       this.setFormValue(name, e.target.value);
-      console.log(this.controller.values)
+    };
+
+    const onBlur = () => {
+      if (!this.controller.isValid) {
+        this.validate();
+      }
     };
 
     return {
       name: name || '',
       value: defaultValue || '',
       onInput: onInput,
+      onBlur: onBlur,
       // error: () => this.getFormError(name) || '',
     }
   };
