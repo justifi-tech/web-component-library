@@ -30,7 +30,10 @@ jobs:
 
       - name: Run unit tests
         working-directory: stencil-library
-        run: yarn test
+        run: |
+          cd stencil-library
+          yarn install --frozen-lockfile
+          yarn test
 
       - name: Run end-to-end tests
         working-directory: stencil-library
