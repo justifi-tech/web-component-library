@@ -31,7 +31,7 @@ jobs:
       - name: Run unit tests
         working-directory: stencil-library
         run: |
-          cd stencil-library
+          cd ../stencil-library
           yarn install --frozen-lockfile
           yarn test
 
