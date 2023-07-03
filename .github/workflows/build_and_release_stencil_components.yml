@@ -13,8 +13,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    env:
-      IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
     defaults:
       run:
         working-directory: stencil-library
@@ -35,6 +33,8 @@ jobs:
       - name: Typescript Compiling Build
         run: |
           IFRAME_ORIGIN=$IFRAME_ORIGIN yarn build:prod 
+        env:
+          IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
       - name: Publish to GitHub Registry
         run: |
           yarn publish --verbose --no-git-tag-version --access public
