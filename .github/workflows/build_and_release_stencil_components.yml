@@ -34,7 +34,7 @@ jobs:
 
       - name: Typescript Compiling Build
         run: |
-          yarn build:prod
+          IFRAME_ORIGIN=$IFRAME_ORIGIN yarn build:prod 
       - name: Publish to GitHub Registry
         run: |
           yarn publish --verbose --no-git-tag-version --access public
