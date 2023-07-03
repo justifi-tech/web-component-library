@@ -32,7 +32,7 @@ jobs:
           echo "::group::Build"
           rm -rf node_modules
           yarn install --frozen-lockfile
-          IFRAME_ORIGIN=$IFRAME_ORIGIN yarn build:prod 
+          yarn build:prod
           yarn build-storybook
           echo "::endgroup::"
 
