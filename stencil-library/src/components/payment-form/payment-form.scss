@@ -23,6 +23,7 @@ justifi-payment-method-form {
 }
 
 *::part(input) {
+  font-family: var(--jfi-layout-font-family);
   background-color: var(--jfi-form-control-background-color);
   border-color: var(--jfi-form-control-border-color);
   border-width: var(--jfi-form-control-border-width);
@@ -58,6 +59,7 @@ justifi-payment-method-form {
 }
 
 .jfi-submit-button {
+  font-family: var(--jfi-layout-font-family);
   color: var(--jfi-submit-button-color);
   background-color: var(--jfi-submit-button-background-color);
   border-color: var(--jfi-submit-button-border-color);

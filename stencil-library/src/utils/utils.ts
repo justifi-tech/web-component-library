@@ -29,3 +29,8 @@ export function formatTimeSeconds(dateString: string): string {
   const date = new Date(dateString);
   return format(date, 'h:mm:ssaaa');
 }
+
+export function extractComputedFontsToLoad() {
+  const computedStyles = getComputedStyle(document.body);
+  return computedStyles?.getPropertyValue('--jfi-load-google-font')?.trim().replace(/'|"/g, '').replace(' ', '+') || null;
+}
