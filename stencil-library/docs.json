@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-29T17:48:32",
+  "timestamp": "2023-07-07T18:07:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -1289,44 +1289,7 @@
       "tag": "justifi-payments-list",
       "readme": "# justifi-payments-list\n",
       "docs": "",
-      "docsTags": [
-        {
-          "name": "exportedPart",
-          "text": "table-head-row: Head row"
-        },
-        {
-          "name": "exportedPart",
-          "text": "table-head-cell: Individual head cell"
-        },
-        {
-          "name": "exportedPart",
-          "text": "table-body: Body of the table"
-        },
-        {
-          "name": "exportedPart",
-          "text": "table-row: Row of the table"
-        },
-        {
-          "name": "exportedPart",
-          "text": "table-cell: Individual cell of the table"
-        },
-        {
-          "name": "exportedPart",
-          "text": "loading-state-cell: Row for loading state"
-        },
-        {
-          "name": "exportedPart",
-          "text": "loading-state-spinner: Spinner element for loading state"
-        },
-        {
-          "name": "exportedPart",
-          "text": "error-state: Row for Error state"
-        },
-        {
-          "name": "exportedPart",
-          "text": "empty-state: Row for Emtpy state"
-        }
-      ],
+      "docsTags": [],
       "usage": {},
       "props": [
         {
@@ -1385,11 +1348,19 @@
           "docs": ""
         },
         {
+          "name": "pagination-bar",
+          "docs": ""
+        },
+        {
           "name": "table-body",
           "docs": ""
         },
         {
           "name": "table-cell",
+          "docs": ""
+        },
+        {
+          "name": "table-head",
           "docs": ""
         },
         {

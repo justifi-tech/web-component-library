@@ -3,18 +3,33 @@ import { Api, IApiResponseCollection, Payment } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 
 /**
-   *
-   * @exportedPart table-head-row: Head row
-   * @exportedPart table-head-cell: Individual head cell
-   * @exportedPart table-body: Body of the table
-   * @exportedPart table-row: Row of the table
-   * @exportedPart table-cell: Individual cell of the table
-   * @exportedPart loading-state-cell: Row for loading state
-   * @exportedPart loading-state-spinner: Spinner element for loading state
-   * @exportedPart error-state: Row for Error state
-   * @exportedPart empty-state: Row for Emtpy state
-   *
-   */
+ * @exportedPart table-head: Table head
+ * @exportedPart table-head-row: Head row
+ * @exportedPart table-head-cell: Individual head cell
+ * @exportedPart table-body: Body of the table
+ * @exportedPart table-row: Row of the table
+ * @exportedPart table-cell: Individual cell of the table
+ * @exportedPart loading-state-cell: Row for loading state
+ * @exportedPart loading-state-spinner: Spinner element for loading state
+ * @exportedPart error-state: Row for Error state
+ * @exportedPart empty-state: Row for Emtpy state
+ */
+
+interface PagingInfo {
+  amount: number,
+  start_cursor: string,
+  end_cursor: string,
+  has_previous: boolean,
+  has_next: boolean,
+}
+
+const pagingDefaults = {
+  amount: 25,
+  start_cursor: '',
+  end_cursor: '',
+  has_previous: false,
+  has_next: false,
+}
 @Component({
   tag: 'justifi-payments-list',
   styleUrl: 'payments-list.scss',
@@ -27,6 +42,7 @@ export class PaymentsList {
   @State() payments: Payment[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
+  @State() paging: PagingInfo = pagingDefaults;
 
   @Watch('accountId')
   @Watch('authToken')
@@ -38,17 +54,45 @@ export class PaymentsList {
     this.fetchData();
   }
 
-  async fetchData(): Promise<void> {
+  // onChangeAmount = (e) => {
+  //   const newVal = e?.target?.value;
+  //   if (newVal) {
+  //     this.paging = pagingDefaults;
+  //     this.paging.amount = newVal;
+  //     this.fetchData();
+  //   }
+  // }
+
+  onPageChange = (direction: string) => {
+    return () => {
+      this.fetchData(direction);
+    }
+  }
+
+  async fetchData(direction?: string): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken"
       this.loading = false;
       return;
     }
     this.loading = true;
-    const endpoint = `account/${this.accountId}/payments`;
+    const limit = this.paging.amount;
+    const cursor = `${
+      direction === 'prev'
+      ? '&before_cursor='+this.paging.start_cursor
+      : direction === 'next'
+        ? '&after_cursor='+this.paging.end_cursor
+        : ''
+    }`;
+    const endpoint = `account/${this.accountId}/payments?limit=${limit}${cursor ? cursor : ''}`;
 
     const response: IApiResponseCollection<Payment[]> = await Api(this.authToken).get(endpoint);
     if (!response.error) {
+      this.paging = {
+        ...this.paging,
+        ...response.page_info
+      }
+
       const data = response?.data?.map(dataItem => new Payment(dataItem));
       this.payments = data;
     } else {
@@ -64,13 +108,13 @@ export class PaymentsList {
 
   emptyState = (
     <tr>
-      <td part="empty-state" colSpan={8} style={{ textAlign: 'center' }}>No payments to show</td>
+      <td class="empty-state" part="empty-state" colSpan={8} style={{ textAlign: 'center' }}>No payments to show</td>
     </tr>
   );
 
   errorState = () => (
     <tr>
-      <td part="error-state" colSpan={8} style={{ textAlign: 'center' }}>
+      <td class="error-state" part="error-state" colSpan={8} style={{ textAlign: 'center' }}>
         An unexpected error occurred: {this.errorMessage}
       </td>
     </tr>
@@ -78,7 +122,7 @@ export class PaymentsList {
 
   loadingState = (
     <tr>
-      <td part="loading-state-cell" colSpan={8} style={{ textAlign: 'center' }}>
+      <td class="loading-state" part="loading-state-cell" colSpan={8} style={{ textAlign: 'center' }}>
         <div part="loading-state-spinner" class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
@@ -86,15 +130,40 @@ export class PaymentsList {
     </tr>
   );
 
+  paginationBar = () => {
+    return (
+    this.paging && (
+      <div part="pagination-bar" class="pagination-bar">
+        <button
+          onClick={this.onPageChange('prev')}
+          part={`arrow,arrow-left${this.paging.has_previous ? '' : ',disabled'}`}
+          disabled={!this.paging.has_previous}
+          class={`pagination-btn pagination-prev-btn${this.paging.has_previous ? '' : ' disabled'}`}
+        >&larr;</button>
+        {/* <select class="amount-select" part="amount-select" onChange={this.onChangeAmount}>
+          <option selected={this.paging.amount === 10} value={10}>10</option>
+          <option selected={this.paging.amount === 25} value={25}>25</option>
+          <option selected={this.paging.amount === 50} value={50}>50</option>
+        </select> */}
+        <button
+          onClick={this.onPageChange('next')}
+          part={`arrow,arrow-right${this.paging.has_next ? '' : ',disabled'}`}
+          disabled={!this.paging.has_next}
+          class={`pagination-btn pagination-next-btn${this.paging.has_next ? '' : ' disabled'}`}
+        >&rarr;</button>
+      </div>
+    )
+  )};
+
   render() {
     return (
       <Host exportparts="
-        table-head-row,table-head-cell,table-body,
+        table-head,table-head-row,table-head-cell,table-body,
         loading-state-cell,loading-state-spinner,error-state,
         empty-state,table-row,table-cell
       ">
         <table class="table">
-          <thead>
+          <thead class="table-head" part="table-head">
             <tr part='table-head-row'>
               <th part="table-head-cell" scope="col" title="The date and time each payment was made">
                 Made on
@@ -109,7 +178,7 @@ export class PaymentsList {
               <th part="table-head-cell" scope="col">Payment ID</th>
             </tr>
           </thead>
-          <tbody part='table-body'>
+          <tbody class="table-body" part='table-body'>
             {
               this.loading ? this.loadingState :
               this.errorMessage ? this.errorState() :
@@ -131,6 +200,7 @@ export class PaymentsList {
             }
           </tbody>
         </table>
+        {this.paginationBar()}
       </Host>
     );
   }

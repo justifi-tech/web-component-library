@@ -37,3 +37,13 @@ const Template = (args: PaymentsListArgs) => {
 
 export const Basic = Template.bind({});
 Basic.args = new PaymentsListArgs({});
+
+export const Contained = Template.bind({});
+Contained.decorators = [
+  (Story) => `
+    <div style="position: relative; width: 900px; height: 300px; overflow-x: hidden;">
+      ${Story()}
+    </div>
+  `
+]
+Contained.args = new PaymentsListArgs({});
