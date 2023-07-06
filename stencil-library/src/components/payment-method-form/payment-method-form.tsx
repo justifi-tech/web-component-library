@@ -109,7 +109,7 @@ export class PaymentMethodForm {
   }
 
   private getIframeSrc() {
-    const iframeOrigin = this.iframeOrigin || process.env.IFRAME_ORIGIN;
+    const iframeOrigin = this.iframeOrigin || 'https://js.justifi.ai/v2';
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
     if (this.paymentMethodFormValidationMode) {

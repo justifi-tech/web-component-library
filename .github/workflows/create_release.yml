@@ -10,6 +10,7 @@ on:
           - patch
           - minor
           - major
+          - prerelease
 
 env:
   STENCIL_VERSION_FILE: stencil-library/package.json
