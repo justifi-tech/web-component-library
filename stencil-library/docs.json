@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-02T18:46:38",
+  "timestamp": "2023-07-06T19:22:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -371,6 +371,20 @@
             {
               "name": "event",
               "text": "justifi-bank-account-form#bankAccountFormValidate"
+            }
+          ]
+        },
+        {
+          "event": "ready",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Triggered when iframe has loaded",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-bank-account-form#ready"
             }
           ]
         }
@@ -925,6 +939,20 @@
             {
               "name": "event",
               "text": "justifi-card-form#cardFormTokenize"
+            }
+          ]
+        },
+        {
+          "event": "ready",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Triggered when iframe has loaded",
+          "docsTags": [
+            {
+              "name": "event",
+              "text": "justifi-card-form#ready"
             }
           ]
         }
