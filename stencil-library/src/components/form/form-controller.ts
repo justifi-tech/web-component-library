@@ -3,51 +3,50 @@ import { ObjectSchema, ValidationError } from "yup";
 class FormController {
   private defaultValues: any = {};
   private schema: ObjectSchema<any>;
-  private controller = { values: {}, isValid: false, errors: {} };
+  private _errors: any = {};
+  private _values: any = {};
+  private _isValid: boolean = false;
 
   get errors(): any {
-    return this.controller.errors;
+    return this._errors;
   }
 
-  validate = async () => {
-    const newController = {
-      isValid: true,
-      errors: {}
-    }
+  validate = async (): Promise<{ isValid: boolean, errors: any, values: any }> => {
+    this._isValid = true;
+    this._errors = {};
 
     try {
-      await this.schema.validate(this.controller.values, { abortEarly: false });
+      await this.schema.validate(this._values, { abortEarly: false });
     } catch (err) {
-      newController.isValid = false;
+      this._isValid = false;
       err.inner.map((item: ValidationError) => {
-        newController.errors[item.path] = item.message;
+        this._errors[item.path] = item.message;
       });
     }
 
-    this.controller = { ...this.controller, ...newController };
-
-    return this.controller;
+    return { isValid: this._isValid, errors: this._errors, values: this._values };
   };
 
   reset = () => {
-    this.controller.values = this.defaultValues;
-    this.controller.isValid = false;
-    this.controller.errors = {};
+    this._values = this.defaultValues;
+    this._isValid = false;
+    this._errors = {};
   }
 
   getFormError(name: string) {
     const path = name.split('.');
-    return path.reduce((acc, part) => acc && acc[part], this.controller.errors);
+    return path.reduce((acc, part) => acc && acc[part], this._errors);
   }
 
   getFormValue(name: string) {
     const path = name.split('.');
-    return path.reduce((acc, part) => acc && acc[part], this.controller.values);
+    return path.reduce((acc, part) => acc && acc[part], this._values);
   }
 
   setFormValue(name: string, value: any) {
     const path = name.split('.');
     let newControllerValue = {};
+
     path.reduce((acc, part, index) => {
       if (index === path.length - 1) {
         acc[part] = value;
@@ -56,35 +55,29 @@ class FormController {
       }
       return acc[part];
     }, newControllerValue);
-    this.controller.values = { ...this.controller.values, ...newControllerValue };
+
+    this._values = { ...this._values, ...newControllerValue };
   }
 
   register = (name) => {
     const defaultValue = this.getFormValue(name);
-
-    const onInput = (e) => {
-      this.setFormValue(name, e.target.value);
-    };
-
+    const onInput = (e) => this.setFormValue(name, e.target.value);
     const onBlur = () => {
-      if (!this.controller.isValid) {
-        this.validate();
-      }
+      if (!this._isValid) this.validate();
     };
 
     return {
       name: name || '',
       value: defaultValue || '',
       onInput: onInput,
-      onBlur: onBlur,
-      // error: () => this.getFormError(name) || '',
+      onBlur: onBlur
     }
   };
 
   constructor(defaultValues: any, schema: ObjectSchema<any>) {
     this.defaultValues = defaultValues;
-    this.controller.values = defaultValues;
     this.schema = schema;
+    this._values = defaultValues;
   }
 }
 

@@ -10,7 +10,7 @@ export class TextInput {
   @Prop() name: any;
   @Prop() onInput: (e: Event) => void;
   @Prop() error: string;
-  @Prop() value: string;
+  @Prop({ mutable: true }) value: string;
 
   render() {
     return (
