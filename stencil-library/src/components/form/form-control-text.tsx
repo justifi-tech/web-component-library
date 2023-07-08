@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'form-control-text',
@@ -8,9 +8,10 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class TextInput {
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() onInput: (e: Event) => void;
   @Prop() error: string;
-  @Prop({ mutable: true }) value: string;
+  @Prop() defaultValue: string;
+  @Event() formControlInput: EventEmitter<any>;
+  @Event() formControlBlur: EventEmitter<any>;
 
   render() {
     return (
@@ -21,8 +22,8 @@ export class TextInput {
         <input
           id={this.name}
           name={this.name}
-          onInput={this.onInput}
-          value={this.value}
+          onInput={(event: any) => this.formControlInput.emit({ name: this.name, value: event.target.value })}
+          onBlur={() => this.formControlBlur.emit()}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"

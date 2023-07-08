@@ -1,11 +1,105 @@
 {
-  "timestamp": "2023-07-07T15:46:25",
+  "timestamp": "2023-07-08T21:08:31",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
     "typescriptVersion": "5.0.4"
   },
   "components": [
+    {
+      "filePath": "./src/components/form/form-component.tsx",
+      "encapsulation": "shadow",
+      "tag": "form-component",
+      "readme": "# form-control-text\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "defaultValues",
+          "type": "any",
+          "mutable": false,
+          "attr": "default-values",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "form",
+          "type": "any",
+          "mutable": false,
+          "attr": "form",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "schema",
+          "type": "ObjectSchema<any, AnyObject, any, \"\">",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ObjectSchema<any, AnyObject, any, \"\">"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "validFormSubmitted",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "formControlInput",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "formControlBlur",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "justifi-business-form"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "justifi-business-form": [
+          "form-component"
+        ]
+      }
+    },
     {
       "filePath": "./src/components/form/form-control-select.tsx",
       "encapsulation": "shadow",
@@ -15,6 +109,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "mutable": false,
+          "attr": "default-value",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "error",
           "type": "string",
@@ -64,21 +174,6 @@
           "required": false
         },
         {
-          "name": "onInput",
-          "type": "(e: Event) => void",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "(e: Event) => void"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "options",
           "type": "{ label: string; value: string; }[]",
           "mutable": false,
@@ -95,7 +190,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "formControlInput",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -129,6 +234,22 @@
       "usage": {},
       "props": [
         {
+          "name": "defaultValue",
+          "type": "string",
+          "mutable": false,
+          "attr": "default-value",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "error",
           "type": "string",
           "mutable": false,
@@ -175,41 +296,29 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "onInput",
-          "type": "(e: Event) => void",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "(e: Event) => void"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "mutable": true,
-          "attr": "value",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "formControlBlur",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "formControlInput",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -666,23 +775,11 @@
           "required": false
         }
       ],
-      "methods": [
-        {
-          "name": "submit",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "signature": "submit(event: any) => Promise<void>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [],
       "listeners": [
         {
-          "event": "fieldReceivedInput",
+          "event": "validFormSubmitted",
           "capture": false,
           "passive": false
         }
@@ -692,24 +789,15 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "form-component",
         "form-control-text",
-        "form-control-select",
-        "justifi-business-representative"
+        "form-control-select"
       ],
       "dependencyGraph": {
         "justifi-business-form": [
+          "form-component",
           "form-control-text",
-          "form-control-select",
-          "justifi-business-representative"
-        ],
-        "justifi-business-representative": [
-          "form-control-text",
-          "form-control-select",
-          "justifi-business-address-form"
-        ],
-        "justifi-business-address-form": [
-          "form-control-text",
-          "select-input"
+          "form-control-select"
         ]
       }
     },
@@ -765,9 +853,7 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "justifi-business-form"
-      ],
+      "dependents": [],
       "dependencies": [
         "form-control-text",
         "form-control-select",
@@ -782,9 +868,6 @@
         "justifi-business-address-form": [
           "form-control-text",
           "select-input"
-        ],
-        "justifi-business-form": [
-          "justifi-business-representative"
         ]
       }
     },

@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'form-control-select',
@@ -8,8 +8,9 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class TextInput {
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() onInput: (e: Event) => void;
   @Prop() error: string;
+  @Prop() defaultValue: string;
+  @Event() formControlInput: EventEmitter<any>;
   @Prop() options: { label: string; value: string }[];
 
   render() {
@@ -21,7 +22,7 @@ export class TextInput {
         <select
           id={this.name}
           name={this.name}
-          onInput={this.onInput}
+          onInput={(event: any) => this.formControlInput.emit({ name: this.name, value: event.target.value })}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-select is-invalid' : 'form-select'}>
           {this.options.map(option => (

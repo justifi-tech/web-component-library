@@ -5,28 +5,32 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ObjectSchema, ValidationError } from "yup";
 import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
-import { ValidationError } from "yup";
 import { PaymentMethodTypes } from "./api";
+export { ObjectSchema, ValidationError } from "yup";
 export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 export { BillingFormFields } from "./components/billing-form/billing-form-schema";
-export { ValidationError } from "yup";
 export { PaymentMethodTypes } from "./api";
 export namespace Components {
+    interface FormComponent {
+        "defaultValues": any;
+        "form": any;
+        "schema": ObjectSchema<any>;
+    }
     interface FormControlSelect {
+        "defaultValue": string;
         "error": string;
         "label": string;
         "name": any;
-        "onInput": (e: Event) => void;
         "options": { label: string; value: string }[];
     }
     interface FormControlText {
+        "defaultValue": string;
         "error": string;
         "label": string;
         "name": any;
-        "onInput": (e: Event) => void;
-        "value": string;
     }
     interface JustifiBankAccountForm {
         /**
@@ -88,7 +92,6 @@ export namespace Components {
     interface JustifiBusinessForm {
         "authToken": string;
         "businessId"?: string;
-        "submit": (event: any) => Promise<void>;
     }
     interface JustifiBusinessRepresentative {
         "errors": any;
@@ -173,6 +176,18 @@ export namespace Components {
         "name": string;
     }
 }
+export interface FormComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLFormComponentElement;
+}
+export interface FormControlSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLFormControlSelectElement;
+}
+export interface FormControlTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLFormControlTextElement;
+}
 export interface JustifiBankAccountFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLJustifiBankAccountFormElement;
@@ -202,6 +217,12 @@ export interface TextInputCustomEvent<T> extends CustomEvent<T> {
     target: HTMLTextInputElement;
 }
 declare global {
+    interface HTMLFormComponentElement extends Components.FormComponent, HTMLStencilElement {
+    }
+    var HTMLFormComponentElement: {
+        prototype: HTMLFormComponentElement;
+        new (): HTMLFormComponentElement;
+    };
     interface HTMLFormControlSelectElement extends Components.FormControlSelect, HTMLStencilElement {
     }
     var HTMLFormControlSelectElement: {
@@ -308,6 +329,7 @@ declare global {
         new (): HTMLTextInputElement;
     };
     interface HTMLElementTagNameMap {
+        "form-component": HTMLFormComponentElement;
         "form-control-select": HTMLFormControlSelectElement;
         "form-control-text": HTMLFormControlTextElement;
         "justifi-bank-account-form": HTMLJustifiBankAccountFormElement;
@@ -325,19 +347,27 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface FormComponent {
+        "defaultValues"?: any;
+        "form"?: any;
+        "onValidFormSubmitted"?: (event: FormComponentCustomEvent<any>) => void;
+        "schema"?: ObjectSchema<any>;
+    }
     interface FormControlSelect {
+        "defaultValue"?: string;
         "error"?: string;
         "label"?: string;
         "name"?: any;
-        "onInput"?: (e: Event) => void;
+        "onFormControlInput"?: (event: FormControlSelectCustomEvent<any>) => void;
         "options"?: { label: string; value: string }[];
     }
     interface FormControlText {
+        "defaultValue"?: string;
         "error"?: string;
         "label"?: string;
         "name"?: any;
-        "onInput"?: (e: Event) => void;
-        "value"?: string;
+        "onFormControlBlur"?: (event: FormControlTextCustomEvent<any>) => void;
+        "onFormControlInput"?: (event: FormControlTextCustomEvent<any>) => void;
     }
     interface JustifiBankAccountForm {
         /**
@@ -486,6 +516,7 @@ declare namespace LocalJSX {
         "onFieldReceivedInput"?: (event: TextInputCustomEvent<{ name: string; value: string }>) => void;
     }
     interface IntrinsicElements {
+        "form-component": FormComponent;
         "form-control-select": FormControlSelect;
         "form-control-text": FormControlText;
         "justifi-bank-account-form": JustifiBankAccountForm;
@@ -506,6 +537,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "form-component": LocalJSX.FormComponent & JSXBase.HTMLAttributes<HTMLFormComponentElement>;
             "form-control-select": LocalJSX.FormControlSelect & JSXBase.HTMLAttributes<HTMLFormControlSelectElement>;
             "form-control-text": LocalJSX.FormControlText & JSXBase.HTMLAttributes<HTMLFormControlTextElement>;
             "justifi-bank-account-form": LocalJSX.JustifiBankAccountForm & JSXBase.HTMLAttributes<HTMLJustifiBankAccountFormElement>;
