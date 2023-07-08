@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Listen, Method } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method } from '@stencil/core';
 import { Api } from '../../api';
 import BusinessFormSchema, { Business, BusinessStructureOptions, BusinessTypeOptions } from './business-form-schema';
 import FormController from '../form/form-controller';
@@ -38,16 +38,6 @@ export class BusinessForm {
   async sendBusinessForm(data): Promise<void> {
     return Api(this.authToken).post(this.endpoint, data);
   };
-
-  @Listen('fieldReceivedInput')
-  setFormValue(event) {
-    const data = event.detail;
-    const businessClone = { ...this.business };
-    if (data.name) {
-      businessClone[data.name] = data.value;
-      this.business = businessClone;
-    }
-  }
 
   @Method()
   async submit(event) {
