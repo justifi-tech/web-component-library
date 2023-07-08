@@ -1,6 +1,6 @@
-import { Component, Host, h, Prop, State, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, Listen } from '@stencil/core';
 import { Api } from '../../api';
-import BusinessFormSchema, { Business, BusinessStructureOptions, BusinessTypeOptions } from './business-form-schema';
+import BusinessFormSchema, { BusinessStructureOptions, BusinessTypeOptions } from './business-form-schema';
 import form from '../form/form-store';
 
 /**
@@ -16,8 +16,6 @@ import form from '../form/form-store';
 export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId?: string;
-  @State() business = new Business();
-  @State() businessFormFieldsErrors: any = {};
 
   private endpoint: string = 'entities/business';
 
@@ -30,7 +28,7 @@ export class BusinessForm {
   async fetchBusiness(): Promise<void> {
     // fetch data and pre-fill form
     const businessPrefillData = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
-    this.business = businessPrefillData;
+    form.defaultValues = businessPrefillData;
   };
 
   async sendBusinessForm(data): Promise<void> {
