@@ -93,8 +93,7 @@ export namespace Components {
         "businessId"?: string;
     }
     interface JustifiBusinessRepresentative {
-        "errors": any;
-        "form": FormController;
+        "form": FormState;
     }
     interface JustifiCardForm {
         /**
@@ -424,8 +423,7 @@ declare namespace LocalJSX {
         "businessId"?: string;
     }
     interface JustifiBusinessRepresentative {
-        "errors"?: any;
-        "form"?: FormController;
+        "form"?: FormState;
     }
     interface JustifiCardForm {
         /**

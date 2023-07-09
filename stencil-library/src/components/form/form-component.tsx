@@ -31,7 +31,7 @@ export class TextInput {
 
   setFormValue(name: string, value: any) {
     const path = name.split('.');
-    let newControllerValue = {};
+    let newControllerValues = { ...this.form.values };
 
     if (path.length > 1) {
       path.reduce((acc, part, index) => {
@@ -41,12 +41,12 @@ export class TextInput {
           acc[part] = acc[part] || {};
         }
         return acc[part];
-      }, newControllerValue);
+      }, newControllerValues);
     } else {
-      newControllerValue = { [name]: value };
+      newControllerValues = { [name]: value };
     }
 
-    this.form.values = { ...this.form.values, ...newControllerValue };
+    this.form.values = newControllerValues;
     this.form = { ...this.form };
   }
 

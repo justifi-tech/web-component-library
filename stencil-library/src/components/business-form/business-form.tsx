@@ -52,6 +52,7 @@ export class BusinessForm {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
+        {JSON.stringify(this.form.values)}
         <form-component form={this.form}>
           <div class="row gy-3">
             <div class="col-12">
@@ -110,9 +111,13 @@ export class BusinessForm {
             <div class="col-12">
               <form-control-text
                 name="phone"
-                label="Phone"
+                label="Phone Number"
                 defaultValue={this.form.defaultValues?.phone}
                 error={this.form.errors?.phone} />
+            </div>
+            <div class="col-12">
+              <justifi-business-representative form={this.form}>
+              </justifi-business-representative>
             </div>
           </div>
         </form-component>
