@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-08T23:24:18",
+  "timestamp": "2023-07-09T00:55:17",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -46,25 +46,19 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "schema",
-          "type": "ObjectSchema<any, AnyObject, any, \"\">",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "ObjectSchema<any, AnyObject, any, \"\">"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
       "events": [
+        {
+          "event": "formShouldUpdate",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
         {
           "event": "validFormSubmitted",
           "detail": "any",
@@ -778,6 +772,11 @@
       "methods": [],
       "events": [],
       "listeners": [
+        {
+          "event": "formShouldUpdate",
+          "capture": false,
+          "passive": false
+        },
         {
           "event": "validFormSubmitted",
           "capture": false,

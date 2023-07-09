@@ -5,19 +5,18 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ObjectSchema, ValidationError } from "yup";
 import { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 import { BillingFormFields } from "./components/billing-form/billing-form-schema";
+import { ValidationError } from "yup";
 import { PaymentMethodTypes } from "./api";
-export { ObjectSchema, ValidationError } from "yup";
 export { CreatePaymentMethodResponse } from "./components/payment-method-form/payment-method-responses";
 export { BillingFormFields } from "./components/billing-form/billing-form-schema";
+export { ValidationError } from "yup";
 export { PaymentMethodTypes } from "./api";
 export namespace Components {
     interface FormComponent {
         "defaultValues": any;
         "form": any;
-        "schema": ObjectSchema<any>;
     }
     interface FormControlSelect {
         "defaultValue": string;
@@ -350,8 +349,8 @@ declare namespace LocalJSX {
     interface FormComponent {
         "defaultValues"?: any;
         "form"?: any;
+        "onFormShouldUpdate"?: (event: FormComponentCustomEvent<any>) => void;
         "onValidFormSubmitted"?: (event: FormComponentCustomEvent<any>) => void;
-        "schema"?: ObjectSchema<any>;
     }
     interface FormControlSelect {
         "defaultValue"?: string;

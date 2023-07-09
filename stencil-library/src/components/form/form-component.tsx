@@ -1,5 +1,5 @@
-import { Component, Host, h, Prop, Event, EventEmitter, Listen } from '@stencil/core';
-import { ObjectSchema, ValidationError } from 'yup';
+import { Component, Host, h, Prop, Event, EventEmitter, Listen, Watch } from '@stencil/core';
+import { ValidationError } from 'yup';
 
 @Component({
   tag: 'form-component',
@@ -8,8 +8,13 @@ import { ObjectSchema, ValidationError } from 'yup';
 export class TextInput {
   @Prop() form: any;
   @Prop() defaultValues: any;
-  @Prop() schema: ObjectSchema<any>;
   @Event() validFormSubmitted: EventEmitter;
+  @Event() formShouldUpdate: EventEmitter<any>;
+
+  @Watch('form')
+  handleFormChange(newValue: any) {
+    this.formShouldUpdate.emit(newValue);
+  }
 
   @Listen('formControlInput')
   handleFormControlInput(event: CustomEvent) {
@@ -20,7 +25,7 @@ export class TextInput {
   @Listen('formControlBlur')
   handleFormControlBlur() {
     if (!this.form.isValid) {
-      this.validate(this.schema);
+      this.validate(this.form.schema);
     }
   };
 
@@ -42,10 +47,11 @@ export class TextInput {
     }
 
     this.form.values = { ...this.form.values, ...newControllerValue };
+    this.form = { ...this.form };
   }
 
   validate = async (schema): Promise<{ isValid: boolean, errors: any, values: any }> => {
-    this.form.isValid = true;
+    this.form.isValid = true
     this.form.errors = {};
 
     try {
@@ -56,6 +62,7 @@ export class TextInput {
         this.form.errors[item.path] = item.message;
       });
     }
+    this.form = { ...this.form };
     return this.form.isValid;
   };
 
@@ -68,7 +75,7 @@ export class TextInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={(event) => this.submit(event, this.schema)}>
+        <form onSubmit={(event) => this.submit(event, this.form.schema)}>
           <slot />
           <button type="submit">Submit</button>
         </form>
