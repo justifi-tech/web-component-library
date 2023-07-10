@@ -78,12 +78,12 @@ export class CardForm {
     if (!this.childRef) {
       throw new Error('Cannot call validate');
     }
-    return this.childRef.validate();
+    return this.childRef.validate;
   }
 
   /**
-    *  Manually resizes the iframe to fit the contents of the iframe
-    */
+   *  Manually resizes the iframe to fit the contents of the iframe
+   */
   @Method()
   async resize(): Promise<void> {
     if (!this.childRef) {
