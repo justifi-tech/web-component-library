@@ -36,6 +36,7 @@ export class PaymentMethodForm {
 
   componentShouldUpdate() {
     this.sendStyleOverrides();
+    this.resize();
   }
 
   sendStyleOverrides() {
@@ -59,7 +60,7 @@ export class PaymentMethodForm {
   }
 
   private postMessage(eventType: string, payload?: any) {
-    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, '*');
+    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, this.iframeOrigin || process.env.IFRAME_ORIGIN || '*');
   }
 
   private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
@@ -109,7 +110,7 @@ export class PaymentMethodForm {
   }
 
   private getIframeSrc() {
-    const iframeOrigin = this.iframeOrigin || 'https://js.justifi.ai/v2';
+    const iframeOrigin = this.iframeOrigin || process.env.IFRAME_ORIGIN || 'https://js.justifi.ai/v2';
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
     if (this.paymentMethodFormValidationMode) {
@@ -130,6 +131,10 @@ export class PaymentMethodForm {
           src={this.getIframeSrc()}
           ref={el => (this.iframeElement = el as HTMLIFrameElement)}
           height={this.height}
+          onLoad={() => {
+            this.sendStyleOverrides();
+            this.resize();
+          }}
         ></iframe>
       </Host>
     );
