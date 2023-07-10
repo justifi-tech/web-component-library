@@ -82,8 +82,8 @@ export class CardForm {
   }
 
   /**
-    *  Manually resizes the iframe to fit the contents of the iframe
-    */
+   *  Manually resizes the iframe to fit the contents of the iframe
+   */
   @Method()
   async resize(): Promise<void> {
     if (!this.childRef) {
