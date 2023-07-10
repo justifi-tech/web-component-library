@@ -78,7 +78,7 @@ export class CardForm {
     if (!this.childRef) {
       throw new Error('Cannot call validate');
     }
-    return this.childRef.validate;
+    return this.childRef.validate();
   }
 
   /**
