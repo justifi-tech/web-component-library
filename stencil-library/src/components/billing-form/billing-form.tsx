@@ -17,7 +17,7 @@ export class BillingForm {
   /**
    * (Optional) A label for the form.
    */
-  @Prop() legend?: string;
+  @Prop({ mutable: true }) legend?: string;
   @State() billingFields: BillingFormFields = {
     name: '',
     address_line1: '',
