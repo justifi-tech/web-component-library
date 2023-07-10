@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
-import FormController from '../../form/form-controller';
+import FormState from '../../form/form';
 
 @Component({
   tag: 'justifi-business-address-form',
@@ -8,9 +8,8 @@ import FormController from '../../form/form-controller';
   shadow: true,
 })
 export class BusinessAddressForm {
-  @Prop() form: FormController;
+  @Prop() form: FormState;
   @Prop() subFormName: string;
-  @Prop() errors: any;
 
   render() {
     return (
@@ -18,43 +17,43 @@ export class BusinessAddressForm {
         <div class="row gx-2 gy-2">
           <div class="col-12">
             <form-control-text
-              name="line1"
+              name={`${this.subFormName}.line1`}
               label="Street Address"
-              {...this.form.register(`${this.subFormName}.line1`)}
-              error={this.errors && this.errors[`${this.subFormName}.line1`]} />
+              defaultValue={this.form.defaultValues[this.subFormName]?.address?.line1}
+              error={this.form.errors[`${this.subFormName}.line1`]} />
           </div>
 
           <div class="col-12">
             <form-control-text
-              name="line2"
-              label="Apartment, Suite, etc. (optional)"
-              {...this.form.register(`${this.subFormName}.line2`)}
-              error={this.errors && this.errors[`${this.subFormName}.line2`]} />
+              name={`${this.subFormName}.line2`}
+              label="Apt, Suite, etc. (optional)"
+              defaultValue={this.form.defaultValues[this.subFormName]?.address?.line2}
+              error={this.form.errors[`${this.subFormName}.line2`]} />
           </div>
 
           <div class="col-12">
             <form-control-text
-              name="city"
+              name={`${this.subFormName}.city`}
               label="City"
-              {...this.form.register(`${this.subFormName}.city`)}
-              error={this.errors && this.errors[`${this.subFormName}.city`]} />
+              defaultValue={this.form.defaultValues[this.subFormName]?.address?.city}
+              error={this.form.errors[`${this.subFormName}.city`]} />
           </div>
 
           <div class="col-12">
-            <select-input
-              name="state"
+            <form-control-select
+              name={`${this.subFormName}.state`}
               label="State"
+              defaultValue={this.form.defaultValues[this.subFormName]?.address?.state}
               options={StateOptions}
-              {...this.form.register(`${this.subFormName}.state`)}
-              error={this.errors && this.errors[`${this.subFormName}.state`]} />
+              error={this.form.errors[`${this.subFormName}.state`]} />
           </div>
 
           <div class="col-12">
             <form-control-text
-              name="postal_code"
+              name={`${this.subFormName}.postal_code`}
               label="Postal Code"
-              {...this.form.register(`${this.subFormName}.postal_code`)}
-              error={this.errors && this.errors[`${this.subFormName}.postal_code`]} />
+              defaultValue={this.form.defaultValues[this.subFormName]?.address?.postal_code}
+              error={this.form.errors[`${this.subFormName}.postal_code`]} />
           </div>
         </div>
       </Host>

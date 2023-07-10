@@ -24,7 +24,7 @@ export class BusinessRepresentative {
                 name="representative.name"
                 label="Full Name"
                 defaultValue={this.form.defaultValues?.representative?.name}
-                error={this.form.errors?.representative?.name} />
+                error={this.form.errors['representative.name']} />
             </div>
 
             <div class="col-4">
@@ -33,7 +33,7 @@ export class BusinessRepresentative {
                 label="Prefix"
                 defaultValue={this.form.defaultValues?.representative?.title}
                 options={[{ label: 'Select Prefix', value: '' }, { label: 'Mrs.', value: 'Mrs.' }]}
-                error={this.form.errors?.representative?.title} />
+                error={this.form.errors['representative.title']} />
             </div>
 
             <div class="col-12">
@@ -41,7 +41,7 @@ export class BusinessRepresentative {
                 name="representative.email"
                 label="Email Address"
                 defaultValue={this.form.defaultValues?.representative?.email}
-                error={this.form.errors?.representative?.email} />
+                error={this.form.errors['representative.email']} />
             </div>
 
             <div class="col-12">
@@ -49,7 +49,7 @@ export class BusinessRepresentative {
                 name="representative.phone"
                 label="Phone Number"
                 defaultValue={this.form.defaultValues?.representative?.phone}
-                error={this.form.errors?.representative?.phone} />
+                error={this.form.errors['representative.phone']} />
             </div>
 
             <div class="col-12">
@@ -61,7 +61,7 @@ export class BusinessRepresentative {
                 name="representative.dob_day"
                 label="Day"
                 defaultValue={this.form.defaultValues?.representative?.dob_day}
-                error={this.form.errors?.representative?.dob_day} />
+                error={this.form.errors['representative.dob_day']} />
             </div>
 
             <div class="col-4">
@@ -69,7 +69,7 @@ export class BusinessRepresentative {
                 name="representative.dob_month"
                 label="Month"
                 defaultValue={this.form.defaultValues?.representative?.dob_month}
-                error={this.form.errors?.representative?.dob_month} />
+                error={this.form.errors['representative.dob_month']} />
             </div>
 
             <div class="col-4">
@@ -77,7 +77,7 @@ export class BusinessRepresentative {
                 name="representative.dob_year"
                 label="Year"
                 defaultValue={this.form.defaultValues?.representative?.dob_year}
-                error={this.form.errors?.representative?.dob_year} />
+                error={this.form.errors['representative.dob_year']} />
             </div>
 
             <div class="col-12">
@@ -85,12 +85,12 @@ export class BusinessRepresentative {
                 name="representative.identification_number"
                 label="EIN/SSN"
                 defaultValue={this.form.defaultValues?.representative?.identification_number}
-                error={this.form.errors?.representative?.identification_number} />
+                error={this.form.errors['representative.identification_number']} />
             </div>
-            {/* 
+
             <div class="col-12">
-              <justifi-business-address-form form={this.form} subFormName='representative.address' errors={this.errors} />
-            </div> */}
+              <justifi-business-address-form form={this.form} subFormName='representative.address' />
+            </div>
           </div>
         </fieldset>
       </Host >

@@ -79,8 +79,7 @@ export namespace Components {
         "validate": () => Promise<{ isValid: boolean; }>;
     }
     interface JustifiBusinessAddressForm {
-        "errors": any;
-        "form": FormController;
+        "form": FormState;
         "subFormName": string;
     }
     /**
@@ -409,8 +408,7 @@ declare namespace LocalJSX {
         "legend"?: string;
     }
     interface JustifiBusinessAddressForm {
-        "errors"?: any;
-        "form"?: FormController;
+        "form"?: FormState;
         "subFormName"?: string;
     }
     /**
