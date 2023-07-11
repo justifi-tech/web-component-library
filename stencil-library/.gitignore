@@ -1,6 +1,11 @@
+# Auto-generated
 dist/
 www/
 loader/
+docs.json
+build/
+docs.d.ts
+src/components.d.ts
 
 *~
 *.sw[mnpcod]
