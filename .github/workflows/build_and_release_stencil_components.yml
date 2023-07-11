@@ -9,7 +9,7 @@ on:
         description: Select package access
         options:
           - public
-          - private
+          - restricted
 
 jobs:
   build:
