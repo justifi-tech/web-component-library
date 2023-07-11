@@ -145,7 +145,15 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ## Methods
 
-### `tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) => Promise<CreatePaymentMethodResponse>`
+### `resize() => Promise<void>`
+
+Manually resizes the iframe to fit the contents of the iframe
+
+#### Returns
+
+Type: `Promise<void>`
+
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
 
 Makes a tokenization request to the iframe
 

@@ -1,11 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('business-address', () => {
+describe('justifi-business-address', () => {
   it('renders', async () => {
     const page = await newE2EPage();
-    await page.setContent('<business-address></business-address>');
+    await page.setContent('<justifi-business-address></justifi-business-address>');
 
-    const element = await page.find('business-address');
+    const element = await page.find('justifi-business-address');
     expect(element).toHaveClass('hydrated');
   });
 });

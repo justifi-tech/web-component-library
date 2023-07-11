@@ -35,7 +35,6 @@ jobs:
           yarn build:prod
           yarn build-storybook
           echo "::endgroup::"
-
       - name: 'upload'
         uses: actions/upload-pages-artifact@v1.0.8
         with:

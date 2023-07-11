@@ -10,7 +10,7 @@ export class SelectInput {
   @Prop() label: string;
   @Prop() defaultValue: string;
   @Prop() error: string;
-  @Prop() options: { label: string; value: string }[];
+  @Prop() options: { label: string; value: string }[] = [];
   @Event() fieldReceivedInput: EventEmitter<{ name: string; value: string }>;
   @State() internalValue = '';
 
@@ -29,7 +29,7 @@ export class SelectInput {
         <select
           name={this.name}
           onInput={event => this.onInput(event)}
-          part={`input ${this.error && 'input-invalid'}`}
+          part={`input${this.error ? ' input-invalid' : ''}`}
           class={this.error ? 'form-select is-invalid' : 'form-select'}
         >
           {this.options.map(option => (
