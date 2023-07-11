@@ -11,7 +11,7 @@
 | `error`        | `error`         |             | `string`                              | `undefined` |
 | `label`        | `label`         |             | `string`                              | `undefined` |
 | `name`         | `name`          |             | `string`                              | `undefined` |
-| `options`      | --              |             | `{ label: string; value: string; }[]` | `undefined` |
+| `options`      | --              |             | `{ label: string; value: string; }[]` | `[]`        |
 
 
 ## Events
@@ -33,15 +33,11 @@
 ### Used by
 
  - [justifi-billing-form](../billing-form)
- - [justifi-business-address-form](../business-form/business-address)
- - [justifi-business-representative](../business-form/business-representative)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-billing-form --> select-input
-  justifi-business-address-form --> select-input
-  justifi-business-representative --> select-input
   style select-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

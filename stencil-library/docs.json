@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-10T19:55:43",
+  "timestamp": "2023-07-11T23:27:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.3.0",
@@ -1692,6 +1692,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "[]",
           "values": [
             {
               "type": "{ label: string; value: string; }[]"

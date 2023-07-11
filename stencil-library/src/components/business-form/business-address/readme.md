@@ -5,31 +5,31 @@
 <!-- Auto Generated Below -->
 
 
-## Methods
+## Properties
 
-### `submit() => Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
-
-
-
-#### Returns
-
-Type: `Promise<{ isValid: boolean; values: BusinessAddressFormFields; }>`
-
-
+| Property      | Attribute       | Description | Type        | Default     |
+| ------------- | --------------- | ----------- | ----------- | ----------- |
+| `form`        | --              |             | `FormState` | `undefined` |
+| `subFormName` | `sub-form-name` |             | `string`    | `undefined` |
 
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-business-representative](../business-representative)
+
 ### Depends on
 
-- [text-input](../../text-input)
-- [select-input](../../select-input)
+- [form-control-text](../../form)
+- [form-control-select](../../form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-address-form --> text-input
-  justifi-business-address-form --> select-input
+  justifi-business-address-form --> form-control-text
+  justifi-business-address-form --> form-control-select
+  justifi-business-representative --> justifi-business-address-form
   style justifi-business-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
