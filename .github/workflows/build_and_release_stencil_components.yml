@@ -39,6 +39,6 @@ jobs:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
       - name: Publish to GitHub Registry
         run: |
-          yarn publish --verbose --no-git-tag-version --access ${{ github.event.inputs.release_type }}
+          yarn publish --verbose --no-git-tag-version --access ${{ inputs.release_type }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
