@@ -23,7 +23,8 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
 }
 
 const Api = (authToken: string) => {
-  const apiOrigin = 'https://justifi.ai';
+  const originFromEnv = process.env.API_ORIGIN;
+  const apiOrigin = originFromEnv || 'https://justifi.ai';
 
   async function getAuthorizationHeader() {
     return {
