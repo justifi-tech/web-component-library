@@ -11,7 +11,7 @@ describe('text-input', () => {
       <text-input exportparts="label,input,input-invalid">
         <mock:shadow-root>
           <label class="form-label" part="label"></label>
-          <input class="form-control" part="input undefined" type="text">
+          <input class="form-control" part="input" type="text">
         </mock:shadow-root>
       </text-input>
     `);
@@ -26,7 +26,7 @@ describe('text-input', () => {
       <text-input name="test" label="Test" default-value="Hello" exportparts="label,input,input-invalid">
         <mock:shadow-root>
           <label class="form-label" part="label">Test</label>
-          <input class="form-control" name="test" part="input undefined" type="text" value="Hello">
+          <input class="form-control" name="test" part="input" type="text" value="Hello">
         </mock:shadow-root>
       </text-input>
     `);
