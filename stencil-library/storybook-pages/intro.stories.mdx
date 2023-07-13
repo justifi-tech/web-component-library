@@ -19,6 +19,7 @@ Latest Version: <code>{extractVersionFromPackage()}</code>
 - [React](#react)
 - [Styling](#styling)
   - [Styling iFramed components with variables](#styling-components-with-variables)
+    - [Loading Google Fonts](#loading-google-fonts)
   - [Styling components with custom css](#styling-components-with-custom-css)
 - [Changelog](/docs/changelog--docs)
 
@@ -138,6 +139,47 @@ This is a complete list of variables as defined in this project's `root.scss`:
 <Markdown>{`
   **Note:** When customizing the \`--jfi-form-control-box-shadow\` variable, ensure that the \`--jfi-layout-padding\` is not set to \`0\`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
 `}</Markdown>
+
+## Loading Google fonts
+
+In order to load custom fonts in the iFramed components, there's a special CSS variable that can be used: `--jfi-load-google-font`.
+The value provided should be a string commpatible with what's described in the following [official documentation from Google](https://developers.google.com/fonts/docs/css2).
+
+### Check out the [CardForm story for this to see it in action](?path=/docs/components-cardform--styled).
+
+Usage examples:
+<Source
+  language="css"
+  dark
+  code={dedent`
+    :root {
+      /*
+        Note: The value provided to '--jfi-load-google-font' needs to be wrapped in quotes,
+        since it can contain characters incompatible with CSS that can't be used literally.
+
+        Also, as you'll see in the examples below, if more than one font-family
+        is to be loaded, any subsequent one except the first needs to be preceeded
+        by the '&family=' string, as described in the documentation linked above.
+      */
+
+      /* Load a single font (and it's default weight of 400) */
+      --jfi-load-google-font: 'Inter';
+
+      /* Load a font with multiple weights */
+      --jfi-load-google-font: 'Inter:wght@200;400;700;900';
+
+      /* Load multiple fonts */
+      --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
+
+      /* Load multiple fonts with multiple weights */
+      --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima:wght@200;400';
+
+      /* Then, any of these can be used with the following two variables */
+      --jfi-layout-font-family: Inter; /* Applies to all elements and is inherited */
+      --jfi-form-label-font-family: Agdasima; /* Applies exclusively to the form labels */
+    }
+  `}
+/>
 
 ## Styling components with custom css
 

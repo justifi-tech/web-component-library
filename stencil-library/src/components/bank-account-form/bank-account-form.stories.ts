@@ -1,5 +1,7 @@
 const isDev = process.env.NODE_ENV === 'development';
 const CSSVars = `
+--jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900&family=Agdasima';
+--jfi-layout-font-family: Roboto Mono;
 --jfi-layout-padding: 4px;
 --jfi-layout-form-control-spacing-x: .5rem;
 --jfi-layout-form-control-spacing-y: 1rem;
