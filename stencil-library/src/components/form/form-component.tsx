@@ -3,6 +3,7 @@ import { ValidationError } from 'yup';
 
 @Component({
   tag: 'form-component',
+  styleUrl: 'form-component.scss',
   shadow: true,
 })
 export class TextInput {
@@ -76,8 +77,16 @@ export class TextInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={(event) => this.submit(event, this.form.schema)}>
-          <slot />
-          <button type="submit">Submit</button>
+          <div class="row gy-3">
+            <div class="col-12">
+              <slot />
+            </div>
+          </div>
+          <div class="row gy-3">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
         </form>
       </Host>
     );
