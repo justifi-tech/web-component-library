@@ -10,17 +10,16 @@ export class TextInput {
   @Prop() form: any;
   @Prop() defaultValues: any;
   @Event() validFormSubmitted: EventEmitter;
-  @Event() formShouldUpdate: EventEmitter<any>;
+  @Event() updateFormState: EventEmitter<any>;
 
   @Watch('form')
   handleFormChange(newValue: any) {
-    this.formShouldUpdate.emit(newValue);
+    this.updateFormState.emit(newValue);
   }
 
-  @Listen('formControlInput')
-  handleFormControlInput(event: CustomEvent) {
-    const { name, value } = event.detail;
-    this.setFormValue(name, value);
+  @Listen('updateFormValues')
+  handleFormValuesUpdate(event: CustomEvent) {
+    this.form = { ...this.form, values: { ...this.form.values, ...event.detail } };
   };
 
   @Listen('formControlBlur')
@@ -29,27 +28,6 @@ export class TextInput {
       this.validate(this.form.schema);
     }
   };
-
-  setFormValue(name: string, value: any) {
-    const path = name.split('.');
-    let newControllerValues = {};
-
-    if (path.length > 1) {
-      path.reduce((acc, part, index) => {
-        if (index === path.length - 1) {
-          acc[part] = value;
-        } else {
-          acc[part] = acc[part] || {};
-        }
-        return acc[part];
-      }, newControllerValues);
-    } else {
-      newControllerValues = { [name]: value };
-    }
-
-    this.form.values = { ...this.form.values, ...newControllerValues };
-    this.form = { ...this.form };
-  }
 
   validate = async (schema): Promise<{ isValid: boolean, errors: any, values: any }> => {
     this.form.isValid = true
@@ -69,6 +47,7 @@ export class TextInput {
 
   async submit(event, schema) {
     event.preventDefault();
+    console.log('submit', this.form.values)
     const formIsValid = await this.validate(schema);
     if (formIsValid) this.validFormSubmitted.emit(this.form.values);
   }

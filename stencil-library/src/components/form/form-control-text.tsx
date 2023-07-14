@@ -10,8 +10,15 @@ export class TextInput {
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
+  @Prop() onChange: (field: { [key: string]: string }) => void;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
+
+  handleFormControlInput(event: any) {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.onChange({ [name]: target.value });
+  };
 
   render() {
     return (
@@ -22,7 +29,7 @@ export class TextInput {
         <input
           id={this.name}
           name={this.name}
-          onInput={(event: any) => this.formControlInput.emit({ name: this.name, value: event.target.value })}
+          onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}

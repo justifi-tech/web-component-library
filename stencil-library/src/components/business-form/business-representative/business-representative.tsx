@@ -1,5 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
-import FormState from '../../form/form';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -7,11 +6,19 @@ import FormState from '../../form/form';
   shadow: true,
 })
 export class BusinessRepresentative {
-  @Prop() form: FormState;
+  @Prop() defaultValues: any;
+  @Prop() errors: any = {};
+  @State() representative: any = {};
+  @Event() updateFormValues: EventEmitter<any>;
 
-  // private toggleIsOwner() {
-  //   this.representativeFields.is_owner = !this.representativeFields.is_owner
-  // }
+  @Watch('representative')
+  handleRepresentativeChange(newValue: any) {
+    this.updateFormValues.emit({ representative: newValue });
+  };
+
+  onChange(field) {
+    this.representative = { ...this.representative, ...field };
+  };
 
   render() {
     return (
@@ -21,35 +28,39 @@ export class BusinessRepresentative {
           <div class="row gx-2 gy-2">
             <div class="col-8">
               <form-control-text
-                name="representative.name"
+                name="name"
                 label="Full Name"
-                defaultValue={this.form.defaultValues?.representative?.name}
-                error={this.form.errors['representative.name']} />
+                defaultValue={this.defaultValues?.representative?.name}
+                error={this.errors['representative.name']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-4">
               <form-control-select
-                name="representative.title"
+                name="title"
                 label="Prefix"
-                defaultValue={this.form.defaultValues?.representative?.title}
+                defaultValue={this.defaultValues?.representative?.title}
                 options={[{ label: 'Select Prefix', value: '' }, { label: 'Mrs.', value: 'Mrs.' }]}
-                error={this.form.errors['representative.title']} />
+                error={this.errors['representative.title']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-12">
               <form-control-text
-                name="representative.email"
+                name="email"
                 label="Email Address"
-                defaultValue={this.form.defaultValues?.representative?.email}
-                error={this.form.errors['representative.email']} />
+                defaultValue={this.defaultValues?.representative?.email}
+                error={this.errors['representative.email']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-12">
               <form-control-text
-                name="representative.phone"
+                name="phone"
                 label="Phone Number"
-                defaultValue={this.form.defaultValues?.representative?.phone}
-                error={this.form.errors['representative.phone']} />
+                defaultValue={this.defaultValues?.representative?.phone}
+                error={this.errors['representative.phone']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-12">
@@ -58,39 +69,43 @@ export class BusinessRepresentative {
 
             <div class="col-4">
               <form-control-text
-                name="representative.dob_day"
+                name="dob_day"
                 label="Day"
-                defaultValue={this.form.defaultValues?.representative?.dob_day}
-                error={this.form.errors['representative.dob_day']} />
+                defaultValue={this.defaultValues?.representative?.dob_day}
+                error={this.errors['representative.dob_day']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-4">
               <form-control-text
-                name="representative.dob_month"
+                name="dob_month"
                 label="Month"
-                defaultValue={this.form.defaultValues?.representative?.dob_month}
-                error={this.form.errors['representative.dob_month']} />
+                defaultValue={this.defaultValues?.representative?.dob_month}
+                error={this.errors['representative.dob_month']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-4">
               <form-control-text
-                name="representative.dob_year"
+                name="dob_year"
                 label="Year"
-                defaultValue={this.form.defaultValues?.representative?.dob_year}
-                error={this.form.errors['representative.dob_year']} />
+                defaultValue={this.defaultValues?.representative?.dob_year}
+                error={this.errors['representative.dob_year']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
             <div class="col-12">
               <form-control-text
-                name="representative.identification_number"
+                name="identification_number"
                 label="EIN/SSN"
-                defaultValue={this.form.defaultValues?.representative?.identification_number}
-                error={this.form.errors['representative.identification_number']} />
+                defaultValue={this.defaultValues?.representative?.identification_number}
+                error={this.errors['representative.identification_number']}
+                onChange={(event: any) => this.onChange(event)} />
             </div>
 
-            <div class="col-12">
+            {/* <div class="col-12">
               <justifi-business-address-form form={this.form} subFormName='representative.address' />
-            </div>
+            </div> */}
           </div>
         </fieldset>
       </Host >
