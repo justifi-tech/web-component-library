@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 
 import { BusinessStructureOptions, BusinessTypeOptions } from '../business-form-schema';
 
@@ -16,11 +16,11 @@ export class BusinessGenericInfo {
   @Prop() defaultValues: any;
   @Prop() errors: any;
   @State() genericBusinessInfo: any = {};
-  @Event() updateFormValues: EventEmitter<any>;
+  @Prop() onFormUpdate: (values: any) => void;
 
   @Watch('genericBusinessInfo')
-  handleGenericBusinessInfoChange(newValue: any) {
-    this.updateFormValues.emit(newValue);
+  handleGenericBusinessInfoChange(newValues: any) {
+    this.onFormUpdate(newValues);
   };
 
   onChange(field) {

@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -6,19 +6,23 @@ import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@st
   shadow: true,
 })
 export class BusinessRepresentative {
-  @Prop() defaultValues: any;
-  @Prop() errors: any = {};
   @State() representative: any = {};
-  @Event() updateFormValues: EventEmitter<any>;
+  @Prop() defaultValues?: any;
+  @Prop() errors?: any = {};
+  @Prop() onFormUpdate: (values: any) => void;
 
   @Watch('representative')
-  handleRepresentativeChange(newValue: any) {
-    this.updateFormValues.emit({ representative: newValue });
+  handleRepresentativeChange(newValues: any) {
+    this.onFormUpdate(newValues);
   };
 
   onChange(field) {
     this.representative = { ...this.representative, ...field };
   };
+
+  onAddressFormUpdate(values) {
+    this.representative.address = values;
+  }
 
   render() {
     return (
@@ -30,8 +34,8 @@ export class BusinessRepresentative {
               <form-control-text
                 name="name"
                 label="Full Name"
-                defaultValue={this.defaultValues?.representative?.name}
-                error={this.errors['representative.name']}
+                defaultValue={this.defaultValues?.name}
+                error={this.errors?.name}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -39,9 +43,9 @@ export class BusinessRepresentative {
               <form-control-select
                 name="title"
                 label="Prefix"
-                defaultValue={this.defaultValues?.representative?.title}
+                defaultValue={this.defaultValues?.title}
                 options={[{ label: 'Select Prefix', value: '' }, { label: 'Mrs.', value: 'Mrs.' }]}
-                error={this.errors['representative.title']}
+                error={this.errors?.title}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -49,8 +53,8 @@ export class BusinessRepresentative {
               <form-control-text
                 name="email"
                 label="Email Address"
-                defaultValue={this.defaultValues?.representative?.email}
-                error={this.errors['representative.email']}
+                defaultValue={this.defaultValues?.email}
+                error={this.errors?.email}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -58,8 +62,8 @@ export class BusinessRepresentative {
               <form-control-text
                 name="phone"
                 label="Phone Number"
-                defaultValue={this.defaultValues?.representative?.phone}
-                error={this.errors['representative.phone']}
+                defaultValue={this.defaultValues?.phone}
+                error={this.errors?.phone}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -71,8 +75,8 @@ export class BusinessRepresentative {
               <form-control-text
                 name="dob_day"
                 label="Day"
-                defaultValue={this.defaultValues?.representative?.dob_day}
-                error={this.errors['representative.dob_day']}
+                defaultValue={this.defaultValues?.dob_day}
+                error={this.errors?.dob_day}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -80,8 +84,8 @@ export class BusinessRepresentative {
               <form-control-text
                 name="dob_month"
                 label="Month"
-                defaultValue={this.defaultValues?.representative?.dob_month}
-                error={this.errors['representative.dob_month']}
+                defaultValue={this.defaultValues?.dob_month}
+                error={this.errors?.dob_month}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -89,8 +93,8 @@ export class BusinessRepresentative {
               <form-control-text
                 name="dob_year"
                 label="Year"
-                defaultValue={this.defaultValues?.representative?.dob_year}
-                error={this.errors['representative.dob_year']}
+                defaultValue={this.defaultValues?.dob_year}
+                error={this.errors?.dob_year}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
@@ -98,14 +102,17 @@ export class BusinessRepresentative {
               <form-control-text
                 name="identification_number"
                 label="EIN/SSN"
-                defaultValue={this.defaultValues?.representative?.identification_number}
-                error={this.errors['representative.identification_number']}
+                defaultValue={this.defaultValues?.identification_number}
+                error={this.errors?.identification_number}
                 onChange={(event: any) => this.onChange(event)} />
             </div>
 
-            {/* <div class="col-12">
-              <justifi-business-address-form form={this.form} subFormName='representative.address' />
-            </div> */}
+            <div class="col-12">
+              <justifi-business-address-form
+                onFormUpdate={(values: any) => this.onAddressFormUpdate(values)}
+                errors={this.errors?.address}
+                defaultValues={this.defaultValues?.address} />
+            </div>
           </div>
         </fieldset>
       </Host >

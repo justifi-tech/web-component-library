@@ -1,6 +1,5 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
-import FormState from '../../form/form';
 
 @Component({
   tag: 'justifi-business-address-form',
@@ -8,8 +7,19 @@ import FormState from '../../form/form';
   shadow: true,
 })
 export class BusinessAddressForm {
-  @Prop() form: FormState;
-  @Prop() subFormName: string;
+  @State() address: any = {};
+  @Prop() defaultValues?: any;
+  @Prop() errors?: any = {};
+  @Prop() onFormUpdate: (values: any) => void;
+
+  @Watch('address')
+  handleAddressChange(newValue: any) {
+    this.onFormUpdate(newValue)
+  }
+
+  onChange(field) {
+    this.address = { ...this.address, ...field };
+  };
 
   render() {
     return (
@@ -17,43 +27,48 @@ export class BusinessAddressForm {
         <div class="row gx-2 gy-2">
           <div class="col-12">
             <form-control-text
-              name={`${this.subFormName}.line1`}
+              name="line1"
               label="Street Address"
-              defaultValue={this.form.defaultValues[this.subFormName]?.address?.line1}
-              error={this.form.errors[`${this.subFormName}.line1`]} />
+              defaultValue={this.defaultValues?.line1}
+              error={this.errors?.line1}
+              onChange={(event: any) => this.onChange(event)} />
           </div>
 
           <div class="col-12">
             <form-control-text
-              name={`${this.subFormName}.line2`}
+              name="line2"
               label="Apt, Suite, etc. (optional)"
-              defaultValue={this.form.defaultValues[this.subFormName]?.address?.line2}
-              error={this.form.errors[`${this.subFormName}.line2`]} />
+              defaultValue={this.defaultValues?.line2}
+              error={this.errors?.line2}
+              onChange={(event: any) => this.onChange(event)} />
           </div>
 
           <div class="col-12">
             <form-control-text
-              name={`${this.subFormName}.city`}
+              name="city"
               label="City"
-              defaultValue={this.form.defaultValues[this.subFormName]?.address?.city}
-              error={this.form.errors[`${this.subFormName}.city`]} />
+              defaultValue={this.defaultValues?.city}
+              error={this.errors?.city}
+              onChange={(event: any) => this.onChange(event)} />
           </div>
 
           <div class="col-12">
             <form-control-select
-              name={`${this.subFormName}.state`}
+              name="state"
               label="State"
-              defaultValue={this.form.defaultValues[this.subFormName]?.address?.state}
+              defaultValue={this.defaultValues?.state}
               options={StateOptions}
-              error={this.form.errors[`${this.subFormName}.state`]} />
+              error={this.errors?.state}
+              onChange={(event: any) => this.onChange(event)} />
           </div>
 
           <div class="col-12">
             <form-control-text
-              name={`${this.subFormName}.postal_code`}
+              name="postal_code"
               label="Postal Code"
-              defaultValue={this.form.defaultValues[this.subFormName]?.address?.postal_code}
-              error={this.form.errors[`${this.subFormName}.postal_code`]} />
+              defaultValue={this.defaultValues?.postal_code}
+              error={this.errors?.postal_code}
+              onChange={(event: any) => this.onChange(event)} />
           </div>
         </div>
       </Host>

@@ -9,6 +9,7 @@ import { ValidationError } from 'yup';
 export class TextInput {
   @Prop() form: any;
   @Prop() defaultValues: any;
+  @Prop() onFormUpdate: (values: any) => void;
   @Event() validFormSubmitted: EventEmitter;
   @Event() updateFormState: EventEmitter<any>;
 
@@ -17,17 +18,24 @@ export class TextInput {
     this.updateFormState.emit(newValue);
   }
 
-  @Listen('updateFormValues')
-  handleFormValuesUpdate(event: CustomEvent) {
-    this.form = { ...this.form, values: { ...this.form.values, ...event.detail } };
-  };
-
   @Listen('formControlBlur')
   handleFormControlBlur() {
     if (!this.form.isValid) {
       this.validate(this.form.schema);
     }
   };
+
+  setFormError(obj, path, message: string) {
+    var properties = Array.isArray(path) ? path : path.split(".");
+    var property = properties.shift();
+    obj[property] = obj[property] || {};
+    if (properties.length) {
+      this.setFormError(obj[property], properties, message);
+    } else {
+      obj[property] = message;
+    }
+    return obj;
+  }
 
   validate = async (schema): Promise<{ isValid: boolean, errors: any, values: any }> => {
     this.form.isValid = true
@@ -37,10 +45,13 @@ export class TextInput {
       await schema.validate(this.form.values, { abortEarly: false });
     } catch (err) {
       this.form.isValid = false;
+      const newErrors = {};
       err.inner.map((item: ValidationError) => {
-        this.form.errors[item.path] = item.message;
+        this.setFormError(newErrors, item.path, item.message);
       });
+      this.form.errors = newErrors
     }
+
     this.form = { ...this.form };
     return this.form.isValid;
   };

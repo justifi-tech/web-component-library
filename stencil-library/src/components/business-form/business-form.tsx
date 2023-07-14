@@ -48,18 +48,24 @@ export class BusinessForm {
     await this.sendBusinessForm(data);
   }
 
+  updateForm(values) {
+    this.form = { ...this.form, values };
+  };
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
         <form-component form={this.form}>
           <justifi-business-generic-info-form
+            onFormUpdate={(values) => this.updateForm(values)}
             errors={this.form.errors}
             defaultValues={this.form.defaultValues}>
           </justifi-business-generic-info-form>
           <justifi-business-representative
-            errors={this.form.errors}
-            defaultValues={this.form.defaultValues}>
+            onFormUpdate={(values) => this.updateForm(values)}
+            errors={this.form.errors.representative}
+            defaultValues={this.form.defaultValues.representative}>
           </justifi-business-representative>
         </form-component>
       </Host>
