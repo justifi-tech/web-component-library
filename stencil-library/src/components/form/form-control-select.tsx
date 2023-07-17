@@ -10,8 +10,16 @@ export class TextInput {
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
-  @Event() formControlInput: EventEmitter<any>;
+  @Prop() onChange: (field: { [key: string]: string }) => void;
   @Prop() options: { label: string; value: string }[];
+  @Event() formControlInput: EventEmitter<any>;
+  @Event() formControlBlur: EventEmitter<any>;
+
+  handleFormControlInput(event: any) {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.onChange({ [name]: target.value });
+  };
 
   render() {
     return (
@@ -22,7 +30,7 @@ export class TextInput {
         <select
           id={this.name}
           name={this.name}
-          onInput={(event: any) => this.formControlInput.emit({ name: this.name, value: event.target.value })}
+          onInput={(event: any) => this.handleFormControlInput(event)}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-select is-invalid' : 'form-select'}>
           {this.options.map(option => (
