@@ -13,7 +13,7 @@ export class BusinessRepresentative {
 
   @Watch('representative')
   handleRepresentativeChange(newValues: any) {
-    this.onFormUpdate(newValues);
+    this.onFormUpdate({ representative: newValues });
   };
 
   onChange(field) {
@@ -22,6 +22,7 @@ export class BusinessRepresentative {
 
   onAddressFormUpdate(values) {
     this.representative.address = values;
+    this.representative = { ...this.representative };
   }
 
   render() {

@@ -58,7 +58,6 @@ export class TextInput {
 
   async submit(event, schema) {
     event.preventDefault();
-    console.log('submit', this.form.values)
     const formIsValid = await this.validate(schema);
     if (formIsValid) this.validFormSubmitted.emit(this.form.values);
   }
