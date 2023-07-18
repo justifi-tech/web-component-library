@@ -18,12 +18,32 @@ export class FormController {
   private setError(obj, path, message: string) {
     var properties = Array.isArray(path) ? path : path.split(".");
     var property = properties.shift();
-    obj[property] = obj[property] || {};
-    if (properties.length) {
-      this.setError(obj[property], properties, message);
-    } else {
-      obj[property] = message;
+    var errorForFieldArray = property.includes('[');
+
+    if (errorForFieldArray) {
+      // Yup provies a stringified 'path' for array fields, so we need to parse it
+      const index = property.slice(property.indexOf("[") + 1, property.indexOf("]"));
+      const arrayName = property.slice(0, property.indexOf("["));
+
+      obj[arrayName] = obj[arrayName] || [];
+      obj[arrayName][index] = obj[arrayName][index] || {};
+
+      if (properties.length) {
+        this.setError(obj[arrayName][index], properties, message);
+      } else {
+        obj[arrayName][index] = message;
+      }
     }
+
+    else {
+      obj[property] = obj[property] || {};
+      if (properties.length) {
+        this.setError(obj[property], properties, message);
+      } else {
+        obj[property] = message;
+      }
+    }
+
     return obj;
   }
 
