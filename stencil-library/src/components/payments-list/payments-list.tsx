@@ -187,8 +187,8 @@ export class PaymentsList {
               this.loading ? this.loadingState :
               this.errorMessage ? this.errorState() :
               this.showEmptyState() ? this.emptyState :
-              this.payments?.map(payment =>
-                <tr part="table-row">
+              this.payments?.map((payment, index) =>
+                <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
                   <th scope="row" part="table-cell">
                     <div>{formatDate(payment.created_at)}</div>
                     <div>{formatTime(payment.created_at)}</div>
