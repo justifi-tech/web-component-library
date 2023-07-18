@@ -76,7 +76,7 @@ export class PaymentsList {
 
   async fetchData(direction?: string): Promise<void> {
     if (!this.accountId || !this.authToken) {
-      this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken"
+      this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
       this.loading = false;
       return;
     }
@@ -137,13 +137,12 @@ export class PaymentsList {
 
   paginationBar = () => {
     return (
-    this.paging && (
-      <div part="pagination-bar" class="pagination-bar">
+      <div class="pagination-bar d-flex justify-content-center gap-3">
         <button
           onClick={this.onPageChange('prev')}
-          part={`arrow,arrow-left${this.paging.has_previous ? '' : ',arrow-disabled'}`}
+          part={`arrow arrow-left${this.paging.has_previous ? '' : ' arrow-disabled'}`}
           disabled={!this.paging.has_previous}
-          class={`pagination-btn pagination-prev-btn${this.paging.has_previous ? '' : ' disabled'}`}
+          class={`btn btn-primary pagination-btn pagination-prev-btn${this.paging.has_previous ? '' : ' disabled'}`}
         >&larr;</button>
         {/* <select class="amount-select" part="amount-select" onChange={this.onChangeAmount}>
           <option selected={this.paging.amount === 10} value={10}>10</option>
@@ -152,13 +151,13 @@ export class PaymentsList {
         </select> */}
         <button
           onClick={this.onPageChange('next')}
-          part={`arrow,arrow-right${this.paging.has_next ? '' : ',arrow-disabled'}`}
+          part={`arrow arrow-right${this.paging.has_next ? '' : ' arrow-disabled'}`}
           disabled={!this.paging.has_next}
-          class={`pagination-btn pagination-next-btn${this.paging.has_next ? '' : ' disabled'}`}
+          class={`btn btn-primary pagination-btn pagination-next-btn${this.paging.has_next ? '' : ' disabled'}`}
         >&rarr;</button>
       </div>
     )
-  )};
+  };
 
   render() {
     return (
@@ -167,9 +166,9 @@ export class PaymentsList {
         loading-state-cell,loading-state-spinner,error-state,empty-state,
         pagination-bar,arrow,arrow-left,arrow-right,arrow-disabled
       ">
-        <table class="table">
-          <thead class="table-head" part="table-head">
-            <tr part='table-head-row'>
+        <table class="table table-hover">
+          <thead class="table-head sticky-top" part="table-head">
+            <tr class="table-light" part='table-head-row'>
               <th part="table-head-cell" scope="col" title="The date and time each payment was made">
                 Made on
               </th>
@@ -190,22 +189,30 @@ export class PaymentsList {
               this.showEmptyState() ? this.emptyState :
               this.payments?.map(payment =>
                 <tr part="table-row">
-                  <td part="table-cell">
+                  <th scope="row" part="table-cell">
                     <div>{formatDate(payment.created_at)}</div>
                     <div>{formatTime(payment.created_at)}</div>
-                  </td>
-                  <td part="table-cell" >{formatCurrency(payment.amount)}</td>
-                  <td part="table-cell" >{payment.description}</td>
-                  <td part="table-cell" >{payment.payment_method?.card?.name}</td>
-                  <td part="table-cell" >{payment.payment_method?.card?.acct_last_four}</td>
-                  <td part="table-cell" >{payment.status}</td>
-                  <td part="table-cell" >{payment.id}</td>
+                  </th>
+                  <td part="table-cell">{formatCurrency(payment.amount)}</td>
+                  <td part="table-cell">{payment.description}</td>
+                  <td part="table-cell">{payment.payment_method?.card?.name}</td>
+                  <td part="table-cell">{payment.payment_method?.card?.acct_last_four}</td>
+                  <td part="table-cell">{payment.status}</td>
+                  <td part="table-cell">{payment.id}</td>
                 </tr>
               )
             }
           </tbody>
+          {this.paging &&
+            <tfoot class="sticky-bottom">
+              <tr class="table-light align-middle">
+                <td part="pagination-bar" colSpan={7}>
+                  {this.paginationBar()}
+                </td>
+              </tr>
+            </tfoot>
+          }
         </table>
-        {this.paginationBar()}
       </Host>
     );
   }
