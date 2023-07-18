@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
-import { FormController } from '../../form/form-service';
+import { FormController } from '../../form/form';
 
 @Component({
   tag: 'justifi-business-address-form',

@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { FormController } from '../../form/form-service';
+import { FormController } from '../../form/form';
 
 @Component({
   tag: 'justifi-business-representative',

@@ -1,15 +1,19 @@
+import { BehaviorSubject } from "rxjs";
 import { ObjectSchema, ValidationError } from "yup";
 
-class FormState {
-  values: any = {};
-  errors: any = {};
-  defaultValues: any = {};
-  schema?: ObjectSchema<any>;
+export class FormController {
+  public values: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public defaultValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public errors: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
-  update = (obj: any) => {
-    console.log(obj)
-    this.values = { ...this.values, ...obj };
-  };
+  private _schema: ObjectSchema<any>;
+  private _values: any = {};
+  private _errors: any = {};
+  private _isValid = true;
+
+  constructor(schema: ObjectSchema<any>) {
+    this._schema = schema;
+  }
 
   private setError(obj, path, message: string) {
     var properties = Array.isArray(path) ? path : path.split(".");
@@ -23,29 +27,34 @@ class FormState {
     return obj;
   }
 
-  isValid = async (schema): Promise<boolean> => {
-    let isValid = true
-    this.errors = {};
+  private async validate(): Promise<boolean> {
+    this._isValid = true
+    this._errors = {};
 
     try {
-      await schema.validate(this.values, { abortEarly: false });
+      await this._schema.validate(this._values, { abortEarly: false });
     } catch (err) {
-      isValid = false;
+      this._isValid = false;
       const newErrors = {};
       err.inner.map((item: ValidationError) => {
         this.setError(newErrors, item.path, item.message);
       });
-      this.errors = newErrors
+      this._errors = newErrors;
     }
 
-    return isValid;
+    this.errors.next(this._errors);
+    return this._isValid;
   };
 
-  constructor(schema: ObjectSchema<any>, defaultValues: any) {
-    this.schema = schema;
-    this.defaultValues = defaultValues || {};
-  };
+  public async validateAndSubmit(submitHandler: () => void): Promise<void> {
+    const isValid = await this.validate();
+    if (isValid) {
+      submitHandler();
+    }
+  }
 
+  public setValues(values): void {
+    this._values = { ...this._values, ...values };
+    this.values.next(this._values);
+  }
 }
-
-export default FormState;

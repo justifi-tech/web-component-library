@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 
 import { BusinessStructureOptions, BusinessTypeOptions } from '../business-form-schema';
-import { FormController } from '../../form/form-service';
+import { FormController } from '../../form/form';
 
 /**
  * @exportedPart label: Label for inputs

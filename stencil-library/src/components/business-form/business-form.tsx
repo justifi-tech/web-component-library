@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { FormController } from '../form/form-service';
+import { FormController } from '../form/form';
 import BusinessFormSchema from './business-form-schema';
 
 /**
