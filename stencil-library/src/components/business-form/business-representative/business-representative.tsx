@@ -115,7 +115,8 @@ export class BusinessRepresentative {
 
             <div class="col-12">
               <justifi-business-address-form
-                formController={this.formController}
+                errors={this.errors.address}
+                defaultValues={this.defaultValues.address}
                 onFormUpdate={(values) => this.onAddressFormUpdate(values)} />
             </div>
           </div>
