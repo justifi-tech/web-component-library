@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
+import { FormController } from '../../form/form-service';
 
 @Component({
   tag: 'justifi-business-address-form',
@@ -7,18 +8,29 @@ import StateOptions from '../../billing-form/state-options';
   shadow: true,
 })
 export class BusinessAddressForm {
-  @State() address: any = {};
-  @Prop() defaultValues?: any;
-  @Prop() errors?: any = {};
+  @Prop() formController: FormController;
   @Prop() onFormUpdate: (values: any) => void;
+  @State() errors: any = {};
+  @State() defaultValues: any = {};
+  @State() address: any = {};
 
-  @Watch('address')
-  handleAddressChange(newValue: any) {
-    this.onFormUpdate(newValue)
+  componentDidLoad() {
+    this.formController.errors.subscribe(
+      (errors) => this.errors = { ...errors.representative?.address }
+    );
+    this.formController.defaultValues.subscribe(
+      (defaultValues) => this.defaultValues = { ...defaultValues.representative?.address }
+    );
   }
 
-  onChange(field) {
-    this.address = { ...this.address, ...field };
+  @Watch('address')
+  handleAddressChange(newValues: any) {
+    this.onFormUpdate(newValues)
+  }
+
+  inputHandler(name: string, value: string) {
+    this.address[name] = value;
+    this.address = { ...this.address };
   };
 
   render() {
@@ -29,46 +41,46 @@ export class BusinessAddressForm {
             <form-control-text
               name="line1"
               label="Street Address"
-              defaultValue={this.defaultValues?.line1}
-              error={this.errors?.line1}
-              onChange={(event: any) => this.onChange(event)} />
+              defaultValue={this.defaultValues.line1}
+              error={this.errors.line1}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
             <form-control-text
               name="line2"
               label="Apt, Suite, etc. (optional)"
-              defaultValue={this.defaultValues?.line2}
-              error={this.errors?.line2}
-              onChange={(event: any) => this.onChange(event)} />
+              defaultValue={this.defaultValues.line2}
+              error={this.errors.line2}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
             <form-control-text
               name="city"
               label="City"
-              defaultValue={this.defaultValues?.city}
-              error={this.errors?.city}
-              onChange={(event: any) => this.onChange(event)} />
+              defaultValue={this.defaultValues.city}
+              error={this.errors.city}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
             <form-control-select
               name="state"
               label="State"
-              defaultValue={this.defaultValues?.state}
+              defaultValue={this.defaultValues.state}
               options={StateOptions}
-              error={this.errors?.state}
-              onChange={(event: any) => this.onChange(event)} />
+              error={this.errors.state}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
             <form-control-text
               name="postal_code"
               label="Postal Code"
-              defaultValue={this.defaultValues?.postal_code}
-              error={this.errors?.postal_code}
-              onChange={(event: any) => this.onChange(event)} />
+              defaultValue={this.defaultValues.postal_code}
+              error={this.errors.postal_code}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
         </div>
       </Host>

@@ -1,7 +1,6 @@
-import { Component, Host, h, Prop, Listen, State } from '@stencil/core';
-import { Api } from '../../api';
+import { Component, Host, h, Prop } from '@stencil/core';
+import { FormController } from '../form/form-service';
 import BusinessFormSchema from './business-form-schema';
-import FormState from '../form/form';
 
 /**
  * @exportedPart label: Label for inputs
@@ -16,58 +15,38 @@ import FormState from '../form/form';
 export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId?: string;
-  @State() form: FormState = new FormState({}, BusinessFormSchema);
+  private formController: FormController;
 
-  @Listen('updateFormState')
-  handleFormShouldUpdate(event: CustomEvent) {
-    this.form = { ...event.detail };
-  };
-
-  private endpoint: string = 'entities/business';
-
-  componentDidMount() {
-    if (this.businessId) {
-      this.fetchBusiness();
-    }
+  constructor() {
+    this.formController = new FormController(BusinessFormSchema);
   }
 
-  async fetchBusiness(): Promise<void> {
-    // fetch data and pre-fill form
-    const businessPrefillData = await Api(this.authToken).get(`${this.endpoint}/${this.businessId}`);
-    this.form = { ...this.form, defaultValues: businessPrefillData }
-  };
-
-  async sendBusinessForm(data): Promise<void> {
-    console.log('sendBusinessForm', data);
-    // return Api(this.authToken).post(this.endpoint, data);
-  };
-
-  @Listen('validFormSubmitted')
-  async handleValidFormSubmitted(event: CustomEvent) {
-    const data = event.detail;
-    await this.sendBusinessForm(data);
+  sendData() {
+    console.log('sendData')
   }
 
-  updateForm(values) {
-    this.form = { ...this.form, values };
-  };
+  validateAndSubmit(event: any) {
+    event.preventDefault();
+    this.formController.validateAndSubmit(this.sendData)
+  }
 
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
-        <form-component form={this.form}>
-          <justifi-business-generic-info-form
-            onFormUpdate={(values) => this.updateForm(values)}
-            errors={this.form.errors}
-            defaultValues={this.form.defaultValues}>
-          </justifi-business-generic-info-form>
-          <justifi-business-representative
-            onFormUpdate={(values) => this.updateForm(values)}
-            errors={this.form.errors.representative}
-            defaultValues={this.form.defaultValues.representative}>
-          </justifi-business-representative>
-        </form-component>
+        <form onSubmit={(event) => this.validateAndSubmit(event)}>
+          <div class="row gy-3">
+            <div class="col-12">
+              <justifi-business-generic-info formController={this.formController} />
+              <justifi-business-representative formController={this.formController} />
+            </div>
+          </div>
+          <div class="row gy-3">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
       </Host>
     );
   }

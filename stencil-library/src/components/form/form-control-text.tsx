@@ -10,14 +10,14 @@ export class TextInput {
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
-  @Prop() onChange: (field: { [key: string]: string }) => void;
+  @Prop() inputHandler: (name: string, value: string) => void;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
   handleFormControlInput(event: any) {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.onChange({ [name]: target.value });
+    this.inputHandler(name, target.value);
   };
 
   render() {
