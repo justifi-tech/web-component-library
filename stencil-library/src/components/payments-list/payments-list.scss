@@ -1,7 +1,14 @@
 @import "reboot";
 @import "tables";
+@import "buttons";
+@import "grid";
+@import "bootstrap-utilities";
 
 :host {
   @include host-base-styles;
-  display: block;
+  max-height: calc(100% - 40px);
+}
+
+.pagination-bar {
+  height: 40px;
 }

@@ -4,7 +4,9 @@ const getComputedTheme = () => {
   const computedStyles = getComputedStyle(document.body);
 
   const computedTheme: Theme = {
+    loadGoogleFont: computedStyles.getPropertyValue('--jfi-load-google-font'),
     layout: {
+      fontFamily: computedStyles.getPropertyValue('--jfi-layout-font-family'),
       padding: computedStyles.getPropertyValue('--jfi-layout-padding'),
       formControlSpacingHorizontal: computedStyles.getPropertyValue('--jfi-layout-form-control-spacing-x'),
       formControlSpacingVertical: computedStyles.getPropertyValue('--jfi-layout-form-control-spacing-y'),
