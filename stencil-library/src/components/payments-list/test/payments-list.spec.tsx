@@ -15,9 +15,9 @@ describe('justifi-payments-list', () => {
         pagination-bar,arrow,arrow-left,arrow-right,arrow-disabled
       ">
       <mock:shadow-root>
-        <table class="table">
-          <thead class="table-head" part="table-head">
-            <tr part="table-head-row">
+        <table class="table table-hover">
+          <thead class="sticky-top table-head" part="table-head">
+            <tr class="table-light" part="table-head-row">
               <th part="table-head-cell" scope="col" title="The date and time each payment was made">
                 Made on
               </th>
@@ -48,15 +48,21 @@ describe('justifi-payments-list', () => {
               </td>
             </tr>
           </tbody>
+          <tfoot class="sticky-bottom">
+            <tr class="align-middle table-light">
+              <td colspan="7" part="pagination-bar">
+                <div class="d-flex gap-3 justify-content-center pagination-bar">
+                  <button class="btn btn-primary disabled pagination-btn pagination-prev-btn" disabled="" part="arrow arrow-left arrow-disabled">
+                    ←
+                  </button>
+                  <button class="btn btn-primary disabled pagination-btn pagination-next-btn" disabled="" part="arrow arrow-right arrow-disabled">
+                    →
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
         </table>
-        <div class="pagination-bar" part="pagination-bar">
-          <button class="disabled pagination-btn pagination-prev-btn" disabled="" part="arrow,arrow-left,arrow-disabled">
-            ←
-          </button>
-          <button class="disabled pagination-btn pagination-next-btn" disabled="" part="arrow,arrow-right,arrow-disabled">
-            →
-          </button>
-        </div>
       </mock:shadow-root>
     </justifi-payments-list>
     `);
