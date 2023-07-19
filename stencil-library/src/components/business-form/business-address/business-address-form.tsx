@@ -1,7 +1,5 @@
-import { Component, Host, h, State, Method, Listen } from '@stencil/core';
-import { ValidationError } from 'yup';
+import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
-import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business-address-form-schema';
 
 @Component({
   tag: 'justifi-business-address-form',
@@ -9,43 +7,19 @@ import BusinessAddressFormSchema, { BusinessAddressFormFields } from './business
   shadow: true,
 })
 export class BusinessAddressForm {
-  @State() businessAddress: BusinessAddressFormFields = {
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    country: ''
-  };
-  @State() businessAddressErrors: any = {};
+  @Prop() onFormUpdate: (values: any) => void;
+  @Prop() errors: any;
+  @Prop() defaultValues: any;
+  @State() address: any = {};
 
-  @Listen('fieldReceivedInput')
-  setFormValue(event) {
-    const data = event.detail;
-    const businessAddressClone = { ...this.businessAddress };
-    if (data.name) {
-      businessAddressClone[data.name] = data.value;
-      this.businessAddress = businessAddressClone;
-    }
+  @Watch('address')
+  handleAddressChange(newValues: any) {
+    this.onFormUpdate(newValues)
   }
 
-  @Method()
-  async submit() {
-    const newErrors = {};
-    let isValid: boolean = true;
-
-    try {
-      await BusinessAddressFormSchema.validate(this.businessAddress, { abortEarly: false });
-    } catch (err) {
-      isValid = false;
-      err.inner.map((item: ValidationError) => {
-        newErrors[item.path] = item.message;
-      });
-    }
-
-    this.businessAddressErrors = newErrors;
-
-    return { isValid: isValid, values: this.businessAddress }
+  inputHandler(name: string, value: string) {
+    this.address[name] = value;
+    this.address = { ...this.address };
   };
 
   render() {
@@ -53,44 +27,49 @@ export class BusinessAddressForm {
       <Host exportparts="label,input,input-invalid">
         <div class="row gx-2 gy-2">
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="line1"
               label="Street Address"
-              defaultValue={this.businessAddress?.line1}
-              error={this.businessAddressErrors?.line1} />
+              defaultValue={this.defaultValues?.line1}
+              error={this.errors?.line1}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="line2"
               label="Apartment, Suite, etc. (optional)"
-              defaultValue={this.businessAddress?.line2}
-              error={this.businessAddressErrors?.line2} />
+              defaultValue={this.defaultValues?.line2}
+              error={this.errors?.line2}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="city"
               label="City"
-              defaultValue={this.businessAddress?.city}
-              error={this.businessAddressErrors?.city} />
+              defaultValue={this.defaultValues?.city}
+              error={this.errors?.city}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
-            <select-input
+            <form-control-select
               name="state"
               label="State"
+              defaultValue={this.defaultValues?.state}
               options={StateOptions}
-              defaultValue={this.businessAddress.state}
-              error={this.businessAddressErrors.state} />
+              error={this.errors?.state}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
 
           <div class="col-12">
-            <text-input
+            <form-control-text
               name="postal_code"
               label="Postal Code"
-              defaultValue={this.businessAddress?.postal_code}
-              error={this.businessAddressErrors?.postal_code} />
+              defaultValue={this.defaultValues?.postal_code}
+              error={this.errors?.postal_code}
+              inputHandler={(name, value) => this.inputHandler(name, value)} />
           </div>
         </div>
       </Host>

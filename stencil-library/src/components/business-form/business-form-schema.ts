@@ -135,6 +135,21 @@ const BusinessFormSchema = object({
   business_type: string().required('Select business type'),
   business_structure: string().required('Select business structure'),
   industry: string().required('Enter a business industry'),
+  representative: object({
+    name: string().required('Enter representative name'),
+    email: string().required('Enter representative email'),
+    phone: string().required('Enter representative phone'),
+    dob_day: string().required('Enter representative birth day'),
+    dob_month: string().required('Enter representative birth month'),
+    dob_year: string().required('Enter representative birth year'),
+    identification_number: string().required('Enter representative identification number'),
+    address: object({
+      line1: string().required('Enter street address'),
+      city: string().required('Enter city'),
+      state: string().required('Select state'),
+      postal_code: string().required('Enter postal code'),
+    })
+  })
 });
 
 export default BusinessFormSchema;
