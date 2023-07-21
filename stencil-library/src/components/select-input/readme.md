@@ -13,7 +13,7 @@
 | `error`        | `error`         |             | `string`                              | `undefined` |
 | `label`        | `label`         |             | `string`                              | `undefined` |
 | `name`         | `name`          |             | `string`                              | `undefined` |
-| `options`      | --              |             | `{ label: string; value: string; }[]` | `undefined` |
+| `options`      | --              |             | `{ label: string; value: string; }[]` | `[]`        |
 
 
 ## Events
