@@ -29,6 +29,37 @@ To do this, do the following:
 - From the `stencil-library` directory, run `yarn link`
 - From the `react-library` run `yarn link "@justifi/webcomponents"`
 
+## Lerna Management
+
+This project now uses [Lerna](https://lerna.js.org/) to manage the versions of the multiple packages. Here are some common Lerna commands you might need:
+
+### Bootstrapping
+
+Lerna will ensure dependencies are linked together:
+
+```bash
+lerna bootstrap
+```
+
+### Checking for Changes
+
+To see which packages have changed since the last release:
+
+```bash
+lerna changed
+```
+
+### Publishing Changes
+
+To version and publish updated packages:
+
+```bash
+lerna version
+lerna publish
+```
+
+**Note**: Before using the `lerna version` command, make sure your current branch exists on the remote repository.
+
 # Project Testing Guide
 
 ## Getting Started
@@ -41,24 +72,38 @@ Below are commands used for various testing and development scenarios.
 
 Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. The build scripts for different environments are:
 
-- `yarn run build:dev` for development environment.
-- `yarn run build:staging` for staging environment.
-- `yarn run build:prod` for production environment.
+```bash
+yarn run build:dev
+```
+
+```bash
+yarn run build:staging
+```
+
+```bash
+yarn run build:prod
+```
 
 ## test
 
 Runs unit tests using the Stencil's spec testing.
 
-`yarn run test`
+```bash
+yarn run test
+```
 
 ## test:watch
 
 Runs unit tests in watch mode. Good for development.
 
-`yarn run test:watch`
+```bash
+yarn run test:watch
+```
 
 ## test:e2e
 
 Runs end-to-end tests using the Stencil's E2E testing.
 
-`yarn run test:e2e`
+```bash
+yarn run test:e2e
+```
