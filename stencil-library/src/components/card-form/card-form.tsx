@@ -22,11 +22,6 @@ export class CardForm {
    */
   @Prop() singleLine: boolean = false;
 
-  /**
-   * Placeholder prop for future features.
-   */
-  @Prop() futureFeatureEnabled: boolean = false;
-
   @State() internalStyleOverrides: Theme;
 
   /**
