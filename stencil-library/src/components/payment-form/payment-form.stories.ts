@@ -8,7 +8,6 @@ interface PaymentFormStoryArgs {
   'account-id': string;
   'submit-button-text': string;
   'cssVariables': string;
-  'slot': string;
 }
 
 export default {
@@ -37,9 +36,7 @@ const Template = (args: PaymentFormStoryArgs) => {
         account-id='${args['account-id']}'
         submit-button-text='${args['submit-button-text']}'
         iframe-origin='${args['iframe-origin']}'
-      >
-        ${args.slot}
-      </justifi-payment-form>
+      />
     </div>
     <style>
       :root {
@@ -150,20 +147,4 @@ Styled.args = {
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
   --jfi-radio-button-group-width: 100%;
   `,
-};
-
-export const Slotted = Template.bind({});
-Slotted.args = {
-  'bank-account': true,
-  'card': true,
-  'email': '',
-  'client-id': '',
-  'account-id': '',
-  'submit-button-text': '',
-  'iframe-origin': '',
-  'slot': `
-    <div slot="insurance" class="col-12">
-      Hey! I'm in a Slot!
-    </div>
-  `
 };
