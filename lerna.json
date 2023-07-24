@@ -1,0 +1,8 @@
+{
+  "npmClient": "yarn",
+  "packages": [
+    "react-library",
+    "stencil-library"
+  ],
+  "version": "independent"
+}

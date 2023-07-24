@@ -29,8 +29,6 @@ To do this, do the following:
 - From the `stencil-library` directory, run `yarn link`
 - From the `react-library` run `yarn link "@justifi/webcomponents"`
 
-# Project Testing Guide
-
 ## Getting Started
 
 This project uses the Stencil testing framework for unit and end-to-end (E2E) tests, along with Storybook for UI component testing and auto-changelog to maintain a changelog based on git metadata.
@@ -42,7 +40,6 @@ Below are commands used for various testing and development scenarios.
 Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. The build scripts for different environments are:
 
 - `yarn run build:dev` for development environment.
-- `yarn run build:staging` for staging environment.
 - `yarn run build:prod` for production environment.
 
 ## test

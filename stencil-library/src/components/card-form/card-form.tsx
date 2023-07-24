@@ -21,6 +21,7 @@ export class CardForm {
    * Boolean indicating if the Card Form should render in a single line
    */
   @Prop() singleLine: boolean = false;
+
   @State() internalStyleOverrides: Theme;
 
   /**
