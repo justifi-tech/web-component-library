@@ -208,6 +208,7 @@ describe('justifi-payment-form', () => {
             <div class="col-12">
               <justifi-billing-form legend="Billing Info"></justifi-billing-form>
             </div>
+            <slot name="insurance"></slot>
             <div class="col-12">
               <button class="btn btn-primary jfi-submit-button" type="submit">
                 Submit
