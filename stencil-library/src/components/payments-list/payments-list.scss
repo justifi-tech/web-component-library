@@ -6,9 +6,4 @@
 
 :host {
   @include host-base-styles;
-  max-height: calc(100% - 40px);
-}
-
-.pagination-bar {
-  height: 40px;
 }
