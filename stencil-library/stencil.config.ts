@@ -12,17 +12,18 @@ export const config: Config = {
   plugins: [
     sass({
       injectGlobalPaths: [
-        './node_modules/bootstrap/scss/_functions.scss',
-        './node_modules/bootstrap/scss/_variables.scss',
-        './node_modules/bootstrap/scss/_maps.scss',
-        './node_modules/bootstrap/scss/_mixins.scss',
-        './node_modules/bootstrap/scss/_utilities.scss',
-        './node_modules/bootstrap/scss/_root.scss',
-        './node_modules/bootstrap/scss/_spinners.scss',
-        './node_modules/bootstrap/scss/_helpers.scss',
+        '../node_modules/bootstrap/scss/_functions.scss',
+        '../node_modules/bootstrap/scss/_variables.scss',
+        '../node_modules/bootstrap/scss/_variables-dark.scss',
+        '../node_modules/bootstrap/scss/_maps.scss',
+        '../node_modules/bootstrap/scss/_mixins.scss',
+        '../node_modules/bootstrap/scss/_utilities.scss',
+        '../node_modules/bootstrap/scss/_root.scss',
+        '../node_modules/bootstrap/scss/_spinners.scss',
+        '../node_modules/bootstrap/scss/_helpers.scss',
         './src/styles/_mixins.scss',
       ],
-      includePaths: ['./node_modules/bootstrap/scss/'],
+      includePaths: ['../node_modules/bootstrap/scss/'],
     }),
     replace({
       'process.env.IFRAME_ORIGIN': JSON.stringify(process.env.IFRAME_ORIGIN),
