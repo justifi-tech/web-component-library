@@ -103,6 +103,7 @@ export class PaymentForm {
               }}
             />
           </div>
+          <slot name='insurance' />
           <div class="col-12">
             <button
               type="submit"
