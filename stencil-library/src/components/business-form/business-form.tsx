@@ -39,6 +39,7 @@ export class BusinessForm {
             <div class="col-12">
               <justifi-business-generic-info formController={this.formController} />
               <justifi-business-representative formController={this.formController} />
+              <justifi-business-owners formController={this.formController} />
             </div>
           </div>
           <div class="row gy-3">
