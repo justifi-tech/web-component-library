@@ -5,7 +5,7 @@ import { FormController } from '../../form/form';
 @Component({
   tag: 'justifi-business-address-form',
   styleUrl: 'business-address-form.scss',
-  shadow: true,
+  shadow: false,
 })
 export class BusinessAddressForm {
   @Prop() formController: FormController;

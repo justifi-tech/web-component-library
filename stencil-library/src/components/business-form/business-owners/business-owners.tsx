@@ -23,10 +23,11 @@ class BusinessOwner {
 @Component({
   tag: 'justifi-business-owners',
   styleUrl: 'business-owners.scss',
-  shadow: true,
+  shadow: false,
 })
 export class BusinessOwners {
   @Prop() formController: FormController
+  @State() defaultValues: any[] = [];
   @State() errors: any[] = [];
   @State() owners: BusinessOwner[] = [];
 
@@ -36,20 +37,23 @@ export class BusinessOwners {
   };
 
   componentDidLoad() {
+    this.formController.defaultValues.subscribe((defaultValues) => this.defaultValues = { ...defaultValues.owners });
     this.formController.errors.subscribe((errors) => this.errors = { ...errors.owners });
   };
 
-  inputHandler(name: string, value: string, index: number) {
+  inputHandler(name: string, value: string, index: number): void {
     this.owners[index][name] = value;
     this.owners = [...this.owners]
   };
 
-  addOwner() {
+  addOwner(event: MouseEvent): void {
+    event.preventDefault();
     this.owners.push(new BusinessOwner());
     this.owners = [...this.owners];
   };
 
-  removeOwner(index: number) {
+  removeOwner(event: MouseEvent, index: number): void {
+    event.preventDefault();
     this.owners.splice(index, 1);
     this.owners = [...this.owners];
   };
@@ -67,19 +71,21 @@ export class BusinessOwners {
                   <form-control-text
                     name="name"
                     label="Full Name"
+                    defaultValue={this.defaultValues[index]?.name}
                     error={this.errors[index]?.name}
                     inputHandler={(name, value) => this.inputHandler(name, value, index)} />
                   <form-control-text
                     name="title"
                     label="Title"
+                    defaultValue={this.defaultValues[index]?.title}
                     error={this.errors[index]?.title}
                     inputHandler={(name, value) => this.inputHandler(name, value, index)} />
-                  <button onClick={() => this.removeOwner(index)}>- Remove owner</button>
+                  <button type="button" class="btn" onClick={(event) => this.removeOwner(event, index)}>- Remove owner</button>
                 </div>
               </div>
             );
           })}
-          <button onClick={() => this.addOwner()}>+ Add an owner</button>
+          <button type="button" class="btn" onClick={(event) => this.addOwner(event)}>+ Add an owner</button>
         </fieldset>
       </Host>
     );

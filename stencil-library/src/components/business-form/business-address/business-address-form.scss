@@ -1,8 +1,0 @@
-@import "reboot";
-@import "forms";
-@import "grid";
-
-:host {
-  @include host-base-styles;
-  display: block;
-}
