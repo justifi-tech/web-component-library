@@ -1,5 +1,7 @@
 export interface Theme {
+  loadGoogleFont: string;
   layout?: {
+    fontFamily?: string;
     padding?: string;
     formControlSpacingHorizontal?: string;
     formControlSpacingVertical?: string;

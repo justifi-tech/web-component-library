@@ -34,15 +34,11 @@
 ### Used by
 
  - [justifi-billing-form](../billing-form)
- - [justifi-business-address](../business-address)
- - [justifi-business-info](../business-info)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-billing-form --> text-input
-  justifi-business-address --> text-input
-  justifi-business-info --> text-input
   style text-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

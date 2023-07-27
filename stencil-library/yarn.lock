@@ -2145,6 +2145,11 @@
   resolved "https://registry.yarnpkg.com/@stencil/sass/-/sass-3.0.1.tgz#ef079a7fe93f824961f28b36b7ed88902b37eca4"
   integrity sha512-nAcD7MyUy+gieodk/mMSqYE4FERWf2Hiun+QR+srnugpclP2MMRq/Ik1SGUcFrWj+L6lSvoCyWimSEigf9aSBg==
 
+"@stencil/store@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@stencil/store/-/store-2.0.8.tgz#fcde55e29f81425b474c4032614980a3662981ff"
+  integrity sha512-6yNRPyItnVq45r8TtXLIZZMCqtgqA2xiO7alUnr28W5dlDIKMW1W80Muozh1p4FSqRcYLWUUDladXdc+/xXJBA==
+
 "@storybook/addon-actions@7.0.4", "@storybook/addon-actions@^7.0.4":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-7.0.4.tgz#9131fb8811661fa47ead11604a67301b13de3b97"
@@ -9084,6 +9089,13 @@ rxjs@^7.0.0, rxjs@^7.5.7:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.0.tgz#90a938862a82888ff4c7359811a595e14e1e09a4"
   integrity sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@^7.8.1:
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
+  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
   dependencies:
     tslib "^2.1.0"
 
