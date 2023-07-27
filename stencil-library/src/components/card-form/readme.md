@@ -144,6 +144,8 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | `cardFormReady`    | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
 | `cardFormTokenize` | Triggered when the tokenize method is called on the component | `CustomEvent<{ data: any; }>`                   |
 | `cardFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<{ data: { isValid: boolean; }; }>` |
+| `ready`            | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
+
 
 
 ## Methods

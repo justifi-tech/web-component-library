@@ -2145,6 +2145,11 @@
   resolved "https://registry.yarnpkg.com/@stencil/sass/-/sass-3.0.1.tgz#ef079a7fe93f824961f28b36b7ed88902b37eca4"
   integrity sha512-nAcD7MyUy+gieodk/mMSqYE4FERWf2Hiun+QR+srnugpclP2MMRq/Ik1SGUcFrWj+L6lSvoCyWimSEigf9aSBg==
 
+"@stencil/store@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@stencil/store/-/store-2.0.8.tgz#fcde55e29f81425b474c4032614980a3662981ff"
+  integrity sha512-6yNRPyItnVq45r8TtXLIZZMCqtgqA2xiO7alUnr28W5dlDIKMW1W80Muozh1p4FSqRcYLWUUDladXdc+/xXJBA==
+
 "@storybook/addon-actions@7.0.4", "@storybook/addon-actions@^7.0.4":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-7.0.4.tgz#9131fb8811661fa47ead11604a67301b13de3b97"
@@ -9087,6 +9092,13 @@ rxjs@^7.0.0, rxjs@^7.5.7:
   dependencies:
     tslib "^2.1.0"
 
+rxjs@^7.8.1:
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
+  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
+  dependencies:
+    tslib "^2.1.0"
+
 safe-buffer@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -10368,9 +10380,9 @@ windows-release@^5.0.1:
     execa "^5.1.1"
 
 word-wrap@~1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
-  integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.4.tgz#cb4b50ec9aca570abd1f52f33cd45b6c61739a9f"
+  integrity sha512-2V81OA4ugVo5pRo46hAoD2ivUJx8jXmWXfUkY4KFNw0hEptvN0QfH3K4nHiwzGeKl5rFKedV48QVoqYavy4YpA==
 
 wordwrap@^1.0.0:
   version "1.0.0"

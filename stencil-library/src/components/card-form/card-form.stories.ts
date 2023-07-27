@@ -111,11 +111,13 @@ SingleLine.args = {
 };
 
 const styledVariables = `
+  --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
+  --jfi-layout-font-family: Agdasima;
   --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: .5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
-  --jfi-form-label-font-weight: 700;
-  --jfi-form-label-font-family: sans-serif;
+  --jfi-form-label-font-weight: 100;
+  --jfi-form-label-font-family: Inter;
   --jfi-form-label-margin: 0 0 .5rem 0;
   --jfi-form-control-background-color: #F4F4F6;
   --jfi-form-control-background-color-hover: #EEEEF5;
@@ -146,5 +148,6 @@ const styledVariables = `
 
 export const Styled = Template.bind({});
 Styled.args = {
+  'single-line': false,
   'css-variables': styledVariables,
 };
