@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Api, IApiResponseCollection, Payout } from '../../api';
+import { Api, IApiResponseCollection, Payout, PayoutStatuses } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 
 interface PagingInfo {
@@ -71,6 +71,21 @@ export class PayoutsList {
   onPageChange = (direction: string) => {
     return () => {
       this.fetchData(direction);
+    }
+  }
+
+  mapStatusToBadge = (status: PayoutStatuses) => {
+    switch (status) {
+      case PayoutStatuses.scheduled || PayoutStatuses.in_transit:
+        return 'bg-primary';
+      case PayoutStatuses.failed || PayoutStatuses.canceled:
+        return 'bg-danger';
+      case PayoutStatuses.forwarded:
+        return 'bg-secondary';
+      case PayoutStatuses.paid:
+        return 'bg-success';
+      default:
+        return 'bg-secondary';
     }
   }
 
@@ -204,7 +219,7 @@ export class PayoutsList {
                   <td part="table-cell">{formatCurrency(payout.fees_total)}</td>
                   <td part="table-cell">{formatCurrency(payout.other_total)}</td>
                   <td part="table-cell">{formatCurrency(payout.amount)}</td>
-                  <td part="table-cell">{payout.status}</td>
+                  <td part="table-cell"><span class={`badge ${this.mapStatusToBadge(payout.status)}`}>{payout.status}</span></td>
                 </tr>
               )
             }

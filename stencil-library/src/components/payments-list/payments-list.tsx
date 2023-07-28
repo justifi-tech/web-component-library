@@ -113,13 +113,13 @@ export class PaymentsList {
 
   emptyState = (
     <tr>
-      <td class="empty-state" part="empty-state" colSpan={8} style={{ textAlign: 'center' }}>No payments to show</td>
+      <td class="empty-state" part="empty-state" colSpan={7} style={{ textAlign: 'center' }}>No payments to show</td>
     </tr>
   );
 
   errorState = () => (
     <tr>
-      <td class="error-state" part="error-state" colSpan={8} style={{ textAlign: 'center' }}>
+      <td class="error-state" part="error-state" colSpan={7} style={{ textAlign: 'center' }}>
         An unexpected error occurred: {this.errorMessage}
       </td>
     </tr>
@@ -127,7 +127,7 @@ export class PaymentsList {
 
   loadingState = (
     <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={8} style={{ textAlign: 'center' }}>
+      <td class="loading-state" part="loading-state-cell" colSpan={7} style={{ textAlign: 'center' }}>
         <div part="loading-state-spinner" class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
