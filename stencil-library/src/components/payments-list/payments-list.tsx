@@ -1,22 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payment } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
-
-interface PagingInfo {
-  amount: number,
-  start_cursor: string,
-  end_cursor: string,
-  has_previous: boolean,
-  has_next: boolean,
-}
-
-const pagingDefaults = {
-  amount: 25,
-  start_cursor: '',
-  end_cursor: '',
-  has_previous: false,
-  has_next: false,
-}
+import { PagingInfo, pagingDefaults } from '../table/table-utils';
 
 /**
   * @exportedPart table-head: Table head
@@ -59,15 +44,6 @@ export class PaymentsList {
     this.fetchData();
   }
 
-  // onChangeAmount = (e) => {
-  //   const newVal = e?.target?.value;
-  //   if (newVal) {
-  //     this.paging = pagingDefaults;
-  //     this.paging.amount = newVal;
-  //     this.fetchData();
-  //   }
-  // }
-
   onPageChange = (direction: string) => {
     return () => {
       this.fetchData(direction);
@@ -107,112 +83,46 @@ export class PaymentsList {
     this.loading = false;
   }
 
-  showEmptyState() {
-    return this.payments ? this.payments.length < 1 : true;
-  }
-
-  emptyState = (
-    <tr>
-      <td class="empty-state" part="empty-state" colSpan={7} style={{ textAlign: 'center' }}>No payments to show</td>
-    </tr>
-  );
-
-  errorState = () => (
-    <tr>
-      <td class="error-state" part="error-state" colSpan={7} style={{ textAlign: 'center' }}>
-        An unexpected error occurred: {this.errorMessage}
-      </td>
-    </tr>
-  );
-
-  loadingState = (
-    <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={7} style={{ textAlign: 'center' }}>
-        <div part="loading-state-spinner" class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </td>
-    </tr>
-  );
-
-  paginationBar = () => {
-    return (
-      <div class="pagination-bar d-flex justify-content-center gap-3">
-        <button
-          onClick={this.onPageChange('prev')}
-          part={`arrow arrow-left${this.paging.has_previous ? '' : ' arrow-disabled'}`}
-          disabled={!this.paging.has_previous}
-          class={`btn btn-primary pagination-btn pagination-prev-btn${this.paging.has_previous ? '' : ' disabled'}`}
-        >&larr;</button>
-        {/* <select class="amount-select" part="amount-select" onChange={this.onChangeAmount}>
-          <option selected={this.paging.amount === 10} value={10}>10</option>
-          <option selected={this.paging.amount === 25} value={25}>25</option>
-          <option selected={this.paging.amount === 50} value={50}>50</option>
-        </select> */}
-        <button
-          onClick={this.onPageChange('next')}
-          part={`arrow arrow-right${this.paging.has_next ? '' : ' arrow-disabled'}`}
-          disabled={!this.paging.has_next}
-          class={`btn btn-primary pagination-btn pagination-next-btn${this.paging.has_next ? '' : ' disabled'}`}
-        >&rarr;</button>
-      </div>
-    )
-  };
-
   render() {
     return (
-      <Host exportparts="
-        table-head,table-head-row,table-head-cell,table-body,table-row,table-cell,
-        loading-state-cell,loading-state-spinner,error-state,empty-state,
-        pagination-bar,arrow,arrow-left,arrow-right,arrow-disabled
-      ">
-        <table class="table table-hover">
-          <thead class="table-head sticky-top" part="table-head">
-            <tr class="table-light" part='table-head-row'>
-              <th part="table-head-cell" scope="col" title="The date and time each payment was made">
-                Made on
-              </th>
-              <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
-                Amount
-              </th>
-              <th part="table-head-cell" scope="col">Description</th>
-              <th part="table-head-cell" scope="col">Cardholder</th>
-              <th part="table-head-cell" scope="col">Payment Method</th>
-              <th part="table-head-cell" scope="col">Status</th>
-              <th part="table-head-cell" scope="col">Payment ID</th>
-            </tr>
-          </thead>
-          <tbody class="table-body" part='table-body'>
-            {
-              this.loading ? this.loadingState :
-              this.errorMessage ? this.errorState() :
-              this.showEmptyState() ? this.emptyState :
-              this.payments?.map((payment, index) =>
-                <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
-                  <th scope="row" part="table-cell">
-                    <div>{formatDate(payment.created_at)}</div>
-                    <div>{formatTime(payment.created_at)}</div>
-                  </th>
-                  <td part="table-cell">{formatCurrency(payment.amount)}</td>
-                  <td part="table-cell">{payment.description}</td>
-                  <td part="table-cell">{payment.payment_method?.card?.name}</td>
-                  <td part="table-cell">{payment.payment_method?.card?.acct_last_four}</td>
-                  <td part="table-cell">{payment.status}</td>
-                  <td part="table-cell">{payment.id}</td>
-                </tr>
-              )
-            }
-          </tbody>
-          {this.paging &&
-            <tfoot class="sticky-bottom">
-              <tr class="table-light align-middle">
-                <td part="pagination-bar" colSpan={7}>
-                  {this.paginationBar()}
-                </td>
-              </tr>
-            </tfoot>
+      <Host>
+        <justifi-table
+          columnData={[
+            'Made On',
+            'Amount',
+            'Description',
+            'Cardholder',
+            'Payment Method',
+            'Status',
+            'Payment ID'
+          ]}
+          rowData={
+            this.payments.map((payment) => (
+              [
+                {
+                  type: 'head',
+                  value: `
+                    <div>${formatDate(payment.created_at)}</div>
+                    <div>${formatTime(payment.created_at)}</div>
+                  `,
+                },
+                formatCurrency(payment.amount),
+                payment.description,
+                payment.payment_method.card.name,
+                payment.payment_method?.card?.acct_last_four,
+                payment.status,
+                payment.id
+              ]
+            ))
           }
-        </table>
+          loading={this.loading}
+          error-message={this.errorMessage}
+          paging={{
+            ...this.paging,
+            onPrev: this.onPageChange('prev'),
+            onNext: this.onPageChange('next')
+          }}
+        />
       </Host>
     );
   }
