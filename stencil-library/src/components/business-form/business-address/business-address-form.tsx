@@ -15,23 +15,19 @@ export class BusinessAddressForm {
   @State() address: any = {};
 
   componentDidLoad() {
-    this.formController.errors.subscribe(
-      (errors) => this.errors = { ...errors.representative?.address }
-    );
-    this.formController.defaultValues.subscribe(
-      (defaultValues) => this.defaultValues = { ...defaultValues.representative?.address }
-    );
+    this.formController?.errors.subscribe(errors => (this.errors = { ...errors.representative?.address }));
+    this.formController?.defaultValues.subscribe(defaultValues => (this.defaultValues = { ...defaultValues.representative?.address }));
   }
 
   @Watch('address')
   handleAddressChange(newValues: any) {
-    this.onFormUpdate(newValues)
+    this.onFormUpdate(newValues);
   }
 
   inputHandler(name: string, value: string) {
     this.address[name] = value;
     this.address = { ...this.address };
-  };
+  }
 
   render() {
     return (
@@ -43,7 +39,8 @@ export class BusinessAddressForm {
               label="Street Address"
               defaultValue={this.defaultValues.line1}
               error={this.errors.line1}
-              inputHandler={(name, value) => this.inputHandler(name, value)} />
+              inputHandler={(name, value) => this.inputHandler(name, value)}
+            />
           </div>
 
           <div class="col-12">
@@ -52,7 +49,8 @@ export class BusinessAddressForm {
               label="Apt, Suite, etc. (optional)"
               defaultValue={this.defaultValues.line2}
               error={this.errors.line2}
-              inputHandler={(name, value) => this.inputHandler(name, value)} />
+              inputHandler={(name, value) => this.inputHandler(name, value)}
+            />
           </div>
 
           <div class="col-12">
@@ -61,7 +59,8 @@ export class BusinessAddressForm {
               label="City"
               defaultValue={this.defaultValues.city}
               error={this.errors.city}
-              inputHandler={(name, value) => this.inputHandler(name, value)} />
+              inputHandler={(name, value) => this.inputHandler(name, value)}
+            />
           </div>
 
           <div class="col-12">
@@ -71,7 +70,8 @@ export class BusinessAddressForm {
               defaultValue={this.defaultValues.state}
               options={StateOptions}
               error={this.errors.state}
-              inputHandler={(name, value) => this.inputHandler(name, value)} />
+              inputHandler={(name, value) => this.inputHandler(name, value)}
+            />
           </div>
 
           <div class="col-12">
@@ -80,11 +80,11 @@ export class BusinessAddressForm {
               label="Postal Code"
               defaultValue={this.defaultValues.postal_code}
               error={this.errors.postal_code}
-              inputHandler={(name, value) => this.inputHandler(name, value)} />
+              inputHandler={(name, value) => this.inputHandler(name, value)}
+            />
           </div>
         </div>
       </Host>
     );
   }
-
 }
