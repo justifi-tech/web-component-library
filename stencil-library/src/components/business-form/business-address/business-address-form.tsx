@@ -4,7 +4,7 @@ import StateOptions from '../../billing-form/state-options';
 @Component({
   tag: 'justifi-business-address-form',
   styleUrl: 'business-address-form.scss',
-  shadow: false,
+  shadow: true,
 })
 export class BusinessAddressForm {
   @Prop() onFormUpdate: (values: any) => void;
