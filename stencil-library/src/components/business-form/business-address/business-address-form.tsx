@@ -1,6 +1,5 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../billing-form/state-options';
-import { FormController } from '../../form/form';
 
 @Component({
   tag: 'justifi-business-address-form',
@@ -8,16 +7,10 @@ import { FormController } from '../../form/form';
   shadow: false,
 })
 export class BusinessAddressForm {
-  @Prop() formController: FormController;
   @Prop() onFormUpdate: (values: any) => void;
-  @State() errors: any = {};
-  @State() defaultValues: any = {};
+  @Prop() errors: any;
+  @Prop() defaultValues: any;
   @State() address: any = {};
-
-  componentDidLoad() {
-    this.formController?.errors.subscribe(errors => (this.errors = { ...errors.representative?.address }));
-    this.formController?.defaultValues.subscribe(defaultValues => (this.defaultValues = { ...defaultValues.representative?.address }));
-  }
 
   @Watch('address')
   handleAddressChange(newValues: any) {
@@ -37,8 +30,8 @@ export class BusinessAddressForm {
             <form-control-text
               name="line1"
               label="Street Address"
-              defaultValue={this.defaultValues.line1}
-              error={this.errors.line1}
+              defaultValue={this.defaultValues?.line1}
+              error={this.errors?.line1}
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
@@ -46,9 +39,9 @@ export class BusinessAddressForm {
           <div class="col-12">
             <form-control-text
               name="line2"
-              label="Apt, Suite, etc. (optional)"
-              defaultValue={this.defaultValues.line2}
-              error={this.errors.line2}
+              label="Apartment, Suite, etc. (optional)"
+              defaultValue={this.defaultValues?.line2}
+              error={this.errors?.line2}
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
@@ -57,8 +50,8 @@ export class BusinessAddressForm {
             <form-control-text
               name="city"
               label="City"
-              defaultValue={this.defaultValues.city}
-              error={this.errors.city}
+              defaultValue={this.defaultValues?.city}
+              error={this.errors?.city}
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
@@ -67,9 +60,9 @@ export class BusinessAddressForm {
             <form-control-select
               name="state"
               label="State"
-              defaultValue={this.defaultValues.state}
+              defaultValue={this.defaultValues?.state}
               options={StateOptions}
-              error={this.errors.state}
+              error={this.errors?.state}
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
@@ -78,8 +71,8 @@ export class BusinessAddressForm {
             <form-control-text
               name="postal_code"
               label="Postal Code"
-              defaultValue={this.defaultValues.postal_code}
-              error={this.errors.postal_code}
+              defaultValue={this.defaultValues?.postal_code}
+              error={this.errors?.postal_code}
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>

@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type        | Default     |
-| -------- | --------- | ----------- | ----------- | ----------- |
-| `form`   | --        |             | `FormState` | `undefined` |
+| Property         | Attribute | Description | Type             | Default     |
+| ---------------- | --------- | ----------- | ---------------- | ----------- |
+| `formController` | --        |             | `FormController` | `undefined` |
 
 
 ## Shadow Parts

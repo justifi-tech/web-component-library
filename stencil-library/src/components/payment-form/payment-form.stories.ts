@@ -80,12 +80,13 @@ Styled.args = {
   'iframe-origin': '',
   'cssVariables': `
   --jfi-primary-color: #212529;
-
+  --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
+  --jfi-layout-font-family: Roboto Mono, Calibri, sans-serif;
   --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: .5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
   --jfi-form-label-font-weight: 700;
-  --jfi-form-label-font-family: sans-serif;
+  --jfi-form-label-font-family: Calibri, sans-serif;
   --jfi-form-label-margin: 0 0 .5rem 0;
   --jfi-form-control-background-color: #F4F4F6;
   --jfi-form-control-background-color-hover: #EEEEF5;

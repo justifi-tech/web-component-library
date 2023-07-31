@@ -1,5 +1,10 @@
 {
-  "dependencies": {
-    "rxjs": "^7.8.1"
+  "private": true,
+  "workspaces": [
+    "react-library",
+    "stencil-library"
+  ],
+  "devDependencies": {
+    "lerna": "^7.1.4"
   }
 }

@@ -2,17 +2,19 @@ import { BehaviorSubject } from "rxjs";
 import { ObjectSchema, ValidationError } from "yup";
 
 export class FormController {
-  public values: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public defaultValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public values: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public errors: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   private _schema: ObjectSchema<any>;
+  private _defaultValues: any = {};
   private _values: any = {};
   private _errors: any = {};
   private _isValid = true;
 
-  constructor(schema: ObjectSchema<any>) {
+  constructor(schema: ObjectSchema<any>, defaultValues: any = {}) {
     this._schema = schema;
+    this._defaultValues = defaultValues;
   }
 
   private setError(obj, path, message: string) {
@@ -76,5 +78,10 @@ export class FormController {
   public setValues(values): void {
     this._values = { ...this._values, ...values };
     this.values.next(this._values);
+  }
+
+  public setDefaultValues(values): void {
+    this._defaultValues = { ...this._defaultValues, ...values };
+    this.defaultValues.next(this._defaultValues);
   }
 }

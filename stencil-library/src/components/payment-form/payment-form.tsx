@@ -2,6 +2,7 @@ import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } 
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
+import { extractComputedFontsToLoad } from '../../utils/utils';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -18,6 +19,7 @@ export class PaymentForm {
   @Prop() submitButtonText?: string;
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
   @State() submitButtonEnabled: boolean = true;
+  @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodType: PaymentMethodTypes;
   @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
@@ -36,6 +38,11 @@ export class PaymentForm {
       this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
     }
     this.selectedPaymentMethodType = this.allowedPaymentMethodTypes[0];
+
+    if (!this.hasLoadedFonts) {
+      this.loadFontsOnParent();
+      this.hasLoadedFonts = true;
+    }
   }
 
   @Listen('paymentMethodSelected')
@@ -52,6 +59,23 @@ export class PaymentForm {
   @Method()
   async enableSubmitButton() {
     this.submitButtonEnabled = true;
+  }
+
+  @Method()
+  async loadFontsOnParent() {
+
+    const parent = document.body;
+    const fontsToLoad = extractComputedFontsToLoad();
+    if (!parent || !fontsToLoad) {
+      return null;
+    }
+
+    // This approach is needed to load the font in a parent of the component
+    const fonts = document.createElement('link');
+    fonts.rel = 'stylesheet';
+    fonts.href = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
+
+    parent.append(fonts);
   }
 
   async submit(event) {
@@ -103,6 +127,7 @@ export class PaymentForm {
               }}
             />
           </div>
+          <slot name='insurance' />
           <div class="col-12">
             <button
               type="submit"

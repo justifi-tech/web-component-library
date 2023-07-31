@@ -21,6 +21,7 @@
 | `ready`                   | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
 
 
+
 ## Methods
 
 ### `resize() => Promise<void>`
@@ -33,7 +34,7 @@ Type: `Promise<void>`
 
 
 
-### `tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) => Promise<CreatePaymentMethodResponse>`
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
 
 Makes a tokenization request to the iframe
 

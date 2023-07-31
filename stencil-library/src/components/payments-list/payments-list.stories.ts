@@ -37,3 +37,50 @@ const Template = (args: PaymentsListArgs) => {
 
 export const Basic = Template.bind({});
 Basic.args = new PaymentsListArgs({});
+
+export const Styled = Template.bind({});
+Styled.args = new PaymentsListArgs({});
+Styled.decorators = [
+  (Story) => `
+    ${Story()}
+    <style>
+      justifi-payments-list::part(table-head-cell) {
+        background-color: #F4F4F6;
+      }
+      justifi-payments-list::part(pagination-bar) {
+        background-color: #F4F4F6;
+      }
+      justifi-payments-list::part(arrow) {
+        --bs-btn-disabled-bg: #212529;
+        --bs-btn-disabled-border-color: #212529;
+        --bs-btn-bg: #212529;
+        --bs-btn-border-color: #212529;
+        --bs-btn-hover-bg: #fccc32;
+        --bs-btn-hover-border-color: #fccc32;
+      }
+      justifi-payments-list::part(error-state) {
+        color: red;
+        background-color: #EEEEF5;
+      }
+      justifi-payments-list::part(loading-state-cell) {
+        background-color: #EEEEF5;
+      }
+      justifi-payments-list::part(table-row) {
+        background-color: #EEEEF5;
+      }
+      justifi-payments-list::part(table-row-even) {
+        background-color: #F4F4F6;
+      }
+    </style>
+  `
+]
+
+export const Contained = Template.bind({});
+Contained.decorators = [
+  (Story) => `
+    <div style="position: relative; width: 900px; height: 300px; overflow-x: hidden;">
+      ${Story()}
+    </div>
+  `
+]
+Contained.args = new PaymentsListArgs({});

@@ -6,7 +6,11 @@ const CSSVars = () => <Source
   language='css'
   dark
   code={dedent`
+  /* general */
+  --jfi-load-google-font
+
   /* layout */
+  --jfi-layout-font-family
   --jfi-layout-padding
   --jfi-layout-form-control-spacing-x
   --jfi-layout-form-control-spacing-y

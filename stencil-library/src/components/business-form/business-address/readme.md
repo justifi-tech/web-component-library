@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute       | Description | Type        | Default     |
-| ------------- | --------------- | ----------- | ----------- | ----------- |
-| `form`        | --              |             | `FormState` | `undefined` |
-| `subFormName` | `sub-form-name` |             | `string`    | `undefined` |
+| Property        | Attribute        | Description | Type                    | Default     |
+| --------------- | ---------------- | ----------- | ----------------------- | ----------- |
+| `defaultValues` | `default-values` |             | `any`                   | `undefined` |
+| `errors`        | `errors`         |             | `any`                   | `undefined` |
+| `onFormUpdate`  | --               |             | `(values: any) => void` | `undefined` |
 
 
 ## Dependencies

@@ -7,17 +7,9 @@
 
 ## Properties
 
-| Property        | Attribute        | Description | Type  | Default     |
-| --------------- | ---------------- | ----------- | ----- | ----------- |
-| `defaultValues` | `default-values` |             | `any` | `undefined` |
-| `errors`        | `errors`         |             | `any` | `undefined` |
-
-
-## Events
-
-| Event               | Description | Type               |
-| ------------------- | ----------- | ------------------ |
-| `formControlChange` |             | `CustomEvent<any>` |
+| Property         | Attribute | Description | Type             | Default     |
+| ---------------- | --------- | ----------- | ---------------- | ----------- |
+| `formController` | --        |             | `FormController` | `undefined` |
 
 
 ## Dependencies
@@ -34,10 +26,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-generic-info-form --> form-control-text
-  justifi-business-generic-info-form --> form-control-select
-  justifi-business-form --> justifi-business-generic-info-form
-  style justifi-business-generic-info-form fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-generic-info --> form-control-text
+  justifi-business-generic-info --> form-control-select
+  justifi-business-form --> justifi-business-generic-info
+  style justifi-business-generic-info fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

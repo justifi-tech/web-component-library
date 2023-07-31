@@ -147,6 +147,7 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | `ready`            | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
 
 
+
 ## Methods
 
 ### `resize() => Promise<void>`
@@ -159,7 +160,7 @@ Type: `Promise<void>`
 
 
 
-### `tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) => Promise<CreatePaymentMethodResponse>`
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
 
 Makes a tokenization request to the iframe
 
