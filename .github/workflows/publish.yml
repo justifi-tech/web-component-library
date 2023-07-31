@@ -44,7 +44,7 @@ jobs:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
       - name: Publish to GitHub Registry
         run: |
-          yarn lerna version ${{ inputs.release_type }}
+          yarn lerna version ${{ inputs.release_type }} --yes
           yarn lerna publish from-git --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
