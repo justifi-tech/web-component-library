@@ -43,7 +43,7 @@ describe('justifi-payments-list', () => {
           </thead>
           <tbody class="table-body" part="table-body">
             <tr>
-              <td class="error-state" colspan="8" part="error-state" style="text-align: center;">
+              <td class="error-state" colspan="7" part="error-state" style="text-align: center;">
                 An unexpected error occurred: Can not fetch any data without an AccountID and an AuthToken
               </td>
             </tr>

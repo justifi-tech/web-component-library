@@ -1,0 +1,76 @@
+export default {
+  title: 'dev/Components/PayoutsList',
+  component: 'justifi-payouts-list',
+  parameters: {},
+  argTypes: {
+    'client-id': {
+      control: 'text',
+      table: {
+        category: 'props',
+      }
+    },
+  },
+};
+
+class PayoutsListArgs {
+  'auth-token': string;
+  'account-id': string;
+  'client-id': string;
+
+  constructor(args) {
+    this['auth-token'] = args['auth-token'] || '';
+    this['account-id'] = args['account-id'] || '';
+    this['client-id'] = args['client-id'] || '';
+  }
+}
+
+const Template = (args: PayoutsListArgs) => {
+  return (`
+    <justifi-payouts-list
+      data-testid="justifi-payouts-list"
+      auth-token="${args['auth-token']}"
+      account-id="${args['account-id']}"
+      client-id="${args['client-id']}"
+    />
+  `);
+};
+
+export const Basic = Template.bind({});
+Basic.args = new PayoutsListArgs({});
+
+export const Styled = Template.bind({});
+Styled.args = new PayoutsListArgs({});
+Styled.decorators = [
+  (Story) => `
+    ${Story()}
+    <style>
+      justifi-payouts-list::part(table-head-cell) {
+        background-color: #F4F4F6;
+      }
+      justifi-payouts-list::part(pagination-bar) {
+        background-color: #F4F4F6;
+      }
+      justifi-payouts-list::part(arrow) {
+        --bs-btn-disabled-bg: #212529;
+        --bs-btn-disabled-border-color: #212529;
+        --bs-btn-bg: #212529;
+        --bs-btn-border-color: #212529;
+        --bs-btn-hover-bg: #fccc32;
+        --bs-btn-hover-border-color: #fccc32;
+      }
+      justifi-payouts-list::part(error-state) {
+        color: red;
+        background-color: #EEEEF5;
+      }
+      justifi-payouts-list::part(loading-state-cell) {
+        background-color: #EEEEF5;
+      }
+      justifi-payouts-list::part(table-row) {
+        background-color: #EEEEF5;
+      }
+      justifi-payouts-list::part(table-row-even) {
+        background-color: #F4F4F6;
+      }
+    </style>
+  `
+]

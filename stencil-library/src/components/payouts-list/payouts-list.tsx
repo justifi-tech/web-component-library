@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Api, IApiResponseCollection, Payment } from '../../api';
+import { Api, IApiResponseCollection, Payout, PayoutStatuses } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 
 interface PagingInfo {
@@ -36,15 +36,15 @@ const pagingDefaults = {
   * @exportedPart arrow-disabled: Disabled state for paging buttons
 */
 @Component({
-  tag: 'justifi-payments-list',
-  styleUrl: 'payments-list.scss',
+  tag: 'justifi-payouts-list',
+  styleUrl: 'payouts-list.scss',
   shadow: true,
 })
 
-export class PaymentsList {
+export class PayoutsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @State() payments: Payment[] = [];
+  @State() payouts: Payout[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
@@ -74,6 +74,21 @@ export class PaymentsList {
     }
   }
 
+  mapStatusToBadge = (status: PayoutStatuses) => {
+    switch (status) {
+      case PayoutStatuses.scheduled || PayoutStatuses.in_transit:
+        return 'bg-primary';
+      case PayoutStatuses.failed || PayoutStatuses.canceled:
+        return 'bg-danger';
+      case PayoutStatuses.forwarded:
+        return 'bg-secondary';
+      case PayoutStatuses.paid:
+        return 'bg-success';
+      default:
+        return 'bg-secondary';
+    }
+  }
+
   async fetchData(direction?: string): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
@@ -89,17 +104,17 @@ export class PaymentsList {
         ? '&after_cursor='+this.paging.end_cursor
         : ''
     }`;
-    const endpoint = `account/${this.accountId}/payments?limit=${limit}${cursor ? cursor : ''}`;
+    const endpoint = `account/${this.accountId}/payouts?limit=${limit}${cursor ? cursor : ''}`;
 
-    const response: IApiResponseCollection<Payment[]> = await Api(this.authToken).get(endpoint);
+    const response: IApiResponseCollection<Payout[]> = await Api(this.authToken).get(endpoint);
     if (!response.error) {
       this.paging = {
         ...this.paging,
         ...response.page_info
       }
 
-      const data = response?.data?.map(dataItem => new Payment(dataItem));
-      this.payments = data;
+      const data = response?.data?.map(dataItem => new Payout(dataItem));
+      this.payouts = data;
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }
@@ -108,18 +123,18 @@ export class PaymentsList {
   }
 
   showEmptyState() {
-    return this.payments ? this.payments.length < 1 : true;
+    return this.payouts ? this.payouts.length < 1 : true;
   }
 
   emptyState = (
     <tr>
-      <td class="empty-state" part="empty-state" colSpan={7} style={{ textAlign: 'center' }}>No payments to show</td>
+      <td class="empty-state" part="empty-state" colSpan={10} style={{ textAlign: 'center' }}>No payouts to show</td>
     </tr>
   );
 
   errorState = () => (
     <tr>
-      <td class="error-state" part="error-state" colSpan={7} style={{ textAlign: 'center' }}>
+      <td class="error-state" part="error-state" colSpan={10} style={{ textAlign: 'center' }}>
         An unexpected error occurred: {this.errorMessage}
       </td>
     </tr>
@@ -127,7 +142,7 @@ export class PaymentsList {
 
   loadingState = (
     <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={7} style={{ textAlign: 'center' }}>
+      <td class="loading-state" part="loading-state-cell" colSpan={10} style={{ textAlign: 'center' }}>
         <div part="loading-state-spinner" class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
@@ -170,16 +185,19 @@ export class PaymentsList {
           <thead class="table-head sticky-top" part="table-head">
             <tr class="table-light" part='table-head-row'>
               <th part="table-head-cell" scope="col" title="The date and time each payment was made">
-                Made on
+                Paid Out On
               </th>
-              <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
-                Amount
+              <th part="table-head-cell" scope="col">
+                Type
               </th>
-              <th part="table-head-cell" scope="col">Description</th>
-              <th part="table-head-cell" scope="col">Cardholder</th>
-              <th part="table-head-cell" scope="col">Payment Method</th>
+              <th part="table-head-cell" scope="col">Account</th>
+              <th part="table-head-cell" scope="col">Paid Out To</th>
+              <th part="table-head-cell" scope="col">Payments</th>
+              <th part="table-head-cell" scope="col">Refunds</th>
+              <th part="table-head-cell" scope="col">Fees</th>
+              <th part="table-head-cell" scope="col">Other</th>
+              <th part="table-head-cell" scope="col">Payout Amount</th>
               <th part="table-head-cell" scope="col">Status</th>
-              <th part="table-head-cell" scope="col">Payment ID</th>
             </tr>
           </thead>
           <tbody class="table-body" part='table-body'>
@@ -187,18 +205,21 @@ export class PaymentsList {
               this.loading ? this.loadingState :
               this.errorMessage ? this.errorState() :
               this.showEmptyState() ? this.emptyState :
-              this.payments?.map((payment, index) =>
+              this.payouts?.map((payout, index) =>
                 <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
                   <th scope="row" part="table-cell">
-                    <div>{formatDate(payment.created_at)}</div>
-                    <div>{formatTime(payment.created_at)}</div>
+                    <div>{formatDate(payout.created_at)}</div>
+                    <div>{formatTime(payout.created_at)}</div>
                   </th>
-                  <td part="table-cell">{formatCurrency(payment.amount)}</td>
-                  <td part="table-cell">{payment.description}</td>
-                  <td part="table-cell">{payment.payment_method?.card?.name}</td>
-                  <td part="table-cell">{payment.payment_method?.card?.acct_last_four}</td>
-                  <td part="table-cell">{payment.status}</td>
-                  <td part="table-cell">{payment.id}</td>
+                  <td part="table-cell">{payout.payout_type}</td>
+                  <td part="table-cell">{payout.account_id}</td>
+                  <td part="table-cell">{payout.bank_account.full_name} {payout.bank_account.account_number_last4}</td>
+                  <td part="table-cell">{formatCurrency(payout.payments_total)}</td>
+                  <td part="table-cell">{formatCurrency(payout.refunds_total)}</td>
+                  <td part="table-cell">{formatCurrency(payout.fees_total)}</td>
+                  <td part="table-cell">{formatCurrency(payout.other_total)}</td>
+                  <td part="table-cell">{formatCurrency(payout.amount)}</td>
+                  <td part="table-cell"><span class={`badge ${this.mapStatusToBadge(payout.status)}`}>{payout.status}</span></td>
                 </tr>
               )
             }
@@ -206,7 +227,7 @@ export class PaymentsList {
           {this.paging &&
             <tfoot class="sticky-bottom">
               <tr class="table-light align-middle">
-                <td part="pagination-bar" colSpan={7}>
+                <td part="pagination-bar" colSpan={10}>
                   {this.paginationBar()}
                 </td>
               </tr>
