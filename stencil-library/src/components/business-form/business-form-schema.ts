@@ -127,6 +127,24 @@ export const BusinessStructureOptions: { label: string; value: BusinessStructure
   },
 ];
 
+const addressSchema = Yup.object({
+  line1: Yup.string().required('Enter street address'),
+  city: Yup.string().required('Enter city'),
+  state: Yup.string().required('Select state'),
+  postal_code: Yup.string().matches(RegExZip, 'Enter valid postal code').required('Enter postal code'),
+});
+
+const representativeSchema = Yup.object({
+  name: Yup.string().required('Enter representative name'),
+  email: Yup.string().email('Enter valid representative email').required('Enter representative email'),
+  phone: Yup.string().required('Enter representative phone number'),
+  dob_day: Yup.string().required('Enter representative birth day'),
+  dob_month: Yup.string().required('Enter representative birth month'),
+  dob_year: Yup.string().required('Enter representative birth year'),
+  identification_number: Yup.string().required('Enter representative identification number'),
+  address: addressSchema,
+});
+
 const OwnerSchema = Yup.object({
   name: Yup.string().required('Enter owner name'),
   title: Yup.string().required('Enter owner title'),
@@ -138,12 +156,7 @@ const OwnerSchema = Yup.object({
   identification_number: Yup.string().required('Enter owner identification number'),
   is_owner: Yup.boolean(),
   metadata: Yup.mixed(),
-  address: Yup.object({
-    line1: Yup.string().required('Enter owner street address'),
-    city: Yup.string().required('Enter owner city'),
-    state: Yup.string().required('Select owner state'),
-    postal_code: Yup.string().matches(RegExZip, 'Enter valid postal code').required('Enter owner postal code'),
-  }),
+  address: addressSchema,
 });
 
 const BusinessFormSchema = Yup.object({
@@ -155,21 +168,7 @@ const BusinessFormSchema = Yup.object({
   business_type: Yup.string().required('Select business type'),
   business_structure: Yup.string().required('Select business structure'),
   industry: Yup.string().required('Enter a business industry'),
-  representative: Yup.object({
-    name: Yup.string().required('Enter representative name'),
-    email: Yup.string().required('Enter representative email'),
-    phone: Yup.string().required('Enter representative phone'),
-    dob_day: Yup.string().required('Enter representative birth day'),
-    dob_month: Yup.string().required('Enter representative birth month'),
-    dob_year: Yup.string().required('Enter representative birth year'),
-    identification_number: Yup.string().required('Enter representative identification number'),
-    address: Yup.object({
-      line1: Yup.string().required('Enter street address'),
-      city: Yup.string().required('Enter city'),
-      state: Yup.string().required('Select state'),
-      postal_code: Yup.string().required('Enter postal code'),
-    }),
-  }),
+  representative: representativeSchema.required('Enter representative information'),
   owners: Yup.array().of(OwnerSchema).min(1, 'Enter at least 1 owners'),
 });
 
