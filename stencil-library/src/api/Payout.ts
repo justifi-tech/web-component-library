@@ -7,7 +7,7 @@ export enum PayoutStatuses {
   canceled = 'canceled',
 }
 
-export interface BankAccount {
+export interface PayoutBankAccount {
   id: string,
   full_name: string,
   bank_name: string,
@@ -23,7 +23,7 @@ export interface IPayout {
   id: string;
   account_id: string;
   amount: number;
-  bank_account: BankAccount;
+  bank_account: PayoutBankAccount;
   currency: 'usd';
   delivery_method: string;
   description: string;
@@ -45,7 +45,7 @@ export class Payout implements IPayout {
   public id: string;
   public account_id: string;
   public amount: number;
-  public bank_account: BankAccount;
+  public bank_account: PayoutBankAccount;
   public currency: 'usd';
   public delivery_method: string;
   public description: string;
