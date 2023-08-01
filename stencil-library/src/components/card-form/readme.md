@@ -147,7 +147,6 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 | `ready`            | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
 
 
-
 ## Methods
 
 ### `resize() => Promise<void>`

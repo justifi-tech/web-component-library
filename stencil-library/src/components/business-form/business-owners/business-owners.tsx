@@ -42,8 +42,10 @@ export class BusinessOwners {
   }
 
   inputHandler(name: string, value: string, index: number): void {
-    this.owners[index][name] = value;
-    this.owners = [...this.owners];
+    const updatedOwners = [...this.owners];
+    const updatedOwner = { ...updatedOwners[index], [name]: value };
+    updatedOwners[index] = updatedOwner;
+    this.owners = updatedOwners;
   }
 
   addOwner(event: MouseEvent): void {
