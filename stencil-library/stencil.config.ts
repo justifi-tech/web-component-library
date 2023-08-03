@@ -3,6 +3,7 @@ import { sass } from '@stencil/sass';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import dotenv from 'dotenv';
 import replace from 'rollup-plugin-replace';
+import { angularOutputTarget } from '@stencil/angular-output-target';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -39,6 +40,11 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader',
     },
+    angularOutputTarget({
+      componentCorePackage: '@justifi/webcomponents',
+      directivesProxyFile: '../angular-library/projects/component-library/src/lib/stencil-generated/components.ts',
+      directivesArrayFile: '../angular-library/projects/component-library/src/lib/stencil-generated/index.ts',
+    }),
     {
       type: 'dist-custom-elements',
     },
