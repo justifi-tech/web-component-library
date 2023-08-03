@@ -7,6 +7,15 @@ export enum PayoutStatuses {
   canceled = 'canceled',
 }
 
+export enum PayoutStatusesSafeNames {
+  paid = 'Paid',
+  failed = 'Failed',
+  forwarded = 'Forwarded',
+  scheduled = 'Scheduled',
+  in_transit = 'In Transit',
+  canceled = 'Canceled',
+}
+
 export interface PayoutBankAccount {
   id: string,
   full_name: string,
