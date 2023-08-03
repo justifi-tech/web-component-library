@@ -22,6 +22,7 @@ export const JustifiPaymentMethodForm = /*@__PURE__*/createReactComponent<JSX.Ju
 export const JustifiPaymentMethodSelector = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentMethodSelector, HTMLJustifiPaymentMethodSelectorElement>('justifi-payment-method-selector');
 export const JustifiPaymentsList = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentsList, HTMLJustifiPaymentsListElement>('justifi-payments-list');
 export const JustifiPayoutsList = /*@__PURE__*/createReactComponent<JSX.JustifiPayoutsList, HTMLJustifiPayoutsListElement>('justifi-payouts-list');
+export const JustifiProceedsList = /*@__PURE__*/createReactComponent<JSX.JustifiProceedsList, HTMLJustifiProceedsListElement>('justifi-proceeds-list');
 export const JustifiTable = /*@__PURE__*/createReactComponent<JSX.JustifiTable, HTMLJustifiTableElement>('justifi-table');
 export const SelectInput = /*@__PURE__*/createReactComponent<JSX.SelectInput, HTMLSelectInputElement>('select-input');
 export const TextInput = /*@__PURE__*/createReactComponent<JSX.TextInput, HTMLTextInputElement>('text-input');
