@@ -2,19 +2,9 @@
 
 name: Build and release components
 on:
-  workflow_dispatch:
-    inputs:
-      release_type:
-        type: choice
-        description: Select a new version
-        options:
-          - major
-          - minor
-          - patch
-          - premajor
-          - preminor
-          - prepatch
-          - prerelease
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -42,11 +32,7 @@ jobs:
           yarn build:prod
         env:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
+          GH_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
       - name: Publish to GitHub Registry
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"
-          yarn lerna version ${{ inputs.release_type }} --yes
-          yarn lerna publish from-git --yes
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+          yarn lerna publish from-package --yes
