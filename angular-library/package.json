@@ -1,5 +1,5 @@
 {
-  "name": "angular-library",
+  "name": "@justifi/angular-library",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
