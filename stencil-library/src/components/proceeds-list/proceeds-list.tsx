@@ -73,17 +73,12 @@ export class ProceedsList {
       return;
     }
     this.loading = true;
-    const limit = this.paging.amount;
-    const cursor = `${
-      direction === 'prev'
-      ? '&before_cursor='+this.paging.start_cursor
-      : direction === 'next'
-        ? '&after_cursor='+this.paging.end_cursor
-        : ''
-    }`;
-    const endpoint = `account/${this.accountId}/proceeds?limit=${limit}${cursor ? cursor : ''}`;
+    const endpoint = `account/${this.accountId}/proceeds`;
 
-    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken).get(endpoint);
+    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken).get(endpoint, {
+      paging: this.paging,
+      direction: direction
+    });
     if (!response.error) {
       this.paging = {
         ...this.paging,
