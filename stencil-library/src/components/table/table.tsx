@@ -30,30 +30,30 @@ export class Table {
   @Prop() loading: TableProps['loading'] = true;
   @Prop() errorMessage: TableProps['errorMessage'] = '';
   @Prop() rowData: TableProps['rowData'] = [];
-  @Prop() columnData: TableProps['columnData'] = [];
+  @Prop() columnData!: TableProps['columnData'];
   @Prop() paging: TableProps['paging'] = ExtendedPagingDefaults;
 
   showEmptyState() {
     return this.rowData ? this.rowData.length < 1 : true;
   }
 
-  emptyState = (
+  emptyState = () => (
     <tr>
-      <td class="empty-state" part="empty-state" colSpan={this.columnData.length} style={{ textAlign: 'center' }}>No payments to show</td>
+      <td class="empty-state" part="empty-state" colSpan={this.columnData?.length} style={{ textAlign: 'center' }}>No payments to show</td>
     </tr>
   );
 
   errorState = () => (
     <tr>
-      <td class="error-state" part="error-state" colSpan={this.columnData.length} style={{ textAlign: 'center' }}>
+      <td class="error-state" part="error-state" colSpan={this.columnData?.length} style={{ textAlign: 'center' }}>
         An unexpected error occurred: {this.errorMessage}
       </td>
     </tr>
   );
 
-  loadingState = (
+  loadingState = () => (
     <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={this.columnData.length} style={{ textAlign: 'center' }}>
+      <td class="loading-state" part="loading-state-cell" colSpan={this.columnData?.length} style={{ textAlign: 'center' }}>
         <div part="loading-state-spinner" class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
@@ -87,11 +87,12 @@ export class Table {
         table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
         empty-state,pagination-bar,arrow,arrow-left,arrow-right,arrow-disabled
       ">
+        {this.columnData ?
         <table class="table table-hover">
           <thead class="table-head sticky-top" part="table-head">
             <tr class="table-light" part='table-head-row'>
               {
-                this.columnData.map((column) =>
+                this.columnData?.map((column) =>
                   <th part="table-head-cell" scope="col">
                     {column}
                   </th>
@@ -101,10 +102,10 @@ export class Table {
           </thead>
           <tbody class="table-body" part='table-body'>
             {
-              this.loading ? this.loadingState :
+              this.loading ? this.loadingState() :
               this.errorMessage ? this.errorState() :
-              this.showEmptyState() ? this.emptyState :
-              this.rowData.map((payment, index) => (
+              this.showEmptyState() ? this.emptyState() :
+              this.rowData?.map((payment, index) => (
                 <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
                   {
                     payment.map((paymentEntry: any) =>
@@ -125,13 +126,15 @@ export class Table {
           {this.paging &&
             <tfoot class="sticky-bottom">
               <tr class="table-light align-middle">
-                <td part="pagination-bar" colSpan={this.columnData.length}>
+                <td part="pagination-bar" colSpan={this.columnData?.length}>
                   {this.paginationBar()}
                 </td>
               </tr>
             </tfoot>
           }
         </table>
+        :
+        <div data-test-id="empty-error-state">Column data is required</div>}
       </Host>
     )
   }
