@@ -72,17 +72,12 @@ export class PayoutsList {
       return;
     }
     this.loading = true;
-    const limit = this.paging.amount;
-    const cursor = `${
-      direction === 'prev'
-      ? '&before_cursor='+this.paging.start_cursor
-      : direction === 'next'
-        ? '&after_cursor='+this.paging.end_cursor
-        : ''
-    }`;
-    const endpoint = `account/${this.accountId}/payouts?limit=${limit}${cursor ? cursor : ''}`;
+    const endpoint = `account/${this.accountId}/payouts`;
 
-    const response: IApiResponseCollection<Payout[]> = await Api(this.authToken).get(endpoint);
+    const response: IApiResponseCollection<Payout[]> = await Api(this.authToken).get(endpoint, {
+      paging: this.paging,
+      direction: direction
+    });
     if (!response.error) {
       this.paging = {
         ...this.paging,
