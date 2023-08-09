@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "react-library",
-    "stencil-library"
+    "stencil-library",
+    "angular-library"
   ],
   "devDependencies": {
     "lerna": "^7.1.4"
