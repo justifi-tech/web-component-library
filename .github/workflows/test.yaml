@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Run unit tests
-        run: npx lerna run test --scope=stencil-library
+        run: npx lerna run test
 
       - name: Run E2E tests
-        run: npx lerna run test:e2e --scope=stencil-library
+        run: npx lerna run test:e2e
