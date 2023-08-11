@@ -10,6 +10,15 @@
     "stencil-library",
     "angular-library"
   ],
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "x86",
+    "arm64"
+  ],
   "devDependencies": {
     "lerna": "^7.1.4"
   }
