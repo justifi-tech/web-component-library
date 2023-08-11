@@ -23,16 +23,16 @@ jobs:
           node-version-file: 'stencil-library/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn Install
+      - name: NPM Install
         run: |
-          yarn install
+          npm install
 
       - name: Typescript Compiling Build
         run: |
-          yarn build:prod
+          npm build:prod
         env:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
           GH_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
       - name: Publish to GitHub Registry
         run: |
-          yarn lerna publish from-package --yes
+          npm lerna publish from-package --yes

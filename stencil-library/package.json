@@ -18,11 +18,11 @@
     "loader/"
   ],
   "scripts": {
-    "build": "yarn build:prod",
+    "build": "npm build:prod",
     "build:dev": "NODE_ENV=dev stencil build --docs",
     "build:staging": "NODE_ENV=staging stencil build --docs",
     "build:prod": "NODE_ENV=prod stencil build --docs",
-    "start": "NODE_ENV=dev concurrently --restart-tries 3 -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
+    "start": "NODE_ENV=dev concurrently --restart-tries 3 -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run start-stencil\" \"npm run storybook\"",
     "start-stencil": "stencil build --watch --serve --no-open",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",

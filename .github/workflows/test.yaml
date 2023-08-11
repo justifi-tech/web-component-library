@@ -22,11 +22,11 @@ jobs:
           node-version-file: 'stencil-library/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn Install
-        run: yarn install
+      - name: NPM Install
+        run: npm install
 
       - name: Run unit tests
-        run: yarn test
+        run: npm test
 
       - name: Run E2E tests
-        run: yarn test:e2e
+        run: npm test:e2e

@@ -8,9 +8,9 @@
     "url": "https://github.com/justifi-tech/web-component-library.git"
   },
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
+    "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
-    "compile": "yarn run tsc",
+    "compile": "npm run tsc",
     "tsc": "tsc -p .",
     "rollup": "rollup -c"
   },
@@ -24,7 +24,6 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
-    "np": "^7.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.0.2"

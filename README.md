@@ -22,12 +22,12 @@ Before building the project, make sure to set the correct environment using the 
 
 Follow the semantic versioning guidelines found [here](https://semver.org/)
 
-In order for `react-library` to build, you must first create a yarn symlink to `stencil-library` because it is a dependency.
+In order for `react-library` to build, you must first create a npm symlink to `stencil-library` because it is a dependency.
 
 To do this, do the following:
 
-- From the `stencil-library` directory, run `yarn link`
-- From the `react-library` run `yarn link "@justifi/webcomponents"`
+- From the `stencil-library` directory, run `npm link`
+- From the `react-library` run `npm link "@justifi/webcomponents"`
 
 ## Getting Started
 
@@ -39,26 +39,26 @@ Below are commands used for various testing and development scenarios.
 
 Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. The build scripts for different environments are:
 
-- `yarn run build:dev` for development environment.
-- `yarn run build:prod` for production environment.
+- `npm run build:dev` for development environment.
+- `npm run build:prod` for production environment.
 
 ## test
 
 Runs unit tests using the Stencil's spec testing.
 
-`yarn run test`
+`npm run test`
 
 ## test:watch
 
 Runs unit tests in watch mode. Good for development.
 
-`yarn run test:watch`
+`npm run test:watch`
 
 ## test:e2e
 
 Runs end-to-end tests using the Stencil's E2E testing.
 
-`yarn run test:e2e`
+`npm run test:e2e`
 
 ## Deprecation Notice: Methods and Events
 
