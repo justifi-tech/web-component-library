@@ -2,10 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "test": "lerna run test",
-    "publish": "lerna publish"
+    "publish": "lerna publish from-package --yes"
   },
   "workspaces": [
     "react-library",

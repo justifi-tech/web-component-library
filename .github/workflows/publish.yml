@@ -23,16 +23,16 @@ jobs:
           node-version-file: 'stencil-library/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: NPM Install
+      - name: Install dependencies
         run: |
           npm install
 
-      - name: Typescript Compiling Build
+      - name: Build packages
         run: |
-          npm build:prod
+          npm run build
         env:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
-          GH_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
-      - name: Publish to GitHub Registry
+          NPM_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
+      - name: Publish to NPM Registry
         run: |
-          npm lerna publish from-package --yes
+          npm run publish
