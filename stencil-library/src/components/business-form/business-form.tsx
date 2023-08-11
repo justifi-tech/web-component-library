@@ -22,7 +22,7 @@ export class BusinessForm {
   }
 
   sendData() {
-    console.log('sendData');
+    // send data to server
   }
 
   validateAndSubmit(event: any) {
