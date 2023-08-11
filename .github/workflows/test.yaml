@@ -9,9 +9,6 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: stencil-library
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Run unit tests
-        run: npm test
+        run: npx lerna run test --scope=stencil-library
 
       - name: Run E2E tests
-        run: npm test:e2e
+        run: npx lerna run test:e2e --scope=stencil-library
