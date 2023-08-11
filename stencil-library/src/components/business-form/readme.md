@@ -18,6 +18,7 @@
 ### Depends on
 
 - [justifi-business-generic-info](business-generic-info)
+- [justifi-legal-address-form](../legal-address-form)
 - [justifi-business-representative](business-representative)
 - [justifi-business-owners](business-owners)
 
@@ -25,10 +26,13 @@
 ```mermaid
 graph TD;
   justifi-business-form --> justifi-business-generic-info
+  justifi-business-form --> justifi-legal-address-form
   justifi-business-form --> justifi-business-representative
   justifi-business-form --> justifi-business-owners
   justifi-business-generic-info --> form-control-text
   justifi-business-generic-info --> form-control-select
+  justifi-legal-address-form --> form-control-text
+  justifi-legal-address-form --> form-control-select
   justifi-business-representative --> form-control-text
   justifi-business-representative --> form-control-select
   justifi-business-representative --> justifi-business-address-form

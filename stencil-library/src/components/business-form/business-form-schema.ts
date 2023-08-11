@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import legalAddressSchema from '../legal-address-form/legal-address-form-schema';
 
 export const RegExZip = /^\d{5}/;
 
@@ -170,6 +171,7 @@ const BusinessFormSchema = Yup.object({
   industry: Yup.string().required('Enter a business industry'),
   representative: representativeSchema.required('Enter representative information'),
   owners: Yup.array().of(OwnerSchema).min(1, 'Enter at least 1 owners'),
+  legalAddress: legalAddressSchema.required('Enter legal address'),
 });
 
 export default BusinessFormSchema;
