@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
+    "test": "lerna run test",
+    "test:e2e": "lerna run test:e2e",
     "publish": "lerna publish from-package --yes"
   },
   "workspaces": [
