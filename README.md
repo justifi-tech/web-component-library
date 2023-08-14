@@ -6,6 +6,16 @@
 - React component library
   - Docs for this are not in place yet, but feel free to check out [sample-react-app.zip](https://github.com/justifi-tech/web-component-library/files/11125233/sample-react-app.zip)
 
+
+## Getting Started
+
+This project is a monorepo which uses `lerna` and npm workspaces. Lerna is aware of the workspaces within the mono repo as they are defined within the `workspaces` section of the `package.json`. When running a lerna command via `lerna run xyz`, lerna will run that command for each workspace as long as the command exists within the `scripts` section of the `package.json` for that workspace.
+
+There are some project-wide tasks that can be run:
+- To install all depenedencies across the repo, simply run `npm install` from the root of the project and dependencies will be installed for all of the workspaces as well as dependencies at the root level (such as lerna)
+- To build the entire project for production, including all framework specific packages, run `npm run build`
+- To run tests across the entire project, run `npm run test`
+
 # Environment Variables
 
 This project uses environment variables to manage configurations for different environments like development, staging, and production. These variables were previously stored in `.env.dev`, `.env.staging`, and `.env.prod` files respectively, but for security and configuration management reasons, these files are no longer included in the repository and have been added to the `.gitignore` file.
@@ -18,43 +28,30 @@ Repeat this process to create `.env.staging` and `.env.prod` for staging and pro
 
 Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. For example, if you're working in the development environment, you should set `NODE_ENV=dev`.
 
-# For contributors:
-
-Follow the semantic versioning guidelines found [here](https://semver.org/)
-
-In order for `react-library` to build, you must first create a npm symlink to `stencil-library` because it is a dependency.
-
-To do this, do the following:
-
-- From the `stencil-library` directory, run `npm link`
-- From the `react-library` run `npm link "@justifi/webcomponents"`
-
-## Getting Started
-
-This project uses the Stencil testing framework for unit and end-to-end (E2E) tests, along with Storybook for UI component testing and auto-changelog to maintain a changelog based on git metadata.
-
-Below are commands used for various testing and development scenarios.
-
-## Build
+## Building
 
 Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. The build scripts for different environments are:
 
 - `npm run build:dev` for development environment.
 - `npm run build:prod` for production environment.
 
-## test
+
+## Testing
+This project uses the Stencil testing framework for unit and end-to-end (E2E) tests, along with Storybook for UI component testing.
+
+### test
 
 Runs unit tests using the Stencil's spec testing.
 
 `npm run test`
 
-## test:watch
+### test:watch
 
 Runs unit tests in watch mode. Good for development.
 
 `npm run test:watch`
 
-## test:e2e
+### test:e2e
 
 Runs end-to-end tests using the Stencil's E2E testing.
 
