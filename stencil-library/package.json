@@ -13,20 +13,16 @@
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
   "files": [
     "dist/",
     "loader/"
   ],
   "scripts": {
-    "auto-changelog": "auto-changelog",
+    "build": "npm run build:prod",
     "build:dev": "NODE_ENV=dev stencil build --docs",
     "build:staging": "NODE_ENV=staging stencil build --docs",
     "build:prod": "NODE_ENV=prod stencil build --docs",
-    "start": "NODE_ENV=dev concurrently --restart-tries 3 -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"yarn run start-stencil\" \"yarn run storybook\"",
+    "start": "NODE_ENV=dev concurrently --restart-tries 3 -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run start-stencil\" \"npm run storybook\"",
     "start-stencil": "stencil build --watch --serve --no-open",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
@@ -35,14 +31,8 @@
     "storybook": "storybook dev -p 6006 --quiet",
     "build-storybook": "storybook build -o ../docs"
   },
-  "auto-changelog": {
-    "output": "../CHANGELOG.md",
-    "hideCredtis": "true",
-    "commitLimit": "true"
-  },
   "dependencies": {
-    "@stencil/core": "^3.3.0",
-    "@stencil/react-output-target": "^0.3.1",
+    "@stencil/core": "^4.0.5",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
     "dinero.js": "^1.9.1",
@@ -57,6 +47,7 @@
     "@babel/preset-typescript": "^7.21.5",
     "@pxtrn/storybook-addon-docs-stencil": "^6.4.1",
     "@stencil/angular-output-target": "^0.7.1",
+    "@stencil/react-output-target": "^0.5.3",
     "@stencil/sass": "^3.0.1",
     "@stencil/store": "^2.0.8",
     "@storybook/addon-actions": "^7.0.4",
@@ -71,8 +62,8 @@
     "@types/node": "^20.1.4",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
-    "auto-changelog": "^2.4.0",
     "concurrently": "^7.6.0",
+    "dotenv": "^16.3.1",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^10.0.0",
@@ -82,5 +73,5 @@
     "storybook": "^7.0.4"
   },
   "license": "MIT",
-  "gitHead": "240e3ce16e18d267ab8cd08f0435c9072af7f553"
+  "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783"
 }

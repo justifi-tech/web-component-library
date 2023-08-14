@@ -9,6 +9,7 @@ export const DIRECTIVES = [
   d.JustifiBusinessAddressForm,
   d.JustifiBusinessForm,
   d.JustifiBusinessGenericInfo,
+  d.JustifiBusinessOwners,
   d.JustifiBusinessRepresentative,
   d.JustifiCardForm,
   d.JustifiPaymentForm,

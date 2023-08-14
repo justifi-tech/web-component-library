@@ -1,9 +1,25 @@
 {
+  "name": "root",
   "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "test:e2e": "lerna run test:e2e",
+    "publish": "lerna publish from-package --yes"
+  },
   "workspaces": [
     "react-library",
     "stencil-library",
     "angular-library"
+  ],
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "x86",
+    "arm64"
   ],
   "devDependencies": {
     "lerna": "^7.1.4"

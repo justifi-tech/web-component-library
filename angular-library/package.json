@@ -1,14 +1,12 @@
 {
   "name": "@justifi/angular-library",
-  "version": "0.0.0",
+  "version": "4.4.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "watch": "ng build --watch --configuration development"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
     "@angular/common": "^16.1.0",
@@ -20,7 +18,8 @@
     "@angular/router": "^16.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.13.0",
+    "@justifi/webcomponents": "*"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.7",
