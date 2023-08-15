@@ -29,7 +29,9 @@ jobs:
           npm run build
         env:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
-          NPM_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
+
       - name: Publish to NPM Registry
         run: |
-          npm run publish
+          npm run publish --loglevel verbose
+        env:
+          NPM_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
