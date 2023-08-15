@@ -1,5 +1,3 @@
-# https://dev.to/xcanchal/automatic-versioning-in-a-lerna-monorepo-using-github-actions-4hij
-
 name: Build and release components
 on:
   push:
@@ -32,6 +30,6 @@ jobs:
 
       - name: Publish to NPM Registry
         run: |
-          npm run publish --loglevel verbose --access public
+          npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
