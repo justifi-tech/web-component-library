@@ -32,6 +32,6 @@ jobs:
 
       - name: Publish to NPM Registry
         run: |
-          npm login -v && npm run publish --loglevel verbose
+          npm run publish --loglevel verbose --access public
         env:
-          NPM_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
