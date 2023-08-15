@@ -78,6 +78,27 @@ export class PaymentsList {
     this.loading = false;
   }
 
+  mapStatusToBadge = (status: string) => {
+    switch (status) {
+      case "authorized":
+        return "<span class='badge bg-primary' title='This card payment was authorized, but not captured. It could still succeed or fail.'>Authorized</span>";
+      case "disputed":
+        return "<span class='badge bg-primary' title='The account holder disputed this payment. The amount has been returned and a fee assessed.'>Disputed</span>";
+      case "achFailed":
+        return "<span class='badge bg-danger' title='The funds couldn't be collected for this ACH payment (in addition to the original payment, an ACH return and fee will appear in a payout)'>Failed</span>";
+      case "failed":
+        return "<span class='badge bg-danger' title='This card payment didn’t go through (it won't appear in a payout)'>Failed</span>";
+      case "fully_refunded":
+        return "<span class='badge bg-primary' title='The full amount of this payment has been refunded'>Fully Refunded</span>";
+      case "partially_refunded":
+        return "<span class='badge bg-primary' title='A portion of this payment has been refunded'>Partially Refunded</span>";
+      case "pending":
+        return "<span class='badge bg-secondary' title='This ACH payment was processed, but the funds haven't settled. It could still succeed or fail.'>Pending</span>";
+      case "succeeded":
+        return "<span class='badge bg-success' title='This payment was successfully captured'>Successful</span>";
+    }
+  };
+
   render() {
     return (
       <Host>
@@ -105,7 +126,10 @@ export class PaymentsList {
                 payment.description,
                 payment.payment_method.card.name,
                 payment.payment_method?.card?.acct_last_four,
-                payment.status,
+                {
+                  type: 'inner',
+                  value: this.mapStatusToBadge(payment.status)
+                },
                 payment.id
               ]
             ))
