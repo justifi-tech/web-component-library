@@ -100,16 +100,16 @@ export class PayoutsList {
       <Host>
         <justifi-table
           columnData={[
-            'Paid Out On',
-            'Type',
-            'Account',
-            'Paid Out To',
-            'Payments',
-            'Refunds',
-            'Fees',
-            'Other',
-            'Payout Amount',
-            'Status'
+            ['Paid Out On', 'The date each transaction occurred'],
+            ['Type', 'The type of each transaction'],
+            ['Account', 'The ID of the account associated with each payout'],
+            ['Paid Out To', 'The bank account to which each payout was transferred'],
+            ['Payments', 'Sum of payments in each payout'],
+            ['Refunds', 'Sum of refunds in each payout'],
+            ['Fees', 'Sum of fees in each payout'],
+            ['Other', 'Sum of less common transactions in each payout (disputes, ACH returns, fee refunds, and forwarded balances due to failed payouts)'],
+            ['Payout Amount', 'The net sum of all transactions in each payout. This is the amount you\'ll see reflected on your bank statement'],
+            ['Status', 'The real-time status of each payout']
           ]}
           rowData={
             this.payouts.map((payout) => (

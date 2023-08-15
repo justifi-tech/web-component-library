@@ -101,13 +101,13 @@ export class ProceedsList {
       <Host>
         <justifi-table
           columnData={[
-            'Paid Out On',
-            'Paid Out To',
-            'From Payments',
-            'From Refunds',
-            'Other',
-            'Proceeds Amount',
-            'Status',
+            ['Paid Out On', 'The date each batch of proceeds is transferred to your bank account'],
+            ['Paid Out To', 'The bank account to which each payout is sent'],
+            ['From Payments', 'The amount added related to payments in each payout'],
+            ['From Refunds', 'The amount deducted related to refunds in each payout'],
+            ['Other', 'The amount related to less common transactions in each payout (disputes, ACH returns, fee refunds, and forwarded balances due to failed payouts)'],
+            ['Proceeds Amount', 'The net sum of all transactions in each payout. This is the amount you\'ll see reflected on your bank statement.'],
+            ['Status', 'The real-time status of each payout'],
           ]}
           rowData={
             this.proceeds.map((proceed) => (

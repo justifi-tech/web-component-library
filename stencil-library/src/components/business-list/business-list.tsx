@@ -108,7 +108,7 @@ export class BusinessList {
     this.loading = true;
     const endpoint = `entities/business`;
 
-    const response: IApiResponseCollection<Business[]> = await Api(this.authToken, 'http://localhost:3020').get(endpoint, {
+    const response: IApiResponseCollection<Business[]> = await Api(this.authToken, process.env.ENTITIES_API_ORIGIN).get(endpoint, {
       account_id: this.accountId,
       paging: this.paging,
       direction: direction
@@ -133,13 +133,13 @@ export class BusinessList {
       <Host>
         <justifi-table
           columnData={[
-            'Legal Name',
-            'Business Type',
-            'Business Structure',
-            'Tax ID',
-            'Industry',
-            'Product Ready',
-            'Created at',
+            ['Legal Name', 'The name associated with this Business'],
+            ['Business Type', 'The business type'],
+            ['Business Structure', 'The business structure'],
+            ['Tax ID', 'The tax ID associated with this business'],
+            ['Industry', 'The industry this business participates in'],
+            ['Product Ready', 'List of our products that are used by this business'],
+            ['Created at', 'Date this business was created'],
           ]}
           rowData={
             this.businesses.map((business) => (
