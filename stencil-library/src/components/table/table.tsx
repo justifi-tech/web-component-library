@@ -105,15 +105,15 @@ export class Table {
               this.loading ? this.loadingState() :
               this.errorMessage ? this.errorState() :
               this.showEmptyState() ? this.emptyState() :
-              this.rowData?.map((payment, index) => (
+              this.rowData?.map((data, index) => (
                 <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
                   {
-                    payment.map((paymentEntry: any) =>
+                    data.map((dataEntry: any) =>
                       { return (
-                          !paymentEntry?.type
-                          ? <td part="table-cell">{paymentEntry}</td>
+                          !dataEntry?.type
+                          ? <td part="table-cell">{dataEntry}</td>
                           : <th scope="row" part="table-cell">
-                              <td part="table-cell" innerHTML={paymentEntry.value}></td>
+                              <td part="table-cell" innerHTML={dataEntry.value}></td>
                             </th>
                         )
                       }
