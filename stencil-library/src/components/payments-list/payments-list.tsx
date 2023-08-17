@@ -104,13 +104,13 @@ export class PaymentsList {
       <Host>
         <justifi-table
           columnData={[
-            'Made On',
-            'Amount',
-            'Description',
-            'Cardholder',
-            'Payment Method',
-            'Status',
-            'Payment ID'
+            ['Made On', 'The date and time each payment was made'],
+            ['Amount', 'The dollar amount of each payment'],
+            ['Description', 'The payment description, if you provided one'],
+            ['Cardholder', 'The name associated with the payment method'],
+            ['Payment Method', 'The brand and last 4 digits of the payment method'],
+            ['Status', 'The current status of each payment'],
+            ['Payment ID', 'The unique identifier of each payment']
           ]}
           rowData={
             this.payments.map((payment) => (
