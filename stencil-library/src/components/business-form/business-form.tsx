@@ -43,6 +43,9 @@ export class BusinessForm {
               <justifi-legal-address-form formController={this.formController} legend="Legal Address" />
             </div>
             <div class="col-12">
+              <justifi-additional-questions formController={this.formController} />
+            </div>
+            <div class="col-12">
               <justifi-business-representative formController={this.formController} />
             </div>
           </div>

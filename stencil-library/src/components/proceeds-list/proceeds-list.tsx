@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
-import { formatDate } from '../../utils/utils';
+import { formatCurrency, formatDate } from '../../utils/utils';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
 import { Proceed, ProceedStatuses, ProceedStatusesSafeNames } from '../../api/Proceed';
 
@@ -53,16 +53,18 @@ export class ProceedsList {
 
   mapStatusToBadge = (status: ProceedStatuses) => {
     switch (status) {
-      case ProceedStatuses.scheduled || ProceedStatuses.in_transit:
-        return 'bg-primary';
-      case ProceedStatuses.failed || ProceedStatuses.canceled:
-        return 'bg-danger';
+      case ProceedStatuses.scheduled:
+        return `<span class="badge bg-primary" title='Batched and scheduled to be transferred'>${ProceedStatusesSafeNames[status]}</span>`;
+      case ProceedStatuses.in_transit:
+        return `<span class="badge bg-primary" title='Transfer to your bank account has been initiated'>${ProceedStatusesSafeNames[status]}</span>`;
+      case ProceedStatuses.failed:
+        return `<span class="badge bg-danger" title='Transfer to your bank account failed'>${ProceedStatusesSafeNames[status]}</span>`;
+      case ProceedStatuses.canceled:
+        return `<span class="badge bg-danger" title='Transfer to your bank account failed'>${ProceedStatusesSafeNames[status]}</span>`;
       case ProceedStatuses.forwarded:
-        return 'bg-secondary';
+        return `<span class="badge bg-secondary" title='This payout initially failed; the funds have been forwarded to your next successful batch of proceeds'>${ProceedStatusesSafeNames[status]}</span>`;
       case ProceedStatuses.paid:
-        return 'bg-success';
-      default:
-        return 'bg-secondary';
+        return `<span class="badge bg-success" title='Successfully deposited into your bank account'>${ProceedStatusesSafeNames[status]}</span>`;
     }
   }
 
@@ -99,13 +101,13 @@ export class ProceedsList {
       <Host>
         <justifi-table
           columnData={[
-            'Paid Out On',
-            'Paid Out To',
-            'From Payments',
-            'From Refunds',
-            'Other',
-            'Proceeds Amount',
-            'Status',
+            ['Paid Out On', 'The date each batch of proceeds is transferred to your bank account'],
+            ['Paid Out To', 'The bank account to which each payout is sent'],
+            ['From Payments', 'The amount added related to payments in each payout'],
+            ['From Refunds', 'The amount deducted related to refunds in each payout'],
+            ['Other', 'The amount related to less common transactions in each payout (disputes, ACH returns, fee refunds, and forwarded balances due to failed payouts)'],
+            ['Proceeds Amount', 'The net sum of all transactions in each payout. This is the amount you\'ll see reflected on your bank statement.'],
+            ['Status', 'The real-time status of each payout'],
           ]}
           rowData={
             this.proceeds.map((proceed) => (
@@ -115,13 +117,13 @@ export class ProceedsList {
                   value: formatDate(proceed.deposits_at),
                 },
                 proceed.bank_account.full_name,
-                proceed.payments_total,
-                proceed.refunds_total,
-                proceed.other_total,
-                proceed.amount,
+                formatCurrency(proceed.payments_total),
+                formatCurrency(proceed.refunds_total),
+                formatCurrency(proceed.other_total),
+                formatCurrency(proceed.amount),
                 {
                   type: 'inner',
-                  value: `<span class="badge ${this.mapStatusToBadge(proceed.status)}">${ProceedStatusesSafeNames[proceed.status]}</span>`
+                  value: this.mapStatusToBadge(proceed.status)
                 }
               ]
             ))

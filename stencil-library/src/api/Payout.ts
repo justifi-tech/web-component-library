@@ -1,3 +1,5 @@
+import { BankAccount } from "./shared";
+
 export enum PayoutStatuses {
   paid = 'paid',
   failed = 'failed',
@@ -16,23 +18,11 @@ export enum PayoutStatusesSafeNames {
   canceled = 'Canceled',
 }
 
-export interface PayoutBankAccount {
-  id: string,
-  full_name: string,
-  bank_name: string,
-  account_number_last4: string,
-  routing_number: string,
-  country: string,
-  currency: string,
-  nickname: string,
-  account_type: string,
-}
-
 export interface IPayout {
   id: string;
   account_id: string;
   amount: number;
-  bank_account: PayoutBankAccount;
+  bank_account: BankAccount;
   currency: 'usd';
   delivery_method: string;
   description: string;
@@ -54,7 +44,7 @@ export class Payout implements IPayout {
   public id: string;
   public account_id: string;
   public amount: number;
-  public bank_account: PayoutBankAccount;
+  public bank_account: BankAccount;
   public currency: 'usd';
   public delivery_method: string;
   public description: string;
