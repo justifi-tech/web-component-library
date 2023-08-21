@@ -15,7 +15,7 @@ const ExtendedPagingDefaults: ExtendedPagingInfo = {
 export interface TableProps {
   loading: boolean;
   errorMessage: string;
-  columnData: string[];
+  columnData: (string|string[])[];
   rowData: any[];
   paging: ExtendedPagingInfo;
 }
@@ -93,8 +93,8 @@ export class Table {
             <tr class="table-light" part='table-head-row'>
               {
                 this.columnData?.map((column) =>
-                  <th part="table-head-cell" scope="col">
-                    {column}
+                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
+                    {!Array.isArray(column) ? column : column[0]}
                   </th>
                 )
               }

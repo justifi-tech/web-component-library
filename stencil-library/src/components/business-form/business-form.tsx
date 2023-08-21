@@ -22,7 +22,7 @@ export class BusinessForm {
   }
 
   sendData() {
-    console.log('sendData');
+    // send data to server
   }
 
   validateAndSubmit(event: any) {
@@ -34,10 +34,18 @@ export class BusinessForm {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
-        <form onSubmit={event => this.validateAndSubmit(event)} class="container">
-          <div class="row gy-6 grid gap-4">
+        <form onSubmit={event => this.validateAndSubmit(event)}>
+          <div class="row gy-6">
             <div class="col-12">
               <justifi-business-generic-info formController={this.formController} />
+            </div>
+            <div class="col-12">
+              <justifi-legal-address-form formController={this.formController} legend="Legal Address" />
+            </div>
+            <div class="col-12">
+              <justifi-additional-questions formController={this.formController} />
+            </div>
+            <div class="col-12">
               <justifi-business-representative formController={this.formController} />
             </div>
             <div class="col-12">
