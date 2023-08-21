@@ -22,7 +22,7 @@ export class BusinessForm {
   }
 
   sendData() {
-    // send data
+    // send data to server
   }
 
   validateAndSubmit(event: any) {
@@ -38,6 +38,9 @@ export class BusinessForm {
           <div class="row gy-6">
             <div class="col-12">
               <justifi-business-generic-info formController={this.formController} />
+            </div>
+            <div class="col-12">
+              <justifi-legal-address-form formController={this.formController} legend="Legal Address" />
             </div>
             <div class="col-12">
               <justifi-additional-questions formController={this.formController} />
