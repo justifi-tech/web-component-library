@@ -17,11 +17,11 @@ export class LegalAddressForm {
   @Prop() legend: string;
   @State() errors: any = {};
   @State() defaultValues: any = {};
-  @State() legalAddress: any = {};
+  @State() legal_address: any = {};
 
-  @Watch('legalAddress')
+  @Watch('legal_address')
   handleLegalAddressChange(newValue: any) {
-    this.formController.setValues({ legalAddress: newValue });
+    this.formController.setValues({ legal_address: newValue });
   }
 
   componentDidLoad() {
@@ -30,7 +30,7 @@ export class LegalAddressForm {
   }
 
   inputHandler(name: string, value: string) {
-    this.legalAddress = { ...this.legalAddress, [name]: value };
+    this.legal_address = { ...this.legal_address, [name]: value };
   }
 
   render() {
@@ -40,19 +40,19 @@ export class LegalAddressForm {
           {this.legend && <legend>{this.legend}</legend>}
           <div class="row gx-2 gy-2">
             <div class="col-12">
-              <form-control-text name="line1" label="Legal Address" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legalAddress?.line1} />
+              <form-control-text name="line1" label="Legal Address" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legal_address?.line1} />
             </div>
             <div class="col-12">
               <form-control-text name="line2" label="Address Line 2" inputHandler={(name, value) => this.inputHandler(name, value)} />
             </div>
             <div class="col-12">
-              <form-control-text name="city" label="City" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legalAddress?.city} />
+              <form-control-text name="city" label="City" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legal_address?.city} />
             </div>
             <div class="col-12">
-              <form-control-text name="state" label="State" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legalAddress?.state} />
+              <form-control-text name="state" label="State" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legal_address?.state} />
             </div>
             <div class="col-12">
-              <form-control-text name="postal_code" label="Zip" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legalAddress?.postal_code} />
+              <form-control-text name="postal_code" label="Zip" inputHandler={(name, value) => this.inputHandler(name, value)} error={this.errors?.legal_address?.postal_code} />
             </div>
             <div class="col-12">
               <form-control-select
@@ -60,7 +60,7 @@ export class LegalAddressForm {
                 label="Country"
                 options={countryOptions}
                 inputHandler={(name, value) => this.inputHandler(name, value)}
-                error={this.errors?.legalAddress?.country}
+                error={this.errors?.legal_address?.country}
               />
             </div>
           </div>
