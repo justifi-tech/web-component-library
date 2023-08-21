@@ -34,7 +34,7 @@ export class BusinessForm {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
-        <form onSubmit={event => this.validateAndSubmit(event)} class="container">
+        <form onSubmit={event => this.validateAndSubmit(event)}>
           <div class="row gy-6">
             <div class="col-12">
               <justifi-business-generic-info formController={this.formController} />
