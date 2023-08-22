@@ -48,9 +48,10 @@ export class BusinessForm {
             <div class="col-12">
               <justifi-business-representative formController={this.formController} />
             </div>
-          </div>
-          <div class="row gy-3">
             <div class="col-12">
+              <justifi-business-owners formController={this.formController} />
+            </div>
+            <div class="col-12 d-flex flex-row-reverse">
               <button type="submit" class="btn btn-primary">
                 Submit
               </button>
