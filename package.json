@@ -10,7 +10,8 @@
   "workspaces": [
     "react-library",
     "stencil-library",
-    "angular-library"
+    "angular-library",
+    "vue-library"
   ],
   "os": [
     "darwin",
