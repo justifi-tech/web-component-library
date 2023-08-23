@@ -1,5 +1,11 @@
 ### Changelog
 
+#### 4.4.1
+
+> 23 Aug 2023
+
+- Update `package.json` to contain the correct `main` file entry
+
 #### 4.4.0
 
 > 27 July 2023
