@@ -62,7 +62,7 @@ describe('business-address', () => {
             <form-control-text defaultValue="Apartment 1" label="Apartment, Suite, etc. (optional)" name="line2"></form-control-text>
           </div>
           <div class="col-12">
-            <form-control-text defaultValue="City" label="City" name="city"></form-control-text>
+            <form-control-text defaultvalue="City" label="City" name="city"></form-control-text>
           </div>
           <div class="col-12 col-md-6">
             <form-control-select defaultValue="State" label="State" name="state"></form-control-select>

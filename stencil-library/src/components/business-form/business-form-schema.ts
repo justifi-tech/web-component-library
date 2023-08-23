@@ -171,7 +171,7 @@ const BusinessFormSchema = object({
   industry: string().required('Enter a business industry'),
   representative: representativeSchema.required('Enter representative information'),
   owners: array().of(OwnerSchema).min(1, 'Enter at least 1 owners'),
-  legal_address: legalAddressSchema.required('Enter legal address'),
+  legal_address: legalAddressSchema.required('Enater legal address'),
 });
 
 export default BusinessFormSchema;

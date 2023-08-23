@@ -1,10 +1,10 @@
-import { BehaviorSubject } from "rxjs";
-import { ObjectSchema, ValidationError } from "yup";
+import { BehaviorSubject } from 'rxjs';
+import { ObjectSchema, ValidationError } from 'yup';
 
 export class FormController {
-  public defaultValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  public values: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  public errors: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public defaultValues = new BehaviorSubject<any>({});
+  public values = new BehaviorSubject<any>({});
+  public errors = new BehaviorSubject<any>({});
 
   private _schema: ObjectSchema<any>;
   private _defaultValues: any = {};
@@ -17,36 +17,68 @@ export class FormController {
     this._defaultValues = defaultValues;
   }
 
-  private setError(obj, path, message: string) {
-    var properties = Array.isArray(path) ? path : path.split(".");
-    var property = properties.shift();
+  private processArrayError(obj: any, property: string, remainingProperties: string[], message: string): void {
+    // Extract array name and index from the property string
+    const [arrayName, indexStr] = property.match(/^([a-zA-Z0-9]+)\[(\d+)\]/).slice(1);
+    const index = parseInt(indexStr, 10);
+
+    // Ensure the array exists and has an entry at the given index
+    obj[arrayName] = obj[arrayName] || [];
+    obj[arrayName][index] = obj[arrayName][index] || {};
+
+    // Recursively set the error if there are remaining properties, else set the error message
+    if (remainingProperties.length) {
+      this.setNestedError(obj[arrayName][index], remainingProperties, message);
+    } else {
+      obj[arrayName][index] = message;
+    }
+  }
+
+  private processRegularError(obj: any, property: string, remainingProperties: string[], message: string): void {
+    // Ensure the property exists
     obj[property] = obj[property] || {};
-    if (properties.length) {
-      this.setError(obj[property], properties, message);
+
+    // Recursively set the error if there are remaining properties, else set the error message
+    if (remainingProperties.length) {
+      this.setNestedError(obj[property], remainingProperties, message);
     } else {
       obj[property] = message;
     }
-    return obj;
+  }
+
+  private setNestedError(obj: any, properties: string[], message: string): void {
+    const property = properties.shift();
+    const isArrayError = property.includes('[');
+
+    if (isArrayError) {
+      this.processArrayError(obj, property, properties, message);
+    } else {
+      this.processRegularError(obj, property, properties, message);
+    }
+  }
+
+  private setError(obj: any, path: string, message: string): void {
+    // Convert path to properties array
+    const properties = Array.isArray(path) ? path : path.split('.');
+    this.setNestedError(obj, properties, message);
   }
 
   private async validate(): Promise<boolean> {
-    this._isValid = true
+    this._isValid = true;
     this._errors = {};
 
     try {
       await this._schema.validate(this._values, { abortEarly: false });
     } catch (err) {
       this._isValid = false;
-      const newErrors = {};
-      err.inner.map((item: ValidationError) => {
-        this.setError(newErrors, item.path, item.message);
+      err.inner.forEach((item: ValidationError) => {
+        this.setError(this._errors, item.path, item.message);
       });
-      this._errors = newErrors;
     }
 
     this.errors.next(this._errors);
     return this._isValid;
-  };
+  }
 
   public async validateAndSubmit(submitHandler: () => void): Promise<void> {
     const isValid = await this.validate();
@@ -55,12 +87,12 @@ export class FormController {
     }
   }
 
-  public setValues(values): void {
+  public setValues(values: any): void {
     this._values = { ...this._values, ...values };
     this.values.next(this._values);
   }
 
-  public setDefaultValues(values): void {
+  public setDefaultValues(values: any): void {
     this._defaultValues = { ...this._defaultValues, ...values };
     this.defaultValues.next(this._defaultValues);
   }

@@ -13,21 +13,18 @@
 | `authToken` | `auth-token` |             | `string` | `undefined` |
 
 
-## Shadow Parts
+## Dependencies
 
-| Part                      | Description |
-| ------------------------- | ----------- |
-| `"empty-state"`           |             |
-| `"error-state"`           |             |
-| `"loading-state-cell"`    |             |
-| `"loading-state-spinner"` |             |
-| `"pagination-bar"`        |             |
-| `"table-body"`            |             |
-| `"table-cell"`            |             |
-| `"table-head"`            |             |
-| `"table-head-cell"`       |             |
-| `"table-head-row"`        |             |
+### Depends on
 
+- [justifi-table](../table)
+
+### Graph
+```mermaid
+graph TD;
+  justifi-payments-list --> justifi-table
+  style justifi-payments-list fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

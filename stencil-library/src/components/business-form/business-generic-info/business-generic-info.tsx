@@ -11,7 +11,7 @@ import { FormController } from '../../form/form';
 @Component({
   tag: 'justifi-business-generic-info',
   styleUrl: 'business-generic-info.scss',
-  shadow: true,
+  shadow: false,
 })
 export class BusinessGenericInfo {
   @Prop() formController: FormController;

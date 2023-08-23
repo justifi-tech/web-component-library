@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property         | Attribute     | Description | Type             | Default     |
-| ---------------- | ------------- | ----------- | ---------------- | ----------- |
-| `formController` | --            |             | `FormController` | `undefined` |
-| `hideSubmit`     | `hide-submit` |             | `boolean`        | `false`     |
-| `legend`         | `legend`      |             | `string`         | `undefined` |
+| Property         | Attribute | Description | Type             | Default     |
+| ---------------- | --------- | ----------- | ---------------- | ----------- |
+| `formController` | --        |             | `FormController` | `undefined` |
+| `legend`         | `legend`  |             | `string`         | `undefined` |
 
 
 ## Dependencies

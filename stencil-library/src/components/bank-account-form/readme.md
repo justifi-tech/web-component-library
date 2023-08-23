@@ -21,7 +21,6 @@
 | `ready`                   | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
 
 
-
 ## Methods
 
 ### `resize() => Promise<void>`
