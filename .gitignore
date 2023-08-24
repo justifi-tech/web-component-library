@@ -6,3 +6,5 @@ UserInterfaceState.xcuserstate
 node_modules
 lerna-debug.log
 
+vue-library/dist/*
+vue-library/lib/components.ts

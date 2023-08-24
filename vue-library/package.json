@@ -1,0 +1,34 @@
+{
+  "name": "@justifi/vue-components",
+  "version": "4.4.0",
+  "description": "\"Vue specific wrapper for JustiFi web components\"",
+  "homepage": "https://github.com/justifi-tech/web-component-library#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justifi-tech/web-component-library.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/vue-library.test.js",
+    "build": "npm run tsc",
+    "tsc": "tsc -p . --outDir ./dist"
+  },
+  "bugs": {
+    "url": "https://github.com/justifi-tech/web-component-library/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "vue": "^3.3.4"
+  }
+}
