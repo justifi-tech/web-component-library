@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
 import { formatCurrency, formatDate } from '../../utils/utils';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
@@ -34,6 +34,10 @@ export class ProceedsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @Event({
+    eventName: 'proceed-row-clicked',
+    bubbles: true,
+  }) rowClicked: EventEmitter<Proceed>;
 
   @Watch('accountId')
   @Watch('authToken')
@@ -100,6 +104,12 @@ export class ProceedsList {
     return (
       <Host>
         <justifi-table
+          rowClickHandler={(e) => {
+            const clickedProceedID = e.target.closest('tr').dataset.rowEntityId;
+            if (!clickedProceedID) { return }
+            this.rowClicked.emit(this.proceeds.find((proceed) => proceed.id === clickedProceedID));
+          }}
+          entityId={this.proceeds.map((proceed) => proceed.id)}
           columnData={[
             ['Paid Out On', 'The date each batch of proceeds is transferred to your bank account'],
             ['Paid Out To', 'The bank account to which each payout is sent'],

@@ -10,6 +10,16 @@ export default {
       }
     },
   },
+  decorators: [
+    (Story) => `
+      ${Story()}
+      <script>
+        window.addEventListener('payment-row-clicked', (e) => {
+          console.log(e);
+        })
+      </script>
+    `
+  ]
 };
 
 class PaymentsListArgs {
