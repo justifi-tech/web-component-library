@@ -32,6 +32,8 @@ export class Table {
   @Prop() rowData: TableProps['rowData'] = [];
   @Prop() columnData!: TableProps['columnData'];
   @Prop() paging: TableProps['paging'] = ExtendedPagingDefaults;
+  @Prop() entityIDFieldIndex: number;
+  @Prop() rowClickHandler: (e) => any;
 
   showEmptyState() {
     return this.rowData ? this.rowData.length < 1 : true;
@@ -105,8 +107,8 @@ export class Table {
               this.loading ? this.loadingState() :
               this.errorMessage ? this.errorState() :
               this.showEmptyState() ? this.emptyState() :
-              this.rowData?.map((payment, index) => (
-                <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
+              this.rowData?.map((data, index) => (
+                <tr data-row-entity-id={data[this.entityIDFieldIndex]} onClick={e => this.rowClickHandler(e)} part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
                   {
                     payment.map((paymentEntry: any) =>
                       { return (

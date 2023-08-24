@@ -56,4 +56,15 @@ describe('justifi-table', () => {
     const error = page.root.shadowRoot.querySelector('[part="pagination-bar"]');
     expect(error).not.toBeNull();
   });
+
+  it('has an ID for each row', async () => {
+    const page = await newSpecPage({
+      components: [Table],
+      template: () => <justifi-table entityId={['123']} rowData={[['test']]} columnData={['test', 'test']} loading={false} />
+    });
+
+    const row: HTMLElement = page.root.shadowRoot.querySelector('[data-row-entity-id]');
+    expect(row).not.toBeNull();
+    expect(row.dataset.rowEntityId).toBe('123');
+  });
 });
