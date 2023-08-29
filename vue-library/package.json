@@ -28,6 +28,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@justifi/webcomponents": "*"
+  },
   "devDependencies": {
     "vue": "^3.3.4"
   }
