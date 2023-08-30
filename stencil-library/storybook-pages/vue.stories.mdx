@@ -1,0 +1,99 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import { SummaryElement } from './utils.tsx';
+import dedent from 'ts-dedent';
+
+<Meta title="Vue 3" />
+
+# Justifi Vue 3 web components
+
+# Index
+
+- [Usage](#usage)
+- [Usage details](#usage-details)
+  - [Props Names](#props-names)
+  - [Listening to events](#listening-to-events)
+  - [Calling methods](#calling-methods)
+
+# Usage
+
+To use the Vue 3 version of the web components, you need to install the package:
+
+<Source language="bash" dark code="npm install --save @justifi/vue-components" />
+
+Then import it in your `main.js`:
+
+<Source
+  language="javascript"
+  dark
+  code={dedent(`
+    import JustifiVue3Components from '@justifi/vue-components';
+    import { createApp } from 'vue';
+
+    const app = createApp(App);
+    app.use(JustifiVue3Components);
+    app.mount('#app');
+
+`)}
+/>
+
+And use it as a normal Vue component:
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    <justifi-card-form
+      @card-form-ready="onPaymentMethodReady"
+    ></justifi-card-form>
+`)}
+/>
+
+# Usage details
+
+## Props Names
+
+Vue 3 will follow the same prop conventions as the vanilla HTML web components, so they should be hyphen-cased.
+
+For example, the `cardFormReady` event will be `card-form-ready` in Vue 3.
+
+## Listening to events
+
+To listen to events, you can use the Vue 3 syntax for binding to component events.
+
+For example `@event="handler"`.
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    <justifi-card-form
+      @card-form-ready="onCardFormReady"
+    ></justifi-card-form>
+`)}
+/>
+
+## Calling methods
+
+You can call methods by grabbing a reference to the element in the component.
+
+<Source
+  language="javascript"
+  dark
+  code={dedent(`
+    <template>
+      <justifi-card-form ref="cardForm"></justifi-card-form>
+    </template>
+
+    <script setup>
+      import { ref } from 'vue';
+      const cardForm = ref(null);
+
+      const onSomeEventHandler = () => {
+        cardForm.value.tokenize(clientId, paymentMethodMetadata, subAccountID).then(tokenizeResponse => {
+          // Do stuff with the tokenized payment method, like submitting a payment
+        });
+      }
+    </script>
+
+`)}
+/>
