@@ -33,7 +33,7 @@ Type: `Promise<void>`
 
 
 
-### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<CreatePaymentMethodResponse>`
+### `tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>) => Promise<CreatePaymentMethodResponse>`
 
 Makes a tokenization request to the iframe
 
