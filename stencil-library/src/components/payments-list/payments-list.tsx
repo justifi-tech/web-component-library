@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Api, IApiResponseCollection, Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
@@ -33,6 +33,10 @@ export class PaymentsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @Event({
+    eventName: 'payment-row-clicked',
+    bubbles: true,
+  }) rowClicked: EventEmitter<Payment>;
 
   @Watch('accountId')
   @Watch('authToken')
@@ -82,6 +86,12 @@ export class PaymentsList {
     return (
       <Host>
         <justifi-table
+          rowClickHandler={e => {
+            const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
+            if (!clickedPaymentID) { return }
+            this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
+          }}
+          entityId={this.payments.map((payment) => payment.id)}
           columnData={[
             ['Made On', 'The date and time each payment was made'],
             ['Amount', 'The dollar amount of each payment'],

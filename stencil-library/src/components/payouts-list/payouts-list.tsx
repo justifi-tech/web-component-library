@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Api, IApiResponseCollection, Payout, PayoutStatuses, PayoutStatusesSafeNames } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
@@ -33,6 +33,10 @@ export class PayoutsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @Event({
+    eventName: 'payout-row-clicked',
+    bubbles: true,
+  }) rowClicked: EventEmitter<Payout>;
 
   @Watch('accountId')
   @Watch('authToken')
@@ -99,6 +103,11 @@ export class PayoutsList {
     return (
       <Host>
         <justifi-table
+          rowClickHandler={(e) => {
+            const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;
+            if (!clickedPayoutID) { return }
+            this.rowClicked.emit(this.payouts.find((payout) => payout.id === clickedPayoutID));
+          }}
           columnData={[
             ['Paid Out On', 'The date each transaction occurred'],
             ['Type', 'The type of each transaction'],
@@ -111,6 +120,7 @@ export class PayoutsList {
             ['Payout Amount', 'The net sum of all transactions in each payout. This is the amount you\'ll see reflected on your bank statement'],
             ['Status', 'The real-time status of each payout']
           ]}
+          entityId={this.payouts.map((payout) => payout.id)}
           rowData={
             this.payouts.map((payout) => (
               [

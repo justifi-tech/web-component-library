@@ -32,6 +32,8 @@ export class Table {
   @Prop() rowData: TableProps['rowData'] = [];
   @Prop() columnData!: TableProps['columnData'];
   @Prop() paging: TableProps['paging'] = ExtendedPagingDefaults;
+  @Prop() entityId: string[];
+  @Prop() rowClickHandler: (e: any) => any;
 
   showEmptyState() {
     return this.rowData ? this.rowData.length < 1 : true;
@@ -105,8 +107,13 @@ export class Table {
               this.loading ? this.loadingState() :
               this.errorMessage ? this.errorState() :
               this.showEmptyState() ? this.emptyState() :
-              this.rowData?.map((data, index) => (
-                <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
+              this.rowData?.map((data, index) => {
+                return (
+                <tr
+                  data-row-entity-id={this.entityId[index]}
+                  onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
+                  part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}
+                >
                   {
                     data.map((dataEntry: any) =>
                       { return (
@@ -120,7 +127,8 @@ export class Table {
                     )
                   }
                 </tr>
-              ))
+                )
+              })
             }
           </tbody>
           {this.paging &&
