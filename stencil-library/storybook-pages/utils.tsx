@@ -21,7 +21,7 @@ const ExportedParts = ({ tags, component, compact }: { tags: string[]; component
         const description = splitText[1];
         return (
           <li key={part}>
-            <strong>{part}</strong> - {description}
+            <strong>{part}</strong> {description ? '- '+description : ''}
             <ExportedPartUsage component={component} tag={part} compact={compact} />
           </li>
         );
