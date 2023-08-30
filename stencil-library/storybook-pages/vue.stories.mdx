@@ -1,6 +1,5 @@
 import { Meta, Source } from '@storybook/addon-docs';
 import { SummaryElement } from './utils.tsx';
-import CSSVars from './css-variables.tsx';
 import dedent from 'ts-dedent';
 
 <Meta title="Vue 3" />
@@ -14,9 +13,6 @@ import dedent from 'ts-dedent';
   - [Props Names](#props-names)
   - [Listening to events](#listening-to-events)
   - [Calling methods](#calling-methods)
-- [Styling](#styling)
-  - [Components styled with variables](#components-styled-with-variables)
-  - [Styling exported parts](#styling-exported-parts)
 
 # Usage
 
@@ -101,51 +97,3 @@ You can call methods by grabbing a reference to the element in the component.
 
 `)}
 />
-
-# Styling
-
-## Components styled with variables
-
-The following components can only be styled through CSS variables:
-
-- [BankAccountForm](?path=/docs/components-bankaccountform--docs)
-- [CardForm](?path=/docs/components-cardform--docs)
-- [PaymentForm](?path=/docs/components-paymentform--docs)
-
-You can easily override the variables in a `<style>` tag in any place of your App.
-
-<Source
-  language="html"
-  dark
-  code={dedent`
-    <style>
-      :root {
-        --jfi-variable: 'override value';
-      }
-    </style>
-
-    <justifi-payment-form></justifi-payment-form>
-
-`}
-/>
-
-<SummaryElement title="See full list of CSS variables available">
-  <CSSVars />
-</SummaryElement>
-
-## Styling exported parts
-
-You can style the components in the same way as in the React documentation.
-
-<Source
-  language="html"
-  dark
-  code={dedent(`
-    /* Given an exported part of "label" for example */
-    the-component-tag:part(label) {
-      /* Your custom css */
-    }
-`)}
-/>
-
-This documentation should help you get started with integrating Justifi's Vue 3 web components. If you have more specific requirements or need further information, please let me know!
