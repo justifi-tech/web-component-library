@@ -1,5 +1,3 @@
-# https://dev.to/xcanchal/automatic-versioning-in-a-lerna-monorepo-using-github-actions-4hij
-
 name: Build and release components
 on:
   push:
@@ -10,9 +8,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: stencil-library
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,19 +15,21 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: 'stencil-library/.nvmrc'
+          node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn Install
+      - name: Install dependencies
         run: |
-          yarn install
+          npm install
 
-      - name: Typescript Compiling Build
+      - name: Build packages
         run: |
-          yarn build:prod
+          npm run build
         env:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
-          GH_TOKEN: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
-      - name: Publish to GitHub Registry
+
+      - name: Publish to NPM Registry
         run: |
-          yarn lerna publish from-package --yes
+          npm run publish --loglevel verbose --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}

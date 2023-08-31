@@ -8,13 +8,10 @@
     "url": "https://github.com/justifi-tech/web-component-library.git"
   },
   "scripts": {
-    "auto-changelog": "auto-changelog",
-    "release": "release-it --no-npm",
-    "build": "yarn run clean && yarn run compile",
+    "build": "npm run clean && npm run compile",
     "clean": "rm -rf dist",
-    "compile": "yarn run tsc",
-    "tsc": "tsc -p .",
-    "rollup": "rollup -c"
+    "compile": "npm run tsc",
+    "tsc": "tsc -p ."
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -22,26 +19,20 @@
   "files": [
     "dist/"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
   "devDependencies": {
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
-    "auto-changelog": "^2.4.0",
-    "np": "^7.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@justifi/webcomponents": "^4.4.0"
+    "@justifi/webcomponents": "*"
   },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "gitHead": "a1de3cf756d211589486479abddf57551d3b9674"
+  "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783"
 }

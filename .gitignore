@@ -4,3 +4,4 @@ UserInterfaceState.xcuserstate
 **/.env*
 /docs
 node_modules
+lerna-debug.log

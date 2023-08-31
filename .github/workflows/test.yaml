@@ -9,9 +9,6 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: stencil-library
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,14 +16,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: 'stencil-library/.nvmrc'
+          node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn Install
-        run: yarn install
+      - name: NPM Install
+        run: npm install
 
       - name: Run unit tests
-        run: yarn test
+        run: npx lerna run test
 
       - name: Run E2E tests
-        run: yarn test:e2e
+        run: npx lerna run test:e2e

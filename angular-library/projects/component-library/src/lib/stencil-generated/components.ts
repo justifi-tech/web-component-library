@@ -197,6 +197,28 @@ export declare interface JustifiBusinessGenericInfo extends Components.JustifiBu
   inputs: ['formController']
 })
 @Component({
+  selector: 'justifi-business-owners',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['formController'],
+})
+export class JustifiBusinessOwners {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface JustifiBusinessOwners extends Components.JustifiBusinessOwners {}
+
+
+@ProxyCmp({
+  inputs: ['formController']
+})
+@Component({
   selector: 'justifi-business-representative',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
