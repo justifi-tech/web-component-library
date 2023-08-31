@@ -1,0 +1,152 @@
+import { Component } from '@angular/core';
+import { Meta, Source } from '@storybook/addon-docs';
+import { SummaryElement } from './utils.tsx';
+import CSSVars from './css-variables.tsx';
+import dedent from 'ts-dedent';
+
+<Meta title="Angular" />
+
+# Justifi Angular web components
+
+# Index
+
+- [Usage](#usage)
+- [Usage details](#usage-details)
+  - [Props Names](#props-names)
+  - [Listening to events](#listening-to-events)
+  - [Calling methods](#calling-methods)
+- [Styling](#styling)
+  - [Components styled with variables](#components-styled-with-variables)
+  - [Styling exported parts](#styling-exported-parts)
+
+# Usage
+
+To use the Angular version of the web components, you need to install the package:
+
+<Source language="bash" dark code="npm install --save @justifi/angular-components" />
+
+Then import it in your module:
+
+<Source
+  language="typescript"
+  dark
+  code={dedent(`
+    import { JustifiAngularComponentsModule } from '@justifi/angular-components';
+
+    @NgModule({
+      imports: [JustifiAngularComponentsModule]
+    })
+    export class AppModule { }
+
+`)}
+/>
+
+And use it as a normal Angular component:
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    <justifi-card-form
+      (cardFormReady)="onPaymentMethodReady($event)"
+    ></justifi-card-form>
+`)}
+/>
+
+# Usage details
+
+## Props Names
+
+Angular will follow the same prop conventions as the vanilla HTML web components, so they should be hyphen-cased.
+
+For example, the `cardFormReady` event will be `card-form-ready` in Angular.
+
+## Listening to events
+
+To listen to events, you can use the Angular syntax for binding to component events.
+
+For example `(event)="handler($event)"`.
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    <justifi-card-form
+      (cardFormReady)="onCardFormReady($event)"
+    ></justifi-card-form>
+`)}
+/>
+
+## Calling methods
+
+You can call methods by grabbing a reference to the element in the component.
+
+<Source
+  language="typescript"
+  dark
+  code={dedent(`
+    import { ViewChild } from '@angular/core';
+
+    @Component({
+      template: \`<justifi-card-form #cardForm></justifi-card-form>\`,
+    })
+    export class MyComponent {
+      @ViewChild('cardForm') cardForm;
+
+      onSomeEventHandler() {
+        this.cardForm.tokenize(clientId, paymentMethodMetadata, subAccountID).then(tokenizeResponse => {
+          // Do stuff with the tokenized payment method, like submitting a payment
+        });
+      }
+    }
+
+`)}
+/>
+
+# Styling
+
+## Components styled with variables
+
+The following components can only be styled through CSS variables:
+
+- [BankAccountForm](?path=/docs/components-bankaccountform--docs)
+- [CardForm](?path=/docs/components-cardform--docs)
+- [PaymentForm](?path=/docs/components-paymentform--docs)
+
+You can easily override the variables in a `<style>` tag in any place of your App, both in the `<head>` of your root `index.html` or at any component level.
+
+<Source
+  language="html"
+  dark
+  code={dedent`
+    <style>
+      :root {
+        --jfi-variable: 'override value';
+      }
+    </style>
+
+    <justifi-payment-form></justifi-payment-form>
+
+`}
+/>
+
+<SummaryElement title="See full list of CSS variables available">
+  <CSSVars />
+</SummaryElement>
+
+## Styling exported parts
+
+You can style the components in the same way as in the React documentation.
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    /* Given an exported part of "label" for example */
+    the-component-tag:part(label) {
+      /* Your custom css */
+    }
+`)}
+/>
+
+This documentation should help you get started with integrating Justifi's Angular web components. If you have more specific requirements or need further information, please let me know!
