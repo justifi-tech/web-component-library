@@ -25,5 +25,8 @@
   ],
   "devDependencies": {
     "lerna": "^7.1.4"
+  },
+  "resolutions": {
+    "node-fetch": "2.6.7"
   }
 }
