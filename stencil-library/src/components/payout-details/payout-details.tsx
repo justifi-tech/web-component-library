@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Api, IApiResponseCollection, Payment } from '../../api';
+import { Api, IApiResponseCollection, Payout } from '../../api';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -18,19 +18,19 @@ import { Api, IApiResponseCollection, Payment } from '../../api';
   * @exportedPart detail-method-data
 */
 @Component({
-  tag: 'justifi-payment-details',
-  styleUrl: 'payment-details.scss',
+  tag: 'justifi-payout-details',
+  styleUrl: 'payout-details.scss',
   shadow: true,
 })
 
 export class PaymentDetails {
-  @Prop() paymentId: string;
+  @Prop() payoutId: string;
   @Prop() authToken: string;
-  @State() payment: Payment;
+  @State() payout: Payout;
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
-  @Watch('paymentId')
+  @Watch('payoutId')
   @Watch('authToken')
   updateOnPropChange() {
     this.fetchData();
@@ -42,17 +42,17 @@ export class PaymentDetails {
 
   async fetchData(): Promise<void> {
     this.errorMessage = '';
-    if (!this.paymentId || !this.authToken) {
-      this.errorMessage = "Can not fetch any data without a PaymentID and an AuthToken";
+    if (!this.payoutId || !this.authToken) {
+      this.errorMessage = "Can not fetch any data without a PayoutID and an AuthToken";
       this.loading = false;
       return;
     }
     this.loading = true;
-    const endpoint = `payments/${this.paymentId}`;
+    const endpoint = `payouts/${this.payoutId}`;
 
-    const response: IApiResponseCollection<Payment> = await Api(this.authToken).get(endpoint);
+    const response: IApiResponseCollection<Payout> = await Api(this.authToken).get(endpoint);
     if (!response.error) {
-      this.payment = response.data;
+      this.payout = response.data;
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }
@@ -66,7 +66,7 @@ export class PaymentDetails {
         <justifi-details
           loading={this.loading}
           error-message={this.errorMessage}
-          entity={this.payment}
+          entity={this.payout}
         />
       </Host>
     );
