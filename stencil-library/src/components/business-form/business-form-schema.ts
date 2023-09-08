@@ -1,4 +1,4 @@
-import { array, boolean, mixed, object, string } from 'yup';
+import { array, boolean, object, string } from 'yup';
 import legalAddressSchema from '../legal-address-form/legal-address-form-schema';
 
 export const RegExZip = /^\d{5}/;
@@ -128,6 +128,17 @@ export const BusinessStructureOptions: { label: string; value: BusinessStructure
   },
 ];
 
+const businessGenericInfoSchema = object({
+  legal_name: string().required('Enter legal name'),
+  website_url: string().url('Enter valid website url').required('Enter website url'),
+  email: string().email('Enter valid email').required('Enter email'),
+  phone: string().required('Enter phone number'),
+  doing_business_as: string().required('Enter doing business as'),
+  business_type: string().required('Select business type'),
+  business_structure: string().required('Select business structure'),
+  industry: string().required('Enter a business industry'),
+});
+
 const addressSchema = object({
   line1: string().required('Enter street address'),
   city: string().required('Enter city'),
@@ -142,11 +153,11 @@ const representativeSchema = object({
   dob_day: string().required('Enter representative birth day'),
   dob_month: string().required('Enter representative birth month'),
   dob_year: string().required('Enter representative birth year'),
-  identification_number: string().required('Enter representative identification number'),
+  identification_number: string(),
   address: addressSchema,
 });
 
-const OwnerSchema = object({
+const ownerSchema = object({
   name: string().required('Enter owner name'),
   title: string().required('Enter owner title'),
   email: string().email('Enter valid owner email').required('Enter owner email'),
@@ -154,24 +165,38 @@ const OwnerSchema = object({
   dob_day: string().required('Enter owner birth day'),
   dob_month: string().required('Enter owner birth month'),
   dob_year: string().required('Enter owner birth year'),
-  identification_number: string().required('Enter owner identification number'),
+  identification_number: string(),
   is_owner: boolean(),
-  metadata: mixed(),
   address: addressSchema,
 });
 
-const BusinessFormSchema = object({
-  legal_name: string().required('Enter legal name'),
-  website_url: string().url('Enter valid website url').required('Enter website url'),
-  email: string().email('Enter valid email').required('Enter email'),
-  phone: string().required('Enter phone number'),
-  doing_business_as: string().required('Enter doing business as'),
-  business_type: string().required('Select business type'),
-  business_structure: string().required('Select business structure'),
-  industry: string().required('Enter a business industry'),
-  representative: representativeSchema.required('Enter representative information'),
-  owners: array().of(OwnerSchema).min(1, 'Enter at least 1 owners'),
-  legal_address: legalAddressSchema.required('Enater legal address'),
+const additionQuestionsSchema = object({
+  business_revenue: string().required('Enter business revenue'),
+  business_purchase_order_volume: string().required('Enter business purchase order volume'),
+  business_invoice_volume: string().required('Enter business invoice volume'),
+  business_fund_use_intent: string().required('Enter business fund use intent'),
+  equipment_invoice: string().required('Enter equipment invoice'),
+  business_invoice_number: string().required('Enter business invoice number'),
+  business_invoice_amount: string().required('Enter business invoice amount'),
+  business_purchase_order_number: string().required('Enter business purchase order number'),
+  industry_code: string().required('Enter industry code'),
+  duns_number: string().required('Enter duns number'),
+  business_payment_volume: string().required('Enter business payment volume'),
+  business_payment_decline_volume: string().required('Enter business payment decline volume'),
+  business_refund_volume: string().required('Enter business refund volume'),
+  business_dispute_volume: string().required('Enter business dispute volume'),
+  business_receivable_volume: string().required('Enter business receivable volume'),
+  business_future_scheduled_payment_volume: string().required('Enter business future scheduled payment volume'),
+  business_dispute_win_rate: string().required('Enter business dispute win rate'),
+  length_of_business_relationship: string().required('Enter length of business relationship'),
 });
 
-export default BusinessFormSchema;
+const businessFormSchema = object({
+  ...businessGenericInfoSchema.fields,
+  legal_address: legalAddressSchema.required('Enater legal address'),
+  additional_questions: additionQuestionsSchema.required('Enter additional questions'),
+  representative: representativeSchema.required('Enter representative information'),
+  owners: array().of(ownerSchema).min(1, 'Enter at least 1 owners'),
+});
+
+export default businessFormSchema;

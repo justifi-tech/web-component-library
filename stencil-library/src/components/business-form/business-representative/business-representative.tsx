@@ -1,25 +1,23 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../form/form';
 
 @Component({
   tag: 'justifi-business-representative',
   styleUrl: 'business-representative.scss',
-  shadow: false,
 })
 export class BusinessRepresentative {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() defaultValues: any = {};
   @State() representative: any = {};
 
-  @Watch('representative')
-  handleRepresentativeChange(newValue: any) {
-    this.formController.setValues({ representative: newValue });
+  constructor() {
+    this.inputHandler = this.inputHandler.bind(this);
+    this.onAddressFormUpdate = this.onAddressFormUpdate.bind(this);
   }
 
   componentDidLoad() {
     this.formController.errors.subscribe(errors => (this.errors = { ...errors.representative }));
-    this.formController.defaultValues.subscribe(defaultValues => (this.defaultValues = { ...defaultValues.representative }));
+    this.formController.values.subscribe(values => (this.representative = { ...values.representative }));
   }
 
   inputHandler(name: string, value: string) {
@@ -37,47 +35,29 @@ export class BusinessRepresentative {
           <legend>Representative</legend>
           <div class="row gy-3">
             <div class="col-12 col-md-8">
-              <form-control-text
-                name="name"
-                label="Full Name"
-                defaultValue={this.defaultValues.name}
-                error={this.errors.name}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
-              />
+              <form-control-text name="name" label="Full Name" defaultValue={this.representative.name} error={this.errors.name} inputHandler={this.inputHandler} />
             </div>
 
             <div class="col-12 col-md-4">
               <form-control-select
                 name="title"
                 label="Prefix"
-                defaultValue={this.defaultValues.title}
+                defaultValue={this.representative.title}
                 options={[
                   { label: 'Select Prefix', value: '' },
                   { label: 'Mrs.', value: 'Mrs.' },
                 ]}
                 error={this.errors.title}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
+                inputHandler={this.inputHandler}
               />
             </div>
 
             <div class="col-12 col-md-6">
-              <form-control-text
-                name="email"
-                label="Email Address"
-                defaultValue={this.defaultValues.email}
-                error={this.errors.email}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
-              />
+              <form-control-text name="email" label="Email Address" defaultValue={this.representative.email} error={this.errors.email} inputHandler={this.inputHandler} />
             </div>
 
             <div class="col-12 col-md-6">
-              <form-control-text
-                name="phone"
-                label="Phone Number"
-                defaultValue={this.defaultValues.phone}
-                error={this.errors.phone}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
-              />
+              <form-control-text name="phone" label="Phone Number" defaultValue={this.representative.phone} error={this.errors.phone} inputHandler={this.inputHandler} />
             </div>
 
             <div class="col-12">
@@ -87,47 +67,29 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text
-                name="dob_day"
-                label="Day"
-                defaultValue={this.defaultValues.dob_day}
-                error={this.errors.dob_day}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
-              />
+              <form-control-text name="dob_day" label="Day" defaultValue={this.representative.dob_day} error={this.errors.dob_day} inputHandler={this.inputHandler} />
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text
-                name="dob_month"
-                label="Month"
-                defaultValue={this.defaultValues.dob_month}
-                error={this.errors.dob_month}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
-              />
+              <form-control-text name="dob_month" label="Month" defaultValue={this.representative.dob_month} error={this.errors.dob_month} inputHandler={this.inputHandler} />
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text
-                name="dob_year"
-                label="Year"
-                defaultValue={this.defaultValues.dob_year}
-                error={this.errors.dob_year}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
-              />
+              <form-control-text name="dob_year" label="Year" defaultValue={this.representative.dob_year} error={this.errors.dob_year} inputHandler={this.inputHandler} />
             </div>
 
             <div class="col-12">
               <form-control-text
                 name="identification_number"
                 label="EIN/SSN"
-                defaultValue={this.defaultValues.identification_number}
+                defaultValue={this.representative.identification_number}
                 error={this.errors.identification_number}
-                inputHandler={(name, value) => this.inputHandler(name, value)}
+                inputHandler={this.inputHandler}
               />
             </div>
 
             <div class="col-12">
-              <justifi-business-address-form errors={this.errors.address} defaultValues={this.defaultValues.address} onFormUpdate={values => this.onAddressFormUpdate(values)} />
+              <justifi-business-address-form errors={this.errors.address} defaultValues={this.representative.address} onFormUpdate={values => this.onAddressFormUpdate(values)} />
             </div>
           </div>
         </fieldset>

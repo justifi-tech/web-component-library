@@ -2,19 +2,17 @@ import { BehaviorSubject } from 'rxjs';
 import { ObjectSchema, ValidationError } from 'yup';
 
 export class FormController {
-  public defaultValues = new BehaviorSubject<any>({});
   public values = new BehaviorSubject<any>({});
   public errors = new BehaviorSubject<any>({});
 
   private _schema: ObjectSchema<any>;
-  private _defaultValues: any = {};
   private _values: any = {};
   private _errors: any = {};
   private _isValid = true;
 
-  constructor(schema: ObjectSchema<any>, defaultValues: any = {}) {
+  constructor(schema: ObjectSchema<any>, values: any = {}) {
     this._schema = schema;
-    this._defaultValues = defaultValues;
+    this._values = values;
   }
 
   private processArrayError(obj: any, property: string, remainingProperties: string[], message: string): void {
@@ -90,10 +88,5 @@ export class FormController {
   public setValues(values: any): void {
     this._values = { ...this._values, ...values };
     this.values.next(this._values);
-  }
-
-  public setDefaultValues(values: any): void {
-    this._defaultValues = { ...this._defaultValues, ...values };
-    this.defaultValues.next(this._defaultValues);
   }
 }

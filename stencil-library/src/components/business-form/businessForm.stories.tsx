@@ -28,7 +28,7 @@ const Template = (args: BusinessFormStoryArgs) => {
   return `
     <div>
       <justifi-business-form
-        auth-token=${args['authToken']}
+        auth-token=${args['auth-token']}
         business-id='${args['business-id']}'
       />
     </div>
