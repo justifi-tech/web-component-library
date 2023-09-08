@@ -43,13 +43,13 @@ const Template = (args: BusinessFormStoryArgs) => {
 export const Basic = Template.bind({});
 Basic.args = {
   'auth-token': 'authtoken',
-  'business-id': 'businessid',
+  'business-id': '',
 };
 
 export const Styled = Template.bind({});
 Styled.args = {
   'auth-token': 'authtoken',
-  'business-id': 'businessid',
+  'business-id': '',
   'cssVariables': `
   --jfi-primary-color: #212529;
   --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
