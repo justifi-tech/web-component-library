@@ -26,7 +26,7 @@ export class BusinessForm {
 
   componentWillLoad() {
     this.formController = new FormController(businessFormSchema);
-    this.api = Api(this.authToken, process.env.JUSTIFI_API_ENTITIES_ENDPOINT);
+    this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
 
     if (this.businessId) {
       this.fetchData(this.businessId);
