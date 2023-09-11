@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
@@ -15,6 +15,7 @@ import { Api } from '../../api';
 export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId?: string;
+  @State() isLoading: boolean = false;
 
   private formController: FormController;
   private api: any;
@@ -26,7 +27,9 @@ export class BusinessForm {
 
   componentWillLoad() {
     if (!this.authToken) {
-      console.warn('Warning: Missing auth-token. The form will not be functional without it.');
+      console.warn(
+        'Warning: Missing auth-token. The form will not be functional without it.',
+      );
     }
 
     this.formController = new FormController(businessFormSchema);
@@ -38,7 +41,17 @@ export class BusinessForm {
   }
 
   // Remove unecessary props from the form data
-  private parseForPatching({ legal_name, website_url, email, phone, doing_business_as, business_type, business_structure, industry, tax_id }) {
+  private parseForPatching({
+    legal_name,
+    website_url,
+    email,
+    phone,
+    doing_business_as,
+    business_type,
+    business_structure,
+    industry,
+    tax_id,
+  }) {
     return {
       legal_name,
       website_url,
@@ -53,29 +66,41 @@ export class BusinessForm {
   }
 
   private async sendData() {
+    this.isLoading = true;
     try {
       const data = this.formController.values.getValue();
 
       // Conditionally making either POST or PATCH request
       if (this.businessId) {
         const payload = this.parseForPatching(data);
-        const response = await this.api.patch(`entities/business/${this.businessId}`, JSON.stringify(payload));
+        const response = await this.api.patch(
+          `entities/business/${this.businessId}`,
+          JSON.stringify(payload),
+        );
         console.log('Server response from PATCH:', response);
       } else {
-        const response = await this.api.post('entities/business', JSON.stringify(data));
+        const response = await this.api.post(
+          'entities/business',
+          JSON.stringify(data),
+        );
         console.log('Server response from POST:', response);
       }
     } catch (error) {
       console.error('Error sending data:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
   private async fetchData(businessId) {
+    this.isLoading = true;
     try {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setValues(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -91,23 +116,36 @@ export class BusinessForm {
         <form onSubmit={event => this.validateAndSubmit(event)}>
           <div class="row gy-6 gap-3">
             <div class="col-12">
-              <justifi-business-generic-info formController={this.formController} />
+              <justifi-business-generic-info
+                formController={this.formController}
+              />
             </div>
             <div class="col-12">
-              <justifi-legal-address-form formController={this.formController} legend="Legal Address" />
+              <justifi-legal-address-form
+                formController={this.formController}
+                legend="Legal Address"
+              />
             </div>
             <div class="col-12">
-              <justifi-additional-questions formController={this.formController} />
+              <justifi-additional-questions
+                formController={this.formController}
+              />
             </div>
             <div class="col-12">
-              <justifi-business-representative formController={this.formController} />
+              <justifi-business-representative
+                formController={this.formController}
+              />
             </div>
             <div class="col-12">
               <justifi-business-owners formController={this.formController} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
-              <button type="submit" class="btn btn-primary jfi-submit-button" disabled={!this.authToken}>
-                Submit
+              <button
+                type="submit"
+                class="btn btn-primary jfi-submit-button"
+                disabled={!this.authToken || this.isLoading}
+              >
+                {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
             </div>
           </div>
