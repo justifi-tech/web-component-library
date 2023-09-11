@@ -16,16 +16,35 @@ export class BusinessRepresentative {
   }
 
   componentDidLoad() {
-    this.formController.errors.subscribe(errors => (this.errors = { ...errors.representative }));
-    this.formController.values.subscribe(values => (this.representative = { ...values.representative }));
+    this.formController.errors.subscribe(
+      errors => (this.errors = { ...errors.representative }),
+    );
+    this.formController.values.subscribe(
+      values => (this.representative = { ...values.representative }),
+    );
   }
 
   inputHandler(name: string, value: string) {
-    this.representative = { ...this.representative, [name]: value };
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      representative: {
+        ...this.formController.values.getValue().representative,
+        [name]: value,
+      },
+    });
   }
 
   onAddressFormUpdate(values: any): void {
-    this.representative = { ...this.representative, address: values };
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      representative: {
+        ...this.formController.values.getValue().representative,
+        address: {
+          ...this.formController.values.getValue().representative.address,
+          ...values,
+        },
+      },
+    });
   }
 
   render() {
@@ -35,7 +54,13 @@ export class BusinessRepresentative {
           <legend>Representative</legend>
           <div class="row gy-3">
             <div class="col-12 col-md-8">
-              <form-control-text name="name" label="Full Name" defaultValue={this.representative.name} error={this.errors.name} inputHandler={this.inputHandler} />
+              <form-control-text
+                name="name"
+                label="Full Name"
+                defaultValue={this.representative.name}
+                error={this.errors.name}
+                inputHandler={this.inputHandler}
+              />
             </div>
 
             <div class="col-12 col-md-4">
@@ -53,11 +78,23 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-6">
-              <form-control-text name="email" label="Email Address" defaultValue={this.representative.email} error={this.errors.email} inputHandler={this.inputHandler} />
+              <form-control-text
+                name="email"
+                label="Email Address"
+                defaultValue={this.representative.email}
+                error={this.errors.email}
+                inputHandler={this.inputHandler}
+              />
             </div>
 
             <div class="col-12 col-md-6">
-              <form-control-text name="phone" label="Phone Number" defaultValue={this.representative.phone} error={this.errors.phone} inputHandler={this.inputHandler} />
+              <form-control-text
+                name="phone"
+                label="Phone Number"
+                defaultValue={this.representative.phone}
+                error={this.errors.phone}
+                inputHandler={this.inputHandler}
+              />
             </div>
 
             <div class="col-12">
@@ -67,15 +104,33 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text name="dob_day" label="Day" defaultValue={this.representative.dob_day} error={this.errors.dob_day} inputHandler={this.inputHandler} />
+              <form-control-text
+                name="dob_day"
+                label="Day"
+                defaultValue={this.representative.dob_day}
+                error={this.errors.dob_day}
+                inputHandler={this.inputHandler}
+              />
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text name="dob_month" label="Month" defaultValue={this.representative.dob_month} error={this.errors.dob_month} inputHandler={this.inputHandler} />
+              <form-control-text
+                name="dob_month"
+                label="Month"
+                defaultValue={this.representative.dob_month}
+                error={this.errors.dob_month}
+                inputHandler={this.inputHandler}
+              />
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text name="dob_year" label="Year" defaultValue={this.representative.dob_year} error={this.errors.dob_year} inputHandler={this.inputHandler} />
+              <form-control-text
+                name="dob_year"
+                label="Year"
+                defaultValue={this.representative.dob_year}
+                error={this.errors.dob_year}
+                inputHandler={this.inputHandler}
+              />
             </div>
 
             <div class="col-12">
@@ -89,7 +144,11 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12">
-              <justifi-business-address-form errors={this.errors.address} defaultValues={this.representative.address} onFormUpdate={values => this.onAddressFormUpdate(values)} />
+              <justifi-business-address-form
+                errors={this.errors.address}
+                defaultValues={this.representative.address}
+                onFormUpdate={values => this.onAddressFormUpdate(values)}
+              />
             </div>
           </div>
         </fieldset>
