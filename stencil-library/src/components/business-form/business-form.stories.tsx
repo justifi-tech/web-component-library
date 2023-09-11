@@ -28,8 +28,8 @@ const Template = (args: BusinessFormStoryArgs) => {
   return `
     <div>
       <justifi-business-form
-        auth-token=${args['auth-token']}
-        business-id='${args['business-id']}'
+        auth-token="${args['auth-token']}"
+        business-id="${args['business-id']}"
       />
     </div>
     <style>
@@ -42,13 +42,13 @@ const Template = (args: BusinessFormStoryArgs) => {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  'auth-token': 'authtoken',
+  'auth-token': '',
   'business-id': '',
 };
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'auth-token': 'authtoken',
+  'auth-token': '',
   'business-id': '',
   'cssVariables': `
   --jfi-primary-color: #212529;

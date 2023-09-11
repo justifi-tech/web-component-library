@@ -25,6 +25,10 @@ export class BusinessForm {
   }
 
   componentWillLoad() {
+    if (!this.authToken) {
+      console.warn('Warning: Missing auth-token. The form will not be functional without it.');
+    }
+
     this.formController = new FormController(businessFormSchema);
     this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
 
@@ -34,7 +38,7 @@ export class BusinessForm {
   }
 
   // Remove unecessary props from the form data
-  parseForPatching({ legal_name, website_url, email, phone, doing_business_as, business_type, business_structure, industry, tax_id }) {
+  private parseForPatching({ legal_name, website_url, email, phone, doing_business_as, business_type, business_structure, industry, tax_id }) {
     return {
       legal_name,
       website_url,
@@ -48,7 +52,7 @@ export class BusinessForm {
     };
   }
 
-  async sendData() {
+  private async sendData() {
     try {
       const data = this.formController.values.getValue();
 
@@ -66,7 +70,7 @@ export class BusinessForm {
     }
   }
 
-  async fetchData(businessId) {
+  private async fetchData(businessId) {
     try {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setValues(response.data);
@@ -75,7 +79,7 @@ export class BusinessForm {
     }
   }
 
-  validateAndSubmit(event: any) {
+  private validateAndSubmit(event: any) {
     event.preventDefault();
     this.formController.validateAndSubmit(this.sendData);
   }
@@ -102,7 +106,7 @@ export class BusinessForm {
               <justifi-business-owners formController={this.formController} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary jfi-submit-button" disabled={!this.authToken}>
                 Submit
               </button>
             </div>
