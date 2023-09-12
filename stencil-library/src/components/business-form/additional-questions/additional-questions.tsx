@@ -19,8 +19,13 @@ export class AdditionalQuestions {
   }
 
   componentDidLoad() {
-    this.formController.errors.subscribe(errors => (this.errors = { ...errors }));
-    this.formController.values.subscribe(values => (this.additional_questions = { ...values }));
+    this.formController.errors.subscribe(
+      errors => (this.errors = { ...errors }),
+    );
+    this.formController.values.subscribe(
+      values =>
+        (this.additional_questions = { ...values.additional_questions }),
+    );
   }
 
   inputHandler(name: string, value: string) {
@@ -51,8 +56,13 @@ export class AdditionalQuestions {
               name="business_purchase_order_volume"
               label="Business Purchase Order Volume"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_purchase_order_volume}
-              defaultValue={this.additional_questions?.business_purchase_order_volume}
+              error={
+                this.errors?.additional_questions
+                  ?.business_purchase_order_volume
+              }
+              defaultValue={
+                this.additional_questions?.business_purchase_order_volume
+              }
             />
           </div>
           <div class="col-12">
@@ -69,7 +79,9 @@ export class AdditionalQuestions {
               name="business_fund_use_intent"
               label="Business Fund Use Intent"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_fund_use_intent}
+              error={
+                this.errors?.additional_questions?.business_fund_use_intent
+              }
               defaultValue={this.additional_questions?.business_fund_use_intent}
             />
           </div>
@@ -105,8 +117,13 @@ export class AdditionalQuestions {
               name="business_purchase_order_number"
               label="Business Purchase Order Number"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_purchase_order_number}
-              defaultValue={this.additional_questions?.business_purchase_order_number}
+              error={
+                this.errors?.additional_questions
+                  ?.business_purchase_order_number
+              }
+              defaultValue={
+                this.additional_questions?.business_purchase_order_number
+              }
             />
           </div>
           <div class="col-12">
@@ -141,8 +158,13 @@ export class AdditionalQuestions {
               name="business_payment_decline_volume"
               label="Business Payment Decline Volume"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_payment_decline_volume}
-              defaultValue={this.additional_questions?.business_payment_decline_volume}
+              error={
+                this.errors?.additional_questions
+                  ?.business_payment_decline_volume
+              }
+              defaultValue={
+                this.additional_questions?.business_payment_decline_volume
+              }
             />
           </div>
           <div class="col-12">
@@ -168,8 +190,12 @@ export class AdditionalQuestions {
               name="business_receivable_volume"
               label="Business Receivable Volume"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_receivable_volume}
-              defaultValue={this.additional_questions?.business_receivable_volume}
+              error={
+                this.errors?.additional_questions?.business_receivable_volume
+              }
+              defaultValue={
+                this.additional_questions?.business_receivable_volume
+              }
             />
           </div>
           <div class="col-12">
@@ -177,8 +203,14 @@ export class AdditionalQuestions {
               name="business_future_scheduled_payment_volume"
               label="Business Future Scheduled Payment Volume"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_future_scheduled_payment_volume}
-              defaultValue={this.additional_questions?.business_future_scheduled_payment_volume}
+              error={
+                this.errors?.additional_questions
+                  ?.business_future_scheduled_payment_volume
+              }
+              defaultValue={
+                this.additional_questions
+                  ?.business_future_scheduled_payment_volume
+              }
             />
           </div>
           <div class="col-12">
@@ -186,8 +218,12 @@ export class AdditionalQuestions {
               name="business_dispute_win_rate"
               label="Business Dispute Win Rate"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_dispute_win_rate}
-              defaultValue={this.additional_questions?.business_dispute_win_rate}
+              error={
+                this.errors?.additional_questions?.business_dispute_win_rate
+              }
+              defaultValue={
+                this.additional_questions?.business_dispute_win_rate
+              }
             />
           </div>
           <div class="col-12">
@@ -195,8 +231,13 @@ export class AdditionalQuestions {
               name="length_of_business_relationship"
               label="Length of Business Relationship"
               inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.length_of_business_relationship}
-              defaultValue={this.additional_questions?.length_of_business_relationship}
+              error={
+                this.errors?.additional_questions
+                  ?.length_of_business_relationship
+              }
+              defaultValue={
+                this.additional_questions?.length_of_business_relationship
+              }
             />
           </div>
         </div>

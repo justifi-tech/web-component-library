@@ -1,4 +1,12 @@
-import { Component, Host, h, Prop, Event, EventEmitter, Element, Watch } from '@stencil/core';
+import {
+  Component,
+  Host,
+  h,
+  Prop,
+  Event,
+  EventEmitter,
+  Watch,
+} from '@stencil/core';
 
 @Component({
   tag: 'form-control-select',
@@ -6,7 +14,7 @@ import { Component, Host, h, Prop, Event, EventEmitter, Element, Watch } from '@
   shadow: true,
 })
 export class SelectInput {
-  @Element() el: HTMLElement;
+  selectElement!: HTMLSelectElement;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -23,10 +31,7 @@ export class SelectInput {
   }
 
   updateInput(newValue: any) {
-    const selectElement = this.el.shadowRoot.querySelector('select');
-    if (selectElement) {
-      selectElement.value = newValue;
-    }
+    this.selectElement.value = newValue;
   }
 
   handleFormControlInput(event: any) {
@@ -46,6 +51,7 @@ export class SelectInput {
           {this.label}
         </label>
         <select
+          ref={el => (this.selectElement = el as HTMLSelectElement)}
           id={this.name}
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
