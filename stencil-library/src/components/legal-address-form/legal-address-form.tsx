@@ -22,8 +22,12 @@ export class LegalAddressForm {
   }
 
   componentDidLoad() {
-    this.formController.errors.subscribe(errors => (this.errors = { ...errors }));
-    this.formController.values.subscribe(values => (this.legal_address = { ...values.legal_address }));
+    this.formController.errors.subscribe(
+      errors => (this.errors = { ...errors }),
+    );
+    this.formController.values.subscribe(
+      values => (this.legal_address = { ...values.legal_address }),
+    );
   }
 
   inputHandler(name: string, value: string) {
@@ -52,16 +56,33 @@ export class LegalAddressForm {
               />
             </div>
             <div class="col-12">
-              <form-control-text name="line2" label="Address Line 2" inputHandler={(name, value) => this.inputHandler(name, value)} defaultValue={this.legal_address?.line2} />
-            </div>
-            <div class="col-12">
-              <form-control-text name="city" label="City" inputHandler={this.inputHandler} defaultValue={this.legal_address?.city} error={this.errors?.legal_address?.city} />
-            </div>
-            <div class="col-12">
-              <form-control-text name="state" label="State" inputHandler={this.inputHandler} defaultValue={this.legal_address?.state} error={this.errors?.legal_address?.state} />
+              <form-control-text
+                name="line2"
+                label="Address Line 2"
+                inputHandler={(name, value) => this.inputHandler(name, value)}
+                defaultValue={this.legal_address?.line2}
+              />
             </div>
             <div class="col-12">
               <form-control-text
+                name="city"
+                label="City"
+                inputHandler={this.inputHandler}
+                defaultValue={this.legal_address?.city}
+                error={this.errors?.legal_address?.city}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="state"
+                label="State"
+                inputHandler={this.inputHandler}
+                defaultValue={this.legal_address?.state}
+                error={this.errors?.legal_address?.state}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-number
                 name="postal_code"
                 label="Zip"
                 inputHandler={this.inputHandler}

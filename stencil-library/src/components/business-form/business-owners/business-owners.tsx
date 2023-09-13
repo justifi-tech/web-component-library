@@ -60,6 +60,24 @@ export class BusinessOwners {
     });
   }
 
+  addressInputHandler(name: string, value: string, index: number): void {
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      owners: this.owners.map((owner, i) => {
+        if (i === index) {
+          return {
+            ...owner,
+            address: {
+              ...owner.address,
+              [name]: value,
+            },
+          };
+        }
+        return owner;
+      }),
+    });
+  }
+
   addOwner(event: MouseEvent): void {
     event.preventDefault();
 
@@ -203,10 +221,9 @@ export class BusinessOwners {
                             label="Street Address"
                             defaultValue={this.owners[index]?.address?.line1}
                             error={this.errors[index]?.address?.line1}
-                            inputHandler={(_name, value) => {
-                              this.owners[index].address.line1 = value;
-                              this.owners = [...this.owners];
-                            }}
+                            inputHandler={(name, value) =>
+                              this.addressInputHandler(name, value, index)
+                            }
                             class="form-control"
                           />
                         </div>
@@ -216,10 +233,9 @@ export class BusinessOwners {
                             label="City"
                             defaultValue={this.owners[index]?.address?.city}
                             error={this.errors[index]?.address?.city}
-                            inputHandler={(_name, value) => {
-                              this.owners[index].address.city = value;
-                              this.owners = [...this.owners];
-                            }}
+                            inputHandler={(name, value) =>
+                              this.addressInputHandler(name, value, index)
+                            }
                             class="form-control"
                           />
                         </div>
@@ -232,10 +248,9 @@ export class BusinessOwners {
                             label="State"
                             defaultValue={this.owners[index]?.address?.state}
                             error={this.errors[index]?.address?.state}
-                            inputHandler={(_name, value) => {
-                              this.owners[index].address.state = value;
-                              this.owners = [...this.owners];
-                            }}
+                            inputHandler={(name, value) =>
+                              this.addressInputHandler(name, value, index)
+                            }
                             class="form-control"
                           />
                         </div>
@@ -247,10 +262,9 @@ export class BusinessOwners {
                               this.owners[index]?.address?.postal_code
                             }
                             error={this.errors[index]?.address?.postal_code}
-                            inputHandler={(_name, value) => {
-                              this.owners[index].address.postal_code = value;
-                              this.owners = [...this.owners];
-                            }}
+                            inputHandler={(name, value) =>
+                              this.addressInputHandler(name, value, index)
+                            }
                             class="form-control"
                           />
                         </div>

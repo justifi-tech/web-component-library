@@ -96,7 +96,7 @@ export class BusinessForm {
     this.isLoading = true;
     try {
       const response = await this.api.get(`entities/business/${businessId}`);
-      this.formController.setValues(response.data);
+      this.formController.setInitialValues(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
