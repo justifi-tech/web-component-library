@@ -116,4 +116,8 @@ export class FormController {
     this._values = this._initialValues;
     this.values.next(this._values);
   }
+
+  public getInitialValues(): any {
+    return this._initialValues;
+  }
 }

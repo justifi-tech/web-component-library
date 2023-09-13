@@ -41,6 +41,9 @@ export class LegalAddressForm {
   }
 
   render() {
+    const legalAddressDefaultValue =
+      this.formController.getInitialValues().legal_address;
+
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset class="mb-4">
@@ -51,7 +54,7 @@ export class LegalAddressForm {
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={this.legal_address?.line1}
+                defaultValue={legalAddressDefaultValue?.line1}
                 error={this.errors?.legal_address?.line1}
               />
             </div>
@@ -60,7 +63,7 @@ export class LegalAddressForm {
                 name="line2"
                 label="Address Line 2"
                 inputHandler={(name, value) => this.inputHandler(name, value)}
-                defaultValue={this.legal_address?.line2}
+                defaultValue={legalAddressDefaultValue?.line2}
               />
             </div>
             <div class="col-12">
@@ -68,7 +71,7 @@ export class LegalAddressForm {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={this.legal_address?.city}
+                defaultValue={legalAddressDefaultValue?.city}
                 error={this.errors?.legal_address?.city}
               />
             </div>
@@ -77,7 +80,7 @@ export class LegalAddressForm {
                 name="state"
                 label="State"
                 inputHandler={this.inputHandler}
-                defaultValue={this.legal_address?.state}
+                defaultValue={legalAddressDefaultValue?.state}
                 error={this.errors?.legal_address?.state}
               />
             </div>
@@ -86,7 +89,7 @@ export class LegalAddressForm {
                 name="postal_code"
                 label="Zip"
                 inputHandler={this.inputHandler}
-                defaultValue={this.legal_address?.postal_code}
+                defaultValue={legalAddressDefaultValue?.postal_code}
                 error={this.errors?.legal_address?.postal_code}
               />
             </div>
@@ -96,7 +99,7 @@ export class LegalAddressForm {
                 label="Country"
                 options={countryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={this.legal_address?.country}
+                defaultValue={legalAddressDefaultValue?.country}
                 error={this.errors?.legal_address?.country}
               />
             </div>

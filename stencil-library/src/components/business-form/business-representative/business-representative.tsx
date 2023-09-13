@@ -48,6 +48,9 @@ export class BusinessRepresentative {
   }
 
   render() {
+    const representativeDefaultValue =
+      this.formController.getInitialValues().representative;
+
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
@@ -57,7 +60,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="name"
                 label="Full Name"
-                defaultValue={this.representative.name}
+                defaultValue={representativeDefaultValue?.name}
                 error={this.errors.name}
                 inputHandler={this.inputHandler}
               />
@@ -67,7 +70,7 @@ export class BusinessRepresentative {
               <form-control-select
                 name="title"
                 label="Prefix"
-                defaultValue={this.representative.title}
+                defaultValue={representativeDefaultValue?.title}
                 options={[
                   { label: 'Select Prefix', value: '' },
                   { label: 'Mrs.', value: 'Mrs.' },
@@ -81,7 +84,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="email"
                 label="Email Address"
-                defaultValue={this.representative.email}
+                defaultValue={representativeDefaultValue?.email}
                 error={this.errors.email}
                 inputHandler={this.inputHandler}
               />
@@ -91,7 +94,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="phone"
                 label="Phone Number"
-                defaultValue={this.representative.phone}
+                defaultValue={representativeDefaultValue?.phone}
                 error={this.errors.phone}
                 inputHandler={this.inputHandler}
               />
@@ -107,7 +110,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="dob_day"
                 label="Day"
-                defaultValue={this.representative.dob_day}
+                defaultValue={representativeDefaultValue?.dob_day}
                 error={this.errors.dob_day}
                 inputHandler={this.inputHandler}
               />
@@ -117,7 +120,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="dob_month"
                 label="Month"
-                defaultValue={this.representative.dob_month}
+                defaultValue={representativeDefaultValue?.dob_month}
                 error={this.errors.dob_month}
                 inputHandler={this.inputHandler}
               />
@@ -127,7 +130,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="dob_year"
                 label="Year"
-                defaultValue={this.representative.dob_year}
+                defaultValue={representativeDefaultValue?.dob_year}
                 error={this.errors.dob_year}
                 inputHandler={this.inputHandler}
               />
@@ -137,7 +140,7 @@ export class BusinessRepresentative {
               <form-control-text
                 name="identification_number"
                 label="EIN/SSN"
-                defaultValue={this.representative.identification_number}
+                defaultValue={representativeDefaultValue?.identification_number}
                 error={this.errors.identification_number}
                 inputHandler={this.inputHandler}
               />
@@ -146,7 +149,7 @@ export class BusinessRepresentative {
             <div class="col-12">
               <justifi-business-address-form
                 errors={this.errors.address}
-                defaultValues={this.representative.address}
+                defaultValues={representativeDefaultValue?.address}
                 onFormUpdate={values => this.onAddressFormUpdate(values)}
               />
             </div>

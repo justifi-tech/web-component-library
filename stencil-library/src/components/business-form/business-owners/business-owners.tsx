@@ -96,6 +96,9 @@ export class BusinessOwners {
   }
 
   render() {
+    const ownersDefaultValue =
+      this.formController.values.getValue().owners || [];
+
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset class="mb-4">
@@ -110,7 +113,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="name"
                           label="Full Name"
-                          defaultValue={this.owners[index]?.name}
+                          defaultValue={ownersDefaultValue[index]?.name}
                           error={this.errors[index]?.name}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -122,7 +125,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="title"
                           label="Title"
-                          defaultValue={this.owners[index]?.title}
+                          defaultValue={ownersDefaultValue[index]?.title}
                           error={this.errors[index]?.title}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -137,7 +140,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="email"
                           label="Email"
-                          defaultValue={this.owners[index]?.email}
+                          defaultValue={ownersDefaultValue[index]?.email}
                           error={this.errors[index]?.email}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -149,7 +152,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="phone"
                           label="Phone"
-                          defaultValue={this.owners[index]?.phone}
+                          defaultValue={ownersDefaultValue[index]?.phone}
                           error={this.errors[index]?.phone}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -164,7 +167,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="dob_day"
                           label="Date of Birth - Day"
-                          defaultValue={this.owners[index]?.dob_day}
+                          defaultValue={ownersDefaultValue[index]?.dob_day}
                           error={this.errors[index]?.dob_day}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -176,7 +179,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="dob_month"
                           label="Date of Birth - Month"
-                          defaultValue={this.owners[index]?.dob_month}
+                          defaultValue={ownersDefaultValue[index]?.dob_month}
                           error={this.errors[index]?.dob_month}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -188,7 +191,7 @@ export class BusinessOwners {
                         <form-control-text
                           name="dob_year"
                           label="Date of Birth - Year"
-                          defaultValue={this.owners[index]?.dob_year}
+                          defaultValue={ownersDefaultValue[index]?.dob_year}
                           error={this.errors[index]?.dob_year}
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
@@ -202,7 +205,9 @@ export class BusinessOwners {
                       <form-control-text
                         name="identification_number"
                         label="Identification Number"
-                        defaultValue={this.owners[index]?.identification_number}
+                        defaultValue={
+                          ownersDefaultValue[index]?.identification_number
+                        }
                         error={this.errors[index]?.identification_number}
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
@@ -219,7 +224,9 @@ export class BusinessOwners {
                           <form-control-text
                             name="line1"
                             label="Street Address"
-                            defaultValue={this.owners[index]?.address?.line1}
+                            defaultValue={
+                              ownersDefaultValue[index]?.address?.line1
+                            }
                             error={this.errors[index]?.address?.line1}
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
@@ -231,7 +238,9 @@ export class BusinessOwners {
                           <form-control-text
                             name="city"
                             label="City"
-                            defaultValue={this.owners[index]?.address?.city}
+                            defaultValue={
+                              ownersDefaultValue[index]?.address?.city
+                            }
                             error={this.errors[index]?.address?.city}
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
@@ -246,7 +255,9 @@ export class BusinessOwners {
                           <form-control-text
                             name="state"
                             label="State"
-                            defaultValue={this.owners[index]?.address?.state}
+                            defaultValue={
+                              ownersDefaultValue[index]?.address?.state
+                            }
                             error={this.errors[index]?.address?.state}
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
@@ -259,7 +270,7 @@ export class BusinessOwners {
                             name="postal_code"
                             label="Postal Code"
                             defaultValue={
-                              this.owners[index]?.address?.postal_code
+                              ownersDefaultValue[index]?.address?.postal_code
                             }
                             error={this.errors[index]?.address?.postal_code}
                             inputHandler={(name, value) =>
