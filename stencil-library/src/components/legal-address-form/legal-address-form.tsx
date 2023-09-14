@@ -87,7 +87,7 @@ export class LegalAddressForm {
             <div class="col-12">
               <form-control-number
                 name="postal_code"
-                label="Zip"
+                label="Postal Code"
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.postal_code}
                 error={this.errors?.legal_address?.postal_code}
