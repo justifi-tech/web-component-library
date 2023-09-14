@@ -94,7 +94,7 @@ export class BusinessGenericInfo {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="tax_id"
               label="Tax ID"
               defaultValue={genericInfoDefaultValue.tax_id}

@@ -68,7 +68,7 @@ export class BusinessAddressForm {
           </div>
 
           <div class="col-12 col-md-6">
-            <form-control-text
+            <form-control-number
               name="postal_code"
               label="Postal Code"
               defaultValue={this.defaultValues?.postal_code}

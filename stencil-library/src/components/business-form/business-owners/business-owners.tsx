@@ -149,7 +149,7 @@ export class BusinessOwners {
                         />
                       </div>
                       <div class="col-12 col-md-6">
-                        <form-control-text
+                        <form-control-number
                           name="phone"
                           label="Phone"
                           defaultValue={ownersDefaultValue[index]?.phone}
@@ -164,7 +164,7 @@ export class BusinessOwners {
 
                     <div class="row mb-3">
                       <div class="col-12 col-md-4">
-                        <form-control-text
+                        <form-control-number
                           name="dob_day"
                           label="Date of Birth - Day"
                           defaultValue={ownersDefaultValue[index]?.dob_day}
@@ -176,7 +176,7 @@ export class BusinessOwners {
                         />
                       </div>
                       <div class="col-12 col-md-4">
-                        <form-control-text
+                        <form-control-number
                           name="dob_month"
                           label="Date of Birth - Month"
                           defaultValue={ownersDefaultValue[index]?.dob_month}
@@ -188,7 +188,7 @@ export class BusinessOwners {
                         />
                       </div>
                       <div class="col-12 col-md-4">
-                        <form-control-text
+                        <form-control-number
                           name="dob_year"
                           label="Date of Birth - Year"
                           defaultValue={ownersDefaultValue[index]?.dob_year}
@@ -202,7 +202,7 @@ export class BusinessOwners {
                     </div>
 
                     <div class="mb-3">
-                      <form-control-text
+                      <form-control-number
                         name="identification_number"
                         label="Identification Number"
                         defaultValue={
@@ -266,7 +266,7 @@ export class BusinessOwners {
                           />
                         </div>
                         <div class="col-12 col-md-6">
-                          <form-control-text
+                          <form-control-number
                             name="postal_code"
                             label="Postal Code"
                             defaultValue={

@@ -11,11 +11,11 @@ import {
 } from '@stencil/core';
 
 @Component({
-  tag: 'form-control-text',
-  styleUrl: 'form-control-text.scss',
+  tag: 'form-control-number',
+  styleUrl: 'form-control-number.scss',
   shadow: true,
 })
-export class TextInput {
+export class NumberInput {
   @Element() el: HTMLElement;
 
   @Prop() label: string;
@@ -62,7 +62,7 @@ export class TextInput {
           onBlur={() => this.formControlBlur.emit()}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
-          type="text"
+          type="number"
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>

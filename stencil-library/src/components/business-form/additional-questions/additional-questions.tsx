@@ -46,7 +46,7 @@ export class AdditionalQuestions {
       <Host exportparts="label,input,input-invalid">
         <div class="row gy-3">
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_revenue"
               label="Business Revenue"
               inputHandler={this.inputHandler}
@@ -55,7 +55,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_purchase_order_volume"
               label="Business Purchase Order Volume"
               inputHandler={this.inputHandler}
@@ -69,7 +69,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_invoice_volume"
               label="Business Invoice Volume"
               inputHandler={this.inputHandler}
@@ -93,7 +93,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="equipment_invoice"
               label="Equipment Invoice"
               inputHandler={this.inputHandler}
@@ -102,7 +102,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_invoice_number"
               label="Business Invoice Number"
               inputHandler={this.inputHandler}
@@ -113,7 +113,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_invoice_amount"
               label="Business Invoice Amount"
               inputHandler={this.inputHandler}
@@ -124,7 +124,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_purchase_order_number"
               label="Business Purchase Order Number"
               inputHandler={this.inputHandler}
@@ -147,7 +147,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="duns_number"
               label="DUNS Number"
               inputHandler={this.inputHandler}
@@ -156,7 +156,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_payment_volume"
               label="Business Payment Volume"
               inputHandler={this.inputHandler}
@@ -167,7 +167,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_payment_decline_volume"
               label="Business Payment Decline Volume"
               inputHandler={this.inputHandler}
@@ -181,7 +181,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_refund_volume"
               label="Business Refund Volume"
               inputHandler={this.inputHandler}
@@ -192,7 +192,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_dispute_volume"
               label="Business Dispute Volume"
               inputHandler={this.inputHandler}
@@ -203,7 +203,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_receivable_volume"
               label="Business Receivable Volume"
               inputHandler={this.inputHandler}
@@ -216,7 +216,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_future_scheduled_payment_volume"
               label="Business Future Scheduled Payment Volume"
               inputHandler={this.inputHandler}
@@ -230,7 +230,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="business_dispute_win_rate"
               label="Business Dispute Win Rate"
               inputHandler={this.inputHandler}
@@ -243,7 +243,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-number
               name="length_of_business_relationship"
               label="Length of Business Relationship"
               inputHandler={this.inputHandler}

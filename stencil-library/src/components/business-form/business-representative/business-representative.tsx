@@ -91,7 +91,7 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-6">
-              <form-control-text
+              <form-control-number
                 name="phone"
                 label="Phone Number"
                 defaultValue={representativeDefaultValue?.phone}
@@ -107,7 +107,7 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text
+              <form-control-number
                 name="dob_day"
                 label="Day"
                 defaultValue={representativeDefaultValue?.dob_day}
@@ -117,7 +117,7 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text
+              <form-control-number
                 name="dob_month"
                 label="Month"
                 defaultValue={representativeDefaultValue?.dob_month}
@@ -127,7 +127,7 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-text
+              <form-control-number
                 name="dob_year"
                 label="Year"
                 defaultValue={representativeDefaultValue?.dob_year}
@@ -137,7 +137,7 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12">
-              <form-control-text
+              <form-control-number
                 name="identification_number"
                 label="EIN/SSN"
                 defaultValue={representativeDefaultValue?.identification_number}
