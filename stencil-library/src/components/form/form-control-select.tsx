@@ -22,6 +22,7 @@ export class SelectInput {
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() options: { label: string; value: string }[];
+  @Prop() disabled: boolean;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -58,6 +59,7 @@ export class SelectInput {
           onBlur={() => this.formControlBlur.emit()}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-select is-invalid' : 'form-select'}
+          disabled={this.disabled}
         >
           {this.options.map(option => (
             <option value={option.value}>{option.label}</option>

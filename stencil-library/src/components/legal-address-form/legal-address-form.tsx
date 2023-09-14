@@ -101,6 +101,8 @@ export class LegalAddressForm {
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.country}
                 error={this.errors?.legal_address?.country}
+                // just for now so we skip handling country specificities
+                disabled={true}
               />
             </div>
           </div>
