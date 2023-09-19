@@ -1,9 +1,14 @@
-import { array, boolean, mixed, object, string } from 'yup';
+import { array, boolean, object, string } from 'yup';
 import legalAddressSchema from '../legal-address-form/legal-address-form-schema';
 
 export const RegExZip = /^\d{5}/;
 
-type BusinessType = 'for_profit' | 'non_profit' | 'government_entity' | 'individual' | '';
+type BusinessType =
+  | 'for_profit'
+  | 'non_profit'
+  | 'government_entity'
+  | 'individual'
+  | '';
 type BusinessStructure =
   | 'sole_proprietorship'
   | 'single_llc'
@@ -69,7 +74,10 @@ export const BusinessTypeOptions: { label: string; value: BusinessType }[] = [
   },
 ];
 
-export const BusinessStructureOptions: { label: string; value: BusinessStructure }[] = [
+export const BusinessStructureOptions: {
+  label: string;
+  value: BusinessStructure;
+}[] = [
   {
     label: 'Choose business structure',
     value: '',
@@ -128,6 +136,19 @@ export const BusinessStructureOptions: { label: string; value: BusinessStructure
   },
 ];
 
+const businessGenericInfoSchema = object({
+  legal_name: string().required('Enter legal name'),
+  website_url: string()
+    .url('Enter valid website url')
+    .required('Enter website url'),
+  email: string().email('Enter valid email').required('Enter email'),
+  phone: string().required('Enter phone number'),
+  doing_business_as: string().required('Enter doing business as'),
+  business_type: string().required('Select business type'),
+  business_structure: string().required('Select business structure'),
+  industry: string().required('Enter a business industry'),
+});
+
 const addressSchema = object({
   line1: string().required('Enter street address'),
   city: string().required('Enter city'),
@@ -137,41 +158,51 @@ const addressSchema = object({
 
 const representativeSchema = object({
   name: string().required('Enter representative name'),
-  email: string().email('Enter valid representative email').required('Enter representative email'),
+  email: string()
+    .email('Enter valid representative email')
+    .required('Enter representative email'),
   phone: string().required('Enter representative phone number'),
   dob_day: string().required('Enter representative birth day'),
   dob_month: string().required('Enter representative birth month'),
   dob_year: string().required('Enter representative birth year'),
-  identification_number: string().required('Enter representative identification number'),
+  identification_number: string(),
   address: addressSchema,
 });
 
-const OwnerSchema = object({
+const ownerSchema = object({
   name: string().required('Enter owner name'),
   title: string().required('Enter owner title'),
-  email: string().email('Enter valid owner email').required('Enter owner email'),
+  email: string()
+    .email('Enter valid owner email')
+    .required('Enter owner email'),
   phone: string().required('Enter owner phone number'),
   dob_day: string().required('Enter owner birth day'),
   dob_month: string().required('Enter owner birth month'),
   dob_year: string().required('Enter owner birth year'),
-  identification_number: string().required('Enter owner identification number'),
+  identification_number: string(),
   is_owner: boolean(),
-  metadata: mixed(),
   address: addressSchema,
 });
 
-const BusinessFormSchema = object({
-  legal_name: string().required('Enter legal name'),
-  website_url: string().url('Enter valid website url').required('Enter website url'),
-  email: string().email('Enter valid email').required('Enter email'),
-  phone: string().required('Enter phone number'),
-  doing_business_as: string().required('Enter doing business as'),
-  business_type: string().required('Select business type'),
-  business_structure: string().required('Select business structure'),
-  industry: string().required('Enter a business industry'),
-  representative: representativeSchema.required('Enter representative information'),
-  owners: array().of(OwnerSchema).min(1, 'Enter at least 1 owners'),
-  legal_address: legalAddressSchema.required('Enater legal address'),
+const additionQuestionsSchema = object({
+  business_revenue: string().required('Enter business revenue'),
+  business_payment_volume: string().required('Enter business payment volume'),
+  business_dispute_volume: string().required('Enter business dispute volume'),
+  business_receivable_volume: string().required(
+    'Enter business receivable volume',
+  ),
 });
 
-export default BusinessFormSchema;
+const businessFormSchema = object({
+  ...businessGenericInfoSchema.fields,
+  legal_address: legalAddressSchema.required('Enater legal address'),
+  additional_questions: additionQuestionsSchema.required(
+    'Enter additional questions',
+  ),
+  representative: representativeSchema.required(
+    'Enter representative information',
+  ),
+  owners: array().of(ownerSchema).min(1, 'Enter at least 1 owners'),
+});
+
+export default businessFormSchema;

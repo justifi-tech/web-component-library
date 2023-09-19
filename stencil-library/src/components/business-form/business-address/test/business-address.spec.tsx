@@ -7,7 +7,9 @@ describe('business-address', () => {
   it('should render BusinessAddressForm component', async () => {
     const page = await newSpecPage({
       components: [BusinessAddressForm],
-      template: () => <justifi-business-address-form></justifi-business-address-form>,
+      template: () => (
+        <justifi-business-address-form></justifi-business-address-form>
+      ),
     });
     expect(page.root).toEqualHtml(`
     <justifi-business-address-form exportparts="label,input,input-invalid">
@@ -30,7 +32,7 @@ describe('business-address', () => {
           </div>
 
           <div class="col-12 col-md-6">
-            <form-control-text label="Postal Code" name="postal_code"></form-control-text>
+            <form-control-number label="Postal Code" name="postal_code"></form-control-number>
           </div>
         </div>
       </mock:shadow-root>
@@ -49,7 +51,11 @@ describe('business-address', () => {
     } as BusinessAddressFormFields;
     const page = await newSpecPage({
       components: [BusinessAddressForm],
-      template: () => <justifi-business-address-form defaultValues={businessAddress}></justifi-business-address-form>,
+      template: () => (
+        <justifi-business-address-form
+          defaultValues={businessAddress}
+        ></justifi-business-address-form>
+      ),
     });
     expect(page.root).toEqualHtml(`
     <justifi-business-address-form exportparts="label,input,input-invalid">
@@ -68,7 +74,7 @@ describe('business-address', () => {
             <form-control-select defaultValue="State" label="State" name="state"></form-control-select>
           </div>
           <div class="col-12 col-md-6">
-            <form-control-text defaultValue="12345" label="Postal Code" name="postal_code"></form-control-text>
+            <form-control-number defaultValue="12345" label="Postal Code" name="postal_code"></form-control-number>
           </div>
         </div>
       </mock:shadow-root>
