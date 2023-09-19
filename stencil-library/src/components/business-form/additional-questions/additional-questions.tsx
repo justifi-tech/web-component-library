@@ -46,7 +46,7 @@ export class AdditionalQuestions {
       <Host exportparts="label,input,input-invalid">
         <div class="row gy-3">
           <div class="col-12">
-            <form-control-number
+            <form-control-monetary
               name="business_revenue"
               label="Business Revenue"
               inputHandler={this.inputHandler}
@@ -55,7 +55,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-number
+            <form-control-monetary
               name="business_payment_volume"
               label="Business Payment Volume"
               inputHandler={this.inputHandler}
@@ -66,7 +66,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-number
+            <form-control-monetary
               name="business_dispute_volume"
               label="Business Dispute Volume"
               inputHandler={this.inputHandler}
@@ -77,7 +77,7 @@ export class AdditionalQuestions {
             />
           </div>
           <div class="col-12">
-            <form-control-number
+            <form-control-monetary
               name="business_receivable_volume"
               label="Business Receivable Volume"
               inputHandler={this.inputHandler}
