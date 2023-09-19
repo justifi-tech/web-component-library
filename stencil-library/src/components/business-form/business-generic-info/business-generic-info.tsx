@@ -5,6 +5,7 @@ import {
   BusinessTypeOptions,
 } from '../business-form-schema';
 import { FormController } from '../../form/form';
+import { PHONE_MASKS } from '../../../utils/phone-masks';
 
 /**
  * @exportedPart label: Label for inputs
@@ -121,12 +122,13 @@ export class BusinessGenericInfo {
             />
           </div>
           <div class="col-12 col-md-6">
-            <form-control-text
+            <form-control-number-masked
               name="phone"
               label="Phone Number"
               defaultValue={genericInfoDefaultValue.phone}
               error={this.errors.phone}
               inputHandler={this.inputHandler}
+              mask={PHONE_MASKS.US}
             />
           </div>
         </div>

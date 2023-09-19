@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../form/form';
+import { PHONE_MASKS } from '../../../utils/phone-masks';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -91,12 +92,13 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-6">
-              <form-control-number
+              <form-control-number-masked
                 name="phone"
                 label="Phone Number"
                 defaultValue={representativeDefaultValue?.phone}
                 error={this.errors.phone}
                 inputHandler={this.inputHandler}
+                mask={PHONE_MASKS.US}
               />
             </div>
 

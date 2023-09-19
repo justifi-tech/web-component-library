@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../form/form';
+import { PHONE_MASKS } from '../../../utils/phone-masks';
 
 class BusinessOwner {
   name: string = '';
@@ -149,7 +150,7 @@ export class BusinessOwners {
                         />
                       </div>
                       <div class="col-12 col-md-6">
-                        <form-control-number
+                        <form-control-number-masked
                           name="phone"
                           label="Phone"
                           defaultValue={ownersDefaultValue[index]?.phone}
@@ -158,6 +159,7 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          mask={PHONE_MASKS.US}
                         />
                       </div>
                     </div>
