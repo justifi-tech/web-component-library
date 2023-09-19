@@ -109,32 +109,35 @@ export class BusinessRepresentative {
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-number
+              <form-control-datepart
                 name="dob_day"
                 label="Day"
                 defaultValue={representativeDefaultValue?.dob_day}
                 error={this.errors.dob_day}
                 inputHandler={this.inputHandler}
+                type="day"
               />
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-number
+              <form-control-datepart
                 name="dob_month"
                 label="Month"
                 defaultValue={representativeDefaultValue?.dob_month}
                 error={this.errors.dob_month}
                 inputHandler={this.inputHandler}
+                type="month"
               />
             </div>
 
             <div class="col-12 col-md-4">
-              <form-control-number
+              <form-control-datepart
                 name="dob_year"
                 label="Year"
                 defaultValue={representativeDefaultValue?.dob_year}
                 error={this.errors.dob_year}
                 inputHandler={this.inputHandler}
+                type="year"
               />
             </div>
 

@@ -166,7 +166,7 @@ export class BusinessOwners {
 
                     <div class="row mb-3">
                       <div class="col-12 col-md-4">
-                        <form-control-number
+                        <form-control-datepart
                           name="dob_day"
                           label="Date of Birth - Day"
                           defaultValue={ownersDefaultValue[index]?.dob_day}
@@ -175,10 +175,11 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          type="day"
                         />
                       </div>
                       <div class="col-12 col-md-4">
-                        <form-control-number
+                        <form-control-datepart
                           name="dob_month"
                           label="Date of Birth - Month"
                           defaultValue={ownersDefaultValue[index]?.dob_month}
@@ -187,10 +188,11 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          type="month"
                         />
                       </div>
                       <div class="col-12 col-md-4">
-                        <form-control-number
+                        <form-control-datepart
                           name="dob_year"
                           label="Date of Birth - Year"
                           defaultValue={ownersDefaultValue[index]?.dob_year}
@@ -199,6 +201,7 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          type="year"
                         />
                       </div>
                     </div>
