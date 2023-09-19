@@ -33,10 +33,17 @@ export class BusinessForm {
     }
 
     this.formController = new FormController(businessFormSchema);
+
     this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
 
     if (this.businessId) {
       this.fetchData(this.businessId);
+    } else {
+      this.formController.setInitialValues({
+        legal_address: {
+          country: 'US',
+        },
+      });
     }
   }
 
