@@ -22,8 +22,9 @@ export class NumberInput {
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
-  @State() input: string;
   @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() disabled: boolean;
+  @State() input: string;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -63,6 +64,7 @@ export class NumberInput {
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="number"
+          disabled={this.disabled}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>

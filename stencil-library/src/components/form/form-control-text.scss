@@ -5,3 +5,10 @@
   @include host-base-styles;
   display: block;
 }
+
+input[type='text'][disabled] {
+  color: #495057;
+  background-color: #e9ecef;
+  opacity: 0.5;
+  cursor: not-allowed;
+}

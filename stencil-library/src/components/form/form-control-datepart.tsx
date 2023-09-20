@@ -24,6 +24,7 @@ export class DatePartInput {
   @Prop() defaultValue: string;
   @Prop() type: 'day' | 'month' | 'year';
   @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() disabled: boolean;
 
   private imask: InputMask<any> | null = null;
 
@@ -96,6 +97,7 @@ export class DatePartInput {
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"
+          disabled={this.disabled}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>

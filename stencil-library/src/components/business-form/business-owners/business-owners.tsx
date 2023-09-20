@@ -28,6 +28,7 @@ class BusinessOwner {
 })
 export class BusinessOwners {
   @Prop() formController: FormController;
+  @Prop() isEditing: boolean;
   @State() errors: any[] = [];
   @State() owners: BusinessOwner[] = [];
 
@@ -120,6 +121,7 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          disabled={this.isEditing}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -132,6 +134,7 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          disabled={this.isEditing}
                         />
                       </div>
                     </div>
@@ -147,6 +150,7 @@ export class BusinessOwners {
                             this.inputHandler(name, value, index)
                           }
                           class="form-control"
+                          disabled={this.isEditing}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -160,6 +164,7 @@ export class BusinessOwners {
                           }
                           class="form-control"
                           mask={PHONE_MASKS.US}
+                          disabled={this.isEditing}
                         />
                       </div>
                     </div>
@@ -176,6 +181,7 @@ export class BusinessOwners {
                           }
                           class="form-control"
                           type="day"
+                          disabled={this.isEditing}
                         />
                       </div>
                       <div class="col-12 col-md-4">
@@ -189,6 +195,7 @@ export class BusinessOwners {
                           }
                           class="form-control"
                           type="month"
+                          disabled={this.isEditing}
                         />
                       </div>
                       <div class="col-12 col-md-4">
@@ -202,6 +209,7 @@ export class BusinessOwners {
                           }
                           class="form-control"
                           type="year"
+                          disabled={this.isEditing}
                         />
                       </div>
                     </div>
@@ -218,6 +226,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         class="form-control"
+                        disabled={this.isEditing}
                       />
                     </div>
 
@@ -237,6 +246,7 @@ export class BusinessOwners {
                               this.addressInputHandler(name, value, index)
                             }
                             class="form-control"
+                            disabled={this.isEditing}
                           />
                         </div>
                         <div class="col-12 col-md-6">
@@ -251,6 +261,7 @@ export class BusinessOwners {
                               this.addressInputHandler(name, value, index)
                             }
                             class="form-control"
+                            disabled={this.isEditing}
                           />
                         </div>
                       </div>
@@ -268,6 +279,7 @@ export class BusinessOwners {
                               this.addressInputHandler(name, value, index)
                             }
                             class="form-control"
+                            disabled={this.isEditing}
                           />
                         </div>
                         <div class="col-12 col-md-6">
@@ -282,6 +294,7 @@ export class BusinessOwners {
                               this.addressInputHandler(name, value, index)
                             }
                             class="form-control"
+                            disabled={this.isEditing}
                           />
                         </div>
                       </div>

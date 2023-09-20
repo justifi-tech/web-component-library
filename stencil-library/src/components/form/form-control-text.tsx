@@ -22,8 +22,9 @@ export class TextInput {
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
-  @State() input: string;
+  @Prop() disabled: boolean;
   @Prop() inputHandler: (name: string, value: string) => void;
+  @State() input: string;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -60,9 +61,12 @@ export class TextInput {
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
+          part={`input ${this.error && 'input-invalid'} ${
+            this.disabled && 'input-disabled'
+          }`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"
+          disabled={this.disabled}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
