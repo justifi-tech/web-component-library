@@ -48,12 +48,10 @@ export class MonetaryInput {
 
       this.imask.on('accept', () => {
         const rawValue = this.imask.unmaskedValue;
-        console.log('emitting accept with value:', rawValue); // Debug log
         this.inputHandler(this.name, rawValue);
       });
 
       inputElement.addEventListener('blur', () => {
-        console.log('emitting blur event'); // Debug log
         this.formControlBlur.emit();
       });
     }
