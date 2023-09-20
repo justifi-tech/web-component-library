@@ -1,7 +1,8 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { ErrorState, LoadingState } from '../details/utils';
+import { DetailItem, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { DetailSection } from '../details/utils';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -71,42 +72,42 @@ export class PaymentDetails {
           <justifi-details
             error-message={this.errorMessage}
             entity={{
-              title: `${formatCurrency(this.payment.amount)} ${this.payment.currency}`,
-              entityHeadInfo: [
-                {title: "Updated At", value: `${formatDate(this.payment.updated_at)} ${formatTime(this.payment.updated_at)}`},
-                {title: "Created At", value: `${formatDate(this.payment.created_at)} ${formatTime(this.payment.created_at)}`},
-                {title: "ID", value: this.payment.id}
-              ],
-              entitySections: [
-                {
-                  sectionTitle: "Details",
-                  sectionDetails: [
-                    {title: "Amount", value: formatCurrency(this.payment.amount)},
-                    {title: "Fees", value: formatCurrency(this.payment.fee_amount)},
-                    {title: "Refunded", value: this.payment.amount_refunded},
-                    {title: "Net", value: this.payment.balance},
-                    {title: "Status", value: MapPaymentStatusToBadge(this.payment.status)},
-                    {title: "Payment ID", value: this.payment.id},
-                    {title: "Processing Fees", value: this.payment.fee_amount},
-                    {title: "Statement Descriptor", value: this.payment.description},
-                    {title: "Description", value: this.payment.description},
-                  ]
-                },
-                {
-                  sectionTitle: "Payment Method",
-                  sectionDetails: [
-                    {title: "ID", value: this.payment.payment_method.card.id},
-                    {title: "Payment Type", value: "Card"},
-                    {title: "Last 4 Numbers", value: this.payment.payment_method.card.acct_last_four},
-                    {title: "Brand", value: this.payment.payment_method.card.brand},
-                    {title: "Cardholder", value: this.payment.payment_method.card.name},
-                  ]
-                }
-              ],
               metadata: this.payment.metadata
             }}
           >
-            <span slot='badge' innerHTML={MapPaymentStatusToBadge(this.payment?.status)} />
+            <EntityHeadInfo slot="head-info" badge={<span slot='badge' innerHTML={MapPaymentStatusToBadge(this.payment?.status)} />} title={`${formatCurrency(this.payment.amount)} ${this.payment.currency.toUpperCase()}`}>
+              <EntityHeadInfoItem
+                classes="border-1 border-end"
+                title="Updated At"
+                value={`${formatDate(this.payment.updated_at)} ${formatTime(this.payment.updated_at)}`}
+              />
+              <EntityHeadInfoItem
+                classes="border-1 border-end"
+                title="Created At"
+                value={`${formatDate(this.payment.created_at)} ${formatTime(this.payment.created_at)}`}
+              />
+              <EntityHeadInfoItem title="ID" value={this.payment.id} />
+            </EntityHeadInfo>
+            <div slot='detail-sections'>
+              <DetailSection sectionTitle="Details">
+                <DetailItem title="Amount" value={formatCurrency(this.payment.amount)} />
+                <DetailItem title="Fees" value={formatCurrency(this.payment.fee_amount)} />
+                <DetailItem title="Refunded" value={formatCurrency(this.payment.amount_refunded)} />
+                <DetailItem title="Net" value={formatCurrency(this.payment.balance)} />
+                <DetailItem title="Status" value={MapPaymentStatusToBadge(this.payment.status)} />
+                <DetailItem title="Payment ID" value={this.payment.id} />
+                <DetailItem title="Processing Fees" value={formatCurrency(this.payment.fee_amount)} />
+                <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />
+                <DetailItem title="Description" value={this.payment.description} />
+              </DetailSection>
+              <DetailSection sectionTitle="Payment Method">
+                <DetailItem title="ID" value={this.payment.payment_method.card.id} />
+                <DetailItem title="Payment Type" value="Card" />
+                <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.card.acct_last_four} />
+                <DetailItem title="Brand" value={this.payment.payment_method.card.brand} />
+                <DetailItem title="Cardholder" value={this.payment.payment_method.card.name} />
+              </DetailSection>
+            </div>
           </justifi-details>
           }
       </Host>

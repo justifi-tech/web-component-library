@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { ErrorState, LoadingState } from '../details/utils';
+import { DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -70,39 +70,37 @@ export class PaymentDetails {
           !this.payout ? ErrorState(this.errorMessage) :
           <justifi-details
             error-message={this.errorMessage}
-            entity={{
-              title: `${formatCurrency(this.payout.amount)} ${this.payout.currency}`,
-              entityHeadInfo: [
-                {title: "Updated At", value: `${formatDate(this.payout.updated_at)} ${formatTime(this.payout.updated_at)}`},
-                {title: "Created At", value: `${formatDate(this.payout.created_at)} ${formatTime(this.payout.created_at)}`},
-                {title: "ID", value: this.payout.id}
-              ],
-              entitySections: [
-                {
-                  sectionTitle: "Details",
-                  sectionDetails: [
-                    {title: "Date paid", value: formatDate(this.payout.deposits_at)},
-                    {title: "Statement Description", value: this.payout.description},
-                    {title: "Payout Method", value: this.payout.delivery_method},
-                    {title: "Amount", value: formatCurrency(this.payout.amount)},
-                    {title: "Fee", value: formatCurrency(this.payout.fees_total)},
-                  ]
-                },
-                {
-                  sectionTitle: "Account",
-                  sectionDetails: [
-                    {title: "ID", value: this.payout.account_id},
-                    {title: "Account Type", value: this.payout.bank_account.account_type},
-                    {title: "Institution", value: this.payout.bank_account.account_type},
-                    {title: "Routing Number", value: this.payout.bank_account.routing_number},
-                    {title: "Account Number", value: this.payout.bank_account.account_number_last4},
-                  ]
-                }
-              ],
-              metadata: this.payout.metadata
-            }}
+            entity={{ metadata: this.payout.metadata }}
           >
-            <span slot='badge' innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />
+            <EntityHeadInfo slot="head-info" badge={<span slot='badge' innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />} title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}>
+              <EntityHeadInfoItem
+                classes="border-1 border-end"
+                title="Updated At"
+                value={`${formatDate(this.payout.updated_at)} ${formatTime(this.payout.updated_at)}`}
+              />
+              <EntityHeadInfoItem
+                classes="border-1 border-end"
+                title="Created At"
+                value={`${formatDate(this.payout.created_at)} ${formatTime(this.payout.created_at)}`}
+              />
+              <EntityHeadInfoItem title="ID" value={this.payout.id} />
+            </EntityHeadInfo>
+            <div slot='detail-sections'>
+              <DetailSection sectionTitle="Details">
+                <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
+                <DetailItem title="Statement Description" value={this.payout.description} />
+                <DetailItem title="Payout Method" value={this.payout.delivery_method} />
+                <DetailItem title="Amount" value={formatCurrency(this.payout.amount)} />
+                <DetailItem title="Fee" value={formatCurrency(this.payout.fees_total)} />
+              </DetailSection>
+              <DetailSection sectionTitle="Account">
+                <DetailItem title="ID" value={this.payout.account_id} />
+                <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
+                <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
+                <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
+                <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
+              </DetailSection>
+            </div>
           </justifi-details>
         }
       </Host>
