@@ -24,6 +24,7 @@ export class NumberInputMasked {
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() mask: string;
+  @Prop() disabled: boolean;
 
   private imask: InputMask<any> | null = null;
 
@@ -44,12 +45,10 @@ export class NumberInputMasked {
 
       this.imask.on('accept', () => {
         const rawValue = this.imask.unmaskedValue;
-        console.log('emitting accept with value:', rawValue);
         this.inputHandler(this.name, rawValue);
       });
 
       inputElement.addEventListener('blur', () => {
-        console.log('emitting blur event');
         this.formControlBlur.emit();
       });
     }
@@ -79,6 +78,7 @@ export class NumberInputMasked {
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"
+          disabled={this.disabled}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
