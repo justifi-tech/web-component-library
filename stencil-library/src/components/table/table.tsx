@@ -65,20 +65,36 @@ export class Table {
 
   paginationBar = () => {
     return (
-      <div class="d-flex justify-content-center gap-3">
-        <button
-          onClick={this.paging.onPrev}
-          part={`arrow arrow-left${this.paging.has_previous ? '' : ' arrow-disabled'}`}
-          disabled={!this.paging.has_previous}
-          class={`btn btn-primary ${this.paging.has_previous ? '' : ' disabled'}`}
-        >&larr;</button>
-        <button
-          onClick={this.paging.onNext}
-          part={`arrow arrow-right${this.paging.has_next ? '' : ' arrow-disabled'}`}
-          disabled={!this.paging.has_next}
-          class={`btn btn-primary ${this.paging.has_next ? '' : ' disabled'}`}
-        >&rarr;</button>
-      </div>
+      <nav aria-label="Table pagination" class="d-flex justify-content-end gap-3">
+        <ul class="pagination m-0">
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+              this.paging.onPrev();
+            }}
+            part={`previous-button${this.paging.has_previous ? '' : ' button-disabled'}`}
+            class={`page-item ${this.paging.has_previous ? '' : ' disabled'}`}
+          >
+            <a href="#" class="page-link">
+              <span class="me-1" part="arrow arrow-left">&laquo;</span>
+              <span part="previous-button-text">Previous</span>
+            </a>
+          </li>
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+              this.paging.onNext();
+            }}
+            part={`${this.paging.has_next ? '' : ' button-disabled'}`}
+            class={`page-item ${this.paging.has_next ? '' : ' disabled'}`}
+          >
+            <a href="#" class="page-link">
+              <span part="next-button-text">Next</span>
+              <span class="ms-1" part="arrow arrow-right">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     )
   };
 
@@ -87,7 +103,8 @@ export class Table {
       <Host exportparts="
         table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
         table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
-        empty-state,pagination-bar,arrow,arrow-left,arrow-right,arrow-disabled
+        empty-state,pagination-bar,arrow,arrow-left,arrow-right,button-disabled,
+        previous-button-text,next-button-text
       ">
         {this.columnData ?
         <table class="table table-hover">

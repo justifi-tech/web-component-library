@@ -4,6 +4,7 @@
 @import "badge";
 @import "grid";
 @import "bootstrap-utilities";
+@import "pagination";
 
 :host {
   @include host-base-styles;
