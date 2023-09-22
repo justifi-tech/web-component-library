@@ -1,5 +1,5 @@
 export default {
-  title: 'dev/Components/ProceedsList',
+  title: 'Components/ProceedsList',
   component: 'justifi-proceeds-list',
   parameters: {},
   argTypes: {

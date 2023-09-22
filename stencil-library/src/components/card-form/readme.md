@@ -99,7 +99,7 @@
           metadata: { something: 'somevalue' }, // optional
         };
         // ACCOUNT_ID is optional, currently required for platforms
-        // ACCOUNT_ID is the seller account for which you are tokenizing
+        // CLIENT_ID is the seller account for which you are tokenizing
         cardForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID').then(data => {
           // This is where you can submit the form and use the payment method token
           // on your backend

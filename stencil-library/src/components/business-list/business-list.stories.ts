@@ -1,5 +1,5 @@
 export default {
-  title: 'dev/Components/BusinessList',
+  title: 'Components/BusinessList',
   component: 'justifi-business-list',
   parameters: {},
   argTypes: {
