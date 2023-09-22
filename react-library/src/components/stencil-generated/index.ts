@@ -8,6 +8,7 @@ import type { JSX } from '@justifi/webcomponents';
 import { defineCustomElements } from '@justifi/webcomponents/loader';
 
 defineCustomElements();
+export const FormControlNumber = /*@__PURE__*/createReactComponent<JSX.FormControlNumber, HTMLFormControlNumberElement>('form-control-number');
 export const FormControlSelect = /*@__PURE__*/createReactComponent<JSX.FormControlSelect, HTMLFormControlSelectElement>('form-control-select');
 export const FormControlText = /*@__PURE__*/createReactComponent<JSX.FormControlText, HTMLFormControlTextElement>('form-control-text');
 export const JustifiAdditionalQuestions = /*@__PURE__*/createReactComponent<JSX.JustifiAdditionalQuestions, HTMLJustifiAdditionalQuestionsElement>('justifi-additional-questions');

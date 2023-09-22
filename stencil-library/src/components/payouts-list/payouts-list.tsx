@@ -18,7 +18,9 @@ import { PagingInfo, pagingDefaults } from '../table/table-utils';
   * @exportedPart arrow: Both paging buttons
   * @exportedPart arrow-left: Previous page button
   * @exportedPart arrow-right: Next page button
-  * @exportedPart arrow-disabled: Disabled state for paging buttons
+  * @exportedPart button-disabled: Disabled state for paging buttons
+  * @exportedPart previous-button-text: Text for Previous button
+  * @exportedPart next-button-text: Text for Next button
 */
 @Component({
   tag: 'justifi-payouts-list',
