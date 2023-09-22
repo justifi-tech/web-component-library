@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  Element,
   Watch,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
@@ -16,8 +15,6 @@ import IMask, { InputMask } from 'imask';
   shadow: true,
 })
 export class DatePartInput {
-  @Element() el: HTMLElement;
-
   @Prop() label: string;
   @Prop() name: string;
   @Prop() error: string;
@@ -28,6 +25,8 @@ export class DatePartInput {
 
   private imask: InputMask<any> | null = null;
 
+  textInput!: HTMLInputElement;
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -37,8 +36,7 @@ export class DatePartInput {
   }
 
   componentDidLoad() {
-    const inputElement = this.el.shadowRoot.querySelector('input');
-    if (inputElement) {
+    if (this.textInput) {
       let maskOptions;
 
       switch (this.type) {
@@ -59,14 +57,14 @@ export class DatePartInput {
           throw new Error('Invalid type prop');
       }
 
-      this.imask = IMask(inputElement, maskOptions);
+      this.imask = IMask(this.textInput, maskOptions);
 
       this.imask.on('accept', () => {
         const rawValue = this.imask.unmaskedValue;
         this.inputHandler(this.name, rawValue);
       });
 
-      inputElement.addEventListener('blur', () => {
+      this.textInput.addEventListener('blur', () => {
         this.formControlBlur.emit();
       });
 
@@ -91,6 +89,7 @@ export class DatePartInput {
           {this.label}
         </label>
         <input
+          ref={el => (this.textInput = el as HTMLInputElement)}
           id={this.name}
           name={this.name}
           onBlur={() => this.formControlBlur.emit()}

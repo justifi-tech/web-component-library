@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  Element,
   Watch,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
@@ -16,8 +15,6 @@ import IMask, { InputMask } from 'imask';
   shadow: true,
 })
 export class NumberInputMasked {
-  @Element() el: HTMLElement;
-
   @Prop() label: string;
   @Prop() name: any;
   @Prop() error: string;
@@ -28,6 +25,8 @@ export class NumberInputMasked {
 
   private imask: InputMask<any> | null = null;
 
+  textInput!: HTMLInputElement;
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -37,9 +36,8 @@ export class NumberInputMasked {
   }
 
   componentDidLoad() {
-    const inputElement = this.el.shadowRoot.querySelector('input');
-    if (inputElement && this.mask) {
-      this.imask = IMask(inputElement, {
+    if (this.textInput && this.mask) {
+      this.imask = IMask(this.textInput, {
         mask: this.mask,
       });
 
@@ -48,11 +46,12 @@ export class NumberInputMasked {
         this.inputHandler(this.name, rawValue);
       });
 
-      inputElement.addEventListener('blur', () => {
+      this.textInput.addEventListener('blur', () => {
         this.formControlBlur.emit();
       });
+
+      this.updateInput(this.defaultValue);
     }
-    this.updateInput(this.defaultValue);
   }
 
   disconnectedCallback() {
@@ -72,6 +71,7 @@ export class NumberInputMasked {
           {this.label}
         </label>
         <input
+          ref={el => (this.textInput = el as HTMLInputElement)}
           id={this.name}
           name={this.name}
           onBlur={() => this.formControlBlur.emit()}
