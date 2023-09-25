@@ -24,12 +24,14 @@
 
 - [form-control-text](../../form)
 - [form-control-select](../../form)
+- [form-control-number](../../form)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-business-address-form --> form-control-text
   justifi-business-address-form --> form-control-select
+  justifi-business-address-form --> form-control-number
   justifi-business-representative --> justifi-business-address-form
   style justifi-business-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

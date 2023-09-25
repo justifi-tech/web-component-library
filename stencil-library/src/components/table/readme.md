@@ -10,9 +10,11 @@
 | Property                  | Attribute       | Description | Type                     | Default                  |
 | ------------------------- | --------------- | ----------- | ------------------------ | ------------------------ |
 | `columnData` _(required)_ | --              |             | `(string \| string[])[]` | `undefined`              |
+| `entityId`                | --              |             | `string[]`               | `undefined`              |
 | `errorMessage`            | `error-message` |             | `string`                 | `''`                     |
 | `loading`                 | `loading`       |             | `boolean`                | `true`                   |
 | `paging`                  | --              |             | `ExtendedPagingInfo`     | `ExtendedPagingDefaults` |
+| `rowClickHandler`         | --              |             | `(e: any) => any`        | `undefined`              |
 | `rowData`                 | --              |             | `any[]`                  | `[]`                     |
 
 
@@ -20,11 +22,16 @@
 
 | Part                      | Description |
 | ------------------------- | ----------- |
+| `"arrow"`                 |             |
+| `"arrow-left"`            |             |
+| `"arrow-right"`           |             |
 | `"empty-state"`           |             |
 | `"error-state"`           |             |
 | `"loading-state-cell"`    |             |
 | `"loading-state-spinner"` |             |
+| `"next-button-text"`      |             |
 | `"pagination-bar"`        |             |
+| `"previous-button-text"`  |             |
 | `"table-body"`            |             |
 | `"table-cell"`            |             |
 | `"table-head"`            |             |

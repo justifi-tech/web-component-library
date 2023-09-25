@@ -10,6 +10,7 @@
 | Property       | Attribute       | Description | Type                                    | Default     |
 | -------------- | --------------- | ----------- | --------------------------------------- | ----------- |
 | `defaultValue` | `default-value` |             | `string`                                | `undefined` |
+| `disabled`     | `disabled`      |             | `boolean`                               | `undefined` |
 | `error`        | `error`         |             | `string`                                | `undefined` |
 | `inputHandler` | --              |             | `(name: string, value: string) => void` | `undefined` |
 | `label`        | `label`         |             | `string`                                | `undefined` |
@@ -35,7 +36,6 @@
 
 ### Used by
 
- - [justifi-additional-questions](../business-form/additional-questions)
  - [justifi-business-address-form](../business-form/business-address)
  - [justifi-business-generic-info](../business-form/business-generic-info)
  - [justifi-business-owners](../business-form/business-owners)
@@ -45,7 +45,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-text
   justifi-business-address-form --> form-control-text
   justifi-business-generic-info --> form-control-text
   justifi-business-owners --> form-control-text

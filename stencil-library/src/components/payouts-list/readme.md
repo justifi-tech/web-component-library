@@ -13,6 +13,13 @@
 | `authToken` | `auth-token` |             | `string` | `undefined` |
 
 
+## Events
+
+| Event                | Description | Type                  |
+| -------------------- | ----------- | --------------------- |
+| `payout-row-clicked` |             | `CustomEvent<Payout>` |
+
+
 ## Dependencies
 
 ### Depends on

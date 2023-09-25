@@ -13,6 +13,13 @@
 | `authToken` | `auth-token` |             | `string` | `undefined` |
 
 
+## Events
+
+| Event                 | Description | Type                   |
+| --------------------- | ----------- | ---------------------- |
+| `proceed-row-clicked` |             | `CustomEvent<Proceed>` |
+
+
 ## Dependencies
 
 ### Depends on

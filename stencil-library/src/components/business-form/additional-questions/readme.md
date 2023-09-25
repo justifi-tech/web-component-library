@@ -20,12 +20,12 @@
 
 ### Depends on
 
-- [form-control-text](../../form)
+- [form-control-monetary](../../form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-text
+  justifi-additional-questions --> form-control-monetary
   justifi-business-form --> justifi-additional-questions
   style justifi-additional-questions fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -33,15 +33,25 @@ graph TD;
   justifi-business-form --> justifi-business-owners
   justifi-business-generic-info --> form-control-text
   justifi-business-generic-info --> form-control-select
+  justifi-business-generic-info --> form-control-number
+  justifi-business-generic-info --> form-control-number-masked
   justifi-legal-address-form --> form-control-text
+  justifi-legal-address-form --> form-control-number
   justifi-legal-address-form --> form-control-select
-  justifi-additional-questions --> form-control-text
+  justifi-additional-questions --> form-control-monetary
   justifi-business-representative --> form-control-text
   justifi-business-representative --> form-control-select
+  justifi-business-representative --> form-control-number-masked
+  justifi-business-representative --> form-control-datepart
+  justifi-business-representative --> form-control-number
   justifi-business-representative --> justifi-business-address-form
   justifi-business-address-form --> form-control-text
   justifi-business-address-form --> form-control-select
+  justifi-business-address-form --> form-control-number
   justifi-business-owners --> form-control-text
+  justifi-business-owners --> form-control-number-masked
+  justifi-business-owners --> form-control-datepart
+  justifi-business-owners --> form-control-number
   style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
