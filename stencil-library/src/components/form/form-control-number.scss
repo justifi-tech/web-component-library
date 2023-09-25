@@ -6,8 +6,6 @@
   display: block;
 }
 
-// form-control-number.scss
-
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -16,4 +14,18 @@ input[type='number']::-webkit-outer-spin-button {
 
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+input[type='number'][disabled] {
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input[type='text'][disabled] {
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -5,26 +5,28 @@ import {
   Prop,
   Event,
   EventEmitter,
-  State,
-  Element,
   Watch,
 } from '@stencil/core';
+import IMask, { InputMask } from 'imask';
 
 @Component({
-  tag: 'form-control-text',
-  styleUrl: 'form-control-text.scss',
+  tag: 'form-control-number-masked',
+  styleUrl: 'form-control-number.scss',
   shadow: true,
 })
-export class TextInput {
-  @Element() el: HTMLElement;
-
+export class NumberInputMasked {
   @Prop() label: string;
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
-  @Prop() disabled: boolean;
   @Prop() inputHandler: (name: string, value: string) => void;
-  @State() input: string;
+  @Prop() mask: string;
+  @Prop() disabled: boolean;
+
+  private imask: InputMask<any> | null = null;
+
+  textInput!: HTMLInputElement;
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -33,21 +35,33 @@ export class TextInput {
     this.updateInput(newValue);
   }
 
-  updateInput(newValue: any) {
-    const inputElement = this.el.shadowRoot.querySelector('input');
-    if (inputElement) {
-      inputElement.value = newValue || '';
+  componentDidLoad() {
+    if (this.textInput && this.mask) {
+      this.imask = IMask(this.textInput, {
+        mask: this.mask,
+      });
+
+      this.imask.on('accept', () => {
+        const rawValue = this.imask.unmaskedValue;
+        this.inputHandler(this.name, rawValue);
+      });
+
+      this.textInput.addEventListener('blur', () => {
+        this.formControlBlur.emit();
+      });
+
+      this.updateInput(this.defaultValue);
     }
   }
 
-  handleFormControlInput(event: any) {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    this.inputHandler(name, target.value);
+  disconnectedCallback() {
+    this.imask?.destroy();
   }
 
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
+  updateInput(newValue: any) {
+    if (this.imask) {
+      this.imask.value = String(newValue);
+    }
   }
 
   render() {
@@ -57,13 +71,11 @@ export class TextInput {
           {this.label}
         </label>
         <input
+          ref={el => (this.textInput = el as HTMLInputElement)}
           id={this.name}
           name={this.name}
-          onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'} ${
-            this.disabled && 'input-disabled'
-          }`}
+          part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"
           disabled={this.disabled}
