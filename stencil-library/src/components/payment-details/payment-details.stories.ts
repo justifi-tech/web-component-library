@@ -1,5 +1,5 @@
 export default {
-  title: 'dev/Components/PaymentDetails',
+  title: 'Components/PaymentDetails',
   component: 'justifi-payment-details',
   parameters: {},
   argTypes: {
