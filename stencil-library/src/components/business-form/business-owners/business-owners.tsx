@@ -120,7 +120,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           disabled={this.isEditing}
                         />
                       </div>
@@ -133,7 +132,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           disabled={this.isEditing}
                         />
                       </div>
@@ -149,7 +147,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           disabled={this.isEditing}
                         />
                       </div>
@@ -162,7 +159,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           mask={PHONE_MASKS.US}
                           disabled={this.isEditing}
                         />
@@ -179,7 +175,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           type="day"
                           disabled={this.isEditing}
                         />
@@ -193,7 +188,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           type="month"
                           disabled={this.isEditing}
                         />
@@ -207,7 +201,6 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.inputHandler(name, value, index)
                           }
-                          class="form-control"
                           type="year"
                           disabled={this.isEditing}
                         />
@@ -225,7 +218,6 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        class="form-control"
                         disabled={this.isEditing}
                       />
                     </div>
@@ -245,7 +237,6 @@ export class BusinessOwners {
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
                             }
-                            class="form-control"
                             disabled={this.isEditing}
                           />
                         </div>
@@ -260,7 +251,6 @@ export class BusinessOwners {
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
                             }
-                            class="form-control"
                             disabled={this.isEditing}
                           />
                         </div>
@@ -278,7 +268,6 @@ export class BusinessOwners {
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
                             }
-                            class="form-control"
                             disabled={this.isEditing}
                           />
                         </div>
@@ -293,7 +282,6 @@ export class BusinessOwners {
                             inputHandler={(name, value) =>
                               this.addressInputHandler(name, value, index)
                             }
-                            class="form-control"
                             disabled={this.isEditing}
                           />
                         </div>
