@@ -1,0 +1,34 @@
+name: 'CodeQL'
+
+on:
+  pull_request:
+    # By default, CodeQL action will analyze all paths.
+    # You can configure it to only analyze the paths you are interested in.
+    paths:
+      - 'stencil-library/**'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: 'javascript,typescript' # list the languages your project uses
+          queries: +security-and-quality
+          # Optional: specify the folder within the monorepo
+          source-root: 'stencil-library'
+
+      # Perform the CodeQL analysis.
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
