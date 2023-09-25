@@ -7,8 +7,8 @@
 }
 
 input[type='text'][disabled] {
-  color: #495057;
-  background-color: #e9ecef;
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
   opacity: 0.5;
   cursor: not-allowed;
 }
