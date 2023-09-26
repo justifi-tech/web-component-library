@@ -1,26 +1,16 @@
 export default {
   title: 'Components/BusinessList',
   component: 'justifi-business-list',
-  parameters: {},
-  argTypes: {
-    'client-id': {
-      control: 'text',
-      table: {
-        category: 'props',
-      }
-    },
-  },
+  parameters: {}
 };
 
 class BusinessListArgs {
   'auth-token': string;
   'account-id': string;
-  'client-id': string;
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['account-id'] = args['account-id'] || '';
-    this['client-id'] = args['client-id'] || '';
   }
 }
 
@@ -30,7 +20,6 @@ const Template = (args: BusinessListArgs) => {
       data-testid="justifi-business-list"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
-      client-id="${args['client-id']}"
     />
   `);
 };
