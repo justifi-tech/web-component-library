@@ -1,26 +1,16 @@
 export default {
   title: 'Components/PayoutDetails',
   component: 'justifi-payout-details',
-  parameters: {},
-  argTypes: {
-    'client-id': {
-      control: 'text',
-      table: {
-        category: 'props',
-      }
-    },
-  },
+  parameters: {}
 };
 
 class PayoutDetailsArgs {
   'auth-token': string;
   'payout-id': string;
-  'client-id': string;
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['payout-id'] = args['payout-id'] || '';
-    this['client-id'] = args['client-id'] || '';
   }
 }
 
@@ -30,7 +20,6 @@ const Template = (args: PayoutDetailsArgs) => {
       data-testid="justifi-payout-details"
       auth-token="${args['auth-token']}"
       payout-id="${args['payout-id']}"
-      client-id="${args['client-id']}"
     />
   `);
 };
