@@ -35,23 +35,16 @@ const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, payment
   const tokenizeResponse = await cardForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
 };
-const handleResizeClick = async (cardForm: HTMLJustifiCardFormElement) => {
-  await cardForm.resize();
-};
 const handleReady = () => {
   console.log('card form is ready');
   const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
-  const resizeBtn = document.querySelector('#resize-btn');
   validateBtn?.addEventListener('click', () => {
     handleValidateClick(cardForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
     handleTokenizeClick(cardForm, {});
-  });
-  resizeBtn?.addEventListener('click', () => {
-    handleResizeClick(cardForm);
   });
 };
 
@@ -75,7 +68,6 @@ const FormButtons = `
   <div class="button-bar">
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
-    <button id="resize-btn">Resize</button>
   </div>`;
 
 const Template = (args: CardFormStoryArgs) => {
