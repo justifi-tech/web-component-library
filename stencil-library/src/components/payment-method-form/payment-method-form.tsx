@@ -122,9 +122,9 @@ export class PaymentMethodForm {
           src={this.getIframeSrc()}
           ref={el => {
             this.iframeElement = el as HTMLIFrameElement;
-            iFrameResize({ log: true }, this.iframeElement);
           }}
           onLoad={() => {
+            iFrameResize({ log: true }, this.iframeElement);
             this.sendStyleOverrides();
           }}
         ></iframe>
