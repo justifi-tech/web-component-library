@@ -97,6 +97,21 @@ export class CardForm {
     return this.childRef.validate();
   }
 
+  /**
+   *  Manually resizes the iframe to fit the contents of the iframe
+   *  @deprecated This method will be removed in future releases.
+   */
+  @Method()
+  async resize(): Promise<void> {
+    console.warn(
+      `The 'resize' method is deprecated and will be removed in the next major release. Please refer to the documentation for the migration process and alternative approach.`,
+    );
+    if (!this.childRef) {
+      throw new Error('Cannot call validate');
+    }
+    return this.childRef.resize();
+  }
+
   render() {
     return (
       <justifi-payment-method-form

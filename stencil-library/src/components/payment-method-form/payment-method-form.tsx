@@ -54,6 +54,11 @@ export class PaymentMethodForm {
     this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, this.iframeOrigin || process.env.IFRAME_ORIGIN || '*');
   }
 
+  @Method()
+  async resize(): Promise<any> {
+    this.postMessage(MessageEventType[this.paymentMethodFormType].resize);
+  }
+
   private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
     return new Promise(resolve => {
       const responseListener = (event: MessageEvent) => {
