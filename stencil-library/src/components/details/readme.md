@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type           | Default     |
-| -------------- | --------------- | ----------- | -------------- | ----------- |
-| `entity`       | --              |             | `IEntityProps` | `undefined` |
-| `errorMessage` | `error-message` |             | `string`       | `undefined` |
+| Property       | Attribute       | Description | Type                 | Default     |
+| -------------- | --------------- | ----------- | -------------------- | ----------- |
+| `entity`       | --              |             | `{ metadata: any; }` | `undefined` |
+| `errorMessage` | `error-message` |             | `string`             | `undefined` |
 
 
 ## Shadow Parts
