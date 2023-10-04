@@ -5,7 +5,7 @@ interface BusinessFormStoryArgs {
 }
 
 export default {
-  title: 'Components/BusinessForm',
+  title: 'dev/Components/BusinessForm',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {

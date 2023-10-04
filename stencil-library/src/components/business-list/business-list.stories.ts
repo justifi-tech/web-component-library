@@ -1,5 +1,5 @@
 export default {
-  title: 'Components/BusinessList',
+  title: 'dev/Components/BusinessList',
   component: 'justifi-business-list',
   parameters: {}
 };

@@ -1,5 +1,21 @@
 ### Changelog
 
+#### 4.5.0
+
+> 4 October 2023
+
+- Added `PaymentDetails`
+- Added `PayoutDetails`
+- Added `ProceedsList`
+- Added `BusinessList`
+- Added `BusinessDetail`
+- Added `AdditionalQuestions` and `LegalAddressForm` sub-form components to `BusinessForm`
+- Updated `BusinessForm` to create a new business entity as well as load an existing one and update it
+- Updated table pagination to use proper bootstrap pagination styles
+- Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
+- Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
+
+
 #### 4.4.0
 
 > 27 July 2023
