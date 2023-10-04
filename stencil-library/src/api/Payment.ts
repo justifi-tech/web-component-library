@@ -104,6 +104,7 @@ export class Payment implements IPayment {
   public status: PaymentStatuses;
   public created_at: string;
   public updated_at: string;
+  public statement_descriptor?: string;
 
   constructor(payment: IPayment) {
     this.id = payment.id;

@@ -2,10 +2,11 @@ import React from 'react';
 import { Source } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
 
-const CSSVars = () => <Source
-  language='css'
-  dark
-  code={dedent`
+const CSSVars = () => (
+  <Source
+    language="css"
+    dark
+    code={dedent`
   /* general */
   --jfi-load-google-font
 
@@ -41,6 +42,8 @@ const CSSVars = () => <Source
   --jfi-form-control-line-height
   --jfi-form-control-margin
   --jfi-form-control-padding
+  --jfi-form-control-disabled-background-color
+  --jfi-form-control-disabled-color
 
   /* form label */
   --jfi-form-label-color
@@ -94,6 +97,7 @@ const CSSVars = () => <Source
   --jfi-submit-button-background-color-loading
   --jfi-submit-button-border-color-loading
   `}
-/>
+  />
+);
 
 export default CSSVars;

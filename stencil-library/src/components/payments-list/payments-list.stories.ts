@@ -2,25 +2,25 @@ export default {
   title: 'dev/Components/PaymentsList',
   component: 'justifi-payments-list',
   parameters: {},
-  argTypes: {
-    'client-id': {
-      control: 'text',
-      table: {
-        category: 'props',
-      }
-    },
-  },
+  decorators: [
+    (Story) => `
+      ${Story()}
+      <script>
+        window.addEventListener('payment-row-clicked', (e) => {
+          console.log(e);
+        })
+      </script>
+    `
+  ]
 };
 
 class PaymentsListArgs {
   'auth-token': string;
   'account-id': string;
-  'client-id': string;
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['account-id'] = args['account-id'] || '';
-    this['client-id'] = args['client-id'] || '';
   }
 }
 
@@ -30,7 +30,6 @@ const Template = (args: PaymentsListArgs) => {
       data-testid="justifi-payments-list"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
-      client-id="${args['client-id']}"
     />
   `);
 };

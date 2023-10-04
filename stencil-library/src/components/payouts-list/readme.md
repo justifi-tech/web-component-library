@@ -13,21 +13,25 @@
 | `authToken` | `auth-token` |             | `string` | `undefined` |
 
 
-## Shadow Parts
+## Events
 
-| Part                      | Description |
-| ------------------------- | ----------- |
-| `"empty-state"`           |             |
-| `"error-state"`           |             |
-| `"loading-state-cell"`    |             |
-| `"loading-state-spinner"` |             |
-| `"pagination-bar"`        |             |
-| `"table-body"`            |             |
-| `"table-cell"`            |             |
-| `"table-head"`            |             |
-| `"table-head-cell"`       |             |
-| `"table-head-row"`        |             |
+| Event                | Description | Type                  |
+| -------------------- | ----------- | --------------------- |
+| `payout-row-clicked` |             | `CustomEvent<Payout>` |
 
+
+## Dependencies
+
+### Depends on
+
+- [justifi-table](../table)
+
+### Graph
+```mermaid
+graph TD;
+  justifi-payouts-list --> justifi-table
+  style justifi-payouts-list fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

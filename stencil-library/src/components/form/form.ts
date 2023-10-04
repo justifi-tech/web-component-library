@@ -2,24 +2,29 @@ import { BehaviorSubject } from 'rxjs';
 import { ObjectSchema, ValidationError } from 'yup';
 
 export class FormController {
-  public defaultValues = new BehaviorSubject<any>({});
   public values = new BehaviorSubject<any>({});
   public errors = new BehaviorSubject<any>({});
 
   private _schema: ObjectSchema<any>;
-  private _defaultValues: any = {};
+  private _initialValues: any = {};
   private _values: any = {};
   private _errors: any = {};
   private _isValid = true;
 
-  constructor(schema: ObjectSchema<any>, defaultValues: any = {}) {
+  constructor(schema: ObjectSchema<any>) {
     this._schema = schema;
-    this._defaultValues = defaultValues;
   }
 
-  private processArrayError(obj: any, property: string, remainingProperties: string[], message: string): void {
+  private processArrayError(
+    obj: any,
+    property: string,
+    remainingProperties: string[],
+    message: string,
+  ): void {
     // Extract array name and index from the property string
-    const [arrayName, indexStr] = property.match(/^([a-zA-Z0-9]+)\[(\d+)\]/).slice(1);
+    const [arrayName, indexStr] = property
+      .match(/^([a-zA-Z0-9]+)\[(\d+)\]/)
+      .slice(1);
     const index = parseInt(indexStr, 10);
 
     // Ensure the array exists and has an entry at the given index
@@ -34,7 +39,12 @@ export class FormController {
     }
   }
 
-  private processRegularError(obj: any, property: string, remainingProperties: string[], message: string): void {
+  private processRegularError(
+    obj: any,
+    property: string,
+    remainingProperties: string[],
+    message: string,
+  ): void {
     // Ensure the property exists
     obj[property] = obj[property] || {};
 
@@ -46,7 +56,11 @@ export class FormController {
     }
   }
 
-  private setNestedError(obj: any, properties: string[], message: string): void {
+  private setNestedError(
+    obj: any,
+    properties: string[],
+    message: string,
+  ): void {
     const property = properties.shift();
     const isArrayError = property.includes('[');
 
@@ -87,13 +101,23 @@ export class FormController {
     }
   }
 
+  public setInitialValues(values: any): void {
+    this._initialValues = values;
+    this._values = values;
+    this.values.next(this._values);
+  }
+
   public setValues(values: any): void {
     this._values = { ...this._values, ...values };
     this.values.next(this._values);
   }
 
-  public setDefaultValues(values: any): void {
-    this._defaultValues = { ...this._defaultValues, ...values };
-    this.defaultValues.next(this._defaultValues);
+  public resetValues(): void {
+    this._values = this._initialValues;
+    this.values.next(this._values);
+  }
+
+  public getInitialValues(): any {
+    return this._initialValues;
   }
 }
