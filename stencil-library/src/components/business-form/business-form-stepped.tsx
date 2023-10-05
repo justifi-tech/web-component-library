@@ -10,10 +10,10 @@ import { parseForPatching } from './helpers';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-form',
+  tag: 'justifi-business-form-stepped',
   styleUrl: 'business-form.scss',
 })
-export class BusinessForm {
+export class BusinessFormStepped {
   @Prop() authToken: string;
   @Prop() businessId?: string;
   @State() isLoading: boolean = false;
