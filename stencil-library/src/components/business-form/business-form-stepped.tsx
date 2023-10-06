@@ -28,6 +28,7 @@ export class BusinessFormStepped {
   @Prop() businessId?: string;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
+  @State() totalSteps: number = 4;
 
   private formController: FormController;
   private api: any;
@@ -45,8 +46,8 @@ export class BusinessFormStepped {
     }
 
     this.formController = new FormController(businessFormSchema);
-
     this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
+    this.totalSteps = Object.keys(componentStepMapping).length - 1;
 
     if (this.businessId) {
       this.fetchData(this.businessId);
@@ -103,38 +104,40 @@ export class BusinessFormStepped {
     this.formController.validateAndSubmit(this.sendData);
   }
 
+  showPreviousStepButton() {
+    return this.currentStep > 0;
+  }
+
+  showNextStepButton() {
+    return this.currentStep < this.totalSteps;
+  }
+
+  showSubmitButton() {
+    return this.currentStep === this.totalSteps;
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
         <form onSubmit={this.validateAndSubmit}>
           {componentStepMapping[this.currentStep](this.formController)}
-          <div class="buttons">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              onClick={() => {
-                if (this.currentStep > 0) {
-                  this.currentStep--;
-                }
-              }}
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              onClick={() => {
-                if (this.currentStep < 4) {
-                  this.currentStep++;
-                }
-              }}
-            >
-              Next
-            </button>
-            <button type="submit" class="btn btn-primary">
-              Submit
-            </button>
+          <div>
+            {this.showPreviousStepButton() && (
+              <button type="button" class="btn btn-secondary" onClick={() => this.currentStep--}>
+                Previous
+              </button>
+            )}
+            {this.showNextStepButton() && (
+              <button type="button" class="btn btn-secondary" onClick={() => this.currentStep++}>
+                Next
+              </button>
+            )}
+            {this.showSubmitButton() && (
+              <button type="submit" class="btn btn-primary">
+                Submit
+              </button>
+            )}
           </div>
         </form>
       </Host>
