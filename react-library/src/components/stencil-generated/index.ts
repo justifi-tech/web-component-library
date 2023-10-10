@@ -19,6 +19,7 @@ export const JustifiBankAccountForm = /*@__PURE__*/createReactComponent<JSX.Just
 export const JustifiBillingForm = /*@__PURE__*/createReactComponent<JSX.JustifiBillingForm, HTMLJustifiBillingFormElement>('justifi-billing-form');
 export const JustifiBusinessAddressForm = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessAddressForm, HTMLJustifiBusinessAddressFormElement>('justifi-business-address-form');
 export const JustifiBusinessForm = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessForm, HTMLJustifiBusinessFormElement>('justifi-business-form');
+export const JustifiBusinessFormStepped = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessFormStepped, HTMLJustifiBusinessFormSteppedElement>('justifi-business-form-stepped');
 export const JustifiBusinessGenericInfo = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessGenericInfo, HTMLJustifiBusinessGenericInfoElement>('justifi-business-generic-info');
 export const JustifiBusinessList = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessList, HTMLJustifiBusinessListElement>('justifi-business-list');
 export const JustifiBusinessOwners = /*@__PURE__*/createReactComponent<JSX.JustifiBusinessOwners, HTMLJustifiBusinessOwnersElement>('justifi-business-owners');

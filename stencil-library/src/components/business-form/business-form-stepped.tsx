@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
@@ -21,7 +21,7 @@ const componentStepMapping = {
  */
 @Component({
   tag: 'justifi-business-form-stepped',
-  styleUrl: 'business-form.scss',
+  styleUrl: 'business-form-stepped.scss',
 })
 export class BusinessFormStepped {
   @Prop() authToken: string;
@@ -29,6 +29,12 @@ export class BusinessFormStepped {
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
+  @State() percentageComplete: number = 0;
+
+  @Watch('currentStep')
+  updatePercentageCompleteOnStepChange() {
+    this.updatePercentageComplete();
+  }
 
   private formController: FormController;
   private api: any;
@@ -108,28 +114,54 @@ export class BusinessFormStepped {
     return this.currentStep > 0;
   }
 
+  previousStepButtonOnClick() {
+    // sendData
+    // then
+    this.currentStep--;
+  }
+
   showNextStepButton() {
     return this.currentStep < this.totalSteps;
+  }
+
+  nextStepButtonOnClick() {
+    // sendData
+    // then
+    this.currentStep++;
   }
 
   showSubmitButton() {
     return this.currentStep === this.totalSteps;
   }
 
+  updatePercentageComplete() {
+    this.percentageComplete = (this.currentStep / this.totalSteps) * 100;
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
+
+        <div class="progress my-4"
+          role="progressbar"
+          aria-label="Basic example"
+          aria-valuenow={this.percentageComplete}
+          aria-valuemin="0"
+          aria-valuemax="100">
+          <div class="progress-bar" style={{ width: `${this.percentageComplete}%` }}></div>
+        </div>
+
         <form onSubmit={this.validateAndSubmit}>
           {componentStepMapping[this.currentStep](this.formController)}
           <div>
             {this.showPreviousStepButton() && (
-              <button type="button" class="btn btn-secondary" onClick={() => this.currentStep--}>
+              <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
                 Previous
               </button>
             )}
             {this.showNextStepButton() && (
-              <button type="button" class="btn btn-secondary" onClick={() => this.currentStep++}>
+              <button type="button" class="btn btn-secondary" onClick={() => this.nextStepButtonOnClick()}>
                 Next
               </button>
             )}
