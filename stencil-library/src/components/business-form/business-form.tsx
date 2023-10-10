@@ -95,35 +95,25 @@ export class BusinessForm {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <h1>Business Information</h1>
         <form onSubmit={event => this.validateAndSubmit(event)}>
-          <div class="row gy-6 gap-3">
-            <div class="col-12">
-              <justifi-business-generic-info
-                formController={this.formController}
-              />
+          <div class="row gap-3">
+            <div class="col-12 mb-4">
+              <h1>Business Information</h1>
             </div>
-            <div class="col-12">
-              <justifi-legal-address-form
-                formController={this.formController}
-                legend="Legal Address"
-              />
+            <div class="col-12 mb-4">
+              <justifi-business-generic-info formController={this.formController} />
             </div>
-            <div class="col-12">
-              <justifi-additional-questions
-                formController={this.formController}
-              />
+            <div class="col-12 mb-4">
+              <justifi-legal-address-form formController={this.formController} />
             </div>
-            <div class="col-12">
-              <justifi-business-representative
-                formController={this.formController}
-              />
+            <div class="col-12 mb-4">
+              <justifi-additional-questions formController={this.formController} />
             </div>
-            <div class="col-12">
-              <justifi-business-owners
-                isEditing={!!this.businessId}
-                formController={this.formController}
-              />
+            <div class="col-12 mb-4">
+              <justifi-business-representative formController={this.formController} />
+            </div>
+            <div class="col-12 mb-4">
+              <justifi-business-owners isEditing={!!this.businessId} formController={this.formController} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <button
