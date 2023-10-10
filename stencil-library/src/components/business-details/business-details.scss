@@ -1,0 +1,45 @@
+@import 'bootstrap-utilities';
+
+:host {
+  display: block;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+// Detail Sections
+detail-section {
+  margin-bottom: 20px;
+
+  &::part(detail-section-title) {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+}
+
+// Detail Items
+detail-item {
+  margin-bottom: 10px;
+  gap: 10px;
+
+  &::part(detail-section-item-title),
+  &::part(detail-section-item-data) {
+    display: inline-block;
+  }
+
+  &::part(detail-section-item-title) {
+    font-weight: bold;
+    width: 150px;
+  }
+
+  &::part(detail-section-item-data) {
+    width: calc(100% - 150px);
+  }
+}
+
+// Loading and Error States
+.loading-state,
+.error-state {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px;
+}
