@@ -153,8 +153,10 @@ export class BusinessFormStepped {
         </div>
 
         <form onSubmit={this.validateAndSubmit}>
-          {componentStepMapping[this.currentStep](this.formController)}
-          <div>
+          <div class="my-4">
+            {componentStepMapping[this.currentStep](this.formController)}
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             {this.showPreviousStepButton() && (
               <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
                 Previous
