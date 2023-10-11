@@ -1,4 +1,4 @@
-import { Component, Prop, State, h } from '@stencil/core';
+import { Component, Host, Prop, State, h } from '@stencil/core';
 import { IBusiness } from '../../api/Business';
 import { Api } from '../../api';
 import { ErrorState, LoadingState } from '../details/utils'; // Make sure to adjust the path if necessary
@@ -26,41 +26,53 @@ export class BusinessDetails {
   @Prop() businessId: string;
   @Prop() authToken: string;
   @State() business: IBusiness;
-  @State() renderState: RENDER_STATES = RENDER_STATES.READY;
+  @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
+  @State() errorMessage: string = 'An error ocurred.';
 
   private api: any;
 
-  componentWillLoad() {
-    if (!this.authToken) {
-      console.warn(
-        'Warning: Missing auth-token. The form will not be functional without it.',
-      );
-    }
-
-    try {
-      this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
-      this.fetchBusiness(this.businessId);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      this.renderState = RENDER_STATES.ERROR;
-    }
-  }
-
   constructor() {
     this.fetchBusiness = this.fetchBusiness.bind(this);
+    this.setError = this.setError.bind(this);
+  }
+
+  async componentWillLoad() {
+    if (!this.authToken) {
+      this.setError(
+        'Missing auth-token. The form will not be functional without it.',
+      );
+      return;
+    }
+
+    if (!this.businessId) {
+      this.setError(
+        'Missing business-id. The form will not be functional without it.',
+      );
+      return;
+    }
+
+    this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
+    await this.fetchBusiness(this.businessId);
   }
 
   async fetchBusiness(businessId) {
     this.renderState = RENDER_STATES.LOADING;
     try {
-      const response = await this.api.get(`entities/businesss/${businessId}`);
+      const response = await this.api.get(`entities/business/${businessId}`);
+      if (response.error) {
+        this.setError(response.error.message);
+        return;
+      }
       this.business = response.data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      this.renderState = RENDER_STATES.ERROR;
-    } finally {
       this.renderState = RENDER_STATES.READY;
+    } catch (error) {
+      this.setError(error);
     }
+  }
+
+  setError(error: string) {
+    this.errorMessage = error || this.errorMessage;
+    this.renderState = RENDER_STATES.ERROR;
   }
 
   render() {
@@ -69,15 +81,15 @@ export class BusinessDetails {
     }
 
     if (this.renderState === RENDER_STATES.ERROR) {
-      return ErrorState('Error');
+      return ErrorState(this.errorMessage);
     }
 
     return (
-      <div>
+      <Host>
         <business-details-section business={this.business} />
         <representative-details-section business={this.business} />
         <owner-details-section business={this.business} />
-      </div>
+      </Host>
     );
   }
 }
