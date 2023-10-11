@@ -156,22 +156,25 @@ export class BusinessFormStepped {
           <div class="my-4">
             {componentStepMapping[this.currentStep](this.formController)}
           </div>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            {this.showPreviousStepButton() && (
-              <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
-                Previous
-              </button>
-            )}
-            {this.showNextStepButton() && (
-              <button type="button" class="btn btn-secondary" onClick={() => this.nextStepButtonOnClick()}>
-                Next
-              </button>
-            )}
-            {this.showSubmitButton() && (
-              <button type="submit" class="btn btn-primary">
-                Submit
-              </button>
-            )}
+          <div class="d-flex justify-content-between">
+            <div>Step {this.currentStep + 1} of {this.totalSteps + 1}</div>
+            <div class="d-flex gap-2">
+              {this.showPreviousStepButton() && (
+                <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
+                  Previous
+                </button>
+              )}
+              {this.showNextStepButton() && (
+                <button type="button" class="btn btn-primary" onClick={() => this.nextStepButtonOnClick()}>
+                  Next
+                </button>
+              )}
+              {this.showSubmitButton() && (
+                <button type="submit" class="btn btn-primary">
+                  Submit
+                </button>
+              )}
+            </div>
           </div>
         </form>
       </Host>
