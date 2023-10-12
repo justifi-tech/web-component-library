@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+/projects/component-library/src/lib/stencil-generated/**/*
 
 # Node
 /node_modules

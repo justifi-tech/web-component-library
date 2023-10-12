@@ -1,22 +1,7 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Api, IApiResponseCollection, Payment } from '../../api';
-import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
-
-interface PagingInfo {
-  amount: number,
-  start_cursor: string,
-  end_cursor: string,
-  has_previous: boolean,
-  has_next: boolean,
-}
-
-const pagingDefaults = {
-  amount: 25,
-  start_cursor: '',
-  end_cursor: '',
-  has_previous: false,
-  has_next: false,
-}
+import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { PagingInfo, pagingDefaults } from '../table/table-utils';
 
 /**
   * @exportedPart table-head: Table head
@@ -33,7 +18,9 @@ const pagingDefaults = {
   * @exportedPart arrow: Both paging buttons
   * @exportedPart arrow-left: Previous page button
   * @exportedPart arrow-right: Next page button
-  * @exportedPart arrow-disabled: Disabled state for paging buttons
+  * @exportedPart button-disabled: Disabled state for paging buttons
+  * @exportedPart previous-button-text: Text for Previous button
+  * @exportedPart next-button-text: Text for Next button
 */
 @Component({
   tag: 'justifi-payments-list',
@@ -48,6 +35,10 @@ export class PaymentsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @Event({
+    eventName: 'payment-row-clicked',
+    bubbles: true,
+  }) rowClicked: EventEmitter<Payment>;
 
   @Watch('accountId')
   @Watch('authToken')
@@ -58,15 +49,6 @@ export class PaymentsList {
   connectedCallback() {
     this.fetchData();
   }
-
-  // onChangeAmount = (e) => {
-  //   const newVal = e?.target?.value;
-  //   if (newVal) {
-  //     this.paging = pagingDefaults;
-  //     this.paging.amount = newVal;
-  //     this.fetchData();
-  //   }
-  // }
 
   onPageChange = (direction: string) => {
     return () => {
@@ -81,17 +63,12 @@ export class PaymentsList {
       return;
     }
     this.loading = true;
-    const limit = this.paging.amount;
-    const cursor = `${
-      direction === 'prev'
-      ? '&before_cursor='+this.paging.start_cursor
-      : direction === 'next'
-        ? '&after_cursor='+this.paging.end_cursor
-        : ''
-    }`;
-    const endpoint = `account/${this.accountId}/payments?limit=${limit}${cursor ? cursor : ''}`;
+    const endpoint = `account/${this.accountId}/payments`;
 
-    const response: IApiResponseCollection<Payment[]> = await Api(this.authToken).get(endpoint);
+    const response: IApiResponseCollection<Payment[]> = await Api(this.authToken).get(endpoint, {
+      paging: this.paging,
+      direction: direction
+    });
     if (!response.error) {
       this.paging = {
         ...this.paging,
@@ -107,112 +84,55 @@ export class PaymentsList {
     this.loading = false;
   }
 
-  showEmptyState() {
-    return this.payments ? this.payments.length < 1 : true;
-  }
-
-  emptyState = (
-    <tr>
-      <td class="empty-state" part="empty-state" colSpan={7} style={{ textAlign: 'center' }}>No payments to show</td>
-    </tr>
-  );
-
-  errorState = () => (
-    <tr>
-      <td class="error-state" part="error-state" colSpan={7} style={{ textAlign: 'center' }}>
-        An unexpected error occurred: {this.errorMessage}
-      </td>
-    </tr>
-  );
-
-  loadingState = (
-    <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={7} style={{ textAlign: 'center' }}>
-        <div part="loading-state-spinner" class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </td>
-    </tr>
-  );
-
-  paginationBar = () => {
-    return (
-      <div class="pagination-bar d-flex justify-content-center gap-3">
-        <button
-          onClick={this.onPageChange('prev')}
-          part={`arrow arrow-left${this.paging.has_previous ? '' : ' arrow-disabled'}`}
-          disabled={!this.paging.has_previous}
-          class={`btn btn-primary pagination-btn pagination-prev-btn${this.paging.has_previous ? '' : ' disabled'}`}
-        >&larr;</button>
-        {/* <select class="amount-select" part="amount-select" onChange={this.onChangeAmount}>
-          <option selected={this.paging.amount === 10} value={10}>10</option>
-          <option selected={this.paging.amount === 25} value={25}>25</option>
-          <option selected={this.paging.amount === 50} value={50}>50</option>
-        </select> */}
-        <button
-          onClick={this.onPageChange('next')}
-          part={`arrow arrow-right${this.paging.has_next ? '' : ' arrow-disabled'}`}
-          disabled={!this.paging.has_next}
-          class={`btn btn-primary pagination-btn pagination-next-btn${this.paging.has_next ? '' : ' disabled'}`}
-        >&rarr;</button>
-      </div>
-    )
-  };
-
   render() {
     return (
-      <Host exportparts="
-        table-head,table-head-row,table-head-cell,table-body,table-row,table-cell,
-        loading-state-cell,loading-state-spinner,error-state,empty-state,
-        pagination-bar,arrow,arrow-left,arrow-right,arrow-disabled
-      ">
-        <table class="table table-hover">
-          <thead class="table-head sticky-top" part="table-head">
-            <tr class="table-light" part='table-head-row'>
-              <th part="table-head-cell" scope="col" title="The date and time each payment was made">
-                Made on
-              </th>
-              <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
-                Amount
-              </th>
-              <th part="table-head-cell" scope="col">Description</th>
-              <th part="table-head-cell" scope="col">Cardholder</th>
-              <th part="table-head-cell" scope="col">Payment Method</th>
-              <th part="table-head-cell" scope="col">Status</th>
-              <th part="table-head-cell" scope="col">Payment ID</th>
-            </tr>
-          </thead>
-          <tbody class="table-body" part='table-body'>
-            {
-              this.loading ? this.loadingState :
-              this.errorMessage ? this.errorState() :
-              this.showEmptyState() ? this.emptyState :
-              this.payments?.map((payment, index) =>
-                <tr part={`table-row${index%2 ? ' table-row-even' : ' table-row-odd'}`}>
-                  <th scope="row" part="table-cell">
-                    <div>{formatDate(payment.created_at)}</div>
-                    <div>{formatTime(payment.created_at)}</div>
-                  </th>
-                  <td part="table-cell">{formatCurrency(payment.amount)}</td>
-                  <td part="table-cell">{payment.description}</td>
-                  <td part="table-cell">{payment.payment_method?.card?.name}</td>
-                  <td part="table-cell">{payment.payment_method?.card?.acct_last_four}</td>
-                  <td part="table-cell">{payment.status}</td>
-                  <td part="table-cell">{payment.id}</td>
-                </tr>
-              )
-            }
-          </tbody>
-          {this.paging &&
-            <tfoot class="sticky-bottom">
-              <tr class="table-light align-middle">
-                <td part="pagination-bar" colSpan={7}>
-                  {this.paginationBar()}
-                </td>
-              </tr>
-            </tfoot>
+      <Host>
+        <justifi-table
+          rowClickHandler={e => {
+            const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
+            if (!clickedPaymentID) { return }
+            this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
+          }}
+          entityId={this.payments.map((payment) => payment.id)}
+          columnData={[
+            ['Made On', 'The date and time each payment was made'],
+            ['Amount', 'The dollar amount of each payment'],
+            ['Description', 'The payment description, if you provided one'],
+            ['Cardholder', 'The name associated with the payment method'],
+            ['Payment Method', 'The brand and last 4 digits of the payment method'],
+            ['Status', 'The current status of each payment'],
+            ['Payment ID', 'The unique identifier of each payment']
+          ]}
+          rowData={
+            this.payments.map((payment) => (
+              [
+                {
+                  type: 'head',
+                  value: `
+                    <div>${formatDate(payment.created_at)}</div>
+                    <div>${formatTime(payment.created_at)}</div>
+                  `,
+                },
+                formatCurrency(payment.amount),
+                payment.description,
+                payment.payment_method.card.name,
+                payment.payment_method?.card?.acct_last_four,
+                {
+                  type: 'inner',
+                  value: MapPaymentStatusToBadge(payment.status)
+                },
+                payment.id
+              ]
+            ))
           }
-        </table>
+          loading={this.loading}
+          error-message={this.errorMessage}
+          paging={{
+            ...this.paging,
+            onPrev: this.onPageChange('prev'),
+            onNext: this.onPageChange('next')
+          }}
+        />
       </Host>
     );
   }

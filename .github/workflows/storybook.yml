@@ -32,8 +32,8 @@ jobs:
           echo "::group::Build"
           rm -rf node_modules
           npm install --frozen-lockfile
-          npm build:prod
-          npm build-storybook
+          npm run build:prod
+          npm run build-storybook
           echo "::endgroup::"
       - name: 'upload'
         uses: actions/upload-pages-artifact@v1.0.8

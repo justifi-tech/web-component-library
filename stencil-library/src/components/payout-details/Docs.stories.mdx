@@ -1,0 +1,44 @@
+import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../../storybook-pages/utils.tsx';
+import example from './example.js';
+
+<Meta
+  title="dev/Components/PayoutDetails"
+  Components="justifi-payout-details"
+/>
+
+<Title />
+Component to render details of a given payout.
+
+# Index
+
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+  - [Exported Parts](#exported-parts)
+- [Example usage](#example-usage)
+
+# Props, events and methods
+
+---
+
+<ArgTypes exclude={['css-variables']} />
+
+# Styling
+
+---
+
+The `<justifi-payout-details>` can be customized by using the exported `parts`.
+
+## Exported parts
+
+<ExportedParts
+  compact
+  component="justifi-payout-details"
+  tags={filterDocsByTag('justifi-payout-details').docsTags.map(part => part.text)}
+/>
+
+# Example Usage
+
+---
+
+<Source dark language="html" code={example} />

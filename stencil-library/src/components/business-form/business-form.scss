@@ -1,6 +1,7 @@
 @import 'reboot';
 @import 'grid';
 @import 'buttons';
+@import 'bootstrap-utilities';
 
 :host {
   @include host-base-styles;
@@ -49,46 +50,4 @@
     border-color: var(--jfi-form-control-border-color-error);
     box-shadow: var(--jfi-form-control-box-shadow-error-focus);
   }
-}
-
-.jfi-submit-button {
-  font-family: var(--jfi-layout-font-family);
-  color: var(--jfi-submit-button-color);
-  background-color: var(--jfi-submit-button-background-color);
-  border-color: var(--jfi-submit-button-border-color);
-  padding: var(--jfi-submit-button-padding);
-  font-size: var(--jfi-submit-button-font-size);
-  border-radius: var(--jfi-submit-button-border-radius);
-  width: var(--jfi-submit-button-width);
-  box-shadow: var(--jfi-submit-button-box-shadow);
-}
-
-.jfi-submit-button:hover {
-  color: var(--jfi-submit-button-color-hover);
-  background-color: var(--jfi-submit-button-background-color-hover);
-  border-color: var(--jfi-submit-button-border-color-hover);
-}
-
-.jfi-submit-button:focus {
-  color: var(--jfi-submit-button-color-focus);
-  background-color: var(--jfi-submit-button-background-color-focus);
-  border-color: var(--jfi-submit-button-border-color-focus);
-}
-
-// Extra selector for specificity
-.btn.jfi-submit-button:active {
-  color: var(--jfi-submit-button-color-active);
-  background-color: var(--jfi-submit-button-background-color-active);
-  border-color: var(--jfi-submit-button-border-color-active);
-}
-.btn.jfi-submit-button-loading {
-  min-width: 75px;
-  color: var(--jfi-submit-button-color-loading);
-  background-color: var(--jfi-submit-button-background-color-loading);
-  border-color: var(--jfi-submit-button-border-color-loading);
-}
-.btn.jfi-submit-button-loading .spinner-border {
-  border-top-color: var(--jfi-submit-button-color-loading);
-  border-bottom-color: var(--jfi-submit-button-color-loading);
-  border-left-color: var(--jfi-submit-button-color-loading);
 }

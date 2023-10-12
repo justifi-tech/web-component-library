@@ -22,9 +22,9 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: IPagination;
 }
 
-const Api = (authToken: string) => {
+const Api = (authToken: string, customApiOrigin?: string) => {
   const originFromEnv = process.env.API_ORIGIN;
-  const apiOrigin = originFromEnv || 'https://justifi.ai';
+  const apiOrigin = customApiOrigin || originFromEnv || 'https://justifi.ai';
 
   async function getAuthorizationHeader() {
     return {
@@ -36,7 +36,21 @@ const Api = (authToken: string) => {
 
   async function makeRequest(endpoint: string, method: string, params?: any, body?: any, signal?: AbortSignal) {
     const url = `${apiOrigin}/v1/${endpoint}`;
-    const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
+    let cursor;
+    if (params?.paging) {
+      cursor = params?.paging && params?.direction ? `${
+        params.direction === 'prev'
+        ? '&before_cursor='+params.paging.start_cursor
+        : params.direction === 'next'
+          ? '&after_cursor='+params.paging.end_cursor
+          : ''
+      }` : null;
+      delete params.paging;
+    }
+    if (params?.direction) {
+      delete params.direction;
+    }
+    const requestUrl = params ? `${url}?${new URLSearchParams(params)}${cursor ? '&'+cursor : ''}` : url;
     const response = await fetch(requestUrl, {
       method: method,
       headers: await getAuthorizationHeader(),

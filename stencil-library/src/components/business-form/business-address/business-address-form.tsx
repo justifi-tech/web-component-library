@@ -25,8 +25,8 @@ export class BusinessAddressForm {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <div class="row gx-2 gy-2">
-          <div class="col-12">
+        <div class="row gy-3">
+          <div class="col-12 col-md-8">
             <form-control-text
               name="line1"
               label="Street Address"
@@ -36,7 +36,7 @@ export class BusinessAddressForm {
             />
           </div>
 
-          <div class="col-12">
+          <div class="col-12 col-md-4">
             <form-control-text
               name="line2"
               label="Apartment, Suite, etc. (optional)"
@@ -56,7 +56,7 @@ export class BusinessAddressForm {
             />
           </div>
 
-          <div class="col-12">
+          <div class="col-12 col-md-6">
             <form-control-select
               name="state"
               label="State"
@@ -67,8 +67,8 @@ export class BusinessAddressForm {
             />
           </div>
 
-          <div class="col-12">
-            <form-control-text
+          <div class="col-12 col-md-6">
+            <form-control-number
               name="postal_code"
               label="Postal Code"
               defaultValue={this.defaultValues?.postal_code}

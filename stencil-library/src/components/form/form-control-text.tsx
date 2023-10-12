@@ -1,4 +1,14 @@
-import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import {
+  Component,
+  Host,
+  h,
+  Prop,
+  Event,
+  EventEmitter,
+  State,
+  Element,
+  Watch,
+} from '@stencil/core';
 
 @Component({
   tag: 'form-control-text',
@@ -6,19 +16,39 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
   shadow: true,
 })
 export class TextInput {
+  @Element() el: HTMLElement;
+
   @Prop() label: string;
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
+  @Prop() disabled: boolean;
   @Prop() inputHandler: (name: string, value: string) => void;
+  @State() input: string;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
+
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
+  }
+
+  updateInput(newValue: any) {
+    const inputElement = this.el.shadowRoot.querySelector('input');
+    if (inputElement) {
+      inputElement.value = newValue || '';
+    }
+  }
 
   handleFormControlInput(event: any) {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
-  };
+  }
+
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
+  }
 
   render() {
     return (
@@ -31,9 +61,12 @@ export class TextInput {
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
+          part={`input ${this.error && 'input-invalid'} ${
+            this.disabled && 'input-disabled'
+          }`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"
+          disabled={this.disabled}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
