@@ -1,5 +1,9 @@
 ### Changelog
 
+### 4.5.1
+
+- Fix: iframe resize issue
+
 #### 4.4.0
 
 > 27 July 2023
@@ -26,13 +30,14 @@
 
 - Add `resize` method to `CardForm` and `BankAccount` form
 
-
 #### 1.0.0
+
 > 31 March 2023
 
 - Upgrade React dependencies and peer dependencies to React 18
 
 #### 0.2.0
+
 > 31 March 2023
 
 - Update react-library with the most recent version of @justifi/web-components
