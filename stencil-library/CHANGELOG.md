@@ -1,5 +1,9 @@
 ### Changelog
 
+### 4.5.1
+
+- Fix: iframe resize issue
+
 #### 4.4.0
 
 > 27 July 2023
@@ -17,7 +21,6 @@
   - added generic business info sub-form
   - changed `FormController` to be observable / rxjs based so that sub-components can subscribe to changes
   - added new select and text input form controls that are compatible with refactored `FormController`
-
 
 #### 4.2.2
 
