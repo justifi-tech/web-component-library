@@ -1,7 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSection, DetailItem } from '../../details/utils';
-import { IBusiness } from '../../../api/Business';
 import { formatMediumDate } from '../../../utils/utils';
+import { Identity } from '../../../api/Business';
 
 /**
  *
@@ -12,19 +12,19 @@ import { formatMediumDate } from '../../../utils/utils';
  * @exportedPart detail-empty-state
  */
 @Component({
-  tag: 'owner-details-section',
-  styleUrl: 'owner-details-section.scss',
+  tag: 'owner-details',
+  styleUrl: 'owner-details.scss',
   shadow: true,
 })
-export class OwnerDetailsSection {
-  @Prop() business: IBusiness;
+export class OwnerDetails {
+  @Prop() owners: Identity[];
 
   render() {
     return (
       <Host>
         <DetailSection sectionTitle="Owner Details">
-          {!!this.business?.owners.length ? (
-            this.business.owners.map(owner => (
+          {!!this?.owners.length ? (
+            this.owners.map(owner => (
               <div style={{ width: '50%' }}>
                 <DetailItem title="Name" value={owner.name} />
                 <DetailItem title="Title" value={owner.title} />

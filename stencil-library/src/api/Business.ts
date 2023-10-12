@@ -78,6 +78,13 @@ export interface ProductCategories {
   payment: boolean;
 }
 
+export interface AdditionalQuestions {
+  business_revenue: string;
+  business_payment_volume: string;
+  business_dispute_volume: string;
+  business_receivable_volume: string;
+}
+
 export interface IBusiness {
   business_structure: BusinessStructure;
   business_type: string;
@@ -99,6 +106,7 @@ export interface IBusiness {
   updated_at: string;
   website_url: string;
   product_categories: ProductCategories;
+  additional_questions: AdditionalQuestions;
 }
 
 export class Business implements IBusiness {
@@ -122,6 +130,7 @@ export class Business implements IBusiness {
   public updated_at: string;
   public website_url: string;
   public product_categories: ProductCategories;
+  public additional_questions: AdditionalQuestions;
 
   constructor(business: IBusiness) {
     this.business_structure = business.business_structure;

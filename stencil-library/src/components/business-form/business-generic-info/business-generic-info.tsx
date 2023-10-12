@@ -8,6 +8,11 @@ import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/phone-masks';
 
 /**
+ *
+ * The difference between this component and business-generic-info-details
+ * is that this component is meant to be a form and send data
+ * and the other one  is meant to be just read only.
+ *
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
  * @exportedPart input-invalid: Invalid state for inputfs

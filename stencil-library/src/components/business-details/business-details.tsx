@@ -86,9 +86,13 @@ export class BusinessDetails {
 
     return (
       <Host>
-        <business-details-section business={this.business} />
-        <representative-details-section business={this.business} />
-        <owner-details-section business={this.business} />
+        <generic-info-details business={this.business} />
+        <legal-address-details legalAddress={this.business?.legal_address} />
+        <representative-details
+          representative={this.business?.representative}
+        />
+        <owner-details owners={this.business?.owners} />
+        <additional-questions-details business={this.business} />
       </Host>
     );
   }
