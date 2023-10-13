@@ -1,4 +1,5 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method, State } from '@stencil/core';
+import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
+import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
 import packageJson from '../../../package.json';
@@ -20,7 +21,6 @@ export class PaymentMethodForm {
   @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
   @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
-  @State() height: number = 55;
 
   private computedTheme: Theme = getComputedTheme();
 
@@ -32,11 +32,6 @@ export class PaymentMethodForm {
 
   disconnectedCallback() {
     window.removeEventListener('message', this.dispatchMessageEvent.bind(this));
-  }
-
-  componentShouldUpdate() {
-    this.sendStyleOverrides();
-    this.resize();
   }
 
   sendStyleOverrides() {
@@ -53,14 +48,15 @@ export class PaymentMethodForm {
     if (messageType === MessageEventType[this.paymentMethodFormType].ready) {
       this.paymentMethodFormReady.emit(messageData);
     }
-
-    if (messageType === MessageEventType[this.paymentMethodFormType].resize) {
-      this.height = messageData.height;
-    }
   }
 
   private postMessage(eventType: string, payload?: any) {
     this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, this.iframeOrigin || process.env.IFRAME_ORIGIN || '*');
+  }
+
+  @Method()
+  async resize(): Promise<any> {
+    this.postMessage(MessageEventType[this.paymentMethodFormType].resize);
   }
 
   private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
@@ -91,11 +87,6 @@ export class PaymentMethodForm {
   @Method()
   async validate(): Promise<any> {
     return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
-  }
-
-  @Method()
-  async resize(): Promise<any> {
-    this.postMessage(MessageEventType[this.paymentMethodFormType].resize);
   }
 
   private composeQueryParams(values: string[]) {
@@ -129,11 +120,12 @@ export class PaymentMethodForm {
         <iframe
           id={`justifi-payment-method-form-${this.paymentMethodFormType}`}
           src={this.getIframeSrc()}
-          ref={el => (this.iframeElement = el as HTMLIFrameElement)}
-          height={this.height}
+          ref={el => {
+            this.iframeElement = el as HTMLIFrameElement;
+          }}
           onLoad={() => {
+            iFrameResize({ log: true }, this.iframeElement);
             this.sendStyleOverrides();
-            this.resize();
           }}
         ></iframe>
       </Host>

@@ -1,5 +1,8 @@
 ### Changelog
 
+### 4.5.1
+
+- Fix: iframe resize issue
 #### 4.5.0
 
 > 4 October 2023
