@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
-import { FormController } from '../form/form';
-import countryOptions from '../../utils/country-options';
+import { FormController } from '../../form/form';
+import countryOptions from '../../../utils/country-options';
 
 /**
  * @exportedPart label: Label for inputs
@@ -13,7 +13,6 @@ import countryOptions from '../../utils/country-options';
 })
 export class LegalAddressForm {
   @Prop() formController: FormController;
-  @Prop() legend: string;
   @State() errors: any = {};
   @State() legal_address: any = {};
 
@@ -46,8 +45,9 @@ export class LegalAddressForm {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <fieldset class="mb-4">
-          {this.legend && <legend>{this.legend}</legend>}
+        <fieldset>
+          <legend>Business Legal Address</legend>
+          <hr />
           <div class="row gx-2 gy-2">
             <div class="col-12">
               <form-control-text

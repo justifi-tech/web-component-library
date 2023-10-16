@@ -1,5 +1,13 @@
 ### Changelog
 
+### 4.6.0
+
+> (insert date here upon release)
+
+- Added `BusinessFormStepped`
+- Updated `BusinessForm` layout (section spacing and headings)
+
+
 #### 4.5.0
 
 > 4 October 2023

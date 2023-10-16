@@ -46,92 +46,96 @@ export class BusinessGenericInfo {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <div class="row gy-3">
-          <div class="col-12 col-md-6">
-            <form-control-text
-              name="legal_name"
-              label="Legal Name"
-              defaultValue={genericInfoDefaultValue.legal_name}
-              error={this.errors.legal_name}
-              inputHandler={this.inputHandler}
-            />
+        <fieldset>
+          <legend>General Info</legend>
+          <hr />
+          <div class="row gy-3">
+            <div class="col-12 col-md-6">
+              <form-control-text
+                name="legal_name"
+                label="Legal Name"
+                defaultValue={genericInfoDefaultValue.legal_name}
+                error={this.errors.legal_name}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-text
+                name="doing_business_as"
+                label="Doing Business As (DBA)"
+                defaultValue={genericInfoDefaultValue.doing_business_as}
+                error={this.errors.doing_business_as}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-select
+                name="business_type"
+                label="Business Type"
+                options={BusinessTypeOptions}
+                defaultValue={genericInfoDefaultValue.business_type}
+                error={this.errors.business_type}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-select
+                name="business_structure"
+                label="Business Structure"
+                options={BusinessStructureOptions}
+                defaultValue={genericInfoDefaultValue.business_structure}
+                error={this.errors.business_structure}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="industry"
+                label="Industry"
+                defaultValue={genericInfoDefaultValue.industry}
+                error={this.errors.business_structure}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-number
+                name="tax_id"
+                label="Tax ID"
+                defaultValue={genericInfoDefaultValue.tax_id}
+                error={this.errors.tax_id}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="website_url"
+                label="Website URL"
+                defaultValue={genericInfoDefaultValue.website_url}
+                error={this.errors.website_url}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-text
+                name="email"
+                label="Email Address"
+                defaultValue={genericInfoDefaultValue.email}
+                error={this.errors.email}
+                inputHandler={this.inputHandler}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-number-masked
+                name="phone"
+                label="Phone Number"
+                defaultValue={genericInfoDefaultValue.phone}
+                error={this.errors.phone}
+                inputHandler={this.inputHandler}
+                mask={PHONE_MASKS.US}
+              />
+            </div>
           </div>
-          <div class="col-12 col-md-6">
-            <form-control-text
-              name="doing_business_as"
-              label="Doing Business As (DBA)"
-              defaultValue={genericInfoDefaultValue.doing_business_as}
-              error={this.errors.doing_business_as}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <form-control-select
-              name="business_type"
-              label="Business Type"
-              options={BusinessTypeOptions}
-              defaultValue={genericInfoDefaultValue.business_type}
-              error={this.errors.business_type}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <form-control-select
-              name="business_structure"
-              label="Business Structure"
-              options={BusinessStructureOptions}
-              defaultValue={genericInfoDefaultValue.business_structure}
-              error={this.errors.business_structure}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12">
-            <form-control-text
-              name="industry"
-              label="Industry"
-              defaultValue={genericInfoDefaultValue.industry}
-              error={this.errors.business_structure}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12">
-            <form-control-number
-              name="tax_id"
-              label="Tax ID"
-              defaultValue={genericInfoDefaultValue.tax_id}
-              error={this.errors.tax_id}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12">
-            <form-control-text
-              name="website_url"
-              label="Website URL"
-              defaultValue={genericInfoDefaultValue.website_url}
-              error={this.errors.website_url}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <form-control-text
-              name="email"
-              label="Email Address"
-              defaultValue={genericInfoDefaultValue.email}
-              error={this.errors.email}
-              inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <form-control-number-masked
-              name="phone"
-              label="Phone Number"
-              defaultValue={genericInfoDefaultValue.phone}
-              error={this.errors.phone}
-              inputHandler={this.inputHandler}
-              mask={PHONE_MASKS.US}
-            />
-          </div>
-        </div>
+        </fieldset>
       </Host>
     );
   }

@@ -1,11 +1,11 @@
-interface BusinessFormStoryArgs {
+interface BusinessFormSteppedStoryArgs {
   authToken: string;
   businessId: string;
   cssVariables: string;
 }
 
 export default {
-  title: 'Components/BusinessForm',
+  title: 'Components/BusinessFormStepped',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {
@@ -23,11 +23,11 @@ export default {
   },
 };
 
-const Template = (args: BusinessFormStoryArgs) => {
+const Template = (args: BusinessFormSteppedStoryArgs) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
     <div>
-      <justifi-business-form
+      <justifi-business-form-stepped
         auth-token="${args['auth-token']}"
         business-id="${args['business-id']}"
       />
