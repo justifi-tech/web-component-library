@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
@@ -29,12 +29,6 @@ export class BusinessFormStepped {
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
-  @State() percentageComplete: number = 0;
-
-  @Watch('currentStep')
-  updatePercentageCompleteOnStepChange() {
-    this.updatePercentageComplete();
-  }
 
   private formController: FormController;
   private api: any;
@@ -134,8 +128,8 @@ export class BusinessFormStepped {
     return this.currentStep === this.totalSteps;
   }
 
-  updatePercentageComplete() {
-    this.percentageComplete = (this.currentStep / this.totalSteps) * 100;
+  get percentageComplete(): number {
+    return (this.currentStep / this.totalSteps) * 100;
   }
 
   render() {
