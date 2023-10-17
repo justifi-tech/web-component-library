@@ -44,52 +44,56 @@ export class AdditionalQuestions {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <div class="row gy-3">
-          <div class="col-12">
-            <form-control-monetary
-              name="business_revenue"
-              label="Business Revenue"
-              inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_revenue}
-              defaultValue={additionalQuestionsDefaultValue?.business_revenue}
-            />
+        <fieldset>
+          <legend>Additional Questions</legend>
+          <hr />
+          <div class="row gy-3">
+            <div class="col-12">
+              <form-control-monetary
+                name="business_revenue"
+                label="Business Revenue"
+                inputHandler={this.inputHandler}
+                error={this.errors?.additional_questions?.business_revenue}
+                defaultValue={additionalQuestionsDefaultValue?.business_revenue}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-monetary
+                name="business_payment_volume"
+                label="Business Payment Volume"
+                inputHandler={this.inputHandler}
+                error={this.errors?.additional_questions?.business_payment_volume}
+                defaultValue={
+                  additionalQuestionsDefaultValue?.business_payment_volume
+                }
+              />
+            </div>
+            <div class="col-12">
+              <form-control-monetary
+                name="business_dispute_volume"
+                label="Business Dispute Volume"
+                inputHandler={this.inputHandler}
+                error={this.errors?.additional_questions?.business_dispute_volume}
+                defaultValue={
+                  additionalQuestionsDefaultValue?.business_dispute_volume
+                }
+              />
+            </div>
+            <div class="col-12">
+              <form-control-monetary
+                name="business_receivable_volume"
+                label="Business Receivable Volume"
+                inputHandler={this.inputHandler}
+                error={
+                  this.errors?.additional_questions?.business_receivable_volume
+                }
+                defaultValue={
+                  additionalQuestionsDefaultValue?.business_receivable_volume
+                }
+              />
+            </div>
           </div>
-          <div class="col-12">
-            <form-control-monetary
-              name="business_payment_volume"
-              label="Business Payment Volume"
-              inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_payment_volume}
-              defaultValue={
-                additionalQuestionsDefaultValue?.business_payment_volume
-              }
-            />
-          </div>
-          <div class="col-12">
-            <form-control-monetary
-              name="business_dispute_volume"
-              label="Business Dispute Volume"
-              inputHandler={this.inputHandler}
-              error={this.errors?.additional_questions?.business_dispute_volume}
-              defaultValue={
-                additionalQuestionsDefaultValue?.business_dispute_volume
-              }
-            />
-          </div>
-          <div class="col-12">
-            <form-control-monetary
-              name="business_receivable_volume"
-              label="Business Receivable Volume"
-              inputHandler={this.inputHandler}
-              error={
-                this.errors?.additional_questions?.business_receivable_volume
-              }
-              defaultValue={
-                additionalQuestionsDefaultValue?.business_receivable_volume
-              }
-            />
-          </div>
-        </div>
+        </fieldset>
       </Host>
     );
   }

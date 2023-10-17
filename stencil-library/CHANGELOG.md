@@ -4,7 +4,9 @@
 
 > (insert date here upon release)
 
-- Added `Business-details`
+- Added `BusinessDetails`
+- Added `BusinessFormStepped`
+- Updated `BusinessForm` layout (section spacing and headings)
 
 #### 4.5.0
 
