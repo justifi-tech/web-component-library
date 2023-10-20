@@ -23,8 +23,8 @@ export class JustifiRepresentativeDetails {
     return (
       <Host>
         <DetailSection sectionTitle="Representative Details">
-          <div class="d-flex justify-content-between">
-            <div style={{ flex: '50%' }}>
+          <div class="row gy-3">
+            <div class="col-12 col-md-6">
               <DetailItem title="Name" value={this.representative?.name} />
               <DetailItem title="ID" value={this.representative?.id} />
               <DetailItem
@@ -36,7 +36,7 @@ export class JustifiRepresentativeDetails {
                 value={formatMediumDate(this.representative?.created_at)}
               />
             </div>
-            <div style={{ flex: '50%' }}>
+            <div class="col-12 col-md-6">
               <DetailItem title="Title" value={this.representative?.title} />
               <DetailItem
                 title="Is Owner?"

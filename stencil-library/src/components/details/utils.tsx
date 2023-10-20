@@ -1,7 +1,11 @@
 import { h } from '@stencil/core';
 
 export const LoadingState = (
-  <main part="detail-loading-state" class="p-2 d-flex justify-content-center">
+  <main
+    part="detail-loading-state"
+    class="p-4 d-flex justify-content-center text-center"
+    style={{ fontSize: '1.2rem' }}
+  >
     <div
       part="detail-loading-spinner"
       class="spinner-border spinner-border-sm"
@@ -15,7 +19,8 @@ export const LoadingState = (
 export const ErrorState = (errorMessage: string) => (
   <main
     part="detail-empty-state"
-    class="p-2 d-flex justify-content-center error-state"
+    class="p-4 d-flex justify-content-center text-center"
+    style={{ fontSize: '1.2rem' }}
   >
     <div>{errorMessage}</div>
   </main>
@@ -43,11 +48,11 @@ export const DetailItem = ({
 }) =>
   title && value ? (
     <div class="d-flex gap-2">
-      <span part="detail-section-item-title flex-1" class="fw-bold flex-1">
+      <span part="detail-section-item-title" class="fw-bold flex-1">
         {title}
       </span>
       <span
-        part="detail-section-item-data flex-1"
+        part="detail-section-item-data"
         class="flex-1"
         innerHTML={value}
       ></span>
