@@ -13,96 +13,104 @@ export enum BusinessStructure {
   unincorporated = 'unincorporated',
   government_unit = 'government_unit',
   government_instrumentality = 'government_instrumentality',
-  tax_exempt_government_instrumentality = 'tax_exempt_government_instrumentality'
+  tax_exempt_government_instrumentality = 'tax_exempt_government_instrumentality',
 }
 
 export enum BusinessType {
   individual = 'individual',
   for_profit = 'for_profit',
   non_profit = 'non_profit',
-  government_entity = 'government_entity'
+  government_entity = 'government_entity',
 }
 
 export interface Address {
-  id: string,
-  platform_account_id: string,
-  line1: string,
-  line2: string,
-  postal_code: string,
-  city: string,
-  state: string,
-  country: string,
-  created_at: string
-  updated_at: string
+  id: string;
+  platform_account_id: string;
+  line1: string;
+  line2: string;
+  postal_code: string;
+  city: string;
+  state: string;
+  country: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Document {
-  business_id: string,
-  created_at: string,
-  description: string | null,
-  document_type: string,
-  file_name: string,
-  file_type: string,
-  id: string,
-  identity_id: string,
-  metadata: any,
-  platform_account_id: string,
-  presigned_url: string | null,
-  status: string,
-  updated_at: string
+  business_id: string;
+  created_at: string;
+  description: string | null;
+  document_type: string;
+  file_name: string;
+  file_type: string;
+  id: string;
+  identity_id: string;
+  metadata: any;
+  platform_account_id: string;
+  presigned_url: string | null;
+  status: string;
+  updated_at: string;
 }
 
 export interface Identity {
-  address: Address,
-  created_at: string,
-  dob_day: string,
-  dob_month: string,
-  dob_year: string,
-  documents: Document[],
-  email: string,
-  id: string,
-  is_owner: boolean,
-  metadata: any,
-  name: string,
-  phone: string,
-  platform_account_id: string,
-  ssn_last4: string,
-  title: string,
-  updated_at: string
+  address: Address;
+  created_at: string;
+  dob_day: string;
+  dob_month: string;
+  dob_year: string;
+  documents: Document[];
+  email: string;
+  id: string;
+  is_owner: boolean;
+  metadata: any;
+  name: string;
+  phone: string;
+  platform_account_id: string;
+  ssn_last4: string;
+  title: string;
+  updated_at: string;
 }
 
 export interface ProductCategories {
-  credit: boolean
-  insurance: boolean
-  lending: boolean
-  payment: boolean
+  credit: boolean;
+  insurance: boolean;
+  lending: boolean;
+  payment: boolean;
+}
+
+export interface AdditionalQuestions {
+  business_revenue: string;
+  business_payment_volume: string;
+  business_dispute_volume: string;
+  business_receivable_volume: string;
 }
 
 export interface IBusiness {
-  business_structure: string,
-  business_type: string,
-  bank_accounts: BankAccount[]
-  created_at: string,
-  documents: Document[],
-  doing_business_as: string,
-  email: string,
-  id: string,
-  industry: string,
-  legal_address: Address,
-  legal_name: string,
-  metadata: any,
-  owners: Identity[],
-  phone: string,
-  platform_account_id: string,
-  representative: Identity | null,
-  tax_id: string,
-  updated_at: string,
-  website_url: string,
-  product_categories: ProductCategories
+  business_structure: BusinessStructure;
+  business_type: string;
+  bank_accounts: BankAccount[];
+  created_at: string;
+  documents: Document[];
+  doing_business_as: string;
+  email: string;
+  id: string;
+  industry: string;
+  legal_address: Address;
+  legal_name: string;
+  metadata: any;
+  owners: Identity[];
+  phone: string;
+  platform_account_id: string;
+  representative: Identity | null;
+  tax_id: string;
+  updated_at: string;
+  website_url: string;
+  product_categories: ProductCategories;
+  additional_questions: AdditionalQuestions;
 }
 
 export class Business implements IBusiness {
-  public business_structure: string;
+  public business_structure: BusinessStructure;
   public business_type: string;
   public bank_accounts: BankAccount[];
   public created_at: string;
@@ -122,6 +130,7 @@ export class Business implements IBusiness {
   public updated_at: string;
   public website_url: string;
   public product_categories: ProductCategories;
+  public additional_questions: AdditionalQuestions;
 
   constructor(business: IBusiness) {
     this.business_structure = business.business_structure;
@@ -145,20 +154,20 @@ export class Business implements IBusiness {
     this.website_url = business.website_url;
     this.product_categories = business.product_categories;
   }
-};
+}
 
 export interface IProductReadiness {
-  business_id: string,
-  created_at: string,
-  id: string,
-  last_verified_at: string,
-  missing_optional_fields: string[],
-  missing_required_fields: string[],
-  percentage_complete: number,
-  percentage_ready: number,
-  platform_account_id: string,
-  product_category: string,
-  product_name: string,
-  required_ready: boolean,
-  updated_at: string
-};
+  business_id: string;
+  created_at: string;
+  id: string;
+  last_verified_at: string;
+  missing_optional_fields: string[];
+  missing_required_fields: string[];
+  percentage_complete: number;
+  percentage_ready: number;
+  platform_account_id: string;
+  product_category: string;
+  product_name: string;
+  required_ready: boolean;
+  updated_at: string;
+}
