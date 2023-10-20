@@ -1,5 +1,5 @@
 export default {
-  title: 'Components/PayoutsList',
+  title: 'Pre-release Components/PayoutsList',
   component: 'justifi-payouts-list',
   parameters: {},
   decorators: [
