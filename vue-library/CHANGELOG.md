@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.6.0
+
+> (insert date here upon release)
+
+- Added `PaymentBalanceTransactions`
+
 #### 4.5.0
 
 > 4 October 2023
@@ -14,7 +20,6 @@
 - Updated table pagination to use proper bootstrap pagination styles
 - Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
 - Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
-
 
 #### 4.4.0
 

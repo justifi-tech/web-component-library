@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.6.0
+
+> (insert date here upon release)
+
+- Added `PaymentBalanceTransactions`
+
 #### 4.5.0
 
 > 4 October 2023
@@ -14,7 +20,6 @@
 - Updated table pagination to use proper bootstrap pagination styles
 - Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
 - Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
-
 
 #### 4.4.0
 
@@ -42,13 +47,14 @@
 
 - Add `resize` method to `CardForm` and `BankAccount` form
 
-
 #### 1.0.0
+
 > 31 March 2023
 
 - Upgrade React dependencies and peer dependencies to React 18
 
 #### 0.2.0
+
 > 31 March 2023
 
 - Update react-library with the most recent version of @justifi/web-components

@@ -7,6 +7,7 @@
 - Added `BusinessDetails`
 - Added `BusinessFormStepped`
 - Updated `BusinessForm` layout (section spacing and headings)
+- Added `PaymentBalanceTransactions`
 
 #### 4.5.0
 
