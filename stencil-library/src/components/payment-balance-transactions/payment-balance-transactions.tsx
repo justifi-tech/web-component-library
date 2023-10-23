@@ -93,7 +93,7 @@ export class PaymentBalanceTransactions {
             snakeCaseToHumanReadable(
               balanceTransaction.payment_balance_txn_type,
             ),
-            balanceTransaction.id,
+            balanceTransaction.payment_id,
             formatCurrency(balanceTransaction.amount),
             formatCurrency(balanceTransaction.balance),
           ])}
