@@ -1,8 +1,17 @@
 ### Changelog
 
+### 4.6.0
+
+> 23 October 2023
+
+- Updated API enpoint to proxy service
+- Updated `PaymentsList` to handle display of ACH payments
+
 ### 4.5.1
 
-- Fix: iframe resize issue
+> 13 October 2023
+
+- Fix iframe resize issue
 
 #### 4.5.0
 
