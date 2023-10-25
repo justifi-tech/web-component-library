@@ -44,5 +44,4 @@ export const LegalAddressDetails = /*@__PURE__*/createReactComponent<JSX.LegalAd
 export const OwnerDetails = /*@__PURE__*/createReactComponent<JSX.OwnerDetails, HTMLOwnerDetailsElement>('owner-details');
 export const RepresentativeDetails = /*@__PURE__*/createReactComponent<JSX.RepresentativeDetails, HTMLRepresentativeDetailsElement>('representative-details');
 export const SelectInput = /*@__PURE__*/createReactComponent<JSX.SelectInput, HTMLSelectInputElement>('select-input');
-export const SubaccountList = /*@__PURE__*/createReactComponent<JSX.SubaccountList, HTMLSubaccountListElement>('subaccount-list');
 export const TextInput = /*@__PURE__*/createReactComponent<JSX.TextInput, HTMLTextInputElement>('text-input');

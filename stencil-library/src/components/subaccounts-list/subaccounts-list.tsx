@@ -10,7 +10,7 @@ export class SubaccountsList {
   render() {
     return (
       <Host>
-        <div>Yoooooooooo</div>
+        <div>oooo</div>
       </Host>
     );
   }
