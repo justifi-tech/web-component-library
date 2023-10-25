@@ -1,3 +1,5 @@
+import config from '../../../config';
+
 export default {
   title: 'Pre-release Components/PayoutsList',
   component: 'justifi-payouts-list',
@@ -19,8 +21,8 @@ class PayoutsListArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || 'eyJraWQiOiJqdXN0aWZpLWUyNDgyMmU3ODE1MmEzZjRkMjU1IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguanVzdGlmaS5haS8iLCJhenAiOiJvYXNfMkJMRHpaOHF6dDZndnNvQkxBZnFCbyIsInN1YiI6Im9hc18yQkxEelo4cXp0Nmd2c29CTEFmcUJvQHNlc3Npb25zIiwiYXVkIjoiaHR0cHM6Ly9hcGkuanVzdGlmaS5haS92MSIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsInBlcm1pc3Npb25zIjpbeyJyb2xlIjoicmVhZDphY2NvdW50IiwicmVzb3VyY2VfaWQiOiJhY2NfMUdCS1Mycmc3bUxsMnIzRHM0TlBQWSJ9XSwiZXhwIjoxNzAwNDExOTYyLCJpYXQiOjE2OTc4MTk5NjIsInBsYXRmb3JtX2FjY291bnRfaWQiOiJhY2NfN2NWbmc3ZXNDdmZIZXZXUUxTd2xuayJ9.Xcafn_lBJAPoZf36CITUyENHuIQLgDCXTpkos2ZIufr8tqXN1jVb5_vmd4OYYuxQjfgAjPiQ5KF_-Zn14NsELihth-fAHagOeyFQ4hQNezULOy7oVhf7BpsUMPlMPcIM3beomTY--xqULxeSbTTo9Kt-Pu9sPIARb2wT7WpPlw1Xskm9jHjVRgM_QPxMxaqGa6YFXfivQpdWxCz4H9eD6eijUV2DIOvzkZ8UTRTul6AzIeIXFItynfjXeetrzBihBeirVOWMxlfIgOYNUeGo_IgnriHdyratxF1o3JZQb-mZS5AS-YYIYENm41I9sY6t7slAza3IhwZ400t6_lceww';
-    this['account-id'] = args['account-id'] || 'acc_1GBKS2rg7mLl2r3Ds4NPPY';
+    this['auth-token'] = args['auth-token'] || config.authToken;
+    this['payment-id'] = args['payment-id'] || config.accountId;
   }
 }
 
