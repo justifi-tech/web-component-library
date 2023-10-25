@@ -6,6 +6,7 @@
 
 - Added `BusinessDetails`
 - Added `BusinessFormStepped`
+- Added `SubAccountList`
 - Updated `BusinessForm` layout (section spacing and headings)
 
 #### 4.5.0
