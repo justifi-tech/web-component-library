@@ -10,7 +10,7 @@ describe('justifi-payment-method-form', () => {
     });
     expect(page.root).toEqualHtml(`
     <justifi-payment-method-form>
-      <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
+      <iframe id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
     </justifi-payment-method-form>
   `);
   });
@@ -22,7 +22,7 @@ describe('justifi-payment-method-form', () => {
     });
     expect(page.root).toEqualHtml(`
     <justifi-payment-method-form>
-      <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
+      <iframe id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
     </justifi-payment-method-form>
   `);
   });
@@ -34,7 +34,7 @@ describe('justifi-payment-method-form', () => {
     });
     expect(page.root).toEqualHtml(`
     <justifi-payment-method-form>
-      <iframe height="55" id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount"></iframe>
+      <iframe id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount"></iframe>
     </justifi-payment-method-form>
   `);
   });
@@ -47,7 +47,7 @@ describe('justifi-payment-method-form', () => {
 
     expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe height="55" id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount?validationMode=onChange"></iframe>
+        <iframe id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount?validationMode=onChange"></iframe>
       </justifi-payment-method-form>
     `);
   });
@@ -60,7 +60,7 @@ describe('justifi-payment-method-form', () => {
 
     expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe height="55" id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount?validationMode=onBlur"></iframe>
+        <iframe id="justifi-payment-method-form-bankAccount" src="https://js.justifi.ai/v2/bankAccount?validationMode=onBlur"></iframe>
       </justifi-payment-method-form>
     `);
   });
@@ -73,7 +73,7 @@ describe('justifi-payment-method-form', () => {
 
     expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
+        <iframe id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card"></iframe>
       </justifi-payment-method-form>
     `);
   });
@@ -86,7 +86,7 @@ describe('justifi-payment-method-form', () => {
 
     expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe height="55" id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card?singleLine=true"></iframe>
+        <iframe id="justifi-payment-method-form-card" src="https://js.justifi.ai/v2/card?singleLine=true"></iframe>
       </justifi-payment-method-form>
     `);
   });

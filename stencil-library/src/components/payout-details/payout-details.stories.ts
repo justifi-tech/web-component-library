@@ -1,5 +1,7 @@
+import config from '../../../config';
+
 export default {
-  title: 'dev/Components/PayoutDetails',
+  title: 'Pre-release Components/PayoutDetails',
   component: 'justifi-payout-details',
   parameters: {}
 };
@@ -9,8 +11,8 @@ class PayoutDetailsArgs {
   'payout-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || '';
-    this['payout-id'] = args['payout-id'] || '';
+    this['auth-token'] = args['auth-token'] || config.authToken;
+    this['payment-id'] = args['payment-id'] || 'po_zBUZ6WvMEzoPzwS0qUmWE';
   }
 }
 
