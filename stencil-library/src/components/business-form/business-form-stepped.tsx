@@ -64,7 +64,6 @@ export class BusinessFormStepped {
     this.isLoading = true;
     try {
       const data = this.formController.values.getValue();
-
       // Conditionally making either POST or PATCH request
       if (this.businessId) {
         const payload = parseForPatching(data);
@@ -109,8 +108,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
-    // sendData
-    // then
+    this.sendData();
     this.currentStep--;
   }
 
@@ -119,8 +117,7 @@ export class BusinessFormStepped {
   }
 
   nextStepButtonOnClick() {
-    // sendData
-    // then
+    this.sendData();
     this.currentStep++;
   }
 
@@ -164,7 +161,7 @@ export class BusinessFormStepped {
                 </button>
               )}
               {this.showSubmitButton() && (
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" onClick={() => this.nextStepButtonOnClick()}>
                   Submit
                 </button>
               )}
