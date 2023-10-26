@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "JustiFi Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/components/index.js",
@@ -39,6 +39,7 @@
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
     "dinero.js": "^1.9.1",
+    "iframe-resizer": "^4.3.7",
     "imask": "^7.1.3",
     "rxjs": "^7.8.1",
     "ts-dedent": "^2.2.0",

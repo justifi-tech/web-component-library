@@ -53,9 +53,17 @@ export default {
         defaultValue: CSSVars,
       },
     },
+    'resize': {
+      description: 'Deprecated: This method will be removed in future releases.',
+      table: {
+        category: 'methods',
+      },
+    },
   },
   decorators: [
     story => `
+      <!-- Deprecated Notice -->
+      <p style="color: red; font-family: 'Roboto Mono', monospace;">Note: The 'resize' method is deprecated and will be removed in future releases.</p>
       ${story()}
       <script>${addEvents()}</script>
     `,

@@ -26,6 +26,7 @@ export enum PaymentDisputedStatuses {
 
 export interface IPaymentMethod {
   card?: ICard;
+  bank_account?: IBankAccount;
 }
 
 export type CardBrand =
@@ -37,6 +38,16 @@ export type CardBrand =
   | 'china_unionpay'
   | 'visa'
   | 'unknown';
+
+export interface IBankAccount {
+  id: string;
+  acct_last_four: string;
+  name: string;
+  brand: string;
+  token: string
+  created_at: string;
+  updated_at: string;
+}
 
 export interface ICard {
   id: string;
