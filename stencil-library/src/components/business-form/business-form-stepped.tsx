@@ -4,19 +4,31 @@ import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 
+
+const componentStepMapping = {
+  0: (formController) => <justifi-business-generic-info formController={formController} />,
+  1: (formController) => <justifi-legal-address-form formController={formController} />,
+  2: (formController) => <justifi-additional-questions formController={formController} />,
+  3: (formController) => <justifi-business-representative formController={formController} />,
+  4: (formController) => <justifi-business-owners formController={formController} />
+};
+
+
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-form',
-  styleUrl: 'business-form.scss',
+  tag: 'justifi-business-form-stepped',
+  styleUrl: 'business-form-stepped.scss',
 })
-export class BusinessForm {
+export class BusinessFormStepped {
   @Prop() authToken: string;
   @Prop() businessId?: string;
   @State() isLoading: boolean = false;
+  @State() currentStep: number = 0;
+  @State() totalSteps: number = 4;
 
   private formController: FormController;
   private api: any;
@@ -34,8 +46,8 @@ export class BusinessForm {
     }
 
     this.formController = new FormController(businessFormSchema);
-
     this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
+    this.totalSteps = Object.keys(componentStepMapping).length - 1;
 
     if (this.businessId) {
       this.fetchData(this.businessId);
@@ -92,37 +104,70 @@ export class BusinessForm {
     this.formController.validateAndSubmit(this.sendData);
   }
 
+  showPreviousStepButton() {
+    return this.currentStep > 0;
+  }
+
+  previousStepButtonOnClick() {
+    // sendData
+    // then
+    this.currentStep--;
+  }
+
+  showNextStepButton() {
+    return this.currentStep < this.totalSteps;
+  }
+
+  nextStepButtonOnClick() {
+    // sendData
+    // then
+    this.currentStep++;
+  }
+
+  showSubmitButton() {
+    return this.currentStep === this.totalSteps;
+  }
+
+  get percentageComplete(): number {
+    return (this.currentStep / this.totalSteps) * 100;
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={event => this.validateAndSubmit(event)}>
-          <div class="row gap-3">
-            <div class="col-12 mb-4">
-              <h1>Business Information</h1>
-            </div>
-            <div class="col-12 mb-4">
-              <justifi-business-generic-info formController={this.formController} />
-            </div>
-            <div class="col-12 mb-4">
-              <justifi-legal-address-form formController={this.formController} />
-            </div>
-            <div class="col-12 mb-4">
-              <justifi-additional-questions formController={this.formController} />
-            </div>
-            <div class="col-12 mb-4">
-              <justifi-business-representative formController={this.formController} />
-            </div>
-            <div class="col-12 mb-4">
-              <justifi-business-owners isEditing={!!this.businessId} formController={this.formController} />
-            </div>
-            <div class="col-12 d-flex flex-row-reverse">
-              <button
-                type="submit"
-                class="btn btn-primary jfi-submit-button"
-                disabled={!this.authToken || this.isLoading}
-              >
-                {this.isLoading ? 'Loading...' : 'Submit'}
-              </button>
+        <h1>Business Information</h1>
+
+        <div class="progress my-4"
+          role="progressbar"
+          aria-label="Basic example"
+          aria-valuenow={this.percentageComplete}
+          aria-valuemin="0"
+          aria-valuemax="100">
+          <div class="progress-bar" style={{ width: `${this.percentageComplete}%` }}></div>
+        </div>
+
+        <form onSubmit={this.validateAndSubmit}>
+          <div class="my-4">
+            {componentStepMapping[this.currentStep](this.formController)}
+          </div>
+          <div class="d-flex justify-content-between">
+            <div>Step {this.currentStep + 1} of {this.totalSteps + 1}</div>
+            <div class="d-flex gap-2">
+              {this.showPreviousStepButton() && (
+                <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
+                  Previous
+                </button>
+              )}
+              {this.showNextStepButton() && (
+                <button type="button" class="btn btn-primary" onClick={() => this.nextStepButtonOnClick()}>
+                  Next
+                </button>
+              )}
+              {this.showSubmitButton() && (
+                <button type="submit" class="btn btn-primary">
+                  Submit
+                </button>
+              )}
             </div>
           </div>
         </form>

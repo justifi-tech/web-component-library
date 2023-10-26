@@ -1,5 +1,5 @@
 import { array, boolean, object, string } from 'yup';
-import legalAddressSchema from '../legal-address-form/legal-address-form-schema';
+import legalAddressSchema from './legal-address-form/legal-address-form-schema';
 
 export const RegExZip = /^\d{5}/;
 
@@ -78,63 +78,63 @@ export const BusinessStructureOptions: {
   label: string;
   value: BusinessStructure;
 }[] = [
-  {
-    label: 'Choose business structure',
-    value: '',
-  },
-  {
-    label: 'Sole Proprietorship',
-    value: 'sole_proprietorship',
-  },
-  {
-    label: 'LLC (Single)',
-    value: 'single_llc',
-  },
-  {
-    label: 'LLC (Multiple)',
-    value: 'multi_llc',
-  },
-  {
-    label: 'Private Partnership',
-    value: 'private_partnership',
-  },
-  {
-    label: 'Private Corporation',
-    value: 'private_corporation',
-  },
-  {
-    label: 'Unincorporated Association',
-    value: 'unincorporated_association',
-  },
-  {
-    label: 'Public Partnership',
-    value: 'public_partnership',
-  },
-  {
-    label: 'Public Corporation',
-    value: 'public_corporation',
-  },
-  {
-    label: 'Incorporated',
-    value: 'incorporated',
-  },
-  {
-    label: 'Unincorporated',
-    value: 'unincorporated',
-  },
-  {
-    label: 'Government Unit',
-    value: 'government_unit',
-  },
-  {
-    label: 'Government Instrumentality',
-    value: 'government_instrumentality',
-  },
-  {
-    label: 'Tax Exempt Government Instrumentality',
-    value: 'tax_exempt_government_instrumentality',
-  },
-];
+    {
+      label: 'Choose business structure',
+      value: '',
+    },
+    {
+      label: 'Sole Proprietorship',
+      value: 'sole_proprietorship',
+    },
+    {
+      label: 'LLC (Single)',
+      value: 'single_llc',
+    },
+    {
+      label: 'LLC (Multiple)',
+      value: 'multi_llc',
+    },
+    {
+      label: 'Private Partnership',
+      value: 'private_partnership',
+    },
+    {
+      label: 'Private Corporation',
+      value: 'private_corporation',
+    },
+    {
+      label: 'Unincorporated Association',
+      value: 'unincorporated_association',
+    },
+    {
+      label: 'Public Partnership',
+      value: 'public_partnership',
+    },
+    {
+      label: 'Public Corporation',
+      value: 'public_corporation',
+    },
+    {
+      label: 'Incorporated',
+      value: 'incorporated',
+    },
+    {
+      label: 'Unincorporated',
+      value: 'unincorporated',
+    },
+    {
+      label: 'Government Unit',
+      value: 'government_unit',
+    },
+    {
+      label: 'Government Instrumentality',
+      value: 'government_instrumentality',
+    },
+    {
+      label: 'Tax Exempt Government Instrumentality',
+      value: 'tax_exempt_government_instrumentality',
+    },
+  ];
 
 const businessGenericInfoSchema = object({
   legal_name: string().required('Enter legal name'),

@@ -18,6 +18,7 @@
 ### Used by
 
  - [justifi-business-form](..)
+ - [justifi-business-form-stepped](..)
 
 ### Depends on
 
@@ -34,6 +35,7 @@ graph TD;
   justifi-business-owners --> form-control-datepart
   justifi-business-owners --> form-control-number
   justifi-business-form --> justifi-business-owners
+  justifi-business-form-stepped --> justifi-business-owners
   style justifi-business-owners fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

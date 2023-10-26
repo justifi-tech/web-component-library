@@ -1,9 +1,12 @@
 ### Changelog
 
-### 4.6.1
+### 4.7.0
 
 > (insert date here upon release)
 
+- Added `BusinessDetails`
+- Added `BusinessFormStepped`
+- Updated `BusinessForm` layout (section spacing and headings)
 - Removed console.log from `PaymentMethodForm` component
 
 ### 4.6.0
