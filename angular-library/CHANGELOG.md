@@ -1,11 +1,5 @@
 ### Changelog
 
-### 4.6.1
-
-> (insert date here upon release)
-
-- Removed console.log from `PaymentMethodForm` component
-
 ### 4.6.0
 
 > 23 October 2023
