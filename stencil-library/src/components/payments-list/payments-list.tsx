@@ -8,7 +8,12 @@ import {
   Event,
   EventEmitter,
 } from '@stencil/core';
-import { Api, IApiResponseCollection, Payment } from '../../api';
+import {
+  Api,
+  IApiResponseCollection,
+  IPaymentMethod,
+  Payment,
+} from '../../api';
 import {
   MapPaymentStatusToBadge,
   formatCurrency,
@@ -122,6 +127,10 @@ export class PaymentsList {
     this.loading = false;
   }
 
+  getPaymentMethod(paymentMethod: IPaymentMethod) {
+    return paymentMethod.card || paymentMethod.bank_account;
+  }
+
   render() {
     return (
       <Host>
@@ -158,8 +167,8 @@ export class PaymentsList {
             },
             formatCurrency(payment.amount),
             payment.description,
-            payment.payment_method.card.name,
-            payment.payment_method?.card?.acct_last_four,
+            this.getPaymentMethod(payment.payment_method).name,
+            this.getPaymentMethod(payment.payment_method).acct_last_four,
             {
               type: 'inner',
               value: MapPaymentStatusToBadge(payment.status),
