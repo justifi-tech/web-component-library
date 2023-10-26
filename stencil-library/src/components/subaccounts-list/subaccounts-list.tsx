@@ -1,7 +1,8 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { SubAccount } from '../../api/SubAccount';
 import { MapPaymentStatusToBadge } from '../../utils/utils';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
+import { Api, IApiResponseCollection } from '../../api';
 
 @Component({
   tag: 'justifi-subaccounts-list',
@@ -20,14 +21,47 @@ export class SubaccountsList {
     bubbles: true,
   }) rowClicked: EventEmitter<SubAccount>;
 
+
+  @Watch('accountId')
+  @Watch('authToken')
+  updateOnPropChange() {
+    this.fetchData();
+  }
+
+  connectedCallback() {
+    this.fetchData();
+  }
+
   onPageChange = (direction: string) => {
     return () => {
       this.fetchData(direction);
     }
   }
 
-  fetchData(direction?: string) {
-    console.log(direction);
+  async fetchData(direction?: string): Promise<void> {
+    if (!this.accountId || !this.authToken) {
+      this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
+      this.loading = false;
+      return;
+    }
+    this.loading = true;
+    const endpoint = `account/${this.accountId}/seller_accounts`;
+
+    const response: IApiResponseCollection<SubAccount[]> = await Api(this.authToken).get(endpoint, {
+      paging: this.paging,
+      direction: direction
+    });
+    if (!response.error) {
+      this.paging = {
+        ...this.paging,
+        ...response.page_info
+      }
+      const data = response?.data.map(dataItem => new SubAccount(dataItem));
+      this.subaccounts = data;
+    } else {
+      this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
+    }
+    this.loading = false;
   }
 
   render() {
