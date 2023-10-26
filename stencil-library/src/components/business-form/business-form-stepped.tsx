@@ -147,21 +147,41 @@ export class BusinessFormStepped {
           <div class="my-4">
             {componentStepMapping[this.currentStep](this.formController)}
           </div>
-          <div class="d-flex justify-content-between">
-            <div>Step {this.currentStep + 1} of {this.totalSteps + 1}</div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              Step {this.currentStep + 1} of {this.totalSteps + 1}
+
+              {this.isLoading && (
+                <div class="spinner-border ms-2" style={{ width: '1.5rem', height: '1.5rem' }} role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              )}
+            </div>
             <div class="d-flex gap-2">
               {this.showPreviousStepButton() && (
-                <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onClick={() => this.previousStepButtonOnClick()}
+                  disabled={this.isLoading}>
                   Previous
                 </button>
               )}
               {this.showNextStepButton() && (
-                <button type="button" class="btn btn-primary" onClick={() => this.nextStepButtonOnClick()}>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick={() => this.nextStepButtonOnClick()}
+                  disabled={this.isLoading}>
                   Next
                 </button>
               )}
               {this.showSubmitButton() && (
-                <button type="submit" class="btn btn-primary" onClick={() => this.nextStepButtonOnClick()}>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  onClick={() => this.nextStepButtonOnClick()}
+                  disabled={this.isLoading}>
                   Submit
                 </button>
               )}
