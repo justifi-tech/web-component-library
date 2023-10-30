@@ -60,7 +60,7 @@ export class BusinessFormStepped {
     }
   }
 
-  private async sendData() {
+  private async sendData(callback?: () => void) {
     this.isLoading = true;
     try {
       const data = this.formController.values.getValue();
@@ -72,12 +72,14 @@ export class BusinessFormStepped {
           JSON.stringify(payload),
         );
         console.log('Server response from PATCH:', response);
+        callback();
       } else {
         const response = await this.api.post(
           'entities/business',
           JSON.stringify(data),
         );
         console.log('Server response from POST:', response);
+        callback();
       }
     } catch (error) {
       console.error('Error sending data:', error);
@@ -108,8 +110,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
-    this.sendData();
-    this.currentStep--;
+    this.sendData(() => this.currentStep--);
   }
 
   showNextStepButton() {
@@ -117,8 +118,7 @@ export class BusinessFormStepped {
   }
 
   nextStepButtonOnClick() {
-    this.sendData();
-    this.currentStep++;
+    this.sendData(() => this.currentStep++);
   }
 
   showSubmitButton() {
