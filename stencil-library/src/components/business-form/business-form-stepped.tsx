@@ -125,24 +125,10 @@ export class BusinessFormStepped {
     return this.currentStep === this.totalSteps;
   }
 
-  get percentageComplete(): number {
-    return (this.currentStep / this.totalSteps) * 100;
-  }
-
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
-
-        <div class="progress my-4"
-          role="progressbar"
-          aria-label="Basic example"
-          aria-valuenow={this.percentageComplete}
-          aria-valuemin="0"
-          aria-valuemax="100">
-          <div class="progress-bar" style={{ width: `${this.percentageComplete}%` }}></div>
-        </div>
-
         <form onSubmit={this.validateAndSubmit}>
           <div class="my-4">
             {componentStepMapping[this.currentStep](this.formController)}
@@ -150,12 +136,6 @@ export class BusinessFormStepped {
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
               Step {this.currentStep + 1} of {this.totalSteps + 1}
-
-              {this.isLoading && (
-                <div class="spinner-border ms-2" style={{ width: '1.5rem', height: '1.5rem' }} role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              )}
             </div>
             <div class="d-flex gap-2">
               {this.showPreviousStepButton() && (
