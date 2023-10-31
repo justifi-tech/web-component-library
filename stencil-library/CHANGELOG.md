@@ -8,6 +8,7 @@
 - Added `BusinessFormStepped`
 - Updated `BusinessForm` layout (section spacing and headings)
 - Added `PaymentBalanceTransactions`
+- Refactored `BusinessList` removing the mapping functions
 
 ### 4.6.0
 
