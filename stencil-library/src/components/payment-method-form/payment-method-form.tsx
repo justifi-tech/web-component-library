@@ -1,4 +1,12 @@
-import { Component, Event, Host, Prop, h, EventEmitter, Method } from '@stencil/core';
+import {
+  Component,
+  Event,
+  Host,
+  Prop,
+  h,
+  EventEmitter,
+  Method,
+} from '@stencil/core';
 import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { MessageEventType } from './message-event-types';
 import { Theme } from './theme';
@@ -16,11 +24,18 @@ export class PaymentMethodForm {
   @Prop({
     mutable: true,
   })
-  paymentMethodFormValidationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  paymentMethodFormValidationMode:
+    | 'onChange'
+    | 'onBlur'
+    | 'onSubmit'
+    | 'onTouched'
+    | 'all';
   @Prop() iframeOrigin?: string;
   @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
-  @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{ data: any }>;
+  @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{
+    data: any;
+  }>;
 
   private computedTheme: Theme = getComputedTheme();
 
@@ -36,7 +51,10 @@ export class PaymentMethodForm {
 
   sendStyleOverrides() {
     if (this.computedTheme) {
-      this.postMessage(MessageEventType[this.paymentMethodFormType].styleOverrides, { styleOverrides: this.computedTheme });
+      this.postMessage(
+        MessageEventType[this.paymentMethodFormType].styleOverrides,
+        { styleOverrides: this.computedTheme },
+      );
     }
   }
 
@@ -51,7 +69,10 @@ export class PaymentMethodForm {
   }
 
   private postMessage(eventType: string, payload?: any) {
-    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, this.iframeOrigin || process.env.IFRAME_ORIGIN || '*');
+    this.iframeElement?.contentWindow?.postMessage(
+      { eventType: eventType, ...payload },
+      this.iframeOrigin || process.env.IFRAME_ORIGIN || '*',
+    );
   }
 
   @Method()
@@ -59,7 +80,10 @@ export class PaymentMethodForm {
     this.postMessage(MessageEventType[this.paymentMethodFormType].resize);
   }
 
-  private async postMessageWithResponseListener(eventType: string, payload?: any): Promise<any> {
+  private async postMessageWithResponseListener(
+    eventType: string,
+    payload?: any,
+  ): Promise<any> {
     return new Promise(resolve => {
       const responseListener = (event: MessageEvent) => {
         if (event.data.eventType !== eventType) return;
@@ -72,7 +96,11 @@ export class PaymentMethodForm {
   }
 
   @Method()
-  async tokenize(clientId: string, paymentMethodMetadata: any, account?: string): Promise<CreatePaymentMethodResponse> {
+  async tokenize(
+    clientId: string,
+    paymentMethodMetadata: any,
+    account?: string,
+  ): Promise<CreatePaymentMethodResponse> {
     const eventType = MessageEventType[this.paymentMethodFormType].tokenize;
     const payload = {
       clientId: clientId,
@@ -86,7 +114,9 @@ export class PaymentMethodForm {
 
   @Method()
   async validate(): Promise<any> {
-    return this.postMessageWithResponseListener(MessageEventType[this.paymentMethodFormType].validate);
+    return this.postMessageWithResponseListener(
+      MessageEventType[this.paymentMethodFormType].validate,
+    );
   }
 
   private composeQueryParams(values: string[]) {
@@ -101,7 +131,10 @@ export class PaymentMethodForm {
   }
 
   private getIframeSrc() {
-    const iframeOrigin = this.iframeOrigin || process.env.IFRAME_ORIGIN || 'https://js.justifi.ai/v2';
+    const iframeOrigin =
+      this.iframeOrigin ||
+      process.env.IFRAME_ORIGIN ||
+      'https://js.justifi.ai/v2';
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
     if (this.paymentMethodFormValidationMode) {
@@ -124,7 +157,7 @@ export class PaymentMethodForm {
             this.iframeElement = el as HTMLIFrameElement;
           }}
           onLoad={() => {
-            iFrameResize({ log: true }, this.iframeElement);
+            iFrameResize(this.iframeElement);
             this.sendStyleOverrides();
           }}
         ></iframe>

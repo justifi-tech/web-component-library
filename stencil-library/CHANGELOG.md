@@ -7,6 +7,7 @@
 - Added `BusinessDetails`
 - Added `BusinessFormStepped`
 - Updated `BusinessForm` layout (section spacing and headings)
+- Removed console.log from `PaymentMethodForm` component
 - Added `PaymentBalanceTransactions`
 
 ### 4.6.0
