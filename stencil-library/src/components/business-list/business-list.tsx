@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
-import { Business } from '../../api/Business';
+import { Business, IBusiness } from '../../api/Business';
 import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
 
 /**
@@ -106,7 +106,7 @@ export class BusinessList {
             ],
             ['Created at', 'Date this business was created'],
           ]}
-          rowData={this.businesses.map(business => [
+          rowData={this.businesses.map((business: IBusiness) => [
             business.legal_name,
             snakeCaseToHumanReadable(business.business_type),
             snakeCaseToHumanReadable(business.business_structure),
