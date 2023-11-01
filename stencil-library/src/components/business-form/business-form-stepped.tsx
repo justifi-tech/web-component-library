@@ -67,6 +67,7 @@ export class BusinessFormStepped {
       this.serverError = response.error.message;
     } else {
       this.serverError = '';
+      this.businessId = response.data.id;
       onSuccess();
     }
   }
