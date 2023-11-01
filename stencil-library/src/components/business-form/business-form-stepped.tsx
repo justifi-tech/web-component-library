@@ -25,10 +25,12 @@ const componentStepMapping = {
 })
 export class BusinessFormStepped {
   @Prop() authToken: string;
+  @Prop() accountId: string;
   @Prop() businessId?: string;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
+  @State() serverError: string;
 
   private formController: FormController;
   private api: any;
@@ -60,8 +62,18 @@ export class BusinessFormStepped {
     }
   }
 
-  private async sendData(callback?: () => void) {
+  handleResponse(response, onSuccess) {
+    if (response.error) {
+      this.serverError = response.error.message;
+    } else {
+      this.serverError = '';
+      onSuccess();
+    }
+  }
+
+  private async sendData(onSuccess?: () => void) {
     this.isLoading = true;
+
     try {
       const data = this.formController.values.getValue();
       // Conditionally making either POST or PATCH request
@@ -69,17 +81,16 @@ export class BusinessFormStepped {
         const payload = parseForPatching(data);
         const response = await this.api.patch(
           `entities/business/${this.businessId}`,
-          JSON.stringify(payload),
+          JSON.stringify(payload)
         );
-        console.log('Server response from PATCH:', response);
-        callback();
+        this.handleResponse(response, onSuccess);
       } else {
         const response = await this.api.post(
           'entities/business',
           JSON.stringify(data),
+          { account_id: this.accountId }
         );
-        console.log('Server response from POST:', response);
-        callback();
+        this.handleResponse(response, onSuccess);
       }
     } catch (error) {
       console.error('Error sending data:', error);
@@ -129,6 +140,13 @@ export class BusinessFormStepped {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
+
+        {this.serverError && (
+          <div class="alert alert-danger" role="alert">
+            {this.serverError}
+          </div>
+        )}
+
         <form onSubmit={this.validateAndSubmit}>
           <div class="my-4">
             {componentStepMapping[this.currentStep](this.formController)}
