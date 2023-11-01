@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { SubAccount } from '../../api/SubAccount';
-import { MapPaymentStatusToBadge } from '../../utils/utils';
+import { MapSubAccountStatusToBadge } from '../../utils/utils';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
 import { Api, IApiResponseCollection } from '../../api';
 
@@ -47,7 +47,7 @@ export class SubaccountsList {
     this.loading = true;
     const endpoint = `account/${this.accountId}/seller_accounts`;
 
-    const response: IApiResponseCollection<SubAccount[]> = await Api(this.authToken).get(endpoint, {
+    const response: IApiResponseCollection<SubAccount[]> = await Api(this.authToken, 'http://localhost:3000').get(endpoint, {
       paging: this.paging,
       direction: direction
     });
@@ -98,7 +98,7 @@ export class SubaccountsList {
                 subaccount.achRate,
                 {
                   type: 'inner',
-                  value: MapPaymentStatusToBadge(subaccount.status)
+                  value: MapSubAccountStatusToBadge(subaccount.status)
                 }
               ]
             ))

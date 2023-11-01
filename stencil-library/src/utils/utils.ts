@@ -128,6 +128,25 @@ export const MapPayoutStatusToBadge = (status: string) => {
   }
 };
 
+export const MapSubAccountStatusToBadge = (status: string) => {
+  switch (status) {
+    case 'created':
+      return "<span class='badge bg-primary' title='This sub account has been created, but we haven't received their onboarding yet'>Canceled</span>";
+    case 'submitted':
+      return "<span class='badge bg-info' title='We've received this sub account's onboarding and we're reviewing their information'>Submitted</span>";
+    case 'information_needed':
+      return "<span class='badge bg-warning' title='We've reviewed this sub account's onboarding information and found an issue'>Information Needed</span>";
+    case 'enabled':
+      return "<span class='badge bg-success' title='This sub account is approved to process payments'>Enabled</span>";
+    case 'disabled':
+      return "<span class='badge bg-danger' title='This sub account was previously approved, but has since become ineligible to process payments'>Disabled</span>";
+    case 'rejected':
+      return "<span class='badge bg-danger' title='This sub account didn't pass approval, so they won't be able to process payments'>Rejected</span>";
+    case 'archived':
+      return "<span class='badge bg-primary' title='This sub account has been archived. They won't be able to process payments unless they are restored'>Archived</span>";
+  }
+};
+
 /**
  * Converts a snake_case string to a human-readable format by replacing underscores with spaces and capitalizing the first letter of each word.
  *
