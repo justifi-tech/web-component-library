@@ -9,8 +9,8 @@ class BusinessListArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || '';
-    this['account-id'] = args['account-id'] || '';
+    this['auth-token'] = args['auth-token'] || 'tbd';
+    this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
   }
 }
 

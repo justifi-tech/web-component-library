@@ -1,7 +1,15 @@
-interface BusinessFormSteppedStoryArgs {
-  authToken: string;
-  businessId: string;
-  cssVariables: string;
+class BusinessFormSteppedStoryArgs {
+  'auth-token': string;
+  'account-id': string;
+  'bussiness-id': string;
+  'cssVariables': string;
+
+  constructor(args) {
+    this['auth-token'] = args['auth-token'] || '';
+    this['business-id'] = args['business-id'] || '';
+    this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
+    this['cssVariables'] = args['cssVariables'] || '';
+  }
 }
 
 export default {
@@ -9,6 +17,12 @@ export default {
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {
+      control: 'text',
+      table: {
+        category: 'props',
+      },
+    },
+    'account-id': {
       control: 'text',
       table: {
         category: 'props',
@@ -29,6 +43,7 @@ const Template = (args: BusinessFormSteppedStoryArgs) => {
     <div>
       <justifi-business-form-stepped
         auth-token="${args['auth-token']}"
+        account-id="${args['account-id']}"
         business-id="${args['business-id']}"
       />
     </div>
@@ -41,16 +56,13 @@ const Template = (args: BusinessFormSteppedStoryArgs) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  'auth-token': '',
-  'business-id': '',
-};
+Basic.args = new BusinessFormSteppedStoryArgs({});
 
 export const Styled = Template.bind({});
-Styled.args = {
+Styled.args = new BusinessFormSteppedStoryArgs({
   'auth-token': '',
   'business-id': '',
-  'cssVariables': `
+  cssVariables: `
   --jfi-primary-color: #212529;
   --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
   --jfi-layout-font-family: Roboto Mono, Calibri, sans-serif;
@@ -120,4 +132,4 @@ Styled.args = {
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
   --jfi-radio-button-group-width: 100%;
   `,
-};
+});
