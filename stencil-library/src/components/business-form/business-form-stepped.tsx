@@ -68,6 +68,7 @@ export class BusinessFormStepped {
     } else {
       this.serverError = '';
       this.businessId = response.data.id;
+      this.formController.setValues(response.data);
       onSuccess();
     }
   }
@@ -82,7 +83,8 @@ export class BusinessFormStepped {
         const payload = parseForPatching(data);
         const response = await this.api.patch(
           `entities/business/${this.businessId}`,
-          JSON.stringify(payload)
+          JSON.stringify(payload),
+          { account_id: this.accountId }
         );
         this.handleResponse(response, onSuccess);
       } else {
