@@ -26,10 +26,7 @@ export const config: Config = {
         './src/styles/_mixins.scss',
       ],
       includePaths: ['../node_modules/bootstrap/scss/'],
-    }),
-    replace({
-      'process.env.IFRAME_ORIGIN': JSON.stringify(process.env.IFRAME_ORIGIN),
-    }),
+    })
   ],
   outputTargets: [
     react({

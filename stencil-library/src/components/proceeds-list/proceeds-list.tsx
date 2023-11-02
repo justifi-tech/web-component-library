@@ -83,10 +83,12 @@ export class ProceedsList {
     this.loading = true;
     const endpoint = `account/${this.accountId}/proceeds`;
 
-    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken).get(endpoint, {
-      paging: this.paging,
-      direction: direction
-    });
+    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken, process.env.PRIVATE_API_ORIGIN)
+      .get(endpoint, {
+        paging: this.paging,
+        direction: direction
+      });
+
     if (!response.error) {
       this.paging = {
         ...this.paging,

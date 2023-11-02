@@ -62,13 +62,17 @@ export class PaymentsList {
       this.loading = false;
       return;
     }
+
     this.loading = true;
+
+    const api = Api(this.authToken, process.env.PROXY_API_ORIGIN);
     const endpoint = `account/${this.accountId}/payments`;
 
-    const response: IApiResponseCollection<Payment[]> = await Api(this.authToken).get(endpoint, {
+    const response: IApiResponseCollection<Payment[]> = await api.get(endpoint, {
       paging: this.paging,
       direction: direction
     });
+
     if (!response.error) {
       this.paging = {
         ...this.paging,

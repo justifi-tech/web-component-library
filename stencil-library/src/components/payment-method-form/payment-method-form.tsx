@@ -51,7 +51,7 @@ export class PaymentMethodForm {
   }
 
   private postMessage(eventType: string, payload?: any) {
-    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, this.iframeOrigin || process.env.IFRAME_ORIGIN || '*');
+    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, process.env.IFRAME_ORIGIN || '*');
   }
 
   @Method()
@@ -101,7 +101,7 @@ export class PaymentMethodForm {
   }
 
   private getIframeSrc() {
-    const iframeOrigin = this.iframeOrigin || process.env.IFRAME_ORIGIN || 'https://js.justifi.ai/v2';
+    const iframeOrigin = process.env.IFRAME_ORIGIN;
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
     if (this.paymentMethodFormValidationMode) {

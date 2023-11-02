@@ -51,7 +51,7 @@ export class BusinessDetails {
       return;
     }
 
-    this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
+    this.api = Api(this.authToken, process.env.ENTITIES_API_ORIGIN);
     await this.fetchBusiness(this.businessId);
   }
 
