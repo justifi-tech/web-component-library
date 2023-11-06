@@ -18,6 +18,11 @@ export enum SubAccountStatusType {
   archived = 'archived'
 }
 
+export enum AccountType {
+  live = 'live',
+  test = 'test'
+}
+
 export enum BusinessType {
   forProfit = 'for_profit',
   nonProfit = 'non_profit',
@@ -59,7 +64,7 @@ export interface ApplicationFeeRate {
 }
 
 export interface ISubAccount {
-  account_type: string,
+  account_type: AccountType,
   application_fee_rates: ApplicationFeeRate[] | [],
   created_at: string,
   currency: string,
@@ -75,7 +80,7 @@ export interface ISubAccount {
 };
 
 export class SubAccount implements ISubAccount {
-  public account_type: string;
+  public account_type: AccountType;
   public application_fee_rates: ApplicationFeeRate[] | [];
   public created_at: string;
   public dateString: string;
@@ -109,25 +114,25 @@ export class SubAccount implements ISubAccount {
     this.related_accounts = subAccount.related_accounts || {};
     const activeCardRate = this.findActiveRate(subAccount, 'cc');
     const activeAchRate = this.findActiveRate(subAccount, 'ach');
-    this.cardRate = this.formattedRate(activeCardRate);
-    this.achRate = this.formattedRate(activeAchRate);
+    this.cardRate = this.getFormattedRate(activeCardRate);
+    this.achRate = this.getFormattedRate(activeAchRate);
   }
 
   findActiveRate = (subAccount: ISubAccount, type: string): ApplicationFeeRate | undefined => {
     return subAccount.application_fee_rates.find(rate => rate.rate_type === type);
   };
 
-  basisPercentage = (rate: ApplicationFeeRate | undefined): string | undefined => {
-    return rate && formatPercentage(rate.basis_point_rate);;
+  getBasisPercentage = (rate: ApplicationFeeRate | undefined): string | undefined => {
+    return formatPercentage(rate?.basis_point_rate);
   };
 
-  transactionFee = (rate: ApplicationFeeRate | undefined): string | undefined => {
-    return rate && formatCurrency(rate.transaction_fee);
+  getTransactionFee = (rate: ApplicationFeeRate | undefined): string | undefined => {
+    return formatCurrency(rate?.transaction_fee);
   };
 
-  formattedRate = (rate: ApplicationFeeRate | undefined): string | undefined => {
+  getFormattedRate = (rate: ApplicationFeeRate | undefined): string | undefined => {
     return rate ?
-      `${this.basisPercentage(rate)} + ${this.transactionFee(rate)}`
+      `${this.getBasisPercentage(rate)} + ${this.getTransactionFee(rate)}`
       : 'Not set';
   };
 

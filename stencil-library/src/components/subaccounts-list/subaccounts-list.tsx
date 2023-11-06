@@ -47,7 +47,7 @@ export class SubaccountsList {
     this.loading = true;
     const endpoint = `account/${this.accountId}/seller_accounts`;
 
-    const response: IApiResponseCollection<SubAccount[]> = await Api(this.authToken, 'http://localhost:3000').get(endpoint, {
+    const response: IApiResponseCollection<SubAccount[]> = await Api(this.authToken, process.env.PRIVATE_API_ORIGIN).get(endpoint, {
       paging: this.paging,
       direction: direction
     });
