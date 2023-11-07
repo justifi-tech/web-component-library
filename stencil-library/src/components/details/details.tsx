@@ -9,7 +9,6 @@ import { ErrorState } from './utils';
 
 export class Details {
   @Prop() errorMessage: string;
-  @Prop() entity: { metadata: any };
 
   render() {
     return (
@@ -26,18 +25,6 @@ export class Details {
             <main class="p-2">
               <slot name="head-info" />
               <slot name='detail-sections' />
-              {this.entity?.metadata && Object.keys(this.entity?.metadata).length ?
-                <div class="mt-4">
-                  <h2 part="detail-metadata-title" class="fs-3">Metadata</h2>
-                  <hr />
-                  <pre part="detail-metadata" class="p-2" aria-label="metadata content">
-                    <code>
-                      {JSON.stringify(this.entity.metadata, null, 2)}
-                    </code>
-                  </pre>
-                </div>
-                : null
-              }
             </main>
         }
       </Host>
