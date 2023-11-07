@@ -30,6 +30,7 @@ export const JustifiBusinessRepresentative = /*@__PURE__*/createReactComponent<J
 export const JustifiCardForm = /*@__PURE__*/createReactComponent<JSX.JustifiCardForm, HTMLJustifiCardFormElement>('justifi-card-form');
 export const JustifiDetails = /*@__PURE__*/createReactComponent<JSX.JustifiDetails, HTMLJustifiDetailsElement>('justifi-details');
 export const JustifiLegalAddressForm = /*@__PURE__*/createReactComponent<JSX.JustifiLegalAddressForm, HTMLJustifiLegalAddressFormElement>('justifi-legal-address-form');
+export const JustifiPaymentBalanceTransactions = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentBalanceTransactions, HTMLJustifiPaymentBalanceTransactionsElement>('justifi-payment-balance-transactions');
 export const JustifiPaymentDetails = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentDetails, HTMLJustifiPaymentDetailsElement>('justifi-payment-details');
 export const JustifiPaymentForm = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentForm, HTMLJustifiPaymentFormElement>('justifi-payment-form');
 export const JustifiPaymentMethodForm = /*@__PURE__*/createReactComponent<JSX.JustifiPaymentMethodForm, HTMLJustifiPaymentMethodFormElement>('justifi-payment-method-form');
