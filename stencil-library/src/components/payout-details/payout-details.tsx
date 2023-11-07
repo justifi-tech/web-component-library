@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -68,10 +68,7 @@ export class PaymentDetails {
         {
           this.loading ? LoadingState :
           !this.payout ? ErrorState(this.errorMessage) :
-          <justifi-details
-            error-message={this.errorMessage}
-            entity={{ metadata: this.payout.metadata }}
-          >
+          <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo slot="head-info" badge={<span slot='badge' innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />} title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}>
               <EntityHeadInfoItem
                 classes="border-1 border-end"
@@ -99,6 +96,9 @@ export class PaymentDetails {
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
                 <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
+              </DetailSection>
+              <DetailSection sectionTitle='Metadata'>
+                <CodeBlock metadata={this.payout.metadata} />
               </DetailSection>
             </div>
           </justifi-details>
