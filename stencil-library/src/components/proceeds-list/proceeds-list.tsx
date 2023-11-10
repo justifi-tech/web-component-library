@@ -1,7 +1,6 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Api, IApiResponseCollection } from '../../api';
+import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 import { formatCurrency, formatDate } from '../../utils/utils';
-import { PagingInfo, pagingDefaults } from '../table/table-utils';
 import { Proceed, ProceedStatuses, ProceedStatusesSafeNames } from '../../api/Proceed';
 
 /**
@@ -36,6 +35,7 @@ export class ProceedsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @State() params: any
   @Event({
     eventName: 'proceed-row-clicked',
     bubbles: true,
@@ -43,18 +43,13 @@ export class ProceedsList {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('params')
   updateOnPropChange() {
     this.fetchData();
   }
 
   connectedCallback() {
     this.fetchData();
-  }
-
-  onPageChange = (direction: string) => {
-    return () => {
-      this.fetchData(direction);
-    }
   }
 
   mapStatusToBadge = (status: ProceedStatuses) => {
@@ -74,7 +69,19 @@ export class ProceedsList {
     }
   }
 
-  async fetchData(direction?: string): Promise<void> {
+  handleClickPrevious = (beforeCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.after_cursor;
+    this.params = ({ ...newParams, before_cursor: beforeCursor });
+  };
+
+  handleClickNext = (afterCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.before_cursor;
+    this.params = ({ ...newParams, after_cursor: afterCursor });
+  }; 
+
+  async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
       this.loading = false;
@@ -83,10 +90,7 @@ export class ProceedsList {
     this.loading = true;
     const endpoint = `account/${this.accountId}/proceeds`;
 
-    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken).get(endpoint, {
-      paging: this.paging,
-      direction: direction
-    });
+    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken).get(endpoint, this.params);
     if (!response.error) {
       this.paging = {
         ...this.paging,
@@ -142,10 +146,11 @@ export class ProceedsList {
           }
           loading={this.loading}
           error-message={this.errorMessage}
+          params={this.params}
           paging={{
             ...this.paging,
-            onPrev: this.onPageChange('prev'),
-            onNext: this.onPageChange('next')
+            handleClickNext: this.handleClickNext,
+            handleClickPrevious: this.handleClickPrevious
           }}
         />
       </Host>

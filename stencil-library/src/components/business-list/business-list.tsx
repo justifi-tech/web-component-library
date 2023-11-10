@@ -1,6 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Api, IApiResponseCollection } from '../../api';
-import { PagingInfo, pagingDefaults } from '../table/table-utils';
+import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 import { Business, IBusiness } from '../../api/Business';
 import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
 
@@ -33,9 +32,11 @@ export class BusinessList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @State() params: any
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('params')
   updateOnPropChange() {
     this.fetchData();
   }
@@ -44,17 +45,23 @@ export class BusinessList {
     this.fetchData();
   }
 
-  onPageChange = (direction: string) => {
-    return () => {
-      this.fetchData(direction);
-    };
-  };
-
   mapProductStatusToBadge = (status: boolean) => {
     return (status && 'bg-success') || 'bg-secondary';
   };
 
-  async fetchData(direction?: string): Promise<void> {
+  handleClickPrevious = (beforeCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.after_cursor;
+    this.params = ({ ...newParams, before_cursor: beforeCursor });
+  };
+
+  handleClickNext = (afterCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.before_cursor;
+    this.params = ({ ...newParams, after_cursor: afterCursor });
+  }; 
+
+  async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage =
         'Can not fetch any data without an AccountID and an AuthToken';
@@ -63,15 +70,12 @@ export class BusinessList {
     }
     this.loading = true;
     const endpoint = `entities/business`;
+    let accountIDParam = { account_id: this.accountId };
 
     const response: IApiResponseCollection<Business[]> = await Api(
       this.authToken,
       process.env.ENTITIES_API_ORIGIN,
-    ).get(endpoint, {
-      account_id: this.accountId,
-      paging: this.paging,
-      direction: direction,
-    });
+    ).get(endpoint, { ...accountIDParam, ...this.params });
     if (!response.error) {
       this.paging = {
         ...this.paging,
@@ -135,10 +139,11 @@ export class BusinessList {
           ])}
           loading={this.loading}
           error-message={this.errorMessage}
+          params={this.params}
           paging={{
             ...this.paging,
-            onPrev: this.onPageChange('prev'),
-            onNext: this.onPageChange('next'),
+            handleClickNext: this.handleClickNext,
+            handleClickPrevious: this.handleClickPrevious
           }}
         />
       </Host>
