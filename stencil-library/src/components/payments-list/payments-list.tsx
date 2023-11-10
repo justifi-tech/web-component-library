@@ -42,16 +42,15 @@ export class PaymentsList {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('params')
   updateOnPropChange() {
     this.fetchData();
   }
 
-  @Watch('params')
   connectedCallback() {
     this.fetchData();
   }
   
-
   handleClickPrevious = (beforeCursor: string) => {
     const newParams: any = { ...this.params };
     delete newParams.after_cursor;

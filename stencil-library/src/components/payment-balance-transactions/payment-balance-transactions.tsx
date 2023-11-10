@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import {
   Api,
   IApiResponseCollection,
@@ -29,6 +29,11 @@ export class PaymentBalanceTransactions {
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: any
+
+  @Watch('params')
+  updateOnPropChange() {
+    this.fetchData();
+  }
 
   connectedCallback() {
     this.fetchData();
