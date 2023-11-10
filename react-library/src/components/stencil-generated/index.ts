@@ -42,6 +42,7 @@ export const JustifiProceedsList = /*@__PURE__*/createReactComponent<JSX.Justifi
 export const JustifiTable = /*@__PURE__*/createReactComponent<JSX.JustifiTable, HTMLJustifiTableElement>('justifi-table');
 export const LegalAddressDetails = /*@__PURE__*/createReactComponent<JSX.LegalAddressDetails, HTMLLegalAddressDetailsElement>('legal-address-details');
 export const OwnerDetails = /*@__PURE__*/createReactComponent<JSX.OwnerDetails, HTMLOwnerDetailsElement>('owner-details');
+export const PaginationMenu = /*@__PURE__*/createReactComponent<JSX.PaginationMenu, HTMLPaginationMenuElement>('pagination-menu');
 export const RepresentativeDetails = /*@__PURE__*/createReactComponent<JSX.RepresentativeDetails, HTMLRepresentativeDetailsElement>('representative-details');
 export const SelectInput = /*@__PURE__*/createReactComponent<JSX.SelectInput, HTMLSelectInputElement>('select-input');
 export const TextInput = /*@__PURE__*/createReactComponent<JSX.TextInput, HTMLTextInputElement>('text-input');
