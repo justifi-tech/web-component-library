@@ -45,8 +45,8 @@ describe('justifi-table', () => {
       end_cursor: '',
       has_previous: false,
       has_next: false,
-      onPrev: () => {},
-      onNext: () => {}
+      handleClickNext: () => {},
+      handleClickPrevious: () => {}
     };
     const page = await newSpecPage({
       components: [Table],

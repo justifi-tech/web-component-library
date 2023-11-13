@@ -1,11 +1,13 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import {
   Api,
   IApiResponseCollection,
   IPaymentBalanceTransaction,
+  PagingInfo,
   PaymentBalanceTransaction,
+  pagingDefaults,
 } from '../../api';
-import { PagingInfo, pagingDefaults } from '../table/table-utils';
+
 import {
   formatCurrency,
   formatDate,
@@ -26,18 +28,30 @@ export class PaymentBalanceTransactions {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @State() params: any
+
+  @Watch('params')
+  updateOnPropChange() {
+    this.fetchData();
+  }
 
   connectedCallback() {
     this.fetchData();
   }
 
-  onPageChange = (direction: string) => {
-    return () => {
-      this.fetchData(direction);
-    };
+  handleClickPrevious = (beforeCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.after_cursor;
+    this.params = ({ ...newParams, before_cursor: beforeCursor });
   };
 
-  async fetchData(direction?: string): Promise<void> {
+  handleClickNext = (afterCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.before_cursor;
+    this.params = ({ ...newParams, after_cursor: afterCursor });
+  }; 
+
+  async fetchData(): Promise<void> {
     this.loading = true;
 
     if (!this.accountId || !this.paymentId) {
@@ -48,10 +62,7 @@ export class PaymentBalanceTransactions {
     const endpoint = `account/${this.accountId}/payments/${this.paymentId}/payment_balance_transactions`;
 
     const response: IApiResponseCollection<IPaymentBalanceTransaction[]> =
-      await Api(this.authToken).get(endpoint, {
-        paging: this.paging,
-        direction: direction,
-      });
+      await Api(this.authToken).get(endpoint, this.params);
 
     if (!response.error) {
       this.paging = {
@@ -99,10 +110,11 @@ export class PaymentBalanceTransactions {
           ])}
           loading={this.loading}
           error-message={this.errorMessage}
+          params={this.params}
           paging={{
             ...this.paging,
-            onPrev: this.onPageChange('prev'),
-            onNext: this.onPageChange('next'),
+            handleClickNext: this.handleClickNext,
+            handleClickPrevious: this.handleClickPrevious
           }}
         />
       </Host>
