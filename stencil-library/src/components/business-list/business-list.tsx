@@ -26,7 +26,20 @@ import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
   shadow: true,
 })
 export class BusinessList {
+  /**
+   * The Account ID to fetch payments.
+   * This is required to fetch any data.
+   * @required
+   * @type {string}
+   * @memberof PaymentsList
+   */
   @Prop() accountId: string;
+  /**
+   * The Auth Token to fetch payments.
+   * This is required to fetch any data.
+   * @required
+   * @type {string}
+   */
   @Prop() authToken: string;
   @State() businesses: Business[] = [];
   @State() loading: boolean = true;
