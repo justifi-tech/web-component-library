@@ -1,8 +1,8 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
 import { PagingInfo, pagingDefaults } from '../table/table-utils';
-import { Business } from '../../api/Business';
-import { formatDate } from '../../utils/utils';
+import { Business, IBusiness } from '../../api/Business';
+import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
 
 /**
  * @exportedPart table-head: Table head
@@ -67,50 +67,6 @@ export class BusinessList {
     return (status && 'bg-success') || 'bg-secondary';
   };
 
-  mapBusinessType = (type: string) => {
-    switch (type) {
-      case 'individual':
-        return 'Individual';
-      case 'non_profit':
-        return 'Non Profit';
-      case 'for_profit':
-        return 'For Profit';
-      case 'government_entity':
-        return 'Government Entity';
-    }
-  };
-
-  mapBusinessStructure = (type: string) => {
-    switch (type) {
-      case 'sole_proprietorship':
-        return 'Sole Proprietorship';
-      case 'single_llc':
-        return 'Single LLC';
-      case 'multi_llc':
-        return 'Multi LLC';
-      case 'private_partnership':
-        return 'Private Partnership';
-      case 'private_corporation':
-        return 'Private Corporation';
-      case 'unincorporated_association':
-        return 'Unincorporated Association';
-      case 'public_partnership':
-        return 'Public Partnership';
-      case 'public_corporation':
-        return 'Public Corporation';
-      case 'incorporated':
-        return 'Incorporated';
-      case 'unincorporated':
-        return 'Unincorporated';
-      case 'government_unit':
-        return 'Government Unit';
-      case 'government_instrumentality':
-        return 'Government Instrumentality';
-      case 'tax_exempt_government_instrumentality':
-        return 'Tax Exempt Government Instrumentality';
-    }
-  };
-
   async fetchData(direction?: string): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage =
@@ -163,10 +119,10 @@ export class BusinessList {
             ],
             ['Created at', 'Date this business was created'],
           ]}
-          rowData={this.businesses.map(business => [
+          rowData={this.businesses.map((business: IBusiness) => [
             business.legal_name,
-            this.mapBusinessType(business.business_type),
-            this.mapBusinessStructure(business.business_structure),
+            snakeCaseToHumanReadable(business.business_type),
+            snakeCaseToHumanReadable(business.business_structure),
             business.tax_id,
             business.industry,
             {
