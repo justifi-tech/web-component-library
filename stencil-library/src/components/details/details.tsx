@@ -13,10 +13,8 @@ export class Details {
   render() {
     return (
       <Host
-        exportParts='detail-loading-spinner,detail-loading-state,detail-empty-state,
-        detail-head,detail-title,detail-head-info,detail-head-info-item,
-        detail-head-info-item-title,detail-head-info-item-data,detail-metadata,detail-metadata-title,
-        detail-section,detail-section-title,detail-section-item-title,detail-section-item-data'
+        exportParts='detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
+        detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info'
       >
         {
           this.errorMessage ?

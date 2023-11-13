@@ -18,6 +18,14 @@ import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoIte
   * @exportedPart detail-metadata-title
   * @exportedPart detail-method-title
   * @exportedPart detail-method-data
+  * @exportedPart detail-section
+  * @exportedPart detail-section-title
+  * @exportedPart detail-section-item-title
+  * @exportedPart detail-section-item-data
+  * @exportedPart detail-head-info
+  * @exportedPart detail-head-info-item
+  * @exportedPart detail-head-info-item-title
+  * @exportedPart detail-head-info-item-data
 */
 @Component({
   tag: 'justifi-payout-details',
