@@ -68,7 +68,7 @@ export class BusinessFormStepped {
     } else {
       this.serverError = '';
       this.businessId = response.data.id;
-      this.formController.setValues(response.data);
+      this.formController.setInitialValues(response.data);
       onSuccess();
     }
   }
@@ -139,6 +139,10 @@ export class BusinessFormStepped {
     return this.currentStep === this.totalSteps;
   }
 
+  currentStepComponent() {
+    return componentStepMapping[this.currentStep](this.formController);
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
@@ -152,7 +156,7 @@ export class BusinessFormStepped {
 
         <form onSubmit={this.validateAndSubmit}>
           <div class="my-4">
-            {componentStepMapping[this.currentStep](this.formController)}
+            {this.currentStepComponent()}
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
