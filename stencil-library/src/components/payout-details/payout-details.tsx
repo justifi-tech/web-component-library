@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -18,6 +18,14 @@ import { DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorSta
   * @exportedPart detail-metadata-title
   * @exportedPart detail-method-title
   * @exportedPart detail-method-data
+  * @exportedPart detail-section
+  * @exportedPart detail-section-title
+  * @exportedPart detail-section-item-title
+  * @exportedPart detail-section-item-data
+  * @exportedPart detail-head-info
+  * @exportedPart detail-head-info-item
+  * @exportedPart detail-head-info-item-title
+  * @exportedPart detail-head-info-item-data
 */
 @Component({
   tag: 'justifi-payout-details',

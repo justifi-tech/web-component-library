@@ -1,8 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { DetailItem, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
-import { DetailSection } from '../details/utils';
+import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -19,6 +18,14 @@ import { DetailSection } from '../details/utils';
   * @exportedPart detail-metadata-title
   * @exportedPart detail-method-title
   * @exportedPart detail-method-data
+  * @exportedPart detail-section
+  * @exportedPart detail-section-title
+  * @exportedPart detail-section-item-title
+  * @exportedPart detail-section-item-data
+  * @exportedPart detail-head-info
+  * @exportedPart detail-head-info-item
+  * @exportedPart detail-head-info-item-title
+  * @exportedPart detail-head-info-item-data
 */
 @Component({
   tag: 'justifi-payment-details',
@@ -68,6 +75,7 @@ export class PaymentDetails {
       <Host>
         {
           this.loading ? LoadingState :
+
             !this.payment ? ErrorState(this.errorMessage) :
               <justifi-details
                 error-message={this.errorMessage}
