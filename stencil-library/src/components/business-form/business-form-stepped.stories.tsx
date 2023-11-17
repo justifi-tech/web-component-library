@@ -2,13 +2,13 @@ class BusinessFormSteppedStoryArgs {
   'auth-token': string;
   'account-id': string;
   'bussiness-id': string;
-  'cssVariables': string;
+  'css-variables': string;
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['business-id'] = args['business-id'] || '';
     this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
-    this['cssVariables'] = args['cssVariables'] || '';
+    this['css-variables'] = args['css-variables'] || '';
   }
 }
 
@@ -49,7 +49,7 @@ const Template = (args: BusinessFormSteppedStoryArgs) => {
     </div>
     <style>
       :root {
-        ${args.cssVariables}
+        ${args['css-variables']}
       }
     </style>
   `;
@@ -62,7 +62,7 @@ export const Styled = Template.bind({});
 Styled.args = new BusinessFormSteppedStoryArgs({
   'auth-token': '',
   'business-id': '',
-  cssVariables: `
+  'css-variables': `
   --jfi-primary-color: #212529;
   --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
   --jfi-layout-font-family: Roboto Mono, Calibri, sans-serif;
