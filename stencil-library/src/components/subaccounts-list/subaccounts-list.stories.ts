@@ -1,5 +1,5 @@
 export default {
-  title: 'Components/SubaccountsList',
+  title: 'dev/Components/SubaccountsList',
   component: 'justifi-subaccounts-list',
   parameters: {},
   decorators: [
