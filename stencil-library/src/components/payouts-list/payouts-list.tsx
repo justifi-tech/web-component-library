@@ -95,9 +95,11 @@ export class PayoutsList {
       return;
     }
     this.loading = true;
+
+    const api = Api(this.authToken, process.env.PROXY_API_ORIGIN);
     const endpoint = `account/${this.accountId}/payouts`;
 
-    const response: IApiResponseCollection<Payout[]> = await Api(this.authToken).get(endpoint, this.params);
+    const response: IApiResponseCollection<Payout[]> = await api.get(endpoint, this.params);
     if (!response.error) {
       this.paging = {
         ...this.paging,

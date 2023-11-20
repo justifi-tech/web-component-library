@@ -5,19 +5,10 @@ interface CardFormStoryArgs {
   'css-variables': string;
 }
 
-const isDev = process.env.NODE_ENV === 'development';
-
 export default {
   title: 'Components/CardForm',
   component: 'justifi-card-form',
   argTypes: {
-    'iframe-origin': {
-      control: 'text',
-      table: {
-        disable: isDev ? false : true,
-        category: 'props',
-      },
-    },
     'resize': {
       description: 'Deprecated: This method will be removed in future releases.',
       table: {
@@ -99,7 +90,7 @@ const Template = (args: CardFormStoryArgs) => {
       <justifi-card-form
         data-testid="card-form-iframe"
         validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${args['iframe-origin'] || ''}'
+        iframe-origin='${process.env.IFRAME_ORIGIN}'
         single-line='${args['single-line']}'
       />
     </div>

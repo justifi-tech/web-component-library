@@ -22,10 +22,7 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: PagingInfo;
 }
 
-const Api = (authToken: string, customApiOrigin?: string) => {
-  const originFromEnv = process.env.API_ORIGIN;
-  const apiOrigin = customApiOrigin || originFromEnv || 'https://wc-proxy.justifi.ai';
-
+const Api = (authToken: string, apiOrigin?: string) => {
   async function getAuthorizationHeader() {
     return {
       'Authorization': `Bearer ${authToken}`,
@@ -36,7 +33,6 @@ const Api = (authToken: string, customApiOrigin?: string) => {
 
   async function makeRequest(endpoint: string, method: string, params?: any, body?: any, signal?: AbortSignal) {
     const url = `${apiOrigin}/v1/${endpoint}`;
-
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
     const response = await fetch(requestUrl, {
       method: method,

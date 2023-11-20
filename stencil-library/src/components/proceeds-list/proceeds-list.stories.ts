@@ -19,8 +19,8 @@ class ProceedsListArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || '';
-    this['account-id'] = args['account-id'] || '';
+    this['auth-token'] = args['auth-token'] || process.env.PRIVATE_AUTH_TOKEN;
+    this['account-id'] = args['account-id'] || process.env.EXAMPLE_PLATFORM_ACCOUNT_ID;
   }
 }
 
