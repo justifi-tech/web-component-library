@@ -1,4 +1,3 @@
-const isDev = process.env.NODE_ENV === 'development';
 const CSSVars = `
 --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900&family=Agdasima';
 --jfi-layout-font-family: Roboto Mono;
@@ -39,13 +38,6 @@ export default {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
   argTypes: {
-    'iframe-origin': {
-      control: 'text',
-      table: {
-        disable: isDev ? false : true,
-        category: 'props',
-      },
-    },
     'css-variables': {
       control: 'text',
       table: {
@@ -131,7 +123,7 @@ const Template = (args: any) => {
       <justifi-bank-account-form
         data-testid="bank-account-form-iframe"
         validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${args['iframe-origin'] || ''}'
+        iframe-origin='${process.env.IFRAME_ORIGIN}'
       />
     </div>
     ${FormButtons}

@@ -87,7 +87,7 @@ export interface AdditionalQuestions {
 
 export interface IBusiness {
   business_structure: BusinessStructure;
-  business_type: string;
+  business_type: BusinessType;
   bank_accounts: BankAccount[];
   created_at: string;
   documents: Document[];
@@ -111,7 +111,7 @@ export interface IBusiness {
 
 export class Business implements IBusiness {
   public business_structure: BusinessStructure;
-  public business_type: string;
+  public business_type: BusinessType;
   public bank_accounts: BankAccount[];
   public created_at: string;
   public documents: Document[];

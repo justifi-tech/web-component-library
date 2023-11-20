@@ -35,7 +35,7 @@ export class BusinessForm {
 
     this.formController = new FormController(businessFormSchema);
 
-    this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
+    this.api = Api(this.authToken, process.env.ENTITIES_API_ORIGIN);
 
     if (this.businessId) {
       this.fetchData(this.businessId);

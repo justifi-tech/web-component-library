@@ -1,5 +1,3 @@
-import config from "../../../config";
-
 export default {
   title: 'Components/SubaccountsList',
   component: 'justifi-subaccounts-list',
@@ -21,8 +19,8 @@ class SubaccountsListArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || config.authToken;
-    this['account-id'] = args['account-id'] || config.accountId;
+    this['auth-token'] = args['auth-token'] || process.env.PRIVATE_AUTH_TOKEN;
+    this['account-id'] = args['account-id'] || process.env.EXAMPLE_PLATFORM_ACCOUNT_ID;
   }
 }
 

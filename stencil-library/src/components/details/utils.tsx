@@ -94,3 +94,14 @@ export const EntityHeadInfo = ({ title, slot, badge }, children) => (
     </div>
   </div>
 );
+
+export const CodeBlock = ({ metadata }: {metadata: {}}) => 
+  metadata && Object.keys(metadata).length ? (
+    <div class='mt-4'>
+      <pre part="detail-metadata" class="p-2" aria-label="metadata content">
+        <code>
+          {JSON.stringify(metadata, null, 2)}
+        </code>
+      </pre>
+    </div>
+  ) : null;

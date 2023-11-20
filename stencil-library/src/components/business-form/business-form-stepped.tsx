@@ -46,7 +46,7 @@ export class BusinessFormStepped {
     }
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api(this.authToken, process.env.ENTITIES_ENDPOINT);
+    this.api = Api(this.authToken, process.env.ENTITIES_API_ORIGIN);
     this.totalSteps = Object.keys(componentStepMapping).length - 1;
 
     if (this.businessId) {

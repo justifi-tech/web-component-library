@@ -1,8 +1,7 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { SubAccount } from '../../api/SubAccount';
 import { MapSubAccountStatusToBadge } from '../../utils/utils';
-import { PagingInfo, pagingDefaults } from '../table/table-utils';
-import { Api, IApiResponseCollection } from '../../api';
+import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 
 @Component({
   tag: 'justifi-subaccounts-list',
@@ -16,6 +15,7 @@ export class SubaccountsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @State() params: any;
   @Event({
     eventName: 'subaccount-row-clicked',
     bubbles: true,
@@ -24,6 +24,7 @@ export class SubaccountsList {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('params')
   updateOnPropChange() {
     this.fetchData();
   }
@@ -32,11 +33,17 @@ export class SubaccountsList {
     this.fetchData();
   }
 
-  onPageChange = (direction: string) => {
-    return () => {
-      this.fetchData(direction);
-    }
-  }
+  handleClickPrevious = (beforeCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.after_cursor;
+    this.params = ({ ...newParams, before_cursor: beforeCursor });
+  };
+
+  handleClickNext = (afterCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.before_cursor;
+    this.params = ({ ...newParams, after_cursor: afterCursor });
+  };
 
   async fetchData(direction?: string): Promise<void> {
     if (!this.accountId || !this.authToken) {
@@ -105,10 +112,11 @@ export class SubaccountsList {
           }
           loading={this.loading}
           error-message={this.errorMessage}
+          params={this.params}
           paging={{
             ...this.paging,
-            onPrev: this.onPageChange('prev'),
-            onNext: this.onPageChange('next')
+            handleClickNext: this.handleClickNext,
+            handleClickPrevious: this.handleClickPrevious
           }}
         />
       </Host>
