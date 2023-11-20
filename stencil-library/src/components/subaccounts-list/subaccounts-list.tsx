@@ -45,19 +45,18 @@ export class SubaccountsList {
     this.params = ({ ...newParams, after_cursor: afterCursor });
   };
 
-  async fetchData(direction?: string): Promise<void> {
+  async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
       this.loading = false;
       return;
     }
     this.loading = true;
+    const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
     const endpoint = `account/${this.accountId}/seller_accounts`;
 
-    const response: IApiResponseCollection<SubAccount[]> = await Api(this.authToken, process.env.PRIVATE_API_ORIGIN).get(endpoint, {
-      paging: this.paging,
-      direction: direction
-    });
+
+    const response: IApiResponseCollection<SubAccount[]> = await api.get(endpoint, this.params);
     if (!response.error) {
       this.paging = {
         ...this.paging,
