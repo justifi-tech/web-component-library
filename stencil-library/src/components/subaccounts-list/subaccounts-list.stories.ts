@@ -1,12 +1,12 @@
 export default {
-  title: 'dev/Components/ProceedsList',
-  component: 'justifi-proceeds-list',
+  title: 'dev/Components/SubaccountsList',
+  component: 'justifi-subaccounts-list',
   parameters: {},
   decorators: [
     (Story) => `
       ${Story()}
       <script>
-        window.addEventListener('proceed-row-clicked', (e) => {
+        window.addEventListener('subaccount-row-clicked', (e) => {
           console.log(e);
         })
       </script>
@@ -14,7 +14,7 @@ export default {
   ]
 };
 
-class ProceedsListArgs {
+class SubaccountsListArgs {
   'auth-token': string;
   'account-id': string;
 
@@ -24,10 +24,10 @@ class ProceedsListArgs {
   }
 }
 
-const Template = (args: ProceedsListArgs) => {
+const Template = (args: SubaccountsListArgs) => {
   return (`
-    <justifi-proceeds-list
-      data-testid="justifi-proceeds-list"
+    <justifi-subaccounts-list
+      data-testid="justifi-subaccounts-list"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
     />
@@ -35,21 +35,21 @@ const Template = (args: ProceedsListArgs) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = new ProceedsListArgs({});
+Basic.args = new SubaccountsListArgs({});
 
 export const Styled = Template.bind({});
-Styled.args = new ProceedsListArgs({});
+Styled.args = new SubaccountsListArgs({});
 Styled.decorators = [
   (Story) => `
     ${Story()}
     <style>
-      justifi-proceeds-list::part(table-head-cell) {
+      justifi-subaccounts-list::part(table-head-cell) {
         background-color: #F4F4F6;
       }
-      justifi-proceeds-list::part(pagination-bar) {
+      justifi-subaccounts-list::part(pagination-bar) {
         background-color: #F4F4F6;
       }
-      justifi-proceeds-list::part(arrow) {
+      justifi-subaccounts-list::part(arrow) {
         --bs-btn-disabled-bg: #212529;
         --bs-btn-disabled-border-color: #212529;
         --bs-btn-bg: #212529;
@@ -57,17 +57,17 @@ Styled.decorators = [
         --bs-btn-hover-bg: #fccc32;
         --bs-btn-hover-border-color: #fccc32;
       }
-      justifi-proceeds-list::part(error-state) {
+      justifi-subaccounts-list::part(error-state) {
         color: red;
         background-color: #EEEEF5;
       }
-      justifi-proceeds-list::part(loading-state-cell) {
+      justifi-subaccounts-list::part(loading-state-cell) {
         background-color: #EEEEF5;
       }
-      justifi-proceeds-list::part(table-row) {
+      justifi-subaccounts-list::part(table-row) {
         background-color: #EEEEF5;
       }
-      justifi-proceeds-list::part(table-row-even) {
+      justifi-subaccounts-list::part(table-row-even) {
         background-color: #F4F4F6;
       }
     </style>

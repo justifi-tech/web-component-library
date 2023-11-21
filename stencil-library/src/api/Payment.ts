@@ -29,7 +29,15 @@ export interface IPaymentMethod {
   bank_account?: IBankAccount;
 }
 
-export type CardBrand = 'american_express' | 'diners_club' | 'discover' | 'jcb' | 'mastercard' | 'china_unionpay' | 'visa' | 'unknown';
+export type CardBrand =
+  | 'american_express'
+  | 'diners_club'
+  | 'discover'
+  | 'jcb'
+  | 'mastercard'
+  | 'china_unionpay'
+  | 'visa'
+  | 'unknown';
 
 export interface IBankAccount {
   id: string;
@@ -145,7 +153,9 @@ export class Payment implements IPayment {
   }
 
   get disputedStatus(): PaymentDisputedStatuses | null {
-    const lost = this.disputes.some(dispute => dispute.status === PaymentDisputedStatuses.lost);
+    const lost = this.disputes.some(
+      dispute => dispute.status === PaymentDisputedStatuses.lost,
+    );
     // if a dispute is 'won', we don't show a dispute status, just general status
     if (!this.disputed) {
       return null;
@@ -154,5 +164,53 @@ export class Payment implements IPayment {
     } else {
       return PaymentDisputedStatuses.open;
     }
+  }
+}
+
+export interface IPaymentBalanceTransaction {
+  id: string;
+  amount: number;
+  balance: number;
+  currency: 'usd';
+  financial_transaction_id: string;
+  payment_id: string;
+  payment_balance_txn_type: string;
+  source_id: string;
+  source_type: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export class PaymentBalanceTransaction implements IPaymentBalanceTransaction {
+  public id: string;
+  public amount: number;
+  public balance: number;
+  public currency: 'usd';
+  public financial_transaction_id: string;
+  public payment_id: string;
+  public payment_balance_txn_type: string;
+  public source_id: string;
+  public source_type: string;
+  public created_at: string;
+  public updated_at: string;
+
+  constructor(balanceTransaction: IPaymentBalanceTransaction) {
+    this.id = balanceTransaction.id;
+    this.amount = balanceTransaction.amount;
+    this.balance = balanceTransaction.balance;
+    this.currency = balanceTransaction.currency;
+    this.financial_transaction_id = balanceTransaction.financial_transaction_id;
+    this.payment_id = balanceTransaction.payment_id;
+    this.payment_balance_txn_type = balanceTransaction.payment_balance_txn_type;
+    this.source_id = balanceTransaction.source_id;
+    this.source_type = balanceTransaction.source_type;
+    this.created_at = balanceTransaction.created_at;
+    this.updated_at = balanceTransaction.updated_at;
+  }
+
+  get displayTransactionId(): string {
+    return this.payment_balance_txn_type === 'payment_fee'
+      ? '--'
+      : this.source_id;
   }
 }

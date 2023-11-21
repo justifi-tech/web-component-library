@@ -1,22 +1,22 @@
-import config from '../../../config';
+class BusinessFormSteppedStoryArgs {
+  'auth-token': string;
+  'account-id': string;
+  'bussiness-id': string;
+  'css-variables': string;
 
-interface BusinessFormSteppedStoryArgs {
-  authToken: string;
-  businessId: string;
-  cssVariables: string;
+  constructor(args) {
+    this['auth-token'] = args['auth-token'] || '';
+    this['business-id'] = args['business-id'] || '';
+    this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
+    this['css-variables'] = args['css-variables'] || '';
+  }
 }
 
 export default {
-  title: 'Components/BusinessFormStepped',
+  title: 'dev/Components/BusinessFormStepped',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {
-      control: 'text',
-      table: {
-        category: 'props',
-      },
-    },
-    'business-id': {
       control: 'text',
       table: {
         category: 'props',
@@ -28,11 +28,17 @@ export default {
         category: 'props',
       },
     },
+    'business-id': {
+      control: 'text',
+      table: {
+        category: 'props',
+      },
+    }
   },
 };
 
 const Template = (args: BusinessFormSteppedStoryArgs) => {
-  const authToken = args['auth-token'] || config.authToken;
+  const authToken = args['auth-token'];
   const businessId = args['business-id'];
   const accountId = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
   // The <div> here should be replaced by a `display` property in the cardForm potentially
@@ -46,21 +52,18 @@ const Template = (args: BusinessFormSteppedStoryArgs) => {
     </div>
     <style>
       :root {
-        ${args.cssVariables}
+        ${args['css-variables']}
       }
     </style>
   `;
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  'auth-token': '',
-  'business-id': '',
-  'account-id': '',
-};
+
+Basic.args = new BusinessFormSteppedStoryArgs({});
 
 export const Styled = Template.bind({});
-Styled.args = {
+Styled.args = new BusinessFormSteppedStoryArgs({
   'auth-token': '',
   'business-id': '',
   'account-id': '',
@@ -134,4 +137,4 @@ Styled.args = {
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
   --jfi-radio-button-group-width: 100%;
   `,
-};
+});
