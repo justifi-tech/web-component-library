@@ -6,6 +6,7 @@
 
 - Added `BusinessDetails`
 - Added `BusinessFormStepped`
+- Added `SubAccountList`
 - Updated `BusinessForm` layout (section spacing and headings)
 - Removed console.log from `PaymentMethodForm` component
 - Added `PaymentBalanceTransactions`

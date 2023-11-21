@@ -75,14 +75,8 @@ export class PaymentDetails {
       <Host>
         {
           this.loading ? LoadingState :
-
             !this.payment ? ErrorState(this.errorMessage) :
-              <justifi-details
-                error-message={this.errorMessage}
-                entity={{
-                  metadata: this.payment.metadata
-                }}
-              >
+              <justifi-details error-message={this.errorMessage}>
                 <EntityHeadInfo slot="head-info" badge={<span slot='badge' innerHTML={MapPaymentStatusToBadge(this.payment?.status)} />} title={`${formatCurrency(this.payment.amount)} ${this.payment.currency.toUpperCase()}`}>
                   <EntityHeadInfoItem
                     classes="border-1 border-end"
@@ -114,6 +108,9 @@ export class PaymentDetails {
                     <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.card.acct_last_four} />
                     <DetailItem title="Brand" value={this.payment.payment_method.card.brand} />
                     <DetailItem title="Cardholder" value={this.payment.payment_method.card.name} />
+                  </DetailSection>
+                  <DetailSection sectionTitle='Metadata'>
+                    <CodeBlock metadata={this.payment.metadata} />
                   </DetailSection>
                 </div>
               </justifi-details>

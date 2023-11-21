@@ -15,6 +15,17 @@ export function formatCurrency(amount: number, withSymbol = true): string {
   return amount < 0 ? `(${format(-amount)})` : format(amount);
 }
 
+export function formatPercentage(amount: number): string {
+  if (!amount) amount = 0;
+
+  function format(amount: number) {
+    const number = amount / 100;
+    return number.toFixed(2).toString() + '%';
+  }
+
+  return format(amount);
+};
+
 export function formatDate(dateString: string | Date): string {
   if (!dateString) return '';
   const date = new Date(dateString);
@@ -114,6 +125,25 @@ export const MapPayoutStatusToBadge = (status: string) => {
       return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Scheduled</span>";
     case 'withdrawn':
       return "<span class='badge bg-success' title='Negative payout balance successfully withdrawn from your bank account'>Withdrawn</span>";
+  }
+};
+
+export const MapSubAccountStatusToBadge = (status: string) => {
+  switch (status) {
+    case 'created':
+      return "<span class='badge bg-primary' title='This sub account has been created, but we haven't received their onboarding yet'>Canceled</span>";
+    case 'submitted':
+      return "<span class='badge bg-info' title='We've received this sub account's onboarding and we're reviewing their information'>Submitted</span>";
+    case 'information_needed':
+      return "<span class='badge bg-warning' title='We've reviewed this sub account's onboarding information and found an issue'>Information Needed</span>";
+    case 'enabled':
+      return "<span class='badge bg-success' title='This sub account is approved to process payments'>Enabled</span>";
+    case 'disabled':
+      return "<span class='badge bg-danger' title='This sub account was previously approved, but has since become ineligible to process payments'>Disabled</span>";
+    case 'rejected':
+      return "<span class='badge bg-danger' title='This sub account didn't pass approval, so they won't be able to process payments'>Rejected</span>";
+    case 'archived':
+      return "<span class='badge bg-primary' title='This sub account has been archived. They won't be able to process payments unless they are restored'>Archived</span>";
   }
 };
 
