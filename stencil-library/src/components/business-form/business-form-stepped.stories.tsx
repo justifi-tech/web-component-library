@@ -13,7 +13,7 @@ class BusinessFormSteppedStoryArgs {
 }
 
 export default {
-  title: 'Components/BusinessFormStepped',
+  title: 'dev/Components/BusinessFormStepped',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {
@@ -33,18 +33,21 @@ export default {
       table: {
         category: 'props',
       },
-    },
+    }
   },
 };
 
 const Template = (args: BusinessFormSteppedStoryArgs) => {
+  const authToken = args['auth-token'];
+  const businessId = args['business-id'];
+  const accountId = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
     <div>
       <justifi-business-form-stepped
-        auth-token="${args['auth-token']}"
-        account-id="${args['account-id']}"
-        business-id="${args['business-id']}"
+        auth-token="${authToken}"
+        business-id="${businessId}"
+        account-id="${accountId}"
       />
     </div>
     <style>
@@ -56,13 +59,15 @@ const Template = (args: BusinessFormSteppedStoryArgs) => {
 };
 
 export const Basic = Template.bind({});
+
 Basic.args = new BusinessFormSteppedStoryArgs({});
 
 export const Styled = Template.bind({});
 Styled.args = new BusinessFormSteppedStoryArgs({
   'auth-token': '',
   'business-id': '',
-  'css-variables': `
+  'account-id': '',
+  'cssVariables': `
   --jfi-primary-color: #212529;
   --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
   --jfi-layout-font-family: Roboto Mono, Calibri, sans-serif;

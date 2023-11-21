@@ -25,10 +25,12 @@ const componentStepMapping = {
 })
 export class BusinessFormStepped {
   @Prop() authToken: string;
+  @Prop() accountId: string;
   @Prop() businessId?: string;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
+  @State() serverError: string;
 
   private formController: FormController;
   private api: any;
@@ -60,25 +62,38 @@ export class BusinessFormStepped {
     }
   }
 
-  private async sendData() {
+  handleResponse(response, onSuccess) {
+    if (response.error) {
+      this.serverError = response.error.message;
+    } else {
+      this.serverError = '';
+      this.businessId = response.data.id;
+      this.formController.setInitialValues(response.data);
+      onSuccess();
+    }
+  }
+
+  private async sendData(onSuccess?: () => void) {
     this.isLoading = true;
+
     try {
       const data = this.formController.values.getValue();
-
       // Conditionally making either POST or PATCH request
       if (this.businessId) {
         const payload = parseForPatching(data);
         const response = await this.api.patch(
           `entities/business/${this.businessId}`,
           JSON.stringify(payload),
+          { account_id: this.accountId }
         );
-        console.log('Server response from PATCH:', response);
+        this.handleResponse(response, onSuccess);
       } else {
         const response = await this.api.post(
           'entities/business',
           JSON.stringify(data),
+          { account_id: this.accountId }
         );
-        console.log('Server response from POST:', response);
+        this.handleResponse(response, onSuccess);
       }
     } catch (error) {
       console.error('Error sending data:', error);
@@ -109,9 +124,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
-    // sendData
-    // then
-    this.currentStep--;
+    this.sendData(() => this.currentStep--);
   }
 
   showNextStepButton() {
@@ -119,17 +132,15 @@ export class BusinessFormStepped {
   }
 
   nextStepButtonOnClick() {
-    // sendData
-    // then
-    this.currentStep++;
+    this.sendData(() => this.currentStep++);
   }
 
   showSubmitButton() {
     return this.currentStep === this.totalSteps;
   }
 
-  get percentageComplete(): number {
-    return (this.currentStep / this.totalSteps) * 100;
+  currentStepComponent() {
+    return componentStepMapping[this.currentStep](this.formController);
   }
 
   render() {
@@ -137,34 +148,45 @@ export class BusinessFormStepped {
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
 
-        <div class="progress my-4"
-          role="progressbar"
-          aria-label="Basic example"
-          aria-valuenow={this.percentageComplete}
-          aria-valuemin="0"
-          aria-valuemax="100">
-          <div class="progress-bar" style={{ width: `${this.percentageComplete}%` }}></div>
-        </div>
+        {this.serverError && (
+          <div class="alert alert-danger" role="alert">
+            {this.serverError}
+          </div>
+        )}
 
         <form onSubmit={this.validateAndSubmit}>
           <div class="my-4">
-            {componentStepMapping[this.currentStep](this.formController)}
+            {this.currentStepComponent()}
           </div>
-          <div class="d-flex justify-content-between">
-            <div>Step {this.currentStep + 1} of {this.totalSteps + 1}</div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              Step {this.currentStep + 1} of {this.totalSteps + 1}
+            </div>
             <div class="d-flex gap-2">
               {this.showPreviousStepButton() && (
-                <button type="button" class="btn btn-secondary" onClick={() => this.previousStepButtonOnClick()}>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onClick={() => this.previousStepButtonOnClick()}
+                  disabled={this.isLoading}>
                   Previous
                 </button>
               )}
               {this.showNextStepButton() && (
-                <button type="button" class="btn btn-primary" onClick={() => this.nextStepButtonOnClick()}>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick={() => this.nextStepButtonOnClick()}
+                  disabled={this.isLoading}>
                   Next
                 </button>
               )}
               {this.showSubmitButton() && (
-                <button type="submit" class="btn btn-primary">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  onClick={() => this.nextStepButtonOnClick()}
+                  disabled={this.isLoading}>
                   Submit
                 </button>
               )}
