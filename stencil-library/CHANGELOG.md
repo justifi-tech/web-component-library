@@ -1,5 +1,7 @@
 ### Changelog
 
+- Added Error handling for tokenization on PaymentForm
+
 ### 4.6.0
 
 > 23 October 2023
@@ -27,7 +29,6 @@
 - Updated table pagination to use proper bootstrap pagination styles
 - Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
 - Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
-
 
 #### 4.4.0
 
