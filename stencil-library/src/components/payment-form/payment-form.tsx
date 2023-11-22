@@ -91,15 +91,8 @@ export class PaymentForm {
 
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
-      const paymentMethodData = {
-        email: this.email,
-        ...billingFormFieldValues,
-      };
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
-        this.clientId,
-        paymentMethodData,
-        this.accountId,
-      );
+      const paymentMethodData = { email: this.email, ...billingFormFieldValues };
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
 
       // Check if tokenization is successful here and handle errors
       if (tokenizeResponse.error) {
