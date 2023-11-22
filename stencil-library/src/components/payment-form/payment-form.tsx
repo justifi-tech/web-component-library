@@ -89,12 +89,44 @@ export class PaymentForm {
 
     this.isLoading = true;
 
-    const billingFormFieldValues = await this.billingFormRef.getValues();
-    const paymentMethodData = { email: this.email, ...billingFormFieldValues };
-    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
+    try {
+      const billingFormFieldValues = await this.billingFormRef.getValues();
+      const paymentMethodData = {
+        email: this.email,
+        ...billingFormFieldValues,
+      };
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(
+        this.clientId,
+        paymentMethodData,
+        this.accountId,
+      );
 
-    this.submitted.emit(tokenizeResponse);
-    this.isLoading = false;
+      // Check if tokenization is successful here and handle errors
+      if (tokenizeResponse.error) {
+        // Handle tokenization error
+        const errorResponse: CreatePaymentMethodResponse = {
+          id: '',
+          type: 'payment_method',
+          error: tokenizeResponse.error,
+          page_info: 'Error encountered during tokenization', // Additional context
+        };
+        this.submitted.emit(errorResponse);
+      } else {
+        // Successful tokenization
+        this.submitted.emit(tokenizeResponse);
+      }
+    } catch (error) {
+      // Convert ServerError to CreatePaymentMethodResponse
+      const errorResponse: CreatePaymentMethodResponse = {
+        id: '',
+        type: 'payment_method',
+        error: error,
+        page_info: 'Unexpected error during payment processing', // Additional context
+      };
+      this.submitted.emit(errorResponse);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   render() {

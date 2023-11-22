@@ -219,4 +219,60 @@ describe('justifi-payment-form', () => {
       </justifi-payment-form>
     `);
   });
+
+  // Tokenization Error Testing
+  it('should correctly handle tokenization errors', async () => {
+    // Mock billingFormRef and paymentMethodFormRef
+    const mockBillingFormRef = {
+      validate: jest.fn().mockResolvedValue({ isValid: true }),
+      getValues: jest.fn().mockResolvedValue({ name: 'John Doe' }),
+    };
+
+    const mockPaymentMethodFormRef = {
+      validate: jest.fn().mockResolvedValue({ isValid: true }),
+      tokenize: jest
+        .fn()
+        .mockRejectedValue({
+          code: 'unexpected_error',
+          message: 'Tokenization error',
+        }),
+    };
+
+    // Mock component
+    const mockComponent = new PaymentForm();
+
+    // Cast to any to bypass type checker and directly set private properties
+    (mockComponent as any).billingFormRef = mockBillingFormRef;
+    (mockComponent as any).paymentMethodFormRef = mockPaymentMethodFormRef;
+
+    // Mock event
+    const mockEvent = { preventDefault: jest.fn() };
+
+    // Mock event emitter
+    const mockEmitter = { emit: jest.fn() };
+    mockComponent.submitted = mockEmitter as any;
+
+    // Call submit method
+    await mockComponent.submit(mockEvent);
+
+    // Expectations
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    expect(mockBillingFormRef.validate).toHaveBeenCalled();
+    expect(mockPaymentMethodFormRef.validate).toHaveBeenCalled();
+    expect(mockBillingFormRef.getValues).toHaveBeenCalled();
+    expect(mockPaymentMethodFormRef.tokenize).toHaveBeenCalledWith(
+      mockComponent.clientId,
+      { email: mockComponent.email, name: 'John Doe' },
+      mockComponent.accountId,
+    );
+    expect(mockEmitter.emit).toHaveBeenCalledWith({
+      id: '',
+      type: 'payment_method',
+      error: {
+        code: 'unexpected_error',
+        message: 'Tokenization error',
+      },
+      page_info: 'Unexpected error during payment processing',
+    });
+  });
 });

@@ -1,11 +1,18 @@
 interface PaymentMethodCreateResponseWrapper {
   id: string;
   type: 'payment_method';
-  error?: {
-    code: string;
-    message: string;
-  };
   page_info: string;
+  error?: string;
+}
+
+interface ServerError extends PaymentMethodCreateResponseWrapper {
+  exception: string;
+  status: number;
+  traces: {
+    applicationTrace: Array<any>;
+    frameworkTrace: Array<any>;
+    fullTrace: Array<any>;
+  };
 }
 
 interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
@@ -45,4 +52,7 @@ interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
   };
 }
 
-export type CreatePaymentMethodResponse = CardCreateResponse | BankAccountCreateResponse;
+export type CreatePaymentMethodResponse =
+  | CardCreateResponse
+  | BankAccountCreateResponse
+  | ServerError;
