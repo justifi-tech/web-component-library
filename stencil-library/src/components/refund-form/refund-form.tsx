@@ -17,17 +17,39 @@ import { Api } from '../../api';
   shadow: true,
 })
 export class RefundForm {
+  /**
+   * Authentication token required to authorize the refund transaction.
+   */
   @Prop() authToken: string;
+
+  /**
+   * The unique identifier for the payment to be refunded.
+   */
   @Prop() paymentId: string;
 
+  /**
+   * Custom text for the submit button. Defaults to 'Submit'.
+   */
   @Prop() submitButtonText?: string = 'Submit';
+
+  /**
+   * Flag to control the visibility of the submit button.
+   */
   @Prop() withButton?: boolean;
+
+  /**
+   * Optional information text displayed above the form.
+   */
   @Prop() refundInfoText?: string;
 
   @State() refundFields: RefundFormFields = { amount: 0, message: '' };
   @State() refundFieldsErrors: any = {};
   @State() isLoading: boolean = false;
 
+  /**
+   * Event emitted when the refund form is successfully submitted.
+   * The submitted refund fields are passed as the event detail.
+   */
   @Event() submitted: EventEmitter<RefundFormFields>;
 
   private api: any;
@@ -36,6 +58,10 @@ export class RefundForm {
     this.initializeApi();
   }
 
+  /**
+   * Handles the form submission.
+   * Prevents the default form action, validates the form, and emits the 'submitted' event.
+   */
   async handleSubmit(event: Event) {
     event.preventDefault();
     this.isLoading = true;
@@ -49,6 +75,9 @@ export class RefundForm {
     this.isLoading = false;
   }
 
+  /**
+   * Submits the refund request to the API.
+   */
   private async submitRefund() {
     const response = await this.api.post(
       `payments/${this.paymentId}/refunds`,
@@ -57,10 +86,17 @@ export class RefundForm {
     return response;
   }
 
+  /**
+   * Handles input changes, updating the refundFields state.
+   */
   private handleInput(field: keyof RefundFormFields, value: any) {
     this.refundFields = { ...this.refundFields, [field]: value };
   }
 
+  /**
+   * Validates the form fields against the RefundFormSchema.
+   * Updates the refundFieldsErrors state with any validation errors.
+   */
   private async validate() {
     const newErrors = {};
     let isValid = true;
@@ -80,6 +116,10 @@ export class RefundForm {
     return { isValid };
   }
 
+  /**
+   * Initializes the API with the given authentication token.
+   * Logs a warning if the auth token is missing.
+   */
   private initializeApi() {
     if (!this.authToken) {
       console.warn('Warning: Missing auth-token.');
