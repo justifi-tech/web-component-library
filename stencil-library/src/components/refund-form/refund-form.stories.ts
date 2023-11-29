@@ -4,6 +4,7 @@ export default {
   argTypes: {
     authToken: { control: 'text' },
     paymentId: { control: 'text' },
+    amount: { control: 'number' },
     submitButtonText: { control: 'text' },
     withButton: { control: 'boolean' },
     refundInfoText: { control: 'text' },
@@ -13,6 +14,7 @@ export default {
 const RefundFormTemplate = ({
   authToken,
   paymentId,
+  amount,
   submitButtonText,
   withButton,
   refundInfoText,
@@ -23,6 +25,7 @@ const RefundFormTemplate = ({
       <justifi-refund-form
         auth-token="${authToken}"
         payment-id="${paymentId}"
+        amount="${amount}"
         submit-button-text="${submitButtonText}"
         ${withButton ? 'with-button' : ''}
         refund-info-text="${refundInfoText}"
@@ -106,6 +109,7 @@ export const Basic = RefundFormTemplate.bind({});
 Basic.args = {
   authToken: '',
   paymentId: '',
+  amount: 0,
   submitButtonText: 'Submit',
   withButton: true,
   refundInfoText: '',
@@ -116,6 +120,7 @@ export const Styled = RefundFormTemplate.bind({});
 Styled.args = {
   authToken: '',
   paymentId: '',
+  amount: 0,
   submitButtonText: 'Submit',
   withButton: true,
   refundInfoText: '',

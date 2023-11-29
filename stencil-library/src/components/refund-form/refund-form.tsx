@@ -28,6 +28,11 @@ export class RefundForm {
   @Prop() paymentId: string;
 
   /**
+   * The amount of the payment to be refunded.
+   */
+  @Prop() amount?: number = 0;
+
+  /**
    * Custom text for the submit button. Defaults to 'Submit'.
    */
   @Prop() submitButtonText?: string = 'Submit';
@@ -42,7 +47,10 @@ export class RefundForm {
    */
   @Prop() refundInfoText?: string;
 
-  @State() refundFields: RefundFormFields = { amount: 0, message: '' };
+  @State() refundFields: RefundFormFields = {
+    amount: this.amount,
+    message: '',
+  };
   @State() refundFieldsErrors: any = {};
   @State() isLoading: boolean = false;
 
@@ -102,7 +110,10 @@ export class RefundForm {
     let isValid = true;
 
     try {
-      await RefundFormSchema.validate(this.refundFields, { abortEarly: false });
+      await RefundFormSchema.validate(this.refundFields, {
+        abortEarly: false,
+        context: { originalPaymentAmount: this.amount },
+      });
     } catch (err) {
       isValid = false;
       if (err instanceof ValidationError) {
