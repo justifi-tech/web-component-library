@@ -144,16 +144,18 @@ export class RefundForm {
         <h1>Refund</h1>
 
         {this.refundInfoText && (
-          <div class="info-text-container" role="alert">
+          <div
+            class="d-flex align-items-center flex-row gap-4 border-top border-bottom mb-4 p-3"
+            role="alert"
+          >
             <img
               src="/info-icon.svg"
               alt="Information"
-              class="info-icon"
               height="30"
               width="30"
             />
 
-            <p class="info-text" innerHTML={this.refundInfoText} />
+            <p innerHTML={this.refundInfoText} />
           </div>
         )}
 

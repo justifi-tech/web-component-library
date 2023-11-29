@@ -6,28 +6,6 @@
   display: block;
 }
 
-.info-text-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
-  border-top: var(--jfi-form-control-border-color) solid 1px;
-  border-bottom: var(--jfi-form-control-border-color) solid 1px;
-  margin-bottom: 1rem;
-}
-
-.info-icon {
-  margin-left: 1rem;
-}
-
-.info-text {
-  flex: 1;
-  padding: 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: var(--jfi-form-control-color);
-}
-
 *::part(input) {
   font-family: var(--jfi-layout-font-family);
   background-color: var(--jfi-form-control-background-color);
