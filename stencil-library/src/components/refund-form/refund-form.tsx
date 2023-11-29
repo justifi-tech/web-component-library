@@ -145,7 +145,7 @@ export class RefundForm {
 
         {this.refundInfoText && (
           <div
-            class="d-flex align-items-center flex-row gap-4 border-top border-bottom mb-4 p-3"
+            class="d-flex align-items-center flex-row gap-4 border-top border-bottom my-4 p-3"
             role="alert"
           >
             <img
@@ -155,7 +155,7 @@ export class RefundForm {
               width="30"
             />
 
-            <p innerHTML={this.refundInfoText} />
+            <p class="m-0" innerHTML={this.refundInfoText} />
           </div>
         )}
 
