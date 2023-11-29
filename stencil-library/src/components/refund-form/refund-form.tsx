@@ -52,7 +52,7 @@ export class RefundForm {
     message: '',
   };
   @State() refundFieldsErrors: any = {};
-  @State() isLoading: boolean = false;
+  @State() isSubmitting: boolean = false;
 
   /**
    * Event emitted when the refund form is successfully submitted.
@@ -72,7 +72,7 @@ export class RefundForm {
    */
   async handleSubmit(event: Event) {
     event.preventDefault();
-    this.isLoading = true;
+    this.isSubmitting = true;
     const validation = await this.validate();
 
     if (validation.isValid) {
@@ -80,7 +80,7 @@ export class RefundForm {
       this.submitted.emit(this.refundFields);
     }
 
-    this.isLoading = false;
+    this.isSubmitting = false;
   }
 
   /**
@@ -186,9 +186,8 @@ export class RefundForm {
             <div class="form-group d-flex flex-row-reverse">
               <button
                 type="submit"
-                class={`btn btn-primary ml-auto jfi-submit-button${
-                  !!this.isLoading ? ' jfi-submit-button-loading' : ''
-                }`}
+                disabled={!!this.isSubmitting}
+                class="btn btn-primary ml-auto"
               >
                 {this.submitButtonText}
               </button>
