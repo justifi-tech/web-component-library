@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, Source } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/addon-docs';
 import { Markdown } from '@storybook/blocks';
 import dedent from 'ts-dedent';
 import { extractVersionFromPackage, SummaryElement } from './utils.tsx';
@@ -16,7 +16,7 @@ Latest Version: <code>{extractVersionFromPackage()}</code>
 
 - [Usage](#usage)
 - [Default Styling](#default-styling)
-- [React](#react)
+- [React](#including-web-components-in-your-react-app)
 - [Styling](#styling)
   - [Styling iFramed components with variables](#styling-components-with-variables)
     - [Loading Google Fonts](#loading-google-fonts)
@@ -88,35 +88,9 @@ If you want to include it from the `node_modules` you'll need to get this file t
   `}
 />
 
-## React
+# Including Web Components in Your React App
 
-To use the React version of the web components, you need to install the package:
-
-<Source
-  language="bash"
-  dark
-  format={false}
-  code={dedent`
-    npm install --save @justifi/react-components
-  `}
-/>
-
-Then import it and use it as a normal React component, for a more in-depth explanation you can search the sidebar for the component you want to use:
-
-<Source
-  language='jsx'
-  dark
-  format={false}
-  code={dedent`
-    import { JustifiCardForm } from '@justifi/react-components';
-
-    <JustifiCardForm
-      ref={cardFormRef}
-      onCardFormReady={onPaymentMethodReady}
-    />
-
-`}
-/>
+To use JustiFi Web Components in a React application, include the required script and CSS from the CDN or via npm/yarn installation as outlined in the [HTML Web Components section](#usage).
 
 ### For a detailed explanation of how to use the React components, [See the React page](/docs/react--docs)
 
@@ -143,7 +117,7 @@ This is a complete list of variables as defined in this project's `root.scss`:
 ## Loading Google fonts
 
 In order to load custom fonts in the iFramed components, there's a special CSS variable that can be used: `--jfi-load-google-font`.
-The value provided should be a string commpatible with what's described in the following [official documentation from Google](https://developers.google.com/fonts/docs/css2).
+The value provided should be a string compatible with what's described in the following [official documentation from Google](https://developers.google.com/fonts/docs/css2).
 
 ### Check out the [CardForm story for this to see it in action](?path=/docs/components-cardform--styled).
 
@@ -191,9 +165,9 @@ For every other component, you'll be able to see a list of `exportedparts` in th
   language="css"
   dark
   code={dedent`
-    /* Given an exportedpart of "label" for example */
-    the-component-tag:part(label) {
-      /* Your custom css */
+    /* Assuming the component has an exported part named "label" */
+    the-component-tag::part(label) {
+      /* Custom CSS styles go here */
     }
   `}
 />

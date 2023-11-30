@@ -11,101 +11,187 @@ import { SummaryElement } from './utils.tsx';
 
 - [Usage](#usage)
 - [Usage details](#usage-details)
-  - [Props Names](#props-names)
   - [Listening to events](#listening-to-events)
   - [Calling methods](#calling-methods)
-- [Styling](#styling)
-  - [Components styled with variables](#components-styled-with-variables)
-  - [Styling exported parts](#styling-exported-parts)
+- [Styling exported parts](#styling-exported-parts)
 
 # Usage
 
-To use the React version of the web components, you need to install the package:
+To use the web-components in a React app you need to add the CDN script and the link to the default styles to your `index.html` file:
 
 <Source
   language="bash"
   dark
   format={false}
   code={dedent`
-    npm install --save @justifi/react-components
+    <head>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.css"
+      />
+      <script
+        src="https://cdn.justifi.co/justifi-components/1.0.0/justifi-components.js"
+      />
+    </head>
   `}
 />
 
-Then import it and use it as a normal React component, for a more in-depth explanation you can search the sidebar for the component you want to use:
+Then you can use the components as any other HTML element:
 
 <Source
-  language='jsx'
+  language="jsx"
   dark
   format={false}
   code={dedent`
-    import { JustifiCardForm } from '@justifi/react-components';
-
-    <JustifiCardForm
-      ref={cardFormRef}
-      onCardFormReady={onPaymentMethodReady}
+    <justifi-card-form
+      single-line="true"
+      validation-mode="onSubmit"
     />
-  `}
+`}
 />
 
 # Usage details
 
-## Props Names
+## Tyepscript integration
 
-The same props listed on any components page are available, but where they are `hyphen-cased` for the vanilla HTML web components,
-they are `camelCased` in the React version.
+To integrate with TypeScript, declare the component in the JSX.IntrinsicElements interface. This helps TypeScript understand the custom element, its attributes, and events.
 
-For example for `single-line` in the `justifi-card-form`, the React version would use the `singleLine` prop in `JustifiCardForm`.
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    import React, { useState, DOMAttributes } from 'react';
+
+    type CustomElement<T> = Partial<T & DOMAttributes<T> & { children?: React.ReactNode }>;
+
+    declare global {
+      namespace JSX {
+        interface IntrinsicElements {
+          'justifi-payment-form': CustomElement<any>; // Specify more specific types as needed
+        }
+      }
+    }
+
+`}
+/>
 
 ## Listening to events
 
-For components that list events in their docs page, you can listen to those events passing a callback as a value for that prop.
+React allows attaching event listeners directly to JSX components. For custom events emitted by justifi-payment-form, use the addEventListener method within a useEffect hook or a ref callback.
 
-The prop name is `on` plus the name of the event capitalized: for example, for `cardFormReady`, the component would allow a prop called `onCardFormReady`.
+Example of handling a custom event:
 
 <Source
-  language='jsx'
+  language="jsx"
   dark
   format={false}
   code={dedent`
-    import { JustifiCardForm } from '@justifi/react-components';
+    import React, { useEffect, useRef } from 'react';
 
-    <JustifiCardForm
-      onCardFormReady={(event) => {
-        // CardForm is ready!
-        // Do stuff
-      }}
-    />
-  `}
+    export default function PaymentFormComponent() {
+      const formRef = useRef(null);
+
+      useEffect(() => {
+        const form = formRef.current;
+        if (form) {
+          const handleSubmit = (event) => {
+            // Handle the submit event
+          };
+          form.addEventListener('submitted', handleSubmit);
+
+          // Cleanup
+          return () => form.removeEventListener('submitted', handleSubmit);
+        }
+      }, []);
+
+      return (
+        <justifi-payment-form
+          ref={formRef}
+          client-id="your-client-id"
+          email="customer@example.com"
+          // ... other props
+        />
+      );
+    }
+
+`}
 />
 
-## Calling methods
+## Calling Methods
 
-In order to call methods of the component, a React ref needs to be used.
+In some scenarios, you might need to programmatically call methods on the justifi-payment-form web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
+
+### Step 1 Creating a Ref to the Component
+
+First, create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
 
 <Source
-  language='jsx'
+  language="jsx"
   dark
   format={false}
   code={dedent`
-    import { JustifiCardForm } from '@justifi/react-components';
+    import React, { useRef } from 'react';
 
-    const MyComponent = () => {
-      const justifiCardFormRef = useRef(null);
+    export default function PaymentFormComponent() {
+      const paymentFormRef = useRef(null);
 
-      const onSomeEventHandler = () => {
-        // The ref needs to be typed as any
-        const cardForm = (cardFormRef as any).current;
-
-        const tokenizeResponse = await cardForm.tokenize(clientId, paymentMethodMetadata, subAccountID);
-        // Do stuff with the tokenized payment method, like submitting a payment
-      }
-
-      <JustifiCardForm
-        onSomeEvent={onSomeEventHandler}
-        ref={justifiCardFormRef}
-      />
+      // Rest of your component code
     }
-  `}
+
+`}
+/>
+
+### Step 2 Attaching the Ref to the Web Component
+
+Attach the created ref to the justifi-payment-form element in your JSX
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+  <justifi-payment-form
+    ref={paymentFormRef}
+    client-id="your-client-id"
+    // ... other props
+  />
+`}
+/>
+
+### Step 3 Calling Methods on the component
+
+You can now call methods on the justifi-payment-form component using the ref. It’s important to ensure that the component is mounted and the ref is set before attempting to call any methods. This is typically done inside event handlers or lifecycle methods like useEffect.
+
+Example of calling a method:
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    import React, { useRef, useEffect } from 'react';
+
+    export default function PaymentFormComponent() {
+      const paymentFormRef = useRef(null);
+
+      useEffect(() => {
+        if (paymentFormRef.current) {
+          // Call a method on the web component
+          paymentFormRef.current.someMethod();
+        }
+      }, []);
+
+      return (
+        <justifi-payment-form
+          ref={paymentFormRef}
+          client-id="your-client-id"
+          // ... other props
+        />
+      );
+    }
+
+`}
 />
 
 # Styling
