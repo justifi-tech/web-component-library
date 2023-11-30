@@ -24,7 +24,6 @@ import { PHONE_MASKS } from '../../../utils/phone-masks';
 export class BusinessGenericInfo {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() business: any = {};
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -34,9 +33,6 @@ export class BusinessGenericInfo {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
-    this.formController.values.subscribe(
-      values => (this.business = { ...values }),
-    );
   }
 
   inputHandler(name: string, value: string) {
