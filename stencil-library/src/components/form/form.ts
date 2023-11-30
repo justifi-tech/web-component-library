@@ -77,12 +77,12 @@ export class FormController {
     this.setNestedError(obj, properties, message);
   }
 
-  private async validate(): Promise<boolean> {
+  private async validate(context?: any): Promise<boolean> {
     this._isValid = true;
     this._errors = {};
 
     try {
-      await this._schema.validate(this._values, { abortEarly: false });
+      await this._schema.validate(this._values, { context, abortEarly: false });
     } catch (err) {
       this._isValid = false;
       err.inner.forEach((item: ValidationError) => {
@@ -94,8 +94,11 @@ export class FormController {
     return this._isValid;
   }
 
-  public async validateAndSubmit(submitHandler: () => void): Promise<void> {
-    const isValid = await this.validate();
+  public async validateAndSubmit(
+    submitHandler: () => void,
+    context?: any,
+  ): Promise<void> {
+    const isValid = await this.validate(context || {});
     if (isValid) {
       submitHandler();
     }

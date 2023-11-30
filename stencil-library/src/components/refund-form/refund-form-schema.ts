@@ -12,10 +12,10 @@ const RefundFormSchema = yup.object().shape({
     .typeError('Amount must be a number')
     .positive('Amount must be positive')
     .test(
-      'maxAmount',
+      'amount',
       'Refund amount cannot be more than the original payment amount',
       function (value) {
-        return value <= this.options.context.originalPaymentAmount;
+        return value <= this.options.context.amount;
       },
     )
     .nullable(),

@@ -7,9 +7,9 @@ import {
   EventEmitter,
   Prop,
 } from '@stencil/core';
-import { ValidationError } from 'yup';
 import RefundFormSchema, { RefundFormFields } from './refund-form-schema';
 import { Api } from '../../api';
+import { FormController } from '../form/form';
 
 @Component({
   tag: 'justifi-refund-form',
@@ -47,11 +47,7 @@ export class RefundForm {
    */
   @Prop() refundInfoText?: string;
 
-  @State() refundFields: RefundFormFields = {
-    amount: this.amount,
-    message: '',
-  };
-  @State() refundFieldsErrors: any = {};
+  @State() errors: any = {};
   @State() isSubmitting: boolean = false;
 
   /**
@@ -60,10 +56,22 @@ export class RefundForm {
    */
   @Event() submitted: EventEmitter<RefundFormFields>;
 
+  private formController: FormController;
   private api: any;
 
   componentWillLoad() {
+    this.formController = new FormController(RefundFormSchema);
+    this.formController.setInitialValues({
+      amount: this.amount,
+      message: '',
+    });
     this.initializeApi();
+  }
+
+  componentDidLoad() {
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
   }
 
   /**
@@ -72,59 +80,38 @@ export class RefundForm {
    */
   async handleSubmit(event: Event) {
     event.preventDefault();
-    this.isSubmitting = true;
-    const validation = await this.validate();
 
-    if (validation.isValid) {
-      await this.submitRefund();
-      this.submitted.emit(this.refundFields);
-    }
-
-    this.isSubmitting = false;
+    this.formController.validateAndSubmit(this.submitRefund.bind(this), {
+      amount: this.amount,
+    });
   }
 
   /**
    * Submits the refund request to the API.
    */
   private async submitRefund() {
-    const response = await this.api.post(
-      `payments/${this.paymentId}/refunds`,
-      this.refundFields,
-    );
-    return response;
+    this.isSubmitting = true;
+    const refundFields = this.formController.values.getValue();
+
+    try {
+      await this.api.post(`payments/${this.paymentId}/refunds`, refundFields);
+      this.submitted.emit(refundFields);
+    } catch (error) {
+      console.error('Error submitting refund:', error);
+      this.submitted.emit(error);
+    } finally {
+      this.isSubmitting = false;
+    }
   }
 
   /**
    * Handles input changes, updating the refundFields state.
    */
   private handleInput(field: keyof RefundFormFields, value: any) {
-    this.refundFields = { ...this.refundFields, [field]: value };
-  }
-
-  /**
-   * Validates the form fields against the RefundFormSchema.
-   * Updates the refundFieldsErrors state with any validation errors.
-   */
-  private async validate() {
-    const newErrors = {};
-    let isValid = true;
-
-    try {
-      await RefundFormSchema.validate(this.refundFields, {
-        abortEarly: false,
-        context: { originalPaymentAmount: this.amount },
-      });
-    } catch (err) {
-      isValid = false;
-      if (err instanceof ValidationError) {
-        err.inner.forEach((error: ValidationError) => {
-          newErrors[error.path] = error.message;
-        });
-      }
-    }
-
-    this.refundFieldsErrors = newErrors;
-    return { isValid };
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      [field]: value,
+    });
   }
 
   /**
@@ -164,22 +151,21 @@ export class RefundForm {
             <form-control-monetary
               name="amount"
               label="Refund Amount"
-              defaultValue={this.refundFields.amount?.toString() || ''}
+              defaultValue={this.amount?.toString() || ''}
               inputHandler={(name: keyof RefundFormFields, value: any) =>
                 this.handleInput(name, value)
               }
-              error={this.refundFieldsErrors.amount}
+              error={this.errors.amount}
             ></form-control-monetary>
           </div>
           <div class="form-group">
             <form-control-text
               name="notes"
               label="Additional Notes"
-              defaultValue={this.refundFields.message || ''}
               inputHandler={(name: keyof RefundFormFields, value: any) =>
                 this.handleInput(name, value)
               }
-              error={this.refundFieldsErrors.notes}
+              error={this.errors.notes}
             ></form-control-text>
           </div>
           {this.withButton && (
