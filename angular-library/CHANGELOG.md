@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.6.1
+
+> 30 November 2023
+
+- Add package support warning to `README`
+
 ### 4.6.0
 
 > 23 October 2023

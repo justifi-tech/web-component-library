@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.6.1
+
+> 30 November 2023
+
+- Update `README.md` to have correct version in CDN link
+
 ### 4.6.0
 
 > 23 October 2023
