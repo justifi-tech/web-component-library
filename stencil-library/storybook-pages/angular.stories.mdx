@@ -10,114 +10,139 @@ import dedent from 'ts-dedent';
 # Index
 
 - [Usage](#usage)
-- [Usage details](#usage-details)
-  - [Props Names](#props-names)
-  - [Listening to events](#listening-to-events)
-  - [Calling methods](#calling-methods)
+- [Integration Steps](#integration-steps)
+- [Props and Event Handling](#props-and-event-handling)
+- [Calling methods](#calling-methods)
 - [Styling](#styling)
   - [Components styled with variables](#components-styled-with-variables)
   - [Styling exported parts](#styling-exported-parts)
 
 # Usage
 
-To use the Angular version of the web components, you need to install the package:
+To integrate Justifi web components into your Angular application, use the `@justifi/webcomponents` package directly. This approach allows you to utilize the standard web components in an Angular environment.
 
-<Source language="bash" dark code="npm install --save @justifi/angular-components" />
+## Integration Steps
 
-Then import it in your module:
+1. Include Web Components in index.html:
+
+<Source
+  language="bash"
+  dark
+  code={dedent(`
+    <head>
+      <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.css" />
+      <script type='module'
+        src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.esm.js'></script>
+    </head>
+  `)}
+/>
+
+2. Update Angular Module Configuration:
 
 <Source
   language="typescript"
   dark
   code={dedent(`
-    import { JustifiAngularComponentsModule } from '@justifi/angular-components';
+    import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+    import { BrowserModule } from '@angular/platform-browser';
+    import { AppComponent } from './app.component';
 
     @NgModule({
-      imports: [JustifiAngularComponentsModule]
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule
+      ],
+      providers: [],
+      bootstrap: [AppComponent],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     export class AppModule { }
 
 `)}
 />
 
-And use it as a normal Angular component:
+## Props and Event Handling
+
+- **Props**: Use Angular template syntax for passing props to components. For example, if `cardEnabled` is a variable in your component:
 
 <Source
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      (cardFormReady)="onPaymentMethodReady($event)"
-    ></justifi-card-form>
-`)}
+    <justifi-payment-form [card]="cardEnabled"></justifi-payment-form>
+  `)}
 />
 
-# Usage details
-
-## Props Names
-
-Angular will follow the same prop conventions as the vanilla HTML web components, so they should be hyphen-cased.
-
-For example, the `cardFormReady` event will be `card-form-ready` in Angular.
-
-## Listening to events
-
-To listen to events, you can use the Angular syntax for binding to component events.
-
-For example `(event)="handler($event)"`.
+- **Event Handling**: Listen to events using Angular's event binding syntax.
 
 <Source
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      (cardFormReady)="onCardFormReady($event)"
-    ></justifi-card-form>
-`)}
+    <justifi-payment-form (submitted)="onFormSubmitted($event)"></justifi-payment-form>
+  `)}
 />
 
 ## Calling methods
 
-You can call methods by grabbing a reference to the element in the component.
+To programmatically call methods on web components from an Angular component, you should first obtain a reference to the web component instance. This can be achieved using Angular’s ViewChild decorator.
+
+1. **Reference the element**: Use `ViewChild` to get a reference to the web component in your Angular component. Assign a template reference variable (`#refVariable`) to the web component in your template, and then access it in your TypeScript code.
+
+In your template (`app.component.html`):
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    <justifi-payment-form #paymentForm></justifi-payment-form>
+`)}
+/>
+
+In your component (`app.component.ts`):
 
 <Source
   language="typescript"
   dark
   code={dedent(`
-    import { ViewChild } from '@angular/core';
+    import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
     @Component({
-      template: \`<justifi-card-form #cardForm></justifi-card-form>\`,
+      selector: 'app-root',
+      templateUrl: './app.component.html',
+      styleUrls: ['./app.component.css']
     })
-    export class MyComponent {
-      @ViewChild('cardForm') cardForm;
+    export class AppComponent implements AfterViewInit {
+      @ViewChild('paymentForm') paymentFormRef: ElementRef;
 
-      onSomeEventHandler() {
-        this.cardForm.tokenize(clientId, paymentMethodMetadata, subAccountID).then(tokenizeResponse => {
-          // Do stuff with the tokenized payment method, like submitting a payment
-        });
+      ngAfterViewInit() {
+        // Now you can call methods on the web component
+        this.paymentFormRef.nativeElement.enableSubmitButton();
       }
     }
 
 `)}
 />
 
-# Styling
+Remember that the web component's methods will be available on the nativeElement of the ElementRef.
 
-## Components styled with variables
+2. **Ensure Component is Loaded**: Make sure that the web component is fully loaded before calling its methods. The `ngAfterViewInit` lifecycle hook is a good place for such method calls, as it ensures that the view is fully initialized.
 
-The following components can only be styled through CSS variables:
+## Styling
 
-- [BankAccountForm](?path=/docs/components-bankaccountform--docs)
-- [CardForm](?path=/docs/components-cardform--docs)
-- [PaymentForm](?path=/docs/components-paymentform--docs)
+### Components Styled with Variables
 
-You can easily override the variables in a `<style>` tag in any place of your App, both in the `<head>` of your root `index.html` or at any component level.
+- **CSS Variables**: Style components using CSS variables. These can be set globally or scoped to a component.
 
 <Source
-  language="html"
+  language="css"
   dark
-  code={dedent`
+  code={dedent(`
     <style>
       :root {
         --jfi-variable: 'override value';
@@ -126,24 +151,23 @@ You can easily override the variables in a `<style>` tag in any place of your Ap
 
     <justifi-payment-form></justifi-payment-form>
 
-`}
+`)}
 />
 
 <SummaryElement title="See full list of CSS variables available">
   <CSSVars />
 </SummaryElement>
 
-## Styling exported parts
+### Styling Exported Parts
 
-You can style the components in the same way as in the React documentation.
+- **Shadow Parts**: Style exported parts of components using the `part` attribute.
 
 <Source
-  language="html"
+  language="css"
   dark
   code={dedent(`
-    /* Given an exported part of "label" for example */
-    the-component-tag:part(label) {
-      /* Your custom css */
+    the-component-tag::part(label) {
+      /* Custom CSS */
     }
 `)}
 />
