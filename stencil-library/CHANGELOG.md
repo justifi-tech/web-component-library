@@ -11,6 +11,7 @@
 - Removed console.log from `PaymentMethodForm` component
 - Added `PaymentBalanceTransactions`
 - Refactored `BusinessList` removing the mapping functions
+- Updated `Angular` Storybook documentation
 
 ### 4.6.0
 
