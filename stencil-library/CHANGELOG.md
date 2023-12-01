@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.6.2
+
+> 1 December 2023
+
+- Convert `README.mdx` to `README.md` to republish readme to NPM registry
+
 ### 4.6.1
 
 > 30 November 2023
