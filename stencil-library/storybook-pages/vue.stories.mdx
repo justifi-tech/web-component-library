@@ -1,5 +1,4 @@
 import { Meta, Source } from '@storybook/addon-docs';
-import { SummaryElement } from './utils.tsx';
 import dedent from 'ts-dedent';
 
 <Meta title="Vue 3" />
@@ -9,75 +8,87 @@ import dedent from 'ts-dedent';
 # Index
 
 - [Usage](#usage)
-- [Usage details](#usage-details)
-  - [Props Names](#props-names)
-  - [Listening to events](#listening-to-events)
-  - [Calling methods](#calling-methods)
+- [Integration Step]()
+- [Props and Event Handling](#usage-details)
+- [Calling methods](#calling-methods)
 
 # Usage
 
-To use the Vue 3 version of the web components, you need to install the package:
+To integrate Justifi web components into your Vue 3 application, you will directly use the standard web components package.
 
-<Source language="bash" dark code="npm install --save @justifi/vue-components" />
+## Integration Steps
 
-Then import it in your `main.js`:
+1. Include Web Components in your Project:
 
-<Source
-  language="javascript"
-  dark
-  code={dedent(`
-    import JustifiVue3Components from '@justifi/vue-components';
-    import { createApp } from 'vue';
-
-    const app = createApp(App);
-    app.use(JustifiVue3Components);
-    app.mount('#app');
-
-`)}
-/>
-
-And use it as a normal Vue component:
+Add the web components script and stylesheet to your project's `index.html` file.
 
 <Source
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      @card-form-ready="onPaymentMethodReady"
-    ></justifi-card-form>
-`)}
+    <head>
+      <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.css" />
+      <script type='module'
+        src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.esm.js'></script>
+    </head>
+  `)}
 />
 
-# Usage details
+2. Use the Web Component in your Vue Template:
 
-## Props Names
-
-Vue 3 will follow the same prop conventions as the vanilla HTML web components, so they should be hyphen-cased.
-
-For example, the `cardFormReady` event will be `card-form-ready` in Vue 3.
-
-## Listening to events
-
-To listen to events, you can use the Vue 3 syntax for binding to component events.
-
-For example `@event="handler"`.
+Once included, use the web component tags directly in your Vue templates.
 
 <Source
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      @card-form-ready="onCardFormReady"
-    ></justifi-card-form>
+    <template>
+      <justifi-card-form
+        @card-form-ready="onPaymentMethodReady"
+      ></justifi-card-form>
+    </template>
 `)}
 />
 
-## Calling methods
+## Props and Event Handling
 
-You can call methods by grabbing a reference to the element in the component.
+- **Props:** Use Vue's binding syntax to pass props to the web components. Remember that web component attributes are typically kebab-cased.
 
 <Source
-  language="javascript"
+  language="html"
+  dark
+  code={dedent(`
+    <template>
+      <justifi-card-form :client-id="clientId"></justifi-card-form>
+    </template>
+
+`)}
+/>
+
+- **Event Handling:** Listen to events using Vue's `v-on` directive or the shorthand `@`.
+
+<Source
+  language="html"
+  dark
+  code={dedent(`
+    <template>
+      <justifi-card-form
+        @card-form-ready="onCardFormReady"
+      ></justifi-card-form>
+    </template>
+
+`)}
+/>
+
+## Calling Methods
+
+To call methods on a web component from a Vue component:
+
+1. ** Reference Element:** Use Vue's `ref` to get a reference to the web component.
+
+<Source
+  language="html"
   dark
   code={dedent(`
     <template>
@@ -90,10 +101,12 @@ You can call methods by grabbing a reference to the element in the component.
 
       const onSomeEventHandler = () => {
         cardForm.value.tokenize(clientId, paymentMethodMetadata, subAccountID).then(tokenizeResponse => {
-          // Do stuff with the tokenized payment method, like submitting a payment
+          // Process the response
         });
       }
     </script>
 
 `)}
 />
+
+In this example, `cardForm` is a reference to the `justifi-card-form` web component, and you can call its methods directly.
