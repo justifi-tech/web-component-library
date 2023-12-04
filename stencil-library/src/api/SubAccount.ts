@@ -190,7 +190,8 @@ export interface SubAccountIdentity {
   address_postal_code?: string,
   address_country?: string,
   phone?: string,
-  is_owner?: boolean
+  is_owner?: boolean,
+  ssn_last4?: string
 }
 
 export interface BankAccount {

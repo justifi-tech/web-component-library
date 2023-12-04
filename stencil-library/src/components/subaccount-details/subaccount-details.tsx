@@ -51,6 +51,7 @@ export class SubaccountDetails {
     return (
       <Host>
         <subaccount-business-details data={this.subaccount?.payload.business_details} />
+        <subaccount-representative-details data={this.subaccount?.payload.representative} />
       </Host>
     );
   }
