@@ -1,8 +1,6 @@
 # Documentation
 
-- [Web component library](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library)
-  - [justifi-bank-account-form](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/bank-account-form#justifi-bank-account-form)
-  - [justifi-card-form](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/card-form#justifi-card-form)
+- [JustiFi Web Component Documentation](https://storybook.justifi.ai/?path=/docs/introduction--docs)
 
 ## Getting Started
 
