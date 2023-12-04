@@ -47,4 +47,5 @@ export const OwnerDetails = /*@__PURE__*/createReactComponent<JSX.OwnerDetails, 
 export const PaginationMenu = /*@__PURE__*/createReactComponent<JSX.PaginationMenu, HTMLPaginationMenuElement>('pagination-menu');
 export const RepresentativeDetails = /*@__PURE__*/createReactComponent<JSX.RepresentativeDetails, HTMLRepresentativeDetailsElement>('representative-details');
 export const SelectInput = /*@__PURE__*/createReactComponent<JSX.SelectInput, HTMLSelectInputElement>('select-input');
+export const SubaccountBusinessDetails = /*@__PURE__*/createReactComponent<JSX.SubaccountBusinessDetails, HTMLSubaccountBusinessDetailsElement>('subaccount-business-details');
 export const TextInput = /*@__PURE__*/createReactComponent<JSX.TextInput, HTMLTextInputElement>('text-input');

@@ -1,23 +1,22 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponse } from '../../api';
-import { SubAccount } from '../../api/SubAccount';
-import { DetailItem, DetailSection } from '../details/utils';
+import { SubAccountOnboardingData } from '../../api/SubAccount';
 
 @Component({
   tag: 'justifi-subaccount-details',
-  styleUrl: 'subaccount-details.css',
+  styleUrl: 'subaccount-details.scss',
   shadow: true,
 })
 
 export class SubaccountDetails {
   @Prop() accountId: string;
-  @Prop() subAccountId: string;
+  @Prop() subId: string;
   @Prop() authToken: string;
-  @State() subaccount: SubAccount
+  @State() subaccount: SubAccountOnboardingData
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
-  @Watch('subAccountId')
+  @Watch('subId')
   @Watch('authToken')
   updateOnPropChange() {
     this.fetchData();
@@ -34,11 +33,11 @@ export class SubaccountDetails {
       return;
     }
     this.loading = true;
-    const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
-    const endpoint = `account/${this.accountId}/seller_accounts/${this.subAccountId}`;
+    const api = Api(this.authToken, process.env.ACCOUNTS_API_ORIGIN);
+    const endpoint = `onboarding/${this.subId}`;
 
 
-    const response: IApiResponse<SubAccount> = await api.get(endpoint);
+    const response: IApiResponse<SubAccountOnboardingData> = await api.get(endpoint);
     if (!response.error) {
       this.subaccount = response.data;
       console.log(this.subaccount);
@@ -51,12 +50,7 @@ export class SubaccountDetails {
   render() {
     return (
       <Host>
-        <DetailSection sectionTitle='Details'>
-          <DetailItem title='Test' value='Value' />
-          <DetailItem title='Test' value='Value' />
-          <DetailItem title='Test' value='Value' />
-          <DetailItem title='Test' value='Value' />
-        </DetailSection>
+        <subaccount-business-details data={this.subaccount?.payload.business_details} />
       </Host>
     );
   }
