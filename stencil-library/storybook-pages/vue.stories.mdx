@@ -7,14 +7,9 @@ import dedent from 'ts-dedent';
 
 # Index
 
-- [Usage](#usage)
 - [Integration Step]()
-- [Props and Event Handling](#usage-details)
+- [Props and Event Handling](#props-and-event-handling)
 - [Calling methods](#calling-methods)
-
-# Usage
-
-To integrate Justifi web components into your Vue 3 application, you will directly use the standard web components package.
 
 ## Integration Steps
 
@@ -45,7 +40,7 @@ Once included, use the web component tags directly in your Vue templates.
   code={dedent(`
     <template>
       <justifi-card-form
-        @card-form-ready="onPaymentMethodReady"
+        :client-id="clientId"
       ></justifi-card-form>
     </template>
 `)}
@@ -66,26 +61,34 @@ Once included, use the web component tags directly in your Vue templates.
 `)}
 />
 
-- **Event Handling:** Listen to events using Vue's `v-on` directive or the shorthand `@`.
+- **Event Handling:** To listen to events, use a `ref` and the mounted lifecycle hook to add event listeners.
 
 <Source
   language="html"
   dark
   code={dedent(`
     <template>
-      <justifi-card-form
-        @card-form-ready="onCardFormReady"
-      ></justifi-card-form>
+      <justifi-card-form ref="cardForm"></justifi-card-form>
     </template>
+
+    <script setup>
+      import { ref, onMounted } from 'vue';
+
+      const cardForm = ref(null);
+
+      onMounted(() => {
+        cardForm.value.addEventListener('cardFormReady', (event) => {
+          // Handle the card form ready event
+        });
+      });
+    </script>
 
 `)}
 />
 
 ## Calling Methods
 
-To call methods on a web component from a Vue component:
-
-1. ** Reference Element:** Use Vue's `ref` to get a reference to the web component.
+To call methods on a web component from a Vue component use a `ref` to get a reference to the web component.
 
 <Source
   language="html"
