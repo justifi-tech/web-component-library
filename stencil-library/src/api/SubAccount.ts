@@ -218,27 +218,9 @@ export interface IOnboardingPayload {
   owners?: SubAccountIdentity[]
 }
 
-export class OnboardingPayload implements IOnboardingPayload {
-  public onboarding_version: string;
-  public bank_account?: SubaccountBankAccount;
-  public business_details?: SubAccountBusinessDetails;
-  public representative?: SubAccountIdentity;
-  public terms_and_conditions?: Terms;
-  public owners?: SubAccountIdentity[];
-
-  constructor(payload: IOnboardingPayload) {
-    this.onboarding_version = payload.onboarding_version;
-    this.bank_account = payload.bank_account;
-    this.business_details = payload.business_details;
-    this.representative = payload.representative;
-    this.terms_and_conditions = payload.terms_and_conditions;
-    this.owners = payload.owners;
-  }
-}
-
-export interface SubAccountOnboardingData {
+export interface IOnboardingData {
   account_type?: AccountType,
-  payload?: OnboardingPayload,
+  payload?: IOnboardingPayload,
   platform_account_id?: string,
   seller_account_id?: string,
   sub_account_id?: string

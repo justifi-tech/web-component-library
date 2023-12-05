@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponse } from '../../api';
-import { SubAccountOnboardingData } from '../../api/SubAccount';
+import { IOnboardingData } from '../../api/SubAccount';
 import { MockOnboardingData } from '../../api/mockData/MockOnboardingData';
 
 @Component({
@@ -13,7 +13,7 @@ export class SubaccountDetails {
   @Prop() accountId: string;
   @Prop() subId: string;
   @Prop() authToken: string;
-  @State() subaccount: SubAccountOnboardingData = MockOnboardingData;
+  @State() subaccount: IOnboardingData = MockOnboardingData;
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
@@ -38,7 +38,7 @@ export class SubaccountDetails {
     const endpoint = `onboarding/${this.subId}`;
 
 
-    const response: IApiResponse<SubAccountOnboardingData> = await api.get(endpoint);
+    const response: IApiResponse<IOnboardingData> = await api.get(endpoint);
     if (!response.error) {
       this.subaccount = response.data;
       console.log(this.subaccount);
