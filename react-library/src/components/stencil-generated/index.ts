@@ -51,4 +51,5 @@ export const SubaccountBankDetails = /*@__PURE__*/createReactComponent<JSX.Subac
 export const SubaccountBusinessDetails = /*@__PURE__*/createReactComponent<JSX.SubaccountBusinessDetails, HTMLSubaccountBusinessDetailsElement>('subaccount-business-details');
 export const SubaccountOwnersDetails = /*@__PURE__*/createReactComponent<JSX.SubaccountOwnersDetails, HTMLSubaccountOwnersDetailsElement>('subaccount-owners-details');
 export const SubaccountRepresentativeDetails = /*@__PURE__*/createReactComponent<JSX.SubaccountRepresentativeDetails, HTMLSubaccountRepresentativeDetailsElement>('subaccount-representative-details');
+export const SubaccountTermsDetails = /*@__PURE__*/createReactComponent<JSX.SubaccountTermsDetails, HTMLSubaccountTermsDetailsElement>('subaccount-terms-details');
 export const TextInput = /*@__PURE__*/createReactComponent<JSX.TextInput, HTMLTextInputElement>('text-input');

@@ -37,6 +37,8 @@ export class SubaccountRepresentativeDetails {
                 title="Is Owner?"
                 value={this.data?.is_owner ? 'Yes' : 'No'}
               />
+            </div>
+            <div class="col-12 col-md-6">  
               <DetailItem
                 title="Date of Birth"
                 value={formatMediumDate(
