@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponse } from '../../api';
 import { SubAccountOnboardingData } from '../../api/SubAccount';
+import { MockOnboardingData } from '../../api/mockData/MockOnboardingData';
 
 @Component({
   tag: 'justifi-subaccount-details',
@@ -12,7 +13,7 @@ export class SubaccountDetails {
   @Prop() accountId: string;
   @Prop() subId: string;
   @Prop() authToken: string;
-  @State() subaccount: SubAccountOnboardingData
+  @State() subaccount: SubAccountOnboardingData = MockOnboardingData;
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
@@ -52,6 +53,7 @@ export class SubaccountDetails {
       <Host>
         <subaccount-business-details data={this.subaccount?.payload.business_details} />
         <subaccount-representative-details data={this.subaccount?.payload.representative} />
+        <subaccount-owners-details data={this.subaccount?.payload.owners} />
       </Host>
     );
   }
