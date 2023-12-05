@@ -209,13 +209,31 @@ export interface Terms {
   user_agent?: string
 }
 
-export interface OnboardingPayload {
+export interface IOnboardingPayload {
   onboarding_version: string,
   bank_account?: BankAccount,
   business_details?: SubAccountBusinessDetails,
   representative?: SubAccountIdentity,
   terms_and_conditions?: Terms
   owners?: SubAccountIdentity[]
+}
+
+export class OnboardingPayload implements IOnboardingPayload {
+  public onboarding_version: string;
+  public bank_account?: BankAccount;
+  public business_details?: SubAccountBusinessDetails;
+  public representative?: SubAccountIdentity;
+  public terms_and_conditions?: Terms;
+  public owners?: SubAccountIdentity[];
+
+  constructor(payload: IOnboardingPayload) {
+    this.onboarding_version = payload.onboarding_version;
+    this.bank_account = payload.bank_account;
+    this.business_details = payload.business_details;
+    this.representative = payload.representative;
+    this.terms_and_conditions = payload.terms_and_conditions;
+    this.owners = payload.owners;
+  }
 }
 
 export interface SubAccountOnboardingData {
