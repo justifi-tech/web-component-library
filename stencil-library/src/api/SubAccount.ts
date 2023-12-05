@@ -194,7 +194,7 @@ export interface SubAccountIdentity {
   ssn_last4?: string
 }
 
-export interface BankAccount {
+export interface SubaccountBankAccount {
   bank_name?: string,
   account_nickname?: string,
   routing_number?: string,
@@ -211,7 +211,7 @@ export interface Terms {
 
 export interface IOnboardingPayload {
   onboarding_version: string,
-  bank_account?: BankAccount,
+  bank_account?: SubaccountBankAccount,
   business_details?: SubAccountBusinessDetails,
   representative?: SubAccountIdentity,
   terms_and_conditions?: Terms
@@ -220,7 +220,7 @@ export interface IOnboardingPayload {
 
 export class OnboardingPayload implements IOnboardingPayload {
   public onboarding_version: string;
-  public bank_account?: BankAccount;
+  public bank_account?: SubaccountBankAccount;
   public business_details?: SubAccountBusinessDetails;
   public representative?: SubAccountIdentity;
   public terms_and_conditions?: Terms;
