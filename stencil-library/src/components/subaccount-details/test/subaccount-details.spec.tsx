@@ -2,17 +2,21 @@ import { newSpecPage } from '@stencil/core/testing';
 import { SubaccountDetails } from '../subaccount-details';
 
 describe('subaccount-details', () => {
-  it('renders', async () => {
+  it('renders properly', async () => {
     const page = await newSpecPage({
       components: [SubaccountDetails],
-      html: `<subaccount-details></subaccount-details>`,
+      html: `<justifi-subaccount-details></justifi-subaccount-details>`,
     });
     expect(page.root).toEqualHtml(`
-      <subaccount-details>
+      <justifi-subaccount-details>
         <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </subaccount-details>
+          <subaccount-business-details></subaccount-business-details>
+          <subaccount-representative-details></subaccount-representative-details>
+          <subaccount-owners-details></subaccount-owners-details>
+          <subaccount-bank-details></subaccount-bank-details>
+          <subaccount-terms-details></subaccount-terms-details>
+       </mock:shadow-root>
+      </justifi-subaccount-details>
     `);
   });
 });
