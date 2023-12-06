@@ -1,13 +1,29 @@
-import { AccountType, BusinessType } from "../SubAccount"
+import { BusinessStructure } from "../Business";
+import { AccountType, BusinessType, IOnboardingPayload } from "../SubAccount"
 
-const MockOnboardingPayload = {
+const MockOnboardingPayload: IOnboardingPayload = {
   business_details: {
     url: "https://justifi.ai",
+    phone: '111-222-3333',
+    doing_business_as: {
+      name: 'Very Good Business'
+    },
+    email: 'ceo@business.com',
     type: BusinessType.individual,
-    industry: "Landscaping Services"
+    structure: BusinessStructure.private_corporation,
+    industry: "Landscaping Services",
+    legal: {
+      name: 'Legal Business Name',
+      address_city: "Minneapolis",
+      address_line1: "123 Example St",
+      address_state: "MN",
+      address_country: "USA",
+      address_postal_code: "55555"
+    }
   },
   representative: {
     name: "Individual Personname",
+    title: 'Head of Operations',
     email: "just.an.individual@justifi.ai",
     phone: "6124011111",
     dob_day: "01",
