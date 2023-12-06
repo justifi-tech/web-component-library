@@ -14,31 +14,14 @@ export class SubaccountRepresentativeDetails {
   render() {
     return (
       <Host>
-        <DetailSection sectionTitle='Subaccount Representative Details' >
+        <DetailSection sectionTitle='Representative'>
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem
                 title="Name"
                 value={this.data?.name}
               />
-              <DetailItem
-                title="Title"
-                value={this.data?.title}
-              />
-              <DetailItem
-                title="Email"
-                value={this.data?.email}
-              />
-              <DetailItem
-                title="Phone"
-                value={this.data?.phone}
-              />
-              <DetailItem
-                title="Is Owner?"
-                value={this.data?.is_owner ? 'Yes' : 'No'}
-              />
-            </div>
-            <div class="col-12 col-md-6">  
+              
               <DetailItem
                 title="Date of Birth"
                 value={formatMediumDate(
@@ -50,12 +33,22 @@ export class SubaccountRepresentativeDetails {
                 )}
               />
               <DetailItem
+                title="Email"
+                value={this.data?.email}
+              />
+              <DetailItem
                 title="Last 4 SSN Digits"
                 value={this.data?.ssn_last4}
               />
+            </div>
+            <div class="col-12 col-md-6">
               <DetailItem
-                title="Email"
-                value={this.data?.email}
+                title="Title"
+                value={this.data?.title}
+              />
+              <DetailItem
+                title="Phone"
+                value={this.data?.phone}
               />
               <DetailItem
                 title="Representative Address"

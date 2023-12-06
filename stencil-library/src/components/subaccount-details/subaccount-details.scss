@@ -1,7 +1,9 @@
-@import 'reboot';
-@import 'bootstrap-utilities';
-@import 'type';
-@import 'spinners';
+@import "reboot";
+@import "tables";
+@import "buttons";
+@import "badge";
+@import "grid";
+@import "bootstrap-utilities";
 
 :host {
   @include host-base-styles;

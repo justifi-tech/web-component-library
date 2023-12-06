@@ -13,9 +13,9 @@ export class SubaccountOwnersDetails {
   render() {
     return (
       <Host>
-        <DetailSection sectionTitle='Account Owners'>
+        <DetailSection sectionTitle='Owners'>
           <div class="row gy-3">
-            {this.data.map((owner) => {
+            {this.data && this.data.map((owner) => {
               return (
                 <div class="col-12 col-md-6">
                   <DetailItem 
