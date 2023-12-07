@@ -1,10 +1,8 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponse } from '../../api';
 import { IOnboardingData, ISubAccount, SubAccount } from '../../api/SubAccount';
-import { MockOnboardingData } from '../../api/mockData/MockOnboardingData';
 import { EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { MapSubAccountStatusToBadge, formatDate, formatTime } from '../../utils/utils';
-import mockSubAccounts from '../../api/mockData/MockSubAccount';
 
 @Component({
   tag: 'justifi-subaccount-details',
@@ -16,8 +14,8 @@ export class SubaccountDetails {
   @Prop() accountId: string;
   @Prop() subId: string;
   @Prop() authToken: string;
-  @State() onboardingData: IOnboardingData = MockOnboardingData;
-  @State() subaccount: SubAccount =  mockSubAccounts[0];
+  @State() onboardingData: IOnboardingData;
+  @State() subaccount: SubAccount;
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
