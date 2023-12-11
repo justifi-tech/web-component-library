@@ -36,13 +36,13 @@ export class SubaccountMerchantDetails {
                 />
                 <DetailItem
                   title='Address'
-                  value={`${formatLegalAddress(this.onboardingData?.payload?.business_details?.legal)}`}
+                  value={this.onboardingData?.payload?.business_details?.legal ? `${formatLegalAddress(this.onboardingData?.payload?.business_details?.legal)}` : ''}
                 />
               </div>
               <div class="col-12 col-md-6">
                 <DetailItem
                   title='Business Structure'
-                  value={snakeCaseToHumanReadable(this.onboardingData?.payload?.business_details?.structure)}
+                  value={this.onboardingData?.payload?.business_details?.structure ? snakeCaseToHumanReadable(this.onboardingData?.payload?.business_details?.structure) : ''}
                   />
                 <DetailItem
                   title='Business Type'
