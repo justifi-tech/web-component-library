@@ -11,6 +11,7 @@
 - Removed console.log from `PaymentMethodForm` component
 - Added `PaymentBalanceTransactions`
 - Refactored `BusinessList` removing the mapping functions
+- Added `RefundForm` component for handling refund processes
 
 ### 4.6.0
 
