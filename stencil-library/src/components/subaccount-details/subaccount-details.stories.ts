@@ -1,5 +1,5 @@
 export default {
-  title: 'Components/SubaccountDetails',
+  title: 'dev/Components/SubaccountDetails',
   component: 'justifi-subaccount-details',
   parameters: {}
 };
@@ -7,12 +7,12 @@ export default {
 class SubaccountDetailsArgs {
   'auth-token': string;
   'account-id': string;
-  'sub-id': string;
+  'subaccount-id': string;
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || process.env.PRIVATE_AUTH_TOKEN;
     this['account-id'] = args['account-id'] || process.env.EXAMPLE_PLATFORM_ACCOUNT_ID;
-    this['sub-id'] = args['sub-id'] || process.env.EXAMPLE_SUBACCOUNT_ID;
+    this['subaccount-id'] = args['subaccount-id'] || process.env.EXAMPLE_SUBACCOUNT_ID;
   }
 }
 
@@ -22,7 +22,7 @@ const Template = (args: SubaccountDetailsArgs) => {
       data-testid="justifi-subaccounts-details"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
-      sub-id="${args['sub-id']}"
+      subaccount-id="${args['subaccount-id']}"
     />
   `);
 };

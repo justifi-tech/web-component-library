@@ -12,14 +12,14 @@ import { MapSubAccountStatusToBadge, formatDate, formatTime } from '../../utils/
 
 export class SubaccountDetails {
   @Prop() accountId: string;
-  @Prop() subId: string;
+  @Prop() subaccountId: string;
   @Prop() authToken: string;
   @State() onboardingData: IOnboardingData;
   @State() subaccount: SubAccount;
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
-  @Watch('subId')
+  @Watch('subaccountId')
   @Watch('authToken')
   updateOnPropChange() {
     this.fetchData();
@@ -31,12 +31,11 @@ export class SubaccountDetails {
 
   async fetchOnboardingData(): Promise<void> {
     const api = Api(this.authToken, process.env.ACCOUNTS_API_ORIGIN);
-    const endpoint = `onboarding/${this.subId}`;
+    const endpoint = `onboarding/${this.subaccountId}`;
 
     const response: IApiResponse<IOnboardingData> = await api.get(endpoint);
     if (!response.error) {
       this.onboardingData = response.data;
-      console.log(this.onboardingData);
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }
@@ -44,13 +43,12 @@ export class SubaccountDetails {
 
   async fetchSubAccountData(): Promise<void> {
     const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
-    const endpoint = `account/${this.accountId}/seller_accounts/${this.subId}`;
+    const endpoint = `account/${this.accountId}/seller_accounts/${this.subaccountId}`;
 
     const response: IApiResponse<ISubAccount> = await api.get(endpoint);
     if (!response.error) {
       const data = new SubAccount(response.data);
       this.subaccount = data;
-      console.log(this.subaccount);
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }
