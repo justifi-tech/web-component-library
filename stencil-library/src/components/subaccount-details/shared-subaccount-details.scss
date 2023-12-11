@@ -2,6 +2,6 @@
 @import 'bootstrap-utilities';
 @import 'grid';
 
-.flex-1 {
-  flex: 1;
+:host {
+  @include host-base-styles;
 }
