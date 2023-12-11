@@ -26,9 +26,9 @@ export class SubaccountRepresentativeDetails {
                   title="Date of Birth"
                   value={formatMediumDate(
                     new Date(
-                      Number(this.data?.dob_day),
-                      Number(this.data?.dob_month) - 1,
-                      Number(this.data?.dob_year)
+                      Number(this.data?.dob_year),
+                      Number(this.data?.dob_month) -1,
+                      Number(this.data?.dob_day)
                     )
                   )}
                 />

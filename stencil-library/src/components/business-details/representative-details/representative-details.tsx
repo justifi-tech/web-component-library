@@ -46,9 +46,9 @@ export class JustifiRepresentativeDetails {
                 title="Date Of Birth"
                 value={formatMediumDate(
                   new Date(
-                    Number(this.representative?.dob_day),
-                    Number(this.representative?.dob_month) - 1,
                     Number(this.representative?.dob_year),
+                    Number(this.representative?.dob_month) - 1,
+                    Number(this.representative?.dob_day)
                   ),
                 )}
               />
