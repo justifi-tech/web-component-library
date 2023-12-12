@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for taking the time to contribute to JustiFi Web Components! The following is a set of guidelines for contributing to this project.
+Thank you for taking the time to contribute to the JustiFi Web Component Library! The following is a set of guidelines for contributing to this project.
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change. 
@@ -23,9 +23,7 @@ Note: Please include as many details as possible to assist our team in quickly i
 1. Create an Issue for the Web Component Repo using the Repo's Issue Page
 2. In the body of the Issue, enter `/` to select our Enhancement Request Template and fill out each section as required. 
 
-Note: Please include as many details as possible to help our team understand the intent behind your request, and how this request will potentially improve the user experience. 
-
-## How can I ask for help?
+Note: Please include as many details as possible to help our team understand the intent behind your request, and how this request will potentially improve the user experience for all consumers of this project. 
 
 ## Pull Request Process
 
