@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.6.4
+
+> 12 December 2023
+
+- Fallback to wc proxy when process is undefined in Api.ts
+
 ### 4.6.3
 
 > 12 December 2023
@@ -45,7 +51,6 @@
 - Updated table pagination to use proper bootstrap pagination styles
 - Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
 - Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
-
 
 #### 4.4.0
 
