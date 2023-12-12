@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
+import { Legal } from '../api/SubAccount';
 
 export function formatCurrency(amount: number, withSymbol = true): string {
   if (!amount) amount = 0;
@@ -73,6 +74,10 @@ export function formatTimeSeconds(dateString: string): string {
 // eg. 123 Main St, Scranton, PA 11111
 export function formatAddress(address: Address): string {
   return `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`;
+}
+
+export function formatLegalAddress(address: Legal): string {
+  return `${address.address_line1}, ${address.address_city}, ${address.address_state}, ${address.address_postal_code}`;
 }
 
 export function extractComputedFontsToLoad() {

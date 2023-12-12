@@ -1,4 +1,5 @@
 import { formatCurrency, formatDate, formatPercentage, formatTime } from '../utils/utils';
+import { BusinessStructure } from './Business';
 
 export enum TagTypes {
   neutral = 'neutral',
@@ -61,6 +62,16 @@ export interface ApplicationFeeRate {
   rate_type: string,
   transaction_fee: number,
   updated_at: string
+}
+
+export interface Legal {
+  name?: string,
+  address_line1?: string,
+  address_line2?: string,
+  address_city?: string,
+  address_state?: string,
+  address_postal_code?: string,
+  address_country?: string
 }
 
 export interface ISubAccount {
@@ -148,4 +159,69 @@ export class SubAccount implements ISubAccount {
     };
     return typeMap[this.status];
   }
+}
+
+export interface SubAccountBusinessDetails {
+  url?: string,
+  type?: BusinessType,
+  structure?: BusinessStructure,
+  industry?: string,
+  tax_id?: string,
+  phone?: string,
+  email?: string,
+  date_of_incorporation?: string,
+  approximate_annual_volume?: string,
+  legal?: Legal,
+  doing_business_as?: {name: string}
+}
+
+export interface SubAccountIdentity {
+  name?: string,
+  title?: string,
+  email?: string,
+  identification_number?: string,
+  dob_month?: string,
+  dob_day?: string,
+  dob_year?: string,
+  address_line1?: string,
+  address_line2?: string,
+  address_city?: string,
+  address_state?: string,
+  address_postal_code?: string,
+  address_country?: string,
+  phone?: string,
+  is_owner?: boolean,
+  ssn_last4?: string
+}
+
+export interface SubaccountBankAccount {
+  bank_name?: string,
+  account_nickname?: string,
+  routing_number?: string,
+  account_number?: string,
+  account_type?: string,
+  account_owner_name?: string
+}
+
+export interface Terms {
+  accepted?: boolean,
+  ip?: string,
+  user_agent?: string
+}
+
+export interface IOnboardingPayload {
+  onboarding_version: string,
+  bank_account?: SubaccountBankAccount,
+  business_details?: SubAccountBusinessDetails,
+  representative?: SubAccountIdentity,
+  terms_and_conditions?: Terms
+  owners?: SubAccountIdentity[]
+}
+
+export interface IOnboardingData {
+  account_type?: AccountType,
+  payload?: IOnboardingPayload,
+  platform_account_id?: string,
+  seller_account_id?: string,
+  sub_account_id?: string
 }
