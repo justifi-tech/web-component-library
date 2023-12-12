@@ -23,7 +23,7 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
 }
 
 const Api = (authToken: string, customApiOrigin?: string) => {
-  const originFromEnv = process.env.API_ORIGIN;
+  const originFromEnv = process?.env.API_ORIGIN;
   const apiOrigin = customApiOrigin || originFromEnv || 'https://wc-proxy.justifi.ai';
 
   async function getAuthorizationHeader() {
@@ -39,10 +39,10 @@ const Api = (authToken: string, customApiOrigin?: string) => {
     let cursor;
     if (params?.paging) {
       cursor = params?.paging && params?.direction ? `${params.direction === 'prev'
-          ? '&before_cursor=' + params.paging.start_cursor
-          : params.direction === 'next'
-            ? '&after_cursor=' + params.paging.end_cursor
-            : ''
+        ? '&before_cursor=' + params.paging.start_cursor
+        : params.direction === 'next'
+          ? '&after_cursor=' + params.paging.end_cursor
+          : ''
         }` : null;
       delete params.paging;
     }
