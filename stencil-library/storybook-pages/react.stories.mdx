@@ -1,7 +1,7 @@
 import { Meta, Source } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
 import CSSVars from './css-variables.tsx';
-import { SummaryElement } from './utils.tsx';
+import { SummaryElement, extractVersionFromPackage } from './utils.tsx';
 
 <Meta title="React" />
 
@@ -27,10 +27,12 @@ To use the web-components in a React app you need to add the CDN script and the 
     <head>
       <link
         rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.css"
+        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.css"
       />
       <script
-        src="https://cdn.justifi.co/justifi-components/1.0.0/justifi-components.js"
+        async
+        type="module"
+        src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.esm.js"
       />
     </head>
   `}
@@ -222,7 +224,8 @@ You can easily override the variables in a `<style>` tag in any place of your Ap
 
       <JustifiPaymentForm />
     </YourComponent>
-  `}
+
+`}
 />
 
 <SummaryElement title="See full list of CSS variables available">
