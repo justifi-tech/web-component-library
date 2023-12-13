@@ -39,6 +39,7 @@ export const JustifiPaymentsList = /*@__PURE__*/createReactComponent<JSX.Justifi
 export const JustifiPayoutDetails = /*@__PURE__*/createReactComponent<JSX.JustifiPayoutDetails, HTMLJustifiPayoutDetailsElement>('justifi-payout-details');
 export const JustifiPayoutsList = /*@__PURE__*/createReactComponent<JSX.JustifiPayoutsList, HTMLJustifiPayoutsListElement>('justifi-payouts-list');
 export const JustifiProceedsList = /*@__PURE__*/createReactComponent<JSX.JustifiProceedsList, HTMLJustifiProceedsListElement>('justifi-proceeds-list');
+export const JustifiRefundForm = /*@__PURE__*/createReactComponent<JSX.JustifiRefundForm, HTMLJustifiRefundFormElement>('justifi-refund-form');
 export const JustifiSubaccountDetails = /*@__PURE__*/createReactComponent<JSX.JustifiSubaccountDetails, HTMLJustifiSubaccountDetailsElement>('justifi-subaccount-details');
 export const JustifiSubaccountsList = /*@__PURE__*/createReactComponent<JSX.JustifiSubaccountsList, HTMLJustifiSubaccountsListElement>('justifi-subaccounts-list');
 export const JustifiTable = /*@__PURE__*/createReactComponent<JSX.JustifiTable, HTMLJustifiTableElement>('justifi-table');
