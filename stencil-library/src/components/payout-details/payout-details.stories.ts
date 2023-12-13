@@ -12,7 +12,7 @@ class PayoutDetailsArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || config.authToken;
-    this['payment-id'] = args['payment-id'] || 'po_zBUZ6WvMEzoPzwS0qUmWE';
+    this['payout-id'] = args['payout-id'] || 'po_zBUZ6WvMEzoPzwS0qUmWE';
   }
 }
 

@@ -22,7 +22,7 @@ class PayoutsListArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || config.authToken;
-    this['payment-id'] = args['payment-id'] || config.accountId;
+    this['account-id'] = args['account-id'] || config.accountId;
   }
 }
 
