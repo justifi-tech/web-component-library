@@ -17,8 +17,8 @@ interface GrossVolumeReport {
   shadow: true,
 })
 export class GrossPaymentChart {
-  chartRef: HTMLCanvasElement
   chart: Chart
+  ctx = document.getElementById('chart') as HTMLCanvasElement
 
   @Prop() accountId: string;
   @Prop() authToken: string;
@@ -58,34 +58,24 @@ export class GrossPaymentChart {
   }
 
   renderChart() {
-    if (this.chart) {
-      this.chart.update()
-    } else if (this.chartRef) {
-      this.chart = new Chart(
-        this.chartRef.getContext("2d"),
-        {
-          type: 'bar',
-          data: {
-            labels: this.data.dates.map(row => row.date),
-            datasets: [
-              {
-                label: 'Acquisitions by year',
-                data: this.data.dates.map(row => row.value)
-              }]
-          },
+    this.chart = new Chart(
+      this.ctx,
+      {
+        type: 'bar',
+        data: {
+          datasets: [{
+            label: 'Gross Volume',
+            data: [1, 2, 3, 4, 5, 6]
+          }]
         }
-      );
-      this.chart.render()
-    }
-
+      }
+    )
   }
-
-  
 
   render() {
     return (
       <Host>
-        <canvas id="canvas" ref={(elem) => this.chartRef = elem} />
+        <canvas id="chart" />
       </Host>
     );
   }
