@@ -124,9 +124,9 @@ Example of handling a custom event:
 
 In some scenarios, you might need to programmatically call methods on the justifi-payment-form web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
 
-### Step 1 Creating a Ref to the Component
+### Creating a Ref to the Component
 
-First, create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
+Create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
 
 <Source
   language="jsx"
@@ -135,60 +135,22 @@ First, create a ref in your React component that will be attached to the `justif
   code={dedent`
     import React, { useRef } from 'react';
 
-    export default function PaymentFormComponent() {
-      const paymentFormRef = useRef(null);
+    export default function CardFormComponent() {
+      // create the ref
+      const formRef = useRef(null);
 
-      // Rest of your component code
-    }
-
-`}
-/>
-
-### Step 2 Attaching the Ref to the Web Component
-
-Attach the created ref to the justifi-payment-form element in your JSX
-
-<Source
-  language="jsx"
-  dark
-  format={false}
-  code={dedent`
-  <justifi-payment-form
-    ref={paymentFormRef}
-    client-id="your-client-id"
-    // ... other props
-  />
-`}
-/>
-
-### Step 3 Calling Methods on the component
-
-You can now call methods on the justifi-payment-form component using the ref. It’s important to ensure that the component is mounted and the ref is set before attempting to call any methods. This is typically done inside event handlers or lifecycle methods like useEffect.
-
-Example of calling a method:
-
-<Source
-  language="jsx"
-  dark
-  format={false}
-  code={dedent`
-    import React, { useRef, useEffect } from 'react';
-
-    export default function PaymentFormComponent() {
-      const paymentFormRef = useRef(null);
-
-      useEffect(() => {
-        if (paymentFormRef.current) {
-          // Call a method on the web component
-          paymentFormRef.current.someMethod();
+      const handleSubmit = () => {
+        const form = formRef.current;
+        if (form) {
+          form.tokenize();
         }
-      }, []);
+      };
 
       return (
-        <justifi-payment-form
-          ref={paymentFormRef}
-          client-id="your-client-id"
-          // ... other props
+        <justifi-card-form
+          // attach the ref to the web component
+          ref={formRef}
+          validation-mode="onBlur"
         />
       );
     }
