@@ -1,7 +1,8 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
-import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend} from 'chart.js'
-import { mockGrossVolumeReport } from '../../api/mockData/mockGrossVolumeReport';
+import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip} from 'chart.js'
+// import { mockGrossVolumeReport } from '../../api/mockData/mockGrossVolumeReport';
+import { formatCurrency, formatDisplayDate } from '../../utils/utils';
 
 interface GrossVolumeReportDate {
   date: string, value: number
@@ -23,7 +24,10 @@ export class GrossPaymentChart {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @State() data: GrossVolumeReport = mockGrossVolumeReport;
+  @State() data: GrossVolumeReport;
+  @State() total: number;
+  @State() dates: GrossVolumeReportDate[];
+  @State() endDate: string;
   @State() loading: boolean;
   @State() errorMessage: string;
 
@@ -55,37 +59,61 @@ export class GrossPaymentChart {
     const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
 
     if (!response.error) {
-      this.data = response?.data;
-      console.log(this.data);
+      console.log(response.data);
+      this.total = response?.data.total;
+      this.dates = response?.data.dates.reverse();
+      this.endDate = this.dates[this.dates.length - 1].date;
+      console.log(this.endDate);
     }
   }
 
   renderChart() {
-    console.log('renderChart fired');
     if (this.chart) {
       this.chart.update()
-    } else if (this.chartRef) {
+    } else if (this.chartRef && this.endDate) {
       Chart.register(
         Colors,
         BarController,
         BarElement,
         CategoryScale,
         LinearScale,
-        Legend
+        Legend,
+        Tooltip
       )
       this.chart = new Chart(
         this.chartRef.getContext("2d"),
         {
           type: 'bar',
           options: {
-            
+            plugins: {
+              tooltip: {
+                displayColors: false,
+                callbacks: {
+                  label: (context) => {
+                    let index = context.dataIndex;
+                    let date = formatDisplayDate(this.dates[index].date, this.endDate);
+                    let value = formatCurrency(this.dates[index].value)
+                    return [date, value]
+                  },
+                }
+              }
+            },
+            scales: {
+              x: {
+                display: false
+              },
+              y: {
+                display: false
+              }
+            }
           },
           data: {
-            labels: [1, 2, 3],
+            labels: this.dates.map(() => ''),
             datasets: [
               {
-                label: 'Acquisitions by year',
-                data: [1, 2, 3]
+                label: 'Gross Volume Report',
+                data: this.dates.map((date) => date.value),
+                minBarLength: 5
                 
               }]
           },
@@ -96,7 +124,6 @@ export class GrossPaymentChart {
   }
 
   render() {
-    console.log('render fired');
     return (
       <Host>
         <canvas id="chart" ref={(elem) => this.chartRef = elem} />
