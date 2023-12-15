@@ -1,14 +1,29 @@
-interface BusinessFormStoryArgs {
-  authToken: string;
-  businessId: string;
-  cssVariables: string;
+
+class BusinessFormStoryArgs {
+  'auth-token': string;
+  'account-id': string;
+  'bussiness-id': string;
+  'cssVariables': string;
+
+  constructor(args) {
+    this['auth-token'] = args['auth-token'] || '';
+    this['business-id'] = args['business-id'] || '';
+    this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
+    this['cssVariables'] = args['cssVariables'] || '';
+  }
 }
 
 export default {
-  title: 'dev/Components/BusinessForm',
+  title: 'Components/BusinessForm',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {
+      control: 'text',
+      table: {
+        category: 'props',
+      },
+    },
+    'account-id': {
       control: 'text',
       table: {
         category: 'props',
@@ -29,6 +44,7 @@ const Template = (args: BusinessFormStoryArgs) => {
     <div>
       <justifi-business-form
         auth-token="${args['auth-token']}"
+        account-id="${args['account-id']}"
         business-id="${args['business-id']}"
       />
     </div>
@@ -41,16 +57,13 @@ const Template = (args: BusinessFormStoryArgs) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  'auth-token': '',
-  'business-id': '',
-};
+Basic.args = new BusinessFormStoryArgs({});
 
 export const Styled = Template.bind({});
-Styled.args = {
+Basic.args = new BusinessFormStoryArgs({
   'auth-token': '',
   'business-id': '',
-  'cssVariables': `
+  cssVariables: `
   --jfi-primary-color: #212529;
   --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
   --jfi-layout-font-family: Roboto Mono, Calibri, sans-serif;
@@ -120,4 +133,4 @@ Styled.args = {
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
   --jfi-radio-button-group-width: 100%;
   `,
-};
+});

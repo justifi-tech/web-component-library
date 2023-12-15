@@ -1,5 +1,18 @@
 ### Changelog
 
+### 4.7.0
+
+> (insert date here upon release)
+
+- Added `BusinessDetails`
+- Added `BusinessFormStepped`
+- Added `SubAccountList`
+- Updated `BusinessForm` layout (section spacing and headings)
+- Removed console.log from `PaymentMethodForm` component
+- Added `PaymentBalanceTransactions`
+- Refactored `BusinessList` removing the mapping functions
+- Added `RefundForm` component for handling refund processes
+
 ### 4.6.2
 
 > 1 December 2023
@@ -39,7 +52,6 @@
 - Updated table pagination to use proper bootstrap pagination styles
 - Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
 - Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
-
 
 #### 4.4.0
 
