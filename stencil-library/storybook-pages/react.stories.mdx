@@ -78,6 +78,44 @@ To integrate with TypeScript, declare the component in the JSX.IntrinsicElements
 `}
 />
 
+## Calling Methods
+
+In some scenarios, you might need to programmatically call methods on the justifi-payment-form web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
+
+### Creating a Ref to the Component
+
+Create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    import React, { useRef } from 'react';
+
+    export default function CardFormComponent() {
+      // create the ref
+      const formRef = useRef(null);
+
+      const handleSubmit = () => {
+        const form = formRef.current;
+        if (form) {
+          form.tokenize();
+        }
+      };
+
+      return (
+        <justifi-card-form
+          // attach the ref to the web component
+          ref={formRef}
+          validation-mode="onBlur"
+        />
+      );
+    }
+
+`}
+/>
+
 ## Listening to events
 
 React allows attaching event listeners directly to JSX components. For custom events emitted by justifi-payment-form, use the addEventListener method within a useEffect hook or a ref callback.
@@ -113,44 +151,6 @@ Example of handling a custom event:
           client-id="your-client-id"
           email="customer@example.com"
           // ... other props
-        />
-      );
-    }
-
-`}
-/>
-
-## Calling Methods
-
-In some scenarios, you might need to programmatically call methods on the justifi-payment-form web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
-
-### Creating a Ref to the Component
-
-Create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
-
-<Source
-  language="jsx"
-  dark
-  format={false}
-  code={dedent`
-    import React, { useRef } from 'react';
-
-    export default function CardFormComponent() {
-      // create the ref
-      const formRef = useRef(null);
-
-      const handleSubmit = () => {
-        const form = formRef.current;
-        if (form) {
-          form.tokenize();
-        }
-      };
-
-      return (
-        <justifi-card-form
-          // attach the ref to the web component
-          ref={formRef}
-          validation-mode="onBlur"
         />
       );
     }

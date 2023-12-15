@@ -1,11 +1,5 @@
 ### Changelog
 
-### 4.6.5
-
-> (insert date here)
-
-- Update React Storybook documentation
-
 ### 4.6.4
 
 > 12 December 2023
