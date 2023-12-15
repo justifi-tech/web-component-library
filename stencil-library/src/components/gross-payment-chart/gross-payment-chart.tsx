@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
-import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip} from 'chart.js'
+import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title} from 'chart.js'
 // import { mockGrossVolumeReport } from '../../api/mockData/mockGrossVolumeReport';
 import { formatCurrency, formatDisplayDate } from '../../utils/utils';
 
@@ -78,7 +78,8 @@ export class GrossPaymentChart {
         CategoryScale,
         LinearScale,
         Legend,
-        Tooltip
+        Tooltip,
+        Title
       )
       this.chart = new Chart(
         this.chartRef.getContext("2d"),
@@ -86,8 +87,18 @@ export class GrossPaymentChart {
           type: 'bar',
           options: {
             plugins: {
+              legend: {
+                display: false
+              },
+              title: {
+                display: true,
+                text: ['Trailing 30 Days', 'Gross Payments', formatCurrency(this.total)],
+                position: 'top',
+                align: 'start'
+              },
               tooltip: {
                 displayColors: false,
+                intersect: false,
                 callbacks: {
                   label: (context) => {
                     let index = context.dataIndex;
@@ -100,7 +111,17 @@ export class GrossPaymentChart {
             },
             scales: {
               x: {
-                display: false
+                grid: {
+                  drawOnChartArea: false,
+                  drawTicks: false
+                },
+                ticks: {
+                  callback: (index) => {
+                    if (index === 0 || index === this.dates.length - 1) {
+                      return formatDisplayDate(this.dates[index].date, this.endDate);
+                    }
+                  }
+                }
               },
               y: {
                 display: false
@@ -111,10 +132,8 @@ export class GrossPaymentChart {
             labels: this.dates.map(() => ''),
             datasets: [
               {
-                label: 'Gross Volume Report',
-                data: this.dates.map((date) => date.value),
-                minBarLength: 5
-                
+                label: 'Gross Volume by Date',
+                data: this.dates.map((date) => date.value)
               }]
           },
         }
