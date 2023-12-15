@@ -40,47 +40,46 @@ Once included, use the web component tags directly in your Vue templates.
   code={dedent(`
     <template>
       <justifi-card-form
-        :client-id="clientId"
+        ref="cardForm"
+        :validation-mode="'onBlur'"
+        @cardFormReady="onCardFormReady"
+        @cardFormTokenize="onCardFormTokenize"
+        @cardFormValidate="onCardFormValidate"
       ></justifi-card-form>
     </template>
 `)}
 />
 
-## Props and Event Handling
+## Event Handling
 
-- **Props:** Use Vue's binding syntax to pass props to the web components. Remember that web component attributes are typically kebab-cased.
-
-<Source
-  language="html"
-  dark
-  code={dedent(`
-    <template>
-      <justifi-card-form :client-id="clientId"></justifi-card-form>
-    </template>
-
-`)}
-/>
-
-- **Event Handling:** To listen to events, use a `ref` and the mounted lifecycle hook to add event listeners.
+- **Event Handling:** Events emitted by justifi-card-form can be listened to using the @eventName syntax..
 
 <Source
   language="html"
   dark
   code={dedent(`
     <template>
-      <justifi-card-form ref="cardForm"></justifi-card-form>
+      <justifi-card-form
+        ref="cardForm"
+        :validation-mode="'onBlur'"
+        @cardFormReady="onCardFormReady"
+        @cardFormTokenize="onCardFormTokenize"
+        @cardFormValidate="onCardFormValidate"
+      ></justifi-card-form>
     </template>
+    <script setup lang="ts">
+      // Event handlers
+      const onCardFormReady = (event: any) => {
+        console.log('Card Form is ready:', event)
+      }
 
-    <script setup>
-      import { ref, onMounted } from 'vue';
+      const onCardFormTokenize = (event: any) => {
+        console.log('Card Form Tokenize event:', event)
+      }
 
-      const cardForm = ref(null);
-
-      onMounted(() => {
-        cardForm.value.addEventListener('cardFormReady', (event) => {
-          // Handle the card form ready event
-        });
-      });
+      const onCardFormValidate = (event: any) => {
+        console.log('Card Form Validate event:', event)
+      }
     </script>
 
 `)}
@@ -100,12 +99,14 @@ To call methods on a web component from a Vue component use a `ref` to get a ref
 
     <script setup>
       import { ref } from 'vue';
-      const cardForm = ref(null);
 
-      const onSomeEventHandler = () => {
-        cardForm.value.tokenize(clientId, paymentMethodMetadata, subAccountID).then(tokenizeResponse => {
-          // Process the response
-        });
+      const cardForm = ref<any>(null)
+
+      const validateForm = async () => {
+        if (cardForm.value) {
+          const response = await cardForm.value.validate()
+          console.log('Validation response:', response)
+        }
       }
     </script>
 
