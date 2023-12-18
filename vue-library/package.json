@@ -1,6 +1,6 @@
 {
   "name": "@justifi/vue-components",
-  "version": "4.6.0",
+  "version": "4.6.1",
   "description": "\"Vue specific wrapper for JustiFi web components\"",
   "homepage": "https://github.com/justifi-tech/web-component-library#readme",
   "license": "ISC",
@@ -29,7 +29,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@justifi/webcomponents": "4.6.0"
+    "@justifi/webcomponents": "4.6.1"
   },
   "devDependencies": {
     "vue": "^3.3.4"

@@ -2,7 +2,7 @@
 
 ### 4.7.0
 
-> (insert date here upon release)
+> 18 December 2023
 
 - Added `BusinessDetails`
 - Added `BusinessFormStepped`
@@ -12,6 +12,30 @@
 - Added `PaymentBalanceTransactions`
 - Refactored `BusinessList` removing the mapping functions
 - Added `RefundForm` component for handling refund processes
+
+### 4.6.4
+
+> 12 December 2023
+
+- Fallback to wc proxy when process is undefined in Api.ts
+
+### 4.6.3
+
+> 12 December 2023
+
+- Fallback to wc proxy when process is undefined in Api.ts
+
+### 4.6.2
+
+> 1 December 2023
+
+- Convert `README.mdx` to `README.md` to republish readme to NPM registry
+
+### 4.6.1
+
+> 30 November 2023
+
+- Update `README.md` to have correct version in CDN link
 
 ### 4.6.0
 
