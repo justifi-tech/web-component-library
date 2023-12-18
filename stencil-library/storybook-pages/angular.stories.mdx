@@ -1,5 +1,5 @@
 import { Meta, Source } from '@storybook/addon-docs';
-import { SummaryElement } from './utils.tsx';
+import { SummaryElement, extractVersionFromPackage } from './utils.tsx';
 import CSSVars from './css-variables.tsx';
 import dedent from 'ts-dedent';
 
@@ -31,9 +31,9 @@ To integrate Justifi web components into your Angular application, use the `@jus
   code={dedent(`
     <head>
       <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.css" />
+        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.css" />
       <script type='module'
-        src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.0/dist/webcomponents/webcomponents.esm.js'></script>
+        src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.esm.js'></script>
     </head>
   `)}
 />
@@ -57,9 +57,8 @@ To integrate Justifi web components into your Angular application, use the `@jus
       ],
       providers: [],
       bootstrap: [AppComponent],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
+      -   schemas: [...]
+      +   schemas: [..., CUSTOM_ELEMENTS_SCHEMA]
     })
     export class AppModule { }
 
@@ -68,7 +67,7 @@ To integrate Justifi web components into your Angular application, use the `@jus
 
 ## Props and Event Handling
 
-- **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. It's also possible to pass variables:
+- **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. You may also use expressions for prop values as with any other Angular component:
 
 <Source
   language="html"
