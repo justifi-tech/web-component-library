@@ -9,7 +9,7 @@ class GrossChartArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || process.env.PROXY_AUTH_TOKEN;
+    this['auth-token'] = args['auth-token'] || '';
     this['account-id'] = args['account-id'] || process.env.EXAMPLE_PAYMENTS_ACCOUNT_ID;
   }
 }

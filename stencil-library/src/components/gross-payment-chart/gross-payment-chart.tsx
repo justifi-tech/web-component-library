@@ -1,17 +1,9 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
-import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title} from 'chart.js'
-// import { mockGrossVolumeReport } from '../../api/mockData/mockGrossVolumeReport';
-import { formatCurrency, formatDisplayDate } from '../../utils/utils';
-
-interface GrossVolumeReportDate {
-  date: string, value: number
-}
-
-interface GrossVolumeReport {
-  total: number,
-  dates: GrossVolumeReportDate[]
-}
+import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration} from 'chart.js'
+import { GrossVolumeReport, GrossVolumeReportDate } from '../../api/GrossVolume';
+import { generateChartOptions } from './chart-utils';
+import { ErrorState } from '../details/utils';
 
 @Component({
   tag: 'justifi-gross-payment-chart',
@@ -28,8 +20,8 @@ export class GrossPaymentChart {
   @State() total: number;
   @State() dates: GrossVolumeReportDate[];
   @State() endDate: string;
-  @State() loading: boolean;
-  @State() errorMessage: string;
+  @State() loading: boolean = true;
+  @State() errorMessage: string = '';
 
   @Watch('accountId')
   @Watch('authToken')
@@ -51,7 +43,6 @@ export class GrossPaymentChart {
       this.loading = false;
       return;
     }
-
     this.loading = true;
 
     const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
@@ -59,12 +50,12 @@ export class GrossPaymentChart {
     const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
 
     if (!response.error) {
-      console.log(response.data);
       this.total = response?.data.total;
       this.dates = response?.data.dates.reverse();
       this.endDate = this.dates[this.dates.length - 1].date;
-      console.log(this.endDate);
     }
+
+    this.loading = false;
   }
 
   renderChart() {
@@ -83,60 +74,7 @@ export class GrossPaymentChart {
       )
       this.chart = new Chart(
         this.chartRef.getContext("2d"),
-        {
-          type: 'bar',
-          options: {
-            plugins: {
-              legend: {
-                display: false
-              },
-              title: {
-                display: true,
-                text: ['Trailing 30 Days', 'Gross Payments', formatCurrency(this.total)],
-                position: 'top',
-                align: 'start'
-              },
-              tooltip: {
-                displayColors: false,
-                intersect: false,
-                callbacks: {
-                  label: (context) => {
-                    let index = context.dataIndex;
-                    let date = formatDisplayDate(this.dates[index].date, this.endDate);
-                    let value = formatCurrency(this.dates[index].value)
-                    return [date, value]
-                  },
-                }
-              }
-            },
-            scales: {
-              x: {
-                grid: {
-                  drawOnChartArea: false,
-                  drawTicks: false
-                },
-                ticks: {
-                  callback: (index) => {
-                    if (index === 0 || index === this.dates.length - 1) {
-                      return formatDisplayDate(this.dates[index].date, this.endDate);
-                    }
-                  }
-                }
-              },
-              y: {
-                display: false
-              }
-            }
-          },
-          data: {
-            labels: this.dates.map(() => ''),
-            datasets: [
-              {
-                label: 'Gross Volume by Date',
-                data: this.dates.map((date) => date.value)
-              }]
-          },
-        }
+        generateChartOptions(this.total, this.dates, this.endDate) as ChartConfiguration
       );
       this.chart.render()
     }
@@ -145,9 +83,11 @@ export class GrossPaymentChart {
   render() {
     return (
       <Host>
-        <canvas id="chart" ref={(elem) => this.chartRef = elem} />
+        {
+          this.errorMessage ? ErrorState(this.errorMessage) 
+            : <canvas id="chart" ref={(elem) => this.chartRef = elem} />
+        }
       </Host>
     );
   }
-
 }
