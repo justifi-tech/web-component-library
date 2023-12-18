@@ -1,5 +1,5 @@
 export default {
-  title: 'Pre-release Components/PaymentDetails',
+  title: 'Components/PaymentDetails',
   component: 'justifi-payment-details',
   parameters: {},
 };
