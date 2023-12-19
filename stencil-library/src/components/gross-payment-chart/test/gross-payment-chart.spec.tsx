@@ -9,9 +9,6 @@ describe('gross-payment-chart', () => {
     });
     expect(page.root).toEqualHtml(`
       <gross-payment-chart>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
       </gross-payment-chart>
     `);
   });
