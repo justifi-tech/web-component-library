@@ -9,7 +9,7 @@ There are two methods for including the JustiFi web components in your applicati
 ### Include from CDN
 
 Add the script tag in the `head` of your `index.html`:
-`<script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@2.1.0/dist/webcomponents/webcomponents.esm.js'></script>`
+`<script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.6.2/dist/webcomponents/webcomponents.esm.js'></script>`
 Then you can use the element anywhere in your template, JSX, html etc
 
 ## Component documentation
