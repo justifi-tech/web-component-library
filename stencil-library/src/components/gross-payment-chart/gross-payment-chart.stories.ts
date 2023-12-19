@@ -1,5 +1,5 @@
 export default {
-  title: 'Components/GrossPaymentChart',
+  title: 'dev/Components/GrossPaymentChart',
   component: 'justifi-gross-payment-chart',
   parameters: {}
 };
@@ -10,7 +10,7 @@ class GrossChartArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
-    this['account-id'] = args['account-id'] || process.env.EXAMPLE_PAYMENTS_ACCOUNT_ID;
+    this['account-id'] = args['account-id'] || '';
   }
 }
 
