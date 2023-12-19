@@ -151,7 +151,7 @@ The `style-overrides` attribute below requires type `string`, but should be a st
 
 ### `resize() => Promise<void>`
 
-Manually resizes the iframe to fit the contents of the iframe
+<span style="color:red">**[DEPRECATED]**</span> This method will be removed in future releases.<br/><br/>Manually resizes the iframe to fit the contents of the iframe
 
 #### Returns
 
