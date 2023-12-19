@@ -5,6 +5,12 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The difference between this component and business-generic-info-details
+is that this component is meant to be a form and send data
+and the other one  is meant to be just read only.
+
 ## Properties
 
 | Property         | Attribute | Description | Type             | Default     |

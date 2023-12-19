@@ -9,6 +9,7 @@
 
 | Property     | Attribute     | Description | Type     | Default     |
 | ------------ | ------------- | ----------- | -------- | ----------- |
+| `accountId`  | `account-id`  |             | `string` | `undefined` |
 | `authToken`  | `auth-token`  |             | `string` | `undefined` |
 | `businessId` | `business-id` |             | `string` | `undefined` |
 
@@ -18,7 +19,7 @@
 ### Depends on
 
 - [justifi-business-generic-info](business-generic-info)
-- [justifi-legal-address-form](../legal-address-form)
+- [justifi-legal-address-form](legal-address-form)
 - [justifi-additional-questions](additional-questions)
 - [justifi-business-representative](business-representative)
 - [justifi-business-owners](business-owners)
