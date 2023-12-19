@@ -1,4 +1,4 @@
-# justifi-payouts-list
+# justifi-payment-balance-transactions
 
 
 
@@ -11,13 +11,7 @@
 | ----------- | ------------ | ----------- | -------- | ----------- |
 | `accountId` | `account-id` |             | `string` | `undefined` |
 | `authToken` | `auth-token` |             | `string` | `undefined` |
-
-
-## Events
-
-| Event                | Description | Type                  |
-| -------------------- | ----------- | --------------------- |
-| `payout-row-clicked` |             | `CustomEvent<Payout>` |
+| `paymentId` | `payment-id` |             | `string` | `undefined` |
 
 
 ## Dependencies
@@ -29,9 +23,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payouts-list --> justifi-table
+  justifi-payment-balance-transactions --> justifi-table
   justifi-table --> pagination-menu
-  style justifi-payouts-list fill:#f9f,stroke:#333,stroke-width:4px
+  style justifi-payment-balance-transactions fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

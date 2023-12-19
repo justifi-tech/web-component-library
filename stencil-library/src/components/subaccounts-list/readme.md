@@ -1,4 +1,4 @@
-# justifi-payouts-list
+# justifi-subaccounts-list
 
 
 
@@ -15,9 +15,9 @@
 
 ## Events
 
-| Event                | Description | Type                  |
-| -------------------- | ----------- | --------------------- |
-| `payout-row-clicked` |             | `CustomEvent<Payout>` |
+| Event                    | Description | Type                      |
+| ------------------------ | ----------- | ------------------------- |
+| `subaccount-row-clicked` |             | `CustomEvent<SubAccount>` |
 
 
 ## Dependencies
@@ -29,9 +29,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payouts-list --> justifi-table
+  justifi-subaccounts-list --> justifi-table
   justifi-table --> pagination-menu
-  style justifi-payouts-list fill:#f9f,stroke:#333,stroke-width:4px
+  style justifi-subaccounts-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

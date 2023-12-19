@@ -10,21 +10,20 @@
 | Property         | Attribute | Description | Type             | Default     |
 | ---------------- | --------- | ----------- | ---------------- | ----------- |
 | `formController` | --        |             | `FormController` | `undefined` |
-| `legend`         | `legend`  |             | `string`         | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [justifi-business-form](../business-form)
- - [justifi-business-form-stepped](../business-form)
+ - [justifi-business-form](..)
+ - [justifi-business-form-stepped](..)
 
 ### Depends on
 
-- [form-control-text](../form)
-- [form-control-number](../form)
-- [form-control-select](../form)
+- [form-control-text](../../form)
+- [form-control-number](../../form)
+- [form-control-select](../../form)
 
 ### Graph
 ```mermaid
