@@ -58,6 +58,11 @@ export function formatMediumDate(input: string | Date): string {
   return input.toLocaleDateString('en-US', options);
 }
 
+export function formatDisplayDate(value: any, endDate: string) {
+  const isEndingDate = value === endDate;
+  return (isEndingDate) ? 'Today' : format(new Date(value.replace(/-/g, '/')), 'MMM d');
+}
+
 export function formatTime(dateString: string): string {
   if (!dateString) return '';
   const date = new Date(dateString);
