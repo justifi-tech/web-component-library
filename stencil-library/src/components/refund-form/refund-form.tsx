@@ -10,6 +10,8 @@ import {
 import RefundFormSchema, { RefundFormFields } from './refund-form-schema';
 import { Api } from '../../api';
 import { FormController } from '../form/form';
+import { config } from '../../../config';
+
 
 @Component({
   tag: 'justifi-refund-form',
@@ -122,7 +124,7 @@ export class RefundForm {
     if (!this.authToken) {
       console.warn('Warning: Missing auth-token.');
     }
-    this.api = Api(this.authToken, process.env.ENTITIES_API_ORIGIN);
+    this.api = Api(this.authToken, config.proxyApiOrigin);
   }
 
   render() {

@@ -1,3 +1,5 @@
+import { config } from '../../../config';
+
 export default {
   title: 'Components/BusinessDetails',
   component: 'justifi-business-details',
@@ -9,8 +11,8 @@ class BusinessDetailsArgs {
   'authToken': string;
 
   constructor(args) {
-    this['businessId'] = args['businessId'] || process.env.EXAMPLE_BUSINESS_ID;
-    this['authToken'] = args['authToken'] || process.env.ENTITIES_AUTH_TOKEN
+    this['businessId'] = args['businessId'] || config.exampleBusinessId;
+    this['authToken'] = args['authToken'] || config.proxyAuthToken;
   }
 };
 

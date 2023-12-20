@@ -1,3 +1,5 @@
+import { config } from '../../../config';
+
 interface PaymentFormStoryArgs {
   'bank-account': boolean;
   'card': boolean;
@@ -25,7 +27,7 @@ const Template = (args: PaymentFormStoryArgs) => {
         client-id='${args['client-id']}'
         account-id='${args['account-id']}'
         submit-button-text='${args['submit-button-text']}'
-        iframe-origin='${process.env.IFRAME_ORIGIN}'
+        iframe-origin='${config.iframeOrigin}'
       />
     </div>
     <style>

@@ -1,3 +1,5 @@
+import { config } from '../../../config';
+
 class BusinessFormSteppedStoryArgs {
   'auth-token': string;
   'account-id': string;
@@ -7,7 +9,7 @@ class BusinessFormSteppedStoryArgs {
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['business-id'] = args['business-id'] || '';
-    this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
+    this['account-id'] = args['account-id'] || config.exampleBusinessAccountId;
     this['css-variables'] = args['css-variables'] || '';
   }
 }
@@ -40,7 +42,7 @@ export default {
 const Template = (args: BusinessFormSteppedStoryArgs) => {
   const authToken = args['auth-token'];
   const businessId = args['business-id'];
-  const accountId = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
+  const accountId = args['account-id'] || config.exampleBusinessAccountId;
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
     <div>

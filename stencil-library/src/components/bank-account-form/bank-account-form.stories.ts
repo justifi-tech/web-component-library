@@ -1,3 +1,5 @@
+import { config } from '../../../config';
+
 const CSSVars = `
 --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900&family=Agdasima';
 --jfi-layout-font-family: Roboto Mono;
@@ -123,7 +125,7 @@ const Template = (args: any) => {
       <justifi-bank-account-form
         data-testid="bank-account-form-iframe"
         validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${process.env.IFRAME_ORIGIN}'
+        iframe-origin='${config.iframeOrigin}'
       />
     </div>
     ${FormButtons}

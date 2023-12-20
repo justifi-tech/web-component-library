@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { config } from '../../../config';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -60,7 +61,7 @@ export class PaymentDetails {
     this.loading = true;
     const endpoint = `payments/${this.paymentId}`;
 
-    const response: IApiResponseCollection<Payment> = await Api(this.authToken, process.env.PROXY_API_ORIGIN).get(endpoint);
+    const response: IApiResponseCollection<Payment> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
     if (!response.error) {
       this.payment = response.data;
     } else {

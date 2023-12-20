@@ -2,6 +2,8 @@ import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 import { Business, IBusiness } from '../../api/Business';
 import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
+import { config } from '../../../config';
+
 
 /**
  * @exportedPart table-head: Table head
@@ -72,7 +74,7 @@ export class BusinessList {
     const newParams: any = { ...this.params };
     delete newParams.before_cursor;
     this.params = ({ ...newParams, after_cursor: afterCursor });
-  }; 
+  };
 
   async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
@@ -85,10 +87,9 @@ export class BusinessList {
     const endpoint = `entities/business`;
     let accountIDParam = { account_id: this.accountId };
 
-    const response: IApiResponseCollection<Business[]> = await Api(
-      this.authToken,
-      process.env.ENTITIES_API_ORIGIN,
-    ).get(endpoint, { ...accountIDParam, ...this.params });
+    const response: IApiResponseCollection<Business[]> = await Api(this.authToken, config.proxyApiOrigin,)
+      .get(endpoint, { ...accountIDParam, ...this.params });
+
     if (!response.error) {
       this.paging = {
         ...this.paging,
@@ -134,17 +135,17 @@ export class BusinessList {
               value: `
                     <div class="d-flex flex-nowrap gap-1">
                       <span class="badge ${this.mapProductStatusToBadge(
-                        business.product_categories.credit,
-                      )}">Credit</span>
+                business.product_categories.credit,
+              )}">Credit</span>
                       <span class="badge ${this.mapProductStatusToBadge(
-                        business.product_categories.insurance,
-                      )}">Insurance</span>
+                business.product_categories.insurance,
+              )}">Insurance</span>
                       <span class="badge ${this.mapProductStatusToBadge(
-                        business.product_categories.lending,
-                      )}">Lending</span>
+                business.product_categories.lending,
+              )}">Lending</span>
                       <span class="badge ${this.mapProductStatusToBadge(
-                        business.product_categories.payment,
-                      )}">Payment</span>
+                business.product_categories.payment,
+              )}">Payment</span>
                     </div>
                   `,
             },

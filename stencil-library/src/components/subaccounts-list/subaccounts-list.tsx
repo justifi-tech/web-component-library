@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Event, EventEmitter, Watch } from '@st
 import { SubAccount } from '../../api/SubAccount';
 import { MapSubAccountStatusToBadge } from '../../utils/utils';
 import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-subaccounts-list',
@@ -52,7 +53,7 @@ export class SubaccountsList {
       return;
     }
     this.loading = true;
-    const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
+    const api = Api(this.authToken, config.privateApiOrigin);
     const endpoint = `account/${this.accountId}/seller_accounts`;
 
 

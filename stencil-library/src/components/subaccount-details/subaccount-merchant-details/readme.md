@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type              | Default     |
-| ---------------- | ----------------- | ----------- | ----------------- | ----------- |
-| `onboardingData` | `onboarding-data` |             | `IOnboardingData` | `undefined` |
+| Property         | Attribute | Description | Type              | Default     |
+| ---------------- | --------- | ----------- | ----------------- | ----------- |
+| `onboardingData` | --        |             | `IOnboardingData` | `undefined` |
 
 
 ## Dependencies

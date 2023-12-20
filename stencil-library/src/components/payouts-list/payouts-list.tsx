@@ -1,14 +1,16 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { 
-  Api, 
-  IApiResponseCollection, 
-  PagingInfo, 
-  Payout, 
-  PayoutStatuses, 
-  PayoutStatusesSafeNames, 
-  pagingDefaults 
+import {
+  Api,
+  IApiResponseCollection,
+  PagingInfo,
+  Payout,
+  PayoutStatuses,
+  PayoutStatusesSafeNames,
+  pagingDefaults
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { config } from '../../../config';
+
 
 /**
   * @exportedPart table-head: Table head
@@ -86,7 +88,7 @@ export class PayoutsList {
     const newParams: any = { ...this.params };
     delete newParams.before_cursor;
     this.params = ({ ...newParams, after_cursor: afterCursor });
-  }; 
+  };
 
   async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
@@ -96,7 +98,7 @@ export class PayoutsList {
     }
     this.loading = true;
 
-    const api = Api(this.authToken, process.env.PROXY_API_ORIGIN);
+    const api = Api(this.authToken, config.proxyApiOrigin);
     const endpoint = `account/${this.accountId}/payouts`;
 
     const response: IApiResponseCollection<Payout[]> = await api.get(endpoint, this.params);

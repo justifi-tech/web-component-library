@@ -1,3 +1,5 @@
+import { config } from '../../../config';
+
 interface CardFormStoryArgs {
   'iframe-origin': string;
   'single-line': boolean;
@@ -90,7 +92,7 @@ const Template = (args: CardFormStoryArgs) => {
       <justifi-card-form
         data-testid="card-form-iframe"
         validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${process.env.IFRAME_ORIGIN}'
+        iframe-origin='${config.iframeOrigin}'
         single-line='${args['single-line']}'
       />
     </div>
