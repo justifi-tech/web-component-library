@@ -1,5 +1,5 @@
 export default {
-  title: 'Pre-release Components/RefundForm',
+  title: 'dev/Components/RefundForm',
   component: 'refund-form',
   argTypes: {
     authToken: { control: 'text' },
