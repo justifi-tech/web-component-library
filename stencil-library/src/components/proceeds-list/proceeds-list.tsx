@@ -2,6 +2,8 @@ import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@st
 import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 import { formatCurrency, formatDate } from '../../utils/utils';
 import { Proceed, ProceedStatuses, ProceedStatusesSafeNames } from '../../api/Proceed';
+import { config } from '../../../config';
+
 
 /**
   * @exportedPart table-head: Table head
@@ -79,7 +81,7 @@ export class ProceedsList {
     const newParams: any = { ...this.params };
     delete newParams.before_cursor;
     this.params = ({ ...newParams, after_cursor: afterCursor });
-  }; 
+  };
 
   async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
@@ -90,7 +92,7 @@ export class ProceedsList {
     this.loading = true;
     const endpoint = `account/${this.accountId}/proceeds`;
 
-    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken, process.env.PRIVATE_API_ORIGIN)
+    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken, config.privateApiOrigin)
       .get(endpoint, this.params);
 
     if (!response.error) {

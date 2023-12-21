@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Api, IApiResponseCollection, IPaymentMethod, PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { config } from '../../../config';
 
 /**
   * @exportedPart table-head: Table head
@@ -50,7 +51,7 @@ export class PaymentsList {
   connectedCallback() {
     this.fetchData();
   }
-  
+
   handleClickPrevious = (beforeCursor: string) => {
     const newParams: any = { ...this.params };
     delete newParams.after_cursor;
@@ -61,7 +62,7 @@ export class PaymentsList {
     const newParams: any = { ...this.params };
     delete newParams.before_cursor;
     this.params = ({ ...newParams, after_cursor: afterCursor });
-  }; 
+  };
 
   async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
@@ -72,7 +73,7 @@ export class PaymentsList {
 
     this.loading = true;
 
-    const api = Api(this.authToken, process.env.PROXY_API_ORIGIN);
+    const api = Api(this.authToken, config.proxyApiOrigin);
     const endpoint = `account/${this.accountId}/payments`;
 
     const response: IApiResponseCollection<Payment[]> = await api.get(endpoint, this.params);

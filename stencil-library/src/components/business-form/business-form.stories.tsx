@@ -1,3 +1,4 @@
+import { config } from '../../../config';
 
 class BusinessFormStoryArgs {
   'auth-token': string;
@@ -8,7 +9,7 @@ class BusinessFormStoryArgs {
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['business-id'] = args['business-id'] || '';
-    this['account-id'] = args['account-id'] || process.env.EXAMPLE_BUSINESS_ACCOUNT_ID;
+    this['account-id'] = args['account-id'] || config.exampleBusinessAccountId;
     this['cssVariables'] = args['cssVariables'] || '';
   }
 }

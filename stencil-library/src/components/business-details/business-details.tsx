@@ -2,6 +2,8 @@ import { Component, Host, Prop, State, h } from '@stencil/core';
 import { IBusiness } from '../../api/Business';
 import { Api } from '../../api';
 import { ErrorState, LoadingState } from '../details/utils'; // Make sure to adjust the path if necessary
+import { config } from '../../../config';
+
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -51,7 +53,7 @@ export class BusinessDetails {
       return;
     }
 
-    this.api = Api(this.authToken, process.env.ENTITIES_API_ORIGIN);
+    this.api = Api(this.authToken, config.proxyApiOrigin);
     await this.fetchBusiness(this.businessId);
   }
 

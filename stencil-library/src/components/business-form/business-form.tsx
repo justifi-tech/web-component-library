@@ -3,6 +3,8 @@ import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
 import { parseForPatching } from './helpers';
+import { config } from '../../../config';
+
 
 /**
  * @exportedPart label: Label for inputs
@@ -35,7 +37,7 @@ export class BusinessForm {
 
     this.formController = new FormController(businessFormSchema);
 
-    this.api = Api(this.authToken, process.env.ENTITIES_API_ORIGIN);
+    this.api = Api(this.authToken, config.proxyApiOrigin);
 
     if (this.businessId) {
       this.fetchData(this.businessId);

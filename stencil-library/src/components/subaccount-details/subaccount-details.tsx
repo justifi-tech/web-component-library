@@ -3,6 +3,7 @@ import { Api, IApiResponse } from '../../api';
 import { IOnboardingData, ISubAccount, SubAccount } from '../../api/SubAccount';
 import { EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { MapSubAccountStatusToBadge, formatDate, formatTime } from '../../utils/utils';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-subaccount-details',
@@ -30,7 +31,7 @@ export class SubaccountDetails {
   }
 
   async fetchOnboardingData(): Promise<void> {
-    const api = Api(this.authToken, process.env.ACCOUNTS_API_ORIGIN);
+    const api = Api(this.authToken, '');
     const endpoint = `onboarding/${this.subaccountId}`;
 
     const response: IApiResponse<IOnboardingData> = await api.get(endpoint);
@@ -42,7 +43,7 @@ export class SubaccountDetails {
   }
 
   async fetchSubAccountData(): Promise<void> {
-    const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
+    const api = Api(this.authToken, config.privateApiOrigin);
     const endpoint = `account/${this.accountId}/seller_accounts/${this.subaccountId}`;
 
     const response: IApiResponse<ISubAccount> = await api.get(endpoint);
@@ -73,21 +74,21 @@ export class SubaccountDetails {
           this.loading ? LoadingState :
             !this.subaccount || !this.onboardingData ? ErrorState(this.errorMessage) :
               <justifi-details>
-                <EntityHeadInfo 
-                  slot='head-info' 
+                <EntityHeadInfo
+                  slot='head-info'
                   badge={<span slot='badge' innerHTML={MapSubAccountStatusToBadge(this.subaccount?.status)} />}
                   title={this.subaccount?.name}>
-                    <EntityHeadInfoItem 
-                      classes="border-1 border-end"
-                      title="Created At"
-                      value={`${formatDate(this.subaccount.created_at)} ${formatTime(this.subaccount.created_at)}`}
-                    />
-                    <EntityHeadInfoItem
-                      classes="border-1 border-end"
-                      title="Last Updated"
-                      value={`${formatDate(this.subaccount.updated_at)} ${formatTime(this.subaccount.updated_at)}`}
-                    />
-                    <EntityHeadInfoItem title="ID" value={this.subaccount.id} />  
+                  <EntityHeadInfoItem
+                    classes="border-1 border-end"
+                    title="Created At"
+                    value={`${formatDate(this.subaccount.created_at)} ${formatTime(this.subaccount.created_at)}`}
+                  />
+                  <EntityHeadInfoItem
+                    classes="border-1 border-end"
+                    title="Last Updated"
+                    value={`${formatDate(this.subaccount.updated_at)} ${formatTime(this.subaccount.updated_at)}`}
+                  />
+                  <EntityHeadInfoItem title="ID" value={this.subaccount.id} />
                 </EntityHeadInfo>
                 <div slot='detail-sections'>
                   <subaccount-account-details subaccount={this.subaccount} onboardingData={this.onboardingData} />

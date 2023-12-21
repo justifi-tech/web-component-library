@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "4.7.0-rc.0",
+  "version": "4.7.0-rc.1",
   "description": "JustiFi Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/components/index.js",
@@ -22,16 +22,16 @@
   ],
   "scripts": {
     "build": "npm run build:prod",
-    "build:dev": "NODE_ENV=dev stencil build --docs",
-    "build:staging": "NODE_ENV=staging stencil build --docs",
-    "build:prod": "NODE_ENV=prod stencil build --docs",
+    "build:dev": "stencil build --docs",
+    "build:staging": "stencil build --docs",
+    "build:prod": "stencil build --docs",
     "start": "concurrently --restart-tries 3 -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run start-stencil\" \"npm run storybook\"",
-    "start-stencil": "NODE_ENV=dev stencil build --watch",
+    "start-stencil": "stencil build --watch",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "test:e2e": "stencil test --e2e",
     "generate": "stencil generate",
-    "storybook": "NODE_ENV=dev storybook dev -p 6006 --quiet",
+    "storybook": "storybook dev -p 6006 --quiet",
     "build-storybook": "storybook build -o ../docs"
   },
   "dependencies": {

@@ -13,6 +13,7 @@ import { Theme } from './theme';
 import packageJson from '../../../package.json';
 import getComputedTheme from './get-computed-theme';
 import { CreatePaymentMethodResponse } from './payment-method-responses';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-payment-method-form',
@@ -69,7 +70,7 @@ export class PaymentMethodForm {
   }
 
   private postMessage(eventType: string, payload?: any) {
-    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, process.env.IFRAME_ORIGIN || '*');
+    this.iframeElement?.contentWindow?.postMessage({ eventType: eventType, ...payload }, config.iframeOrigin || '*');
   }
 
   @Method()
@@ -128,7 +129,7 @@ export class PaymentMethodForm {
   }
 
   private getIframeSrc() {
-    const iframeOrigin = process.env.IFRAME_ORIGIN;
+    const iframeOrigin = config.iframeOrigin;
 
     let iframeSrc = `${iframeOrigin}/${this.paymentMethodFormType}`;
     let paramsList = [];
