@@ -1,9 +1,10 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { Api, IApiResponseCollection } from '../../api';
-import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration} from 'chart.js'
+import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
 import { GrossVolumeReport, GrossVolumeReportDate } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import { ErrorState } from '../details/utils';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-gross-payment-chart',
@@ -32,7 +33,7 @@ export class GrossPaymentChart {
   connectedCallback() {
     this.fetchData();
   }
-  
+
   componentDidRender() {
     this.renderChart();
   }
@@ -45,7 +46,7 @@ export class GrossPaymentChart {
     }
     this.loading = true;
 
-    const api = Api(this.authToken, process.env.PRIVATE_API_ORIGIN);
+    const api = Api(this.authToken, config.proxyApiOrigin);
     const endpoint = `account/${this.accountId}/reports/gross_volume`;
     const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
 
@@ -84,7 +85,7 @@ export class GrossPaymentChart {
     return (
       <Host>
         {
-          this.errorMessage ? ErrorState(this.errorMessage) 
+          this.errorMessage ? ErrorState(this.errorMessage)
             : <canvas id="chart" ref={(elem) => this.chartRef = elem} />
         }
       </Host>
