@@ -21,10 +21,7 @@
     "loader/"
   ],
   "scripts": {
-    "build": "npm run build:prod",
-    "build:dev": "stencil build --docs",
-    "build:staging": "stencil build --docs",
-    "build:prod": "stencil build --docs",
+    "build": "stencil build --docs",
     "start": "concurrently --restart-tries 3 -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run start-stencil\" \"npm run storybook\"",
     "start-stencil": "stencil build --watch",
     "test": "stencil test --spec",
