@@ -1,7 +1,5 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import replace from 'rollup-plugin-replace';
-import { replaceEnvVariables } from './env';
 
 export const config: Config = {
   namespace: 'webcomponents',
@@ -21,8 +19,7 @@ export const config: Config = {
         './src/styles/_mixins.scss',
       ],
       includePaths: ['../node_modules/bootstrap/scss/'],
-    }),
-    replace(replaceEnvVariables()),
+    })
   ],
   outputTargets: [
     {

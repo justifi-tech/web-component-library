@@ -14,6 +14,7 @@ import {
   formatTime,
   snakeCaseToHumanReadable,
 } from '../../utils/utils';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-payment-balance-transactions',
@@ -49,7 +50,7 @@ export class PaymentBalanceTransactions {
     const newParams: any = { ...this.params };
     delete newParams.before_cursor;
     this.params = ({ ...newParams, after_cursor: afterCursor });
-  }; 
+  };
 
   async fetchData(): Promise<void> {
     this.loading = true;
@@ -62,7 +63,7 @@ export class PaymentBalanceTransactions {
     const endpoint = `account/${this.accountId}/payments/${this.paymentId}/payment_balance_transactions`;
 
     const response: IApiResponseCollection<IPaymentBalanceTransaction[]> =
-      await Api(this.authToken).get(endpoint, this.params);
+      await Api(this.authToken, config.proxyApiOrigin).get(endpoint, this.params);
 
     if (!response.error) {
       this.paging = {

@@ -22,7 +22,7 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: PagingInfo;
 }
 
-const Api = (authToken: string, apiOrigin?: string) => {
+const Api = (authToken: string, apiOrigin: string) => {
   async function getAuthorizationHeader() {
     return {
       'Authorization': `Bearer ${authToken}`,
