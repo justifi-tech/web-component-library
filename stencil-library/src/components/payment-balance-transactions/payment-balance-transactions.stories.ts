@@ -14,7 +14,7 @@ class PaymentBalanceTransactionsArgs {
   'constructor'(args) {
     this['auth-token'] = args['auth-token'] || config.proxyAuthToken;
     this['payment-id'] = args['payment-id'] || config.examplePaymentId;
-    this['account-id'] = args['account-id'] || config.examplePaymentsAccountId;
+    this['account-id'] = args['account-id'] || config.exampleAccountId;
   }
 }
 

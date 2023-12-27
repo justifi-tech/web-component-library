@@ -1,7 +1,7 @@
 import { config } from '../../../config';
 
 export default {
-  title: 'dev/Components/BusinessList',
+  title: 'Components/BusinessList',
   component: 'justifi-business-list',
   parameters: {}
 };
@@ -12,7 +12,7 @@ class BusinessListArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || config.proxyAuthToken;
-    this['account-id'] = args['account-id'] || config.exampleBusinessAccountId;
+    this['account-id'] = args['account-id'] || config.exampleAccountId;
   }
 }
 

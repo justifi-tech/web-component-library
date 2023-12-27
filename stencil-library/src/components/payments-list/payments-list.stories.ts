@@ -22,7 +22,7 @@ class PaymentsListArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || config.proxyAuthToken;
-    this['account-id'] = args['account-id'] || config.examplePaymentsAccountId;
+    this['account-id'] = args['account-id'] || config.exampleAccountId;
   }
 }
 

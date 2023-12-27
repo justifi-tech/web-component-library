@@ -22,7 +22,7 @@ class ProceedsListArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || config.privateAuthToken;
-    this['account-id'] = args['account-id'] || config.examplePlatformAccountId;
+    this['account-id'] = args['account-id'] || '';
   }
 }
 

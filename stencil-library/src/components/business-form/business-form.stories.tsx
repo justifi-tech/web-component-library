@@ -9,7 +9,7 @@ class BusinessFormStoryArgs {
   constructor(args) {
     this['auth-token'] = args['auth-token'] || '';
     this['business-id'] = args['business-id'] || '';
-    this['account-id'] = args['account-id'] || config.exampleBusinessAccountId;
+    this['account-id'] = args['account-id'] || config.exampleAccountId;
     this['cssVariables'] = args['cssVariables'] || '';
   }
 }
