@@ -97,6 +97,14 @@ export class PaymentsList {
     return paymentMethod.card || paymentMethod.bank_account
   }
 
+  getPaymentMethodName(paymentMethod: IPaymentMethod) {
+    if (paymentMethod.card) {
+      return paymentMethod.card.name;
+    } else {
+      return paymentMethod.bank_account.account_owner_name
+    }
+  }
+
   render() {
     return (
       <Host>
@@ -128,7 +136,7 @@ export class PaymentsList {
                 },
                 formatCurrency(payment.amount),
                 payment.description,
-                this.getPaymentMethod(payment.payment_method).name,
+                this.getPaymentMethodName(payment.payment_method),
                 this.getPaymentMethod(payment.payment_method).acct_last_four,
                 {
                   type: 'inner',

@@ -42,8 +42,8 @@ export type CardBrand =
 export interface IBankAccount {
   id: string;
   acct_last_four: string;
-  name: string;
-  brand: string;
+  account_owner_name: string;
+  bank_name: string;
   token: string
   created_at: string;
   updated_at: string;
