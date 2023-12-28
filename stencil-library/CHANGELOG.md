@@ -10,7 +10,6 @@
 - Added `SubAccountDetails`
 - Updated `BusinessForm` layout (section spacing and headings)
 - Removed console.log from `PaymentMethodForm` component
-- Added `PaymentBalanceTransactions`
 - Refactored `BusinessList` removing the mapping functions
 - Added `RefundForm` component for handling refund processes
 - Added `GrossPaymentChart` component to view gross payment volume per day
