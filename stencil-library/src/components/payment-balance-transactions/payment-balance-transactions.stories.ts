@@ -1,7 +1,7 @@
 import { config } from "../../../config";
 
 export default {
-  title: 'Components/PaymentBalanceTransactions',
+  title: 'dev/Components/PaymentBalanceTransactions',
   component: 'justifi-payment-balance-transactions',
   parameters: {},
 };
