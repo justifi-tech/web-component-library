@@ -61,7 +61,7 @@ export const Basic = Template.bind({});
 Basic.args = new BusinessFormStoryArgs({});
 
 export const Styled = Template.bind({});
-Basic.args = new BusinessFormStoryArgs({
+Styled.args = new BusinessFormStoryArgs({
   'auth-token': '',
   'business-id': '',
   cssVariables: `
