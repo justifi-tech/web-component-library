@@ -24,6 +24,7 @@
 ### Used by
 
  - [justifi-business-form](..)
+ - [justifi-business-form-stepped](..)
 
 ### Depends on
 
@@ -47,6 +48,7 @@ graph TD;
   justifi-business-address-form --> form-control-select
   justifi-business-address-form --> form-control-number
   justifi-business-form --> justifi-business-representative
+  justifi-business-form-stepped --> justifi-business-representative
   style justifi-business-representative fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

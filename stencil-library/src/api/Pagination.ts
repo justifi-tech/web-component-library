@@ -1,20 +1,26 @@
-export interface IPagination {
-  has_previous: boolean;
-  has_next: boolean;
-  start_cursor: string;
-  end_cursor: string;
+export interface PagingInfo {
+  amount: number,
+  start_cursor: string,
+  end_cursor: string,
+  has_previous: boolean,
+  has_next: boolean,
 }
 
-export class Pagination implements IPagination {
-  public has_previous: boolean;
-  public has_next: boolean;
-  public start_cursor: string;
-  public end_cursor: string;
+export const pagingDefaults = {
+  amount: 25,
+  start_cursor: '',
+  end_cursor: '',
+  has_previous: false,
+  has_next: false,
+}
 
-  constructor(pagination?: IPagination) {
-    this.has_previous = pagination?.has_previous || false;
-    this.has_next = pagination?.has_next || false;
-    this.start_cursor = pagination?.start_cursor || '';
-    this.end_cursor = pagination?.end_cursor || '';
-  }
+export interface ExtendedPagingInfo extends PagingInfo {
+  handleClickNext: (after_cursor: string) => void;
+  handleClickPrevious: (before_cursor: string) => void;
+}
+
+export const ExtendedPagingDefaults: ExtendedPagingInfo = {
+  ...pagingDefaults,
+  handleClickNext: () => { },
+  handleClickPrevious: () => { }
 }

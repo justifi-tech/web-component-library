@@ -8,6 +8,10 @@
 
 ### 4.6.0
 
+> (insert date here upon release)
+
+- Added `PaymentBalanceTransactions`
+
 > 23 October 2023
 
 - Updated API enpoint to proxy service
@@ -33,7 +37,6 @@
 - Updated table pagination to use proper bootstrap pagination styles
 - Updated `PaymentsList` and `PayoutsList` table headers and status badges to have descriptions on hover
 - Updated `PaymentsList` and `PayoutsList` to emit events when a table row is clicked
-
 
 #### 4.4.0
 

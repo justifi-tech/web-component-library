@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Api, IApiResponseCollection, IPaymentMethod, Payment } from '../../api';
+import { Api, IApiResponseCollection, IPaymentMethod, PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { PagingInfo, pagingDefaults } from '../table/table-utils';
+import { config } from '../../../config';
 
 /**
   * @exportedPart table-head: Table head
@@ -35,6 +35,7 @@ export class PaymentsList {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
+  @State() params: any;
   @Event({
     eventName: 'payment-row-clicked',
     bubbles: true,
@@ -42,6 +43,7 @@ export class PaymentsList {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('params')
   updateOnPropChange() {
     this.fetchData();
   }
@@ -50,25 +52,32 @@ export class PaymentsList {
     this.fetchData();
   }
 
-  onPageChange = (direction: string) => {
-    return () => {
-      this.fetchData(direction);
-    }
-  }
+  handleClickPrevious = (beforeCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.after_cursor;
+    this.params = ({ ...newParams, before_cursor: beforeCursor });
+  };
 
-  async fetchData(direction?: string): Promise<void> {
+  handleClickNext = (afterCursor: string) => {
+    const newParams: any = { ...this.params };
+    delete newParams.before_cursor;
+    this.params = ({ ...newParams, after_cursor: afterCursor });
+  };
+
+  async fetchData(): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
       this.loading = false;
       return;
     }
+
     this.loading = true;
+
+    const api = Api(this.authToken, config.proxyApiOrigin);
     const endpoint = `account/${this.accountId}/payments`;
 
-    const response: IApiResponseCollection<Payment[]> = await Api(this.authToken).get(endpoint, {
-      paging: this.paging,
-      direction: direction
-    });
+    const response: IApiResponseCollection<Payment[]> = await api.get(endpoint, this.params);
+
     if (!response.error) {
       this.paging = {
         ...this.paging,
@@ -86,6 +95,14 @@ export class PaymentsList {
 
   getPaymentMethod(paymentMethod: IPaymentMethod) {
     return paymentMethod.card || paymentMethod.bank_account
+  }
+
+  getPaymentMethodName(paymentMethod: IPaymentMethod) {
+    if (paymentMethod.card) {
+      return paymentMethod.card.name;
+    } else {
+      return paymentMethod.bank_account.account_owner_name
+    }
   }
 
   render() {
@@ -119,7 +136,7 @@ export class PaymentsList {
                 },
                 formatCurrency(payment.amount),
                 payment.description,
-                this.getPaymentMethod(payment.payment_method).name,
+                this.getPaymentMethodName(payment.payment_method),
                 this.getPaymentMethod(payment.payment_method).acct_last_four,
                 {
                   type: 'inner',
@@ -131,10 +148,11 @@ export class PaymentsList {
           }
           loading={this.loading}
           error-message={this.errorMessage}
+          params={this.params}
           paging={{
             ...this.paging,
-            onPrev: this.onPageChange('prev'),
-            onNext: this.onPageChange('next')
+            handleClickNext: this.handleClickNext,
+            handleClickPrevious: this.handleClickPrevious
           }}
         />
       </Host>

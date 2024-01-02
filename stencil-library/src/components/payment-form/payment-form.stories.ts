@@ -1,4 +1,4 @@
-const isDev = process.env.NODE_ENV === 'development';
+import { config } from '../../../config';
 
 interface PaymentFormStoryArgs {
   'bank-account': boolean;
@@ -13,15 +13,7 @@ interface PaymentFormStoryArgs {
 export default {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
-  argTypes: {
-    'iframe-origin': {
-      control: 'text',
-      table: {
-        disable: isDev ? false : true,
-        category: 'props',
-      },
-    },
-  },
+  argTypes: {},
 };
 
 const Template = (args: PaymentFormStoryArgs) => {
@@ -35,7 +27,7 @@ const Template = (args: PaymentFormStoryArgs) => {
         client-id='${args['client-id']}'
         account-id='${args['account-id']}'
         submit-button-text='${args['submit-button-text']}'
-        iframe-origin='${args['iframe-origin']}'
+        iframe-origin='${config.iframeOrigin}'
       />
     </div>
     <style>

@@ -1,3 +1,5 @@
+import { config } from '../../../config';
+
 export default {
   title: 'dev/Components/ProceedsList',
   component: 'justifi-proceeds-list',
@@ -19,7 +21,7 @@ class ProceedsListArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || '';
+    this['auth-token'] = args['auth-token'] || config.privateAuthToken;
     this['account-id'] = args['account-id'] || '';
   }
 }

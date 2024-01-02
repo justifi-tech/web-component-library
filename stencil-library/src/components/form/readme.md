@@ -40,7 +40,8 @@
  - [justifi-business-generic-info](../business-form/business-generic-info)
  - [justifi-business-owners](../business-form/business-owners)
  - [justifi-business-representative](../business-form/business-representative)
- - [justifi-legal-address-form](../legal-address-form)
+ - [justifi-legal-address-form](../business-form/legal-address-form)
+ - [justifi-refund-form](../refund-form)
 
 ### Graph
 ```mermaid
@@ -50,6 +51,7 @@ graph TD;
   justifi-business-owners --> form-control-text
   justifi-business-representative --> form-control-text
   justifi-legal-address-form --> form-control-text
+  justifi-refund-form --> form-control-text
   style form-control-text fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

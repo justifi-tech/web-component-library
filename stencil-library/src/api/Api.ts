@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IPagination } from './Pagination';
+import { PagingInfo } from './Pagination';
 
 export interface IApiResponse<T> {
   data: T;
   error?: IErrorObject | IServerError;
-  page_info?: IPagination;
+  page_info?: PagingInfo;
   errors?: string[];
   id: number;
   type: string;
@@ -19,13 +19,10 @@ export interface IErrorObject {
 }
 
 export interface IApiResponseCollection<T> extends IApiResponse<T> {
-  page_info: IPagination;
+  page_info: PagingInfo;
 }
 
-const Api = (authToken: string, customApiOrigin?: string) => {
-  const originFromEnv = typeof process !== 'undefined' && process?.env.API_ORIGIN;
-  const apiOrigin = customApiOrigin || originFromEnv || 'https://wc-proxy.justifi.ai';
-
+const Api = (authToken: string, apiOrigin: string) => {
   async function getAuthorizationHeader() {
     return {
       'Authorization': `Bearer ${authToken}`,
@@ -36,20 +33,7 @@ const Api = (authToken: string, customApiOrigin?: string) => {
 
   async function makeRequest(endpoint: string, method: string, params?: any, body?: any, signal?: AbortSignal) {
     const url = `${apiOrigin}/v1/${endpoint}`;
-    let cursor;
-    if (params?.paging) {
-      cursor = params?.paging && params?.direction ? `${params.direction === 'prev'
-        ? '&before_cursor=' + params.paging.start_cursor
-        : params.direction === 'next'
-          ? '&after_cursor=' + params.paging.end_cursor
-          : ''
-        }` : null;
-      delete params.paging;
-    }
-    if (params?.direction) {
-      delete params.direction;
-    }
-    const requestUrl = params ? `${url}?${new URLSearchParams(params)}${cursor ? '&' + cursor : ''}` : url;
+    const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
     const response = await fetch(requestUrl, {
       method: method,
       headers: await getAuthorizationHeader(),

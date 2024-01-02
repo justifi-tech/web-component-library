@@ -59,7 +59,7 @@ export class NumberInputMasked {
   }
 
   updateInput(newValue: any) {
-    if (this.imask) {
+    if (this.imask && newValue) {
       this.imask.value = String(newValue);
     }
   }

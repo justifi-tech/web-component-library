@@ -9,6 +9,7 @@
 
 | Property     | Attribute     | Description | Type     | Default     |
 | ------------ | ------------- | ----------- | -------- | ----------- |
+| `accountId`  | `account-id`  |             | `string` | `undefined` |
 | `authToken`  | `auth-token`  |             | `string` | `undefined` |
 | `businessId` | `business-id` |             | `string` | `undefined` |
 
@@ -18,7 +19,7 @@
 ### Depends on
 
 - [justifi-business-generic-info](business-generic-info)
-- [justifi-legal-address-form](../legal-address-form)
+- [justifi-legal-address-form](legal-address-form)
 - [justifi-additional-questions](additional-questions)
 - [justifi-business-representative](business-representative)
 - [justifi-business-owners](business-owners)
@@ -26,11 +27,11 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-form --> justifi-business-generic-info
-  justifi-business-form --> justifi-legal-address-form
-  justifi-business-form --> justifi-additional-questions
-  justifi-business-form --> justifi-business-representative
-  justifi-business-form --> justifi-business-owners
+  justifi-business-form-stepped --> justifi-business-generic-info
+  justifi-business-form-stepped --> justifi-legal-address-form
+  justifi-business-form-stepped --> justifi-additional-questions
+  justifi-business-form-stepped --> justifi-business-representative
+  justifi-business-form-stepped --> justifi-business-owners
   justifi-business-generic-info --> form-control-text
   justifi-business-generic-info --> form-control-select
   justifi-business-generic-info --> form-control-number
@@ -52,7 +53,7 @@ graph TD;
   justifi-business-owners --> form-control-number-masked
   justifi-business-owners --> form-control-datepart
   justifi-business-owners --> form-control-number
-  style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px
+  style justifi-business-form-stepped fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

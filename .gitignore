@@ -1,7 +1,9 @@
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-**/.env*
+.env.dev
+.env.staging
+.env.production
 /docs
 node_modules
 lerna-debug.log

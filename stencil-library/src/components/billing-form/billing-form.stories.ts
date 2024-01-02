@@ -1,5 +1,5 @@
 export default {
-  title: 'Components/BillingForm',
+  title: 'dev/Components/BillingForm',
   component: 'justifi-billing-form',
   parameters: {},
 };

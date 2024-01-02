@@ -1,7 +1,7 @@
-import config from '../../../config';
+import { config } from '../../../config';
 
 export default {
-  title: 'Pre-release Components/PayoutsList',
+  title: 'Components/PayoutsList',
   component: 'justifi-payouts-list',
   parameters: {},
   decorators: [
@@ -21,8 +21,8 @@ class PayoutsListArgs {
   'account-id': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || config.authToken;
-    this['account-id'] = args['account-id'] || config.accountId;
+    this['auth-token'] = args['auth-token'] || config.proxyAuthToken;
+    this['account-id'] = args['account-id'] || config.exampleAccountId;
   }
 }
 
