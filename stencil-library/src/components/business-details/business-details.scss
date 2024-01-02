@@ -1,0 +1,8 @@
+@import 'reboot';
+@import 'bootstrap-utilities';
+@import 'type';
+@import 'spinners';
+
+:host {
+  @include host-base-styles;
+}

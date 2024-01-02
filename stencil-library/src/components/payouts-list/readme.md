@@ -30,6 +30,7 @@
 ```mermaid
 graph TD;
   justifi-payouts-list --> justifi-table
+  justifi-table --> pagination-menu
   style justifi-payouts-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

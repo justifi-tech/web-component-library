@@ -8,6 +8,10 @@
 
 ### 4.6.0
 
+> (insert date here upon release)
+
+- Added `PaymentBalanceTransactions`
+
 > 23 October 2023
 
 - Updated API enpoint to proxy service

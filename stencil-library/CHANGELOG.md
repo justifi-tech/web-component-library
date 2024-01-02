@@ -1,5 +1,15 @@
 ### Changelog
 
+### 4.7.0
+
+> 18 December 2023
+
+- Added `BusinessDetails`
+- Added `BusinessFormStepped`
+- Updated `BusinessForm` layout (section spacing and headings)
+- Removed console.log from `PaymentMethodForm` component
+- Refactored `BusinessList` removing the mapping functions
+
 ### 4.6.4
 
 > 12 December 2023
