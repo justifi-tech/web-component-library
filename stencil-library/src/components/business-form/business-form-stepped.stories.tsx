@@ -7,7 +7,7 @@ class BusinessFormSteppedStoryArgs {
   'css-variables': string;
 
   constructor(args) {
-    this['auth-token'] = args['auth-token'] || '';
+    this['auth-token'] = args['auth-token'] || config.proxyAuthToken;
     this['business-id'] = args['business-id'] || '';
     this['account-id'] = args['account-id'] || config.exampleAccountId;
     this['css-variables'] = args['css-variables'] || '';
@@ -15,7 +15,7 @@ class BusinessFormSteppedStoryArgs {
 }
 
 export default {
-  title: 'dev/Components/BusinessFormStepped',
+  title: 'Components/BusinessFormStepped',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {

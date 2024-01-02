@@ -54,14 +54,6 @@ export default {
       },
     },
   },
-  decorators: [
-    story => `
-      <!-- Deprecated Notice -->
-      <p style="color: red; font-family: 'Roboto Mono', monospace;">Note: The 'resize' method is deprecated and will be removed in future releases.</p>
-      ${story()}
-      <script>${addEvents()}</script>
-    `,
-  ],
 };
 
 const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
