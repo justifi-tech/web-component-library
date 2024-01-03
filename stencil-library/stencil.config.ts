@@ -44,6 +44,7 @@ export const config: Config = {
       ],
     },
   ],
+  sourceMap: false
   // Uncomment to develop if needed
   // testing: {
   //   browserHeadless: false,

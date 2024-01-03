@@ -27,6 +27,7 @@ export class BusinessFormStepped {
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() businessId?: string;
+  @Prop() testMode: boolean = false;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
@@ -74,6 +75,12 @@ export class BusinessFormStepped {
   }
 
   private async sendData(onSuccess?: () => void) {
+    // Stopgap solution to prevent sending data in storybook examples.
+    if (this.testMode) {
+      onSuccess();
+      return;
+    }
+
     this.isLoading = true;
 
     try {
