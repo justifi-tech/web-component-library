@@ -1,7 +1,7 @@
 import { config } from "../../../config";
 
 export default {
-  title: 'dev/Components/GrossPaymentChart',
+  title: 'Components/GrossPaymentChart',
   component: 'justifi-gross-payment-chart',
   parameters: {}
 };

@@ -15,7 +15,7 @@ class BusinessFormSteppedStoryArgs {
 }
 
 export default {
-  title: 'dev/Components/BusinessFormStepped',
+  title: 'Components/BusinessFormStepped',
   component: 'justifi-business-form',
   argTypes: {
     'auth-token': {
@@ -50,6 +50,7 @@ const Template = (args: BusinessFormSteppedStoryArgs) => {
         auth-token="${authToken}"
         business-id="${businessId}"
         account-id="${accountId}"
+        test-mode="true"
       />
     </div>
     <style>
