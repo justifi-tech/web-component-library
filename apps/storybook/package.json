@@ -1,0 +1,25 @@
+{
+  "name": "web-components-storybook",
+  "description": "Storybook for JustiFi Web Components",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "storybook": "storybook dev -p 6006 --quiet",
+    "build-storybook": "storybook build -o ../docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@pxtrn/storybook-addon-docs-stencil": "^6.4.1",
+    "@storybook/addon-actions": "^7.0.4",
+    "@storybook/addon-docs": "^7.0.4",
+    "@storybook/addon-essentials": "^7.0.4",
+    "@storybook/addon-interactions": "^7.0.4",
+    "@storybook/addon-links": "^7.0.4",
+    "@storybook/html": "^7.0.4",
+    "@storybook/html-webpack5": "^7.0.4",
+    "@storybook/jest": "^0.1.0",
+    "@storybook/testing-library": "^0.2.2",
+    "storybook": "^7.0.4",
+    "react": "18.2.0"
+  }
+}

@@ -1,15 +1,12 @@
 {
   "name": "root",
   "private": true,
-  "scripts": {
-    "build": "lerna run build",
-    "test": "lerna run test",
-    "version": "lerna version",
-    "test:e2e": "lerna run test:e2e",
-    "publish": "lerna publish from-package --yes"
-  },
+  "scripts": {},
   "workspaces": [
-    "stencil-library"
+    "apps/admin-dashboard",
+    "apps/storybook",
+    "packages/justifi-types",
+    "packages/webcomponents"
   ],
   "os": [
     "darwin",
@@ -21,9 +18,6 @@
     "arm64"
   ],
   "devDependencies": {
-    "lerna": "^7.1.4"
-  },
-  "resolutions": {
-    "node-fetch": "2.6.7"
+    "turbo": "^1.11.2"
   }
 }
