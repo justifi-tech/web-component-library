@@ -8,4 +8,13 @@
 
 :host {
   @include host-base-styles;
+  table-layout: fixed;
+}
+
+.table-wrapper {
+  overflow-x: scroll;
+}
+
+.table-light {
+  white-space: nowrap;
 }
