@@ -33,7 +33,7 @@ export const DetailSection = (
   <div part="detail-section" class="mt-4">
     <h5 part="detail-section-title">{sectionTitle}</h5>
     <hr />
-    <div class="d-flex flex-column justify-content-center gap-2 text-nowrap">
+    <div class="d-flex flex-column justify-content-center gap-2">
       {children}
     </div>
   </div>
@@ -52,7 +52,7 @@ export const DetailItem = ({
         {title}
       </span>
       <span
-        part="detail-section-item-data"
+        part="detail-section-item-data white-space-wrap text-wrap text-break"
         class="flex-1"
         innerHTML={value}
       ></span>

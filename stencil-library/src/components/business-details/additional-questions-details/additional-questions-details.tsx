@@ -26,21 +26,21 @@ export class AdditionalQuestionsDetails {
             <div class="col-12 col-md-6">
               <DetailItem
                 title="Business Revenue"
-                value={this.business?.additional_questions.business_revenue?.toString()}
+                value={this.business?.additional_questions?.business_revenue?.toString()}
               />
               <DetailItem
                 title="Business Payment Volume"
-                value={this.business?.additional_questions.business_payment_volume?.toString()}
+                value={this.business?.additional_questions?.business_payment_volume?.toString()}
               />
             </div>
             <div class="col-12 col-md-6">
               <DetailItem
                 title="Business Dispute Volume"
-                value={this.business?.additional_questions.business_dispute_volume?.toString()}
+                value={this.business?.additional_questions?.business_dispute_volume?.toString()}
               />
               <DetailItem
                 title="Business Receivable Volume"
-                value={this.business?.additional_questions.business_receivable_volume?.toString()}
+                value={this.business?.additional_questions?.business_receivable_volume?.toString()}
               />
             </div>
           </div>

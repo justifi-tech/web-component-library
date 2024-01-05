@@ -29,7 +29,7 @@ export class JustifiRepresentativeDetails {
               <DetailItem title="ID" value={this.representative?.id} />
               <DetailItem
                 title="Representative Address"
-                value={this.representative?.address.line1}
+                value={this.representative?.address?.line1}
               />
               <DetailItem
                 title="Representative Created At"
