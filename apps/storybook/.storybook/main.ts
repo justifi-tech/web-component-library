@@ -1,8 +1,7 @@
 module.exports = {
   stories: [
-    '../src/**/*.stories.mdx',
-    '../src/**/*.stories.@(js|jsx|ts|tsx)',
-    '../storybook-pages/*.stories.mdx',
+    './pages/**/*.stories.mdx',
+    './pages/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-links',
@@ -17,5 +16,12 @@ module.exports = {
   docs: {
     autodocs: true,
   },
-  staticDirs: ['../src/assets'],
+  managerHead: (head) => `
+  ${head}
+  <style>
+    #dev, #dev-components, [data-parent-id="dev-components"] {
+      display: none;
+    }
+  </style>
+  `,
 };

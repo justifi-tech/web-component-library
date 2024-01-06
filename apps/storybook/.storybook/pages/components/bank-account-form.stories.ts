@@ -1,4 +1,4 @@
-import { config } from '../../../config';
+import { JustifiBankAccountForm } from '@justifi/webcomponents';
 
 const CSSVars = `
 --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900&family=Agdasima';
@@ -64,20 +64,20 @@ export default {
   ],
 };
 
-const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
+const handleValidateClick = async (bankForm: any) => {
   const valid = await bankForm.validate();
   console.log(valid);
 };
-const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
+const handleTokenizeClick = async (bankForm: any, paymentMethodData: any) => {
   const tokenizeResponse = await bankForm.tokenize('CLIENT_ID', paymentMethodData);
   console.log(tokenizeResponse);
 };
-const handleResizeClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
+const handleResizeClick = async (bankForm: any) => {
   await bankForm.resize();
 };
 const handleReady = () => {
   console.log('bank account form is ready');
-  const bankForm = document.querySelector('justifi-bank-account-form') as HTMLJustifiBankAccountFormElement;
+  const bankForm = document.querySelector('justifi-bank-account-form') as any;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
   const resizeBtn = document.querySelector('#resize-btn');
@@ -122,10 +122,14 @@ const Template = (args: any) => {
         ${args['css-variables'] || ''}
       }
       </style>
+      <!--
+      <link rel="stylesheet" href='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.7.1/dist/webcomponents/webcomponents.css'>
+      <script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.7.1/dist/webcomponents/webcomponents.esm.js'></script>
+      -->
       <justifi-bank-account-form
         data-testid="bank-account-form-iframe"
         validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${config.iframeOrigin}'
+        iframe-origin='https://js.justifi.ai/v2'
       />
     </div>
     ${FormButtons}

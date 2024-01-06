@@ -1,10 +1,10 @@
 import React from 'react';
 import { Source } from '@storybook/blocks';
 import dedent from 'ts-dedent';
-import DocsJson from '../docs.json';
+import DocsJson from '@justifi/webcomponents/dist/docs.json';
 
 const extractVersionFromPackage = () => {
-  const packageJson = require('../package.json');
+  const packageJson = require('@justifi/webcomponents/package.json');
   return packageJson.version;
 };
 
@@ -21,7 +21,7 @@ const ExportedParts = ({ tags, component, compact }: { tags: string[]; component
         const description = splitText[1];
         return (
           <li key={part}>
-            <strong>{part}</strong> {description ? '- '+description : ''}
+            <strong>{part}</strong> {description ? '- ' + description : ''}
             <ExportedPartUsage component={component} tag={part} compact={compact} />
           </li>
         );

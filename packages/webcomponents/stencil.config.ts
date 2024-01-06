@@ -23,15 +23,12 @@ export const config: Config = {
   ],
   outputTargets: [
     {
-      type: 'dist-custom-elements',
-    },
-    {
       type: 'dist',
-      esmLoaderPath: '../loader',
+      isPrimaryPackageOutputTarget: true
     },
     {
       type: 'docs-json',
-      file: 'docs.json',
+      file: 'dist/docs.json'
     },
   ],
   sourceMap: false

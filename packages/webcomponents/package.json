@@ -3,12 +3,7 @@
   "version": "4.7.1",
   "description": "JustiFi Web Components",
   "main": "dist/index.cjs.js",
-  "module": "dist/components/index.js",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
-  "types": "dist/types/index.d.ts",
-  "collection": "dist/collection/collection-manifest.json",
-  "collection:main": "dist/collection/index.js",
+  "module": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
@@ -17,8 +12,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "files": [
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "scripts": {
     "build": "stencil build --docs",
@@ -42,19 +36,14 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.21.5",
-    "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.5",
-    "@pxtrn/storybook-addon-docs-stencil": "^6.4.1",
     "@stencil/sass": "^3.0.1",
     "@stencil/store": "^2.0.8",
     "@types/jest": "27.0.3",
     "@types/node": "^20.1.4",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
-    "puppeteer": "^21.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "puppeteer": "^21.0.0"
   },
   "license": "MIT",
   "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783"
