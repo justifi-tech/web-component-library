@@ -7,77 +7,47 @@
 info => Cleaning outputDir: /storybook-static
 info => Loading presets
 info => Building manager..
-info => Manager built (76 ms)
+info => Manager built (77 ms)
 info => Building preview..
 info => Copying static files: /Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+manager@7.6.7/node_modules/@storybook/manager/static at /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/storybook-static/sb-common-assets
-WARN 🚨 Unable to index files:
-WARN - ./stories/payments-list.stories.tsx: CSF: missing default export /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/stories/payments-list.stories.tsx (line 1, col 0)
-WARN 
-WARN More info: https://storybook.js.org/docs/react/writing-stories#default-export
-WARN - ./stories/payments-list.stories.tsx: CSF: missing default export /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/stories/payments-list.stories.tsx (line 1, col 0)
-WARN 
-WARN More info: https://storybook.js.org/docs/react/writing-stories#default-export
-WARN 🚨 Unable to index files:
-WARN - ./stories/payments-list.stories.tsx: CSF: missing default export /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/stories/payments-list.stories.tsx (line 1, col 0)
-WARN 
-WARN More info: https://storybook.js.org/docs/react/writing-stories#default-export
-WARN - ./stories/payments-list.stories.tsx: CSF: missing default export /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/stories/payments-list.stories.tsx (line 1, col 0)
-WARN 
-WARN More info: https://storybook.js.org/docs/react/writing-stories#default-export
-Error: Unable to index files:
-- ./stories/payments-list.stories.tsx: CSF: missing default export ./stories/payments-list.stories.tsx (line 1, col 0)
-
-More info: https://storybook.js.org/docs/react/writing-stories#default-export
-- ./stories/payments-list.stories.tsx: CSF: missing default export ./stories/payments-list.stories.tsx (line 1, col 0)
-
-More info: https://storybook.js.org/docs/react/writing-stories#default-export
-    at StoryIndexGenerator.getIndex (/Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+core-server@7.6.7/node_modules/@storybook/core-server/dist/index.js:60:3746)
-    at async extractStoriesJson (/Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+core-server@7.6.7/node_modules/@storybook/core-server/dist/index.js:51:4623)
-    at async Promise.all (index 3)
-    at async buildStaticStandalone (/Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+core-server@7.6.7/node_modules/@storybook/core-server/dist/index.js:61:2295)
-    at async withTelemetry (/Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+core-server@7.6.7/node_modules/@storybook/core-server/dist/index.js:65:3948)
-    at async build (/Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+cli@7.6.7/node_modules/@storybook/cli/dist/generate.js:478:1059)
-    at async Command.<anonymous> (/Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+cli@7.6.7/node_modules/@storybook/cli/dist/generate.js:494:125)
-[33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
-[?25l[2K[1G[36m?[39m [1mWould you like to help improve Storybook by sending anonymous crash reports?[22m [90m›[39m [90m(Y/n)[39mvite v5.0.11 building for production...
+vite v5.0.11 building for production...
 
 ./sb-common-assets/fonts.css doesn't exist at build time, it will remain unchanged to be resolved at runtime
 transforming...
 ../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs (1413:15) Use of eval in "../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
 ../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs (1416:18) Use of eval in "../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
-✓ 723 modules transformed.
+✓ 576 modules transformed.
 rendering chunks...
 computing gzip size...
 storybook-static/iframe.html                                     12.70 kB │ gzip:   3.57 kB
-storybook-static/assets/preview-hsja-fY-.js                       0.14 kB │ gzip:   0.12 kB
-storybook-static/assets/WithTooltip-V3YHNWJZ-hjNy8zu4.js          0.35 kB │ gzip:   0.24 kB
-storybook-static/assets/syntaxhighlighter-V7JZZA35-Or6HSlU-.js    0.36 kB │ gzip:   0.26 kB
-storybook-static/assets/index-LoCCyZqz.js                         0.54 kB │ gzip:   0.32 kB
+storybook-static/assets/preview-T3NZ0inP.js                       0.14 kB │ gzip:   0.12 kB
+storybook-static/assets/entry-preview-8z2Yh6eu.js                 0.18 kB │ gzip:   0.16 kB
+storybook-static/assets/tiny-invariant-VyoA2Os1.js                0.18 kB │ gzip:   0.15 kB
+storybook-static/assets/WithTooltip-V3YHNWJZ-Jzw2349r.js          0.28 kB │ gzip:   0.19 kB
+storybook-static/assets/syntaxhighlighter-V7JZZA35-MVZNuAQS.js    0.30 kB │ gzip:   0.22 kB
+storybook-static/assets/payments-list.stories-dXcHsVrF.js         0.36 kB │ gzip:   0.24 kB
+storybook-static/assets/preview-zvIR_CkY.js                       0.59 kB │ gzip:   0.34 kB
 storybook-static/assets/preview-VI2eoWmp.js                       0.64 kB │ gzip:   0.44 kB
-storybook-static/assets/preview-zdyHBIU-.js                       0.65 kB │ gzip:   0.39 kB
+storybook-static/assets/index-32rxAy6V.js                         0.70 kB │ gzip:   0.41 kB
 storybook-static/assets/index-PPLHz8o0.js                         0.77 kB │ gzip:   0.47 kB
 storybook-static/assets/preview-bEa2SesL.js                       0.86 kB │ gzip:   0.55 kB
-storybook-static/assets/entry-preview-hpuSWCkx.js                 1.08 kB │ gzip:   0.63 kB
 storybook-static/assets/index-ogXoivrg.js                         2.59 kB │ gzip:   1.26 kB
 storybook-static/assets/preview-FekBEZxm.js                       3.19 kB │ gzip:   1.37 kB
-storybook-static/assets/iframe-UQyzIUjP.js                        4.08 kB │ gzip:   1.60 kB
+storybook-static/assets/entry-preview-docs-7LlnL6Dz.js            3.88 kB │ gzip:   1.89 kB
+storybook-static/assets/iframe-egDm4v05.js                        4.07 kB │ gzip:   1.61 kB
 storybook-static/assets/preview-OnO0tzRj.js                       5.23 kB │ gzip:   2.39 kB
 storybook-static/assets/preview-u8M_OEO2.js                       7.62 kB │ gzip:   1.56 kB
-storybook-static/assets/index-DogsOklH.js                         7.80 kB │ gzip:   3.07 kB
-storybook-static/assets/preview-TkXSQy1x.js                       8.11 kB │ gzip:   3.08 kB
-storybook-static/assets/Color-6VNJS4EI-EJYNax1q.js               30.96 kB │ gzip:  11.61 kB
-storybook-static/assets/react-16-hfYRM8RH.js                    134.13 kB │ gzip:  43.23 kB
-storybook-static/assets/_getPrototype-YxJs5bVo.js               142.79 kB │ gzip:  43.37 kB
-storybook-static/assets/payments-list.stories-dsA0STu6.js       145.90 kB │ gzip:  45.40 kB
-storybook-static/assets/entry-preview-docs-INdWooBr.js          213.07 kB │ gzip:  66.20 kB
-storybook-static/assets/DocsRenderer-NNNQARDV-BCeJyBvn.js       538.13 kB │ gzip: 175.47 kB
-storybook-static/assets/formatter-SWP5E3XI-HB5Gu4V0.js          601.53 kB │ gzip: 184.99 kB
+storybook-static/assets/preview-9bpQVOkQ.js                       8.16 kB │ gzip:   3.10 kB
+storybook-static/assets/chunk-FJPRWHXQ-9inOxp7K.js               16.91 kB │ gzip:   6.35 kB
+storybook-static/assets/Color-6VNJS4EI-CKAv3ZhS.js               30.89 kB │ gzip:  11.58 kB
+storybook-static/assets/index-wsg3eEVD.js                       128.72 kB │ gzip:  38.44 kB
+storybook-static/assets/formatter-SWP5E3XI-wjv8kQxF.js          601.47 kB │ gzip: 184.96 kB
+storybook-static/assets/DocsRenderer-NNNQARDV-rpEjToOt.js       685.37 kB │ gzip: 222.95 kB
 
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 6.45s
-info => Preview built (6.94 s)
-[2K[1G[2K[1G[31m✖[39m [1mWould you like to help improve Storybook by sending anonymous crash reports?[22m [90m…[39m yes
-[?25h ELIFECYCLE  Command failed with exit code 1.
+✓ built in 2.41s
+info => Preview built (2.52 s)
+info => Output directory: /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/storybook-static

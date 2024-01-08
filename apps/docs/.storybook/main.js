@@ -12,7 +12,7 @@ const config = {
     getAbsolutePath("@storybook/addon-docs"),
   ],
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: getAbsolutePath("@storybook/web-components-vite"),
     options: {},
   },
 

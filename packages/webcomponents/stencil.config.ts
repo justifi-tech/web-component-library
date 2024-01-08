@@ -25,7 +25,7 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       dir: 'dist/module',
-      customElementsExportBehavior: 'single-export-module',
+      customElementsExportBehavior: 'auto-define-custom-elements',
       isPrimaryPackageOutputTarget: true
     },
     {

@@ -1,10 +1,15 @@
-import { JustifiBankAccountForm } from '@justifi/webcomponents';
+import type { Meta, StoryObj } from '@storybook/web-components';
 
-const JustifiBankAccountFormStory = () => (
-  <JustifiBankAccountForm
-    clientId="123456789"
-    clientSecret="123456789"
-  />
-);
+const meta: Meta = {
+  component: 'justifi-payments-list',
+};
 
-export default JustifiBankAccountFormStory;
+export default meta;
+type Story = StoryObj;
+
+//👇 Throws a type error it the args don't match the component props
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+};
