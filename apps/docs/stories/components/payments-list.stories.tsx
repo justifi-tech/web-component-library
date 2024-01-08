@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
 const meta: Meta = {
+  title: 'Payments List',
   component: 'justifi-payments-list',
 };
 
