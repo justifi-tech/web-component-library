@@ -7,7 +7,7 @@
 info => Cleaning outputDir: /storybook-static
 info => Loading presets
 info => Building manager..
-info => Manager built (77 ms)
+info => Manager built (83 ms)
 info => Building preview..
 info => Copying static files: /Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+manager@7.6.7/node_modules/@storybook/manager/static at /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/storybook-static/sb-common-assets
 vite v5.0.11 building for production...
@@ -16,38 +16,38 @@ vite v5.0.11 building for production...
 transforming...
 ../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs (1413:15) Use of eval in "../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
 ../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs (1416:18) Use of eval in "../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
-✓ 576 modules transformed.
+✓ 587 modules transformed.
 rendering chunks...
 computing gzip size...
 storybook-static/iframe.html                                     12.70 kB │ gzip:   3.57 kB
-storybook-static/assets/preview-T3NZ0inP.js                       0.14 kB │ gzip:   0.12 kB
+storybook-static/assets/preview-D_cN2lOT.js                       0.14 kB │ gzip:   0.12 kB
 storybook-static/assets/entry-preview-8z2Yh6eu.js                 0.18 kB │ gzip:   0.16 kB
 storybook-static/assets/tiny-invariant-VyoA2Os1.js                0.18 kB │ gzip:   0.15 kB
-storybook-static/assets/WithTooltip-V3YHNWJZ-Jzw2349r.js          0.28 kB │ gzip:   0.19 kB
-storybook-static/assets/syntaxhighlighter-V7JZZA35-MVZNuAQS.js    0.30 kB │ gzip:   0.22 kB
-storybook-static/assets/payments-list.stories-dXcHsVrF.js         0.36 kB │ gzip:   0.24 kB
-storybook-static/assets/preview-zvIR_CkY.js                       0.59 kB │ gzip:   0.34 kB
+storybook-static/assets/WithTooltip-V3YHNWJZ-RxZLZJWh.js          0.28 kB │ gzip:   0.20 kB
+storybook-static/assets/syntaxhighlighter-V7JZZA35-t5Cx2FhE.js    0.30 kB │ gzip:   0.22 kB
+storybook-static/assets/preview-MRZdWhfo.js                       0.59 kB │ gzip:   0.35 kB
 storybook-static/assets/preview-VI2eoWmp.js                       0.64 kB │ gzip:   0.44 kB
-storybook-static/assets/index-32rxAy6V.js                         0.70 kB │ gzip:   0.41 kB
+storybook-static/assets/index-Bhga7QM_.js                         0.70 kB │ gzip:   0.41 kB
 storybook-static/assets/index-PPLHz8o0.js                         0.77 kB │ gzip:   0.47 kB
 storybook-static/assets/preview-bEa2SesL.js                       0.86 kB │ gzip:   0.55 kB
 storybook-static/assets/index-ogXoivrg.js                         2.59 kB │ gzip:   1.26 kB
 storybook-static/assets/preview-FekBEZxm.js                       3.19 kB │ gzip:   1.37 kB
 storybook-static/assets/entry-preview-docs-7LlnL6Dz.js            3.88 kB │ gzip:   1.89 kB
-storybook-static/assets/iframe-egDm4v05.js                        4.07 kB │ gzip:   1.61 kB
+storybook-static/assets/iframe-nJnZ4dzm.js                        4.07 kB │ gzip:   1.61 kB
 storybook-static/assets/preview-OnO0tzRj.js                       5.23 kB │ gzip:   2.39 kB
 storybook-static/assets/preview-u8M_OEO2.js                       7.62 kB │ gzip:   1.56 kB
 storybook-static/assets/preview-9bpQVOkQ.js                       8.16 kB │ gzip:   3.10 kB
 storybook-static/assets/chunk-FJPRWHXQ-9inOxp7K.js               16.91 kB │ gzip:   6.35 kB
-storybook-static/assets/Color-6VNJS4EI-CKAv3ZhS.js               30.89 kB │ gzip:  11.58 kB
+storybook-static/assets/Color-6VNJS4EI-V0nnEZs3.js               30.89 kB │ gzip:  11.58 kB
 storybook-static/assets/index-wsg3eEVD.js                       128.72 kB │ gzip:  38.44 kB
-storybook-static/assets/formatter-SWP5E3XI-wjv8kQxF.js          601.47 kB │ gzip: 184.96 kB
-storybook-static/assets/DocsRenderer-NNNQARDV-rpEjToOt.js       685.37 kB │ gzip: 222.95 kB
+storybook-static/assets/payments-list.stories-fgelNwlE.js       340.59 kB │ gzip:  62.57 kB
+storybook-static/assets/formatter-SWP5E3XI-LgyHZU2D.js          601.47 kB │ gzip: 184.96 kB
+storybook-static/assets/DocsRenderer-NNNQARDV-ZqZVDDB7.js       685.37 kB │ gzip: 222.94 kB
 
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 2.41s
-info => Preview built (2.52 s)
+✓ built in 2.54s
+info => Preview built (2.63 s)
 info => Output directory: /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/storybook-static

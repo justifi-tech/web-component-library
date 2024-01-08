@@ -23,6 +23,9 @@ export const config: Config = {
   ],
   outputTargets: [
     {
+      type: 'dist'
+    },
+    {
       type: 'dist-custom-elements',
       dir: 'dist/module',
       customElementsExportBehavior: 'auto-define-custom-elements',
