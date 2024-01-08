@@ -1,94 +1,192 @@
-# Documentation
+# Turborepo Design System Starter
 
-- [JustiFi Web Component Documentation](https://storybook.justifi.ai/?path=/docs/introduction--docs)
+This guide explains how to use a React design system starter powered by:
 
-## Getting Started
+- 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
+- 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
+- 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
+- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
 
-This project is a monorepo which uses `lerna` and npm workspaces. Lerna is aware of the workspaces within the mono repo as they are defined within the `workspaces` section of the `package.json`. When running a lerna command via `lerna run xyz`, lerna will run that command for each workspace as long as the command exists within the `scripts` section of the `package.json` for that workspace.
+As well as a few others tools preconfigured:
 
-There are some project-wide tasks that can be run:
-- To install all depenedencies across the repo, simply run `npm install` from the root of the project and dependencies will be installed for all of the workspaces as well as dependencies at the root level (such as lerna)
-- To build the entire project for production, including all framework specific packages, run `npm run build`
-- To run tests across the entire project, run `npm run test`
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+- [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
+- [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
 
-# Environment Variables
+## Using this example
 
-This project uses environment variables to manage configurations for different environments like development, staging, and production. These variables were previously stored in `.env.dev`, `.env.staging`, and `.env.prod` files respectively, but for security and configuration management reasons, these files are no longer included in the repository and have been added to the `.gitignore` file.
+Run the following command:
 
-To setup the project locally, you will need to create these `.env` files manually in the project root folder. Here is a basic setup for the `.env.dev` file (for the development environment):
-
-`IFRAME_ORIGIN=value`
-
-Repeat this process to create `.env.staging` and `.env.prod` for staging and production environments, respectively.
-
-Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. For example, if you're working in the development environment, you should set `NODE_ENV=dev`.
-
-## Building
-
-Before building the project, make sure to set the correct environment using the `NODE_ENV` variable. The build scripts for different environments are:
-
-- `npm run build:dev` for development environment.
-- `npm run build:prod` for production environment.
-
-
-## Testing
-This project uses the Stencil testing framework for unit and end-to-end (E2E) tests, along with Storybook for UI component testing.
-
-### test
-
-Runs unit tests using the Stencil's spec testing.
-
-`npm run test`
-
-### test:watch
-
-Runs unit tests in watch mode. Good for development.
-
-`npm run test:watch`
-
-### test:e2e
-
-Runs end-to-end tests using the Stencil's E2E testing.
-
-`npm run test:e2e`
-
-## Deprecation Notice: Methods and Events
-
-In the upcoming release of our web component library, we are deprecating certain methods and events. These deprecations aim to improve the component's API and provide a more consistent and intuitive usage experience. Please take note of the following changes and plan your migration accordingly.
-
-### Deprecated Methods and Events:
-
-1. `bankAccountFormReady` event
-
-   - Deprecated in version 5.0.0
-   - Will be renamed to `ready` in version 6.0.0
-
-   **Reason for Deprecation:**
-   The event name `bankAccountFormReady` is being updated to `ready` to align with industry standards and improve consistency across our components.
-
-**Migration Example:**
-Before (current usage):
-
-```javascript
-element.addEventListener('bankAccountFormReady', handleReady);
+```sh
+npx create-turbo@latest -e design-system
 ```
 
-After (migrated usage):
+### Useful Commands
 
+- `pnpm build` - Build all packages, including the Storybook site
+- `pnpm dev` - Run all packages locally and preview with Storybook
+- `pnpm lint` - Lint all packages
+- `pnpm changeset` - Generate a changeset
+- `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
+
+## Turborepo
+
+[Turborepo](https://turbo.build/repo) is a high-performance build system for JavaScript and TypeScript codebases. It was designed after the workflows used by massive software engineering organizations to ship code at scale. Turborepo abstracts the complex configuration needed for monorepos and provides fast, incremental builds with zero-configuration remote caching.
+
+Using Turborepo simplifies managing your design system monorepo, as you can have a single lint, build, test, and release process for all packages. [Learn more](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software) about how monorepos improve your development workflow.
+
+## Apps & Packages
+
+This Turborepo includes the following packages and applications:
+
+- `apps/docs`: Component documentation site with Storybook
+- `packages/ui`: Core React components
+- `packages/utils`: Shared React utilities
+- `packages/typescript-config`: Shared `tsconfig.json`s used throughout the Turborepo
+- `packages/eslint-config`: ESLint preset
+
+Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
+
+This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
+
+### Compilation
+
+To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `tsup`, which uses `esbuild` to greatly improve performance.
+
+Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+
+For `acme-core`, the `build` command is the following:
+
+```bash
+tsup src/index.tsx --format esm,cjs --dts --external react
 ```
-element.addEventListener('ready', handleReady);
+
+`tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `acme-core` then instructs the consumer to select the correct format:
+
+```json:acme-core/package.json
+{
+  "name": "@acme/core",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+}
 ```
 
-Please update your event listeners accordingly to ensure compatibility with future releases.
+Run `pnpm build` to confirm compilation is working correctly. You should see a folder `acme-core/dist` which contains the compiled output.
 
-**Warning Message:** When using the deprecated `bankAccountFormReady` event, a warning will be logged in the console, indicating the upcoming change and the need for migration.
+```bash
+acme-core
+└── dist
+    ├── index.d.ts  <-- Types
+    ├── index.js    <-- CommonJS version
+    └── index.mjs   <-- ES Modules version
+```
 
-**Recommended Migration Version:** 6.0.0
+## Components
 
-## Additional Considerations:
+Each file inside of `acme-core/src` is a component inside our design system. For example:
 
-- Make sure to update any code, documentation, or integrations that rely on the deprecated methods and events to prevent disruptions in functionality.
-- Please note that starting from version 6.0.0, the `bankAccountFormReady` event will be completely removed from the component.
-  We highly recommend migrating to the new event name `ready` as soon as possible to ensure a smooth transition and to leverage the latest improvements in our component library.
+```tsx:acme-core/src/Button.tsx
+import * as React from 'react';
 
-If you have any questions or need assistance with the migration process, please don't hesitate to reach out to our support team.
+export interface ButtonProps {
+  children: React.ReactNode;
+}
+
+export function Button(props: ButtonProps) {
+  return <button>{props.children}</button>;
+}
+
+Button.displayName = 'Button';
+```
+
+When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
+
+```tsx:acme-core/src/index.tsx
+import * as React from "react";
+export { Button, type ButtonProps } from "./Button";
+// Add new component exports here
+```
+
+## Storybook
+
+Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Storybook to:
+
+- Use Vite to bundle stories instantly (in milliseconds)
+- Automatically find any stories inside the `stories/` folder
+- Support using module path aliases like `@acme-core` for imports
+- Write MDX for component documentation pages
+
+For example, here's the included Story for our `Button` component:
+
+```js:apps/docs/stories/button.stories.mdx
+import { Button } from '@acme-core/src';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title="Components/Button" component={Button} />
+
+# Button
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+
+## Props
+
+<Props of={Box} />
+
+## Examples
+
+<Preview>
+  <Story name="Default">
+    <Button>Hello</Button>
+  </Story>
+</Preview>
+```
+
+This example includes a few helpful Storybook scripts:
+
+- `pnpm dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
+- `pnpm build`: Builds the Storybook UI and generates the static HTML files
+- `pnpm preview-storybook`: Starts a local server to view the generated Storybook UI
+
+## Versioning & Publishing Packages
+
+This example uses [Changesets](https://github.com/changesets/changesets) to manage versions, create changelogs, and publish to npm. It's preconfigured so you can start publishing packages immediately.
+
+You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHub repository settings to enable access to npm. It's also worth installing the [Changesets bot](https://github.com/apps/changeset-bot) on your repository.
+
+### Generating the Changelog
+
+To generate your changelog, run `pnpm changeset` locally:
+
+1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
+1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
+1. If doing the first major version, confirm you want to release.
+1. Write a summary for the changes.
+1. Confirm the changeset looks as expected.
+1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
+
+### Releasing
+
+When you push your code to GitHub, the [GitHub Action](https://github.com/changesets/action) will run the `release` script defined in the root `package.json`:
+
+```bash
+turbo run build --filter=docs^... && changeset publish
+```
+
+Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `acme` as the npm organization. To change this, do the following:
+
+- Rename folders in `packages/*` to replace `acme` with your desired scope
+- Search and replace `acme` with your desired scope
+- Re-run `pnpm install`
+
+To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
+
+```diff
+- "publishConfig": {
+-  "access": "public"
+- },
+```
