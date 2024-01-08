@@ -1,5 +1,13 @@
 ### Changelog
 
+
+### 4.7.1
+
+> 3 Jan 2023
+
+- Remove sourcemaps from production build
+- Fix CDN link version in readme
+
 ### 4.7.0
 
 > 18 December 2023
