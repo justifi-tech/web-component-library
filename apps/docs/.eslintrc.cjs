@@ -24,6 +24,9 @@ module.exports = {
   ],
   parserOptions: {
     project,
+    project: "tsconfig.json",
+    sourceType: "module",
+    tsconfigRootDir: __dirname,
   },
   plugins: ["only-warn"],
   globals: {
@@ -44,11 +47,3 @@ module.exports = {
   },
 };
 
-module.exports = {
-  extends: ["@repo/eslint-config/storybook.js"],
-  parserOptions: {
-    project: "tsconfig.json",
-    sourceType: "module",
-    tsconfigRootDir: __dirname,
-  },
-};

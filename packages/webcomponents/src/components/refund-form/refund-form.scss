@@ -1,0 +1,65 @@
+@import 'reboot';
+@import 'grid';
+@import 'buttons';
+@import 'bootstrap-utilities';
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
+
+*::part(input) {
+  font-family: var(--jfi-layout-font-family);
+  background-color: var(--jfi-form-control-background-color);
+  border-color: var(--jfi-form-control-border-color);
+  border-width: var(--jfi-form-control-border-width);
+  border-bottom-width: var(--jfi-form-control-border-bottom-width);
+  border-left-width: var(--jfi-form-control-border-left-width);
+  border-right-width: var(--jfi-form-control-border-right-width);
+  border-top-width: var(--jfi-form-control-border-top-width);
+  border-radius: var(--jfi-form-control-border-radius);
+  border-style: var(--jfi-form-control-border-style);
+  box-shadow: var(--jfi-form-control-box-shadow);
+  color: var(--jfi-form-control-color);
+  font-size: var(--jfi-form-control-font-size);
+  font-weight: var(--jfi-form-control-font-weight);
+  line-height: var(--jfi-form-control-line-height);
+  margin: var(--jfi-form-control-margin);
+  padding: var(--jfi-form-control-padding);
+
+  &:focus {
+    color: var(--jfi-form-control-color-focus);
+    border-color: var(--jfi-form-control-border-color-focus);
+    box-shadow: var(--jfi-form-control-box-shadow-focus);
+  }
+}
+
+.btn {
+  font-family: var(--jfi-layout-font-family);
+  color: var(--jfi-submit-button-color);
+  background-color: var(--jfi-submit-button-background-color);
+  border-color: var(--jfi-submit-button-border-color);
+  padding: var(--jfi-submit-button-padding);
+  font-size: var(--jfi-submit-button-font-size);
+  border-radius: var(--jfi-submit-button-border-radius);
+  width: var(--jfi-submit-button-width);
+  box-shadow: var(--jfi-submit-button-box-shadow);
+}
+
+.btn:hover {
+  color: var(--jfi-submit-button-color-hover);
+  background-color: var(--jfi-submit-button-background-color-hover);
+  border-color: var(--jfi-submit-button-border-color-hover);
+}
+
+.btn:focus {
+  color: var(--jfi-submit-button-color-focus);
+  background-color: var(--jfi-submit-button-background-color-focus);
+  border-color: var(--jfi-submit-button-border-color-focus);
+}
+
+.btn:active {
+  color: var(--jfi-submit-button-color-active);
+  background-color: var(--jfi-submit-button-background-color-active);
+  border-color: var(--jfi-submit-button-border-color-active);
+}

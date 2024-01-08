@@ -1,5 +1,5 @@
 
-> @repo/docs@0.0.0 build
+> @repo/docs@0.0.0 build /Users/jakemerringer/justifi-tech/web-component-library/apps/docs
 > storybook build --docs
 
 @storybook/cli v7.6.7
@@ -7,51 +7,51 @@
 info => Cleaning outputDir: /storybook-static
 info => Loading presets
 info => Building manager..
-info => Manager built (73 ms)
+info => Manager built (79 ms)
 info => Building preview..
-info => Copying static files: /Users/jakemerringer/justifi-tech/fe-monorepo/node_modules/@storybook/manager/static at /Users/jakemerringer/justifi-tech/fe-monorepo/apps/docs/storybook-static/sb-common-assets
+info => Copying static files: /Users/jakemerringer/justifi-tech/web-component-library/node_modules/.pnpm/@storybook+manager@7.6.7/node_modules/@storybook/manager/static at /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/storybook-static/sb-common-assets
 [33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
 vite v5.0.11 building for production...
 
 ./sb-common-assets/fonts.css doesn't exist at build time, it will remain unchanged to be resolved at runtime
 transforming...
-../../node_modules/telejson/dist/index.mjs (1413:15) Use of eval in "../../node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
-../../node_modules/telejson/dist/index.mjs (1416:18) Use of eval in "../../node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
-✓ 630 modules transformed.
+../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs (1413:15) Use of eval in "../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
+../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs (1416:18) Use of eval in "../../node_modules/.pnpm/telejson@7.2.0/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
+✓ 723 modules transformed.
 rendering chunks...
 computing gzip size...
 storybook-static/iframe.html                                     12.70 kB │ gzip:   3.57 kB
-storybook-static/assets/preview-O0G1qMFe.js                       0.14 kB │ gzip:   0.12 kB
-storybook-static/assets/WithTooltip-V3YHNWJZ-cw2W_dAC.js          0.35 kB │ gzip:   0.24 kB
-storybook-static/assets/syntaxhighlighter-V7JZZA35-50A-o7kJ.js    0.36 kB │ gzip:   0.26 kB
+storybook-static/assets/preview-9wF5OL8B.js                       0.14 kB │ gzip:   0.12 kB
+storybook-static/assets/WithTooltip-V3YHNWJZ-gpX1kgTn.js          0.35 kB │ gzip:   0.23 kB
+storybook-static/assets/syntaxhighlighter-V7JZZA35-NCYui3Q3.js    0.36 kB │ gzip:   0.25 kB
 storybook-static/assets/index-LoCCyZqz.js                         0.54 kB │ gzip:   0.32 kB
 storybook-static/assets/preview-VI2eoWmp.js                       0.64 kB │ gzip:   0.44 kB
-storybook-static/assets/preview-2OnPXBRX.js                       0.65 kB │ gzip:   0.38 kB
+storybook-static/assets/preview-cXfFe7gF.js                       0.65 kB │ gzip:   0.38 kB
 storybook-static/assets/index-PPLHz8o0.js                         0.77 kB │ gzip:   0.47 kB
 storybook-static/assets/preview-bEa2SesL.js                       0.86 kB │ gzip:   0.55 kB
 storybook-static/assets/entry-preview-hpuSWCkx.js                 1.08 kB │ gzip:   0.63 kB
-storybook-static/assets/button.stories-JvTjcbeT.js                2.58 kB │ gzip:   1.30 kB
 storybook-static/assets/index-ogXoivrg.js                         2.59 kB │ gzip:   1.26 kB
 storybook-static/assets/preview-FekBEZxm.js                       3.19 kB │ gzip:   1.37 kB
-storybook-static/assets/iframe-ZH6JR9c4.js                        4.05 kB │ gzip:   1.59 kB
+storybook-static/assets/iframe-DBo33Tfi.js                        4.08 kB │ gzip:   1.60 kB
 storybook-static/assets/preview-OnO0tzRj.js                       5.23 kB │ gzip:   2.39 kB
 storybook-static/assets/preview-u8M_OEO2.js                       7.62 kB │ gzip:   1.56 kB
 storybook-static/assets/index-DogsOklH.js                         7.80 kB │ gzip:   3.07 kB
 storybook-static/assets/preview-TkXSQy1x.js                       8.11 kB │ gzip:   3.08 kB
-storybook-static/assets/Color-6VNJS4EI-3_r8ZSfv.js               30.96 kB │ gzip:  11.61 kB
-storybook-static/assets/react-16-hfYRM8RH.js                    134.13 kB │ gzip:  43.24 kB
-storybook-static/assets/_getPrototype-YxJs5bVo.js               142.79 kB │ gzip:  43.38 kB
-storybook-static/assets/entry-preview-docs-INdWooBr.js          213.07 kB │ gzip:  66.21 kB
-storybook-static/assets/DocsRenderer-NNNQARDV-Opxlo3sy.js       538.26 kB │ gzip: 175.51 kB
-storybook-static/assets/formatter-SWP5E3XI-N35I8CTY.js          601.53 kB │ gzip: 185.02 kB
+storybook-static/assets/Color-6VNJS4EI-hIKd7u2g.js               30.96 kB │ gzip:  11.61 kB
+storybook-static/assets/react-16-hfYRM8RH.js                    134.13 kB │ gzip:  43.23 kB
+storybook-static/assets/_getPrototype-YxJs5bVo.js               142.79 kB │ gzip:  43.37 kB
+storybook-static/assets/payments-list.stories-GG_aynJv.js       146.53 kB │ gzip:  45.66 kB
+storybook-static/assets/entry-preview-docs-INdWooBr.js          213.07 kB │ gzip:  66.20 kB
+storybook-static/assets/DocsRenderer-NNNQARDV-x43RfGsc.js       538.13 kB │ gzip: 175.47 kB
+storybook-static/assets/formatter-SWP5E3XI-O7Bq9hxj.js          601.53 kB │ gzip: 184.99 kB
 
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 3.42s
-info => Preview built (4.09 s)
-info => Output directory: /Users/jakemerringer/justifi-tech/fe-monorepo/apps/docs/storybook-static
+✓ built in 6.54s
+info => Preview built (7.28 s)
+info => Output directory: /Users/jakemerringer/justifi-tech/web-component-library/apps/docs/storybook-static
 
 attention => Storybook now collects completely anonymous telemetry regarding usage.
 This information is used to shape Storybook's roadmap and prioritize features.

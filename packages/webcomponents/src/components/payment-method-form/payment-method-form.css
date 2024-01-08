@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+justifi-payment-method-form iframe {
+  border: none;
+  width: 100%;
+}
+
+iframe {
+  width: 1px;
+  min-width: 100%;
+}
