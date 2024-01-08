@@ -28,11 +28,11 @@ export class JustifiRepresentativeDetails {
               <DetailItem title="Name" value={this.representative?.name} />
               <DetailItem title="ID" value={this.representative?.id} />
               <DetailItem
-                title="Representative Address"
-                value={this.representative?.address.line1}
+                title="Address"
+                value={this.representative?.address?.line1}
               />
               <DetailItem
-                title="Representative Created At"
+                title="Created At"
                 value={formatMediumDate(this.representative?.created_at)}
               />
             </div>
@@ -55,7 +55,7 @@ export class JustifiRepresentativeDetails {
               <DetailItem title="Email" value={this.representative?.email} />
               <DetailItem title="Phone" value={this.representative?.phone} />
               <DetailItem
-                title="Representative Updated At"
+                title="Updated At"
                 value={formatMediumDate(this.representative?.updated_at)}
               />
             </div>

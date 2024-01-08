@@ -33,7 +33,7 @@ export const DetailSection = (
   <div part="detail-section" class="mt-4">
     <h5 part="detail-section-title">{sectionTitle}</h5>
     <hr />
-    <div class="d-flex flex-column justify-content-center gap-2 text-nowrap">
+    <div class="d-table gap-2 w-100">
       {children}
     </div>
   </div>
@@ -47,13 +47,13 @@ export const DetailItem = ({
   value: string;
 }) =>
   title && value ? (
-    <div class="d-flex gap-2">
-      <span part="detail-section-item-title" class="fw-bold flex-1">
+    <div class="d-table-row gap-2">
+      <span part="detail-section-item-title" class="fw-bold d-table-cell px-2">
         {title}
       </span>
       <span
         part="detail-section-item-data"
-        class="flex-1"
+        class="flex-1 d-table-cell px-2"
         innerHTML={value}
       ></span>
     </div>
@@ -95,7 +95,7 @@ export const EntityHeadInfo = ({ title, slot, badge }, children) => (
   </div>
 );
 
-export const CodeBlock = ({ metadata }: {metadata: {}}) => 
+export const CodeBlock = ({ metadata }: { metadata: {} }) =>
   metadata && Object.keys(metadata).length ? (
     <div class='mt-4'>
       <pre part="detail-metadata" class="p-2" aria-label="metadata content">
