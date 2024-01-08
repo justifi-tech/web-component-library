@@ -4,24 +4,13 @@
 
 <h1 align="center">JustiFi Web Components</h1>
 
-JustiFi Web Components are created for.....
+The JustiFi web component library is our collection of customizable fintech components. The library includes various types of components such as Payment Forms, Tables/Lists, Charts, Onboarding Forms, and more. It is built for our clients to simply and efficiently implement key pieces of their finance infrastructure into their existing dashboards or software solutions.
 
 ## Installation
 
-There are two methods for including the JustiFi web components in your application:
-
-### Installation via npm
+The best method for including the JustiFi web components in your application is via npm:
 
 `npm install @justifi/webcomponents`
-
-### Include from CDN
-
-Add the script tag in the `head` of your `index.html`:
-```
-<script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@4.7.1-rc.0/dist/webcomponents/webcomponents.esm.js'></script>
-```
-
-Then you can use the element anywhere in your template, JSX, html etc. 
 
 ## Documentation
 
