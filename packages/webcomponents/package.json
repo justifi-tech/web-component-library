@@ -2,6 +2,7 @@
   "name": "@justifi/webcomponents",
   "version": "4.7.1",
   "description": "JustiFi Web Components",
+  "main": "dist/module/index.js",
   "module": "dist/module/index.js",
   "repository": {
     "type": "git",
