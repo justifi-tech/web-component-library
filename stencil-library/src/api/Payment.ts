@@ -40,7 +40,7 @@ export class PaymentMethod implements IPaymentMethod {
       : undefined;
   }
 
-  getName(): string {
+  getPayersName(): string {
     if (this.card) {
       return this.card.getName();
     } else if (this.bank_account) {
@@ -237,7 +237,7 @@ export class Payment implements IPayment {
 
   public get paymentMakerName(): string | null {
     if (this.payment_method) {
-      return this.payment_method.getName();
+      return this.payment_method.getPayersName();
     }
     return null;
   }
