@@ -5,7 +5,9 @@
 
 <h1 align="center">JustiFi Web Components</h1>
 
-The JustiFi web component library is our collection of customizable fintech components. The library includes various types of components such as Payment Forms, Tables/Lists, Charts, Onboarding Forms, and more. It is built for our clients to simply and efficiently implement key pieces of their finance infrastructure into their existing dashboards or software solutions.
+The JustiFi web component library is an ever-expanding repository of customizable, white-labeled fintech components. From Payment Forms and Tables/Lists to Charts and Onboarding Forms, this diverse collection is designed to empower our clients to seamlessly integrate crucial elements of their financial infrastructure into existing dashboards and software solutions.
+
+Stay tuned for future library updates as we continuously introduce new and powerful web components to help elevate your customer experience.
 
 
 ## Installation
