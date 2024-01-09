@@ -1,4 +1,4 @@
-import { CaptureStrategy, Card, Payment, PaymentMethod, PaymentStatuses } from '../Payment';
+import { CaptureStrategy, Payment, PaymentStatuses } from '../Payment';
 
 const mockPayments = [
   // payment 0: succeeded
@@ -40,8 +40,8 @@ const mockPayments = [
       ],
     },
     payment_intent_id: null,
-    payment_method: new PaymentMethod({
-      card: new Card({
+    payment_method: {
+      card: {
         acct_last_four: '6449',
         brand: 'mastercard',
         created_at: '2022-01-13T14:19:11.803Z',
@@ -49,8 +49,8 @@ const mockPayments = [
         name: 'Nick Name',
         token: 'fake-token',
         updated_at: '2022-01-13T14:19:11.803Z',
-      }),
-    }),
+      },
+    },
     refunded: false,
     status: PaymentStatuses.succeeded,
     updated_at: '2022-01-10T15:29:58.940Z',
@@ -77,8 +77,8 @@ const mockPayments = [
     is_test: false,
     metadata: null,
     payment_intent_id: null,
-    payment_method: new PaymentMethod({
-      card: new Card({
+    payment_method: {
+      card: {
         acct_last_four: '1213',
         brand: 'visa',
         created_at: '2021-01-13T14:19:11.803Z',
@@ -86,8 +86,8 @@ const mockPayments = [
         name: 'Good Customer',
         token: 'fake-token',
         updated_at: '2021-01-13T14:19:11.803Z',
-      }),
-    }),
+      },
+    },
     refunded: true,
     status: PaymentStatuses.fully_refunded,
     updated_at: '2021-01-10T15:29:58.940Z',
@@ -114,8 +114,8 @@ const mockPayments = [
     is_test: false,
     metadata: null,
     payment_intent_id: null,
-    payment_method: new PaymentMethod({
-      card: new Card({
+    payment_method: {
+      card: {
         acct_last_four: '9780',
         brand: 'american_express',
         created_at: '2021-11-13T14:19:11.803Z',
@@ -123,8 +123,8 @@ const mockPayments = [
         name: 'Sal Gleason',
         token: 'fake-token',
         updated_at: '2021-11-13T14:19:11.803Z',
-      }),
-    }),
+      },
+    },
     refunded: true,
     status: PaymentStatuses.partially_refunded,
     updated_at: '2022-01-10T15:29:58.940Z',
@@ -163,8 +163,8 @@ const mockPayments = [
     is_test: false,
     metadata: null,
     payment_intent_id: null,
-    payment_method: new PaymentMethod({
-      card: new Card({
+    payment_method: {
+      card: {
         acct_last_four: '1554',
         brand: 'discover',
         created_at: '2021-09-13T14:19:11.803Z',
@@ -172,8 +172,8 @@ const mockPayments = [
         name: 'Sal Gleason',
         token: 'fake-token',
         updated_at: '2021-09-13T14:19:11.803Z',
-      }),
-    }),
+      },
+    },
     refunded: false,
     status: PaymentStatuses.disputed,
     updated_at: '2021-09-10T15:29:58.940Z',
@@ -200,8 +200,8 @@ const mockPayments = [
     is_test: true,
     metadata: null,
     payment_intent_id: null,
-    payment_method: new PaymentMethod({
-      card: new Card({
+    payment_method: {
+      card: {
         acct_last_four: '8774',
         brand: 'diners_club',
         created_at: '2022-01-18T15:07:15.975Z',
@@ -209,8 +209,8 @@ const mockPayments = [
         name: 'Minnie Bernhard',
         token: 'fake-token',
         updated_at: '2022-01-18T15:07:15.975Z',
-      }),
-    }),
+      },
+    },
     refunded: false,
     status: PaymentStatuses.failed,
     updated_at: '2022-01-18T12:54:44.822Z',
