@@ -66,7 +66,7 @@ export class Table {
           <div class="table-wrapper">
             <table class="table table-hover">
               <thead class="table-head sticky-top" part="table-head">
-                <tr class="table-light" part='table-head-row'>
+                <tr class="table-light text-nowrap" part='table-head-row'>
                   {
                     this.columnData?.map((column) =>
                       <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
