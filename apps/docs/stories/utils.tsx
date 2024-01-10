@@ -1,15 +1,15 @@
 import { Source } from '@storybook/blocks';
 import dedent from 'ts-dedent';
-import packageJson from '../package.json';
-// import DocsJson from '../docs.json';
+import webcomponentsPackageJson from '@justifi/webcomponents/package.json';
+import webcomponentsDocsJson from '@justifi/webcomponents/dist/docs.json';
 
 const extractVersionFromPackage = () => {
-  return packageJson.version;
+  return webcomponentsPackageJson.version;
 };
 
-// const filterDocsByTag = (tag: string) => {
-//   return DocsJson.components.filter(comp => tag === comp.tag)[0];
-// };
+const filterDocsByTag = (tag: string) => {
+  return webcomponentsDocsJson.components.filter(comp => tag === comp.tag)[0];
+};
 
 const ExportedParts = ({ tags, component, compact }: { tags: string[]; component: string, compact: boolean }) => {
   return (
@@ -62,6 +62,7 @@ const SummaryElement = (props: { title: string, children: any }) => {
 
 export {
   extractVersionFromPackage,
+  filterDocsByTag,
   ExportedParts,
   SummaryElement
 };

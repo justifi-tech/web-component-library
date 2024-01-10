@@ -33,7 +33,7 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: 'docs.json',
+      file: './dist/docs.json',
     },
   ],
   sourceMap: false
