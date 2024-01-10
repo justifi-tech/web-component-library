@@ -1,4 +1,4 @@
-import { head } from '../shared/example-parts';
+import { head } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">

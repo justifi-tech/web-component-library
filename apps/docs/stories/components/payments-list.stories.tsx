@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import StoryBaseArgs from '../shared/base-args';
-import { renderComponentWithStyles } from '../shared/utils';
+import { renderComponentWithStyles, StoryBaseArgs } from '../utils';
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
 const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
