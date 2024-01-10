@@ -2,6 +2,9 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Storybook Docs",
   "compilerOptions": {
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "composite": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -26,10 +29,11 @@
     "module": "esnext",
     "noEmit": true,
     "resolveJsonModule": true,
-    "target": "es5"
+    "target": "es5",
   },
   "include": [
-    "."
+    ".",
+    ".storybook/vite.config.ts"
   ],
   "exclude": [
     "dist",

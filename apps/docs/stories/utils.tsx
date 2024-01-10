@@ -1,9 +1,9 @@
 import { Source } from '@storybook/blocks';
 import dedent from 'ts-dedent';
+import packageJson from '../package.json';
 // import DocsJson from '../docs.json';
 
 const extractVersionFromPackage = () => {
-  const packageJson = require('../package.json');
   return packageJson.version;
 };
 
@@ -62,7 +62,6 @@ const SummaryElement = (props: { title: string, children: any }) => {
 
 export {
   extractVersionFromPackage,
-  // filterDocsByTag,
   ExportedParts,
   SummaryElement
 };
