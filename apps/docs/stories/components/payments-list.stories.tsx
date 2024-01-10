@@ -12,10 +12,8 @@ const meta: Meta = {
 };
 
 export default meta;
+
 type Story = StoryObj;
 
-//👇 Throws a type error it the args don't match the component props
-export const Primary: Story = {
-  args: {
-  },
+export const Basic: Story = {
 };
