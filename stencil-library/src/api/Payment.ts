@@ -25,8 +25,29 @@ export enum PaymentDisputedStatuses {
 }
 
 export interface IPaymentMethod {
-  card?: ICard;
-  bank_account?: IBankAccount;
+  card?: Card;
+  bank_account?: BankAccount;
+}
+
+export class PaymentMethod implements IPaymentMethod {
+  public card?: Card;
+  public bank_account?: BankAccount;
+
+  constructor(paymentMethod: IPaymentMethod) {
+    this.card = paymentMethod.card ? new Card(paymentMethod.card) : undefined;
+    this.bank_account = paymentMethod.bank_account
+      ? new BankAccount(paymentMethod.bank_account)
+      : undefined;
+  }
+
+  getPayersName(): string {
+    if (this.card) {
+      return this.card.getName();
+    } else if (this.bank_account) {
+      return this.bank_account.getName();
+    }
+    return '';
+  }
 }
 
 export type CardBrand =
@@ -49,6 +70,30 @@ export interface IBankAccount {
   updated_at: string;
 }
 
+export class BankAccount implements IBankAccount {
+  public id: string;
+  public acct_last_four: string;
+  public account_owner_name: string;
+  public bank_name: string;
+  public token: string
+  public created_at: string;
+  public updated_at: string;
+
+  constructor(bankAccount: IBankAccount) {
+    this.id = bankAccount.id;
+    this.acct_last_four = bankAccount.acct_last_four;
+    this.account_owner_name = bankAccount.account_owner_name;
+    this.bank_name = bankAccount.bank_name;
+    this.token = bankAccount.token;
+    this.created_at = bankAccount.created_at;
+    this.updated_at = bankAccount.updated_at;
+  }
+
+  getName(): string {
+    return this.account_owner_name;
+  }
+}
+
 export interface ICard {
   id: string;
   acct_last_four: string;
@@ -57,6 +102,30 @@ export interface ICard {
   token: string;
   created_at: string;
   updated_at: string;
+}
+
+export class Card implements ICard {
+  public id: string;
+  public acct_last_four: string;
+  public name: string;
+  public brand: CardBrand;
+  public token: string;
+  public created_at: string;
+  public updated_at: string;
+
+  constructor(card: ICard) {
+    this.id = card.id || '';
+    this.acct_last_four = card.acct_last_four;
+    this.name = card.name;
+    this.brand = card.brand;
+    this.token = card.token;
+    this.created_at = card.created_at;
+    this.updated_at = card.updated_at;
+  }
+
+  getName(): string {
+    return this.name;
+  }
 }
 
 export interface IDispute {
@@ -90,7 +159,7 @@ export interface IPayment {
   fee_amount: number;
   is_test: boolean;
   metadata: Object | null;
-  payment_method: IPaymentMethod;
+  payment_method: PaymentMethod;
   payment_intent_id: string | null;
   refunded: boolean;
   status: PaymentStatuses;
@@ -117,7 +186,7 @@ export class Payment implements IPayment {
   public fee_amount: number;
   public is_test: boolean;
   public metadata: Object | null;
-  public payment_method: IPaymentMethod;
+  public payment_method: PaymentMethod;
   public payment_intent_id: string | null;
   public refunded: boolean;
   public status: PaymentStatuses;
@@ -144,7 +213,7 @@ export class Payment implements IPayment {
     this.fee_amount = payment.fee_amount;
     this.is_test = payment.is_test;
     this.metadata = payment.metadata;
-    this.payment_method = payment.payment_method;
+    this.payment_method = new PaymentMethod(payment.payment_method);
     this.payment_intent_id = payment.payment_intent_id;
     this.refunded = payment.refunded;
     this.status = payment.status;
@@ -164,6 +233,24 @@ export class Payment implements IPayment {
     } else {
       return PaymentDisputedStatuses.open;
     }
+  }
+
+  public get paymentMakerName(): string | null {
+    if (this.payment_method) {
+      return this.payment_method.getPayersName();
+    }
+    return null;
+  }
+
+  public get lastFourDigits(): string | null {
+    if (this.payment_method) {
+      if (this.payment_method.card) {
+        return this.payment_method.card.acct_last_four;
+      } else if (this.payment_method.bank_account) {
+        return this.payment_method.bank_account.acct_last_four;
+      }
+    }
+    return null;
   }
 }
 
