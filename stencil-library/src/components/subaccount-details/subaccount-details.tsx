@@ -70,34 +70,34 @@ export class SubaccountDetails {
   render() {
     return (
       <Host>
-        {
-          this.loading ? LoadingState :
-            !this.subaccount || !this.onboardingData ? ErrorState(this.errorMessage) :
-              <justifi-details>
-                <EntityHeadInfo
-                  slot='head-info'
-                  badge={<span slot='badge' innerHTML={MapSubAccountStatusToBadge(this.subaccount?.status)} />}
-                  title={this.subaccount?.name}>
-                  <EntityHeadInfoItem
-                    classes="border-1 border-end"
-                    title="Created At"
-                    value={`${formatDate(this.subaccount.created_at)} ${formatTime(this.subaccount.created_at)}`}
-                  />
-                  <EntityHeadInfoItem
-                    classes="border-1 border-end"
-                    title="Last Updated"
-                    value={`${formatDate(this.subaccount.updated_at)} ${formatTime(this.subaccount.updated_at)}`}
-                  />
-                  <EntityHeadInfoItem title="ID" value={this.subaccount.id} />
-                </EntityHeadInfo>
-                <div slot='detail-sections'>
-                  <subaccount-account-details subaccount={this.subaccount} onboardingData={this.onboardingData} />
-                  <subaccount-merchant-details onboardingData={this.onboardingData} />
-                  <subaccount-representative-details data={this.onboardingData?.payload?.representative} />
-                  <subaccount-owners-details data={this.onboardingData?.payload?.owners} />
-                </div>
-              </justifi-details>
-        }
+        {this.loading && LoadingState}
+        {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
+        {!this.loading && this.subaccount && this.onboardingData && (
+          <justifi-details>
+            <EntityHeadInfo
+              slot='head-info'
+              badge={<span slot='badge' innerHTML={MapSubAccountStatusToBadge(this.subaccount?.status)} />}
+              title={this.subaccount?.name}>
+              <EntityHeadInfoItem
+                classes="border-1 border-end"
+                title="Created At"
+                value={`${formatDate(this.subaccount.created_at)} ${formatTime(this.subaccount.created_at)}`}
+              />
+              <EntityHeadInfoItem
+                classes="border-1 border-end"
+                title="Last Updated"
+                value={`${formatDate(this.subaccount.updated_at)} ${formatTime(this.subaccount.updated_at)}`}
+              />
+              <EntityHeadInfoItem title="ID" value={this.subaccount.id} />
+            </EntityHeadInfo>
+            <div slot='detail-sections'>
+              <subaccount-account-details subaccount={this.subaccount} onboardingData={this.onboardingData} />
+              <subaccount-merchant-details onboardingData={this.onboardingData} />
+              <subaccount-representative-details data={this.onboardingData?.payload?.representative} />
+              <subaccount-owners-details data={this.onboardingData?.payload?.owners} />
+            </div>
+          </justifi-details>
+        )}
       </Host>
     );
   }
