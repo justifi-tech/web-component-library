@@ -4,6 +4,7 @@ import webcomponentsPackageJson from '@justifi/webcomponents/package.json';
 import webcomponentsDocsJson from '@justifi/webcomponents/dist/docs.json';
 import CSSVars from './css-variables';
 import StoryBaseArgs from './base-args';
+import customStoryDecorator from './decorators';
 
 const extractVersionFromPackage = () => {
   return webcomponentsPackageJson.version;
@@ -62,7 +63,7 @@ const SummaryElement = (props: { title: string, children: any }) => {
   );
 };
 
-const head = (tag: string) => `<head>
+const codeExampleHead = (tag: string) => `<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>${tag}</title>
@@ -72,9 +73,10 @@ const head = (tag: string) => `<head>
 </head>`;
 
 export {
-  head,
+  codeExampleHead,
   extractVersionFromPackage,
   filterDocsByTag,
+  customStoryDecorator,
   StoryBaseArgs,
   ExportedParts,
   SummaryElement,

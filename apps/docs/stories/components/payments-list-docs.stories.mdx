@@ -1,6 +1,6 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
-import example from './payments-list-example';
+import { codeExampleFull, codeExampleEventHandling } from './payments-list-example';
 
 <Meta
   title="Components/PaymentsList"
@@ -10,18 +10,17 @@ import example from './payments-list-example';
 <Title />
 Component to render a formated list of payments for the requested account.
 
-# Index
 
+# Index
 - [Props, events and methods](#props-events-and-methods)
   - [Events usage](#events-usage)
 - [Styling](#styling)
   - [Exported Parts](#exported-parts)
 - [Example usage](#example-usage)
 
+
 # Props, events and methods
-
 ---
-
 <ArgTypes exclude={['css-variables']} />
 
 ## Events usage
@@ -30,38 +29,22 @@ All table components emit an event when a row is clicked with the necessary info
 <Source
   dark
   language="html"
-  code={`
-  <justifi-payments-list />
-
-  <script>
-    window.addEventListener('payment-row-clicked', (event) => {
-      // event.detail contains all the necessary information to call an endpoint to get more details on this entity
-      const entityID = event.detail.id;
-
-      // Below is pseudocode just to show the flow of data
-      const getMoreEntityDetails = justifiAPI(entityID);
-      <entity-details-component data={getMoreEntityDetails} />
-    })
-  </script>
-  `}
+  code={codeExampleEventHandling}
 />
 
+
 # Styling
-
 ---
-
 The `<justifi-payments-list>` can be customized by using the exported `parts`.
 
 ## Exported parts
-
 <ExportedParts
   compact
   component="justifi-payments-list"
   tags={filterDocsByTag('justifi-payments-list').docsTags.map(part => part.text)}
 />
 
+
 # Example Usage
-
 ---
-
-<Source dark language="html" code={example} />
+<Source dark language="html" code={codeExampleFull} />

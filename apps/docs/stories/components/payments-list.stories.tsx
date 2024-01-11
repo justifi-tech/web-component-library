@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs } from '../utils';
-import { customStoryDecorator } from '../utils/decorators';
+import { StoryBaseArgs, customStoryDecorator } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
