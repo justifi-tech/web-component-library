@@ -1,9 +1,11 @@
+type Props = { name: string, value: any }[];
+
 const getPropsAndStyles = (storyContext: any) => {
   const args = storyContext.args;
   const argNames = Object.keys(args);
   const nonStyleArgs = argNames.filter((arg) => arg !== 'style');
-  const props = nonStyleArgs.map((arg) => {
-    return { [arg]: args[arg] };
+  const props: Props = nonStyleArgs.map((arg) => {
+    return { name: arg, value: args[arg] };
   });
   const styleArg = args.style;
 
@@ -11,11 +13,11 @@ const getPropsAndStyles = (storyContext: any) => {
 };
 
 
-const applyArgsToStoryComponent = (storyComponent: any, props: { [x: string]: any }[]) => {
+const applyArgsToStoryComponent = (storyComponent: any, props: Props) => {
   const component = storyComponent();
 
   props.forEach((prop) => {
-    component.setAttribute(prop?.name, prop?.value);
+    component.setAttribute(prop.name, prop.value, prop);
   });
 
   return component;
