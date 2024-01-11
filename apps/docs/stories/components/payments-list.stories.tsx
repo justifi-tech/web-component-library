@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs } from '../utils';
-import { styledStoryDecorator } from '../utils/decorators';
+import { customStoryDecorator } from '../utils/decorators';
 
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
@@ -24,7 +24,7 @@ const meta: Meta = {
     },
   },
   decorators: [
-    (Story, args) => styledStoryDecorator(Story, args),
+    customStoryDecorator,
     withActions // https://github.com/storybookjs/storybook/issues/22384
   ],
 };
