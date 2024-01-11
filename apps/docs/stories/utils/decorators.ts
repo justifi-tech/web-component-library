@@ -1,30 +1,3 @@
-import { PartialStoryFn } from '@storybook/addons';
-import { WebComponentsRenderer } from '@storybook/web-components';
-
-// const generateStyleBlockFromArgs = (componentRenderFunc: () => HTMLElement, stylesArg: any) => {
-//   return (
-//     <>
-//     <style>
-//     {
-//       Object.keys(stylesArg).map((style) => {
-//         const selector = style;
-//         const styles = stylesArg[style];
-//         return (
-//           `
-//             ${selector} {
-//               ${Object.keys(styles).map((style) => {
-//             return `${style}: ${styles[style]};`;
-//           }).join('')}
-//           }`
-//         );
-//       })
-//     }
-//     < /style>
-//       { componentRenderFunc() }
-//   </>
-//   );
-// }
-
 const getPropsAndStyles = (storyContext: any) => {
   const args = storyContext.args;
   const argNames = Object.keys(args);
