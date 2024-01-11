@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { renderComponentWithStyles, StoryBaseArgs } from '../utils';
+import { StoryBaseArgs } from '../utils';
+import { styledStoryDecorator } from '../utils/decorators';
+
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
+
+type Story = StoryObj;
 
 const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
 
@@ -19,14 +23,14 @@ const meta: Meta = {
       handles: ['payment-row-clicked'],
     },
   },
-  decorators: [withActions], // https://github.com/storybookjs/storybook/issues/22384
+  decorators: [
+    (Story, args) => styledStoryDecorator(Story, args),
+    withActions // https://github.com/storybookjs/storybook/issues/22384
+  ],
 };
 
-export default meta;
-
-type Story = StoryObj;
-
 export const Basic: Story = {};
+
 export const Styled: Story = {
   args: {
     style: {
@@ -58,10 +62,7 @@ export const Styled: Story = {
         'background-color': '#F4F4F6'
       }
     }
-  },
-  render: ({ items, ...args }) => renderComponentWithStyles(
-    () => <justifi-payments-list></justifi-payments-list>,
-    args.style
-  )
+  }
 };
 
+export default meta;

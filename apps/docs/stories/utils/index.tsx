@@ -13,28 +13,6 @@ const filterDocsByTag = (tag: string) => {
   return webcomponentsDocsJson.components.filter(comp => tag === comp.tag)[0];
 };
 
-const renderComponentWithStyles = (componentRenderFunc: () => HTMLElement, stylesArg: any) => {
-  return (
-    <>
-      <style>
-        {Object.keys(stylesArg).map((style) => {
-          const selector = style;
-          const styles = stylesArg[style];
-          return (
-            `
-            ${selector} {
-              ${Object.keys(styles).map((style) => {
-              return `${style}: ${styles[style]};`;
-            }).join('')}
-          }`
-          );
-        })}
-      </style>
-      {componentRenderFunc()}
-    </>
-  );
-}
-
 const ExportedParts = ({ tags, component, compact }: { tags: string[]; component: string, compact: boolean }) => {
   return (
     <ul>
@@ -96,7 +74,6 @@ const head = (tag: string) => `<head>
 export {
   head,
   extractVersionFromPackage,
-  renderComponentWithStyles,
   filterDocsByTag,
   StoryBaseArgs,
   ExportedParts,
