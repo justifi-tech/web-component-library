@@ -1,0 +1,45 @@
+import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../../storybook-pages/utils.tsx';
+import example from './business-form-stepped-example.js';
+
+<Meta
+  title="Components/BusinessFormStepped"
+  Components="justifi-business-form-stepped"
+/>
+
+<Title />
+Component to render a business onboarding form, segmented into multiple steps.
+
+# Index
+
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+- [Example usage](#example-usage)
+
+# Props, events and methods
+
+---
+
+<ArgTypes exclude={['css-variables']} />
+
+
+# Styling
+
+---
+
+The `<justifi-business-form-stepped>` can be customized by using the exported `parts`.
+
+## Exported parts
+
+<ExportedParts
+  compact
+  component="justifi-business-form-stepped"
+  tags={filterDocsByTag('justifi-business-form-stepped').docsTags.map(part => part.text)}
+/>
+
+
+# Example Usage
+
+---
+
+<Source dark language="html" code={example} />
