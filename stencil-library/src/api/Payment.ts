@@ -245,9 +245,9 @@ export class Payment implements IPayment {
   public get lastFourDigits(): string | null {
     if (this.payment_method) {
       if (this.payment_method.card) {
-        return this.payment_method.card.acct_last_four;
+        return `**** ${this.payment_method.card.acct_last_four}`;
       } else if (this.payment_method.bank_account) {
-        return this.payment_method.bank_account.acct_last_four;
+        return `**** ${this.payment_method.bank_account.acct_last_four}`;
       }
     }
     return null;
