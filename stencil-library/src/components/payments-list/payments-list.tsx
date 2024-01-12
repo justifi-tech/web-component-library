@@ -122,8 +122,8 @@ export class PaymentsList {
                 },
                 formatCurrency(payment.amount),
                 payment.description,
-                payment.paymentMakerName,
-                payment.lastFourDigits,
+                payment.payment_method.payersName,
+                payment.payment_method.lastFourDigits,
                 {
                   type: 'inner',
                   value: MapPaymentStatusToBadge(payment.status)

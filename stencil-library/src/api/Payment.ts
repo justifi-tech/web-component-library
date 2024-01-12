@@ -40,13 +40,22 @@ export class PaymentMethod implements IPaymentMethod {
       : undefined;
   }
 
-  getPayersName(): string {
+  public get payersName(): string | null{
     if (this.card) {
-      return this.card.getName();
+      return this.card.name;
     } else if (this.bank_account) {
-      return this.bank_account.getName();
+      return this.bank_account.name;
     }
-    return '';
+    return null;
+  }
+
+  public get lastFourDigits(): string | null {
+    if (this.card) {
+      return `**** ${this.card.acct_last_four}`;
+    } else if (this.bank_account) {
+      return `**** ${this.bank_account.acct_last_four}`;
+    }
+    return null;
   }
 }
 
@@ -63,8 +72,8 @@ export type CardBrand =
 export interface IBankAccount {
   id: string;
   acct_last_four: string;
-  account_owner_name: string;
-  bank_name: string;
+  name: string;
+  brand: string;
   token: string
   created_at: string;
   updated_at: string;
@@ -73,8 +82,8 @@ export interface IBankAccount {
 export class BankAccount implements IBankAccount {
   public id: string;
   public acct_last_four: string;
-  public account_owner_name: string;
-  public bank_name: string;
+  public name: string;
+  public brand: string;
   public token: string
   public created_at: string;
   public updated_at: string;
@@ -82,15 +91,11 @@ export class BankAccount implements IBankAccount {
   constructor(bankAccount: IBankAccount) {
     this.id = bankAccount.id;
     this.acct_last_four = bankAccount.acct_last_four;
-    this.account_owner_name = bankAccount.account_owner_name;
-    this.bank_name = bankAccount.bank_name;
+    this.name = bankAccount.name;
+    this.brand = bankAccount.brand;
     this.token = bankAccount.token;
     this.created_at = bankAccount.created_at;
     this.updated_at = bankAccount.updated_at;
-  }
-
-  getName(): string {
-    return this.account_owner_name;
   }
 }
 
@@ -121,10 +126,6 @@ export class Card implements ICard {
     this.token = card.token;
     this.created_at = card.created_at;
     this.updated_at = card.updated_at;
-  }
-
-  getName(): string {
-    return this.name;
   }
 }
 
@@ -159,7 +160,7 @@ export interface IPayment {
   fee_amount: number;
   is_test: boolean;
   metadata: Object | null;
-  payment_method: PaymentMethod;
+  payment_method: IPaymentMethod;
   payment_intent_id: string | null;
   refunded: boolean;
   status: PaymentStatuses;
@@ -233,24 +234,6 @@ export class Payment implements IPayment {
     } else {
       return PaymentDisputedStatuses.open;
     }
-  }
-
-  public get paymentMakerName(): string | null {
-    if (this.payment_method) {
-      return this.payment_method.getPayersName();
-    }
-    return null;
-  }
-
-  public get lastFourDigits(): string | null {
-    if (this.payment_method) {
-      if (this.payment_method.card) {
-        return `**** ${this.payment_method.card.acct_last_four}`;
-      } else if (this.payment_method.bank_account) {
-        return `**** ${this.payment_method.bank_account.acct_last_four}`;
-      }
-    }
-    return null;
   }
 }
 

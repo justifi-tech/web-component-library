@@ -107,17 +107,17 @@ export class PaymentDetails {
                 <DetailSection sectionTitle="Payment Method">
                   <DetailItem title="ID" value={this.payment.payment_method.card.id} />
                   <DetailItem title="Payment Type" value="Card" />
-                  <DetailItem title="Last 4 Numbers" value={this.payment.lastFourDigits} />
+                  <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
                   <DetailItem title="Brand" value={this.payment.payment_method.card.brand} />
-                  <DetailItem title="Cardholder" value={this.payment.payment_method.card.name} />
+                  <DetailItem title="Cardholder" value={this.payment.payment_method.payersName} />
                 </DetailSection>
               )}
               {this.payment.payment_method.bank_account && (
                 <DetailSection sectionTitle="Payment Method">
                   <DetailItem title="ID" value={this.payment.payment_method.bank_account.id} />
-                  <DetailItem title="Last 4 Numbers" value={this.payment.lastFourDigits} />
-                  <DetailItem title="Bank Name" value={this.payment.payment_method.bank_account.bank_name} />
-                  <DetailItem title="Account Owner" value={this.payment.payment_method.bank_account.account_owner_name} />
+                  <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
+                  <DetailItem title="Bank Name" value={this.payment.payment_method.bank_account.brand} />
+                  <DetailItem title="Account Owner" value={this.payment.payment_method.payersName} />
                 </DetailSection>
               )}
               <DetailSection sectionTitle='Metadata'>
