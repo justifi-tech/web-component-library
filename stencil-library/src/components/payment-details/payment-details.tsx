@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponse, IPayment, Payment } from '../../api';
-import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
 
@@ -108,7 +108,7 @@ export class PaymentDetails {
                   <DetailItem title="ID" value={this.payment.payment_method.card.id} />
                   <DetailItem title="Payment Type" value="Card" />
                   <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
-                  <DetailItem title="Brand" value={this.payment.payment_method.card.brand} />
+                  <DetailItem title="Brand" value={snakeCaseToHumanReadable(this.payment.payment_method.card.brand)} />
                   <DetailItem title="Cardholder" value={this.payment.payment_method.payersName} />
                 </DetailSection>
               )}
