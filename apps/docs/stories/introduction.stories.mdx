@@ -1,7 +1,7 @@
 import { Canvas, Meta, Story, Source } from '@storybook/addon-docs';
 import { Markdown } from '@storybook/blocks';
 import dedent from 'ts-dedent';
-import { extractVersionFromPackage, SummaryElement, CSSVars } from './utils';
+import { extractWebcomponentsVersion, SummaryElement, CSSVars } from './utils';
 
 <Meta title="Introduction" />
 
@@ -9,7 +9,7 @@ import { extractVersionFromPackage, SummaryElement, CSSVars } from './utils';
 
 {/* This function would be potentially dangerous in the context of a private repository */}
 {/* In this case since the repo is public, the package.json file is public already */}
-Latest Version: <code>{extractVersionFromPackage()}</code>
+Latest Version: <code>{extractWebcomponentsVersion()}</code>
 
 # Index
 
@@ -35,7 +35,7 @@ The simplest way to use the Web Components is to include the following script wi
   dark
   format={false}
   code={dedent`
-    <script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.esm.js'></script>
+    <script type='module' src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js'></script>
   `}
 />
 
@@ -72,7 +72,7 @@ It can be included from the CDN, which is easier to start with, but won't update
   dark
   format={false}
   code={dedent`
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractVersionFromPackage()}/dist/webcomponents/webcomponents.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.css" />
   `}
 />
 

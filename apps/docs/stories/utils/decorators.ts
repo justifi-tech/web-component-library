@@ -44,7 +44,7 @@ const generateStyleBlock = (styleArg: any) => {
   return styleBlock;
 }
 
-const customStoryDecorator = (storyComponent: any, storyContext: any) => {
+export const customStoryDecorator = (storyComponent: any, storyContext: any) => {
   const fragment = new DocumentFragment();
   const { props, styleArg } = getPropsAndStyles(storyContext);
   const component = applyArgsToStoryComponent(storyComponent, props);
@@ -57,5 +57,3 @@ const customStoryDecorator = (storyComponent: any, storyContext: any) => {
   fragment.appendChild(component);
   return fragment;
 };
-
-export default customStoryDecorator;

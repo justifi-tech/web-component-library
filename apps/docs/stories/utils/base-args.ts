@@ -24,7 +24,7 @@ const argTypes: ArgTypes = {
   }
 }
 
-export default class StoryBaseArgs {
+export class StoryBaseArgs {
   args: ArgValues = {};
   argTypes: ArgTypes = {};
 

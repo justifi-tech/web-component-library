@@ -1,7 +1,7 @@
 import { Source } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
 
-const CSSVars = () => (
+export const CSSVars = () => (
   <Source
     language="css"
     dark
@@ -98,5 +98,3 @@ const CSSVars = () => (
   `}
   />
 );
-
-export default CSSVars;
