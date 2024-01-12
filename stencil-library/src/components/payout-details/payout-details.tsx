@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Api, IApiResponseCollection, Payout } from '../../api';
+import { Api, IApiResponse, IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
@@ -61,9 +61,9 @@ export class PaymentDetails {
     this.loading = true;
     const endpoint = `payouts/${this.payoutId}`;
 
-    const response: IApiResponseCollection<Payout> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
+    const response: IApiResponse<IPayout> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
     if (!response.error) {
-      this.payout = response.data;
+      this.payout = new Payout(response.data);
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }

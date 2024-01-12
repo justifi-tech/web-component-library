@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Api, IApiResponseCollection, PagingInfo, Payment, pagingDefaults } from '../../api';
+import { Api, IApiResponseCollection, IPayment, PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
 
@@ -75,8 +75,7 @@ export class PaymentsList {
 
     const api = Api(this.authToken, config.proxyApiOrigin);
     const endpoint = `account/${this.accountId}/payments`;
-
-    const response: IApiResponseCollection<Payment[]> = await api.get(endpoint, this.params);
+    const response: IApiResponseCollection<IPayment[]> = await api.get(endpoint, this.params);
 
     if (!response.error) {
       this.paging = {
@@ -84,8 +83,7 @@ export class PaymentsList {
         ...response.page_info
       }
 
-      const data = response?.data?.map(dataItem => new Payment(dataItem));
-      this.payments = data;
+      this.payments = response.data?.map(dataItem => new Payment(dataItem));
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }

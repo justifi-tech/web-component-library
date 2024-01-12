@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@st
 import {
   Api,
   IApiResponseCollection,
+  IPayout,
   PagingInfo,
   Payout,
   PayoutStatuses,
@@ -101,15 +102,14 @@ export class PayoutsList {
     const api = Api(this.authToken, config.proxyApiOrigin);
     const endpoint = `account/${this.accountId}/payouts`;
 
-    const response: IApiResponseCollection<Payout[]> = await api.get(endpoint, this.params);
+    const response: IApiResponseCollection<IPayout[]> = await api.get(endpoint, this.params);
     if (!response.error) {
       this.paging = {
         ...this.paging,
         ...response.page_info
       }
 
-      const data = response?.data?.map(dataItem => new Payout(dataItem));
-      this.payouts = data;
+      this.payouts = response.data?.map(dataItem => new Payout(dataItem));
     } else {
       this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
     }

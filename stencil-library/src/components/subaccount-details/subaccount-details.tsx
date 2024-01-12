@@ -76,8 +76,8 @@ export class SubaccountDetails {
           <justifi-details>
             <EntityHeadInfo
               slot='head-info'
-              badge={<span slot='badge' innerHTML={MapSubAccountStatusToBadge(this.subaccount?.status)} />}
-              title={this.subaccount?.name}>
+              badge={<span slot='badge' innerHTML={MapSubAccountStatusToBadge(this.subaccount.status)} />}
+              title={this.subaccount.name}>
               <EntityHeadInfoItem
                 classes="border-1 border-end"
                 title="Created At"
@@ -93,8 +93,8 @@ export class SubaccountDetails {
             <div slot='detail-sections'>
               <subaccount-account-details subaccount={this.subaccount} onboardingData={this.onboardingData} />
               <subaccount-merchant-details onboardingData={this.onboardingData} />
-              <subaccount-representative-details data={this.onboardingData?.payload?.representative} />
-              <subaccount-owners-details data={this.onboardingData?.payload?.owners} />
+              <subaccount-representative-details data={this.onboardingData.payload?.representative} />
+              <subaccount-owners-details data={this.onboardingData.payload?.owners} />
             </div>
           </justifi-details>
         )}
