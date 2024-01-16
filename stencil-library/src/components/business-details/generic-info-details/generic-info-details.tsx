@@ -27,11 +27,11 @@ export class GenericInfoDetails {
               />
               <DetailItem
                 title="Business Type"
-                value={this.business?.business_type && snakeCaseToHumanReadable(this.business?.business_type)}
+                value={snakeCaseToHumanReadable(this.business?.business_type)}
               />
               <DetailItem
                 title="Business Structure"
-                value={this.business?.business_structure && snakeCaseToHumanReadable(
+                value={snakeCaseToHumanReadable(
                   this.business?.business_structure,
                 )}
               />

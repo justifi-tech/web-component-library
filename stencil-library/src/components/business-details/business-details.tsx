@@ -1,12 +1,13 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { IBusiness } from '../../api/Business';
 import { Api } from '../../api';
-import { LoadingState } from '../details/utils';
+import { ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
 
 enum RENDER_STATES {
   LOADING = 'loading',
   READY = 'ready',
+  ERROR = 'error',
 }
 
 /**
@@ -59,6 +60,7 @@ export class BusinessDetails {
       if (response.error) {
         this.errorMessage = `${this.errorMessage}: ${response.error}`;
         console.error(this.errorMessage);
+        this.renderState = RENDER_STATES.ERROR;
         return;
       }
       this.business = response.data;
@@ -66,6 +68,7 @@ export class BusinessDetails {
     } catch (error) {
       this.errorMessage = `${this.errorMessage}: ${error}`;
       console.error(this.errorMessage);
+      this.renderState = RENDER_STATES.ERROR;
     } finally {
       this.renderState = RENDER_STATES.READY;
     }
@@ -73,7 +76,11 @@ export class BusinessDetails {
 
   render() {
     if (this.renderState === RENDER_STATES.LOADING) {
-      return LoadingState;
+      return <Host>{LoadingState}</Host>;
+    }
+
+    if (this.renderState === RENDER_STATES.ERROR) {
+      return <Host>{ErrorState(this.errorMessage)}</Host>;
     }
 
     return (
