@@ -32,8 +32,8 @@ export class JustifiRepresentativeDetails {
                 value={this.representative?.address.line1}
               />
               <DetailItem
-                title="Representative Created At"
-                value={formatMediumDate(this.representative?.created_at)}
+                title="Created At"
+                value={this.representative?.created_at && formatMediumDate(this.representative?.created_at)}
               />
             </div>
             <div class="col-12 col-md-6">
@@ -44,7 +44,7 @@ export class JustifiRepresentativeDetails {
               />
               <DetailItem
                 title="Date Of Birth"
-                value={formatMediumDate(
+                value={this.representative && formatMediumDate(
                   new Date(
                     Number(this.representative?.dob_year),
                     Number(this.representative?.dob_month) - 1,
@@ -55,8 +55,8 @@ export class JustifiRepresentativeDetails {
               <DetailItem title="Email" value={this.representative?.email} />
               <DetailItem title="Phone" value={this.representative?.phone} />
               <DetailItem
-                title="Representative Updated At"
-                value={formatMediumDate(this.representative?.updated_at)}
+                title="Updated At"
+                value={this.representative && formatMediumDate(this.representative?.updated_at)}
               />
             </div>
           </div>

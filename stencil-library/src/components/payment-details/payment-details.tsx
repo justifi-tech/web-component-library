@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Api, IApiResponse, IPayment, Payment } from '../../api';
+import { Api, IApiResponse, Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
@@ -52,31 +52,38 @@ export class PaymentDetails {
   }
 
   async fetchData(): Promise<void> {
-    this.errorMessage = '';
     if (!this.paymentId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without a PaymentID and an AuthToken";
       this.loading = false;
       return;
     }
     this.loading = true;
-    const endpoint = `payments/${this.paymentId}`;
-    const response: IApiResponse<IPayment> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
 
-    if (!response.error) {
-      this.payment = new Payment(response.data);
-    } else {
-      this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
+    try {
+      const endpoint = `payments/${this.paymentId}`;
+      const response: IApiResponse<Payment> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
+
+      if (!response.error) {
+        this.payment = response.data;
+      } else {
+        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
+        this.errorMessage = `Error trying to fetch data : ${responseError}`;
+        console.error(this.errorMessage);
+      }
+    } catch (error) {
+      this.errorMessage = `Error trying to fetch data : ${error}`;
+      console.error(this.errorMessage);
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   render() {
+    if (this.loading) return LoadingState;
+    if (this.errorMessage) return ErrorState(this.errorMessage);
     return (
       <Host>
-        {this.loading && LoadingState}
-        {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
-        {!this.loading && this.payment && (
+        {this.payment && (
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo slot="head-info" badge={<span slot='badge' innerHTML={MapPaymentStatusToBadge(this.payment.status)} />} title={`${formatCurrency(this.payment.amount)} ${this.payment.currency.toUpperCase()}`}>
               <EntityHeadInfoItem
