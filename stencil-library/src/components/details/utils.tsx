@@ -53,7 +53,7 @@ export const DetailItem = ({
       </span>
       <span
         part="detail-section-item-data"
-        class="flex-1 d-table-cell px-2"
+        class="flex-1 d-table-cell px-2 text-wrap"
         innerHTML={value}
       ></span>
     </div>
