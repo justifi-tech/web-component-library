@@ -1,5 +1,16 @@
 ### Changelog
 
+### 4.7.2
+> 16 Jan 2023
+
+- Fixed text wrapping on Detail views
+- Adjusted table component screen responsiveness
+- Improved NPM Readme
+- Added `GrossPaymentChart` component
+- Added Storybook stories and documentation for `BusinessForm` components, and `GrossPaymentChart` component
+- Refactored `Payment` and `Payout` types and classes
+- Refactored render logic for `Payment` and `Payout` details and list components
+- Improved error handling for all components
 
 ### 4.7.1
 
