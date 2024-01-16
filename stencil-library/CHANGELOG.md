@@ -1,7 +1,7 @@
 ### Changelog
 
 ### 4.7.2
-> (insert date here)
+> 16 Jan 2023
 
 - Fixed text wrapping on Detail views
 - Adjusted table component screen responsiveness
