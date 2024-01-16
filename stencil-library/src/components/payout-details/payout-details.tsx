@@ -59,16 +59,24 @@ export class PaymentDetails {
       return;
     }
     this.loading = true;
-    const endpoint = `payouts/${this.payoutId}`;
 
-    const response: IApiResponse<IPayout> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
-    if (!response.error) {
-      this.payout = new Payout(response.data);
-    } else {
-      this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
+    try {
+      const endpoint = `payouts/${this.payoutId}`;
+
+      const response: IApiResponse<IPayout> = await Api(this.authToken, config.proxyApiOrigin).get(endpoint);
+      if (!response.error) {
+        this.payout = new Payout(response.data);
+      } else {
+        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
+        this.errorMessage = `Error fetching payout details: ${responseError}`;
+        console.error(this.errorMessage);
+      }
+    } catch (error) {
+      this.errorMessage = `Error fetching payout details: ${error}`;
+      console.error(this.errorMessage);
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   render() {

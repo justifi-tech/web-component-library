@@ -73,22 +73,31 @@ export class PaymentsList {
 
     this.loading = true;
 
-    const api = Api(this.authToken, config.proxyApiOrigin);
-    const endpoint = `account/${this.accountId}/payments`;
-    const response: IApiResponseCollection<IPayment[]> = await api.get(endpoint, this.params);
+    try {
+      const api = Api(this.authToken, config.proxyApiOrigin);
+      const endpoint = `account/${this.accountId}/payments`;
 
-    if (!response.error) {
-      this.paging = {
-        ...this.paging,
-        ...response.page_info
+      const response: IApiResponseCollection<IPayment[]> = await api.get(endpoint, this.params);
+
+      if (!response.error) {
+        this.paging = {
+          ...this.paging,
+          ...response.page_info
+        }
+
+        const data = response?.data?.map(dataItem => new Payment(dataItem));
+        this.payments = data;
+      } else {
+        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
+        console.error(`Error fetching payments: ${responseError}`)
+        this.errorMessage = 'No results';
       }
-
-      this.payments = response.data?.map(dataItem => new Payment(dataItem));
-    } else {
-      this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
+    } catch (error) {
+      console.error(`Error fetching payments: ${error.message}`);
+      this.errorMessage = 'No results';
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   render() {

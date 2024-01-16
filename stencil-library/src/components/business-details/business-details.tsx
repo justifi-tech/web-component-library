@@ -1,9 +1,8 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { IBusiness } from '../../api/Business';
 import { Api } from '../../api';
-import { ErrorState, LoadingState } from '../details/utils'; // Make sure to adjust the path if necessary
+import { ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
-
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -35,21 +34,18 @@ export class BusinessDetails {
 
   constructor() {
     this.fetchBusiness = this.fetchBusiness.bind(this);
-    this.setError = this.setError.bind(this);
   }
 
   async componentWillLoad() {
     if (!this.authToken) {
-      this.setError(
-        'Missing auth-token. The form will not be functional without it.',
-      );
+      this.errorMessage = 'Missing auth-token. The form will not be functional without it.';
+      console.error(this.errorMessage);
       return;
     }
 
     if (!this.businessId) {
-      this.setError(
-        'Missing business-id. The form will not be functional without it.',
-      );
+      this.errorMessage = 'Missing business-id. The form will not be functional without it.';
+      console.error(this.errorMessage);
       return;
     }
 
@@ -62,28 +58,29 @@ export class BusinessDetails {
     try {
       const response = await this.api.get(`entities/business/${businessId}`);
       if (response.error) {
-        this.setError(response.error.message);
+        this.errorMessage = `${this.errorMessage}: ${response.error}`;
+        console.error(this.errorMessage);
+        this.renderState = RENDER_STATES.ERROR;
         return;
       }
       this.business = response.data;
       this.renderState = RENDER_STATES.READY;
     } catch (error) {
-      this.setError(error);
+      this.errorMessage = `${this.errorMessage}: ${error}`;
+      console.error(this.errorMessage);
+      this.renderState = RENDER_STATES.ERROR;
+    } finally {
+      this.renderState = RENDER_STATES.READY;
     }
-  }
-
-  setError(error: string) {
-    this.errorMessage = error || this.errorMessage;
-    this.renderState = RENDER_STATES.ERROR;
   }
 
   render() {
     if (this.renderState === RENDER_STATES.LOADING) {
-      return LoadingState;
+      return <Host>{LoadingState}</Host>;
     }
 
     if (this.renderState === RENDER_STATES.ERROR) {
-      return ErrorState(this.errorMessage);
+      return <Host>{ErrorState(this.errorMessage)}</Host>;
     }
 
     return (
