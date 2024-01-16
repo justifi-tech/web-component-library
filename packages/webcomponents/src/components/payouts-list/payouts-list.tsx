@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@st
 import {
   Api,
   IApiResponseCollection,
+  IPayout,
   PagingInfo,
   Payout,
   PayoutStatuses,
@@ -10,7 +11,6 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
-
 
 /**
   * @exportedPart table-head: Table head
@@ -98,23 +98,30 @@ export class PayoutsList {
     }
     this.loading = true;
 
-    const api = Api(this.authToken, config.proxyApiOrigin);
-    const endpoint = `account/${this.accountId}/payouts`;
+    try {
+      const api = Api(this.authToken, config.proxyApiOrigin);
+      const endpoint = `account/${this.accountId}/payouts`;
 
-    const response: IApiResponseCollection<Payout[]> = await api.get(endpoint, this.params);
-    if (!response.error) {
-      this.paging = {
-        ...this.paging,
-        ...response.page_info
+      const response: IApiResponseCollection<IPayout[]> = await api.get(endpoint, this.params);
+      if (!response.error) {
+        this.paging = {
+          ...this.paging,
+          ...response.page_info
+        }
+
+        const data = response?.data?.map(dataItem => new Payout(dataItem));
+        this.payouts = data;
+      } else {
+        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
+        console.error(`Error fetching payouts: ${responseError}`);
+        this.errorMessage = 'No results';
       }
-
-      const data = response?.data?.map(dataItem => new Payout(dataItem));
-      this.payouts = data;
-    } else {
-      this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
+    } catch (error) {
+      console.error(`Error fetching payouts: ${error}`);
+      this.errorMessage = 'No results';
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   render() {

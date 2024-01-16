@@ -45,4 +45,11 @@ interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
   };
 }
 
-export type CreatePaymentMethodResponse = CardCreateResponse | BankAccountCreateResponse;
+interface PaymentMethodErrorResponse {
+  error: {
+    code: string;
+    message: string;
+  };
+}
+
+export type CreatePaymentMethodResponse = CardCreateResponse | BankAccountCreateResponse | PaymentMethodErrorResponse;

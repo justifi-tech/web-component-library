@@ -46,17 +46,25 @@ export class GrossPaymentChart {
     }
     this.loading = true;
 
-    const api = Api(this.authToken, config.proxyApiOrigin);
-    const endpoint = `account/${this.accountId}/reports/gross_volume`;
-    const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
+    try {
+      const api = Api(this.authToken, config.proxyApiOrigin);
+      const endpoint = `account/${this.accountId}/reports/gross_volume`;
+      const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
 
-    if (!response.error) {
-      this.total = response?.data.total;
-      this.dates = response?.data.dates.reverse();
-      this.endDate = this.dates[this.dates.length - 1].date;
+      if (!response.error) {
+        this.total = response?.data.total;
+        this.dates = response?.data.dates.reverse();
+        this.endDate = this.dates[this.dates.length - 1].date;
+      } else {
+        this.errorMessage = `Error trying to fetch data : ${response.error}`;
+        console.error(this.errorMessage);
+      }
+    } catch (error) {
+      this.errorMessage = `Error trying to fetch data : ${error}`;
+      console.error(this.errorMessage);
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   renderChart() {

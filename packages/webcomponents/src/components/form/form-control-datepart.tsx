@@ -74,7 +74,7 @@ export class DatePartInput {
 
   updateInput(newValue: any) {
     if (this.imask) {
-      this.imask.value = newValue;
+      this.imask.value = String(newValue);
     }
   }
 

@@ -1,20 +1,18 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../../storybook-pages/utils.tsx';
-import example from './example.js';
+import example from './business-form-example.js';
 
 <Meta
-  title="Components/PaymentDetails"
-  Components="justifi-payment-details"
+  title="Components/BusinessForm"
+  Components="justifi-business-form"
 />
 
 <Title />
-Component to render details of a given payment.
+Component to render a business onboarding form.
 
 # Index
 
 - [Props, events and methods](#props-events-and-methods)
-- [Styling](#styling)
-  - [Exported Parts](#exported-parts)
 - [Example usage](#example-usage)
 
 # Props, events and methods
@@ -27,14 +25,14 @@ Component to render details of a given payment.
 
 ---
 
-The `<justifi-payment-details>` can be customized by using the exported `parts`.
+The `<justifi-business-form>` can be customized by using the exported `parts`.
 
 ## Exported parts
 
 <ExportedParts
   compact
-  component="justifi-payment-details"
-  tags={filterDocsByTag('justifi-payment-details').docsTags.map(part => part.text)}
+  component="justifi-business-form"
+  tags={filterDocsByTag('justifi-business-form').docsTags.map(part => part.text)}
 />
 
 # Example Usage

@@ -89,12 +89,19 @@ export class PaymentForm {
 
     this.isLoading = true;
 
-    const billingFormFieldValues = await this.billingFormRef.getValues();
-    const paymentMethodData = { email: this.email, ...billingFormFieldValues };
-    const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
-
-    this.submitted.emit(tokenizeResponse);
-    this.isLoading = false;
+    try {
+      const billingFormFieldValues = await this.billingFormRef.getValues();
+      const paymentMethodData = { email: this.email, ...billingFormFieldValues };
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
+      if (tokenizeResponse.error) {
+        console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
+      }
+      this.submitted.emit(tokenizeResponse);
+    } catch (error) {
+      console.error(`An error occured submitting the form: ${error}`);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   render() {
@@ -137,10 +144,10 @@ export class PaymentForm {
             >
               {
                 this.isLoading ?
-                <div class="spinner-border spinner-border-sm" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div> :
-                this.submitButtonText || 'Submit'
+                  <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div> :
+                  this.submitButtonText || 'Submit'
               }
             </button>
           </div>

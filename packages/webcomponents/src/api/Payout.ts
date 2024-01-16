@@ -35,7 +35,7 @@ export interface IPayout {
   payout_type: 'ach' | 'cc';
   other_total: number;
   status: PayoutStatuses;
-  metadata: any;
+  metadata: Object | null;
   created_at: string;
   updated_at: string;
 }
@@ -57,7 +57,7 @@ export class Payout implements IPayout {
   public payout_type: 'ach' | 'cc';
   public other_total: number;
   public status: PayoutStatuses;
-  public metadata: any;
+  public metadata: Object | null;
   public created_at: string;
   public updated_at: string;
 

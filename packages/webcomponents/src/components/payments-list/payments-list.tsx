@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Api, IApiResponseCollection, IPaymentMethod, PagingInfo, Payment, pagingDefaults } from '../../api';
+import { Api, IApiResponseCollection, IPayment, PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
 
@@ -73,35 +73,30 @@ export class PaymentsList {
 
     this.loading = true;
 
-    const api = Api(this.authToken, config.proxyApiOrigin);
-    const endpoint = `account/${this.accountId}/payments`;
+    try {
+      const api = Api(this.authToken, config.proxyApiOrigin);
+      const endpoint = `account/${this.accountId}/payments`;
 
-    const response: IApiResponseCollection<Payment[]> = await api.get(endpoint, this.params);
+      const response: IApiResponseCollection<IPayment[]> = await api.get(endpoint, this.params);
 
-    if (!response.error) {
-      this.paging = {
-        ...this.paging,
-        ...response.page_info
+      if (!response.error) {
+        this.paging = {
+          ...this.paging,
+          ...response.page_info
+        }
+
+        const data = response?.data?.map(dataItem => new Payment(dataItem));
+        this.payments = data;
+      } else {
+        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
+        console.error(`Error fetching payments: ${responseError}`)
+        this.errorMessage = 'No results';
       }
-
-      const data = response?.data?.map(dataItem => new Payment(dataItem));
-      this.payments = data;
-    } else {
-      this.errorMessage = typeof response.error === 'string' ? response.error : response.error.message;
-    }
-
-    this.loading = false;
-  }
-
-  getPaymentMethod(paymentMethod: IPaymentMethod) {
-    return paymentMethod.card || paymentMethod.bank_account
-  }
-
-  getPaymentMethodName(paymentMethod: IPaymentMethod) {
-    if (paymentMethod.card) {
-      return paymentMethod.card.name;
-    } else {
-      return paymentMethod.bank_account.account_owner_name
+    } catch (error) {
+      console.error(`Error fetching payments: ${error.message}`);
+      this.errorMessage = 'No results';
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -136,8 +131,8 @@ export class PaymentsList {
                 },
                 formatCurrency(payment.amount),
                 payment.description,
-                this.getPaymentMethodName(payment.payment_method),
-                this.getPaymentMethod(payment.payment_method).acct_last_four,
+                payment.payment_method.payersName,
+                payment.payment_method.lastFourDigits,
                 {
                   type: 'inner',
                   value: MapPaymentStatusToBadge(payment.status)
