@@ -1,5 +1,9 @@
 ### Changelog
 
+### 4.7.2
+> (insert date here)
+
+- Improved error handling for all components
 
 ### 4.7.1
 
