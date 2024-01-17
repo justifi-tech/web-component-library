@@ -1,6 +1,6 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
-import { filterDocsByTag, ExportedParts } from '../../../storybook-pages/utils.tsx';
-import example from './example.js';
+import { filterDocsByTag, ExportedParts } from '../utils';
+import codeExample from './payouts-list-example';
 
 <Meta
   title="Components/PayoutsList"
@@ -41,4 +41,4 @@ The `<justifi-payouts-list>` can be customized by using the exported `parts`.
 
 ---
 
-<Source dark language="html" code={example} />
+<Source dark language="html" code={codeExample} />
