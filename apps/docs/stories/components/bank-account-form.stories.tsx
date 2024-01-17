@@ -1,4 +1,9 @@
-import { config } from '../../../config';
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { customStoryDecorator } from '../utils';
+import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
+import { withActions } from '@storybook/addon-actions/decorator';
+
+type Story = StoryObj;
 
 const CSSVars = `
 --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900&family=Agdasima';
@@ -36,7 +41,7 @@ const CSSVars = `
 --jfi-error-message-font-size: .875rem;
 `;
 
-export default {
+const meta: Meta = {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
   argTypes: {
@@ -47,6 +52,23 @@ export default {
         defaultValue: CSSVars,
       },
     },
+    'iframe-origin': {
+      type: 'string',
+      description: 'URL for the rendered iFrame. End-users need not use this.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'validation-mode': {
+      type: 'string',
+      description: 'When to trigger validation of the form.',
+      table: {
+        category: 'props'
+      }
+    },
     'resize': {
       description: 'Deprecated: This method will be removed in future releases.',
       table: {
@@ -54,13 +76,10 @@ export default {
       },
     },
   },
+  parameters: {},
   decorators: [
-    story => `
-      <!-- Deprecated Notice -->
-      <p style="color: red; font-family: 'Roboto Mono', monospace;">Note: The 'resize' method is deprecated and will be removed in future releases.</p>
-      ${story()}
-      <script>${addEvents()}</script>
-    `,
+    customStoryDecorator,
+    
   ],
 };
 
@@ -114,27 +133,6 @@ const FormButtons = `
   </div>
 `;
 
-const Template = (args: any) => {
-  return `
-    <div>
-      <style>
-      :root {
-        ${args['css-variables'] || ''}
-      }
-      </style>
-      <justifi-bank-account-form
-        data-testid="bank-account-form-iframe"
-        validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${config.iframeOrigin}'
-      />
-    </div>
-    ${FormButtons}
-  `;
-};
+export const Basic: Story = {};
 
-export const Basic = Template.bind({});
-
-export const Styled = Template.bind({});
-Styled.args = {
-  'css-variables': CSSVars,
-};
+export default meta;
