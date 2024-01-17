@@ -1,9 +1,9 @@
-import { head } from '../../../storybook-pages/example-parts';
+import { codeExampleHead } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${head('justifi-payouts-list')}
+${codeExampleHead('justifi-payouts-list')}
 
 <body>
   <justifi-payouts-list></justifi-payouts-list>
