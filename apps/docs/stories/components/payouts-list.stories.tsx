@@ -24,6 +24,7 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
+    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
     withActions // https://github.com/storybookjs/storybook/issues/22384
   ],
 };
