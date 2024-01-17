@@ -1,9 +1,9 @@
-import { head } from '../../../storybook-pages/example-parts';
+import { codeExampleHead } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${head('justifi-business-form-stepped')}
+${codeExampleHead('justifi-business-form-stepped')}
 
 <body>
   <justifi-business-form-stepped></justifi-business-form-stepped>
