@@ -36,6 +36,7 @@
 #storybook-explorer-menu .sidebar-item[data-selected=true],
 #storybook-explorer-menu .sidebar-item[data-selected=true] svg {
   color: #000;
+  background-color: rgb(221, 221, 230);
 }
 
 /* Toolbar styles */
@@ -43,6 +44,13 @@
 #root div[role="main"] button:hover {
   color: #000;
 }
+
+
+/* Args Controls */
+.docblock-argstable-head th:first-child {
+  width: 50px;
+}
+
 
 /* Lato Font */
 

@@ -34,31 +34,24 @@ export const Styled: Story = {
   args: {
     style: {
       'justifi-payouts-list::part(table-head-cell)': {
-        'background-color': '#F4F4F6'
+        'background-color': '#fff',
+        'font-weight': '600',
+        'font-size': '0.8rem',
+        'text-transform': 'uppercase',
+        'letter-spacing': '0.1em',
+      },
+      'justifi-payouts-list::part(table-cell)': {
+        'background-color': 'transparent',
+        'font-weight': 'normal',
+        'font-size': '0.8rem',
       },
       'justifi-payouts-list::part(pagination-bar)': {
-        'background-color': '#F4F4F6'
+        'background-color': '#fff',
+        'border-bottom': 'none'
       },
-      'justifi-payouts-list::part(arrow)': {
-        '--bs-btn-disabled-bg': '#212529',
-        '--bs-btn-disabled-border-color': '#212529',
-        '--bs-btn-bg': '#212529',
-        '--bs-btn-border-color': '#212529',
-        '--bs-btn-hover-bg': '#fccc32',
-        '--bs-btn-hover-border-color': '#fccc32'
-      },
-      'justifi-payouts-list::part(error-state)': {
-        'color': 'red',
-        'background-color': '#EEEEF5'
-      },
-      'justifi-payouts-list::part(loading-state-cell)': {
-        'background-color': '#EEEEF5'
-      },
-      'justifi-payouts-list::part(table-row)': {
-        'background-color': '#EEEEF5'
-      },
-      'justifi-payouts-list::part(table-row-even)': {
-        'background-color': '#F4F4F6'
+      'justifi-payouts-list::part(table-row):hover': {
+        'background-color': 'rgba(0, 0, 0, 0.05)',
+        'cursor': 'pointer'
       }
     }
   }
