@@ -1,6 +1,5 @@
 import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
 
-
 export const parameters = {
   controls: {
     hideNoControlsWarning: true,
