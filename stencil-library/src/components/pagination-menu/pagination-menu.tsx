@@ -24,7 +24,9 @@ export class PaginationMenu {
             <li
               onClick={(e) => {
                 e.preventDefault();
-                this.paging.handleClickPrevious(this.paging.start_cursor);
+                if (this.paging.has_previous) {
+                  this.paging.handleClickPrevious(this.paging.start_cursor);
+                }
               }}
               part={`previous-button${this.paging.has_previous ? '' : ' button-disabled'}`}
               class={`page-item ${this.paging.has_previous ? '' : ' disabled'}`}
@@ -37,7 +39,9 @@ export class PaginationMenu {
             <li
               onClick={(e) => {
                 e.preventDefault();
-                this.paging.handleClickNext(this.paging.end_cursor);
+                if (this.paging.has_next) {
+                  this.paging.handleClickNext(this.paging.end_cursor);
+                }
               }}
               part={`next-button${this.paging.has_next ? '' : ' button-disabled'}`}
               class={`page-item ${this.paging.has_next ? '' : ' disabled'}`}
