@@ -1,5 +1,10 @@
 ### Changelog
 
+### 4.7.3
+> 18 Jan 2023
+
+- Fixed: added missing next-button pagination css part
+
 ### 4.7.2
 > 16 Jan 2023
 

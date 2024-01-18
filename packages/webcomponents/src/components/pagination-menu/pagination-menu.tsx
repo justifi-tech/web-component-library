@@ -39,7 +39,7 @@ export class PaginationMenu {
                 e.preventDefault();
                 this.paging.handleClickNext(this.paging.end_cursor);
               }}
-              part={`${this.paging.has_next ? '' : ' button-disabled'}`}
+              part={`next-button${this.paging.has_next ? '' : ' button-disabled'}`}
               class={`page-item ${this.paging.has_next ? '' : ' disabled'}`}
             >
               <a href="#" class="page-link">
