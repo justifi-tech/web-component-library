@@ -89,15 +89,18 @@ export class PaymentForm {
 
     this.isLoading = true;
 
+    let tokenizeResponse = null;
+
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
       const paymentMethodData = { email: this.email, ...billingFormFieldValues };
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
+      tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
+      this.submitted.emit(tokenizeResponse);
       if (tokenizeResponse.error) {
         console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
       }
-      this.submitted.emit(tokenizeResponse);
     } catch (error) {
+      this.submitted.emit(tokenizeResponse);
       console.error(`An error occured submitting the form: ${error}`);
     } finally {
       this.isLoading = false;
