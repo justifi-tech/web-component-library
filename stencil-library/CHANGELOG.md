@@ -1,5 +1,9 @@
 ### Changelog
 
+### 4.7.4
+> (date)
+- Fixed `PaymentForm` `submitted` event not emitting when `tokenize` fails
+
 ### 4.7.3
 > 18 Jan 2023
 
