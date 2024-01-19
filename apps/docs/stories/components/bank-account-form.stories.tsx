@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { customStoryDecorator } from '../utils';
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 import { withActions } from '@storybook/addon-actions/decorator';
+import { userEvent, within } from '@storybook/testing-library';
+import { action } from '@storybook/addon-actions';
+import { customStoryDecorator } from '../utils';
+import { JustifiBankAccountForm } from '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
 type Story = StoryObj;
 
@@ -44,7 +47,15 @@ const CSSVars = `
 const meta: Meta = {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
+  args: {
+    'data-testid': 'test-bank-form',
+  },
   argTypes: {
+    'test-id': {
+      table: {
+        disable: true
+      },
+    },
     'css-variables': {
       control: 'text',
       table: {
@@ -63,76 +74,78 @@ const meta: Meta = {
       }
     },
     'validation-mode': {
-      type: 'string',
+      options: ['all', 'onBlur', 'onChange', 'onSubmit', 'onTouched'],
+      control: { type: 'select'},
       description: 'When to trigger validation of the form.',
       table: {
         category: 'props'
+      }
+    },
+    'bankAccountFormTokenize': {
+      description: 'Triggered when the tokenize method is called on the component',
+      table: {
+        category: 'events'
+      },
+    },
+    'bankAccountFormValidate': {
+      description: 'Triggered when the validate method is called on the component',
+      table: {
+        category: 'events'
+      },
+      action: true
+    },
+    'ready': {
+      description: 'Triggered when iframe has loaded',
+      table: {
+        category: 'events'
       }
     },
     'resize': {
       description: 'Deprecated: This method will be removed in future releases.',
       table: {
         category: 'methods',
-      },
+      }
     },
+    'tokenize': {
+      description: 'Makes a tokenization request to the iframe',
+      table: {
+        category: 'methods'
+      }
+    },
+    'validate': {
+      description: 'Runs a validation on the form and shows errors if any',
+      table: {
+        category: 'methods'
+      }
+    }
   },
-  parameters: {},
+  parameters: {
+    actions: {
+      handles: [
+        'bankAccountFormTokenize',
+        'bankAccountFormValidate',
+        'bankAccountFormReady'
+      ]
+    }
+  },
   decorators: [
     customStoryDecorator,
-    
+    withActions
   ],
 };
 
-const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
-  const valid = await bankForm.validate();
-  console.log(valid);
-};
-const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
-  const tokenizeResponse = await bankForm.tokenize('CLIENT_ID', paymentMethodData);
-  console.log(tokenizeResponse);
-};
-const handleResizeClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
-  await bankForm.resize();
-};
-const handleReady = () => {
-  console.log('bank account form is ready');
-  const bankForm = document.querySelector('justifi-bank-account-form') as HTMLJustifiBankAccountFormElement;
-  const validateBtn = document.querySelector('#validate-btn');
-  const tokenizeBtn = document.querySelector('#tokenize-btn');
-  const resizeBtn = document.querySelector('#resize-btn');
-  validateBtn?.addEventListener('click', () => {
-    handleValidateClick(bankForm);
-  });
-  tokenizeBtn?.addEventListener('click', () => {
-    handleTokenizeClick(bankForm, {});
-  });
-  resizeBtn?.addEventListener('click', () => {
-    handleResizeClick(bankForm);
-  });
-};
-
-const addEvents = () => {
-  addEventListener('bankAccountFormReady', handleReady);
-};
-
-const FormButtons = `
-  <style>
-    .button-bar {
-      display: flex;
-      aligin-items: center;
-      padding: 10px;
-    }
-    .button-bar button {
-      margin-right: 10px;
-    }
-  </style>
-  <div class="button-bar">
-    <button id="validate-btn">Validate</button>
-    <button id="tokenize-btn">Tokenize</button>
-    <button id="resize-btn">Resize</button>
-  </div>
-`;
-
 export const Basic: Story = {};
+
+export const Validate: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const bankForm = canvas.getByTestId('test-bank-form') as JustifiBankAccountForm;
+    bankForm.addEventListener('bankAccountFormReady', async () => {
+      bankForm.addEventListener('bankAccountFormValidate', () => console.log('something'))
+      await bankForm.validate();
+    })
+  }
+}
 
 export default meta;
