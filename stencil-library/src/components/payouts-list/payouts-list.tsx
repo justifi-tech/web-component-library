@@ -11,6 +11,7 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
+import { tableExportedParts } from '../table/exported-parts';
 
 /**
   * @exportedPart table-head: Table head
@@ -126,7 +127,7 @@ export class PayoutsList {
 
   render() {
     return (
-      <Host>
+      <Host exportedparts={tableExportedParts}>
         <justifi-table
           rowClickHandler={(e) => {
             const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;

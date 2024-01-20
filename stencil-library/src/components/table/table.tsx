@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { ExtendedPagingDefaults, ExtendedPagingInfo } from '../../api/Pagination';
+import { tableExportedParts } from './exported-parts';
 
 export interface TableProps {
   loading: boolean;
@@ -56,12 +57,7 @@ export class Table {
 
   render() {
     return (
-      <Host exportparts="
-        table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
-        table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
-        empty-state,pagination-bar,arrow,arrow-left,arrow-right,button-disabled,
-        previous-button-text,next-button-text
-      ">
+      <Host exportparts={tableExportedParts}>
         {this.columnData ?
           <div class="table-wrapper">
             <table class="table table-hover">
