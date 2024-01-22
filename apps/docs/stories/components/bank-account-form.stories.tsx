@@ -2,10 +2,9 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { userEvent, within } from '@storybook/testing-library';
-import { action } from '@storybook/addon-actions';
 import { screen } from '@storybook/testing-library';
-import { customStoryDecorator } from '../utils';
 import { JustifiBankAccountForm } from '@justifi/webcomponents/dist/module/justifi-bank-account-form';
+import { html } from 'lit';
 
 type Story = StoryObj;
 
@@ -125,14 +124,61 @@ const meta: Meta = {
       handles: [
         'bankAccountFormTokenize',
         'bankAccountFormValidate',
-        'bankAccountFormReady'
+        'bankAccountFormReady',
+        'ready'
       ]
     }
   },
   decorators: [
-    customStoryDecorator,
+    (story) => html`
+      <div>${story()}</div>
+       <style>
+        .button-bar {
+          display: flex;
+          aligin-items: center;
+          padding: 10px;
+        }
+        .button-bar button {
+          margin-right: 10px;
+        }
+      </style>
+      <div class="button-bar">
+        <button id="validate-btn">Validate</button>
+        <button id="tokenize-btn">Tokenize</button>
+      </div>
+      <script>${addEvents()}</script>
+    `,
     withActions
   ],
+};
+
+const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
+  const valid = await bankForm.validate();
+};
+const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
+  const tokenizeResponse = await bankForm.tokenize('CLIENT_ID', paymentMethodData);
+};
+
+const handleReady = () => {
+  const bankForm = document.querySelector('justifi-bank-account-form') as HTMLJustifiBankAccountFormElement;
+  const validateBtn = document.querySelector('#validate-btn');
+  const tokenizeBtn = document.querySelector('#tokenize-btn');
+  validateBtn?.addEventListener('click', () => {
+    handleValidateClick(bankForm);
+  });
+  tokenizeBtn?.addEventListener('click', () => {
+    handleTokenizeClick(bankForm, {});
+  });
+  bankForm?.addEventListener('bankAccountFormValidate', () => {
+    console.log('validate event');
+  });
+  bankForm?.addEventListener('bankAccountFormTokenize', () => {
+    console.log('tokenize events');
+  });
+};
+
+const addEvents = () => {
+  addEventListener('bankAccountFormReady', handleReady);
 };
 
 export const Basic: Story = {};
@@ -147,8 +193,6 @@ export const Tokenize: Story = {
       const routingNumber = canvas.getByLabelText('routing_number');
       await userEvent.type(routingNumber, 'bla bla')
     })
-
-    
   }
 }
 
