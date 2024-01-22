@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.7.4
+> 18 Jan 2023
+
+- Fixed: added missing css parts for tables
+- Fixed: prevent clicks on disabled pagination buttons
+
 ### 4.7.3
 > 18 Jan 2023
 
