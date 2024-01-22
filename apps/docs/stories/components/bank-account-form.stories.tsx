@@ -75,7 +75,7 @@ const meta: Meta = {
     },
     'validation-mode': {
       options: ['all', 'onBlur', 'onChange', 'onSubmit', 'onTouched'],
-      control: { type: 'select'},
+      control: { type: 'select' },
       description: 'When to trigger validation of the form.',
       table: {
         category: 'props'
@@ -170,10 +170,10 @@ const handleReady = () => {
     handleTokenizeClick(bankForm, {});
   });
   bankForm?.addEventListener('bankAccountFormValidate', () => {
-    console.log('validate event');
+    console.log('validated event captured in story');
   });
   bankForm?.addEventListener('bankAccountFormTokenize', () => {
-    console.log('tokenize events');
+    console.log('tokenized event captured in story');
   });
 };
 
