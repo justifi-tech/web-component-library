@@ -3,6 +3,7 @@ import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { userEvent, within } from '@storybook/testing-library';
 import { action } from '@storybook/addon-actions';
+import { screen } from '@storybook/testing-library';
 import { customStoryDecorator } from '../utils';
 import { JustifiBankAccountForm } from '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
@@ -136,15 +137,18 @@ const meta: Meta = {
 
 export const Basic: Story = {};
 
-export const Validate: Story = {
+export const Tokenize: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     const bankForm = canvas.getByTestId('test-bank-form') as JustifiBankAccountForm;
     bankForm.addEventListener('bankAccountFormReady', async () => {
-      bankForm.addEventListener('bankAccountFormValidate', () => console.log('something'))
-      await bankForm.validate();
+      screen.debug();
+      const routingNumber = canvas.getByLabelText('routing_number');
+      await userEvent.type(routingNumber, 'bla bla')
     })
+
+    
   }
 }
 
