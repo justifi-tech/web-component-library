@@ -33,8 +33,17 @@ Developer considerations
   - If this is a PATCH version, what was fixed?
 - [ ] Update the appropriate documentation. Keep in mind that this mono repository has README files at the repository, project, and component levels. We want developers to be able to find what they need from the main README, so make sure to add links to component documentation if adding something new.
 
+- ** On any task **
+  - [ ] Previous unit and e2e tests are passing
+  - [ ] Perform dev QA 
+- ** On new features ** 
+  - [ ] Add unit tests
+  - [ ] Add e2e tests
+  - [ ] Add documentation
+  - [ ] Does the component have exported-parts for styling?
 
-Steps for Testing/QA
+
+Developer QA steps
 --------------------
 
 <!--
