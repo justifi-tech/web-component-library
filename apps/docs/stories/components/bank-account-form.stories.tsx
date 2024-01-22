@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { userEvent, within } from '@storybook/testing-library';
-import { screen } from '@storybook/testing-library';
-import { JustifiBankAccountForm } from '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 import { html } from 'lit';
+import { StoryBaseArgs } from '../utils';
+
+import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
+
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
 
 type Story = StoryObj;
 
@@ -48,14 +49,10 @@ const meta: Meta = {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
   args: {
-    'data-testid': 'test-bank-form',
+    ...storyBaseArgs.args,
   },
   argTypes: {
-    'test-id': {
-      table: {
-        disable: true
-      },
-    },
+    ...storyBaseArgs.argTypes,
     'css-variables': {
       control: 'text',
       table: {
@@ -70,7 +67,8 @@ const meta: Meta = {
         type: 'text',
       },
       table: {
-        category: 'props'
+        category: 'props',
+        disable: true
       }
     },
     'validation-mode': {
@@ -130,8 +128,13 @@ const meta: Meta = {
     }
   },
   decorators: [
-    (story) => html`
-      <div>${story()}</div>
+    (story, context) => {
+      return html`
+      <justifi-bank-account-form
+        account-id=${context.args['account-id']}
+        auth-token=${context.args['auth-token']}
+      >
+      </justifi-bank-account-form>
        <style>
         .button-bar {
           display: flex;
@@ -143,37 +146,33 @@ const meta: Meta = {
         }
       </style>
       <div class="button-bar">
-        <button id="validate-btn">Validate</button>
-        <button id="tokenize-btn">Tokenize</button>
+        <button id="validate-btn">Test Validation</button>
+        <button id="tokenize-btn">Test Tokenization</button>
       </div>
       <script>${addEvents()}</script>
-    `,
+    `
+    },
     withActions
   ],
 };
 
 const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
-  const valid = await bankForm.validate();
+  await bankForm.validate();
 };
 const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
-  const tokenizeResponse = await bankForm.tokenize('CLIENT_ID', paymentMethodData);
+  await bankForm.tokenize('CLIENT_ID', paymentMethodData);
 };
 
 const handleReady = () => {
   const bankForm = document.querySelector('justifi-bank-account-form') as HTMLJustifiBankAccountFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
+
   validateBtn?.addEventListener('click', () => {
     handleValidateClick(bankForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
     handleTokenizeClick(bankForm, {});
-  });
-  bankForm?.addEventListener('bankAccountFormValidate', () => {
-    console.log('validated event captured in story');
-  });
-  bankForm?.addEventListener('bankAccountFormTokenize', () => {
-    console.log('tokenized event captured in story');
   });
 };
 
@@ -182,18 +181,5 @@ const addEvents = () => {
 };
 
 export const Basic: Story = {};
-
-export const Tokenize: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const bankForm = canvas.getByTestId('test-bank-form') as JustifiBankAccountForm;
-    bankForm.addEventListener('bankAccountFormReady', async () => {
-      screen.debug();
-      const routingNumber = canvas.getByLabelText('routing_number');
-      await userEvent.type(routingNumber, 'bla bla')
-    })
-  }
-}
 
 export default meta;
