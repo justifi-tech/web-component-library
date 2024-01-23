@@ -13,6 +13,9 @@ const argTypes: ArgTypes = {
     description: 'Account ID `string`',
     control: {
       type: 'text',
+    },
+    table: {
+      category: 'props'
     }
   },
   'account-id': {
@@ -20,6 +23,9 @@ const argTypes: ArgTypes = {
     description: 'Auth token `string`',
     control: {
       type: 'text',
+    },
+    table: {
+      category: 'props'
     }
   }
 }
