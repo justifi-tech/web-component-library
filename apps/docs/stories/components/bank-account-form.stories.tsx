@@ -1,13 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { html } from 'lit';
 import { StoryBaseArgs } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
 const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
-
-type Story = StoryObj;
 
 const meta: Meta = {
   title: 'Components/BankAccountForm',
@@ -87,35 +84,9 @@ const meta: Meta = {
     }
   },
   decorators: [
-    (story, context) => {
-      return html`
-      <style>
-      :root {
-        ${context.args['css-variables'] || ''}
-      }
-      </style>
-      <justifi-bank-account-form
-        account-id=${context.args['account-id']}
-        auth-token=${context.args['auth-token']}
-      >
-      </justifi-bank-account-form>
-       <style>
-        .button-bar {
-          display: flex;
-          aligin-items: center;
-          padding: 10px;
-        }
-        .button-bar button {
-          margin-right: 10px;
-        }
-      </style>
-      <div class="button-bar">
-        <button id="validate-btn">Test Validation</button>
-        <button id="tokenize-btn">Test Tokenization</button>
-      </div>
-      <script>${addEvents()}</script>
-    `
-    },
+    story => `
+    ${story()}
+    <script>${addEvents()}</script>`,
     withActions
   ],
 };
@@ -143,8 +114,6 @@ const handleReady = () => {
 const addEvents = () => {
   addEventListener('bankAccountFormReady', handleReady);
 };
-
-export const Basic: Story = {};
 
 const CSSVars = `
 --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900&family=Agdasima';
@@ -182,18 +151,45 @@ const CSSVars = `
 --jfi-error-message-font-size: .875rem;
 `;
 
-export const Styled: Story = {
-  args: {
-  'css-variables': CSSVars
-  },
-  argTypes: {
-    'css-variables': {
-      control: 'text',
-      table: {
-        category: 'props',
+const FormButtons = `
+  <style>
+    .button-bar {
+      display: flex;
+      aligin-items: center;
+      padding: 10px;
+    }
+    .button-bar button {
+      margin-right: 10px;
+    }
+  </style>
+  <div class="button-bar">
+    <button id="validate-btn">Test Validation</button>
+    <button id="tokenize-btn">Test Tokenization</button>
+  </div>
+`;
+
+const Template = (args: any) => {
+  return `
+    <div>
+      <style>
+      :root {
+        ${args['css-variables'] || ''}
       }
-    },
-  }
+      </style>
+      <justifi-bank-account-form
+        data-testid="bank-account-form-iframe"
+        validation-mode='${args['validation-mode'] || 'onSubmit'}'
+      />
+    </div>
+    ${FormButtons}
+  `;
+};
+
+export const Basic = Template.bind({});
+
+export const Styled = Template.bind({});
+Styled.args = {
+  'css-variables': CSSVars,
 };
 
 export default meta;
