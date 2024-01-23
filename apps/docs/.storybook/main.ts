@@ -7,7 +7,7 @@ const config = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-docs',
+    '@storybook/addon-docs'
   ],
   docs: {
     autodocs: true,

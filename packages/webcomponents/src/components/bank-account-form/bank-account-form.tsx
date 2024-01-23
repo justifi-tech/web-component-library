@@ -8,34 +8,34 @@ import { Theme } from '../payment-method-form/theme';
 })
 export class BankAccountForm {
 
-  // /**
-  //  * When to trigger validation of the form.
-  //  */
+  /**
+   * When to trigger validation of the form.
+   */
   @Prop({ mutable: true }) validationMode: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
 
-  // /**
-  //  * URL for the rendered iFrame. End-users need not use this.
-  //  */
+  /**
+   * URL for the rendered iFrame. End-users need not use this.
+   */
   @Prop({ mutable: true }) iframeOrigin?: string;
 
   @State() internalStyleOverrides: Theme;
 
-  // /**
-  //  * Triggered when iframe has loaded
-  //  * @event justifi-bank-account-form#bankAccountFormReady
-  //  */
+  /**
+   * Triggered when iframe has loaded
+   * @event justifi-bank-account-form#bankAccountFormReady
+   */
   @Event() bankAccountFormReady: EventEmitter<any>;
 
-  // /**
-  //  * Triggered when iframe has loaded
-  //  * @event justifi-bank-account-form#ready
-  //  */
+  /**
+   * Triggered when iframe has loaded
+   * @event justifi-bank-account-form#ready
+   */
   @Event() ready: EventEmitter<any>;
 
-  // /**
-  //  * Triggered when the tokenize method is called on the component
-  //  * @event justifi-bank-account-form#bankAccountFormTokenized
-  //  */
+  /**
+   * Triggered when the tokenize method is called on the component
+   * @event justifi-bank-account-form#bankAccountFormTokenized
+   */
   @Event({ eventName: 'bankAccountFormTokenize' }) bankAccountFormTokenized: EventEmitter<{ data: any }>;
 
   /**
@@ -69,9 +69,9 @@ export class BankAccountForm {
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
 
-  // /**
-  //  *  Makes a tokenization request to the iframe
-  //  */
+  /**
+   *  Makes a tokenization request to the iframe
+   */
   @Method()
   async tokenize(...args: Parameters<HTMLJustifiPaymentMethodFormElement['tokenize']>): Promise<CreatePaymentMethodResponse> {
     if (!this.childRef) {
@@ -91,10 +91,10 @@ export class BankAccountForm {
     return this.childRef.validate();
   }
 
-  // /**
-  //  *  Manually resizes the iframe to fit the contents of the iframe
-  //  *  @deprecated This method will be removed in future releases.
-  //  */
+  /**
+   *  Manually resizes the iframe to fit the contents of the iframe
+   *  @deprecated This method will be removed in future releases.
+   */
   @Method()
   async resize(): Promise<void> {
     console.warn(
