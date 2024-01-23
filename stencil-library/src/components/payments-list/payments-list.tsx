@@ -2,7 +2,6 @@ import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@st
 import { Api, IApiResponseCollection, IPayment, PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
-import { tableExportedParts } from '../table/exported-parts';
 
 /**
   * @exportedPart table-head: Table head
@@ -103,7 +102,7 @@ export class PaymentsList {
 
   render() {
     return (
-      <Host exportparts={tableExportedParts}>
+      <Host>
         <justifi-table
           rowClickHandler={e => {
             const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
