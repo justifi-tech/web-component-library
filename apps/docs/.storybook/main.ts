@@ -8,7 +8,6 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-docs',
-    '@storybook/addon-interactions'
   ],
   docs: {
     autodocs: true,

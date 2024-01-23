@@ -13,12 +13,12 @@
 
 ## Events
 
-| Event                     | Description                                                   | Type                                            |
-| ------------------------- | ------------------------------------------------------------- | ----------------------------------------------- |
-| `bankAccountFormReady`    |                                                               | `CustomEvent<any>`                              |
-| `bankAccountFormTokenize` |                                                               | `CustomEvent<{ data: any; }>`                   |
-| `bankAccountFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<{ data: { isValid: boolean; }; }>` |
-| `ready`                   |                                                               | `CustomEvent<any>`                              |
+| Event                     | Description                                                   | Type                          |
+| ------------------------- | ------------------------------------------------------------- | ----------------------------- |
+| `bankAccountFormReady`    |                                                               | `CustomEvent<any>`            |
+| `bankAccountFormTokenize` |                                                               | `CustomEvent<{ data: any; }>` |
+| `bankAccountFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<any>`            |
+| `ready`                   |                                                               | `CustomEvent<any>`            |
 
 
 ## Methods
