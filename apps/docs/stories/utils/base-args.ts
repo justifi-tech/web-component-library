@@ -10,7 +10,7 @@ const args: ArgValues = {
 const argTypes: ArgTypes = {
   'auth-token': {
     type: 'string',
-    description: 'Account ID `string`',
+    description: 'Auth token `string`',
     control: {
       type: 'text',
     },
@@ -20,7 +20,7 @@ const argTypes: ArgTypes = {
   },
   'account-id': {
     type: 'string',
-    description: 'Auth token `string`',
+    description: 'Account ID `string`',
     control: {
       type: 'text',
     },

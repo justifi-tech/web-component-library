@@ -25,7 +25,6 @@ const meta: Meta = {
       },
       table: {
         category: 'props',
-
       }
     },
     'single-line': {
