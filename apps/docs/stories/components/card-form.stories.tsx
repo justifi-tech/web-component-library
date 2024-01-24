@@ -1,58 +1,111 @@
-import { config } from '../../../config';
+import type { Meta } from '@storybook/web-components';
+import { withActions } from '@storybook/addon-actions/decorator';
+import { StoryBaseArgs, paymentMethodFormComponentMethods } from '../utils';
 
-interface CardFormStoryArgs {
-  'iframe-origin': string;
-  'single-line': boolean;
-  'validation-mode': string;
-  'css-variables': string;
-}
+import '@justifi/webcomponents/dist/module/justifi-card-form';
 
-export default {
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+
+const meta: Meta = {
   title: 'Components/CardForm',
   component: 'justifi-card-form',
+  args: {
+    ...storyBaseArgs.args,
+    'iframe-origin': '',
+    'single-line': false,
+    'validation-mode': 'onSubmit'
+  },
   argTypes: {
-    'resize': {
-      description: 'Deprecated: This method will be removed in future releases.',
+    ...storyBaseArgs.argTypes,
+    'css-variables': {
       table: {
-        category: 'methods',
+        disable: true
       },
     },
+    'iframe-origin': {
+      table: {
+        disable: true
+      },
+    },
+    'single-line': {
+      type: 'boolean',
+      description: '`boolean` indicating if the Card Form should render in a single line layout',
+      control: {
+        type: 'boolean'
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'validation-mode': {
+      options: ['all', 'onBlur', 'onChange', 'onSubmit', 'onTouched'],
+      control: { type: 'select' },
+      description: 'When to trigger validation of the form. `\'all\' | \'onBlur\' | \'onChange\' | \'onSubmit\' | \'onTouched\'`',
+      table: {
+        category: 'props'
+      }
+    },
+    'cardFormTokenize': {
+      description: 'Emitted when the `tokenize` method is called on the component',
+      table: {
+        category: 'events'
+      },
+    },
+    'cardFormValidate': {
+      description: 'Emitted when the `validate` method is called on the component',
+      table: {
+        category: 'events'
+      },
+      action: true
+    },
+    'cardFormReady': {
+      description: 'Emitted when iframe content has loaded. This event is deprecated in favor of the `ready` event and will be removed in a future release',
+      table: {
+        category: 'events'
+      }
+    },
+    'ready': {
+      description: 'Emitted when iframe content has loaded',
+      table: {
+        category: 'events'
+      }
+    },
+    ...paymentMethodFormComponentMethods
+  },
+  parameters: {
+    actions: {
+      handles: [
+        'cardFormTokenize',
+        'cardFormValidate',
+        'cardFormReady',
+        'ready'
+      ]
+    }
   },
   decorators: [
     story => `
-      <!-- Deprecated Notice -->
-      <p style="color: red; font-family: 'Roboto Mono', monospace;">Note: The 'resize' method is deprecated and will be removed in future releases.</p>
-      ${story()}
-      <script>${addEvents()}</script>
-    `,
+    ${story()}
+    <script>${addEvents()}</script>`,
+    withActions
   ],
 };
 
 const handleValidateClick = async (cardForm: HTMLJustifiCardFormElement) => {
-  const valid = await cardForm.validate();
-  console.log(valid);
+  await cardForm.validate();
 };
-const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData) => {
-  const tokenizeResponse = await cardForm.tokenize('CLIENT_ID', paymentMethodData);
-  console.log(tokenizeResponse);
+const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData: any) => {
+  await cardForm.tokenize('CLIENT_ID', paymentMethodData);
 };
-const handleResizeClick = async (cardForm: HTMLJustifiCardFormElement) => {
-  await cardForm.resize();
-};
+
 const handleReady = () => {
-  console.log('card form is ready');
   const cardForm = document.querySelector('justifi-card-form') as HTMLJustifiCardFormElement;
   const validateBtn = document.querySelector('#validate-btn');
   const tokenizeBtn = document.querySelector('#tokenize-btn');
-  const resizeBtn = document.querySelector('#resize-btn');
   validateBtn?.addEventListener('click', () => {
     handleValidateClick(cardForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
     handleTokenizeClick(cardForm, {});
-  });
-  resizeBtn?.addEventListener('click', () => {
-    handleResizeClick(cardForm);
   });
 };
 
@@ -76,10 +129,9 @@ const FormButtons = `
   <div class="button-bar">
     <button id="validate-btn">Validate</button>
     <button id="tokenize-btn">Tokenize</button>
-    <button id="resize-btn">Resize</button>
   </div>`;
 
-const Template = (args: CardFormStoryArgs) => {
+const Template = (args: any) => {
   const includeButtons = true;
 
   return `
@@ -92,7 +144,6 @@ const Template = (args: CardFormStoryArgs) => {
       <justifi-card-form
         data-testid="card-form-iframe"
         validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        iframe-origin='${config.iframeOrigin}'
         single-line='${args['single-line']}'
       />
     </div>
@@ -152,3 +203,5 @@ Styled.args = {
   'single-line': false,
   'css-variables': styledVariables,
 };
+
+export default meta;

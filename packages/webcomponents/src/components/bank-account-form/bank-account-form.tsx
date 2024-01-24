@@ -1,4 +1,4 @@
-import { Component, Event, Prop, h, EventEmitter, Listen, Method, State } from '@stencil/core';
+import { Component, Event, h, EventEmitter, Listen, Method, Prop, State, } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../payment-method-form/theme';
 
@@ -7,6 +7,7 @@ import { Theme } from '../payment-method-form/theme';
   shadow: false,
 })
 export class BankAccountForm {
+
   /**
    * When to trigger validation of the form.
    */
@@ -33,15 +34,15 @@ export class BankAccountForm {
 
   /**
    * Triggered when the tokenize method is called on the component
-   * @event justifi-bank-account-form#bankAccountFormTokenize
+   * @event justifi-bank-account-form#bankAccountFormTokenized
    */
-  @Event() bankAccountFormTokenize: EventEmitter<{ data: any }>;
+  @Event({ eventName: 'bankAccountFormTokenize' }) bankAccountFormTokenized: EventEmitter<{ data: any }>;
 
   /**
    * Triggered when the validate method is called on the component
    * @event justifi-bank-account-form#bankAccountFormValidate
    */
-  @Event() bankAccountFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
+  @Event({ eventName: 'bankAccountFormValidate' }) bankAccountFormValidated: EventEmitter<any>;
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
@@ -50,20 +51,20 @@ export class BankAccountForm {
     this.ready.emit(event);
   }
 
-  @Listen('paymentMethodFormTokenize')
+  @Listen('paymentMethodFormTokenized')
   tokenizeHandler(event: { data: any }) {
     console.warn(
-      `The 'bankAccountFormTokenize' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
+      `The 'bankAccountFormTokenized' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
-    this.bankAccountFormTokenize.emit(event);
+    this.bankAccountFormTokenized.emit(event);
   }
 
-  @Listen('paymentMethodFormValidate')
+  @Listen('paymentMethodFormValidated')
   validateHandler(event: { data: any }) {
     console.warn(
       `The 'bankAccountFormValidate' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
-    this.bankAccountFormValidate.emit(event);
+    this.bankAccountFormValidated.emit(event);
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
@@ -116,7 +117,8 @@ export class BankAccountForm {
         iframe-origin={this.iframeOrigin}
         payment-method-form-type="bankAccount"
         payment-method-form-ready={this.bankAccountFormReady}
-        payment-method-form-tokenize={this.bankAccountFormTokenize}
+        payment-method-form-validated={this.bankAccountFormValidated}
+        payment-method-form-tokenize={this.bankAccountFormTokenized}
         payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
       />
     );

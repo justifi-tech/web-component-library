@@ -17,10 +17,11 @@
 
 ## Events
 
-| Event                       | Description | Type                          |
-| --------------------------- | ----------- | ----------------------------- |
-| `paymentMethodFormReady`    |             | `CustomEvent<any>`            |
-| `paymentMethodFormTokenize` |             | `CustomEvent<{ data: any; }>` |
+| Event                        | Description | Type               |
+| ---------------------------- | ----------- | ------------------ |
+| `paymentMethodFormReady`     |             | `CustomEvent<any>` |
+| `paymentMethodFormTokenized` |             | `CustomEvent<any>` |
+| `paymentMethodFormValidated` |             | `CustomEvent<any>` |
 
 
 ## Methods
