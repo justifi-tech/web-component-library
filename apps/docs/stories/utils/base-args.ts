@@ -41,3 +41,24 @@ export class StoryBaseArgs {
     });
   }
 }
+
+export const paymentMethodFormComponentMethods = {
+  'resize': {
+    description: 'Triggers the iframe to compute it\'s height based on it\'s content and resize. This method is deprecated and will be removed in a future release in favor of better automatic resizing',
+    table: {
+      category: 'methods',
+    }
+  },
+  'validate': {
+    description: 'Asynchronous. Triggers validation on the form and shows errors if any, and returns a promise that resolves with `{ isValid: <boolean> }`',
+    table: {
+      category: 'methods'
+    }
+  },
+  'tokenize': {
+    description: 'Asynchronous. Triggers validation, then tokenization of payment method information if it passes client side validation. Returns a promise that resolves with the [tokenization request response body](https://developer.justifi.ai/tag/Payments#operation/CreatePayment).',
+    table: {
+      category: 'methods'
+    }
+  }
+};

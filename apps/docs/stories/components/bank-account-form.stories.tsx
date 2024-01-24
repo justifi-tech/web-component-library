@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs } from '../utils';
+import { paymentMethodFormComponentMethods, StoryBaseArgs } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
@@ -16,62 +16,50 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'iframe-origin': {
-      type: 'string',
-      description: 'URL for the rendered iFrame. End-users need not use this.',
-      control: {
-        type: 'text',
-      },
+    'css-variables': {
       table: {
-        category: 'props',
-
-      }
+        disable: true
+      },
+    },
+    'iframe-origin': {
+      table: {
+        disable: true
+      },
     },
     'validation-mode': {
       options: ['all', 'onBlur', 'onChange', 'onSubmit', 'onTouched'],
       control: { type: 'select' },
-      description: 'When to trigger validation of the form.',
+      description: 'When to trigger validation of the form. `\'all\' | \'onBlur\' | \'onChange\' | \'onSubmit\' | \'onTouched\'`',
       table: {
         category: 'props'
       }
     },
     'bankAccountFormTokenize': {
-      description: 'Triggered when the tokenize method is called on the component',
+      description: 'Emitted when the `tokenize` method is called on the component',
       table: {
         category: 'events'
       },
     },
     'bankAccountFormValidate': {
-      description: 'Triggered when the validate method is called on the component',
+      description: 'Emitted when the `validate` method is called on the component',
       table: {
         category: 'events'
       },
       action: true
     },
-    'ready': {
-      description: 'Triggered when iframe has loaded',
+    'bankAccountFormReady': {
+      description: 'Emitted when iframe content has loaded. This event is deprecated in favor of the `ready` event and will be removed in a future release',
       table: {
         category: 'events'
       }
     },
-    'resize': {
-      description: 'Deprecated: This method will be removed in future releases.',
+    'ready': {
+      description: 'Emitted when iframe content has loaded',
       table: {
-        category: 'methods',
+        category: 'events'
       }
     },
-    'tokenize': {
-      description: 'Makes a tokenization request to the iframe',
-      table: {
-        category: 'methods'
-      }
-    },
-    'validate': {
-      description: 'Runs a validation on the form and shows errors if any',
-      table: {
-        category: 'methods'
-      }
-    }
+    ...paymentMethodFormComponentMethods
   },
   parameters: {
     actions: {
