@@ -13,12 +13,12 @@
 
 ## Events
 
-| Event                     | Description                                                   | Type                                            |
-| ------------------------- | ------------------------------------------------------------- | ----------------------------------------------- |
-| `bankAccountFormReady`    | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
-| `bankAccountFormTokenize` | Triggered when the tokenize method is called on the component | `CustomEvent<{ data: any; }>`                   |
-| `bankAccountFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<{ data: { isValid: boolean; }; }>` |
-| `ready`                   | Triggered when iframe has loaded                              | `CustomEvent<any>`                              |
+| Event                     | Description                                                   | Type                          |
+| ------------------------- | ------------------------------------------------------------- | ----------------------------- |
+| `bankAccountFormReady`    | Triggered when iframe has loaded                              | `CustomEvent<any>`            |
+| `bankAccountFormTokenize` | Triggered when the tokenize method is called on the component | `CustomEvent<{ data: any; }>` |
+| `bankAccountFormValidate` | Triggered when the validate method is called on the component | `CustomEvent<any>`            |
+| `ready`                   | Triggered when iframe has loaded                              | `CustomEvent<any>`            |
 
 
 ## Methods

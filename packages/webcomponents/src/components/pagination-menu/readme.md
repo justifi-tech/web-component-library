@@ -15,13 +15,10 @@
 
 ## Shadow Parts
 
-| Part                     | Description |
-| ------------------------ | ----------- |
-| `"arrow"`                |             |
-| `"arrow-left"`           |             |
-| `"arrow-right"`          |             |
-| `"next-button-text"`     |             |
-| `"previous-button-text"` |             |
+| Part                 | Description |
+| -------------------- | ----------- |
+| `"page-arrow"`       |             |
+| `"page-button-text"` |             |
 
 
 ## Dependencies
