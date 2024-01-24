@@ -40,15 +40,15 @@ export class CardForm {
 
   /**
    * Triggered when the tokenize method is called on the component
-   * @event justifi-card-form#cardFormTokenize
+   * @event justifi-card-form#cardFormTokenized
    */
-  @Event() cardFormTokenize: EventEmitter<{ data: any }>;
+  @Event({ eventName: 'cardFormTokenize' }) cardFormTokenized: EventEmitter<{ data: any }>;
 
   /**
    * Triggered when the validate method is called on the component
-   * @event justifi-card-form#cardFormTokenize
+   * @event justifi-card-form#cardFormValidated
    */
-  @Event() cardFormValidate: EventEmitter<{ data: { isValid: boolean } }>;
+  @Event({ eventName: 'cardFormValidate'}) cardFormValidated: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
@@ -57,20 +57,20 @@ export class CardForm {
     this.ready.emit(event);
   }
 
-  @Listen('paymentMethodFormTokenize')
+  @Listen('paymentMethodFormTokenized')
   tokenizeHandler(event: { data: any }) {
     console.warn(
       `The 'cardFormTokenize' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
-    this.cardFormTokenize.emit(event);
+    this.cardFormTokenized.emit(event);
   }
 
-  @Listen('paymentMethodFormValidate')
+  @Listen('paymentMethodFormValidated')
   validateHandler(event: { data: any }) {
     console.warn(
       `The 'cardFormValidate' event is deprecated in the next major release. Please refer to the documentation for the migration process and alternative approach. This method will be removed in the future.`,
     );
-    this.cardFormValidate.emit(event);
+    this.cardFormValidated.emit(event);
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
@@ -124,7 +124,8 @@ export class CardForm {
         payment-method-form-type="card"
         single-line={this.singleLine}
         payment-method-form-ready={this.cardFormReady}
-        payment-method-form-tokenize={this.cardFormTokenize}
+        payment-method-form-validate={this.cardFormValidated}
+        payment-method-form-tokenize={this.cardFormTokenized}
         payment-method-form-validation-mode={this.validationMode || 'onSubmit'}
       />
     );

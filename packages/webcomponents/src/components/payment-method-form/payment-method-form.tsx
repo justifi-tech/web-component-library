@@ -34,9 +34,8 @@ export class PaymentMethodForm {
   @Prop() iframeOrigin?: string;
   @Prop() singleLine: boolean;
   @Event({ bubbles: true }) paymentMethodFormReady: EventEmitter;
-  @Event({ bubbles: true }) paymentMethodFormTokenize: EventEmitter<{
-    data: any;
-  }>;
+  @Event({ bubbles: true }) paymentMethodFormValidated: EventEmitter<any>;
+  @Event({ bubbles: true }) paymentMethodFormTokenized: EventEmitter<any>;
 
   private computedTheme: Theme = getComputedTheme();
 
@@ -66,6 +65,12 @@ export class PaymentMethodForm {
 
     if (messageType === MessageEventType[this.paymentMethodFormType].ready) {
       this.paymentMethodFormReady.emit(messageData);
+    }
+    if (messageType === MessageEventType[this.paymentMethodFormType].tokenize) {
+      this.paymentMethodFormTokenized.emit(messageData);
+    }
+    if (messageType === MessageEventType[this.paymentMethodFormType].validate) {
+      this.paymentMethodFormValidated.emit(messageData);
     }
   }
 

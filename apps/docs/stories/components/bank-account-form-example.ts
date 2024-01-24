@@ -1,9 +1,9 @@
-import { head } from '../../../storybook-pages/example-parts';
+import { codeExampleHead } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${head('bank-account-form')}
+${codeExampleHead('bank-account-form')}
 
 <body>
   <justifi-bank-account-form></justifi-bank-account-form>

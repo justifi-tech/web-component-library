@@ -24,7 +24,7 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
-    // @ts-ignore
+    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
     withActions // https://github.com/storybookjs/storybook/issues/22384
   ],
 };
@@ -34,33 +34,52 @@ export const Basic: Story = {};
 export const Styled: Story = {
   args: {
     style: {
+      'justifi-payments-list::part(table-head)': {},
+      'justifi-payments-list::part(table-head-row)': {},
       'justifi-payments-list::part(table-head-cell)': {
-        'background-color': '#F4F4F6'
+        'background-color': '#fff',
+        'font-weight': '600',
+        'font-size': '0.8rem',
+        'text-transform': 'uppercase',
+        'letter-spacing': '0.1em',
       },
+      'justifi-payments-list::part(table-body)': {},
+      'justifi-payments-list::part(table-row)': {},
+      'justifi-payments-list::part(table-row):hover': {
+        'cursor': 'pointer',
+      },
+      'justifi-payments-list::part(table-row-even)': {},
+      'justifi-payments-list::part(table-row-odd)': {},
+      'justifi-payments-list::part(table-cell)': {
+        'background-color': 'transparent',
+        'font-weight': 'normal',
+        'font-size': '0.8rem',
+      },
+      'justifi-payments-list::part(loading-state-cell)': {},
+      'justifi-payments-list::part(loading-state-spinner)': {
+        'color': '#ccc',
+      },
+      'justifi-payments-list::part(error-state)': {},
+      'justifi-payments-list::part(empty-state)': {},
       'justifi-payments-list::part(pagination-bar)': {
-        'background-color': '#F4F4F6'
+        'background-color': '#fff',
+        'border-bottom': 'none',
       },
-      'justifi-payments-list::part(arrow)': {
-        '--bs-btn-disabled-bg': '#212529',
-        '--bs-btn-disabled-border-color': '#212529',
-        '--bs-btn-bg': '#212529',
-        '--bs-btn-border-color': '#212529',
-        '--bs-btn-hover-bg': '#fccc32',
-        '--bs-btn-hover-border-color': '#fccc32',
+      'justifi-payments-list::part(page-button)': {
+        'border': 'none',
+        'background-color': 'transparent',
+        'text-transform': 'uppercase',
+        'font-weight': 'normal',
+        'font-size': '0.8rem',
       },
-      'justifi-payments-list::part(error-state)': {
-        'color': 'red',
-        'background-color': '#EEEEF5'
+      'justifi-payments-list::part(page-button-disabled)': {
+        'opacity': '0.5',
+        'cursor': 'not-allowed',
       },
-      'justifi-payments-list::part(loading-state-cell)': {
-        'background-color': '#EEEEF5'
+      'justifi-payments-list::part(page-arrow)': {
+        'display': 'none',
       },
-      'justifi-payments-list::part(table-row)': {
-        'background-color': '#EEEEF5'
-      },
-      'justifi-payments-list::part(table-row-even)': {
-        'background-color': '#F4F4F6'
-      }
+      'justifi-payments-list::part(page-button-text)': {},
     }
   }
 };

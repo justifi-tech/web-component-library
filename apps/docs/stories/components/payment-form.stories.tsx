@@ -1,22 +1,126 @@
-import { config } from '../../../config';
+import type { Meta } from '@storybook/web-components';
+import { withActions } from '@storybook/addon-actions/decorator';
 
-interface PaymentFormStoryArgs {
-  'bank-account': boolean;
-  'card': boolean;
-  'email': string;
-  'client-id': string;
-  'account-id': string;
-  'submit-button-text': string;
-  'cssVariables': string;
-}
+import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
-export default {
+
+const meta: Meta = {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
-  argTypes: {},
-};
+  args: {
+    'account-id': '',
+    'iframe-origin': '',
+    'email': '',
+    'client-id': '',
+    'submit-button-text': ''
+  },
+  argTypes: {
+    'account-id': {
+      type: 'string',
+      description: '`string`',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props',
+      }
+    },
+    'iframe-origin': {
+      type: 'string',
+      description: 'URL for the rendered iFrame. End-users need not use this. `string`',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props',
+      }
+    },
+    'bank-account': {
+      type: 'boolean',
+      description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
+      control: {
+        type: 'boolean'
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'card': {
+      type: 'boolean',
+      description: 'Boolean indicating if the Payment Form should render Card inputs `boolean`',
+      control: {
+        type: 'boolean'
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'email': {
+      type: 'string',
+      control: {
+        type: 'text'
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'client-id': {
+      type: 'string',
+      control: {
+        type: 'text'
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'submit-button-text': {
+      type: 'string',
+      control: {
+        type: 'text'
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'submitted': {
+      description: '`BankAccountCreateResponse` `CardCreateResponse` `PaymentMethodErrorResponse`',
+      table: {
+        category: 'events'
+      },
+      action: true
+    },
+    'enableSubmitButton': {
+      description: '`enableSubmitButton() => Promise<void>`',
+      table: {
+        category: 'methods'
+      }
+    },
+    'fillBillingForm': {
+      description: '`fillBillingForm(fields: BillingFormFields) => Promise<void>`',
+      table: {
+        category: 'methods'
+      }
+    },
+    'loadFontsOnParent': {
+      description: '`loadFontsOnParent() => Promise<any>`',
+      table: {
+        category: 'methods'
+      }
+    },
+  },
+  parameters: {
+    actions: {
+      handles: [
+        'submitted'
+      ]
+    }
+  },
+  decorators: [
+    withActions
+  ],
+}
 
-const Template = (args: PaymentFormStoryArgs) => {
+const Template = (args: any) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
     <div>
@@ -27,7 +131,6 @@ const Template = (args: PaymentFormStoryArgs) => {
         client-id='${args['client-id']}'
         account-id='${args['account-id']}'
         submit-button-text='${args['submit-button-text']}'
-        iframe-origin='${config.iframeOrigin}'
       />
     </div>
     <style>
@@ -141,3 +244,5 @@ Styled.args = {
   --jfi-radio-button-group-width: 100%;
   `,
 };
+
+export default meta;
