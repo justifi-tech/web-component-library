@@ -36,6 +36,9 @@ const argTypes: ArgTypes = {
     description: 'Business ID `string`',
     control: {
       type: 'text',
+    },
+    table: {
+      category: 'props'
     }
   },
   'payment-id': {
@@ -43,6 +46,9 @@ const argTypes: ArgTypes = {
     description: 'Payment ID `string`',
     control: {
       type: 'text',
+    },
+    table: {
+      category: 'props'
     }
   },
   'payout-id': {
@@ -50,6 +56,9 @@ const argTypes: ArgTypes = {
     description: 'Payout ID `string`',
     control: {
       type: 'text',
+    },
+    table: {
+      category: 'props'
     }
   },
 }
