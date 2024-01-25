@@ -4,6 +4,7 @@
   "description": "JustiFi Web Components",
   "main": "dist/module/index.js",
   "module": "dist/module/index.js",
+  "types": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
