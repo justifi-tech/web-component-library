@@ -1,40 +1,40 @@
-name: Build and release components
-on:
-  push:
-    branches:
-      - main
-      - 'release.**'
+# name: Build and release components
+# on:
+#   push:
+#     branches:
+#       - main
+#       - 'release.**'
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
+#       - name: Setup Node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version-file: '.nvmrc'
+#           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: |
-          npm install
+#       - name: Install dependencies
+#         run: |
+#           npm install
 
-      - name: Build packages
-        run: |
-          npm run build
-        env:
-          IFRAME_ORIGIN: https://js.justifi.ai/v2
-          ENTITIES_API_ORIGIN: 'https://api.justifi.ai/v1'
-          PROXY_API_ORIGIN: 'https://wc-proxy.justifi.ai'
-          PRIVATE_API_ORIGIN: 'https://api.justifi.ai/v1'
+#       - name: Build packages
+#         run: |
+#           npm run build
+#         env:
+#           IFRAME_ORIGIN: https://js.justifi.ai/v2
+#           ENTITIES_API_ORIGIN: 'https://api.justifi.ai/v1'
+#           PROXY_API_ORIGIN: 'https://wc-proxy.justifi.ai'
+#           PRIVATE_API_ORIGIN: 'https://api.justifi.ai/v1'
 
-      - name: Publish to NPM Registry
-        run: |
-          git stash
-          npm run publish --loglevel verbose --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+#       - name: Publish to NPM Registry
+#         run: |
+#           git stash
+#           npm run publish --loglevel verbose --access public
+#         env:
+#           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
