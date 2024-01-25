@@ -1,0 +1,23 @@
+name: Check PR for dev QA Tag
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize, reopened]
+
+jobs:
+  check-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for dev QA Tag
+        id: check-tag
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const payload = context.payload
+            const prLabels = payload.pull_request.labels.map(label => label.name);
+            const hasDevQALabel = prLabels.includes('dev QA');
+
+            if (!hasDevQALabel) {
+              core.setFailed('Pull request does not have the dev QA tag.');
+            }

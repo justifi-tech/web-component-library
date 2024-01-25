@@ -158,7 +158,9 @@ export class PaymentMethodForm {
             this.iframeElement = el as HTMLIFrameElement;
           }}
           onLoad={() => {
-            iFrameResize(this.iframeElement);
+            iFrameResize({
+              scrollbars: false,
+            }, this.iframeElement);
             this.sendStyleOverrides();
           }}
         ></iframe>
