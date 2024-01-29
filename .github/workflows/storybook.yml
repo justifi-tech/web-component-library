@@ -35,9 +35,9 @@ jobs:
         shell: bash
         run: |
           echo "::group::Build"
-          rm -rf node_modules
+          pnpm clean
           pnpm install --frozen-lockfile
-          pnpm run build
+          pnpm build
           echo "::endgroup::"
 
       - name: 'upload'
