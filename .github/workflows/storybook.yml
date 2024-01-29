@@ -19,7 +19,7 @@ jobs:
       id-token: write
     defaults:
       run:
-        working-directory: /apps/docs
+        working-directory: apps/docs/
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
       - name: 'upload'
         uses: actions/upload-pages-artifact@v1.0.8
         with:
-          path: ./storybook-static
+          path: ./docs
 
       - id: deploy
         name: Deploy to GitHub Pages
