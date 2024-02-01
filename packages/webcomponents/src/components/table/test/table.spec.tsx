@@ -3,15 +3,17 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Table } from '../table';
 
 describe('justifi-table', () => {
-  it('does not render properly without columnData', async () => {
+
+  it('enters loading state when loading is true', async () => {
     const page = await newSpecPage({
       components: [Table],
-      html: `<justifi-table></justifi-table>`,
+      template: () => <justifi-table columnData={['test', 'test']} loading={true} />
     });
 
-    const error = page.root.shadowRoot.querySelector('[data-test-id="empty-error-state"]');
-    expect(error).toBeTruthy();
-  });
+    const loading = page.root.shadowRoot.querySelector('.loading-state');
+
+    expect(loading).toBeTruthy();
+  })
 
   it('stops loading', async () => {
     const page = await newSpecPage({
@@ -31,8 +33,9 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} errorMessage={ERROR_TEXT} />
     });
 
-    const error = page.root.shadowRoot.querySelector('.error-state');
-    expect(error).not.toBeNull();
+    const error = await page.root.shadowRoot.querySelector('.error-state');
+    console.log(page.root.shadowRoot.innerHTML);
+    expect(error).toBeTruthy();
 
     const errorText = error.innerHTML;
     expect(errorText).toBe(`An unexpected error occurred: ${ERROR_TEXT}`);
@@ -53,8 +56,8 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} paging={PAG} />
     });
 
-    const error = page.root.shadowRoot.querySelector('[part="pagination-bar"]');
-    expect(error).not.toBeNull();
+    const paginationBar = page.root.shadowRoot.querySelector('[part="pagination-bar"]');
+    expect(paginationBar).toBeTruthy();
   });
 
   it('has an ID for each row', async () => {
