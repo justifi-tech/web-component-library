@@ -1,24 +1,51 @@
 name: Build and Publish storybook to GitHub Pages
-
 on:
+  workflow_dispatch:
   push:
     branches:
-      - "main"
+      - 'main'
+    paths:
+      - apps/docs/**
 jobs:
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.build-publish.outputs.page_url }}
     runs-on: ubuntu-latest
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    defaults:
+      run:
+        working-directory: apps/docs/
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8.7.5
           run: pnpm install
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.0
+
+      - name: 'Build'
+        shell: bash
+        run: |
+          echo "::group::Build"
+          pnpm clean
+          pnpm install --frozen-lockfile
+          pnpm build
+          echo "::endgroup::"
+
+      - name: 'upload'
+        uses: actions/upload-pages-artifact@v1.0.8
         with:
-          working_directory: apps/docs/
-          path: storybook-static
-          build_command: pnpm build
+          path: ./docs
+
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          token: ${{ github.token }}
