@@ -45,6 +45,7 @@ export class BusinessOwners {
     this.formController.values.subscribe(
       values => (this.owners = values?.owners || []),
     );
+    console.log('*** business-owners this.isEditing prop:', this.isEditing);
   }
 
   inputHandler(name: string, value: string, index: number): void {

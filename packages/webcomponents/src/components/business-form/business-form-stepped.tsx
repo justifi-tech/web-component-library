@@ -5,15 +5,6 @@ import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 
-const componentStepMapping = {
-  0: (formController) => <justifi-business-generic-info formController={formController} />,
-  1: (formController) => <justifi-legal-address-form formController={formController} />,
-  2: (formController) => <justifi-additional-questions formController={formController} />,
-  3: (formController) => <justifi-business-representative formController={formController} />,
-  4: (formController) => <justifi-business-owners formController={formController} />
-};
-
-
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -26,7 +17,7 @@ const componentStepMapping = {
 export class BusinessFormStepped {
   @Prop() authToken: string;
   @Prop() accountId: string;
-  @Prop() businessId?: string;
+  @Prop() businessId: string;
   @Prop() testMode: boolean = false;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
@@ -41,16 +32,29 @@ export class BusinessFormStepped {
     this.fetchData = this.fetchData.bind(this);
   }
 
+  componentStepMapping = {
+    0: (formController) => <justifi-business-generic-info formController={formController} />,
+    1: (formController) => <justifi-legal-address-form formController={formController} />,
+    2: (formController) => <justifi-additional-questions formController={formController} />,
+    3: (formController) => <justifi-business-representative formController={formController} />,
+    4: (formController) => <justifi-business-owners isEditing={!!this.businessId} formController={formController} />
+  };
+
   componentWillLoad() {
     if (!this.authToken) {
       console.warn(
         'Warning: Missing auth-token. The form will not be functional without it.',
       );
     }
+    if (!this.businessId) {
+      console.warn(
+        'Warning: Missing business-id. The form requires an existing business-id to function.'
+      )
+    }
 
     this.formController = new FormController(businessFormSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
-    this.totalSteps = Object.keys(componentStepMapping).length - 1;
+    this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
 
     if (this.businessId) {
       this.fetchData(this.businessId);
@@ -85,23 +89,13 @@ export class BusinessFormStepped {
 
     try {
       const data = this.formController.values.getValue();
-      // Conditionally making either POST or PATCH request
-      if (this.businessId) {
-        const payload = parseForPatching(data);
-        const response = await this.api.patch(
-          `entities/business/${this.businessId}`,
-          JSON.stringify(payload),
-          { account_id: this.accountId }
-        );
-        this.handleResponse(response, onSuccess);
-      } else {
-        const response = await this.api.post(
-          'entities/business',
-          JSON.stringify(data),
-          { account_id: this.accountId }
-        );
-        this.handleResponse(response, onSuccess);
-      }
+      const payload = parseForPatching(data);
+      const response = await this.api.patch(
+        `entities/business/${this.businessId}`,
+        JSON.stringify(payload),
+        { account_id: this.accountId }
+      );
+      this.handleResponse(response, onSuccess);
     } catch (error) {
       console.error('Error sending data:', error);
     } finally {
@@ -147,7 +141,7 @@ export class BusinessFormStepped {
   }
 
   currentStepComponent() {
-    return componentStepMapping[this.currentStep](this.formController);
+    return this.componentStepMapping[this.currentStep](this.formController);
   }
 
   render() {
@@ -184,7 +178,7 @@ export class BusinessFormStepped {
                   type="button"
                   class="btn btn-primary"
                   onClick={() => this.nextStepButtonOnClick()}
-                  disabled={this.isLoading}>
+                  disabled={!this.businessId || this.isLoading}>
                   Next
                 </button>
               )}
@@ -193,7 +187,7 @@ export class BusinessFormStepped {
                   type="submit"
                   class="btn btn-primary"
                   onClick={() => this.nextStepButtonOnClick()}
-                  disabled={this.isLoading}>
+                  disabled={!this.businessId || this.isLoading}>
                   Submit
                 </button>
               )}

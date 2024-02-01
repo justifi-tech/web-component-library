@@ -5,7 +5,6 @@ import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 
-
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -17,7 +16,7 @@ import { config } from '../../../config';
 })
 export class BusinessForm {
   @Prop() authToken: string;
-  @Prop() businessId?: string;
+  @Prop() businessId: string;
   @State() isLoading: boolean = false;
 
   private formController: FormController;
@@ -34,6 +33,13 @@ export class BusinessForm {
         'Warning: Missing auth-token. The form will not be functional without it.',
       );
     }
+    if (!this.businessId) {
+      console.warn(
+        'Warning: Missing business-id. The form requires an existing business-id to function.'
+      )
+    }
+
+    console.log('*** business-form this.businessId as boolean', !!this.businessId)
 
     this.formController = new FormController(businessFormSchema);
 
@@ -55,21 +61,12 @@ export class BusinessForm {
     try {
       const data = this.formController.values.getValue();
 
-      // Conditionally making either POST or PATCH request
-      if (this.businessId) {
-        const payload = parseForPatching(data);
-        const response = await this.api.patch(
-          `entities/business/${this.businessId}`,
-          JSON.stringify(payload),
-        );
-        console.log('Server response from PATCH:', response);
-      } else {
-        const response = await this.api.post(
-          'entities/business',
-          JSON.stringify(data),
-        );
-        console.log('Server response from POST:', response);
-      }
+      const payload = parseForPatching(data);
+      const response = await this.api.patch(
+        `entities/business/${this.businessId}`,
+        JSON.stringify(payload),
+      );
+      console.log('Server response from PATCH:', response);
     } catch (error) {
       console.error('Error sending data:', error);
     } finally {
@@ -121,7 +118,7 @@ export class BusinessForm {
               <button
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
-                disabled={!this.authToken || this.isLoading}
+                disabled={!this.authToken || !this.businessId || this.isLoading}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
