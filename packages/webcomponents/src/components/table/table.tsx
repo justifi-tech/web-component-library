@@ -29,7 +29,7 @@ export class Table {
   @Prop() rowClickHandler: (e: any) => any;
   @State() showEmptyState: boolean = !this.loading && !this.errorMessage && this.rowData.length < 1;
   @State() showErrorState: boolean = !this.loading && !!this.errorMessage;
-  @State() showRowData: boolean = !this.loading && !this.errorMessage && this.rowData.length > 0;
+  @State() showRowData: boolean = !this.showEmptyState && !this.showErrorState;
 
   render() {
     return (
