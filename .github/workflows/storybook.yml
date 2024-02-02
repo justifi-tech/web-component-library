@@ -39,6 +39,9 @@ jobs:
       - name: List webcomponents package contents
         run: ls node_modules
 
+      - name: Find webcomponents.css in @justifi/webcomponents
+        run: find node_modules/@justifi/webcomponents -type f -name "webcomponents.css"
+
       - name: 'Build'
         shell: bash
         run: |
