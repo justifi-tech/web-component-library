@@ -112,7 +112,7 @@ export class BusinessForm {
               <justifi-business-representative formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-business-owners isEditing={!!this.businessId} formController={this.formController} />
+              <justifi-business-owners formController={this.formController} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <button

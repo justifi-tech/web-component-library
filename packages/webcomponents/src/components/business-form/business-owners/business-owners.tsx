@@ -28,7 +28,6 @@ class BusinessOwner {
 })
 export class BusinessOwners {
   @Prop() formController: FormController;
-  @Prop() isEditing: boolean;
   @State() errors: any[] = [];
   @State() owners: BusinessOwner[] = [];
 
@@ -45,7 +44,6 @@ export class BusinessOwners {
     this.formController.values.subscribe(
       values => (this.owners = values?.owners || []),
     );
-    console.log('*** business-owners this.isEditing prop:', this.isEditing);
   }
 
   inputHandler(name: string, value: string, index: number): void {
@@ -121,7 +119,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                     <div class="col-12 col-md-6">
@@ -133,7 +131,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                   </div>
@@ -148,7 +146,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                     <div class="col-12 col-md-6">
@@ -161,7 +159,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         mask={PHONE_MASKS.US}
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                   </div>
@@ -177,7 +175,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="day"
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                     <div class="col-12 col-md-4">
@@ -190,7 +188,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="month"
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                     <div class="col-12 col-md-4">
@@ -203,7 +201,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="year"
-                        disabled={this.isEditing}
+                        disabled
                       />
                     </div>
                   </div>
@@ -219,7 +217,7 @@ export class BusinessOwners {
                       inputHandler={(name, value) =>
                         this.inputHandler(name, value, index)
                       }
-                      disabled={this.isEditing}
+                      disabled
                     />
                   </div>
 
@@ -238,7 +236,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.isEditing}
+                          disabled
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -252,7 +250,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.isEditing}
+                          disabled
                         />
                       </div>
                     </div>
@@ -269,7 +267,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.isEditing}
+                          disabled
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -283,23 +281,23 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.isEditing}
+                          disabled
                         />
                       </div>
                     </div>
                   </div>
-                  <button
+                  {/* <button
                     type="button"
                     class="btn btn-outline-danger"
                     onClick={event => this.removeOwner(event, index)}
                   >
                     Remove owner
-                  </button>
+                  </button> */}
                 </div>
               </div>
             )
           })}
-          <div class="row gy-3">
+          {/* <div class="row gy-3">
             <div class="col-12">
               <button
                 type="button"
@@ -309,7 +307,7 @@ export class BusinessOwners {
                 Add an owner
               </button>
             </div>
-          </div>
+          </div> */}
         </fieldset>
       </Host>
     );
