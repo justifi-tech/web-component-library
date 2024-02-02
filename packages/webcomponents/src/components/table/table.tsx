@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import { ExtendedPagingDefaults, ExtendedPagingInfo } from '../../api/Pagination';
 import { tableExportedParts } from './exported-parts';
 import { EmptyState, ErrorState, LoadingState } from './utils';
@@ -27,10 +27,9 @@ export class Table {
   @Prop() params: TableProps['params'] = {};
   @Prop() entityId: string[];
   @Prop() rowClickHandler: (e: any) => any;
-
-  showEmptyState() {
-    return this.rowData ? this.rowData.length < 1 : true;
-  }
+  @State() showEmptyState: boolean = !this.loading && !this.errorMessage && this.rowData.length < 1;
+  @State() showErrorState: boolean = !this.loading && !!this.errorMessage;
+  @State() showRowData: boolean = !this.loading && !this.errorMessage && this.rowData.length > 0;
 
   render() {
     return (
@@ -50,10 +49,9 @@ export class Table {
             </thead>
             <tbody class="table-body" part='table-body'>
               {this.loading && LoadingState(this.columnData.length)}
-              {this.errorMessage && ErrorState(this.columnData.length, this.errorMessage)}
-              {this.showEmptyState() && !this.errorMessage && EmptyState(this.columnData.length)}
-              {!this.loading && !this.errorMessage &&
-                this.rowData && (
+              {this.showEmptyState && EmptyState(this.columnData.length)}
+              {this.showErrorState && ErrorState(this.columnData.length, this.errorMessage)}
+              {this.showRowData && (
                   this.rowData.map((data, index) => {
                     return (
                       <tr
