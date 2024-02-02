@@ -36,6 +36,10 @@ jobs:
           version: 8.7.5
           run: pnpm install
 
+      - name: Install dependencies
+        run: |
+          pnpm install
+
       - name: 'Build'
         shell: bash
         run: |
