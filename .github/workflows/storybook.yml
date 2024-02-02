@@ -36,9 +36,6 @@ jobs:
           version: 8.7.5
           run: pnpm install
 
-      - name: Find webcomponents.css in @justifi/webcomponents
-        run: find node_modules/@justifi/webcomponents -type f -name "webcomponents.css"
-
       - name: 'Build'
         shell: bash
         run: |
@@ -46,6 +43,7 @@ jobs:
           pnpm clean
           pnpm install --frozen-lockfile
           pnpm build
+          find node_modules/@justifi/webcomponents -type f -name "webcomponents.css"
           echo "::endgroup::"
 
       - name: 'upload'
