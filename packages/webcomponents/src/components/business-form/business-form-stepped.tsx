@@ -4,7 +4,7 @@ import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
-import { FormAlert } from './utils';
+import { FormAlert } from '../form/utils';
 
 const componentStepMapping = {
   0: (formController) => <justifi-business-generic-info formController={formController} />,
