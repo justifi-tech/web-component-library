@@ -1,0 +1,118 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+    "has_previous": false,
+    "has_next": false,
+    "start_cursor": "WyIyMDI0LTAxLTE3IDE3OjM1OjQ4Ljk2NzY3MzAwMCIsImM4ODU5ZWIyLTg3Y2ItNDhjYS1hOTBkLWY2YTgwMjAzNDFmNyJd",
+    "end_cursor": "WyIyMDIzLTEyLTI3IDE4OjMxOjMwLjUxMjgzMTAwMCIsIjhhYjk4MzEzLWZlYzktNDBkMi1iYzZmLTBlZTZhMDM0ZDVmNiJd"
+  },
+  "data": [
+    {
+      "id": "py_66NWqoIBi7xnPmqv9By5jD",
+      "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 23456,
+      "amount_refundable": 23456,
+      "application_fee_rate_id": "afr_3M57cWYg7b1koxDXEohZ0j",
+      "balance": 22602,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-01-17T17:35:48.967Z",
+      "currency": "usd",
+      "description": "payment",
+      "statement_descriptor": "WC Account",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 854,
+      "financial_transaction_id": "ft_3TP4q0oIHN5fBw2NWalu2L",
+      "is_test": true,
+      "metadata": null,
+      "payment_intent_id": null,
+      "refunded": false,
+      "returned": false,
+      "status": "succeeded",
+      "updated_at": "2024-01-17T17:35:49.141Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_5pyJvKyXHl9FBaovVNfr7a",
+          "acct_last_four": "1111",
+          "brand": "visa",
+          "name": "test card",
+          "token": "pm_5pyJvKyXHl9FBaovVNfr7a",
+          "metadata": null,
+          "created_at": "2024-01-17T17:35:48.961Z",
+          "updated_at": "2024-01-17T17:35:48.961Z"
+        },
+        "customer_id": "cust_10yjRge8zbycC5d6h3Ls5g",
+        "signature": "1hi1fWPJ39xdLzOIeG2EkN"
+      },
+      "application_fee": {
+        "id": "fee_32m5hhuzIFrDBPU2TOzBJ7",
+        "amount": 854,
+        "currency": "usd",
+        "created_at": "2024-01-17T17:35:49.139Z",
+        "updated_at": "2024-01-17T17:36:06.741Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_4VPDyBwelwI9HjufbgwqZK",
+      "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 23456,
+      "amount_refundable": 23456,
+      "application_fee_rate_id": "afr_3M57cWYg7b1koxDXEohZ0j",
+      "balance": 22602,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-01-15T20:52:43.908Z",
+      "currency": "usd",
+      "description": "payment",
+      "statement_descriptor": "WC Account",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 854,
+      "financial_transaction_id": "ft_3wIbvV6f1iLEMO7xEzWx1g",
+      "is_test": true,
+      "metadata": null,
+      "payment_intent_id": null,
+      "refunded": false,
+      "returned": false,
+      "status": "succeeded",
+      "updated_at": "2024-01-15T20:52:44.074Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_yIGaQgcZMts1uvsGNRRz3",
+          "acct_last_four": "1111",
+          "brand": "visa",
+          "name": "test card",
+          "token": "pm_yIGaQgcZMts1uvsGNRRz3",
+          "metadata": null,
+          "created_at": "2024-01-15T20:52:43.898Z",
+          "updated_at": "2024-01-15T20:52:43.898Z"
+        },
+        "customer_id": "cust_10yjRge8zbycC5d6h3Ls5g",
+        "signature": "1hi1fWPJ39xdLzOIeG2EkN"
+      },
+      "application_fee": {
+        "id": "fee_43bvx0JRLiUKHVRQI7AJOC",
+        "amount": 854,
+        "currency": "usd",
+        "created_at": "2024-01-15T20:52:44.070Z",
+        "updated_at": "2024-01-15T20:53:09.010Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    }
+  ]
+}

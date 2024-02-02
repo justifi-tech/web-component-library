@@ -39,7 +39,13 @@ export class Table {
 
   errorState = () => (
     <tr>
-      <td class="error-state" part="error-state" colSpan={this.columnData?.length} style={{ textAlign: 'center' }}>
+      <td
+        class="error-state"
+        part="error-state"
+        colSpan={this.columnData?.length}
+        style={{ textAlign: 'center' }}
+        data-test-id="error-state"
+      >
         An unexpected error occurred: {this.errorMessage}
       </td>
     </tr>
@@ -80,6 +86,7 @@ export class Table {
                         this.rowData?.map((data, index) => {
                           return (
                             <tr
+                              data-test-id="payment-row"
                               data-row-entity-id={this.entityId[index]}
                               onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
                               part={`table-row${index % 2 ? ' table-row-even' : ' table-row-odd'}`}
