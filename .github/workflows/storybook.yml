@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
+          pnpm install && ls -a
 
       - name: 'Build'
         shell: bash
