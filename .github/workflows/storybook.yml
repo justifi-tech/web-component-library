@@ -43,7 +43,6 @@ jobs:
           pnpm clean
           pnpm install --frozen-lockfile
           pnpm build
-          find node_modules/@justifi/webcomponents -type f -name "webcomponents.css"
           echo "::endgroup::"
 
       - name: 'upload'
