@@ -36,6 +36,9 @@ jobs:
           version: 8.7.5
           run: pnpm install
 
+      - name: List webcomponents package contents
+        run: ls node_modules/@justifi/webcomponents/dist/webcomponents/
+
       - name: 'Build'
         shell: bash
         run: |
