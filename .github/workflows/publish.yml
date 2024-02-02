@@ -30,7 +30,7 @@ jobs:
           pnpm install
 
       - name: List webcomponents package contents
-        run: ls node_modules/@justifi/webcomponents/dist
+        run: ls node_modules
 
       - name: Build packages
         run: |
