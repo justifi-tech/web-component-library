@@ -29,6 +29,9 @@ jobs:
         run: |
           pnpm install
 
+      - name: List webcomponents package contents
+        run: ls node_modules/@justifi/webcomponents/dist/webcomponents/
+
       - name: Build packages
         run: |
           pnpm run build
