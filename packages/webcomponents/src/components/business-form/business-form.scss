@@ -2,6 +2,7 @@
 @import 'grid';
 @import 'buttons';
 @import 'bootstrap-utilities';
+@import 'alert';
 
 :host {
   @include host-base-styles;
