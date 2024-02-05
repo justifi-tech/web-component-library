@@ -1,5 +1,5 @@
 ---
-"@justifi/webcomponents": patch
+"@justifi/webcomponents": minor
 ---
 
 Improved table component render logic and unit test coverage for table component
