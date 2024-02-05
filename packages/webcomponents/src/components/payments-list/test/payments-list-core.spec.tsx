@@ -26,7 +26,7 @@ describe('payments-list-core', () => {
 
     const shadowRoot = justifiTable.shadowRoot;
 
-    const rows = shadowRoot.querySelectorAll('[data-test-id="payment-row"]');
+    const rows = shadowRoot.querySelectorAll('[data-test-id="table-row"]');
 
     expect(rows.length).toBe(2);
   });
@@ -117,7 +117,7 @@ describe('payments-list-core', () => {
 
     const justifiTable = page.root.querySelector('justifi-table');
     const shadowRoot = justifiTable.shadowRoot;
-    const rows = shadowRoot.querySelectorAll('[data-test-id="payment-row"]');
+    const rows = shadowRoot.querySelectorAll('[data-test-id="table-row"]');
 
     if (rows.length > 0) {
       (rows[0] as HTMLElement).click();
