@@ -57,19 +57,21 @@ export class Table {
                       <tr
                         data-row-entity-id={this.entityId[index]}
                         onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
-                        part={`table-row${index % 2 ? ' table-row-even' : ' table-row-odd'}`}
+                        part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
                       >
                         {
                           data.map((dataEntry: any) => {
-                            return (
-                              !dataEntry?.type
-                                ? <td part="table-cell">{dataEntry}</td>
-                                : <th scope="row" part="table-cell">
-                                  <td part="table-cell" innerHTML={dataEntry.value}></td>
-                                </th>
-                            )
-                          }
-                          )
+                            let nestedHtml = dataEntry?.type;
+                            if (nestedHtml) {
+                              return (
+                                <td part="table-cell" innerHTML={dataEntry.value}></td>
+                              )
+                            } else {
+                              return (
+                                <td part="table-cell">{dataEntry}</td>
+                              )
+                            }
+                          })
                         }
                       </tr>
                     )
