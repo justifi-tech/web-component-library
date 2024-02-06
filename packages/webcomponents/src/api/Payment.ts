@@ -10,6 +10,7 @@ export enum PaymentMethodTypes {
 
 export enum PaymentStatuses {
   pending = 'pending',
+  automatic = 'automatic',
   authorized = 'authorized',
   succeeded = 'succeeded',
   failed = 'failed',
@@ -40,7 +41,7 @@ export class PaymentMethod implements IPaymentMethod {
       : undefined;
   }
 
-  public get payersName(): string | null{
+  public get payersName(): string | null {
     if (this.card) {
       return this.card.name;
     } else if (this.bank_account) {
@@ -74,7 +75,7 @@ export interface IBankAccount {
   acct_last_four: string;
   name: string;
   brand: string;
-  token: string
+  token: string;
   created_at: string;
   updated_at: string;
 }
@@ -84,7 +85,7 @@ export class BankAccount implements IBankAccount {
   public acct_last_four: string;
   public name: string;
   public brand: string;
-  public token: string
+  public token: string;
   public created_at: string;
   public updated_at: string;
 
@@ -148,24 +149,32 @@ export interface IPayment {
   amount_disputed: number;
   amount_refundable: number;
   amount_refunded: number;
+  amount_returned?: number;
   balance: number;
   captured: boolean;
   capture_strategy: CaptureStrategy;
-  currency: 'usd';
+  currency: string;
   description: string;
   disputed: boolean;
-  disputes: IDispute[];
+  disputes: (IDispute | null)[];
   error_code: string | null;
   error_description: string | null;
   fee_amount: number;
   is_test: boolean;
   metadata: Object | null;
   payment_method: IPaymentMethod;
-  payment_intent_id: string | null;
+  payment_intent_id?: string | null;
   refunded: boolean;
   status: PaymentStatuses;
   created_at: string;
   updated_at: string;
+  financial_transaction_id: string;
+  returned: boolean;
+  application_fee: IApplicationFee;
+  application_fee_rate_id?: string;
+  refunds: (IRefund | null)[];
+  transaction_hold?: null;
+  statement_descriptor?: string;
 }
 
 export class Payment implements IPayment {
@@ -194,6 +203,11 @@ export class Payment implements IPayment {
   public created_at: string;
   public updated_at: string;
   public statement_descriptor?: string;
+  public financial_transaction_id: string;
+  public returned: boolean;
+  public application_fee: IApplicationFee;
+  public refunds: IRefund[];
+  public transaction_hold: null;
 
   constructor(payment: IPayment) {
     this.id = payment.id;
@@ -205,7 +219,6 @@ export class Payment implements IPayment {
     this.balance = payment.balance;
     this.captured = payment.captured;
     this.capture_strategy = payment.capture_strategy;
-    this.currency = payment.currency;
     this.description = payment.description;
     this.disputed = payment.disputed;
     this.disputes = payment.disputes;
@@ -224,7 +237,7 @@ export class Payment implements IPayment {
 
   get disputedStatus(): PaymentDisputedStatuses | null {
     const lost = this.disputes.some(
-      dispute => dispute.status === PaymentDisputedStatuses.lost,
+      (dispute) => dispute.status === PaymentDisputedStatuses.lost
     );
     // if a dispute is 'won', we don't show a dispute status, just general status
     if (!this.disputed) {
@@ -283,4 +296,38 @@ export class PaymentBalanceTransaction implements IPaymentBalanceTransaction {
       ? '--'
       : this.source_id;
   }
+}
+
+export interface IRefund {
+  id: string;
+  payment_id: string;
+  amount: number;
+  description: string | null;
+  reason: string | null;
+  status: string;
+  metadata: null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IApplicationFee {
+  id: string;
+  amount: number;
+  currency: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IPageInfo {
+  start_cursor: string;
+  end_cursor: string;
+  has_previous: boolean;
+  has_next: boolean;
+}
+
+export interface FetchPaymentsResponseType {
+  id: string | null;
+  type: string;
+  page_info: IPageInfo;
+  data: IPayment[];
 }

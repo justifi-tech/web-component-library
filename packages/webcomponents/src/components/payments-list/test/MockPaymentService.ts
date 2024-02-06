@@ -1,4 +1,4 @@
-import { FetchPaymentsResponseType } from '../fetch-payments-response.type';
+import { FetchPaymentsResponseType } from '../../../api';
 import { IPaymentService } from '../payment.service';
 
 // argument type for MockPaymentService constructor

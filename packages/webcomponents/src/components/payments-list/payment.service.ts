@@ -1,6 +1,5 @@
-import { Api } from '../../api';
+import { Api, FetchPaymentsResponseType } from '../../api';
 import { config } from '../../../config';
-import { FetchPaymentsResponseType } from './fetch-payments-response.type';
 
 export interface IPaymentService {
   fetchPayments(

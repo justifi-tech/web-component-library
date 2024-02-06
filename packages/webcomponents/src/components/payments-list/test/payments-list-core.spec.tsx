@@ -3,11 +3,14 @@ import { MockPaymentService } from './MockPaymentService';
 import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { PaymentsListCore } from '../payments-list-core';
-import mockSuccessResponse from './mockSuccessResponse.json';
+import { FetchPaymentsResponseType } from '../../../api';
+import mockSuccessResponse from '../../../api/mockData/mockPaymentsSuccess.json';
+
+const mockPaymentsResponse = mockSuccessResponse as FetchPaymentsResponseType;
 
 describe('payments-list-core', () => {
   it('renders properly', async () => {
-    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockSuccessResponse });
+    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockPaymentsResponse });
     const page = await newSpecPage({
       components: [PaymentsListCore, Table, PaginationMenu],
       html: `
@@ -32,7 +35,7 @@ describe('payments-list-core', () => {
   });
 
   it('renders an error state when no account id is passed', async () => {
-    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockSuccessResponse });
+    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockPaymentsResponse });
     const page = await newSpecPage({
       components: [PaymentsListCore, Table, PaginationMenu],
       html: `
@@ -55,7 +58,7 @@ describe('payments-list-core', () => {
   });
 
   it('renders an error state when no auth token is passed', async () => {
-    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockSuccessResponse });
+    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockPaymentsResponse });
     const page = await newSpecPage({
       components: [PaymentsListCore, Table, PaginationMenu],
       html: `
@@ -102,7 +105,7 @@ describe('payments-list-core', () => {
   });
 
   it('listens to row clicks', async () => {
-    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockSuccessResponse });
+    const mockPaymentService = new MockPaymentService({ fetchPaymentsResponse: mockPaymentsResponse });
     const page = await newSpecPage({
       components: [PaymentsListCore, Table, PaginationMenu],
       html: `<payments-list-core account-id="acc_123" auth-token="my-token"></payments-list-core>`,
