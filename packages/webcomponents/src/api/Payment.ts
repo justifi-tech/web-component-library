@@ -1,3 +1,5 @@
+import { IPageInfo } from './Pagination';
+
 export enum CaptureStrategy {
   automatic = 'automatic',
   manual = 'manual',
@@ -316,13 +318,6 @@ export interface IApplicationFee {
   currency: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface IPageInfo {
-  start_cursor: string;
-  end_cursor: string;
-  has_previous: boolean;
-  has_next: boolean;
 }
 
 export interface FetchPaymentsResponseType {
