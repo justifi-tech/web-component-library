@@ -5,6 +5,7 @@ import { GrossVolumeReport, GrossVolumeReportDate } from '../../api/GrossVolume'
 import { generateChartOptions } from './chart-utils';
 import { ErrorState } from '../details/utils';
 import { config } from '../../../config';
+import { ChartDataService } from './chart-data.service';
 
 @Component({
   tag: 'gross-payment-chart-core',
@@ -18,6 +19,7 @@ export class GrossPaymentChartCore {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
+  @Prop() dataService: ChartDataService
   @State() data: GrossVolumeReport;
   @State() total: number;
   @State() dates: GrossVolumeReportDate[];
@@ -51,6 +53,7 @@ export class GrossPaymentChartCore {
       const api = Api(this.authToken, config.proxyApiOrigin);
       const endpoint = `account/${this.accountId}/reports/gross_volume`;
       const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
+      console.log('response', response);
 
       if (!response.error) {
         this.total = response?.data.total;
