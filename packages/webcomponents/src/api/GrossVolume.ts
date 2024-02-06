@@ -13,4 +13,5 @@ export interface GrossVolumeReponseType {
   type: string;
   page_info: any;
   data: GrossVolumeReport;
+  // error?: any
 }

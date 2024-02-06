@@ -41,7 +41,7 @@ export class GrossPaymentChartCore {
     this.renderChart();
   }
 
-  async fetchData(): Promise<void> {
+  async bbb(): Promise<void> {
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
       this.loading = false;
@@ -53,7 +53,6 @@ export class GrossPaymentChartCore {
       const api = Api(this.authToken, config.proxyApiOrigin);
       const endpoint = `account/${this.accountId}/reports/gross_volume`;
       const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
-      console.log('response', response);
 
       if (!response.error) {
         this.total = response?.data.total;
@@ -68,6 +67,25 @@ export class GrossPaymentChartCore {
       console.error(this.errorMessage);
     } finally {
       this.loading = false;
+    }
+  }
+
+   fetchData() {
+    if(!this.dataService) {
+      return;
+    }
+    if (!this.accountId || !this.authToken) {
+      this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
+      this.loading = false;
+      return;
+    }
+    this.loading = true;
+    try {
+      const response = await this.dataService.fetchChartData(this.accountId, this.authToken);
+      if (!response.error) {
+        const pagingInfo = {
+          ...response.page_info,
+        };
     }
   }
 
