@@ -1,18 +1,23 @@
 ### Changelog
 
+### 4.7.5
+> 2 Feb 2024
+
+- Fixed: events for `bankAccountFormValidate`, `bankAccountFormTokenize`, `cardFormValidate`, and `cardFormTokenize` are now being properly emitted
+
 ### 4.7.4
-> 18 Jan 2023
+> 18 Jan 2024
 
 - Fixed: added missing css parts for tables
 - Fixed: prevent clicks on disabled pagination buttons
 
 ### 4.7.3
-> 18 Jan 2023
+> 18 Jan 2024
 
 - Fixed: added missing next-button pagination css part
 
 ### 4.7.2
-> 16 Jan 2023
+> 16 Jan 2024
 
 - Fixed text wrapping on Detail views
 - Adjusted table component screen responsiveness
@@ -25,7 +30,7 @@
 
 ### 4.7.1
 
-> 3 Jan 2023
+> 3 Jan 2024
 
 - Remove sourcemaps from production build
 - Fix CDN link version in readme
