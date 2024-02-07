@@ -1,7 +1,6 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { getPayments } from './get-payments.action';
 import { PaymentService } from './payment.service';
 
 @Component({
@@ -48,30 +47,51 @@ export class PaymentsListCore {
     this.params = ({ ...newParams, after_cursor: afterCursor });
   };
 
-  fetchData() {
+  onError(errorMessage) {
+    this.payments = [];
+    this.paging = pagingDefaults;
+    this.errorMessage = errorMessage;
+    this.loading = false;
+    console.error(`Error fetching payments: ${errorMessage}`);
+  }
+
+  async fetchData(): Promise<void> {
+    if (!this.accountId || !this.authToken) {
+      this.onError('Cannot fetch data without an AccountID and an AuthToken');
+      return;
+    }
+
     if (!this.paymentService) {
       return;
     }
+
     this.loading = true;
-    getPayments({
-      accountId: this.accountId,
-      authToken: this.authToken,
-      service: this.paymentService,
-      params: this.params,
-      onSuccess: ({ payments, pagingInfo }) => {
+
+    try {
+      const response = await this.paymentService.fetchPayments(this.accountId, this.authToken, this.params);
+      if (!response.error) {
+        const pagingInfo = {
+          ...response.page_info,
+        };
+
+        const payments =
+          response.data?.map((dataItem) => new Payment(dataItem)) || [];
+
         this.payments = payments;
         this.paging = pagingInfo;
         this.loading = false;
-      },
-      onError: (errorMessage) => {
-        this.payments = [];
-        this.paging = pagingDefaults;
-        this.errorMessage = errorMessage;
-        this.loading = false;
-        console.error(`Error fetching payments: ${errorMessage}`);
-      },
-    });
-  }
+      } else {
+        const responseError =
+          typeof response.error === 'string'
+            ? response.error
+            : response.error.message;
+
+        return this.onError(responseError);
+      }
+    } catch (error) {
+      return this.onError(error.message || error);
+    }
+  };
 
   render() {
     return (
