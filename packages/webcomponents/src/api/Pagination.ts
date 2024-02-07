@@ -1,12 +1,9 @@
-export interface IPageInfo {
+export interface PagingInfo {
+  amount: number;
   start_cursor: string;
   end_cursor: string;
   has_previous: boolean;
   has_next: boolean;
-}
-
-export interface PagingInfo extends IPageInfo {
-  amount: number;
 }
 
 export const pagingDefaults = {

@@ -1,5 +1,3 @@
-import { IPageInfo } from './Pagination';
-
 export enum CaptureStrategy {
   automatic = 'automatic',
   manual = 'manual',
@@ -318,11 +316,4 @@ export interface IApplicationFee {
   currency: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface FetchPaymentsResponseType {
-  id: string | null;
-  type: string;
-  page_info: IPageInfo;
-  data: IPayment[];
 }

@@ -5,7 +5,8 @@
     "has_previous": false,
     "has_next": false,
     "start_cursor": "WyIyMDI0LTAxLTE3IDE3OjM1OjQ4Ljk2NzY3MzAwMCIsImM4ODU5ZWIyLTg3Y2ItNDhjYS1hOTBkLWY2YTgwMjAzNDFmNyJd",
-    "end_cursor": "WyIyMDIzLTEyLTI3IDE4OjMxOjMwLjUxMjgzMTAwMCIsIjhhYjk4MzEzLWZlYzktNDBkMi1iYzZmLTBlZTZhMDM0ZDVmNiJd"
+    "end_cursor": "WyIyMDIzLTEyLTI3IDE4OjMxOjMwLjUxMjgzMTAwMCIsIjhhYjk4MzEzLWZlYzktNDBkMi1iYzZmLTBlZTZhMDM0ZDVmNiJd",
+    "amount": 10
   },
   "data": [
     {

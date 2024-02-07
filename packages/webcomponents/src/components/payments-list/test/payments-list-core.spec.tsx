@@ -3,10 +3,10 @@ import { MockPaymentService } from './MockPaymentService';
 import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { PaymentsListCore } from '../payments-list-core';
-import { FetchPaymentsResponseType } from '../../../api';
+import { IApiResponseCollection, IPayment } from '../../../api';
 import mockSuccessResponse from '../../../api/mockData/mockPaymentsSuccess.json';
 
-const mockPaymentsResponse = mockSuccessResponse as FetchPaymentsResponseType;
+const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
 
 describe('payments-list-core', () => {
   it('renders properly', async () => {
