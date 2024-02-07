@@ -219,6 +219,7 @@ export class Payment implements IPayment {
     this.balance = payment.balance;
     this.captured = payment.captured;
     this.capture_strategy = payment.capture_strategy;
+    this.currency = 'usd';
     this.description = payment.description;
     this.disputed = payment.disputed;
     this.disputes = payment.disputes;
