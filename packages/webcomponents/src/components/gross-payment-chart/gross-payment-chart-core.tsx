@@ -1,10 +1,8 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
-import { Api, IApiResponseCollection } from '../../api';
 import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
 import { GrossVolumeReport, GrossVolumeReportDate } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import { ErrorState } from '../details/utils';
-import { config } from '../../../config';
 import { ChartDataService } from './chart-data.service';
 
 @Component({
@@ -29,6 +27,7 @@ export class GrossPaymentChartCore {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('dataService')
   updateOnPropChange() {
     this.fetchData();
   }
@@ -41,19 +40,18 @@ export class GrossPaymentChartCore {
     this.renderChart();
   }
 
-  async bbb(): Promise<void> {
+   async fetchData() {
+    if(!this.dataService) {
+      return;
+    }
     if (!this.accountId || !this.authToken) {
       this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
       this.loading = false;
       return;
     }
     this.loading = true;
-
     try {
-      const api = Api(this.authToken, config.proxyApiOrigin);
-      const endpoint = `account/${this.accountId}/reports/gross_volume`;
-      const response: IApiResponseCollection<GrossVolumeReport> = await api.get(endpoint);
-
+      const response = await this.dataService.fetchChartData(this.accountId, this.authToken);
       if (!response.error) {
         this.total = response?.data.total;
         this.dates = response?.data.dates.reverse();
@@ -67,25 +65,6 @@ export class GrossPaymentChartCore {
       console.error(this.errorMessage);
     } finally {
       this.loading = false;
-    }
-  }
-
-   fetchData() {
-    if(!this.dataService) {
-      return;
-    }
-    if (!this.accountId || !this.authToken) {
-      this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
-      this.loading = false;
-      return;
-    }
-    this.loading = true;
-    try {
-      const response = await this.dataService.fetchChartData(this.accountId, this.authToken);
-      if (!response.error) {
-        const pagingInfo = {
-          ...response.page_info,
-        };
     }
   }
 
@@ -114,12 +93,9 @@ export class GrossPaymentChartCore {
   render() {
     return (
       <Host>
-        {
-          this.errorMessage ? ErrorState(this.errorMessage)
-            : <canvas id="chart" ref={(elem) => this.chartRef = elem} />
-        }
+        {this.errorMessage && ErrorState(this.errorMessage)}
+        <canvas id="chart" ref={(elem) => this.chartRef = elem} />
       </Host>
     );
   }
 }
-
