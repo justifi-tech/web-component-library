@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
 import { ExtendedPagingDefaults, ExtendedPagingInfo } from '../../api/Pagination';
 import { tableExportedParts } from './exported-parts';
 import { EmptyState, ErrorState, LoadingState } from './utils';
@@ -27,9 +27,18 @@ export class Table {
   @Prop() params: TableProps['params'] = {};
   @Prop() entityId: string[];
   @Prop() rowClickHandler: (e: any) => any;
-  @State() showEmptyState: boolean = !this.loading && !this.errorMessage && this.rowData.length < 1;
-  @State() showErrorState: boolean = !this.loading && !!this.errorMessage;
-  @State() showRowData: boolean = !this.showEmptyState && !this.showErrorState;
+
+  get showEmptyState() {
+    return !this.loading && !this.errorMessage && this.rowData.length < 1;
+  }
+
+  get showErrorState() {
+    return !this.loading && !!this.errorMessage;
+  }
+
+  get showRowData() {
+    return !this.showEmptyState && !this.showErrorState;
+  }
 
   render() {
     return (
