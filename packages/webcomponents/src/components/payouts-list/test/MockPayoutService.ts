@@ -1,17 +1,23 @@
-import { IApiResponseCollection, IPayout } from '../../../api';
+import { IApiResponse, IApiResponseCollection, IPayout } from '../../../api';
 import { IPayoutService } from '../payout.service';
 
 // argument type for MockPayoutService constructor
 // you can pass a success or an error response to fetchPayouts
 export interface MockPayoutServiceConstructorArgs {
-  fetchPayoutsResponse: IApiResponseCollection<IPayout[]>;
+  fetchPayoutsResponse?: IApiResponseCollection<IPayout[]>;
+  fetchPayoutResponse?: IApiResponse<IPayout>;
 }
 
 export class MockPayoutService implements IPayoutService {
   private fetchPayoutsResponse: IApiResponseCollection<IPayout[]>;
+  private fetchPayoutResponse: IApiResponse<IPayout>;
 
-  constructor({ fetchPayoutsResponse }: MockPayoutServiceConstructorArgs) {
+  constructor({
+    fetchPayoutsResponse,
+    fetchPayoutResponse,
+  }: MockPayoutServiceConstructorArgs) {
     this.fetchPayoutsResponse = fetchPayoutsResponse;
+    this.fetchPayoutResponse = fetchPayoutResponse;
   }
 
   fetchPayouts(
@@ -20,5 +26,12 @@ export class MockPayoutService implements IPayoutService {
     _params: any
   ): Promise<IApiResponseCollection<IPayout[]>> {
     return Promise.resolve(this.fetchPayoutsResponse);
+  }
+
+  fetchPayout(
+    _payoutId: string,
+    _authToken: string
+  ): Promise<IApiResponse<IPayout>> {
+    return Promise.resolve(this.fetchPayoutResponse);
   }
 }
