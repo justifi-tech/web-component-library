@@ -4,6 +4,7 @@ import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
+import { FormAlert } from '../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -19,10 +20,24 @@ export class BusinessFormStepped {
   @Prop() accountId: string;
   @Prop() businessId: string;
   @Prop() testMode: boolean = false;
+  @Prop() hideErrors?: boolean;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
-  @State() serverError: string;
+  @State() serverError: boolean = false;
+  @State() errorMessage: string = '';
+
+  get submitDisabled() {
+    return !this.authToken || this.isLoading || this.serverError;
+  }
+
+  get nextDisabled() {
+    return !this.authToken || this.isLoading || this.serverError;
+  }
+
+  get showErrors() {
+    return this.serverError && !this.hideErrors;
+  }
 
   private formController: FormController;
   private api: any;
@@ -69,9 +84,10 @@ export class BusinessFormStepped {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError = response.error.message;
+      this.serverError = true;
+      this.errorMessage = response.error.message;
     } else {
-      this.serverError = '';
+      this.serverError = false;
       this.businessId = response.data.id;
       this.formController.setInitialValues(response.data);
       onSuccess();
@@ -97,7 +113,8 @@ export class BusinessFormStepped {
       );
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      console.error('Error sending data:', error);
+      this.serverError = true;
+      this.errorMessage = error.message;
     } finally {
       this.isLoading = false;
     }
@@ -109,7 +126,8 @@ export class BusinessFormStepped {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setInitialValues(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      this.serverError = true;
+      this.errorMessage = `Error fetching data: ${error.message}`;
     } finally {
       this.isLoading = false;
     }
@@ -148,13 +166,7 @@ export class BusinessFormStepped {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
-
-        {this.serverError && (
-          <div class="alert alert-danger" role="alert">
-            {this.serverError}
-          </div>
-        )}
-
+        {this.showErrors && FormAlert(this.errorMessage)}
         <form onSubmit={this.validateAndSubmit}>
           <div class="my-4">
             {this.currentStepComponent()}
@@ -178,7 +190,7 @@ export class BusinessFormStepped {
                   type="button"
                   class="btn btn-primary"
                   onClick={() => this.nextStepButtonOnClick()}
-                  disabled={!this.businessId || this.isLoading}>
+                  disabled={this.nextDisabled}>
                   Next
                 </button>
               )}
@@ -187,7 +199,7 @@ export class BusinessFormStepped {
                   type="submit"
                   class="btn btn-primary"
                   onClick={() => this.nextStepButtonOnClick()}
-                  disabled={!this.businessId || this.isLoading}>
+                  disabled={this.submitDisabled}>
                   Submit
                 </button>
               )}
