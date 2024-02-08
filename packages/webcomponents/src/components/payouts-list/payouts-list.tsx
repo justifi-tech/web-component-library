@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { tableExportedParts } from '../table/exported-parts';
-import { PayoutService } from './payout.service';
+import { PayoutService } from '../../api/services/payout.service';
 
 /**
   * @exportedPart table-head: Table head

@@ -8,7 +8,7 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
-import { PayoutService } from './payout.service';
+import { PayoutService } from '../../api/services/payout.service';
 
 @Component({
   tag: 'payouts-list-core',
