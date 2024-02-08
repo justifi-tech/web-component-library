@@ -26,7 +26,6 @@ export class BusinessFormStepped {
   @State() totalSteps: number = 4;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
-  @State() existingOwners: boolean;
 
   get disabledState() {
     return !this.authToken || !this.businessId || this.isLoading || this.serverError;
@@ -49,7 +48,7 @@ export class BusinessFormStepped {
     1: (formController) => <justifi-legal-address-form formController={formController} />,
     2: (formController) => <justifi-additional-questions formController={formController} />,
     3: (formController) => <justifi-business-representative formController={formController} />,
-    4: (formController) => <justifi-business-owners existingOwners={this.existingOwners} formController={formController} />
+    4: (formController) => <justifi-business-owners formController={formController} />
   };
 
   componentWillLoad() {
@@ -103,8 +102,10 @@ export class BusinessFormStepped {
     this.isLoading = true;
 
     try {
-      const data = this.formController.values.getValue();
-      const payload = parseForPatching(data, this.existingOwners);
+      const values = this.formController.values.getValue();
+      const initialValues = this.formController.getInitialValues();
+
+      const payload = parseForPatching(values, initialValues);
       const response = await this.api.patch(
         `entities/business/${this.businessId}`,
         JSON.stringify(payload),
@@ -124,9 +125,6 @@ export class BusinessFormStepped {
     try {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setInitialValues(response.data);
-      if (response.data.owners.length > 0) {
-        this.existingOwners = true;
-      }
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;

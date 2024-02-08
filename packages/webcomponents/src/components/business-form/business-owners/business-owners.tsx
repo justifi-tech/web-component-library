@@ -28,10 +28,12 @@ class BusinessOwner {
 })
 export class BusinessOwners {
   @Prop() formController: FormController;
-  @Prop() existingOwners: boolean;
   @State() errors: any[] = [];
   @State() owners: BusinessOwner[] = [];
 
+  get disabledState() {
+    return !!this.formController.getInitialValues().owners && !!this.formController.getInitialValues().owners.length;
+  }
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -121,7 +123,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-6">
@@ -133,7 +135,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                   </div>
@@ -148,7 +150,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-6">
@@ -161,7 +163,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         mask={PHONE_MASKS.US}
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                   </div>
@@ -177,7 +179,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="day"
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-4">
@@ -190,7 +192,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="month"
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-4">
@@ -203,7 +205,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="year"
-                        disabled={this.existingOwners}
+                        disabled={this.disabledState}
                       />
                     </div>
                   </div>
@@ -219,7 +221,7 @@ export class BusinessOwners {
                       inputHandler={(name, value) =>
                         this.inputHandler(name, value, index)
                       }
-                      disabled={this.existingOwners}
+                      disabled={this.disabledState}
                     />
                   </div>
 
@@ -238,7 +240,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.existingOwners}
+                          disabled={this.disabledState}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -252,7 +254,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.existingOwners}
+                          disabled={this.disabledState}
                         />
                       </div>
                     </div>
@@ -269,7 +271,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.existingOwners}
+                          disabled={this.disabledState}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -283,7 +285,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled={this.existingOwners}
+                          disabled={this.disabledState}
                         />
                       </div>
                     </div>
@@ -292,7 +294,7 @@ export class BusinessOwners {
                     type="button"
                     class="btn btn-outline-danger"
                     onClick={event => this.removeOwner(event, index)}
-                    disabled={this.existingOwners}
+                    disabled={this.disabledState}
                   >
                     Remove owner
                   </button>
@@ -306,7 +308,7 @@ export class BusinessOwners {
                 type="button"
                 class="btn btn-outline-primary"
                 onClick={event => this.addOwner(event)}
-                disabled={this.existingOwners}
+                disabled={this.disabledState}
               >
                 Add an owner
               </button>
