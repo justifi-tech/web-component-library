@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { PaymentService } from './payment.service';
+import { PaymentService } from '../../api/services/payment.service';
 
 @Component({
   tag: 'payments-list-core',
