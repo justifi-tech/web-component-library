@@ -1,5 +1,5 @@
 // These props should not be sent to the server
-export const parseForPatching = (data, existingOwners?: boolean) => {
+export const parseForPatching = (data, existingOwners: boolean) => {
   delete data.id;
   delete data.documents;
   delete data.bank_accounts;

@@ -22,7 +22,7 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
-  @State() existingOwners: any[];
+  @State() existingOwners: boolean;
 
   get disabledState() {
     return !this.authToken || !this.businessId || this.isLoading || this.serverError;
@@ -74,7 +74,7 @@ export class BusinessForm {
     try {
       const data = this.formController.values.getValue();
 
-      const payload = parseForPatching(data, !!this.existingOwners.length);
+      const payload = parseForPatching(data, this.existingOwners);
       const response = await this.api.patch(
         `entities/business/${this.businessId}`,
         JSON.stringify(payload),
@@ -94,7 +94,7 @@ export class BusinessForm {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setInitialValues(response.data);
       if (response.data.owners.length > 0) {
-        this.existingOwners = response.data.owners;
+        this.existingOwners = true;
       }
     } catch (error) {
       this.serverError = true;
@@ -131,7 +131,7 @@ export class BusinessForm {
               <justifi-business-representative formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-business-owners formController={this.formController} />
+              <justifi-business-owners existingOwners={this.existingOwners} formController={this.formController} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <button
