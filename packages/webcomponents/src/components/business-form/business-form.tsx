@@ -22,6 +22,7 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @State() existingOwners: any[];
 
   get submitDisabled() {
     return !this.authToken || this.isLoading || this.serverError;
@@ -73,7 +74,7 @@ export class BusinessForm {
     try {
       const data = this.formController.values.getValue();
 
-      const payload = parseForPatching(data);
+      const payload = parseForPatching(data, !!this.existingOwners.length);
       const response = await this.api.patch(
         `entities/business/${this.businessId}`,
         JSON.stringify(payload),
@@ -92,6 +93,9 @@ export class BusinessForm {
     try {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setInitialValues(response.data);
+      if (response.data.owners.length > 0) {
+        this.existingOwners = response.data.owners;
+      }
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;

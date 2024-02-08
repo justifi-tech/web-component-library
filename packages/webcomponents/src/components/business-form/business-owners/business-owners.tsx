@@ -42,14 +42,12 @@ export class BusinessOwners {
   }
 
   componentDidLoad() {
-    console.log(this.disabledState);
     this.formController.errors.subscribe(errors => {
       this.errors = errors?.owners || [];
     });
     this.formController.values.subscribe(
       values => (this.owners = values?.owners || []),
     );
-    console.log('*** formController', this.formController);
   }
 
   inputHandler(name: string, value: string, index: number): void {
