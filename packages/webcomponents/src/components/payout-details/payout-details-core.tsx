@@ -2,7 +2,7 @@ import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
-import { PayoutService } from '../payouts-list/payout.service';
+import { PayoutService } from '../../api/services/payout.service';
 
 @Component({
   tag: 'payout-details-core',

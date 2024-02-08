@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { PayoutService } from '../payouts-list/payout.service';
+import { PayoutService } from '../../api/services/payout.service';
 
 /**
   * @exportedPart detail-loading-spinner
