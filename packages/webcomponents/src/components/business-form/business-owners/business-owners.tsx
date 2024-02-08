@@ -37,13 +37,19 @@ export class BusinessOwners {
     this.removeOwner = this.removeOwner.bind(this);
   }
 
+  get disabledState() {
+    return !!this.owners.length;
+  }
+
   componentDidLoad() {
+    console.log(this.disabledState);
     this.formController.errors.subscribe(errors => {
       this.errors = errors?.owners || [];
     });
     this.formController.values.subscribe(
       values => (this.owners = values?.owners || []),
     );
+    console.log('*** formController', this.formController);
   }
 
   inputHandler(name: string, value: string, index: number): void {
@@ -119,7 +125,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-6">
@@ -131,7 +137,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                   </div>
@@ -146,7 +152,7 @@ export class BusinessOwners {
                         inputHandler={(name, value) =>
                           this.inputHandler(name, value, index)
                         }
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-6">
@@ -159,7 +165,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         mask={PHONE_MASKS.US}
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                   </div>
@@ -175,7 +181,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="day"
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-4">
@@ -188,7 +194,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="month"
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                     <div class="col-12 col-md-4">
@@ -201,7 +207,7 @@ export class BusinessOwners {
                           this.inputHandler(name, value, index)
                         }
                         type="year"
-                        disabled
+                        disabled={this.disabledState}
                       />
                     </div>
                   </div>
@@ -217,7 +223,7 @@ export class BusinessOwners {
                       inputHandler={(name, value) =>
                         this.inputHandler(name, value, index)
                       }
-                      disabled
+                      disabled={this.disabledState}
                     />
                   </div>
 
@@ -236,7 +242,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled
+                          disabled={this.disabledState}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -250,7 +256,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled
+                          disabled={this.disabledState}
                         />
                       </div>
                     </div>
@@ -267,7 +273,7 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled
+                          disabled={this.disabledState}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -281,33 +287,35 @@ export class BusinessOwners {
                           inputHandler={(name, value) =>
                             this.addressInputHandler(name, value, index)
                           }
-                          disabled
+                          disabled={this.disabledState}
                         />
                       </div>
                     </div>
                   </div>
-                  {/* <button
+                  <button
                     type="button"
                     class="btn btn-outline-danger"
                     onClick={event => this.removeOwner(event, index)}
+                    disabled={this.disabledState}
                   >
                     Remove owner
-                  </button> */}
+                  </button>
                 </div>
               </div>
             )
           })}
-          {/* <div class="row gy-3">
+          <div class="row gy-3">
             <div class="col-12">
               <button
                 type="button"
                 class="btn btn-outline-primary"
                 onClick={event => this.addOwner(event)}
+                disabled={this.disabledState}
               >
                 Add an owner
               </button>
             </div>
-          </div> */}
+          </div>
         </fieldset>
       </Host>
     );
