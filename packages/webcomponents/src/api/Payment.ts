@@ -153,7 +153,7 @@ export interface IPayment {
   balance: number;
   captured: boolean;
   capture_strategy: CaptureStrategy;
-  currency: string;
+  currency: 'usd';
   description: string;
   disputed: boolean;
   disputes: (IDispute | null)[];
@@ -219,6 +219,7 @@ export class Payment implements IPayment {
     this.balance = payment.balance;
     this.captured = payment.captured;
     this.capture_strategy = payment.capture_strategy;
+    this.currency = payment.currency;
     this.description = payment.description;
     this.disputed = payment.disputed;
     this.disputes = payment.disputes;

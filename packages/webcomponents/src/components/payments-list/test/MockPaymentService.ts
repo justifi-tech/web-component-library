@@ -1,5 +1,5 @@
 import { IApiResponseCollection, IPayment } from '../../../api';
-import { IPaymentService } from '../payment.service';
+import { IPaymentService } from '../../../api/services/payment.service';
 
 // argument type for MockPaymentService constructor
 // you can pass a success or an error response to fetchPayments

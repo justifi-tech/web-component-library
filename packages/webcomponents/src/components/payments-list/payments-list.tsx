@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { PaymentService } from './payment.service';
+import { PaymentService } from '../../api/services/payment.service';
 
 /**
   * @exportedPart table-head: Table head
