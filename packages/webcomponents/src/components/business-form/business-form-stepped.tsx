@@ -28,16 +28,12 @@ export class BusinessFormStepped {
   @State() errorMessage: string = '';
   @State() existingOwners: any[];
 
-  get submitDisabled() {
-    return !this.authToken || this.isLoading || this.serverError;
-  }
-
-  get nextDisabled() {
-    return !this.authToken || this.isLoading || this.serverError;
+  get disabledState() {
+    return !this.authToken || !this.businessId || this.isLoading || this.serverError;
   }
 
   get showErrors() {
-    return this.serverError && !this.hideErrors;
+    return (this.serverError || !this.businessId || !this.authToken) && !this.hideErrors;
   }
 
   private formController: FormController;
@@ -61,11 +57,13 @@ export class BusinessFormStepped {
       console.warn(
         'Warning: Missing auth-token. The form will not be functional without it.',
       );
+      this.errorMessage = 'Missing auth-token. The form will not be functional without it.';
     }
     if (!this.businessId) {
       console.warn(
         'Warning: Missing business-id. The form requires an existing business-id to function.'
       )
+      this.errorMessage = 'Missing business-id. The form requires an existing business-id to function.';
     }
 
     this.formController = new FormController(businessFormSchema);
@@ -194,7 +192,7 @@ export class BusinessFormStepped {
                   type="button"
                   class="btn btn-primary"
                   onClick={() => this.nextStepButtonOnClick()}
-                  disabled={this.nextDisabled}>
+                  disabled={this.disabledState}>
                   Next
                 </button>
               )}
@@ -203,7 +201,7 @@ export class BusinessFormStepped {
                   type="submit"
                   class="btn btn-primary"
                   onClick={() => this.nextStepButtonOnClick()}
-                  disabled={this.submitDisabled}>
+                  disabled={this.disabledState}>
                   Submit
                 </button>
               )}

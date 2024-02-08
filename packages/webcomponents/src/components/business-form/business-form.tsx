@@ -24,12 +24,12 @@ export class BusinessForm {
   @State() errorMessage: string = '';
   @State() existingOwners: any[];
 
-  get submitDisabled() {
-    return !this.authToken || this.isLoading || this.serverError;
+  get disabledState() {
+    return !this.authToken || !this.businessId || this.isLoading || this.serverError;
   }
 
   get showErrors() {
-    return this.serverError && !this.hideErrors;
+    return (this.serverError || !this.businessId || !this.authToken) && !this.hideErrors;
   }
 
   private formController: FormController;
@@ -45,14 +45,14 @@ export class BusinessForm {
       console.warn(
         'Warning: Missing auth-token. The form will not be functional without it.',
       );
+      this.errorMessage = 'Missing auth-token. The form will not be functional without it.';
     }
     if (!this.businessId) {
       console.warn(
         'Warning: Missing business-id. The form requires an existing business-id to function.'
       )
+      this.errorMessage = 'Missing business-id. The form requires an existing business-id to function.';
     }
-
-    console.log('*** business-form this.businessId as boolean', !!this.businessId)
 
     this.formController = new FormController(businessFormSchema);
 
@@ -137,7 +137,7 @@ export class BusinessForm {
               <button
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
-                disabled={this.submitDisabled}
+                disabled={this.disabledState}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
