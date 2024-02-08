@@ -1,5 +1,5 @@
 import { IApiResponseCollection, IPayout } from '../../../api';
-import { IPayoutService } from '../payout.service';
+import { IPayoutService } from '../../../api/services/payout.service';
 
 // argument type for MockPayoutService constructor
 // you can pass a success or an error response to fetchPayouts

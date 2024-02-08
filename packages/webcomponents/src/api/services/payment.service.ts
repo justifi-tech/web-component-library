@@ -1,4 +1,4 @@
-import { Api, IApiResponse, IApiResponseCollection, IPayment } from '../../api';
+import { Api, IApiResponseCollection, IApiResponse, IPayment } from '..';
 import { config } from '../../../config';
 
 export interface IPaymentService {
