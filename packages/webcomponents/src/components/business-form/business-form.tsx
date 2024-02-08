@@ -4,7 +4,7 @@ import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
-
+import { FormAlert } from '../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -18,7 +18,18 @@ import { config } from '../../../config';
 export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId?: string;
+  @Prop() hideErrors?: boolean;
   @State() isLoading: boolean = false;
+  @State() serverError: boolean = false;
+  @State() errorMessage: string = '';
+
+  get submitDisabled() {
+    return !this.authToken || this.isLoading || this.serverError;
+  }
+
+  get showErrors() {
+    return this.serverError && !this.hideErrors;
+  }
 
   private formController: FormController;
   private api: any;
@@ -71,7 +82,8 @@ export class BusinessForm {
         console.log('Server response from POST:', response);
       }
     } catch (error) {
-      console.error('Error sending data:', error);
+      this.serverError = true;
+      this.errorMessage = error.message;
     } finally {
       this.isLoading = false;
     }
@@ -83,7 +95,8 @@ export class BusinessForm {
       const response = await this.api.get(`entities/business/${businessId}`);
       this.formController.setInitialValues(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      this.serverError = true;
+      this.errorMessage = `Error fetching data: ${error.message}`;
     } finally {
       this.isLoading = false;
     }
@@ -102,6 +115,7 @@ export class BusinessForm {
             <div class="col-12 mb-4">
               <h1>Business Information</h1>
             </div>
+            {this.showErrors && FormAlert(this.errorMessage)}
             <div class="col-12 mb-4">
               <justifi-business-generic-info formController={this.formController} />
             </div>
@@ -121,7 +135,7 @@ export class BusinessForm {
               <button
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
-                disabled={!this.authToken || this.isLoading}
+                disabled={this.submitDisabled}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
