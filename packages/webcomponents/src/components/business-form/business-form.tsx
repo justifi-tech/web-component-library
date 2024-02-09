@@ -24,11 +24,11 @@ export class BusinessForm {
   @State() errorMessage: string = '';
 
   get disabledState() {
-    return !this.authToken || !this.businessId || this.isLoading || this.serverError;
+    return this.isLoading;
   }
 
   get showErrors() {
-    return (this.serverError || !this.businessId || !this.authToken) && !this.hideErrors;
+    return this.serverError && !this.hideErrors;
   }
 
   private formController: FormController;
@@ -41,16 +41,14 @@ export class BusinessForm {
 
   componentWillLoad() {
     if (!this.authToken) {
-      console.warn(
+      console.error(
         'Warning: Missing auth-token. The form will not be functional without it.',
       );
-      this.errorMessage = 'Missing auth-token. The form will not be functional without it.';
     }
     if (!this.businessId) {
-      console.warn(
+      console.error(
         'Warning: Missing business-id. The form requires an existing business-id to function.'
       )
-      this.errorMessage = 'Missing business-id. The form requires an existing business-id to function.';
     }
 
     this.formController = new FormController(businessFormSchema);
