@@ -20,7 +20,7 @@ export class BusinessFormStepped {
   @Prop() accountId: string;
   @Prop() businessId: string;
   @Prop() testMode: boolean = false;
-  @Prop() hideErrors?: boolean;
+  @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;

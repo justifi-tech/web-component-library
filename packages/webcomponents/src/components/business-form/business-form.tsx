@@ -18,7 +18,7 @@ import { FormAlert } from '../form/utils';
 export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() hideErrors?: boolean;
+  @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
@@ -52,6 +52,7 @@ export class BusinessForm {
       )
       this.errorMessage = 'Missing business-id. The form requires an existing business-id to function.';
     }
+    console.log('this.hideErrors', this.hideErrors);
 
     this.formController = new FormController(businessFormSchema);
 
