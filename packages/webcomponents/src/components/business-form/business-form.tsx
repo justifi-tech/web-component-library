@@ -52,7 +52,6 @@ export class BusinessForm {
       )
       this.errorMessage = 'Missing business-id. The form requires an existing business-id to function.';
     }
-    console.log('this.hideErrors', this.hideErrors);
 
     this.formController = new FormController(businessFormSchema);
 
