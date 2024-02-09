@@ -30,10 +30,11 @@ Please add screenshots to help explain your problem. Consider the following:
 **Videos**
 Please consider sharing videos or screen recordings of reported issues if applicable. 
  - Note - Github supports .mp4 and .mov files for sharing videos.  
+ - If sharing a screen recording, please ensure the developer console or network tab is visible in the recording.
 
 **Code Samples**
 Please consider sharing snippets or samples of your implementation code. 
-Please be mindful of sharing snippets that reveal authentication tokens or secret variables. When sharing code samples, please be careful to mask or hide critical info. 
+ - Please be mindful of sharing snippets that reveal authentication tokens or secret variables. When sharing code samples, please be careful to mask or hide critical info. 
 
 
 **Desktop (please complete the following information):**
