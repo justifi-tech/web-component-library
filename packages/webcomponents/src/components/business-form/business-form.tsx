@@ -125,9 +125,9 @@ export class BusinessForm {
             <div class="col-12 mb-4">
               <justifi-business-representative formController={this.formController} />
             </div>
-            <div class="col-12 mb-4">
+            {/* <div class="col-12 mb-4">
               <justifi-business-owners formController={this.formController} />
-            </div>
+            </div> */}
             <div class="col-12 d-flex flex-row-reverse">
               <button
                 type="submit"

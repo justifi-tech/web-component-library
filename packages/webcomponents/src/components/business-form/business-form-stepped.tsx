@@ -47,8 +47,7 @@ export class BusinessFormStepped {
     0: (formController) => <justifi-business-generic-info formController={formController} />,
     1: (formController) => <justifi-legal-address-form formController={formController} />,
     2: (formController) => <justifi-additional-questions formController={formController} />,
-    3: (formController) => <justifi-business-representative formController={formController} />,
-    4: (formController) => <justifi-business-owners formController={formController} />
+    3: (formController) => <justifi-business-representative formController={formController} />
   };
 
   componentWillLoad() {

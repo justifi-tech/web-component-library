@@ -1,4 +1,4 @@
-import { array, boolean, object, string } from 'yup';
+import { object, string } from 'yup';
 import legalAddressSchema from './legal-address-form/legal-address-form-schema';
 
 export const RegExZip = /^\d{5}/;
@@ -169,20 +169,20 @@ const representativeSchema = object({
   address: addressSchema,
 });
 
-const ownerSchema = object({
-  name: string().required('Enter owner name'),
-  title: string().required('Enter owner title'),
-  email: string()
-    .email('Enter valid owner email')
-    .required('Enter owner email'),
-  phone: string().required('Enter owner phone number'),
-  dob_day: string().required('Enter owner birth day'),
-  dob_month: string().required('Enter owner birth month'),
-  dob_year: string().required('Enter owner birth year'),
-  identification_number: string(),
-  is_owner: boolean(),
-  address: addressSchema,
-});
+// const ownerSchema = object({
+//   name: string().required('Enter owner name'),
+//   title: string().required('Enter owner title'),
+//   email: string()
+//     .email('Enter valid owner email')
+//     .required('Enter owner email'),
+//   phone: string().required('Enter owner phone number'),
+//   dob_day: string().required('Enter owner birth day'),
+//   dob_month: string().required('Enter owner birth month'),
+//   dob_year: string().required('Enter owner birth year'),
+//   identification_number: string(),
+//   is_owner: boolean(),
+//   address: addressSchema,
+// });
 
 const additionQuestionsSchema = object({
   business_revenue: string().required('Enter business revenue'),
@@ -201,8 +201,7 @@ const businessFormSchema = object({
   ),
   representative: representativeSchema.required(
     'Enter representative information',
-  ),
-  owners: array().of(ownerSchema).min(1, 'Enter at least 1 owners'),
+  )
 });
 
 export default businessFormSchema;
