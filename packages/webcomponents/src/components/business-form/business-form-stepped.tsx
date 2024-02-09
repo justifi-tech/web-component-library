@@ -25,7 +25,6 @@ const componentStepMapping = {
 })
 export class BusinessFormStepped {
   @Prop() authToken: string;
-  @Prop() accountId: string;
   @Prop() businessId?: string;
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean;
@@ -105,15 +104,13 @@ export class BusinessFormStepped {
         const payload = parseForPatching(data);
         const response = await this.api.patch(
           `entities/business/${this.businessId}`,
-          JSON.stringify(payload),
-          { account_id: this.accountId }
+          JSON.stringify(payload)
         );
         this.handleResponse(response, onSuccess);
       } else {
         const response = await this.api.post(
           'entities/business',
-          JSON.stringify(data),
-          { account_id: this.accountId }
+          JSON.stringify(data)
         );
         this.handleResponse(response, onSuccess);
       }
