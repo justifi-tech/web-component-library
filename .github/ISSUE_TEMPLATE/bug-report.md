@@ -21,7 +21,20 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem.
+Please add screenshots to help explain your problem. Consider the following:
+
+ - On screen errors, warnings, or visual bugs
+ - Developer console warnings or errors
+ - Developer console network tab
+
+**Videos**
+Please consider sharing videos or screen recordings of reported issues if applicable. 
+ - Note - Github supports .mp4 and .mov files for sharing videos.  
+
+**Code Samples**
+Please consider sharing snippets or samples of your implementation code. 
+Please be mindful of sharing snippets that reveal authentication tokens or secret variables. When sharing code samples, please be careful to mask or hide critical info. 
+
 
 **Desktop (please complete the following information):**
 
