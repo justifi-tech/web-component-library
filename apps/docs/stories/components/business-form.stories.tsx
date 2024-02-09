@@ -6,7 +6,7 @@ import '@justifi/webcomponents/dist/module/justifi-business-form';
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['auth-token', 'business-id']);
 
 const meta: Meta = {
   title: 'Components/BusinessForm',
@@ -17,13 +17,6 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'business-id': {
-      type: 'string',
-      description: 'An optionally provided business ID for updating a business. If not provided, a new business will be created.',
-      control: {
-        type: 'text',
-      }
-    },
     'test-mode': {
       table: {
         disable: true
