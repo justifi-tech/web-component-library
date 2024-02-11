@@ -1,8 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
-import { Payout } from '../../api';
+import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
-import { PayoutService } from '../../api/services/payout.service';
 
 @Component({
   tag: 'payout-details-core',
@@ -10,59 +9,49 @@ import { PayoutService } from '../../api/services/payout.service';
 })
 
 export class PayoutDetailsCore {
-  @Prop() payoutId: string;
-  @Prop() authToken: string;
-  @Prop() payoutService: PayoutService;
+  @Prop() getPayout: Function;
   @State() payout: Payout;
   @State() loading: boolean = true;
   @State() errorMessage: string = null;
 
-  @Watch('payoutId')
-  @Watch('authToken')
-  @Watch('payoutService')
-  updateOnPropChange() {
+  componentWillLoad() {
+    if (typeof this.getPayout === 'function') {
+      this.fetchData();
+    }
+  }
+
+  @Watch('getPayout')
+  getPayoutWatcher() {
     this.fetchData();
   }
 
-  connectedCallback() {
-    this.fetchData();
-  }
-
-  async fetchData(): Promise<void> {
-    if (!this.payoutId || !this.authToken) {
-      this.errorMessage = "Can not fetch any data without a PayoutID and an AuthToken";
-      this.loading = false;
-      return;
-    }
-
-    if (!this.payoutService) {
-      return;
-    }
-
+  fetchData(): void {
     this.loading = true;
 
-    try {
-      const response = await this.payoutService.fetchPayout(this.payoutId, this.authToken);
-
-      if (!response.error) {
-        this.payout = new Payout(response.data);
-      } else {
-        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
-        this.errorMessage = `Error fetching payout details: ${responseError}`;
-        console.error(this.errorMessage);
-      }
-    } catch (error) {
-      this.errorMessage = `Error fetching payout details: ${error}`;
-      console.error(this.errorMessage);
-    } finally {
+    if (typeof this.getPayout === 'function') {
+      this.getPayout({
+        onSuccess: (payout: IPayout) => {
+          this.errorMessage = null;
+          this.payout = payout;
+          this.loading = false;
+        },
+        onError: (errorMessage) => {
+          this.errorMessage = errorMessage;
+          console.error(this.errorMessage);
+          this.loading = false;
+        },
+      });
+    } else {
+      console.error('getPayout prop is not a function or not provided');
       this.loading = false;
+      this.errorMessage = 'Failed to load payout details. getPayout function is not provided.';
     }
   }
 
   render() {
     return (
       <Host>
-        {this.loading && LoadingState}
+        {this.loading && LoadingState()}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.payout && (
           <justifi-details error-message={this.errorMessage}>

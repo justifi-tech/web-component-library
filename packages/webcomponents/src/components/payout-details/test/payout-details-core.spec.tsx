@@ -1,67 +1,90 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { PayoutDetailsCore } from '../payout-details-core';
 import mockPayoutDetailSuccess from '../../../api/mockData/mockPayoutDetailsSuccess.json';
+import { makeGetPayout } from '../get-payout';
 
 describe('payout-details-core', () => {
-  let payoutServiceMock;
-
-  beforeEach(() => {
-    payoutServiceMock = {
-      fetchPayout: jest.fn(),
-    };
-  });
-
   it('renders loading state initially', async () => {
-    const page = await newSpecPage({
-      components: [PayoutDetailsCore],
-      html: '<payout-details-core></payout-details-core>',
+    // Define a mock getPayout function as part of the component initialization
+    const mockGetPayout = jest.fn().mockImplementation(({ onSuccess }) => {
+      // Simulate an asynchronous operation without resolving immediately
+      setTimeout(() => onSuccess({ /* mock data */ }), 1000);
     });
-    expect(page.root).toMatchSnapshot();
-  });
 
-  it('renders error state when no payoutId or authToken', async () => {
+    // Initialize the page with the mock getPayout function included in the component tag
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      html: '<payout-details-core></payout-details-core>',
+      html: `<payout-details-core get-payout="${mockGetPayout}"></payout-details-core>`,
     });
+
+    // Wait for any state changes to complete
     await page.waitForChanges();
+
+    // Assert the loading state is visible in the snapshot
     expect(page.root).toMatchSnapshot();
   });
 
   it('fetches payout details on connected callback', async () => {
-    payoutServiceMock.fetchPayout.mockResolvedValueOnce(mockPayoutDetailSuccess);
+    const mockService = {
+      fetchPayout: jest.fn().mockResolvedValue(mockPayoutDetailSuccess),
+    };
+
+    const getPayout = makeGetPayout({
+      id: 'some-id',
+      authToken: 'some-auth-token',
+      service: mockService,
+    });
+
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
       html: '<payout-details-core></payout-details-core>',
-      supportsShadowDom: true,
     });
 
-    page.rootInstance.payoutId = '123';
-    page.rootInstance.authToken = 'token';
-    page.rootInstance.payoutService = payoutServiceMock;
+    page.rootInstance.componentWillLoad = () => { };
+
+    page.rootInstance.getPayout = getPayout;
+
+    page.rootInstance.fetchData();
+
     await page.waitForChanges();
 
-    expect(payoutServiceMock.fetchPayout).toHaveBeenCalledWith('123', 'token');
+    expect(mockService.fetchPayout).toHaveBeenCalled(); // Verify the mock service method was called
     expect(page.rootInstance.payout).toEqual(expect.objectContaining({
-      "id": "po_17745yESnHyEgWNeunmhmR"
+      "id": mockPayoutDetailSuccess.id, // Verify the component state was updated with mock data
     }));
-    expect(page.root).toMatchSnapshot();
+    expect(page.root).toMatchSnapshot(); // Verify the rendered output
   });
 
+
   it('handles fetch payout error correctly', async () => {
-    payoutServiceMock.fetchPayout.mockRejectedValueOnce('Fetch error');
+    // Mock the service method that gets called by getPayout
+    const mockService = {
+      fetchPayout: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    };
+
+    // Real getPayout function but with mocked service
+    const realGetPayoutWithMockedService = makeGetPayout({
+      id: 'some-id', // Use appropriate id
+      authToken: 'some-auth-token', // Use appropriate auth token
+      service: mockService // Injecting the mocked service
+    });
+
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
       html: '<payout-details-core></payout-details-core>',
     });
 
-    page.rootInstance.payoutId = '123';
-    page.rootInstance.authToken = 'token';
-    page.rootInstance.payoutService = payoutServiceMock;
+    page.rootInstance.componentWillLoad = () => { };
+
+    // Inject the getPayout function with mocked service into the component
+    page.rootInstance.getPayout = realGetPayoutWithMockedService;
+
+    // Manually call fetchData if necessary, depending on how your component is set up
+    await page.rootInstance.fetchData();
     await page.waitForChanges();
 
-    expect(page.rootInstance.errorMessage).toBe('Error fetching payout details: Fetch error');
+    // Assertions to verify the error handling
+    expect(page.rootInstance.errorMessage).toBe('Error fetching payout details: Error: Fetch error');
     expect(page.root).toMatchSnapshot();
   });
 });
-

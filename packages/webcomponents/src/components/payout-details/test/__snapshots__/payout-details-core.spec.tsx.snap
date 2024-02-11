@@ -2,12 +2,7 @@
 
 exports[`payout-details-core fetches payout details on connected callback 1`] = `
 <payout-details-core>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-    <div>
-      Can not fetch any data without a PayoutID and an AuthToken
-    </div>
-  </main>
-  <justifi-details error-message="Can not fetch any data without a PayoutID and an AuthToken">
+  <justifi-details>
     <div class="p-2" part="detail-head" slot="head-info">
       <div class="align-items-center d-flex flex-row gap-2 mb-2">
         <h1 class="m-0" part="detail-title">
@@ -159,27 +154,21 @@ exports[`payout-details-core handles fetch payout error correctly 1`] = `
 <payout-details-core>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
     <div>
-      Error fetching payout details: Fetch error
-    </div>
-  </main>
-</payout-details-core>
-`;
-
-exports[`payout-details-core renders error state when no payoutId or authToken 1`] = `
-<payout-details-core>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-    <div>
-      Can not fetch any data without a PayoutID and an AuthToken
+      Error fetching payout details: Error: Fetch error
     </div>
   </main>
 </payout-details-core>
 `;
 
 exports[`payout-details-core renders loading state initially 1`] = `
-<payout-details-core>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-    <div>
-      Can not fetch any data without a PayoutID and an AuthToken
+<payout-details-core get-payout="function () {
+        return fn.apply(this, arguments);
+      }">
+  <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
+    <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
+      <span class="visually-hidden">
+        Loading...
+      </span>
     </div>
   </main>
 </payout-details-core>

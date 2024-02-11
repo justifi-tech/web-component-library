@@ -1,48 +1,48 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Watch, State } from '@stencil/core';
 import { PayoutService } from '../../api/services/payout.service';
+import { makeGetPayout } from './get-payout';
+import { ErrorState } from '../details/utils';
 
-/**
-  * @exportedPart detail-loading-spinner
-  * @exportedPart detail-loading-state
-  * @exportedPart detail-empty-state
-  * @exportedPart detail-head
-  * @exportedPart detail-title
-  * @exportedPart detail-method
-  * @exportedPart detail-info
-  * @exportedPart detail-info-item
-  * @exportedPart detail-info-item-title
-  * @exportedPart detail-info-item-data
-  * @exportedPart detail-metadata
-  * @exportedPart detail-metadata-title
-  * @exportedPart detail-method-title
-  * @exportedPart detail-method-data
-  * @exportedPart detail-section
-  * @exportedPart detail-section-title
-  * @exportedPart detail-section-item-title
-  * @exportedPart detail-section-item-data
-  * @exportedPart detail-head-info
-  * @exportedPart detail-head-info-item
-  * @exportedPart detail-head-info-item-title
-  * @exportedPart detail-head-info-item-data
-*/
 @Component({
   tag: 'justifi-payout-details',
   shadow: true,
 })
 
-export class PaymentDetails {
+export class PayoutDetails {
   @Prop() payoutId: string;
   @Prop() authToken: string;
+  @State() getPayout: Function;
+  @State() errorMessage: string = null;
 
-  payoutService = new PayoutService();
+  componentWillLoad() {
+    this.initializeGetPayout();
+  }
+
+  @Watch('payoutId')
+  @Watch('authToken')
+  propChanged() {
+    this.initializeGetPayout();
+  }
+
+  initializeGetPayout() {
+    if (this.payoutId && this.authToken) {
+      this.getPayout = makeGetPayout({
+        id: this.payoutId,
+        authToken: this.authToken,
+        service: new PayoutService()
+      });
+    } else {
+      this.errorMessage = 'Failed to load payout details. payoutId or authToken is not provided.';
+    }
+  }
 
   render() {
+    if (this.errorMessage) {
+      return ErrorState(this.errorMessage);
+    }
+
     return (
-      <payout-details-core
-        payoutId={this.payoutId}
-        authToken={this.authToken}
-        payoutService={this.payoutService}
-      ></payout-details-core>
-    )
+      <payout-details-core getPayout={this.getPayout}></payout-details-core>
+    );
   }
 }
