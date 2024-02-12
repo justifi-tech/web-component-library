@@ -1,5 +1,11 @@
 ### Changelog
 
+### 4.7.6
+> 12 Feb 2024
+
+- Remove `account-id` from BusinessFormStepped. This is not a breaking change as the `account-id` does not have an impact on loading a business, and will not error if left as a prop after upgrading
+
+
 ### 4.7.5
 > 2 Feb 2024
 
