@@ -27,6 +27,14 @@ export class BusinessFormStepped {
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
 
+  private formController: FormController;
+  private api: any;
+
+  constructor() {
+    this.sendData = this.sendData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
   get disabledState() {
     return this.isLoading;
   }
@@ -35,12 +43,8 @@ export class BusinessFormStepped {
     return this.serverError && !this.hideErrors;
   }
 
-  private formController: FormController;
-  private api: any;
-
-  constructor() {
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
+  get businessEndpoint() {
+    return `entities/business/${this.businessId}`
   }
 
   componentStepMapping = {
@@ -51,30 +55,15 @@ export class BusinessFormStepped {
   };
 
   componentWillLoad() {
-    if (!this.authToken) {
-      console.error(
-        'Warning: Missing auth-token. The form will not be functional without it.',
-      );
-    }
-    if (!this.businessId) {
-      console.error(
-        'Warning: Missing business-id. The form requires an existing business-id to function.'
-      )
-    }
+    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
+    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    if (!this.authToken) console.error(missingAuthTokenMessage);
+    if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
-
-    if (this.businessId) {
-      this.fetchData(this.businessId);
-    } else {
-      this.formController.setInitialValues({
-        legal_address: {
-          country: 'US',
-        },
-      });
-    }
+    this.fetchData();
   }
 
   handleResponse(response, onSuccess) {
@@ -101,13 +90,8 @@ export class BusinessFormStepped {
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
-
       const payload = parseForPatching(values, initialValues);
-      const response = await this.api.patch(
-        `entities/business/${this.businessId}`,
-        JSON.stringify(payload),
-        { account_id: this.accountId }
-      );
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError = true;
@@ -117,10 +101,10 @@ export class BusinessFormStepped {
     }
   }
 
-  private async fetchData(businessId) {
+  private async fetchData() {
     this.isLoading = true;
     try {
-      const response = await this.api.get(`entities/business/${businessId}`);
+      const response = await this.api.get(this.businessEndpoint);
       this.formController.setInitialValues(response.data);
     } catch (error) {
       this.serverError = true;

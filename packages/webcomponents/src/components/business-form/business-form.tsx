@@ -31,6 +31,10 @@ export class BusinessForm {
     return this.serverError && !this.hideErrors;
   }
 
+  get businessEndpoint() {
+    return `entities/business/${this.businessId}`
+  }
+
   private formController: FormController;
   private api: any;
 
@@ -40,30 +44,14 @@ export class BusinessForm {
   }
 
   componentWillLoad() {
-    if (!this.authToken) {
-      console.error(
-        'Warning: Missing auth-token. The form will not be functional without it.',
-      );
-    }
-    if (!this.businessId) {
-      console.error(
-        'Warning: Missing business-id. The form requires an existing business-id to function.'
-      )
-    }
+    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
+    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    if (!this.authToken) console.error(missingAuthTokenMessage);
+    if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-
     this.api = Api(this.authToken, config.proxyApiOrigin);
-
-    if (this.businessId) {
-      this.fetchData(this.businessId);
-    } else {
-      this.formController.setInitialValues({
-        legal_address: {
-          country: 'US',
-        },
-      });
-    }
+    this.fetchData();
   }
 
   private async sendData() {
@@ -71,13 +59,8 @@ export class BusinessForm {
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
-
       const payload = parseForPatching(values, initialValues);
-      const response = await this.api.patch(
-        `entities/business/${this.businessId}`,
-        JSON.stringify(payload),
-      );
-      console.log('Server response from PATCH:', response);
+      await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
@@ -86,10 +69,10 @@ export class BusinessForm {
     }
   }
 
-  private async fetchData(businessId) {
+  private async fetchData() {
     this.isLoading = true;
     try {
-      const response = await this.api.get(`entities/business/${businessId}`);
+      const response = await this.api.get(this.businessEndpoint);
       this.formController.setInitialValues(response.data);
     } catch (error) {
       this.serverError = true;
