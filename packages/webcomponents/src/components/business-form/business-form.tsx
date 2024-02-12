@@ -17,18 +17,22 @@ import { FormAlert } from '../form/utils';
 })
 export class BusinessForm {
   @Prop() authToken: string;
-  @Prop() businessId?: string;
-  @Prop() hideErrors?: boolean;
+  @Prop() businessId: string;
+  @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
 
-  get submitDisabled() {
-    return !this.authToken || this.isLoading || this.serverError;
+  get disabledState() {
+    return this.isLoading;
   }
 
   get showErrors() {
     return this.serverError && !this.hideErrors;
+  }
+
+  get businessEndpoint() {
+    return `entities/business/${this.businessId}`
   }
 
   private formController: FormController;
@@ -40,47 +44,23 @@ export class BusinessForm {
   }
 
   componentWillLoad() {
-    if (!this.authToken) {
-      console.warn(
-        'Warning: Missing auth-token. The form will not be functional without it.',
-      );
-    }
+    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
+    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    if (!this.authToken) console.error(missingAuthTokenMessage);
+    if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-
     this.api = Api(this.authToken, config.proxyApiOrigin);
-
-    if (this.businessId) {
-      this.fetchData(this.businessId);
-    } else {
-      this.formController.setInitialValues({
-        legal_address: {
-          country: 'US',
-        },
-      });
-    }
+    this.fetchData();
   }
 
   private async sendData() {
     this.isLoading = true;
     try {
-      const data = this.formController.values.getValue();
-
-      // Conditionally making either POST or PATCH request
-      if (this.businessId) {
-        const payload = parseForPatching(data);
-        const response = await this.api.patch(
-          `entities/business/${this.businessId}`,
-          JSON.stringify(payload),
-        );
-        console.log('Server response from PATCH:', response);
-      } else {
-        const response = await this.api.post(
-          'entities/business',
-          JSON.stringify(data),
-        );
-        console.log('Server response from POST:', response);
-      }
+      const values = this.formController.values.getValue();
+      const initialValues = this.formController.getInitialValues();
+      const payload = parseForPatching(values, initialValues);
+      await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
@@ -89,10 +69,10 @@ export class BusinessForm {
     }
   }
 
-  private async fetchData(businessId) {
+  private async fetchData() {
     this.isLoading = true;
     try {
-      const response = await this.api.get(`entities/business/${businessId}`);
+      const response = await this.api.get(this.businessEndpoint);
       this.formController.setInitialValues(response.data);
     } catch (error) {
       this.serverError = true;
@@ -128,14 +108,14 @@ export class BusinessForm {
             <div class="col-12 mb-4">
               <justifi-business-representative formController={this.formController} />
             </div>
-            <div class="col-12 mb-4">
-              <justifi-business-owners isEditing={!!this.businessId} formController={this.formController} />
-            </div>
+            {/* <div class="col-12 mb-4">
+              <justifi-business-owners formController={this.formController} />
+            </div> */}
             <div class="col-12 d-flex flex-row-reverse">
               <button
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
-                disabled={this.submitDisabled}
+                disabled={this.disabledState}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
