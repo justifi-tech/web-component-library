@@ -95,8 +95,8 @@ export class SubaccountsList {
                 {
                   type: 'head',
                   value: `
-                    <div>${subaccount.dateString}</div>
-                    <div>${subaccount.timeString}</div>
+                    <div class='fw-bold'>${subaccount.dateString}</div>
+                    <div class='fw-bold'>${subaccount.timeString}</div>
                   `,
                 },
                 subaccount.name,

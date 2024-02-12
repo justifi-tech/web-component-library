@@ -17,7 +17,6 @@ import { FormAlert } from '../form/utils';
 })
 export class BusinessFormStepped {
   @Prop() authToken: string;
-  @Prop() accountId: string;
   @Prop() businessId: string;
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;

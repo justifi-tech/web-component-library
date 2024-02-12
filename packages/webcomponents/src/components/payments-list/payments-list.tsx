@@ -125,8 +125,8 @@ export class PaymentsList {
                 {
                   type: 'head',
                   value: `
-                    <div>${formatDate(payment.created_at)}</div>
-                    <div>${formatTime(payment.created_at)}</div>
+                    <div class='fw-bold'>${formatDate(payment.created_at)}</div>
+                    <div class='fw-bold'>${formatTime(payment.created_at)}</div>
                   `,
                 },
                 formatCurrency(payment.amount),

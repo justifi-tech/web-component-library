@@ -9,7 +9,6 @@
 
 | Property     | Attribute     | Description | Type      | Default     |
 | ------------ | ------------- | ----------- | --------- | ----------- |
-| `accountId`  | `account-id`  |             | `string`  | `undefined` |
 | `authToken`  | `auth-token`  |             | `string`  | `undefined` |
 | `businessId` | `business-id` |             | `string`  | `undefined` |
 | `hideErrors` | `hide-errors` |             | `boolean` | `false`     |
