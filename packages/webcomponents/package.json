@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "4.7.5",
+  "version": "4.7.6",
   "description": "JustiFi Web Components",
   "main": "dist/module/index.js",
   "module": "dist/module/index.js",
