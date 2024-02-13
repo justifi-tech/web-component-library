@@ -87,7 +87,10 @@ const handleValidateClick = async (cardForm: HTMLJustifiCardFormElement) => {
   await cardForm.validate();
 };
 const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData: any) => {
-  await cardForm.tokenize('CLIENT_ID', paymentMethodData);
+  const clientId = storyBaseArgs.args['client-id'] || '';
+  const accountId = storyBaseArgs.args['account-id'] || '';
+  console.log('clientID', clientId);
+  await cardForm.tokenize(clientId, paymentMethodData, accountId);
 };
 
 const handleReady = () => {
@@ -98,7 +101,7 @@ const handleReady = () => {
     handleValidateClick(cardForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
-    handleTokenizeClick(cardForm, {});
+    handleTokenizeClick(cardForm, { address_postal_code: '12345' });
   });
 };
 

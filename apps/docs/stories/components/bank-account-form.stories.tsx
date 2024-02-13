@@ -78,7 +78,9 @@ const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) 
 };
 
 const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
-  await bankForm.tokenize('CLIENT_ID', paymentMethodData);
+  const clientId = storyBaseArgs.args['client-id'] || '';
+  const accountId = storyBaseArgs.args['account-id'] || '';
+  await bankForm.tokenize(clientId, paymentMethodData, accountId);
 };
 
 const handleReady = () => {
@@ -90,7 +92,7 @@ const handleReady = () => {
     handleValidateClick(bankForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
-    handleTokenizeClick(bankForm, {});
+    handleTokenizeClick(bankForm, { account_owner_name: 'John Doe' });
   });
 };
 
