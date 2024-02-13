@@ -10,7 +10,9 @@ const meta: Meta = {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
   args: {
-    ...storyBaseArgs.args
+    ...storyBaseArgs.args,
+    'email': 'test@test.com',
+    'submit-button-text': 'Submit'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
