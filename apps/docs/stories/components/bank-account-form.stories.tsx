@@ -4,24 +4,18 @@ import { paymentMethodFormComponentMethods, StoryBaseArgs } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const meta: Meta = {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
   args: {
-    ...storyBaseArgs.args,
-    'iframe-origin': '',
-    'validation-mode': 'onSubmit'
+    ...storyBaseArgs.args
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
     'css-variables': {
-      table: {
-        disable: true
-      },
-    },
-    'iframe-origin': {
       table: {
         disable: true
       },
@@ -82,6 +76,7 @@ const meta: Meta = {
 const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
   await bankForm.validate();
 };
+
 const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
   await bankForm.tokenize('CLIENT_ID', paymentMethodData);
 };
@@ -166,7 +161,7 @@ const Template = (args: any) => {
       </style>
       <justifi-bank-account-form
         data-testid="bank-account-form-iframe"
-        validation-mode='${args['validation-mode'] || 'onSubmit'}'
+        validation-mode="${args['validation-mode'] || 'onSubmit'}"
       />
     </div>
     ${FormButtons}

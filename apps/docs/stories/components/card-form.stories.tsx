@@ -4,25 +4,18 @@ import { StoryBaseArgs, paymentMethodFormComponentMethods } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-card-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const meta: Meta = {
   title: 'Components/CardForm',
   component: 'justifi-card-form',
   args: {
-    ...storyBaseArgs.args,
-    'iframe-origin': '',
-    'single-line': false,
-    'validation-mode': 'onSubmit'
+    ...storyBaseArgs.args
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
     'css-variables': {
-      table: {
-        disable: true
-      },
-    },
-    'iframe-origin': {
       table: {
         disable: true
       },
@@ -143,8 +136,8 @@ const Template = (args: any) => {
       </style>
       <justifi-card-form
         data-testid="card-form-iframe"
-        validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        single-line='${args['single-line']}'
+        validation-mode="${args['validation-mode'] || 'onSubmit'}"
+        single-line="${args['single-line']}"
       />
     </div>
     ${includeButtons ? FormButtons : ''}
