@@ -41,6 +41,7 @@ export class BusinessForm {
   constructor() {
     this.sendData = this.sendData.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.validateAndSubmit = this.validateAndSubmit.bind(this);
   }
 
   componentWillLoad() {
@@ -84,13 +85,15 @@ export class BusinessForm {
 
   private validateAndSubmit(event: any) {
     event.preventDefault();
+    console.log('validateAndSubmit')
+    console.log(this.formController)
     this.formController.validateAndSubmit(this.sendData);
   }
 
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={event => this.validateAndSubmit(event)}>
+        <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
             <div class="col-12 mb-4">
               <h1>Business Information</h1>
