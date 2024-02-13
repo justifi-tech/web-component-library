@@ -108,20 +108,12 @@ const addEvents = () => {
 
 const FormButtons = `
   <style>
-    .button-bar {
-      display: flex;
-      aligin-items: center;
-      padding: 10px;
-    }
-    .button-bar button {
-      margin-right: 10px;
-      border-radius: 3px;
-      border: 1px solid black;
-    }
+    .button-bar { margin-top: 10px;}
+    .button-bar button { margin-right: 10px; }
   </style>
   <div class="button-bar">
-    <button id="validate-btn">Validate</button>
-    <button id="tokenize-btn">Tokenize</button>
+    <button id="validate-btn">Test Validate</button>
+    <button id="tokenize-btn">Test Tokenize</button>
   </div>`;
 
 const Template = (args: any) => {
@@ -145,15 +137,10 @@ const Template = (args: any) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  'validation-mode': 'onSubmit',
-  'single-line': false,
-};
+Basic.args = {};
 
 export const SingleLine = Template.bind({});
-SingleLine.args = {
-  'single-line': true,
-};
+SingleLine.args = { 'single-line': true };
 
 const styledVariables = `
   --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
@@ -193,8 +180,7 @@ const styledVariables = `
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'single-line': false,
-  'css-variables': styledVariables,
+  'css-variables': styledVariables
 };
 
 export default meta;

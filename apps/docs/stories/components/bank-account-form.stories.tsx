@@ -136,20 +136,13 @@ const CSSVars = `
 
 const FormButtons = `
   <style>
-    .button-bar {
-      display: flex;
-      aligin-items: center;
-      padding: 10px;
-    }
-    .button-bar button {
-      margin-right: 10px;
-    }
+    .button-bar { margin-top: 10px;}
+    .button-bar button { margin-right: 10px; }
   </style>
   <div class="button-bar">
-    <button id="validate-btn">Test Validation</button>
-    <button id="tokenize-btn">Test Tokenization</button>
-  </div>
-`;
+    <button id="validate-btn">Test Validate</button>
+    <button id="tokenize-btn">Test Tokenize</button>
+  </div>`;
 
 const Template = (args: any) => {
   return `
@@ -172,7 +165,7 @@ export const Basic = Template.bind({});
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'css-variables': CSSVars,
+  'css-variables': CSSVars
 };
 
 export default meta;
