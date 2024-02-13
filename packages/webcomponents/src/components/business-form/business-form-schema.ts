@@ -195,7 +195,7 @@ const additionQuestionsSchema = object({
 
 const businessFormSchema = object({
   ...businessGenericInfoSchema.fields,
-  legal_address: legalAddressSchema.required('Enater legal address'),
+  legal_address: legalAddressSchema.required('Enter legal address'),
   additional_questions: additionQuestionsSchema.required(
     'Enter additional questions',
   ),
