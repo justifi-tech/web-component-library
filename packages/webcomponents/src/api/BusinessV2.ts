@@ -108,16 +108,16 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
   public email: string;
   public phone: string;
 
-  constructor(genericBusinessInfo: ICoreBusinessInfo) {
-    this.business_structure = genericBusinessInfo.business_structure;
-    this.business_type = genericBusinessInfo.business_type;
-    this.legal_name = genericBusinessInfo.legal_name;
-    this.doing_business_as = genericBusinessInfo.doing_business_as;
-    this.industry = genericBusinessInfo.industry;
-    this.tax_id = genericBusinessInfo.tax_id;
-    this.website_url = genericBusinessInfo.website_url;
-    this.email = genericBusinessInfo.email;
-    this.phone = genericBusinessInfo.phone;
+  constructor(coreBusinessInfo: ICoreBusinessInfo) {
+    this.business_structure = coreBusinessInfo.business_structure;
+    this.business_type = coreBusinessInfo.business_type;
+    this.legal_name = coreBusinessInfo.legal_name;
+    this.doing_business_as = coreBusinessInfo.doing_business_as;
+    this.industry = coreBusinessInfo.industry;
+    this.tax_id = coreBusinessInfo.tax_id;
+    this.website_url = coreBusinessInfo.website_url;
+    this.email = coreBusinessInfo.email;
+    this.phone = coreBusinessInfo.phone;
   }
 }
 
