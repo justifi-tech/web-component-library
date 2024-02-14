@@ -64,8 +64,6 @@ export class PaymentsList {
     return (
       <payments-list-core
         getPayments={this.getPayments}
-        account-id={this.accountId}
-        auth-token={this.authToken}
       ></payments-list-core>
     );
   }
