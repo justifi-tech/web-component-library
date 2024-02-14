@@ -99,8 +99,6 @@ export class FormController {
     context?: any,
   ): Promise<void> {
     const isValid = await this.validate(context || {});
-    console.log('this._errors', this._errors);
-    console.log('isValid', isValid);
     if (isValid) {
       submitHandler();
     }
