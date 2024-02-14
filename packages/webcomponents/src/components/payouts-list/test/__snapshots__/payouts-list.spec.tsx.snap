@@ -1,37 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`payment-details renders an error message when authToken is not provided 1`] = `
-<justifi-payment-details payment-id="abc">
+exports[`payouts-list renders an error message when accountId and authToken are not provided 1`] = `
+<justifi-payouts-list>
   <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
-        Payment ID and Auth Token are required
+        Account ID and Auth Token are required
       </div>
     </main>
   </mock:shadow-root>
-</justifi-payment-details>
+</justifi-payouts-list>
 `;
 
-exports[`payment-details renders an error message when paymentId and authToken are not provided 1`] = `
-<justifi-payment-details>
+exports[`payouts-list renders an error message when accountId is not provided 1`] = `
+<justifi-payouts-list auth-token="abc">
   <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
-        Payment ID and Auth Token are required
+        Account ID and Auth Token are required
       </div>
     </main>
   </mock:shadow-root>
-</justifi-payment-details>
+</justifi-payouts-list>
 `;
 
-exports[`payment-details renders an error message when paymentId is not provided 1`] = `
-<justifi-payment-details auth-token="abc">
+exports[`payouts-list renders an error message when authToken is not provided 1`] = `
+<justifi-payouts-list account-id="abc">
   <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
-        Payment ID and Auth Token are required
+        Account ID and Auth Token are required
       </div>
     </main>
   </mock:shadow-root>
-</justifi-payment-details>
+</justifi-payouts-list>
 `;

@@ -8,7 +8,6 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
-import { PayoutService } from '../../api/services/payout.service';
 
 @Component({
   tag: 'payouts-list-core',
@@ -16,9 +15,7 @@ import { PayoutService } from '../../api/services/payout.service';
 })
 
 export class PayoutsListCore {
-  @Prop() accountId: string;
-  @Prop() authToken: string;
-  @Prop() payoutService: PayoutService;
+  @Prop() getPayouts: Function;
   @State() payouts: Payout[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -29,15 +26,15 @@ export class PayoutsListCore {
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
 
-  @Watch('accountId')
-  @Watch('authToken')
-  @Watch('params')
-  @Watch('payoutService')
-  updateOnPropChange() {
-    this.fetchData();
+  componentWillLoad() {
+    if (typeof this.getPayouts === 'function') {
+      this.fetchData();
+    }
   }
 
-  connectedCallback() {
+  @Watch('params')
+  @Watch('getPayouts')
+  updateOnPropChange() {
     this.fetchData();
   }
 
@@ -70,47 +67,25 @@ export class PayoutsListCore {
     this.params = ({ ...newParams, after_cursor: afterCursor });
   };
 
-  onError(errorMessage: string) {
-    this.payouts = [];
-    this.paging = pagingDefaults;
-    this.errorMessage = errorMessage;
-    this.loading = false;
-    console.error(`Error fetching payouts: ${errorMessage}`);
-  }
+  fetchData(): void {
+    this.loading = true;
 
-  async fetchData(): Promise<void> {
-    if (!this.accountId || !this.authToken) {
-      this.onError('Cannot fetch data without an AccountID and an AuthToken');
-      return;
-    }
-
-    if (!this.payoutService) {
-      return;
-    }
-
-    try {
-      const response = await this.payoutService.fetchPayouts(this.accountId, this.authToken, this.params);
-      if (!response.error || !response) {
-        const pagingInfo = {
-          ...response.page_info,
-        };
-
-        const payouts =
-          response.data?.map((dataItem) => new Payout(dataItem)) || [];
-
-        this.payouts = payouts;
-        this.paging = pagingInfo;
-        this.loading = false;
-      } else {
-        const responseError =
-          typeof response.error === 'string'
-            ? response.error
-            : response.error.message;
-
-        return this.onError(responseError);
-      }
-    } catch (error) {
-      return this.onError(error.message || error);
+    if (typeof this.getPayouts === 'function') {
+      this.getPayouts({
+        params: this.params,
+        onSuccess: ({ payouts, pagingInfo }) => {
+          this.payouts = payouts;
+          this.paging = pagingInfo;
+          this.loading = false;
+        },
+        onError: (errorMessage) => {
+          this.errorMessage = errorMessage;
+          this.loading = false;
+        },
+      });
+    } else {
+      this.loading = false;
+      this.errorMessage = "No getPayouts function provided";
     }
   };
 

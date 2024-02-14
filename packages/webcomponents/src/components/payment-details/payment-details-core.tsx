@@ -2,7 +2,6 @@ import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
-import { PaymentService } from '../../api/services/payment.service';
 
 @Component({
   tag: 'payment-details-core',
@@ -10,12 +9,16 @@ import { PaymentService } from '../../api/services/payment.service';
 })
 
 export class PaymentDetailsCore {
-  @Prop() paymentId: string;
-  @Prop() authToken: string;
-  @Prop() paymentService: PaymentService;
+  @Prop() getPaymentDetails: Function;
   @State() payment: Payment;
   @State() loading: boolean = true;
   @State() errorMessage: string;
+
+  componentWillLoad() {
+    if (typeof this.getPaymentDetails === 'function') {
+      this.fetchData();
+    }
+  }
 
   @Watch('paymentId')
   @Watch('authToken')
@@ -24,46 +27,28 @@ export class PaymentDetailsCore {
     this.fetchData();
   }
 
-  connectedCallback() {
-    this.fetchData();
-  }
-
-  async fetchData(): Promise<void> {
-    if (!this.paymentId || !this.authToken) {
-      this.errorMessage = "Can not fetch any data without a PaymentID and an AuthToken";
-      this.loading = false;
-      return;
-    }
-
-    if (!this.paymentService) {
-      return;
-    }
-
+  fetchData(): void {
     this.loading = true;
 
-    try {
-      const response = await this.paymentService.fetchPayment(this.paymentId, this.authToken);
-
-      if (!response.error) {
-        this.payment = new Payment(response.data)
-        this.errorMessage = null;
-      } else {
-        const responseError = typeof response.error === 'string' ? response.error : response.error.message;
-        this.errorMessage = `Error trying to fetch data : ${responseError}`;
-        console.error(this.errorMessage);
-      }
-    } catch (error) {
-      this.errorMessage = `Error trying to fetch data : ${error}`;
-      console.error(this.errorMessage);
-    } finally {
-      this.loading = false;
+    if (typeof this.getPaymentDetails === 'function') {
+      this.getPaymentDetails({
+        onSuccess: ({ payment }) => {
+          this.payment = payment;
+          this.loading = false;
+          this.errorMessage = null;
+        },
+        onError: (error) => {
+          this.errorMessage = error;
+          this.loading = false;
+        },
+      });
     }
   }
 
   render() {
     return (
       <Host>
-        {this.loading && LoadingState}
+        {this.loading && LoadingState()}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && !this.errorMessage &&
           this.payment && (

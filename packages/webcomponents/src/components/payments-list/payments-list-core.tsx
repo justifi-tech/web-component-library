@@ -1,7 +1,6 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { PaymentService } from '../../api/services/payment.service';
 
 @Component({
   tag: 'payments-list-core',
@@ -9,9 +8,7 @@ import { PaymentService } from '../../api/services/payment.service';
 })
 
 export class PaymentsListCore {
-  @Prop() accountId: string;
-  @Prop() authToken: string;
-  @Prop() paymentService: PaymentService;
+  @Prop() getPayments: Function;
   @State() payments: Payment[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -23,15 +20,15 @@ export class PaymentsListCore {
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
-  @Watch('accountId')
-  @Watch('authToken')
-  @Watch('params')
-  @Watch('paymentService')
-  updateOnPropChange() {
-    this.fetchData();
+  componentWillLoad() {
+    if (typeof this.getPayments === 'function') {
+      this.fetchData();
+    }
   }
 
-  connectedCallback() {
+  @Watch('params')
+  @Watch('getPayments')
+  updateOnPropChange() {
     this.fetchData();
   }
 
@@ -47,49 +44,25 @@ export class PaymentsListCore {
     this.params = ({ ...newParams, after_cursor: afterCursor });
   };
 
-  onError(errorMessage) {
-    this.payments = [];
-    this.paging = pagingDefaults;
-    this.errorMessage = errorMessage;
-    this.loading = false;
-    console.error(`Error fetching payments: ${errorMessage}`);
-  }
-
-  async fetchData(): Promise<void> {
-    if (!this.accountId || !this.authToken) {
-      this.onError('Cannot fetch data without an AccountID and an AuthToken');
-      return;
-    }
-
-    if (!this.paymentService) {
-      return;
-    }
-
+  fetchData(): void {
     this.loading = true;
 
-    try {
-      const response = await this.paymentService.fetchPayments(this.accountId, this.authToken, this.params);
-      if (!response.error) {
-        const pagingInfo = {
-          ...response.page_info,
-        };
-
-        const payments =
-          response.data?.map((dataItem) => new Payment(dataItem)) || [];
-
-        this.payments = payments;
-        this.paging = pagingInfo;
-        this.loading = false;
-      } else {
-        const responseError =
-          typeof response.error === 'string'
-            ? response.error
-            : response.error.message;
-
-        return this.onError(responseError);
-      }
-    } catch (error) {
-      return this.onError(error.message || error);
+    if (typeof this.getPayments === 'function') {
+      this.getPayments({
+        params: this.params,
+        onSuccess: ({ payments, pagingInfo }) => {
+          this.payments = payments;
+          this.paging = pagingInfo;
+          this.loading = false;
+        },
+        onError: (errorMessage) => {
+          this.errorMessage = errorMessage;
+          this.loading = false;
+        },
+      });
+    } else {
+      this.loading = false;
+      this.errorMessage = "No getPayments function provided";
     }
   };
 
