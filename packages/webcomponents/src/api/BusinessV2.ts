@@ -86,6 +86,7 @@ export interface AdditionalQuestions {
 }
 
 export interface IBusiness {
+  additional_questions: AdditionalQuestions | {};
   business_structure: BusinessStructure;
   business_type: BusinessType;
   bank_accounts: BankAccount[];
@@ -95,21 +96,21 @@ export interface IBusiness {
   email: string;
   id: string;
   industry: string;
-  legal_address: Address;
+  legal_address: Address | {};
   legal_name: string;
   metadata: any;
   owners: Identity[];
   phone: string;
   platform_account_id: string;
-  representative: Identity | null;
+  product_categories: ProductCategories;
+  representative: Identity | {};
   tax_id: string;
   updated_at: string;
   website_url: string;
-  product_categories: ProductCategories;
-  additional_questions: AdditionalQuestions;
 }
 
 export class Business implements IBusiness {
+  public additional_questions: AdditionalQuestions | {};
   public business_structure: BusinessStructure;
   public business_type: BusinessType;
   public bank_accounts: BankAccount[];
@@ -119,18 +120,17 @@ export class Business implements IBusiness {
   public email: string;
   public id: string;
   public industry: string;
-  public legal_address: Address;
+  public legal_address: Address | {};
   public legal_name: string;
   public metadata: any;
   public owners: Identity[];
   public phone: string;
   public platform_account_id: string;
-  public representative: Identity | null;
+  public representative: Identity | {};
   public tax_id: string;
   public updated_at: string;
   public website_url: string;
   public product_categories: ProductCategories;
-  public additional_questions: AdditionalQuestions;
 
   constructor(business: IBusiness) {
     this.business_structure = business.business_structure;
@@ -142,18 +142,20 @@ export class Business implements IBusiness {
     this.email = business.email;
     this.id = business.id;
     this.industry = business.industry;
-    this.legal_address = business.legal_address;
     this.legal_name = business.legal_name;
     this.metadata = business.metadata;
-    this.owners = business.owners;
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
-    this.representative = business.representative;
     this.tax_id = business.tax_id;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.product_categories = business.product_categories;
-    this.additional_questions = business.additional_questions;
+
+    // Form sections
+    this.legal_address = business.legal_address || {};
+    this.representative = business.representative || {};
+    this.additional_questions = business.additional_questions || {};
+    this.owners = business.owners;
   }
 }
 
