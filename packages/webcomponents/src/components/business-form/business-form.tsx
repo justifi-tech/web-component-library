@@ -5,6 +5,7 @@ import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
+import { Business } from '../../api/BusinessV2';
 
 /**
  * @exportedPart label: Label for inputs
@@ -74,7 +75,8 @@ export class BusinessForm {
     this.isLoading = true;
     try {
       const response = await this.api.get(this.businessEndpoint);
-      this.formController.setInitialValues(response.data);
+      const business = new Business(response.data);
+      this.formController.setInitialValues(business);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
