@@ -1,5 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
+import { makeGetPaymentDetails } from './get-payment-details';
+import { ErrorState } from '../details/utils';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -34,14 +36,41 @@ export class PaymentDetails {
   @Prop() paymentId: string;
   @Prop() authToken: string;
 
+  @State() getPaymentDetails: Function;
+  @State() errorMessage: string = null;
+
+  componentWillLoad() {
+    this.initializeGetPaymentDetails();
+  }
+
+  @Watch('paymentId')
+  @Watch('authToken')
+  propChanged() {
+    this.initializeGetPaymentDetails();
+  }
+
+  private initializeGetPaymentDetails() {
+    if (this.paymentId && this.authToken) {
+      this.getPaymentDetails = makeGetPaymentDetails({
+        id: this.paymentId,
+        authToken: this.authToken,
+        service: new PaymentService(),
+      });
+    } else {
+      this.errorMessage = 'Payment ID and Auth Token are required';
+    }
+  }
+
   paymentService = new PaymentService();
 
   render() {
+    if (this.errorMessage) {
+      return ErrorState(this.errorMessage);
+    }
+
     return (
       <payment-details-core
-        paymentId={this.paymentId}
-        authToken={this.authToken}
-        paymentService={this.paymentService}
+        getPaymentDetails={this.getPaymentDetails}
       ></payment-details-core>
     );
   }
