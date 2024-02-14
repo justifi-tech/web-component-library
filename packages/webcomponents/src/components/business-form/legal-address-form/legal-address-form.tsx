@@ -1,6 +1,5 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../form/form';
-import countryOptions from '../../../utils/country-options';
 
 /**
  * @exportedPart label: Label for inputs
