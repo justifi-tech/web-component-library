@@ -4,24 +4,18 @@ import { paymentMethodFormComponentMethods, StoryBaseArgs } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const meta: Meta = {
   title: 'Components/BankAccountForm',
   component: 'justifi-bank-account-form',
   args: {
-    ...storyBaseArgs.args,
-    'iframe-origin': '',
-    'validation-mode': 'onSubmit'
+    ...storyBaseArgs.args
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
     'css-variables': {
-      table: {
-        disable: true
-      },
-    },
-    'iframe-origin': {
       table: {
         disable: true
       },
@@ -82,8 +76,11 @@ const meta: Meta = {
 const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) => {
   await bankForm.validate();
 };
+
 const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
-  await bankForm.tokenize('CLIENT_ID', paymentMethodData);
+  const clientId = storyBaseArgs.args['client-id'] || '';
+  const accountId = storyBaseArgs.args['account-id'] || '';
+  await bankForm.tokenize(clientId, paymentMethodData, accountId);
 };
 
 const handleReady = () => {
@@ -95,7 +92,7 @@ const handleReady = () => {
     handleValidateClick(bankForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
-    handleTokenizeClick(bankForm, {});
+    handleTokenizeClick(bankForm, { account_owner_name: 'John Doe' });
   });
 };
 
@@ -141,20 +138,13 @@ const CSSVars = `
 
 const FormButtons = `
   <style>
-    .button-bar {
-      display: flex;
-      aligin-items: center;
-      padding: 10px;
-    }
-    .button-bar button {
-      margin-right: 10px;
-    }
+    .button-bar { margin-top: 10px;}
+    .button-bar button { margin-right: 10px; }
   </style>
   <div class="button-bar">
-    <button id="validate-btn">Test Validation</button>
-    <button id="tokenize-btn">Test Tokenization</button>
-  </div>
-`;
+    <button id="validate-btn">Test Validate</button>
+    <button id="tokenize-btn">Test Tokenize</button>
+  </div>`;
 
 const Template = (args: any) => {
   return `
@@ -166,7 +156,7 @@ const Template = (args: any) => {
       </style>
       <justifi-bank-account-form
         data-testid="bank-account-form-iframe"
-        validation-mode='${args['validation-mode'] || 'onSubmit'}'
+        validation-mode="${args['validation-mode'] || 'onSubmit'}"
       />
     </div>
     ${FormButtons}
@@ -177,7 +167,7 @@ export const Basic = Template.bind({});
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'css-variables': CSSVars,
+  'css-variables': CSSVars
 };
 
 export default meta;

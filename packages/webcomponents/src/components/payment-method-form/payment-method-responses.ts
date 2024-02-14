@@ -1,6 +1,6 @@
 interface PaymentMethodCreateResponseWrapper {
   id: string;
-  type: 'payment_method';
+  type: "payment_method";
   error?: {
     code: string;
     message: string;
@@ -24,6 +24,20 @@ interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
       metadata: any;
       address_line1_check: string;
       address_postal_code_check: string;
+      bin_details?: {
+        type: "Credit" | "Debit" | "Prepaid" | "Unknown";
+        card_brand: string;
+        card_class: string;
+        country: string;
+        issuer: string;
+        funding_source:
+          | "Charge"
+          | "Credit"
+          | "Debit"
+          | "Deferred Debit (Visa Only)"
+          | "Network Only"
+          | "Prepaid";
+      };
     };
   };
 }
@@ -36,7 +50,7 @@ interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
     bank_account: {
       id: string;
       account_owner_name: string;
-      account_type: 'checking' | 'savings';
+      account_type: "checking" | "savings";
       bank_name: string;
       acct_last_four: number;
       token: string;
@@ -52,4 +66,7 @@ interface PaymentMethodErrorResponse {
   };
 }
 
-export type CreatePaymentMethodResponse = CardCreateResponse | BankAccountCreateResponse | PaymentMethodErrorResponse;
+export type CreatePaymentMethodResponse =
+  | CardCreateResponse
+  | BankAccountCreateResponse
+  | PaymentMethodErrorResponse;

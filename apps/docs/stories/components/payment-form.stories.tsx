@@ -1,40 +1,21 @@
 import type { Meta } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
+import { StoryBaseArgs } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
 
 const meta: Meta = {
   title: 'Components/PaymentForm',
   component: 'justifi-payment-form',
   args: {
-    'account-id': '',
-    'iframe-origin': '',
-    'email': '',
-    'client-id': '',
-    'submit-button-text': ''
+    ...storyBaseArgs.args,
+    'email': 'test@test.com',
+    'submit-button-text': 'Submit'
   },
   argTypes: {
-    'account-id': {
-      type: 'string',
-      description: '`string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props',
-      }
-    },
-    'iframe-origin': {
-      type: 'string',
-      description: 'URL for the rendered iFrame. End-users need not use this. `string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props',
-      }
-    },
+    ...storyBaseArgs.argTypes,
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
@@ -56,15 +37,6 @@ const meta: Meta = {
       }
     },
     'email': {
-      type: 'string',
-      control: {
-        type: 'text'
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'client-id': {
       type: 'string',
       control: {
         type: 'text'
@@ -125,12 +97,12 @@ const Template = (args: any) => {
   return `
     <div>
       <justifi-payment-form
-        card=${args.card}
-        bank-account='${args['bank-account']}'
-        email='${args.email}'
-        client-id='${args['client-id']}'
-        account-id='${args['account-id']}'
-        submit-button-text='${args['submit-button-text']}'
+        card="${args.card}"
+        bank-account="${args['bank-account']}"
+        email="${args.email}"
+        client-id="${args['client-id']}"
+        account-id="${args['account-id']}"
+        submit-button-text="${args['submit-button-text']}"
       />
     </div>
     <style>
@@ -154,25 +126,10 @@ const Template = (args: any) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  'bank-account': true,
-  'card': true,
-  'email': '',
-  'client-id': '',
-  'account-id': '',
-  'submit-button-text': '',
-  'iframe-origin': '',
-};
+Basic.args = {};
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'bank-account': true,
-  'card': true,
-  'email': '',
-  'client-id': '',
-  'account-id': '',
-  'submit-button-text': '',
-  'iframe-origin': '',
   'cssVariables': `
   --jfi-primary-color: #212529;
   --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';

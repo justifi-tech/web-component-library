@@ -1,11 +1,6 @@
-name: Build and release components
+name: Publish components
 on:
-  push:
-    branches:
-      - main
-      - 'release.**'
-    paths:
-      - packages/webcomponents/**
+  workflow_dispatch:
 
 jobs:
   build:

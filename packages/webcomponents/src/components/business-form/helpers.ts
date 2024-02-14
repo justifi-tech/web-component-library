@@ -1,22 +1,22 @@
 // These props should not be sent to the server
-export const parseForPatching = (data) => {
-  delete data.id;
-  delete data.documents;
-  delete data.bank_accounts;
-  delete data.product_categories;
-  delete data.created_at;
-  delete data.updated_at;
-  delete data.legal_address?.id;
-  delete data.legal_address?.created_at;
-  delete data.legal_address?.updated_at;
-  delete data.representative?.id;
-  delete data.representative?.documents;
-  delete data.representative?.created_at;
-  delete data.representative?.updated_at;
-  delete data.representative?.address.id;
-  delete data.representative?.address.created_at;
-  delete data.representative?.address.updated_at;
-  delete data.owners;
+export const parseForPatching = (values, initialValues) => {
+  delete values.id;
+  delete values.documents;
+  delete values.bank_accounts;
+  delete values.product_categories;
+  delete values.created_at;
+  delete values.updated_at;
+  delete values.legal_address?.id;
+  delete values.legal_address?.created_at;
+  delete values.legal_address?.updated_at;
+  delete values.representative?.id;
+  delete values.representative?.documents;
+  delete values.representative?.created_at;
+  delete values.representative?.updated_at;
+  delete values.representative?.address.id;
+  delete values.representative?.address.created_at;
+  delete values.representative?.address.updated_at;
+  initialValues.owners.length && delete values.owners;
 
-  return data;
+  return values;
 }
