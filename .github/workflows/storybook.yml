@@ -1,11 +1,11 @@
-name: Build and Publish storybook to GitHub Pages
+name: Deploy Storybook to GitHub Pages
 on:
   workflow_dispatch:
   push:
     branches:
       - 'main'
-    # paths:
-    #   - apps/docs/**
+    paths:
+      - apps/docs/**
 jobs:
   deploy:
     environment:
@@ -17,9 +17,6 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    defaults:
-      run:
-        working-directory: apps/docs/
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -36,6 +33,10 @@ jobs:
           version: 8.7.5
           run: pnpm install
 
+      - name: Install dependencies
+        run: |
+          pnpm install && ls -a
+
       - name: 'Build'
         shell: bash
         run: |
@@ -48,7 +49,7 @@ jobs:
       - name: 'upload'
         uses: actions/upload-pages-artifact@v1.0.8
         with:
-          path: ./docs
+          path: ./apps/docs/storybook-static
 
       - id: deploy
         name: Deploy to GitHub Pages

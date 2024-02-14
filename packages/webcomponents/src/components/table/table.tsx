@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { ExtendedPagingDefaults, ExtendedPagingInfo } from '../../api/Pagination';
 import { tableExportedParts } from './exported-parts';
+import { EmptyState, ErrorState, LoadingState } from './utils';
 
 export interface TableProps {
   loading: boolean;
@@ -27,100 +28,77 @@ export class Table {
   @Prop() entityId: string[];
   @Prop() rowClickHandler: (e: any) => any;
 
-  showEmptyState() {
-    return this.rowData ? this.rowData.length < 1 : true;
+  get showEmptyState() {
+    return !this.loading && !this.errorMessage && this.rowData.length < 1;
   }
 
-  emptyState = () => (
-    <tr>
-      <td class="empty-state" part="empty-state" colSpan={this.columnData?.length} style={{ textAlign: 'center' }}>No results</td>
-    </tr>
-  );
+  get showErrorState() {
+    return !this.loading && !!this.errorMessage;
+  }
 
-  errorState = () => (
-    <tr>
-      <td
-        class="error-state"
-        part="error-state"
-        colSpan={this.columnData?.length}
-        style={{ textAlign: 'center' }}
-        data-test-id="error-state"
-      >
-        An unexpected error occurred: {this.errorMessage}
-      </td>
-    </tr>
-  );
-
-  loadingState = () => (
-    <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={this.columnData?.length} style={{ textAlign: 'center' }}>
-        <div part="loading-state-spinner" class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </td>
-    </tr>
-  );
+  get showRowData() {
+    return !this.showEmptyState && !this.showErrorState;
+  }
 
   render() {
     return (
       <Host exportparts={tableExportedParts}>
-        {this.columnData ?
-          <div class="table-wrapper">
-            <table class="table table-hover">
-              <thead class="table-head sticky-top" part="table-head">
-                <tr class="table-light text-nowrap" part='table-head-row'>
-                  {
-                    this.columnData?.map((column) =>
-                      <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
-                        {!Array.isArray(column) ? column : column[0]}
-                      </th>
-                    )
-                  }
-                </tr>
-              </thead>
-              <tbody class="table-body" part='table-body'>
+        <div class="table-wrapper">
+          <table class="table table-hover">
+            <thead class="table-head sticky-top" part="table-head">
+              <tr class="table-light text-nowrap" part='table-head-row'>
                 {
-                  this.loading ? this.loadingState() :
-                    this.errorMessage ? this.errorState() :
-                      this.showEmptyState() ? this.emptyState() :
-                        this.rowData?.map((data, index) => {
-                          return (
-                            <tr
-                              data-test-id="table-row"
-                              data-row-entity-id={this.entityId[index]}
-                              onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
-                              part={`table-row${index % 2 ? ' table-row-even' : ' table-row-odd'}`}
-                            >
-                              {
-                                data.map((dataEntry: any) => {
-                                  return (
-                                    !dataEntry?.type
-                                      ? <td part="table-cell">{dataEntry}</td>
-                                      : <th scope="row" part="table-cell">
-                                        <td part="table-cell" innerHTML={dataEntry.value}></td>
-                                      </th>
-                                  )
-                                }
-                                )
-                              }
-                            </tr>
-                          )
-                        })
+                  this.columnData?.map((column) =>
+                    <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
+                      {!Array.isArray(column) ? column : column[0]}
+                    </th>
+                  )
                 }
-              </tbody>
-              {this.paging &&
-                <tfoot class="sticky-bottom">
-                  <tr class="table-light align-middle">
-                    <td part="pagination-bar" colSpan={this.columnData?.length}>
-                      <pagination-menu paging={this.paging} params={this.params} />
-                    </td>
-                  </tr>
-                </tfoot>
-              }
-            </table>
-          </div>
-          :
-          <div data-test-id="empty-error-state">Column data is required</div>}
+              </tr>
+            </thead>
+            <tbody class="table-body" part='table-body'>
+              {this.loading && LoadingState(this.columnData.length)}
+              {this.showEmptyState && EmptyState(this.columnData.length)}
+              {this.showErrorState && ErrorState(this.columnData.length, this.errorMessage)}
+              {this.showRowData && (
+                this.rowData.map((data, index) => {
+                  return (
+                    <tr
+                      data-test-id="table-row"
+                      data-row-entity-id={this.entityId[index]}
+                      onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
+                      part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
+                    >
+                      {
+                        data.map((dataEntry: any) => {
+                          let nestedHtml = dataEntry?.type;
+                          if (nestedHtml) {
+                            return (
+                              <td part="table-cell" innerHTML={dataEntry.value}></td>
+                            )
+                          } else {
+                            return (
+                              <td part="table-cell">{dataEntry}</td>
+                            )
+                          }
+                        })
+                      }
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
+            {this.paging &&
+              <tfoot class="sticky-bottom">
+                <tr class="table-light align-middle">
+                  <td part="pagination-bar" colSpan={this.columnData?.length}>
+                    <pagination-menu paging={this.paging} params={this.params} />
+                  </td>
+                </tr>
+              </tfoot>
+            }
+          </table>
+        </div>
       </Host>
     )
   }

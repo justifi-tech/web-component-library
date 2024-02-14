@@ -117,8 +117,8 @@ export class PayoutsListCore {
                 {
                   type: 'head',
                   value: `
-                    <div>${formatDate(payout.created_at)}</div>
-                    <div>${formatTime(payout.created_at)}</div>
+                    <div class='fw-bold'>${formatDate(payout.created_at)}</div>
+                    <div class='fw-bold'>${formatTime(payout.created_at)}</div>
                   `,
                 },
                 payout.payout_type,

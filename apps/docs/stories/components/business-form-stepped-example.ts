@@ -6,7 +6,10 @@ export default `<!DOCTYPE html>
 ${codeExampleHead('justifi-business-form-stepped')}
 
 <body>
-  <justifi-business-form-stepped></justifi-business-form-stepped>
+  <justifi-business-form-stepped
+    business-id="<BUSINESS_ID>"
+    auth-token="<WEBCOMPONENT_AUTH_TOKEN>">
+  </justifi-business-form-stepped>
 </body>
 
 </html>`;

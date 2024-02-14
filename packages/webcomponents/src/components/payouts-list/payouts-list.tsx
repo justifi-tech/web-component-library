@@ -64,9 +64,7 @@ export class PayoutsList {
 
     return (
       <Host exportedparts={tableExportedParts}>
-        <payouts-list-core
-          getPayouts={this.getPayouts}
-        />
+        <payouts-list-core getPayouts={this.getPayouts} />
       </Host>
     );
   }
