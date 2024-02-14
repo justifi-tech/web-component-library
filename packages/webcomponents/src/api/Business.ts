@@ -153,6 +153,7 @@ export class Business implements IBusiness {
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.product_categories = business.product_categories;
+    this.additional_questions = business.additional_questions;
   }
 }
 

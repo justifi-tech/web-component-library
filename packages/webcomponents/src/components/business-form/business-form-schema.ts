@@ -188,20 +188,14 @@ const additionQuestionsSchema = object({
   business_revenue: string().required('Enter business revenue'),
   business_payment_volume: string().required('Enter business payment volume'),
   business_dispute_volume: string().required('Enter business dispute volume'),
-  business_receivable_volume: string().required(
-    'Enter business receivable volume',
-  ),
+  business_receivable_volume: string().required('Enter business receivable volume'),
 });
 
 const businessFormSchema = object({
   ...businessGenericInfoSchema.fields,
   legal_address: legalAddressSchema.required('Enter legal address'),
-  additional_questions: additionQuestionsSchema.required(
-    'Enter additional questions',
-  ),
-  representative: representativeSchema.required(
-    'Enter representative information',
-  )
+  additional_questions: additionQuestionsSchema.nullable(),
+  representative: representativeSchema.nullable()
 });
 
 export default businessFormSchema;

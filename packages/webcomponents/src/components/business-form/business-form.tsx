@@ -85,8 +85,6 @@ export class BusinessForm {
 
   private validateAndSubmit(event: any) {
     event.preventDefault();
-    console.log('validateAndSubmit')
-    console.log(this.formController)
     this.formController.validateAndSubmit(this.sendData);
   }
 
