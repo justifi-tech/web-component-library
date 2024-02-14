@@ -23,10 +23,10 @@ Links
 Developer considerations
 --------------
 
-- ** On any task **
+- On any task
   - [ ] Previous unit and e2e tests are passing
-  - [ ] Perform dev QA 
-- ** On new features ** 
+  - [ ] Perform dev QA
+- On new features
   - [ ] Add unit tests
   - [ ] Add e2e tests
   - [ ] Add documentation
