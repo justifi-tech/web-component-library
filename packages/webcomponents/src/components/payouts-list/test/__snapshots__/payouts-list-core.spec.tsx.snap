@@ -146,16 +146,14 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           </thead>
           <tbody class="table-body" part="table-body">
             <tr data-row-entity-id="po_3LLEczAX869CcrZJhP4o2B" data-test-id="table-row" part="table-row table-row-odd">
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <div>
-                    Jan 17, 2024
-                  </div>
-                  <div>
-                    10:33pm
-                  </div>
-                </td>
-              </th>
+              <td part="table-cell">
+                <div class="fw-bold">
+                  Jan 17, 2024
+                </div>
+                <div class="fw-bold">
+                  10:33pm
+                </div>
+              </td>
               <td part="table-cell">
                 cc
               </td>
@@ -180,25 +178,21 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <td part="table-cell">
                 $226.02
               </td>
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <span class="badge bg-success" title="Successfully deposited into your bank account">
-                    Paid
-                  </span>
-                </td>
-              </th>
+              <td part="table-cell">
+                <span class="badge bg-success" title="Successfully deposited into your bank account">
+                  Paid
+                </span>
+              </td>
             </tr>
             <tr data-row-entity-id="po_7SO8x5IehLv679EIvW5eX5" data-test-id="table-row" part="table-row table-row-even">
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <div>
-                    Jan 16, 2024
-                  </div>
-                  <div>
-                    10:15pm
-                  </div>
-                </td>
-              </th>
+              <td part="table-cell">
+                <div class="fw-bold">
+                  Jan 16, 2024
+                </div>
+                <div class="fw-bold">
+                  10:15pm
+                </div>
+              </td>
               <td part="table-cell">
                 cc
               </td>
@@ -223,25 +217,21 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <td part="table-cell">
                 $226.02
               </td>
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <span class="badge bg-success" title="Successfully deposited into your bank account">
-                    Paid
-                  </span>
-                </td>
-              </th>
+              <td part="table-cell">
+                <span class="badge bg-success" title="Successfully deposited into your bank account">
+                  Paid
+                </span>
+              </td>
             </tr>
             <tr data-row-entity-id="po_3YQ2iAevdMZqIUiCDg1Ge5" data-test-id="table-row" part="table-row table-row-odd">
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <div>
-                    Jan 9, 2024
-                  </div>
-                  <div>
-                    10:28pm
-                  </div>
-                </td>
-              </th>
+              <td part="table-cell">
+                <div class="fw-bold">
+                  Jan 9, 2024
+                </div>
+                <div class="fw-bold">
+                  10:28pm
+                </div>
+              </td>
               <td part="table-cell">
                 cc
               </td>
@@ -266,25 +256,21 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <td part="table-cell">
                 $226.02
               </td>
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <span class="badge bg-success" title="Successfully deposited into your bank account">
-                    Paid
-                  </span>
-                </td>
-              </th>
+              <td part="table-cell">
+                <span class="badge bg-success" title="Successfully deposited into your bank account">
+                  Paid
+                </span>
+              </td>
             </tr>
             <tr data-row-entity-id="po_17745yESnHyEgWNeunmhmR" data-test-id="table-row" part="table-row table-row-even">
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <div>
-                    Dec 27, 2023
-                  </div>
-                  <div>
-                    10:27pm
-                  </div>
-                </td>
-              </th>
+              <td part="table-cell">
+                <div class="fw-bold">
+                  Dec 27, 2023
+                </div>
+                <div class="fw-bold">
+                  10:27pm
+                </div>
+              </td>
               <td part="table-cell">
                 cc
               </td>
@@ -309,13 +295,11 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <td part="table-cell">
                 $220.15
               </td>
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <span class="badge bg-success" title="Successfully deposited into your bank account">
-                    Paid
-                  </span>
-                </td>
-              </th>
+              <td part="table-cell">
+                <span class="badge bg-success" title="Successfully deposited into your bank account">
+                  Paid
+                </span>
+              </td>
             </tr>
           </tbody>
           <tfoot class="sticky-bottom">
