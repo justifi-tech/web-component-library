@@ -64,6 +64,7 @@ export class Table {
                 this.rowData.map((data, index) => {
                   return (
                     <tr
+                      data-test-id="table-row"
                       data-row-entity-id={this.entityId[index]}
                       onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
                       part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}

@@ -120,16 +120,14 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           </thead>
           <tbody class="table-body" part="table-body">
             <tr data-row-entity-id="py_66NWqoIBi7xnPmqv9By5jD" data-test-id="table-row" part="table-row table-row-odd">
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <div>
-                    Jan 17, 2024
-                  </div>
-                  <div>
-                    2:35pm
-                  </div>
-                </td>
-              </th>
+              <td part="table-cell">
+                <div class="fw-bold">
+                  Jan 17, 2024
+                </div>
+                <div class="fw-bold">
+                  2:35pm
+                </div>
+              </td>
               <td part="table-cell">
                 $234.56
               </td>
@@ -142,28 +140,24 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <td part="table-cell">
                 **** 1111
               </td>
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <span class="badge bg-success" title="This payment was successfully captured">
-                    Successful
-                  </span>
-                </td>
-              </th>
+              <td part="table-cell">
+                <span class="badge bg-success" title="This payment was successfully captured">
+                  Successful
+                </span>
+              </td>
               <td part="table-cell">
                 py_66NWqoIBi7xnPmqv9By5jD
               </td>
             </tr>
             <tr data-row-entity-id="py_4VPDyBwelwI9HjufbgwqZK" data-test-id="table-row" part="table-row table-row-even">
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <div>
-                    Jan 15, 2024
-                  </div>
-                  <div>
-                    5:52pm
-                  </div>
-                </td>
-              </th>
+              <td part="table-cell">
+                <div class="fw-bold">
+                  Jan 15, 2024
+                </div>
+                <div class="fw-bold">
+                  5:52pm
+                </div>
+              </td>
               <td part="table-cell">
                 $234.56
               </td>
@@ -176,13 +170,11 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <td part="table-cell">
                 **** 1111
               </td>
-              <th part="table-cell" scope="row">
-                <td part="table-cell">
-                  <span class="badge bg-success" title="This payment was successfully captured">
-                    Successful
-                  </span>
-                </td>
-              </th>
+              <td part="table-cell">
+                <span class="badge bg-success" title="This payment was successfully captured">
+                  Successful
+                </span>
+              </td>
               <td part="table-cell">
                 py_4VPDyBwelwI9HjufbgwqZK
               </td>
