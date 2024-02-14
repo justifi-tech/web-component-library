@@ -1,5 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
+import { makeGetPayments } from './get-payments';
+import { ErrorState } from '../details/utils';
 
 /**
   * @exportedPart table-head: Table head
@@ -29,14 +31,39 @@ export class PaymentsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
 
-  private paymentService = new PaymentService();
+  @State() getPayments: Function;
+  @State() errorMessage: string = null;
+
+  componentWillLoad() {
+    this.initializeGetPayments();
+  }
+
+  @Watch('accountId')
+  @Watch('authToken')
+  propChanged() {
+    this.initializeGetPayments();
+  }
+
+  private initializeGetPayments() {
+    if (this.accountId && this.authToken) {
+      this.getPayments = makeGetPayments({
+        id: this.accountId,
+        authToken: this.authToken,
+        service: new PaymentService(),
+      });
+    } else {
+      this.errorMessage = 'Account ID and Auth Token are required';
+    }
+  }
 
   render() {
+
+    if (this.errorMessage) {
+      return ErrorState(this.errorMessage);
+    }
     return (
       <payments-list-core
-        paymentService={this.paymentService}
-        account-id={this.accountId}
-        auth-token={this.authToken}
+        getPayments={this.getPayments}
       ></payments-list-core>
     );
   }

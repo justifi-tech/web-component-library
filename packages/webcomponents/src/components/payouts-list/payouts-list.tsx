@@ -1,6 +1,8 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { tableExportedParts } from '../table/exported-parts';
 import { PayoutService } from '../../api/services/payout.service';
+import { makeGetPayouts } from './get-payouts';
+import { ErrorState } from '../details/utils';
 
 /**
   * @exportedPart table-head: Table head
@@ -30,15 +32,40 @@ export class PayoutsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
 
-  private payoutService = new PayoutService();
+  @State() getPayouts: Function;
+  @State() errorMessage: string = null;
+
+  componentWillLoad() {
+    this.initializeGetPayouts();
+  }
+
+  @Watch('accountId')
+  @Watch('authToken')
+  propChanged() {
+    this.initializeGetPayouts();
+  }
+
+  private initializeGetPayouts() {
+    if (this.accountId && this.authToken) {
+      this.getPayouts = makeGetPayouts({
+        id: this.accountId,
+        authToken: this.authToken,
+        service: new PayoutService(),
+      });
+    } else {
+      this.errorMessage = 'Account ID and Auth Token are required';
+    }
+  }
 
   render() {
+    if (this.errorMessage) {
+      return ErrorState(this.errorMessage);
+    }
+
     return (
       <Host exportedparts={tableExportedParts}>
         <payouts-list-core
-          accountId={this.accountId}
-          authToken={this.authToken}
-          payoutService={this.payoutService}
+          getPayouts={this.getPayouts}
         />
       </Host>
     );
