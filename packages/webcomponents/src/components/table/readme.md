@@ -21,18 +21,14 @@
 
 ## Shadow Parts
 
-| Part                      | Description |
-| ------------------------- | ----------- |
-| `"empty-state"`           |             |
-| `"error-state"`           |             |
-| `"loading-state-cell"`    |             |
-| `"loading-state-spinner"` |             |
-| `"pagination-bar"`        |             |
-| `"table-body"`            |             |
-| `"table-cell"`            |             |
-| `"table-head"`            |             |
-| `"table-head-cell"`       |             |
-| `"table-head-row"`        |             |
+| Part                | Description |
+| ------------------- | ----------- |
+| `"pagination-bar"`  |             |
+| `"table-body"`      |             |
+| `"table-cell"`      |             |
+| `"table-head"`      |             |
+| `"table-head-cell"` |             |
+| `"table-head-row"`  |             |
 
 
 ## Dependencies

@@ -3,25 +3,37 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Table } from '../table';
 
 describe('justifi-table', () => {
-  it('does not render properly without columnData', async () => {
+
+  it('enters loading state when loading is true', async () => {
     const page = await newSpecPage({
       components: [Table],
-      html: `<justifi-table></justifi-table>`,
+      template: () => <justifi-table columnData={['test', 'test']} loading={true} />
     });
 
-    const error = page.root.shadowRoot.querySelector('[data-test-id="empty-error-state"]');
-    expect(error).toBeTruthy();
-  });
+    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    expect(loading).toBeTruthy();
 
-  it('stops loading', async () => {
+    const loadingSpinner = page.root.shadowRoot.querySelector('.spinner-border');
+    expect(loadingSpinner).toBeTruthy();
+
+    const error = await page.root.shadowRoot.querySelector('.error-state');
+    expect(error).toBeNull();
+  })
+
+  it('renders the empty state when no data is passed', async () => {
     const page = await newSpecPage({
       components: [Table],
       template: () => <justifi-table columnData={['test', 'test']} loading={false} />
     });
 
-    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    const empty = page.root.shadowRoot.querySelector('.empty-state');
+    expect(empty).toBeTruthy();
 
-    expect(loading).toBeNull();
+    const emptyStateMessage = empty.innerHTML;
+    expect(emptyStateMessage).toBe('No results');
+
+    const error = await page.root.shadowRoot.querySelector('.error-state');
+    expect(error).toBeNull();
   });
 
   it('renders the state and displays error message passed', async () => {
@@ -31,8 +43,11 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} errorMessage={ERROR_TEXT} />
     });
 
+    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    expect(loading).toBeNull();
+
     const error = page.root.shadowRoot.querySelector('.error-state');
-    expect(error).not.toBeNull();
+    expect(error).toBeTruthy();
 
     const errorText = error.innerHTML;
     expect(errorText).toBe(`An unexpected error occurred: ${ERROR_TEXT}`);
@@ -40,11 +55,11 @@ describe('justifi-table', () => {
 
   it('renders the pagination bar when pagination is passed', async () => {
     const PAG = {
-      amount: 25,
+      amount: 50,
       start_cursor: '',
       end_cursor: '',
       has_previous: false,
-      has_next: false,
+      has_next: true,
       handleClickNext: () => { },
       handleClickPrevious: () => { }
     };
@@ -53,8 +68,8 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} paging={PAG} />
     });
 
-    const error = page.root.shadowRoot.querySelector('[part="pagination-bar"]');
-    expect(error).not.toBeNull();
+    const paginationBar = page.root.shadowRoot.querySelector('[part="pagination-bar"]');
+    expect(paginationBar).toBeTruthy();
   });
 
   it('has an ID for each row', async () => {
@@ -64,8 +79,17 @@ describe('justifi-table', () => {
     });
 
     const row: HTMLElement = page.root.shadowRoot.querySelector('[data-row-entity-id]');
-    expect(row).not.toBeNull();
+    expect(row).toBeTruthy();
     expect(row.dataset.rowEntityId).toBe('123');
+
+    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    expect(loading).toBeNull();
+
+    const empty = page.root.shadowRoot.querySelector('.empty-state');
+    expect(empty).toBeNull();
+
+    const error = await page.root.shadowRoot.querySelector('.error-state');
+    expect(error).toBeNull();
   });
 
   it('renders rows and columns based on columnData and rowData', async () => {

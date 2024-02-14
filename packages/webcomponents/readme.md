@@ -43,4 +43,4 @@ Read the [contributing guide](https://github.com/justifi-tech/web-component-libr
 
 ## Changelog
 
-The [changelog](https://github.com/justifi-tech/web-component-library/blob/main/stencil-library/CHANGELOG.md) is regularly updated to reflect what's changed in each new release.
+The [changelog](https://github.com/justifi-tech/web-component-library/blob/main/packages/webcomponents/CHANGELOG.md) is regularly updated to reflect what's changed in each new release.

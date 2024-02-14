@@ -1,9 +1,6 @@
-name: Build and release components
+name: Publish components
 on:
-  push:
-    branches:
-      - main
-      - 'release.**'
+  workflow_dispatch:
 
 jobs:
   build:
