@@ -152,7 +152,7 @@ export class Business implements IBusiness {
     this.product_categories = business.product_categories;
 
     // Form sections
-    this.legal_address = business.legal_address || {};
+    this.legal_address = business.legal_address || { country: 'USA' };
     this.representative = business.representative || {};
     this.additional_questions = business.additional_questions || {};
     this.owners = business.owners;
