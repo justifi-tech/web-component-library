@@ -85,6 +85,42 @@ export interface AdditionalQuestions {
   business_receivable_volume: string;
 }
 
+export interface ICoreBusinessInfo {
+  business_structure?: BusinessStructure;
+  business_type?: BusinessType;
+  legal_name?: string;
+  doing_business_as?: string;
+  industry?: string;
+  tax_id?: string;
+  website_url?: string;
+  email?: string;
+  phone?: string;
+}
+
+export class CoreBusinessInfo implements ICoreBusinessInfo {
+  public business_structure: BusinessStructure;
+  public business_type: BusinessType;
+  public legal_name: string;
+  public doing_business_as: string;
+  public industry: string;
+  public tax_id: string;
+  public website_url: string;
+  public email: string;
+  public phone: string;
+
+  constructor(coreBusinessInfo: ICoreBusinessInfo) {
+    this.business_structure = coreBusinessInfo.business_structure;
+    this.business_type = coreBusinessInfo.business_type;
+    this.legal_name = coreBusinessInfo.legal_name;
+    this.doing_business_as = coreBusinessInfo.doing_business_as;
+    this.industry = coreBusinessInfo.industry;
+    this.tax_id = coreBusinessInfo.tax_id;
+    this.website_url = coreBusinessInfo.website_url;
+    this.email = coreBusinessInfo.email;
+    this.phone = coreBusinessInfo.phone;
+  }
+}
+
 export interface IBusiness {
   additional_questions: AdditionalQuestions | {};
   business_structure: BusinessStructure;
