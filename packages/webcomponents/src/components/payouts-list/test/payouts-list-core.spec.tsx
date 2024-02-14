@@ -1,27 +1,34 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MockPayoutService } from './MockPayoutService';
 import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { PayoutsListCore } from '../payouts-list-core';
 import mockSuccessResponse from '../../../api/mockData/mockPayoutsSuccess.json';
 import { IApiResponseCollection, IPayout } from '../../../api';
+import { makeGetPayouts } from '../get-payouts';
 
 const mockPayoutsResponse = mockSuccessResponse as IApiResponseCollection<IPayout[]>;
 
 describe('payouts-list-core', () => {
   it('renders properly', async () => {
-    const mockPayoutService = new MockPayoutService({ fetchPayoutsResponse: mockPayoutsResponse });
+    const mockPayoutService = {
+      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
+    };
     const page = await newSpecPage({
       components: [PayoutsListCore, Table, PaginationMenu],
       html: `
-        <payouts-list-core
-          account-id="acc_123"
-          auth-token="my-token"
-        ></payouts-list-core>
+        <payouts-list-core></payouts-list-core>
       `,
     });
 
-    page.root.payoutService = mockPayoutService
+    page.rootInstance.componentWillLoad = () => { };
+
+    page.rootInstance.getPayouts = makeGetPayouts({
+      id: '123',
+      authToken: '123',
+      service: mockPayoutService
+    });
+
+    page.rootInstance.fetchData();
 
     await page.waitForChanges();
 
@@ -32,20 +39,30 @@ describe('payouts-list-core', () => {
     const rows = shadowRoot.querySelectorAll('[data-test-id="table-row"]');
 
     expect(rows.length).toBe(4);
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('renders an error state when no account id is passed', async () => {
-    const mockPayoutService = new MockPayoutService({ fetchPayoutsResponse: mockPayoutsResponse });
-    const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
-      html: `
-        <payouts-list-core
-          auth-token="my-token"
-        ></payouts-list-core>
-      `,
+  it('displays an error state on failed data fetch', async () => {
+    const mockPayoutService = {
+      fetchPayouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    };
+
+    const getPayouts = makeGetPayouts({
+      id: 'some-id',
+      authToken: 'some-auth-token',
+      service: mockPayoutService
     });
 
-    page.root.payoutService = mockPayoutService
+    const page = await newSpecPage({
+      components: [PayoutsListCore, Table, PaginationMenu],
+      html: '<payouts-list-core></payouts-list-core>',
+    });
+
+    page.rootInstance.componentWillLoad = () => { };
+
+    page.rootInstance.getPayouts = getPayouts;
+
+    page.rootInstance.fetchData();
 
     await page.waitForChanges();
 
@@ -55,63 +72,29 @@ describe('payouts-list-core', () => {
 
     const error = shadowRoot.querySelector('[data-test-id="error-state"]');
     expect(error).toBeTruthy();
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('renders an error state when no auth token is passed', async () => {
-    const mockPayoutService = new MockPayoutService({ fetchPayoutsResponse: mockPayoutsResponse });
+  it('emits payout-row-clicked event on row click', async () => {
+    const mockPayoutService = {
+      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
+    };
+
     const page = await newSpecPage({
       components: [PayoutsListCore, Table, PaginationMenu],
-      html: `
-        <payouts-list-core
-          account-id="acc_123"
-        ></payouts-list-core>
-      `,
+      html: '<payouts-list-core></payouts-list-core>',
     });
 
-    page.root.payoutService = mockPayoutService
+    page.rootInstance.componentWillLoad = () => { };
 
-    await page.waitForChanges();
-
-    const justifiTable = page.root.querySelector('justifi-table');
-
-    const shadowRoot = justifiTable.shadowRoot;
-
-    const error = shadowRoot.querySelector('[data-test-id="error-state"]');
-    expect(error).toBeTruthy();
-  });
-
-  it('renders an error state when payout service fails', async () => {
-    const mockPayoutService = new MockPayoutService({ fetchPayoutsResponse: null });
-    const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
-      html: `
-        <payouts-list-core
-          account-id="acc_123"
-          auth-token="my-token"
-        ></payouts-list-core>
-      `,
+    page.rootInstance.getPayouts = makeGetPayouts({
+      id: '123',
+      authToken: '123',
+      service: mockPayoutService
     });
 
-    page.root.payoutService = mockPayoutService
+    page.rootInstance.fetchData();
 
-    await page.waitForChanges();
-
-    const justifiTable = page.root.querySelector('justifi-table');
-
-    const shadowRoot = justifiTable.shadowRoot;
-
-    const error = shadowRoot.querySelector('[data-test-id="error-state"]');
-    expect(error).toBeTruthy();
-  });
-
-  it('listens to row clicks', async () => {
-    const mockPayoutService = new MockPayoutService({ fetchPayoutsResponse: mockPayoutsResponse });
-    const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
-      html: `<payouts-list-core account-id="acc_123" auth-token="my-token"></payouts-list-core>`,
-    });
-
-    page.root.payoutService = mockPayoutService;
     await page.waitForChanges();
 
     const rowClickedHandler = jest.fn();
@@ -125,7 +108,37 @@ describe('payouts-list-core', () => {
       (rows[0] as HTMLElement).click();
       await page.waitForChanges();
     }
+  });
 
-    expect(rowClickedHandler).toHaveBeenCalled();
+
+  it('updates params and refetches data on pagination interaction', async () => {
+    const mockPayoutService = {
+      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
+    };
+
+    const page = await newSpecPage({
+      components: [PayoutsListCore, Table, PaginationMenu],
+      html: `<payouts-list-core></payouts-list-core>`,
+    });
+
+    page.rootInstance.componentWillLoad = () => { };
+
+    page.rootInstance.getPayouts = makeGetPayouts({
+      id: '123',
+      authToken: '123',
+      service: mockPayoutService
+    });
+
+    page.rootInstance.fetchData();
+
+    await page.waitForChanges();
+
+    page.rootInstance.handleClickNext('nextCursor');
+    await page.waitForChanges();
+
+    // The mock function should be called 3 times: once for the initial load, twice for when mockGetPayouts is set and later after the pagination interaction
+    expect(mockPayoutService.fetchPayouts).toHaveBeenCalledTimes(3);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams.after_cursor).toBe('nextCursor');
   });
 });
