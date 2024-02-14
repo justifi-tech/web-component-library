@@ -1,7 +1,7 @@
 import { PaymentService } from '../../../api/services/payment.service';
 import { makeGetPayments } from '../get-payments';
 import mockResponse from '../../../api/mockData/mockPaymentsSuccess.json';
-import { IApiResponseCollection, IPayment } from '../../../api';
+import { IApiResponseCollection, IPayment, Payment } from '../../../api';
 
 // Mock the PaymentService class
 jest.mock('../../../api/services/payment.service');
@@ -40,7 +40,10 @@ describe('makeGetPayments', () => {
     await getPayments({ params: mockParams, onSuccess, onError });
 
     expect(onSuccess).toHaveBeenCalledWith({
-      payments: [expect.any(Object), expect.any(Object)],
+      payments: expect.arrayContaining([
+        expect.any(Payment),
+        expect.any(Payment),
+      ]),
       pagingInfo: mockResponse.page_info,
     });
     expect(onError).not.toHaveBeenCalled();
