@@ -97,7 +97,7 @@ export class LegalAddressForm {
               <form-control-select
                 name="country"
                 label="Country"
-                options={countryOptions}
+                options={[{ label: 'United States', value: 'USA' }]}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.country}
                 error={this.errors?.legal_address?.country}
