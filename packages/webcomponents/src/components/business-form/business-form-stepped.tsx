@@ -32,7 +32,6 @@ export class BusinessFormStepped {
   constructor() {
     this.sendData = this.sendData.bind(this);
     this.fetchData = this.fetchData.bind(this);
-    this.validateAndSubmit = this.validateAndSubmit.bind(this);
   }
 
   get disabledState() {
@@ -114,8 +113,9 @@ export class BusinessFormStepped {
     }
   }
 
-  private validateAndSubmit(callback: () => void) {
-    this.formController.validateAndSubmit(() => this.sendData(callback));
+  private validateAndSubmit(event: any) {
+    event.preventDefault();
+    this.formController.validateAndSubmit(this.sendData);
   }
 
   showPreviousStepButton() {
@@ -123,7 +123,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
-    this.validateAndSubmit(() => this.currentStep--);
+    this.sendData(() => this.currentStep--);
   }
 
   showNextStepButton() {
@@ -131,7 +131,7 @@ export class BusinessFormStepped {
   }
 
   nextStepButtonOnClick() {
-    this.validateAndSubmit(() => this.currentStep++);
+    this.sendData(() => this.currentStep++);
   }
 
   showSubmitButton() {
@@ -147,7 +147,7 @@ export class BusinessFormStepped {
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
-        <form onSubmit={(event) => event.preventDefault()}>
+        <form onSubmit={this.validateAndSubmit}>
           <div class="my-4">
             {this.currentStepComponent()}
           </div>
