@@ -1,6 +1,6 @@
-import { h } from '@stencil/core';
+import { FunctionalComponent, h } from '@stencil/core';
 
-export const LoadingState = (
+export const LoadingState = () => (
   <main
     part="detail-loading-state"
     class="p-4 d-flex justify-content-center text-center"
@@ -16,6 +16,7 @@ export const LoadingState = (
   </main>
 );
 
+
 export const ErrorState = (errorMessage: string) => (
   <main
     part="detail-empty-state"
@@ -26,15 +27,12 @@ export const ErrorState = (errorMessage: string) => (
   </main>
 );
 
-export const DetailSection = (
-  { sectionTitle }: { sectionTitle: string },
-  children,
-) => (
+export const DetailSection: FunctionalComponent<{ sectionTitle: string }> = (props, children) => (
   <div part="detail-section" class="mt-4">
-    <h5 part="detail-section-title">{sectionTitle}</h5>
+    <h5 part="detail-section-title">{props.sectionTitle}</h5>
     <hr />
     <div class="d-table gap-2 w-100">
-      {children}
+      {...children}
     </div>
   </div>
 );
