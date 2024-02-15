@@ -37,7 +37,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           </thead>
           <tbody class="table-body" part="table-body">
             <tr>
-              <td class="error-state" colspan="7" data-test-id="error-state" part="error-state" style="text-align: center;">
+              <td class="error-state" colspan="7" data-test-id="table-error-state" part="error-state" style="text-align: center;">
                 An unexpected error occurred: Fetch error
               </td>
             </tr>
