@@ -14,8 +14,12 @@ describe('payout-details-core', () => {
     // Initialize the page with the mock getPayout function included in the component tag
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      html: `<payout-details-core get-payout="${mockGetPayout}"></payout-details-core>`,
+      html: `<payout-details-core></payout-details-core>`,
     });
+
+    page.rootInstance.componentWillLoad = () => { };
+
+    page.rootInstance.getPayout = mockGetPayout
 
     // Wait for any state changes to complete
     await page.waitForChanges();

@@ -15,7 +15,7 @@ export class PayoutDetailsCore {
   @State() errorMessage: string = null;
 
   componentWillLoad() {
-    if (typeof this.getPayout === 'function') {
+    if (this.getPayout) {
       this.fetchData();
     }
   }
@@ -28,24 +28,18 @@ export class PayoutDetailsCore {
   fetchData(): void {
     this.loading = true;
 
-    if (typeof this.getPayout === 'function') {
-      this.getPayout({
-        onSuccess: (payout: IPayout) => {
-          this.errorMessage = null;
-          this.payout = payout;
-          this.loading = false;
-        },
-        onError: (errorMessage) => {
-          this.errorMessage = errorMessage;
-          console.error(this.errorMessage);
-          this.loading = false;
-        },
-      });
-    } else {
-      console.error('getPayout prop is not a function or not provided');
-      this.loading = false;
-      this.errorMessage = 'Failed to load payout details. getPayout function is not provided.';
-    }
+    this.getPayout({
+      onSuccess: (payout: IPayout) => {
+        this.errorMessage = null;
+        this.payout = payout;
+        this.loading = false;
+      },
+      onError: (errorMessage) => {
+        this.errorMessage = errorMessage;
+        console.error(this.errorMessage);
+        this.loading = false;
+      },
+    });
   }
 
   render() {

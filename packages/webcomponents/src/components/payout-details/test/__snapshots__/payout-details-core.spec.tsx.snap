@@ -161,9 +161,7 @@ exports[`payout-details-core handles fetch payout error correctly 1`] = `
 `;
 
 exports[`payout-details-core renders loading state initially 1`] = `
-<payout-details-core get-payout="function () {
-        return fn.apply(this, arguments);
-      }">
+<payout-details-core>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
     <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
       <span class="visually-hidden">
