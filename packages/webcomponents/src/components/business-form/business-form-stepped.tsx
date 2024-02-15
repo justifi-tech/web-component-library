@@ -136,8 +136,8 @@ export class BusinessFormStepped {
     return this.currentStep < this.totalSteps;
   }
 
-  nextStepButtonOnClick() {
-    this.clickEvent.emit({ name: ClickEvents.nextStep })
+  nextStepButtonOnClick(clickEventName) {
+    this.clickEvent.emit({ name: clickEventName })
     this.sendData(() => this.currentStep++);
   }
 
@@ -176,7 +176,7 @@ export class BusinessFormStepped {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onClick={() => this.nextStepButtonOnClick()}
+                  onClick={() => this.nextStepButtonOnClick(ClickEvents.nextStep)}
                   disabled={this.disabledState}>
                   Next
                 </button>
@@ -185,7 +185,7 @@ export class BusinessFormStepped {
                 <button
                   type="submit"
                   class="btn btn-primary"
-                  onClick={() => this.nextStepButtonOnClick()}
+                  onClick={() => this.nextStepButtonOnClick(ClickEvents.submit)}
                   disabled={this.disabledState}>
                   Submit
                 </button>
