@@ -1,4 +1,5 @@
 import { Payment } from '../../api';
+import { getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPaymentDetails =
   ({ id, authToken, service }) =>
@@ -8,10 +9,7 @@ export const makeGetPaymentDetails =
       if (!response.error) {
         onSuccess({ payment: new Payment(response.data) });
       } else {
-        const responseError =
-          typeof response.error === 'string'
-            ? response.error
-            : response.error.message;
+        const responseError = getErrorMessage(response.error);
         onError(`Error trying to fetch data : ${responseError}`);
       }
     } catch (error) {
