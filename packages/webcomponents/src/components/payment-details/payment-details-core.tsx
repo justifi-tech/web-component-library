@@ -15,14 +15,12 @@ export class PaymentDetailsCore {
   @State() errorMessage: string;
 
   componentWillLoad() {
-    if (typeof this.getPaymentDetails === 'function') {
+    if (this.getPaymentDetails) {
       this.fetchData();
     }
   }
 
-  @Watch('paymentId')
-  @Watch('authToken')
-  @Watch('paymentService')
+  @Watch('getPaymentDetails')
   updateOnPropChange() {
     this.fetchData();
   }
@@ -30,19 +28,17 @@ export class PaymentDetailsCore {
   fetchData(): void {
     this.loading = true;
 
-    if (typeof this.getPaymentDetails === 'function') {
-      this.getPaymentDetails({
-        onSuccess: ({ payment }) => {
-          this.payment = payment;
-          this.loading = false;
-          this.errorMessage = null;
-        },
-        onError: (error) => {
-          this.errorMessage = error;
-          this.loading = false;
-        },
-      });
-    }
+    this.getPaymentDetails({
+      onSuccess: ({ payment }) => {
+        this.payment = payment;
+        this.loading = false;
+        this.errorMessage = null;
+      },
+      onError: (error) => {
+        this.errorMessage = error;
+        this.loading = false;
+      },
+    });
   }
 
   render() {
