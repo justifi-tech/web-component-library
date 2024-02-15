@@ -1,6 +1,6 @@
 import { IApiResponse, Payout } from '../../../api';
 import { PayoutService } from '../../../api/services/payout.service';
-import { makeGetPayout } from '../get-payout';
+import { makeGetPayoutDetails } from '../get-payout-details';
 import mockResponse from '../../../api/mockData/mockPayoutDetailsSuccess.json';
 
 describe('getPayout', () => {
@@ -22,7 +22,7 @@ describe('getPayout', () => {
       mockResponse as unknown as IApiResponse<Payout>
     );
 
-    const getPayout = makeGetPayout({
+    const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
@@ -40,7 +40,7 @@ describe('getPayout', () => {
 
     mockServiceInstance.fetchPayout.mockRejectedValue(mockError);
 
-    const getPayout = makeGetPayout({
+    const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
@@ -60,7 +60,7 @@ describe('getPayout', () => {
 
     mockServiceInstance.fetchPayout.mockRejectedValue(mockError);
 
-    const getPayout = makeGetPayout({
+    const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,

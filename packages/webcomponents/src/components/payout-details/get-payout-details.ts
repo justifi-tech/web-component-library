@@ -1,6 +1,7 @@
 import { Payout } from '../../api';
+import { getErrorMessage } from '../../api/services/utils';
 
-export const makeGetPayout =
+export const makeGetPayoutDetails =
   ({ id, authToken, service }) =>
   async ({ onSuccess, onError }) => {
     try {
@@ -11,10 +12,7 @@ export const makeGetPayout =
 
         onSuccess(payout);
       } else {
-        const responseError =
-          typeof response.error === 'string'
-            ? response.error
-            : response.error.message;
+        const responseError = getErrorMessage(response.error);
         const errorMessage = `Error fetching payout details: ${responseError}`;
         onError(errorMessage);
       }

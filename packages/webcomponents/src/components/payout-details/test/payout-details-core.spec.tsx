@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { PayoutDetailsCore } from '../payout-details-core';
 import mockPayoutDetailSuccess from '../../../api/mockData/mockPayoutDetailsSuccess.json';
-import { makeGetPayout } from '../get-payout';
+import { makeGetPayoutDetails } from '../get-payout-details';
 
 describe('payout-details-core', () => {
   it('renders loading state initially', async () => {
@@ -29,7 +29,7 @@ describe('payout-details-core', () => {
       fetchPayout: jest.fn().mockResolvedValue(mockPayoutDetailSuccess),
     };
 
-    const getPayout = makeGetPayout({
+    const getPayout = makeGetPayoutDetails({
       id: 'some-id',
       authToken: 'some-auth-token',
       service: mockService,
@@ -63,7 +63,7 @@ describe('payout-details-core', () => {
     };
 
     // Real getPayout function but with mocked service
-    const realGetPayoutWithMockedService = makeGetPayout({
+    const realGetPayoutWithMockedService = makeGetPayoutDetails({
       id: 'some-id', // Use appropriate id
       authToken: 'some-auth-token', // Use appropriate auth token
       service: mockService // Injecting the mocked service

@@ -1,6 +1,6 @@
 import { Component, h, Prop, Watch, State } from '@stencil/core';
 import { PayoutService } from '../../api/services/payout.service';
-import { makeGetPayout } from './get-payout';
+import { makeGetPayoutDetails } from './get-payout-details';
 import { ErrorState } from '../details/utils';
 
 @Component({
@@ -26,7 +26,7 @@ export class PayoutDetails {
 
   initializeGetPayout() {
     if (this.payoutId && this.authToken) {
-      this.getPayout = makeGetPayout({
+      this.getPayout = makeGetPayoutDetails({
         id: this.payoutId,
         authToken: this.authToken,
         service: new PayoutService()
