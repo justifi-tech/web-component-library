@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
@@ -23,6 +23,7 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() submitted: EventEmitter<any>;
 
   get disabledState() {
     return this.isLoading;
@@ -62,10 +63,12 @@ export class BusinessForm {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
       const payload = parseForPatching(values, initialValues);
-      await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      this.submitted.emit(response.data);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
+      this.submitted.emit(error);
     } finally {
       this.isLoading = false;
     }

@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api } from '../../api';
@@ -25,6 +25,8 @@ export class BusinessFormStepped {
   @State() totalSteps: number = 4;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() submitted: EventEmitter<any>;
+
 
   private formController: FormController;
   private api: any;
