@@ -21,7 +21,7 @@ export class PaymentsListCore {
   }) rowClicked: EventEmitter<Payment>;
 
   componentWillLoad() {
-    if (typeof this.getPayments === 'function') {
+    if (this.getPayments) {
       this.fetchData();
     }
   }
@@ -47,23 +47,18 @@ export class PaymentsListCore {
   fetchData(): void {
     this.loading = true;
 
-    if (typeof this.getPayments === 'function') {
-      this.getPayments({
-        params: this.params,
-        onSuccess: ({ payments, pagingInfo }) => {
-          this.payments = payments;
-          this.paging = pagingInfo;
-          this.loading = false;
-        },
-        onError: (errorMessage) => {
-          this.errorMessage = errorMessage;
-          this.loading = false;
-        },
-      });
-    } else {
-      this.loading = false;
-      this.errorMessage = "No getPayments function provided";
-    }
+    this.getPayments({
+      params: this.params,
+      onSuccess: ({ payments, pagingInfo }) => {
+        this.payments = payments;
+        this.paging = pagingInfo;
+        this.loading = false;
+      },
+      onError: (errorMessage) => {
+        this.errorMessage = errorMessage;
+        this.loading = false;
+      },
+    });
   };
 
   render() {

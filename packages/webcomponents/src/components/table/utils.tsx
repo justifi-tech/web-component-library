@@ -18,7 +18,7 @@ export const EmptyState = (columnSpan: number) => (
 
 export const ErrorState = (columnSpan: number, errorMessage: string) => (
   <tr>
-    <td class="error-state" part="error-state" colSpan={columnSpan} data-test-id="error-state" style={{ textAlign: 'center' }}>
+    <td class="error-state" part="error-state" colSpan={columnSpan} data-test-id="table-error-state" style={{ textAlign: 'center' }}>
       An unexpected error occurred: {errorMessage}
     </td>
   </tr>
