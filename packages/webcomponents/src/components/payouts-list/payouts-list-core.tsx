@@ -27,7 +27,7 @@ export class PayoutsListCore {
   }) rowClicked: EventEmitter<Payout>;
 
   componentWillLoad() {
-    if (typeof this.getPayouts === 'function') {
+    if (this.getPayouts) {
       this.fetchData();
     }
   }
@@ -70,23 +70,18 @@ export class PayoutsListCore {
   fetchData(): void {
     this.loading = true;
 
-    if (typeof this.getPayouts === 'function') {
-      this.getPayouts({
-        params: this.params,
-        onSuccess: ({ payouts, pagingInfo }) => {
-          this.payouts = payouts;
-          this.paging = pagingInfo;
-          this.loading = false;
-        },
-        onError: (errorMessage) => {
-          this.errorMessage = errorMessage;
-          this.loading = false;
-        },
-      });
-    } else {
-      this.loading = false;
-      this.errorMessage = "No getPayouts function provided";
-    }
+    this.getPayouts({
+      params: this.params,
+      onSuccess: ({ payouts, pagingInfo }) => {
+        this.payouts = payouts;
+        this.paging = pagingInfo;
+        this.loading = false;
+      },
+      onError: (errorMessage) => {
+        this.errorMessage = errorMessage;
+        this.loading = false;
+      },
+    });
   };
 
   render() {

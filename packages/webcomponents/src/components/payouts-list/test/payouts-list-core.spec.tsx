@@ -70,7 +70,7 @@ describe('payouts-list-core', () => {
 
     const shadowRoot = justifiTable.shadowRoot;
 
-    const error = shadowRoot.querySelector('[data-test-id="error-state"]');
+    const error = shadowRoot.querySelector('[data-test-id="table-error-state"]');
     expect(error).toBeTruthy();
     expect(page.root).toMatchSnapshot();
   });
