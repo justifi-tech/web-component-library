@@ -1,4 +1,5 @@
 import { Payment } from '../../api';
+import { getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayments =
   ({ id, authToken, service }) =>
@@ -16,11 +17,7 @@ export const makeGetPayments =
 
         onSuccess({ payments, pagingInfo });
       } else {
-        const responseError =
-          typeof response.error === 'string'
-            ? response.error
-            : response.error.message;
-
+        const responseError = getErrorMessage(response.error);
         return onError(responseError);
       }
     } catch (error) {
