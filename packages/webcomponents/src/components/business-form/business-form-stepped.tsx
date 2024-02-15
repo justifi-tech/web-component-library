@@ -5,6 +5,7 @@ import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
+import { ClickEvents } from './BusinessFormEventTypes';
 
 /**
  * @exportedPart label: Label for inputs
@@ -127,7 +128,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
-    this.clickEvent.emit({ name: 'previousStep' })
+    this.clickEvent.emit({ name: ClickEvents.previousStep })
     this.sendData(() => this.currentStep--);
   }
 
@@ -136,7 +137,7 @@ export class BusinessFormStepped {
   }
 
   nextStepButtonOnClick() {
-    this.clickEvent.emit({ name: 'nextStep' })
+    this.clickEvent.emit({ name: ClickEvents.nextStep })
     this.sendData(() => this.currentStep++);
   }
 

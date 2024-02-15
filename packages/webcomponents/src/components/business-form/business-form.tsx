@@ -6,6 +6,7 @@ import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
 import { Business } from '../../api/BusinessV2';
+import { ClickEvents } from './BusinessFormEventTypes';
 
 /**
  * @exportedPart label: Label for inputs
@@ -122,7 +123,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.clickEvent.emit({ name: 'submit'})}
+                onClick={() => this.clickEvent.emit({ name: ClickEvents.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
