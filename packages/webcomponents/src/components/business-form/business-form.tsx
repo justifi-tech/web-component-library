@@ -23,6 +23,7 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() clickEvent: EventEmitter<any>;
   @Event() submitted: EventEmitter<any>;
 
   get disabledState() {
@@ -122,6 +123,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
+                onClick={() => this.clickEvent.emit({ name: 'submit'})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>

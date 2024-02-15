@@ -25,6 +25,7 @@ export class BusinessFormStepped {
   @State() totalSteps: number = 4;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() clickEvent: EventEmitter<any>;
   @Event() submitted: EventEmitter<any>;
 
 
@@ -94,9 +95,11 @@ export class BusinessFormStepped {
       const payload = parseForPatching(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
+      this.submitted.emit(response.data);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
+      this.submitted.emit(error);
     } finally {
       this.isLoading = false;
     }
@@ -125,6 +128,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
+    this.clickEvent.emit({ name: 'previous step button clicked' })
     this.sendData(() => this.currentStep--);
   }
 
@@ -133,6 +137,7 @@ export class BusinessFormStepped {
   }
 
   nextStepButtonOnClick() {
+    this.clickEvent.emit({ name: 'next step button clicked' })
     this.sendData(() => this.currentStep++);
   }
 

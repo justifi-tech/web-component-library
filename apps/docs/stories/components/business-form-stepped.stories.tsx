@@ -26,7 +26,8 @@ const meta: Meta = {
   parameters: {
     actions: {
       handles: [
-        'submitted'
+        'submitted',
+        'clickEvent'
       ]
     }
   },
