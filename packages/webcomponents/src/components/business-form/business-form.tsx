@@ -23,8 +23,8 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
-  @Event() clickEvent: EventEmitter<any>;
-  @Event() submitted: EventEmitter<any>;
+  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
+  @Event() submitted: EventEmitter<{ data: any }>;
 
   get disabledState() {
     return this.isLoading;
@@ -65,11 +65,10 @@ export class BusinessForm {
       const initialValues = this.formController.getInitialValues();
       const payload = parseForPatching(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-      this.submitted.emit(response.data);
+      this.submitted.emit({data: response.data});
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
-      this.submitted.emit(error);
     } finally {
       this.isLoading = false;
     }
