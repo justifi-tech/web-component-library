@@ -6,6 +6,7 @@ import {
 } from '../business-form-schema';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/phone-masks';
+import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../api/BusinessV2';
 
 /**
  *
@@ -24,12 +25,16 @@ import { PHONE_MASKS } from '../../../utils/phone-masks';
 export class BusinessGenericInfo {
   @Prop() formController: FormController;
   @State() errors: any = {};
+  @State() genericInfo: ICoreBusinessInfo = {};
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
   }
 
   componentDidLoad() {
+    this.formController.values.subscribe(
+      values => (this.genericInfo = { ...new CoreBusinessInfo(values) }),
+    );
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });

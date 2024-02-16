@@ -5,6 +5,7 @@ import { Api } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
+import { Business } from '../../api/BusinessV2';
 
 /**
  * @exportedPart label: Label for inputs
@@ -41,6 +42,7 @@ export class BusinessForm {
   constructor() {
     this.sendData = this.sendData.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.validateAndSubmit = this.validateAndSubmit.bind(this);
   }
 
   componentWillLoad() {
@@ -73,7 +75,8 @@ export class BusinessForm {
     this.isLoading = true;
     try {
       const response = await this.api.get(this.businessEndpoint);
-      this.formController.setInitialValues(response.data);
+      const business = new Business(response.data);
+      this.formController.setInitialValues(business);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
@@ -90,7 +93,7 @@ export class BusinessForm {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={event => this.validateAndSubmit(event)}>
+        <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
             <div class="col-12 mb-4">
               <h1>Business Information</h1>
