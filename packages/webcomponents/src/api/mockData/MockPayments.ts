@@ -54,6 +54,11 @@ const mockPayments = [
     refunded: false,
     status: PaymentStatuses.succeeded,
     updated_at: '2022-01-10T15:29:58.940Z',
+    financial_transaction_id: null,
+    returned: null,
+    application_fee: null,
+    refunds: [],
+    transaction_hold: null,
   }),
   // payment 1: fully refunded
   new Payment({
@@ -91,6 +96,11 @@ const mockPayments = [
     refunded: true,
     status: PaymentStatuses.fully_refunded,
     updated_at: '2021-01-10T15:29:58.940Z',
+    financial_transaction_id: null,
+    returned: null,
+    application_fee: null,
+    refunds: [],
+    transaction_hold: null,
   }),
   // payment 2: partially refunded
   new Payment({
@@ -128,6 +138,11 @@ const mockPayments = [
     refunded: true,
     status: PaymentStatuses.partially_refunded,
     updated_at: '2022-01-10T15:29:58.940Z',
+    financial_transaction_id: null,
+    returned: null,
+    application_fee: null,
+    refunds: [],
+    transaction_hold: null,
   }),
   // payment 3: disputed
   new Payment({
@@ -177,6 +192,11 @@ const mockPayments = [
     refunded: false,
     status: PaymentStatuses.disputed,
     updated_at: '2021-09-10T15:29:58.940Z',
+    financial_transaction_id: null,
+    returned: null,
+    application_fee: null,
+    refunds: [],
+    transaction_hold: null,
   }),
   // payment 4: failed
   new Payment({
@@ -214,6 +234,11 @@ const mockPayments = [
     refunded: false,
     status: PaymentStatuses.failed,
     updated_at: '2022-01-18T12:54:44.822Z',
+    financial_transaction_id: null,
+    returned: null,
+    application_fee: null,
+    refunds: [],
+    transaction_hold: null,
   }),
 ];
 

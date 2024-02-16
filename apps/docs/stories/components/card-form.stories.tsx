@@ -4,25 +4,18 @@ import { StoryBaseArgs, paymentMethodFormComponentMethods } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-card-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const meta: Meta = {
   title: 'Components/CardForm',
   component: 'justifi-card-form',
   args: {
-    ...storyBaseArgs.args,
-    'iframe-origin': '',
-    'single-line': false,
-    'validation-mode': 'onSubmit'
+    ...storyBaseArgs.args
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
     'css-variables': {
-      table: {
-        disable: true
-      },
-    },
-    'iframe-origin': {
       table: {
         disable: true
       },
@@ -94,7 +87,10 @@ const handleValidateClick = async (cardForm: HTMLJustifiCardFormElement) => {
   await cardForm.validate();
 };
 const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData: any) => {
-  await cardForm.tokenize('CLIENT_ID', paymentMethodData);
+  const clientId = storyBaseArgs.args['client-id'] || '';
+  const accountId = storyBaseArgs.args['account-id'] || '';
+  console.log('clientID', clientId);
+  await cardForm.tokenize(clientId, paymentMethodData, accountId);
 };
 
 const handleReady = () => {
@@ -105,7 +101,7 @@ const handleReady = () => {
     handleValidateClick(cardForm);
   });
   tokenizeBtn?.addEventListener('click', () => {
-    handleTokenizeClick(cardForm, {});
+    handleTokenizeClick(cardForm, { address_postal_code: '12345' });
   });
 };
 
@@ -115,20 +111,12 @@ const addEvents = () => {
 
 const FormButtons = `
   <style>
-    .button-bar {
-      display: flex;
-      aligin-items: center;
-      padding: 10px;
-    }
-    .button-bar button {
-      margin-right: 10px;
-      border-radius: 3px;
-      border: 1px solid black;
-    }
+    .button-bar { margin-top: 10px;}
+    .button-bar button { margin-right: 10px; }
   </style>
   <div class="button-bar">
-    <button id="validate-btn">Validate</button>
-    <button id="tokenize-btn">Tokenize</button>
+    <button id="validate-btn">Test Validate</button>
+    <button id="tokenize-btn">Test Tokenize</button>
   </div>`;
 
 const Template = (args: any) => {
@@ -143,8 +131,8 @@ const Template = (args: any) => {
       </style>
       <justifi-card-form
         data-testid="card-form-iframe"
-        validation-mode='${args['validation-mode'] || 'onSubmit'}'
-        single-line='${args['single-line']}'
+        validation-mode="${args['validation-mode'] || 'onSubmit'}"
+        single-line="${args['single-line']}"
       />
     </div>
     ${includeButtons ? FormButtons : ''}
@@ -152,15 +140,10 @@ const Template = (args: any) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  'validation-mode': 'onSubmit',
-  'single-line': false,
-};
+Basic.args = {};
 
 export const SingleLine = Template.bind({});
-SingleLine.args = {
-  'single-line': true,
-};
+SingleLine.args = { 'single-line': true };
 
 const styledVariables = `
   --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
@@ -200,8 +183,7 @@ const styledVariables = `
 
 export const Styled = Template.bind({});
 Styled.args = {
-  'single-line': false,
-  'css-variables': styledVariables,
+  'css-variables': styledVariables
 };
 
 export default meta;

@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property         | Attribute    | Description | Type             | Default     |
-| ---------------- | ------------ | ----------- | ---------------- | ----------- |
-| `formController` | --           |             | `FormController` | `undefined` |
-| `isEditing`      | `is-editing` |             | `boolean`        | `undefined` |
+| Property         | Attribute | Description | Type             | Default     |
+| ---------------- | --------- | ----------- | ---------------- | ----------- |
+| `formController` | --        |             | `FormController` | `undefined` |
 
 
 ## Dependencies

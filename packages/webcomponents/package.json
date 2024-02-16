@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "4.7.4",
+  "version": "4.7.6",
   "description": "JustiFi Web Components",
   "main": "dist/module/index.js",
   "module": "dist/module/index.js",
@@ -50,9 +50,11 @@
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "dotenv": "^16.3.1",
-    "jest": "^27.4.5",
-    "jest-cli": "^27.4.5",
-    "puppeteer": "^21.0.0"
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "puppeteer": "^21.0.0",
+    "ts-jest": "^29.1.2"
   },
   "license": "MIT",
   "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783"
