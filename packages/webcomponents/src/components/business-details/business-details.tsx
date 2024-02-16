@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
-import { IBusiness } from '../../api/Business';
-import { Api } from '../../api';
+import { Business, IBusiness } from '../../api/Business';
+import { Api, IApiResponse } from '../../api';
 import { ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
 
@@ -26,7 +26,7 @@ enum RENDER_STATES {
 export class BusinessDetails {
   @Prop() businessId: string;
   @Prop() authToken: string;
-  @State() business: IBusiness;
+  @State() business: Business;
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
   @State() errorMessage: string = 'An error ocurred.';
 
@@ -56,14 +56,14 @@ export class BusinessDetails {
   async fetchBusiness(businessId) {
     this.renderState = RENDER_STATES.LOADING;
     try {
-      const response = await this.api.get(`entities/business/${businessId}`);
+      const response: IApiResponse<IBusiness> = await this.api.get(`entities/business/${businessId}`);
       if (response.error) {
         this.errorMessage = `${this.errorMessage}: ${response.error}`;
         console.error(this.errorMessage);
         this.renderState = RENDER_STATES.ERROR;
         return;
       }
-      this.business = response.data;
+      this.business = new Business(response.data);
       this.renderState = RENDER_STATES.READY;
     } catch (error) {
       this.errorMessage = `${this.errorMessage}: ${error}`;
@@ -86,12 +86,12 @@ export class BusinessDetails {
     return (
       <Host>
         <generic-info-details business={this.business} />
-        <legal-address-details legalAddress={this.business?.legal_address} />
+        <legal-address-details legalAddress={this.business.legal_address} />
         <representative-details
-          representative={this.business?.representative}
+          representative={this.business.representative}
         />
-        <owner-details owners={this.business?.owners} />
-        <additional-questions-details business={this.business} />
+        <owner-details owners={this.business.owners} />
+        <additional-questions-details additionalQuestions={this.business.additional_questions} />
       </Host>
     );
   }

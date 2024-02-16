@@ -1,10 +1,11 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
-import { Api } from '../../api';
+import { Api, IApiResponse } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
+import { Business, IBusiness } from '../../api/Business';
 
 /**
  * @exportedPart label: Label for inputs
@@ -103,8 +104,9 @@ export class BusinessFormStepped {
   private async fetchData() {
     this.isLoading = true;
     try {
-      const response = await this.api.get(this.businessEndpoint);
-      this.formController.setInitialValues(response.data);
+      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
+      const business = new Business(response.data);
+      this.formController.setInitialValues(business);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
