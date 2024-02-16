@@ -5,7 +5,7 @@ import {
   BusinessTypeOptions,
 } from '../business-form-schema';
 import { FormController } from '../../form/form';
-import { PHONE_MASKS } from '../../../utils/phone-masks';
+import { PHONE_MASKS, TAX_ID_MASKS } from '../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../api/BusinessV2';
 
 /**
@@ -104,12 +104,13 @@ export class BusinessGenericInfo {
               />
             </div>
             <div class="col-12">
-              <form-control-text
+              <form-control-number-masked
                 name="tax_id"
                 label="Tax ID"
                 defaultValue={genericInfoDefaultValue.tax_id}
                 error={this.errors.tax_id}
                 inputHandler={this.inputHandler}
+                mask={TAX_ID_MASKS.US}
               />
             </div>
             <div class="col-12">
