@@ -1,6 +1,5 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../form/form';
-import countryOptions from '../../../utils/country-options';
 
 /**
  * @exportedPart label: Label for inputs
@@ -97,7 +96,7 @@ export class LegalAddressForm {
               <form-control-select
                 name="country"
                 label="Country"
-                options={countryOptions}
+                options={[{ label: 'United States', value: 'USA' }]}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.country}
                 error={this.errors?.legal_address?.country}

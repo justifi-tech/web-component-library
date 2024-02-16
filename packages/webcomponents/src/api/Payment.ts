@@ -156,7 +156,7 @@ export interface IPayment {
   currency: 'usd';
   description: string;
   disputed: boolean;
-  disputes: (IDispute | null)[];
+  disputes: IDispute[];
   error_code: string | null;
   error_description: string | null;
   fee_amount: number;
@@ -172,7 +172,7 @@ export interface IPayment {
   returned: boolean;
   application_fee: IApplicationFee;
   application_fee_rate_id?: string;
-  refunds: (IRefund | null)[];
+  refunds: IRefund[];
   transaction_hold?: null;
   statement_descriptor?: string;
 }
