@@ -13,7 +13,7 @@ export interface BusinessAddressFormFields {
 
 const BusinessAddressFormSchema = object({
   line1: string().required('Enter street address'),
-  line2: string(),
+  line2: string().nullable(),
   city: string().required('Enter city'),
   state: string().required('Choose state'),
   postal_code: string()
