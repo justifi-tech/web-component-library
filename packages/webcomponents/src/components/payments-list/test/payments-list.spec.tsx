@@ -1,41 +1,32 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { PaymentsList } from '../payments-list';
+import { newSpecPage } from "@stencil/core/testing";
+import { PaymentsList } from "../payments-list";
+import { PaymentsListCore } from "../payments-list-core";
 
-describe('justifi-payments-list', () => {
-  it('renders properly', async () => {
+describe('payments-list', () => {
+  it('renders an error message when accountId and authToken are not provided', async () => {
     const page = await newSpecPage({
-      components: [PaymentsList],
-      html: `<justifi-payments-list></justifi-payments-list>`,
+      components: [PaymentsList, PaymentsListCore],
+      html: '<justifi-payments-list></justifi-payments-list>',
     });
-
-    expect(page.root).toEqualHtml(`
-    <justifi-payments-list>
-      <mock:shadow-root>
-        <justifi-table error-message="Can not fetch any data without an AccountID and an AuthToken">
-      </mock:shadow-root>
-    </justifi-table>
-    `);
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('stops loading', async () => {
+  it('renders an error message when accountId is not provided', async () => {
     const page = await newSpecPage({
-      components: [PaymentsList],
-      html: `<justifi-payments-list></justifi-payments-list>`,
+      components: [PaymentsList, PaymentsListCore],
+      html: '<justifi-payments-list auth-token="abc"></justifi-payments-list>',
     });
-
-    const loading = page.root.__shadowRoot.querySelector('.loading-state');
-
-    expect(loading).toEqual(null);
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('renders an error when not given proper auth data', async () => {
+  it('renders an error message when authToken is not provided', async () => {
     const page = await newSpecPage({
-      components: [PaymentsList],
-      html: `<justifi-payments-list></justifi-payments-list>`,
+      components: [PaymentsList, PaymentsListCore],
+      html: '<justifi-payments-list account-id="abc"></justifi-payments-list>',
     });
-
-    const error = page.root.__shadowRoot.querySelector('.error-state');
-
-    expect(error).toBeDefined();
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
   });
 });

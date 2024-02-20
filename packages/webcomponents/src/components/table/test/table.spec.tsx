@@ -12,7 +12,7 @@ describe('justifi-table', () => {
 
     const loading = page.root.shadowRoot.querySelector('.loading-state');
     expect(loading).toBeTruthy();
-    
+
     const loadingSpinner = page.root.shadowRoot.querySelector('.spinner-border');
     expect(loadingSpinner).toBeTruthy();
 
@@ -42,7 +42,7 @@ describe('justifi-table', () => {
       components: [Table],
       template: () => <justifi-table columnData={['test', 'test']} loading={false} errorMessage={ERROR_TEXT} />
     });
-    
+
     const loading = page.root.shadowRoot.querySelector('.loading-state');
     expect(loading).toBeNull();
 
@@ -60,8 +60,8 @@ describe('justifi-table', () => {
       end_cursor: '',
       has_previous: false,
       has_next: true,
-      handleClickNext: () => {},
-      handleClickPrevious: () => {}
+      handleClickNext: () => { },
+      handleClickPrevious: () => { }
     };
     const page = await newSpecPage({
       components: [Table],
@@ -90,5 +90,34 @@ describe('justifi-table', () => {
 
     const error = await page.root.shadowRoot.querySelector('.error-state');
     expect(error).toBeNull();
+  });
+
+  it('renders rows and columns based on columnData and rowData', async () => {
+    const columnData = ['Name', 'Age'];
+    const rowData = [['John Doe', 30], ['Jane Doe', 25]];
+    const entityId = ['id1', 'id2']; // Corresponding entity IDs for each row
+
+    const page = await newSpecPage({
+      components: [Table],
+      template: () => (
+        <justifi-table
+          columnData={columnData}
+          rowData={rowData}
+          entityId={entityId}
+          loading={false}
+        />
+      ),
+    });
+
+    const rows = page.root.shadowRoot.querySelectorAll('[data-test-id="table-row"]');
+    expect(rows.length).toBe(rowData.length);
+
+    rows.forEach((row, index) => {
+      const cells = row.querySelectorAll('td');
+      expect(cells.length).toBe(columnData.length);
+      cells.forEach((cell, cellIndex) => {
+        expect(cell.textContent).toBe(String(rowData[index][cellIndex]));
+      });
+    });
   });
 });

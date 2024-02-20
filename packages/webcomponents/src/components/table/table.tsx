@@ -61,31 +61,32 @@ export class Table {
               {this.showEmptyState && EmptyState(this.columnData.length)}
               {this.showErrorState && ErrorState(this.columnData.length, this.errorMessage)}
               {this.showRowData && (
-                  this.rowData.map((data, index) => {
-                    return (
-                      <tr
-                        data-row-entity-id={this.entityId[index]}
-                        onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
-                        part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
-                      >
-                        {
-                          data.map((dataEntry: any) => {
-                            let nestedHtml = dataEntry?.type;
-                            if (nestedHtml) {
-                              return (
-                                <td part="table-cell" innerHTML={dataEntry.value}></td>
-                              )
-                            } else {
-                              return (
-                                <td part="table-cell">{dataEntry}</td>
-                              )
-                            }
-                          })
-                        }
-                      </tr>
-                    )
-                  })
-                )}
+                this.rowData.map((data, index) => {
+                  return (
+                    <tr
+                      data-test-id="table-row"
+                      data-row-entity-id={this.entityId[index]}
+                      onClick={e => this.rowClickHandler ? this.rowClickHandler(e) : null}
+                      part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
+                    >
+                      {
+                        data.map((dataEntry: any) => {
+                          let nestedHtml = dataEntry?.type;
+                          if (nestedHtml) {
+                            return (
+                              <td part="table-cell" innerHTML={dataEntry.value}></td>
+                            )
+                          } else {
+                            return (
+                              <td part="table-cell">{dataEntry}</td>
+                            )
+                          }
+                        })
+                      }
+                    </tr>
+                  )
+                })
+              )}
             </tbody>
             {this.paging &&
               <tfoot class="sticky-bottom">

@@ -1,9 +1,9 @@
 export interface PagingInfo {
-  amount: number,
-  start_cursor: string,
-  end_cursor: string,
-  has_previous: boolean,
-  has_next: boolean,
+  amount: number;
+  start_cursor: string;
+  end_cursor: string;
+  has_previous: boolean;
+  has_next: boolean;
 }
 
 export const pagingDefaults = {
@@ -12,7 +12,7 @@ export const pagingDefaults = {
   end_cursor: '',
   has_previous: false,
   has_next: false,
-}
+};
 
 export interface ExtendedPagingInfo extends PagingInfo {
   handleClickNext: (after_cursor: string) => void;
@@ -21,6 +21,6 @@ export interface ExtendedPagingInfo extends PagingInfo {
 
 export const ExtendedPagingDefaults: ExtendedPagingInfo = {
   ...pagingDefaults,
-  handleClickNext: () => { },
-  handleClickPrevious: () => { }
-}
+  handleClickNext: () => {},
+  handleClickPrevious: () => {},
+};
