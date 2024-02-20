@@ -66,7 +66,7 @@ export class BusinessForm {
       const initialValues = this.formController.getInitialValues();
       const payload = parseForPatching(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-      this.submitted.emit({data: response.data});
+      this.submitted.emit({data: response});
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
