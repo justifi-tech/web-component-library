@@ -60,6 +60,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@5.0.12)
+      chromatic:
+        specifier: ^10.6.0
+        version: 10.6.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -4918,6 +4921,19 @@ packages:
   /chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
+    dev: true
+
+  /chromatic@10.6.0:
+    resolution: {integrity: sha512-pT8t0lbY6TCf33klkVGvZGgOcse8Tmzd/Y9LLP/XA53fK6sedlRxNEdJkIkV+/c2yKMEPqpmifpcfmHL35LKtw==}
+    hasBin: true
+    peerDependencies:
+      chromatic-cypress: ^0.4.0 || ^1.0.0
+      chromatic-playwright: ^0.4.0 || ^1.0.0
+    peerDependenciesMeta:
+      chromatic-cypress:
+        optional: true
+      chromatic-playwright:
+        optional: true
     dev: true
 
   /chromium-bidi@0.5.2(devtools-protocol@0.0.1203626):
