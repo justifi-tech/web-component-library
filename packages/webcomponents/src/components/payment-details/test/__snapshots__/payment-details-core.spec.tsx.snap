@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`payment-details-core displays an error state on failed data fetch 1`] = `
+<payment-details-core>
+  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+    <div>
+      Error trying to fetch data : Error: Fetch error
+    </div>
+  </main>
+</payment-details-core>
+`;
+
+exports[`payment-details-core it renders properly with fetched data 1`] = `
+<payment-details-core>
+  <justifi-details exportparts="detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
+        detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info">
+    <mock:shadow-root>
+      <main class="p-2">
+        <slot name="head-info"></slot>
+        <slot name="detail-sections"></slot>
+      </main>
+    </mock:shadow-root>
+    <div class="p-2" part="detail-head" slot="head-info">
+      <div class="align-items-center d-flex flex-row gap-2 mb-2">
+        <h1 class="m-0" part="detail-title">
+          $234.56 USD
+        </h1>
+        <span slot="badge">
+          <span class="badge bg-success" title="This payment was successfully captured">
+            Successful
+          </span>
+        </span>
+      </div>
+      <div class="align-items-top d-flex flex-row" part="detail-head-info">
+        <div class="border-1 border-end d-flex flex-column" part="detail-head-info-item">
+          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
+            Updated At
+          </span>
+          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
+            Dec 27, 2023 6:53pm
+          </span>
+        </div>
+        <div class="border-1 border-end d-flex flex-column" part="detail-head-info-item">
+          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
+            Created At
+          </span>
+          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
+            Dec 27, 2023 6:52pm
+          </span>
+        </div>
+        <div class="d-flex flex-column undefined" part="detail-head-info-item">
+          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
+            ID
+          </span>
+          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
+            py_1NNeEnf4FbelxDCQN2RHcE
+          </span>
+        </div>
+      </div>
+    </div>
+    <div slot="detail-sections">
+      <div class="mt-4" part="detail-section">
+        <h5 part="detail-section-title">
+          Details
+        </h5>
+        <hr>
+        <div class="d-table gap-2 w-100">
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Amount
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              $234.56
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Fees
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              $2.00
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Refunded
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              $0.00
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Net
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              $232.56
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Status
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              <span class="badge bg-success" title="This payment was successfully captured">
+                Successful
+              </span>
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Payment ID
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              py_1NNeEnf4FbelxDCQN2RHcE
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Processing Fees
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              $2.00
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Description
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              payment
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4" part="detail-section">
+        <h5 part="detail-section-title">
+          Payment Method
+        </h5>
+        <hr>
+        <div class="d-table gap-2 w-100">
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              ID
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              pm_uICmv8696AatL4gRwa0Wq
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Last 4 Numbers
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              **** 6789
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Bank Name
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              Altra
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Account Owner
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              Julia Garnett
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4" part="detail-section">
+        <h5 part="detail-section-title">
+          Metadata
+        </h5>
+        <hr>
+        <div class="d-table gap-2 w-100"></div>
+      </div>
+    </div>
+  </justifi-details>
+</payment-details-core>
+`;

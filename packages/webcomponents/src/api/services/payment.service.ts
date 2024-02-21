@@ -1,4 +1,4 @@
-import { Api, IApiResponseCollection, IPayment } from '..';
+import { Api, IApiResponseCollection, IApiResponse, IPayment } from '..';
 import { config } from '../../../config';
 
 export interface IPaymentService {
@@ -7,6 +7,10 @@ export interface IPaymentService {
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<IPayment[]>>;
+  fetchPayment(
+    paymentId: string,
+    authToken: string
+  ): Promise<IApiResponse<IPayment>>;
 }
 
 export class PaymentService implements IPaymentService {
@@ -18,5 +22,13 @@ export class PaymentService implements IPaymentService {
     const api = Api(authToken, config.proxyApiOrigin);
     const endpoint = `account/${accountId}/payments`;
     return api.get(endpoint, params);
+  }
+
+  async fetchPayment(
+    paymentId: string,
+    authToken: string
+  ): Promise<IApiResponse<IPayment>> {
+    const endpoint = `payments/${paymentId}`;
+    return Api(authToken, config.proxyApiOrigin).get(endpoint);
   }
 }
