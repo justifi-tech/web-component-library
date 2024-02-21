@@ -1,4 +1,4 @@
-import { Api, IApiResponseCollection, IPayout } from '..';
+import { Api, IApiResponse, IApiResponseCollection, IPayout } from '..';
 import { config } from '../../../config';
 
 export interface IPayoutService {
@@ -7,6 +7,10 @@ export interface IPayoutService {
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<IPayout[]>>;
+  fetchPayout(
+    payoutId: string,
+    authToken: string
+  ): Promise<IApiResponse<IPayout>>;
 }
 
 export class PayoutService implements IPayoutService {
@@ -18,5 +22,14 @@ export class PayoutService implements IPayoutService {
     const api = Api(authToken, config.proxyApiOrigin);
     const endpoint = `account/${accountId}/payouts`;
     return api.get(endpoint, params);
+  }
+
+  async fetchPayout(
+    payoutId: string,
+    authToken: string
+  ): Promise<IApiResponse<IPayout>> {
+    const api = Api(authToken, config.proxyApiOrigin);
+    const endpoint = `payouts/${payoutId}`;
+    return api.get(endpoint);
   }
 }
