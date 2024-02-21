@@ -85,7 +85,10 @@ const meta: Meta = {
       handles: [
         'submitted'
       ]
-    }
+    },
+    chromatic: {
+      delay: 1000
+    },
   },
   decorators: [
     withActions
