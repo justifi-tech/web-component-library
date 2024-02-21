@@ -16,7 +16,8 @@ export const parseForPatching = (values, initialValues) => {
   delete values.representative?.address.id;
   delete values.representative?.address.created_at;
   delete values.representative?.address.updated_at;
-  initialValues.owners.length && delete values.owners;
+  delete values.representative?.business_id;
+  initialValues.owners?.length && delete values.owners;
 
   return values;
 }
