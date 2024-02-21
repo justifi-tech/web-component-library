@@ -1,28 +1,50 @@
 ### Changelog
 
+## 4.8.0
+
+### Minor Changes
+
+- 902b037: Implement error alerts to form components triggered on server error - alerts can be hidden via new optional prop: hideErrors.
+- 44f6f11: - BusinessForm and BusinessFormStepped components require a `business-id` prop. The business will be loaded into the form and updated upon submit.
+  - Removed POST (create) functionality from BusinessForm and BusinessFormStepped
+
+### Patch Changes
+
+- 902b037: Added event emitters to 'business-form' and 'business-form-stepped' for submit and click events
+- aa5fbe9: Default `BusinessForm` legal address country to 'USA', and update select option value to 'USA' instead of 'US'
+- 66e2266: Added the Bin Details to the Card-Form Tokenize response/event. The change will trickle down to the Payment-Form component. The addition of Bin Details is passing through the response from the Payment Method API call.
+- 902b037: Fixed tax id field filling value from data
+- 9f9dbc1: Fix BusinessGeneric info prefill when business is loaded
+- 902b037: Improved table component render logic and unit test coverage for table component
+- 7afac17: - Fix `BusinessForm` validations by using `Business` class to create a business instance on load and update validation schema
+
 ### 4.7.6
+
 > 12 Feb 2024
 
 - Remove `account-id` from BusinessFormStepped. This is not a breaking change as the `account-id` does not have an impact on loading a business, and will not error if left as a prop after upgrading
 
-
 ### 4.7.5
+
 > 2 Feb 2024
 
 - Fixed: events for `bankAccountFormValidate`, `bankAccountFormTokenize`, `cardFormValidate`, and `cardFormTokenize` are now being properly emitted
 
 ### 4.7.4
+
 > 18 Jan 2024
 
 - Fixed: added missing css parts for tables
 - Fixed: prevent clicks on disabled pagination buttons
 
 ### 4.7.3
+
 > 18 Jan 2024
 
 - Fixed: added missing next-button pagination css part
 
 ### 4.7.2
+
 > 16 Jan 2024
 
 - Fixed text wrapping on Detail views
