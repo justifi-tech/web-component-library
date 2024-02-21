@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GrossPaymentChart renders an error when no accountId and authToken is passed 1`] = `
+<justifi-gross-payment-chart>
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-gross-payment-chart>
+`;
+
+exports[`GrossPaymentChart renders an error when no accountId is passed 1`] = `
+<justifi-gross-payment-chart auth-token="abc">
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-gross-payment-chart>
+`;
+
+exports[`GrossPaymentChart renders an error when no authToken is passed 1`] = `
+<justifi-gross-payment-chart account-id="abc">
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-gross-payment-chart>
+`;

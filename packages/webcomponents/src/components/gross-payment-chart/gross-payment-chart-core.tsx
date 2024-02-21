@@ -2,100 +2,91 @@ import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
 import { GrossVolumeReport, GrossVolumeReportDate } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
-import { ErrorState } from '../details/utils';
-import { ChartDataService } from './chart-data.service';
+import { ErrorState, LoadingState } from '../details/utils';
 
+Chart.register(
+  Colors,
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Legend,
+  Tooltip,
+  Title
+)
 @Component({
   tag: 'gross-payment-chart-core',
   styleUrl: 'gross-payment-chart.scss',
-  shadow: true,
 })
 
 export class GrossPaymentChartCore {
   chart: Chart
   chartRef: HTMLCanvasElement
 
-  @Prop() accountId: string;
-  @Prop() authToken: string;
-  @Prop() dataService: ChartDataService
-  @State() data: GrossVolumeReport;
+  @Prop() getGrossPayment: Function;
   @State() total: number;
   @State() dates: GrossVolumeReportDate[];
   @State() endDate: string;
   @State() loading: boolean = true;
   @State() errorMessage: string = '';
 
-  @Watch('accountId')
-  @Watch('authToken')
-  @Watch('dataService')
-  updateOnPropChange() {
-    this.fetchData();
-  }
-
-  connectedCallback() {
-    this.fetchData();
-  }
-
-  componentDidRender() {
-    this.renderChart();
-  }
-
-   async fetchData() {
-    if(!this.dataService) {
-      return;
+  componentDidLoad() {
+    if (this.getGrossPayment) {
+      this.fetchData();
     }
-    if (!this.accountId || !this.authToken) {
-      this.errorMessage = "Can not fetch any data without an AccountID and an AuthToken";
-      this.loading = false;
-      return;
+  }
+
+  @Watch('getGrossPayment')
+  propChanged() {
+    if (this.getGrossPayment) {
+      this.fetchData();
     }
+  }
+
+  async fetchData() {
     this.loading = true;
-    try {
-      const response = await this.dataService.fetchChartData(this.accountId, this.authToken);
-      if (!response.error) {
-        this.total = response?.data.total;
-        this.dates = response?.data.dates.reverse();
+
+    this.getGrossPayment({
+      onSuccess: (data: GrossVolumeReport) => {
+        this.total = data.total;
+        this.dates = data.dates;
         this.endDate = this.dates[this.dates.length - 1].date;
-      } else {
-        this.errorMessage = `Error trying to fetch data : ${response.error}`;
-        console.error(this.errorMessage);
+        this.loading = false;
+        this.initChart();
+        this.renderChart();
+      },
+      onError: (error: string) => {
+        this.errorMessage = error;
+        this.loading = false;
       }
-    } catch (error) {
-      this.errorMessage = `Error trying to fetch data : ${error}`;
-      console.error(this.errorMessage);
-    } finally {
-      this.loading = false;
-    }
+    });
   }
 
   renderChart() {
-    if (this.chart) {
+    if (!this.chart) {
+      this.initChart()
+    } else {
       this.chart.update()
-    } else if (this.chartRef && this.endDate) {
-      Chart.register(
-        Colors,
-        BarController,
-        BarElement,
-        CategoryScale,
-        LinearScale,
-        Legend,
-        Tooltip,
-        Title
-      )
+    }
+  }
+
+  initChart() {
+    if (this.chartRef && this.endDate) {
       this.chart = new Chart(
         this.chartRef.getContext("2d"),
         generateChartOptions(this.total, this.dates, this.endDate) as ChartConfiguration
       );
-      this.chart.render()
+    } else {
+      this.errorMessage = 'No data to display';
     }
   }
 
   render() {
     return (
       <Host>
-        {this.errorMessage && ErrorState(this.errorMessage)}
-        <canvas id="chart" ref={(elem) => this.chartRef = elem} />
+        {this.loading && LoadingState()}
+        {!this.errorMessage ? <canvas id="chart" ref={(elem) => this.chartRef = elem} /> : ErrorState(this.errorMessage)}
       </Host>
     );
   }
-}
+} 
