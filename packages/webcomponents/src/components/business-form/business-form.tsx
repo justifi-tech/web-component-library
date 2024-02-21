@@ -1,10 +1,11 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api, IApiResponse } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
+import { ClickEvents } from './BusinessFormEventTypes';
 import { Business, IBusiness } from '../../api/Business';
 
 /**
@@ -23,6 +24,8 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
+  @Event() submitted: EventEmitter<{ data: any }>;
 
   get disabledState() {
     return this.isLoading;
@@ -62,7 +65,8 @@ export class BusinessForm {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
       const payload = parseForPatching(values, initialValues);
-      await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      this.submitted.emit({data: response});
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
@@ -119,6 +123,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
+                onClick={() => this.clickEvent.emit({ name: ClickEvents.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>

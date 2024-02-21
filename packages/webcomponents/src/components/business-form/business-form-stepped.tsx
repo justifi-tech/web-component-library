@@ -1,12 +1,12 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
 import { Api, IApiResponse } from '../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
+import { ClickEvents } from './BusinessFormEventTypes';
 import { Business, IBusiness } from '../../api/Business';
-
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -26,6 +26,9 @@ export class BusinessFormStepped {
   @State() totalSteps: number = 4;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
+  @Event() submitted: EventEmitter<{ data: any }>;
+
 
   private formController: FormController;
   private api: any;
@@ -93,6 +96,7 @@ export class BusinessFormStepped {
       const payload = parseForPatching(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
+      this.submitted.emit({ data: response.data });
     } catch (error) {
       this.serverError = true;
       this.errorMessage = error.message;
@@ -125,6 +129,7 @@ export class BusinessFormStepped {
   }
 
   previousStepButtonOnClick() {
+    this.clickEvent.emit({ name: ClickEvents.previousStep })
     this.sendData(() => this.currentStep--);
   }
 
@@ -132,7 +137,8 @@ export class BusinessFormStepped {
     return this.currentStep < this.totalSteps;
   }
 
-  nextStepButtonOnClick() {
+  nextStepButtonOnClick(clickEventName) {
+    this.clickEvent.emit({ name: clickEventName })
     this.sendData(() => this.currentStep++);
   }
 
@@ -171,7 +177,7 @@ export class BusinessFormStepped {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onClick={() => this.nextStepButtonOnClick()}
+                  onClick={() => this.nextStepButtonOnClick(ClickEvents.nextStep)}
                   disabled={this.disabledState}>
                   Next
                 </button>
@@ -180,7 +186,7 @@ export class BusinessFormStepped {
                 <button
                   type="submit"
                   class="btn btn-primary"
-                  onClick={() => this.nextStepButtonOnClick()}
+                  onClick={() => this.nextStepButtonOnClick(ClickEvents.submit)}
                   disabled={this.disabledState}>
                   Submit
                 </button>
