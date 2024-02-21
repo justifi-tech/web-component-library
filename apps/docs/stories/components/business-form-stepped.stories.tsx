@@ -24,6 +24,12 @@ const meta: Meta = {
     }
   },
   parameters: {
+    actions: {
+      handles: [
+        'submitted',
+        'clickEvent'
+      ]
+    }
   },
   decorators: [
     customStoryDecorator,
