@@ -17,8 +17,18 @@ module.exports = {
     "@vercel/style-guide/eslint/typescript",
     "@vercel/style-guide/eslint/react",
   ].map(require.resolve),
+  overrides: [
+    {
+      files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      extends: [require.resolve("@vercel/style-guide/eslint/jest")],
+    },
+  ],
+  env: {
+    node: true,
+  },
   parserOptions: {
     project,
+    tsconfigRootDir: __dirname,
   },
   plugins: ["only-warn"],
   globals: {
@@ -31,18 +41,18 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js", "**/*.css"],
+  ignorePatterns: ["node_modules/", "dist/", "**/*.css"],
   // add rules configurations here
   rules: {
     "import/no-default-export": "off",
   },
 };
 
-module.exports = {
-  extends: ["@repo/eslint-config/react.js"],
-  parserOptions: {
-    project: "tsconfig.json",
-    sourceType: "module",
-    tsconfigRootDir: __dirname,
-  }
-};
+// module.exports = {
+//   extends: ["@repo/eslint-config/react.js"],
+//   parserOptions: {
+//     project: "tsconfig.json",
+//     sourceType: "module",
+//     tsconfigRootDir: __dirname,
+//   },
+// };

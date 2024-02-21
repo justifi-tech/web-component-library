@@ -13,7 +13,8 @@
     "jsx": "react",
     "jsxFactory": "h",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

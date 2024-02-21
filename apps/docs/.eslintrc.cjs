@@ -24,7 +24,7 @@ module.exports = {
   ],
   parserOptions: {
     project,
-    project: "tsconfig.json",
+    // project: "tsconfig.json",
     sourceType: "module",
     tsconfigRootDir: __dirname,
   },
@@ -46,4 +46,3 @@ module.exports = {
     "import/no-default-export": "off",
   },
 };
-
