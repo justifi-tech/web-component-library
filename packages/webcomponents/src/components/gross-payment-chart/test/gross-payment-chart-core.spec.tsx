@@ -43,9 +43,7 @@ describe('gross-payment-chart', () => {
     page.rootInstance.fetchData();
     await page.waitForChanges();
 
-    expect(page.rootInstance.total).toEqual(mockDataResponse.data.total);
-    expect(page.rootInstance.dates).toEqual(mockDataResponse.data.dates);
-    expect(page.rootInstance.endDate).toEqual(mockDataResponse.data.dates[mockDataResponse.data.dates.length - 1].date);
+    expect(page.rootInstance.grossVolumeReport).toEqual(mockDataResponse.data);
   });
 
   it('matches the snapshot when in loading state', async () => {

@@ -24,9 +24,7 @@ export class GrossPaymentChartCore {
   chartRef: HTMLCanvasElement
 
   @Prop() getGrossPayment: Function;
-  @State() total: number;
-  @State() dates: GrossVolumeReportDate[];
-  @State() endDate: string;
+  @State() grossVolumeReport: GrossVolumeReport;
   @State() loading: boolean = true;
   @State() errorMessage: string = '';
 
@@ -43,41 +41,50 @@ export class GrossPaymentChartCore {
     }
   }
 
+  @Watch('grossVolumeReport')
+  grossVolumeReportChanged(grossVolumeReport: GrossVolumeReport) {
+    if (grossVolumeReport) {
+      if (!this.chart) {
+        this.initChart(grossVolumeReport);
+      } else {
+        this.updateChartData(grossVolumeReport);
+      }
+    }
+  }
+
   async fetchData() {
     this.loading = true;
 
     this.getGrossPayment({
       onSuccess: (data: GrossVolumeReport) => {
-        this.total = data.total;
-        this.dates = data.dates;
-        this.endDate = this.dates[this.dates.length - 1].date;
         this.loading = false;
-        this.initChart();
-        this.renderChart();
+        this.grossVolumeReport = data;
       },
       onError: (error: string) => {
-        this.errorMessage = error;
         this.loading = false;
+        this.errorMessage = error;
       }
     });
   }
 
-  renderChart() {
-    if (!this.chart) {
-      this.initChart()
-    } else {
-      this.chart.update()
-    }
+  initChart(grossVolumeReport: GrossVolumeReport) {
+    const { dates, total } = grossVolumeReport;
+    const endDate = dates[dates.length - 1].date;
+    const chartOptions = generateChartOptions(total, dates, endDate) as ChartConfiguration;
+    this.chart = new Chart(this.chartRef.getContext('2d'), chartOptions);
   }
 
-  initChart() {
-    if (this.chartRef && this.endDate) {
-      this.chart = new Chart(
-        this.chartRef.getContext("2d"),
-        generateChartOptions(this.total, this.dates, this.endDate) as ChartConfiguration
-      );
-    } else {
-      this.errorMessage = 'No data to display';
+  updateChartData(grossVolumeReport: GrossVolumeReport) {
+    const newData = grossVolumeReport.dates.map((date) => date.value);
+    this.chart.data.datasets.forEach((dataset) => {
+      dataset.data = newData;
+    });
+    this.chart.update();
+  }
+
+  disconnectedCallback() {
+    if (this.chart) {
+      this.chart.destroy();
     }
   }
 
