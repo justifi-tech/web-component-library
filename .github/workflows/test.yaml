@@ -3,7 +3,7 @@ name: Run Tests
 on:
   pull_request:
     paths:
-      - stencil-library/**
+      - packages/webcomponents/**
 
 jobs:
   test:
