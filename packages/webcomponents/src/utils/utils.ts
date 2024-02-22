@@ -1,7 +1,16 @@
-import { format } from 'date-fns';
 import Dinero from 'dinero.js';
+import { parseISO } from 'date-fns';
+import { zonedTimeToUtc, format as formatTz } from 'date-fns-tz';
 import { Address } from '../api/Business';
 import { Legal } from '../api/SubAccount';
+
+// Utility function to format dates with time zone
+const formatWithTimeZone = (dateInput, formatStr, timeZone = 'UTC') => {
+  // Parse the date string into a Date object if it's a string
+  const date = typeof dateInput === 'string' ? parseISO(dateInput) : dateInput;
+  const zonedDate = zonedTimeToUtc(date, timeZone);
+  return formatTz(zonedDate, formatStr, { timeZone });
+};
 
 export function formatCurrency(amount: number, withSymbol = true): string {
   if (!amount) amount = 0;
@@ -29,50 +38,31 @@ export function formatPercentage(amount: number): string {
 
 export function formatDate(dateString: string | Date): string {
   if (!dateString) return '';
-  const date = new Date(dateString);
-  return format(date, 'MMM d, yyyy');
+  return formatWithTimeZone(dateString, 'MMM d, yyyy');
 }
 
-// eg. Oct 9, 2023
 export function formatMediumDate(input: string | Date): string {
   // Check if input is a string and convert to Date object
-  if (typeof input === 'string') {
-    input = new Date(input);
-  }
+  if (typeof input === 'string') input = new Date(input);
+  if (isNaN(input.getTime())) return 'Invalid date';
 
-  // Check if input is a valid date
-  if (Object.prototype.toString.call(input) === '[object Date]') {
-    if (isNaN(input.getTime())) {
-      return 'Invalid date';
-    }
-  } else {
-    return 'Invalid input';
-  }
-
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
-
-  return input.toLocaleDateString('en-US', options);
+  return formatWithTimeZone(input, 'MMM d, yyyy');
 }
 
-export function formatDisplayDate(value: any, endDate: string) {
+export function formatDisplayDate(value: any, endDate: string): string {
   const isEndingDate = value === endDate;
-  return (isEndingDate) ? 'Today' : format(new Date(value.replace(/-/g, '/')), 'MMM d');
+  const date = new Date(value.replace(/-/g, '/'));
+  return isEndingDate ? 'Today' : formatWithTimeZone(date, 'MMM d');
 }
 
 export function formatTime(dateString: string): string {
   if (!dateString) return '';
-  const date = new Date(dateString);
-  return format(date, 'h:mmaaa');
+  return formatWithTimeZone(dateString, 'h:mmaaa');
 }
 
 export function formatTimeSeconds(dateString: string): string {
   if (!dateString) return '';
-  const date = new Date(dateString);
-  return format(date, 'h:mm:ssaaa');
+  return formatWithTimeZone(dateString, 'h:mm:ssaaa');
 }
 
 // Receives an Address as input and return a formatted string
