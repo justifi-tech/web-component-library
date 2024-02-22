@@ -25,31 +25,6 @@ type BusinessStructure =
   | 'tax_exempt_government_instrumentality'
   | '';
 
-export class Business {
-  public legal_name = '';
-  public website_url = '';
-  public email: string = '';
-  public phone: string = '';
-  public doing_business_as: string = '';
-  public business_type: string = '';
-  public business_structure: string = '';
-  public industry: string = '';
-  public metadata: any = {};
-
-  constructor(data?: any) {
-    if (data) {
-      this.legal_name = data.legal_name;
-      this.website_url = data.website_url;
-      this.email = data.email;
-      this.phone = data.phone;
-      this.doing_business_as = data.doing_business_as;
-      this.business_type = data.business_type;
-      this.business_structure = data.business_structure;
-      this.industry = data.industry;
-      this.metadata = data.metadata;
-    }
-  }
-}
 
 export const BusinessTypeOptions: { label: string; value: BusinessType }[] = [
   {
@@ -136,7 +111,7 @@ export const BusinessStructureOptions: {
     },
   ];
 
-const businessGenericInfoSchema = object({
+export const businessGenericInfoSchema = object({
   legal_name: string().required('Enter legal name'),
   website_url: string()
     .url('Enter valid website url')
@@ -149,14 +124,14 @@ const businessGenericInfoSchema = object({
   industry: string().required('Enter a business industry'),
 });
 
-const addressSchema = object({
+export const addressSchema = object({
   line1: string().required('Enter street address'),
   city: string().required('Enter city'),
   state: string().required('Select state'),
   postal_code: string().required('Enter postal code'),
 });
 
-const representativeSchema = object({
+export const representativeSchema = object({
   name: string().required('Enter representative name'),
   email: string()
     .email('Enter valid representative email')
@@ -184,7 +159,7 @@ const representativeSchema = object({
 //   address: addressSchema,
 // });
 
-const additionQuestionsSchema = object({
+export const additionQuestionsSchema = object({
   business_revenue: string().required('Enter business revenue'),
   business_payment_volume: string().required('Enter business payment volume'),
   business_dispute_volume: string().required('Enter business dispute volume'),
