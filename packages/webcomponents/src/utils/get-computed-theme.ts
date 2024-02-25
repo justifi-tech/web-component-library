@@ -1,4 +1,4 @@
-import { Theme } from './theme';
+import { Theme } from '../components/payment-method-form/theme';
 
 const getComputedTheme = () => {
   const computedStyles = getComputedStyle(document.body);
