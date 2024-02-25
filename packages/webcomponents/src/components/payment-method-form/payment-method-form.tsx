@@ -9,7 +9,7 @@ import {
 } from '@stencil/core';
 import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { MessageEventType } from './message-event-types';
-import { Theme } from './theme';
+import { Theme } from '../../utils/theme';
 import packageJson from '../../../package.json';
 import getComputedTheme from '../../utils/get-computed-theme';
 import { CreatePaymentMethodResponse } from './payment-method-responses';
