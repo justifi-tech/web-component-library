@@ -24,11 +24,11 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-owners --> form-control-text
-  justifi-business-owners --> form-control-number-masked
-  justifi-business-owners --> form-control-datepart
-  justifi-business-owners --> form-control-number
-  style justifi-business-owners fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-owners-form-step --> form-control-text
+  justifi-business-owners-form-step --> form-control-number-masked
+  justifi-business-owners-form-step --> form-control-datepart
+  justifi-business-owners-form-step --> form-control-number
+  style justifi-business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

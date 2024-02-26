@@ -16,11 +16,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [justifi-business-representative](../business-representative)
- - [justifi-business-representative-form-step](../../business-form-stepped/business-representative)
-
 ### Depends on
 
 - [form-control-text](../../form)
@@ -30,12 +25,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-address-form --> form-control-text
-  justifi-business-address-form --> form-control-select
-  justifi-business-address-form --> form-control-number
-  justifi-business-representative --> justifi-business-address-form
-  justifi-business-representative-form-step --> justifi-business-address-form
-  style justifi-business-address-form fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-address-form-step --> form-control-text
+  justifi-business-address-form-step --> form-control-select
+  justifi-business-address-form-step --> form-control-number
+  style justifi-business-address-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

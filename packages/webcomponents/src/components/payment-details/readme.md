@@ -7,13 +7,16 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type     | Default     |
-| ----------- | ------------ | ----------- | -------- | ----------- |
-| `authToken` | `auth-token` |             | `string` | `undefined` |
-| `paymentId` | `payment-id` |             | `string` | `undefined` |
+| Property            | Attribute | Description | Type       | Default     |
+| ------------------- | --------- | ----------- | ---------- | ----------- |
+| `getPaymentDetails` | --        |             | `Function` | `undefined` |
 
 
 ## Dependencies
+
+### Used by
+
+ - [justifi-payment-details](.)
 
 ### Depends on
 
@@ -22,8 +25,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-details --> justifi-details
-  style justifi-payment-details fill:#f9f,stroke:#333,stroke-width:4px
+  payment-details-core --> justifi-details
+  justifi-payment-details --> payment-details-core
+  style payment-details-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

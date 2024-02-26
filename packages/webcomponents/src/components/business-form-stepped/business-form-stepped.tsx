@@ -51,10 +51,10 @@ export class BusinessFormStepped {
   }
 
   componentStepMapping = {
-    0: (formController) => <justifi-business-generic-info formController={formController} />,
-    1: (formController) => <justifi-legal-address-form formController={formController} />,
-    2: (formController) => <justifi-additional-questions formController={formController} />,
-    3: (formController) => <justifi-business-representative formController={formController} />
+    0: (formController) => <justifi-business-core-info-form-step formController={formController} />,
+    1: (formController) => <justifi-legal-address-form-step formController={formController} />,
+    2: (formController) => <justifi-additional-questions-form-step formController={formController} />,
+    3: (formController) => <justifi-business-representative-form-step formController={formController} />
   };
 
   componentWillLoad() {
