@@ -1,4 +1,4 @@
-# justifi-business-owners
+# legal-address-form
 
 
 
@@ -14,21 +14,24 @@
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-business-form-stepped](..)
+
 ### Depends on
 
 - [form-control-text](../../form)
-- [form-control-number-masked](../../form)
-- [form-control-datepart](../../form)
 - [form-control-number](../../form)
+- [form-control-select](../../form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-owners --> form-control-text
-  justifi-business-owners --> form-control-number-masked
-  justifi-business-owners --> form-control-datepart
-  justifi-business-owners --> form-control-number
-  style justifi-business-owners fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-legal-address-form-step --> form-control-text
+  justifi-legal-address-form-step --> form-control-number
+  justifi-legal-address-form-step --> form-control-select
+  justifi-business-form-stepped --> justifi-legal-address-form-step
+  style justifi-legal-address-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

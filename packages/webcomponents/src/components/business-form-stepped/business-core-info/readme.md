@@ -20,10 +20,6 @@ and the other one  is meant to be just read only.
 
 ## Dependencies
 
-### Used by
-
- - [justifi-business-form](..)
-
 ### Depends on
 
 - [form-control-text](../../form)
@@ -33,11 +29,10 @@ and the other one  is meant to be just read only.
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-generic-info --> form-control-text
-  justifi-business-generic-info --> form-control-select
-  justifi-business-generic-info --> form-control-number-masked
-  justifi-business-form --> justifi-business-generic-info
-  style justifi-business-generic-info fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-core-info-form-step --> form-control-text
+  justifi-business-core-info-form-step --> form-control-select
+  justifi-business-core-info-form-step --> form-control-number-masked
+  style justifi-business-core-info-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

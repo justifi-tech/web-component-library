@@ -16,7 +16,7 @@
 
 ### Used by
 
- - [justifi-business-form](..)
+ - [justifi-business-form-stepped](..)
 
 ### Depends on
 
@@ -25,9 +25,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-monetary
-  justifi-business-form --> justifi-additional-questions
-  style justifi-additional-questions fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-additional-questions-form-step --> form-control-monetary
+  justifi-business-form-stepped --> justifi-additional-questions-form-step
+  style justifi-additional-questions-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
