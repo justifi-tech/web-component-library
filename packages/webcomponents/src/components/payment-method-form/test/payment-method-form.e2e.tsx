@@ -24,7 +24,7 @@ it('should emit "paymentMethodFormTokenize" when conditions are met', async () =
 
   const tokenizeEventSpy = await cardFormElement.spyOnEvent('cardFormTokenize');
 
-  paymentFormElement.triggerEvent('paymentMethodFormTokenize');
+  paymentFormElement.triggerEvent('paymentMethodFormTokenized');
   await page.waitForChanges();
 
   expect(tokenizeEventSpy).toHaveReceivedEventTimes(1);
