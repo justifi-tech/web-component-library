@@ -1,17 +1,15 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../form/form';
 import businessFormSchema from './business-form-schema';
-import { Api, IApiResponse } from '../../api';
-import { parseForPatching } from './helpers';
-import { config } from '../../../config';
 import { FormAlert } from '../form/utils';
 import { ClickEvents } from './BusinessFormEventTypes';
-import { Business, IBusiness } from '../../api/Business';
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
  * @exportedPart input-invalid: Invalid state for inputfs
  */
+
+
 @Component({
   tag: 'justifi-business-form-stepped',
   styleUrl: 'business-form-stepped.scss',
@@ -31,12 +29,6 @@ export class BusinessFormStepped {
 
 
   private formController: FormController;
-  private api: any;
-
-  constructor() {
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-  }
 
   get disabledState() {
     return this.isLoading;
@@ -50,11 +42,14 @@ export class BusinessFormStepped {
     return `entities/business/${this.businessId}`
   }
 
+  private additionalQuestionsRef: any;
+  private refs = [];
+
   componentStepMapping = {
-    0: (formController) => <justifi-business-core-info-form-step formController={formController} />,
-    1: (formController) => <justifi-legal-address-form-step formController={formController} />,
-    2: (formController) => <justifi-additional-questions-form-step formController={formController} />,
-    3: (formController) => <justifi-business-representative-form-step formController={formController} />
+    // 0: (formController) => <justifi-business-core-info-form-step formController={formController} />,
+    // 1: (formController) => <justifi-legal-address-form-step formController={formController} />,
+    0: () => <justifi-additional-questions-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} />,
+    // 3: (formController) => <justifi-business-representative-form-step formController={formController} />
   };
 
   componentWillLoad() {
@@ -64,9 +59,8 @@ export class BusinessFormStepped {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.refs = [this.additionalQuestionsRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
-    this.fetchData();
   }
 
   handleResponse(response, onSuccess) {
@@ -81,65 +75,28 @@ export class BusinessFormStepped {
     }
   }
 
-  private async sendData(onSuccess?: () => void) {
-    // Stopgap solution to prevent sending data in storybook examples.
-    if (this.testMode) {
-      onSuccess();
-      return;
-    }
-
-    this.isLoading = true;
-
-    try {
-      const values = this.formController.values.getValue();
-      const initialValues = this.formController.getInitialValues();
-      const payload = parseForPatching(values, initialValues);
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-      this.handleResponse(response, onSuccess);
-      this.submitted.emit({ data: response.data });
-    } catch (error) {
-      this.serverError = true;
-      this.errorMessage = error.message;
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
-  private async fetchData() {
-    this.isLoading = true;
-    try {
-      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      const business = new Business(response.data);
-      this.formController.setInitialValues(business);
-    } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error fetching data: ${error.message}`;
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
-  private validateAndSubmit(event: any) {
-    event.preventDefault();
-    this.formController.validateAndSubmit(this.sendData);
-  }
-
   showPreviousStepButton() {
     return this.currentStep > 0;
   }
 
   previousStepButtonOnClick() {
     this.clickEvent.emit({ name: ClickEvents.previousStep })
-    this.sendData(() => this.currentStep--);
+    // this.sendData(() => this.currentStep--);
+    this.currentStep--;
   }
 
   showNextStepButton() {
     return this.currentStep < this.totalSteps;
   }
 
-  nextStepButtonOnClick(clickEventName) {
+  nextStepButtonOnClick(e: any, clickEventName) {
+    e.preventDefault();
     this.clickEvent.emit({ name: clickEventName })
-    this.sendData(() => this.currentStep++);
+
+    const currentStep = this.refs[this.currentStep];
+    currentStep.validateAndSubmit();
+    // this.sendData(() => this.currentStep++);
+    // this.currentStep++;
   }
 
   showSubmitButton() {
@@ -147,7 +104,7 @@ export class BusinessFormStepped {
   }
 
   currentStepComponent() {
-    return this.componentStepMapping[this.currentStep](this.formController);
+    return this.componentStepMapping[this.currentStep]();
   }
 
   render() {
@@ -155,7 +112,7 @@ export class BusinessFormStepped {
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
-        <form onSubmit={this.validateAndSubmit}>
+        <form>
           <div class="my-4">
             {this.currentStepComponent()}
           </div>
@@ -177,7 +134,7 @@ export class BusinessFormStepped {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onClick={() => this.nextStepButtonOnClick(ClickEvents.nextStep)}
+                  onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.nextStep)}
                   disabled={this.disabledState}>
                   Next
                 </button>
@@ -186,7 +143,7 @@ export class BusinessFormStepped {
                 <button
                   type="submit"
                   class="btn btn-primary"
-                  onClick={() => this.nextStepButtonOnClick(ClickEvents.submit)}
+                  onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.submit)}
                   disabled={this.disabledState}>
                   Submit
                 </button>
