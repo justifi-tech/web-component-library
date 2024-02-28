@@ -1,5 +1,6 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../form/form';
+import { Address } from '../../../api/Business';
 
 /**
  * @exportedPart label: Label for inputs
@@ -24,7 +25,7 @@ export class LegalAddressForm {
       errors => (this.errors = { ...errors }),
     );
     this.formController.values.subscribe(
-      values => (this.legal_address = { ...values.legal_address }),
+      values => (this.legal_address = new Address({ ...values.legal_address })),
     );
   }
 
