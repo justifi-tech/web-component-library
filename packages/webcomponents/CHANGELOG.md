@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.8.1
+
+### Patch Changes
+
+- a6885c6: Add 'USA' as fallback option for business legal address country in cases where country is null.
+
 ## 4.8.0
 
 ### Minor Changes
