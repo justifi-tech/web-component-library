@@ -23,7 +23,7 @@ import { FrameCommunicationService } from '../../utils/frame-comunication-servic
   shadow: false,
 })
 export class PaymentMethodForm {
-  @Prop() paymentMethodFormType: PaymentMethodTypes.card | PaymentMethodTypes.bankAccount;
+  @Prop() paymentMethodFormType: PaymentMethodTypes;
   @Prop({
     mutable: true,
   })
