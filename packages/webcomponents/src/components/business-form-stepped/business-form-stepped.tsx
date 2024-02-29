@@ -43,12 +43,13 @@ export class BusinessFormStepped {
   }
 
   private additionalQuestionsRef: any;
+  private coreInfoRef: any;
   private refs = [];
 
   componentStepMapping = {
-    // 0: (formController) => <justifi-business-core-info-form-step formController={formController} />,
+    0: () => <justifi-business-core-info-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} />,
     // 1: (formController) => <justifi-legal-address-form-step formController={formController} />,
-    0: () => <justifi-additional-questions-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} />,
+    1: () => <justifi-additional-questions-form-step ref={(el) => this.refs[1] = el} authToken={this.authToken} businessId={this.businessId} />,
     // 3: (formController) => <justifi-business-representative-form-step formController={formController} />
   };
 
@@ -59,7 +60,7 @@ export class BusinessFormStepped {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.refs = [this.additionalQuestionsRef];
+    this.refs = [this.coreInfoRef, this.additionalQuestionsRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 
@@ -81,7 +82,8 @@ export class BusinessFormStepped {
 
   previousStepButtonOnClick() {
     this.clickEvent.emit({ name: ClickEvents.previousStep })
-    // this.sendData(() => this.currentStep--);
+    const currentStep = this.refs[this.currentStep];
+    currentStep.validateAndSubmit();
     this.currentStep--;
   }
 
@@ -95,8 +97,7 @@ export class BusinessFormStepped {
 
     const currentStep = this.refs[this.currentStep];
     currentStep.validateAndSubmit();
-    // this.sendData(() => this.currentStep++);
-    // this.currentStep++;
+    this.currentStep++;
   }
 
   showSubmitButton() {

@@ -4,7 +4,6 @@ import { IBusiness } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';
 import { additionQuestionsSchema } from '../../business-form/business-form-schema';
-import { ClickEvents } from '../../business-form/BusinessFormEventTypes';
 
 /**
  * @exportedPart label: Label for inputs
@@ -17,8 +16,6 @@ import { ClickEvents } from '../../business-form/BusinessFormEventTypes';
 export class AdditionalQuestionsFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() previousStepButtonOnClick: () => void;
-  @Prop() nextStepButtonOnClick: (clickEventName: ClickEvents) => void;
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
@@ -106,56 +103,56 @@ export class AdditionalQuestionsFormStep {
     return (
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={() => this.sendData}>
-        <fieldset>
-          <legend>Additional Questions</legend>
-          <hr />
-          <div class="row gy-3">
-            <div class="col-12">
-              <form-control-monetary
-                name="business_revenue"
-                label="Business Revenue"
-                inputHandler={this.inputHandler}
-                error={this.errors?.business_revenue}
-                defaultValue={additionalQuestionsDefaultValue?.business_revenue}
-              />
+          <fieldset>
+            <legend>Additional Questions</legend>
+            <hr />
+            <div class="row gy-3">
+              <div class="col-12">
+                <form-control-monetary
+                  name="business_revenue"
+                  label="Business Revenue"
+                  inputHandler={this.inputHandler}
+                  error={this.errors?.business_revenue}
+                  defaultValue={additionalQuestionsDefaultValue?.business_revenue}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-monetary
+                  name="business_payment_volume"
+                  label="Business Payment Volume"
+                  inputHandler={this.inputHandler}
+                  error={this.errors?.business_payment_volume}
+                  defaultValue={
+                    additionalQuestionsDefaultValue?.business_payment_volume
+                  }
+                />
+              </div>
+              <div class="col-12">
+                <form-control-monetary
+                  name="business_dispute_volume"
+                  label="Business Dispute Volume"
+                  inputHandler={this.inputHandler}
+                  error={this.errors?.business_dispute_volume}
+                  defaultValue={
+                    additionalQuestionsDefaultValue?.business_dispute_volume
+                  }
+                />
+              </div>
+              <div class="col-12">
+                <form-control-monetary
+                  name="business_receivable_volume"
+                  label="Business Receivable Volume"
+                  inputHandler={this.inputHandler}
+                  error={
+                    this.errors?.business_receivable_volume
+                  }
+                  defaultValue={
+                    additionalQuestionsDefaultValue?.business_receivable_volume
+                  }
+                />
+              </div>
             </div>
-            <div class="col-12">
-              <form-control-monetary
-                name="business_payment_volume"
-                label="Business Payment Volume"
-                inputHandler={this.inputHandler}
-                error={this.errors?.business_payment_volume}
-                defaultValue={
-                  additionalQuestionsDefaultValue?.business_payment_volume
-                }
-              />
-            </div>
-            <div class="col-12">
-              <form-control-monetary
-                name="business_dispute_volume"
-                label="Business Dispute Volume"
-                inputHandler={this.inputHandler}
-                error={this.errors?.business_dispute_volume}
-                defaultValue={
-                  additionalQuestionsDefaultValue?.business_dispute_volume
-                }
-              />
-            </div>
-            <div class="col-12">
-              <form-control-monetary
-                name="business_receivable_volume"
-                label="Business Receivable Volume"
-                inputHandler={this.inputHandler}
-                error={
-                  this.errors?.business_receivable_volume
-                }
-                defaultValue={
-                  additionalQuestionsDefaultValue?.business_receivable_volume
-                }
-              />
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
         </form>
       </Host>
     );

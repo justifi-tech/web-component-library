@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method } from '@stencil/core';
 
 import {
   BusinessStructureOptions,
@@ -6,7 +6,12 @@ import {
 } from '../business-form-schema';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../utils/form-input-masks';
-import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../api/Business';
+import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../api/Business';
+import { Api, IApiResponse } from '../../../api';
+import { coreInfoSchema } from '../../business-form/business-form-schema';
+import { config } from '../../../../config';
+import { parseCoreInfo } from '../helpers';
+import { flattenNestedObject } from '../../../utils/utils';
 
 /**
  *
@@ -23,18 +28,75 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../api/Business';
   styleUrl: 'business-core-info-form-step.scss',
 })
 export class BusinessCoreInfoFormStep {
-  @Prop() formController: FormController;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
+  @State() isLoading: boolean = false;
+  @State() serverError: boolean = false;
+  @State() errorMessage: string = '';
+  @State() formController: FormController;
   @State() errors: any = {};
-  @State() genericInfo: ICoreBusinessInfo = {};
+  @State() coreInfo: ICoreBusinessInfo = {};
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
+    this.sendData = this.sendData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  private api: any;
+
+  get businessEndpoint() {
+    return `entities/business/${this.businessId}`
+  }
+
+  private async fetchData() {
+    this.isLoading = true;
+    try {
+      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
+      this.coreInfo = new CoreBusinessInfo(response.data);
+      this.formController.setInitialValues(this.coreInfo);
+    } catch (error) {
+      this.serverError = true;
+      this.errorMessage = `Error fetching data: ${error.message}`;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  @Method()
+  async validateAndSubmit() {
+    this.formController.validateAndSubmit(this.sendData);
+  };
+
+  private async sendData() {
+    // this.isLoading = true;
+    try {
+      const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
+      console.log('payload', payload);
+      await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+    } catch (error) {
+      this.serverError = true;
+      this.errorMessage = `Error sending data: ${error.message}`;
+    } finally {
+      // this.isLoading = false;
+    }
+  }
+
+  componentWillLoad() {
+    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
+    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    if (!this.authToken) console.error(missingAuthTokenMessage);
+    if (!this.businessId) console.error(missingBusinessIdMessage);
+
+    this.formController = new FormController(coreInfoSchema);
+    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.fetchData();
   }
 
   componentDidLoad() {
-    this.formController.values.subscribe(
-      values => (this.genericInfo = { ...new CoreBusinessInfo(values) }),
-    );
+    // this.formController.values.subscribe(
+    //   values => (this.coreInfo = { ...new CoreBusinessInfo(values) }),
+    // );
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
@@ -48,101 +110,103 @@ export class BusinessCoreInfoFormStep {
   }
 
   render() {
-    const genericInfoDefaultValue = this.formController.getInitialValues();
+    const coreInfoDefaultValue = this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <fieldset>
-          <legend>General Info</legend>
-          <hr />
-          <div class="row gy-3">
-            <div class="col-12 col-md-6">
-              <form-control-text
-                name="legal_name"
-                label="Legal Name"
-                defaultValue={genericInfoDefaultValue.legal_name}
-                error={this.errors.legal_name}
-                inputHandler={this.inputHandler}
-              />
+        <form onSubmit={() => this.sendData}>
+          <fieldset>
+            <legend>General Info</legend>
+            <hr />
+            <div class="row gy-3">
+              <div class="col-12 col-md-6">
+                <form-control-text
+                  name="legal_name"
+                  label="Legal Name"
+                  defaultValue={coreInfoDefaultValue.legal_name}
+                  error={this.errors.legal_name}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-text
+                  name="doing_business_as"
+                  label="Doing Business As (DBA)"
+                  defaultValue={coreInfoDefaultValue.doing_business_as}
+                  error={this.errors.doing_business_as}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-select
+                  name="business_type"
+                  label="Business Type"
+                  options={BusinessTypeOptions}
+                  defaultValue={coreInfoDefaultValue.business_type}
+                  error={this.errors.business_type}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-select
+                  name="business_structure"
+                  label="Business Structure"
+                  options={BusinessStructureOptions}
+                  defaultValue={coreInfoDefaultValue.business_structure}
+                  error={this.errors.business_structure}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-text
+                  name="industry"
+                  label="Industry"
+                  defaultValue={coreInfoDefaultValue.industry}
+                  error={this.errors.business_structure}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-number-masked
+                  name="tax_id"
+                  label="Tax ID"
+                  defaultValue={coreInfoDefaultValue.tax_id}
+                  error={this.errors.tax_id}
+                  inputHandler={this.inputHandler}
+                  mask={TAX_ID_MASKS.US}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-text
+                  name="website_url"
+                  label="Website URL"
+                  defaultValue={coreInfoDefaultValue.website_url}
+                  error={this.errors.website_url}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-text
+                  name="email"
+                  label="Email Address"
+                  defaultValue={coreInfoDefaultValue.email}
+                  error={this.errors.email}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-number-masked
+                  name="phone"
+                  label="Phone Number"
+                  defaultValue={coreInfoDefaultValue.phone}
+                  error={this.errors.phone}
+                  inputHandler={this.inputHandler}
+                  mask={PHONE_MASKS.US}
+                />
+              </div>
             </div>
-            <div class="col-12 col-md-6">
-              <form-control-text
-                name="doing_business_as"
-                label="Doing Business As (DBA)"
-                defaultValue={genericInfoDefaultValue.doing_business_as}
-                error={this.errors.doing_business_as}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-select
-                name="business_type"
-                label="Business Type"
-                options={BusinessTypeOptions}
-                defaultValue={genericInfoDefaultValue.business_type}
-                error={this.errors.business_type}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-select
-                name="business_structure"
-                label="Business Structure"
-                options={BusinessStructureOptions}
-                defaultValue={genericInfoDefaultValue.business_structure}
-                error={this.errors.business_structure}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="industry"
-                label="Industry"
-                defaultValue={genericInfoDefaultValue.industry}
-                error={this.errors.business_structure}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-number-masked
-                name="tax_id"
-                label="Tax ID"
-                defaultValue={genericInfoDefaultValue.tax_id}
-                error={this.errors.tax_id}
-                inputHandler={this.inputHandler}
-                mask={TAX_ID_MASKS.US}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="website_url"
-                label="Website URL"
-                defaultValue={genericInfoDefaultValue.website_url}
-                error={this.errors.website_url}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-text
-                name="email"
-                label="Email Address"
-                defaultValue={genericInfoDefaultValue.email}
-                error={this.errors.email}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-number-masked
-                name="phone"
-                label="Phone Number"
-                defaultValue={genericInfoDefaultValue.phone}
-                error={this.errors.phone}
-                inputHandler={this.inputHandler}
-                mask={PHONE_MASKS.US}
-              />
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        </form>
       </Host>
     );
   }
