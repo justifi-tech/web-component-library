@@ -1,6 +1,6 @@
 import { Component, Event, h, EventEmitter, Listen, Method, Prop, State, } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
-import { Theme } from '../payment-method-form/theme';
+import { Theme } from '../../utils/theme';
 
 @Component({
   tag: 'justifi-bank-account-form',
