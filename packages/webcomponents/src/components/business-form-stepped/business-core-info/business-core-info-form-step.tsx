@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 
 import {
   BusinessStructureOptions,
@@ -30,12 +30,13 @@ import { flattenNestedObject } from '../../../utils/utils';
 export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @State() isLoading: boolean = false;
+  @Prop() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
+  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any}>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -63,24 +64,35 @@ export class BusinessCoreInfoFormStep {
     }
   }
 
-  @Method()
-  async validateAndSubmit() {
-    this.formController.validateAndSubmit(this.sendData);
-  };
-
-  private async sendData() {
-    // this.isLoading = true;
+  private async sendData(onSuccess?: () => void) {
+    this.isLoading = true;
     try {
       const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-      console.log('payload', payload);
-      await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error sending data: ${error.message}`;
     } finally {
-      // this.isLoading = false;
+      this.isLoading = false;
     }
   }
+  
+  handleResponse(response, onSuccess) {
+    if (response.error) {
+      this.serverError = true;
+      this.errorMessage = response.error.message;
+    } else {
+      this.serverError = false;
+      onSuccess();
+    }
+    this.submitted.emit({ data: response });
+  }
+
+  @Method()
+  async validateAndSubmit(onSuccess: () => Promise<void>) {
+    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+  };
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
@@ -94,9 +106,9 @@ export class BusinessCoreInfoFormStep {
   }
 
   componentDidLoad() {
-    // this.formController.values.subscribe(
-    //   values => (this.coreInfo = { ...new CoreBusinessInfo(values) }),
-    // );
+    this.formController.values.subscribe(values => 
+      this.coreInfo = { ...values }
+    );
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
@@ -162,7 +174,7 @@ export class BusinessCoreInfoFormStep {
                   name="industry"
                   label="Industry"
                   defaultValue={coreInfoDefaultValue.industry}
-                  error={this.errors.business_structure}
+                  error={this.errors.industry}
                   inputHandler={this.inputHandler}
                 />
               </div>

@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { IBusiness } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
@@ -16,12 +16,13 @@ import { additionQuestionsSchema } from '../../business-form/business-form-schem
 export class AdditionalQuestionsFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @State() isLoading: boolean = false;
+  @Prop() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};
+  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -49,24 +50,35 @@ export class AdditionalQuestionsFormStep {
     }
   }
 
-  @Method()
-  async validateAndSubmit() {
-    this.formController.validateAndSubmit(this.sendData);
-  };
-
-  private async sendData() {
-    // this.isLoading = true;
+  private async sendData(onSuccess?: () => void) {
+    this.isLoading = true;
     try {
-      const values = this.formController.values.getValue();
-      console.log('values', values);
-      await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: values}));
+      const payload = this.formController.values.getValue();
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload}));
+      this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error sending data: ${error.message}`;
     } finally {
-      // this.isLoading = false;
+      this.isLoading = false;
     }
   }
+
+  handleResponse(response, onSuccess) {
+    if (response.error) {
+      this.serverError = true;
+      this.errorMessage = response.error.message;
+    } else {
+      this.serverError = false;
+      onSuccess();
+    }
+    this.submitted.emit({ data: response });
+  }
+
+  @Method()
+  async validateAndSubmit(onSuccess: () => Promise<void>) {
+    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+  };
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
@@ -80,13 +92,12 @@ export class AdditionalQuestionsFormStep {
   }
 
   componentDidLoad() {
+    this.formController.values.subscribe(values =>
+      this.additional_questions = { ...values }
+    );
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors }),
     );
-    // this.formController.values.subscribe(
-    //   values =>
-    //   (this.additional_questions = { ...values.additional_questions }),
-    //   );
   }
 
   inputHandler(name: string, value: string) {

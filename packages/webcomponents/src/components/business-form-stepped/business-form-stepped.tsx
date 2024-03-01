@@ -7,7 +7,6 @@ import { ClickEvents } from './BusinessFormEventTypes';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 
-
 @Component({
   tag: 'justifi-business-form-stepped',
   styleUrl: 'business-form-stepped.scss',
@@ -23,13 +22,11 @@ export class BusinessFormStepped {
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
-  @Event() submitted: EventEmitter<{ data: any }>;
 
   constructor() {
     this.incrementSteps = this.incrementSteps.bind(this);
     this.decrementSteps = this.decrementSteps.bind(this);
   }
-
 
   get disabledState() {
     return this.formLoading;
@@ -43,16 +40,17 @@ export class BusinessFormStepped {
     return `entities/business/${this.businessId}`
   }
 
-  private additionalQuestionsRef: any;
-  private legalAddressRef: any;
   private coreInfoRef: any;
+  private legalAddressRef: any;
+  private additionalQuestionsRef: any;
+  private representativeRef: any;
   private refs = [];
 
   componentStepMapping = {
     0: () => <justifi-business-core-info-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />,
-    1: () => <justifi-legal-address-form-step ref={(el) => this.refs[1] = el} authToken={this.authToken} businessId={this.businessId} />,
-    2: () => <justifi-additional-questions-form-step ref={(el) => this.refs[2] = el} authToken={this.authToken} businessId={this.businessId} />,
-    // 3: (formController) => <justifi-business-representative-form-step formController={formController} />
+    1: () => <justifi-legal-address-form-step ref={(el) => this.refs[1] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />,
+    2: () => <justifi-additional-questions-form-step ref={(el) => this.refs[2] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />,
+    3: () => <justifi-business-representative-form-step ref={(el) => this.refs[3] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />
   };
 
   componentWillLoad() {
@@ -61,27 +59,30 @@ export class BusinessFormStepped {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 
-
   showPreviousStepButton() {
     return this.currentStep > 0;
-  }
-
-  previousStepButtonOnClick() {
-    this.clickEvent.emit({ name: ClickEvents.previousStep })
-    const currentStep = this.refs[this.currentStep];
-    currentStep.validateAndSubmit(this.decrementSteps);
   }
 
   showNextStepButton() {
     return this.currentStep < this.totalSteps;
   }
 
-  incrementSteps() { return this.currentStep++; }
+  incrementSteps() { 
+    if (this.currentStep < this.totalSteps) {
+      return this.currentStep++; 
+    }
+  }
   decrementSteps() { return this.currentStep--; }
+
+  previousStepButtonOnClick() {
+    this.clickEvent.emit({ name: ClickEvents.previousStep })
+    const currentStep = this.refs[this.currentStep];
+    currentStep.validateAndSubmit(this.decrementSteps);
+  }
 
   nextStepButtonOnClick(e: any, clickEventName) {
     e.preventDefault();
@@ -126,7 +127,7 @@ export class BusinessFormStepped {
                 type="button"
                 class="btn btn-primary"
                 onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.nextStep)}
-                disabled={this.disabledState}>
+                disabled={this.disabledState || this.formLoading}>
                 Next
               </button>
             )}
@@ -135,7 +136,7 @@ export class BusinessFormStepped {
                 type="submit"
                 class="btn btn-primary"
                 onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.submit)}
-                disabled={this.disabledState}>
+                disabled={this.disabledState || this.formLoading}>
                 Submit
               </button>
             )}
