@@ -7,9 +7,37 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type             | Default     |
-| ---------------- | --------- | ----------- | ---------------- | ----------- |
-| `formController` | --        |             | `FormController` | `undefined` |
+| Property     | Attribute     | Description | Type      | Default     |
+| ------------ | ------------- | ----------- | --------- | ----------- |
+| `authToken`  | `auth-token`  |             | `string`  | `undefined` |
+| `businessId` | `business-id` |             | `string`  | `undefined` |
+| `isLoading`  | `is-loading`  |             | `boolean` | `false`     |
+
+
+## Events
+
+| Event       | Description | Type                           |
+| ----------- | ----------- | ------------------------------ |
+| `submitted` |             | `CustomEvent<{ data?: any; }>` |
+
+
+## Methods
+
+### `validateAndSubmit(onSuccess: () => Promise<void>) => Promise<void>`
+
+
+
+#### Parameters
+
+| Name        | Type                  | Description |
+| ----------- | --------------------- | ----------- |
+| `onSuccess` | `() => Promise<void>` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Shadow Parts
