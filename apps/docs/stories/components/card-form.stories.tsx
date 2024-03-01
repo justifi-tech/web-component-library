@@ -8,7 +8,7 @@ const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-orig
 storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const meta: Meta = {
-  title: 'Components/CardForm',
+  title: 'Payment Facilitation/Payments/Card Form',
   component: 'justifi-card-form',
   args: {
     ...storyBaseArgs.args

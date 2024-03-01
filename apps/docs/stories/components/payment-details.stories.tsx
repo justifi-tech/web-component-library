@@ -9,7 +9,7 @@ type Story = StoryObj;
 const storyBaseArgs = new StoryBaseArgs(['payment-id', 'auth-token']);
 
 const meta: Meta = {
-  title: 'Components/PaymentDetails',
+  title: 'Payment Facilitation/Merchant Tools/Payment Details',
   component: 'justifi-payment-details',
   args: {
     ...storyBaseArgs.args,
