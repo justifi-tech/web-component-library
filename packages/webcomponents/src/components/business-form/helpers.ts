@@ -6,9 +6,11 @@ export const parseForPatching = (values, initialValues) => {
   delete values.product_categories;
   delete values.created_at;
   delete values.updated_at;
+  delete values['_constructor-name_'];
   delete values.legal_address?.id;
   delete values.legal_address?.created_at;
   delete values.legal_address?.updated_at;
+  delete values.legal_address['_constructor-name_'];
   delete values.representative?.id;
   delete values.representative?.documents;
   delete values.representative?.created_at;

@@ -14,18 +14,19 @@ import { Address } from '../../../api/Business';
 export class LegalAddressForm {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: any = {};
+  @State() legal_address: Address;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
   }
 
   componentDidLoad() {
+    this.legal_address = this.formController.getInitialValues().legal_address;
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors }),
     );
     this.formController.values.subscribe(
-      values => (this.legal_address = new Address({ ...values.legal_address })),
+      values => (this.legal_address = { ...values.legal_address })
     );
   }
 

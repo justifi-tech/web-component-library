@@ -37,16 +37,16 @@ export interface IAddress {
 }
 
 export class Address implements IAddress {
-  public id: string;
-  public platform_account_id: string;
-  public line1: string;
-  public line2: string;
-  public postal_code: string;
-  public city: string;
-  public state: string;
-  public country: string;
-  public created_at: string;
-  public updated_at: string;
+  public id?: string;
+  public platform_account_id?: string;
+  public line1?: string;
+  public line2?: string;
+  public postal_code?: string;
+  public city?: string;
+  public state?: string;
+  public country?: string;
+  public created_at?: string;
+  public updated_at?: string;
 
   constructor(address: IAddress) {
     this.id = address.id;
@@ -183,7 +183,7 @@ export class Business implements IBusiness {
   public email: string;
   public id: string;
   public industry: string;
-  public legal_address: IAddress | {};
+  public legal_address: Address | {};
   public legal_name: string;
   public metadata: any;
   public owners: Identity[];
@@ -215,7 +215,7 @@ export class Business implements IBusiness {
     this.product_categories = business.product_categories;
 
     // Form sections
-    this.legal_address = business.legal_address || { country: 'USA' };
+    this.legal_address = new Address(business.legal_address || {});
     this.representative = business.representative || {};
     this.additional_questions = business.additional_questions || {};
     this.owners = business.owners;
