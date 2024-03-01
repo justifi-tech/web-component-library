@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`payments-list renders an error message when accountId and authToken are not provided 1`] = `
+<justifi-payments-list>
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-payments-list>
+`;
+
+exports[`payments-list renders an error message when accountId is not provided 1`] = `
+<justifi-payments-list auth-token="abc">
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-payments-list>
+`;
+
+exports[`payments-list renders an error message when authToken is not provided 1`] = `
+<justifi-payments-list account-id="abc">
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-payments-list>
+`;
