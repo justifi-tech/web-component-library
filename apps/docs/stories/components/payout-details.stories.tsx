@@ -17,6 +17,11 @@ const meta: Meta = {
   argTypes: {
     ...storyBaseArgs.argTypes,
   },
+  parameters: {
+    chromatic: {
+      delay: 2000,
+    },
+  },
   decorators: [
     customStoryDecorator,
     // @ts-ignore

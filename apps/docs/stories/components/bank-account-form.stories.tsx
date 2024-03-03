@@ -63,7 +63,10 @@ const meta: Meta = {
         'bankAccountFormReady',
         'ready'
       ]
-    }
+    },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     story => `
