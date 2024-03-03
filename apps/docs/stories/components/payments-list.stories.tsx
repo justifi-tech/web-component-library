@@ -21,6 +21,9 @@ const meta: Meta = {
     actions: {
       handles: ['payment-row-clicked'],
     },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     customStoryDecorator,
