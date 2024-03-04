@@ -62,7 +62,6 @@ export class Address implements IAddress {
   }
 }
 
-
 export interface Document {
   business_id: string;
   created_at: string;
@@ -215,7 +214,7 @@ export class Business implements IBusiness {
     this.product_categories = business.product_categories;
 
     // Form sections
-    this.legal_address = new Address(business.legal_address || {});
+    this.legal_address = { ...new Address(business.legal_address || {}) };
     this.representative = business.representative || {};
     this.additional_questions = business.additional_questions || {};
     this.owners = business.owners;
