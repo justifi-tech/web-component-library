@@ -21,7 +21,6 @@ export class LegalAddressForm {
   }
 
   componentDidLoad() {
-    this.legal_address = this.formController.getInitialValues().legal_address;
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors }),
     );
