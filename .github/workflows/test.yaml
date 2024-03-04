@@ -3,7 +3,7 @@ name: Run Tests
 on:
   pull_request:
     paths:
-      - stencil-library/**
+      - packages/webcomponents/**
 
 jobs:
   test:
@@ -18,6 +18,11 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.5
 
       - name: NPM Install
         run: pnpm install

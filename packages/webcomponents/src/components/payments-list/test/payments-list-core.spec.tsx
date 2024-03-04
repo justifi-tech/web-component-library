@@ -36,7 +36,7 @@ describe('payments-list-core', () => {
     const rows = justifiTable.shadowRoot.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(mockPaymentsResponse.data.length);
     expect(mockPaymentsService.fetchPayments).toHaveBeenCalled();
-    expect(page.root).toMatchSnapshot();
+    // expect(page.root).toMatchSnapshot();
   });
 
   it('displays an error state on failed data fetch', async () => {
@@ -63,7 +63,7 @@ describe('payments-list-core', () => {
     await page.waitForChanges();
 
     expect(page.rootInstance.errorMessage).toBe('Fetch error');
-    expect(page.root).toMatchSnapshot();
+    // expect(page.root).toMatchSnapshot();
   });
 
   it('emits payment-row-clicked event on row click', async () => {

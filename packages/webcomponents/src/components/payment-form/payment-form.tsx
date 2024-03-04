@@ -1,8 +1,9 @@
-import { Component, Prop, h, Host, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, Host, State, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
-import { extractComputedFontsToLoad } from '../../utils/utils';
+import { loadFontsOnParent } from '../../utils/utils';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -11,44 +12,23 @@ import { extractComputedFontsToLoad } from '../../utils/utils';
 })
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
-  @Prop() card?: boolean;
+  @Prop() card?: boolean = true;
   @Prop() email?: string;
-  @Prop() iframeOrigin?: string;
   @Prop() clientId: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
+
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
+
   @State() submitButtonEnabled: boolean = true;
-  @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
-  @State() selectedPaymentMethodType: PaymentMethodTypes;
-  @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
+  @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
 
   connectedCallback() {
-    if (this.card) {
-      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
-    }
-    if (this.bankAccount) {
-      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.bankAccount);
-    }
-    if (!this.allowedPaymentMethodTypes.length) {
-      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
-    }
-    this.selectedPaymentMethodType = this.allowedPaymentMethodTypes[0];
-
-    if (!this.hasLoadedFonts) {
-      this.loadFontsOnParent();
-      this.hasLoadedFonts = true;
-    }
-  }
-
-  @Listen('paymentMethodSelected')
-  paymentMethodSelectedHandler(event: CustomEvent) {
-    const paymentMethodType: PaymentMethodTypes = event.detail;
-    this.selectedPaymentMethodType = paymentMethodType;
+    loadFontsOnParent();
   }
 
   @Method()
@@ -61,21 +41,9 @@ export class PaymentForm {
     this.submitButtonEnabled = true;
   }
 
-  @Method()
-  async loadFontsOnParent() {
-
-    const parent = document.body;
-    const fontsToLoad = extractComputedFontsToLoad();
-    if (!parent || !fontsToLoad) {
-      return null;
-    }
-
-    // This approach is needed to load the font in a parent of the component
-    const fonts = document.createElement('link');
-    fonts.rel = 'stylesheet';
-    fonts.href = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
-
-    parent.append(fonts);
+  paymentMethodSelectedHandler(event: CustomEvent) {
+    const paymentMethodType: PaymentMethodTypes = event.detail;
+    this.selectedPaymentMethodType = paymentMethodType;
   }
 
   async submit(event) {
@@ -108,15 +76,18 @@ export class PaymentForm {
     return (
       <Host>
         <form class="row gy-3">
-          {this.allowedPaymentMethodTypes.length > 1 && (
+          {this.card && this.bankAccount && (
             <div class="col-12">
-              <justifi-payment-method-selector paymentMethodTypes={this.allowedPaymentMethodTypes} selectedPaymentMethodType={this.selectedPaymentMethodType} />
+              <justifi-payment-method-selector
+                selectedPaymentMethodType={this.selectedPaymentMethodType}
+                onPaymentMethodSelected={event => this.paymentMethodSelectedHandler(event)}
+              />
             </div>
           )}
           <div class="col-12">
             <justifi-payment-method-form
               payment-method-form-type={this.selectedPaymentMethodType}
-              iframe-origin={this.iframeOrigin}
+              iframeOrigin={config.iframeOrigin}
               ref={el => {
                 if (el) {
                   this.paymentMethodFormRef = el;

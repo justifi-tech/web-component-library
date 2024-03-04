@@ -1,6 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSection, DetailItem } from '../../details/utils';
-import { Address } from '../../../api/Business';
+import { IAddress } from '../../../api/Business';
 
 @Component({
   tag: 'legal-address-details',
@@ -8,7 +8,7 @@ import { Address } from '../../../api/Business';
   shadow: true,
 })
 export class LegalAddressDetails {
-  @Prop() legalAddress: Address;
+  @Prop() legalAddress: IAddress;
 
   render() {
     return (
