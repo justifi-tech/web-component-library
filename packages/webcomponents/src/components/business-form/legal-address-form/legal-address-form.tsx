@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../form/form';
-import { Address } from '../../../api/Business';
+import { IAddress } from '../../../api/Business';
 
 /**
  * @exportedPart label: Label for inputs
@@ -14,7 +14,7 @@ import { Address } from '../../../api/Business';
 export class LegalAddressForm {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: Address;
+  @State() legal_address: IAddress;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
