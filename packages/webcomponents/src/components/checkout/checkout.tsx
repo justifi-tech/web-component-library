@@ -3,6 +3,7 @@ import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad } from '../../utils/utils';
+import { mockCheckout } from './test/mockCheckout';
 
 @Component({
   tag: 'justifi-checkout',
@@ -10,40 +11,48 @@ import { extractComputedFontsToLoad } from '../../utils/utils';
   shadow: true,
 })
 export class Checkout {
-  @Prop() bankAccount?: boolean;
-  @Prop() card?: boolean;
-  @Prop() email?: string;
   @Prop() iframeOrigin?: string;
   @Prop() clientId: string;
   @Prop() accountId?: string;
-  @Prop() submitButtonText?: string;
+
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
-  @State() submitButtonEnabled: boolean = true;
+
   @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
-  @State() selectedPaymentMethodType: PaymentMethodTypes;
-  @State() allowedPaymentMethodTypes: PaymentMethodTypes[] = [];
+  @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
+  @State() checkout: any = {};
+  @State() serverError: boolean = false;
+  @State() errorMessage: string = '';
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
 
   connectedCallback() {
-    if (this.card) {
-      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
-    }
-    if (this.bankAccount) {
-      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.bankAccount);
-    }
-    if (!this.allowedPaymentMethodTypes.length) {
-      this.allowedPaymentMethodTypes.push(PaymentMethodTypes.card);
-    }
-    this.selectedPaymentMethodType = this.allowedPaymentMethodTypes[0];
+    this.fetchData();
 
     if (!this.hasLoadedFonts) {
       this.loadFontsOnParent();
       this.hasLoadedFonts = true;
     }
   }
+
+  private fetchData() {
+    this.isLoading = true;
+    this.checkout = mockCheckout.data;
+    this.isLoading = false;
+  }
+
+  // private async fetchData() {
+  //   this.isLoading = true;
+  //   try {
+  //     const response: IApiResponse<any> = mockCheckout;
+  //   } catch (error) {
+  //     this.serverError = true;
+  //     this.errorMessage = `Error fetching data: ${error.message}`;
+  //   } finally {
+  //     this.isLoading = false;
+  //   }
+  // }
 
   @Listen('paymentMethodSelected')
   paymentMethodSelectedHandler(event: CustomEvent) {
@@ -54,11 +63,6 @@ export class Checkout {
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     this.billingFormRef.fill(fields);
-  }
-
-  @Method()
-  async enableSubmitButton() {
-    this.submitButtonEnabled = true;
   }
 
   @Method()
@@ -91,7 +95,7 @@ export class Checkout {
 
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
-      const paymentMethodData = { email: this.email, ...billingFormFieldValues };
+      const paymentMethodData = { ...billingFormFieldValues };
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
       if (tokenizeResponse.error) {
         console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
@@ -108,14 +112,13 @@ export class Checkout {
     return (
       <Host>
         <form class="row gy-3">
-          {this.allowedPaymentMethodTypes.length > 1 && (
-            <div class="col-12">
-              <justifi-payment-method-type-selector
-                paymentMethodTypes={this.allowedPaymentMethodTypes}
-                selectedPaymentMethodType={this.selectedPaymentMethodType}
-              />
-            </div>
-          )}
+          <div class="col-12">
+            <justifi-payment-method-type-selector
+              show-credit-card={this.checkout.payment_settings?.credit_card_payments}
+              show-ach={this.checkout.payment_settings?.ach_payments}
+              selected-payment-method-type={this.selectedPaymentMethodType}
+            />
+          </div>
           <div class="col-12">
             <justifi-payment-method-form
               payment-method-form-type={this.selectedPaymentMethodType}
@@ -142,7 +145,7 @@ export class Checkout {
             <button
               type="submit"
               onClick={event => this.submit(event)}
-              disabled={!this.submitButtonEnabled || this.isLoading}
+              disabled={this.isLoading}
               class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
             >
               {
@@ -150,7 +153,7 @@ export class Checkout {
                   <div class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div> :
-                  this.submitButtonText || 'Submit'
+                  'Submit'
               }
             </button>
           </div>

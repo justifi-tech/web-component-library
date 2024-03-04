@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property   | Attribute | Description | Type        | Default     |
-| ---------- | --------- | ----------- | ----------- | ----------- |
-| `business` | --        |             | `IBusiness` | `undefined` |
+| Property              | Attribute | Description | Type                  | Default     |
+| --------------------- | --------- | ----------- | --------------------- | ----------- |
+| `additionalQuestions` | --        |             | `AdditionalQuestions` | `undefined` |
 
 
 ## Dependencies

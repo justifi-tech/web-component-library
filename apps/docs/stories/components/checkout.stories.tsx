@@ -10,62 +10,16 @@ const meta: Meta = {
   title: 'Components/Checkout',
   component: 'justifi-checkout',
   args: {
-    ...storyBaseArgs.args,
-    'email': 'test@test.com',
-    'submit-button-text': 'Submit'
+    ...storyBaseArgs.args
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'bank-account': {
-      type: 'boolean',
-      description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
-      control: {
-        type: 'boolean'
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'card': {
-      type: 'boolean',
-      description: 'Boolean indicating if the Payment Form should render Card inputs `boolean`',
-      control: {
-        type: 'boolean'
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'email': {
-      type: 'string',
-      control: {
-        type: 'text'
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'submit-button-text': {
-      type: 'string',
-      control: {
-        type: 'text'
-      },
-      table: {
-        category: 'props'
-      }
-    },
     'submitted': {
       description: '`BankAccountCreateResponse` `CardCreateResponse` `PaymentMethodErrorResponse`',
       table: {
         category: 'events'
       },
       action: true
-    },
-    'enableSubmitButton': {
-      description: '`enableSubmitButton() => Promise<void>`',
-      table: {
-        category: 'methods'
-      }
     },
     'fillBillingForm': {
       description: '`fillBillingForm(fields: BillingFormFields) => Promise<void>`',
@@ -100,12 +54,8 @@ const Template = (args: any) => {
   return `
     <div>
       <justifi-checkout
-        card="${args.card}"
-        bank-account="${args['bank-account']}"
-        email="${args.email}"
         client-id="${args['client-id']}"
         account-id="${args['account-id']}"
-        submit-button-text="${args['submit-button-text']}"
       />
     </div>
     <style>

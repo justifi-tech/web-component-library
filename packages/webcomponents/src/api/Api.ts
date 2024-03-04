@@ -6,7 +6,7 @@ export interface IApiResponse<T> {
   error?: IErrorObject | IServerError;
   page_info?: PagingInfo;
   errors?: string[];
-  id: number;
+  id: number | string;
   type: string;
 }
 

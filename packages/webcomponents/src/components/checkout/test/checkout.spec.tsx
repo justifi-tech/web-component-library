@@ -4,33 +4,6 @@ import { PaymentMethodTypes } from '../../../api';
 import { BillingFormFields } from '../../billing-form/billing-form-schema';
 
 describe('justifi-checkout', () => {
-  // State Testing
-  it('should update allowedPaymentMethodTypes and selectedPaymentMethodType state correctly when connectedCallback is invoked', async () => {
-    // Mock properties
-    const mockComponent = new Checkout();
-    mockComponent.bankAccount = true;
-    mockComponent.card = true;
-
-    // Invoke the lifecycle method
-    mockComponent.connectedCallback();
-
-    // Assertions
-    expect(mockComponent.allowedPaymentMethodTypes).toEqual([PaymentMethodTypes.card, PaymentMethodTypes.bankAccount]);
-    expect(mockComponent.selectedPaymentMethodType).toBe(PaymentMethodTypes.card);
-  });
-
-  it('should update submitButtonEnabled state when enableSubmitButton method is called', async () => {
-    // Mock component
-    const mockComponent = new Checkout();
-    mockComponent.submitButtonEnabled = false;
-
-    // Call the method
-    await mockComponent.enableSubmitButton();
-
-    // Assertion
-    expect(mockComponent.submitButtonEnabled).toBe(true);
-  });
-
   it('should update selectedPaymentMethodType when paymentMethodSelected event is fired', async () => {
     // Mock component
     const mockComponent = new Checkout();
@@ -125,7 +98,7 @@ describe('justifi-checkout', () => {
     expect(mockBillingFormRef.validate).toHaveBeenCalled();
     expect(mockPaymentMethodFormRef.validate).toHaveBeenCalled();
     expect(mockBillingFormRef.getValues).toHaveBeenCalled();
-    expect(mockPaymentMethodFormRef.tokenize).toHaveBeenCalledWith(mockComponent.clientId, { email: mockComponent.email, name: 'John Doe' }, mockComponent.accountId);
+    expect(mockPaymentMethodFormRef.tokenize).toHaveBeenCalledWith(mockComponent.clientId, { name: 'John Doe' }, mockComponent.accountId);
     expect(mockEmitter.emit).toHaveBeenCalledWith({ token: 'abc123' });
   });
 
@@ -151,7 +124,6 @@ describe('justifi-checkout', () => {
 
     // Mock component
     const mockComponent = new Checkout();
-    mockComponent.email = 'john@example.com'; // set email prop
 
     // Cast to any to bypass type checker and directly set private properties
     (mockComponent as any).billingFormRef = mockBillingFormRef;
@@ -178,13 +150,9 @@ describe('justifi-checkout', () => {
   it('should correctly render the child components based on the given props and state', async () => {
     // Set up new Checkout with specific props and state
     const component = new Checkout();
-    component.bankAccount = true;
-    component.card = true;
-    component.email = 'test@test.com';
     component.iframeOrigin = 'https://example.com';
     component.clientId = 'abc123';
     component.accountId = 'def456';
-    component.submitButtonText = 'Submit';
 
     // Cast to any to bypass type checker and directly set private properties
     (component as any).submitButtonEnabled = true;

@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, Fragment } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 
 const PaymentMethodTypeLabels = {
@@ -12,35 +12,41 @@ const PaymentMethodTypeLabels = {
   shadow: true,
 })
 export class PaymentMethodTypeSelector {
-  @Prop() paymentMethodTypes: PaymentMethodTypes[] = [];
   @Prop() selectedPaymentMethodType: PaymentMethodTypes;
+  @Prop() showCreditCard: boolean;
+  @Prop() showAch: boolean;
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
 
   defaultRadioButtonOption!: HTMLInputElement;
 
   onChangeHandler(event: any) {
     this.paymentMethodSelected.emit(event.target.value);
+  };
+
+  inputFor(paymentMethodType: PaymentMethodTypes) {
+    return (
+      <Fragment>
+        <input
+          id={paymentMethodType}
+          type="radio"
+          name="paymentMethodType"
+          value={paymentMethodType}
+          onChange={(event: any) => this.onChangeHandler(event)}
+          checked={this.selectedPaymentMethodType === paymentMethodType}
+          class="btn-check jfi-btn-radio"
+        />
+        <label htmlFor={paymentMethodType} class="btn btn-outline-primary jfi-btn-radio-label">
+          {PaymentMethodTypeLabels[paymentMethodType]}
+        </label>
+      </Fragment>
+    );
   }
 
   render() {
     return (
       <div class="btn-group jfi-btn-radio-group" role="group" aria-label="Radio toggle group for payment method">
-        {this.paymentMethodTypes.map((paymentMethodType: PaymentMethodTypes) => (
-          <Fragment>
-            <input
-              id={paymentMethodType}
-              type="radio"
-              name="paymentMethodType"
-              value={paymentMethodType}
-              onChange={(event: any) => this.onChangeHandler(event)}
-              checked={this.selectedPaymentMethodType === paymentMethodType}
-              class="btn-check jfi-btn-radio"
-            />
-            <label htmlFor={paymentMethodType} class="btn btn-outline-primary jfi-btn-radio-label">
-              {PaymentMethodTypeLabels[paymentMethodType]}
-            </label>
-          </Fragment>
-        ))}
+        {this.showCreditCard ? this.inputFor(PaymentMethodTypes.card) : ''}
+        {this.showAch ? this.inputFor(PaymentMethodTypes.bankAccount) : ''}
       </div>
     );
   }

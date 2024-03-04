@@ -54,13 +54,13 @@
 
 ### Used by
 
- - [justifi-payment-form](.)
+ - [justifi-checkout](.)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-form --> justifi-payment-method-selector
-  style justifi-payment-method-selector fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-checkout --> justifi-payment-method-type-selector
+  style justifi-payment-method-type-selector fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

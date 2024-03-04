@@ -71,6 +71,7 @@ Type: `Promise<any>`
 
  - [justifi-bank-account-form](../bank-account-form)
  - [justifi-card-form](../card-form)
+ - [justifi-checkout](../checkout)
  - [justifi-payment-form](../payment-form)
 
 ### Graph
@@ -78,6 +79,7 @@ Type: `Promise<any>`
 graph TD;
   justifi-bank-account-form --> justifi-payment-method-form
   justifi-card-form --> justifi-payment-method-form
+  justifi-checkout --> justifi-payment-method-form
   justifi-payment-form --> justifi-payment-method-form
   style justifi-payment-method-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

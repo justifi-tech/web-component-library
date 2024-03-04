@@ -15,6 +15,14 @@
 | `testMode`   | `test-mode`   |             | `boolean` | `false`     |
 
 
+## Events
+
+| Event        | Description | Type                                         |
+| ------------ | ----------- | -------------------------------------------- |
+| `clickEvent` |             | `CustomEvent<{ data?: any; name: string; }>` |
+| `submitted`  |             | `CustomEvent<{ data: any; }>`                |
+
+
 ## Dependencies
 
 ### Depends on
@@ -33,7 +41,6 @@ graph TD;
   justifi-business-form-stepped --> justifi-business-representative
   justifi-business-generic-info --> form-control-text
   justifi-business-generic-info --> form-control-select
-  justifi-business-generic-info --> form-control-number
   justifi-business-generic-info --> form-control-number-masked
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form --> form-control-number
