@@ -13,16 +13,13 @@ import { mockCheckout } from './test/mockCheckout';
 export class Checkout {
   @Prop() iframeOrigin?: string;
   @Prop() clientId: string;
-  @Prop() accountId?: string;
-
-  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
-
   @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
   @State() checkout: any = {};
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
@@ -96,7 +93,7 @@ export class Checkout {
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
       const paymentMethodData = { ...billingFormFieldValues };
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData);
       if (tokenizeResponse.error) {
         console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
       }
@@ -107,6 +104,12 @@ export class Checkout {
       this.isLoading = false;
     }
   }
+
+  private loadingSpinner = (
+    <div class="spinner-border spinner-border-sm" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  );
 
   render() {
     return (
@@ -124,9 +127,7 @@ export class Checkout {
               payment-method-form-type={this.selectedPaymentMethodType}
               iframe-origin={this.iframeOrigin}
               ref={el => {
-                if (el) {
-                  this.paymentMethodFormRef = el;
-                }
+                if (el) { this.paymentMethodFormRef = el; }
               }}
             />
           </div>
@@ -134,9 +135,7 @@ export class Checkout {
             <justifi-billing-form
               legend="Billing Info"
               ref={el => {
-                if (el) {
-                  this.billingFormRef = el;
-                }
+                if (el) { this.billingFormRef = el; }
               }}
             />
           </div>
@@ -146,15 +145,9 @@ export class Checkout {
               type="submit"
               onClick={event => this.submit(event)}
               disabled={this.isLoading}
-              class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+              class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
             >
-              {
-                this.isLoading ?
-                  <div class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div> :
-                  'Submit'
-              }
+              {this.isLoading ? this.loadingSpinner : 'Submit'}
             </button>
           </div>
         </form>
