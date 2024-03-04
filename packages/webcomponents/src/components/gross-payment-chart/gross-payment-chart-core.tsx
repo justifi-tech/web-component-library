@@ -70,7 +70,7 @@ export class GrossPaymentChartCore {
   initChart(grossVolumeReport: GrossVolumeReport) {
     const { dates, total } = grossVolumeReport;
     const endDate = dates[dates.length - 1].date;
-    const chartOptions = generateChartOptions(total, dates, endDate) as ChartConfiguration;
+    const chartOptions = generateChartOptions(total, dates.reverse(), endDate) as ChartConfiguration;
     this.chart = new Chart(this.chartRef.getContext('2d'), chartOptions);
   }
 
