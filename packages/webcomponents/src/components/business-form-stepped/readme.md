@@ -20,13 +20,13 @@
 | Event        | Description | Type                                         |
 | ------------ | ----------- | -------------------------------------------- |
 | `clickEvent` |             | `CustomEvent<{ data?: any; name: string; }>` |
+| `submitted`  |             | `CustomEvent<{ data: any; }>`                |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [justifi-business-core-info-form-step](business-core-info)
 - [justifi-legal-address-form-step](legal-address-form)
 - [justifi-additional-questions-form-step](additional-questions)
 - [justifi-business-representative-form-step](business-representative)
@@ -34,13 +34,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-form-stepped --> justifi-business-core-info-form-step
   justifi-business-form-stepped --> justifi-legal-address-form-step
   justifi-business-form-stepped --> justifi-additional-questions-form-step
   justifi-business-form-stepped --> justifi-business-representative-form-step
-  justifi-business-core-info-form-step --> form-control-text
-  justifi-business-core-info-form-step --> form-control-select
-  justifi-business-core-info-form-step --> form-control-number-masked
   justifi-legal-address-form-step --> form-control-text
   justifi-legal-address-form-step --> form-control-number
   justifi-legal-address-form-step --> form-control-select
