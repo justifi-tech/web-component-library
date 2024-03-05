@@ -30,13 +30,13 @@ import { flattenNestedObject } from '../../../utils/utils';
 export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any}>;
+  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -51,7 +51,7 @@ export class BusinessCoreInfoFormStep {
   }
 
   private async fetchData() {
-    this.isLoading = true;
+    this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.coreInfo = new CoreBusinessInfo(response.data);
@@ -60,12 +60,12 @@ export class BusinessCoreInfoFormStep {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
     } finally {
-      this.isLoading = false;
+      this.formLoading.emit(false);
     }
   }
 
   private async sendData(onSuccess?: () => void) {
-    this.isLoading = true;
+    this.formLoading.emit(true);
     try {
       const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
@@ -74,7 +74,7 @@ export class BusinessCoreInfoFormStep {
       this.serverError = true;
       this.errorMessage = `Error sending data: ${error.message}`;
     } finally {
-      this.isLoading = false;
+      this.formLoading.emit(false);
     }
   }
   

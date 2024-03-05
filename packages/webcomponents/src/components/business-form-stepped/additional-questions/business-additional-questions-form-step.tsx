@@ -16,13 +16,13 @@ import { additionQuestionsSchema } from '../../business-form/business-form-schem
 export class AdditionalQuestionsFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -37,7 +37,7 @@ export class AdditionalQuestionsFormStep {
   }
 
   private async fetchData() {
-    this.isLoading = true;
+    this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.additional_questions = response.data.additional_questions;
@@ -46,12 +46,12 @@ export class AdditionalQuestionsFormStep {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
     } finally {
-      this.isLoading = false;
+      this.formLoading.emit(false);
     }
   }
 
   private async sendData(onSuccess?: () => void) {
-    this.isLoading = true;
+    this.formLoading.emit(true);
     try {
       const payload = this.formController.values.getValue();
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload}));
@@ -60,7 +60,7 @@ export class AdditionalQuestionsFormStep {
       this.serverError = true;
       this.errorMessage = `Error sending data: ${error.message}`;
     } finally {
-      this.isLoading = false;
+      this.formLoading.emit(false);
     }
   }
 

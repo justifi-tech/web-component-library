@@ -18,13 +18,13 @@ import { config } from '../../../../config';
 export class LegalAddressFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -39,7 +39,7 @@ export class LegalAddressFormStep {
   }
 
   private async fetchData() {
-    this.isLoading = true;
+    this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.legal_address = new Address(response.data.legal_address || {});
@@ -48,12 +48,12 @@ export class LegalAddressFormStep {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
     } finally {
-      this.isLoading = false;
+      this.formLoading.emit(false);
     }
   }
 
   private async sendData(onSuccess?: () => void) {
-    this.isLoading = true;
+    this.formLoading.emit(true);
     try {
       const payload = parseAddressInfo(this.formController.values.getValue());
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload}));
@@ -62,7 +62,7 @@ export class LegalAddressFormStep {
       this.serverError = true;
       this.errorMessage = `Error sending data: ${error.message}`;
     } finally {
-      this.isLoading = false;
+      this.formLoading.emit(false);
     }
   }
 

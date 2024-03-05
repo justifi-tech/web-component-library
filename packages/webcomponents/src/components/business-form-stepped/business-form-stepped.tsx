@@ -28,10 +28,6 @@ export class BusinessFormStepped {
     this.decrementSteps = this.decrementSteps.bind(this);
   }
 
-  get disabledState() {
-    return this.formLoading;
-  }
-
   get showErrors() {
     return this.serverError && !this.hideErrors;
   }
@@ -47,10 +43,10 @@ export class BusinessFormStepped {
   private refs = [];
 
   componentStepMapping = {
-    0: () => <justifi-business-core-info-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />,
-    1: () => <justifi-legal-address-form-step ref={(el) => this.refs[1] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />,
-    2: () => <justifi-additional-questions-form-step ref={(el) => this.refs[2] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />,
-    3: () => <justifi-business-representative-form-step ref={(el) => this.refs[3] = el} authToken={this.authToken} businessId={this.businessId} isLoading={this.formLoading} />
+    0: () => <justifi-business-core-info-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />,
+    1: () => <justifi-legal-address-form-step ref={(el) => this.refs[1] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />,
+    2: () => <justifi-additional-questions-form-step ref={(el) => this.refs[2] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />,
+    3: () => <justifi-business-representative-form-step ref={(el) => this.refs[3] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />
   };
 
   componentWillLoad() {
@@ -61,6 +57,10 @@ export class BusinessFormStepped {
 
     this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
+  }
+
+  handleFormLoading(e: CustomEvent) {
+    this.formLoading = e.detail;
   }
 
   showPreviousStepButton() {
@@ -125,19 +125,31 @@ export class BusinessFormStepped {
             {this.showNextStepButton() && (
               <button
                 type="button"
-                class="btn btn-primary"
+                class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.nextStep)}
-                disabled={this.disabledState || this.formLoading}>
-                Next
+                disabled={this.formLoading}>
+                {
+                  this.formLoading ?
+                    <div class="spinner-border spinner-border-sm" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div> : 
+                    'Next'
+                }
               </button>
             )}
             {this.showSubmitButton() && (
               <button
                 type="submit"
-                class="btn btn-primary"
+                class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.submit)}
-                disabled={this.disabledState || this.formLoading}>
-                Submit
+                disabled={this.formLoading}>
+                {
+                  this.formLoading ?
+                    <div class="spinner-border spinner-border-sm" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div> :
+                    'Submit'
+                }
               </button>
             )}
           </div>
