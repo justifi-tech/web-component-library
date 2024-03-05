@@ -109,13 +109,10 @@ export class BusinessRepresentativeFormStep {
   onAddressFormUpdate(values: any): void {
     this.formController.setValues({
       ...this.formController.values.getValue(),
-      representative: {
-        ...this.formController.values.getValue().representative,
         address: {
-          ...this.formController.values.getValue().representative.address,
+          ...this.formController.values.getValue().address,
           ...values,
-        },
-      },
+        }
     });
   }
 
