@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { FormAlert } from '../form/utils';
+import { FormAlert, LoadingSpinner } from '../form/utils';
 import { ClickEvents } from './BusinessFormEventTypes';
 /**
  * @exportedPart label: Label for inputs
@@ -17,9 +17,9 @@ export class BusinessFormStepped {
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;
   @State() formLoading: boolean = false;
+  @State() serverError: boolean = false;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
-  @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
 
@@ -43,10 +43,34 @@ export class BusinessFormStepped {
   private refs = [];
 
   componentStepMapping = {
-    0: () => <justifi-business-core-info-form-step ref={(el) => this.refs[0] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />,
-    1: () => <justifi-legal-address-form-step ref={(el) => this.refs[1] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />,
-    2: () => <justifi-additional-questions-form-step ref={(el) => this.refs[2] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />,
-    3: () => <justifi-business-representative-form-step ref={(el) => this.refs[3] = el} authToken={this.authToken} businessId={this.businessId} onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)} />
+    0: () => <justifi-business-core-info-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[0] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    1: () => <justifi-legal-address-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[1] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    2: () => <justifi-additional-questions-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[2] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    3: () => <justifi-business-representative-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[3] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />
   };
 
   componentWillLoad() {
@@ -61,6 +85,11 @@ export class BusinessFormStepped {
 
   handleFormLoading(e: CustomEvent) {
     this.formLoading = e.detail;
+  }
+
+  handleServerErrors(e: CustomEvent) {
+    this.serverError = true;
+    this.errorMessage = e.detail.message;
   }
 
   showPreviousStepButton() {
@@ -128,13 +157,7 @@ export class BusinessFormStepped {
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.nextStep)}
                 disabled={this.formLoading}>
-                {
-                  this.formLoading ?
-                    <div class="spinner-border spinner-border-sm" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div> : 
-                    'Next'
-                }
+                {this.formLoading ? LoadingSpinner() : 'Next'}
               </button>
             )}
             {this.showSubmitButton() && (
@@ -143,13 +166,7 @@ export class BusinessFormStepped {
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.submit)}
                 disabled={this.formLoading}>
-                {
-                  this.formLoading ?
-                    <div class="spinner-border spinner-border-sm" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div> :
-                    'Submit'
-                }
+                {this.formLoading ? LoadingSpinner() : 'Submit' }
               </button>
             )}
           </div>

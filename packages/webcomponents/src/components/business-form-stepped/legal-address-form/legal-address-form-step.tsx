@@ -18,13 +18,12 @@ import { config } from '../../../../config';
 export class LegalAddressFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
-  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
+  @Event() formLoading: EventEmitter<boolean>;
+  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -43,10 +42,9 @@ export class LegalAddressFormStep {
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.legal_address = new Address(response.data.legal_address || {});
-      this.formController.setInitialValues(this.legal_address);
+      this.formController.setInitialValues({ ...this.legal_address });
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error fetching data: ${error.message}`;
+      this.serverError.emit({ data: error, message: 'Error fetching business data' });
     } finally {
       this.formLoading.emit(false);
     }
@@ -59,8 +57,7 @@ export class LegalAddressFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload}));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error sending data: ${error.message}`;
+      this.serverError.emit({ data: error, message: 'Error updating business data' });
     } finally {
       this.formLoading.emit(false);
     }
@@ -68,10 +65,8 @@ export class LegalAddressFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError = true;
-      this.errorMessage = response.error.message;
+      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
     } else {
-      this.serverError = false;
       onSuccess();
     }
     this.submitted.emit({ data: response });

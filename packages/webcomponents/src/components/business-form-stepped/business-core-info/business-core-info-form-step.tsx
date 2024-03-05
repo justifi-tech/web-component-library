@@ -30,13 +30,12 @@ import { flattenNestedObject } from '../../../utils/utils';
 export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any}>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
+  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -55,10 +54,9 @@ export class BusinessCoreInfoFormStep {
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.coreInfo = new CoreBusinessInfo(response.data);
-      this.formController.setInitialValues(this.coreInfo);
+      this.formController.setInitialValues({ ...this.coreInfo });
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error fetching data: ${error.message}`;
+      this.serverError.emit({ data: error, message: 'Error fetching business data' });
     } finally {
       this.formLoading.emit(false);
     }
@@ -71,8 +69,7 @@ export class BusinessCoreInfoFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error sending data: ${error.message}`;
+      this.serverError.emit({ data: error, message: 'Error updating business data' });
     } finally {
       this.formLoading.emit(false);
     }
@@ -80,10 +77,8 @@ export class BusinessCoreInfoFormStep {
   
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError = true;
-      this.errorMessage = response.error.message;
+      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
     } else {
-      this.serverError = false;
       onSuccess();
     }
     this.submitted.emit({ data: response });
