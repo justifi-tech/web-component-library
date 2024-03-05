@@ -32,7 +32,7 @@ Developer considerations
   - [ ] Add documentation
   - [ ] Does the component have exportedparts for styling? If so, add unit a unit test for each exportedpart
 - On bugs
-  - [ ] Add unit tests to prevent the bug to happen again
+  - [ ] Add unit tests to prevent the bug from happening again
 
 
 Developer QA steps
