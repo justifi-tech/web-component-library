@@ -31,6 +31,8 @@ Developer considerations
   - [ ] Add e2e tests
   - [ ] Add documentation
   - [ ] Does the component have exportedparts for styling? If so, add unit a unit test for each exportedpart
+- On bugs
+  - [ ] Add unit tests to prevent the bug to happen again
 
 
 Developer QA steps
