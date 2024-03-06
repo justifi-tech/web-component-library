@@ -2,10 +2,11 @@ import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@s
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../api/Api';
-import { IBusiness } from '../../../api/Business';
+import { BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import { parseRepresentativeInfo } from '../helpers';
 import { representativeSchema } from '../business-form-schema';
 import { config } from '../../../../config';
+import { FormAlert } from '../../form/utils';
 
 @Component({
   tag: 'justifi-business-representative-form-step',
@@ -17,9 +18,10 @@ export class BusinessRepresentativeFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
+  @State() serverError: any;
+  @State() errorMessage: BusinessFormServerErrors;
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -34,6 +36,11 @@ export class BusinessRepresentativeFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  private handleServerErrors(error: any, message: BusinessFormServerErrors) {
+    this.serverError = error;
+    this.errorMessage = message;
+  }
+
   private async fetchData() {
     this.formLoading.emit(true);
     try {
@@ -41,7 +48,7 @@ export class BusinessRepresentativeFormStep {
       this.representative = response.data.representative;
       this.formController.setInitialValues(this.representative);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error fetching business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.fetchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -54,7 +61,7 @@ export class BusinessRepresentativeFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ representative: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error updating business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.patchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -62,7 +69,7 @@ export class BusinessRepresentativeFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
+      this.handleServerErrors(response.error, BusinessFormServerErrors.patchData);
     } else {
       onSuccess();
     }
@@ -121,6 +128,7 @@ export class BusinessRepresentativeFormStep {
           <fieldset>
             <legend>Representative</legend>
             <hr />
+            {this.serverError && FormAlert(this.errorMessage)}
             <div class="row gy-3">
               <div class="col-12 col-md-8">
                 <form-control-text

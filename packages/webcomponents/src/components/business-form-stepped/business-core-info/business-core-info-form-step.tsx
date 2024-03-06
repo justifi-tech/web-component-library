@@ -6,12 +6,13 @@ import {
 } from '../business-form-schema';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../utils/form-input-masks';
-import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../api/Business';
+import { BusinessFormServerErrors, CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
 import { coreInfoSchema } from '../../business-form/business-form-schema';
 import { config } from '../../../../config';
 import { parseCoreInfo } from '../helpers';
 import { flattenNestedObject } from '../../../utils/utils';
+import { FormAlert } from '../../form/utils';
 
 /**
  *
@@ -33,9 +34,10 @@ export class BusinessCoreInfoFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any}>;
+  @State() serverError: any;
+  @State() errorMessage: BusinessFormServerErrors;
+  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any, message?: string}>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -49,6 +51,11 @@ export class BusinessCoreInfoFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  private handleServerErrors(error: any, message: BusinessFormServerErrors) {
+    this.serverError = error;
+    this.errorMessage = message;
+  }
+
   private async fetchData() {
     this.formLoading.emit(true);
     try {
@@ -56,7 +63,7 @@ export class BusinessCoreInfoFormStep {
       this.coreInfo = new CoreBusinessInfo(response.data);
       this.formController.setInitialValues({ ...this.coreInfo });
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error fetching business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.fetchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -66,10 +73,10 @@ export class BusinessCoreInfoFormStep {
     this.formLoading.emit(true);
     try {
       const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const response = await this.api.patch('entities/business/', JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error updating business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.patchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -77,7 +84,7 @@ export class BusinessCoreInfoFormStep {
   
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
+      this.handleServerErrors(response.error, BusinessFormServerErrors.patchData);
     } else {
       onSuccess();
     }
@@ -125,6 +132,7 @@ export class BusinessCoreInfoFormStep {
           <fieldset>
             <legend>General Info</legend>
             <hr />
+            {this.serverError && FormAlert(this.errorMessage)}
             <div class="row gy-3">
               <div class="col-12 col-md-6">
                 <form-control-text

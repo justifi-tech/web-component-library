@@ -1,9 +1,10 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
-import { IBusiness } from '../../../api/Business';
+import { BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';
 import { additionQuestionsSchema } from '../../business-form/business-form-schema';
+import { FormAlert } from '../../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -19,9 +20,10 @@ export class AdditionalQuestionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};
+  @State() serverError: any;
+  @State() errorMessage: BusinessFormServerErrors;
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -35,6 +37,11 @@ export class AdditionalQuestionsFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  private handleServerErrors(error: any, message: BusinessFormServerErrors) {
+    this.serverError = error;
+    this.errorMessage = message;
+  }
+
   private async fetchData() {
     this.formLoading.emit(true);
     try {
@@ -42,7 +49,7 @@ export class AdditionalQuestionsFormStep {
       this.additional_questions = response.data.additional_questions;
       this.formController.setInitialValues(this.additional_questions);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error fetching business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.fetchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -55,7 +62,7 @@ export class AdditionalQuestionsFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload}));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error updating business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.patchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -63,7 +70,7 @@ export class AdditionalQuestionsFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
+      this.handleServerErrors(response.error, BusinessFormServerErrors.patchData);
     } else {
       onSuccess();
     }
@@ -112,6 +119,7 @@ export class AdditionalQuestionsFormStep {
           <fieldset>
             <legend>Additional Questions</legend>
             <hr />
+            {this.serverError && FormAlert(this.errorMessage)}
             <div class="row gy-3">
               <div class="col-12">
                 <form-control-monetary

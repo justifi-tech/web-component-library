@@ -23,6 +23,11 @@ export enum BusinessType {
   government_entity = 'government_entity',
 }
 
+export enum BusinessFormServerErrors { 
+  fetchData = 'Error retrieving business data',
+  patchData = 'Error updating business data'
+}
+
 export interface IAddress {
   id?: string;
   platform_account_id?: string;

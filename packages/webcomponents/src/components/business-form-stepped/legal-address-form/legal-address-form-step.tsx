@@ -1,10 +1,11 @@
 import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
 import Api, { IApiResponse } from '../../../api/Api';
-import { Address, IAddress, IBusiness } from '../../../api/Business';
+import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../api/Business';
 import { parseAddressInfo } from '../helpers';
 import legalAddressSchema from '../../business-form/legal-address-form/legal-address-form-schema';
 import { config } from '../../../../config';
+import { FormAlert } from '../../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -21,9 +22,10 @@ export class LegalAddressFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
+  @State() serverError: any;
+  @State() errorMessage: BusinessFormServerErrors;
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -37,6 +39,11 @@ export class LegalAddressFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  private handleServerErrors(error: any, message: BusinessFormServerErrors) {
+    this.serverError = error;
+    this.errorMessage = message;
+  }
+
   private async fetchData() {
     this.formLoading.emit(true);
     try {
@@ -44,7 +51,7 @@ export class LegalAddressFormStep {
       this.legal_address = new Address(response.data.legal_address);
       this.formController.setInitialValues({ ...this.legal_address });
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error fetching business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.fetchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -57,7 +64,7 @@ export class LegalAddressFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload}));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error updating business data' });
+      this.handleServerErrors(error, BusinessFormServerErrors.patchData);
     } finally {
       this.formLoading.emit(false);
     }
@@ -65,7 +72,7 @@ export class LegalAddressFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
+      this.handleServerErrors(response.error, BusinessFormServerErrors.patchData);
     } else {
       onSuccess();
     }
@@ -114,6 +121,7 @@ export class LegalAddressFormStep {
           <fieldset>
             <legend>Business Legal Address</legend>
             <hr />
+            {this.serverError && FormAlert(this.errorMessage)}
             <div class="row gx-2 gy-2">
               <div class="col-12">
                 <form-control-text
