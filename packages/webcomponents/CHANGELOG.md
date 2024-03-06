@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.8.2
+
+### Patch Changes
+
+- 215fd59: Better handle country fallback option for business class in business forms
+
 ## 4.8.1
 
 ### Patch Changes
