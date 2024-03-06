@@ -23,7 +23,7 @@ export enum BusinessType {
   government_entity = 'government_entity',
 }
 
-export interface Address {
+export interface IAddress {
   id?: string;
   platform_account_id?: string;
   line1?: string;
@@ -34,6 +34,32 @@ export interface Address {
   country?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+export class Address implements IAddress {
+  public id?: string;
+  public platform_account_id?: string;
+  public line1?: string;
+  public line2?: string;
+  public postal_code?: string;
+  public city?: string;
+  public state?: string;
+  public country?: string;
+  public created_at?: string;
+  public updated_at?: string;
+
+  constructor(address: IAddress) {
+    this.id = address.id;
+    this.platform_account_id = address.platform_account_id;
+    this.line1 = address.line1;
+    this.line2 = address.line2;
+    this.postal_code = address.postal_code;
+    this.city = address.city;
+    this.state = address.state;
+    this.country = address.country || 'USA';
+    this.created_at = address.created_at;
+    this.updated_at = address.updated_at;
+  }
 }
 
 export interface Document {
@@ -53,7 +79,7 @@ export interface Document {
 }
 
 export interface Identity {
-  address?: Address;
+  address?: IAddress;
   created_at?: string;
   dob_day?: string;
   dob_month?: string;
@@ -132,7 +158,7 @@ export interface IBusiness {
   email: string;
   id: string;
   industry: string;
-  legal_address: Address | {};
+  legal_address: IAddress | {};
   legal_name: string;
   metadata: any;
   owners: Identity[];
@@ -188,7 +214,7 @@ export class Business implements IBusiness {
     this.product_categories = business.product_categories;
 
     // Form sections
-    this.legal_address = business.legal_address || { country: 'USA' };
+    this.legal_address = { ...new Address(business.legal_address || {}) };
     this.representative = business.representative || {};
     this.additional_questions = business.additional_questions || {};
     this.owners = business.owners;
