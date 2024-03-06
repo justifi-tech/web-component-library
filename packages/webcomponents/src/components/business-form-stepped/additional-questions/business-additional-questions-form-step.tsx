@@ -108,7 +108,7 @@ export class AdditionalQuestionsFormStep {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={() => this.sendData}>
+        <form>
           <fieldset>
             <legend>Additional Questions</legend>
             <hr />

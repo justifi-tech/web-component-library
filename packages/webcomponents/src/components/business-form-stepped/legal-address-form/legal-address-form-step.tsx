@@ -110,7 +110,7 @@ export class LegalAddressFormStep {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={() => this.sendData}>
+        <form>
           <fieldset>
             <legend>Business Legal Address</legend>
             <hr />

@@ -121,7 +121,7 @@ export class BusinessCoreInfoFormStep {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={() => this.sendData}>
+        <form>
           <fieldset>
             <legend>General Info</legend>
             <hr />

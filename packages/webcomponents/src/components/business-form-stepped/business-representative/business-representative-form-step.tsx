@@ -117,7 +117,7 @@ export class BusinessRepresentativeFormStep {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <form onSubmit={() => this.sendData}>
+        <form>
           <fieldset>
             <legend>Representative</legend>
             <hr />
