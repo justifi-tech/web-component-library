@@ -43,11 +43,17 @@ export class PaymentMethodTypeSelector {
   }
 
   render() {
-    return (
-      <div class="btn-group jfi-btn-radio-group" role="group" aria-label="Radio toggle group for payment method">
-        {this.showCreditCard ? this.inputFor(PaymentMethodTypes.card) : ''}
-        {this.showAch ? this.inputFor(PaymentMethodTypes.bankAccount) : ''}
-      </div>
-    );
+    if (this.showCreditCard || this.showAch) {
+      return (
+        <div class="col-12">
+          <div class="btn-group jfi-btn-radio-group" role="group" aria-label="Radio toggle group for payment method">
+            {this.showCreditCard ? this.inputFor(PaymentMethodTypes.card) : ''}
+            {this.showAch ? this.inputFor(PaymentMethodTypes.bankAccount) : ''}
+          </div>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }

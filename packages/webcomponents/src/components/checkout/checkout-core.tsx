@@ -2,6 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Host, Listen, Method } 
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad } from '../../utils/utils';
 import { PaymentMethodTypes } from '../../api';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -9,9 +10,11 @@ import { PaymentMethodTypes } from '../../api';
   shadow: true,
 })
 export class CheckoutCore {
+  /**
+ * URL for the rendered iFrame. End-users need not use this.
+ */
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin; @Prop() authToken: string;
   @Prop() getCheckout: Function;
-  @Prop() iframeOrigin?: string;
-  @Prop() authToken: string;
   @Prop() checkoutId: string;
 
   @State() hasLoadedFonts: boolean = false;
@@ -116,13 +119,11 @@ export class CheckoutCore {
     return (
       <Host>
         <form class="row gy-3">
-          <div class="col-12">
-            <justifi-payment-method-type-selector
-              show-credit-card={this.checkout.payment_settings?.credit_card_payments}
-              show-ach={this.checkout.payment_settings?.ach_payments}
-              selected-payment-method-type={this.selectedPaymentMethodType}
-            />
-          </div>
+          <justifi-payment-method-type-selector
+            show-credit-card={this.checkout.payment_settings?.credit_card_payments}
+            show-ach={this.checkout.payment_settings?.ach_payments}
+            selected-payment-method-type={this.selectedPaymentMethodType}
+          />
           <div class="col-12">
             <justifi-payment-method-form
               payment-method-form-type={this.selectedPaymentMethodType}
