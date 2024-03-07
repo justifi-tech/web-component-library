@@ -3,7 +3,7 @@ import { FormController } from '../../form/form';
 import { BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';
-import { additionQuestionsSchema } from '../../business-form/business-form-schema';
+import { additionQuestionsSchema } from './business-additional-questions-form-schema';
 
 /**
  * @exportedPart label: Label for inputs

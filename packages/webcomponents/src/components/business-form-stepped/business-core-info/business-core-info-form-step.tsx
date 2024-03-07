@@ -1,13 +1,12 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { BusinessStructureOptions, BusinessTypeOptions } from '../business-form-schema';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../utils/form-input-masks';
 import { BusinessFormServerErrors, CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
-import { coreInfoSchema } from '../../business-form/business-form-schema';
 import { config } from '../../../../config';
 import { parseCoreInfo } from '../helpers';
 import { flattenNestedObject } from '../../../utils/utils';
+import { BusinessStructureOptions, BusinessTypeOptions, coreInfoSchema } from './business-core-info-form-schema';
 
 /**
  *

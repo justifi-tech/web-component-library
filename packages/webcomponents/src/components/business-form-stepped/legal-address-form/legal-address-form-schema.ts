@@ -1,12 +1,10 @@
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 
-const legalAddressSchema = Yup.object({
-  line1: Yup.string().required('Enter street address'),
-  line2: Yup.string().nullable(),
-  city: Yup.string().required('Enter city'),
-  state: Yup.string().required('Select state'),
-  postal_code: Yup.string().required('Enter postal code'),
-  country: Yup.string().required('Select country'),
+export const legalAddressSchema = object({
+  line1: string().required('Enter street address'),
+  line2: string().nullable(),
+  city: string().required('Enter city'),
+  state: string().required('Select state'),
+  postal_code: string().required('Enter postal code'),
+  country: string().required('Select country'),
 });
-
-export default legalAddressSchema;
