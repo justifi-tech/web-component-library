@@ -6,8 +6,8 @@ import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
-import { BusinessStructureOptions, BusinessTypeOptions, coreInfoSchema } from '../../schemas/business-core-info-form-schema';
-import { BusinessFormServerErrors } from '../../utils/business-form-types';
+import { coreInfoSchema } from '../../schemas/business-core-info-form-schema';
+import { BusinessStructureOptions, BusinessTypeOptions, BusinessFormServerErrors } from '../../utils/business-form-types';
 
 /**
  *
