@@ -29,7 +29,7 @@ describe('payment-details-core', () => {
 
     expect(page.rootInstance.payment).toEqual(expect.objectContaining({ id: mockPaymentDetailsResponse.data.id }));
     expect(mockPaymentService.fetchPayment).toHaveBeenCalled();
-    // expect(page.root).toMatchSnapshot();
+    expect(page.root).toMatchSnapshot();
   });
 
   it('displays an error state on failed data fetch', async () => {
@@ -54,6 +54,6 @@ describe('payment-details-core', () => {
     page.rootInstance.fetchData();
     await page.waitForChanges();
 
-    // expect(page.root).toMatchSnapshot();
+    expect(page.root).toMatchSnapshot();
   });
 });

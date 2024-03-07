@@ -39,7 +39,7 @@ describe('payouts-list-core', () => {
     const rows = shadowRoot.querySelectorAll('[data-test-id="table-row"]');
 
     expect(rows.length).toBe(4);
-    // expect(page.root).toMatchSnapshot();
+    expect(page.root).toMatchSnapshot();
   });
 
   it('displays an error state on failed data fetch', async () => {
@@ -72,7 +72,7 @@ describe('payouts-list-core', () => {
 
     const error = shadowRoot.querySelector('[data-test-id="table-error-state"]');
     expect(error).toBeTruthy();
-    // expect(page.root).toMatchSnapshot();
+    expect(page.root).toMatchSnapshot();
   });
 
   it('emits payout-row-clicked event on row click', async () => {
