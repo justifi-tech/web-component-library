@@ -101,7 +101,7 @@ export class BusinessForm {
             </div>
             {this.showErrors && FormAlert(this.errorMessage)}
             <div class="col-12 mb-4">
-              <justifi-business-generic-info formController={this.formController} />
+              <justifi-business-core-info formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
               <justifi-legal-address-form formController={this.formController} />

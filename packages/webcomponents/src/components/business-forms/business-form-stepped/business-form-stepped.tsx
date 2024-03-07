@@ -48,29 +48,29 @@ export class BusinessFormStepped {
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[0] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={(e) => this.handleFormLoading(e)}
+                onServerError={(e) => this.handleServerErrors(e)}
               />,
     1: () => <justifi-legal-address-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[1] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={(e) => this.handleFormLoading(e)}
+                onServerError={(e) => this.handleServerErrors(e)}
               />,
     2: () => <justifi-additional-questions-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[2] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={(e) => this.handleFormLoading(e)}
+                onServerError={(e) => this.handleServerErrors(e)}
               />,
     3: () => <justifi-business-representative-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[3] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={(e) => this.handleFormLoading(e)}
+                onServerError={(e) => this.handleServerErrors(e)}
               />
   };
 
