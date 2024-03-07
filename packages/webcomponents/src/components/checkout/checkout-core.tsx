@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Host, Listen, Method } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
-// import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { extractComputedFontsToLoad } from '../../utils/utils';
 import { PaymentMethodTypes } from '../../api';
 
