@@ -2,23 +2,9 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PaymentForm } from '../payment-form';
 import { PaymentMethodTypes } from '../../../api';
 import { BillingFormFields } from '../../billing-form/billing-form-schema';
+import { config } from '../../../../config';
 
 describe('justifi-payment-form', () => {
-  // State Testing
-  it('should update allowedPaymentMethodTypes and selectedPaymentMethodType state correctly when connectedCallback is invoked', async () => {
-    // Mock properties
-    const mockComponent = new PaymentForm();
-    mockComponent.bankAccount = true;
-    mockComponent.card = true;
-
-    // Invoke the lifecycle method
-    mockComponent.connectedCallback();
-
-    // Assertions
-    expect(mockComponent.allowedPaymentMethodTypes).toEqual([PaymentMethodTypes.card, PaymentMethodTypes.bankAccount]);
-    expect(mockComponent.selectedPaymentMethodType).toBe(PaymentMethodTypes.card);
-  });
-
   it('should update submitButtonEnabled state when enableSubmitButton method is called', async () => {
     // Mock component
     const mockComponent = new PaymentForm();
@@ -53,9 +39,8 @@ describe('justifi-payment-form', () => {
 
     // Assert that the properties exist and have the expected default values
     expect(paymentForm).toHaveProperty('bankAccount', undefined);
-    expect(paymentForm).toHaveProperty('card', undefined);
+    expect(paymentForm).toHaveProperty('card', true);
     expect(paymentForm).toHaveProperty('email', undefined);
-    expect(paymentForm).toHaveProperty('iframeOrigin', undefined);
     expect(paymentForm).toHaveProperty('clientId', undefined);
     expect(paymentForm).toHaveProperty('accountId', undefined);
     expect(paymentForm).toHaveProperty('submitButtonText', undefined);
@@ -181,7 +166,6 @@ describe('justifi-payment-form', () => {
     component.bankAccount = true;
     component.card = true;
     component.email = 'test@test.com';
-    component.iframeOrigin = 'https://example.com';
     component.clientId = 'abc123';
     component.accountId = 'def456';
     component.submitButtonText = 'Submit';
@@ -194,16 +178,16 @@ describe('justifi-payment-form', () => {
     // Render the component
     const { root } = await newSpecPage({
       components: [PaymentForm],
-      html: '<justifi-payment-form payment-method-form-type="card" iframe-origin="https://example.com"></justifi-payment-form>',
+      html: `<justifi-payment-form payment-method-form-type="card"></justifi-payment-form>`,
     });
 
     // Assert that the rendered output is correct
     expect(root).toEqualHtml(`
-      <justifi-payment-form iframe-origin="https://example.com" payment-method-form-type="card">
+      <justifi-payment-form payment-method-form-type="card">
         <mock:shadow-root>
           <form class="gy-3 row">
             <div class="col-12">
-              <justifi-payment-method-form iframe-origin="https://example.com" payment-method-form-type="card"></justifi-payment-method-form>
+              <justifi-payment-method-form payment-method-form-type="card" iframeorigin="${config.iframeOrigin}"></justifi-payment-method-form>
             </div>
             <div class="col-12">
               <justifi-billing-form legend="Billing Info"></justifi-billing-form>
