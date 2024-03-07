@@ -11,6 +11,12 @@ export enum BusinessFormClickEvents {
   submit = 'submit'
 }
 
+export enum BusinessFormButton {
+  submit = 'Submit',
+  next = 'Next',
+  previous = 'Previous'
+}
+
 export interface BusinessAddressFormFields {
   line1: string;
   line2?: string;

@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormAlert, LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickEvents } from '../utils/business-form-types';
+import { BusinessFormButton, BusinessFormClickEvents } from '../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -22,7 +22,7 @@ export class BusinessFormStepped {
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
   @State() errorMessage: string = '';
-  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
+  @Event() clickEvent: EventEmitter<{ data?: any, name: BusinessFormClickEvents }>;
 
   constructor() {
     this.incrementSteps = this.incrementSteps.bind(this);
@@ -149,7 +149,7 @@ export class BusinessFormStepped {
                 class="btn btn-secondary"
                 onClick={() => this.previousStepButtonOnClick()}
                 disabled={this.formLoading}>
-                Previous
+                {BusinessFormButton.previous}
               </button>
             )}
             {this.showNextStepButton() && (
@@ -158,7 +158,7 @@ export class BusinessFormStepped {
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickEvents.nextStep)}
                 disabled={this.formLoading}>
-                {this.formLoading ? LoadingSpinner() : 'Next'}
+                {this.formLoading ? LoadingSpinner() : BusinessFormButton.next}
               </button>
             )}
             {this.showSubmitButton() && (
@@ -167,7 +167,7 @@ export class BusinessFormStepped {
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickEvents.submit)}
                 disabled={this.formLoading}>
-                {this.formLoading ? LoadingSpinner() : 'Submit' }
+                {this.formLoading ? LoadingSpinner() : BusinessFormButton.submit }
               </button>
             )}
           </div>

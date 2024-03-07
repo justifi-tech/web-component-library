@@ -4,9 +4,9 @@ import businessFormSchema from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { parseBusinessInfo } from '../utils/parsers';
 import { config } from '../../../../config';
-import { FormAlert } from '../../form/utils';
+import { FormAlert, LoadingSpinner } from '../../form/utils';
 import { Business, IBusiness } from '../../../api/Business';
-import { BusinessFormClickEvents } from '../utils/business-form-types';
+import { BusinessFormButton, BusinessFormClickEvents, BusinessFormServerErrors } from '../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -22,14 +22,10 @@ export class BusinessForm {
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
-  @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
-  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
+  @State() serverError: any;
+  @State() errorMessage: BusinessFormServerErrors;
+  @Event() clickEvent: EventEmitter<{ data?: any, name: BusinessFormClickEvents }>;
   @Event() submitted: EventEmitter<{ data: any }>;
-
-  get disabledState() {
-    return this.isLoading;
-  }
 
   get showErrors() {
     return this.serverError && !this.hideErrors;
@@ -68,8 +64,9 @@ export class BusinessForm {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.submitted.emit({data: response});
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = error.message;
+      this.serverError = error;
+      this.errorMessage = BusinessFormServerErrors.patchData;
+      this.submitted.emit({data: error});
     } finally {
       this.isLoading = false;
     }
@@ -82,8 +79,8 @@ export class BusinessForm {
       const business = new Business(response.data);
       this.formController.setInitialValues(business);
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error fetching data: ${error.message}`;
+      this.serverError = error;
+      this.errorMessage = BusinessFormServerErrors.fetchData;
     } finally {
       this.isLoading = false;
     }
@@ -121,11 +118,10 @@ export class BusinessForm {
             <div class="col-12 d-flex flex-row-reverse">
               <button
                 type="submit"
-                class="btn btn-primary jfi-submit-button"
-                disabled={this.disabledState}
+                class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={() => this.clickEvent.emit({ name: BusinessFormClickEvents.submit})}
-              >
-                {this.isLoading ? 'Loading...' : 'Submit'}
+                disabled={this.isLoading}>
+                {this.isLoading ? LoadingSpinner() : BusinessFormButton.submit}
               </button>
             </div>
           </div>
