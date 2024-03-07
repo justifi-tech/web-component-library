@@ -1,9 +1,5 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-
-import {
-  BusinessStructureOptions,
-  BusinessTypeOptions,
-} from '../business-form-schema';
+import { BusinessStructureOptions, BusinessTypeOptions } from '../business-form-schema';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../utils/form-input-masks';
 import { BusinessFormServerErrors, CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../api/Business';
@@ -66,7 +62,7 @@ export class BusinessCoreInfoFormStep {
     this.formLoading.emit(true);
     try {
       const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const response = await this.api.patch('entities/business/', JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
