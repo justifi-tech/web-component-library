@@ -1,6 +1,7 @@
 import { Component, Event, Prop, h, EventEmitter, Method, Listen, State } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
-import { Theme } from '../payment-method-form/theme';
+import { Theme } from '../../utils/theme';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-card-form',
@@ -15,7 +16,7 @@ export class CardForm {
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */
-  @Prop({ mutable: true }) iframeOrigin?: string;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
 
   /**
    * Boolean indicating if the Card Form should render in a single line
@@ -48,7 +49,7 @@ export class CardForm {
    * Triggered when the validate method is called on the component
    * @event justifi-card-form#cardFormValidated
    */
-  @Event({ eventName: 'cardFormValidate'}) cardFormValidated: EventEmitter<{ data: { isValid: boolean } }>;
+  @Event({ eventName: 'cardFormValidate' }) cardFormValidated: EventEmitter<{ data: { isValid: boolean } }>;
 
   @Listen('paymentMethodFormReady')
   readyHandler(event: CustomEvent) {
