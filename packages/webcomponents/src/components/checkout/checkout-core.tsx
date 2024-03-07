@@ -30,8 +30,6 @@ export class CheckoutCore {
   private billingFormRef?: HTMLJustifiBillingFormElement;
 
   componentWillLoad() {
-    console.log('this.getCheckout', this.getCheckout);
-
     if (this.getCheckout) {
       this.fetchData();
     }
