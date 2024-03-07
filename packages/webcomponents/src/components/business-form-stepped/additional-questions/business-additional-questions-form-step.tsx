@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
-import { IBusiness } from '../../../api/Business';
+import { BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';
 import { additionQuestionsSchema } from '../../business-form/business-form-schema';
@@ -20,8 +20,8 @@ export class AdditionalQuestionsFormStep {
   @State() errors: any = {};
   @State() additional_questions: any = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
-  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
+  @Event() formLoading: EventEmitter<boolean>;
+  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -42,7 +42,7 @@ export class AdditionalQuestionsFormStep {
       this.additional_questions = response.data.additional_questions;
       this.formController.setInitialValues(this.additional_questions);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error fetching business data' });
+      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
     }
@@ -55,7 +55,7 @@ export class AdditionalQuestionsFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload}));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error updating business data' });
+      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
     } finally {
       this.formLoading.emit(false);
     }
@@ -63,7 +63,7 @@ export class AdditionalQuestionsFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
+      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
     } else {
       onSuccess();
     }

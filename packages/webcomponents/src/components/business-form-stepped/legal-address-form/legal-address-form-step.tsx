@@ -1,7 +1,7 @@
 import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
 import Api, { IApiResponse } from '../../../api/Api';
-import { Address, IAddress, IBusiness } from '../../../api/Business';
+import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../api/Business';
 import { parseAddressInfo } from '../helpers';
 import legalAddressSchema from '../../business-form/legal-address-form/legal-address-form-schema';
 import { config } from '../../../../config';
@@ -23,7 +23,7 @@ export class LegalAddressFormStep {
   @State() legal_address: IAddress = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data?: any, message?: string }>;
+  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -44,7 +44,7 @@ export class LegalAddressFormStep {
       this.legal_address = new Address(response.data.legal_address);
       this.formController.setInitialValues({ ...this.legal_address });
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error fetching business data' });
+      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
     }
@@ -57,7 +57,7 @@ export class LegalAddressFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload}));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'Error updating business data' });
+      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
     } finally {
       this.formLoading.emit(false);
     }
@@ -65,7 +65,7 @@ export class LegalAddressFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'Error updating business data' });
+      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
     } else {
       onSuccess();
     }
