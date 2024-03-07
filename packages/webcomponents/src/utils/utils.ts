@@ -173,3 +173,42 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
+
+export function composeQueryParams(values: string[]) {
+  const queryParams = values.map((value) => {
+    if (value === values[0]) {
+      return (value = `?${value}`);
+    } else {
+      return (value = `&${value}`);
+    }
+  });
+  return queryParams.join('');
+}
+
+export async function loadFontsOnParent() {
+  const parent = document.body;
+  const fontsToLoad = extractComputedFontsToLoad();
+  if (!parent || !fontsToLoad) {
+    return null;
+  }
+
+  // Construct the font URL
+  const fontHref = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
+
+  // Check if a link element with the same href already exists
+  const existingFontLink = Array.from(document.querySelectorAll('link')).find(
+    (link) => link.href === fontHref
+  );
+
+  // If the font link already exists, there's no need to append a new one
+  if (existingFontLink) {
+    return;
+  }
+
+  // This approach is needed to load the font in a parent of the component
+  const fonts = document.createElement('link');
+  fonts.rel = 'stylesheet';
+  fonts.href = fontHref;
+
+  parent.append(fonts);
+}
