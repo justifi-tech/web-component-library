@@ -39,6 +39,7 @@ export class SelectInput {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
+    this.formControlInput.emit(target.value);
   }
 
   componentDidLoad() {
@@ -57,11 +58,11 @@ export class SelectInput {
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
+          part={`input ${this.error ? 'input-invalid' : ''}`}
           class={this.error ? 'form-select is-invalid' : 'form-select'}
           disabled={this.disabled}
         >
-          {this.options.map(option => (
+          {this.options?.length && this.options.map(option => (
             <option value={option.value}>{option.label}</option>
           ))}
         </select>
