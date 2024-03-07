@@ -22,8 +22,8 @@
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "generate": "stencil generate",
-    "test": "stencil test --spec",
-    "test:watch": "stencil test --spec --watchAll",
+    "test": "TZ=utc stencil test --spec",
+    "test:watch": "TZ=utc stencil test --spec --watchAll",
     "test:e2e": "stencil test --e2e"
   },
   "dependencies": {
