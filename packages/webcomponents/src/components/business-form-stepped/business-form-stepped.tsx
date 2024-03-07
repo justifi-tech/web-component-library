@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { LoadingSpinner } from '../form/utils';
+import { FormAlert, LoadingSpinner } from '../form/utils';
 import { ClickEvents } from './BusinessFormEventTypes';
 /**
  * @exportedPart label: Label for inputs
@@ -48,24 +48,28 @@ export class BusinessFormStepped {
                 authToken={this.authToken}
                 ref={(el) => this.refs[0] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
               />,
     1: () => <justifi-legal-address-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[1] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
               />,
     2: () => <justifi-additional-questions-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[2] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
               />,
     3: () => <justifi-business-representative-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[3] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
               />
   };
 
@@ -81,6 +85,11 @@ export class BusinessFormStepped {
 
   handleFormLoading(e: CustomEvent) {
     this.formLoading = e.detail;
+  }
+
+  handleServerErrors(e: CustomEvent) {
+    this.serverError = true;
+    this.errorMessage = e.detail.message;
   }
 
   showPreviousStepButton() {
@@ -124,6 +133,7 @@ export class BusinessFormStepped {
     return (
       <Host exportparts="label,input,input-invalid">
         <h1>Business Information</h1>
+        {this.showErrors && FormAlert(this.errorMessage)}
         <div class="my-4">
           {this.currentStepComponent()}
         </div>

@@ -62,7 +62,7 @@ export class BusinessCoreInfoFormStep {
     this.formLoading.emit(true);
     try {
       const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-      const response = await this.api.patch('entities/business/', JSON.stringify(payload));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
