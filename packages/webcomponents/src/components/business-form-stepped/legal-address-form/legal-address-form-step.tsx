@@ -3,8 +3,8 @@ import { FormController } from '../../form/form';
 import Api, { IApiResponse } from '../../../api/Api';
 import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../api/Business';
 import { parseAddressInfo } from '../helpers';
-import legalAddressSchema from '../../business-form/legal-address-form/legal-address-form-schema';
 import { config } from '../../../../config';
+import { legalAddressSchema } from './legal-address-form-schema';
 
 /**
  * @exportedPart label: Label for inputs
