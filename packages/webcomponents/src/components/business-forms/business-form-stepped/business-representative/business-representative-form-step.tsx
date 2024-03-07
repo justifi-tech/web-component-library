@@ -2,10 +2,11 @@ import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@s
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
-import { BusinessFormServerErrors, IBusiness } from '../../../../api/Business';
+import { IBusiness } from '../../../../api/Business';
 import { parseRepresentativeInfo } from '../../utils/parsers';
 import { representativeSchema } from '../../schemas/business-representative-form-schema';
 import { config } from '../../../../../config';
+import { BusinessFormServerErrors } from '../../utils/business-form-types';
 
 @Component({
   tag: 'justifi-business-representative-form-step',

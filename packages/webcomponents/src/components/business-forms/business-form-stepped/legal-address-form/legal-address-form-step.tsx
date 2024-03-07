@@ -1,10 +1,11 @@
 import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
-import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../../api/Business';
+import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/parsers';
 import { config } from '../../../../../config';
 import { legalAddressSchema } from '../../schemas/legal-address-form-schema';
+import { BusinessFormServerErrors } from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs

@@ -5,7 +5,8 @@ import { Api, IApiResponse } from '../../../api';
 import { parseBusinessInfo } from '../utils/parsers';
 import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
-import { Business, BusinessFormClickEvents, IBusiness } from '../../../api/Business';
+import { Business, IBusiness } from '../../../api/Business';
+import { BusinessFormClickEvents } from '../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs

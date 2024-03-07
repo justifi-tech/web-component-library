@@ -1,6 +1,4 @@
-import { BusinessAddressFormFields } from '../business-address/business-address-form-schema';
-
-export const RegExZip = /^\d{5}/;
+import { BusinessAddressFormFields } from "../../utils/business-form-types";
 
 export interface IBusinessRepresentative {
   name: string;
