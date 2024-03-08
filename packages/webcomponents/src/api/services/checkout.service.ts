@@ -1,5 +1,5 @@
 import { Api, IApiResponse, ICheckout } from '..';
-import { config } from '../../../config';
+// import { config } from '../../../config';
 
 export interface ICheckoutService {
   fetchCheckout(
@@ -13,7 +13,7 @@ export class CheckoutService implements ICheckoutService {
     authToken: string,
     checkoutId: string,
   ): Promise<IApiResponse<ICheckout>> {
-    const endpoint = `checkout/${checkoutId}`;
-    return Api(authToken, config.proxyApiOrigin).get(endpoint);
+    const endpoint = `checkouts/${checkoutId}`;
+    return Api(authToken, 'https://api.justifi.ai/v1/').get(endpoint);
   }
 }
