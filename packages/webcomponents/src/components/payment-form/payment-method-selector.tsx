@@ -12,10 +12,10 @@ const PaymentMethodLabels = {
   shadow: true,
 })
 export class PaymentMethodSelector {
+  @Prop() paymentMethodTypes: PaymentMethodTypes[] = [];
   @Prop() selectedPaymentMethodType: PaymentMethodTypes;
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
 
-  paymentMethodTypes: PaymentMethodTypes[] = [PaymentMethodTypes.card, PaymentMethodTypes.bankAccount];
   defaultRadioButtonOption!: HTMLInputElement;
 
   onChangeHandler(event: any) {

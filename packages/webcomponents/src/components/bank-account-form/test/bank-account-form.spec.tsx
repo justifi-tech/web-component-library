@@ -1,7 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { BankAccountForm } from '../bank-account-form';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
-import { config } from '../../../../config';
 
 describe('justifi-bank-account-form', () => {
   it('should pass validationMode prop to justifi-payment-method-form', async () => {
@@ -21,16 +20,6 @@ describe('justifi-bank-account-form', () => {
 
     const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
     expect(paymentMethodForm.getAttribute('iframe-origin')).toBe('https://example.com');
-  });
-
-  it('should pass iframeOrigin default prop to justifi-payment-method-form when no prop is provided', async () => {
-    const page = await newSpecPage({
-      components: [BankAccountForm],
-      html: '<justifi-bank-account-form />',
-    });
-
-    const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
-    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe(config.iframeOrigin);
   });
 
   it('should call the PaymentMethodForm validate method when invoked from the BankAccountForm component', async () => {

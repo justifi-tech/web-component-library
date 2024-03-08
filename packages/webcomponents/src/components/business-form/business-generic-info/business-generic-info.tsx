@@ -99,7 +99,7 @@ export class BusinessGenericInfo {
                 name="industry"
                 label="Industry"
                 defaultValue={genericInfoDefaultValue.industry}
-                error={this.errors.industry}
+                error={this.errors.business_structure}
                 inputHandler={this.inputHandler}
               />
             </div>
