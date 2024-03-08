@@ -23,7 +23,7 @@ export enum BusinessType {
   government_entity = 'government_entity',
 }
 
-export enum BusinessFormServerErrors { 
+export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',
   patchData = 'Error updating business data'
 }
