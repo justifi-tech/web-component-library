@@ -1,2 +1,5 @@
 storybook-static
 .turbo
+
+# temp
+./stories/components/checkout.stories.tsx
