@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-number handles the disabled state 1`] = `
+<form-control-number disabled="" exportparts="label,input,input-invalid" label="Age">
+  <mock:shadow-root>
+    <label class="form-label" part="label">
+      Age
+    </label>
+    <input class="form-control" disabled="" part="input undefined" type="number" value="">
+  </mock:shadow-root>
+</form-control-number>
+`;
+
+exports[`form-control-number renders with an error message 1`] = `
+<form-control-number error="Invalid input" exportparts="label,input,input-invalid" label="Age">
+  <mock:shadow-root>
+    <label class="form-label" part="label">
+      Age
+    </label>
+    <input class="form-control is-invalid" part="input input-invalid" type="number" value="">
+    <div class="invalid-feedback">
+      Invalid input
+    </div>
+  </mock:shadow-root>
+</form-control-number>
+`;
+
+exports[`form-control-number renders with default props 1`] = `
+<form-control-number exportparts="label,input,input-invalid" label="Age">
+  <mock:shadow-root>
+    <label class="form-label" part="label">
+      Age
+    </label>
+    <input class="form-control" part="input undefined" type="number" value="">
+  </mock:shadow-root>
+</form-control-number>
+`;
