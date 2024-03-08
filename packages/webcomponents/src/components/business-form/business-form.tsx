@@ -80,7 +80,7 @@ export class BusinessForm {
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       const business = new Business(response.data);
-      this.formController.setInitialValues({ ...business });
+      this.formController.setInitialValues(business);
     } catch (error) {
       this.serverError = true;
       this.errorMessage = `Error fetching data: ${error.message}`;
