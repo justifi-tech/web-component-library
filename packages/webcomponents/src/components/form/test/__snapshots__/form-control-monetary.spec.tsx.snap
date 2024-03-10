@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-monetary renders correctly with default props 1`] = `
+<form-control-monetary exportparts="label,input,input-invalid">
+  <mock:shadow-root>
+    <label class="form-label" part="label"></label>
+    <input class="form-control" part="input undefined" type="text">
+  </mock:shadow-root>
+</form-control-monetary>
+`;
