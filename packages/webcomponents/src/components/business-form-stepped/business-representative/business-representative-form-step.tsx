@@ -21,20 +21,13 @@ export class BusinessRepresentativeFormStep {
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
 
-  constructor() {
-    this.inputHandler = this.inputHandler.bind(this);
-    this.onAddressFormUpdate = this.onAddressFormUpdate.bind(this);
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-  }
-
   private api: any;
 
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
 
-  private async fetchData() {
+  private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
@@ -47,7 +40,7 @@ export class BusinessRepresentativeFormStep {
     }
   }
 
-  private async sendData(onSuccess?: () => void) {
+  private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
       const payload = parseRepresentativeInfo(this.formController.values.getValue());
@@ -70,7 +63,7 @@ export class BusinessRepresentativeFormStep {
   }
 
   @Method()
-  async validateAndSubmit(onSuccess: () => Promise<void>) {
+  async validateAndSubmit({ onSuccess }) {
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
@@ -94,14 +87,14 @@ export class BusinessRepresentativeFormStep {
     );
   }
 
-  inputHandler(name: string, value: string) {
+  inputHandler = (name: string, value: string) => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,
     });
   }
 
-  onAddressFormUpdate(values: any): void {
+  onAddressFormUpdate = (values: any): void => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
         address: {

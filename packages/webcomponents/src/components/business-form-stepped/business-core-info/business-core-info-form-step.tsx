@@ -33,19 +33,13 @@ export class BusinessCoreInfoFormStep {
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
 
-  constructor() {
-    this.inputHandler = this.inputHandler.bind(this);
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-  }
-
   private api: any;
 
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
 
-  private async fetchData() {
+  private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
@@ -58,7 +52,7 @@ export class BusinessCoreInfoFormStep {
     }
   }
 
-  private async sendData(onSuccess?: () => void) {
+  private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
       const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
@@ -81,7 +75,7 @@ export class BusinessCoreInfoFormStep {
   }
 
   @Method()
-  async validateAndSubmit(onSuccess: () => Promise<void>) {
+  async validateAndSubmit({ onSuccess }) {
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
@@ -105,7 +99,7 @@ export class BusinessCoreInfoFormStep {
     });
   }
 
-  inputHandler(name: string, value: string) {
+  inputHandler = (name: string, value: string) => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,

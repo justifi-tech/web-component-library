@@ -17,14 +17,13 @@ export class BusinessFormStepped {
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;
   @State() formLoading: boolean = false;
-  @State() serverError: boolean = false;
+  @State() errorMessage: string = '';
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
-  @State() errorMessage: string = '';
   @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
 
   get showErrors() {
-    return this.serverError && !this.hideErrors;
+    return this.errorMessage && !this.hideErrors;
   }
 
   get businessEndpoint() {
@@ -83,7 +82,6 @@ export class BusinessFormStepped {
   }
 
   handleServerErrors(e: CustomEvent) {
-    this.serverError = true;
     this.errorMessage = e.detail.message;
   }
 
@@ -105,7 +103,7 @@ export class BusinessFormStepped {
   previousStepButtonOnClick() {
     this.clickEvent.emit({ name: ClickEvents.previousStep })
     const currentStep = this.refs[this.currentStep];
-    currentStep.validateAndSubmit(this.decrementSteps);
+    currentStep.validateAndSubmit({ onSuccess: this.decrementSteps });
   }
 
   nextStepButtonOnClick(e: any, clickEventName) {
@@ -113,7 +111,7 @@ export class BusinessFormStepped {
     this.clickEvent.emit({ name: clickEventName })
 
     const currentStep = this.refs[this.currentStep];
-    currentStep.validateAndSubmit(this.incrementSteps);
+    currentStep.validateAndSubmit({ onSuccess: this.incrementSteps });
   }
 
   showSubmitButton() {
