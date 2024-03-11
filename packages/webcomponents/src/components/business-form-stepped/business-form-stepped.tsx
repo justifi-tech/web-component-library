@@ -23,11 +23,6 @@ export class BusinessFormStepped {
   @State() errorMessage: string = '';
   @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
 
-  constructor() {
-    this.incrementSteps = this.incrementSteps.bind(this);
-    this.decrementSteps = this.decrementSteps.bind(this);
-  }
-
   get showErrors() {
     return this.serverError && !this.hideErrors;
   }
@@ -100,12 +95,12 @@ export class BusinessFormStepped {
     return this.currentStep < this.totalSteps;
   }
 
-  incrementSteps() { 
+  incrementSteps = () => { 
     if (this.currentStep < this.totalSteps) {
       return this.currentStep++; 
     }
   }
-  decrementSteps() { return this.currentStep--; }
+  decrementSteps = () => { return this.currentStep--; }
 
   previousStepButtonOnClick() {
     this.clickEvent.emit({ name: ClickEvents.previousStep })
