@@ -70,4 +70,15 @@ describe('form-control-monetary', () => {
 
     expect(blurSpy).toHaveBeenCalled();
   });
+
+  it('displays error message when error prop is set', async () => {
+    const page = await newSpecPage({
+      components: [MonetaryInput],
+      html: `<form-control-monetary error="Invalid amount"></form-control-monetary>`,
+    });
+
+    const errorDiv = page.root.shadowRoot.querySelector('.invalid-feedback');
+    expect(errorDiv.textContent).toBe('Invalid amount');
+    expect(page.root).toMatchSnapshot();
+  });
 });
