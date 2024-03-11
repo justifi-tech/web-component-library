@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Watch } from '@stencil/core';
-import { makeGetCheckout } from './get-checkout';
+import { makeGetCheckout, makePay } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 
 @Component({
@@ -11,6 +11,7 @@ export class Checkout {
   @Prop() authToken: string;
   @Prop() checkoutId: string;
   @State() getCheckout: Function;
+  @State() pay: Function;
   @State() errorMessage: string = '';
 
   componentWillLoad() {
@@ -24,8 +25,13 @@ export class Checkout {
         checkoutId: this.checkoutId,
         service: new CheckoutService()
       });
+      this.pay = makePay({
+        authToken: this.authToken,
+        checkoutId: this.checkoutId,
+        service: new CheckoutService()
+      });
     } else {
-      this.errorMessage = 'Client ID is required';
+      this.errorMessage = 'auth-token and checkout-id are required';
     }
   }
 
@@ -37,7 +43,10 @@ export class Checkout {
 
   render() {
     return (
-      <justifi-checkout-core getCheckout={this.getCheckout}></justifi-checkout-core>
+      <justifi-checkout-core
+        getCheckout={this.getCheckout}
+        pay={this.pay}
+      ></justifi-checkout-core>
     );
   }
 }

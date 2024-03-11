@@ -15,6 +15,7 @@ export class CheckoutCore {
  */
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin; @Prop() authToken: string;
   @Prop() getCheckout: Function;
+  @Prop() pay: Function;
   @Prop() checkoutId: string;
 
   @State() hasLoadedFonts: boolean = false;
@@ -90,21 +91,47 @@ export class CheckoutCore {
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
     this.isLoading = true;
+    const token = await this.tokenize();
+    if (token) { await this.payWithPaymentMethodToken(token); }
+    this.isLoading = false;
+  }
 
+  async tokenize() {
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
       const paymentMethodData = { ...billingFormFieldValues };
       const clientId = this.checkout.payment_client_id;
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData);
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.checkout.account_id);
+
+      this.submitted.emit(tokenizeResponse);
+
       if (tokenizeResponse.error) {
         console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
+        return null;
       }
-      this.submitted.emit(tokenizeResponse);
+
+      const data = tokenizeResponse.data;
+      const tokenizedPaymentMethod = (data as any).card || (data as any).ach; // fix the response types to avoid this
+      return tokenizedPaymentMethod.token;
     } catch (error) {
       console.error(`An error occured submitting the form: ${error}`);
-    } finally {
-      this.isLoading = false;
+      return null;
     }
+  }
+
+  async payWithPaymentMethodToken(token: string) {
+    console.log('payWithPaymentMethodToken', token)
+    this.pay({
+      paymentMethodToken: token,
+      onSuccess: ({ checkout }) => {
+        this.checkout = checkout;
+        this.isLoading = false;
+      },
+      onError: (errorMessage) => {
+        this.errorMessage = errorMessage;
+        this.isLoading = false;
+      },
+    })
   }
 
   private loadingSpinner = (

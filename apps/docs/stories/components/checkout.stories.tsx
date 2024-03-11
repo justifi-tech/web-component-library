@@ -10,8 +10,8 @@ const meta: Meta = {
   title: 'Components/Checkout',
   component: 'justifi-checkout',
   args: {
-    ...storyBaseArgs.args,
-    'checkout-id': '123'
+    'auth-token': '',
+    'checkout-id': ''
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

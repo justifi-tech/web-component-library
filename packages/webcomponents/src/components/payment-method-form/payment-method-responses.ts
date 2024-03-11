@@ -8,7 +8,7 @@ interface PaymentMethodCreateResponseWrapper {
   page_info: string;
 }
 
-interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
+export interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
   data?: {
     signature: string;
     customer_id: string;
@@ -42,7 +42,7 @@ interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
   };
 }
 
-interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
+export interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
   data?: {
     signature: string;
     customer_id: string;
