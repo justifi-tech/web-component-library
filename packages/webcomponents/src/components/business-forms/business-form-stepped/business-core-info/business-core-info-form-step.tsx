@@ -1,13 +1,13 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { BusinessStructureOptions, BusinessTypeOptions } from '../../utils/business-form-types';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { BusinessFormServerErrors, CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
+import { coreInfoSchema } from '../../schemas/business-core-info-schema';
 import { config } from '../../../../../config';
-import { flattenNestedObject } from '../../../../utils/utils';
-import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema';
-import { BusinessStructureOptions, BusinessTypeOptions } from '../../utils/business-form-types';
 import { parseCoreInfo } from '../../utils/payload-parsers';
+import { flattenNestedObject } from '../../../../utils/utils';
 
 /**
  *
@@ -85,7 +85,7 @@ export class BusinessCoreInfoFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(businessCoreInfoSchema);
+    this.formController = new FormController(coreInfoSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

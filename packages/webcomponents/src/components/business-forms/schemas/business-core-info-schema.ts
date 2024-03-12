@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-export const businessCoreInfoSchema = object({
+export const coreInfoSchema = object({
   legal_name: string().required('Enter legal name'),
   website_url: string()
     .url('Enter valid website url')

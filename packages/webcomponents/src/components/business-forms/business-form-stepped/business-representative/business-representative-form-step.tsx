@@ -3,9 +3,9 @@ import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { BusinessFormServerErrors, IBusiness } from '../../../../api/Business';
-import { config } from '../../../../../config';
 import { parseRepresentativeInfo } from '../../utils/payload-parsers';
 import { representativeSchema } from '../../schemas/business-representative-schema';
+import { config } from '../../../../../config';
 
 @Component({
   tag: 'justifi-business-representative-form-step',
