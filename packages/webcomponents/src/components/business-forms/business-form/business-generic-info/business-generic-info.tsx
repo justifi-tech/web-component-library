@@ -4,9 +4,9 @@ import {
   BusinessStructureOptions,
   BusinessTypeOptions,
 } from '../business-form-schema';
-import { FormController } from '../../form/form';
-import { PHONE_MASKS, TAX_ID_MASKS } from '../../../utils/form-input-masks';
-import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../api/Business';
+import { FormController } from '../../../form/form';
+import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 
 /**
  *

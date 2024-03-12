@@ -1,12 +1,12 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
-import StateOptions from '../../billing-form/state-options';
+import StateOptions from '../../../billing-form/state-options';
 
 @Component({
-  tag: 'justifi-business-address-form',
-  styleUrl: 'business-address-form.scss',
+  tag: 'justifi-business-address-form-step',
+  styleUrl: 'business-address-form-step.scss',
   shadow: true,
 })
-export class BusinessAddressForm {
+export class BusinessAddressFormStep {
   @Prop() onFormUpdate: (values: any) => void;
   @Prop() errors: any;
   @Prop() defaultValues: any;

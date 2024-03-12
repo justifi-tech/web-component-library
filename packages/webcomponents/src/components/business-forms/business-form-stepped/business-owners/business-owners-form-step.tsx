@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { FormController } from '../../form/form';
-import { PHONE_MASKS } from '../../../utils/form-input-masks';
+import { FormController } from '../../../form/form';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 
 class BusinessOwner {
   name: string = '';
@@ -22,11 +22,11 @@ class BusinessOwner {
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-owners',
-  styleUrl: 'business-owners.scss',
+  tag: 'justifi-business-owners-form-step',
+  styleUrl: 'business-owners-form-step.scss',
   shadow: false,
 })
-export class BusinessOwners {
+export class BusinessOwnersFormStep {
   @Prop() formController: FormController;
   @State() errors: any[] = [];
   @State() owners: BusinessOwner[] = [];
