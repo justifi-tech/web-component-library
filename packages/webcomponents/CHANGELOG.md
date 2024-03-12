@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.8.3
+
+### Patch Changes
+
+- 26670a6: Change business form field label from SSN/EIN to SSN
+
 ## 4.8.2
 
 ### Patch Changes
