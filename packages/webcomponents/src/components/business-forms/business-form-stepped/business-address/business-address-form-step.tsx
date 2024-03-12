@@ -7,14 +7,14 @@ import StateOptions from '../../../billing-form/state-options';
   shadow: true,
 })
 export class BusinessAddressFormStep {
-  @Prop() onFormUpdate: (values: any) => void;
+  @Prop() formUpdateHandler: (values: any) => void;
   @Prop() errors: any;
   @Prop() defaultValues: any;
   @State() address: any = {};
 
   @Watch('address')
   handleAddressChange(newValues: any) {
-    this.onFormUpdate(newValues);
+    this.formUpdateHandler(newValues);
   }
 
   inputHandler(name: string, value: string) {
