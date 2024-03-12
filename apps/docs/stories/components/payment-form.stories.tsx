@@ -7,7 +7,7 @@ import '@justifi/webcomponents/dist/module/justifi-payment-form';
 const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
 
 const meta: Meta = {
-  title: 'Components/PaymentForm',
+  title: 'Payment Facilitation/Payments/Payment Form',
   component: 'justifi-payment-form',
   args: {
     ...storyBaseArgs.args,

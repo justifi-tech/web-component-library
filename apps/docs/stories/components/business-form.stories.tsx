@@ -9,7 +9,7 @@ type Story = StoryObj;
 const storyBaseArgs = new StoryBaseArgs(['auth-token', 'business-id']);
 
 const meta: Meta = {
-  title: 'Components/BusinessForm',
+  title: 'Entities/BusinessForm',
   component: 'justifi-business-form',
   args: {
     ...storyBaseArgs.args,
