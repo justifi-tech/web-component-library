@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.8.3
+
+### Patch Changes
+
+- e4c9343: Change BusinessForm label from SSN/EIN to SSN
+
 ## 4.8.2
 
 ### Patch Changes
