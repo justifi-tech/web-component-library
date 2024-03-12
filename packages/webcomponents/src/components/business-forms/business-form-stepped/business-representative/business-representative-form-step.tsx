@@ -1,11 +1,11 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../../form/form';
-import { PHONE_MASKS } from '../../../utils/form-input-masks';
-import Api, { IApiResponse } from '../../../api/Api';
-import { BusinessFormServerErrors, IBusiness } from '../../../api/Business';
+import { FormController } from '../../../form/form';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import Api, { IApiResponse } from '../../../../api/Api';
+import { BusinessFormServerErrors, IBusiness } from '../../../../api/Business';
 import { parseRepresentativeInfo } from '../helpers';
 import { representativeSchema } from '../business-form-schema';
-import { config } from '../../../../config';
+import { config } from '../../../../../config';
 
 @Component({
   tag: 'justifi-business-representative-form-step',

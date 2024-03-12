@@ -1,12 +1,12 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../form/form';
+import { FormController } from '../../form/form';
 import businessFormSchema from './business-form-schema';
-import { Api, IApiResponse } from '../../api';
+import { Api, IApiResponse } from '../../../api';
 import { parseForPatching } from './helpers';
-import { config } from '../../../config';
-import { FormAlert } from '../form/utils';
+import { config } from '../../../../config';
+import { FormAlert } from '../../form/utils';
 import { ClickEvents } from './BusinessFormEventTypes';
-import { Business, IBusiness } from '../../api/Business';
+import { Business, IBusiness } from '../../../api/Business';
 
 /**
  * @exportedPart label: Label for inputs

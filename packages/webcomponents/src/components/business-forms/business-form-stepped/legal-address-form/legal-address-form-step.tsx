@@ -1,9 +1,10 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../../form/form';
-import { BusinessFormServerErrors, IBusiness } from '../../../api/Business';
-import { Api, IApiResponse } from '../../../api';
-import { config } from '../../../../config';
-import { additionQuestionsSchema } from '../../business-form/business-form-schema';
+import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@stencil/core';
+import { FormController } from '../../../form/form';
+import Api, { IApiResponse } from '../../../../api/Api';
+import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../../api/Business';
+import { parseAddressInfo } from '../helpers';
+import legalAddressSchema from '../../business-form/legal-address-form/legal-address-form-schema';
+import { config } from '../../../../../config';
 
 /**
  * @exportedPart label: Label for inputs
@@ -11,18 +12,19 @@ import { additionQuestionsSchema } from '../../business-form/business-form-schem
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-additional-questions-form-step',
+  tag: 'justifi-legal-address-form-step',
+  styleUrl: 'legal-address-form-step.scss',
 })
-export class AdditionalQuestionsFormStep {
+export class LegalAddressFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() additional_questions: any = {};
+  @State() legal_address: IAddress = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
-  
+
   private api: any;
 
   get businessEndpoint() {
@@ -33,8 +35,8 @@ export class AdditionalQuestionsFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.additional_questions = response.data.additional_questions;
-      this.formController.setInitialValues(this.additional_questions);
+      this.legal_address = new Address(response.data.legal_address);
+      this.formController.setInitialValues({ ...this.legal_address });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
@@ -45,8 +47,8 @@ export class AdditionalQuestionsFormStep {
   private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
-      const payload = this.formController.values.getValue();
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload}));
+      const payload = parseAddressInfo(this.formController.values.getValue());
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload}));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -75,14 +77,14 @@ export class AdditionalQuestionsFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(additionQuestionsSchema);
+    this.formController = new FormController(legalAddressSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
 
   componentDidLoad() {
     this.formController.values.subscribe(values =>
-      this.additional_questions = { ...values }
+      this.legal_address = { ...values }
     );
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors }),
@@ -97,58 +99,70 @@ export class AdditionalQuestionsFormStep {
   }
 
   render() {
-    const additionalQuestionsDefaultValue =
+    const legalAddressDefaultValue =
       this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
         <form>
           <fieldset>
-            <legend>Additional Questions</legend>
+            <legend>Business Legal Address</legend>
             <hr />
-            <div class="row gy-3">
+            <div class="row gx-2 gy-2">
               <div class="col-12">
-                <form-control-monetary
-                  name="business_revenue"
-                  label="Business Revenue"
+                <form-control-text
+                  name="line1"
+                  label="Legal Address"
                   inputHandler={this.inputHandler}
-                  error={this.errors?.business_revenue}
-                  defaultValue={additionalQuestionsDefaultValue?.business_revenue}
+                  defaultValue={legalAddressDefaultValue?.line1}
+                  error={this.errors?.line1}
                 />
               </div>
               <div class="col-12">
-                <form-control-monetary
-                  name="business_payment_volume"
-                  label="Business Payment Volume"
-                  inputHandler={this.inputHandler}
-                  error={this.errors?.business_payment_volume}
-                  defaultValue={
-                    additionalQuestionsDefaultValue?.business_payment_volume
-                  }
+                <form-control-text
+                  name="line2"
+                  label="Address Line 2"
+                  inputHandler={(name, value) => this.inputHandler(name, value)}
+                  defaultValue={legalAddressDefaultValue?.line2}
                 />
               </div>
               <div class="col-12">
-                <form-control-monetary
-                  name="business_dispute_volume"
-                  label="Business Dispute Volume"
+                <form-control-text
+                  name="city"
+                  label="City"
                   inputHandler={this.inputHandler}
-                  error={this.errors?.business_dispute_volume}
-                  defaultValue={
-                    additionalQuestionsDefaultValue?.business_dispute_volume
-                  }
+                  defaultValue={legalAddressDefaultValue?.city}
+                  error={this.errors?.city}
                 />
               </div>
               <div class="col-12">
-                <form-control-monetary
-                  name="business_receivable_volume"
-                  label="Business Receivable Volume"
+                <form-control-text
+                  name="state"
+                  label="State"
                   inputHandler={this.inputHandler}
-                  error={
-                    this.errors?.business_receivable_volume
-                  }
-                  defaultValue={
-                    additionalQuestionsDefaultValue?.business_receivable_volume
-                  }
+                  defaultValue={legalAddressDefaultValue?.state}
+                  error={this.errors?.state}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-number
+                  name="postal_code"
+                  label="Postal Code"
+                  inputHandler={this.inputHandler}
+                  defaultValue={legalAddressDefaultValue?.postal_code}
+                  error={this.errors?.postal_code}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-select
+                  name="country"
+                  label="Country"
+                  options={[{ label: 'United States', value: 'USA' }]}
+                  inputHandler={this.inputHandler}
+                  defaultValue={legalAddressDefaultValue?.country}
+                  error={this.errors?.country}
+                  // just for now so we skip handling country specificities
+                  disabled={true}
                 />
               </div>
             </div>

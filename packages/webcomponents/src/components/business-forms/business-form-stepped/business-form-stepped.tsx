@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { FormAlert, LoadingSpinner } from '../form/utils';
+import { FormAlert, LoadingSpinner } from '../../form/utils';
 import { ClickEvents } from './BusinessFormEventTypes';
 /**
  * @exportedPart label: Label for inputs

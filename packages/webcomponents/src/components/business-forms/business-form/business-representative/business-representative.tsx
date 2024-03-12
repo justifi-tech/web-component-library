@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { FormController } from '../../form/form';
-import { PHONE_MASKS } from '../../../utils/form-input-masks';
+import { FormController } from '../../../form/form';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 
 @Component({
   tag: 'justifi-business-representative',
