@@ -2,9 +2,9 @@ import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@s
 import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../../api/Business';
-import { parseAddressInfo } from '../helpers';
-import legalAddressSchema from '../../business-form/legal-address-form/legal-address-form-schema';
 import { config } from '../../../../../config';
+import { parseAddressInfo } from '../../utils/payload-parsers';
+import { legalAddressSchema } from '../../schemas/business-legal-address-form-schema';
 
 /**
  * @exportedPart label: Label for inputs
