@@ -1,9 +1,10 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormServerErrors, IBusiness } from '../../../../api/Business';
+import { IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { additionQuestionsSchema } from '../../schemas/business-additional-questions-schema';
+import { BusinessFormServerErrors } from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs

@@ -1,3 +1,16 @@
+export enum BusinessFormServerErrors {
+  fetchData = 'Error retrieving business data',
+  patchData = 'Error updating business data'
+}
+
+export enum BusinessFormClickEvents {
+  nextStep = 'nextStep',
+  previousStep = 'previousStep',
+  submit = 'submit'
+}
+
+export const RegExZip = /^\d{5}/;
+
 
 type BusinessType =
   | 'for_profit'
@@ -106,11 +119,3 @@ export const BusinessStructureOptions: {
       value: 'tax_exempt_government_instrumentality',
     },
   ];
-
-export enum BusinessFormClickEvents {
-  nextStep = 'nextStep',
-  previousStep = 'previousStep',
-  submit = 'submit'
-}
-
-export const RegExZip = /^\d{5}/;

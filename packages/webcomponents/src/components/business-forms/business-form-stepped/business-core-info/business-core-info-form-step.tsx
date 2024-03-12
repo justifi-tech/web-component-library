@@ -1,8 +1,8 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { BusinessStructureOptions, BusinessTypeOptions } from '../../utils/business-form-types';
+import { BusinessStructureOptions, BusinessTypeOptions, BusinessFormServerErrors } from '../../utils/business-form-types';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
-import { BusinessFormServerErrors, CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/Business';
+import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { coreInfoSchema } from '../../schemas/business-core-info-schema';
 import { config } from '../../../../../config';
