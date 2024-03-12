@@ -1,12 +1,8 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-
-import {
-  BusinessStructureOptions,
-  BusinessTypeOptions,
-} from '../business-form-schema';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
+import { BusinessStructureOptions, BusinessTypeOptions } from '../../utils/business-form-types';
 
 /**
  *
@@ -19,13 +15,13 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-generic-info',
-  styleUrl: 'business-generic-info.scss',
+  tag: 'justifi-business-core-info',
+  styleUrl: 'business-core-info.scss',
 })
-export class BusinessGenericInfo {
+export class BusinessCoreInfo {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() genericInfo: ICoreBusinessInfo = {};
+  @State() coreInfo: ICoreBusinessInfo = {};
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -33,7 +29,7 @@ export class BusinessGenericInfo {
 
   componentDidLoad() {
     this.formController.values.subscribe(
-      values => (this.genericInfo = { ...new CoreBusinessInfo(values) }),
+      values => (this.coreInfo = { ...new CoreBusinessInfo(values) }),
     );
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
@@ -48,7 +44,7 @@ export class BusinessGenericInfo {
   }
 
   render() {
-    const genericInfoDefaultValue = this.formController.getInitialValues();
+    const coreInfoDefaultValue = this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
@@ -60,7 +56,7 @@ export class BusinessGenericInfo {
               <form-control-text
                 name="legal_name"
                 label="Legal Name"
-                defaultValue={genericInfoDefaultValue.legal_name}
+                defaultValue={coreInfoDefaultValue.legal_name}
                 error={this.errors.legal_name}
                 inputHandler={this.inputHandler}
               />
@@ -69,7 +65,7 @@ export class BusinessGenericInfo {
               <form-control-text
                 name="doing_business_as"
                 label="Doing Business As (DBA)"
-                defaultValue={genericInfoDefaultValue.doing_business_as}
+                defaultValue={coreInfoDefaultValue.doing_business_as}
                 error={this.errors.doing_business_as}
                 inputHandler={this.inputHandler}
               />
@@ -79,7 +75,7 @@ export class BusinessGenericInfo {
                 name="business_type"
                 label="Business Type"
                 options={BusinessTypeOptions}
-                defaultValue={genericInfoDefaultValue.business_type}
+                defaultValue={coreInfoDefaultValue.business_type}
                 error={this.errors.business_type}
                 inputHandler={this.inputHandler}
               />
@@ -89,7 +85,7 @@ export class BusinessGenericInfo {
                 name="business_structure"
                 label="Business Structure"
                 options={BusinessStructureOptions}
-                defaultValue={genericInfoDefaultValue.business_structure}
+                defaultValue={coreInfoDefaultValue.business_structure}
                 error={this.errors.business_structure}
                 inputHandler={this.inputHandler}
               />
@@ -98,7 +94,7 @@ export class BusinessGenericInfo {
               <form-control-text
                 name="industry"
                 label="Industry"
-                defaultValue={genericInfoDefaultValue.industry}
+                defaultValue={coreInfoDefaultValue.industry}
                 error={this.errors.business_structure}
                 inputHandler={this.inputHandler}
               />
@@ -107,7 +103,7 @@ export class BusinessGenericInfo {
               <form-control-number-masked
                 name="tax_id"
                 label="Tax ID"
-                defaultValue={genericInfoDefaultValue.tax_id}
+                defaultValue={coreInfoDefaultValue.tax_id}
                 error={this.errors.tax_id}
                 inputHandler={this.inputHandler}
                 mask={TAX_ID_MASKS.US}
@@ -117,7 +113,7 @@ export class BusinessGenericInfo {
               <form-control-text
                 name="website_url"
                 label="Website URL"
-                defaultValue={genericInfoDefaultValue.website_url}
+                defaultValue={coreInfoDefaultValue.website_url}
                 error={this.errors.website_url}
                 inputHandler={this.inputHandler}
               />
@@ -126,7 +122,7 @@ export class BusinessGenericInfo {
               <form-control-text
                 name="email"
                 label="Email Address"
-                defaultValue={genericInfoDefaultValue.email}
+                defaultValue={coreInfoDefaultValue.email}
                 error={this.errors.email}
                 inputHandler={this.inputHandler}
               />
@@ -135,7 +131,7 @@ export class BusinessGenericInfo {
               <form-control-number-masked
                 name="phone"
                 label="Phone Number"
-                defaultValue={genericInfoDefaultValue.phone}
+                defaultValue={coreInfoDefaultValue.phone}
                 error={this.errors.phone}
                 inputHandler={this.inputHandler}
                 mask={PHONE_MASKS.US}

@@ -1,12 +1,12 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
-import businessFormSchema from './business-form-schema';
 import { Api, IApiResponse } from '../../../api';
-import { parseForPatching } from './helpers';
 import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
-import { ClickEvents } from './BusinessFormEventTypes';
 import { Business, IBusiness } from '../../../api/Business';
+import { businessFormSchema } from '../schemas/business-form-schema';
+import { parseForPatching } from '../utils/payload-parsers';
+import { BusinessFormClickEvents } from '../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -104,7 +104,7 @@ export class BusinessForm {
             </div>
             {this.showErrors && FormAlert(this.errorMessage)}
             <div class="col-12 mb-4">
-              <justifi-business-generic-info formController={this.formController} />
+              <justifi-business-core-info formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
               <justifi-legal-address-form formController={this.formController} />
@@ -123,7 +123,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.clickEvent.emit({ name: ClickEvents.submit})}
+                onClick={() => this.clickEvent.emit({ name: BusinessFormClickEvents.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
