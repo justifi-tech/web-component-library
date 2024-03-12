@@ -3,7 +3,6 @@ import { Business, IBusiness } from '../../api/Business';
 import { Api, IApiResponse } from '../../api';
 import { ErrorState, LoadingState } from '../details/utils';
 import { config } from '../../../config';
-import { isEmptyObject } from '../../utils/utils';
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -87,20 +86,12 @@ export class BusinessDetails {
     return (
       <Host>
         <generic-info-details business={this.business} />
-        {!isEmptyObject(this.business.legal_address) && (
-          <legal-address-details legalAddress={this.business.legal_address} />
-        )}
-        {!isEmptyObject(this.business.representative) && (
-          <representative-details representative={this.business.representative} />
-        )}
-        {this.business.owners.length > 0 && (
-          <owners-details owners={this.business.owners} />
-        )}
-        {!isEmptyObject(this.business.additional_questions) && (
-          <additional-questions-details
-            additionalQuestions={this.business.additional_questions}
-          />
-        )}
+        <legal-address-details legalAddress={this.business.legal_address} />
+        <representative-details representative={this.business.representative} />
+        <owners-details owners={this.business.owners} />
+        <additional-questions-details
+          additionalQuestions={this.business.additional_questions}
+        />
       </Host>
     );
   }

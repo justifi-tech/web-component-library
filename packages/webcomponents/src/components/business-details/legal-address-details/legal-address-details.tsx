@@ -1,6 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSection, DetailItem } from '../../details/utils';
 import { IAddress } from '../../../api/Business';
+import { isEmptyObject } from '../../../utils/utils';
 
 @Component({
   tag: 'legal-address-details',
@@ -13,6 +14,8 @@ export class LegalAddressDetails {
   showFirstColumn = () => this.legalAddress?.line1 || this.legalAddress?.line2 || this.legalAddress?.city;
 
   render() {
+    if (isEmptyObject(this.legalAddress)) return null;
+
     return (
       <Host>
         <DetailSection sectionTitle="Business Legal Address Details">

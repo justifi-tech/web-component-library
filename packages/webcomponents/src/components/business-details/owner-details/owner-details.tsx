@@ -20,6 +20,8 @@ export class OwnerDetails {
   @Prop() owners: Identity[];
 
   render() {
+    if (!this?.owners?.length) return null;
+
     return (
       <Host>
         {!!this?.owners.length ? (
