@@ -1,4 +1,4 @@
-import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
+import "@justifi/webcomponents/dist/webcomponents/webcomponents.css";
 
 export const parameters = {
   controls: {
@@ -11,9 +11,8 @@ export const parameters = {
   },
   options: {
     storySort: {
-      method: 'alphabetical',
-      order: ['Introduction', 'React', '*', 'Changelog'],
+      method: "alphabetical",
+      order: ["Introduction", "Changelog", "Frameworks", "*"],
     },
   },
 };
-
