@@ -111,7 +111,7 @@ export const BusinessStructureOptions: {
     },
   ];
 
-export const businessGenericInfoSchema = object({
+export const coreInfoSchema = object({
   legal_name: string().required('Enter legal name'),
   website_url: string()
     .url('Enter valid website url')
@@ -167,7 +167,7 @@ export const additionQuestionsSchema = object({
 });
 
 const businessFormSchema = object({
-  ...businessGenericInfoSchema.fields,
+  ...coreInfoSchema.fields,
   legal_address: legalAddressSchema,
   additional_questions: additionQuestionsSchema,
   representative: representativeSchema

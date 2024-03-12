@@ -173,3 +173,20 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
+
+export function flattenNestedObject(obj) {
+  const result = {};
+
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      const nestedObj = flattenNestedObject(obj[key]);
+      for (const nestedKey in nestedObj) {
+        result[nestedKey] = nestedObj[nestedKey];
+      }
+    } else {
+      result[key] = obj[key];
+    }
+  }
+
+  return result;
+}
