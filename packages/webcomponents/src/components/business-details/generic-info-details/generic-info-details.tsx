@@ -17,10 +17,7 @@ export class GenericInfoDetails {
         <DetailSection sectionTitle="Business Generic Info Details">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
-              <DetailItem
-                title="Legal Name"
-                value={this.business?.legal_name}
-              />
+              <DetailItem title="Legal Name" value={this.business?.legal_name} />
               <DetailItem
                 title="Doing Business As (DBA)"
                 value={this.business?.doing_business_as}
@@ -31,9 +28,7 @@ export class GenericInfoDetails {
               />
               <DetailItem
                 title="Business Structure"
-                value={snakeCaseToHumanReadable(
-                  this.business?.business_structure,
-                )}
+                value={snakeCaseToHumanReadable(this.business?.business_structure)}
               />
               <DetailItem title="Industry" value={this.business?.industry} />
             </div>
