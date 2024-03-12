@@ -11,8 +11,6 @@ import { isEmptyObject } from '../../../utils/utils';
 export class LegalAddressDetails {
   @Prop() legalAddress: IAddress;
 
-  showFirstColumn = () => this.legalAddress?.line1 || this.legalAddress?.line2 || this.legalAddress?.city;
-
   render() {
     if (isEmptyObject(this.legalAddress)) return null;
 
@@ -20,26 +18,24 @@ export class LegalAddressDetails {
       <Host>
         <DetailSection sectionTitle="Business Legal Address Details">
           <div class="row gy-3">
-            {this.showFirstColumn() && (
-              <div class="col-12 col-md-6">
-                <DetailItem
-                  title="Legal Address"
-                  value={this.legalAddress?.line1}
-                />
-                <DetailItem
-                  title="Address Line 2"
-                  value={this.legalAddress?.line2}
-                />
-                <DetailItem title="City" value={this.legalAddress?.city} />
-              </div>
-            )}
             <div class="col-12 col-md-6">
+              <DetailItem title="Country" value={this.legalAddress?.country} />
+              <DetailItem
+                title="Legal Address"
+                value={this.legalAddress?.line1}
+              />
+              <DetailItem
+                title="Address Line 2"
+                value={this.legalAddress?.line2}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <DetailItem title="City" value={this.legalAddress?.city} />
               <DetailItem title="State" value={this.legalAddress?.state} />
               <DetailItem
                 title="Postal Code"
                 value={this.legalAddress?.postal_code?.toString()}
               />
-              <DetailItem title="Country" value={this.legalAddress?.country} />
             </div>
           </div>
         </DetailSection>
