@@ -5,7 +5,7 @@ import { Api, IApiResponse } from '../../../api';
 import { parseForPatching } from '../utils/payload-parsers';
 import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 
 /**
@@ -22,8 +22,7 @@ export class BusinessForm {
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
-  @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
+  @State() errorMessage: BusinessFormServerErrors;
   @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
 
@@ -32,7 +31,7 @@ export class BusinessForm {
   }
 
   get showErrors() {
-    return this.serverError && !this.hideErrors;
+    return this.errorMessage && !this.hideErrors;
   }
 
   get businessEndpoint() {
@@ -68,8 +67,7 @@ export class BusinessForm {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.submitted.emit({data: response});
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = error.message;
+      this.errorMessage = BusinessFormServerErrors.patchData;
     } finally {
       this.isLoading = false;
     }
@@ -82,8 +80,7 @@ export class BusinessForm {
       const business = new Business(response.data);
       this.formController.setInitialValues(business);
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error fetching data: ${error.message}`;
+      this.errorMessage = BusinessFormServerErrors.fetchData;
     } finally {
       this.isLoading = false;
     }

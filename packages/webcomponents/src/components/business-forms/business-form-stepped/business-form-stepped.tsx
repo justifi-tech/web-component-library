@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormAlert, LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors } from '../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -18,7 +18,7 @@ export class BusinessFormStepped {
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;
   @State() formLoading: boolean = false;
-  @State() errorMessage: string = '';
+  @State() errorMessage: BusinessFormServerErrors;
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
   @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
