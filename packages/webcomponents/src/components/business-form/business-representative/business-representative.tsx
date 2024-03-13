@@ -145,7 +145,7 @@ export class BusinessRepresentative {
             <div class="col-12">
               <form-control-number
                 name="identification_number"
-                label="EIN/SSN"
+                label="SSN"
                 defaultValue={representativeDefaultValue?.identification_number}
                 error={this.errors.identification_number}
                 inputHandler={this.inputHandler}
