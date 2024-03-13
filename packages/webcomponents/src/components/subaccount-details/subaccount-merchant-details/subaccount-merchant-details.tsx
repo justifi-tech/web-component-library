@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailItem, DetailSection } from '../../details/utils';
+import { DetailItem, DetailSectionTitle } from '../../details/utils';
 import { IOnboardingData } from '../../../components';
 import { formatLegalAddress, snakeCaseToHumanReadable } from '../../../utils/utils';
 
@@ -15,7 +15,8 @@ export class SubaccountMerchantDetails {
     return (
       <Host>
         <div class='p-2'>
-          <DetailSection sectionTitle='Merchant Details'>
+          <DetailSectionTitle sectionTitle='Merchant Details' />
+          <div class="d-table gap-2 w-100">
             <div class="row gy-3">
               <div class="col-12 col-md-6">
                 <DetailItem
@@ -43,14 +44,14 @@ export class SubaccountMerchantDetails {
                 <DetailItem
                   title='Business Structure'
                   value={this.onboardingData?.payload?.business_details?.structure ? snakeCaseToHumanReadable(this.onboardingData?.payload?.business_details?.structure) : ''}
-                  />
+                />
                 <DetailItem
                   title='Business Type'
                   value={this.onboardingData?.payload?.business_details?.type}
-                  />
+                />
               </div>
             </div>
-          </DetailSection>
+          </div>
         </div>
       </Host>
     );

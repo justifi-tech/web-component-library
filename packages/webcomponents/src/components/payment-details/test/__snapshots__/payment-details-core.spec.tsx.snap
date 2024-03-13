@@ -59,127 +59,121 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
       </div>
     </div>
     <div slot="detail-sections">
-      <div class="mt-4" part="detail-section">
-        <h5 part="detail-section-title">
-          Details
-        </h5>
-        <hr>
-        <div class="d-table gap-2 w-100">
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Amount
+      <h5 class="mt-4" part="detail-section-title">
+        Details
+      </h5>
+      <hr>
+      <div class="d-table gap-2 w-100">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Amount
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            $234.56
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Fees
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            $2.00
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Refunded
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            $0.00
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Net
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            $232.56
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Status
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            <span class="badge bg-success" title="This payment was successfully captured">
+              Successful
             </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              $234.56
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Fees
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              $2.00
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Refunded
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              $0.00
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Net
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              $232.56
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Status
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              <span class="badge bg-success" title="This payment was successfully captured">
-                Successful
-              </span>
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Payment ID
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              py_1NNeEnf4FbelxDCQN2RHcE
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Processing Fees
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              $2.00
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Description
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              payment
-            </span>
-          </div>
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Payment ID
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            py_1NNeEnf4FbelxDCQN2RHcE
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Processing Fees
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            $2.00
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Description
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            payment
+          </span>
         </div>
       </div>
-      <div class="mt-4" part="detail-section">
-        <h5 part="detail-section-title">
-          Payment Method
-        </h5>
-        <hr>
-        <div class="d-table gap-2 w-100">
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              ID
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              pm_uICmv8696AatL4gRwa0Wq
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Last 4 Numbers
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              **** 6789
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Bank Name
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              Altra
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Account Owner
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              Julia Garnett
-            </span>
-          </div>
+      <h5 class="mt-4" part="detail-section-title">
+        Payment Method
+      </h5>
+      <hr>
+      <div class="d-table gap-2 w-100">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            ID
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            pm_uICmv8696AatL4gRwa0Wq
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Last 4 Numbers
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            **** 6789
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Bank Name
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            Altra
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Account Owner
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            Julia Garnett
+          </span>
         </div>
       </div>
-      <div class="mt-4" part="detail-section">
-        <h5 part="detail-section-title">
-          Metadata
-        </h5>
-        <hr>
-        <div class="d-table gap-2 w-100"></div>
-      </div>
+      <h5 class="mt-4" part="detail-section-title">
+        Metadata
+      </h5>
+      <hr>
+      <div class="d-table gap-2 w-100"></div>
     </div>
   </justifi-details>
 </payment-details-core>

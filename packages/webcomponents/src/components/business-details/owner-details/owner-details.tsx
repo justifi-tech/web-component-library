@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSection, DetailItem } from '../../details/utils';
+import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { formatMediumDate } from '../../../utils/utils';
 import { Identity } from '../../../api/Business';
 
@@ -25,7 +25,8 @@ export class OwnerDetails {
         {!!this?.owners.length ? (
           this.owners.map(owner => (
             <div class="row">
-              <DetailSection sectionTitle={`Owner ${owner?.name}'s Details`}>
+              <DetailSectionTitle sectionTitle={`Owner ${owner?.name}'s Details`} />
+              <div class="d-table gap-2 w-100">
                 <DetailItem title="Name" value={owner?.name} />
                 <DetailItem title="Title" value={owner?.title} />
                 <DetailItem title="Email" value={owner?.email} />
@@ -62,7 +63,7 @@ export class OwnerDetails {
                   title="Zip"
                   value={owner?.address?.postal_code}
                 />
-              </DetailSection>
+              </div>
             </div>))
         ) : (
           <DetailItem title="No owners" value="" />
