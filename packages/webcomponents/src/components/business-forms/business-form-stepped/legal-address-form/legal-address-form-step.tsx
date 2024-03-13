@@ -5,7 +5,7 @@ import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/payload-parsers';
 import { legalAddressSchema } from '../../schemas/business-legal-address-form-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrors } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -22,9 +22,9 @@ export class LegalAddressFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
+  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
 
   private api: any;
 

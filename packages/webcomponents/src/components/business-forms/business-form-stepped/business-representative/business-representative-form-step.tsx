@@ -6,7 +6,7 @@ import { IBusiness } from '../../../../api/Business';
 import { parseRepresentativeInfo } from '../../utils/payload-parsers';
 import { representativeSchema } from '../../schemas/business-representative-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrors } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 
 @Component({
   tag: 'justifi-business-representative-form-step',
@@ -18,9 +18,9 @@ export class BusinessRepresentativeFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
+  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
 
   private api: any;
 

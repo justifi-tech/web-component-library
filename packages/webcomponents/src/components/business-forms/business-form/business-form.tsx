@@ -5,7 +5,7 @@ import { Api, IApiResponse } from '../../../api';
 import { parseForPatching } from '../utils/payload-parsers';
 import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
-import { BusinessFormClickEvents } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 
 /**
@@ -24,8 +24,8 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
-  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
-  @Event() submitted: EventEmitter<{ data: any }>;
+  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
 
   get disabledState() {
     return this.isLoading;
@@ -123,7 +123,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.clickEvent.emit({ name: BusinessFormClickEvents.submit})}
+                onClick={() => this.clickEvent.emit({ name: BusinessFormClickActions.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>

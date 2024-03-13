@@ -4,7 +4,7 @@ import { IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { additionQuestionsSchema } from '../../schemas/business-additional-questions-schema';
-import { BusinessFormServerErrors } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -20,9 +20,9 @@ export class AdditionalQuestionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
+  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
   
   private api: any;
 

@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { BusinessStructureOptions, BusinessTypeOptions, BusinessFormServerErrors } from '../../utils/business-form-types';
+import { BusinessStructureOptions, BusinessTypeOptions, BusinessFormServerErrors, BusinessFormSubmitEvent, BusinessFormServerErrorEvent } from '../../utils/business-form-types';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/Business';
@@ -29,9 +29,9 @@ export class BusinessCoreInfoFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any}>;
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
+  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
 
   private api: any;
 
