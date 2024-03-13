@@ -22,7 +22,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
   tag: 'justifi-business-core-info',
   styleUrl: 'business-core-info.scss',
 })
-export class BusinessGenericInfo {
+export class BusinessCoreInfo {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
