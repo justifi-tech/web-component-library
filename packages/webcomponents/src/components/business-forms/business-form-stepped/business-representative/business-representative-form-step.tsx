@@ -4,7 +4,7 @@ import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { BusinessFormServerErrors, IBusiness } from '../../../../api/Business';
 import { parseRepresentativeInfo } from '../helpers';
-import { representativeSchema } from '../business-form-schema';
+import { representativeSchema } from '../../schemas/business-representative-schema';
 import { config } from '../../../../../config';
 
 @Component({
