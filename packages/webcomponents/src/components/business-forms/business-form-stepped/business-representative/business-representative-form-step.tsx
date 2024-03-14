@@ -60,7 +60,7 @@ export class BusinessRepresentativeFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response });
+    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' }});
   }
 
   @Method()
