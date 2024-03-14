@@ -204,7 +204,7 @@ export class BusinessRepresentativeFormStep {
                 <justifi-business-address-form
                   errors={this.errors.address}
                   defaultValues={representativeDefaultValue?.address}
-                  onFormUpdate={values => this.onAddressFormUpdate(values)}
+                  handleFormUpdate={values => this.onAddressFormUpdate(values)}
                 />
               </div>
             </div>
