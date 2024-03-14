@@ -5,9 +5,8 @@ import { Api, IApiResponse } from '../../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
-import { ClickEvents } from './BusinessFormEventTypes';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
-
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -22,17 +21,16 @@ export class BusinessForm {
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
-  @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
-  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
-  @Event() submitted: EventEmitter<{ data: any }>;
+  @State() errorMessage: BusinessFormServerErrors;
+  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
 
   get disabledState() {
     return this.isLoading;
   }
 
   get showErrors() {
-    return this.serverError && !this.hideErrors;
+    return this.errorMessage && !this.hideErrors;
   }
 
   get businessEndpoint() {
@@ -68,8 +66,7 @@ export class BusinessForm {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.submitted.emit({data: response});
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = error.message;
+      this.errorMessage = BusinessFormServerErrors.patchData;
     } finally {
       this.isLoading = false;
     }
@@ -82,8 +79,7 @@ export class BusinessForm {
       const business = new Business(response.data);
       this.formController.setInitialValues({ ...business });
     } catch (error) {
-      this.serverError = true;
-      this.errorMessage = `Error fetching data: ${error.message}`;
+      this.errorMessage = BusinessFormServerErrors.fetchData;
     } finally {
       this.isLoading = false;
     }
@@ -123,7 +119,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.clickEvent.emit({ name: ClickEvents.submit})}
+                onClick={() => this.clickEvent.emit({ name: BusinessFormClickActions.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
