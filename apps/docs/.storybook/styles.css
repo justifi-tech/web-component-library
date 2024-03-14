@@ -18,19 +18,11 @@
 }
 
 #storybook-explorer-menu .sidebar-item {
-  border-radius: 2px;
   font-size: 14px;
-  padding: 8px;
 }
 
 #storybook-explorer-menu .sidebar-item a {
-  padding: 0px;
-  margin-left: 16px;
   line-height: 15px;
-}
-
-#storybook-explorer-menu .sidebar-item div svg {
-  display: none;
 }
 
 #storybook-explorer-menu .sidebar-item[data-selected=true],
