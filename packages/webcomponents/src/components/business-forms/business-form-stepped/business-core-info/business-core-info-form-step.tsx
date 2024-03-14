@@ -6,7 +6,7 @@ import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/
 import { Api, IApiResponse } from '../../../../api';
 import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema';
 import { config } from '../../../../../config';
-import { parseCoreInfo } from '../helpers';
+import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 

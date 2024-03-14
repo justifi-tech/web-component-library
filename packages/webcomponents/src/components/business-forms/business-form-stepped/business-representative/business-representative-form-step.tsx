@@ -3,7 +3,7 @@ import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { IBusiness } from '../../../../api/Business';
-import { parseRepresentativeInfo } from '../helpers';
+import { parseRepresentativeInfo } from '../../utils/payload-parsers';
 import { representativeSchema } from '../../schemas/business-representative-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';

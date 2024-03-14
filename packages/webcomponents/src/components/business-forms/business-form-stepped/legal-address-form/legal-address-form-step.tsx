@@ -2,7 +2,7 @@ import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@s
 import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { Address, IAddress, IBusiness } from '../../../../api/Business';
-import { parseAddressInfo } from '../helpers';
+import { parseAddressInfo } from '../../utils/payload-parsers';
 import { legalAddressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';

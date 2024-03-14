@@ -2,11 +2,12 @@ import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/c
 import { FormController } from '../../form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
-import { parseForPatching } from './helpers';
+import { parseBusiness } from '../utils/payload-parsers';
 import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
+
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -62,7 +63,7 @@ export class BusinessForm {
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
-      const payload = parseForPatching(values, initialValues);
+      const payload = parseBusiness(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.submitted.emit({data: response});
     } catch (error) {
