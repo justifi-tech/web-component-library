@@ -1,7 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessAddressForm } from '../business-address-form';
-import { BusinessAddressFormFields } from '../business-address-form-schema';
+
+interface BusinessAddressFormFields {
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  country: string;
+}
 
 describe('business-address', () => {
   it('should render BusinessAddressForm component', async () => {
