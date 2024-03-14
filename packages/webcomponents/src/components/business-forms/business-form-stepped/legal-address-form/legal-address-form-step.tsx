@@ -3,7 +3,7 @@ import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../helpers';
-import legalAddressSchema from '../../business-form/legal-address-form/legal-address-form-schema';
+import { legalAddressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
 
 /**

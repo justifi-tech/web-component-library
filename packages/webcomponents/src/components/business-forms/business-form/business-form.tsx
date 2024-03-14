@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
-import businessFormSchema from './business-form-schema';
+import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { parseForPatching } from './helpers';
 import { config } from '../../../../config';

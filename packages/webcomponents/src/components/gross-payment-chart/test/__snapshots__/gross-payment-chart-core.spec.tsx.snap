@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gross-payment-chart matches the snapshot when in error state 1`] = `
+<gross-payment-chart-core>
+  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+    <div>
+      Error trying to fetch data : Error message
+    </div>
+  </main>
+</gross-payment-chart-core>
+`;
+
+exports[`gross-payment-chart matches the snapshot when in loading state 1`] = `
+<gross-payment-chart-core>
+  <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
+    <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
+      <span class="visually-hidden">
+        Loading...
+      </span>
+    </div>
+  </main>
+  <canvas id="chart"></canvas>
+</gross-payment-chart-core>
+`;

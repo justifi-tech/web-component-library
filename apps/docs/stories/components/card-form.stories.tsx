@@ -140,7 +140,7 @@ const Template = (args: any) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {};
+Basic.args = { 'single-line': false };
 
 export const SingleLine = Template.bind({});
 SingleLine.args = { 'single-line': true };
