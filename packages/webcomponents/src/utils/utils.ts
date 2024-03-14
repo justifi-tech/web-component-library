@@ -168,6 +168,7 @@ export const MapSubAccountStatusToBadge = (status: string) => {
  * console.log(readable); // Outputs: "Sole Proprietorship"
  */
 export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
+  if (!snakeCaseStr) return '';
   return snakeCaseStr
     .split('_')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -211,4 +212,8 @@ export async function loadFontsOnParent() {
   fonts.href = fontHref;
 
   parent.append(fonts);
+}
+
+export function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
 }

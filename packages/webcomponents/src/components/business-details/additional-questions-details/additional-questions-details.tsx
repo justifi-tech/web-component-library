@@ -1,6 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { AdditionalQuestions } from '../../../api/Business';
+import { isEmptyObject } from '../../../utils/utils';
 
 /**
  *
@@ -19,6 +20,8 @@ export class AdditionalQuestionsDetails {
   @Prop() additionalQuestions: AdditionalQuestions
 
   render() {
+    if (isEmptyObject(this.additionalQuestions)) return null
+
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Additional Questions" />
