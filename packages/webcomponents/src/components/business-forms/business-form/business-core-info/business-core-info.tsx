@@ -1,9 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-
-import {
-  BusinessStructureOptions,
-  BusinessTypeOptions,
-} from '../../schemas/business-form-schema';
+import { BusinessTypeOptions, BusinessStructureOptions } from '../../utils/business-form-select-options';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';

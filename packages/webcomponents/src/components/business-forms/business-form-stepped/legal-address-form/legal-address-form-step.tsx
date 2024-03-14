@@ -1,10 +1,11 @@
 import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
-import { Address, BusinessFormServerErrors, IAddress, IBusiness } from '../../../../api/Business';
+import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../helpers';
 import { legalAddressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -21,9 +22,9 @@ export class LegalAddressFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
+  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
 
   private api: any;
 
