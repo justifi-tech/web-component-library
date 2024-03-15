@@ -7,7 +7,7 @@ import '@justifi/webcomponents/dist/module/justifi-checkout';
 const storyBaseArgs = new StoryBaseArgs(['auth-token', 'iframe-origin']);
 
 const meta: Meta = {
-  title: 'Components/Checkout',
+  title: 'Payment Facilitation/Payments/Checkout',
   component: 'justifi-checkout',
   args: {
     'auth-token': '',
