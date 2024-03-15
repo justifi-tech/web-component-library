@@ -13,6 +13,19 @@
 | `authToken` | `auth-token` |             | `string` | `undefined` |
 
 
+## Dependencies
+
+### Depends on
+
+- [gross-payment-chart-core](.)
+
+### Graph
+```mermaid
+graph TD;
+  justifi-gross-payment-chart --> gross-payment-chart-core
+  style justifi-gross-payment-chart fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

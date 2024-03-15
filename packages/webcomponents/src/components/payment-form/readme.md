@@ -39,7 +39,6 @@
 
 | Property                    | Attribute                      | Description | Type                                                        | Default     |
 | --------------------------- | ------------------------------ | ----------- | ----------------------------------------------------------- | ----------- |
-| `paymentMethodTypes`        | --                             |             | `PaymentMethodTypes[]`                                      | `[]`        |
 | `selectedPaymentMethodType` | `selected-payment-method-type` |             | `PaymentMethodTypes.bankAccount \| PaymentMethodTypes.card` | `undefined` |
 
 

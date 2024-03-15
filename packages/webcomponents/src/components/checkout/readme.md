@@ -39,8 +39,9 @@
 
 | Property                    | Attribute                      | Description | Type                                                        | Default     |
 | --------------------------- | ------------------------------ | ----------- | ----------------------------------------------------------- | ----------- |
-| `paymentMethodTypes`        | --                             |             | `PaymentMethodTypes[]`                                      | `[]`        |
 | `selectedPaymentMethodType` | `selected-payment-method-type` |             | `PaymentMethodTypes.bankAccount \| PaymentMethodTypes.card` | `undefined` |
+| `showAch`                   | `show-ach`                     |             | `boolean`                                                   | `undefined` |
+| `showCreditCard`            | `show-credit-card`             |             | `boolean`                                                   | `undefined` |
 
 
 ## Events
@@ -54,12 +55,12 @@
 
 ### Used by
 
- - [justifi-checkout](.)
+ - [justifi-checkout-core](.)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-checkout --> justifi-payment-method-type-selector
+  justifi-checkout-core --> justifi-payment-method-type-selector
   style justifi-payment-method-type-selector fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
