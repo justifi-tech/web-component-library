@@ -4,7 +4,7 @@ import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
 import { Identity } from '../../../api/Business';
 import { parseRepresentativeInfo } from '../business-form-stepped/helpers';
-import { representativeSchema } from '../schemas/business-identity-schema';
+import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 
 @Component({
@@ -12,12 +12,12 @@ import { config } from '../../../../config';
   styleUrl: 'identity-form.scss',
   shadow: true,
 })
-export class IdentityForm {
+export class OwnerForm {
   @Prop() authToken: string;
-  @Prop() identityId: string;
+  @Prop() ownerId: string;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() identity: any = {};
+  @State() owner: any = {};
   @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<{ data: any, message: string }>;
@@ -25,15 +25,15 @@ export class IdentityForm {
   private api: any;
 
   get identityEndpoint() {
-    return `entities/identity/${this.identityId}`
+    return `entities/identity/${this.ownerId}`
   }
 
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
-      this.identity = response.data;
-      this.formController.setInitialValues(this.identity);
+      this.owner = response.data;
+      this.formController.setInitialValues(this.owner);
     } catch (error) {
       this.serverError.emit({ data: error, message: 'bad bad bad' });
     } finally {
@@ -70,11 +70,11 @@ export class IdentityForm {
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    const missingOwnerId = 'Warning: Missing owner-id. The form requires an existing owner-id to function.';
     if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.identityId) console.error(missingBusinessIdMessage);
+    if (!this.ownerId) console.error(missingOwnerId);
 
-    this.formController = new FormController(representativeSchema);
+    this.formController = new FormController(ownerSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
@@ -84,7 +84,7 @@ export class IdentityForm {
       errors => (this.errors = { ...errors }),
     );
     this.formController.values.subscribe(
-      values => (this.identity = { ...values }),
+      values => (this.owner = { ...values }),
     );
   }
 
@@ -107,21 +107,21 @@ export class IdentityForm {
 
   render() {
 
-    const identityDefaultValue =
+    const ownerDefaultValue =
       this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
         <form>
           <fieldset>
-            <legend>Representative</legend>
+            <legend>Owner</legend>
             <hr />
             <div class="row gy-3">
               <div class="col-12 col-md-8">
                 <form-control-text
                   name="name"
                   label="Full Name"
-                  defaultValue={identityDefaultValue?.name}
+                  defaultValue={ownerDefaultValue?.name}
                   error={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
@@ -130,7 +130,7 @@ export class IdentityForm {
                 <form-control-select
                   name="title"
                   label="Prefix"
-                  defaultValue={identityDefaultValue?.title}
+                  defaultValue={ownerDefaultValue?.title}
                   options={[
                     { label: 'Select Prefix', value: '' },
                     { label: 'Mrs.', value: 'Mrs.' },
@@ -143,7 +143,7 @@ export class IdentityForm {
                 <form-control-text
                   name="email"
                   label="Email Address"
-                  defaultValue={identityDefaultValue?.email}
+                  defaultValue={ownerDefaultValue?.email}
                   error={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
@@ -152,7 +152,7 @@ export class IdentityForm {
                 <form-control-number-masked
                   name="phone"
                   label="Phone Number"
-                  defaultValue={identityDefaultValue?.phone}
+                  defaultValue={ownerDefaultValue?.phone}
                   error={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
@@ -167,7 +167,7 @@ export class IdentityForm {
                 <form-control-datepart
                   name="dob_day"
                   label="Day"
-                  defaultValue={identityDefaultValue?.dob_day}
+                  defaultValue={ownerDefaultValue?.dob_day}
                   error={this.errors.dob_day}
                   inputHandler={this.inputHandler}
                   type="day"
@@ -177,7 +177,7 @@ export class IdentityForm {
                 <form-control-datepart
                   name="dob_month"
                   label="Month"
-                  defaultValue={identityDefaultValue?.dob_month}
+                  defaultValue={ownerDefaultValue?.dob_month}
                   error={this.errors.dob_month}
                   inputHandler={this.inputHandler}
                   type="month"
@@ -187,7 +187,7 @@ export class IdentityForm {
                 <form-control-datepart
                   name="dob_year"
                   label="Year"
-                  defaultValue={identityDefaultValue?.dob_year}
+                  defaultValue={ownerDefaultValue?.dob_year}
                   error={this.errors.dob_year}
                   inputHandler={this.inputHandler}
                   type="year"
@@ -197,7 +197,7 @@ export class IdentityForm {
                 <form-control-number
                   name="identification_number"
                   label="EIN/SSN"
-                  defaultValue={identityDefaultValue?.identification_number}
+                  defaultValue={ownerDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                 />
@@ -205,7 +205,7 @@ export class IdentityForm {
               <div class="col-12">
                 <justifi-business-address-form
                   errors={this.errors.address}
-                  defaultValues={identityDefaultValue?.address}
+                  defaultValues={ownerDefaultValue?.address}
                   handleFormUpdate={values => this.onAddressFormUpdate(values)}
                 />
               </div>

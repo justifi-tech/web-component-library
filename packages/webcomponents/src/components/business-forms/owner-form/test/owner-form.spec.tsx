@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { IdentityForm } from '../identity-form';
+import { OwnerForm } from '../owner-form';
 
-describe('identity-form', () => {
+describe('owner-form', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [IdentityForm],
-      html: `<identity-form></identity-form>`,
+      components: [OwnerForm],
+      html: `<owner-form></owner-form>`,
     });
     expect(page.root).toEqualHtml(`
       <identity-form>
