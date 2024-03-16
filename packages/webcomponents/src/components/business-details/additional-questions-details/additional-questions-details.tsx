@@ -20,7 +20,9 @@ export class AdditionalQuestionsDetails {
   @Prop() additionalQuestions: AdditionalQuestions
 
   render() {
-    if (isEmptyObject(this.additionalQuestions)) return null
+    if (!this.additionalQuestions || isEmptyObject(this.additionalQuestions)) {
+      return null;
+    }
 
     return (
       <Host>
