@@ -1,6 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { Terms } from '../../../api/SubAccount';
-import { DetailItem, DetailSection } from '../../details/utils';
+import { DetailItem, DetailSectionTitle } from '../../details/utils';
 
 @Component({
   tag: 'subaccount-terms-details',
@@ -13,7 +13,8 @@ export class SubaccountTermsDetails {
   render() {
     return (
       <Host>
-        <DetailSection sectionTitle='Terms and Conditions'>
+        <DetailSectionTitle sectionTitle='Terms and Conditions' />
+        <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem
@@ -30,7 +31,7 @@ export class SubaccountTermsDetails {
               />
             </div>
           </div>
-        </DetailSection>
+        </div>
       </Host>
     );
   }

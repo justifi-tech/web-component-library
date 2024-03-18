@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 
 @Component({
   tag: 'payout-details-core',
@@ -63,23 +63,26 @@ export class PayoutDetailsCore {
               <EntityHeadInfoItem title="ID" value={this.payout.id} />
             </EntityHeadInfo>
             <div slot='detail-sections'>
-              <DetailSection sectionTitle="Details">
+              <DetailSectionTitle sectionTitle="Details" />
+              <div class="d-table gap-2 w-100">
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
                 <DetailItem title="Payout Method" value={this.payout.delivery_method} />
                 <DetailItem title="Amount" value={formatCurrency(this.payout.amount)} />
                 <DetailItem title="Fee" value={formatCurrency(this.payout.fees_total)} />
-              </DetailSection>
-              <DetailSection sectionTitle="Account">
+              </div>
+              <DetailSectionTitle sectionTitle="Account" />
+              <div class="d-table gap-2 w-100">
                 <DetailItem title="ID" value={this.payout.account_id} />
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
                 <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
-              </DetailSection>
-              <DetailSection sectionTitle='Metadata'>
+              </div>
+              <DetailSectionTitle sectionTitle='Metadata' />
+              <div class="d-table gap-2 w-100">
                 <CodeBlock metadata={this.payout.metadata} />
-              </DetailSection>
+              </div>
             </div>
           </justifi-details>
         )}
