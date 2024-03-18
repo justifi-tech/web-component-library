@@ -3,13 +3,13 @@ import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
 import { Identity } from '../../../api/Business';
-import { parseRepresentativeInfo } from '../business-form-stepped/helpers';
+import { parseRepresentativeInfo } from '../utils/payload-parsers';
 import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 
 @Component({
-  tag: 'justifi-identity-form',
-  styleUrl: 'identity-form.scss',
+  tag: 'justifi-owner-form',
+  styleUrl: 'owner-form.scss',
   shadow: true,
 })
 export class OwnerForm {
