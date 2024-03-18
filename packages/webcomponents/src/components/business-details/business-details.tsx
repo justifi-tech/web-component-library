@@ -42,7 +42,6 @@ export class BusinessDetails {
     if (this.errorMessage) {
       return <Host>{ErrorState(this.errorMessage)}</Host>;
     }
-
     return (
       <Host>
         <business-details-core getBusiness={this.getBusiness} />
