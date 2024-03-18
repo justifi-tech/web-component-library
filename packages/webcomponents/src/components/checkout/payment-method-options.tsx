@@ -23,7 +23,6 @@ export class PaymentMethodOptions {
   @State() savedPaymentMethods: PaymentMethod[] = [];
 
   componentWillLoad() {
-    console.log('will load')
     this.savedPaymentMethods.push(new PaymentMethod('123', 'Citi DoubleCash *4567'));
     this.savedPaymentMethods.push(new PaymentMethod('456', 'Apple Card *7890'));
   }
@@ -63,7 +62,12 @@ export class PaymentMethodOptions {
           {this.savedPaymentMethods.map((option) => this.paymentMethodOption(option))}
           <div class="payment-method">
             <div class="payment-method-header p-3 d-flex">
-              <div class="me-2">+</div> New payment method
+              <div class="me-2">
+                <svg width="1.2rem" height="1.2rem" viewBox="0 0 64 64" stroke-width="5" stroke="#5c5c5c" fill="none">
+                  <line x1="32" y1="4" x2="32" y2="60" />
+                  <line x1="4" y1="32" x2="60" y2="32" />
+                </svg>
+              </div> New payment method
             </div>
           </div>
         </div>
