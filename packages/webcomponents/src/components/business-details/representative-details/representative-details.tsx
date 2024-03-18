@@ -1,6 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSectionTitle, DetailItem } from '../../details/utils';
-import { formatMediumDate } from '../../../utils/utils';
+import { formatMediumDate, isEmptyObject } from '../../../utils/utils';
 import { Identity } from '../../../api/Business';
 
 /**
@@ -20,6 +20,8 @@ export class JustifiRepresentativeDetails {
   @Prop() representative: Identity;
 
   render() {
+    if (isEmptyObject(this.representative)) return null;
+
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Representative Details" />

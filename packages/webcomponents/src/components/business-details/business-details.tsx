@@ -82,16 +82,15 @@ export class BusinessDetails {
     if (this.renderState === RENDER_STATES.ERROR) {
       return <Host>{ErrorState(this.errorMessage)}</Host>;
     }
-
     return (
       <Host>
         <generic-info-details business={this.business} />
-        <legal-address-details legalAddress={this.business.legal_address} />
-        <representative-details
-          representative={this.business.representative}
+        <legal-address-details legalAddress={this.business?.legal_address} />
+        <representative-details representative={this.business?.representative} />
+        <owner-details owners={this.business?.owners} />
+        <additional-questions-details
+          additionalQuestions={this.business?.additional_questions}
         />
-        <owner-details owners={this.business.owners} />
-        <additional-questions-details additionalQuestions={this.business.additional_questions} />
       </Host>
     );
   }
