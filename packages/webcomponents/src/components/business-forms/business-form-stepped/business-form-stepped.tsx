@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormAlert, LoadingSpinner } from '../../form/utils';
-import { ClickEvents } from './BusinessFormEventTypes';
+import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -20,7 +20,7 @@ export class BusinessFormStepped {
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
   @State() totalSteps: number = 4;
-  @Event() clickEvent: EventEmitter<{ data?: any, name: string }>;
+  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   get showErrors() {
     return this.errorMessage && !this.hideErrors;
@@ -101,7 +101,7 @@ export class BusinessFormStepped {
   decrementSteps = () => { return this.currentStep--; }
 
   previousStepButtonOnClick() {
-    this.clickEvent.emit({ name: ClickEvents.previousStep })
+    this.clickEvent.emit({ name: BusinessFormClickActions.previousStep })
     const currentStep = this.refs[this.currentStep];
     currentStep.validateAndSubmit({ onSuccess: this.decrementSteps });
   }
@@ -148,7 +148,7 @@ export class BusinessFormStepped {
               <button
                 type="button"
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
-                onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.nextStep)}
+                onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
                 disabled={this.formLoading}>
                 {this.formLoading ? LoadingSpinner() : 'Next'}
               </button>
@@ -157,7 +157,7 @@ export class BusinessFormStepped {
               <button
                 type="submit"
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
-                onClick={(e) => this.nextStepButtonOnClick(e, ClickEvents.submit)}
+                onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
                 disabled={this.formLoading}>
                 {this.formLoading ? LoadingSpinner() : 'Submit' }
               </button>
