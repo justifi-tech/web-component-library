@@ -67,7 +67,8 @@ export class PaymentMethodOptions {
                   <line x1="32" y1="4" x2="32" y2="60" />
                   <line x1="4" y1="32" x2="60" y2="32" />
                 </svg>
-              </div> New payment method
+              </div>
+              New payment method
             </div>
           </div>
         </div>
