@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSection, DetailItem } from '../../details/utils';
+import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { formatMediumDate, isEmptyObject } from '../../../utils/utils';
 import { Identity } from '../../../api/Business';
 
@@ -24,7 +24,8 @@ export class JustifiRepresentativeDetails {
 
     return (
       <Host>
-        <DetailSection sectionTitle="Representative Details">
+        <DetailSectionTitle sectionTitle="Representative Details" />
+        <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem title="Name" value={this.representative?.name} />
@@ -62,7 +63,7 @@ export class JustifiRepresentativeDetails {
               />
             </div>
           </div>
-        </DetailSection>
+        </div>
       </Host>
     );
   }

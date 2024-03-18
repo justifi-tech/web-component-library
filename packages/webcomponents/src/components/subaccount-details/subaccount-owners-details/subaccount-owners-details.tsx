@@ -1,6 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { SubAccountIdentity } from '../../../components';
-import { DetailItem, DetailSection } from '../../details/utils';
+import { DetailItem, DetailSectionTitle } from '../../details/utils';
 
 @Component({
   tag: 'subaccount-owners-details',
@@ -14,12 +14,13 @@ export class SubaccountOwnersDetails {
     return (
       <Host>
         <div class='p-2'>
-          <DetailSection sectionTitle='Owners'>
+          <DetailSectionTitle sectionTitle='Owners' />
+          <div class="d-table gap-2 w-100">
             <div class="row gy-3">
               {this.data && this.data.map((owner) => {
                 return (
                   <div class="col-12 col-md-6">
-                    <DetailItem 
+                    <DetailItem
                       title='Owner Name'
                       value={owner.name}
                     />
@@ -39,7 +40,7 @@ export class SubaccountOwnersDetails {
                 )
               })}
             </div>
-          </DetailSection>
+          </div>
         </div>
       </Host>
     );

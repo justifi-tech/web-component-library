@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailItem, DetailSection } from '../../details/utils';
+import { DetailItem, DetailSectionTitle } from '../../details/utils';
 import { SubAccountIdentity } from '../../../api/SubAccount';
 import { formatMediumDate } from '../../../utils/utils';
 
@@ -15,7 +15,8 @@ export class SubaccountRepresentativeDetails {
     return (
       <Host>
         <div class='p-2'>
-          <DetailSection sectionTitle='Representative'>
+          <DetailSectionTitle sectionTitle='Representative' />
+          <div class="d-table gap-2 w-100">
             <div class="row gy-3">
               <div class="col-12 col-md-6">
                 <DetailItem
@@ -27,7 +28,7 @@ export class SubaccountRepresentativeDetails {
                   value={formatMediumDate(
                     new Date(
                       Number(this.data?.dob_year),
-                      Number(this.data?.dob_month) -1,
+                      Number(this.data?.dob_month) - 1,
                       Number(this.data?.dob_day)
                     )
                   )}
@@ -56,7 +57,7 @@ export class SubaccountRepresentativeDetails {
                 />
               </div>
             </div>
-          </DetailSection>
+          </div>
         </div>
       </Host>
     );

@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSection, DetailItem } from '../../details/utils';
+import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { IAddress } from '../../../api/Business';
 import { isEmptyObject } from '../../../utils/utils';
 
@@ -16,7 +16,8 @@ export class LegalAddressDetails {
 
     return (
       <Host>
-        <DetailSection sectionTitle="Business Legal Address Details">
+        <DetailSectionTitle sectionTitle="Business Legal Address Details" />
+        <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem title="Country" value={this.legalAddress?.country} />
@@ -38,7 +39,7 @@ export class LegalAddressDetails {
               />
             </div>
           </div>
-        </DetailSection>
+        </div>
       </Host>
     );
   }

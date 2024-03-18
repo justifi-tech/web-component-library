@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSection, DetailItem } from '../../details/utils';
+import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { IBusiness } from '../../../api/Business';
 import { snakeCaseToHumanReadable } from '../../../utils/utils';
 
@@ -14,7 +14,8 @@ export class GenericInfoDetails {
   render() {
     return (
       <Host>
-        <DetailSection sectionTitle="Business Generic Info Details">
+        <DetailSectionTitle sectionTitle="Business Generic Info Details" />
+        <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem title="Legal Name" value={this.business?.legal_name} />
@@ -42,7 +43,7 @@ export class GenericInfoDetails {
               <DetailItem title="Phone Number" value={this.business?.phone} />
             </div>
           </div>
-        </DetailSection>
+        </div>
       </Host>
     );
   }
