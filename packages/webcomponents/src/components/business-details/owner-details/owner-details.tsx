@@ -3,14 +3,6 @@ import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { formatMediumDate } from '../../../utils/utils';
 import { Identity } from '../../../api/Business';
 
-/**
- *
- * @exportedPart detail-section
- * @exportedPart detail-section-title
- * @exportedPart detail-section-item-title
- * @exportedPart detail-section-item-data
- * @exportedPart detail-empty-state
- */
 @Component({
   tag: 'owner-details',
   styleUrl: 'owner-details.scss',
@@ -24,7 +16,7 @@ export class OwnerDetails {
 
     return (
       <Host>
-        {!!this?.owners.length ? (
+        {!!this?.owners.length && (
           this.owners.map(owner => [
             <DetailSectionTitle sectionTitle={`Owner ${owner?.name}'s Details`} />,
             <div class="d-table gap-2 w-100">
@@ -66,8 +58,6 @@ export class OwnerDetails {
               />
             </div>
           ])
-        ) : (
-          <DetailItem title="No owners" value="" />
         )}
       </Host>
     );
