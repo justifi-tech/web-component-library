@@ -1,15 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessAddressForm } from '../business-address-form';
-
-interface BusinessAddressFormFields {
-  line1: string;
-  line2?: string;
-  city: string;
-  state: string;
-  postal_code: string;
-  country: string;
-}
+import { IAddress } from '../../../../../api/Business';
 
 describe('business-address', () => {
   it('should render BusinessAddressForm component', async () => {
@@ -56,7 +48,7 @@ describe('business-address', () => {
       state: 'State',
       postal_code: '12345',
       country: 'Country',
-    } as BusinessAddressFormFields;
+    } as IAddress;
     const page = await newSpecPage({
       components: [BusinessAddressForm],
       template: () => (

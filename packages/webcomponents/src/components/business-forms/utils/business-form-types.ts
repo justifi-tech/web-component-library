@@ -31,5 +31,3 @@ export enum BusinessFormClickActions {
   previousStep = 'previousStep',
   submit = 'submit'
 }
-
-export const RegExZip = /^\d{5}/;
