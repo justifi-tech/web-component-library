@@ -3,6 +3,8 @@ import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
 import { Legal } from '../api/SubAccount';
 
+export const RegExZip = /^\d{5}/;
+
 export function formatCurrency(amount: number, withSymbol = true): string {
   if (!amount) amount = 0;
 

@@ -1,6 +1,5 @@
 import { object, string } from 'yup';
-
-export const RegExZip = /^\d{5}/;
+import { RegExZip } from '../../utils/utils';
 
 export interface BillingFormFields {
   name: string;

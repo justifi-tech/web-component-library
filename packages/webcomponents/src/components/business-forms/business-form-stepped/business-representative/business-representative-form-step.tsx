@@ -2,10 +2,11 @@ import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@s
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
-import { BusinessFormServerErrors, IBusiness } from '../../../../api/Business';
-import { parseRepresentativeInfo } from '../helpers';
+import { IBusiness } from '../../../../api/Business';
+import { parseRepresentativeInfo } from '../../utils/payload-parsers';
 import { representativeSchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 
 @Component({
   tag: 'justifi-business-representative-form-step',
@@ -17,9 +18,9 @@ export class BusinessRepresentativeFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: BusinessFormServerErrors }>;
+  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
 
   private api: any;
 
@@ -59,7 +60,7 @@ export class BusinessRepresentativeFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response });
+    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' }});
   }
 
   @Method()
