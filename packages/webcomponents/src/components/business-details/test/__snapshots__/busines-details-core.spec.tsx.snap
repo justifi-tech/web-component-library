@@ -2,11 +2,9 @@
 
 exports[`BusinessDetailsCore should display error state correctly 1`] = `
 <business-details-core>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
-    <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
-      <span class="visually-hidden">
-        Loading...
-      </span>
+  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+    <div>
+      error
     </div>
   </main>
 </business-details-core>
@@ -21,5 +19,15 @@ exports[`BusinessDetailsCore should display loading state correclty 1`] = `
       </span>
     </div>
   </main>
+</business-details-core>
+`;
+
+exports[`BusinessDetailsCore should set business details correctly to state 1`] = `
+<business-details-core>
+  <generic-info-details></generic-info-details>
+  <legal-address-details></legal-address-details>
+  <representative-details></representative-details>
+  <owner-details></owner-details>
+  <additional-questions-details></additional-questions-details>
 </business-details-core>
 `;

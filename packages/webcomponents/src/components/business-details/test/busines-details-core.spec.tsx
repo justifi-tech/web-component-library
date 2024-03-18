@@ -30,7 +30,11 @@ describe('BusinessDetailsCore', () => {
       },
     });
 
+    page.rootInstance.componentWillLoad = () => { };
+
     page.rootInstance.getBusiness = getBusiness;
+
+    page.rootInstance.fetchData();
 
     await page.waitForChanges();
 
@@ -47,7 +51,7 @@ describe('BusinessDetailsCore', () => {
       id: '',
       authToken: '',
       service: {
-        fetchBusiness: async () => (mockBusinessDetails),
+        fetchBusiness: async () => Promise.resolve(mockBusinessDetails),
       },
     });
 
@@ -55,14 +59,13 @@ describe('BusinessDetailsCore', () => {
 
     page.rootInstance.getBusiness = getBusiness;
 
-    await page.waitForChanges();
-
     page.rootInstance.fetchData();
 
     await page.waitForChanges();
 
     const expectedBusiness = new Business(mockBusinessDetails.data as unknown as IBusiness);
     expect(page.rootInstance.business).toEqual(expectedBusiness);
+    expect(page.root).toMatchSnapshot();
   });
 });
 

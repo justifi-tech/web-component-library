@@ -3,100 +3,98 @@
 exports[`owner-details should render owner-details 1`] = `
 <owner-details>
   <mock:shadow-root>
-    <div class="row">
-      <h5 class="mt-4" part="detail-section-title">
-        Owner Person Name's Details
-      </h5>
-      <hr>
-      <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Name
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            Person Name
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Title
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            President
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Email
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            person.name@justifi.ai
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Phone
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            6124011111
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Date of Birth
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            Jul 4, 1906
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Identification Number
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            ********6789
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Line 1
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            123 Example St
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Line 2
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            Suite 101
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            City
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            Minneapolis
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            State
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            MN
-          </span>
-        </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Zip
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            55555
-          </span>
-        </div>
+    <h5 class="mt-4" part="detail-section-title">
+      Owner Person Name's Details
+    </h5>
+    <hr>
+    <div class="d-table gap-2 w-100">
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Name
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          Person Name
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Title
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          President
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Email
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          person.name@justifi.ai
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Phone
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          6124011111
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Date of Birth
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          Jul 4, 1906
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Identification Number
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          ********6789
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Line 1
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          123 Example St
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Line 2
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          Suite 101
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          City
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          Minneapolis
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          State
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          MN
+        </span>
+      </div>
+      <div class="d-table-row gap-2">
+        <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+          Zip
+        </span>
+        <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          55555
+        </span>
       </div>
     </div>
   </mock:shadow-root>

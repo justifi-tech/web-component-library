@@ -54,7 +54,7 @@ export class BusinessDetailsCore {
         <generic-info-details business={this.business} />
         <legal-address-details legalAddress={this.business.legal_address} />
         <representative-details representative={this.business.representative} />
-        <owners-details owners={this.business.owners} />
+        <owner-details owners={this.business.owners} />
         <additional-questions-details
           additionalQuestions={this.business.additional_questions}
         />
