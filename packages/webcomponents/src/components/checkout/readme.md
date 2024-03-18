@@ -37,11 +37,9 @@
 
 ## Properties
 
-| Property                    | Attribute                      | Description | Type                                                        | Default     |
-| --------------------------- | ------------------------------ | ----------- | ----------------------------------------------------------- | ----------- |
-| `selectedPaymentMethodType` | `selected-payment-method-type` |             | `PaymentMethodTypes.bankAccount \| PaymentMethodTypes.card` | `undefined` |
-| `showAch`                   | `show-ach`                     |             | `boolean`                                                   | `undefined` |
-| `showCreditCard`            | `show-credit-card`             |             | `boolean`                                                   | `undefined` |
+| Property       | Attribute       | Description | Type     | Default               |
+| -------------- | --------------- | ----------- | -------- | --------------------- |
+| `iframeOrigin` | `iframe-origin` |             | `string` | `config.iframeOrigin` |
 
 
 ## Events
@@ -60,8 +58,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-checkout-core --> justifi-payment-method-type-selector
-  style justifi-payment-method-type-selector fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-checkout-core --> justifi-payment-method-options
+  style justifi-payment-method-options fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

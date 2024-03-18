@@ -1,0 +1,61 @@
+@import 'forms';
+@import 'buttons';
+@import 'bootstrap-utilities';
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
+
+.payment-method-header {
+  cursor: pointer;
+
+  input,
+  label {
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: var(--bs-gray-100);
+  }
+}
+
+.payment-method:not(:last-child) .payment-method-header {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+// .jfi-btn-radio+.jfi-btn-radio-label {
+//   color: var(--jfi-radio-button-color);
+//   background-color: var(--jfi-radio-button-background-color);
+//   border-color: var(--jfi-radio-button-border-color);
+//   padding: var(--jfi-radio-button-padding);
+//   font-size: var(--jfi-radio-button-font-size);
+// }
+
+// .jfi-btn-radio:focus+.jfi-btn-radio-label {
+//   box-shadow: var(--jfi-box-shadow-focus);
+// }
+
+// .jfi-btn-radio+.jfi-btn-radio-label:hover {
+//   color: var(--jfi-radio-button-color-hover);
+//   border-color: var(--jfi-radio-button-border-color-hover);
+//   background-color: var(--jfi-radio-button-background-color-hover);
+// }
+
+// .jfi-btn-radio:checked+.jfi-btn-radio-label:hover {
+//   color: var(--jfi-radio-button-color-selected-hover);
+//   border-color: var(--jfi-radio-button-border-color-selected-hover);
+//   background-color: var(--jfi-radio-button-background-color-selected-hover);
+// }
+
+// .jfi-btn-radio:checked+.jfi-btn-radio-label {
+//   color: var(--jfi-radio-button-color-selected);
+//   background-color: var(--jfi-radio-button-background-color-selected);
+//   border-color: var(--jfi-radio-button-border-color-selected);
+// }
+
+// .jfi-btn-radio-group {
+//   font-family: var(--jfi-layout-font-family);
+//   display: inline-flex;
+//   width: var(--jfi-radio-button-group-width);
+// }

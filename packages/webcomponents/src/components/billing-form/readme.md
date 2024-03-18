@@ -55,7 +55,6 @@ Type: `Promise<{ isValid: boolean; }>`
 
 ### Used by
 
- - [justifi-checkout-core](../checkout)
  - [justifi-payment-form](../payment-form)
 
 ### Depends on
@@ -68,7 +67,6 @@ Type: `Promise<{ isValid: boolean; }>`
 graph TD;
   justifi-billing-form --> text-input
   justifi-billing-form --> select-input
-  justifi-checkout-core --> justifi-billing-form
   justifi-payment-form --> justifi-billing-form
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

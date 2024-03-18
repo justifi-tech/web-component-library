@@ -44,6 +44,10 @@ export class PaymentMethodForm {
   private iframeElement!: HTMLIFrameElement;
   private frameService: FrameCommunicationService;
 
+  componentWillLoad() {
+    console.log('computedTheme:', getComputedTheme());
+  }
+
   disconnectedCallback() {
     this.frameService.removeMessageListener(this.dispatchMessageEvent);
   }

@@ -13,7 +13,8 @@ export class CheckoutCore {
   /**
  * URL for the rendered iFrame. End-users need not use this.
  */
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin; @Prop() authToken: string;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop() authToken: string;
   @Prop() getCheckout: Function;
   @Prop() pay: Function;
   @Prop() checkoutId: string;
@@ -144,28 +145,7 @@ export class CheckoutCore {
     return (
       <Host>
         <form class="row gy-3">
-          <justifi-payment-method-type-selector
-            show-credit-card={this.checkout.payment_settings?.credit_card_payments}
-            show-ach={this.checkout.payment_settings?.ach_payments}
-            selected-payment-method-type={this.selectedPaymentMethodType}
-          />
-          <div class="col-12">
-            <justifi-payment-method-form
-              payment-method-form-type={this.selectedPaymentMethodType}
-              iframe-origin={this.iframeOrigin}
-              ref={el => {
-                if (el) { this.paymentMethodFormRef = el; }
-              }}
-            />
-          </div>
-          <div class="col-12">
-            <justifi-billing-form
-              legend="Billing Info"
-              ref={el => {
-                if (el) { this.billingFormRef = el; }
-              }}
-            />
-          </div>
+          <justifi-payment-method-options />
           <slot name='insurance' />
           <div class="col-12">
             <button
@@ -174,7 +154,7 @@ export class CheckoutCore {
               disabled={this.isLoading}
               class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
             >
-              {this.isLoading ? this.loadingSpinner : 'Submit'}
+              {this.isLoading ? this.loadingSpinner : 'Pay'}
             </button>
           </div>
         </form>
