@@ -20,7 +20,7 @@ export class JustifiRepresentativeDetails {
   @Prop() representative: Identity;
 
   render() {
-    if (!this.representative || isEmptyObject(this.representative)) return null;
+    if (isEmptyObject(this.representative)) return null;
 
     return (
       <Host>

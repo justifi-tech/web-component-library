@@ -9,7 +9,7 @@ export function formatCurrency(amount: number, withSymbol = true): string {
   function format(amount: number): string {
     const formattedString = withSymbol ? '$0,0.00' : '0,0.00';
     return Dinero({ amount: amount, currency: 'USD' }).toFormat(
-      formattedString,
+      formattedString
     );
   }
 
@@ -25,7 +25,7 @@ export function formatPercentage(amount: number): string {
   }
 
   return format(amount);
-};
+}
 
 export function formatDate(dateString: string | Date): string {
   if (!dateString) return '';
@@ -60,7 +60,9 @@ export function formatMediumDate(input: string | Date): string {
 
 export function formatDisplayDate(value: any, endDate: string) {
   const isEndingDate = value === endDate;
-  return (isEndingDate) ? 'Today' : format(new Date(value.replace(/-/g, '/')), 'MMM d');
+  return isEndingDate
+    ? 'Today'
+    : format(new Date(value.replace(/-/g, '/')), 'MMM d');
 }
 
 export function formatTime(dateString: string): string {
@@ -171,7 +173,7 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
   if (!snakeCaseStr) return '';
   return snakeCaseStr
     .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
 
@@ -215,5 +217,6 @@ export async function loadFontsOnParent() {
 }
 
 export function isEmptyObject(obj) {
+  if (!obj) return true;
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }

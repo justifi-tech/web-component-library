@@ -12,7 +12,7 @@ export class LegalAddressDetails {
   @Prop() legalAddress: IAddress;
 
   render() {
-    if (!this.legalAddress || isEmptyObject(this.legalAddress)) return null;
+    if (isEmptyObject(this.legalAddress)) return null;
 
     return (
       <Host>
