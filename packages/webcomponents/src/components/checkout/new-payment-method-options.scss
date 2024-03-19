@@ -9,7 +9,20 @@
   display: block;
 }
 
-.payment-method-type:not(:last-child) .payment-method-type-header {
+.payment-method-header {
+  cursor: pointer;
+
+  input,
+  label {
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: var(--bs-gray-100);
+  }
+}
+
+.payment-method:not(:last-child) .payment-method-header {
   border-bottom: 1px solid var(--bs-border-color);
 }
 

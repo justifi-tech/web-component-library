@@ -12,11 +12,11 @@ class PaymentMethod {
 }
 
 @Component({
-  tag: 'justifi-payment-method-options',
-  styleUrl: 'payment-method-options.scss',
+  tag: 'justifi-saved-payment-method-options',
+  styleUrl: 'saved-payment-method-options.scss',
   shadow: false,
 })
-export class PaymentMethodOptions {
+export class SavedPaymentMethodOptions {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
   @State() selectedPaymentMethodId: string;

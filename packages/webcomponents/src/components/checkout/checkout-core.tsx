@@ -145,7 +145,11 @@ export class CheckoutCore {
     return (
       <Host>
         <form class="row gy-3">
-          <justifi-payment-method-options />
+          <justifi-saved-payment-method-options />
+          <justifi-new-payment-method-options
+            show-card={this.checkout.payment_settings?.credit_card_payments || true}
+            show-ach={this.checkout.payment_settings?.ach_payments || true}
+          />
           <slot name='insurance' />
           <div class="col-12">
             <button

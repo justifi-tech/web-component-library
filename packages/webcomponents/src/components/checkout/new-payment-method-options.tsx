@@ -18,8 +18,8 @@ class PaymentMethodTypeOption {
 }
 
 @Component({
-  tag: 'justifi-new-payment-method',
-  styleUrl: 'new-payment-method.scss',
+  tag: 'justifi-new-payment-method-options',
+  styleUrl: 'new-payment-method-options.scss',
   shadow: false,
 })
 export class NewPaymentMethod {
@@ -59,8 +59,8 @@ export class NewPaymentMethod {
     const isSelected = this.selectedPaymentMethodTypeId == option.id;
     const isNewPaymentMethod = option.id == PaymentMethodTypes.card || option.id == PaymentMethodTypes.bankAccount;
     return (
-      <div class="payment-method-type">
-        <div class="payment-method-type-header p-3" onClick={() => this.onPaymentMethodTypeOptionClick(option)}>
+      <div class="payment-method">
+        <div class="payment-method-header p-3" onClick={() => this.onPaymentMethodTypeOptionClick(option)}>
           <input
             type="radio"
             name="paymentMethodType"
