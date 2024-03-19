@@ -1,4 +1,4 @@
-type ArgNames = 'auth-token' | 'account-id' | 'business-id' | 'client-id' | 'iframe-origin' | 'payment-id' | 'payout-id';
+type ArgNames = 'auth-token' | 'account-id' | 'business-id' | 'client-id' | 'iframe-origin' | 'payment-id' | 'payout-id' | 'owner-id';
 type ArgValues = { [key in ArgNames]?: string; };
 type ArgTypes = { [key in ArgNames]?: any; }
 
@@ -9,6 +9,7 @@ const args: ArgValues = {
   'client-id': 'test_df97f04afebc3c018de30df3562d7cdd',
   'payment-id': 'py_1NNeEnf4FbelxDCQN2RHcE',
   'payout-id': 'po_17745yESnHyEgWNeunmhmR',
+  'owner-id': 'idty_xiaT5N94eiDWQWdiLk35b'
 }
 
 const argTypes: ArgTypes = {
@@ -45,6 +46,16 @@ const argTypes: ArgTypes = {
   'client-id': {
     type: 'string',
     description: 'Client ID `string`',
+    control: {
+      type: 'text',
+    },
+    table: {
+      category: 'props'
+    }
+  },
+  'owner-id': {
+    type: 'string',
+    description: 'Owner ID `string`',
     control: {
       type: 'text',
     },

@@ -3,7 +3,7 @@ import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { IBusiness } from '../../../../api/Business';
-import { parseRepresentativeInfo } from '../../utils/payload-parsers';
+import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { representativeSchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
@@ -44,7 +44,7 @@ export class BusinessRepresentativeFormStep {
   private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
-      const payload = parseRepresentativeInfo(this.formController.values.getValue());
+      const payload = parseIdentityInfo(this.formController.values.getValue());
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ representative: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {

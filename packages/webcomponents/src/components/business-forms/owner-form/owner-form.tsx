@@ -1,9 +1,9 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
 import { Identity } from '../../../api/Business';
-import { parseRepresentativeInfo } from '../utils/payload-parsers';
+import { parseIdentityInfo } from '../utils/payload-parsers';
 import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 
@@ -12,9 +12,10 @@ import { config } from '../../../../config';
   styleUrl: 'owner-form.scss',
   shadow: true,
 })
-export class OwnerForm {
+export class BusinessOwnerForm {
   @Prop() authToken: string;
   @Prop() ownerId: string;
+  @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() owner: any = {};
@@ -26,6 +27,12 @@ export class OwnerForm {
 
   get identityEndpoint() {
     return `entities/identity/${this.ownerId}`
+  }
+
+  constructor() {
+    this.sendData = this.sendData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.validateAndSubmit = this.validateAndSubmit.bind(this);
   }
 
   private fetchData = async () => {
@@ -41,12 +48,13 @@ export class OwnerForm {
     }
   }
 
-  private sendData = async (onSuccess?: () => void) => {
+  private sendData = async () => {
     this.formLoading.emit(true);
     try {
-      const payload = parseRepresentativeInfo(this.formController.values.getValue());
-      const response = await this.api.patch(this.identityEndpoint, JSON.stringify({ representative: payload }));
-      this.handleResponse(response, onSuccess);
+      const payload = parseIdentityInfo(this.formController.values.getValue());
+      const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
+      this.submitted.emit({ data: response });
+      // this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: 'bad bad bad' });
     } finally {
@@ -54,19 +62,14 @@ export class OwnerForm {
     }
   }
 
-  handleResponse(response, onSuccess) {
-    if (response.error) {
-      this.serverError.emit({ data: response.error, message: 'bad bad bad' });
-    } else {
-      onSuccess();
-    }
-    this.submitted.emit({ data: response });
-  }
-
-  @Method()
-  async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
-  };
+  // handleResponse(response, onSuccess) {
+  //   if (response.error) {
+  //     this.serverError.emit({ data: response.error, message: 'bad bad bad' });
+  //   } else {
+  //     onSuccess();
+  //   }
+  //   this.submitted.emit({ data: response });
+  // }
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
@@ -104,6 +107,12 @@ export class OwnerForm {
       }
     });
   }
+  
+  private validateAndSubmit(event: any) {
+    console.log('fired')
+    event.preventDefault();
+    this.formController.validateAndSubmit(this.sendData);
+  }
 
   render() {
 
@@ -112,7 +121,7 @@ export class OwnerForm {
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <form>
+        <form onSubmit={this.validateAndSubmit}>
           <fieldset>
             <legend>Owner</legend>
             <hr />
@@ -208,6 +217,16 @@ export class OwnerForm {
                   defaultValues={ownerDefaultValue?.address}
                   handleFormUpdate={values => this.onAddressFormUpdate(values)}
                 />
+              </div>
+              <div class="col-12 d-flex flex-row-reverse">
+                <button
+                  type="submit"
+                  class="btn btn-primary jfi-submit-button"
+                  disabled={this.isLoading}
+                  onClick={() => console.log('hey')}
+                >
+                  {this.isLoading ? 'Loading...' : 'Save'}
+                </button>
               </div>
             </div>
           </fieldset>

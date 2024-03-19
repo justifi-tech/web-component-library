@@ -4,7 +4,7 @@
 export const parseBusiness = (values, initialValues) => {
   parseCoreInfo(values);
   parseAddressInfo(values.legal_address);
-  parseRepresentativeInfo(values.representative);
+  parseIdentityInfo(values.representative);
   initialValues.owners?.length && delete values.owners;
 
   return values;
@@ -30,7 +30,7 @@ export const parseAddressInfo = (values: any) => {
   return values;
 }
 
-export const parseRepresentativeInfo = (values: any) => {
+export const parseIdentityInfo = (values: any) => {
   delete values.id;
   delete values.documents;
   delete values.created_at;
@@ -38,7 +38,6 @@ export const parseRepresentativeInfo = (values: any) => {
   delete values.address.id;
   delete values.address.created_at;
   delete values.address.updated_at;
-  delete values.business_id;
 
   return values;
 }
