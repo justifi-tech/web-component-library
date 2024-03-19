@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Business, IBusiness } from "../../../../api/Business";
 import mockedBusinessDetails from '../../../../api/mockData/mockBusinessDetails.json';
@@ -9,12 +10,10 @@ describe('owner-details', () => {
 
     const page = await newSpecPage({
       components: [OwnerDetails],
-      html: (`
-        <owner-details></owner-details>
-      `),
+      template: () => (
+        <owner-details owners={businessDetails.owners}></owner-details>
+      ),
     });
-
-    page.rootInstance.owners = businessDetails.owners;
 
     await page.waitForChanges();
 

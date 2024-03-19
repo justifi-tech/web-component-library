@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Business, IBusiness } from "../../../../api/Business";
 import { LegalAddressDetails } from "../legal-address-details";
@@ -8,11 +9,10 @@ describe('LegalAddressDetails', () => {
     const businessDetails = new Business(mockedBusinessDetails.data as unknown as IBusiness);
     const page = await newSpecPage({
       components: [LegalAddressDetails],
-      html: (`
-        <legal-address-details></legal-address-details>
-      `),
+      template: () => (
+        <legal-address-details legalAddress={businessDetails.legal_address}></legal-address-details>
+      ),
     });
-    page.rootInstance.legalAddress = businessDetails.legal_address;
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });

@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Business, IBusiness } from "../../../../api/Business";
 import mockedBusinessDetails from '../../../../api/mockData/mockBusinessDetails.json';
@@ -9,12 +10,10 @@ describe('RepresentativeDetails', () => {
 
     const page = await newSpecPage({
       components: [JustifiRepresentativeDetails],
-      html: (`
-        <representative-details></representative-details>
-      `),
+      template: () => (
+        <representative-details representative={businessDetails.representative}></representative-details>
+      ),
     });
-
-    page.rootInstance.representative = businessDetails.representative;
 
     await page.waitForChanges();
 

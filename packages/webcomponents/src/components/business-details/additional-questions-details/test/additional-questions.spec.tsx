@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { AdditionalQuestionsDetails } from "../additional-questions-details";
 import { Business, IBusiness } from '../../../../api/Business';
@@ -9,12 +10,8 @@ describe('additional-questions-details', () => {
 
     const page = await newSpecPage({
       components: [AdditionalQuestionsDetails],
-      html: (`
-        <additional-questions-details></additional-questions-details>
-      `),
-    });
-
-    page.rootInstance.additionalQuestions = businessDetails.additional_questions;
+      template: () => <additional-questions-details additionalQuestions={businessDetails.additional_questions} />
+    },);
 
     await page.waitForChanges();
 

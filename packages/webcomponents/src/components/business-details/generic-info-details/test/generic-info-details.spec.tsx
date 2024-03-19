@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Business, IBusiness } from "../../../../api/Business";
 import { GenericInfoDetails } from "../generic-info-details";
@@ -8,11 +9,10 @@ describe('GenericInfoDetails', () => {
     const businessDetails = new Business(mockedBusinessDetails.data as unknown as IBusiness);
     const page = await newSpecPage({
       components: [GenericInfoDetails],
-      html: (` 
-        <generic-info-details></generic-info-details> 
-      `),
+      template: () => (
+        <generic-info-details business={businessDetails}></generic-info-details>
+      ),
     });
-    page.rootInstance.business = businessDetails;
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });
