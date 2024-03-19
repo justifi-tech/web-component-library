@@ -7,16 +7,6 @@ const PaymentMethodTypeLabels = {
   card: 'Credit or debit card',
 };
 
-class PaymentMethodTypeOption {
-  id: PaymentMethodTypes;
-  label: string;
-
-  constructor(paymentMethodType: PaymentMethodTypes) {
-    this.id = paymentMethodType;
-    this.label = PaymentMethodTypeLabels[paymentMethodType];
-  }
-}
-
 @Component({
   tag: 'justifi-new-payment-method-options',
   styleUrl: 'new-payment-method-options.scss',
@@ -27,16 +17,16 @@ export class NewPaymentMethod {
   @Prop() showAch: boolean;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
-  @State() paymentMethodTypeOptions: PaymentMethodTypeOption[];
-  @State() selectedPaymentMethodTypeId: string;
+  @State() paymentMethodTypeOptions: PaymentMethodTypes[];
+  @State() selectedPaymentMethodType: string;
 
   componentWillLoad() {
     this.paymentMethodTypeOptions = [];
     if (this.showCard) {
-      this.paymentMethodTypeOptions.push(new PaymentMethodTypeOption(PaymentMethodTypes.card));
+      this.paymentMethodTypeOptions.push(PaymentMethodTypes.card);
     }
     if (this.showAch) {
-      this.paymentMethodTypeOptions.push(new PaymentMethodTypeOption(PaymentMethodTypes.bankAccount));
+      this.paymentMethodTypeOptions.push(PaymentMethodTypes.bankAccount);
     }
   }
 
@@ -49,34 +39,33 @@ export class NewPaymentMethod {
     );
   };
 
-  onPaymentMethodTypeOptionClick = (option: PaymentMethodTypeOption) => {
-    this.selectedPaymentMethodTypeId = option.id;
+  onPaymentMethodTypeOptionClick = (type: PaymentMethodTypes) => {
+    this.selectedPaymentMethodType = type;
   };
 
-  paymentMethodOption = (option: PaymentMethodTypeOption) => {
-    const isSelected = this.selectedPaymentMethodTypeId == option.id;
-    const isNewPaymentMethod = option.id == PaymentMethodTypes.card || option.id == PaymentMethodTypes.bankAccount;
+  paymentMethodOption = (type: PaymentMethodTypes) => {
+    const isSelected = this.selectedPaymentMethodType == type;
     return (
       <div class="payment-method">
-        <div class="payment-method-header p-3" onClick={() => this.onPaymentMethodTypeOptionClick(option)}>
+        <div class="payment-method-header p-3" onClick={() => this.onPaymentMethodTypeOptionClick(type)}>
           <input
             type="radio"
             name="paymentMethodType"
-            id={option.id}
-            value={option.id}
+            id={type}
+            value={type}
             checked={isSelected}
             onClick={(event) => event.preventDefault()}
             class="form-check-input me-2"
           />
           <label
-            htmlFor={option.id}
+            htmlFor={type}
             class="form-check-label">
-            {option.label}
+            {PaymentMethodTypeLabels[type]}
           </label>
         </div>
         <div class={(isSelected) ? 'd-block mt-2 pb-4 border-bottom' : 'd-none'}>
           <div class="mb-3">
-            {isNewPaymentMethod && this.newPaymentMethodForm(option.id)}
+            {this.newPaymentMethodForm(type)}
           </div>
           <h3 class="fs-6 fw-bold lh-lg">Billing address</h3>
           <justifi-billing-form></justifi-billing-form>
@@ -89,7 +78,7 @@ export class NewPaymentMethod {
     return (
       <Fragment>
         <div class="d-flex flex-column">
-          {this.paymentMethodTypeOptions.map((option) => this.paymentMethodOption(option))}
+          {this.paymentMethodTypeOptions.map((type) => this.paymentMethodOption(type))}
         </div>
       </Fragment>
     );
