@@ -155,7 +155,7 @@ export class CheckoutCore {
         disabled={this.isLoading}
         class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
       >
-        {this.isLoading ? this.loadingSpinner : 'Pay'}
+        {this.isLoading ? this.loadingSpinner : 'This makes a payment'}
       </button>
     </div>
   );
@@ -166,7 +166,7 @@ export class CheckoutCore {
         Cancel
       </button>
       <button class="btn btn-primary" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
-        Save and Continue
+        This tokenizes
       </button>
     </div>
   );
@@ -175,14 +175,23 @@ export class CheckoutCore {
     return (
       <Host>
         <div class="row gy-3">
-          {this.creatingNewPaymentMethod ? (
-            <justifi-new-payment-method-options
-              show-card={this.checkout.payment_settings?.credit_card_payments || true}
-              show-ach={this.checkout.payment_settings?.ach_payments || true}
-            />
-          ) : (
-            <justifi-saved-payment-method-options />
-          )}
+          <div class="col-12 mb-4">
+            <h2 class="fs-5 fw-bold">Summary</h2>
+            <div>Product desctiption</div>
+            <div>Total $100.00</div>
+          </div>
+          <div class="col-12">
+            <h2 class="fs-5 fw-bold border-bottom pb-3">Payment</h2>
+            <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
+            {this.creatingNewPaymentMethod ? (
+              <justifi-new-payment-method-options
+                show-card={this.checkout.payment_settings?.credit_card_payments || true}
+                show-ach={this.checkout.payment_settings?.ach_payments || true}
+              />
+            ) : (
+              <justifi-saved-payment-method-options />
+            )}
+          </div>
           <slot name='insurance' />
           <div class="col-12">
             {this.creatingNewPaymentMethod ? this.newPaymentMethodButtons : this.payButton}

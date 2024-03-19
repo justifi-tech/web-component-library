@@ -26,6 +26,7 @@ export class SavedPaymentMethodOptions {
   componentWillLoad() {
     this.savedPaymentMethods.push(new PaymentMethod('123', 'Citi DoubleCash *4567'));
     this.savedPaymentMethods.push(new PaymentMethod('456', 'Apple Card *7890'));
+    this.selectedPaymentMethodId = this.savedPaymentMethods[0].id;
   }
 
   onPaymentMethodTypeOptionClick = (paymentMethod: PaymentMethod) => {

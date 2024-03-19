@@ -40,14 +40,12 @@ export class NewPaymentMethod {
     }
   }
 
-  newPaymentMethodForm = (paymentMethodType: PaymentMethodTypes, isSelected: boolean) => {
+  newPaymentMethodForm = (paymentMethodType: PaymentMethodTypes) => {
     return (
-      <div class={(isSelected) ? 'd-block' : 'd-none'}>
-        <justifi-payment-method-form
-          payment-method-form-type={paymentMethodType}
-          iframe-origin={this.iframeOrigin}
-        />
-      </div>
+      <justifi-payment-method-form
+        payment-method-form-type={paymentMethodType}
+        iframe-origin={this.iframeOrigin}
+      />
     );
   };
 
@@ -76,7 +74,13 @@ export class NewPaymentMethod {
             {option.label}
           </label>
         </div>
-        {isNewPaymentMethod && this.newPaymentMethodForm(option.id, isSelected)}
+        <div class={(isSelected) ? 'd-block mt-2 pb-4 border-bottom' : 'd-none'}>
+          <div class="mb-3">
+            {isNewPaymentMethod && this.newPaymentMethodForm(option.id)}
+          </div>
+          <h3 class="fs-6 fw-bold lh-lg">Billing address</h3>
+          <justifi-billing-form></justifi-billing-form>
+        </div>
       </div>
     );
   };
