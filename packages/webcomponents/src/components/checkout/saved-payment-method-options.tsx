@@ -19,6 +19,7 @@ class PaymentMethod {
 export class SavedPaymentMethodOptions {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Event({ bubbles: true }) paymentMethodSelected: EventEmitter;
+  @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
   @State() selectedPaymentMethodId: string;
   @State() savedPaymentMethods: PaymentMethod[] = [];
 
@@ -55,19 +56,21 @@ export class SavedPaymentMethodOptions {
     );
   };
 
+  addIcon = (
+    <svg width="1.2rem" height="1.2rem" viewBox="0 0 64 64" stroke-width="5" stroke="#5c5c5c" fill="none">
+      <line x1="32" y1="4" x2="32" y2="60" />
+      <line x1="4" y1="32" x2="60" y2="32" />
+    </svg>
+  );
+
   render() {
     return (
       <Fragment>
         <div class="d-flex flex-column">
           {this.savedPaymentMethods.map((option) => this.paymentMethodOption(option))}
           <div class="payment-method">
-            <div class="payment-method-header p-3 d-flex">
-              <div class="me-2">
-                <svg width="1.2rem" height="1.2rem" viewBox="0 0 64 64" stroke-width="5" stroke="#5c5c5c" fill="none">
-                  <line x1="32" y1="4" x2="32" y2="60" />
-                  <line x1="4" y1="32" x2="60" y2="32" />
-                </svg>
-              </div>
+            <div class="payment-method-header p-3 d-flex" onClick={() => this.toggleCreatingNewPaymentMethod.emit()}>
+              <div class="me-2">{this.addIcon}</div>
               New payment method
             </div>
           </div>

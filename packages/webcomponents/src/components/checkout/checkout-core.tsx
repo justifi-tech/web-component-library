@@ -25,6 +25,7 @@ export class CheckoutCore {
   @State() checkout: any = {};
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
+  @State() creatingNewPaymentMethod: boolean = false;
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
@@ -63,6 +64,11 @@ export class CheckoutCore {
   paymentMethodSelectedHandler(event: CustomEvent) {
     const paymentMethodType: PaymentMethodTypes = event.detail;
     this.selectedPaymentMethodType = paymentMethodType;
+  }
+
+  @Listen('toggleCreatingNewPaymentMethod')
+  toggleCreatingNewPaymentMethodHandler() {
+    this.creatingNewPaymentMethod = !this.creatingNewPaymentMethod;
   }
 
   @Method()
@@ -141,27 +147,47 @@ export class CheckoutCore {
     </div>
   );
 
+  private payButton = (
+    <div class="d-flex justify-content-end">
+      <button
+        type="submit"
+        onClick={event => this.submit(event)}
+        disabled={this.isLoading}
+        class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
+      >
+        {this.isLoading ? this.loadingSpinner : 'Pay'}
+      </button>
+    </div>
+  );
+
+  private newPaymentMethodButtons = (
+    <div class="d-flex justify-content-end">
+      <button class="btn me-2">
+        Cancel
+      </button>
+      <button class="btn btn-primary" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
+        Save and Continue
+      </button>
+    </div>
+  );
+
   render() {
     return (
       <Host>
-        <form class="row gy-3">
-          <justifi-saved-payment-method-options />
-          <justifi-new-payment-method-options
-            show-card={this.checkout.payment_settings?.credit_card_payments || true}
-            show-ach={this.checkout.payment_settings?.ach_payments || true}
-          />
+        <div class="row gy-3">
+          {this.creatingNewPaymentMethod ? (
+            <justifi-new-payment-method-options
+              show-card={this.checkout.payment_settings?.credit_card_payments || true}
+              show-ach={this.checkout.payment_settings?.ach_payments || true}
+            />
+          ) : (
+            <justifi-saved-payment-method-options />
+          )}
           <slot name='insurance' />
           <div class="col-12">
-            <button
-              type="submit"
-              onClick={event => this.submit(event)}
-              disabled={this.isLoading}
-              class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
-            >
-              {this.isLoading ? this.loadingSpinner : 'Pay'}
-            </button>
+            {this.creatingNewPaymentMethod ? this.newPaymentMethodButtons : this.payButton}
           </div>
-        </form>
+        </div>
       </Host>
     );
   }
