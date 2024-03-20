@@ -2,7 +2,7 @@ import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/c
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
-import { Identity } from '../../../api/Business';
+import { Identity, Owner } from '../../../api/Business';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
@@ -39,7 +39,7 @@ export class BusinessOwnerForm {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
-      this.owner = response.data;
+      this.owner = { ...new Owner(response.data)};
       this.formController.setInitialValues(this.owner);
     } catch (error) {
       this.serverError.emit({ data: error, message: 'bad bad bad' });
@@ -109,7 +109,6 @@ export class BusinessOwnerForm {
   }
   
   private validateAndSubmit(event: any) {
-    console.log('fired')
     event.preventDefault();
     this.formController.validateAndSubmit(this.sendData);
   }
