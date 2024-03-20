@@ -2,7 +2,7 @@ import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/c
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
-import { Identity, Owner } from '../../../api/Business';
+import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
