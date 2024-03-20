@@ -21,7 +21,6 @@ export class CheckoutCore {
 
   @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
-  @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
   @State() checkout: any = {};
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
@@ -29,8 +28,6 @@ export class CheckoutCore {
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
-  private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
-  private billingFormRef?: HTMLJustifiBillingFormElement;
 
   componentWillLoad() {
     if (this.getCheckout) {
@@ -60,12 +57,6 @@ export class CheckoutCore {
     });
   };
 
-  @Listen('paymentMethodSelected')
-  paymentMethodSelectedHandler(event: CustomEvent) {
-    const paymentMethodType: PaymentMethodTypes = event.detail;
-    this.selectedPaymentMethodType = paymentMethodType;
-  }
-
   @Listen('toggleCreatingNewPaymentMethod')
   toggleCreatingNewPaymentMethodHandler() {
     this.creatingNewPaymentMethod = !this.creatingNewPaymentMethod;
@@ -89,41 +80,18 @@ export class CheckoutCore {
   }
 
   async submit(event) {
-    event.preventDefault();
-    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
+    // event.preventDefault();
+    // if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
-    const billingFormValidation = await this.billingFormRef.validate();
-    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+    // const billingFormValidation = await this.billingFormRef.validate();
+    // const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
 
-    if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
+    // if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
 
-    this.isLoading = true;
-    const token = await this.tokenize();
-    if (token) { await this.payWithPaymentMethodToken(token); }
-    this.isLoading = false;
-  }
-
-  async tokenize() {
-    try {
-      const billingFormFieldValues = await this.billingFormRef.getValues();
-      const paymentMethodData = { ...billingFormFieldValues };
-      const clientId = this.checkout.payment_client_id;
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.checkout.account_id);
-
-      this.submitted.emit(tokenizeResponse);
-
-      if (tokenizeResponse.error) {
-        console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
-        return null;
-      }
-
-      const data = tokenizeResponse.data;
-      const tokenizedPaymentMethod = (data as any).card || (data as any).ach; // fix the response types to avoid this
-      return tokenizedPaymentMethod.token;
-    } catch (error) {
-      console.error(`An error occured submitting the form: ${error}`);
-      return null;
-    }
+    // this.isLoading = true;
+    // const token = await this.tokenize();
+    // if (token) { await this.payWithPaymentMethodToken(token); }
+    // this.isLoading = false;
   }
 
   async payWithPaymentMethodToken(token: string) {
@@ -162,7 +130,7 @@ export class CheckoutCore {
 
   private newPaymentMethodButtons = (
     <div class="d-flex justify-content-end">
-      <button class="btn me-2">
+      <button class="btn me-2" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
         Cancel
       </button>
       <button class="btn btn-primary" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
@@ -187,6 +155,8 @@ export class CheckoutCore {
               <justifi-new-payment-method-options
                 show-card={this.checkout.payment_settings?.credit_card_payments || true}
                 show-ach={this.checkout.payment_settings?.ach_payments || true}
+                client-id={this.checkout.payment_client_id}
+                account-id={this.checkout.account_id}
               />
             ) : (
               <justifi-saved-payment-method-options />
