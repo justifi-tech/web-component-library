@@ -14,7 +14,8 @@ import { config } from '../../../../config';
 })
 export class BusinessOwnerForm {
   @Prop() authToken: string;
-  @Prop() ownerId: string;
+  @Prop() ownerId?: string;
+  @Prop() businessId?: string;
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
@@ -26,7 +27,7 @@ export class BusinessOwnerForm {
   private api: any;
 
   get identityEndpoint() {
-    return `entities/identity/${this.ownerId}`
+    return this.ownerId ? `entities/identity/${this.ownerId}` : 'entities/identity';
   }
 
   constructor() {
@@ -36,6 +37,9 @@ export class BusinessOwnerForm {
   }
 
   private fetchData = async () => {
+    if (!this.ownerId) {
+      return;
+    }
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
@@ -51,10 +55,16 @@ export class BusinessOwnerForm {
   private sendData = async () => {
     this.formLoading.emit(true);
     try {
-      const payload = parseIdentityInfo(this.formController.values.getValue());
-      const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
-      this.submitted.emit({ data: response });
-      // this.handleResponse(response, onSuccess);
+      if (this.ownerId) {
+        const payload = parseIdentityInfo(this.formController.values.getValue());
+        const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
+        this.submitted.emit({ data: response });
+      } else {
+        const payload = { ...parseIdentityInfo(this.formController.values.getValue()), business_id: this.businessId};
+        const response = await this.api.post(this.identityEndpoint, JSON.stringify(payload));
+        this.submitted.emit({ data: response });
+        this.ownerId = response.data.id;
+      }
     } catch (error) {
       this.serverError.emit({ data: error, message: 'bad bad bad' });
     } finally {
@@ -62,20 +72,9 @@ export class BusinessOwnerForm {
     }
   }
 
-  // handleResponse(response, onSuccess) {
-  //   if (response.error) {
-  //     this.serverError.emit({ data: response.error, message: 'bad bad bad' });
-  //   } else {
-  //     onSuccess();
-  //   }
-  //   this.submitted.emit({ data: response });
-  // }
-
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingOwnerId = 'Warning: Missing owner-id. The form requires an existing owner-id to function.';
     if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.ownerId) console.error(missingOwnerId);
 
     this.formController = new FormController(ownerSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
