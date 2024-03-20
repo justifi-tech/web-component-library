@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, Fragment, State } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, Fragment, State, Method } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api';
 
@@ -37,18 +37,20 @@ export class NewPaymentMethod {
     }
   }
 
-  newPaymentMethodForm = (paymentMethodType: PaymentMethodTypes) => {
-    return (
-      <justifi-payment-method-form
-        payment-method-form-type={paymentMethodType}
-        iframe-origin={this.iframeOrigin}
-      />
-    );
-  };
-
   onPaymentMethodTypeOptionClick = (type: PaymentMethodTypes) => {
     this.selectedPaymentMethodType = type;
   };
+
+  @Method()
+  async submit() {
+    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
+
+    const billingFormValidation = await this.billingFormRef.validate();
+    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+
+    if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
+    return await this.tokenize();
+  }
 
   async tokenize() {
     try {
@@ -91,13 +93,19 @@ export class NewPaymentMethod {
             {PaymentMethodTypeLabels[type]}
           </label>
         </div>
-        <div class={(isSelected) ? 'd-block mt-2 pb-4 border-bottom' : 'd-none'}>
-          <div class="mb-3">
-            {this.newPaymentMethodForm(type)}
+        {isSelected && (
+          <div class="mt-2 pb-4 border-bottom">
+            <div class="mb-3">
+              <justifi-payment-method-form
+                ref={(el) => (this.paymentMethodFormRef = el)}
+                payment-method-form-type={type}
+                iframe-origin={this.iframeOrigin}
+              />
+            </div>
+            <h3 class="fs-6 fw-bold lh-lg mb-4">Billing address</h3>
+            <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
           </div>
-          <h3 class="fs-6 fw-bold lh-lg mb-4">Billing address</h3>
-          <justifi-billing-form></justifi-billing-form>
-        </div>
+        )}
       </div>
     );
   };

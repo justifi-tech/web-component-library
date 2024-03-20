@@ -28,6 +28,7 @@ export class CheckoutCore {
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
+  private newPaymentMethodOptionsRef?: HTMLJustifiNewPaymentMethodOptionsElement;
 
   componentWillLoad() {
     if (this.getCheckout) {
@@ -95,6 +96,11 @@ export class CheckoutCore {
     })
   }
 
+  async tokenize() {
+    const result = await this.newPaymentMethodOptionsRef.submit();
+    console.log(result);
+  }
+
   private loadingSpinner = (
     <div class="spinner-border spinner-border-sm" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -109,7 +115,7 @@ export class CheckoutCore {
         disabled={this.isLoading}
         class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
       >
-        {this.isLoading ? this.loadingSpinner : 'This makes a payment'}
+        {this.isLoading ? this.loadingSpinner : 'Pay'}
       </button>
     </div>
   );
@@ -120,8 +126,8 @@ export class CheckoutCore {
       <button class="btn me-2" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
         Cancel
       </button>
-      <button class="btn btn-primary" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
-        This tokenizes
+      <button class="btn btn-primary" onClick={() => this.tokenize()}>
+        Save and continue
       </button>
     </div>
   );
@@ -144,6 +150,7 @@ export class CheckoutCore {
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             {this.creatingNewPaymentMethod ? (
               <justifi-new-payment-method-options
+                ref={(el) => (this.newPaymentMethodOptionsRef = el)}
                 show-card={this.checkout.payment_settings?.credit_card_payments || true}
                 show-ach={this.checkout.payment_settings?.ach_payments || true}
                 client-id={this.checkout.payment_client_id}
