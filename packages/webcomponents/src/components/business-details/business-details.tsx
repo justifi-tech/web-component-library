@@ -1,14 +1,7 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
-import { Business, IBusiness } from '../../api/Business';
-import { Api, IApiResponse } from '../../api';
-import { ErrorState, LoadingState } from '../details/utils';
-import { config } from '../../../config';
-
-enum RENDER_STATES {
-  LOADING = 'loading',
-  READY = 'ready',
-  ERROR = 'error',
-}
+import { ErrorState } from '../details/utils';
+import { BusinessService } from '../../api/services/business.service';
+import { makeGetBusiness } from './get-business';
 
 /**
  *
@@ -20,77 +13,38 @@ enum RENDER_STATES {
  */
 @Component({
   tag: 'justifi-business-details',
-  styleUrl: 'business-details.scss',
   shadow: true,
 })
 export class BusinessDetails {
   @Prop() businessId: string;
   @Prop() authToken: string;
-  @State() business: Business;
-  @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
-  @State() errorMessage: string = 'An error ocurred.';
+  @State() errorMessage: string;
+  @State() getBusiness: Function;
 
-  private api: any;
-
-  constructor() {
-    this.fetchBusiness = this.fetchBusiness.bind(this);
+  componentWillLoad() {
+    this.initializeGetBusiness();
   }
 
-  async componentWillLoad() {
-    if (!this.authToken) {
-      this.errorMessage = 'Missing auth-token. The form will not be functional without it.';
-      console.error(this.errorMessage);
+  private initializeGetBusiness() {
+    if (!this.businessId || !this.authToken) {
+      this.errorMessage = 'Invalid business id or auth token';
       return;
     }
 
-    if (!this.businessId) {
-      this.errorMessage = 'Missing business-id. The form will not be functional without it.';
-      console.error(this.errorMessage);
-      return;
-    }
-
-    this.api = Api(this.authToken, config.proxyApiOrigin);
-    await this.fetchBusiness(this.businessId);
-  }
-
-  async fetchBusiness(businessId) {
-    this.renderState = RENDER_STATES.LOADING;
-    try {
-      const response: IApiResponse<IBusiness> = await this.api.get(`entities/business/${businessId}`);
-      if (response.error) {
-        this.errorMessage = `${this.errorMessage}: ${response.error}`;
-        console.error(this.errorMessage);
-        this.renderState = RENDER_STATES.ERROR;
-        return;
-      }
-      this.business = new Business(response.data);
-      this.renderState = RENDER_STATES.READY;
-    } catch (error) {
-      this.errorMessage = `${this.errorMessage}: ${error}`;
-      console.error(this.errorMessage);
-      this.renderState = RENDER_STATES.ERROR;
-    } finally {
-      this.renderState = RENDER_STATES.READY;
-    }
+    this.getBusiness = makeGetBusiness({
+      id: this.businessId,
+      authToken: this.authToken,
+      service: new BusinessService(),
+    });
   }
 
   render() {
-    if (this.renderState === RENDER_STATES.LOADING) {
-      return <Host>{LoadingState}</Host>;
-    }
-
-    if (this.renderState === RENDER_STATES.ERROR) {
+    if (this.errorMessage) {
       return <Host>{ErrorState(this.errorMessage)}</Host>;
     }
     return (
       <Host>
-        <generic-info-details business={this.business} />
-        <legal-address-details legalAddress={this.business?.legal_address} />
-        <representative-details representative={this.business?.representative} />
-        <owner-details owners={this.business?.owners} />
-        <additional-questions-details
-          additionalQuestions={this.business?.additional_questions}
-        />
+        <business-details-core getBusiness={this.getBusiness} />
       </Host>
     );
   }

@@ -12,6 +12,8 @@ export class GenericInfoDetails {
   @Prop() business: IBusiness;
 
   render() {
+    if (!this.business) return null;
+
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Business Generic Info Details" />
