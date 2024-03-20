@@ -1,7 +1,6 @@
 import { Component, h, Prop, State, Event, EventEmitter, Host, Listen, Method } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad } from '../../utils/utils';
-import { PaymentMethodTypes } from '../../api';
 import { config } from '../../../config';
 
 @Component({
@@ -25,6 +24,7 @@ export class CheckoutCore {
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() creatingNewPaymentMethod: boolean = false;
+  @State() selectedPaymentMethodToken: string;
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
@@ -80,24 +80,10 @@ export class CheckoutCore {
   }
 
   async submit(event) {
-    // event.preventDefault();
-    // if (!this.paymentMethodFormRef || !this.billingFormRef) return;
-
-    // const billingFormValidation = await this.billingFormRef.validate();
-    // const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
-
-    // if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
-
-    // this.isLoading = true;
-    // const token = await this.tokenize();
-    // if (token) { await this.payWithPaymentMethodToken(token); }
-    // this.isLoading = false;
-  }
-
-  async payWithPaymentMethodToken(token: string) {
-    console.log('payWithPaymentMethodToken', token)
+    event.preventDefault();
+    this.isLoading = true;
     this.pay({
-      paymentMethodToken: token,
+      paymentMethodToken: this.selectedPaymentMethodToken,
       onSuccess: ({ checkout }) => {
         this.checkout = checkout;
         this.isLoading = false;
@@ -128,6 +114,7 @@ export class CheckoutCore {
     </div>
   );
 
+  // Should this move into the new-payment-method-options component?
   private newPaymentMethodButtons = (
     <div class="d-flex justify-content-end">
       <button class="btn me-2" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
@@ -139,11 +126,15 @@ export class CheckoutCore {
     </div>
   );
 
+  // Case 1: The checkout has a payment method group
+  // Case 2: The checkout has a payment method group, but the user has opted to create a new payment method
+  // Case 3: The checkout does not have a payment method group so the user must create a new payment method
   render() {
     return (
       <Host>
         <div class="row gy-3">
           <div class="col-12 mb-4">
+            {/* componentize this */}
             <h2 class="fs-5 fw-bold">Summary</h2>
             <div>Product desctiption</div>
             <div>Total $100.00</div>
@@ -162,8 +153,8 @@ export class CheckoutCore {
               <justifi-saved-payment-method-options />
             )}
           </div>
-          <slot name='insurance' />
           <div class="col-12">
+            {/* If newPaymentMethodButtons moves into the new-payment-method-options component, what happens here instead? */}
             {this.creatingNewPaymentMethod ? this.newPaymentMethodButtons : this.payButton}
           </div>
         </div>
