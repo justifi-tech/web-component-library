@@ -6,6 +6,8 @@ import { Identity, Owner } from '../../../api/Business';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
+import { LoadingSpinner } from '../../form/utils';
+import { OwnerFormSubmitEvent, OwnerFormServerErrorEvent, OwnerFormServerErrors } from '../utils/business-form-types';
 
 @Component({
   tag: 'justifi-owner-form',
@@ -20,14 +22,21 @@ export class BusinessOwnerForm {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() owner: any = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<{ data?: any }>;
-  @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<{ data: any, message: string }>;
+  @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
+  @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
 
   private api: any;
 
   get identityEndpoint() {
     return this.ownerId ? `entities/identity/${this.ownerId}` : 'entities/identity';
+  }
+
+  get formTitle() {
+    return this.ownerId ? 'Edit Business Owner' : 'Add Business Owner';
+  }
+
+  get submitButtonText() {
+    return this.ownerId ? 'Update' : 'Add';
   }
 
   constructor() {
@@ -40,20 +49,20 @@ export class BusinessOwnerForm {
     if (!this.ownerId) {
       return;
     }
-    this.formLoading.emit(true);
+    this.isLoading = true;
     try {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
       this.owner = { ...new Owner(response.data)};
       this.formController.setInitialValues(this.owner);
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'bad bad bad' });
+      this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
     } finally {
-      this.formLoading.emit(false);
+      this.isLoading = false;
     }
   }
 
   private sendData = async () => {
-    this.formLoading.emit(true);
+    this.isLoading = true;
     try {
       if (this.ownerId) {
         const payload = parseIdentityInfo(this.formController.values.getValue());
@@ -66,9 +75,10 @@ export class BusinessOwnerForm {
         this.ownerId = response.data.id;
       }
     } catch (error) {
-      this.serverError.emit({ data: error, message: 'bad bad bad' });
+      let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
+      this.serverError.emit({ data: error, message: errorMessage });
     } finally {
-      this.formLoading.emit(false);
+      this.isLoading = false;
     }
   }
 
@@ -121,7 +131,7 @@ export class BusinessOwnerForm {
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
-            <legend>Owner</legend>
+            <legend>{this.formTitle}</legend>
             <hr />
             <div class="row gy-3">
               <div class="col-12 col-md-8">
@@ -219,11 +229,9 @@ export class BusinessOwnerForm {
               <div class="col-12 d-flex flex-row-reverse">
                 <button
                   type="submit"
-                  class="btn btn-primary jfi-submit-button"
-                  disabled={this.isLoading}
-                  onClick={() => console.log('hey')}
-                >
-                  {this.isLoading ? 'Loading...' : 'Save'}
+                  class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+                  disabled={this.isLoading}>
+                  {this.isLoading ? LoadingSpinner() : this.submitButtonText}
                 </button>
               </div>
             </div>

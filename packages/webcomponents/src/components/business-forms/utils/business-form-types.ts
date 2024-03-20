@@ -31,3 +31,19 @@ export enum BusinessFormClickActions {
   previousStep = 'previousStep',
   submit = 'submit'
 }
+
+export interface OwnerFormSubmitEvent {
+  data: any;
+  metadata?: any;
+}
+
+export interface OwnerFormServerErrorEvent {
+  data?: any;
+  message: OwnerFormServerErrors;
+}
+
+export enum OwnerFormServerErrors {
+  fetchData = 'Error retrieving owner data',
+  patchData = 'Error updating owner data',
+  postData = 'Error adding owner data'
+}
