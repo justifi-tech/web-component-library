@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import mockPaymentDetailsResponse from '../../../api/mockData/mockPaymentDetailSuccess.json';
 import { PaymentDetailsCore } from '../payment-details-core';
@@ -55,5 +56,35 @@ describe('payment-details-core', () => {
     await page.waitForChanges();
 
     expect(page.root).toMatchSnapshot();
+  });
+
+  it('emits an error event on failed data fetch', async () => {
+    const mockService = {
+      fetchPayment: jest.fn().mockRejectedValue('Fetch error')
+    };
+
+    const getPaymentDetails = makeGetPaymentDetails({
+      id: 'some-id',
+      authToken: 'some-auth-token',
+      service: mockService,
+    });
+
+    const errorEvent = jest.fn();
+    const page = await newSpecPage({
+      components,
+      template: () => (
+        <payment-details-core
+          getPaymentDetails={getPaymentDetails}
+          onErrorEvent={errorEvent}
+        />
+      ),
+    });
+
+    page.rootInstance.componentWillLoad = () => { };
+    page.rootInstance.fetchData();
+    await page.waitForChanges();
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ detail: 'Fetch error' })
+    );
   });
 });
