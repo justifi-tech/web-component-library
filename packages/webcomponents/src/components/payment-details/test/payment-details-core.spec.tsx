@@ -34,7 +34,7 @@ describe('payment-details-core', () => {
 
   it('displays an error state on failed data fetch', async () => {
     const mockService = {
-      fetchPayment: jest.fn().mockRejectedValue(new Error('Fetch error'))
+      fetchPayment: jest.fn().mockRejectedValue('Fetch error')
     };
 
     const getPaymentDetails = makeGetPaymentDetails({

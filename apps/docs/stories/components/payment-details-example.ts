@@ -10,5 +10,17 @@ ${codeExampleHead('justifi-payment-details')}
   <justifi-payment-details payment-id="123" auth-token="your-auth-token"></justifi-payment-details>
 </body>
 
+<script>
+  (function () {
+    var paymentDetails = document.querySelector('justifi-payment-details');
+
+    console.log('paymentDetails: ', paymentDetails);
+
+    paymentDetails.addEventListener('tokenExpired', (data) => {
+      // here is where you would handle the token expired event
+      console.log('data');
+    });
+  })();
+</script>
 </html>
 `);

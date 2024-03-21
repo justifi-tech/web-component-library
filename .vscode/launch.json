@@ -3,22 +3,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Spec Test Current File",
-      "cwd": "${workspaceFolder}/stencil-library",
-      "program": "${workspaceFolder}/stencil-library/node_modules/.bin/stencil",
-      "args": ["test", "--spec", "--", "${fileBasename}"],
+      "name": "Debug Jest Tests",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "test:file"],
+      "args": ["${fileBasenameNoExtension}"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "E2E Test Current File",
-      "cwd": "${workspaceFolder}/stencil-library",
-      "program": "${workspaceFolder}/stencil-library/node_modules/.bin/stencil",
-      "args": ["test", "--e2e", "--", "--maxWorkers=0", "${fileBasename}"],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceFolder}/packages/webcomponents"
     }
   ]
 }
