@@ -43,6 +43,21 @@ describe('payment-details', () => {
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });
+
+  it('emits tokenExpired event when token is expired', async () => {
+    const eventSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PaymentDetails, PaymentDetailsCore, Details],
+      html: (`<justifi-payment-details payment-id="abc" auth-token="abc" />`),
+    });
+
+    page.root.addEventListener('tokenExpired', eventSpy);
+
+    page.rootInstance.handleError({ detail: 'Not Authenticated' });
+
+    expect(eventSpy).toHaveBeenCalled();
+  });
 });
 
 
