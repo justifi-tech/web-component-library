@@ -44,7 +44,7 @@ export class BusinessDetails {
 
   handleError = (event) => {
     if (event.detail === API_ERRORS.NOT_AUTHENTICATED) {
-      this.tokenExpired.emit({ bubbles: true, composed: true });
+      this.tokenExpired.emit();
     }
   };
 
