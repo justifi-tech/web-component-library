@@ -14,9 +14,9 @@ export const makeGetGrossPaymentChartData =
       if (!response.error) {
         onSuccess(response.data);
       } else {
-        onError(`Error trying to fetch data : ${response.error}`);
+        onError(response.error);
       }
     } catch (error) {
-      onError(`Error trying to fetch data : ${error}`);
+      onError(error);
     }
   };

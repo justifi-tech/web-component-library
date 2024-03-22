@@ -32,4 +32,19 @@ describe('GrossPaymentChart', () => {
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });
+
+  it('emits tokenExpired event when token expires', async () => {
+    const eventSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [GrossPaymentChart, GrossPaymentChartCore],
+      html: (`<justifi-gross-payment-chart account-id="abc" auth-token="abc" />`),
+    });
+
+    page.root.addEventListener('tokenExpired', eventSpy);
+
+    page.rootInstance.handleError({ detail: { message: 'Not Authenticated' } });
+
+    expect(eventSpy).toHaveBeenCalled();
+  });
 });

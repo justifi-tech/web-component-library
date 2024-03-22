@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { GrossPaymentChartCore } from '../gross-payment-chart-core';
 import { GrossVolumeReport } from '../../../api/GrossVolume';
@@ -76,5 +77,28 @@ describe('gross-payment-chart', () => {
     await page.waitForChanges();
 
     expect(page.root).toMatchSnapshot();
+  });
+
+  it('emits errorEvent when error occurs', async () => {
+    const getGrossPayment = makeGetGrossPaymentChartData({
+      id: 'my-account-id',
+      authToken: 'my-token',
+      service: {
+        fetchGrossVolumeChartData: jest.fn().mockRejectedValue('Not Authorized')
+      }
+    });
+    const errorEvent = jest.fn();
+
+    const page = await newSpecPage({
+      components: [GrossPaymentChartCore],
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onErrorEvent={errorEvent} />,
+    });
+
+    page.rootInstance.componentWillLoad = () => { };
+    page.rootInstance.fetchData();
+    await page.waitForChanges();
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ detail: 'Not Authorized' })
+    );
   });
 });
