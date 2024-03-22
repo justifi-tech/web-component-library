@@ -1,80 +1,92 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../../../form/form';
-import { PHONE_MASKS } from '../../../../utils/form-input-masks';
-import Api, { IApiResponse } from '../../../../api/Api';
-import { IBusiness } from '../../../../api/Business';
-import { parseIdentityInfo } from '../../utils/payload-parsers';
-import { representativeSchema } from '../../schemas/business-identity-schema';
-import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { FormController } from '../../form/form';
+import { PHONE_MASKS } from '../../../utils/form-input-masks';
+import { Api, IApiResponse } from '../../../api';
+import { Identity, Owner } from '../../../api/Business';
+import { parseIdentityInfo } from '../utils/payload-parsers';
+import { ownerSchema } from '../schemas/business-identity-schema';
+import { config } from '../../../../config';
+import { LoadingSpinner } from '../../form/utils';
+import { OwnerFormSubmitEvent, OwnerFormServerErrorEvent, OwnerFormServerErrors } from '../utils/business-form-types';
 
 @Component({
-  tag: 'justifi-business-representative-form-step',
-  styleUrl: 'business-representative-form-step.scss',
+  tag: 'justifi-owner-form',
+  styleUrl: 'owner-form.scss',
+  shadow: true,
 })
-export class BusinessRepresentativeFormStep {
+export class BusinessOwnerForm {
   @Prop() authToken: string;
-  @Prop() businessId: string;
+  @Prop() ownerId?: string;
+  @Prop() businessId?: string;
+  @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() representative: any = {};
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
+  @State() owner: any = {};
+  @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
+  @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
 
   private api: any;
 
-  get businessEndpoint() {
-    return `entities/business/${this.businessId}`
+  get identityEndpoint() {
+    return this.ownerId ? `entities/identity/${this.ownerId}` : 'entities/identity';
+  }
+
+  get formTitle() {
+    return this.ownerId ? 'Edit Business Owner' : 'Add Business Owner';
+  }
+
+  get submitButtonText() {
+    return this.ownerId ? 'Update' : 'Add';
+  }
+
+  constructor() {
+    this.sendData = this.sendData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.validateAndSubmit = this.validateAndSubmit.bind(this);
   }
 
   private fetchData = async () => {
-    this.formLoading.emit(true);
+    if (!this.ownerId) {
+      return;
+    }
+    this.isLoading = true;
     try {
-      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.representative = response.data.representative;
-      this.formController.setInitialValues(this.representative);
+      const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
+      this.owner = { ...new Owner(response.data)};
+      this.formController.setInitialValues(this.owner);
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
+      this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
     } finally {
-      this.formLoading.emit(false);
+      this.isLoading = false;
     }
   }
 
-  private sendData = async (onSuccess?: () => void) => {
-    this.formLoading.emit(true);
+  private sendData = async () => {
+    this.isLoading = true;
     try {
-      const payload = parseIdentityInfo(this.formController.values.getValue());
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ representative: payload }));
-      this.handleResponse(response, onSuccess);
+      if (this.ownerId) {
+        const payload = parseIdentityInfo(this.formController.values.getValue());
+        const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
+        this.submitted.emit({ data: response });
+      } else {
+        const payload = { ...parseIdentityInfo(this.formController.values.getValue()), business_id: this.businessId};
+        const response = await this.api.post(this.identityEndpoint, JSON.stringify(payload));
+        this.submitted.emit({ data: response });
+        this.ownerId = response.data.id;
+      }
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+      let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
+      this.serverError.emit({ data: error, message: errorMessage });
     } finally {
-      this.formLoading.emit(false);
+      this.isLoading = false;
     }
   }
-
-  handleResponse(response, onSuccess) {
-    if (response.error) {
-      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
-    } else {
-      onSuccess();
-    }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' }});
-  }
-
-  @Method()
-  async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
-  };
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
     if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(representativeSchema);
+    this.formController = new FormController(ownerSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
@@ -84,7 +96,7 @@ export class BusinessRepresentativeFormStep {
       errors => (this.errors = { ...errors }),
     );
     this.formController.values.subscribe(
-      values => (this.representative = { ...values }),
+      values => (this.owner = { ...values }),
     );
   }
 
@@ -98,29 +110,35 @@ export class BusinessRepresentativeFormStep {
   onAddressFormUpdate = (values: any): void => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
-        address: {
-          ...this.formController.values.getValue().address,
-          ...values,
-        }
+      address: {
+        ...this.formController.values.getValue().address,
+        ...values,
+      }
     });
+  }
+  
+  private validateAndSubmit(event: any) {
+    event.preventDefault();
+    this.formController.validateAndSubmit(this.sendData);
   }
 
   render() {
-    const representativeDefaultValue =
+
+    const ownerDefaultValue =
       this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
-        <form>
+        <form onSubmit={this.validateAndSubmit}>
           <fieldset>
-            <legend>Representative</legend>
+            <legend>{this.formTitle}</legend>
             <hr />
             <div class="row gy-3">
               <div class="col-12 col-md-8">
                 <form-control-text
                   name="name"
                   label="Full Name"
-                  defaultValue={representativeDefaultValue?.name}
+                  defaultValue={ownerDefaultValue?.name}
                   error={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
@@ -129,7 +147,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-select
                   name="title"
                   label="Prefix"
-                  defaultValue={representativeDefaultValue?.title}
+                  defaultValue={ownerDefaultValue?.title}
                   options={[
                     { label: 'Select Prefix', value: '' },
                     { label: 'Mrs.', value: 'Mrs.' },
@@ -142,7 +160,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-text
                   name="email"
                   label="Email Address"
-                  defaultValue={representativeDefaultValue?.email}
+                  defaultValue={ownerDefaultValue?.email}
                   error={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
@@ -151,7 +169,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-number-masked
                   name="phone"
                   label="Phone Number"
-                  defaultValue={representativeDefaultValue?.phone}
+                  defaultValue={ownerDefaultValue?.phone}
                   error={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
@@ -166,7 +184,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-datepart
                   name="dob_day"
                   label="Day"
-                  defaultValue={representativeDefaultValue?.dob_day}
+                  defaultValue={ownerDefaultValue?.dob_day}
                   error={this.errors.dob_day}
                   inputHandler={this.inputHandler}
                   type="day"
@@ -176,7 +194,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-datepart
                   name="dob_month"
                   label="Month"
-                  defaultValue={representativeDefaultValue?.dob_month}
+                  defaultValue={ownerDefaultValue?.dob_month}
                   error={this.errors.dob_month}
                   inputHandler={this.inputHandler}
                   type="month"
@@ -186,7 +204,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-datepart
                   name="dob_year"
                   label="Year"
-                  defaultValue={representativeDefaultValue?.dob_year}
+                  defaultValue={ownerDefaultValue?.dob_year}
                   error={this.errors.dob_year}
                   inputHandler={this.inputHandler}
                   type="year"
@@ -196,7 +214,7 @@ export class BusinessRepresentativeFormStep {
                 <form-control-number
                   name="identification_number"
                   label="EIN/SSN"
-                  defaultValue={representativeDefaultValue?.identification_number}
+                  defaultValue={ownerDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                 />
@@ -204,9 +222,17 @@ export class BusinessRepresentativeFormStep {
               <div class="col-12">
                 <justifi-business-address-form
                   errors={this.errors.address}
-                  defaultValues={representativeDefaultValue?.address}
+                  defaultValues={ownerDefaultValue?.address}
                   handleFormUpdate={values => this.onAddressFormUpdate(values)}
                 />
+              </div>
+              <div class="col-12 d-flex flex-row-reverse">
+                <button
+                  type="submit"
+                  class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+                  disabled={this.isLoading}>
+                  {this.isLoading ? LoadingSpinner() : this.submitButtonText}
+                </button>
               </div>
             </div>
           </fieldset>

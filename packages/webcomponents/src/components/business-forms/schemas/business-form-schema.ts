@@ -1,7 +1,7 @@
 import { object } from 'yup';
 import { businessCoreInfoSchema } from './business-core-info-schema';
 import { additionQuestionsSchema } from './business-additional-questions-schema';
-import { representativeSchema } from './business-representative-schema';
+import { representativeSchema } from './business-identity-schema';
 import { legalAddressSchema } from './business-address-schema';
 
 export const businessFormSchema = object({
