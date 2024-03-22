@@ -3,6 +3,8 @@ import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
 import { Legal } from '../api/SubAccount';
 
+export const RegExZip = /^\d{5}/;
+
 export function formatCurrency(amount: number, withSymbol = true): string {
   if (!amount) amount = 0;
 
@@ -177,6 +179,22 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
     .join(' ');
 }
 
+export function flattenNestedObject(obj) {
+  const result = {};
+
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      const nestedObj = flattenNestedObject(obj[key]);
+      for (const nestedKey in nestedObj) {
+        result[nestedKey] = nestedObj[nestedKey];
+      }
+    } else {
+      result[key] = obj[key];
+    }
+  }
+
+  return result;
+}
 export function composeQueryParams(values: string[]) {
   const queryParams = values.map((value) => {
     if (value === values[0]) {
