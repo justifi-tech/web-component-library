@@ -1,7 +1,8 @@
-import { Component, Host, Prop, State, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 import { ErrorState } from '../details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from './get-business';
+import { API_ERRORS } from '../../api/shared';
 
 /**
  *
@@ -18,8 +19,11 @@ import { makeGetBusiness } from './get-business';
 export class BusinessDetails {
   @Prop() businessId: string;
   @Prop() authToken: string;
+
   @State() errorMessage: string;
   @State() getBusiness: Function;
+
+  @Event() tokenExpired: EventEmitter<any>;
 
   componentWillLoad() {
     this.initializeGetBusiness();
@@ -38,14 +42,21 @@ export class BusinessDetails {
     });
   }
 
+  handleError = (event) => {
+    if (event.detail === API_ERRORS.NOT_AUTHENTICATED) {
+      this.tokenExpired.emit({ bubbles: true, composed: true });
+    }
+  };
+
   render() {
     if (this.errorMessage) {
       return <Host>{ErrorState(this.errorMessage)}</Host>;
     }
     return (
-      <Host>
-        <business-details-core getBusiness={this.getBusiness} />
-      </Host>
+      <business-details-core
+        getBusiness={this.getBusiness}
+        onErrorEvent={this.handleError}
+      />
     );
   }
 }

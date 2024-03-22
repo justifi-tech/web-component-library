@@ -1,3 +1,4 @@
+import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
 import { BusinessDetailsCore } from "../business-details-core";
 import { makeGetBusiness } from "../get-business";
@@ -66,6 +67,34 @@ describe('BusinessDetailsCore', () => {
     const expectedBusiness = new Business(mockBusinessDetails.data as unknown as IBusiness);
     expect(page.rootInstance.business).toEqual(expectedBusiness);
     expect(page.root).toMatchSnapshot();
+  });
+
+  it('should emit error event when error occurs', async () => {
+    const mockService = {
+      fetchBusiness: jest.fn().mockRejectedValue('Fetch error')
+    };
+
+    const getBusiness = makeGetBusiness({
+      id: 'some-id',
+      authToken: 'some-auth-token',
+      service: mockService,
+    });
+
+    const errorEventSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [BusinessDetailsCore],
+      template: () => (
+        <business-details-core getBusiness={getBusiness} onErrorEvent={errorEventSpy} />
+      ),
+    });
+
+    page.rootInstance.componentWillLoad = () => { };
+    page.rootInstance.fetchData();
+    await page.waitForChanges();
+    expect(errorEventSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ detail: 'Fetch error' }),
+    );
   });
 });
 

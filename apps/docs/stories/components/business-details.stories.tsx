@@ -16,6 +16,19 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'token-expired': {
+      description: 'Emitted when the token is expired.',
+      table: {
+        category: 'events'
+      }
+    }
+  },
+  parameters: {
+    actions: {
+      handles: [
+        'tokenExpired',
+      ]
+    }
   },
   decorators: [
     customStoryDecorator,
