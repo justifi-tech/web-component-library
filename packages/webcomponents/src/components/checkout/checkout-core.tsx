@@ -28,8 +28,6 @@ export class CheckoutCore {
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
-  private newPaymentMethodOptionsRef?: HTMLJustifiNewPaymentMethodOptionsElement;
-
   componentWillLoad() {
     if (this.getCheckout) {
       this.fetchData();
@@ -63,9 +61,15 @@ export class CheckoutCore {
     this.creatingNewPaymentMethod = !this.creatingNewPaymentMethod;
   }
 
+  @Listen('setSelectedPaymentMethodToken')
+  setSelectedPaymentMethodToken(event: CustomEvent) {
+    console.log('token', event.detail);
+    this.selectedPaymentMethodToken = event.detail;
+  }
+
+
   @Method()
   async loadFontsOnParent() {
-
     const parent = document.body;
     const fontsToLoad = extractComputedFontsToLoad();
     if (!parent || !fontsToLoad) {
@@ -87,6 +91,7 @@ export class CheckoutCore {
       paymentMethodToken: this.selectedPaymentMethodToken,
       onSuccess: ({ checkout }) => {
         this.checkout = checkout;
+        this.selectedPaymentMethodToken = this.checkout.payment_methods[0].id;
         this.isLoading = false;
       },
       onError: (errorMessage) => {
@@ -96,45 +101,16 @@ export class CheckoutCore {
     })
   }
 
-  async tokenize() {
-    const result = await this.newPaymentMethodOptionsRef.submit();
-    console.log(result);
-  }
-
   private loadingSpinner = (
     <div class="spinner-border spinner-border-sm" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   );
 
-  private payButton = (
-    <div class="d-flex justify-content-end">
-      <button
-        type="submit"
-        onClick={event => this.submit(event)}
-        disabled={this.isLoading}
-        class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
-      >
-        {this.isLoading ? this.loadingSpinner : 'Pay'}
-      </button>
-    </div>
-  );
-
-  // Should this move into the new-payment-method-options component?
-  private newPaymentMethodButtons = (
-    <div class="d-flex justify-content-end">
-      <button class="btn me-2" onClick={() => this.toggleCreatingNewPaymentMethodHandler()}>
-        Cancel
-      </button>
-      <button class="btn btn-primary" onClick={() => this.tokenize()}>
-        Save and continue
-      </button>
-    </div>
-  );
-
   // Case 1: The checkout has a payment method group
   // Case 2: The checkout has a payment method group, but the user has opted to create a new payment method
   // Case 3: The checkout does not have a payment method group so the user must create a new payment method
+  // Case 3: The checkout does not have a payment method group so the user must create a new payment method but doesn't want to save it
   render() {
     return (
       <Host>
@@ -148,21 +124,27 @@ export class CheckoutCore {
           <div class="col-12">
             <h2 class="fs-5 fw-bold border-bottom pb-3">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
-            {this.creatingNewPaymentMethod ? (
-              <justifi-new-payment-method-options
-                ref={(el) => (this.newPaymentMethodOptionsRef = el)}
+            <div class="d-flex flex-column">
+              <justifi-payment-method-options
                 show-card={this.checkout.payment_settings?.credit_card_payments || true}
                 show-ach={this.checkout.payment_settings?.ach_payments || true}
                 client-id={this.checkout.payment_client_id}
                 account-id={this.checkout.account_id}
+                savedPaymentMethods={this.checkout.payment_methods}
               />
-            ) : (
-              <justifi-saved-payment-method-options />
-            )}
+            </div>
           </div>
           <div class="col-12">
-            {/* If newPaymentMethodButtons moves into the new-payment-method-options component, what happens here instead? */}
-            {this.creatingNewPaymentMethod ? this.newPaymentMethodButtons : this.payButton}
+            <div class="d-flex justify-content-end">
+              <button
+                type="submit"
+                onClick={event => this.submit(event)}
+                disabled={this.isLoading}
+                class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
+              >
+                {this.isLoading ? this.loadingSpinner : 'Pay'}
+              </button>
+            </div>
           </div>
         </div>
       </Host>

@@ -37,29 +37,32 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default               |
-| -------------- | --------------- | ----------- | -------- | --------------------- |
-| `iframeOrigin` | `iframe-origin` |             | `string` | `config.iframeOrigin` |
+| Property                  | Attribute                    | Description | Type     | Default               |
+| ------------------------- | ---------------------------- | ----------- | -------- | --------------------- |
+| `iframeOrigin`            | `iframe-origin`              |             | `string` | `config.iframeOrigin` |
+| `paymentMethods`          | --                           |             | `any[]`  | `[]`                  |
+| `selectedPaymentMethodId` | `selected-payment-method-id` |             | `string` | `undefined`           |
 
 
 ## Events
 
-| Event                   | Description | Type               |
-| ----------------------- | ----------- | ------------------ |
-| `paymentMethodSelected` |             | `CustomEvent<any>` |
+| Event                            | Description | Type               |
+| -------------------------------- | ----------- | ------------------ |
+| `setSelectedPaymentMethodToken`  |             | `CustomEvent<any>` |
+| `toggleCreatingNewPaymentMethod` |             | `CustomEvent<any>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [justifi-checkout-core](.)
+ - [justifi-payment-method-options](.)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-checkout-core --> justifi-payment-method-options
-  style justifi-payment-method-options fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-method-options --> justifi-saved-payment-method-options
+  style justifi-saved-payment-method-options fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

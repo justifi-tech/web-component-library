@@ -1,8 +1,6 @@
 @import 'forms';
 @import 'buttons';
-@import 'transitions';
 @import 'bootstrap-utilities';
-@import 'variables';
 
 :host {
   @include host-base-styles;
@@ -20,10 +18,6 @@
   &:hover {
     background-color: var(--bs-gray-100);
   }
-}
-
-.payment-method:not(:last-child) .payment-method-header {
-  border-bottom: 1px solid var(--bs-border-color);
 }
 
 // .jfi-btn-radio+.jfi-btn-radio-label {
