@@ -18,6 +18,7 @@ export class BusinessOwnerForm {
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
+  @Prop() removeOwner: (id: string) => void;
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
@@ -241,6 +242,12 @@ export class BusinessOwnerForm {
                       class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
                       disabled={this.isLoading}>
                       {this.isLoading ? LoadingSpinner() : this.submitButtonText}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onClick={() => this.removeOwner(this.ownerId)}>
+                      Remove owner
                     </button>
                   </div>
                 </div>
