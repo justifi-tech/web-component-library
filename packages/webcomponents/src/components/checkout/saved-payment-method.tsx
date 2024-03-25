@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, Method } from '@stencil/core';
 import { config } from '../../../config';
 import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-utils';
 
@@ -13,6 +13,11 @@ export class SavedPaymentMethod {
   @Prop() isSelected: boolean;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+
+  @Method()
+  async getPaymentMethodToken(): Promise<string> {
+    return this.paymentMethodOption?.id;
+  };
 
   onPaymentMethodOptionClick = () => {
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);

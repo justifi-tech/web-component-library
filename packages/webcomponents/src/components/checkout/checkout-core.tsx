@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Listen, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad } from '../../utils/utils';
 import { config } from '../../../config';
@@ -28,6 +28,8 @@ export class CheckoutCore {
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
 
+  private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
+
   componentWillLoad() {
     if (this.getCheckout) {
       this.fetchData();
@@ -56,17 +58,6 @@ export class CheckoutCore {
     });
   };
 
-  @Listen('toggleCreatingNewPaymentMethod')
-  toggleCreatingNewPaymentMethodHandler() {
-    this.creatingNewPaymentMethod = !this.creatingNewPaymentMethod;
-  }
-
-  @Listen('setSelectedPaymentMethodToken')
-  setSelectedPaymentMethodToken(event: CustomEvent) {
-    console.log('token', event.detail);
-    this.selectedPaymentMethodToken = event.detail;
-  }
-
 
   @Method()
   async loadFontsOnParent() {
@@ -86,12 +77,19 @@ export class CheckoutCore {
 
   async submit(event) {
     event.preventDefault();
+
     this.isLoading = true;
+
+    const token = await this.paymentMethodOptionsRef.getPaymentMethodToken();
+    if (!token) {
+      this.isLoading = false;
+      return;
+    };
+
     this.pay({
-      paymentMethodToken: this.selectedPaymentMethodToken,
+      paymentMethodToken: token,
       onSuccess: ({ checkout }) => {
         this.checkout = checkout;
-        this.selectedPaymentMethodToken = this.checkout.payment_methods[0].id;
         this.isLoading = false;
       },
       onError: (errorMessage) => {
@@ -107,10 +105,6 @@ export class CheckoutCore {
     </div>
   );
 
-  // Case 1: The checkout has a payment method group
-  // Case 2: The checkout has a payment method group, but the user has opted to create a new payment method
-  // Case 3: The checkout does not have a payment method group so the user must create a new payment method
-  // Case 3: The checkout does not have a payment method group so the user must create a new payment method but doesn't want to save it
   render() {
     return (
       <Host>
@@ -126,6 +120,7 @@ export class CheckoutCore {
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
               <justifi-payment-method-options
+                ref={(el) => (this.paymentMethodOptionsRef = el)}
                 show-card={this.checkout.payment_settings?.credit_card_payments || true}
                 show-ach={this.checkout.payment_settings?.ach_payments || true}
                 client-id={this.checkout.payment_client_id}

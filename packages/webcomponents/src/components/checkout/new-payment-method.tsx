@@ -25,7 +25,7 @@ export class NewPaymentMethod {
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
 
   @Method()
-  async getToken() {
+  async getPaymentMethodToken(): Promise<string> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();

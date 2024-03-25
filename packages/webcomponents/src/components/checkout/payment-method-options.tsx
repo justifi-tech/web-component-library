@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
@@ -19,7 +19,7 @@ export class PaymentMethodOptions {
 
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
-  // private selectedPaymentMethodOptionRef?: HTMLJustifiBillingFormElement;
+  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement;
 
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
@@ -38,6 +38,11 @@ export class PaymentMethodOptions {
     this.selectedPaymentMethodId = event.detail.id;
   }
 
+  @Method()
+  async getPaymentMethodToken(): Promise<string> {
+    return await this.selectedPaymentMethodOptionRef?.getPaymentMethodToken();
+  }
+
   render() {
     return (
       <div>
@@ -52,6 +57,11 @@ export class PaymentMethodOptions {
                 client-id={this.clientId}
                 account-id={this.accountId}
                 is-selected={isSelected}
+                ref={(el) => {
+                  if (isSelected) {
+                    this.selectedPaymentMethodOptionRef = el;
+                  }
+                }}
               />
             );
           } else {
@@ -59,6 +69,11 @@ export class PaymentMethodOptions {
               <justifi-saved-payment-method
                 paymentMethodOption={paymentMethodOption}
                 is-selected={isSelected}
+                ref={(el) => {
+                  if (isSelected) {
+                    this.selectedPaymentMethodOptionRef = el;
+                  }
+                }}
               />
             );
           }
