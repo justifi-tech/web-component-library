@@ -45,7 +45,7 @@ describe('getPaymentDetails', () => {
   });
 
   it('should call onError with an error message on API failure', async () => {
-    const mockError = new Error('Error fetching payment');
+    const mockError = 'Error fetching payment';
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
@@ -60,9 +60,7 @@ describe('getPaymentDetails', () => {
     await getPaymentDetails({ onSuccess, onError });
 
     expect(onSuccess).not.toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(
-      `Error trying to fetch data : ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith(mockError);
   });
 
   it('should call onError with an error message on API failure', async () => {
@@ -81,8 +79,6 @@ describe('getPaymentDetails', () => {
     await getPaymentDetails({ onSuccess, onError });
 
     expect(onSuccess).not.toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(
-      `Error trying to fetch data : ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith(mockError);
   });
 });

@@ -9,3 +9,9 @@ export interface BankAccount {
   nickname: string,
   account_type: string,
 }
+
+// Errors on [capital]/config/locales/en.yml
+// Add more errors as needed
+export const API_ERRORS = {
+  NOT_AUTHENTICATED: 'Not Authenticated',
+};

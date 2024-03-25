@@ -1,7 +1,8 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from './get-payment-details';
 import { ErrorState } from '../details/utils';
+import { API_ERRORS } from '../../api/shared';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -38,6 +39,8 @@ export class PaymentDetails {
   @State() getPaymentDetails: Function;
   @State() errorMessage: string = null;
 
+  @Event() tokenExpired: EventEmitter<any>;
+
   componentWillLoad() {
     this.initializeGetPaymentDetails();
   }
@@ -60,17 +63,21 @@ export class PaymentDetails {
     }
   }
 
-  paymentService = new PaymentService();
+  handleError = (event) => {
+    if (event.detail === API_ERRORS.NOT_AUTHENTICATED) {
+      this.tokenExpired.emit();
+    }
+  }
 
   render() {
     if (this.errorMessage) {
       return ErrorState(this.errorMessage);
     }
-
     return (
       <payment-details-core
         getPaymentDetails={this.getPaymentDetails}
-      ></payment-details-core>
+        onErrorEvent={this.handleError}
+      />
     );
   }
 }
