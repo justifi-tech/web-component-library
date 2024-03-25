@@ -4,7 +4,6 @@ import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-ut
 
 @Component({
   tag: 'justifi-saved-payment-method',
-  styleUrl: 'saved-payment-method.scss',
   shadow: false,
 })
 export class SavedPaymentMethod {

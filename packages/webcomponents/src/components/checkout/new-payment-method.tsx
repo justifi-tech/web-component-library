@@ -9,7 +9,6 @@ const PaymentMethodTypeLabels = {
 
 @Component({
   tag: 'justifi-new-payment-method',
-  styleUrl: 'new-payment-method.scss',
   shadow: false,
 })
 export class NewPaymentMethod {
@@ -62,7 +61,7 @@ export class NewPaymentMethod {
 
   showNewPaymentMethodForm() {
     return (
-      <div class="mt-2 pb-4">
+      <div class="mt-2 pb-4 border-bottom">
         <div class="mb-3">
           <justifi-payment-method-form
             ref={(el) => (this.paymentMethodFormRef = el)}

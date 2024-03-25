@@ -5,6 +5,7 @@ import { PaymentMethodOption } from './payment-method-option-utils';
 
 @Component({
   tag: 'justifi-payment-method-options',
+  styleUrl: 'payment-method-options.scss',
   shadow: false,
 })
 export class PaymentMethodOptions {
