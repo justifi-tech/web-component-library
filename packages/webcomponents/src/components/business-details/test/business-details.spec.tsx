@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessDetails } from '../business-details';
 import { BusinessDetailsCore } from '../business-details-core';
+import { Details } from '../../details/details';
 
 describe('justifi-business-details', () => {
   it('initializes getBusiness on load with valid props', async () => {
@@ -48,5 +49,20 @@ describe('justifi-business-details', () => {
 
     const core = page.root.shadowRoot.querySelector('business-details-core');
     expect(core).not.toBeNull();
+  });
+
+  it('emits expiredToken event when the error is NOT_AUTHENTICATED', async () => {
+    const eventSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [BusinessDetails, BusinessDetailsCore, Details],
+      html: `<justifi-business-details business-id="123" auth-token="token" />`,
+    });
+
+    page.root.addEventListener('tokenExpired', eventSpy);
+
+    page.rootInstance.handleError({ detail: 'Not Authenticated' });
+
+    expect(eventSpy).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-import { Component, Host, Prop, State, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState, LoadingState } from '../details/utils';
 
@@ -17,6 +17,7 @@ export class BusinessDetailsCore {
   @State() business: Business;
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
   @State() errorMessage: string = 'An error ocurred.';
+  @Event() errorEvent: EventEmitter<string>;
 
   async componentWillLoad() {
     if (this.getBusiness) {
@@ -34,6 +35,7 @@ export class BusinessDetailsCore {
       },
       onError: ({ error }) => {
         console.error(error);
+        this.errorEvent.emit(error);
         this.errorMessage = error;
         this.renderState = RENDER_STATES.ERROR;
       }
