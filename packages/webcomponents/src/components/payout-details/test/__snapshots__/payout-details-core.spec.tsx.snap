@@ -148,7 +148,7 @@ exports[`payout-details-core handles fetch payout error correctly 1`] = `
 <payout-details-core>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
     <div>
-      Error fetching payout details: Error: Fetch error
+      Fetch error
     </div>
   </main>
 </payout-details-core>

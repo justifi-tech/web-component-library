@@ -1,7 +1,8 @@
-import { Component, h, Prop, Watch, State } from '@stencil/core';
+import { Component, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/core';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayoutDetails } from './get-payout-details';
 import { ErrorState } from '../details/utils';
+import { API_ERRORS } from '../../api/shared';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -11,8 +12,11 @@ import { ErrorState } from '../details/utils';
 export class PayoutDetails {
   @Prop() payoutId: string;
   @Prop() authToken: string;
+
   @State() getPayout: Function;
   @State() errorMessage: string = null;
+
+  @Event() tokenExpired: EventEmitter<any>;
 
   componentWillLoad() {
     this.initializeGetPayout();
@@ -36,13 +40,19 @@ export class PayoutDetails {
     }
   }
 
+  handleError = (event) => {
+    if (event.detail === API_ERRORS.NOT_AUTHENTICATED) {
+      this.tokenExpired.emit();
+    }
+  }
+
   render() {
     if (this.errorMessage) {
       return ErrorState(this.errorMessage);
     }
 
     return (
-      <payout-details-core getPayout={this.getPayout}></payout-details-core>
+      <payout-details-core getPayout={this.getPayout} onErrorEvent={this.handleError} />
     );
   }
 }
