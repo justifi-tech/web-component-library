@@ -40,7 +40,7 @@ export class GrossPaymentChart {
   }
 
   handleError = (event) => {
-    if (event.detail.message === API_ERRORS.NOT_AUTHENTICATED) {
+    if (event.detail === API_ERRORS.NOT_AUTHENTICATED) {
       this.tokenExpired.emit();
     }
   }
