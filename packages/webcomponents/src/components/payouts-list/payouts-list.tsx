@@ -1,8 +1,9 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { tableExportedParts } from '../table/exported-parts';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
 import { ErrorState } from '../details/utils';
+import { API_ERRORS } from '../../api/shared';
 
 /**
   * @exportedPart table-head: Table head
@@ -35,6 +36,8 @@ export class PayoutsList {
   @State() getPayouts: Function;
   @State() errorMessage: string = null;
 
+  @Event() tokenExpired: EventEmitter<void>;
+
   componentWillLoad() {
     this.initializeGetPayouts();
   }
@@ -57,6 +60,12 @@ export class PayoutsList {
     }
   }
 
+  handleError = (event) => {
+    if (event.detail === API_ERRORS.NOT_AUTHENTICATED) {
+      this.tokenExpired.emit();
+    }
+  }
+
   render() {
     if (this.errorMessage) {
       return ErrorState(this.errorMessage);
@@ -64,7 +73,7 @@ export class PayoutsList {
 
     return (
       <Host exportedparts={tableExportedParts}>
-        <payouts-list-core getPayouts={this.getPayouts} />
+        <payouts-list-core getPayouts={this.getPayouts} onErrorEvent={this.handleError} />
       </Host>
     );
   }
