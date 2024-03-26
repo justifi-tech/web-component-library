@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
@@ -10,9 +10,12 @@ import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadIn
 
 export class PayoutDetailsCore {
   @Prop() getPayout: Function;
+
   @State() payout: Payout;
   @State() loading: boolean = true;
   @State() errorMessage: string = null;
+
+  @Event() errorEvent: EventEmitter<string>;
 
   componentWillLoad() {
     if (this.getPayout) {
@@ -35,6 +38,7 @@ export class PayoutDetailsCore {
         this.loading = false;
       },
       onError: (errorMessage) => {
+        this.errorEvent.emit(errorMessage);
         this.errorMessage = errorMessage;
         console.error(this.errorMessage);
         this.loading = false;

@@ -2,12 +2,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { PagingInfo } from './Pagination';
 
 export interface IApiResponse<T> {
-  data: T;
+  data?: T;
   error?: IErrorObject | IServerError;
   page_info?: PagingInfo;
   errors?: string[];
-  id: number;
-  type: string;
+  id?: number;
+  type?: string;
 }
 
 export type IServerError = string;
