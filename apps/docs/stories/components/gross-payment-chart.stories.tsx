@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { StoryBaseArgs, customStoryDecorator } from '../utils';
+import { withActions } from '@storybook/addon-actions/decorator';
 
 import '@justifi/webcomponents/dist/module/justifi-gross-payment-chart';
 
@@ -14,11 +15,25 @@ const meta: Meta = {
     ...storyBaseArgs.args
   },
   argTypes: {
-    ...storyBaseArgs.argTypes
+    ...storyBaseArgs.argTypes,
+    'token-expired': {
+      description: 'Emitted when the token is expired.',
+      table: {
+        category: 'events'
+      }
+    }
   },
-  parameters: {},
+  parameters: {
+    actions: {
+      handles: [
+        'tokenExpired'
+      ]
+    }
+  },
   decorators: [
-    customStoryDecorator
+    customStoryDecorator,
+    // @ts-ignore
+    withActions
   ]
 };
 

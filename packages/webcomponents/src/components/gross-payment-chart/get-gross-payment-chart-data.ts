@@ -1,4 +1,5 @@
 import { ReportsService } from '../../api/services/reports.service';
+import { getErrorMessage } from '../../api/services/utils';
 
 interface MakeGetGrossPaymentChartDataProps {
   id: string;
@@ -14,9 +15,9 @@ export const makeGetGrossPaymentChartData =
       if (!response.error) {
         onSuccess(response.data);
       } else {
-        onError(`Error trying to fetch data : ${response.error}`);
+        onError(getErrorMessage(response.error));
       }
     } catch (error) {
-      onError(`Error trying to fetch data : ${error}`);
+      onError(error);
     }
   };
