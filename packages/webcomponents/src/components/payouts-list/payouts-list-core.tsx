@@ -16,15 +16,18 @@ import { tableExportedParts } from '../table/exported-parts';
 
 export class PayoutsListCore {
   @Prop() getPayouts: Function;
+
   @State() payouts: Payout[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: any
+
   @Event({
     eventName: 'payout-row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
+  @Event() errorEvent: EventEmitter<string>;
 
   componentWillLoad() {
     if (this.getPayouts) {
@@ -78,6 +81,7 @@ export class PayoutsListCore {
         this.loading = false;
       },
       onError: (errorMessage) => {
+        this.errorEvent.emit(errorMessage);
         this.errorMessage = errorMessage;
         this.loading = false;
       },
