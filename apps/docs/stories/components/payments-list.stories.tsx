@@ -16,10 +16,22 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'payment-row-clicked': {
+      description: 'Emitted when a row is clicked.',
+      table: {
+        category: 'events',
+      },
+    },
+    'token-expired': {
+      description: 'Emitted when the token is expired.',
+      table: {
+        category: 'events',
+      },
+    },
   },
   parameters: {
     actions: {
-      handles: ['payment-row-clicked'],
+      handles: ['payment-row-clicked', 'tokenExpired'],
     },
   },
   decorators: [

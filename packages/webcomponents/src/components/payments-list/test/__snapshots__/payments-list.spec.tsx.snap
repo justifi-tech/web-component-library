@@ -1,5 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`payments-list emit tokenExpired event when the authToken has expired 1`] = `
+<justifi-payments-list account-id="abc" auth-token="abc">
+  <mock:shadow-root>
+    <payments-list-core>
+      <justifi-table error-message="Not Authenticated" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+">
+        <mock:shadow-root>
+          <div class="table-wrapper">
+            <table class="table table-hover">
+              <thead class="sticky-top table-head" part="table-head">
+                <tr class="table-light text-nowrap" part="table-head-row">
+                  <th part="table-head-cell" scope="col" title="The date and time each payment was made">
+                    Made On
+                  </th>
+                  <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
+                    Amount
+                  </th>
+                  <th part="table-head-cell" scope="col" title="The payment description, if you provided one">
+                    Description
+                  </th>
+                  <th part="table-head-cell" scope="col" title="The name associated with the payment method">
+                    Cardholder
+                  </th>
+                  <th part="table-head-cell" scope="col" title="The brand and last 4 digits of the payment method">
+                    Payment Method
+                  </th>
+                  <th part="table-head-cell" scope="col" title="The current status of each payment">
+                    Status
+                  </th>
+                  <th part="table-head-cell" scope="col" title="The unique identifier of each payment">
+                    Payment ID
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" part="table-body">
+                <tr>
+                  <td class="error-state" colspan="7" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+                    An unexpected error occurred: Not Authenticated
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot class="sticky-bottom">
+                <tr class="align-middle table-light">
+                  <td colspan="7" part="pagination-bar">
+                    <pagination-menu></pagination-menu>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </mock:shadow-root>
+      </justifi-table>
+    </payments-list-core>
+  </mock:shadow-root>
+</justifi-payments-list>
+`;
+
 exports[`payments-list renders an error message when accountId and authToken are not provided 1`] = `
 <justifi-payments-list>
   <mock:shadow-root>

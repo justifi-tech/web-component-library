@@ -19,6 +19,7 @@ export class PaymentsListCore {
 
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
+  @Event() errorEvent: EventEmitter<string>;
 
   componentWillLoad() {
     if (this.getPayments) {
@@ -55,6 +56,7 @@ export class PaymentsListCore {
         this.loading = false;
       },
       onError: (errorMessage) => {
+        this.errorEvent.emit(errorMessage);
         this.errorMessage = errorMessage;
         this.loading = false;
       },
