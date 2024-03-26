@@ -24,7 +24,8 @@
     "generate": "stencil generate",
     "test": "TZ=utc stencil test --spec",
     "test:watch": "TZ=utc stencil test --spec --watchAll",
-    "test:e2e": "stencil test --e2e"
+    "test:e2e": "stencil test --e2e",
+    "test:file": "stencil test --spec --watch --"
   },
   "dependencies": {
     "@stencil/core": "^4.0.5",

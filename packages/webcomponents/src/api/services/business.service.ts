@@ -1,0 +1,20 @@
+import { config } from '../../../config';
+import Api, { IApiResponse } from '../Api';
+import { IBusiness } from '../Business';
+
+export interface IBusinessService {
+  fetchBusiness(
+    businessId: string,
+    authToken: string
+  ): Promise<IApiResponse<IBusiness>>;
+}
+
+export class BusinessService implements IBusinessService {
+  async fetchBusiness(
+    businessId: string,
+    authToken: string
+  ): Promise<IApiResponse<IBusiness>> {
+    const endpoint = `entities/business/${businessId}`;
+    return Api(authToken, config.proxyApiOrigin).get(endpoint);
+  }
+}

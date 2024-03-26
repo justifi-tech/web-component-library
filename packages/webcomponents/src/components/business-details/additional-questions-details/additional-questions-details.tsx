@@ -1,6 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSection, DetailItem } from '../../details/utils';
+import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { AdditionalQuestions } from '../../../api/Business';
+import { isEmptyObject } from '../../../utils/utils';
 
 /**
  *
@@ -19,9 +20,12 @@ export class AdditionalQuestionsDetails {
   @Prop() additionalQuestions: AdditionalQuestions
 
   render() {
+    if (isEmptyObject(this.additionalQuestions)) return null;
+
     return (
       <Host>
-        <DetailSection sectionTitle="Additional Questions">
+        <DetailSectionTitle sectionTitle="Additional Questions" />
+        <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem
@@ -44,7 +48,7 @@ export class AdditionalQuestionsDetails {
               />
             </div>
           </div>
-        </DetailSection>
+        </div>
       </Host>
     );
   }

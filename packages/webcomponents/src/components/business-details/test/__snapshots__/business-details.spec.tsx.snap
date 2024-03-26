@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-business-details renders the error state when there is an error message 1`] = `
+<justifi-business-details>
+  <mock:shadow-root>
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Invalid business id or auth token
+      </div>
+    </main>
+  </mock:shadow-root>
+</justifi-business-details>
+`;

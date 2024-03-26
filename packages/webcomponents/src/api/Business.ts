@@ -195,29 +195,27 @@ export class Business implements IBusiness {
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
+    this.additional_questions = business.additional_questions || {};
+    this.bank_accounts = business.bank_accounts;
     this.business_structure = business.business_structure;
     this.business_type = business.business_type;
-    this.bank_accounts = business.bank_accounts;
     this.created_at = business.created_at;
     this.documents = business.documents;
     this.doing_business_as = business.doing_business_as;
     this.email = business.email;
     this.id = business.id;
     this.industry = business.industry;
+    this.legal_address = { ...new Address(business.legal_address || {}) };
     this.legal_name = business.legal_name;
     this.metadata = business.metadata;
+    this.owners = business.owners;
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
+    this.product_categories = business.product_categories;
+    this.representative = business.representative || {};
     this.tax_id = business.tax_id;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
-    this.product_categories = business.product_categories;
-
-    // Form sections
-    this.legal_address = { ...new Address(business.legal_address || {}) };
-    this.representative = business.representative || {};
-    this.additional_questions = business.additional_questions || {};
-    this.owners = business.owners;
   }
 }
 

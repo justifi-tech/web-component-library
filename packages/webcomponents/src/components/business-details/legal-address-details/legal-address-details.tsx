@@ -1,6 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSection, DetailItem } from '../../details/utils';
+import { DetailSectionTitle, DetailItem } from '../../details/utils';
 import { IAddress } from '../../../api/Business';
+import { isEmptyObject } from '../../../utils/utils';
 
 @Component({
   tag: 'legal-address-details',
@@ -11,11 +12,15 @@ export class LegalAddressDetails {
   @Prop() legalAddress: IAddress;
 
   render() {
+    if (isEmptyObject(this.legalAddress)) return null;
+
     return (
       <Host>
-        <DetailSection sectionTitle="Business Legal Address Details">
+        <DetailSectionTitle sectionTitle="Business Legal Address Details" />
+        <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
+              <DetailItem title="Country" value={this.legalAddress?.country} />
               <DetailItem
                 title="Legal Address"
                 value={this.legalAddress?.line1}
@@ -24,18 +29,17 @@ export class LegalAddressDetails {
                 title="Address Line 2"
                 value={this.legalAddress?.line2}
               />
-              <DetailItem title="City" value={this.legalAddress?.city} />
             </div>
             <div class="col-12 col-md-6">
+              <DetailItem title="City" value={this.legalAddress?.city} />
               <DetailItem title="State" value={this.legalAddress?.state} />
               <DetailItem
                 title="Postal Code"
                 value={this.legalAddress?.postal_code?.toString()}
               />
-              <DetailItem title="Country" value={this.legalAddress?.country} />
             </div>
           </div>
-        </DetailSection>
+        </div>
       </Host>
     );
   }
