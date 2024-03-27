@@ -157,116 +157,116 @@ export class BusinessOwnerForm {
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
             <legend>{this.formTitle}</legend>
-            <div class='row gx-2 gy-2 mb-4'>
-                  <div class="col-12 col-md-6">
-                    <form-control-text
-                      name="name"
-                      label="Full Name"
-                      defaultValue={ownerDefaultValue?.name}
-                      error={this.errors.name}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <form-control-select
-                      name="title"
-                      label="Prefix"
-                      defaultValue={ownerDefaultValue?.title}
-                      options={[
-                        { label: 'Select Prefix', value: '' },
-                        { label: 'Mrs.', value: 'Mrs.' },
-                      ]}
-                      error={this.errors.title}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <form-control-text
-                      name="email"
-                      label="Email Address"
-                      defaultValue={ownerDefaultValue?.email}
-                      error={this.errors.email}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <form-control-number-masked
-                      name="phone"
-                      label="Phone Number"
-                      defaultValue={ownerDefaultValue?.phone}
-                      error={this.errors.phone}
-                      inputHandler={this.inputHandler}
-                      mask={PHONE_MASKS.US}
-                    />
-                  </div>
-                  <div class="col-12">
-                    <label part="label" class="form-label">
-                      Birth Date
-                    </label>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <form-control-datepart
-                      name="dob_day"
-                      label="Day"
-                      defaultValue={ownerDefaultValue?.dob_day}
-                      error={this.errors.dob_day}
-                      inputHandler={this.inputHandler}
-                      type="day"
-                    />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <form-control-datepart
-                      name="dob_month"
-                      label="Month"
-                      defaultValue={ownerDefaultValue?.dob_month}
-                      error={this.errors.dob_month}
-                      inputHandler={this.inputHandler}
-                      type="month"
-                    />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <form-control-datepart
-                      name="dob_year"
-                      label="Year"
-                      defaultValue={ownerDefaultValue?.dob_year}
-                      error={this.errors.dob_year}
-                      inputHandler={this.inputHandler}
-                      type="year"
-                    />
-                  </div>
-                  <div class="col-12">
-                    <form-control-number
-                      name="identification_number"
-                      label="EIN/SSN"
-                      defaultValue={ownerDefaultValue?.identification_number}
-                      error={this.errors.identification_number}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                  <div class="col-12">
-                    <justifi-business-address-form
-                      errors={this.errors.address}
-                      defaultValues={ownerDefaultValue?.address}
-                      handleFormUpdate={values => this.onAddressFormUpdate(values)}
-                    />
-                  </div>
-                  <div class="d-flex gap-2">
-                    <button
-                      type="submit"
-                      class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
-                      disabled={this.isLoading}>
-                      {this.isLoading ? LoadingSpinner() : this.submitButtonText}
-                    </button>
-                  {this.showRemoveOwnerButton &&
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger"
-                      onClick={() => this.removeOwner(this.ownerId)}>
-                      Remove owner
-                    </button>}
-                  </div>
-                </div>
-                <hr />
+            <div class='row gy-3'>
+              <div class="col-12 col-md-6">
+                <form-control-text
+                  name="name"
+                  label="Full Name"
+                  defaultValue={ownerDefaultValue?.name}
+                  error={this.errors.name}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-4">
+                <form-control-select
+                  name="title"
+                  label="Prefix"
+                  defaultValue={ownerDefaultValue?.title}
+                  options={[
+                    { label: 'Select Prefix', value: '' },
+                    { label: 'Mrs.', value: 'Mrs.' },
+                  ]}
+                  error={this.errors.title}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-text
+                  name="email"
+                  label="Email Address"
+                  defaultValue={ownerDefaultValue?.email}
+                  error={this.errors.email}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-number-masked
+                  name="phone"
+                  label="Phone Number"
+                  defaultValue={ownerDefaultValue?.phone}
+                  error={this.errors.phone}
+                  inputHandler={this.inputHandler}
+                  mask={PHONE_MASKS.US}
+                />
+              </div>
+              <div class="col-12">
+                <label part="label" class="form-label">
+                  Birth Date
+                </label>
+              </div>
+              <div class="col-12 col-md-4">
+                <form-control-datepart
+                  name="dob_day"
+                  label="Day"
+                  defaultValue={ownerDefaultValue?.dob_day}
+                  error={this.errors.dob_day}
+                  inputHandler={this.inputHandler}
+                  type="day"
+                />
+              </div>
+              <div class="col-12 col-md-4">
+                <form-control-datepart
+                  name="dob_month"
+                  label="Month"
+                  defaultValue={ownerDefaultValue?.dob_month}
+                  error={this.errors.dob_month}
+                  inputHandler={this.inputHandler}
+                  type="month"
+                />
+              </div>
+              <div class="col-12 col-md-4">
+                <form-control-datepart
+                  name="dob_year"
+                  label="Year"
+                  defaultValue={ownerDefaultValue?.dob_year}
+                  error={this.errors.dob_year}
+                  inputHandler={this.inputHandler}
+                  type="year"
+                />
+              </div>
+              <div class="col-12">
+                <form-control-number
+                  name="identification_number"
+                  label="EIN/SSN"
+                  defaultValue={ownerDefaultValue?.identification_number}
+                  error={this.errors.identification_number}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <justifi-business-address-form
+                  errors={this.errors.address}
+                  defaultValues={ownerDefaultValue?.address}
+                  handleFormUpdate={values => this.onAddressFormUpdate(values)}
+                />
+              </div>
+              <div class="container d-flex gap-2">
+                <button
+                  type="submit"
+                  class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+                  disabled={this.isLoading}>
+                  {this.isLoading ? LoadingSpinner() : this.submitButtonText}
+                </button>
+                {this.showRemoveOwnerButton &&
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    onClick={() => this.removeOwner(this.ownerId)}>
+                    Remove owner
+                  </button>}
+              </div>
+            </div>
+            <hr />
           </fieldset>
         </form>
       </Host>
