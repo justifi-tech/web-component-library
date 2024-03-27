@@ -69,7 +69,7 @@ export class BusinessFormStepped {
     4: () => <justifi-business-owners-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
-                ref={(el) => this.refs[0] = el}
+                ref={(el) => this.refs[4] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
                 onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
               />,

@@ -57,7 +57,7 @@ export class BusinessOwnersFormStep {
       this.refs[ownerIndex] = ref;
     }
   }
-
+  
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
@@ -69,6 +69,7 @@ export class BusinessOwnersFormStep {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
+      this.manageRefs();
     }
   }
 
