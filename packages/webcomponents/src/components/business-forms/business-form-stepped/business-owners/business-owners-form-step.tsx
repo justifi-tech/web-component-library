@@ -1,6 +1,6 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { IBusiness } from '../../../../api/Business';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { Owner } from '../../../../api/Identity';
@@ -18,16 +18,12 @@ import { Owner } from '../../../../api/Identity';
 export class BusinessOwnersFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @State() owners: Owner[] = [];
+  @State() owners: Owner[] = [{ ...new Owner({}) }];
+  @State() newFormOpen: boolean;
   @State() refs = [];
+  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
-
-  constructor() {
-    this.removeOwner = this.removeOwner.bind(this);
-    this.submitAll = this.submitAll.bind(this);
-    this.initializeRefs = this.initializeRefs.bind(this);
-  }
 
   private api: any;
 
@@ -35,33 +31,81 @@ export class BusinessOwnersFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  get showAddOwnerButton() {
+    return this.owners.length < 4 && !this.newFormOpen;
+  }
+
+  get showRemoveOwnerButton() {
+    return this.owners.length > 1;
+  }
+
+  private manageRefs() {
+    const ownerRefs = this.owners.map((owner) => owner.id);
+    this.refs = ownerRefs;
+  }
+
+  private managePayload = async () => {
+    const payload = this.owners.filter((owner) => owner.id).map((owner) => {
+      return { id: owner.id };
+    });
+    return payload;
+  }
+
+  private matchRef = (ref: any, ownerId: string) => {
+    const ownerIndex = this.refs.findIndex(ref => ref === ownerId);
+    if (ownerIndex !== -1) {
+      this.refs[ownerIndex] = ref;
+    }
+  }
+
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.owners = response.data.owners;
+      if (response.data.owners.length) {
+        this.owners = response.data.owners.map(owner => owner);
+      }
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
-      // this.initializeRefs();
     }
   }
 
-  
-  
-  private initializeRefs() {
-    console.log('fired')
-    const ownerRefs = [this.ownerRef1, this.ownerRef2, this.ownerRef3, this.ownerRef4];
-    this.refs = ownerRefs.slice(this.owners.length);
-    console.log('this.refs', this.refs);
-    console.log('this.owners', this.owners);
+  private sendData = async (onSuccess?: () => void) => {
+    this.formLoading.emit(true);
+    try {
+      const payload = await this.managePayload();
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({owners: payload}));
+      this.handleResponse(response, onSuccess);
+    } catch (error) {
+      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+    } finally {
+      this.formLoading.emit(false);
+    }
   }
 
-  private ownerRef1: any;
-  private ownerRef2: any;
-  private ownerRef3: any;
-  private ownerRef4: any;
+  handleResponse(response, onSuccess) {
+    if (response.error) {
+      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
+    } else {
+      onSuccess();
+    }
+    this.submitted.emit({ data: response, metadata: { completedStep: 'owners' } });
+  }
+
+  @Method()
+  async validateAndSubmit({ onSuccess }) {
+    const formValidations = this.refs.map(ref => ref.validate());
+    const formsValid = (await Promise.all(formValidations)).every(result => result);
+    if (!formsValid) { return; }
+
+    const formSubmissions = this.refs.map(ref => ref.submit());
+    const submissionsValid = (await Promise.all(formSubmissions)).every(result => result);
+    if (!submissionsValid) { return; }
+
+    await this.sendData(onSuccess);
+  };
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
@@ -73,67 +117,59 @@ export class BusinessOwnersFormStep {
     this.fetchData();
   }
 
-  // @Watch('owners')
-  // watchOwners() {
-  //   this.initializeRefs();
-  // }
+  private addOwnerForm = () => {
+    this.newFormOpen = true;
+    const newOwner = { ...new Owner({})};
+    this.owners = [...this.owners, newOwner];
+  };
 
-  // addOwner(event: MouseEvent): void {
-  //   event.preventDefault();
+  private removeOwnerForm = (id: string) => {
+    this.owners = this.owners.filter(owner => owner.id !== id);
+  };
 
-  //   this.formController.setValues({
-  //     ...this.formController.values.getValue(),
-  //     owners: [...this.owners, { ...new BusinessOwner() }],
-  //   });
-  // }
+  @Watch('owners')
+  onOwnersUpdated() {
+    this.manageRefs();
+  }
 
-  private removeOwner = (id: string) => {
-    const ownerIndex = this.owners.findIndex(owner => owner.id === id);
-    if (ownerIndex !== -1) {
-      this.owners = this.owners.filter((_, index) => index !== ownerIndex);
-      this.refs = this.refs.filter((_, index) => index !== ownerIndex);
+  private handleOwnerSubmit = (event) => {
+    const ownerData = event.detail.data.data;
+
+    const currentIndex = this.owners.findIndex(owner => owner.id === ownerData.id);
+    if (currentIndex !== -1) {
+      this.owners[currentIndex] = ownerData;
+    } else {
+      const newOwnerIndex = this.owners.findIndex(owner => !owner.id);
+      this.owners[newOwnerIndex] = ownerData;
+      this.newFormOpen ? this.newFormOpen = false : null;
     }
-    console.log('this.owners', this.owners);
-    console.log('this.refs', this.refs);
-  };
-
-  private submitAll = async () => {
-    const refSubmissions = this.refs.map(ref => ref.submit());
-    Promise.all(refSubmissions)
-  };
-
-
-  @Method()
-  async validateAndSubmit({ onSuccess }) {
-    const refValidations = this.refs.map(ref => ref.validate());
-    Promise.all(refValidations)
-      .then(values => {
-        if (values.every(value => value === true)) {
-          this.submitAll();
-          onSuccess();
-        }
-      });
-  };
+  }
 
   render() {
-      
     return (
       <Host exportparts="label,input,input-invalid">
         <div class='col-12'>
-          {this.owners.map((owner, index) => {
-            console.log(owner, index)
+          {this.owners.map((owner) => {
             return (
               <justifi-owner-form 
                 key={owner.id}
                 authToken={this.authToken} 
                 businessId={this.businessId} 
                 ownerId={owner.id}
-                removeOwner={this.removeOwner}
-                // ref={(ref) => this.refs[index] = ref}
+                removeOwner={this.removeOwnerForm}
+                showRemoveOwnerButton={this.showRemoveOwnerButton}
+                onSubmitted={(e: CustomEvent) => this.handleOwnerSubmit(e)}
+                onFormLoading={(e: CustomEvent) => this.formLoading.emit(e.detail)}
+                ref={(ref) => {this.matchRef(ref, owner.id)}}
               />
             );
           })}
         </div>
+        {this.showAddOwnerButton && 
+          <div class='col-12'>
+            <button class='btn btn-primary' onClick={this.addOwnerForm}>Add Owner</button>
+          </div>
+        }
       </Host>
     );
   }

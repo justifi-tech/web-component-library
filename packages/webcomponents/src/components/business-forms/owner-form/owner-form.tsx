@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
@@ -19,11 +19,13 @@ export class BusinessOwnerForm {
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
   @Prop() removeOwner: (id: string) => void;
+  @Prop() showRemoveOwnerButton?: boolean;
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() owner: Owner = {};
   @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
+  @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
 
   private api: any;
@@ -40,10 +42,9 @@ export class BusinessOwnerForm {
     return this.ownerId ? 'Update' : 'Add';
   }
 
-  constructor() {
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-    this.validateAndSubmit = this.validateAndSubmit.bind(this);
+  @Watch('isLoading')
+  loadingWatcher() {
+    this.formLoading.emit(this.isLoading);
   }
 
   private fetchData = async () => {
@@ -68,18 +69,28 @@ export class BusinessOwnerForm {
       if (this.ownerId) {
         const payload = parseIdentityInfo(this.formController.values.getValue());
         const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
-        this.submitted.emit({ data: response });
+        return this.handleResponse(response);
       } else {
         const payload = { ...parseIdentityInfo(this.formController.values.getValue()), business_id: this.businessId};
         const response = await this.api.post(this.identityEndpoint, JSON.stringify(payload));
-        this.submitted.emit({ data: response });
         this.ownerId = response.data.id;
+        return this.handleResponse(response);
       }
     } catch (error) {
-      let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
-      this.serverError.emit({ data: error, message: errorMessage });
+      console.warn(error);
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  handleResponse(response: any) {
+    this.submitted.emit({ data: response, metadata: { ownerId: this.ownerId }});
+    let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
+    if (response.error) {
+      this.serverError.emit({ data: response.error, message: errorMessage });
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -119,18 +130,21 @@ export class BusinessOwnerForm {
   }
 
   @Method()
-  async validate() {
+  async validate(): Promise<boolean> {
     return this.formController.validate();
   }
 
   @Method()
-  async submit() {
-    this.sendData();
+  async submit(): Promise<boolean> {
+    return this.sendData();
   }
 
-  async validateAndSubmit(event: any) {
+  validateAndSubmit = (event: any) => {
     event.preventDefault();
-    return this.formController.validateAndSubmit(this.sendData);
+    const isValid = this.formController.validate();
+    if (isValid) {
+      this.submit();
+    }
   }
 
   render() {
@@ -243,12 +257,13 @@ export class BusinessOwnerForm {
                       disabled={this.isLoading}>
                       {this.isLoading ? LoadingSpinner() : this.submitButtonText}
                     </button>
+                  {this.showRemoveOwnerButton &&
                     <button
                       type="button"
                       class="btn btn-outline-danger"
                       onClick={() => this.removeOwner(this.ownerId)}>
                       Remove owner
-                    </button>
+                    </button>}
                   </div>
                 </div>
                 <hr />
