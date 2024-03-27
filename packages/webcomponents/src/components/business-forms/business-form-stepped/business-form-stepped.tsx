@@ -30,43 +30,43 @@ export class BusinessFormStepped {
     return `entities/business/${this.businessId}`
   }
 
-  // private coreInfoRef: any;
-  // private legalAddressRef: any;
-  // private additionalQuestionsRef: any;
-  // private representativeRef: any;
+  private coreInfoRef: any;
+  private legalAddressRef: any;
+  private additionalQuestionsRef: any;
+  private representativeRef: any;
   private ownersRef: any;
   private refs = [];
 
   componentStepMapping = {
-    // 0: () => <justifi-business-core-info-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[0] = el}
-    //             onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-    //             onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
-    //           />,
-    // 1: () => <justifi-legal-address-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[1] = el}
-    //             onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-    //             onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
-    //           />,
-    // 2: () => <justifi-additional-questions-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[2] = el}
-    //             onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-    //             onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
-    //           />,
-    // 3: () => <justifi-business-representative-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[3] = el}
-    //             onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-    //             onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
-    //           />,
-    0: () => <justifi-business-owners-form-step
+    0: () => <justifi-business-core-info-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[0] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    1: () => <justifi-legal-address-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[1] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    2: () => <justifi-additional-questions-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[2] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    3: () => <justifi-business-representative-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[3] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
+    4: () => <justifi-business-owners-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[0] = el}
@@ -81,8 +81,7 @@ export class BusinessFormStepped {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    // this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
-    this.refs = [this.ownersRef]
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 
