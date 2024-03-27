@@ -31,6 +31,9 @@ export class PaymentMethodOptions {
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
+    if (true) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzel }));
+    }
     this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
   }
 
@@ -51,6 +54,7 @@ export class PaymentMethodOptions {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
           const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
+          const sezzel = paymentMethodOption.id === PaymentMethodTypes.sezzel;
           if (newCard || newBankAccount) {
             return (
               <justifi-new-payment-method
@@ -65,7 +69,14 @@ export class PaymentMethodOptions {
                 }}
               />
             );
-          } else {
+          } else if (sezzel) {
+            return (
+              <justifi-sezzel-payment-method
+                paymentMethodOption={paymentMethodOption}
+                is-selected={isSelected}>
+              </justifi-sezzel-payment-method>);
+          }
+          else {
             return (
               <justifi-saved-payment-method
                 paymentMethodOption={paymentMethodOption}
