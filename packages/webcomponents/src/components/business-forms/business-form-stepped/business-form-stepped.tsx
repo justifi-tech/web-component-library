@@ -19,7 +19,7 @@ export class BusinessFormStepped {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() totalSteps: number = 4;
+  @State() totalSteps: number = 5;
   @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   get showErrors() {
