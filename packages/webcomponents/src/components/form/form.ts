@@ -77,7 +77,7 @@ export class FormController {
     this.setNestedError(obj, properties, message);
   }
 
-  private async validate(context?: any): Promise<boolean> {
+  async validate(context?: any): Promise<boolean> {
     this._isValid = true;
     this._errors = {};
 

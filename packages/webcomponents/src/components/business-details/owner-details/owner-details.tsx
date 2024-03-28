@@ -1,7 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSection, DetailItem } from '../../details/utils';
 import { formatMediumDate } from '../../../utils/utils';
-import { Identity } from '../../../api/Business';
+import { Identity } from '../../../api/Identity';
 
 /**
  *

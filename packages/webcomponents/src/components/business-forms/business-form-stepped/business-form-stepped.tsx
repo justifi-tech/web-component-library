@@ -19,7 +19,7 @@ export class BusinessFormStepped {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() totalSteps: number = 4;
+  @State() totalSteps: number = 5;
   @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   get showErrors() {
@@ -34,6 +34,7 @@ export class BusinessFormStepped {
   private legalAddressRef: any;
   private additionalQuestionsRef: any;
   private representativeRef: any;
+  private ownersRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -64,7 +65,14 @@ export class BusinessFormStepped {
                 ref={(el) => this.refs[3] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
                 onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
-              />
+              />,
+    4: () => <justifi-business-owners-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[4] = el}
+                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
+                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+              />,
   };
 
   componentWillLoad() {
@@ -73,7 +81,7 @@ export class BusinessFormStepped {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 

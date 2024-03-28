@@ -36,7 +36,7 @@ export class LegalAddressFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.legal_address = new Address(response.data.legal_address);
+      this.legal_address = new Address(response.data.legal_address || {});
       this.formController.setInitialValues({ ...this.legal_address });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
