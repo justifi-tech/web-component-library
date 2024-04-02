@@ -25,5 +25,9 @@ export const codeExampleEventHandling = (`
     const getMoreEntityDetails = justifiAPI(entityID);
     <entity-details-component data={getMoreEntityDetails} />
   })
+
+  window.addEventListener('token-expired', (data) => {
+    console.log(data)
+  })
 </script>
 `);
