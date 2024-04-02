@@ -12,12 +12,9 @@ export const makeGetPayoutDetails =
 
         onSuccess(payout);
       } else {
-        const responseError = getErrorMessage(response.error);
-        const errorMessage = `Error fetching payout details: ${responseError}`;
-        onError(errorMessage);
+        onError(getErrorMessage(response.error));
       }
     } catch (error) {
-      const errorMessage = `Error fetching payout details: ${error}`;
-      onError(errorMessage);
+      onError(error.message || error);
     }
   };
