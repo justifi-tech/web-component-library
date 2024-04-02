@@ -4,7 +4,7 @@ exports[`gross-payment-chart matches the snapshot when in error state 1`] = `
 <gross-payment-chart-core>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
     <div>
-      Error trying to fetch data : Error message
+      Error message
     </div>
   </main>
 </gross-payment-chart-core>

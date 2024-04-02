@@ -63,9 +63,7 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith(
-      `Error trying to fetch data : ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith(mockError);
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -84,9 +82,7 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith(
-      `Error trying to fetch data : ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith(mockError);
     expect(onSuccess).not.toHaveBeenCalled();
   });
 });

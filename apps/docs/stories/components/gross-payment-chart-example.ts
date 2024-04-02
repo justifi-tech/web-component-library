@@ -9,4 +9,16 @@ ${codeExampleHead('justifi-gross-payment-chart')}
   <justifi-gross-payment-chart></justifi-gross-payment-chart>
 </body>
 
+<script>
+  (function() {
+    var justifiGrossPaymentChart = document.querySelector('justifi-gross-payment-chart');
+
+    console.log('justifiGrossPaymentChart: ', justifiGrossPaymentChart);
+    
+    justifiGrossPaymentChart.addEventListener('tokenExpired', (data) => {
+      // here is where you would handle the token expired event
+      console.log('data');
+    });
+  })();
+</script>
 </html>`;

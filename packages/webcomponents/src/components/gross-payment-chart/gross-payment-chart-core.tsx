@@ -1,4 +1,4 @@
-import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
@@ -24,9 +24,12 @@ export class GrossPaymentChartCore {
   chartRef: HTMLCanvasElement
 
   @Prop() getGrossPayment: Function;
+
   @State() grossVolumeReport: GrossVolumeReport;
   @State() loading: boolean = true;
   @State() errorMessage: string = '';
+
+  @Event() errorEvent: EventEmitter<string>;
 
   componentDidLoad() {
     if (this.getGrossPayment) {
@@ -61,6 +64,7 @@ export class GrossPaymentChartCore {
         this.grossVolumeReport = data;
       },
       onError: (error: string) => {
+        this.errorEvent.emit(error);
         this.loading = false;
         this.errorMessage = error;
       }
