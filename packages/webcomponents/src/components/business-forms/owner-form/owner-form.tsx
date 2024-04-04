@@ -1,8 +1,8 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
-import { Identity, Owner } from '../../../api/Business';
+import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { ownerSchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
@@ -18,11 +18,15 @@ export class BusinessOwnerForm {
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
+  @Prop() removeOwner: (id: string) => void;
+  @Prop() newFormOpen?: boolean;
+  @Prop() ownersLength?: number;
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() owner: any = {};
+  @State() owner: Owner = {};
   @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
+  @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
 
   private api: any;
@@ -39,10 +43,22 @@ export class BusinessOwnerForm {
     return this.ownerId ? 'Update' : 'Add';
   }
 
-  constructor() {
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-    this.validateAndSubmit = this.validateAndSubmit.bind(this);
+  get showRemoveButton() {
+    const blankForm = !this.ownerId && this.newFormOpen;
+    if (this.ownersLength <= 1) {
+      return false
+    } else {
+      if (blankForm) {
+        return true;
+      } else if (this.ownerId && !this.newFormOpen) {
+        return true;
+      }
+    }
+  }
+
+  @Watch('isLoading')
+  loadingWatcher() {
+    this.formLoading.emit(this.isLoading);
   }
 
   private fetchData = async () => {
@@ -67,18 +83,28 @@ export class BusinessOwnerForm {
       if (this.ownerId) {
         const payload = parseIdentityInfo(this.formController.values.getValue());
         const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
-        this.submitted.emit({ data: response });
+        return this.handleResponse(response);
       } else {
         const payload = { ...parseIdentityInfo(this.formController.values.getValue()), business_id: this.businessId};
         const response = await this.api.post(this.identityEndpoint, JSON.stringify(payload));
-        this.submitted.emit({ data: response });
         this.ownerId = response.data.id;
+        return this.handleResponse(response);
       }
     } catch (error) {
-      let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
-      this.serverError.emit({ data: error, message: errorMessage });
+      console.warn(error);
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  handleResponse(response: any) {
+    this.submitted.emit({ data: response, metadata: { ownerId: this.ownerId }});
+    let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
+    if (response.error) {
+      this.serverError.emit({ data: response.error, message: errorMessage });
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -116,10 +142,23 @@ export class BusinessOwnerForm {
       }
     });
   }
-  
-  private validateAndSubmit(event: any) {
+
+  @Method()
+  async validate(): Promise<boolean> {
+    return this.formController.validate();
+  }
+
+  @Method()
+  async submit(): Promise<boolean> {
+    return this.sendData();
+  }
+
+  validateAndSubmit = (event: any) => {
     event.preventDefault();
-    this.formController.validateAndSubmit(this.sendData);
+    const isValid = this.formController.validate();
+    if (isValid) {
+      this.submit();
+    }
   }
 
   render() {
@@ -132,9 +171,8 @@ export class BusinessOwnerForm {
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
             <legend>{this.formTitle}</legend>
-            <hr />
-            <div class="row gy-3">
-              <div class="col-12 col-md-8">
+            <div class='row gy-3'>
+              <div class="col-12 col-md-6">
                 <form-control-text
                   name="name"
                   label="Full Name"
@@ -226,15 +264,23 @@ export class BusinessOwnerForm {
                   handleFormUpdate={values => this.onAddressFormUpdate(values)}
                 />
               </div>
-              <div class="col-12 d-flex flex-row-reverse">
+              <div class="container d-flex gap-2">
                 <button
                   type="submit"
                   class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
                   disabled={this.isLoading}>
                   {this.isLoading ? LoadingSpinner() : this.submitButtonText}
                 </button>
+                {this.showRemoveButton &&
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    onClick={() => this.removeOwner(this.ownerId)}>
+                    Remove owner
+                  </button>}
               </div>
             </div>
+            <hr />
           </fieldset>
         </form>
       </Host>
