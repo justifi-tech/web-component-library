@@ -27,15 +27,10 @@ export const ErrorState = (errorMessage: string) => (
   </main>
 );
 
-export const DetailSection: FunctionalComponent<{ sectionTitle: string }> = (props, children) => (
-  <div part="detail-section" class="mt-4">
-    <h5 part="detail-section-title">{props.sectionTitle}</h5>
-    <hr />
-    <div class="d-table gap-2 w-100">
-      {...children}
-    </div>
-  </div>
-);
+export const DetailSectionTitle: FunctionalComponent<{ sectionTitle: string }> = (props) => [
+  <h5 part="detail-section-title" class="mt-4">{props.sectionTitle}</h5>,
+  <hr />,
+];
 
 export const DetailItem = ({
   title,

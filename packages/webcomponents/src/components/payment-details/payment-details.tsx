@@ -18,7 +18,6 @@ import { ErrorState } from '../details/utils';
   * @exportedPart detail-metadata-title
   * @exportedPart detail-method-title
   * @exportedPart detail-method-data
-  * @exportedPart detail-section
   * @exportedPart detail-section-title
   * @exportedPart detail-section-item-title
   * @exportedPart detail-section-item-data

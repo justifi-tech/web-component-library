@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import { Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
-import { CodeBlock, DetailItem, DetailSection, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 
 @Component({
   tag: 'payment-details-core',
@@ -67,7 +67,8 @@ export class PaymentDetailsCore {
                 <EntityHeadInfoItem title="ID" value={this.payment.id} />
               </EntityHeadInfo>
               <div slot='detail-sections'>
-                <DetailSection sectionTitle="Details">
+                <DetailSectionTitle sectionTitle="Details" />
+                <div class="d-table gap-2 w-100">
                   <DetailItem title="Amount" value={formatCurrency(this.payment.amount)} />
                   <DetailItem title="Fees" value={formatCurrency(this.payment.fee_amount)} />
                   <DetailItem title="Refunded" value={formatCurrency(this.payment.amount_refunded)} />
@@ -77,27 +78,30 @@ export class PaymentDetailsCore {
                   <DetailItem title="Processing Fees" value={formatCurrency(this.payment.fee_amount)} />
                   <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />
                   <DetailItem title="Description" value={this.payment.description} />
-                </DetailSection>
-                {this.payment.payment_method.card && (
-                  <DetailSection sectionTitle="Payment Method">
+                </div>
+                {this.payment.payment_method.card && [
+                  <DetailSectionTitle sectionTitle="Payment Method" />,
+                  <div class="d-table gap-2 w-100">
                     <DetailItem title="ID" value={this.payment.payment_method.card.id} />
                     <DetailItem title="Payment Type" value="Card" />
                     <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
                     <DetailItem title="Brand" value={snakeCaseToHumanReadable(this.payment.payment_method.card.brand)} />
                     <DetailItem title="Cardholder" value={this.payment.payment_method.payersName} />
-                  </DetailSection>
-                )}
-                {this.payment.payment_method.bank_account && (
-                  <DetailSection sectionTitle="Payment Method">
+                  </div>
+                ]}
+                {this.payment.payment_method.bank_account && [
+                  <DetailSectionTitle sectionTitle="Payment Method" />,
+                  <div class="d-table gap-2 w-100">
                     <DetailItem title="ID" value={this.payment.payment_method.bank_account.id} />
                     <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
                     <DetailItem title="Bank Name" value={this.payment.payment_method.bank_account.brand} />
                     <DetailItem title="Account Owner" value={this.payment.payment_method.payersName} />
-                  </DetailSection>
-                )}
-                <DetailSection sectionTitle='Metadata'>
+                  </div>
+                ]}
+                <DetailSectionTitle sectionTitle='Metadata' />
+                <div class="d-table gap-2 w-100">
                   <CodeBlock metadata={this.payment.metadata} />
-                </DetailSection>
+                </div>
               </div>
             </justifi-details>
           )}
