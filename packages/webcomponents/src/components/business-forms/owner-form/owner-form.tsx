@@ -19,7 +19,8 @@ export class BusinessOwnerForm {
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
   @Prop() removeOwner: (id: string) => void;
-  @Prop() showRemoveOwnerButton?: boolean;
+  @Prop() newFormOpen?: boolean;
+  @Prop() ownersLength?: number;
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
@@ -40,6 +41,19 @@ export class BusinessOwnerForm {
 
   get submitButtonText() {
     return this.ownerId ? 'Update' : 'Add';
+  }
+
+  get showRemoveButton() {
+    const blankForm = !this.ownerId && this.newFormOpen;
+    if (this.ownersLength <= 1) {
+      return false
+    } else {
+      if (blankForm) {
+        return true;
+      } else if (this.ownerId && !this.newFormOpen) {
+        return true;
+      }
+    }
   }
 
   @Watch('isLoading')
@@ -257,7 +271,7 @@ export class BusinessOwnerForm {
                   disabled={this.isLoading}>
                   {this.isLoading ? LoadingSpinner() : this.submitButtonText}
                 </button>
-                {this.showRemoveOwnerButton &&
+                {this.showRemoveButton &&
                   <button
                     type="button"
                     class="btn btn-danger"

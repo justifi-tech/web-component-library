@@ -18,7 +18,7 @@ import { Owner } from '../../../../api/Identity';
 export class BusinessOwnersFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @State() owners: Owner[] = [{ ...new Owner({}) }];
+  @State() owners: Owner[] = [];
   @State() newFormOpen: boolean;
   @State() refs = [];
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
@@ -33,10 +33,6 @@ export class BusinessOwnersFormStep {
 
   get showAddOwnerButton() {
     return this.owners.length < 4 && !this.newFormOpen;
-  }
-
-  get showRemoveOwnerButton() {
-    return this.owners.length > 1;
   }
 
   private manageRefs() {
@@ -64,6 +60,8 @@ export class BusinessOwnersFormStep {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       if (response.data.owners.length) {
         this.owners = response.data.owners.map(owner => owner);
+      } else {
+        this.addOwnerForm();
       }
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
@@ -126,6 +124,7 @@ export class BusinessOwnersFormStep {
 
   private removeOwnerForm = (id: string) => {
     this.owners = this.owners.filter(owner => owner.id !== id);
+    this.newFormOpen ? this.newFormOpen = false : null;
   };
 
   @Watch('owners')
@@ -158,7 +157,8 @@ export class BusinessOwnersFormStep {
                 businessId={this.businessId} 
                 ownerId={owner.id}
                 removeOwner={this.removeOwnerForm}
-                showRemoveOwnerButton={this.showRemoveOwnerButton}
+                newFormOpen={this.newFormOpen}
+                ownersLength={this.owners.length}
                 onSubmitted={(e: CustomEvent) => this.handleOwnerSubmit(e)}
                 onFormLoading={(e: CustomEvent) => this.formLoading.emit(e.detail)}
                 ref={(ref) => {this.matchRef(ref, owner.id)}}
