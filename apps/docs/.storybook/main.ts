@@ -14,9 +14,15 @@ const config = {
   },
   staticDirs: ["../public"],
   async viteFinal(config, { configType }) {
+    const storybookMocksEnabled = process.env.VITE_STORYBOOK_MOCKS_ENABLED;
+
     return mergeConfig(config, {
       plugins: [react()],
+      define: {
+        __VITE_STORYBOOK_MOCKS_ENABLED__: JSON.stringify(storybookMocksEnabled),
+      },
     });
   },
 };
+
 export default config;
