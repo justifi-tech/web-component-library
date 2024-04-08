@@ -14,7 +14,6 @@ export const mockAllServices = () => {
       // BusinessDetails
       this.get('/entities/business/:id', () => mockBusinessDetails);
 
-      // helo me finish this
       this.patch('/entities/business/:id', (schema, request) => {
         const id = request.params.id;
         const newDetails = JSON.parse(request.requestBody);
