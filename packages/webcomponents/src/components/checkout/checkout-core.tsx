@@ -89,6 +89,7 @@ export class CheckoutCore {
     this.pay({
       paymentMethodToken: token,
       onSuccess: ({ checkout }) => {
+        if (!checkout) return;
         this.checkout = checkout;
         this.isLoading = false;
       },
