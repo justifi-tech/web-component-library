@@ -1,5 +1,5 @@
 import { createServer } from 'miragejs';
-import mockBusinessDetails from '../../../../packages/webcomponents/src/api/mockData/mockBusinessDetails.json';
+import mockBusinessDetails from '../../../../mockData/mockBusinessDetails.json';
 
 export const mockAllServices = () => {
   createServer({

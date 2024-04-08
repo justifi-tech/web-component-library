@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import mockPaymentDetailsResponse from '../../../api/mockData/mockPaymentDetailSuccess.json';
+import mockPaymentDetailsResponse from '../../../../../../mockData/mockPaymentDetailSuccess.json';
 import { PaymentDetailsCore } from '../payment-details-core';
 import { Details } from '../../details/details';
 import { makeGetPaymentDetails } from '../get-payment-details';

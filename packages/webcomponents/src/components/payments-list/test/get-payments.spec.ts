@@ -1,6 +1,6 @@
 import { PaymentService } from '../../../api/services/payment.service';
 import { makeGetPayments } from '../get-payments';
-import mockResponse from '../../../api/mockData/mockPaymentsSuccess.json';
+import mockResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment, Payment } from '../../../api';
 
 // Mock the PaymentService class

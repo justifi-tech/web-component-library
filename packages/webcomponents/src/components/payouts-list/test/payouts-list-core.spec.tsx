@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { PayoutsListCore } from '../payouts-list-core';
-import mockSuccessResponse from '../../../api/mockData/mockPayoutsSuccess.json';
+import mockSuccessResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
 import { IApiResponseCollection, IPayout } from '../../../api';
 import { makeGetPayouts } from '../get-payouts';
 
