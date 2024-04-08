@@ -1,4 +1,6 @@
-type Props = { name: string, value: any }[];
+import { mockAllServices } from "./mockAllServices";
+
+type Props = { name: string; value: any }[];
 
 const getPropsAndStyles = (storyContext: any) => {
   const args = storyContext.args;
@@ -47,6 +49,13 @@ const generateStyleBlock = (styleArg: any) => {
 export const customStoryDecorator = (storyComponent: any, storyContext: any) => {
   const fragment = new DocumentFragment();
   const { props, styleArg } = getPropsAndStyles(storyContext);
+
+  const isMocksEnabled = __VITE_STORYBOOK_MOCKS_ENABLED__ === 'true';
+
+  if (isMocksEnabled) {
+    mockAllServices();
+  }
+
   const component = applyArgsToStoryComponent(storyComponent, props);
 
   if (styleArg) {
