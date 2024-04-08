@@ -1,0 +1,21 @@
+@import 'forms';
+@import 'buttons';
+@import 'bootstrap-utilities';
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
+
+.payment-method-header {
+  cursor: pointer;
+
+  input,
+  label {
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: var(--bs-gray-100);
+  }
+}

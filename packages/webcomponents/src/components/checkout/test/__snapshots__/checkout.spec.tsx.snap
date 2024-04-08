@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-checkout renders 1`] = `
+<justifi-checkout>
+  <mock:shadow-root>
+    <justifi-checkout-core>
+      <mock:shadow-root>
+        <div class="gy-3 row">
+          <div class="col-12 mb-4">
+            <h2 class="fs-5 fw-bold">
+              Summary
+            </h2>
+            <div>
+              Product desctiption
+            </div>
+            <div>
+              Total $100.00
+            </div>
+          </div>
+          <div class="col-12">
+            <h2 class="border-bottom fs-5 fw-bold pb-3">
+              Payment
+            </h2>
+            <h3 class="fs-6 fw-bold lh-lg">
+              Select payment type
+            </h3>
+            <div class="d-flex flex-column">
+              <justifi-payment-method-options show-ach="" show-card=""></justifi-payment-method-options>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary jfi-submit-button" type="submit">
+                Pay
+              </button>
+            </div>
+          </div>
+        </div>
+      </mock:shadow-root>
+    </justifi-checkout-core>
+  </mock:shadow-root>
+</justifi-checkout>
+`;

@@ -79,12 +79,11 @@ export class BillingForm {
     return this.billingFields;
   }
 
-  legendBlock = (<legend>{this.legend}</legend>);
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          {this.legend && this.legendBlock}
+          {this.legend && <legend>{this.legend}</legend>}
           <div class="row gy-3">
             <div class="col-12">
               <text-input name="name" label="Full Name" defaultValue={this.billingFields.name} error={this.billingFieldsErrors.name} />
