@@ -29,6 +29,7 @@ and the other one  is meant to be just read only.
 
 - [form-control-text](../../form)
 - [form-control-select](../../form)
+- [form-control-number](../../form)
 - [form-control-number-masked](../../form)
 
 ### Graph
@@ -36,6 +37,7 @@ and the other one  is meant to be just read only.
 graph TD;
   justifi-business-generic-info --> form-control-text
   justifi-business-generic-info --> form-control-select
+  justifi-business-generic-info --> form-control-number
   justifi-business-generic-info --> form-control-number-masked
   justifi-business-form --> justifi-business-generic-info
   justifi-business-form-stepped --> justifi-business-generic-info

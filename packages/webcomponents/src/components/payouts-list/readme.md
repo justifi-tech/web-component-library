@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute | Description | Type       | Default     |
-| ------------ | --------- | ----------- | ---------- | ----------- |
-| `getPayouts` | --        |             | `Function` | `undefined` |
+| Property    | Attribute    | Description | Type     | Default     |
+| ----------- | ------------ | ----------- | -------- | ----------- |
+| `accountId` | `account-id` |             | `string` | `undefined` |
+| `authToken` | `auth-token` |             | `string` | `undefined` |
 
 
 ## Events
@@ -21,10 +22,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [justifi-payouts-list](.)
-
 ### Depends on
 
 - [justifi-table](../table)
@@ -32,10 +29,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  payouts-list-core --> justifi-table
+  justifi-payouts-list --> justifi-table
   justifi-table --> pagination-menu
-  justifi-payouts-list --> payouts-list-core
-  style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
+  style justifi-payouts-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

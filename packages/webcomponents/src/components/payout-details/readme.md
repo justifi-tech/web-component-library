@@ -7,16 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute | Description | Type       | Default     |
-| ----------- | --------- | ----------- | ---------- | ----------- |
-| `getPayout` | --        |             | `Function` | `undefined` |
+| Property    | Attribute    | Description | Type     | Default     |
+| ----------- | ------------ | ----------- | -------- | ----------- |
+| `authToken` | `auth-token` |             | `string` | `undefined` |
+| `payoutId`  | `payout-id`  |             | `string` | `undefined` |
 
 
 ## Dependencies
-
-### Used by
-
- - [justifi-payout-details](.)
 
 ### Depends on
 
@@ -25,9 +22,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  payout-details-core --> justifi-details
-  justifi-payout-details --> payout-details-core
-  style payout-details-core fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payout-details --> justifi-details
+  style justifi-payout-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

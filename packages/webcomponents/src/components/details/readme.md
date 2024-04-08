@@ -16,16 +16,16 @@
 
 ### Used by
 
+ - [justifi-payment-details](../payment-details)
+ - [justifi-payout-details](../payout-details)
  - [justifi-subaccount-details](../subaccount-details)
- - [payment-details-core](../payment-details)
- - [payout-details-core](../payout-details)
 
 ### Graph
 ```mermaid
 graph TD;
+  justifi-payment-details --> justifi-details
+  justifi-payout-details --> justifi-details
   justifi-subaccount-details --> justifi-details
-  payment-details-core --> justifi-details
-  payout-details-core --> justifi-details
   style justifi-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
