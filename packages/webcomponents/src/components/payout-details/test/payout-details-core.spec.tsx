@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { PayoutDetailsCore } from '../payout-details-core';
-import mockPayoutDetailSuccess from '../../../api/mockData/mockPayoutDetailsSuccess.json';
+import mockPayoutDetailSuccess from '../../../../../../mockData/mockPayoutDetailsSuccess.json';
 import { makeGetPayoutDetails } from '../get-payout-details';
 
 describe('payout-details-core', () => {
