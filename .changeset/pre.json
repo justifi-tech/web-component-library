@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "rc",
+  "initialVersions": {
+    "@repo/docs": "0.0.3",
+    "@justifi/webcomponents": "4.9.0"
+  },
+  "changesets": [
+    "bright-ties-flow",
+    "dry-countries-train"
+  ]
+}
