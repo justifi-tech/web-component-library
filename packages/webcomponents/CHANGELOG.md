@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.9.1
+
+### Patch Changes
+
+- 1aa8164: Update Checkout component Summary such that hard-coded mock data is replaced with real checkout data
+
 ## 4.9.0
 
 ### Minor Changes
