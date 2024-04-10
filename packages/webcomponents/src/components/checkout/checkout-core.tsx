@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
-import { extractComputedFontsToLoad } from '../../utils/utils';
+import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 
 @Component({
@@ -20,7 +20,7 @@ export class CheckoutCore {
 
   @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
-  @State() checkout: any = {};
+  @State() checkout: any;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() creatingNewPaymentMethod: boolean = false;
@@ -113,20 +113,25 @@ export class CheckoutCore {
           <div class="col-12 mb-4">
             {/* componentize this */}
             <h2 class="fs-5 fw-bold">Summary</h2>
-            <div>Product desctiption</div>
-            <div>Total $100.00</div>
+            {this.checkout && (
+              <div>
+                <div>{this.checkout?.payment_description}</div>
+                <div>Total {formatCurrency(+this.checkout.payment_amount)}</div>
+              </div>
+            )}
           </div>
+
           <div class="col-12">
             <h2 class="fs-5 fw-bold border-bottom pb-3">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
               <justifi-payment-method-options
                 ref={(el) => (this.paymentMethodOptionsRef = el)}
-                show-card={this.checkout.payment_settings?.credit_card_payments || true}
-                show-ach={this.checkout.payment_settings?.ach_payments || true}
-                client-id={this.checkout.payment_client_id}
-                account-id={this.checkout.account_id}
-                savedPaymentMethods={this.checkout.payment_methods}
+                show-card={this.checkout?.payment_settings?.credit_card_payments || true}
+                show-ach={this.checkout?.payment_settings?.ach_payments || true}
+                client-id={this.checkout?.payment_client_id}
+                account-id={this.checkout?.account_id}
+                savedPaymentMethods={this.checkout?.payment_methods}
               />
             </div>
           </div>
