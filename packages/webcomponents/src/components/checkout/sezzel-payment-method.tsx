@@ -1,4 +1,4 @@
-import { Component, h, Prop, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 
@@ -12,12 +12,17 @@ export class SezzelPaymentMethod {
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
+  @State() sezzleScriptLoaded: boolean = false;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
   @Method()
   async getPaymentMethodToken(): Promise<string> {
     return '';
+  }
+
+  componentWillLoad() {
+    this.loadSezzleScript();
   }
 
   onPaymentMethodOptionClick = () => {
@@ -32,6 +37,15 @@ export class SezzelPaymentMethod {
         </div>
       </div>
     );
+  }
+
+  loadSezzleScript() {
+    const script = document.createElement('script');
+    script.src = 'https://checkout-sdk.sezzle.com/checkout.min.js';
+    script.onload = () => { this.sezzleScriptLoaded = true; };
+    // script.onerror = () => { };
+    script.async = true;
+    document.body.appendChild(script);
   }
 
   render() {
