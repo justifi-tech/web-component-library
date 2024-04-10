@@ -28,8 +28,6 @@ export class CheckoutService implements ICheckoutService {
     paymentMethodToken: string,
   ): Promise<IApiResponse<ICheckout>> {
     const endpoint = `checkouts/${checkoutId}/pay`;
-    console.log('checkoutId', checkoutId);
-    console.log('paymentMethodToken', paymentMethodToken);
     return Api(authToken, config.proxyApiOrigin).post(endpoint, JSON.stringify({ token: paymentMethodToken }));
   }
 }
