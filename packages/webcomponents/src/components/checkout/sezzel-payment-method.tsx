@@ -1,6 +1,7 @@
 import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
+import { mockSezzelInstallmentPlan } from './mock-sezzel-installment-plan';
 // import { formatCurrency, formatDate } from '../../utils/utils';
 
 @Component({
@@ -23,44 +24,15 @@ export class SezzelPaymentMethod {
   }
 
   componentWillLoad() {
+    this.loadSezzleScript();
   }
 
   onPaymentMethodOptionClick = () => {
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
   };
 
-  makeMockInstallmentPlan() {
-    return {
-      "schedule": "bi-weekly",
-      "totalInCents": 1000,
-      "installments": [
-        {
-          "installment": 1,
-          "amountInCents": 250,
-          "dueDate": "2020-10-14"
-        },
-        {
-          "installment": 2,
-          "amountInCents": 250,
-          "dueDate": "2020-10-28"
-        },
-        {
-          "installment": 3,
-          "amountInCents": 250,
-          "dueDate": "2020-11-11"
-        },
-        {
-          "installment": 4,
-          "amountInCents": 250,
-          "dueDate": "2020-11-25"
-        }
-      ]
-    };
-  }
-
   showSezzelPaymentPlan() {
-    this.loadSezzleScript();
-    const paymentPlan = this.makeMockInstallmentPlan();
+    const paymentPlan = mockSezzelInstallmentPlan;
 
     return (
       <div class="mt-2 pb-4 border-bottom">
@@ -70,7 +42,6 @@ export class SezzelPaymentMethod {
             <ul class="list-group">
               {paymentPlan.installments.map((installment) => {
                 return (
-
                   <li class="list-group-item">Installment #{installment.installment}</li>
                   // <div>
                   //   <div>Installment #{installment.installment} {formatCurrency(installment.amountInCents)}</div>
@@ -79,8 +50,6 @@ export class SezzelPaymentMethod {
                 );
               })}
             </ul>
-
-            <div id="sezzle-smart-button-container"></div>
           </div>
         ) : (
           <div class="d-flex justify-content-center">
@@ -96,10 +65,51 @@ export class SezzelPaymentMethod {
   loadSezzleScript() {
     const script = document.createElement('script');
     script.src = 'https://checkout-sdk.sezzle.com/checkout.min.js';
-    script.onload = () => { this.sezzelLoaded = true; };
+    script.onload = () => {
+      this.initSezzleCheckout();
+    };
     // script.onerror = () => { };
     script.async = true;
     document.body.appendChild(script);
+  }
+
+  initSezzleCheckout() {
+    this.sezzelLoaded = true;
+    const Checkout = (window as any).Checkout;
+    const checkout = new Checkout({
+      mode: 'popup',
+      publicKey: 'xxxx',
+      apiMode: 'sandbox',
+      apiVersion: 'v2'
+    });
+    checkout.init({
+      onClick: function () {
+        event.preventDefault();
+        checkout.startCheckout({
+          checkout_payload: {
+            "order": {
+              "intent": "AUTH",
+              "reference_id": "ord_12345",
+              "description": "sezzle-store - #12749253509255",
+              "order_amount": {
+                "amount_in_cents": 10000,
+                "currency": "USD"
+              }
+            }
+          }
+        });
+      },
+      onComplete: function (event) {
+        console.log(event.data)
+      },
+      onCancel: function () {
+        console.log("checkout canceled");
+      },
+      onFailure: function () {
+        console.log("checkout failed");
+      }
+    });
+    console.log('checkout:', checkout);
   }
 
   render() {
@@ -124,7 +134,12 @@ export class SezzelPaymentMethod {
           </label>
         </div>
 
-        {(this.isSelected) ? this.showSezzelPaymentPlan() : null}
+        {(this.isSelected) ? (
+          <div>
+            <div>{this.showSezzelPaymentPlan()}</div>
+            <div id="sezzle-smart-button-container"></div>
+          </div>
+        ) : null}
       </div>
     );
   }
