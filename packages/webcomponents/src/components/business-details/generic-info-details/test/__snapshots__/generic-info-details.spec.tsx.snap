@@ -4,7 +4,7 @@ exports[`GenericInfoDetails should render 1`] = `
 <generic-info-details>
   <mock:shadow-root>
     <h5 class="mt-4" part="detail-section-title">
-      Business Generic Info Details
+      Business Generic Info Details (Oh no)
     </h5>
     <hr>
     <div class="d-table gap-2 w-100">
