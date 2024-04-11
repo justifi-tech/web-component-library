@@ -16,7 +16,7 @@ export class GenericInfoDetails {
 
     return (
       <Host>
-        <DetailSectionTitle sectionTitle="Business Generic Info Details" />
+        <DetailSectionTitle sectionTitle="Business Generic Info Details Chromatic Test" />
         <div class="d-table gap-2 w-100">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
