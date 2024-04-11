@@ -13,13 +13,17 @@ const config = {
     autodocs: true,
   },
   staticDirs: ["../public"],
-  async viteFinal(config, { configType }) {
+  async viteFinal(config) {
     const storybookMocksEnabled = process.env.VITE_STORYBOOK_MOCKS_ENABLED;
+    const storybookChromaticBuild = process.env.VITE_STORYBOOK_CHROMATIC_BUILD;
 
     return mergeConfig(config, {
       plugins: [react()],
       define: {
         __VITE_STORYBOOK_MOCKS_ENABLED__: JSON.stringify(storybookMocksEnabled),
+        __VITE_STORYBOOK_CHROMATIC_BUILD__: JSON.stringify(
+          storybookChromaticBuild
+        ),
       },
     });
   },
