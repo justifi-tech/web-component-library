@@ -1,7 +1,7 @@
 import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
-// import { formatCurrency, formatDate } from '../../utils/utils';
+import { formatCurrency, formatDate } from '../../utils/utils';
 
 @Component({
   tag: 'justifi-sezzel-payment-method',
@@ -15,14 +15,17 @@ export class SezzelPaymentMethod {
   @Prop() isSelected: boolean;
   @State() installmentPlan: any;
   @State() sezzelScriptLoaded: boolean = false;
+  @State() sezzleCheckout: any;
 
   private scriptRef: HTMLScriptElement;
+  private sezzleButtonRef: HTMLButtonElement;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
   componentDidRender() {
     this.scriptRef.onload = () => {
       this.sezzelScriptLoaded = true;
+      this.initializeSezzleCheckout();
     };
   }
 
@@ -44,9 +47,9 @@ export class SezzelPaymentMethod {
       apiMode: 'sandbox',
       apiVersion: 'v2'
     });
-    checkout.renderSezzleButton("sezzle-smart-button-container");
+    checkout.sezzleButtonElement = this.sezzleButtonRef;
     checkout.init({
-      onClick: function () {
+      onClick: function (event) {
         event.preventDefault();
         checkout.startCheckout({
           checkout_payload: {
@@ -64,15 +67,19 @@ export class SezzelPaymentMethod {
       },
       onComplete: function (event) {
         console.log(event.data)
+        console.log("checkout completed");
       },
-      onCancel: function () {
+      onCancel: function (event) {
+        console.log(event.data)
         console.log("checkout canceled");
       },
-      onFailure: function () {
+      onFailure: function (event) {
+        console.log(event.data)
         console.log("checkout failed");
       }
     });
-    this.installmentPlan = checkout.getInstallmentPlan(amount);
+    this.sezzleCheckout = checkout;
+    this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
   };
 
   render() {
@@ -104,7 +111,6 @@ export class SezzelPaymentMethod {
 
         {(this.isSelected) ? (
           <div class="mt-2 pb-4 border-bottom">
-            {this.initializeSezzleCheckout()}
             {this.installmentPlan ? (
               <div>
                 <div class="mb-3">
@@ -112,16 +118,14 @@ export class SezzelPaymentMethod {
                   <ul class="list-group">
                     {this.installmentPlan?.installments.map((installment) => {
                       return (
-                        <li class="list-group-item">Installment #{installment.installment} {installment.dueDate} {installment.amountInCents}</li>
-                        // <div>
-                        //   <div>Installment #{installment.installment} {formatCurrency(installment.amountInCents)}</div>
-                        //   <div>Due {formatDate(installment.dueDate)}</div>
-                        // </div>
+                        <li class="list-group-item">
+                          <div>Installment #{installment.installment} {formatCurrency(installment.amountInCents)}</div>
+                          <div>Due {formatDate(installment.dueDate)}</div>
+                        </li>
                       );
                     })}
                   </ul>
                 </div>
-                <div id="sezzle-smart-button-container"></div>
               </div>
             ) : (
               <div class="d-flex justify-content-center">
@@ -132,6 +136,24 @@ export class SezzelPaymentMethod {
             )}
           </div>
         ) : null}
+
+        <button
+          ref={(el) => (this.sezzleButtonRef = el)}
+          class="btn btn-dark"
+          style={{ whiteSpace: 'nowrap' }}>
+          Checkout with
+          <img
+            class="sezzle-smart-button-logo-img"
+            src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor_WhiteWM.svg"
+            alt="Sezzle"
+            style={{
+              display: 'inline',
+              width: '80px',
+              marginLeft: '5px',
+              marginTop: '-5px',
+            }}
+          />
+        </button>
       </div >
     );
   }
