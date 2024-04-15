@@ -109,15 +109,14 @@ export class SezzelPaymentMethod {
           </label>
         </div>
 
-        <div class={this.isSelected && this.installmentPlan ? "mt-2 pb-4 border-bottom" : "visually-hidden"}>
+        <div class={this.isSelected && this.installmentPlan ? "p-3 border-bottom" : "visually-hidden"}>
           <div class="mb-3">
-            Make {this.installmentPlan?.installments.length} {this.installmentPlan?.schedule} payments
+            <h6>Installment Plan</h6>
             <ul class="list-group">
               {this.installmentPlan?.installments.map((installment) => {
                 return (
                   <li class="list-group-item">
-                    <div>Installment #{installment.installment} {formatCurrency(installment.amountInCents)}</div>
-                    <div>Due {formatDate(installment.dueDate)}</div>
+                    <div>{formatCurrency(installment.amountInCents)} due {formatDate(installment.dueDate)}</div>
                   </li>
                 );
               })}
