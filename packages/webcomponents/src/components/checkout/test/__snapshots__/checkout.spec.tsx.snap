@@ -10,12 +10,6 @@ exports[`justifi-checkout renders 1`] = `
             <h2 class="fs-5 fw-bold">
               Summary
             </h2>
-            <div>
-              Product desctiption
-            </div>
-            <div>
-              Total $100.00
-            </div>
           </div>
           <div class="col-12">
             <h2 class="border-bottom fs-5 fw-bold pb-3">
