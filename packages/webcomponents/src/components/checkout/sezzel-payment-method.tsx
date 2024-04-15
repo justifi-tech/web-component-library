@@ -1,7 +1,21 @@
 import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
-import { formatCurrency, formatDate } from '../../utils/utils';
+import { formatCurrency } from '../../utils/utils';
+
+const sezzleLogo = (
+  <img
+    class="sezzle-smart-button-logo-img"
+    src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor.svg"
+    alt="Sezzle"
+    style={{
+      display: 'inline',
+      width: '80px',
+      marginLeft: '5px',
+      marginTop: '-5px',
+    }}
+  />
+);
 
 @Component({
   tag: 'justifi-sezzel-payment-method',
@@ -25,12 +39,14 @@ export class SezzelPaymentMethod {
   componentDidRender() {
     this.scriptRef.onload = () => {
       this.sezzelScriptLoaded = true;
+      this.sezzleButtonRef = document.createElement('button');
       this.initializeSezzleCheckout();
     };
   }
 
   @Method()
   async getPaymentMethodToken(): Promise<string> {
+    this.sezzleButtonRef.click();
     return '';
   }
 
@@ -65,18 +81,9 @@ export class SezzelPaymentMethod {
           }
         });
       },
-      onComplete: function (event) {
-        console.log(event.data)
-        console.log("checkout completed");
-      },
-      onCancel: function (event) {
-        console.log(event.data)
-        console.log("checkout canceled");
-      },
-      onFailure: function (event) {
-        console.log(event.data)
-        console.log("checkout failed");
-      }
+      onComplete: function (event) { console.log(event.data) },
+      onCancel: function (event) { console.log(event.data) },
+      onFailure: function (event) { console.log(event.data) }
     });
     this.sezzleCheckout = checkout;
     this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
@@ -90,6 +97,7 @@ export class SezzelPaymentMethod {
           async={true}
           ref={(el) => (this.scriptRef = el)}>
         </script>
+
         <div
           class={`payment-method-header p-3 border-bottom`}
           onClick={() => this.onPaymentMethodOptionClick()}>
@@ -105,42 +113,17 @@ export class SezzelPaymentMethod {
           <label
             htmlFor={this.paymentMethodOption?.id}
             class="form-check-label">
-            Buy now, pay later with Sezzle
+            <div>Buy now, pay later with {sezzleLogo}</div>
+            {this.installmentPlan && (
+              <small>
+                <span>{this.installmentPlan?.installments.length}</span>&nbsp;
+                <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
+                <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
+              </small>
+            )}
           </label>
         </div>
-
-        <div class={this.isSelected && this.installmentPlan ? "p-3 border-bottom" : "visually-hidden"}>
-          <div class="mb-3">
-            <h6>Installment Plan</h6>
-            <ul class="list-group">
-              {this.installmentPlan?.installments.map((installment) => {
-                return (
-                  <li class="list-group-item">
-                    <div>{formatCurrency(installment.amountInCents)} due {formatDate(installment.dueDate)}</div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <button
-            ref={(el) => (this.sezzleButtonRef = el)}
-            class="btn btn-dark"
-            style={{ whiteSpace: 'nowrap' }}>
-            Checkout with
-            <img
-              class="sezzle-smart-button-logo-img"
-              src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor_WhiteWM.svg"
-              alt="Sezzle"
-              style={{
-                display: 'inline',
-                width: '80px',
-                marginLeft: '5px',
-                marginTop: '-5px',
-              }}
-            />
-          </button>
-        </div>
-      </div >
+      </div>
     );
   }
 }

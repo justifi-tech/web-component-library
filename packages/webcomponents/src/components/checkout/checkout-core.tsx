@@ -80,7 +80,7 @@ export class CheckoutCore {
 
     this.isLoading = true;
 
-    const token = await this.paymentMethodOptionsRef.getPaymentMethodToken();
+    const token = await this.paymentMethodOptionsRef.getPaymentMethodToken(); // make this return {token: 'token'} or {order_uuid: 'order_uuid'}
     if (!token) {
       this.isLoading = false;
       return;

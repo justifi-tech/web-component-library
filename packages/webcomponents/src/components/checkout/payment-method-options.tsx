@@ -73,7 +73,12 @@ export class PaymentMethodOptions {
             return (
               <justifi-sezzel-payment-method
                 paymentMethodOption={paymentMethodOption}
-                is-selected={isSelected}>
+                is-selected={isSelected}
+                ref={(el) => {
+                  if (isSelected) {
+                    this.selectedPaymentMethodOptionRef = el;
+                  }
+                }}>
               </justifi-sezzel-payment-method>);
           }
           else {
