@@ -109,51 +109,38 @@ export class SezzelPaymentMethod {
           </label>
         </div>
 
-        {(this.isSelected) ? (
-          <div class="mt-2 pb-4 border-bottom">
-            {this.installmentPlan ? (
-              <div>
-                <div class="mb-3">
-                  Make {this.installmentPlan?.installments.length} {this.installmentPlan?.schedule} payments
-                  <ul class="list-group">
-                    {this.installmentPlan?.installments.map((installment) => {
-                      return (
-                        <li class="list-group-item">
-                          <div>Installment #{installment.installment} {formatCurrency(installment.amountInCents)}</div>
-                          <div>Due {formatDate(installment.dueDate)}</div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            ) : (
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border text-primary" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            )}
+        <div class={this.isSelected && this.installmentPlan ? "mt-2 pb-4 border-bottom" : "visually-hidden"}>
+          <div class="mb-3">
+            Make {this.installmentPlan?.installments.length} {this.installmentPlan?.schedule} payments
+            <ul class="list-group">
+              {this.installmentPlan?.installments.map((installment) => {
+                return (
+                  <li class="list-group-item">
+                    <div>Installment #{installment.installment} {formatCurrency(installment.amountInCents)}</div>
+                    <div>Due {formatDate(installment.dueDate)}</div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        ) : null}
-
-        <button
-          ref={(el) => (this.sezzleButtonRef = el)}
-          class="btn btn-dark"
-          style={{ whiteSpace: 'nowrap' }}>
-          Checkout with
-          <img
-            class="sezzle-smart-button-logo-img"
-            src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor_WhiteWM.svg"
-            alt="Sezzle"
-            style={{
-              display: 'inline',
-              width: '80px',
-              marginLeft: '5px',
-              marginTop: '-5px',
-            }}
-          />
-        </button>
+          <button
+            ref={(el) => (this.sezzleButtonRef = el)}
+            class="btn btn-dark"
+            style={{ whiteSpace: 'nowrap' }}>
+            Checkout with
+            <img
+              class="sezzle-smart-button-logo-img"
+              src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor_WhiteWM.svg"
+              alt="Sezzle"
+              style={{
+                display: 'inline',
+                width: '80px',
+                marginLeft: '5px',
+                marginTop: '-5px',
+              }}
+            />
+          </button>
+        </div>
       </div >
     );
   }
