@@ -8,8 +8,7 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
-import { ComponentError } from '../../components';
-import { ComponentErrorCodes } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
 
 @Component({
   tag: 'payouts-list-core',

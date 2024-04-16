@@ -85,7 +85,10 @@ describe('payouts-list-core', () => {
     await page.waitForChanges();
 
     expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
-
+      detail: {
+        errorCode: 'fetch-error',
+        message: 'Fetch error',
+      }
     }));
   });
 
