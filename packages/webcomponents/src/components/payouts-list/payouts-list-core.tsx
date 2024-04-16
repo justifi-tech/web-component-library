@@ -8,6 +8,8 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
+import { ComponentError } from '../../components';
+import { ComponentErrorCodes } from '../../api/ComponentError';
 
 @Component({
   tag: 'payouts-list-core',
@@ -16,15 +18,19 @@ import { tableExportedParts } from '../table/exported-parts';
 
 export class PayoutsListCore {
   @Prop() getPayouts: Function;
+
   @State() payouts: Payout[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any
+  @State() params: any;
+
   @Event({
     eventName: 'payout-row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
+
+  @Event() error: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayouts) {
@@ -79,6 +85,10 @@ export class PayoutsListCore {
       },
       onError: (errorMessage) => {
         this.errorMessage = errorMessage;
+        this.error.emit({
+          errorCode: ComponentErrorCodes.FETCH_ERROR,
+          message: errorMessage,
+        });
         this.loading = false;
       },
     });
