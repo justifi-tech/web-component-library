@@ -30,7 +30,7 @@ export class PayoutsListCore {
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
 
-  @Event() error: EventEmitter<ComponentError>;
+  @Event() errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayouts) {
@@ -85,7 +85,7 @@ export class PayoutsListCore {
       },
       onError: (errorMessage) => {
         this.errorMessage = errorMessage;
-        this.error.emit({
+        this.errorEvent.emit({
           errorCode: ComponentErrorCodes.FETCH_ERROR,
           message: errorMessage,
         });

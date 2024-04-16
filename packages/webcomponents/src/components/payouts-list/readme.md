@@ -16,7 +16,7 @@
 
 | Event                | Description | Type                          |
 | -------------------- | ----------- | ----------------------------- |
-| `error`              |             | `CustomEvent<ComponentError>` |
+| `errorEvent`         |             | `CustomEvent<ComponentError>` |
 | `payout-row-clicked` |             | `CustomEvent<Payout>`         |
 
 

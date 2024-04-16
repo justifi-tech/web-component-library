@@ -79,7 +79,7 @@ describe('payouts-list-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutsListCore, Table, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} onError={errorSpy} />,
+      template: () => <payouts-list-core getPayouts={getPayouts} onErrorEvent={errorSpy} />,
     });
 
     await page.waitForChanges();

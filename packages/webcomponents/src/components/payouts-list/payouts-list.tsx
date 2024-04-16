@@ -36,7 +36,7 @@ export class PayoutsList {
   @State() getPayouts: Function;
   @State() errorMessage: string = null;
 
-  @Event() error: EventEmitter<ComponentError>;
+  @Event() errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetPayouts();
@@ -57,7 +57,7 @@ export class PayoutsList {
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
-      this.error.emit({
+      this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: 'Account ID and Auth Token are required',
       });
@@ -66,7 +66,7 @@ export class PayoutsList {
 
   handleOnError = (event) => {
     this.errorMessage = event.detail.message;
-    this.error.emit(event.detail);
+    this.errorEvent.emit(event.detail);
   }
 
   render() {
@@ -76,7 +76,7 @@ export class PayoutsList {
 
     return (
       <Host exportedparts={tableExportedParts}>
-        <payouts-list-core getPayouts={this.getPayouts} onError={this.handleOnError} />
+        <payouts-list-core getPayouts={this.getPayouts} onErrorEvent={this.handleOnError} />
       </Host>
     );
   }
