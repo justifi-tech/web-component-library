@@ -2,6 +2,8 @@ import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
 import { PayoutsList } from "../payouts-list";
 import { PayoutsListCore } from "../payouts-list-core";
+import { PayoutService } from '../../../api/services/payout.service';
+jest.mock('../../../api/services/payout.service');
 
 describe('payouts-list', () => {
   it('renders an error message when accountId and authToken are not provided', async () => {
@@ -46,6 +48,34 @@ describe('payouts-list', () => {
         detail: {
           errorCode: 'missing-props',
           message: 'Account ID and Auth Token are required',
+        },
+      })
+    );
+  });
+
+  it('emits an error event when fetch fails', async () => {
+    PayoutService.prototype.fetchPayouts = jest.fn().mockRejectedValue(new Error('Fetch error'));
+
+    const onErrorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PayoutsList, PayoutsListCore],
+      template: () => (
+        <justifi-payouts-list
+          account-id="abc"
+          auth-token="abc"
+          onErrorEvent={onErrorSpy}
+        />
+      ),
+    });
+
+    await page.waitForChanges();
+
+    expect(onErrorSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'fetch-error',
+          message: 'Fetch error',
         },
       })
     );
