@@ -7,20 +7,24 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type     | Default     |
-| ----------- | ------------ | ----------- | -------- | ----------- |
-| `accountId` | `account-id` |             | `string` | `undefined` |
-| `authToken` | `auth-token` |             | `string` | `undefined` |
+| Property     | Attribute | Description | Type       | Default     |
+| ------------ | --------- | ----------- | ---------- | ----------- |
+| `getPayouts` | --        |             | `Function` | `undefined` |
 
 
 ## Events
 
-| Event                | Description | Type                  |
-| -------------------- | ----------- | --------------------- |
-| `payout-row-clicked` |             | `CustomEvent<Payout>` |
+| Event                | Description | Type                          |
+| -------------------- | ----------- | ----------------------------- |
+| `error`              |             | `CustomEvent<ComponentError>` |
+| `payout-row-clicked` |             | `CustomEvent<Payout>`         |
 
 
 ## Dependencies
+
+### Used by
+
+ - [justifi-payouts-list](.)
 
 ### Depends on
 
@@ -29,9 +33,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payouts-list --> justifi-table
+  payouts-list-core --> justifi-table
   justifi-table --> pagination-menu
-  style justifi-payouts-list fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payouts-list --> payouts-list-core
+  style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
