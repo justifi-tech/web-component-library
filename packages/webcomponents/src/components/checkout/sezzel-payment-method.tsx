@@ -29,7 +29,6 @@ export class SezzelPaymentMethod {
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
   @State() installmentPlan: any;
-  @State() sezzelScriptLoaded: boolean = false;
   @State() sezzleCheckout: any;
   @State() sezzlePromise: Promise<PaymentMethodPayload>;
 
@@ -40,7 +39,6 @@ export class SezzelPaymentMethod {
 
   componentDidRender() {
     this.scriptRef.onload = () => {
-      this.sezzelScriptLoaded = true;
       this.sezzleButtonRef = document.createElement('button');
       this.initializeSezzleCheckout();
     };
