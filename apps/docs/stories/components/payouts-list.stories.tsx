@@ -19,7 +19,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ['payout-row-clicked'],
+      handles: ['payout-row-clicked', 'errorEvent'],
     },
   },
   decorators: [

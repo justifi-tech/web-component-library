@@ -1,8 +1,9 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { tableExportedParts } from '../table/exported-parts';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
 import { ErrorState } from '../details/utils';
+import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
 
 /**
   * @exportedPart table-head: Table head
@@ -35,6 +36,8 @@ export class PayoutsList {
   @State() getPayouts: Function;
   @State() errorMessage: string = null;
 
+  @Event() errorEvent: EventEmitter<ComponentError>;
+
   componentWillLoad() {
     this.initializeGetPayouts();
   }
@@ -54,7 +57,16 @@ export class PayoutsList {
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        message: 'Account ID and Auth Token are required',
+      });
     }
+  }
+
+  handleOnError = (event) => {
+    this.errorMessage = event.detail.message;
+    this.errorEvent.emit(event.detail);
   }
 
   render() {
@@ -64,7 +76,7 @@ export class PayoutsList {
 
     return (
       <Host exportedparts={tableExportedParts}>
-        <payouts-list-core getPayouts={this.getPayouts} />
+        <payouts-list-core getPayouts={this.getPayouts} onErrorEvent={this.handleOnError} />
       </Host>
     );
   }
