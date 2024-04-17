@@ -1,9 +1,11 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { GrossPaymentChartCore } from '../gross-payment-chart-core';
 import { GrossVolumeReport } from '../../../api/GrossVolume';
 import { IApiResponse } from '../../../api';
 import mockSuccessResponse from '../../../api/mockResponses/mockGrossVolumeReportSuccess.json';
 import { makeGetGrossPaymentChartData } from '../get-gross-payment-chart-data';
+import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 const mockDataResponse = mockSuccessResponse as IApiResponse<GrossVolumeReport>
 
@@ -16,7 +18,7 @@ describe('gross-payment-chart', () => {
   it('should initialize with default states', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      html: `<gross-payment-chart-core />`,
+      template: () => <gross-payment-chart-core />,
     });
     expect(page.rootInstance.loading).toBeTruthy();
     expect(page.rootInstance.errorMessage).toBe('');
@@ -35,12 +37,9 @@ describe('gross-payment-chart', () => {
 
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      html: `<gross-payment-chart-core />`,
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} />,
     });
 
-    page.rootInstance.componentWillLoad = () => { };
-    page.rootInstance.getGrossPayment = getGrossPayment;
-    page.rootInstance.fetchData();
     await page.waitForChanges();
 
     expect(page.rootInstance.grossVolumeReport).toEqual(mockDataResponse.data);
@@ -49,7 +48,7 @@ describe('gross-payment-chart', () => {
   it('matches the snapshot when in loading state', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      html: `<gross-payment-chart-core></gross-payment-chart-core>`,
+      template: () => <gross-payment-chart-core />,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -67,14 +66,63 @@ describe('gross-payment-chart', () => {
 
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      html: `<gross-payment-chart-core></gross-payment-chart-core>`,
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} />,
     });
 
-    page.rootInstance.componentWillLoad = () => { };
-    page.rootInstance.getGrossPayment = getGrossPayment;
-    page.rootInstance.fetchData();
     await page.waitForChanges();
 
     expect(page.root).toMatchSnapshot();
   });
+
+  it('emits an error event when error occurs', async () => {
+    const getGrossPayment = makeGetGrossPaymentChartData({
+      id: 'my-account-id',
+      authToken: 'my-token',
+      service: {
+        fetchGrossVolumeChartData: jest.fn().mockRejectedValue('Error message')
+      }
+    });
+
+    const eventSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [GrossPaymentChartCore],
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onErrorEvent={eventSpy} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'fetch-error',
+        message: 'Error message',
+      }
+    }));
+  });
+
+  it('emits an error event when API return error', async () => {
+    const getGrossPayment = makeGetGrossPaymentChartData({
+      id: 'my-account-id',
+      authToken: 'my-token',
+      service: {
+        fetchGrossVolumeChartData: jest.fn().mockResolvedValue(API_NOT_AUTHENTICATED_ERROR)
+      }
+    });
+
+    const eventSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [GrossPaymentChartCore],
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onErrorEvent={eventSpy} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'fetch-error',
+        message: 'Not Authenticated',
+      }
+    }));
+  })
 });
