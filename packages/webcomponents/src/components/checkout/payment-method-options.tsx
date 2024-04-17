@@ -17,6 +17,7 @@ export class PaymentMethodOptions {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() selectedPaymentMethodId: string;
+  @Prop() paymentAmount: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
 
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
@@ -75,6 +76,7 @@ export class PaymentMethodOptions {
               <justifi-sezzel-payment-method
                 paymentMethodOption={paymentMethodOption}
                 is-selected={isSelected}
+                paymentAmount={this.paymentAmount}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

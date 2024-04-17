@@ -28,6 +28,7 @@ export class SezzelPaymentMethod {
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
+  @Prop() paymentAmount: string;
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;
   @State() sezzlePromise: Promise<PaymentMethodPayload>;
@@ -55,9 +56,9 @@ export class SezzelPaymentMethod {
   };
 
   initializeSezzleCheckout = () => {
-    const amount = 10000;
     let resolveSezzlePromise;
     this.sezzlePromise = new Promise((resolve) => { resolveSezzlePromise = resolve; });
+    const amount = +this.paymentAmount; // convert to number
     const Checkout = (window as any).Checkout;
     const checkout = new Checkout({
       mode: 'popup',

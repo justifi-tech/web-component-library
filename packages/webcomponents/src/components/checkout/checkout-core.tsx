@@ -134,6 +134,7 @@ export class CheckoutCore {
                 client-id={this.checkout?.payment_client_id}
                 account-id={this.checkout?.account_id}
                 savedPaymentMethods={this.checkout?.payment_methods}
+                paymentAmount={this.checkout?.payment_amount}
               />
             </div>
           </div>
