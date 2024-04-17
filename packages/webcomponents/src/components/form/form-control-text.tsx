@@ -62,7 +62,7 @@ export class TextInput {
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error ? 'input-invalid' : ''}${this.disabled ? 'input-disabled' : ''}`}
+          part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"
           disabled={this.disabled}
