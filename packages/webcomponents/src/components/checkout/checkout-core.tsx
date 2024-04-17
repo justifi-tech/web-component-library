@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@s
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
-import { PaymentMethodPayload } from './payment-method-payload';
+// import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -81,7 +81,7 @@ export class CheckoutCore {
 
     this.isLoading = true;
 
-    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+    const payload: any = await this.paymentMethodOptionsRef.resolvePaymentMethod();
     if (payload.token) {
       this.pay({
         paymentMethodToken: payload.token,
@@ -95,8 +95,8 @@ export class CheckoutCore {
           this.isLoading = false;
         },
       })
-    } else if (payload.order_uuid) {
-      // handle sezzle
+    } else if (payload.bnpl) {
+      console.log('BNPL status:', payload.bnpl.status);
     }
 
     this.isLoading = false;

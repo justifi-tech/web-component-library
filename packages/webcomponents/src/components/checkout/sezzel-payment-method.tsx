@@ -31,6 +31,7 @@ export class SezzelPaymentMethod {
   @State() installmentPlan: any;
   @State() sezzelScriptLoaded: boolean = false;
   @State() sezzleCheckout: any;
+  @State() sezzlePromise: Promise<PaymentMethodPayload>;
 
   private scriptRef: HTMLScriptElement;
   private sezzleButtonRef: HTMLButtonElement;
@@ -48,7 +49,7 @@ export class SezzelPaymentMethod {
   @Method()
   async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
     this.sezzleButtonRef.click();
-    return { order_uuid: '' };
+    return this.sezzlePromise;
   }
 
   onPaymentMethodOptionClick = () => {
@@ -57,10 +58,12 @@ export class SezzelPaymentMethod {
 
   initializeSezzleCheckout = () => {
     const amount = 10000;
+    let resolveSezzlePromise;
+    this.sezzlePromise = new Promise((resolve) => { resolveSezzlePromise = resolve; });
     const Checkout = (window as any).Checkout;
     const checkout = new Checkout({
       mode: 'popup',
-      publicKey: 'sz_pub_HXPKLKcufF0NBsRGTFdZQ0hGmz7DIO7R',
+      publicKey: 'xxxx',
       apiMode: 'sandbox',
       apiVersion: 'v2'
     });
@@ -82,9 +85,9 @@ export class SezzelPaymentMethod {
           }
         });
       },
-      onComplete: function (event) { console.log(event.data) },
-      onCancel: function (event) { console.log(event.data) },
-      onFailure: function (event) { console.log(event.data) }
+      onComplete: (event) => resolveSezzlePromise({ bnpl: event.data }),
+      onCancel: (event) => resolveSezzlePromise({ bnpl: event.data }),
+      onFailure: (event) => resolveSezzlePromise({ bnpl: event.data }),
     });
     this.sezzleCheckout = checkout;
     this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
