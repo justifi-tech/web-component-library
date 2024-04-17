@@ -62,7 +62,7 @@ export class SelectInput {
           class={this.error ? 'form-select is-invalid' : 'form-select'}
           disabled={this.disabled}
         >
-          {this.options?.length && this.options.map(option => (
+          {this.options?.map(option => (
             <option value={option.value}>{option.label}</option>
           ))}
         </select>
