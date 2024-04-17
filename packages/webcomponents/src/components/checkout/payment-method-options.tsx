@@ -2,6 +2,7 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method }
 import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -20,7 +21,7 @@ export class PaymentMethodOptions {
 
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
-  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement;
+  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzelPaymentMethodElement;
 
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
@@ -43,8 +44,8 @@ export class PaymentMethodOptions {
   }
 
   @Method()
-  async getPaymentMethodToken(): Promise<string> {
-    return await this.selectedPaymentMethodOptionRef?.getPaymentMethodToken();
+  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
+    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod();
   }
 
   render() {

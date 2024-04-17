@@ -2,6 +2,7 @@ import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 
 const sezzleLogo = (
   <img
@@ -45,9 +46,9 @@ export class SezzelPaymentMethod {
   }
 
   @Method()
-  async getPaymentMethodToken(): Promise<string> {
+  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
     this.sezzleButtonRef.click();
-    return '';
+    return { order_uuid: '' };
   }
 
   onPaymentMethodOptionClick = () => {
