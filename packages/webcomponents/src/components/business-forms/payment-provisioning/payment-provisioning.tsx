@@ -8,10 +8,10 @@ import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/busin
  */
 
 @Component({
-  tag: 'justifi-business-form-stepped',
-  styleUrl: 'business-form-stepped.scss',
+  tag: 'justifi-payment-provisioning',
+  styleUrl: 'payment-provisioning.scss',
 })
-export class BusinessFormStepped {
+export class PaymentProvisioning {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() testMode: boolean = false;
