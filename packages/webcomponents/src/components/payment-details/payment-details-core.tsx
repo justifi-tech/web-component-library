@@ -1,7 +1,8 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
   tag: 'payment-details-core',
@@ -10,9 +11,12 @@ import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadIn
 
 export class PaymentDetailsCore {
   @Prop() getPaymentDetails: Function;
+
   @State() payment: Payment;
   @State() loading: boolean = true;
   @State() errorMessage: string;
+
+  @Event() errorEvent: EventEmitter<ComponentError>
 
   componentWillLoad() {
     if (this.getPaymentDetails) {
@@ -36,6 +40,11 @@ export class PaymentDetailsCore {
       },
       onError: (error) => {
         this.errorMessage = error;
+        this.errorEvent.emit({
+          message: error,
+          errorCode: ComponentErrorCodes.FETCH_ERROR,
+          severity: ComponentErrorSeverity.ERROR
+        });
         this.loading = false;
       },
     });

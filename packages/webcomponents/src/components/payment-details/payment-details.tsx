@@ -1,7 +1,8 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from './get-payment-details';
 import { ErrorState } from '../details/utils';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -38,6 +39,8 @@ export class PaymentDetails {
   @State() getPaymentDetails: Function;
   @State() errorMessage: string = null;
 
+  @Event() errorEvent: EventEmitter<ComponentError>;
+
   componentWillLoad() {
     this.initializeGetPaymentDetails();
   }
@@ -57,10 +60,20 @@ export class PaymentDetails {
       });
     } else {
       this.errorMessage = 'Payment ID and Auth Token are required';
+      this.errorEvent.emit({
+        message: this.errorMessage,
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   }
 
   paymentService = new PaymentService();
+
+  handleErrorEvent = event => {
+    this.errorMessage = event.detail.message;
+    this.errorEvent.emit(event.detail);
+  }
 
   render() {
     if (this.errorMessage) {
@@ -70,6 +83,7 @@ export class PaymentDetails {
     return (
       <payment-details-core
         getPaymentDetails={this.getPaymentDetails}
+        onErrorEvent={this.handleErrorEvent}
       ></payment-details-core>
     );
   }
