@@ -34,7 +34,8 @@ describe('getPayout', () => {
   });
 
   it('should call onError with an error message on API failure', async () => {
-    const mockError = new Error('Error fetching payout');
+    const errorMessage = 'Error fetching payout';
+    const mockError = new Error(errorMessage);
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
@@ -48,13 +49,12 @@ describe('getPayout', () => {
     await getPayout({ onSuccess, onError });
 
     expect(onSuccess).not.toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(
-      `Error fetching payout details: ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith(errorMessage);
   });
 
   it('should call onError with an error message on API failure with error message', async () => {
-    const mockError = new Error('Error fetching payout');
+    const errorMessage = 'Error fetching payout';
+    const mockError = new Error(errorMessage);
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
@@ -68,8 +68,6 @@ describe('getPayout', () => {
     await getPayout({ onSuccess, onError });
 
     expect(onSuccess).not.toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(
-      `Error fetching payout details: ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith(errorMessage);
   });
 });

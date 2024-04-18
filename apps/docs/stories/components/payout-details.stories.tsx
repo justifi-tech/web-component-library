@@ -17,6 +17,11 @@ const meta: Meta = {
   argTypes: {
     ...storyBaseArgs.argTypes,
   },
+  parameters: {
+    actions: {
+      handles: ['errorEvent'],
+    },
+  },
   decorators: [
     customStoryDecorator,
     // @ts-ignore
