@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-select renders with default props 1`] = `
+<form-control-select exportparts="label,input,input-invalid" label="Test Select" name="test">
+  <mock:shadow-root>
+    <label class="form-label" htmlfor="test" part="label">
+      Test Select
+    </label>
+    <select class="form-select" id="test" name="test" part="input "></select>
+  </mock:shadow-root>
+</form-control-select>
+`;
