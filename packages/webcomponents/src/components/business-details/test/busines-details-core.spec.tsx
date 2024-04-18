@@ -19,11 +19,6 @@ describe('BusinessDetailsCore', () => {
   });
 
   it('should display error state correctly', async () => {
-    const page = await newSpecPage({
-      components: [BusinessDetailsCore],
-      template: () => <business-details-core />,
-    });
-
     const getBusiness = makeGetBusiness({
       id: '',
       authToken: '',
@@ -32,11 +27,10 @@ describe('BusinessDetailsCore', () => {
       },
     });
 
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getBusiness = getBusiness;
-
-    page.rootInstance.fetchData();
+    const page = await newSpecPage({
+      components: [BusinessDetailsCore],
+      template: () => <business-details-core getBusiness={getBusiness} />,
+    });
 
     await page.waitForChanges();
 
@@ -44,11 +38,6 @@ describe('BusinessDetailsCore', () => {
   });
 
   it('should set business details correctly to state', async () => {
-    const page = await newSpecPage({
-      components: [BusinessDetailsCore],
-      template: () => <business-details-core />,
-    });
-
     const getBusiness = makeGetBusiness({
       id: '',
       authToken: '',
@@ -57,11 +46,10 @@ describe('BusinessDetailsCore', () => {
       },
     });
 
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getBusiness = getBusiness;
-
-    page.rootInstance.fetchData();
+    const page = await newSpecPage({
+      components: [BusinessDetailsCore],
+      template: () => <business-details-core getBusiness={getBusiness} />,
+    });
 
     await page.waitForChanges();
 
