@@ -3,13 +3,13 @@ import { codeExampleHead } from '../utils';
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead('justifi-business-form-stepped')}
+${codeExampleHead('justifi-payment-provisioning')}
 
 <body>
-  <justifi-business-form-stepped
+  <justifi-payment-provisioning
     business-id="<BUSINESS_ID>"
     auth-token="<WEBCOMPONENT_AUTH_TOKEN>">
-  </justifi-business-form-stepped>
+  </justifi-payment-provisioning>
 </body>
 
 </html>`;

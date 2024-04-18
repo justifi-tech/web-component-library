@@ -1,10 +1,10 @@
 import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
-import example from './business-form-stepped-example';
+import example from './payment-provisioning-example';
 
 <Meta
-  title="Entities/BusinessFormStepped"
-  Components="justifi-business-form-stepped"
+  title="Entities/Payment Provisioning (BETA)"
+  Components="justifi-payment-provisioning"
 />
 
 <Title />
@@ -27,14 +27,14 @@ Component to render a business onboarding form, segmented into multiple steps.
 
 ---
 
-The `<justifi-business-form-stepped>` can be customized by using the exported `parts`.
+The `<justifi-payment-provisioning>` can be customized by using the exported `parts`.
 
 ## Exported parts
 
 <ExportedParts
   compact
-  component="justifi-business-form-stepped"
-  tags={filterDocsByTag('justifi-business-form-stepped').docsTags.map(part => part.text)}
+  component="justifi-payment-provisioning"
+  tags={filterDocsByTag('justifi-payment-provisioning').docsTags.map(part => part.text)}
 />
 
 
