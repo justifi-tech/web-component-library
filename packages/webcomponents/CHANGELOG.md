@@ -1,5 +1,21 @@
 ### Changelog
 
+## 4.9.1
+
+### Patch Changes
+
+- 1aa8164: Update Checkout component Summary such that hard-coded mock data is replaced with real checkout data
+
+## 4.9.0
+
+### Minor Changes
+
+- 9d8a9e4: Added new MVP Checkout component which make make client-side payments using saved payment methods or newly tokenized payment methods
+
+### Patch Changes
+
+- 9838108: Changed the `justifi-business-details` component to handle business created via API and without some attributes. This change will prevent the component from breaking because of missing properties.
+
 ## 4.8.3
 
 ### Patch Changes

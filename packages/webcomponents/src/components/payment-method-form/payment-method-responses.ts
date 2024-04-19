@@ -8,7 +8,7 @@ interface PaymentMethodCreateResponseWrapper {
   page_info: string;
 }
 
-interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
+export interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
   data?: {
     signature: string;
     customer_id: string;
@@ -31,18 +31,18 @@ interface CardCreateResponse extends PaymentMethodCreateResponseWrapper {
         country: string;
         issuer: string;
         funding_source:
-          | "Charge"
-          | "Credit"
-          | "Debit"
-          | "Deferred Debit (Visa Only)"
-          | "Network Only"
-          | "Prepaid";
+        | "Charge"
+        | "Credit"
+        | "Debit"
+        | "Deferred Debit (Visa Only)"
+        | "Network Only"
+        | "Prepaid";
       };
     };
   };
 }
 
-interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
+export interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
   data?: {
     signature: string;
     customer_id: string;
@@ -59,14 +59,6 @@ interface BankAccountCreateResponse extends PaymentMethodCreateResponseWrapper {
   };
 }
 
-interface PaymentMethodErrorResponse {
-  error: {
-    code: string;
-    message: string;
-  };
-}
-
 export type CreatePaymentMethodResponse =
   | CardCreateResponse
-  | BankAccountCreateResponse
-  | PaymentMethodErrorResponse;
+  | BankAccountCreateResponse;
