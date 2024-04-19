@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { IBusiness } from '../../../../api/Business';
+import { AdditionalQuestions, IAdditionalQuestions, IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { additionQuestionsSchema } from '../../schemas/business-additional-questions-schema';
@@ -19,7 +19,7 @@ export class AdditionalQuestionsFormStep {
   @Prop() businessId: string;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() additional_questions: any = {};
+  @State() additional_questions: IAdditionalQuestions = {};
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
@@ -34,8 +34,8 @@ export class AdditionalQuestionsFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.additional_questions = response.data.additional_questions;
-      this.formController.setInitialValues(this.additional_questions);
+      this.additional_questions = new AdditionalQuestions(response.data.additional_questions || {});
+      this.formController.setInitialValues({ ...this.additional_questions });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {

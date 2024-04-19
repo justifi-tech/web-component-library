@@ -87,11 +87,25 @@ export interface ProductCategories {
   payment: boolean;
 }
 
-export interface AdditionalQuestions {
+export interface IAdditionalQuestions {
   business_revenue?: string;
   business_payment_volume?: string;
   business_dispute_volume?: string;
   business_receivable_volume?: string;
+}
+
+export class AdditionalQuestions implements IAdditionalQuestions {
+  public business_revenue?: string;
+  public business_payment_volume?: string;
+  public business_dispute_volume?: string;
+  public business_receivable_volume?: string;
+
+  constructor(additionalQuestions: IAdditionalQuestions) {
+    this.business_revenue = additionalQuestions.business_revenue;
+    this.business_payment_volume = additionalQuestions.business_payment_volume;
+    this.business_dispute_volume = additionalQuestions.business_dispute_volume;
+    this.business_receivable_volume = additionalQuestions.business_receivable_volume;
+  }
 }
 
 export interface ICoreBusinessInfo {
@@ -131,7 +145,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
 }
 
 export interface IBusiness {
-  additional_questions: AdditionalQuestions | {};
+  additional_questions: IAdditionalQuestions | {};
   business_structure: BusinessStructure;
   business_type: BusinessType;
   bank_accounts: BankAccount[];
@@ -155,7 +169,7 @@ export interface IBusiness {
 }
 
 export class Business implements IBusiness {
-  public additional_questions: AdditionalQuestions | {};
+  public additional_questions: IAdditionalQuestions | {};
   public business_structure: BusinessStructure;
   public business_type: BusinessType;
   public bank_accounts: BankAccount[];
