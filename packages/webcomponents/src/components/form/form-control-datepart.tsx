@@ -19,7 +19,7 @@ export class DatePartInput {
   @Prop() name: string;
   @Prop() error: string;
   @Prop() defaultValue: string;
-  @Prop() type: 'day' | 'month' | 'year';
+  @Prop() type: 'day' | 'month' | 'year' = 'day';
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
 
@@ -36,50 +36,55 @@ export class DatePartInput {
   }
 
   componentDidLoad() {
-    if (this.textInput) {
-      let maskOptions;
+    this.initializeMask();
+    this.updateInput(this.defaultValue);
+  }
 
-      switch (this.type) {
-        case 'day':
-          maskOptions = { mask: Number, min: 1, max: 31 };
-          break;
-        case 'month':
-          maskOptions = { mask: Number, min: 1, max: 12 };
-          break;
-        case 'year':
-          maskOptions = {
-            mask: Number,
-            min: 1900,
-            max: new Date().getFullYear(),
-          };
-          break;
-        default:
-          throw new Error('Invalid type prop');
-      }
+  disconnectedCallback() {
+    this.imask?.destroy();
+  }
 
-      this.imask = IMask(this.textInput, maskOptions);
-
-      this.imask.on('accept', () => {
-        const rawValue = this.imask.unmaskedValue;
-        this.inputHandler(this.name, rawValue);
-      });
-
-      this.textInput.addEventListener('blur', () => {
-        this.formControlBlur.emit();
-      });
-
-      this.updateInput(this.defaultValue);
+  private initializeMask() {
+    if (!this.textInput) {
+      return;
     }
+
+    let maskOptions;
+
+    switch (this.type) {
+      default:
+      case 'day':
+        maskOptions = { mask: Number, min: 1, max: 31 };
+        break;
+      case 'month':
+        maskOptions = { mask: Number, min: 1, max: 12 };
+        break;
+      case 'year':
+        maskOptions = {
+          mask: Number,
+          min: 1900,
+          max: new Date().getFullYear(),
+        };
+        break;
+    }
+
+    this.imask = IMask(this.textInput, maskOptions);
+
+    this.imask.on('accept', () => {
+      const rawValue = this.imask.unmaskedValue;
+      this.inputHandler(this.name, rawValue);
+      this.formControlInput.emit({ name: this.name, value: rawValue });
+    });
+
+    this.textInput.addEventListener('blur', () => {
+      this.formControlBlur.emit();
+    });
   }
 
   updateInput(newValue: any) {
     if (this.imask) {
       this.imask.value = String(newValue);
     }
-  }
-
-  disconnectedCallback() {
-    this.imask?.destroy();
   }
 
   render() {
