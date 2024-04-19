@@ -2,6 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@s
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
+// import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -80,24 +81,25 @@ export class CheckoutCore {
 
     this.isLoading = true;
 
-    const token = await this.paymentMethodOptionsRef.getPaymentMethodToken();
-    if (!token) {
-      this.isLoading = false;
-      return;
-    };
+    const payload: any = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+    if (payload.token) {
+      this.pay({
+        paymentMethodToken: payload.token,
+        onSuccess: ({ checkout }) => {
+          if (!checkout) return;
+          this.checkout = checkout;
+          this.isLoading = false;
+        },
+        onError: (errorMessage) => {
+          this.errorMessage = errorMessage;
+          this.isLoading = false;
+        },
+      })
+    } else if (payload.bnpl) {
+      console.log('BNPL status:', payload.bnpl.status);
+    }
 
-    this.pay({
-      paymentMethodToken: token,
-      onSuccess: ({ checkout }) => {
-        if (!checkout) return;
-        this.checkout = checkout;
-        this.isLoading = false;
-      },
-      onError: (errorMessage) => {
-        this.errorMessage = errorMessage;
-        this.isLoading = false;
-      },
-    })
+    this.isLoading = false;
   }
 
   private loadingSpinner = (
@@ -132,6 +134,7 @@ export class CheckoutCore {
                 client-id={this.checkout?.payment_client_id}
                 account-id={this.checkout?.account_id}
                 savedPaymentMethods={this.checkout?.payment_methods}
+                paymentAmount={this.checkout?.payment_amount}
               />
             </div>
           </div>

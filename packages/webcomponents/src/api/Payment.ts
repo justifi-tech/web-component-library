@@ -6,6 +6,7 @@ export enum CaptureStrategy {
 export enum PaymentMethodTypes {
   card = 'card',
   bankAccount = 'bankAccount',
+  sezzel = 'sezzel'
 }
 
 export enum PaymentStatuses {

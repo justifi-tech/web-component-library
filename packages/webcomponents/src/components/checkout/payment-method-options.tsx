@@ -2,6 +2,7 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method }
 import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -16,11 +17,12 @@ export class PaymentMethodOptions {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() selectedPaymentMethodId: string;
+  @Prop() paymentAmount: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
 
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
-  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement;
+  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzelPaymentMethodElement;
 
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
@@ -31,6 +33,9 @@ export class PaymentMethodOptions {
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
+    if (true) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzel }));
+    }
     this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
   }
 
@@ -40,8 +45,8 @@ export class PaymentMethodOptions {
   }
 
   @Method()
-  async getPaymentMethodToken(): Promise<string> {
-    return await this.selectedPaymentMethodOptionRef?.getPaymentMethodToken();
+  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
+    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod();
   }
 
   render() {
@@ -51,6 +56,7 @@ export class PaymentMethodOptions {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
           const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
+          const sezzel = paymentMethodOption.id === PaymentMethodTypes.sezzel;
           if (newCard || newBankAccount) {
             return (
               <justifi-new-payment-method
@@ -65,7 +71,20 @@ export class PaymentMethodOptions {
                 }}
               />
             );
-          } else {
+          } else if (sezzel) {
+            return (
+              <justifi-sezzel-payment-method
+                paymentMethodOption={paymentMethodOption}
+                is-selected={isSelected}
+                paymentAmount={this.paymentAmount}
+                ref={(el) => {
+                  if (isSelected) {
+                    this.selectedPaymentMethodOptionRef = el;
+                  }
+                }}>
+              </justifi-sezzel-payment-method>);
+          }
+          else {
             return (
               <justifi-saved-payment-method
                 paymentMethodOption={paymentMethodOption}

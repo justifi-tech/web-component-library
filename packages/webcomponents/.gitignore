@@ -6,6 +6,8 @@ docs.json
 build/
 docs.d.ts
 src/components.d.ts
+src/components/**/readme.md
+
 
 *~
 *.sw[mnpcod]
