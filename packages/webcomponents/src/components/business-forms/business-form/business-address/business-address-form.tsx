@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
-import StateOptions from '../../../billing-form/state-options';
+import StateOptions from '../../../../utils/state-options';
 
 @Component({
   tag: 'justifi-business-address-form',
