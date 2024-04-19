@@ -141,6 +141,7 @@ describe('payments-list-core', () => {
         detail: {
           errorCode: 'fetch-error',
           message: 'Fetch error',
+          severity: 'error',
         }
       })
     );
