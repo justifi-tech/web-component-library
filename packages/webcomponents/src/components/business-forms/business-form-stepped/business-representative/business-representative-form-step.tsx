@@ -7,6 +7,8 @@ import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { representativeSchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { Representative } from '../../../../api/Identity';
+
 
 @Component({
   tag: 'justifi-business-representative-form-step',
@@ -17,7 +19,7 @@ export class BusinessRepresentativeFormStep {
   @Prop() businessId: string;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() representative: any = {};
+  @State() representative: Representative = {};
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
@@ -32,8 +34,8 @@ export class BusinessRepresentativeFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.representative = response.data.representative;
-      this.formController.setInitialValues(this.representative);
+      this.representative = new Representative(response.data.representative || {});
+      this.formController.setInitialValues({ ...this.representative });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
