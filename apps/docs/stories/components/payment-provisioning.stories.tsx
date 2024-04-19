@@ -2,15 +2,15 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs, customStoryDecorator } from '../utils';
 
-import '@justifi/webcomponents/dist/module/justifi-business-form-stepped';
+import '@justifi/webcomponents/dist/module/justifi-payment-provisioning';
 
 type Story = StoryObj;
 
 const storyBaseArgs = new StoryBaseArgs(['auth-token', 'business-id']);
 
 const meta: Meta = {
-  title: 'Entities/BusinessFormStepped',
-  component: 'justifi-business-form-stepped',
+  title: 'Entities/Payment Provisioning (BETA)',
+  component: 'justifi-payment-provisioning',
   args: {
     ...storyBaseArgs.args,
     'test-mode': true
