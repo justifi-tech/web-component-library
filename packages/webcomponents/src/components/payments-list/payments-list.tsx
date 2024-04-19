@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPayments } from './get-payments';
 import { ErrorState } from '../details/utils';
-import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 /**
   * @exportedPart table-head: Table head
@@ -59,6 +59,7 @@ export class PaymentsList {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
       });
     }
   }
