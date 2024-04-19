@@ -6,6 +6,7 @@ import { parseAddressInfo } from '../../utils/payload-parsers';
 import { legalAddressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';
+import StateOptions from '../../../../utils/state-options';
 
 /**
  * @exportedPart label: Label for inputs
@@ -137,12 +138,13 @@ export class LegalAddressFormStep {
                 />
               </div>
               <div class="col-12">
-                <form-control-text
+                <form-control-select
                   name="state"
                   label="State"
-                  inputHandler={this.inputHandler}
                   defaultValue={legalAddressDefaultValue?.state}
+                  options={StateOptions}
                   error={this.errors?.state}
+                  inputHandler={(name, value) => this.inputHandler(name, value)}
                 />
               </div>
               <div class="col-12">
