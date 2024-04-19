@@ -141,10 +141,10 @@ export class LegalAddressFormStep {
                 <form-control-select
                   name="state"
                   label="State"
-                  defaultValue={legalAddressDefaultValue?.state}
                   options={StateOptions}
+                  inputHandler={this.inputHandler}
+                  defaultValue={legalAddressDefaultValue?.state}
                   error={this.errors?.state}
-                  inputHandler={(name, value) => this.inputHandler(name, value)}
                 />
               </div>
               <div class="col-12">
