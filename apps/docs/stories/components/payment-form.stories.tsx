@@ -93,7 +93,6 @@ const meta: Meta = {
     actions: {
       handles: [
         'submitted',
-        'error-event',
         'errorEvent'
       ]
     },
