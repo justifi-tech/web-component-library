@@ -49,6 +49,7 @@ describe('GrossPaymentChart', () => {
         detail: {
           errorCode: 'missing-props',
           message: 'Account ID and Auth Token are required',
+          severity: 'error',
         }
       })
     );
@@ -82,6 +83,7 @@ describe('GrossPaymentChart', () => {
         detail: {
           errorCode: 'fetch-error',
           message: 'Not Authenticated',
+          severity: 'error',
         }
       })
     );
@@ -111,6 +113,7 @@ describe('GrossPaymentChart', () => {
         detail: {
           errorCode: 'fetch-error',
           message: 'Network error',
+          severity: 'error',
         }
       })
     );

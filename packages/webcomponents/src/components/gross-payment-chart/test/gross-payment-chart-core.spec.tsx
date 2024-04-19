@@ -96,6 +96,7 @@ describe('gross-payment-chart', () => {
       detail: {
         errorCode: 'fetch-error',
         message: 'Error message',
+        severity: 'error',
       }
     }));
   });
@@ -122,6 +123,7 @@ describe('gross-payment-chart', () => {
       detail: {
         errorCode: 'fetch-error',
         message: 'Not Authenticated',
+        severity: 'error',
       }
     }));
   })

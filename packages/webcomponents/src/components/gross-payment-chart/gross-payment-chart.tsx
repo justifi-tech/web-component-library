@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, Prop, State, Watch, h } from '@stencil/
 import { ReportsService } from '../../api/services/reports.service';
 import { makeGetGrossPaymentChartData } from './get-gross-payment-chart-data';
 import { ErrorState } from '../details/utils';
-import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
   tag: 'justifi-gross-payment-chart',
@@ -39,6 +39,7 @@ export class GrossPaymentChart {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
       });
     }
   }

@@ -3,7 +3,7 @@ import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, L
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import { ErrorState, LoadingState } from '../details/utils';
-import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 Chart.register(
   Colors,
@@ -68,6 +68,7 @@ export class GrossPaymentChartCore {
         this.errorEvent.emit({
           errorCode: ComponentErrorCodes.FETCH_ERROR,
           message: error,
+          severity: ComponentErrorSeverity.ERROR,
         });
       }
     });
