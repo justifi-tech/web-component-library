@@ -31,6 +31,11 @@ ${codeExampleHead("justifi-payment-form")}
       // here is where you would submit a payment with the token
       console.log('data');
     });
+
+    paymentForm.addEventListener('error-event', (error) => {
+      // here is where you would handle the error
+      console.error('error-event', error);
+    }
   })();
 </script>
 

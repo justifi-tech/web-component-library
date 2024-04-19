@@ -1,8 +1,12 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentForm } from '../payment-form';
 import { PaymentMethodTypes } from '../../../api';
 import { BillingFormFields } from '../../billing-form/billing-form-schema';
 import { config } from '../../../../config';
+import { PaymentMethodSelector } from '../payment-method-selector';
+import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
+import { BillingForm } from '../../billing-form/billing-form';
 
 describe('justifi-payment-form', () => {
   it('should update submitButtonEnabled state when enableSubmitButton method is called', async () => {
@@ -194,7 +198,7 @@ describe('justifi-payment-form', () => {
             </div>
             <slot name="insurance"></slot>
             <div class="col-12">
-              <button class="btn btn-primary jfi-submit-button" type="submit">
+              <button class="btn btn-primary jfi-submit-button" data-testid="submit-button" type="submit">
                 Submit
               </button>
             </div>
@@ -202,5 +206,78 @@ describe('justifi-payment-form', () => {
         </mock:shadow-root>
       </justifi-payment-form>
     `);
+  });
+
+  it('emits error event when submit fails', async () => {
+    const clientId = 'some-client';
+
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PaymentForm, PaymentMethodSelector, PaymentMethodForm, BillingForm],
+      template: () => <justifi-payment-form clientId={clientId} onErrorEvent={errorSpy} />,
+    });
+
+    page.rootInstance.paymentMethodFormRef = {
+      validate: jest.fn().mockResolvedValue({ isValid: true }),
+      tokenize: jest.fn().mockRejectedValue(new Error('Tokenize error')),
+    };;
+    page.rootInstance.billingFormRef = {
+      validate: jest.fn().mockResolvedValue({ isValid: true }),
+      getValues: jest.fn().mockResolvedValue({}),
+    };
+
+    await page.waitForChanges();
+
+    const submitButton = page.root.shadowRoot.querySelector('[data-testid="submit-button"]') as HTMLButtonElement;
+
+    submitButton.click();
+
+    await page.waitForChanges();
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'unknown-error',
+        message: 'Tokenize error',
+        severity: 'error',
+      }
+    }));
+  });
+
+  it('emits error event when tokenize fails', async () => {
+    const clientId = 'some-client';
+
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PaymentForm, PaymentMethodSelector, PaymentMethodForm, BillingForm],
+      template: () => <justifi-payment-form clientId={clientId} onErrorEvent={errorSpy} />,
+    });
+
+    page.rootInstance.paymentMethodFormRef = {
+      validate: jest.fn().mockResolvedValue({ isValid: true }),
+      tokenize: jest.fn().mockResolvedValue({ error: { message: 'Tokenize error' } }),
+    };
+
+    page.rootInstance.billingFormRef = {
+      validate: jest.fn().mockResolvedValue({ isValid: true }),
+      getValues: jest.fn().mockResolvedValue({}),
+    };
+
+    await page.waitForChanges();
+
+    const submitButton = page.root.shadowRoot.querySelector('[data-testid="submit-button"]') as HTMLButtonElement;
+
+    submitButton.click();
+
+    await page.waitForChanges();
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'tokenize-error',
+        message: 'Tokenize error',
+        severity: 'error',
+      }
+    }));
   });
 });
