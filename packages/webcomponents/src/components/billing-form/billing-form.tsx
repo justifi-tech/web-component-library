@@ -1,7 +1,7 @@
 import { Component, Host, h, State, Listen, Method, Prop } from '@stencil/core';
 import { ValidationError } from 'yup';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
-import StateOptions from './state-options';
+import StateOptions from '../../utils/state-options';
 
 /**
  * @exportedPart label: Label for inputs

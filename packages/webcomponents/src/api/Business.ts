@@ -1,5 +1,6 @@
 import { Identity } from './Identity';
 import { BankAccount } from './shared';
+import { getStateAbbreviation } from '../utils/utils';
 
 export enum BusinessStructure {
   sole_proprietorship = 'sole_proprietorship',
@@ -56,7 +57,7 @@ export class Address implements IAddress {
     this.line2 = address.line2;
     this.postal_code = address.postal_code;
     this.city = address.city;
-    this.state = address.state;
+    this.state = getStateAbbreviation(address.state);
     this.country = address.country || 'USA';
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
