@@ -16,6 +16,20 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'payout-row-clicked': {
+      description: '`PayoutRowClicked`',
+      table: {
+        category: 'events',
+      },
+      action: true,
+    },
+    'error-event': {
+      description: '`ComponentError`',
+      table: {
+        category: 'events',
+      },
+      action: true,
+    },
   },
   parameters: {
     actions: {

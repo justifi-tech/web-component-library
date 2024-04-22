@@ -16,6 +16,13 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'error-event': {
+      description: '`ComponentError`',
+      table: {
+        category: 'events'
+      },
+      action: true
+    },
   },
   parameters: {
     actions: {
