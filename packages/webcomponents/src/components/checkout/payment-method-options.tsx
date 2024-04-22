@@ -12,12 +12,14 @@ import { PaymentMethodPayload } from './payment-method-payload';
 export class PaymentMethodOptions {
   @Prop() showCard: boolean;
   @Prop() showAch: boolean;
+  @Prop() bnpl: any; // type this
   @Prop() clientId: string;
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() selectedPaymentMethodId: string;
   @Prop() paymentAmount: string;
+
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
 
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
@@ -33,7 +35,8 @@ export class PaymentMethodOptions {
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
-    if (true) {
+    if (this.bnpl?.provider === 'sezzle') {
+      console.log(this.bnpl.provider)
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzel }));
     }
     this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
@@ -77,6 +80,7 @@ export class PaymentMethodOptions {
                 paymentMethodOption={paymentMethodOption}
                 is-selected={isSelected}
                 paymentAmount={this.paymentAmount}
+                bnpl={this.bnpl}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

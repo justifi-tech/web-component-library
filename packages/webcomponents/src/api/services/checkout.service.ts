@@ -7,10 +7,10 @@ export interface ICheckoutService {
     checkoutId: string,
   ): Promise<IApiResponse<ICheckout>>;
 
-  pay(
+  complete(
     authToken: string,
     checkoutId: string,
-    tokenizedPaymentMethod: string,
+    payment: { mode: string; token?: string; },
   ): Promise<IApiResponse<ICheckout>>;
 }
 
@@ -22,12 +22,16 @@ export class CheckoutService implements ICheckoutService {
     const endpoint = `checkouts/${checkoutId}`;
     return Api(authToken, config.proxyApiOrigin).get(endpoint);
   }
-  async pay(
+  async complete(
     authToken: string,
     checkoutId: string,
-    paymentMethodToken: string,
+    payment: { mode: string; token?: string; },
   ): Promise<IApiResponse<ICheckout>> {
-    const endpoint = `checkouts/${checkoutId}/pay`;
-    return Api(authToken, config.proxyApiOrigin).post(endpoint, JSON.stringify({ token: paymentMethodToken }));
+    const endpoint = `checkouts/${checkoutId}/complete`;
+    const payload: { mode: string, payment_token?: string } = { mode: payment.mode };
+    if (payment.token) {
+      payload.payment_token = payment.token;
+    }
+    return Api(authToken, config.proxyApiOrigin).post(endpoint, JSON.stringify(payload));
   }
 }

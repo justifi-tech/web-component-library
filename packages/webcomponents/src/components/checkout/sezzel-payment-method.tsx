@@ -24,11 +24,13 @@ const sezzleLogo = (
 })
 export class SezzelPaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop() bnpl: any; // type this
   @Prop() clientId: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
   @Prop() paymentAmount: string;
+
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;
   @State() sezzlePromise: Promise<PaymentMethodPayload>;
@@ -58,30 +60,21 @@ export class SezzelPaymentMethod {
   initializeSezzleCheckout = () => {
     let resolveSezzlePromise;
     this.sezzlePromise = new Promise((resolve) => { resolveSezzlePromise = resolve; });
+    const bnpl = this.bnpl;
     const amount = +this.paymentAmount; // convert to number
     const Checkout = (window as any).Checkout;
     const checkout = new Checkout({
       mode: 'popup',
-      publicKey: 'xxxx',
-      apiMode: 'sandbox',
-      apiVersion: 'v2'
+      publicKey: bnpl.provider_client_id,
+      apiMode: bnpl.provider_mode,
+      apiVersion: bnpl.provider_api_version,
     });
     checkout.sezzleButtonElement = this.sezzleButtonRef;
     checkout.init({
       onClick: function (event) {
         event.preventDefault();
         checkout.startCheckout({
-          checkout_payload: {
-            "order": {
-              "intent": "AUTH",
-              "reference_id": "ord_12345",
-              "description": "sezzle-store - #12749253509255",
-              "order_amount": {
-                "amount_in_cents": amount,
-                "currency": "USD"
-              }
-            }
-          }
+          checkout_url: bnpl.provider_checkout_url
         });
       },
       onComplete: (event) => resolveSezzlePromise({ bnpl: event.data }),
