@@ -16,7 +16,7 @@ import IMask, { InputMask } from 'imask';
 })
 export class MonetaryInput {
   @Prop() label: string;
-  @Prop() name: any;
+  @Prop() name: string;
   @Prop() error: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
@@ -34,30 +34,33 @@ export class MonetaryInput {
   }
 
   componentDidLoad() {
-    if (this.textInput) {
-      this.imask = IMask(this.textInput, {
-        mask: Number,
-        scale: 2,
-        thousandsSeparator: ',',
-        padFractionalZeros: true,
-        normalizeZeros: true,
-        radix: '.',
-      });
-
-      this.imask.on('accept', () => {
-        const rawValue = this.imask.unmaskedValue;
-        this.inputHandler(this.name, rawValue);
-      });
-
-      this.textInput.addEventListener('blur', () => {
-        this.formControlBlur.emit();
-      });
-    }
+    this.initializeIMask();
     this.updateInput(this.defaultValue);
   }
 
   disconnectedCallback() {
     this.imask?.destroy();
+  }
+
+  private initializeIMask() {
+    if (!this.textInput) return;
+
+    this.imask = IMask(this.textInput, {
+      mask: Number,
+      scale: 2,
+      thousandsSeparator: ',',
+      padFractionalZeros: true,
+      normalizeZeros: true,
+      radix: '.',
+    });
+
+    this.imask.on('accept', () => {
+      const rawValue = this.imask.unmaskedValue;
+      this.inputHandler(this.name, rawValue);
+      this.formControlInput.emit({ name: this.name, value: rawValue });
+    });
+
+    this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
   }
 
   updateInput(newValue: any) {
