@@ -69,6 +69,7 @@ export class PaymentProvisioning {
                 ref={(el) => this.refs[3] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
                 onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                easyValidate={this.easyValidate}
               />,
     4: () => <justifi-business-owners-form-step
                 businessId={this.businessId}
@@ -76,6 +77,7 @@ export class PaymentProvisioning {
                 ref={(el) => this.refs[4] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
                 onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                easyValidate={this.easyValidate}
               />,
   };
 

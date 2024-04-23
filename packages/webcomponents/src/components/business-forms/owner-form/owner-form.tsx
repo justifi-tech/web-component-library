@@ -4,7 +4,7 @@ import { PHONE_MASKS } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
 import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
-import { ownerSchema } from '../schemas/business-identity-schema';
+import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 import { LoadingSpinner } from '../../form/utils';
 import { OwnerFormSubmitEvent, OwnerFormServerErrorEvent, OwnerFormServerErrors } from '../utils/business-form-types';
@@ -18,6 +18,7 @@ export class BusinessOwnerForm {
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
+  @Prop() easyValidate?: boolean;
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
@@ -112,7 +113,7 @@ export class BusinessOwnerForm {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     if (!this.authToken) console.error(missingAuthTokenMessage);
 
-    this.formController = new FormController(ownerSchema);
+    this.formController = new FormController(identitySchema('owner', this.easyValidate));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
