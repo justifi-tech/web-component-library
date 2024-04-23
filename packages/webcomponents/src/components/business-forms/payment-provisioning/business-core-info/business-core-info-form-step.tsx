@@ -27,6 +27,7 @@ import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSub
 export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
+  @Prop() easyValidate?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
@@ -86,7 +87,7 @@ export class BusinessCoreInfoFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(businessCoreInfoSchema(true));
+    this.formController = new FormController(businessCoreInfoSchema(this.easyValidate));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

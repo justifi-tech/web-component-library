@@ -5,7 +5,7 @@ import { representativeSchema } from './business-identity-schema';
 import { legalAddressSchema } from './business-address-schema';
 
 export const businessFormSchema = object({
-  ...businessCoreInfoSchema(false).fields,
+  ...businessCoreInfoSchema().fields,
   legal_address: legalAddressSchema,
   additional_questions: additionQuestionsSchema,
   representative: representativeSchema
