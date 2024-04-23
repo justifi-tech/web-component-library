@@ -6,7 +6,7 @@ const theme = `
   justifi-checkout {
     display: block;
     margin: 0 auto;
-    max-width: 450px;
+    max-width: 420px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
