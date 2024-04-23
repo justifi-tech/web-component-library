@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
-import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
+// import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 // import { PaymentMethodPayload } from './payment-method-payload';
@@ -27,7 +27,7 @@ export class CheckoutCore {
   @State() creatingNewPaymentMethod: boolean = false;
   @State() selectedPaymentMethodToken: string;
 
-  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
+  @Event() submitted: EventEmitter<any>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -95,14 +95,14 @@ export class CheckoutCore {
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
+    } else {
+      this.isLoading = false;
     }
-
-    this.isLoading = false;
   }
 
   onSuccess = ({ checkout }) => {
-    this.checkout = checkout;
     this.isLoading = false;
+    this.submitted.emit({ checkout });
   }
 
   onError = (errorMessage) => {

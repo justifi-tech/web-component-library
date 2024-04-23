@@ -7,7 +7,7 @@ const theme = `
     display: block;
     margin: 0 auto;
     max-width: 420px;
-    padding: 20px;
+    padding: 40px 60px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -35,7 +35,7 @@ const theme = `
     background-color: white;
   }
   justifi-checkout::part(pay-button) {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     font-weight: bold;
   }
