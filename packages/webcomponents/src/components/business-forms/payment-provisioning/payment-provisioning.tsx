@@ -53,6 +53,7 @@ export class PaymentProvisioning {
                 ref={(el) => this.refs[1] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
                 onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                easyValidate={this.easyValidate}
               />,
     2: () => <justifi-additional-questions-form-step
                 businessId={this.businessId}

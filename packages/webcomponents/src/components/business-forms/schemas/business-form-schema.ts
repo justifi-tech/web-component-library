@@ -6,7 +6,7 @@ import { legalAddressSchema } from './business-address-schema';
 
 export const businessFormSchema = object({
   ...businessCoreInfoSchema().fields,
-  legal_address: legalAddressSchema,
+  legal_address: legalAddressSchema(),
   additional_questions: additionQuestionsSchema,
   representative: representativeSchema
 });
