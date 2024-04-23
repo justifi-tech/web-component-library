@@ -85,13 +85,13 @@ export class CheckoutCore {
 
     if (payload.token) {
       this.complete({
-        payment: { mode: 'ecom', token: payload.token },
+        payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
     } else if (payload.bnpl?.status === 'success') {
       this.complete({
-        payment: { mode: 'bnpl' },
+        payment: { payment_mode: 'bnpl' },
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
