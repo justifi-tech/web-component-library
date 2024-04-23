@@ -110,15 +110,18 @@ export class CheckoutCore {
 
   render() {
     return (
-      <Host>
+      <Host exportparts="summary-heading,payment-description,payment-total,payment-total-label,payment-total-amount,pay-button">
         <div class="row gy-3">
           <div class="col-12 mb-4">
             {/* componentize this */}
-            <h2 class="fs-5 fw-bold">Summary</h2>
+            <h2 class="fs-5 fw-bold" part="summary-heading">Summary</h2>
             {this.checkout && (
               <div>
-                <div>{this.checkout?.payment_description}</div>
-                <div>Total {formatCurrency(+this.checkout.payment_amount)}</div>
+                <div part="payment-description">{this.checkout?.payment_description}</div>
+                <div part="payment-total">
+                  <span part="payment-total-label">Total</span>&nbsp;
+                  <span part="payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+                </div>
               </div>
             )}
           </div>
@@ -144,6 +147,7 @@ export class CheckoutCore {
                 type="submit"
                 onClick={event => this.submit(event)}
                 disabled={this.isLoading}
+                part="pay-button"
                 class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
               >
                 {this.isLoading ? this.loadingSpinner : 'Pay'}
