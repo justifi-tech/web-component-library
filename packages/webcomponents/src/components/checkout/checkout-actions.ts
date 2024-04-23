@@ -18,10 +18,10 @@ export const makeGetCheckout = ({ authToken, checkoutId, service }) =>
     }
   };
 
-export const makePay = ({ authToken, checkoutId, service }) =>
-  async ({ paymentMethodToken, onSuccess, onError }) => {
+export const makeCheckoutComplete = ({ authToken, checkoutId, service }) =>
+  async ({ payment, onSuccess, onError }) => {
     try {
-      const response = await (service as CheckoutService).pay(authToken, checkoutId, paymentMethodToken);
+      const response = await (service as CheckoutService).complete(authToken, checkoutId, payment);
 
       if (!response.error) {
         const checkout = response.data;

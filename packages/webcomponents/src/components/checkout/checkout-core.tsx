@@ -16,7 +16,7 @@ export class CheckoutCore {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() getCheckout: Function;
-  @Prop() pay: Function;
+  @Prop() complete: Function;
   @Prop() checkoutId: string;
 
   @State() hasLoadedFonts: boolean = false;
@@ -82,23 +82,31 @@ export class CheckoutCore {
     this.isLoading = true;
 
     const payload: any = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+
     if (payload.token) {
-      this.pay({
-        paymentMethodToken: payload.token,
-        onSuccess: ({ checkout }) => {
-          if (!checkout) return;
-          this.checkout = checkout;
-          this.isLoading = false;
-        },
-        onError: (errorMessage) => {
-          this.errorMessage = errorMessage;
-          this.isLoading = false;
-        },
+      this.complete({
+        payment: { payment_mode: 'ecom', payment_token: payload.token },
+        onSuccess: this.onSuccess,
+        onError: this.onError,
       })
-    } else if (payload.bnpl) {
-      console.log('BNPL status:', payload.bnpl.status);
+    } else if (payload.bnpl?.status === 'success') {
+      this.complete({
+        payment: { payment_mode: 'bnpl' },
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
     }
 
+    this.isLoading = false;
+  }
+
+  onSuccess = ({ checkout }) => {
+    this.checkout = checkout;
+    this.isLoading = false;
+  }
+
+  onError = (errorMessage) => {
+    this.errorMessage = errorMessage;
     this.isLoading = false;
   }
 
@@ -134,6 +142,7 @@ export class CheckoutCore {
                 ref={(el) => (this.paymentMethodOptionsRef = el)}
                 show-card={this.checkout?.payment_settings?.credit_card_payments || true}
                 show-ach={this.checkout?.payment_settings?.ach_payments || true}
+                bnpl={this.checkout?.bnpl}
                 client-id={this.checkout?.payment_client_id}
                 account-id={this.checkout?.account_id}
                 savedPaymentMethods={this.checkout?.payment_methods}
