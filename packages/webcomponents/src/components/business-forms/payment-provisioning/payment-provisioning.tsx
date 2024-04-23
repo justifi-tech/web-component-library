@@ -16,6 +16,7 @@ export class PaymentProvisioning {
   @Prop() businessId: string;
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;
+  @Prop() easyValidate?: boolean = false;
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
@@ -44,6 +45,7 @@ export class PaymentProvisioning {
                 ref={(el) => this.refs[0] = el}
                 onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
                 onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                easyValidate={this.easyValidate}
               />,
     1: () => <justifi-legal-address-form-step
                 businessId={this.businessId}

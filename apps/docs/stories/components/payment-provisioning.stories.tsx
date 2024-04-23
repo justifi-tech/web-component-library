@@ -21,6 +21,16 @@ const meta: Meta = {
       table: {
         disable: true
       },
+    },
+    'easy-validate': {
+      type: 'boolean',
+      description: 'Easy validate `boolean`',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        category: 'props'
+      }
     }
   },
   parameters: {
