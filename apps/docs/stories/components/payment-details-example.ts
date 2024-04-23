@@ -14,9 +14,9 @@ ${codeExampleHead('justifi-payment-details')}
   (function () {
     const paymentDetails = document.querySelector('justifi-payment-details');
 
-    paymentDetails.addEventListener('errorEvent', (event) => {
+    paymentDetails.addEventListener('error-event', (event) => {
       // here is where you would handle the error
-      console.error('errorEvent', event.detail);
+      console.error('error-event', event.detail);
     });
   })();
 </script>

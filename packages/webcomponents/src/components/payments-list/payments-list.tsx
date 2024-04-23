@@ -35,7 +35,7 @@ export class PaymentsList {
   @State() getPayments: Function;
   @State() errorMessage: string = null;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetPayments();
@@ -76,7 +76,7 @@ export class PaymentsList {
     return (
       <payments-list-core
         getPayments={this.getPayments}
-        onErrorEvent={this.handleErrorEvent}
+        onError-event={this.handleErrorEvent}
       />
     );
   }

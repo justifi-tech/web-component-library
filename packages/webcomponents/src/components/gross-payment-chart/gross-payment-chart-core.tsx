@@ -28,7 +28,7 @@ export class GrossPaymentChartCore {
   @State() grossVolumeReport: GrossVolumeReport;
   @State() loading: boolean = true;
   @State() errorMessage: string = '';
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentDidLoad() {
     if (this.getGrossPayment) {

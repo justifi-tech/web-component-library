@@ -37,7 +37,7 @@ describe('payments-list', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [PaymentsList, PaymentsListCore],
-      template: () => <justifi-payments-list onErrorEvent={errorEvent} />,
+      template: () => <justifi-payments-list onError-event={errorEvent} />,
     });
     await page.waitForChanges();
     expect(errorEvent).toHaveBeenCalled();
@@ -53,7 +53,7 @@ describe('payments-list', () => {
         <justifi-payments-list
           account-id="abc"
           auth-token="abc"
-          onErrorEvent={errorEvent}
+          onError-event={errorEvent}
         />
       ),
     });

@@ -33,7 +33,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ['payment-row-clicked', 'errorEvent'],
+      handles: ['payment-row-clicked', 'error-event'],
     },
   },
   decorators: [

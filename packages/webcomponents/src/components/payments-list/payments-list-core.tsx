@@ -23,7 +23,7 @@ export class PaymentsListCore {
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayments) {

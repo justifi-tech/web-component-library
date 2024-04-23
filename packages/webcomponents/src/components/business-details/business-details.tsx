@@ -23,7 +23,7 @@ export class BusinessDetails {
   @State() errorMessage: string;
   @State() getBusiness: Function;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetBusiness();

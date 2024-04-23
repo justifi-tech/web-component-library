@@ -20,7 +20,7 @@ describe('payout-details', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetails, PayoutDetailsCore],
-      template: () => <justifi-payout-details authToken="token" onErrorEvent={eventSpy} />,
+      template: () => <justifi-payout-details authToken="token" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
     expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -37,7 +37,7 @@ describe('payout-details', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetails, PayoutDetailsCore],
-      template: () => <justifi-payout-details payoutId="payoutId" onErrorEvent={eventSpy} />,
+      template: () => <justifi-payout-details payoutId="payoutId" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
     expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -56,7 +56,7 @@ describe('payout-details', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetails, PayoutDetailsCore],
-      template: () => <justifi-payout-details payoutId="payoutId" authToken="authToken" onErrorEvent={onErrorSpy} />,
+      template: () => <justifi-payout-details payoutId="payoutId" authToken="authToken" onError-event={onErrorSpy} />,
     });
 
     await page.waitForChanges();

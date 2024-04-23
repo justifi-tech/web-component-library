@@ -56,7 +56,7 @@ describe('justifi-business-details', () => {
 
     const page = await newSpecPage({
       components: [BusinessDetails],
-      template: () => <justifi-business-details business-id="123" onErrorEvent={errorSpy} />,
+      template: () => <justifi-business-details business-id="123" onError-event={errorSpy} />,
     });
 
     page.waitForChanges();

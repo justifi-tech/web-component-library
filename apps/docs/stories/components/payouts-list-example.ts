@@ -13,9 +13,9 @@ ${codeExampleHead('justifi-payouts-list')}
   (function () {
     const payoutsList = document.querySelector('justifi-payouts-list');
 
-    payoutsList.addEventListener('errorEvent', (event) => {
+    payoutsList.addEventListener('error-event', (event) => {
       // here is where you would handle the error
-      console.error('errorEvent', event.detail);
+      console.error('error-event', event.detail);
     });
 
     payoutsList.addEventListener('payout-row-clicked', (event) => {

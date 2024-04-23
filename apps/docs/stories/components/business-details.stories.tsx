@@ -26,7 +26,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ['errorEvent'],
+      handles: ['error-event'],
     },
   },
   decorators: [

@@ -16,9 +16,9 @@ ${codeExampleHead('justifi-business-details')}
   (function () {
     const businessDetails = document.querySelector('justifi-business-details');
 
-    businessDetails.addEventListener('errorEvent', (event) => {
+    businessDetails.addEventListener('error-event', (event) => {
       // here is where you would handle the error
-      console.error('errorEvent', event.detail);
+      console.error('error-event', event.detail);
     });
   })();
 </script>

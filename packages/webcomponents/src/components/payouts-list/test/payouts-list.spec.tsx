@@ -38,7 +38,7 @@ describe('payouts-list', () => {
 
     const page = await newSpecPage({
       components: [PayoutsList, PayoutsListCore],
-      template: () => <justifi-payouts-list onErrorEvent={onErrorSpy} />,
+      template: () => <justifi-payouts-list onError-event={onErrorSpy} />,
     });
 
     await page.waitForChanges();
@@ -64,7 +64,7 @@ describe('payouts-list', () => {
         <justifi-payouts-list
           account-id="abc"
           auth-token="abc"
-          onErrorEvent={onErrorSpy}
+          onError-event={onErrorSpy}
         />
       ),
     });

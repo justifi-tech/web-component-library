@@ -13,9 +13,9 @@ ${codeExampleHead('justifi-gross-payment-chart')}
   (function () {
     const grossPaymentChart = document.querySelector('justifi-gross-payment-chart');
 
-    grossPaymentChart.addEventListener('errorEvent', (event) => {
+    grossPaymentChart.addEventListener('error-event', (event) => {
       // here is where you would handle the error
-      console.error('errorEvent', event.detail);
+      console.error('error-event', event.detail);
     });
   })();
 </script>

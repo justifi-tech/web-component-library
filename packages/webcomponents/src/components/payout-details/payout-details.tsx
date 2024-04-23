@@ -16,7 +16,7 @@ export class PayoutDetails {
   @State() getPayout: Function;
   @State() errorMessage: string = null;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetPayout();
@@ -56,7 +56,7 @@ export class PayoutDetails {
     }
 
     return (
-      <payout-details-core getPayout={this.getPayout} onErrorEvent={this.handleErrorEvent} />
+      <payout-details-core getPayout={this.getPayout} onError-event={this.handleErrorEvent} />
     );
   }
 }

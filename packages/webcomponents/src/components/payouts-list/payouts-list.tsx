@@ -36,7 +36,7 @@ export class PayoutsList {
   @State() getPayouts: Function;
   @State() errorMessage: string = null;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetPayouts();
@@ -76,7 +76,7 @@ export class PayoutsList {
 
     return (
       <Host exportedparts={tableExportedParts}>
-        <payouts-list-core getPayouts={this.getPayouts} onErrorEvent={this.handleOnError} />
+        <payouts-list-core getPayouts={this.getPayouts} onError-event={this.handleOnError} />
       </Host>
     );
   }

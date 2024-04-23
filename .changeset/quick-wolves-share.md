@@ -1,5 +1,5 @@
 ---
-"@justifi/webcomponents": minor
+'@justifi/webcomponents': minor
 ---
 
-Added an errorEvent to all components
+Added an error-event to all components

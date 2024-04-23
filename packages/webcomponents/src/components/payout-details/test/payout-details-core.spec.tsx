@@ -92,7 +92,7 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={getPayout} onErrorEvent={onErrorEvent} />
+      template: () => <payout-details-core getPayout={getPayout} onError-event={onErrorEvent} />
     });
 
     await page.waitForChanges();
@@ -121,7 +121,7 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={getPayout} onErrorEvent={onErrorEvent} />
+      template: () => <payout-details-core getPayout={getPayout} onError-event={onErrorEvent} />
     });
 
     await page.waitForChanges();

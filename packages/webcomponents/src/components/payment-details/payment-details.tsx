@@ -39,7 +39,7 @@ export class PaymentDetails {
   @State() getPaymentDetails: Function;
   @State() errorMessage: string = null;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetPaymentDetails();
@@ -83,7 +83,7 @@ export class PaymentDetails {
     return (
       <payment-details-core
         getPaymentDetails={this.getPaymentDetails}
-        onErrorEvent={this.handleErrorEvent}
+        onError-event={this.handleErrorEvent}
       ></payment-details-core>
     );
   }

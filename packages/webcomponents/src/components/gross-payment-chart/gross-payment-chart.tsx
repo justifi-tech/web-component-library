@@ -15,7 +15,7 @@ export class GrossPaymentChart {
   @State() getGrossPayment: Function;
   @State() errorMessage: string = null;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetGrossPayment();
@@ -55,7 +55,7 @@ export class GrossPaymentChart {
     }
 
     return (
-      <gross-payment-chart-core getGrossPayment={this.getGrossPayment} onErrorEvent={this.handleErrorEvent} />
+      <gross-payment-chart-core getGrossPayment={this.getGrossPayment} onError-event={this.handleErrorEvent} />
     );
   }
 }

@@ -29,7 +29,7 @@ export class PayoutsListCore {
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayouts) {

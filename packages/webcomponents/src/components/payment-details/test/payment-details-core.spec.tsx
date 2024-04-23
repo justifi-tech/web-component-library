@@ -67,7 +67,7 @@ describe('payment-details-core', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <payment-details-core getPaymentDetails={getPaymentDetails} onErrorEvent={errorSpy} />,
+      template: () => <payment-details-core getPaymentDetails={getPaymentDetails} onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -96,7 +96,7 @@ describe('payment-details-core', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <payment-details-core getPaymentDetails={getPaymentDetails} onErrorEvent={errorSpy} />,
+      template: () => <payment-details-core getPaymentDetails={getPaymentDetails} onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();

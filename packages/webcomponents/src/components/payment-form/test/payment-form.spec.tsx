@@ -215,7 +215,7 @@ describe('justifi-payment-form', () => {
 
     const page = await newSpecPage({
       components: [PaymentForm, PaymentMethodSelector, PaymentMethodForm, BillingForm],
-      template: () => <justifi-payment-form clientId={clientId} onErrorEvent={errorSpy} />,
+      template: () => <justifi-payment-form clientId={clientId} onError-event={errorSpy} />,
     });
 
     page.rootInstance.paymentMethodFormRef = {
@@ -251,7 +251,7 @@ describe('justifi-payment-form', () => {
 
     const page = await newSpecPage({
       components: [PaymentForm, PaymentMethodSelector, PaymentMethodForm, BillingForm],
-      template: () => <justifi-payment-form clientId={clientId} onErrorEvent={errorSpy} />,
+      template: () => <justifi-payment-form clientId={clientId} onError-event={errorSpy} />,
     });
 
     page.rootInstance.paymentMethodFormRef = {

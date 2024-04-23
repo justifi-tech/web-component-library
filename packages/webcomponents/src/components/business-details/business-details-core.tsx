@@ -20,7 +20,7 @@ export class BusinessDetailsCore {
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
   @State() errorMessage: string = 'An error ocurred.';
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   async componentWillLoad() {
     if (this.getBusiness) {

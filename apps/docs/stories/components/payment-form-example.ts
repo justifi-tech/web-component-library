@@ -1,9 +1,9 @@
-import { codeExampleHead } from "../utils";
+import { codeExampleHead } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead("justifi-payment-form")}
+${codeExampleHead('justifi-payment-form')}
 
 /*
 * Props definition:
@@ -32,8 +32,8 @@ ${codeExampleHead("justifi-payment-form")}
       console.log('Submitted data:', event.detail);
     });
 
-    paymentForm.addEventListener('errorEvent', (event) => {
-      console.error('Error event:', event.detail);
+    paymentForm.addEventListener('error-event', (event) => {
+      console.error('error-event:', event.detail);
     });
 
   })();

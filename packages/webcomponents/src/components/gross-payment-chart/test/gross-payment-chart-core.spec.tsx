@@ -87,7 +87,7 @@ describe('gross-payment-chart', () => {
 
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onErrorEvent={eventSpy} />,
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onError-event={eventSpy} />,
     });
 
     await page.waitForChanges();
@@ -114,7 +114,7 @@ describe('gross-payment-chart', () => {
 
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onErrorEvent={eventSpy} />,
+      template: () => <gross-payment-chart-core getGrossPayment={getGrossPayment} onError-event={eventSpy} />,
     });
 
     await page.waitForChanges();

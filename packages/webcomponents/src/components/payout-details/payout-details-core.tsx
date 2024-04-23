@@ -16,7 +16,7 @@ export class PayoutDetailsCore {
   @State() loading: boolean = true;
   @State() errorMessage: string = null;
 
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayout) {

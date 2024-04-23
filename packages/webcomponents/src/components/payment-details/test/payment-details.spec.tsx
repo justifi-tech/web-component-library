@@ -41,7 +41,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" onErrorEvent={errorSpy} />,
+      template: () => <justifi-payment-details payment-id="abc" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -60,7 +60,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details auth-token="abc" onErrorEvent={errorSpy} />,
+      template: () => <justifi-payment-details auth-token="abc" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -81,7 +81,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" auth-token="abc" onErrorEvent={errorSpy} />,
+      template: () => <justifi-payment-details payment-id="abc" auth-token="abc" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -102,7 +102,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" auth-token="abc" onErrorEvent={errorSpy} />,
+      template: () => <justifi-payment-details payment-id="abc" auth-token="abc" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();

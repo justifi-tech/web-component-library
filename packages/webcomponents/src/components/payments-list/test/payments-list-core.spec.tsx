@@ -131,7 +131,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, Table, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} onErrorEvent={errorEvent} />,
+      template: () => <payments-list-core getPayments={getPayments} onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();

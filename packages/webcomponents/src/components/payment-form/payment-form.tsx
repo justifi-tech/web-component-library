@@ -25,7 +25,7 @@ export class PaymentForm {
   @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
 
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
-  @Event() errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;

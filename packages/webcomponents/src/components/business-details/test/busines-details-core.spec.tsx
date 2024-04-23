@@ -71,7 +71,7 @@ describe('BusinessDetailsCore', () => {
 
     const page = await newSpecPage({
       components: [BusinessDetailsCore],
-      template: () => <business-details-core getBusiness={getBusiness} onErrorEvent={errorSpy} />,
+      template: () => <business-details-core getBusiness={getBusiness} onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -100,7 +100,7 @@ describe('BusinessDetailsCore', () => {
 
     const page = await newSpecPage({
       components: [BusinessDetailsCore],
-      template: () => <business-details-core getBusiness={getBusiness} onErrorEvent={errorSpy} />,
+      template: () => <business-details-core getBusiness={getBusiness} onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();

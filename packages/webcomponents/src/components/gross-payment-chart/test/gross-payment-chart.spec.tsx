@@ -40,7 +40,7 @@ describe('GrossPaymentChart', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [GrossPaymentChart, GrossPaymentChartCore],
-      template: () => <justifi-gross-payment-chart onErrorEvent={errorEvent} />,
+      template: () => <justifi-gross-payment-chart onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();
@@ -71,7 +71,7 @@ describe('GrossPaymentChart', () => {
         <justifi-gross-payment-chart
           account-id="abc"
           auth-token="abc"
-          onErrorEvent={errorEvent}
+          onError-event={errorEvent}
         />
       ),
     });
@@ -101,7 +101,7 @@ describe('GrossPaymentChart', () => {
         <justifi-gross-payment-chart
           account-id="abc"
           auth-token="abc"
-          onErrorEvent={errorEvent}
+          onError-event={errorEvent}
         />
       ),
     });

@@ -1,6 +1,6 @@
 import { codeExampleHead } from '../utils';
 
-export const codeExampleFull = (`
+export const codeExampleFull = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -11,9 +11,9 @@ ${codeExampleHead('justifi-payments-list')}
 </body>
 
 </html>
-`);
+`;
 
-export const codeExampleEventHandling = (`
+export const codeExampleEventHandling = `
 <justifi-payments-list />
 
 <script>
@@ -29,10 +29,10 @@ export const codeExampleEventHandling = (`
       <entity-details-component data={getMoreEntityDetails} />
     })
   
-    paymentList.addEventListener('errorEvent', (event) => {
+    paymentList.addEventListener('error-event', (event) => {
       // here is where you would handle the error
-      console.error('errorEvent', event.detail);
+      console.error('error-event', event.detail);
     });
   })();
 </script>
-`);
+`;
