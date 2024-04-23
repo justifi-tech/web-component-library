@@ -86,7 +86,7 @@ export class BusinessCoreInfoFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(businessCoreInfoSchema);
+    this.formController = new FormController(businessCoreInfoSchema(true));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
