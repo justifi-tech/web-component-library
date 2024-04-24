@@ -4,8 +4,8 @@ import { paymentMethodFormComponentMethods, StoryBaseArgs } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
-const storyBaseArgs = new StoryBaseArgs(['accountId', 'clientId', 'iframe-origin']);
-storyBaseArgs.argTypes.clientId.table.disable = true;
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Bank Account Form',
@@ -79,8 +79,8 @@ const handleValidateClick = async (bankForm: HTMLJustifiBankAccountFormElement) 
 };
 
 const handleTokenizeClick = async (bankForm: HTMLJustifiBankAccountFormElement, paymentMethodData: any) => {
-  const clientId = storyBaseArgs.args.clientId || '';
-  const accountId = storyBaseArgs.args.accountId || '';
+  const clientId = storyBaseArgs.args['client-id'] || '';
+  const accountId = storyBaseArgs.args['account-id'] || '';
   await bankForm.tokenize(clientId, paymentMethodData, accountId);
 };
 
