@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { StoryBaseArgs, customStoryDecorator } from '../utils';
+import { withActions } from '@storybook/addon-actions/decorator';
 
 import '@justifi/webcomponents/dist/module/justifi-gross-payment-chart';
-import { withActions } from '@storybook/addon-actions/decorator';
 
 type Story = StoryObj;
 
