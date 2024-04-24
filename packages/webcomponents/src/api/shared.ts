@@ -13,7 +13,7 @@ export interface BankAccount {
 // Errors on [capital]/config/locales/en.yml
 // Add more errors as needed
 export const API_ERRORS = {
-  NOT_AUTHENTICATED: 'Not Authenticated',
+  NOT_AUTHENTICATED: 'not_authenticated',
 };
 
 export const API_NOT_AUTHENTICATED_ERROR = {
