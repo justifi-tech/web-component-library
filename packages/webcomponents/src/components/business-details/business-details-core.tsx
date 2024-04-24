@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState, LoadingState } from '../details/utils';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentError } from '../../api/ComponentError';
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -36,14 +36,15 @@ export class BusinessDetailsCore {
         this.business = business;
         this.renderState = RENDER_STATES.READY;
       },
-      onError: ({ error }) => {
+      onError: ({ error, code, severity }) => {
         this.errorMessage = error;
         this.renderState = RENDER_STATES.ERROR;
+
         this.errorEvent.emit({
-          errorCode: ComponentErrorCodes.FETCH_ERROR,
-          message: this.errorMessage,
-          severity: ComponentErrorSeverity.ERROR,
-        })
+          errorCode: code,
+          message: error,
+          severity,
+        });
       }
     });
   }

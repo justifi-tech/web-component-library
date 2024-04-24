@@ -64,7 +64,11 @@ describe('makeGetPayments', () => {
     });
     await getPayments({ params: mockParams, onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Error fetching payments');
+    expect(onError).toHaveBeenCalledWith({
+      code: 'fetch-error',
+      error: 'Error fetching payments',
+      severity: 'error',
+    });
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -83,7 +87,11 @@ describe('makeGetPayments', () => {
     });
     await getPayments({ params: mockParams, onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Network error');
+    expect(onError).toHaveBeenCalledWith({
+      code: 'fetch-error',
+      error: 'Network error',
+      severity: 'error',
+    });
     expect(onSuccess).not.toHaveBeenCalled();
   });
 

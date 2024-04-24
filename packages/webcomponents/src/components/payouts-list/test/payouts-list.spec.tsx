@@ -76,6 +76,7 @@ describe('payouts-list', () => {
         detail: {
           errorCode: 'fetch-error',
           message: 'Fetch error',
+          severity: 'error',
         },
       })
     );

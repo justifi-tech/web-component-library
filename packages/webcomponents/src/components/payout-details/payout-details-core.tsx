@@ -2,7 +2,7 @@ import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@st
 import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentError } from '../../api/ComponentError';
 
 @Component({
   tag: 'payout-details-core',
@@ -38,12 +38,12 @@ export class PayoutDetailsCore {
         this.payout = payout;
         this.loading = false;
       },
-      onError: (errorMessage) => {
-        this.errorMessage = errorMessage;
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
         this.errorEvent.emit({
-          message: this.errorMessage,
-          errorCode: ComponentErrorCodes.FETCH_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
+          message: error,
+          errorCode: code,
+          severity,
         });
         this.loading = false;
       },

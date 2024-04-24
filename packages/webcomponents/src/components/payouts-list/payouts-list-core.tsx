@@ -8,7 +8,7 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
-import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
+import { ComponentError } from '../../api/ComponentError';
 
 @Component({
   tag: 'payouts-list-core',
@@ -82,11 +82,12 @@ export class PayoutsListCore {
         this.paging = pagingInfo;
         this.loading = false;
       },
-      onError: (errorMessage) => {
-        this.errorMessage = errorMessage;
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
         this.errorEvent.emit({
-          errorCode: ComponentErrorCodes.FETCH_ERROR,
-          message: errorMessage,
+          errorCode: code,
+          message: error,
+          severity
         });
         this.loading = false;
       },

@@ -121,7 +121,7 @@ describe('gross-payment-chart', () => {
 
     expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({
       detail: {
-        errorCode: 'fetch-error',
+        errorCode: 'not-authenticated',
         message: 'Not Authenticated',
         severity: 'error',
       }

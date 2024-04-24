@@ -62,7 +62,11 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Not Authenticated');
+    expect(onError).toHaveBeenCalledWith({
+      code: 'not-authenticated',
+      error: 'Not Authenticated',
+      severity: 'error',
+    });
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -81,7 +85,9 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Network error');
+    expect(onError).toHaveBeenCalledWith(
+      expect.objectContaining({ error: 'Network error' })
+    );
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -101,7 +107,11 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Not Authenticated');
+    expect(onError).toHaveBeenCalledWith({
+      code: 'not-authenticated',
+      error: 'Not Authenticated',
+      severity: 'error',
+    });
     expect(onSuccess).not.toHaveBeenCalled();
   });
 });

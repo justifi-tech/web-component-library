@@ -3,6 +3,7 @@ import { newSpecPage } from "@stencil/core/testing";
 import { GrossPaymentChart } from "../gross-payment-chart";
 import { GrossPaymentChartCore } from "../gross-payment-chart-core";
 import { ReportsService } from "../../../api/services/reports.service";
+import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
 jest.mock("../../../api/services/reports.service");
 
 describe('GrossPaymentChart', () => {
@@ -56,12 +57,7 @@ describe('GrossPaymentChart', () => {
   });
 
   it('emits an error event when fetch fails', async () => {
-    ReportsService.prototype.fetchGrossVolumeChartData = jest.fn().mockReturnValue({
-      "error": {
-        "code": "not_authenticated",
-        "message": "Not Authenticated"
-      }
-    });
+    ReportsService.prototype.fetchGrossVolumeChartData = jest.fn().mockReturnValue(API_NOT_AUTHENTICATED_ERROR);
 
     const errorEvent = jest.fn();
 
@@ -81,7 +77,7 @@ describe('GrossPaymentChart', () => {
     expect(errorEvent).toHaveBeenCalledWith(
       expect.objectContaining({
         detail: {
-          errorCode: 'fetch-error',
+          errorCode: 'not-authenticated',
           message: 'Not Authenticated',
           severity: 'error',
         }
