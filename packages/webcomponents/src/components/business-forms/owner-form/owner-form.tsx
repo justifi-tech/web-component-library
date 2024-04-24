@@ -64,6 +64,8 @@ export class BusinessOwnerForm {
 
   private fetchData = async () => {
     if (!this.ownerId) {
+      this.owner = { ...new Owner({}) };
+      this.formController.setInitialValues(this.owner);
       return;
     }
     this.isLoading = true;

@@ -9,10 +9,10 @@ export const additionalQuestionsSchema = (easyValidate?: boolean) => {
   });
 
   const easySchema = object({
-    business_revenue: string().required('Enter business revenue').nullable(),
-    business_payment_volume: string().required('Enter business payment volume').nullable(),
-    business_dispute_volume: string().required('Enter business dispute volume').nullable(),
-    business_receivable_volume: string().required('Enter business receivable volume').nullable()
+    business_revenue: string().nullable(),
+    business_payment_volume: string().nullable(),
+    business_dispute_volume: string().nullable(),
+    business_receivable_volume: string().nullable()
   });
 
   return easyValidate ? easySchema : schema;

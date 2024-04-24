@@ -14,15 +14,12 @@ export const legalAddressSchema = (easyValidate?: boolean) => {
   });
 
   const easySchema = object({
-    line1: string().required('Enter street address').nullable(),
+    line1: string().nullable(),
     line2: string().nullable(),
-    city: string().required('Enter city').nullable(),
-    state: string()
-      .required('Select state')
-      .oneOf(StateOptions.map((option) => option.value), 'Select state')
-      .nullable(),
-    postal_code: string().required('Enter postal code').nullable(),
-    country: string().required('Select country').nullable()
+    city: string().nullable(),
+    state: string().nullable(),
+    postal_code: string().nullable(),
+    country: string().nullable()
   });
 
   return easyValidate ? easySchema : schema;
@@ -39,13 +36,10 @@ export const identityAddressSchema = (easyValidate?: boolean) => {
   });
 
   const easySchema = object({
-    line1: string().required('Enter street address').nullable(),
-    city: string().required('Enter city').nullable(),
-    state: string()
-      .required('Select state')
-      .oneOf(StateOptions.map((option) => option.value), 'Select state')
-      .nullable(),
-    postal_code: string().required('Enter postal code').nullable(),
+    line1: string().nullable(),
+    city: string().nullable(),
+    state: string().nullable(),
+    postal_code: string().nullable(),
   });
 
   return easyValidate ? easySchema : schema;
