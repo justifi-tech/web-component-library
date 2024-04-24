@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs } from '../utils';
+import { StoryBaseArgs, customStoryDecorator } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['accountId', 'clientId', 'iframe-origin']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Payment Form',
@@ -14,10 +14,30 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     'email': 'test@test.com',
-    'submitButtonText': 'Submit Payment',
+    'submit-button-text': 'Submit Payment',
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'account-id': {
+      type: 'string',
+      description: 'Account ID `string`',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props'
+      }
+    },
+    'client-id': {
+      type: 'string',
+      description: 'Client ID `string`',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props'
+      }
+    },
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
@@ -40,6 +60,7 @@ const meta: Meta = {
     },
     'email': {
       type: 'string',
+      description: 'Email `string`',
       control: {
         type: 'text'
       },
@@ -100,6 +121,7 @@ const meta: Meta = {
     },
   },
   decorators: [
+    customStoryDecorator,
     // @ts-ignore
     withActions
   ],
