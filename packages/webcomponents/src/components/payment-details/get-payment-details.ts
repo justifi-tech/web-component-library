@@ -10,9 +10,9 @@ export const makeGetPaymentDetails =
         onSuccess({ payment: new Payment(response.data) });
       } else {
         const responseError = getErrorMessage(response.error);
-        onError(`Error trying to fetch data : ${responseError}`);
+        onError(responseError);
       }
     } catch (error) {
-      onError(`Error trying to fetch data : ${error}`);
+      onError(getErrorMessage(error));
     }
   };

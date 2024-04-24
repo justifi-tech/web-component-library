@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsListCore } from '../payments-list-core';
 import { Table } from '../../table/table';
@@ -14,20 +15,17 @@ describe('payments-list-core', () => {
       fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
     };
 
-    const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
-      html: `<payments-list-core></payments-list-core>`,
-    });
-
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getPayments = makeGetPayments({
+    const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
       service: mockPaymentsService
     });
 
-    page.rootInstance.fetchData();
+    const page = await newSpecPage({
+      components: [PaymentsListCore, Table, PaginationMenu],
+      template: () => <payments-list-core getPayments={getPayments} />,
+    });
+
     await page.waitForChanges();
 
     const justifiTable = page.root.querySelector('justifi-table');
@@ -52,14 +50,9 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, Table, PaginationMenu],
-      html: '<payments-list-core></payments-list-core>',
+      template: () => <payments-list-core getPayments={getPayments} />,
     });
 
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getPayments = getPayments;
-
-    await page.rootInstance.fetchData();
     await page.waitForChanges();
 
     expect(page.rootInstance.errorMessage).toBe('Fetch error');
@@ -71,20 +64,16 @@ describe('payments-list-core', () => {
       fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
     };
 
-    const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
-      html: `<payments-list-core></payments-list-core>`,
-    });
-
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getPayments = makeGetPayments({
+    const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
       service: mockPaymentsService
     });
 
-    page.rootInstance.fetchData();
+    const page = await newSpecPage({
+      components: [PaymentsListCore, Table, PaginationMenu],
+      template: () => <payments-list-core getPayments={getPayments} />,
+    });
 
     await page.waitForChanges();
 
@@ -104,19 +93,16 @@ describe('payments-list-core', () => {
       fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
     };
 
-    const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
-      html: `<payments-list-core></payments-list-core>`,
-    });
-
-    page.rootInstance.componentWillLoad = () => { };
-    page.rootInstance.getPayments = makeGetPayments({
+    const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
       service: mockPaymentsService
     });
 
-    page.rootInstance.fetchData();
+    const page = await newSpecPage({
+      components: [PaymentsListCore, Table, PaginationMenu],
+      template: () => <payments-list-core getPayments={getPayments} />,
+    });
 
     await page.waitForChanges();
 
@@ -124,9 +110,40 @@ describe('payments-list-core', () => {
     page.rootInstance.handleClickNext('nextCursor');
     await page.waitForChanges();
 
-    // The mock function should be called 3 times: once for the initial load, twice for when mockGetPayments is set and later after the pagination interaction
-    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(3);
+    // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
+    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
     expect(updatedParams.after_cursor).toBe('nextCursor');
+  });
+
+  it('emits error event on fetch error', async () => {
+    const mockService = {
+      fetchPayments: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    };
+
+    const getPayments = makeGetPayments({
+      id: 'some-id',
+      authToken: 'some-auth',
+      service: mockService
+    });
+
+    const errorEvent = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PaymentsListCore, Table, PaginationMenu],
+      template: () => <payments-list-core getPayments={getPayments} onError-event={errorEvent} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'fetch-error',
+          message: 'Fetch error',
+          severity: 'error',
+        }
+      })
+    );
   });
 });

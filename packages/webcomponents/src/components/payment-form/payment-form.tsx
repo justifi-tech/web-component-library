@@ -4,6 +4,8 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { loadFontsOnParent } from '../../utils/utils';
 import { config } from '../../../config';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { getErrorMessage } from '../../api/services/utils';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -18,11 +20,12 @@ export class PaymentForm {
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
 
-  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
-
   @State() submitButtonEnabled: boolean = true;
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodType: PaymentMethodTypes = PaymentMethodTypes.card;
+
+  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
@@ -62,11 +65,19 @@ export class PaymentForm {
       const paymentMethodData = { email: this.email, ...billingFormFieldValues };
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
       if (tokenizeResponse.error) {
-        console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
+        this.errorEvent.emit({
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          message: tokenizeResponse.error.message,
+          severity: ComponentErrorSeverity.ERROR
+        });
       }
       this.submitted.emit(tokenizeResponse);
     } catch (error) {
-      console.error(`An error occured submitting the form: ${error}`);
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.UNKNOWN_ERROR,
+        message: getErrorMessage(error),
+        severity: ComponentErrorSeverity.ERROR
+      })
     } finally {
       this.isLoading = false;
     }
@@ -108,6 +119,7 @@ export class PaymentForm {
           <slot name='insurance' />
           <div class="col-12">
             <button
+              data-testid="submit-button"
               type="submit"
               onClick={event => this.submit(event)}
               disabled={!this.submitButtonEnabled || this.isLoading}

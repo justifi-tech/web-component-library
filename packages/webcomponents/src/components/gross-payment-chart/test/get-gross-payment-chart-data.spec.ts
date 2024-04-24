@@ -1,6 +1,7 @@
 import { makeGetGrossPaymentChartData } from '../get-gross-payment-chart-data';
 import { ReportsService } from '../../../api/services/reports.service';
 import { mockGrossVolumeReport } from '../../../api/mockData/mockGrossVolumeReport';
+import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 const mockFetchGrossVolumeChartData = jest.fn().mockResolvedValue({
   data: mockGrossVolumeReport,
@@ -46,11 +47,9 @@ describe('makeGetGrossPaymentChartData', () => {
   });
 
   it('calls onError with message on API error', async () => {
-    const mockError = 'API error';
-    mockFetchGrossVolumeChartData.mockResolvedValue({
-      error: mockError,
-      data: null,
-    });
+    mockFetchGrossVolumeChartData.mockResolvedValue(
+      API_NOT_AUTHENTICATED_ERROR
+    );
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
@@ -63,9 +62,7 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith(
-      `Error trying to fetch data : ${mockError}`
-    );
+    expect(onError).toHaveBeenCalledWith('Not Authenticated');
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -84,9 +81,27 @@ describe('makeGetGrossPaymentChartData', () => {
 
     await getGrossPaymentChartData({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith(
-      `Error trying to fetch data : ${mockError}`
+    expect(onError).toHaveBeenCalledWith('Network error');
+    expect(onSuccess).not.toHaveBeenCalled();
+  });
+
+  it('calls onError with message on error returned', async () => {
+    mockFetchGrossVolumeChartData.mockResolvedValue(
+      API_NOT_AUTHENTICATED_ERROR
     );
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const getGrossPaymentChartData = makeGetGrossPaymentChartData({
+      id: mockId,
+      authToken: mockAuthToken,
+      service: mockService,
+    });
+
+    await getGrossPaymentChartData({ onSuccess, onError });
+
+    expect(onError).toHaveBeenCalledWith('Not Authenticated');
     expect(onSuccess).not.toHaveBeenCalled();
   });
 });

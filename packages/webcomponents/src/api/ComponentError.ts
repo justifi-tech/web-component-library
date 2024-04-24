@@ -2,6 +2,7 @@ export enum ComponentErrorCodes {
   MISSING_PROPS = 'missing-props',
   FETCH_ERROR = 'fetch-error',
   UNKNOWN_ERROR = 'unknown-error',
+  TOKENIZE_ERROR = 'tokenize-error',
 }
 
 export enum ComponentErrorSeverity {

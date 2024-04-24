@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { StoryBaseArgs, customStoryDecorator } from '../utils';
+import { withActions } from '@storybook/addon-actions/decorator';
 
 import '@justifi/webcomponents/dist/module/justifi-gross-payment-chart';
 
@@ -14,11 +15,25 @@ const meta: Meta = {
     ...storyBaseArgs.args
   },
   argTypes: {
-    ...storyBaseArgs.argTypes
+    ...storyBaseArgs.argTypes,
+    'error-event': {
+      description: '`ComponentError`',
+      table: {
+        category: 'events'
+      },
+      action: true
+    },
   },
-  parameters: {},
+  parameters: {
+    actions: {
+      handles: ['error-event']
+    }
+  },
   decorators: [
-    customStoryDecorator
+    customStoryDecorator,
+    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
+    // https://github.com/storybookjs/storybook/issues/22384
+    withActions
   ]
 };
 

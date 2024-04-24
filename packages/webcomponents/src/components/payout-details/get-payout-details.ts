@@ -13,11 +13,11 @@ export const makeGetPayoutDetails =
         onSuccess(payout);
       } else {
         const responseError = getErrorMessage(response.error);
-        const errorMessage = `Error fetching payout details: ${responseError}`;
-        onError(errorMessage);
+        const errorMessage = responseError;
+        onError(getErrorMessage(errorMessage));
       }
     } catch (error) {
-      const errorMessage = `Error fetching payout details: ${error}`;
-      onError(errorMessage);
+      const errorMessage = error;
+      onError(getErrorMessage(errorMessage));
     }
   };
