@@ -6,7 +6,7 @@ import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+const storyBaseArgs = new StoryBaseArgs(['accountId', 'clientId', 'iframe-origin']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Payment Form',
@@ -14,7 +14,7 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     'email': 'test@test.com',
-    'submit-button-text': 'Submit'
+    'submitButtonText': 'Submit Payment',
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -61,7 +61,6 @@ const meta: Meta = {
       table: {
         category: 'events'
       },
-      action: true
     },
     'error-event': {
       description: '`ComponentError`',
