@@ -1,12 +1,12 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessAddressForm } from '../business-address-form';
+import { IdentityAddressForm } from '../identity-address-form';
 import { IAddress } from '../../../../../api/Business';
 
 describe('business-address', () => {
-  it('should render BusinessAddressForm component', async () => {
+  it('should render IdentityAddressForm component', async () => {
     const page = await newSpecPage({
-      components: [BusinessAddressForm],
+      components: [IdentityAddressForm],
       template: () => (
         <justifi-business-address-form></justifi-business-address-form>
       ),
@@ -40,7 +40,7 @@ describe('business-address', () => {
   `);
   });
 
-  it('should render BusinessAddressForm component with defaults', async () => {
+  it('should render IdentityAddressForm component with defaults', async () => {
     const businessAddress = {
       line1: 'Street 1',
       line2: 'Apartment 1',
@@ -50,7 +50,7 @@ describe('business-address', () => {
       country: 'Country',
     } as IAddress;
     const page = await newSpecPage({
-      components: [BusinessAddressForm],
+      components: [IdentityAddressForm],
       template: () => (
         <justifi-business-address-form
           defaultValues={businessAddress}

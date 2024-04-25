@@ -258,7 +258,7 @@ export class BusinessOwnerForm {
                 />
               </div>
               <div class="col-12">
-                <justifi-business-address-form
+                <justifi-identity-address-form
                   errors={this.errors.address}
                   defaultValues={ownerDefaultValue?.address}
                   handleFormUpdate={values => this.onAddressFormUpdate(values)}
