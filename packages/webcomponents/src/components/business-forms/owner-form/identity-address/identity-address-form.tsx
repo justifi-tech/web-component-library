@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../../../utils/state-options';
+import { filterPostalInput } from '../../../form/utils';
 
 @Component({
   tag: 'justifi-identity-address-form',
@@ -64,11 +65,13 @@ export class IdentityAddressForm {
             />
           </div>
           <div class="col-12 col-md-6">
-            <form-control-number
+            <form-control-text
               name="postal_code"
               label="Postal Code"
               defaultValue={this.defaultValues?.postal_code}
               error={this.errors?.postal_code}
+              maxLength={5}
+              keyDownHandler={(e) => filterPostalInput(e)}
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
