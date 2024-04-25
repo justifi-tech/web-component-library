@@ -35,7 +35,6 @@ export class IdentityAddressForm {
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
-
           <div class="col-12 col-md-4">
             <form-control-text
               name="line2"
@@ -45,7 +44,6 @@ export class IdentityAddressForm {
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
-
           <div class="col-12">
             <form-control-text
               name="city"
@@ -55,7 +53,6 @@ export class IdentityAddressForm {
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
-
           <div class="col-12 col-md-6">
             <form-control-select
               name="state"
@@ -66,7 +63,6 @@ export class IdentityAddressForm {
               inputHandler={(name, value) => this.inputHandler(name, value)}
             />
           </div>
-
           <div class="col-12 col-md-6">
             <form-control-number
               name="postal_code"
@@ -74,6 +70,18 @@ export class IdentityAddressForm {
               defaultValue={this.defaultValues?.postal_code}
               error={this.errors?.postal_code}
               inputHandler={(name, value) => this.inputHandler(name, value)}
+            />
+          </div>
+          <div class="col-12">
+            <form-control-select
+              name="country"
+              label="Country"
+              options={[{ label: 'United States', value: 'USA' }]}
+              inputHandler={this.inputHandler}
+              defaultValue={this.defaultValues?.country}
+              error={this.errors?.country}
+              // just for now so we skip handling country specificities
+              disabled={true}
             />
           </div>
         </div>
