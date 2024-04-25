@@ -32,7 +32,7 @@ describe('identity-address', () => {
           </div>
 
           <div class="col-12 col-md-6">
-            <form-control-number label="Postal Code" name="postal_code"></form-control-number>
+            <form-control-text label="Postal Code" maxlength="5" name="postal_code"></form-control-text>
           </div>
 
           <div class="col-12">
@@ -78,7 +78,7 @@ describe('identity-address', () => {
             <form-control-select defaultValue="State" label="State" name="state"></form-control-select>
           </div>
           <div class="col-12 col-md-6">
-            <form-control-number defaultValue="12345" label="Postal Code" name="postal_code"></form-control-number>
+            <form-control-text defaultvalue="12345" label="Postal Code" maxlength="5" name="postal_code"></form-control-text>
           </div>
           <div class="col-12">
             <form-control-select defaultValue="Country" disabled="" label="Country" name="country"></form-control-select>
