@@ -1,12 +1,10 @@
 import { object, string } from 'yup';
-import { phoneRegex } from '../utils/helpers';
+import { phoneRegex, urlRegex } from '../utils/helpers';
 
 export const businessCoreInfoSchema = (easyValidate?: boolean) => {
   const schema = object({
     legal_name: string().required('Enter legal name'),
-    website_url: string()
-      .url('Enter valid website url')
-      .required('Enter website url'),
+    website_url: string().matches(urlRegex, 'Enter valid website url').required('Enter website url'),
     email: string().email('Enter valid email').required('Enter email'),
     phone: string().matches(phoneRegex, 'Enter valid phone number').required('Enter phone number'),
     doing_business_as: string().required('Enter doing business as'),
@@ -17,9 +15,7 @@ export const businessCoreInfoSchema = (easyValidate?: boolean) => {
 
   const easySchema = object({
     legal_name: string().required('Enter legal name'),
-    website_url: string()
-      .url('Enter valid website url')
-      .nullable(),
+    website_url: string().matches(urlRegex, 'Enter valid website url').nullable(),
     email: string().email('Enter valid email').nullable(),
     phone: string().matches(phoneRegex, 'Enter valid phone number').nullable(),
     doing_business_as: string().nullable(),
