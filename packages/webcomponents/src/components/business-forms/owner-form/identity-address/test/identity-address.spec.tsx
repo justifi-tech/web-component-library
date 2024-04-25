@@ -3,16 +3,16 @@ import { newSpecPage } from '@stencil/core/testing';
 import { IdentityAddressForm } from '../identity-address-form';
 import { IAddress } from '../../../../../api/Business';
 
-describe('business-address', () => {
+describe('identity-address', () => {
   it('should render IdentityAddressForm component', async () => {
     const page = await newSpecPage({
       components: [IdentityAddressForm],
       template: () => (
-        <justifi-business-address-form></justifi-business-address-form>
+        <justifi-identity-address-form></justifi-identity-address-form>
       ),
     });
     expect(page.root).toEqualHtml(`
-    <justifi-business-address-form exportparts="label,input,input-invalid">
+    <justifi-identity-address-form exportparts="label,input,input-invalid">
       <mock:shadow-root>
         <div class="row gy-3">
           <div class="col-12 col-md-8">
@@ -34,9 +34,13 @@ describe('business-address', () => {
           <div class="col-12 col-md-6">
             <form-control-number label="Postal Code" name="postal_code"></form-control-number>
           </div>
+
+          <div class="col-12">
+            <form-control-select disabled="" label="Country" name="country"></form-control-select>
+          </div>
         </div>
       </mock:shadow-root>
-    </justifi-business-address-form>
+    </justifi-identity-address-form>
   `);
   });
 
@@ -52,13 +56,13 @@ describe('business-address', () => {
     const page = await newSpecPage({
       components: [IdentityAddressForm],
       template: () => (
-        <justifi-business-address-form
+        <justifi-identity-address-form
           defaultValues={businessAddress}
-        ></justifi-business-address-form>
+        ></justifi-identity-address-form>
       ),
     });
     expect(page.root).toEqualHtml(`
-    <justifi-business-address-form exportparts="label,input,input-invalid">
+    <justifi-identity-address-form exportparts="label,input,input-invalid">
       <mock:shadow-root>
         <div class="gy-3 row">
           <div class="col-12 col-md-8">
@@ -76,9 +80,12 @@ describe('business-address', () => {
           <div class="col-12 col-md-6">
             <form-control-number defaultValue="12345" label="Postal Code" name="postal_code"></form-control-number>
           </div>
+          <div class="col-12">
+            <form-control-select defaultValue="Country" disabled="" label="Country" name="country"></form-control-select>
+          </div>
         </div>
       </mock:shadow-root>
-    </justifi-business-address-form>
+    </justifi-identity-address-form>
   `);
   });
 });
