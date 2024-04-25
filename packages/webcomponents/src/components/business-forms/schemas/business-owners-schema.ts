@@ -1,5 +1,5 @@
 import { object, string, boolean } from 'yup';
-import { identityAddressSchema } from './business-address-schema';
+import { addressSchema } from './business-address-schema';
 
 export const ownerSchema = object({
   name: string().required('Enter owner name'),
@@ -13,5 +13,5 @@ export const ownerSchema = object({
   dob_year: string().required('Enter owner birth year'),
   identification_number: string(),
   is_owner: boolean(),
-  address: identityAddressSchema,
+  address: addressSchema,
 });

@@ -3,7 +3,7 @@ import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/payload-parsers';
-import { legalAddressSchema } from '../../schemas/business-address-schema';
+import { addressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';
 import StateOptions from '../../../../utils/state-options';
@@ -80,7 +80,7 @@ export class LegalAddressFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(legalAddressSchema);
+    this.formController = new FormController(addressSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
@@ -127,6 +127,8 @@ export class LegalAddressFormStep {
                   label="Address Line 2"
                   inputHandler={(name, value) => this.inputHandler(name, value)}
                   defaultValue={legalAddressDefaultValue?.line2}
+                  error={this.errors?.line2}
+
                 />
               </div>
               <div class="col-12">

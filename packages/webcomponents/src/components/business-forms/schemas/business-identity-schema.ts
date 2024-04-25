@@ -1,5 +1,5 @@
 import { object, string } from 'yup';
-import { identityAddressSchema } from './business-address-schema';
+import { addressSchema } from './business-address-schema';
 
 export const phoneRegex = /^[0-9]+$/;
 
@@ -17,7 +17,7 @@ export const representativeSchema = object({
   dob_month: string().required('Enter representative birth month'),
   dob_year: string().required('Enter representative birth year'),
   identification_number: string(),
-  address: identityAddressSchema,
+  address: addressSchema,
 });
 
 export const ownerSchema = object({
@@ -34,5 +34,5 @@ export const ownerSchema = object({
   dob_month: string().required('Enter owner birth month'),
   dob_year: string().required('Enter owner birth year'),
   identification_number: string(),
-  address: identityAddressSchema,
+  address: addressSchema,
 });

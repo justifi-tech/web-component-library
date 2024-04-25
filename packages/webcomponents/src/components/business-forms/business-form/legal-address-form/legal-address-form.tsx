@@ -66,6 +66,7 @@ export class LegalAddressForm {
                 label="Address Line 2"
                 inputHandler={(name, value) => this.inputHandler(name, value)}
                 defaultValue={legalAddressDefaultValue?.line2}
+                error={this.errors?.legal_address?.line2}
               />
             </div>
             <div class="col-12">
