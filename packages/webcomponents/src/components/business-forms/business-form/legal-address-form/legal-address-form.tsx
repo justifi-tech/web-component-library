@@ -1,6 +1,7 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { IAddress } from '../../../../api/Business';
+import StateOptions from '../../../../utils/state-options';
 
 /**
  * @exportedPart label: Label for inputs
@@ -76,9 +77,10 @@ export class LegalAddressForm {
               />
             </div>
             <div class="col-12">
-              <form-control-text
+              <form-control-select
                 name="state"
                 label="State"
+                options={StateOptions}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.state}
                 error={this.errors?.legal_address?.state}
