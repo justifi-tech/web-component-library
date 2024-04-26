@@ -67,21 +67,15 @@ export class BusinessRepresentative {
                 inputHandler={this.inputHandler}
               />
             </div>
-
             <div class="col-12 col-md-4">
-              <form-control-select
+              <form-control-text
                 name="title"
-                label="Prefix"
+                label="Title"
                 defaultValue={representativeDefaultValue?.title}
-                options={[
-                  { label: 'Select Prefix', value: '' },
-                  { label: 'Mrs.', value: 'Mrs.' },
-                ]}
                 error={this.errors.title}
                 inputHandler={this.inputHandler}
               />
             </div>
-
             <div class="col-12 col-md-6">
               <form-control-text
                 name="email"
@@ -91,7 +85,6 @@ export class BusinessRepresentative {
                 inputHandler={this.inputHandler}
               />
             </div>
-
             <div class="col-12 col-md-6">
               <form-control-number-masked
                 name="phone"
@@ -102,13 +95,11 @@ export class BusinessRepresentative {
                 mask={PHONE_MASKS.US}
               />
             </div>
-
             <div class="col-12">
               <label part="label" class="form-label">
                 Birth Date
               </label>
             </div>
-
             <div class="col-12 col-md-4">
               <form-control-datepart
                 name="dob_day"
@@ -119,7 +110,6 @@ export class BusinessRepresentative {
                 type="day"
               />
             </div>
-
             <div class="col-12 col-md-4">
               <form-control-datepart
                 name="dob_month"
@@ -130,7 +120,6 @@ export class BusinessRepresentative {
                 type="month"
               />
             </div>
-
             <div class="col-12 col-md-4">
               <form-control-datepart
                 name="dob_year"
@@ -141,7 +130,6 @@ export class BusinessRepresentative {
                 type="year"
               />
             </div>
-
             <div class="col-12">
               <form-control-number
                 name="identification_number"
@@ -151,7 +139,6 @@ export class BusinessRepresentative {
                 inputHandler={this.inputHandler}
               />
             </div>
-
             <div class="col-12">
               <justifi-business-address-form
                 errors={this.errors.address}
