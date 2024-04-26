@@ -20,7 +20,7 @@ export class PaymentProvisioning {
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
   @State() totalSteps: number = 5;
-  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   get showErrors() {
     return this.errorMessage && !this.hideErrors;
