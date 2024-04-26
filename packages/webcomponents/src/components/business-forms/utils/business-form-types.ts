@@ -56,5 +56,6 @@ export enum OwnerFormServerErrors {
 export enum OwnerFormClickActions {
   removeOwner = 'removeOwner',
   addOwner = 'addOwner',
+  addOwnerForm = 'addOwnerForm',
   updateOwner = 'updateOwner'
 }

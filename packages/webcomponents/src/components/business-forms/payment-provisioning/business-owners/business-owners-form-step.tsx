@@ -1,9 +1,15 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { IBusiness } from '../../../../api/Business';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { Owner } from '../../../../api/Identity';
+import { 
+  BusinessFormServerErrorEvent, 
+  BusinessFormServerErrors, 
+  BusinessFormSubmitEvent, 
+  OwnerFormClickActions, 
+  OwnerFormClickEvent } 
+  from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -22,6 +28,7 @@ export class BusinessOwnersFormStep {
   @State() newFormOpen: boolean;
   @State() refs = [];
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
 
@@ -116,10 +123,11 @@ export class BusinessOwnersFormStep {
     this.fetchData();
   }
 
-  private addOwnerForm = () => {
+  private addOwnerForm = (fireClick?: boolean) => {
     this.newFormOpen = true;
     const newOwner = { ...new Owner({})};
     this.owners = [...this.owners, newOwner];
+    fireClick && this.clickEvent.emit({ name: OwnerFormClickActions.addOwnerForm });
   };
 
   private removeOwnerForm = (id: string) => {
@@ -168,7 +176,7 @@ export class BusinessOwnersFormStep {
         </div>
         {this.showAddOwnerButton && 
           <div class='col-12'>
-            <button class='btn btn-primary' onClick={this.addOwnerForm}>Add Owner</button>
+            <button class='btn btn-primary' onClick={() => this.addOwnerForm(true)}>Add Owner</button>
           </div>
         }
       </Host>
