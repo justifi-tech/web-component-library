@@ -11,7 +11,7 @@ import {
   OwnerFormSubmitEvent, 
   OwnerFormServerErrorEvent, 
   OwnerFormServerErrors, 
-  OwnerFormClickEvents, 
+  OwnerFormClickEvent, 
   OwnerFormClickActions} 
   from '../utils/business-form-types';
 
@@ -32,7 +32,7 @@ export class BusinessOwnerForm {
   @State() errors: any = {};
   @State() owner: Owner = {};
   @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvents>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
 

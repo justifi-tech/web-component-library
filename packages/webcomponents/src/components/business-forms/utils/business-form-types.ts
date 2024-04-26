@@ -37,7 +37,7 @@ export interface OwnerFormSubmitEvent {
   metadata?: any;
 }
 
-export interface OwnerFormClickEvents {
+export interface OwnerFormClickEvent {
   data?: any;
   name: OwnerFormClickActions;
 }
