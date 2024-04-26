@@ -28,17 +28,24 @@ const meta: Meta = {
         category: 'events'
       }
     },
-    'clickEvent': {
+    'click-event': {
       description: 'Emitted when controls are clicked.  Control name is defined in `data.detail.name`.',
       table: {
         category: 'events'
       }
-    }
+    },
+    'clickEvent': {
+      description: 'Emitted when controls are clicked.  Control name is defined in `data.detail.name`. This event will be deprecated in favor of the `click-event` event.',
+      table: {
+        category: 'events'
+      }
+    },
   },
   parameters: {
     actions: {
       handles: [
         'submitted',
+        'click-event',
         'clickEvent'
       ]
     }

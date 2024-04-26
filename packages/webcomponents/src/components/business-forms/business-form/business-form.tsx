@@ -23,8 +23,15 @@ export class BusinessForm {
   @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
-  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({eventName: 'click-event'}) clickEventNew: EventEmitter<BusinessFormClickEvent>;
+  @Event({eventName: 'clickEvent'}) clickEventOld: EventEmitter<BusinessFormClickEvent>;
+
+  fireClickEvents(event: BusinessFormClickEvent) {
+    console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
+    this.clickEventNew.emit(event);
+    this.clickEventOld.emit(event);
+  }
 
   get disabledState() {
     return this.isLoading;
@@ -120,7 +127,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.clickEvent.emit({ name: BusinessFormClickActions.submit})}
+                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
