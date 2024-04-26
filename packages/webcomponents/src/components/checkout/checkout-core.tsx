@@ -27,7 +27,7 @@ export class CheckoutCore {
   @State() creatingNewPaymentMethod: boolean = false;
   @State() selectedPaymentMethodToken: string;
 
-  @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
+  @Event() submitted: EventEmitter<CheckoutCompleteResponse>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -95,9 +95,9 @@ export class CheckoutCore {
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
+    } else {
+      this.isLoading = false;
     }
-
-    this.isLoading = false;
   }
 
   onSuccess = ({ checkout }) => {
