@@ -21,7 +21,7 @@ ${codeExampleHead("justifi-business-form")}
       console.log("server response received", data);
     });
 
-    businessForm.addEventListener("clickEvent", (data) => {
+    businessForm.addEventListener("click-event", (data) => {
       let name = data.detail.name;
 
       if (name == "submit") {
