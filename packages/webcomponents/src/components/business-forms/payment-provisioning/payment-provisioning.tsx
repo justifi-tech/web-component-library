@@ -116,8 +116,7 @@ export class PaymentProvisioning {
 
   previousStepButtonOnClick() {
     this.clickEvent.emit({ name: BusinessFormClickActions.previousStep })
-    const currentStep = this.refs[this.currentStep];
-    currentStep.validateAndSubmit({ onSuccess: this.decrementSteps });
+    this.decrementSteps();
   }
 
   nextStepButtonOnClick(e: any, clickEventName) {

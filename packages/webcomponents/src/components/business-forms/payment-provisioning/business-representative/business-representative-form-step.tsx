@@ -129,14 +129,10 @@ export class BusinessRepresentativeFormStep {
                 />
               </div>
               <div class="col-12 col-md-4">
-                <form-control-select
+                <form-control-text
                   name="title"
-                  label="Prefix"
+                  label="Title"
                   defaultValue={representativeDefaultValue?.title}
-                  options={[
-                    { label: 'Select Prefix', value: '' },
-                    { label: 'Mrs.', value: 'Mrs.' },
-                  ]}
                   error={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
