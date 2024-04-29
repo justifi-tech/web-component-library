@@ -20,6 +20,7 @@ import StateOptions from '../../../../utils/state-options';
 export class LegalAddressFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
@@ -79,7 +80,7 @@ export class LegalAddressFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(legalAddressSchema);
+    this.formController = new FormController(legalAddressSchema(this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

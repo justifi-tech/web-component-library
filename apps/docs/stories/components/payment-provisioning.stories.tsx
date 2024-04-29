@@ -21,6 +21,17 @@ const meta: Meta = {
       table: {
         disable: true
       },
+    },
+    'allow-optional-fields': {
+      type: 'boolean',
+      description: 'When set to `true`, this prop allows most fields in each form step to be nullable, allowing for quicker form completion. Note - the following fields are still required: `business.legal_name`, `representative.name`, `owner.name`.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'false' }
+      }
     }
   },
   parameters: {
