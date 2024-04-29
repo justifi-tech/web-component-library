@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "4.8.3",
+  "version": "4.10.0",
   "description": "JustiFi Web Components",
   "main": "dist/module/index.js",
   "module": "dist/module/index.js",
@@ -58,11 +58,5 @@
     "ts-jest": "^29.1.2"
   },
   "license": "MIT",
-  "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783",
-  "pnpm": {
-    "overrides": {
-      "ip@<1.1.9": ">=1.1.9",
-      "ip@=2.0.0": ">=2.0.1"
-    }
-  }
+  "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783"
 }

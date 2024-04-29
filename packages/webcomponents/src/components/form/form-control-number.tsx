@@ -44,6 +44,7 @@ export class NumberInput {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
+    this.formControlInput.emit({ name, value: target.value });
   }
 
   componentDidLoad() {

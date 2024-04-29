@@ -2,6 +2,9 @@ import { format } from 'date-fns';
 import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
 import { Legal } from '../api/SubAccount';
+import StateOptions from './state-options';
+
+export const RegExZip = /^\d{5}/;
 
 export function formatCurrency(amount: number, withSymbol = true): string {
   if (!amount) amount = 0;
@@ -177,6 +180,22 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
     .join(' ');
 }
 
+export function flattenNestedObject(obj) {
+  const result = {};
+
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      const nestedObj = flattenNestedObject(obj[key]);
+      for (const nestedKey in nestedObj) {
+        result[nestedKey] = nestedObj[nestedKey];
+      }
+    } else {
+      result[key] = obj[key];
+    }
+  }
+
+  return result;
+}
 export function composeQueryParams(values: string[]) {
   const queryParams = values.map((value) => {
     if (value === values[0]) {
@@ -218,4 +237,9 @@ export async function loadFontsOnParent() {
 
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+export function getStateAbbreviation(stateName: string): string | undefined {
+  const state = StateOptions.find(s => s.label === stateName);
+  return state ? state.value : stateName;
 }

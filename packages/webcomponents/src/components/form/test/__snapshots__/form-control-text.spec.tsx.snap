@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-text renders with default props 1`] = `
+<form-control-text exportparts="label,input,input-invalid" label="Username" name="username">
+  <mock:shadow-root>
+    <label class="form-label" htmlfor="username" part="label">
+      Username
+    </label>
+    <input class="form-control" id="username" name="username" part="input " type="text" value="">
+  </mock:shadow-root>
+</form-control-text>
+`;

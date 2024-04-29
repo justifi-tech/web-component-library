@@ -1,7 +1,7 @@
 import { Component, Host, h, State, Listen, Method, Prop } from '@stencil/core';
 import { ValidationError } from 'yup';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
-import StateOptions from './state-options';
+import StateOptions from '../../utils/state-options';
 
 /**
  * @exportedPart label: Label for inputs
@@ -79,12 +79,11 @@ export class BillingForm {
     return this.billingFields;
   }
 
-  legendBlock = (<legend>{this.legend}</legend>);
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          {this.legend && this.legendBlock}
+          {this.legend && <legend>{this.legend}</legend>}
           <div class="row gy-3">
             <div class="col-12">
               <text-input name="name" label="Full Name" defaultValue={this.billingFields.name} error={this.billingFieldsErrors.name} />

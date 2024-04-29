@@ -1,6 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailSectionTitle, DetailItem } from '../../details/utils';
-import { AdditionalQuestions } from '../../../api/Business';
+import { IAdditionalQuestions } from '../../../api/Business';
 import { isEmptyObject } from '../../../utils/utils';
 
 /**
@@ -17,7 +17,7 @@ import { isEmptyObject } from '../../../utils/utils';
   shadow: true,
 })
 export class AdditionalQuestionsDetails {
-  @Prop() additionalQuestions: AdditionalQuestions
+  @Prop() additionalQuestions: IAdditionalQuestions
 
   render() {
     if (isEmptyObject(this.additionalQuestions)) return null;

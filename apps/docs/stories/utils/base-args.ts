@@ -9,7 +9,7 @@ const args: ArgValues = {
   'client-id': 'test_df97f04afebc3c018de30df3562d7cdd',
   'payment-id': 'py_1NNeEnf4FbelxDCQN2RHcE',
   'payout-id': 'po_17745yESnHyEgWNeunmhmR',
-}
+};
 
 const argTypes: ArgTypes = {
   'auth-token': {

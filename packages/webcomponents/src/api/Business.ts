@@ -1,4 +1,6 @@
+import { Identity } from './Identity';
 import { BankAccount } from './shared';
+import { getStateAbbreviation } from '../utils/utils';
 
 export enum BusinessStructure {
   sole_proprietorship = 'sole_proprietorship',
@@ -55,7 +57,7 @@ export class Address implements IAddress {
     this.line2 = address.line2;
     this.postal_code = address.postal_code;
     this.city = address.city;
-    this.state = address.state;
+    this.state = getStateAbbreviation(address.state);
     this.country = address.country || 'USA';
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
@@ -78,25 +80,6 @@ export interface Document {
   updated_at: string;
 }
 
-export interface Identity {
-  address?: IAddress;
-  created_at?: string;
-  dob_day?: string;
-  dob_month?: string;
-  dob_year?: string;
-  documents?: Document[];
-  email?: string;
-  id?: string;
-  is_owner?: boolean;
-  metadata?: any;
-  name?: string;
-  phone?: string;
-  platform_account_id?: string;
-  ssn_last4?: string;
-  title?: string;
-  updated_at?: string;
-}
-
 export interface ProductCategories {
   credit: boolean;
   insurance: boolean;
@@ -104,11 +87,25 @@ export interface ProductCategories {
   payment: boolean;
 }
 
-export interface AdditionalQuestions {
+export interface IAdditionalQuestions {
   business_revenue?: string;
   business_payment_volume?: string;
   business_dispute_volume?: string;
   business_receivable_volume?: string;
+}
+
+export class AdditionalQuestions implements IAdditionalQuestions {
+  public business_revenue?: string;
+  public business_payment_volume?: string;
+  public business_dispute_volume?: string;
+  public business_receivable_volume?: string;
+
+  constructor(additionalQuestions: IAdditionalQuestions) {
+    this.business_revenue = additionalQuestions.business_revenue;
+    this.business_payment_volume = additionalQuestions.business_payment_volume;
+    this.business_dispute_volume = additionalQuestions.business_dispute_volume;
+    this.business_receivable_volume = additionalQuestions.business_receivable_volume;
+  }
 }
 
 export interface ICoreBusinessInfo {
@@ -148,7 +145,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
 }
 
 export interface IBusiness {
-  additional_questions: AdditionalQuestions | {};
+  additional_questions: IAdditionalQuestions | {};
   business_structure: BusinessStructure;
   business_type: BusinessType;
   bank_accounts: BankAccount[];
@@ -172,7 +169,7 @@ export interface IBusiness {
 }
 
 export class Business implements IBusiness {
-  public additional_questions: AdditionalQuestions | {};
+  public additional_questions: IAdditionalQuestions | {};
   public business_structure: BusinessStructure;
   public business_type: BusinessType;
   public bank_accounts: BankAccount[];
