@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 import { phoneRegex, urlRegex } from '../utils/helpers';
 
-export const businessCoreInfoSchema = (easyValidate?: boolean) => {
+export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     legal_name: string().required('Enter legal name'),
     website_url: string().matches(urlRegex, 'Enter valid website url').required('Enter website url'),
@@ -24,5 +24,5 @@ export const businessCoreInfoSchema = (easyValidate?: boolean) => {
     industry: string().nullable(),
   });
 
-  return easyValidate ? easySchema : schema;
+  return allowOptionalFields ? easySchema : schema;
 };

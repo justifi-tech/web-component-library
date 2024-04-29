@@ -17,7 +17,7 @@ import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSub
 export class AdditionalQuestionsFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() easyValidate?: boolean;
+  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: IAdditionalQuestions = {};
@@ -77,7 +77,7 @@ export class AdditionalQuestionsFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(additionalQuestionsSchema(this.easyValidate));
+    this.formController = new FormController(additionalQuestionsSchema(this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

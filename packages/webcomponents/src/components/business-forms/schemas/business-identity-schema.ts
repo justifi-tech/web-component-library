@@ -2,7 +2,7 @@ import { object, string } from 'yup';
 import { identityAddressSchema } from './business-address-schema';
 import { phoneRegex } from '../utils/helpers';
 
-export const identitySchema = (title: string, easyValidate?: boolean) => {
+export const identitySchema = (title: string, allowOptionalFields?: boolean) => {
   const schema = object({
     name: string().required(`Enter ${title} name`),
     email: string()
@@ -13,7 +13,7 @@ export const identitySchema = (title: string, easyValidate?: boolean) => {
     dob_month: string().required(`Enter ${title} birth month`),
     dob_year: string().required(`Enter ${title} birth year`),
     identification_number: string(),
-    address: identityAddressSchema(easyValidate),
+    address: identityAddressSchema(allowOptionalFields),
   });
 
   const easySchema = object({
@@ -26,8 +26,8 @@ export const identitySchema = (title: string, easyValidate?: boolean) => {
     dob_month: string().nullable(),
     dob_year: string().nullable(),
     identification_number: string().nullable(),
-    address: identityAddressSchema(easyValidate),
+    address: identityAddressSchema(allowOptionalFields),
   });
 
-  return easyValidate ? easySchema : schema;
+  return allowOptionalFields ? easySchema : schema;
 };

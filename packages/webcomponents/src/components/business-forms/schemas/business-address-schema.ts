@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 import StateOptions from '../../../utils/state-options';
 
-export const legalAddressSchema = (easyValidate?: boolean) => {
+export const legalAddressSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     line1: string().required('Enter street address'),
     line2: string().nullable(),
@@ -22,10 +22,10 @@ export const legalAddressSchema = (easyValidate?: boolean) => {
     country: string().nullable()
   });
 
-  return easyValidate ? easySchema : schema;
+  return allowOptionalFields ? easySchema : schema;
 };
 
-export const identityAddressSchema = (easyValidate?: boolean) => {
+export const identityAddressSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     line1: string().required('Enter street address'),
     city: string().required('Enter city'),
@@ -42,5 +42,5 @@ export const identityAddressSchema = (easyValidate?: boolean) => {
     postal_code: string().nullable(),
   });
 
-  return easyValidate ? easySchema : schema;
+  return allowOptionalFields ? easySchema : schema;
 };

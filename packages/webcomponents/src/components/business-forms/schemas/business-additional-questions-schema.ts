@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-export const additionalQuestionsSchema = (easyValidate?: boolean) => {
+export const additionalQuestionsSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     business_revenue: string().required('Enter business revenue'),
     business_payment_volume: string().required('Enter business payment volume'),
@@ -15,5 +15,5 @@ export const additionalQuestionsSchema = (easyValidate?: boolean) => {
     business_receivable_volume: string().nullable()
   });
 
-  return easyValidate ? easySchema : schema;
+  return allowOptionalFields ? easySchema : schema;
 };

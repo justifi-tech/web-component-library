@@ -17,7 +17,7 @@ import { Representative } from '../../../../api/Identity';
 export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() easyValidate?: boolean;
+  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: Representative = {};
@@ -77,7 +77,7 @@ export class BusinessRepresentativeFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(identitySchema('representative', this.easyValidate));
+    this.formController = new FormController(identitySchema('representative', this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

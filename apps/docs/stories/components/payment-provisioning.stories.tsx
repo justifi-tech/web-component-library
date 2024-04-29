@@ -22,9 +22,9 @@ const meta: Meta = {
         disable: true
       },
     },
-    'easy-validate': {
+    'allow-optional-fields': {
       type: 'boolean',
-      description: 'Easy validate `boolean`',
+      description: 'Allows most fields in each form step to be nullable, allowing for quicker form completion. `boolean`',
       control: {
         type: 'boolean',
       },
