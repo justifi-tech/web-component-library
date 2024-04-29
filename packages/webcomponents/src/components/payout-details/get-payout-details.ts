@@ -1,5 +1,6 @@
 import { Payout } from '../../api';
-import { getErrorMessage } from '../../api/services/utils';
+import { ComponentErrorSeverity } from '../../api/ComponentError';
+import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayoutDetails =
   ({ id, authToken, service }) =>
@@ -12,12 +13,21 @@ export const makeGetPayoutDetails =
 
         onSuccess(payout);
       } else {
-        const responseError = getErrorMessage(response.error);
-        const errorMessage = responseError;
-        onError(getErrorMessage(errorMessage));
+        const errorMessage = getErrorMessage(response.error);
+        const code = getErrorCode(response.error?.code);
+        onError({
+          error: errorMessage,
+          code,
+          severity: ComponentErrorSeverity.ERROR,
+        });
       }
     } catch (error) {
-      const errorMessage = error;
-      onError(getErrorMessage(errorMessage));
+      const errorMessage = getErrorMessage(error);
+      const code = getErrorCode(error?.code);
+      onError({
+        error: errorMessage,
+        code,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   };

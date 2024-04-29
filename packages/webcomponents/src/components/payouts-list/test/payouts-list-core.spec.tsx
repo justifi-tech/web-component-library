@@ -88,6 +88,7 @@ describe('payouts-list-core', () => {
       detail: {
         errorCode: 'fetch-error',
         message: 'Fetch error',
+        severity: 'error',
       }
     }));
   });

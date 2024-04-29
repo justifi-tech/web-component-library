@@ -129,7 +129,7 @@ describe('payout-details-core', () => {
     expect(onErrorEvent).toHaveBeenCalledWith(expect.objectContaining({
       detail: {
         message: 'Not Authenticated',
-        errorCode: 'fetch-error',
+        errorCode: 'not-authenticated',
         severity: 'error'
       }
     }));

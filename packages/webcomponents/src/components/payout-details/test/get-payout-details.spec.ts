@@ -49,7 +49,11 @@ describe('getPayout', () => {
     await getPayout({ onSuccess, onError });
 
     expect(onSuccess).not.toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(errorMessage);
+    expect(onError).toHaveBeenCalledWith({
+      code: 'fetch-error',
+      error: 'Error fetching payout',
+      severity: 'error',
+    });
   });
 
   it('should call onError with an error message on API failure with error message', async () => {
@@ -68,6 +72,10 @@ describe('getPayout', () => {
     await getPayout({ onSuccess, onError });
 
     expect(onSuccess).not.toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(errorMessage);
+    expect(onError).toHaveBeenCalledWith({
+      code: 'fetch-error',
+      error: 'Error fetching payout',
+      severity: 'error',
+    });
   });
 });
