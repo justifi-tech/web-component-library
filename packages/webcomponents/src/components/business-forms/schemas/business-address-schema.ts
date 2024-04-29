@@ -5,25 +5,28 @@ const streetValidation = string()
   .min(5, 'Address must be at least 5 characters')
   .max(100, 'Address must be less than 100 characters')
   .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Invalid characters in address')
-  .transform((value, originalValue) => {
-    return originalValue.trim() === '' ? null : value;
+  .transform((value) => {
+    return value === '' ? null : value;
   })
 
 const cityValidation = string()
   .min(2, 'City must be at least 2 characters')
   .max(50, 'City must be less than 50 characters')
   .matches(/^(?!^\s+$)[a-zA-Z\s]*$/, 'Invalid characters in city')
-  .transform((value, originalValue) => {
-    return originalValue.trim() === '' ? null : value;
+  .transform((value) => {
+    return value === '' ? null : value;
   })
 
 const stateValidation = string()
   .oneOf(StateOptions.map((option) => option.value), 'Select state')
+  .transform((value) => {
+    return value === '' ? null : value;
+  })
 
 const postalValidation = string()
   .matches(/^[0-9]{5}$/, 'Enter valid postal code')
-  .transform((value, originalValue) => {
-    return originalValue.trim() === '' ? null : value;
+  .transform((value) => {
+    return value === '' ? null : value;
   })
 
 export const addressSchema = (allowOptionalFields?: boolean) => {
