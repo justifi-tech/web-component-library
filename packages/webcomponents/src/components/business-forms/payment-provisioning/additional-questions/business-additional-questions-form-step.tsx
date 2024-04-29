@@ -3,7 +3,7 @@ import { FormController } from '../../../form/form';
 import { AdditionalQuestions, IAdditionalQuestions, IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
-import { additionQuestionsSchema } from '../../schemas/business-additional-questions-schema';
+import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 
 /**
@@ -17,6 +17,7 @@ import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSub
 export class AdditionalQuestionsFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: IAdditionalQuestions = {};
@@ -76,7 +77,7 @@ export class AdditionalQuestionsFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(additionQuestionsSchema);
+    this.formController = new FormController(additionalQuestionsSchema(this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

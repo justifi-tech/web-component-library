@@ -1,38 +1,33 @@
 import { object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
+import { phoneRegex } from '../utils/helpers';
 
-export const phoneRegex = /^[0-9]+$/;
+export const identitySchema = (title: string, allowOptionalFields?: boolean) => {
+  const schema = object({
+    name: string().required(`Enter ${title} name`),
+    email: string()
+      .email(`Enter valid ${title} email`)
+      .required(`Enter ${title} email`),
+    phone: string().matches(phoneRegex, 'Enter valid phone number').required('Enter phone number'),
+    dob_day: string().required(`Enter ${title} birth day`),
+    dob_month: string().required(`Enter ${title} birth month`),
+    dob_year: string().required(`Enter ${title} birth year`),
+    identification_number: string(),
+    address: addressSchema(allowOptionalFields),
+  });
 
-export const representativeSchema = object({
-  name: string().required('Enter representative name'),
-  email: string()
-    .email('Enter valid representative email')
-    .required('Enter representative email'),
-  phone: string()
-    .required('Enter representative phone number')
-    .matches(phoneRegex, 'Phone number must contain only numbers')
-    .min(10, 'Phone number must contain 10 digits')
-    .max(10, 'Phone number must contain 10 digits'),
-  dob_day: string().required('Enter representative birth day'),
-  dob_month: string().required('Enter representative birth month'),
-  dob_year: string().required('Enter representative birth year'),
-  identification_number: string(),
-  address: addressSchema,
-});
+  const easySchema = object({
+    name: string().required(`Enter ${title} name`),
+    email: string()
+      .email(`Enter valid ${title} email`)
+      .nullable(),
+    phone: string().matches(phoneRegex, 'Enter valid phone number').nullable(),
+    dob_day: string().nullable(),
+    dob_month: string().nullable(),
+    dob_year: string().nullable(),
+    identification_number: string().nullable(),
+    address: addressSchema(allowOptionalFields),
+  });
 
-export const ownerSchema = object({
-  name: string().required('Enter owner name'),
-  email: string()
-    .email('Enter valid owner email')
-    .required('Enter owner email'),
-  phone: string()
-    .required('Enter owner phone number')
-    .matches(phoneRegex, 'Phone number must contain only numbers')
-    .min(10, 'Phone number must contain 10 digits')
-    .max(10, 'Phone number must contain 10 digits'),
-  dob_day: string().required('Enter owner birth day'),
-  dob_month: string().required('Enter owner birth month'),
-  dob_year: string().required('Enter owner birth year'),
-  identification_number: string(),
-  address: addressSchema,
-});
+  return allowOptionalFields ? easySchema : schema;
+}

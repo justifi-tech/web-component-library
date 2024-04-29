@@ -4,7 +4,7 @@ import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
-import { representativeSchema } from '../../schemas/business-identity-schema';
+import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Representative } from '../../../../api/Identity';
@@ -17,6 +17,7 @@ import { Representative } from '../../../../api/Identity';
 export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: Representative = {};
@@ -76,7 +77,7 @@ export class BusinessRepresentativeFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(representativeSchema);
+    this.formController = new FormController(identitySchema('representative', this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }

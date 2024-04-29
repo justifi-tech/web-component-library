@@ -26,11 +26,25 @@ const postalValidation = string()
     return originalValue.trim() === '' ? null : value;
   })
 
-export const addressSchema = object({
-  line1: streetValidation.required('Enter street address'),
-  line2: streetValidation.nullable(),
-  city: cityValidation.required('Enter city'),
-  state: stateValidation.required('Select state'),
-  postal_code: postalValidation.required('Enter postal code'),
-  country: string().required('Select country')
-});
+export const addressSchema = (allowOptionalFields?: boolean) => {
+  const schema = object({
+    line1: streetValidation.required('Enter street address'),
+    line2: streetValidation.nullable(),
+    city: cityValidation.required('Enter city'),
+    state: stateValidation.required('Select state'),
+    postal_code: postalValidation.required('Enter postal code'),
+    country: string().required('Select country')
+  });
+
+  const easySchema = object({
+    line1: streetValidation.nullable(),
+    line2: streetValidation.nullable(),
+    city: cityValidation.nullable(),
+    state: stateValidation.nullable(),
+    postal_code: postalValidation.nullable(),
+    country: string().required('Select country')
+  });
+
+  return allowOptionalFields ? easySchema : schema;
+};
+
