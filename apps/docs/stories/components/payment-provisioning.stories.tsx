@@ -28,6 +28,17 @@ const meta: Meta = {
         defaultValue: { summary: 'false' }
       }
     },
+    'allow-optional-fields': {
+      type: 'boolean',
+      description: 'When set to `true`, this prop allows most fields in each form step to be nullable, allowing for quicker form completion. Note - the following fields are still required: `business.legal_name`, `representative.name`, `owner.name`.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'false' }
+      }
+    },
     'submitted': {
       description: 'Emitted when the server response is received.  Will not be raised if form vailidation fails.',
       table: {
@@ -38,17 +49,6 @@ const meta: Meta = {
       description: 'Emitted when controls are clicked.  Control name is defined in `data.detail.name`.',
       table: {
         category: 'events'
-      }
-    },
-    'allow-optional-fields': {
-      type: 'boolean',
-      description: 'When set to `true`, this prop allows most fields in each form step to be nullable, allowing for quicker form completion. Note - the following fields are still required: `business.legal_name`, `representative.name`, `owner.name`.',
-      control: {
-        type: 'boolean',
-      },
-      table: {
-        category: 'props',
-        defaultValue: { summary: 'false' }
       }
     }
   },
