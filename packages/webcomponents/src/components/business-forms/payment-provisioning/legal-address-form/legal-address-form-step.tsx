@@ -3,10 +3,11 @@ import { FormController } from '../../../form/form';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/payload-parsers';
-import { legalAddressSchema } from '../../schemas/business-address-schema';
+import { addressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';
 import StateOptions from '../../../../utils/state-options';
+import { filterPostalInput } from '../../../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -80,7 +81,7 @@ export class LegalAddressFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(legalAddressSchema(this.allowOptionalFields));
+    this.formController = new FormController(addressSchema(this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
   }
@@ -125,8 +126,10 @@ export class LegalAddressFormStep {
                 <form-control-text
                   name="line2"
                   label="Address Line 2"
-                  inputHandler={(name, value) => this.inputHandler(name, value)}
+                  inputHandler={this.inputHandler}
                   defaultValue={legalAddressDefaultValue?.line2}
+                  error={this.errors?.line2}
+
                 />
               </div>
               <div class="col-12">
@@ -149,12 +152,14 @@ export class LegalAddressFormStep {
                 />
               </div>
               <div class="col-12">
-                <form-control-number
+                <form-control-text
                   name="postal_code"
                   label="Postal Code"
                   inputHandler={this.inputHandler}
                   defaultValue={legalAddressDefaultValue?.postal_code}
                   error={this.errors?.postal_code}
+                  maxLength={5}
+                  keyDownHandler={filterPostalInput}
                 />
               </div>
               <div class="col-12">
