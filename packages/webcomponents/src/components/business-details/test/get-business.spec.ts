@@ -1,6 +1,7 @@
 import { makeGetBusiness } from '../get-business';
 import mockResponse from '../../../api/mockData/mockBusinessDetails.json';
 import { Business, IBusiness } from '../../../api/Business';
+import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 // Mocks
 jest.mock('../../../api/services/utils.ts', () => ({
@@ -40,9 +41,7 @@ describe('makeGetBusiness', () => {
   });
 
   it('calls onError with an error message on fetch error', async () => {
-    const error = 'Test error';
-    const responseError = { error };
-    mockService.fetchBusiness.mockResolvedValue(responseError);
+    mockService.fetchBusiness.mockResolvedValue(API_NOT_AUTHENTICATED_ERROR);
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
@@ -54,7 +53,11 @@ describe('makeGetBusiness', () => {
     });
     await getBusiness({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith({ error });
+    expect(onError).toHaveBeenCalledWith({
+      error: 'Not Authenticated',
+      code: 'not-authenticated',
+      severity: 'error',
+    });
   });
 
   it('calls onError with an error message on fetch exception', async () => {
@@ -71,6 +74,10 @@ describe('makeGetBusiness', () => {
     });
     await getBusiness({ onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith({ error: error.message });
+    expect(onError).toHaveBeenCalledWith({
+      error: error.message,
+      code: 'fetch-error',
+      severity: 'error',
+    });
   });
 });

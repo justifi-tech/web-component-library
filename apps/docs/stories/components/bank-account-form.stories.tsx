@@ -69,6 +69,7 @@ const meta: Meta = {
     story => `
     ${story()}
     <script>${addEvents()}</script>`,
+    // @ts-ignore
     withActions
   ],
 };
@@ -162,6 +163,9 @@ const Template = (args: any) => {
     ${FormButtons}
   `;
 };
+
+// This fixes a typescript error
+Template.args = { ...storyBaseArgs.args, 'css-variables': '' };
 
 export const Basic = Template.bind({});
 
