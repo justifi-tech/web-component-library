@@ -19,13 +19,9 @@ export class IdentityAddressForm {
     this.handleFormUpdate(newValues);
   }
 
-  inputHandler(name: string, value: string) {
+  inputHandler = (name: string, value: string) => {
     this.address[name] = value;
     this.address = { ...this.address };
-  }
-
-  constructor() {
-    this.inputHandler = this.inputHandler.bind(this);
   }
 
   render() {
