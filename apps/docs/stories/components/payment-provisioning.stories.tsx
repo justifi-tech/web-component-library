@@ -17,10 +17,16 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'test-mode': {
-      table: {
-        disable: true
+    'hide-errors': {
+      type: 'boolean',
+      description: 'When set to `true`, this prop will hide all error alerts from the form, allowing developers more control over how they wish to handle errors.',
+      control: {
+        type: 'boolean',
       },
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'false' }
+      }
     },
     'submitted': {
       description: 'Emitted when the server response is received.  Will not be raised if form vailidation fails.',
