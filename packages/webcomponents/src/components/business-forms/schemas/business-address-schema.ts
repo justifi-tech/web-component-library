@@ -1,8 +1,15 @@
 import { object, string } from 'yup';
 import StateOptions from '../../../utils/state-options';
 
-const streetValidation = string()
+const lineOneValidation = string()
   .min(5, 'Address must be at least 5 characters')
+  .max(100, 'Address must be less than 100 characters')
+  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Invalid characters in address')
+  .transform((value) => {
+    return value === '' ? null : value;
+  })
+
+const lineTwoValidation = string()
   .max(100, 'Address must be less than 100 characters')
   .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Invalid characters in address')
   .transform((value) => {
@@ -31,8 +38,8 @@ const postalValidation = string()
 
 export const addressSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
-    line1: streetValidation.required('Enter street address'),
-    line2: streetValidation.nullable(),
+    line1: lineOneValidation.required('Enter street address'),
+    line2: lineTwoValidation.nullable(),
     city: cityValidation.required('Enter city'),
     state: stateValidation.required('Select state'),
     postal_code: postalValidation.required('Enter postal code'),
@@ -40,8 +47,8 @@ export const addressSchema = (allowOptionalFields?: boolean) => {
   });
 
   const easySchema = object({
-    line1: streetValidation.nullable(),
-    line2: streetValidation.nullable(),
+    line1: lineOneValidation.nullable(),
+    line2: lineTwoValidation.nullable(),
     city: cityValidation.nullable(),
     state: stateValidation.nullable(),
     postal_code: postalValidation.nullable(),
