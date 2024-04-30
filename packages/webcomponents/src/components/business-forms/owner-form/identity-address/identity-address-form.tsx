@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../../../utils/state-options';
 import { filterPostalInput } from '../../../form/utils';
+import { IAddress } from '../../../../api/Business';
 
 @Component({
   tag: 'justifi-identity-address-form',
@@ -11,7 +12,7 @@ export class IdentityAddressForm {
   @Prop() handleFormUpdate: (values: any) => void;
   @Prop() errors: any;
   @Prop() defaultValues: any;
-  @State() address: any = {};
+  @State() address: IAddress = {};
 
   @Watch('address')
   handleAddressChange(newValues: any) {
@@ -21,6 +22,10 @@ export class IdentityAddressForm {
   inputHandler(name: string, value: string) {
     this.address[name] = value;
     this.address = { ...this.address };
+  }
+
+  constructor() {
+    this.inputHandler = this.inputHandler.bind(this);
   }
 
   render() {
@@ -33,7 +38,7 @@ export class IdentityAddressForm {
               label="Street Address"
               defaultValue={this.defaultValues?.line1}
               error={this.errors?.line1}
-              inputHandler={(name, value) => this.inputHandler(name, value)}
+              inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12 col-md-4">
@@ -42,7 +47,7 @@ export class IdentityAddressForm {
               label="Apartment, Suite, etc. (optional)"
               defaultValue={this.defaultValues?.line2}
               error={this.errors?.line2}
-              inputHandler={(name, value) => this.inputHandler(name, value)}
+              inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">
@@ -51,7 +56,7 @@ export class IdentityAddressForm {
               label="City"
               defaultValue={this.defaultValues?.city}
               error={this.errors?.city}
-              inputHandler={(name, value) => this.inputHandler(name, value)}
+              inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12 col-md-6">
@@ -61,7 +66,7 @@ export class IdentityAddressForm {
               defaultValue={this.defaultValues?.state}
               options={StateOptions}
               error={this.errors?.state}
-              inputHandler={(name, value) => this.inputHandler(name, value)}
+              inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12 col-md-6">
@@ -71,8 +76,8 @@ export class IdentityAddressForm {
               defaultValue={this.defaultValues?.postal_code}
               error={this.errors?.postal_code}
               maxLength={5}
-              keyDownHandler={(e) => filterPostalInput(e)}
-              inputHandler={(name, value) => this.inputHandler(name, value)}
+              keyDownHandler={filterPostalInput}
+              inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">

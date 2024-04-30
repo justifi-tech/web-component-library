@@ -126,7 +126,7 @@ export class LegalAddressFormStep {
                 <form-control-text
                   name="line2"
                   label="Address Line 2"
-                  inputHandler={(name, value) => this.inputHandler(name, value)}
+                  inputHandler={this.inputHandler}
                   defaultValue={legalAddressDefaultValue?.line2}
                   error={this.errors?.line2}
 
@@ -159,7 +159,7 @@ export class LegalAddressFormStep {
                   defaultValue={legalAddressDefaultValue?.postal_code}
                   error={this.errors?.postal_code}
                   maxLength={5}
-                  keyDownHandler={(e) => filterPostalInput(e)}
+                  keyDownHandler={filterPostalInput}
                 />
               </div>
               <div class="col-12">

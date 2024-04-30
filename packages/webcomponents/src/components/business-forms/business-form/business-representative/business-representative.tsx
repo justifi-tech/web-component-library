@@ -143,7 +143,7 @@ export class BusinessRepresentative {
               <justifi-identity-address-form
                 errors={this.errors.address}
                 defaultValues={representativeDefaultValue?.address}
-                handleFormUpdate={values => this.onAddressFormUpdate(values)}
+                handleFormUpdate={this.onAddressFormUpdate}
               />
             </div>
           </div>

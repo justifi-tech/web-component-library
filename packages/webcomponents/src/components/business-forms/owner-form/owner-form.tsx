@@ -260,7 +260,7 @@ export class BusinessOwnerForm {
                 <justifi-identity-address-form
                   errors={this.errors.address}
                   defaultValues={ownerDefaultValue?.address}
-                  handleFormUpdate={values => this.onAddressFormUpdate(values)}
+                  handleFormUpdate={this.onAddressFormUpdate}
                 />
               </div>
               <div class="container d-flex gap-2">

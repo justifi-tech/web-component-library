@@ -64,7 +64,7 @@ export class LegalAddressForm {
               <form-control-text
                 name="line2"
                 label="Address Line 2"
-                inputHandler={(name, value) => this.inputHandler(name, value)}
+                inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.line2}
                 error={this.errors?.legal_address?.line2}
               />
@@ -96,7 +96,7 @@ export class LegalAddressForm {
                 defaultValue={legalAddressDefaultValue?.postal_code}
                 error={this.errors?.legal_address?.postal_code}
                 maxLength={5}
-                keyDownHandler={(e) => filterPostalInput(e)}
+                keyDownHandler={filterPostalInput}
               />
             </div>
             <div class="col-12">
