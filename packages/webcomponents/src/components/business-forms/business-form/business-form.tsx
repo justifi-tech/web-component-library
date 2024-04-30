@@ -72,7 +72,7 @@ export class BusinessForm {
       const initialValues = this.formController.getInitialValues();
       const payload = parseBusiness(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-      this.submitted.emit({data: response});
+      this.handleReponse(response);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     } finally {
@@ -96,6 +96,13 @@ export class BusinessForm {
   private validateAndSubmit(event: any) {
     event.preventDefault();
     this.formController.validateAndSubmit(this.sendData);
+  }
+
+  handleReponse(response) {
+    if (response.error) {
+      this.errorMessage = BusinessFormServerErrors.patchData;
+    } 
+    this.submitted.emit({ data: response });
   }
 
   render() {
