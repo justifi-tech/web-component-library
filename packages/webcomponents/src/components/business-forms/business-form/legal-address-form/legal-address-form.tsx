@@ -1,6 +1,8 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { IAddress } from '../../../../api/Business';
+import StateOptions from '../../../../utils/state-options';
+import { filterPostalInput } from '../../../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -62,8 +64,9 @@ export class LegalAddressForm {
               <form-control-text
                 name="line2"
                 label="Address Line 2"
-                inputHandler={(name, value) => this.inputHandler(name, value)}
+                inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.line2}
+                error={this.errors?.legal_address?.line2}
               />
             </div>
             <div class="col-12">
@@ -76,21 +79,24 @@ export class LegalAddressForm {
               />
             </div>
             <div class="col-12">
-              <form-control-text
+              <form-control-select
                 name="state"
                 label="State"
+                options={StateOptions}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.state}
                 error={this.errors?.legal_address?.state}
               />
             </div>
             <div class="col-12">
-              <form-control-number
+              <form-control-text
                 name="postal_code"
                 label="Postal Code"
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.postal_code}
                 error={this.errors?.legal_address?.postal_code}
+                maxLength={5}
+                keyDownHandler={filterPostalInput}
               />
             </div>
             <div class="col-12">

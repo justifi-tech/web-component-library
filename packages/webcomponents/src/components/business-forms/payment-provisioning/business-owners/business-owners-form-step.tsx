@@ -24,6 +24,7 @@ import {
 export class BusinessOwnersFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
   @State() owners: Owner[] = [];
   @State() newFormOpen: boolean;
   @State() refs = [];
@@ -169,6 +170,7 @@ export class BusinessOwnersFormStep {
                 ownersLength={this.owners.length}
                 onSubmitted={(e: CustomEvent) => this.handleOwnerSubmit(e)}
                 onFormLoading={(e: CustomEvent) => this.formLoading.emit(e.detail)}
+                allowOptionalFields={this.allowOptionalFields}
                 ref={(ref) => {this.matchRef(ref, owner.id)}}
               />
             );

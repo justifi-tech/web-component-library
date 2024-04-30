@@ -14,9 +14,10 @@
 
 ## Events
 
-| Event                | Description | Type                  |
-| -------------------- | ----------- | --------------------- |
-| `payout-row-clicked` |             | `CustomEvent<Payout>` |
+| Event                | Description | Type                          |
+| -------------------- | ----------- | ----------------------------- |
+| `errorEvent`         |             | `CustomEvent<ComponentError>` |
+| `payout-row-clicked` |             | `CustomEvent<Payout>`         |
 
 
 ## Dependencies

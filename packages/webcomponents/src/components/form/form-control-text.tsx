@@ -22,6 +22,8 @@ export class TextInput {
   @Prop() name: any;
   @Prop() error: string;
   @Prop() defaultValue: string;
+  @Prop() keyDownHandler?: (event: any) => void;
+  @Prop() maxLength?: number;
   @Prop() disabled: boolean;
   @Prop() inputHandler: (name: string, value: string) => void;
   @State() input: string;
@@ -62,6 +64,8 @@ export class TextInput {
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
+          onKeyDown={(event: any) => this.keyDownHandler && this.keyDownHandler(event)}
+          maxLength={this.maxLength}
           part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           type="text"

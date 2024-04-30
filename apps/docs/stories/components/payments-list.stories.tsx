@@ -16,10 +16,24 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'payment-row-clicked': {
+      description: '`PaymentRowClicked`',
+      table: {
+        category: 'events',
+      },
+      action: true,
+    },
+    'error-event': {
+      description: '`ComponentError`',
+      table: {
+        category: 'events',
+      },
+      action: true,
+    },
   },
   parameters: {
     actions: {
-      handles: ['payment-row-clicked'],
+      handles: ['payment-row-clicked', 'error-event'],
     },
   },
   decorators: [

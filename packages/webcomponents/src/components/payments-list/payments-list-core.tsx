@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { ComponentError } from '../../api/ComponentError';
 
 @Component({
   tag: 'payments-list-core',
@@ -9,16 +10,20 @@ import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from 
 
 export class PaymentsListCore {
   @Prop() getPayments: Function;
+
   @State() payments: Payment[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: any;
+
   @Event({
     eventName: 'payment-row-clicked',
 
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
+
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayments) {
@@ -54,8 +59,13 @@ export class PaymentsListCore {
         this.paging = pagingInfo;
         this.loading = false;
       },
-      onError: (errorMessage) => {
-        this.errorMessage = errorMessage;
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
         this.loading = false;
       },
     });

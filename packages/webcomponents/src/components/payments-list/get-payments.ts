@@ -1,5 +1,6 @@
 import { Payment } from '../../api';
-import { getErrorMessage } from '../../api/services/utils';
+import { ComponentErrorSeverity } from '../../api/ComponentError';
+import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayments =
   ({ id, authToken, service }) =>
@@ -18,9 +19,19 @@ export const makeGetPayments =
         onSuccess({ payments, pagingInfo });
       } else {
         const responseError = getErrorMessage(response.error);
-        return onError(responseError);
+        const code = getErrorCode(response.error?.code);
+        return onError({
+          error: responseError,
+          code,
+          severity: ComponentErrorSeverity.ERROR,
+        });
       }
     } catch (error) {
-      return onError(error.message || error);
+      const code = getErrorCode(error?.code);
+      return onError({
+        error: error.message || error,
+        code,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   };

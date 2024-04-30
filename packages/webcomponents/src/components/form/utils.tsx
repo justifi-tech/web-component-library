@@ -16,3 +16,10 @@ export const LoadingSpinner = () => (
     <span class="visually-hidden">Loading...</span>
   </div>
 );
+
+export const filterPostalInput = (e: KeyboardEvent) => {
+  const specialKeys = ['Backspace', 'Tab', 'Enter'];
+  if (!/^\d$/.test(e.key) && !specialKeys.includes(e.key)) {
+    e.preventDefault();
+  }
+};

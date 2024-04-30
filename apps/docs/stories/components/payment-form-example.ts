@@ -1,9 +1,9 @@
-import { codeExampleHead } from "../utils";
+import { codeExampleHead } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead("justifi-payment-form")}
+${codeExampleHead('justifi-payment-form')}
 
 /*
 * Props definition:
@@ -25,12 +25,17 @@ ${codeExampleHead("justifi-payment-form")}
 
 <script>
   (function () {
-    var paymentForm = document.querySelector('justifi-payment-form');
+    const paymentForm = document.querySelector('justifi-payment-form');
 
-    paymentForm.addEventListener('submitted', (data) => {
+    paymentForm.addEventListener('submitted', (event) => {
       // here is where you would submit a payment with the token
-      console.log('data');
+      console.log('Submitted data:', event.detail);
     });
+
+    paymentForm.addEventListener('error-event', (event) => {
+      console.error('error-event:', event.detail);
+    });
+
   })();
 </script>
 
