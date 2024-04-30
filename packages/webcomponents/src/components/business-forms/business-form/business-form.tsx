@@ -48,12 +48,6 @@ export class BusinessForm {
   private formController: FormController;
   private api: any;
 
-  constructor() {
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-    this.validateAndSubmit = this.validateAndSubmit.bind(this);
-  }
-
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
@@ -65,7 +59,7 @@ export class BusinessForm {
     this.fetchData();
   }
 
-  private async sendData() {
+  private sendData = async () => {
     this.isLoading = true;
     try {
       const values = this.formController.values.getValue();
@@ -80,7 +74,7 @@ export class BusinessForm {
     }
   }
 
-  private async fetchData() {
+  private fetchData = async () => {
     this.isLoading = true;
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
@@ -93,7 +87,7 @@ export class BusinessForm {
     }
   }
 
-  private validateAndSubmit(event: any) {
+  private validateAndSubmit = (event: any) => {
     event.preventDefault();
     this.formController.validateAndSubmit(this.sendData);
   }
