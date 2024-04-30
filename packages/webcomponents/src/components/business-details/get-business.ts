@@ -1,5 +1,6 @@
 import { Business } from '../../api/Business';
-import { getErrorMessage } from '../../api/services/utils';
+import { ComponentErrorSeverity } from '../../api/ComponentError';
+import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetBusiness =
   ({ id, authToken, service }) =>
@@ -11,9 +12,19 @@ export const makeGetBusiness =
         onSuccess({ business: new Business(response.data) });
       } else {
         const responseError = getErrorMessage(response.error);
-        return onError({ error: responseError });
+        const code = getErrorCode(response.error?.code);
+        return onError({
+          error: responseError,
+          code,
+          severity: ComponentErrorSeverity.ERROR,
+        });
       }
     } catch (error) {
-      return onError({ error: error.message || error });
+      const code = getErrorCode(error?.code);
+      return onError({
+        error: error.message || error,
+        code,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   };

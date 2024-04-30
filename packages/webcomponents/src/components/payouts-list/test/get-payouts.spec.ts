@@ -58,7 +58,11 @@ describe('makeGetPayouts', () => {
     });
     await getPayouts({ params: mockParams, onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Error fetching payouts');
+    expect(onError).toHaveBeenCalledWith({
+      code: 'fetch-error',
+      error: 'Error fetching payouts',
+      severity: 'error',
+    });
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -77,7 +81,11 @@ describe('makeGetPayouts', () => {
     });
     await getPayouts({ params: mockParams, onSuccess, onError });
 
-    expect(onError).toHaveBeenCalledWith('Error fetching payouts');
+    expect(onError).toHaveBeenCalledWith({
+      code: 'fetch-error',
+      error: 'Error fetching payouts',
+      severity: 'error',
+    });
     expect(onSuccess).not.toHaveBeenCalled();
   });
 });

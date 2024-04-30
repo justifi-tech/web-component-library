@@ -1,7 +1,9 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PayoutDetailsCore } from '../payout-details-core';
 import mockPayoutDetailSuccess from '../../../../../../mockData/mockPayoutDetailsSuccess.json';
 import { makeGetPayoutDetails } from '../get-payout-details';
+import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 describe('payout-details-core', () => {
   it('renders loading state initially', async () => {
@@ -14,12 +16,8 @@ describe('payout-details-core', () => {
     // Initialize the page with the mock getPayout function included in the component tag
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      html: `<payout-details-core></payout-details-core>`,
+      template: () => <payout-details-core getPayout={mockGetPayout} />
     });
-
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getPayout = mockGetPayout
 
     // Wait for any state changes to complete
     await page.waitForChanges();
@@ -41,14 +39,8 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      html: '<payout-details-core></payout-details-core>',
+      template: () => <payout-details-core getPayout={getPayout} />
     });
-
-    page.rootInstance.componentWillLoad = () => { };
-
-    page.rootInstance.getPayout = getPayout;
-
-    page.rootInstance.fetchData();
 
     await page.waitForChanges();
 
@@ -67,7 +59,7 @@ describe('payout-details-core', () => {
     };
 
     // Real getPayout function but with mocked service
-    const realGetPayoutWithMockedService = makeGetPayoutDetails({
+    const getPayout = makeGetPayoutDetails({
       id: 'some-id', // Use appropriate id
       authToken: 'some-auth-token', // Use appropriate auth token
       service: mockService // Injecting the mocked service
@@ -75,20 +67,71 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      html: '<payout-details-core></payout-details-core>',
+      template: () => <payout-details-core getPayout={getPayout} />
     });
 
-    page.rootInstance.componentWillLoad = () => { };
-
-    // Inject the getPayout function with mocked service into the component
-    page.rootInstance.getPayout = realGetPayoutWithMockedService;
-
-    // Manually call fetchData if necessary, depending on how your component is set up
-    await page.rootInstance.fetchData();
     await page.waitForChanges();
 
     // Assertions to verify the error handling
-    expect(page.rootInstance.errorMessage).toBe('Error fetching payout details: Error: Fetch error');
+    expect(page.rootInstance.errorMessage).toBe('Fetch error');
     expect(page.root).toMatchSnapshot();
+  });
+
+  it('emits error event on fetch error', async () => {
+    const mockService = {
+      fetchPayout: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    };
+
+    const getPayout = makeGetPayoutDetails({
+      id: 'some-id',
+      authToken: 'some-auth',
+      service: mockService
+    });
+
+    const onErrorEvent = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PayoutDetailsCore],
+      template: () => <payout-details-core getPayout={getPayout} onError-event={onErrorEvent} />
+    });
+
+    await page.waitForChanges();
+
+    expect(onErrorEvent).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        message: 'Fetch error',
+        errorCode: 'fetch-error',
+        severity: 'error'
+      }
+    }));
+  });
+
+  it('emits error event when API returns error', async () => {
+    const mockService = {
+      fetchPayout: jest.fn().mockResolvedValue(API_NOT_AUTHENTICATED_ERROR)
+    };
+
+    const getPayout = makeGetPayoutDetails({
+      id: 'some-id',
+      authToken: 'some-auth',
+      service: mockService
+    });
+
+    const onErrorEvent = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PayoutDetailsCore],
+      template: () => <payout-details-core getPayout={getPayout} onError-event={onErrorEvent} />
+    });
+
+    await page.waitForChanges();
+
+    expect(onErrorEvent).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        message: 'Not Authenticated',
+        errorCode: 'not-authenticated',
+        severity: 'error'
+      }
+    }));
   });
 });

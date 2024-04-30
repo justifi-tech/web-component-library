@@ -1,7 +1,8 @@
-import { Component, Host, Prop, State, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 import { ErrorState } from '../details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from './get-business';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 /**
  *
@@ -18,8 +19,11 @@ import { makeGetBusiness } from './get-business';
 export class BusinessDetails {
   @Prop() businessId: string;
   @Prop() authToken: string;
+
   @State() errorMessage: string;
   @State() getBusiness: Function;
+
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetBusiness();
@@ -28,6 +32,11 @@ export class BusinessDetails {
   private initializeGetBusiness() {
     if (!this.businessId || !this.authToken) {
       this.errorMessage = 'Invalid business id or auth token';
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
+      });
       return;
     }
 
