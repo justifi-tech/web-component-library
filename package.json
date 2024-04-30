@@ -2,10 +2,12 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=true pnpm --filter @repo/docs dev'",
+    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=false pnpm --filter @repo/docs dev'",
+    "dev:mocks": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=true pnpm --filter @repo/docs dev'",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
     "test:e2e": "turbo run test:e2e",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
