@@ -37,6 +37,11 @@ export interface OwnerFormSubmitEvent {
   metadata?: any;
 }
 
+export interface OwnerFormClickEvent {
+  data?: any;
+  name: OwnerFormClickActions;
+}
+
 export interface OwnerFormServerErrorEvent {
   data?: any;
   message: OwnerFormServerErrors;
@@ -46,4 +51,11 @@ export enum OwnerFormServerErrors {
   fetchData = 'Error retrieving owner data',
   patchData = 'Error updating owner data',
   postData = 'Error adding owner data'
+}
+
+export enum OwnerFormClickActions {
+  removeOwner = 'removeOwner',
+  addOwner = 'addOwner',
+  addOwnerForm = 'addOwnerForm',
+  updateOwner = 'updateOwner'
 }

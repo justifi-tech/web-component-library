@@ -17,10 +17,16 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'test-mode': {
-      table: {
-        disable: true
+    'hide-errors': {
+      type: 'boolean',
+      description: 'When set to `true`, this prop will hide all error alerts from the form, allowing developers more control over how they wish to handle errors.',
+      control: {
+        type: 'boolean',
       },
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'false' }
+      }
     },
     'allow-optional-fields': {
       type: 'boolean',
@@ -32,18 +38,31 @@ const meta: Meta = {
         category: 'props',
         defaultValue: { summary: 'false' }
       }
+    },
+    'submitted': {
+      description: 'Emitted when the server response is received.  Will not be raised if form vailidation fails.',
+      table: {
+        category: 'events'
+      }
+    },
+    'click-event': {
+      description: 'Emitted when controls are clicked.  Control name is defined in `data.detail.name`.',
+      table: {
+        category: 'events'
+      }
     }
   },
   parameters: {
     actions: {
       handles: [
         'submitted',
-        'clickEvent'
+        'click-event'
       ]
     }
   },
   decorators: [
     customStoryDecorator,
+    // @ts-ignore
     withActions // https://github.com/storybookjs/storybook/issues/22384
   ],
 };

@@ -7,7 +7,13 @@ import { parseIdentityInfo } from '../utils/payload-parsers';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 import { LoadingSpinner } from '../../form/utils';
-import { OwnerFormSubmitEvent, OwnerFormServerErrorEvent, OwnerFormServerErrors } from '../utils/business-form-types';
+import { 
+  OwnerFormSubmitEvent, 
+  OwnerFormServerErrorEvent, 
+  OwnerFormServerErrors, 
+  OwnerFormClickEvent, 
+  OwnerFormClickActions} 
+  from '../utils/business-form-types';
 
 @Component({
   tag: 'justifi-owner-form',
@@ -27,6 +33,7 @@ export class BusinessOwnerForm {
   @State() errors: any = {};
   @State() owner: Owner = {};
   @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
 
@@ -144,6 +151,16 @@ export class BusinessOwnerForm {
         ...values,
       }
     });
+  }
+
+  handleAddOwner = () => {
+    const eventName = this.ownerId ? OwnerFormClickActions.updateOwner : OwnerFormClickActions.addOwner;
+    this.clickEvent.emit({ name: eventName });
+  }
+
+  handleRemoveOwner = () => {
+    this.removeOwner(this.ownerId);
+    this.clickEvent.emit({ name: OwnerFormClickActions.removeOwner });
   }
 
   @Method()
@@ -267,6 +284,7 @@ export class BusinessOwnerForm {
                 <button
                   type="submit"
                   class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+                  onClick={() => this.handleAddOwner()}
                   disabled={this.isLoading}>
                   {this.isLoading ? LoadingSpinner() : this.submitButtonText}
                 </button>
@@ -274,7 +292,7 @@ export class BusinessOwnerForm {
                   <button
                     type="button"
                     class="btn btn-danger"
-                    onClick={() => this.removeOwner(this.ownerId)}>
+                    onClick={() => this.handleRemoveOwner()}>
                     Remove owner
                   </button>}
               </div>

@@ -23,8 +23,15 @@ export class BusinessForm {
   @Prop() hideErrors?: boolean = false;
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
-  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({eventName: 'click-event'}) clickEventNew: EventEmitter<BusinessFormClickEvent>;
+  @Event({eventName: 'clickEvent'}) clickEventOld: EventEmitter<BusinessFormClickEvent>;
+
+  fireClickEvents(event: BusinessFormClickEvent) {
+    console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
+    this.clickEventNew.emit(event);
+    this.clickEventOld.emit(event);
+  }
 
   get disabledState() {
     return this.isLoading;
@@ -41,12 +48,6 @@ export class BusinessForm {
   private formController: FormController;
   private api: any;
 
-  constructor() {
-    this.sendData = this.sendData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-    this.validateAndSubmit = this.validateAndSubmit.bind(this);
-  }
-
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
@@ -58,14 +59,14 @@ export class BusinessForm {
     this.fetchData();
   }
 
-  private async sendData() {
+  private sendData = async () => {
     this.isLoading = true;
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
       const payload = parseBusiness(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-      this.submitted.emit({data: response});
+      this.handleReponse(response);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     } finally {
@@ -73,7 +74,7 @@ export class BusinessForm {
     }
   }
 
-  private async fetchData() {
+  private fetchData = async () => {
     this.isLoading = true;
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
@@ -86,9 +87,16 @@ export class BusinessForm {
     }
   }
 
-  private validateAndSubmit(event: any) {
+  private validateAndSubmit = (event: any) => {
     event.preventDefault();
     this.formController.validateAndSubmit(this.sendData);
+  }
+
+  handleReponse(response) {
+    if (response.error) {
+      this.errorMessage = BusinessFormServerErrors.patchData;
+    } 
+    this.submitted.emit({ data: response });
   }
 
   render() {
@@ -120,7 +128,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.clickEvent.emit({ name: BusinessFormClickActions.submit})}
+                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit})}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>

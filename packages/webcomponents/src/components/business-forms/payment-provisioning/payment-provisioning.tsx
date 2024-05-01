@@ -21,7 +21,7 @@ export class PaymentProvisioning {
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
   @State() totalSteps: number = 5;
-  @Event() clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   get showErrors() {
     return this.errorMessage && !this.hideErrors;
@@ -43,40 +43,40 @@ export class PaymentProvisioning {
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[0] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
                 allowOptionalFields={this.allowOptionalFields}
               />,
     1: () => <justifi-legal-address-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[1] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
                 allowOptionalFields={this.allowOptionalFields}
               />,
     2: () => <justifi-additional-questions-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[2] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
                 allowOptionalFields={this.allowOptionalFields}
               />,
     3: () => <justifi-business-representative-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[3] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
                 allowOptionalFields={this.allowOptionalFields}
               />,
     4: () => <justifi-business-owners-form-step
                 businessId={this.businessId}
                 authToken={this.authToken}
                 ref={(el) => this.refs[4] = el}
-                onFormLoading={(e: CustomEvent) => this.handleFormLoading(e)}
-                onServerError={(e: CustomEvent) => this.handleServerErrors(e)}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
                 allowOptionalFields={this.allowOptionalFields}
               />,
   };
@@ -91,11 +91,11 @@ export class PaymentProvisioning {
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 
-  handleFormLoading(e: CustomEvent) {
+  handleFormLoading = (e: CustomEvent) => {
     this.formLoading = e.detail;
   }
 
-  handleServerErrors(e: CustomEvent) {
+  handleServerErrors = (e: CustomEvent) => {
     this.errorMessage = e.detail.message;
   }
 
