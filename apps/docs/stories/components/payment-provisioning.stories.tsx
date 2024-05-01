@@ -17,6 +17,17 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'title': {
+      type: 'string',
+      description: 'This prop updates the value of the title displayed at the top of the form.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'Business Information' }
+      }
+    },
     'hide-errors': {
       type: 'boolean',
       description: 'When set to `true`, this prop will hide all error alerts from the form, allowing developers more control over how they wish to handle errors.',

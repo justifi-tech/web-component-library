@@ -17,6 +17,7 @@ export class PaymentProvisioning {
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;
   @Prop() allowOptionalFields?: boolean = false;
+  @Prop() title?: string = 'Business Information';
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
@@ -138,7 +139,7 @@ export class PaymentProvisioning {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <h1>Business Information</h1>
+        <h1>{this.title}</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
         <div class="my-4">
           {this.currentStepComponent()}

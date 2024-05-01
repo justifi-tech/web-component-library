@@ -21,6 +21,7 @@ export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
+  @Prop() title?: string = 'Business Information';
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
@@ -105,7 +106,7 @@ export class BusinessForm {
         <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
             <div class="col-12 mb-4">
-              <h1>Business Information</h1>
+              <h1>{this.title}</h1>
             </div>
             {this.showErrors && FormAlert(this.errorMessage)}
             <div class="col-12 mb-4">
