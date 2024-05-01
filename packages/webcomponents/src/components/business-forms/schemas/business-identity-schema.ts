@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
-import { phoneRegex } from '../utils/helpers';
+import { phoneRegex } from './schema-helpers';
 
 export const identitySchema = (title: string, allowOptionalFields?: boolean) => {
   const schema = object({
