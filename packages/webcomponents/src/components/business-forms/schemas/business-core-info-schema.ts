@@ -4,6 +4,7 @@ import {
   businessNameRegex, 
   phoneRegex, 
   stringLettersOnlyRegex, 
+  taxIdRegex, 
   transformEmptyString, 
   urlRegex } 
   from './schema-helpers';
@@ -42,6 +43,10 @@ const industryValidation = string()
   .matches(stringLettersOnlyRegex, 'Enter valid industry')
   .transform(transformEmptyString);
 
+const taxIdValidation = string()
+  .matches(taxIdRegex, 'Enter valid tax id')
+  .transform(transformEmptyString);
+
 export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     legal_name: nameValidation.required('Enter legal name'),
@@ -51,6 +56,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     doing_business_as: doingBusinessAsValidation.required('Enter doing business as'),
     business_type: businessTypeValidation.required('Select business type'),
     industry: industryValidation.required('Enter a business industry'),
+    tax_id: taxIdValidation.required('Enter tax id'),
   });
 
   const easySchema = object({
@@ -61,6 +67,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     doing_business_as: doingBusinessAsValidation.nullable(),
     business_type: businessTypeValidation.nullable(),
     industry: industryValidation.nullable(),
+    tax_id: taxIdValidation.nullable(),
   });
 
   return allowOptionalFields ? easySchema : schema;
