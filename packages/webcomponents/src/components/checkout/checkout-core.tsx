@@ -1,8 +1,11 @@
 import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
-import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
-// import { PaymentMethodPayload } from './payment-method-payload';
+import { PaymentMethodPayload } from './payment-method-payload';
+
+interface CheckoutCompleteResponse {
+
+}
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -81,7 +84,7 @@ export class CheckoutCore {
 
     this.isLoading = true;
 
-    const payload: any = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
     if (payload.token) {
       this.complete({
