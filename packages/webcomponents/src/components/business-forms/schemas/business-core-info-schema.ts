@@ -1,5 +1,5 @@
 import { object, string } from 'yup';
-import { BusinessTypeOptions } from '../utils/business-form-select-options';
+import { BusinessTypeOptions } from '../utils/business-form-types';
 import { 
   businessNameRegex, 
   phoneRegex, 
