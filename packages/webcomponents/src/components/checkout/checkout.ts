@@ -83,3 +83,6 @@ export class Checkout implements ICheckout {
     Object.assign(this, data);
   }
 }
+
+export interface ICheckoutCompleteResponse {
+}

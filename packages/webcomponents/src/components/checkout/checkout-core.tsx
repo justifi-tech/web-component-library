@@ -3,10 +3,6 @@ import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 
-interface CheckoutCompleteResponse {
-
-}
-
 @Component({
   tag: 'justifi-checkout-core',
   styleUrl: 'checkout-core.scss',
