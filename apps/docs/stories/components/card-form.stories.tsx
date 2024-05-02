@@ -73,7 +73,10 @@ const meta: Meta = {
         'cardFormReady',
         'ready'
       ]
-    }
+    },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     story => `

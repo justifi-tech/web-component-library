@@ -2,7 +2,7 @@ import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
 import { BusinessDetailsCore } from "../business-details-core";
 import { makeGetBusiness } from "../get-business";
-import mockBusinessDetails from './../../../api/mockData/mockBusinessDetails.json';
+import mockBusinessDetails from './../../../../../../mockData/mockBusinessDetails.json';
 import { Business, IBusiness } from "../../../api/Business";
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
 

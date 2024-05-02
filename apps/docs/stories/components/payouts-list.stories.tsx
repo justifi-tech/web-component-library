@@ -35,6 +35,9 @@ const meta: Meta = {
     actions: {
       handles: ['payout-row-clicked', 'error-event'],
     },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     customStoryDecorator,

@@ -29,6 +29,11 @@ const meta: Meta = {
       handles: ['error-event'],
     },
   },
+  parameters: {
+    chromatic: {
+      delay: 2000,
+    }
+  },
   decorators: [
     customStoryDecorator,
     // @ts-ignore

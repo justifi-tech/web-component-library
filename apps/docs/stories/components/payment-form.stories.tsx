@@ -117,7 +117,7 @@ const meta: Meta = {
       ]
     },
     chromatic: {
-      delay: 1000
+      delay: 2000,
     },
   },
   decorators: [

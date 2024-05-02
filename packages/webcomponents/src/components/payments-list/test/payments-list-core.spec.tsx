@@ -3,7 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsListCore } from '../payments-list-core';
 import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
-import mockSuccessResponse from '../../../api/mockData/mockPaymentsSuccess.json';
+import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment } from '../../../api';
 import { makeGetPayments } from '../get-payments';
 

@@ -1,7 +1,7 @@
 import { IApiResponse, Payout } from '../../../api';
 import { PayoutService } from '../../../api/services/payout.service';
 import { makeGetPayoutDetails } from '../get-payout-details';
-import mockResponse from '../../../api/mockData/mockPayoutDetailsSuccess.json';
+import mockResponse from '../../../../../../mockData/mockPayoutDetailsSuccess.json';
 
 describe('getPayout', () => {
   const mockId = '123';
