@@ -2,7 +2,6 @@ import { format } from 'date-fns';
 import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
 import { Legal } from '../api/SubAccount';
-import StateOptions from './state-options';
 
 export const RegExZip = /^\d{5}/;
 
@@ -237,9 +236,4 @@ export async function loadFontsOnParent() {
 
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
-
-export function getStateAbbreviation(stateName: string): string | undefined {
-  const state = StateOptions.find(s => s.label === stateName);
-  return state ? state.value : stateName;
 }

@@ -1,4 +1,5 @@
 import { Address, IAddress } from "./Business";
+import { filterNumber } from "../components/business-forms/utils/helpers";
 
 export interface Identity {
   address?: IAddress;
@@ -42,8 +43,8 @@ export class Owner implements Identity {
   constructor(owner: Identity) {
     this.address = { ...new Address(owner.address || {}) }
     this.created_at = owner.created_at;
-    this.dob_day = owner.dob_day;
-    this.dob_month = owner.dob_month;
+    this.dob_day = filterNumber(owner.dob_day);
+    this.dob_month = filterNumber(owner.dob_month);
     this.dob_year = owner.dob_year;
     this.documents = owner.documents;
     this.email = owner.email;
@@ -82,8 +83,8 @@ export class Representative implements Identity {
   constructor(representative: Identity) {
     this.address = { ...new Address(representative.address || {}) }
     this.created_at = representative.created_at;
-    this.dob_day = representative.dob_day;
-    this.dob_month = representative.dob_month;
+    this.dob_day = filterNumber(representative.dob_day);
+    this.dob_month = filterNumber(representative.dob_month);
     this.dob_year = representative.dob_year;
     this.documents = representative.documents;
     this.email = representative.email;
