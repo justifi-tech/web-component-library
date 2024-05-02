@@ -1,27 +1,34 @@
 import { object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
-import { phoneRegex } from './schema-helpers';
+import { 
+  onlyLettersRegex,
+  transformEmptyString, 
+  emailValidation,
+  phoneValidation} 
+  from './schema-helpers';
 
-export const identitySchema = (title: string, allowOptionalFields?: boolean) => {
+const identityNameValidation = string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(100, 'Name must be less than 100 characters')
+  .matches(onlyLettersRegex, 'Enter valid name')
+  .transform(transformEmptyString);
+
+export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
   const schema = object({
-    name: string().required(`Enter ${title} name`),
-    email: string()
-      .email(`Enter valid ${title} email`)
-      .required(`Enter ${title} email`),
-    phone: string().matches(phoneRegex, 'Enter valid phone number').required('Enter phone number'),
-    dob_day: string().required(`Enter ${title} birth day`),
-    dob_month: string().required(`Enter ${title} birth month`),
-    dob_year: string().required(`Enter ${title} birth year`),
+    name: identityNameValidation.required(`Enter ${role} name`),
+    email: emailValidation.required(`Enter ${role} email`),
+    phone: phoneValidation.required(`Enter ${role} phone number`),
+    dob_day: string().required(`Enter ${role} birth day`),
+    dob_month: string().required(`Enter ${role} birth month`),
+    dob_year: string().required(`Enter ${role} birth year`),
     identification_number: string(),
     address: addressSchema(allowOptionalFields),
   });
 
   const easySchema = object({
-    name: string().required(`Enter ${title} name`),
-    email: string()
-      .email(`Enter valid ${title} email`)
-      .nullable(),
-    phone: string().matches(phoneRegex, 'Enter valid phone number').nullable(),
+    name: identityNameValidation.required(`Enter ${role} name`),
+    email: emailValidation.nullable(),
+    phone: phoneValidation.nullable(),
     dob_day: string().nullable(),
     dob_month: string().nullable(),
     dob_year: string().nullable(),
