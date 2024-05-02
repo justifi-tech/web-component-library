@@ -7,7 +7,8 @@ import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema'
 import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent, BusinessTypeOptions } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessTypeOptions } from '../../utils/business-form-options';
 
 /**
  *

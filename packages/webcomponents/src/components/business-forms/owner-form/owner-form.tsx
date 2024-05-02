@@ -7,12 +7,13 @@ import { parseIdentityInfo } from '../utils/payload-parsers';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 import { LoadingSpinner } from '../../form/utils';
+import { daysOfMonth, monthsOfYear } from '../utils/business-form-options';
 import { 
   OwnerFormSubmitEvent, 
   OwnerFormServerErrorEvent, 
   OwnerFormServerErrors, 
   OwnerFormClickEvent, 
-  OwnerFormClickActions} 
+  OwnerFormClickActions } 
   from '../utils/business-form-types';
 
 @Component({
@@ -235,23 +236,23 @@ export class BusinessOwnerForm {
                 </label>
               </div>
               <div class="col-12 col-md-4">
-                <form-control-datepart
+                <form-control-select
                   name="dob_day"
                   label="Day"
                   defaultValue={ownerDefaultValue?.dob_day}
                   error={this.errors.dob_day}
                   inputHandler={this.inputHandler}
-                  type="day"
+                  options={daysOfMonth}
                 />
               </div>
               <div class="col-12 col-md-4">
-                <form-control-datepart
+                <form-control-select
                   name="dob_month"
                   label="Month"
                   defaultValue={ownerDefaultValue?.dob_month}
                   error={this.errors.dob_month}
                   inputHandler={this.inputHandler}
-                  type="month"
+                  options={monthsOfYear}
                 />
               </div>
               <div class="col-12 col-md-4">

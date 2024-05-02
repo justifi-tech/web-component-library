@@ -6,9 +6,9 @@ import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Representative } from '../../../../api/Identity';
-
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { daysOfMonth, monthsOfYear } from '../../utils/business-form-options';
 
 @Component({
   tag: 'justifi-business-representative-form-step',
@@ -162,23 +162,23 @@ export class BusinessRepresentativeFormStep {
                 </label>
               </div>
               <div class="col-12 col-md-4">
-                <form-control-datepart
+                <form-control-select
                   name="dob_day"
                   label="Day"
                   defaultValue={representativeDefaultValue?.dob_day}
                   error={this.errors.dob_day}
                   inputHandler={this.inputHandler}
-                  type="day"
+                  options={daysOfMonth}
                 />
               </div>
               <div class="col-12 col-md-4">
-                <form-control-datepart
+                <form-control-select
                   name="dob_month"
                   label="Month"
                   defaultValue={representativeDefaultValue?.dob_month}
                   error={this.errors.dob_month}
                   inputHandler={this.inputHandler}
-                  type="month"
+                  options={monthsOfYear}
                 />
               </div>
               <div class="col-12 col-md-4">

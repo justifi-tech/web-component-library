@@ -1,6 +1,6 @@
 import { Identity, Representative } from './Identity';
 import { BankAccount } from './shared';
-import { getStateAbbreviation } from '../utils/utils';
+import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
 export enum BusinessStructure {
   sole_proprietorship = 'sole_proprietorship',

@@ -1,5 +1,5 @@
 import { object, string } from 'yup';
-import { BusinessTypeOptions } from '../utils/business-form-types';
+import { BusinessTypeOptions } from '../utils/business-form-options';
 import {
   businessNameRegex,
   emailValidation,
