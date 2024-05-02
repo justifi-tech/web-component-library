@@ -86,29 +86,24 @@ export class CheckoutCore {
     if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
-        onSuccess: this.onSuccess,
-        onError: this.onError,
+        onSuccess: this.onSubmitted,
+        onError: this.onSubmitted,
       })
     } else if (payload.bnpl?.status === 'success') {
       this.complete({
         payment: { payment_mode: 'bnpl' },
-        onSuccess: this.onSuccess,
-        onError: this.onError,
+        onSuccess: this.onSubmitted,
+        onError: this.onSubmitted,
       })
     } else {
       this.isLoading = false;
     }
   }
 
-  onSuccess = ({ checkout }) => {
-    this.checkout = checkout;
+  onSubmitted = (data) => {
+    this.submitted.emit(data);
     this.isLoading = false;
-  }
-
-  onError = (errorMessage) => {
-    this.errorMessage = errorMessage;
-    this.isLoading = false;
-  }
+  };
 
   private loadingSpinner = (
     <div class="spinner-border spinner-border-sm" role="status">
@@ -142,7 +137,7 @@ export class CheckoutCore {
                 bnpl={this.checkout?.bnpl}
                 client-id={this.checkout?.payment_client_id}
                 account-id={this.checkout?.account_id}
-                savedPaymentMethods={this.checkout?.payment_methods}
+                savedPaymentMethods={this.checkout?.payment_methods || []}
                 paymentAmount={this.checkout?.payment_amount}
               />
             </div>
