@@ -18,11 +18,16 @@ export class PaymentProvisioning {
   @Prop() hideErrors?: boolean = false;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() title?: string = 'Business Information';
+  @Prop() removeTitle?: boolean = false;
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
   @State() totalSteps: number = 5;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
+
+  get formTitle() {
+    return this.removeTitle ? '' : this.title;
+  }
 
   get showErrors() {
     return this.errorMessage && !this.hideErrors;
@@ -139,7 +144,7 @@ export class PaymentProvisioning {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <h1>{this.title}</h1>
+        <h1>{this.formTitle}</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
         <div class="my-4">
           {this.currentStepComponent()}

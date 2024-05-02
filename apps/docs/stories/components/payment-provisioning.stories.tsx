@@ -28,6 +28,17 @@ const meta: Meta = {
         defaultValue: { summary: 'Business Information' }
       }
     },
+    'remove-title': {
+      type: 'boolean',
+      description: 'This prop removes the title displayed at the top of the form.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'false' }
+      }
+    },
     'hide-errors': {
       type: 'boolean',
       description: 'When set to `true`, this prop will hide all error alerts from the form, allowing developers more control over how they wish to handle errors.',
