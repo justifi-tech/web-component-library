@@ -44,6 +44,11 @@ export class PaymentForm {
     this.submitButtonEnabled = true;
   }
 
+  @Method()
+  async disableSubmitButton() {
+    this.submitButtonEnabled = false;
+  }
+
   paymentMethodSelectedHandler(event: CustomEvent) {
     const paymentMethodType: PaymentMethodTypes = event.detail;
     this.selectedPaymentMethodType = paymentMethodType;
