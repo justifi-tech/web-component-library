@@ -58,7 +58,10 @@ const meta: Meta = {
         'submitted',
         'click-event'
       ]
-    }
+    },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     customStoryDecorator,

@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/web-components';
+import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs, paymentMethodFormComponentMethods } from '../utils';
 
@@ -73,12 +73,16 @@ const meta: Meta = {
         'cardFormReady',
         'ready'
       ]
-    }
+    },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     story => `
     ${story()}
     <script>${addEvents()}</script>`,
+    // @ts-ignore
     withActions
   ],
 };
@@ -139,11 +143,15 @@ const Template = (args: any) => {
   `;
 };
 
-export const Basic = Template.bind({});
-Basic.args = { 'single-line': false };
+export const Basic: StoryObj = {
+  args: { ...storyBaseArgs.args, 'single-line': false },
+  render: Template,
+};
 
-export const SingleLine = Template.bind({});
-SingleLine.args = { 'single-line': true };
+export const SingleLine: StoryObj = {
+  args: { ...storyBaseArgs.args, 'single-line': true },
+  render: Template,
+};
 
 const styledVariables = `
   --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
@@ -181,9 +189,12 @@ const styledVariables = `
   --jfi-error-message-font-size: .875rem;
 `;
 
-export const Styled = Template.bind({});
-Styled.args = {
-  'css-variables': styledVariables
+export const Styled: StoryObj = {
+  args: {
+    ...storyBaseArgs.args,
+    'css-variables': styledVariables
+  },
+  render: Template,
 };
 
 export default meta;

@@ -1,5 +1,5 @@
 import { makeGetBusiness } from '../get-business';
-import mockResponse from '../../../api/mockData/mockBusinessDetails.json';
+import mockResponse from '../../../../../../mockData/mockBusinessDetails.json';
 import { Business, IBusiness } from '../../../api/Business';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 

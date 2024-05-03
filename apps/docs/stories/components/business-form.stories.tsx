@@ -54,7 +54,10 @@ const meta: Meta = {
         'click-event',
         'clickEvent'
       ]
-    }
+    },
+    chromatic: {
+      delay: 2000,
+    },
   },
   decorators: [
     customStoryDecorator,

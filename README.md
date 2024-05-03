@@ -6,6 +6,9 @@
 
 - `pnpm build` - Build all packages, including the Storybook site
 - `pnpm dev` - Run all packages locally and preview with Storybook
+- `pnpm dev:mocks` - Run all packages locally with mock data
+- `pnpm test` - Run all tests
+- `pnpm test:watch` - Run all tests in watch mode
 - `pnpm lint` - Lint all packages
 - `pnpm changeset` - Generate a changeset
 - `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
@@ -41,7 +44,7 @@ Stencil compiles `src/index.tsx`, which exports all of the components in the lib
 
 ```json:webcomponents/package.json
 {
-  "name": "@justifi/webcomponents", 
+  "name": "@justifi/webcomponents",
   "version": "x.y.z",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -92,4 +95,3 @@ To generate your changelog, run `pnpm changeset` locally:
 1. Write a summary for the changes.
 1. Confirm the changeset looks as expected.
 1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
-

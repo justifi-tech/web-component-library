@@ -1,7 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { DetailItem, DetailSectionTitle } from '../../details/utils';
 import { IOnboardingData } from '../../../components';
-import { formatLegalAddress, snakeCaseToHumanReadable } from '../../../utils/utils';
+import { formatLegalAddress } from '../../../utils/utils';
 
 @Component({
   tag: 'subaccount-merchant-details',
@@ -41,10 +41,6 @@ export class SubaccountMerchantDetails {
                 />
               </div>
               <div class="col-12 col-md-6">
-                <DetailItem
-                  title='Business Structure'
-                  value={this.onboardingData?.payload?.business_details?.structure ? snakeCaseToHumanReadable(this.onboardingData?.payload?.business_details?.structure) : ''}
-                />
                 <DetailItem
                   title='Business Type'
                   value={this.onboardingData?.payload?.business_details?.type}

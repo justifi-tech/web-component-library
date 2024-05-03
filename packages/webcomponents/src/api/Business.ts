@@ -2,22 +2,6 @@ import { Identity, Representative } from './Identity';
 import { BankAccount } from './shared';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
-export enum BusinessStructure {
-  sole_proprietorship = 'sole_proprietorship',
-  single_llc = 'single_llc',
-  multi_llc = 'multi_llc',
-  private_partnership = 'private_partnership',
-  private_corporation = 'private_corporation',
-  unincorporated_association = 'unincorporated_association',
-  public_partnership = 'public_partnership',
-  public_corporation = 'public_corporation',
-  incorporated = 'incorporated',
-  unincorporated = 'unincorporated',
-  government_unit = 'government_unit',
-  government_instrumentality = 'government_instrumentality',
-  tax_exempt_government_instrumentality = 'tax_exempt_government_instrumentality',
-}
-
 export enum BusinessType {
   individual = 'individual',
   for_profit = 'for_profit',
@@ -109,7 +93,6 @@ export class AdditionalQuestions implements IAdditionalQuestions {
 }
 
 export interface ICoreBusinessInfo {
-  business_structure?: BusinessStructure;
   business_type?: BusinessType;
   legal_name?: string;
   doing_business_as?: string;
@@ -121,7 +104,6 @@ export interface ICoreBusinessInfo {
 }
 
 export class CoreBusinessInfo implements ICoreBusinessInfo {
-  public business_structure: BusinessStructure;
   public business_type: BusinessType;
   public legal_name: string;
   public doing_business_as: string;
@@ -132,7 +114,6 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
   public phone: string;
 
   constructor(coreBusinessInfo: ICoreBusinessInfo) {
-    this.business_structure = coreBusinessInfo.business_structure;
     this.business_type = coreBusinessInfo.business_type;
     this.legal_name = coreBusinessInfo.legal_name;
     this.doing_business_as = coreBusinessInfo.doing_business_as;
@@ -146,7 +127,6 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
 
 export interface IBusiness {
   additional_questions: IAdditionalQuestions | {};
-  business_structure: BusinessStructure;
   business_type: BusinessType;
   bank_accounts: BankAccount[];
   created_at: string;
@@ -170,7 +150,6 @@ export interface IBusiness {
 
 export class Business implements IBusiness {
   public additional_questions: IAdditionalQuestions | {};
-  public business_structure: BusinessStructure;
   public business_type: BusinessType;
   public bank_accounts: BankAccount[];
   public created_at: string;
@@ -194,7 +173,6 @@ export class Business implements IBusiness {
   constructor(business: IBusiness) {
     this.additional_questions = business.additional_questions || {};
     this.bank_accounts = business.bank_accounts;
-    this.business_structure = business.business_structure;
     this.business_type = business.business_type;
     this.created_at = business.created_at;
     this.documents = business.documents;

@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
+    "build:mocks": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true storybook build",
+    "build:chromatic": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true VITE_STORYBOOK_CHROMATIC_BUILD=true storybook build",
     "preview-storybook": "serve storybook-static",
     "clean": "rm -rf .turbo && rm -rf node_modules",
     "lint": "eslint ./stories/*.stories.tsx --max-warnings 0"
@@ -17,19 +19,20 @@
     "ts-dedent": "^2.2.0"
   },
   "devDependencies": {
-    "storybook": "^7.6.17",
-    "@storybook/addon-actions": "^7.6.17",
-    "@storybook/addon-docs": "^7.6.17",
-    "@storybook/addon-essentials": "^7.6.17",
-    "@storybook/addon-links": "^7.6.17",
-    "@storybook/theming": "^7.6.17",
-    "@storybook/web-components": "^7.6.17",
-    "@storybook/web-components-vite": "^7.6.17",
+    "@storybook/addon-actions": "^7.6.8",
+    "@storybook/addon-docs": "^7.6.8",
+    "@storybook/addon-essentials": "^7.6.8",
+    "@storybook/addon-links": "^7.6.8",
+    "@storybook/theming": "^7.6.8",
+    "@storybook/web-components": "^7.6.8",
+    "@storybook/web-components-vite": "^7.6.8",
     "@types/node": "20.10.8",
     "@vitejs/plugin-react": "^4.2.1",
     "chromatic": "^10.6.0",
     "eslint": "^8.56.0",
+    "miragejs": "^0.1.48",
     "serve": "^14.2.1",
+    "storybook": "^7.6.8",
     "typescript": "^5.3.3",
     "vite": "^5.0.13"
   }
