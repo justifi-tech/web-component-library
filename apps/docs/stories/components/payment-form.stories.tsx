@@ -96,6 +96,12 @@ const meta: Meta = {
         category: 'methods'
       }
     },
+    'disableSubmitButton': {
+      description: '`disableSubmitButton() => Promise<void>`',
+      table: {
+        category: 'methods'
+      }
+    },
     'fillBillingForm': {
       description: '`fillBillingForm(fields: BillingFormFields) => Promise<void>`',
       table: {
