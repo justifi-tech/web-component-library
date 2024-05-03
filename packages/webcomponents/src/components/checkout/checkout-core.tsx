@@ -1,8 +1,8 @@
 import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
-// import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
-// import { PaymentMethodPayload } from './payment-method-payload';
+import { PaymentMethodPayload } from './payment-method-payload';
+import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -21,13 +21,13 @@ export class CheckoutCore {
 
   @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
-  @State() checkout: any;
+  @State() checkout: ICheckout;
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() creatingNewPaymentMethod: boolean = false;
   @State() selectedPaymentMethodToken: string;
 
-  @Event() submitted: EventEmitter<any>;
+  @Event() submitted: EventEmitter<ICheckoutCompleteResponse>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -49,7 +49,7 @@ export class CheckoutCore {
 
     this.getCheckout({
       onSuccess: ({ checkout }) => {
-        this.checkout = checkout;
+        this.checkout = new Checkout(checkout);
         this.isLoading = false;
       },
       onError: (errorMessage) => {
@@ -81,34 +81,29 @@ export class CheckoutCore {
 
     this.isLoading = true;
 
-    const payload: any = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
     if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
-        onSuccess: this.onSuccess,
-        onError: this.onError,
+        onSuccess: this.onSubmitted,
+        onError: this.onSubmitted,
       })
     } else if (payload.bnpl?.status === 'success') {
       this.complete({
         payment: { payment_mode: 'bnpl' },
-        onSuccess: this.onSuccess,
-        onError: this.onError,
+        onSuccess: this.onSubmitted,
+        onError: this.onSubmitted,
       })
     } else {
       this.isLoading = false;
     }
   }
 
-  onSuccess = ({ checkout }) => {
+  onSubmitted = (data) => {
+    this.submitted.emit(data);
     this.isLoading = false;
-    this.submitted.emit({ checkout });
-  }
-
-  onError = (errorMessage) => {
-    this.errorMessage = errorMessage;
-    this.isLoading = false;
-  }
+  };
 
   private loadingSpinner = (
     <div class="spinner-border spinner-border-sm" role="status">
@@ -145,7 +140,7 @@ export class CheckoutCore {
                 bnpl={this.checkout?.bnpl}
                 client-id={this.checkout?.payment_client_id}
                 account-id={this.checkout?.account_id}
-                savedPaymentMethods={this.checkout?.payment_methods}
+                savedPaymentMethods={this.checkout?.payment_methods || []}
                 paymentAmount={this.checkout?.payment_amount}
               />
             </div>

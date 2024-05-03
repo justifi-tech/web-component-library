@@ -3,6 +3,7 @@ import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { IBnpl } from '../../api';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -12,7 +13,7 @@ import { PaymentMethodPayload } from './payment-method-payload';
 export class PaymentMethodOptions {
   @Prop() showCard: boolean;
   @Prop() showAch: boolean;
-  @Prop() bnpl: any; // type this
+  @Prop() bnpl: IBnpl;
   @Prop() clientId: string;
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
@@ -36,7 +37,6 @@ export class PaymentMethodOptions {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
     if (this.bnpl?.provider === 'sezzle') {
-      console.log(this.bnpl.provider)
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzel }));
     }
     this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
