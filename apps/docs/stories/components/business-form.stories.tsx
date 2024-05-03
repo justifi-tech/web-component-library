@@ -17,7 +17,7 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'title': {
+    'form-title': {
       type: 'string',
       description: 'This prop updates the value of the title displayed at the top of the form.',
       control: {

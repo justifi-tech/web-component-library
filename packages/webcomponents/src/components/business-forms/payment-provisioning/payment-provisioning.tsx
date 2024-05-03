@@ -17,7 +17,7 @@ export class PaymentProvisioning {
   @Prop() testMode: boolean = false;
   @Prop() hideErrors?: boolean = false;
   @Prop() allowOptionalFields?: boolean = false;
-  @Prop() title?: string = 'Business Information';
+  @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
@@ -25,8 +25,8 @@ export class PaymentProvisioning {
   @State() totalSteps: number = 5;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
-  get formTitle() {
-    return this.removeTitle ? '' : this.title;
+  get title() {
+    return this.removeTitle ? '' : this.formTitle;
   }
 
   get showErrors() {
@@ -144,7 +144,7 @@ export class PaymentProvisioning {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <h1>{this.formTitle}</h1>
+        <h1>{this.title}</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
         <div class="my-4">
           {this.currentStepComponent()}
