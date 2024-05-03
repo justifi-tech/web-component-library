@@ -1,7 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
-import { daysOfMonth, monthsOfYear } from '../../utils/business-form-options';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -96,39 +95,13 @@ export class BusinessRepresentative {
                 mask={PHONE_MASKS.US}
               />
             </div>
-            <div class="col-12">
-              <label part="label" class="form-label">
-                Birth Date
-              </label>
-            </div>
             <div class="col-12 col-md-4">
-              <form-control-select
-                name="dob_day"
-                label="Day"
-                defaultValue={representativeDefaultValue?.dob_day}
-                error={this.errors.dob_day}
-                inputHandler={this.inputHandler}
-                options={daysOfMonth}
-              />
-            </div>
-            <div class="col-12 col-md-4">
-              <form-control-select
-                name="dob_month"
-                label="Month"
-                defaultValue={representativeDefaultValue?.dob_month}
-                error={this.errors.dob_month}
-                inputHandler={this.inputHandler}
-                options={monthsOfYear}
-              />
-            </div>
-            <div class="col-12 col-md-4">
-              <form-control-datepart
-                name="dob_year"
-                label="Year"
+              <form-control-date
+                name="dob"
+                label="Birth Date"
                 defaultValue={representativeDefaultValue?.dob_year}
                 error={this.errors.dob_year}
                 inputHandler={this.inputHandler}
-                type="year"
               />
             </div>
             <div class="col-12">
