@@ -2,7 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Business, IBusiness } from "../../../../api/Business";
 import { GenericInfoDetails } from "../generic-info-details";
-import mockedBusinessDetails from '../../../../api/mockData/mockBusinessDetails.json';
+import mockedBusinessDetails from '../../../../../../../mockData/mockBusinessDetails.json';
 
 describe('GenericInfoDetails', () => {
   it('should render', async () => {

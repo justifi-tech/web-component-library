@@ -1,6 +1,6 @@
 import { makeGetGrossPaymentChartData } from '../get-gross-payment-chart-data';
 import { ReportsService } from '../../../api/services/reports.service';
-import { mockGrossVolumeReport } from '../../../api/mockData/mockGrossVolumeReport';
+import { mockGrossVolumeReport } from '../../../../../../mockData/mockGrossVolumeReport';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 const mockFetchGrossVolumeChartData = jest.fn().mockResolvedValue({

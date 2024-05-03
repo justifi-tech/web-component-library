@@ -10,7 +10,16 @@
         "^build"
       ]
     },
-    "test": {},
+    "test": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "test:watch": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
     "test:e2e": {},
     "lint": {},
     "dev": {
