@@ -1,5 +1,30 @@
 ### Changelog
 
+## 4.11.0
+
+### Minor Changes
+
+- 3b0a6af: Added disableSubmitButton method to PaymentForm
+- fc2121d: PaymentProvisioning - allow users to return to previous step without needing to validate and submit data on their current form step.
+- df2d640: - Made improvements to input logic and validation in address forms found in BusinessForm and PaymentProvisioning components:
+  - Show `country` field in address forms for Representative and Owners. Field is disabled currently, but autofills with `USA`.
+  - In BusinessForm - converted text input for `state` value to dropdown / select menu. Now matches input on PaymentProvisioning.
+  - Improved validation logic for various address fields: Street Address Line 1, Street Address Line 2, City, and Postal Code
+  - Postal Code fields - limited to 5 characters and numerical values only.
+- 79a6924: Added an error-event to all components
+- eb9efb6: PaymentProvisioning component - Added optional prop, `allow-optional-fields`, to allow for quicker form completion with less strict validation requirements.
+
+
+### Patch Changes
+
+- 5b2b354: PaymentProvisioning and BusinessForm - updated Select Menu labeled Prefix in Representative and Owner Forms to now be Text Input labeled Title
+- 5532595: - Added documentation support for events emitted by PaymentProvisoning component: `submitted`, and `click-event`.
+  - Updated event naming for BusinessForm - `click-event` is now available to use in place of `clickEvent`.
+    - `clickEvent` is still available for now, but will be deprecated in a future release in favor of `click-event`
+  - BusinessForm and PaymentProvisoning - updated docs to show `hide-errors` prop for both components.
+    - Default is `false`.
+    - When set to `true` - hides error alerts from appearing in form, allowing developers more control over how they handle errors communicating from the form to the Justifi API.
+
 ## 4.10.0
 
 ### Minor Changes
