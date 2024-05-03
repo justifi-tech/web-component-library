@@ -1,4 +1,4 @@
-import { BusinessStructure } from "../Business";
+
 import { AccountType, BusinessType, IOnboardingPayload } from "../SubAccount"
 
 const MockOnboardingPayload: IOnboardingPayload = {
@@ -10,7 +10,6 @@ const MockOnboardingPayload: IOnboardingPayload = {
     },
     email: 'ceo@business.com',
     type: BusinessType.individual,
-    structure: BusinessStructure.private_corporation,
     industry: "Landscaping Services",
     legal: {
       name: 'Legal Business Name',
