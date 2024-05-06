@@ -21,6 +21,8 @@ export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
+  @Prop() formTitle?: string = 'Business Information';
+  @Prop() removeTitle?: boolean = false;
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
@@ -31,6 +33,10 @@ export class BusinessForm {
     console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
     this.clickEventNew.emit(event);
     this.clickEventOld.emit(event);
+  }
+
+  get title() {
+    return this.removeTitle ? '' : this.formTitle;
   }
 
   get disabledState() {
@@ -105,7 +111,7 @@ export class BusinessForm {
         <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
             <div class="col-12 mb-4">
-              <h1>Business Information</h1>
+              <h1>{this.title}</h1>
             </div>
             {this.showErrors && FormAlert(this.errorMessage)}
             <div class="col-12 mb-4">
