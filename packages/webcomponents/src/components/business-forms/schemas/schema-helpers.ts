@@ -1,3 +1,4 @@
+
 export const transformEmptyString = (value: string) => {
   return value === '' ? null : value;
 }
