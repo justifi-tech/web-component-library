@@ -37,7 +37,7 @@ export class DateInput {
   // }
 
   componentDidUpdate() {
-    this.updateInput(this.defaultValue);
+    this.updateInput(this.defaultValue || '');
   }
 
   handleFormControlInput = (event: any) => {

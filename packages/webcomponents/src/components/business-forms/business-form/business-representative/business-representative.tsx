@@ -115,7 +115,7 @@ export class BusinessRepresentative {
                 onFormControlInput={this.onDateOfBirthUpdate}
               />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-8">
               <form-control-number
                 name="identification_number"
                 label="SSN"
