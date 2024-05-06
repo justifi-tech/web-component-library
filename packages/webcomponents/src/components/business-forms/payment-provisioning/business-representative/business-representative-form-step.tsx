@@ -6,8 +6,8 @@ import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
-import { Representative } from '../../../../api/Identity';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { Representative } from '../../../../api/Identity';
 import { deconstructDate } from '../../utils/helpers';
 
 @Component({
