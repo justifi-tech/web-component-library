@@ -10,12 +10,7 @@ export class BusinessRepresentative {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
-
-  constructor() {
-    this.inputHandler = this.inputHandler.bind(this);
-    this.onAddressFormUpdate = this.onAddressFormUpdate.bind(this);
-  }
-
+  
   componentDidLoad() {
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors.representative }),
@@ -25,7 +20,7 @@ export class BusinessRepresentative {
     );
   }
 
-  inputHandler(name: string, value: string) {
+  inputHandler = (name: string, value: string) => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       representative: {
@@ -35,7 +30,7 @@ export class BusinessRepresentative {
     });
   }
 
-  onAddressFormUpdate(values: any): void {
+  onAddressFormUpdate = (values: any): void => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       representative: {
@@ -97,10 +92,10 @@ export class BusinessRepresentative {
             </div>
             <div class="col-12 col-md-4">
               <form-control-date
-                name="dob"
+                name="dob_full"
                 label="Birth Date"
-                defaultValue={representativeDefaultValue?.dob_year}
-                error={this.errors.dob_year}
+                defaultValue={representativeDefaultValue?.dob_full}
+                error={this.errors.dob_full}
                 inputHandler={this.inputHandler}
               />
             </div>

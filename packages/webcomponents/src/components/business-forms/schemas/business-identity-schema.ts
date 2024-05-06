@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+import { date, object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
 import { 
   onlyLettersRegex,
@@ -18,9 +18,7 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
     name: identityNameValidation.required(`Enter ${role} name`),
     email: emailValidation.required(`Enter ${role} email`),
     phone: phoneValidation.required(`Enter ${role} phone number`),
-    dob_day: string().required(`Enter ${role} birth day`),
-    dob_month: string().required(`Enter ${role} birth month`),
-    dob_year: string().required(`Enter ${role} birth year`),
+    dob_full: date().required(`Enter ${role} birth date`),
     identification_number: string(),
     address: addressSchema(allowOptionalFields),
   });

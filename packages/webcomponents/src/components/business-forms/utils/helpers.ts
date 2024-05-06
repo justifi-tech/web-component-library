@@ -12,3 +12,8 @@ export function filterNumber(num: string): string {
   }
   return num;
 }
+
+export function constructDate(year: string, month: string, day: string): string {
+  
+  return `${year}-${filterNumber(month)}-${filterNumber(day)}`;
+}

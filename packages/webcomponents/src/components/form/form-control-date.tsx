@@ -5,6 +5,7 @@ import {
   Prop,
   Event,
   EventEmitter,
+  State,
 } from '@stencil/core';
 
 @Component({
@@ -12,31 +13,39 @@ import {
   styleUrl: 'form-control-number.scss',
   shadow: true,
 })
-export class DatePartInput {
+export class DateInput {
   @Prop() label: string;
   @Prop() name: string;
   @Prop() error: string;
-  @Prop() defaultValue: Date;
+  @Prop() defaultValue: any;
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
+  @State() date: string
 
   dateInput!: HTMLInputElement;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  // private dateToObject(date: Date) {
-  //   return {
-  //     dob_day: date.getDate().toString(),
-  //     dob_month: (date.getMonth() + 1).toString(), // Months are 0-based in JavaScript
-  //     dob_year: date.getFullYear().toString(),
-  //   };
+
+  private updateInput(value: any) {
+    this.dateInput.value = value;
+  }
+
+  // componentDidLoad() {
+  //   this.updateInput(this.defaultValue);
   // }
 
-  // private updateInput(value: string) {
-  //   const date = new Date(value);
-  //   this.dateInput.valueAsDate = date;
-  // }
+  componentDidUpdate() {
+    this.updateInput(this.defaultValue);
+  }
+
+  handleFormControlInput = (event: any) => {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.inputHandler(name, target.value);
+    this.formControlInput.emit(target.value);
+  }
 
   render() {
     return (
@@ -50,12 +59,7 @@ export class DatePartInput {
           id={this.name}
           name={this.name}
           onBlur={this.formControlBlur.emit}
-          onChange={(e) => {
-            // const date = new Date(e.target.value);
-            // const dob = this.dateToObject(date);
-            console.log(e);
-            // Now you can use dob to update your state or send it to your server
-          }}
+          onChange={this.handleFormControlInput}
           part={`input ${this.error && 'input-invalid'}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           disabled={this.disabled}
