@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import { deconstructDate } from '../../utils/helpers';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -39,6 +40,20 @@ export class BusinessRepresentative {
           ...this.formController.values.getValue().representative.address,
           ...values,
         },
+      },
+    });
+  }
+  
+  onDateOfBirthUpdate = (event): void => {
+    const dob_values = deconstructDate(event.detail);
+
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      representative: {
+        ...this.formController.values.getValue().representative,
+        dob_day: dob_values.dob_day,
+        dob_month: dob_values.dob_month,
+        dob_year: dob_values.dob_year,
       },
     });
   }
@@ -97,6 +112,7 @@ export class BusinessRepresentative {
                 defaultValue={representativeDefaultValue?.dob_full}
                 error={this.errors.dob_full}
                 inputHandler={this.inputHandler}
+                onFormControlInput={this.onDateOfBirthUpdate}
               />
             </div>
             <div class="col-12">

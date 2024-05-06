@@ -14,6 +14,10 @@ export function filterNumber(num: string): string {
 }
 
 export function constructDate(year: string, month: string, day: string): string {
-  
   return `${year}-${filterNumber(month)}-${filterNumber(day)}`;
+}
+
+export function deconstructDate(date: string): { dob_year: string, dob_month: string, dob_day: string } {
+  const [dob_year, dob_month, dob_day] = date.split('-');
+  return { dob_year, dob_month, dob_day };
 }

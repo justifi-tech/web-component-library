@@ -17,7 +17,7 @@ export class DateInput {
   @Prop() label: string;
   @Prop() name: string;
   @Prop() error: string;
-  @Prop() defaultValue: any;
+  @Prop() defaultValue: string;
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
   @State() date: string

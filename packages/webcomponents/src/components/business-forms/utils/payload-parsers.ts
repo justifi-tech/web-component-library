@@ -39,6 +39,7 @@ export const parseIdentityInfo = (values: any) => {
   delete values.address.created_at;
   delete values.address.updated_at;
   delete values.business_id
+  delete values.dob_full;
 
   return values;
 }
