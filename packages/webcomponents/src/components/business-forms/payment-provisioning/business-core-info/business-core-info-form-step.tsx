@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { BusinessTypeOptions, BusinessStructureOptions } from '../../utils/business-form-select-options';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/Business';
@@ -8,7 +7,7 @@ import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema'
 import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent, BusinessTypeOptions } from '../../utils/business-form-types';
 
 /**
  *
@@ -118,7 +117,7 @@ export class BusinessCoreInfoFormStep {
             <legend>General Info</legend>
             <hr />
             <div class="row gy-3">
-              <div class="col-12 col-md-6">
+              <div class="col-12">
                 <form-control-text
                   name="legal_name"
                   label="Legal Name"
@@ -127,7 +126,7 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-6">
+              <div class="col-12">
                 <form-control-text
                   name="doing_business_as"
                   label="Doing Business As (DBA)"
@@ -147,16 +146,6 @@ export class BusinessCoreInfoFormStep {
                 />
               </div>
               <div class="col-12 col-md-6">
-                <form-control-select
-                  name="business_structure"
-                  label="Business Structure"
-                  options={BusinessStructureOptions}
-                  defaultValue={coreInfoDefaultValue.business_structure}
-                  error={this.errors.business_structure}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class="col-12">
                 <form-control-text
                   name="industry"
                   label="Industry"

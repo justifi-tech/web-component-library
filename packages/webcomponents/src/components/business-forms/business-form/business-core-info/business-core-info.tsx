@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { BusinessTypeOptions, BusinessStructureOptions } from '../../utils/business-form-select-options';
+import { BusinessTypeOptions } from '../../utils/business-form-types';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
@@ -52,7 +52,7 @@ export class BusinessCoreInfo {
           <legend>General Info</legend>
           <hr />
           <div class="row gy-3">
-            <div class="col-12 col-md-6">
+            <div class="col-12">
               <form-control-text
                 name="legal_name"
                 label="Legal Name"
@@ -61,7 +61,7 @@ export class BusinessCoreInfo {
                 inputHandler={this.inputHandler}
               />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12">
               <form-control-text
                 name="doing_business_as"
                 label="Doing Business As (DBA)"
@@ -81,16 +81,6 @@ export class BusinessCoreInfo {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-select
-                name="business_structure"
-                label="Business Structure"
-                options={BusinessStructureOptions}
-                defaultValue={coreInfoDefaultValue.business_structure}
-                error={this.errors.business_structure}
-                inputHandler={this.inputHandler}
-              />
-            </div>
-            <div class="col-12">
               <form-control-text
                 name="industry"
                 label="Industry"

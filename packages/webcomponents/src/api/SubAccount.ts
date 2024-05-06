@@ -1,5 +1,4 @@
 import { formatCurrency, formatDate, formatPercentage, formatTime } from '../utils/utils';
-import { BusinessStructure } from './Business';
 
 export enum TagTypes {
   neutral = 'neutral',
@@ -164,7 +163,6 @@ export class SubAccount implements ISubAccount {
 export interface SubAccountBusinessDetails {
   url?: string,
   type?: BusinessType,
-  structure?: BusinessStructure,
   industry?: string,
   tax_id?: string,
   phone?: string,
