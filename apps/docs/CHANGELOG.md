@@ -1,5 +1,19 @@
 # @repo/docs
 
+## 0.0.6
+
+### Patch Changes
+
+- 3b0a6af: Added disableSubmitButton method to PaymentForm
+- Updated dependencies [fc2121d]
+- Updated dependencies [df2d640]
+- Updated dependencies [3b0a6af]
+- Updated dependencies [79a6924]
+- Updated dependencies [5b2b354]
+- Updated dependencies [5532595]
+- Updated dependencies [eb9efb6]
+  - @justifi/webcomponents@4.11.0
+
 ## 0.0.5
 
 ### Patch Changes
