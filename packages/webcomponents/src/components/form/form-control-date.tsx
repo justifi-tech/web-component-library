@@ -6,11 +6,12 @@ import {
   Event,
   EventEmitter,
   State,
+  Watch,
 } from '@stencil/core';
 
 @Component({
   tag: 'form-control-date',
-  styleUrl: 'form-control-number.scss',
+  styleUrl: 'form-control-text.scss',
   shadow: true,
 })
 export class DateInput {
@@ -21,23 +22,22 @@ export class DateInput {
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
   @State() date: string
-
-  dateInput!: HTMLInputElement;
-
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
+  dateInput!: HTMLInputElement;
 
   private updateInput(value: any) {
     this.dateInput.value = value;
   }
 
-  // componentDidLoad() {
-  //   this.updateInput(this.defaultValue);
-  // }
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
+  }
 
-  componentDidUpdate() {
-    this.updateInput(this.defaultValue || '');
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
   }
 
   handleFormControlInput = (event: any) => {
@@ -64,10 +64,8 @@ export class DateInput {
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           disabled={this.disabled}
         />
-        {this.error && <span part="input-invalid">{this.error}</span>}
+        {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
     );
   }
-
 }
-

@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+import { date, object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
 import { phoneRegex } from './schema-helpers';
 
@@ -9,9 +9,7 @@ export const identitySchema = (title: string, allowOptionalFields?: boolean) => 
       .email(`Enter valid ${title} email`)
       .required(`Enter ${title} email`),
     phone: string().matches(phoneRegex, 'Enter valid phone number').required('Enter phone number'),
-    dob_day: string().required(`Enter ${title} birth day`),
-    dob_month: string().required(`Enter ${title} birth month`),
-    dob_year: string().required(`Enter ${title} birth year`),
+    dob_full: date().required('Enter date of birth'),
     identification_number: string(),
     address: addressSchema(allowOptionalFields),
   });
@@ -22,9 +20,7 @@ export const identitySchema = (title: string, allowOptionalFields?: boolean) => 
       .email(`Enter valid ${title} email`)
       .nullable(),
     phone: string().matches(phoneRegex, 'Enter valid phone number').nullable(),
-    dob_day: string().nullable(),
-    dob_month: string().nullable(),
-    dob_year: string().nullable(),
+    dob_full: date().nullable('Enter date of birth'),
     identification_number: string().nullable(),
     address: addressSchema(allowOptionalFields),
   });

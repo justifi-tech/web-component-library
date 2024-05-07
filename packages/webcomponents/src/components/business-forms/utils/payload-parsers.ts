@@ -1,11 +1,10 @@
 // These props should not be sent to the server
 
 // This function is for the larger business form. 
-export const parseBusiness = (values, initialValues) => {
+export const parseBusiness = (values) => {
   parseCoreInfo(values);
   parseAddressInfo(values.legal_address);
   parseIdentityInfo(values.representative);
-  initialValues.owners?.length && delete values.owners;
 
   return values;
 }

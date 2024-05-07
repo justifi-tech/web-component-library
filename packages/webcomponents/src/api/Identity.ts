@@ -47,7 +47,7 @@ export class Owner implements Identity {
     this.dob_day = filterNumber(owner.dob_day);
     this.dob_month = filterNumber(owner.dob_month);
     this.dob_year = owner.dob_year;
-    this.dob_full = constructDate(this.dob_year, this.dob_month, this.dob_day);
+    this.dob_full = constructDate(this.dob_year, this.dob_month, this.dob_day) || '';
     this.documents = owner.documents;
     this.email = owner.email;
     this.id = owner.id;
@@ -89,7 +89,7 @@ export class Representative implements Identity {
     this.dob_day = filterNumber(representative.dob_day);
     this.dob_month = filterNumber(representative.dob_month);
     this.dob_year = representative.dob_year;
-    this.dob_full = constructDate(this.dob_year, this.dob_month, this.dob_day);
+    this.dob_full = constructDate(this.dob_year, this.dob_month, this.dob_day) || '';
     this.documents = representative.documents;
     this.email = representative.email;
     this.id = representative.id;

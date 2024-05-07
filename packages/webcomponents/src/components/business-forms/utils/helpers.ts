@@ -13,7 +13,11 @@ export function filterNumber(num: string): string {
   return num;
 }
 
-export function constructDate(year: string, month: string, day: string): string {
+export function constructDate(year: string, month: string, day: string): string | void {
+  if (!year || !month || !day) {
+    return;
+  }
+  
   return `${year}-${filterNumber(month)}-${filterNumber(day)}`;
 }
 
