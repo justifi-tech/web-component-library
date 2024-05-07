@@ -24,7 +24,7 @@ export class BusinessOwnerForm {
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
-  @Prop() allowOptionalFields?: boolean;
+  @Prop() allowOptionalFields?: boolean = false;
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
@@ -170,12 +170,15 @@ export class BusinessOwnerForm {
 
   @Method()
   async submit(): Promise<boolean> {
-    return this.sendData();
+    const isValid = await this.validate();
+    if (isValid) {
+      return this.sendData();
+    }
   }
 
-  validateAndSubmit = (event: any) => {
+  validateAndSubmit = async (event: any) => {
     event.preventDefault();
-    const isValid = this.formController.validate();
+    const isValid = await this.validate();
     if (isValid) {
       this.submit();
     }
