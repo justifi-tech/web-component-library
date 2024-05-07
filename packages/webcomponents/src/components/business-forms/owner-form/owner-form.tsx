@@ -182,12 +182,15 @@ export class BusinessOwnerForm {
 
   @Method()
   async submit(): Promise<boolean> {
-    return this.sendData();
+    const isValid = await this.validate();
+    if (isValid) {
+      return this.sendData();
+    }
   }
 
-  validateAndSubmit = (event: any) => {
+  validateAndSubmit = async (event: any) => {
     event.preventDefault();
-    const isValid = this.formController.validate();
+    const isValid = await this.validate();
     if (isValid) {
       this.submit();
     }
