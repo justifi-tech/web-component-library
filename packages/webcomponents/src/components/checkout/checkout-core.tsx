@@ -113,24 +113,24 @@ export class CheckoutCore {
 
   render() {
     return (
-      <Host exportparts="summary-heading,payment-description,payment-total,payment-total-label,payment-total-amount,pay-button">
-        <div class="row gy-3">
+      <Host>
+        <div class="row gy-3 jfi-checkout-core">
           <div class="col-12 mb-4">
             {/* componentize this */}
-            <h2 class="fs-5 fw-bold" part="summary-heading">Summary</h2>
+            <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
             {this.checkout && (
               <div>
-                <div part="payment-description">{this.checkout?.payment_description}</div>
-                <div part="payment-total">
-                  <span part="payment-total-label">Total</span>&nbsp;
-                  <span part="payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+                <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
+                <div class="jfi-payment-total">
+                  <span class="jfi-payment-total-label">Total</span>&nbsp;
+                  <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
                 </div>
               </div>
             )}
           </div>
 
           <div class="col-12">
-            <h2 class="fs-5 fw-bold border-bottom pb-3">Payment</h2>
+            <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
               <justifi-payment-method-options

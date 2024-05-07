@@ -7,6 +7,13 @@
 :host {
   @include host-base-styles;
   display: block;
+  --jfi-header-border-color: var(--jfi-border-color);
+  --jfi-form-label-color: var(--jfi-base-color);
+  --bs-form-check-bg: var(--jfi-radio-button-background-color);
+}
+
+.jfi-checkout-core {
+  color: var(--jfi-base-color);
 }
 
 justifi-payment-method-form {
@@ -59,6 +66,16 @@ justifi-payment-method-form {
   }
 }
 
+.jfi-header {
+  color: var(--jfi-header-color);
+  border-bottom: 1px solid var(--jfi-header-border-color);
+}
+
+// .jfi-payment-description {}
+// .jfi-payment-total {}
+// .jfi-payment-total-label {}
+// .jfi-payment-total-amount {}
+
 .jfi-submit-button {
   font-family: var(--jfi-layout-font-family);
   color: var(--jfi-submit-button-color);
@@ -69,6 +86,8 @@ justifi-payment-method-form {
   border-radius: var(--jfi-submit-button-border-radius);
   width: var(--jfi-submit-button-width);
   box-shadow: var(--jfi-submit-button-box-shadow);
+  line-height: var(--jfi-submit-button-line-height);
+  text-transform: var(--jfi-submit-button-text-transform);
 }
 
 .jfi-submit-button:hover {

@@ -1,6 +1,20 @@
 @import 'root';
 
 :root {
+  --jfi-base-color: rgb(182, 190, 201); // use bootstrap var
+  --jfi-header-color: #fff; // use bootstrap var
+  --jfi-border-color: var(--bs-border-color);
+  --jfi-submit-button-line-height: 1.5;
+  --jfi-submit-button-text-transform: initial;
+  --jfi-radio-button-group-color: var(--jfi-base-color);
+  --jfi-radio-button-group-color-hover: var(--jfi-base-color);
+  --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  --jfi-radio-button-group-background-color: transparent;
+  --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
+
+  /* Bootstrap overrides */
+  // --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='current'/%3e%3c/svg%3e");
+
   /* layout */
   --jfi-layout-font-family: #{$font-family-base};
   --jfi-layout-padding: 4px;
