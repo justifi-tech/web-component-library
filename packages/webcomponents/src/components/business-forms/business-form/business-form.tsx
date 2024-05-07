@@ -74,7 +74,8 @@ export class BusinessForm {
     this.isLoading = true;
     try {
       const values = this.formController.values.getValue();
-      const payload = parseBusiness(values);
+      const initialValues = this.formController.getInitialValues();
+      const payload = parseBusiness(values, initialValues);
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
       this.handleReponse(response);
     } catch (error) {

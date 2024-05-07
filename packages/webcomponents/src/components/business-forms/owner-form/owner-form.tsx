@@ -70,17 +70,20 @@ export class BusinessOwnerForm {
     this.formLoading.emit(this.isLoading);
   }
 
+  instantiateOwner = (data: Identity) => {
+    this.owner = { ...new Owner(data) };
+    this.formController.setInitialValues(this.owner);
+  }
+
   private fetchData = async () => {
     if (!this.ownerId) {
-      this.owner = { ...new Owner({}) };
-      this.formController.setInitialValues(this.owner);
+      this.instantiateOwner({});
       return;
     }
     this.isLoading = true;
     try {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
-      this.owner = { ...new Owner(response.data)};
-      this.formController.setInitialValues(this.owner);
+      this.instantiateOwner(response.data);
     } catch (error) {
       this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
     } finally {
@@ -115,6 +118,7 @@ export class BusinessOwnerForm {
       this.serverError.emit({ data: response.error, message: errorMessage });
       return false;
     } else {
+      this.instantiateOwner(response.data);
       return true;
     }
   }
