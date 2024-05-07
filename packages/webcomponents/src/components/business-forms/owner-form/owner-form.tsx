@@ -24,7 +24,7 @@ export class BusinessOwnerForm {
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
-  @Prop() allowOptionalFields?: boolean = false;
+  @Prop() allowOptionalFields?: boolean;
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
