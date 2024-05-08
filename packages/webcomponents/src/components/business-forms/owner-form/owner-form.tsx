@@ -159,14 +159,22 @@ export class BusinessOwnerForm {
   }
 
   onDateOfBirthUpdate = (event): void => {
-    const dob_values = deconstructDate(event.detail);
-
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      dob_day: dob_values.dob_day,
-      dob_month: dob_values.dob_month,
-      dob_year: dob_values.dob_year,
-    });
+    if (event.detail === '') {
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        dob_day: null,
+        dob_month: null,
+        dob_year: null,
+      });
+    } else {
+      const dob_values = deconstructDate(event.detail);
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        dob_day: dob_values.dob_day,
+        dob_month: dob_values.dob_month,
+        dob_year: dob_values.dob_year,
+      });
+    }
   }
 
   handleAddOwner = () => {

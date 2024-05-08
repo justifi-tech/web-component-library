@@ -11,7 +11,7 @@ import {
 
 @Component({
   tag: 'form-control-date',
-  styleUrl: 'form-control-text.scss',
+  styleUrl: 'form-control-date.scss',
   shadow: true,
 })
 export class DateInput {
