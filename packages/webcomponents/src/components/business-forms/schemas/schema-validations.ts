@@ -61,7 +61,13 @@ export const identityNameValidation = string()
   .matches(stringLettersOnlyRegex, 'Enter valid name')
   .transform(transformEmptyString);
 
-export const dobValidation = (title: string) => {
+export const identityTitleValidation = string()
+  .min(2, 'Title must be at least 2 characters')
+  .max(50, 'Title must be less than 50 characters')
+  .matches(stringLettersOnlyRegex, 'Enter valid title')
+  .transform(transformEmptyString);
+
+export const dobValidation = (role: string) => {
   return (
     string()
     .test('min', 'Enter a valid date', (value) => {
@@ -69,7 +75,7 @@ export const dobValidation = (title: string) => {
       const minDate = new Date('1902-01-01');
       return date >= minDate;
     })
-    .test('age', `${title} must be at least 18 years old`, (value) => {
+    .test('age', `${role} must be at least 18 years old`, (value) => {
       const date = new Date(value);
       const minAgeDate = new Date();
       minAgeDate.setFullYear(minAgeDate.getFullYear() - 18);
@@ -115,4 +121,3 @@ export const stateValidation = string()
 export const postalValidation = string()
   .matches(/^[0-9]{5}$/, 'Enter valid postal code')
   .transform(transformEmptyString);
-  
