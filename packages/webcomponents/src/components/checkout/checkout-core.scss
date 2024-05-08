@@ -7,7 +7,6 @@
 :host {
   @include host-base-styles;
   display: block;
-  --jfi-header-border-color: var(--jfi-border-color);
   --jfi-form-label-color: var(--jfi-body-color);
   --bs-form-check-bg: var(--jfi-radio-button-background-color);
 }
