@@ -4,16 +4,6 @@
   --jfi-body-color: rgb(182, 190, 201); // use bootstrap var
   --jfi-header-color: #fff; // use bootstrap var
   --jfi-header-border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
-  --jfi-submit-button-line-height: 1.5;
-  --jfi-submit-button-text-transform: initial;
-  --jfi-radio-button-group-color: var(--jfi-body-color);
-  --jfi-radio-button-group-color-hover: var(--jfi-body-color);
-  --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
-  --jfi-radio-button-group-background-color: transparent;
-  --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
-
-  /* Bootstrap overrides */
-  // --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='current'/%3e%3c/svg%3e");
 
   /* layout */
   --jfi-layout-font-family: #{$font-family-base};
@@ -63,6 +53,11 @@
   --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
+  --jfi-radio-button-group-color: var(--jfi-body-color);
+  --jfi-radio-button-group-color-hover: var(--jfi-body-color);
+  --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  --jfi-radio-button-group-background-color: transparent;
+  --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
 
   /* submit button */
   --jfi-submit-button-color: white;
@@ -85,6 +80,8 @@
   --jfi-submit-button-color-loading: white;
   --jfi-submit-button-background-color-loading: var(--jfi-primary-color);
   --jfi-submit-button-border-color-loading: var(--jfi-primary-color);
+  --jfi-submit-button-line-height: 1.5;
+  --jfi-submit-button-text-transform: initial;
 
   /* form label */
   --jfi-form-label-color: #{$body-color};
