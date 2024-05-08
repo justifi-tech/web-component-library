@@ -1,8 +1,8 @@
 @import 'root';
 
 :root {
-  --jfi-body-color: rgb(182, 190, 201); // use bootstrap var
-  --jfi-header-color: #fff; // use bootstrap var
+  --jfi-body-color: var(--bs-body-color);
+  --jfi-header-color: var(--bs-body-color); // use bootstrap var
   --jfi-header-border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
 
   /* layout */
@@ -53,6 +53,10 @@
   --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
+
+  --jfi-radio-button-box-shadow-focus: #{$form-check-input-focus-box-shadow};
+  --jfi-radio-button-border-color-focus: #{$form-check-input-focus-border};
+
   --jfi-radio-button-group-color: var(--jfi-body-color);
   --jfi-radio-button-group-color-hover: var(--jfi-body-color);
   --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);

@@ -7,8 +7,6 @@
 :host {
   @include host-base-styles;
   display: block;
-  --jfi-form-label-color: var(--jfi-body-color);
-  --bs-form-check-bg: var(--jfi-radio-button-background-color);
 }
 
 justifi-payment-method-form {
