@@ -1,13 +1,13 @@
 @import 'root';
 
 :root {
-  --jfi-base-color: rgb(182, 190, 201); // use bootstrap var
+  --jfi-body-color: rgb(182, 190, 201); // use bootstrap var
   --jfi-header-color: #fff; // use bootstrap var
-  --jfi-border-color: var(--bs-border-color);
+  --jfi-header-border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   --jfi-submit-button-line-height: 1.5;
   --jfi-submit-button-text-transform: initial;
-  --jfi-radio-button-group-color: var(--jfi-base-color);
-  --jfi-radio-button-group-color-hover: var(--jfi-base-color);
+  --jfi-radio-button-group-color: var(--jfi-body-color);
+  --jfi-radio-button-group-color-hover: var(--jfi-body-color);
   --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
@@ -94,7 +94,7 @@
   --jfi-form-label-margin: 0 0 #{$form-label-margin-bottom} 0;
 
   /* validation messages */
-  --jfi-error-message-color: #{$form-feedback-invalid-color};
+  --jfi-error-message-color: var(--bs-form-invalid-color);
   --jfi-error-message-margin: #{$form-feedback-margin-top} 0 0 0;
   --jfi-error-message-font-size: #{$form-feedback-font-size};
 }

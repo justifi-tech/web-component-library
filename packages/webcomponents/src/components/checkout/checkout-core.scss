@@ -8,18 +8,18 @@
   @include host-base-styles;
   display: block;
   --jfi-header-border-color: var(--jfi-border-color);
-  --jfi-form-label-color: var(--jfi-base-color);
+  --jfi-form-label-color: var(--jfi-body-color);
   --bs-form-check-bg: var(--jfi-radio-button-background-color);
-}
-
-.jfi-checkout-core {
-  color: var(--jfi-base-color);
 }
 
 justifi-payment-method-form {
   display: block;
   margin-left: calc(var(--jfi-layout-padding) * -1);
   margin-right: calc(var(--jfi-layout-padding) * -1);
+}
+
+.jfi-checkout-core {
+  color: var(--jfi-body-color);
 }
 
 *::part(label) {
@@ -66,15 +66,17 @@ justifi-payment-method-form {
   }
 }
 
-.jfi-header {
-  color: var(--jfi-header-color);
-  border-bottom: 1px solid var(--jfi-header-border-color);
+*::part(invalid-feedback) {
+  color: var(--jfi-error-message-color);
+  font-size: var(--jfi-error-message-font-size);
+  margin: var(--jfi-error-message-margin);
+  line-height: normal;
 }
 
-// .jfi-payment-description {}
-// .jfi-payment-total {}
-// .jfi-payment-total-label {}
-// .jfi-payment-total-amount {}
+.jfi-header {
+  color: var(--jfi-header-color);
+  border-bottom: var(--jfi-header-border);
+}
 
 .jfi-submit-button {
   font-family: var(--jfi-layout-font-family);
