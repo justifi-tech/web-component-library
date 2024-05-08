@@ -8,5 +8,5 @@ export const businessFormSchema = object({
   ...businessCoreInfoSchema().fields,
   legal_address: addressSchema(),
   additional_questions: additionalQuestionsSchema(),
-  representative: identitySchema('Representative'),
+  representative: identitySchema('representative'),
 });

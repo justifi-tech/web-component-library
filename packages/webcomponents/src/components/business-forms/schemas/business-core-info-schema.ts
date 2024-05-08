@@ -1,12 +1,12 @@
 import { object, string } from 'yup';
 import { BusinessTypeOptions } from '../utils/business-form-types';
-import { 
-  businessNameRegex, 
-  phoneRegex, 
-  stringLettersOnlyRegex, 
-  taxIdRegex, 
-  transformEmptyString, 
-  urlRegex } 
+import {
+  businessNameRegex,
+  phoneRegex,
+  stringLettersOnlyRegex,
+  taxIdRegex,
+  transformEmptyString,
+  urlRegex }
   from './schema-helpers';
 
 const nameValidation = string()

@@ -1,6 +1,6 @@
 import { Identity, Representative } from './Identity';
 import { BankAccount } from './shared';
-import { getStateAbbreviation } from '../utils/utils';
+import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
 export enum BusinessType {
   individual = 'individual',
@@ -187,7 +187,7 @@ export class Business implements IBusiness {
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
     this.product_categories = business.product_categories;
-    this.representative = new Representative(business.representative || {});
+    this.representative = { ...new Representative(business.representative || {}) };
     this.tax_id = business.tax_id;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;

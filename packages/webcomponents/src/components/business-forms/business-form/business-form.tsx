@@ -54,6 +54,11 @@ export class BusinessForm {
   private formController: FormController;
   private api: any;
 
+  instantiateBusiness = (data: IBusiness) => {
+    const business = new Business(data);
+    this.formController.setInitialValues({ ...business });
+  }
+
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
@@ -84,8 +89,7 @@ export class BusinessForm {
     this.isLoading = true;
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      const business = new Business(response.data);
-      this.formController.setInitialValues({ ...business });
+      this.instantiateBusiness(response.data);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.fetchData;
     } finally {
@@ -103,6 +107,7 @@ export class BusinessForm {
       this.errorMessage = BusinessFormServerErrors.patchData;
     } 
     this.submitted.emit({ data: response });
+    this.instantiateBusiness(response.data);
   }
 
   render() {
@@ -126,9 +131,6 @@ export class BusinessForm {
             <div class="col-12 mb-4">
               <justifi-business-representative formController={this.formController} />
             </div>
-            {/* <div class="col-12 mb-4">
-              <justifi-business-owners formController={this.formController} />
-            </div> */}
             <div class="col-12 d-flex flex-row-reverse">
               <button
                 type="submit"

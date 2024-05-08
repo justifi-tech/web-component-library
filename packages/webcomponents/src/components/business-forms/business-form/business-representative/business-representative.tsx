@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import { deconstructDate } from '../../utils/helpers';
 
 @Component({
   tag: 'justifi-business-representative',
@@ -10,12 +11,7 @@ export class BusinessRepresentative {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
-
-  constructor() {
-    this.inputHandler = this.inputHandler.bind(this);
-    this.onAddressFormUpdate = this.onAddressFormUpdate.bind(this);
-  }
-
+  
   componentDidLoad() {
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors.representative }),
@@ -25,7 +21,7 @@ export class BusinessRepresentative {
     );
   }
 
-  inputHandler(name: string, value: string) {
+  inputHandler = (name: string, value: string) => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       representative: {
@@ -35,7 +31,7 @@ export class BusinessRepresentative {
     });
   }
 
-  onAddressFormUpdate(values: any): void {
+  onAddressFormUpdate = (values: any): void => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       representative: {
@@ -44,6 +40,20 @@ export class BusinessRepresentative {
           ...this.formController.values.getValue().representative.address,
           ...values,
         },
+      },
+    });
+  }
+  
+  onDateOfBirthUpdate = (event): void => {
+    const dob_values = deconstructDate(event.detail);
+
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      representative: {
+        ...this.formController.values.getValue().representative,
+        dob_day: dob_values.dob_day,
+        dob_month: dob_values.dob_month,
+        dob_year: dob_values.dob_year,
       },
     });
   }
@@ -95,42 +105,17 @@ export class BusinessRepresentative {
                 mask={PHONE_MASKS.US}
               />
             </div>
-            <div class="col-12">
-              <label part="label" class="form-label">
-                Birth Date
-              </label>
-            </div>
             <div class="col-12 col-md-4">
-              <form-control-datepart
-                name="dob_day"
-                label="Day"
-                defaultValue={representativeDefaultValue?.dob_day}
-                error={this.errors.dob_day}
+              <form-control-date
+                name="dob_full"
+                label="Birth Date"
+                defaultValue={representativeDefaultValue?.dob_full}
+                error={this.errors.dob_full}
                 inputHandler={this.inputHandler}
-                type="day"
+                onFormControlInput={this.onDateOfBirthUpdate}
               />
             </div>
-            <div class="col-12 col-md-4">
-              <form-control-datepart
-                name="dob_month"
-                label="Month"
-                defaultValue={representativeDefaultValue?.dob_month}
-                error={this.errors.dob_month}
-                inputHandler={this.inputHandler}
-                type="month"
-              />
-            </div>
-            <div class="col-12 col-md-4">
-              <form-control-datepart
-                name="dob_year"
-                label="Year"
-                defaultValue={representativeDefaultValue?.dob_year}
-                error={this.errors.dob_year}
-                inputHandler={this.inputHandler}
-                type="year"
-              />
-            </div>
-            <div class="col-12">
+            <div class="col-12 col-md-8">
               <form-control-number
                 name="identification_number"
                 label="SSN"
