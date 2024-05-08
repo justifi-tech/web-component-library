@@ -51,6 +51,12 @@ export const industryValidation = string()
 
 export const taxIdValidation = string()
   .matches(taxIdRegex, 'Enter valid tax id')
+  .test('not-repeat', 'Enter valid tax id', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .test('not-seq', 'Enter valid tax id', (value) => {
+    return value !== '123456789';
+  })
   .transform(transformEmptyString);
 
 // Identity Validations
