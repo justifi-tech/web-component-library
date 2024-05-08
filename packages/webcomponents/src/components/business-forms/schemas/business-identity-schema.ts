@@ -22,7 +22,7 @@ export const identitySchema = (title: string, allowOptionalFields?: boolean) => 
     name: identityNameValidation.required(`Enter ${title} name`),
     email: emailValidation.nullable(),
     phone: phoneValidation.nullable(),
-    dob_full: dobValidation(title).nullable('Enter date of birth'),
+    dob_full: dobValidation(title).nullable(),
     identification_number: ssnValidation.nullable(),
     address: addressSchema(allowOptionalFields),
   });
