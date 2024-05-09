@@ -1,5 +1,37 @@
 ### Changelog
 
+## 4.12.0
+
+### Minor Changes
+
+- b94482f: Add new CSS variables and styling capabilities to Checkout component:
+  ```
+    --jfi-body-color
+    --jfi-header-color
+    --jfi-header-border
+    --jfi-radio-button-box-shadow-focus
+    --jfi-radio-button-border-color-focus
+    --jfi-radio-button-group-color
+    --jfi-radio-button-group-color-hover
+    --jfi-radio-button-group-divider
+    --jfi-radio-button-group-background-color
+    --jfi-radio-button-group-background-color-hover
+    --jfi-submit-button-line-height
+    --jfi-submit-button-text-transform
+    --jfi-error-message-color
+  ```
+- b0eb85b: - BusinessForm and PaymentProvisioning - added new optional prop, `form-title`, which allows devs to add their own custom title to override the default `Business Information`.
+  - BusinessForm and PaymentProvisioning - added new optional prop, `removeTitle`, which allows devs to remove the existing title altogether.
+- b5d079e: - Improved validation rules for first section of BusinessForm and PaymentProvisioning components.
+  - Removed `business_structure` input field from both BusinessForm and PaymentProvisioning components.
+  - Removed `business_structure` property from BusinessDetails component.
+  - `tax_id` is now required by default for both BusinessForm and PaymentProvisioning components.
+
+### Patch Changes
+
+- eb300a4: - PaymentProvisioning component - fixed bug that allowed individual owner form to be submitted without proper form validation.
+- b2839c8: - BusinessForm and PaymentProvisioning components: added single date input to replace 3 separate date inputs used to manage birth day, birth month, and birth year.
+
 ## 4.11.0
 
 ### Minor Changes
@@ -13,7 +45,6 @@
   - Postal Code fields - limited to 5 characters and numerical values only.
 - 79a6924: Added an error-event to all components
 - eb9efb6: PaymentProvisioning component - Added optional prop, `allow-optional-fields`, to allow for quicker form completion with less strict validation requirements.
-
 
 ### Patch Changes
 
