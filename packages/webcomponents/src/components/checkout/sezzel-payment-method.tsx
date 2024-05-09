@@ -95,7 +95,7 @@ export class SezzelPaymentMethod {
         </script>
 
         <div
-          class={`payment-method-header p-3 border-bottom`}
+          class={`payment-method-header p-3`}
           onClick={() => this.onPaymentMethodOptionClick()}>
           <input
             type="radio"

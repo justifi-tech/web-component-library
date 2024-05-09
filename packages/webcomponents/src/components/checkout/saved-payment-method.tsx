@@ -27,7 +27,7 @@ export class SavedPaymentMethod {
     return (
       <Fragment>
         <div class="payment-method">
-          <div class="payment-method-header p-3 border-bottom" onClick={() => this.onPaymentMethodOptionClick()}>
+          <div class="payment-method-header p-3" onClick={() => this.onPaymentMethodOptionClick()}>
             <input
               type="radio"
               name="paymentMethodType"

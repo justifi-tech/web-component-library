@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs, customStoryDecorator } from '../utils';
+import { StoryBaseArgs } from '../utils';
+import theme from '../theme';
 
 import '@justifi/webcomponents/dist/module/justifi-checkout';
 
@@ -45,9 +46,21 @@ const meta: Meta = {
       delay: 1000
     },
   },
-  decorators: [customStoryDecorator, withActions],
+  render: ({ label, ...args }) => {
+    return `<justifi-checkout auth-token="${args['auth-token']}" checkout-id="${args['checkout-id']}"></justifi-checkout>`;
+  }
 }
 
 export const Basic: StoryObj = {};
+Basic.decorators = [
+  (story: any) => {
+    // Import the style here to not pollute other framework stories
+    const styleElement = document.createElement('style');
+    styleElement.textContent = theme;
+
+    return `${styleElement.outerHTML}${story()}`;
+  },
+  withActions
+];
 
 export default meta;

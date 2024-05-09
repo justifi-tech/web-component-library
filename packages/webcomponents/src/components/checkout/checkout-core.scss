@@ -15,6 +15,10 @@ justifi-payment-method-form {
   margin-right: calc(var(--jfi-layout-padding) * -1);
 }
 
+.jfi-checkout-core {
+  color: var(--jfi-body-color);
+}
+
 *::part(label) {
   color: var(--jfi-form-label-color);
   font-family: var(--jfi-form-label-font-family);
@@ -59,6 +63,18 @@ justifi-payment-method-form {
   }
 }
 
+*::part(invalid-feedback) {
+  color: var(--jfi-error-message-color);
+  font-size: var(--jfi-error-message-font-size);
+  margin: var(--jfi-error-message-margin);
+  line-height: normal;
+}
+
+.jfi-header {
+  color: var(--jfi-header-color);
+  border-bottom: var(--jfi-header-border);
+}
+
 .jfi-submit-button {
   font-family: var(--jfi-layout-font-family);
   color: var(--jfi-submit-button-color);
@@ -69,6 +85,8 @@ justifi-payment-method-form {
   border-radius: var(--jfi-submit-button-border-radius);
   width: var(--jfi-submit-button-width);
   box-shadow: var(--jfi-submit-button-box-shadow);
+  line-height: var(--jfi-submit-button-line-height);
+  text-transform: var(--jfi-submit-button-text-transform);
 }
 
 .jfi-submit-button:hover {

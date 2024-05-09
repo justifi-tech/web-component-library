@@ -5,14 +5,14 @@ exports[`justifi-checkout renders 1`] = `
   <mock:shadow-root>
     <justifi-checkout-core>
       <mock:shadow-root>
-        <div class="gy-3 row">
+        <div class="gy-3 jfi-checkout-core row">
           <div class="col-12 mb-4">
-            <h2 class="fs-5 fw-bold">
+            <h2 class="fs-5 fw-bold jfi-header pb-3">
               Summary
             </h2>
           </div>
           <div class="col-12">
-            <h2 class="border-bottom fs-5 fw-bold pb-3">
+            <h2 class="fs-5 fw-bold jfi-header pb-3">
               Payment
             </h2>
             <h3 class="fs-6 fw-bold lh-lg">
@@ -24,7 +24,7 @@ exports[`justifi-checkout renders 1`] = `
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
-              <button class="btn btn-primary jfi-submit-button" type="submit">
+              <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
                 Pay
               </button>
             </div>

@@ -114,20 +114,23 @@ export class CheckoutCore {
   render() {
     return (
       <Host>
-        <div class="row gy-3">
+        <div class="row gy-3 jfi-checkout-core">
           <div class="col-12 mb-4">
             {/* componentize this */}
-            <h2 class="fs-5 fw-bold">Summary</h2>
+            <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
             {this.checkout && (
               <div>
-                <div>{this.checkout?.payment_description}</div>
-                <div>Total {formatCurrency(+this.checkout.payment_amount)}</div>
+                <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
+                <div class="jfi-payment-total">
+                  <span class="jfi-payment-total-label">Total</span>&nbsp;
+                  <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+                </div>
               </div>
             )}
           </div>
 
           <div class="col-12">
-            <h2 class="fs-5 fw-bold border-bottom pb-3">Payment</h2>
+            <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
               <justifi-payment-method-options
@@ -148,6 +151,7 @@ export class CheckoutCore {
                 type="submit"
                 onClick={event => this.submit(event)}
                 disabled={this.isLoading}
+                part="pay-button"
                 class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
               >
                 {this.isLoading ? this.loadingSpinner : 'Pay'}
