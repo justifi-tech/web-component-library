@@ -9,13 +9,33 @@
 
 .payment-method-header {
   cursor: pointer;
+  color: var(--jfi-radio-button-group-color);
+  background-color: var(--jfi-radio-button-group-background-color);
+  border-bottom: var(--jfi-radio-button-group-divider);
 
-  input,
+  input[type="radio"],
   label {
     cursor: pointer;
   }
 
+  input[type="radio"] {
+    background-color: var(--jfi-radio-button-background-color);
+    border-color: var(--jfi-radio-button-border-color);
+
+    &:checked,
+    &:checked:focus {
+      background-color: var(--jfi-radio-button-background-color-selected);
+      border-color: var(--jfi-radio-button-border-color-selected);
+    }
+
+    &:focus {
+      border-color: var(--jfi-radio-button-border-color-focus);
+      box-shadow: var(--jfi-radio-button-box-shadow-focus);
+    }
+  }
+
   &:hover {
-    background-color: var(--bs-gray-100);
+    color: var(--jfi-radio-button-group-color-hover);
+    background-color: var(--jfi-radio-button-group-background-color-hover);
   }
 }

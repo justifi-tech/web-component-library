@@ -1,6 +1,7 @@
 import { Component, Event, EventEmitter, Fragment, h, Prop, Method } from '@stencil/core';
 import { config } from '../../../config';
 import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-saved-payment-method',
@@ -14,8 +15,8 @@ export class SavedPaymentMethod {
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
   @Method()
-  async getPaymentMethodToken(): Promise<string> {
-    return this.paymentMethodOption?.id;
+  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
+    return { token: this.paymentMethodOption?.id };
   };
 
   onPaymentMethodOptionClick = () => {
@@ -26,7 +27,7 @@ export class SavedPaymentMethod {
     return (
       <Fragment>
         <div class="payment-method">
-          <div class="payment-method-header p-3 border-bottom" onClick={() => this.onPaymentMethodOptionClick()}>
+          <div class="payment-method-header p-3" onClick={() => this.onPaymentMethodOptionClick()}>
             <input
               type="radio"
               name="paymentMethodType"
