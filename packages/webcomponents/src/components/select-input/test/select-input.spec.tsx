@@ -18,7 +18,7 @@ describe('select-input', () => {
     ];
     await page.waitForChanges();
     expect(page.root).toEqualHtml(`
-    <select-input exportparts="label,input,input-invalid">
+    <select-input exportparts="label,input,input-invalid,invalid-feedback">
       <mock:shadow-root>
         <label part="label" class="form-label"></label>
         <select class="form-select" part="input">
@@ -44,7 +44,7 @@ describe('select-input', () => {
     await page.waitForChanges();
 
     expect(root).toEqualHtml(`
-    <select-input exportparts="label,input,input-invalid" label="Test Label" name="test">
+    <select-input exportparts="label,input,input-invalid,invalid-feedback" label="Test Label" name="test">
       <mock:shadow-root>
         <label part="label" class="form-label">Test Label</label>
         <select class="form-select" name="test" part="input">
@@ -74,11 +74,11 @@ describe('select-input', () => {
     page.root.error = 'Test Error';
     await page.waitForChanges();
     expect(page.root).toEqualHtml(`
-    <select-input exportparts="label,input,input-invalid">
+    <select-input exportparts="label,input,input-invalid,invalid-feedback">
       <mock:shadow-root>
         <label part="label" class="form-label"></label>
         <select class="form-select is-invalid" part="input input-invalid"></select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" part="invalid-feedback">
           Test Error
         </div>
       </mock:shadow-root>
