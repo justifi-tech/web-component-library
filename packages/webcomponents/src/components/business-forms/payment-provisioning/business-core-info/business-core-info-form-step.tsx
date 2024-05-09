@@ -154,7 +154,7 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <form-control-number-masked
                   name="tax_id"
                   label="Tax ID"
@@ -162,6 +162,15 @@ export class BusinessCoreInfoFormStep {
                   error={this.errors.tax_id}
                   inputHandler={this.inputHandler}
                   mask={TAX_ID_MASKS.US}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-date
+                  name="date_of_incorporation"
+                  label="Date of Incorporation"
+                  defaultValue={coreInfoDefaultValue.date_of_incorporation}
+                  error={this.errors.date_of_incorporation}
+                  inputHandler={this.inputHandler}
                 />
               </div>
               <div class="col-12">

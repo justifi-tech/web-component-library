@@ -59,6 +59,14 @@ export const taxIdValidation = string()
   })
   .transform(transformEmptyString);
 
+export const dateOfIncorporationValidation = string()
+  .test('not-future', 'Date of incorporation cannot be in the future', (value) => {
+    const inputDate = new Date(value);
+    const today = new Date();
+    return inputDate <= today;
+  })
+  .transform(transformEmptyString);
+
 // Identity Validations
 
 export const identityNameValidation = string()

@@ -101,6 +101,7 @@ export interface ICoreBusinessInfo {
   website_url?: string;
   email?: string;
   phone?: string;
+  date_of_incorporation?: string;
 }
 
 export class CoreBusinessInfo implements ICoreBusinessInfo {
@@ -112,6 +113,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
   public website_url: string;
   public email: string;
   public phone: string;
+  public date_of_incorporation: string;
 
   constructor(coreBusinessInfo: ICoreBusinessInfo) {
     this.business_type = coreBusinessInfo.business_type;
@@ -122,6 +124,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
     this.website_url = coreBusinessInfo.website_url;
     this.email = coreBusinessInfo.email;
     this.phone = coreBusinessInfo.phone;
+    this.date_of_incorporation = coreBusinessInfo.date_of_incorporation;
   }
 }
 
@@ -146,6 +149,7 @@ export interface IBusiness {
   tax_id: string;
   updated_at: string;
   website_url: string;
+  date_of_incorporation?: string;
 }
 
 export class Business implements IBusiness {
@@ -168,6 +172,7 @@ export class Business implements IBusiness {
   public tax_id: string;
   public updated_at: string;
   public website_url: string;
+  public date_of_incorporation?: string;
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
@@ -191,6 +196,7 @@ export class Business implements IBusiness {
     this.tax_id = business.tax_id;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
+    this.date_of_incorporation = business.date_of_incorporation;
   }
 }
 
