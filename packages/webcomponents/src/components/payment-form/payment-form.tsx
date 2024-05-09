@@ -16,7 +16,8 @@ export class PaymentForm {
   @Prop() bankAccount?: boolean;
   @Prop() card?: boolean = true;
   @Prop() email?: string;
-  @Prop() clientId: string;
+  @Prop() clientId?: string;
+  @Prop() webComponentToken?: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
 
@@ -29,6 +30,16 @@ export class PaymentForm {
 
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
+
+  componentWillLoad() {
+    if (!this.validateProps()) {
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        message: 'clientId or webComponentToken is required',
+        severity: ComponentErrorSeverity.ERROR
+      });
+    }
+  }
 
   connectedCallback() {
     loadFontsOnParent();
@@ -54,6 +65,14 @@ export class PaymentForm {
     this.selectedPaymentMethodType = paymentMethodType;
   }
 
+  private validateProps(): boolean {
+    return !!(this.clientId || this.webComponentToken);
+  }
+
+  private getToken(): string {
+    return this.webComponentToken || this.clientId;
+  }
+
   async submit(event) {
     event.preventDefault();
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
@@ -68,7 +87,7 @@ export class PaymentForm {
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
       const paymentMethodData = { email: this.email, ...billingFormFieldValues };
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.clientId, paymentMethodData, this.accountId);
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(this.getToken(), paymentMethodData, this.accountId);
       if (tokenizeResponse.error) {
         this.errorEvent.emit({
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,

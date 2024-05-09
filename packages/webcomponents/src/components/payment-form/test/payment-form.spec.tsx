@@ -9,6 +9,25 @@ import { PaymentMethodForm } from '../../payment-method-form/payment-method-form
 import { BillingForm } from '../../billing-form/billing-form';
 
 describe('justifi-payment-form', () => {
+  it('should throw error if both clientId and webComponentToken are not provided', async () => {
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [PaymentForm],
+      template: () => <justifi-payment-form onError-event={errorSpy} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'missing-props',
+        message: 'clientId or webComponentToken is required',
+        severity: 'error',
+      }
+    }));
+  });
+
   it('should update submitButtonEnabled state when enableSubmitButton method is called', async () => {
     // Mock component
     const mockComponent = new PaymentForm();

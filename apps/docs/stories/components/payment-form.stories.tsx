@@ -38,6 +38,16 @@ const meta: Meta = {
         category: 'props'
       }
     },
+    'web-component-token': {
+      type: 'string',
+      description: 'Web Component Token `string`',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props'
+      }
+    },
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
@@ -142,6 +152,7 @@ const Template = (args: any) => {
         email="${args.email}"
         client-id="${args['client-id']}"
         account-id="${args['account-id']}"
+        web-component-token="${args['web-component-token']}"
         submit-button-text="${args['submit-button-text']}"
       />
     </div>
