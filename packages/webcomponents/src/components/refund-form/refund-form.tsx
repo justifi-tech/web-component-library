@@ -11,6 +11,7 @@ import RefundFormSchema, { RefundFormFields } from './refund-form-schema';
 import { Api } from '../../api';
 import { FormController } from '../form/form';
 import { config } from '../../../config';
+import { CURRENCY_MASK } from '../../utils/form-input-masks';
 
 
 @Component({
@@ -154,6 +155,7 @@ export class RefundForm {
               name="amount"
               label="Refund Amount"
               defaultValue={this.amount?.toString() || ''}
+              maskOptions={CURRENCY_MASK.DECIMAL}
               inputHandler={(name: keyof RefundFormFields, value: any) =>
                 this.handleInput(name, value)
               }

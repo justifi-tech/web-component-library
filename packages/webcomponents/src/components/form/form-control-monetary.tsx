@@ -20,6 +20,7 @@ export class MonetaryInput {
   @Prop() error: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() maskOptions: any;
 
   private imask: InputMask<any> | null = null;
 
@@ -45,14 +46,7 @@ export class MonetaryInput {
   private initializeIMask() {
     if (!this.textInput) return;
 
-    this.imask = IMask(this.textInput, {
-      mask: Number,
-      scale: 2,
-      thousandsSeparator: ',',
-      padFractionalZeros: true,
-      normalizeZeros: true,
-      radix: '.',
-    });
+    this.imask = IMask(this.textInput, this.maskOptions);
 
     this.imask.on('accept', () => {
       const rawValue = this.imask.unmaskedValue;
