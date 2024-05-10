@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Watch } from '@stencil/core';
-import { makeGetCheckout, makePay } from './checkout-actions';
+import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class Checkout {
   @Prop() authToken: string;
   @Prop() checkoutId: string;
   @State() getCheckout: Function;
-  @State() pay: Function;
+  @State() complete: Function;
   @State() errorMessage: string = '';
 
   componentWillLoad() {
@@ -25,7 +25,7 @@ export class Checkout {
         checkoutId: this.checkoutId,
         service: new CheckoutService()
       });
-      this.pay = makePay({
+      this.complete = makeCheckoutComplete({
         authToken: this.authToken,
         checkoutId: this.checkoutId,
         service: new CheckoutService()
@@ -45,7 +45,7 @@ export class Checkout {
     return (
       <justifi-checkout-core
         getCheckout={this.getCheckout}
-        pay={this.pay}
+        complete={this.complete}
       ></justifi-checkout-core>
     );
   }

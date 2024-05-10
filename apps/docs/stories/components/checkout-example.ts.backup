@@ -1,0 +1,16 @@
+import { codeExampleHead } from '../utils';
+
+export default `<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+${codeExampleHead('justifi-checkout')}
+
+<body>
+  <justifi-checkout></justifi-checkout>
+</body>
+
+<script>
+
+</script>
+
+</html>`;

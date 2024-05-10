@@ -1,6 +1,7 @@
 import { Component, h, Prop, Method, Event, EventEmitter } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -24,14 +25,15 @@ export class NewPaymentMethod {
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
 
   @Method()
-  async getPaymentMethodToken(): Promise<string> {
+  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
 
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
-    return await this.tokenize();
+    const token = await this.tokenize();
+    return { token: token };
   }
 
   async tokenize() {
@@ -79,7 +81,7 @@ export class NewPaymentMethod {
     return (
       <div class="payment-method">
         <div
-          class={`payment-method-header p-3 border-bottom`}
+          class={`payment-method-header p-3`}
           onClick={() => this.onPaymentMethodOptionClick()}>
           <input
             type="radio"
