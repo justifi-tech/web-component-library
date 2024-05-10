@@ -1,5 +1,5 @@
 import { string } from "yup";
-import { businessTypeOptions } from "../utils/business-form-options";
+import { businessServiceReceivedOptions, businessTypeOptions, recurringPaymentsOptions, seasonalBusinessOptions } from "../utils/business-form-options";
 import StateOptions from "../../../utils/state-options";
 import { 
   businessNameRegex, 
@@ -147,4 +147,25 @@ export const paymentVolumeValidation = string()
   .matches(numbersOnlyRegex, 'Enter valid payment volume')
   .transform(transformEmptyString);
 
-  
+export const whenServiceReceivedValidation = string()
+  .oneOf(businessServiceReceivedOptions.map((option) => option.value), 'Select when service is received')
+  .transform(transformEmptyString);
+
+export const recurringPaymentsValidation = string()
+  .oneOf(recurringPaymentsOptions.map((option) => option.value), 'Select recurring payments')
+  .transform(transformEmptyString);
+
+export const recurringPaymentsPercentageValidation = string()
+  .when('business_recurring_payments', {
+    is: (val: any) => val === 'Yes',
+    then: (schema) => schema.required('Enter recurring payments percentage'),
+    otherwise: (schema) => schema.nullable(),
+  })
+  .transform(transformEmptyString);
+
+export const seasonalBusinessValidation = string()
+  .oneOf(seasonalBusinessOptions.map((option) => option.value), 'Select seasonal business')
+  .transform(transformEmptyString);
+
+export const otherPaymentDetailsValidation = string()
+  .transform(transformEmptyString);

@@ -13,6 +13,7 @@ export const CURRENCY_MASK = {
       num: {
         mask: Number,
         thousandsSeparator: ',',
+        normalizeZeros: true,
       }
     }
   },
