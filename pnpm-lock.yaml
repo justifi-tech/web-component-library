@@ -112,8 +112,8 @@ importers:
         specifier: ^4.3.7
         version: 4.3.9
       imask:
-        specifier: ^7.1.3
-        version: 7.3.0
+        specifier: ^7.6.0
+        version: 7.6.0
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -1515,8 +1515,8 @@ packages:
     resolution: {integrity: sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==}
     dev: true
 
-  /@babel/runtime-corejs3@7.23.8:
-    resolution: {integrity: sha512-2ZzmcDugdm0/YQKFVYsXiwUN7USPX8PM7cytpb4PFl87fM+qYPSvTZX//8tyeJB1j0YDmafBJEbl5f8NfLyuKw==}
+  /@babel/runtime-corejs3@7.24.5:
+    resolution: {integrity: sha512-GWO0mgzNMLWaSYM4z4NVIuY0Cd1fl8cPnuetuddu5w/qGuvt5Y7oUi/kvvQGK9xgOkFJDQX2heIvTRn/OQ1XTg==}
     engines: {node: '>=6.9.0'}
     dependencies:
       core-js-pure: 3.35.0
@@ -6631,11 +6631,11 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /imask@7.3.0:
-    resolution: {integrity: sha512-TG+/rfb62JaQDM2KVrzEHMb4lv2srbsby7vHndXhqgQFB1MgPIXl60VQUfly/Xv5iWfA9ytB+rfQ+skUgINw7A==}
+  /imask@7.6.0:
+    resolution: {integrity: sha512-6EHsq1q7v5+M4Vas2MGrs2oRpxPRWPwPDiL0HmG1ikBI/0hOwvkxRhVRFQnWIlZcTG7R8iw0az5V+z868qnQ9A==}
     engines: {npm: '>=4.0.0'}
     dependencies:
-      '@babel/runtime-corejs3': 7.23.8
+      '@babel/runtime-corejs3': 7.24.5
     dev: false
 
   /import-fresh@3.3.0:
