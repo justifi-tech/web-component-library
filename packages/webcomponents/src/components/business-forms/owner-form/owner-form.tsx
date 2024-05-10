@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../form/form';
-import { PHONE_MASKS } from '../../../utils/form-input-masks';
+import { PHONE_MASKS, SSN_MASK } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
 import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
@@ -267,12 +267,13 @@ export class BusinessOwnerForm {
                 />
               </div>
               <div class="col-12 col-md-8">
-                <form-control-number
+                <form-control-number-masked
                   name="identification_number"
                   label="SSN"
                   defaultValue={ownerDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}
+                  mask={SSN_MASK}
                 />
               </div>
               <div class="col-12">

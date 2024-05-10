@@ -1,31 +1,11 @@
 import { object, string } from 'yup';
-import StateOptions from '../../../utils/state-options';
-import { transformEmptyString } from './schema-helpers';
-
-const lineOneValidation = string()
-  .min(5, 'Address must be at least 5 characters')
-  .max(100, 'Address must be less than 100 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Enter valid address line 1')
-  .transform(transformEmptyString);
-
-const lineTwoValidation = string()
-  .max(100, 'Address must be less than 100 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Enter valid address line 2')
-  .transform(transformEmptyString);
-
-const cityValidation = string()
-  .min(2, 'City must be at least 2 characters')
-  .max(50, 'City must be less than 50 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z\s]*$/, 'Enter valid city')
-  .transform(transformEmptyString);
-
-const stateValidation = string()
-  .oneOf(StateOptions.map((option) => option.value), 'Select state')
-  .transform(transformEmptyString);
-
-const postalValidation = string()
-  .matches(/^[0-9]{5}$/, 'Enter valid postal code')
-  .transform(transformEmptyString);
+import { 
+  cityValidation,
+  lineOneValidation, 
+  lineTwoValidation,
+  postalValidation,
+  stateValidation
+} from './schema-validations';
 
 export const addressSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
