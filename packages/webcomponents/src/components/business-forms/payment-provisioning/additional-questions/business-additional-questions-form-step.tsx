@@ -111,7 +111,7 @@ export class AdditionalQuestionsFormStep {
             <legend>Additional Questions</legend>
             <hr />
             <div class="row gy-3">
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <form-control-monetary
                   name="business_revenue"
                   label="What is the business' estimated annual revenue from its primary business activies?"
@@ -121,7 +121,7 @@ export class AdditionalQuestionsFormStep {
                   maskOptions={CURRENCY_MASK.WHOLE}
                 />
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <form-control-monetary
                   name="business_payment_volume"
                   label="What is the business' average annual payment volume anticipated to process with JustiFi?"
