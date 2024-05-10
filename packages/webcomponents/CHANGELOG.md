@@ -1,5 +1,12 @@
 ### Changelog
 
+## 4.12.1
+
+### Patch Changes
+
+- 2cdfe07: - BusinessForm and PaymentProvisioning - Improved form validations for representative and owner sections.
+- a445df6: - BusinessForm and PaymentProvisioning - fix bug preventing `identity.identification_number` from being included in data submitted via forms.
+
 ## 4.12.0
 
 ### Minor Changes
