@@ -74,21 +74,30 @@ export interface ProductCategories {
 export interface IAdditionalQuestions {
   business_revenue?: string;
   business_payment_volume?: string;
-  business_dispute_volume?: string;
-  business_receivable_volume?: string;
+  business_when_service_received?: string;
+  business_recurring_payments?: string;
+  business_recurring_payments_percentage?: string;
+  business_seasonal?: string;
+  business_other_payment_details?: string;
 }
 
 export class AdditionalQuestions implements IAdditionalQuestions {
   public business_revenue?: string;
   public business_payment_volume?: string;
-  public business_dispute_volume?: string;
-  public business_receivable_volume?: string;
+  public business_when_service_received?: string;
+  public business_recurring_payments?: string;
+  public business_recurring_payments_percentage?: string;
+  public business_seasonal?: string;
+  public business_other_payment_details?: string;
 
   constructor(additionalQuestions: IAdditionalQuestions) {
     this.business_revenue = additionalQuestions.business_revenue;
     this.business_payment_volume = additionalQuestions.business_payment_volume;
-    this.business_dispute_volume = additionalQuestions.business_dispute_volume;
-    this.business_receivable_volume = additionalQuestions.business_receivable_volume;
+    this.business_when_service_received = additionalQuestions.business_when_service_received;
+    this.business_recurring_payments = additionalQuestions.business_recurring_payments;
+    this.business_recurring_payments_percentage = additionalQuestions.business_recurring_payments_percentage;
+    this.business_seasonal = additionalQuestions.business_seasonal;
+    this.business_other_payment_details = additionalQuestions.business_other_payment_details;
   }
 }
 
@@ -153,7 +162,7 @@ export interface IBusiness {
 }
 
 export class Business implements IBusiness {
-  public additional_questions: IAdditionalQuestions | {};
+  public additional_questions: AdditionalQuestions | {};
   public business_type: BusinessType;
   public bank_accounts: BankAccount[];
   public created_at: string;
@@ -176,7 +185,7 @@ export class Business implements IBusiness {
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
-    this.additional_questions = business.additional_questions || {};
+    this.additional_questions = { ...new AdditionalQuestions(business.additional_questions || {})};
     this.bank_accounts = business.bank_accounts;
     this.business_type = business.business_type;
     this.created_at = business.created_at;
