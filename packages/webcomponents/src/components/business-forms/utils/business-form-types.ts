@@ -1,5 +1,3 @@
-import { BusinessType } from "../../../api/Business";
-
 export interface BusinessFormSubmitEvent {
   data: any;
   metadata?: BusinessFormEventMetaData;
@@ -61,26 +59,3 @@ export enum OwnerFormClickActions {
   addOwnerForm = 'addOwnerForm',
   updateOwner = 'updateOwner'
 }
-
-export const BusinessTypeOptions: { label: string; value: BusinessType | string }[] = [
-  {
-    label: 'Choose business type',
-    value: '',
-  },
-  {
-    label: 'Individual',
-    value: BusinessType.individual,
-  },
-  {
-    label: 'For Profit',
-    value: BusinessType.for_profit,
-  },
-  {
-    label: 'Non Profit',
-    value: BusinessType.non_profit,
-  },
-  {
-    label: 'Government Entity',
-    value: BusinessType.government_entity,
-  },
-];
