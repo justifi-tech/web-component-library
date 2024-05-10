@@ -1,8 +1,9 @@
 import { string } from "yup";
-import { BusinessTypeOptions } from "../utils/business-form-types";
+import { businessTypeOptions } from "../utils/business-form-options";
 import StateOptions from "../../../utils/state-options";
 import { 
   businessNameRegex, 
+  numbersOnlyRegex, 
   phoneRegex, 
   ssnRegex, 
   stringLettersOnlyRegex, 
@@ -40,7 +41,7 @@ export const websiteUrlValidation = string()
   .transform(transformEmptyString);
 
 export const businessTypeValidation = string()
-  .oneOf(BusinessTypeOptions.map((option) => option.value), 'Select business type')
+  .oneOf(businessTypeOptions.map((option) => option.value), 'Select business type')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
@@ -135,3 +136,15 @@ export const stateValidation = string()
 export const postalValidation = string()
   .matches(/^[0-9]{5}$/, 'Enter valid postal code')
   .transform(transformEmptyString);
+
+// Additional Questions Validations
+
+export const revenueValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid revenue')
+  .transform(transformEmptyString);
+
+export const paymentVolumeValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid payment volume')
+  .transform(transformEmptyString);
+
+  

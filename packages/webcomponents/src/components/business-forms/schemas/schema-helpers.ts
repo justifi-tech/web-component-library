@@ -13,4 +13,6 @@ export const taxIdRegex = /^\d{9}$/;
 
 export const stringLettersOnlyRegex = /^(?!^\s+$)[a-zA-Z\s]*$/;
 
+export const numbersOnlyRegex = /^\d+$/;
+
 export const ssnRegex = /^(?!000|666|9\d{2})\d{3}(?!00)\d{2}(?!0000)\d{4}$/;

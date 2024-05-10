@@ -7,7 +7,8 @@ import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema'
 import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent, BusinessTypeOptions } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { businessTypeOptions } from '../../utils/business-form-options';
 
 /**
  *
@@ -139,7 +140,7 @@ export class BusinessCoreInfoFormStep {
                 <form-control-select
                   name="business_type"
                   label="Business Type"
-                  options={BusinessTypeOptions}
+                  options={businessTypeOptions}
                   defaultValue={coreInfoDefaultValue.business_type}
                   error={this.errors.business_type}
                   inputHandler={this.inputHandler}

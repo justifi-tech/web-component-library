@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { BusinessTypeOptions } from '../../utils/business-form-types';
+import { businessTypeOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
@@ -74,7 +74,7 @@ export class BusinessCoreInfo {
               <form-control-select
                 name="business_type"
                 label="Business Type"
-                options={BusinessTypeOptions}
+                options={businessTypeOptions}
                 defaultValue={coreInfoDefaultValue.business_type}
                 error={this.errors.business_type}
                 inputHandler={this.inputHandler}
