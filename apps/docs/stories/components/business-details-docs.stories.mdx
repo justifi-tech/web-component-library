@@ -6,7 +6,9 @@ import { Authorization } from '../utils/documentation-components';
 <Meta title="Entities/BusinessDetails" Components="justifi-business-details" />
 
 <Title />
-Component to render detailed information about a business.
+Component to render detailed information about a business. You will need to first
+create a business via [API](https://docs.justifi.tech/api-spec#tag/Business) to get
+the business-id required for this component.
 
 # Index
 
@@ -22,7 +24,7 @@ Component to render detailed information about a business.
 <ArgTypes exclude={['css-variables']} />
 
 <Authorization
-  actions={['read', 'write']}
+  actions={['read']}
   entity="business"
   identification="business_id"
 />

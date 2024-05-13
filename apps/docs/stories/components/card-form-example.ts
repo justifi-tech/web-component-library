@@ -1,9 +1,9 @@
-import { codeExampleHead } from "../utils";
+import { codeExampleHead } from '../utils';
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead("justifi-card-form")}
+${codeExampleHead('justifi-card-form')}
 
 <body>
   <justifi-card-form></justifi-card-form>
@@ -38,7 +38,7 @@ ${codeExampleHead("justifi-card-form")}
       };
 
       /*
-        * ACCOUNT_ID is the seller account for which you are tokenizing
+        * ACCOUNT_ID is the sub account for which you are tokenizing
         * WEB-COMPONENT-TOKEN can be used in place of CLIENT_ID.  WEB-COMPONENT-TOKENs are 
         * created using JusitFi's API as described above.
       */

@@ -151,8 +151,8 @@ const Template = (args: any) => {
         bank-account="${args['bank-account']}"
         email="${args.email}"
         client-id="${args['client-id']}"
-        account-id="${args['account-id']}"
         web-component-token="${args['web-component-token']}"
+        account-id="${args['account-id']}"
         submit-button-text="${args['submit-button-text']}"
       />
     </div>

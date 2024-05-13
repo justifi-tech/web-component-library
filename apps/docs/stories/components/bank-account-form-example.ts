@@ -31,9 +31,12 @@ ${codeExampleHead('bank-account-form')}
         account_type: 'checking', // checking or savings
         account_owner_type: 'individual' // individual or company
       };
-      // ACCOUNT_ID is optional, currently required for platforms
-      // ACCOUNT_ID is the seller account for which you are tokenizing
-      bankAccountForm.tokenize('CLIENT_ID', paymentMethodData, 'ACCOUNT_ID')
+      /*
+        * ACCOUNT_ID is the sub account for which you are tokenizing
+        * WEB-COMPONENT-TOKEN can be used in place of CLIENT_ID.  WEB-COMPONENT-TOKENs are 
+        * created using JusitFi's API as described above.
+      */
+      bankAccountForm.tokenize('CLIENT_ID/WEB-COMPONENT-TOKEN', paymentMethodData, 'ACCOUNT_ID')
         .then((data) => {
           // This is where you can submit the form and use the payment method token
           // on your backend
