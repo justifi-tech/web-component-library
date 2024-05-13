@@ -16,6 +16,7 @@ export interface Identity {
   name?: string;
   phone?: string;
   platform_account_id?: string;
+  identification_number?: string;
   ssn_last4?: string;
   title?: string;
   updated_at?: string;
@@ -37,6 +38,7 @@ export class Owner implements Identity {
   public name?: string;
   public phone?: string;
   public platform_account_id?: string;
+  public identification_number?: string;
   public ssn_last4?: string;
   public title?: string;
   public updated_at?: string;
@@ -57,6 +59,7 @@ export class Owner implements Identity {
     this.name = owner.name;
     this.phone = owner.phone;
     this.platform_account_id = owner.platform_account_id;
+    this.identification_number = owner.identification_number;
     this.ssn_last4 = owner.ssn_last4;
     this.title = owner.title;
     this.updated_at = owner.updated_at;
@@ -79,6 +82,7 @@ export class Representative implements Identity {
   public name?: string;
   public phone?: string;
   public platform_account_id?: string;
+  public identification_number?: string;
   public ssn_last4?: string;
   public title?: string;
   public updated_at?: string;
@@ -99,6 +103,7 @@ export class Representative implements Identity {
     this.name = representative.name;
     this.phone = representative.phone;
     this.platform_account_id = representative.platform_account_id;
+    this.identification_number = representative.identification_number;
     this.ssn_last4 = representative.ssn_last4;
     this.title = representative.title;
     this.updated_at = representative.updated_at;
