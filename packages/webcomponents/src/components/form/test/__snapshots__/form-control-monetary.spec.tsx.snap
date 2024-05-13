@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`form-control-monetary displays error message when error prop is set 1`] = `
-<form-control-monetary error="Invalid amount" exportparts="label,input,input-invalid">
+<form-control-monetary error="Invalid amount" exportparts="label,input,input-invalid" maskoptions="[object" object]="">
   <mock:shadow-root>
     <label class="form-label" part="label"></label>
     <input class="form-control is-invalid" part="input input-invalid" type="text">

@@ -8,6 +8,7 @@ import {
   Watch,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
+import { CURRENCY_MASK } from '../../utils/form-input-masks';
 
 @Component({
   tag: 'form-control-monetary',
@@ -20,7 +21,7 @@ export class MonetaryInput {
   @Prop() error: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() maskOptions: any;
+  @Prop() maskOptions: any = CURRENCY_MASK.DECIMAL;
 
   private imask: InputMask<any> | null = null;
 
