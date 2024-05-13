@@ -14,7 +14,7 @@ const args: ArgValues = {
 const argTypes: ArgTypes = {
   'auth-token': {
     type: 'string',
-    description: 'Auth token `string`',
+    description: 'Auth token `string`, the web component token you create via API. See Authorization below',
     control: {
       type: 'text',
     },
