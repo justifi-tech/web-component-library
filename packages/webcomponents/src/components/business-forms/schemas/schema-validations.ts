@@ -6,6 +6,7 @@ import {
   numbersOnlyRegex, 
   phoneRegex, 
   ssnRegex, 
+  streetAddressRegex, 
   stringLettersOnlyRegex, 
   taxIdRegex, 
   transformEmptyString, 
@@ -115,18 +116,18 @@ export const ssnValidation = string()
 export const lineOneValidation = string()
   .min(5, 'Address must be at least 5 characters')
   .max(100, 'Address must be less than 100 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Enter valid address line 1')
+  .matches(streetAddressRegex, 'Enter valid address line 1')
   .transform(transformEmptyString);
 
 export const lineTwoValidation = string()
   .max(100, 'Address must be less than 100 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Enter valid address line 2')
+  .matches(streetAddressRegex, 'Enter valid address line 2')
   .transform(transformEmptyString);
 
 export const cityValidation = string()
   .min(2, 'City must be at least 2 characters')
   .max(50, 'City must be less than 50 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z\s]*$/, 'Enter valid city')
+  .matches(stringLettersOnlyRegex, 'Enter valid city')
   .transform(transformEmptyString);
 
 export const stateValidation = string()
