@@ -5,6 +5,7 @@ import {
   businessNameRegex, 
   numbersOnlyRegex, 
   phoneRegex, 
+  poBoxRegex, 
   ssnRegex, 
   streetAddressRegex, 
   stringLettersOnlyRegex, 
@@ -117,11 +118,17 @@ export const lineOneValidation = string()
   .min(5, 'Address must be at least 5 characters')
   .max(100, 'Address must be less than 100 characters')
   .matches(streetAddressRegex, 'Enter valid address line 1')
+  .test('not-po-box', 'A PO Box is not a valid address entry', (value) => {
+    return !poBoxRegex.test(value);
+  })
   .transform(transformEmptyString);
 
 export const lineTwoValidation = string()
   .max(100, 'Address must be less than 100 characters')
   .matches(streetAddressRegex, 'Enter valid address line 2')
+  .test('not-po-box', 'A PO Box is not a valid address entry', (value) => {
+    return !poBoxRegex.test(value);
+  })
   .transform(transformEmptyString);
 
 export const cityValidation = string()
