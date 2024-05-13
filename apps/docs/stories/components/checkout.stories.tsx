@@ -11,8 +11,8 @@ const meta: Meta = {
   title: 'dev/Payment Facilitation/Payments/Checkout',
   component: 'justifi-checkout',
   args: {
-    'auth-token': '',
-    'checkout-id': ''
+    ...storyBaseArgs.args,
+    'checkout-id': '123'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
