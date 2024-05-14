@@ -8,7 +8,7 @@ import '@justifi/webcomponents/dist/module/justifi-checkout';
 const storyBaseArgs = new StoryBaseArgs(['auth-token']);
 
 const meta: Meta = {
-  title: 'dev/Payment Facilitation/Payments/Checkout',
+  title: 'Payment Facilitation/Payments/Checkout',
   component: 'justifi-checkout',
   args: {
     ...storyBaseArgs.args,
