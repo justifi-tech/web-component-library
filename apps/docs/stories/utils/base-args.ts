@@ -34,7 +34,7 @@ const argTypes: ArgTypes = {
   },
   'business-id': {
     type: 'string',
-    description: 'Business ID `string`',
+    description: 'Business ID `string`, the id of the business you create via API',
     control: {
       type: 'text',
     },
