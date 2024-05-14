@@ -1,0 +1,18 @@
+@import 'reboot';
+@import 'forms';
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
+
+input[type='text'][disabled] {
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// .input-group .input-group-text {
+//   background-color: red;
+// }

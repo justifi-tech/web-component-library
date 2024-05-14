@@ -12,7 +12,7 @@ import { CURRENCY_MASK } from '../../utils/form-input-masks';
 
 @Component({
   tag: 'form-control-monetary',
-  styleUrl: 'form-control-number.scss',
+  styleUrl: 'form-control-monetary.scss',
   shadow: true,
 })
 export class MonetaryInput {
@@ -70,16 +70,19 @@ export class MonetaryInput {
         <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
-        <input
-          ref={el => (this.textInput = el as HTMLInputElement)}
-          id={this.name}
-          name={this.name}
-          onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
-          type="text"
-        />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input
+            ref={el => (this.textInput = el as HTMLInputElement)}
+            id={this.name}
+            name={this.name}
+            onBlur={() => this.formControlBlur.emit()}
+            part={`input ${this.error && 'input-invalid'}`}
+            class={this.error ? 'form-control is-invalid' : 'form-control'}
+            type="text"
+          />
+          {this.error && <div class="invalid-feedback">{this.error}</div>}
+        </div>
       </Host>
     );
   }
