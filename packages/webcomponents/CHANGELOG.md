@@ -1,5 +1,12 @@
 ### Changelog
 
+## 4.12.2
+
+### Patch Changes
+
+- 44bef77: - Fixed bug preventing `CardForm` and `BankAccountForm` from consistently emitting `ready` event.
+- 7eb227a: - `BusinessForm` and `PaymentProvisioning` - revert change that removed `business_structure` option from form in.
+
 ## 4.12.1
 
 ### Patch Changes
