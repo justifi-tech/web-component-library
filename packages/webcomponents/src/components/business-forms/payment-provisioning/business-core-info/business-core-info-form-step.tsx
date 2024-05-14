@@ -8,7 +8,7 @@ import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
-import { businessTypeOptions } from '../../utils/business-form-options';
+import { businessStructureOptions, businessTypeOptions } from '../../utils/business-form-options';
 
 /**
  *
@@ -143,6 +143,16 @@ export class BusinessCoreInfoFormStep {
                   options={businessTypeOptions}
                   defaultValue={coreInfoDefaultValue.business_type}
                   error={this.errors.business_type}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <form-control-select
+                  name="business_structure"
+                  label="Business Structure"
+                  options={businessStructureOptions}
+                  defaultValue={coreInfoDefaultValue.business_structure}
+                  error={this.errors.business_structure}
                   inputHandler={this.inputHandler}
                 />
               </div>
