@@ -7,7 +7,7 @@ import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema'
 import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent, BusinessTypeOptions } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent, BusinessStructureOptions, BusinessTypeOptions } from '../../utils/business-form-types';
 
 /**
  *
@@ -146,6 +146,16 @@ export class BusinessCoreInfoFormStep {
                 />
               </div>
               <div class="col-12 col-md-6">
+                <form-control-select
+                  name="business_structure"
+                  label="Business Structure"
+                  options={BusinessStructureOptions}
+                  defaultValue={coreInfoDefaultValue.business_structure}
+                  error={this.errors.business_structure}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-6">
                 <form-control-text
                   name="industry"
                   label="Industry"
@@ -154,7 +164,7 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <form-control-number-masked
                   name="tax_id"
                   label="Tax ID"
