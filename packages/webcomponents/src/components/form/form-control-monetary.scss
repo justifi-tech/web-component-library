@@ -13,6 +13,8 @@ input[type='text'][disabled] {
   cursor: not-allowed;
 }
 
-// .input-group .input-group-text {
-//   background-color: red;
-// }
+input {
+  border-left: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
