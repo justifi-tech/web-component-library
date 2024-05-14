@@ -1,4 +1,4 @@
-import { BusinessType } from "../../../api/Business";
+import { BusinessStructure, BusinessType } from "../../../api/Business";
 
 export interface BusinessFormSubmitEvent {
   data: any;
@@ -84,3 +84,65 @@ export const BusinessTypeOptions: { label: string; value: BusinessType | string 
     value: BusinessType.government_entity,
   },
 ];
+
+export const BusinessStructureOptions: {
+  label: string;
+  value: BusinessStructure | string;
+}[] = [
+    {
+      label: 'Choose business structure',
+      value: '',
+    },
+    {
+      label: 'Sole Proprietorship',
+      value: BusinessStructure.sole_proprietorship,
+    },
+    {
+      label: 'LLC (Single)',
+      value: BusinessStructure.single_llc,
+    },
+    {
+      label: 'LLC (Multiple)',
+      value: BusinessStructure.multi_llc,
+    },
+    {
+      label: 'Private Partnership',
+      value: BusinessStructure.private_partnership,
+    },
+    {
+      label: 'Private Corporation',
+      value: BusinessStructure.private_corporation,
+    },
+    {
+      label: 'Unincorporated Association',
+      value: BusinessStructure.unincorporated_association,
+    },
+    {
+      label: 'Public Partnership',
+      value: BusinessStructure.public_partnership,
+    },
+    {
+      label: 'Public Corporation',
+      value: BusinessStructure.public_corporation,
+    },
+    {
+      label: 'Incorporated',
+      value: BusinessStructure.incorporated,
+    },
+    {
+      label: 'Unincorporated',
+      value: BusinessStructure.unincorporated,
+    },
+    {
+      label: 'Government Unit',
+      value: BusinessStructure.government_unit,
+    },
+    {
+      label: 'Government Instrumentality',
+      value: BusinessStructure.government_instrumentality,
+    },
+    {
+      label: 'Tax Exempt Government Instrumentality',
+      value: BusinessStructure.tax_exempt_government_instrumentality,
+    },
+  ];
