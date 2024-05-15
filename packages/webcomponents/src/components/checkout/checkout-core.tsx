@@ -3,6 +3,7 @@ import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
+import { ComponentError } from '../../api/ComponentError';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -28,6 +29,7 @@ export class CheckoutCore {
   @State() selectedPaymentMethodToken: string;
 
   @Event() submitted: EventEmitter<ICheckoutCompleteResponse>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -52,10 +54,16 @@ export class CheckoutCore {
         this.checkout = new Checkout(checkout);
         this.isLoading = false;
       },
-      onError: (errorMessage) => {
-        this.errorMessage = errorMessage;
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
         this.isLoading = false;
-      },
+
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+      }
     });
   };
 

@@ -1,30 +1,12 @@
-import { h } from "@stencil/core";
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckoutCore } from '../checkout-core';
 import { makeGetCheckout } from '../checkout-actions';
-import mockCheckout from './../../../../../../mockData/mockCheckout.json';
+import mockGetCheckoutSuccess from './../../../../../../mockData/mockGetCheckoutSuccess.json';
+import { Checkout, ICheckout } from '../../../api/Checkout';
 
 describe('justifi-checkout-core', () => {
-  it('shows saved payment methods when the checkout loads and has saved payment methods', async () => {
-    const getCheckout = makeGetCheckout({
-      checkoutId: '',
-      authToken: '',
-      service: {
-        fetchBusiness: async () => ({ error: 'error' }),
-      },
-    });
-
-    const page = await newSpecPage({
-      components: [CheckoutCore],
-      template: () => <justifi-checkout-core getCheckout={getCheckout} />,
-    });
-
-    await page.waitForChanges();
-
-    expect(page.root).toMatchSnapshot();
-  });
-
-  it('shows corresponding component when "New bank account" payment method option is selected', async () => {
+  it('should display loading state correclty', async () => {
     const page = await newSpecPage({
       components: [CheckoutCore],
       template: () => <justifi-checkout-core />,
@@ -35,15 +17,80 @@ describe('justifi-checkout-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('shows corresponding component when "New credit or debit card" payment method option is selected', async () => {
+  it('should display error state correctly', async () => {
+    const getCheckout = makeGetCheckout({
+      checkoutId: '',
+      authToken: '',
+      service: {
+        fetchCheckout: async () => ({ error: 'error' }),
+      },
+    });
+
+    const page = await newSpecPage({
+      components: [CheckoutCore],
+      template: () => <checkout-core getCheckout={getCheckout} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should set checkout correctly to state', async () => {
+    const getCheckout = makeGetCheckout({
+      checkoutId: '',
+      authToken: '',
+      service: {
+        fetchCheckout: async () => mockGetCheckoutSuccess,
+      },
+    });
+
+    const page = await newSpecPage({
+      components: [CheckoutCore],
+      template: () => <justifi-checkout-core getCheckout={getCheckout} />,
+    });
+
+    await page.waitForChanges();
+
+    const expectedCheckout = new Checkout(mockGetCheckoutSuccess.data as unknown as ICheckout);
+    expect(page.rootInstance.checkout).toEqual(expectedCheckout);
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should emit error event when fetch fails', async () => {
+    const getCheckout = makeGetCheckout({
+      authToken: 'abc',
+      checkoutId: '123',
+      service: {
+        fetchCheckout: jest.fn().mockRejectedValue(new Error('Fetch error')),
+      },
+    })
+
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [CheckoutCore],
+      template: () => <checkout-core getCheckout={getCheckout} onError-event={errorSpy} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'fetch-error',
+          message: 'Fetch error',
+          severity: 'error',
+        }
+      })
+    );
+  });
+
+  it('should emit error event when API returns error', async () => {
 
   });
 
-  it('Submitting gets token from selected payment method', async () => {
-
-  });
-
-  it('Emits "submitted" event upon submit request completion', async () => {
+  it('emits "submitted" event upon submit request completion', async () => {
 
   });
 });
