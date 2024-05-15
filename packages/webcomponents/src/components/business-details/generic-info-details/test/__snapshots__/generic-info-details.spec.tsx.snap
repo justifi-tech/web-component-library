@@ -36,6 +36,14 @@ exports[`GenericInfoDetails should render 1`] = `
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+              Business Structure
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+              Sole Proprietorship
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
               Industry
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">

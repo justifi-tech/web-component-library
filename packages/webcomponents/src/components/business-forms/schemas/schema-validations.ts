@@ -1,5 +1,5 @@
 import { string } from "yup";
-import { BusinessTypeOptions } from "../utils/business-form-types";
+import { BusinessStructureOptions, BusinessTypeOptions } from "../utils/business-form-types";
 import StateOptions from "../../../utils/state-options";
 import { 
   businessNameRegex, 
@@ -41,6 +41,10 @@ export const websiteUrlValidation = string()
 
 export const businessTypeValidation = string()
   .oneOf(BusinessTypeOptions.map((option) => option.value), 'Select business type')
+  .transform(transformEmptyString);
+
+export const businessStructureValidation = string()
+  .oneOf(BusinessStructureOptions.map((option) => option.value), 'Select business structure')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
