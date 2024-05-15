@@ -8,7 +8,7 @@ exports[`form-control-monetary displays error message when error prop is set 1`]
       <span class="input-group-text">
         $
       </span>
-      <input class="form-control is-invalid" part="input input-invalid" type="text">
+      <input class="form-control is-invalid monetary" part="input input-invalid" type="text">
       <div class="invalid-feedback">
         Invalid amount
       </div>
@@ -25,7 +25,7 @@ exports[`form-control-monetary renders correctly with default props 1`] = `
       <span class="input-group-text">
         $
       </span>
-      <input class="form-control" part="input undefined" type="text">
+      <input class="form-control monetary" part="input undefined" type="text">
     </div>
   </mock:shadow-root>
 </form-control-monetary>
