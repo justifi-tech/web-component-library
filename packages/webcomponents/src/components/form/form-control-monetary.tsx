@@ -78,7 +78,7 @@ export class MonetaryInput {
             name={this.name}
             onBlur={() => this.formControlBlur.emit()}
             part={`input ${this.error && 'input-invalid'}`}
-            class={this.error ? 'form-control is-invalid' : 'form-control'}
+            class={this.error ? 'form-control monetary is-invalid' : 'form-control monetary'}
             type="text"
           />
           {this.error && <div class="invalid-feedback">{this.error}</div>}
