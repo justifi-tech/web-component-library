@@ -26,9 +26,8 @@ export class CheckoutCore {
   @State() serverError: boolean = false;
   @State() errorMessage: string = '';
   @State() creatingNewPaymentMethod: boolean = false;
-  @State() selectedPaymentMethodToken: string;
 
-  @Event() submitted: EventEmitter<ICheckoutCompleteResponse>;
+  @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
@@ -48,7 +47,6 @@ export class CheckoutCore {
 
   fetchData(): void {
     this.isLoading = true;
-
     this.getCheckout({
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
@@ -92,6 +90,7 @@ export class CheckoutCore {
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
     if (payload.token) {
+      console.log('this.complete', this.complete)
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
