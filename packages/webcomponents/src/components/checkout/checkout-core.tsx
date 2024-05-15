@@ -90,7 +90,6 @@ export class CheckoutCore {
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
     if (payload.token) {
-      console.log('this.complete', this.complete)
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
@@ -107,7 +106,7 @@ export class CheckoutCore {
     }
   }
 
-  onSubmitted = (data) => {
+  onSubmitted = (data: ICheckoutCompleteResponse) => {
     this.submitted.emit(data);
     this.isLoading = false;
   };

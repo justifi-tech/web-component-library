@@ -1,4 +1,4 @@
-import { makeGetCheckout } from '../checkout-actions';
+import { makeGetCheckout, makeCheckoutComplete } from '../checkout-actions';
 import mockResponse from '../../../../../../mockData/mockGetCheckoutSuccess.json';
 import { Checkout, ICheckout } from '../../../api/Checkout';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
@@ -10,6 +10,7 @@ jest.mock('../../../api/services/utils.ts', () => ({
 
 const mockService = {
   fetchCheckout: jest.fn(),
+  complete: jest.fn(),
 };
 
 // Test Suite
@@ -82,3 +83,74 @@ describe('makeGetCheckout', () => {
   });
 });
 
+describe('makeCheckoutComplete', () => {
+  const checkoutId = '123';
+  const authToken = 'token';
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('calls onSuccess with checkout complete response data', async () => {
+    mockService.complete.mockResolvedValue(mockResponse);
+
+    const payment = { payment_mode: 'ecom', payment_token: '123' };
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const completeCheckout = makeCheckoutComplete({
+      checkoutId,
+      authToken,
+      service: mockService,
+    });
+    await completeCheckout({ payment, onSuccess, onError });
+
+    expect(onSuccess).toHaveBeenCalledWith({
+      checkout: new Checkout(mockResponse.data as unknown as ICheckout),
+    });
+    expect(onError).not.toHaveBeenCalled();
+  });
+
+  it('calls onError with an error message on post error', async () => {
+    mockService.complete.mockResolvedValue(API_NOT_AUTHENTICATED_ERROR);
+
+    const payment = { payment_mode: 'ecom', payment_token: '123' };
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const completeCheckout = makeCheckoutComplete({
+      checkoutId,
+      authToken,
+      service: mockService,
+    });
+    await completeCheckout({ payment, onSuccess, onError });
+
+    expect(onError).toHaveBeenCalledWith({
+      error: 'Not Authenticated',
+      code: 'not-authenticated',
+      severity: 'error',
+    });
+  });
+
+  it('calls onError with an error message on fetch exception', async () => {
+    const error = new Error('Network error');
+    mockService.complete.mockRejectedValue(error);
+
+    const payment = { payment_mode: 'ecom', payment_token: '123' };
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const completeCheckout = makeCheckoutComplete({
+      checkoutId,
+      authToken,
+      service: mockService,
+    });
+    await completeCheckout({ payment, onSuccess, onError });
+
+    expect(onError).toHaveBeenCalledWith({
+      error: error.message,
+      code: 'fetch-error',
+      severity: 'error',
+    });
+  });
+});
