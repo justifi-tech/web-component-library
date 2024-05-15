@@ -1,5 +1,7 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../../../../mockData/mockBusinessDetails.json';
+import mockGetCheckout from '../../../../mockData/mockGetCheckoutSuccess.json';
+import mockPostCheckout from '../../../../mockData/mockPostCheckoutSuccess.json';
 import mockGrossPaymentChart from '../../../../mockData/mockGrossVolumeReportSuccess.json';
 import mockPayment from '../../../../mockData/mockPaymentDetailSuccess.json';
 import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
@@ -8,6 +10,7 @@ import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  CHECKOUT: '/checkouts/:id',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYMENT_DETAILS: '/payments/:id',
   PAYMENTS_LIST: '/account/:id/payments',
@@ -47,6 +50,10 @@ export const mockAllServices = ({ bypass }: MockAllServicesConfig) => {
 
       // PayoutsList
       this.get(API_PATHS.PAYOUTS_LIST, () => mockPayouts);
+
+      // Checkout
+      this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
+      this.post(API_PATHS.CHECKOUT, () => mockPostCheckout);
 
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);

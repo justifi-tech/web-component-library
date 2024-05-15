@@ -5,14 +5,14 @@ import theme from '../theme';
 
 import '@justifi/webcomponents/dist/module/justifi-checkout';
 
-const storyBaseArgs = new StoryBaseArgs(['auth-token', 'iframe-origin']);
+const storyBaseArgs = new StoryBaseArgs(['auth-token']);
 
 const meta: Meta = {
-  title: 'dev/Payment Facilitation/Payments/Checkout',
+  title: 'Payment Facilitation/Payments/Checkout',
   component: 'justifi-checkout',
   args: {
-    'auth-token': '',
-    'checkout-id': ''
+    ...storyBaseArgs.args,
+    'checkout-id': '123'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
