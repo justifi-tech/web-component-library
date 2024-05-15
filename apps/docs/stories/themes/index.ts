@@ -1,22 +1,14 @@
+import dark from "./dark";
+import light from "./light";
+
 export enum ThemeNames {
   None = 'None (bootstrap defaults)',
   Light = 'Light',
   Dark = 'Dark',
 }
 
-const light = `
-  body {
-    background-color: #f8f8f8;
-  }
-`;
-
-const dark = `
-  body {
-    background-color: #333;
-  }
-`;
-
 const themes = {
+  [ThemeNames.None]: '',
   [ThemeNames.Light]: light,
   [ThemeNames.Dark]: dark
 }

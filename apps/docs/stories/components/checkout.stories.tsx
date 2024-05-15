@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs } from '../utils';
-import themes, { ThemeNames } from '../theme';
+import themes, { ThemeNames } from '../themes';
 
 import '@justifi/webcomponents/dist/module/justifi-checkout';
 
