@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs } from '../utils';
-import theme from '../theme';
+import themes, { ThemeNames } from '../themes';
 
 import '@justifi/webcomponents/dist/module/justifi-checkout';
 
@@ -12,10 +12,17 @@ const meta: Meta = {
   component: 'justifi-checkout',
   args: {
     ...storyBaseArgs.args,
-    'checkout-id': '123'
+    'checkout-id': '123',
+    theme: ThemeNames.Light
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    theme: {
+      options: Object.values(ThemeNames),
+      control: {
+        type: 'select',
+      }
+    },
     'checkout-id': {
       description: 'tbd',
       table: {
@@ -53,10 +60,11 @@ const meta: Meta = {
 
 export const Basic: StoryObj = {};
 Basic.decorators = [
-  (story: any) => {
+  (story: any, storyArgs: any) => {
     // Import the style here to not pollute other framework stories
+    const selectedTheme = storyArgs.args.theme as ThemeNames;
     const styleElement = document.createElement('style');
-    styleElement.textContent = theme;
+    styleElement.textContent = themes[selectedTheme];
 
     return `${styleElement.outerHTML}${story()}`;
   },
