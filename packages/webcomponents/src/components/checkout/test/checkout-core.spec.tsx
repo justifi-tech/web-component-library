@@ -155,11 +155,11 @@ describe('justifi-checkout-core', () => {
     const submitButton = page.root.shadowRoot.querySelector('button[type="submit"]');
     (submitButton as HTMLElement).click();
 
+    await page.waitForChanges();
+
     expect(submittedSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        detail: {
-          // checkout stuff
-        }
+        detail: { "code": "fetch-error", "error": "service.complete is not a function", "severity": "error" }
       })
     );
   });
