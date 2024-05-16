@@ -8,14 +8,9 @@ export const SSN_MASK = '000-00-0000';
 
 export const CURRENCY_MASK = {
   WHOLE: {
-    mask: '$num',
-    blocks: {
-      num: {
-        mask: Number,
-        thousandsSeparator: ',',
-        normalizeZeros: true,
-      }
-    }
+    mask: Number,
+    thousandsSeparator: ',',
+    normalizeZeros: true,
   },
   DECIMAL: {
     mask: Number,

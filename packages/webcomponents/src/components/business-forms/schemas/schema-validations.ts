@@ -1,6 +1,12 @@
 import { string } from "yup";
-import { businessServiceReceivedOptions, businessTypeOptions, recurringPaymentsOptions, seasonalBusinessOptions } from "../utils/business-form-options";
 import StateOptions from "../../../utils/state-options";
+import { 
+  businessStructureOptions, 
+  businessServiceReceivedOptions, 
+  businessTypeOptions, 
+  recurringPaymentsOptions, 
+  seasonalBusinessOptions } 
+from "../utils/business-form-options";
 import { 
   businessNameRegex, 
   numbersOnlyRegex, 
@@ -12,7 +18,7 @@ import {
   taxIdRegex, 
   transformEmptyString, 
   urlRegex } 
-  from "./schema-helpers";
+from "./schema-helpers";
 
 // Common Validations
 
@@ -44,6 +50,10 @@ export const websiteUrlValidation = string()
 
 export const businessTypeValidation = string()
   .oneOf(businessTypeOptions.map((option) => option.value), 'Select business type')
+  .transform(transformEmptyString);
+
+export const businessStructureValidation = string()
+  .oneOf(businessStructureOptions.map((option) => option.value), 'Select business structure')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
