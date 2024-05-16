@@ -37,19 +37,35 @@
 
 ## Properties
 
-| Property                  | Attribute                    | Description | Type     | Default               |
-| ------------------------- | ---------------------------- | ----------- | -------- | --------------------- |
-| `iframeOrigin`            | `iframe-origin`              |             | `string` | `config.iframeOrigin` |
-| `paymentMethods`          | --                           |             | `any[]`  | `[]`                  |
-| `selectedPaymentMethodId` | `selected-payment-method-id` |             | `string` | `undefined`           |
+| Property              | Attribute        | Description | Type                  | Default               |
+| --------------------- | ---------------- | ----------- | --------------------- | --------------------- |
+| `accountId`           | `account-id`     |             | `string`              | `undefined`           |
+| `bnpl`                | `bnpl`           |             | `any`                 | `undefined`           |
+| `clientId`            | `client-id`      |             | `string`              | `undefined`           |
+| `iframeOrigin`        | `iframe-origin`  |             | `string`              | `config.iframeOrigin` |
+| `isSelected`          | `is-selected`    |             | `boolean`             | `undefined`           |
+| `paymentAmount`       | `payment-amount` |             | `string`              | `undefined`           |
+| `paymentMethodOption` | --               |             | `PaymentMethodOption` | `undefined`           |
 
 
 ## Events
 
-| Event                            | Description | Type               |
-| -------------------------------- | ----------- | ------------------ |
-| `setSelectedPaymentMethodToken`  |             | `CustomEvent<any>` |
-| `toggleCreatingNewPaymentMethod` |             | `CustomEvent<any>` |
+| Event                         | Description | Type               |
+| ----------------------------- | ----------- | ------------------ |
+| `paymentMethodOptionSelected` |             | `CustomEvent<any>` |
+
+
+## Methods
+
+### `resolvePaymentMethod() => Promise<PaymentMethodPayload>`
+
+
+
+#### Returns
+
+Type: `Promise<PaymentMethodPayload>`
+
+
 
 
 ## Dependencies
@@ -61,8 +77,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-method-options --> justifi-saved-payment-method-options
-  style justifi-saved-payment-method-options fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-method-options --> justifi-sezzel-payment-method
+  style justifi-sezzel-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
