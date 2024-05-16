@@ -1,15 +1,22 @@
 import { string } from "yup";
-import { BusinessStructureOptions, BusinessTypeOptions } from "../utils/business-form-types";
 import StateOptions from "../../../utils/state-options";
 import { 
+  businessStructureOptions, 
+  businessServiceReceivedOptions, 
+  businessTypeOptions, 
+  recurringPaymentsOptions, 
+  seasonalBusinessOptions } 
+from "../utils/business-form-options";
+import { 
   businessNameRegex, 
+  numbersOnlyRegex, 
   phoneRegex, 
   ssnRegex, 
   stringLettersOnlyRegex, 
   taxIdRegex, 
   transformEmptyString, 
   urlRegex } 
-  from "./schema-helpers";
+from "./schema-helpers";
 
 // Common Validations
 
@@ -40,11 +47,11 @@ export const websiteUrlValidation = string()
   .transform(transformEmptyString);
 
 export const businessTypeValidation = string()
-  .oneOf(BusinessTypeOptions.map((option) => option.value), 'Select business type')
+  .oneOf(businessTypeOptions.map((option) => option.value), 'Select business type')
   .transform(transformEmptyString);
 
 export const businessStructureValidation = string()
-  .oneOf(BusinessStructureOptions.map((option) => option.value), 'Select business structure')
+  .oneOf(businessStructureOptions.map((option) => option.value), 'Select business structure')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
@@ -55,6 +62,20 @@ export const industryValidation = string()
 
 export const taxIdValidation = string()
   .matches(taxIdRegex, 'Enter valid tax id')
+  .test('not-repeat', 'Enter valid tax id', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .test('not-seq', 'Enter valid tax id', (value) => {
+    return value !== '123456789';
+  })
+  .transform(transformEmptyString);
+
+export const dateOfIncorporationValidation = string()
+  .test('not-future', 'Date of incorporation cannot be in the future', (value) => {
+    const inputDate = new Date(value);
+    const today = new Date();
+    return inputDate <= today;
+  })
   .transform(transformEmptyString);
 
 // Identity Validations
@@ -124,4 +145,37 @@ export const stateValidation = string()
 
 export const postalValidation = string()
   .matches(/^[0-9]{5}$/, 'Enter valid postal code')
+  .transform(transformEmptyString);
+
+// Additional Questions Validations
+
+export const revenueValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid revenue')
+  .transform(transformEmptyString);
+
+export const paymentVolumeValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid payment volume')
+  .transform(transformEmptyString);
+
+export const whenServiceReceivedValidation = string()
+  .oneOf(businessServiceReceivedOptions.map((option) => option.value), 'Select when service is received')
+  .transform(transformEmptyString);
+
+export const recurringPaymentsValidation = string()
+  .oneOf(recurringPaymentsOptions.map((option) => option.value), 'Select recurring payments')
+  .transform(transformEmptyString);
+
+export const recurringPaymentsPercentageValidation = string()
+  .when('business_recurring_payments', {
+    is: (val: any) => val === 'Yes',
+    then: (schema) => schema.required('Enter recurring payments percentage'),
+    otherwise: (schema) => schema.nullable(),
+  })
+  .transform(transformEmptyString);
+
+export const seasonalBusinessValidation = string()
+  .oneOf(seasonalBusinessOptions.map((option) => option.value), 'Select seasonal business')
+  .transform(transformEmptyString);
+
+export const otherPaymentDetailsValidation = string()
   .transform(transformEmptyString);

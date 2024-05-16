@@ -1,5 +1,6 @@
 import { newSpecPage } from "@stencil/core/testing";
 import { MonetaryInput } from "../form-control-monetary";
+import { CURRENCY_MASK } from "../../../utils/form-input-masks";
 
 describe('form-control-monetary', () => {
   it('renders correctly with default props', async () => {
@@ -19,6 +20,7 @@ describe('form-control-monetary', () => {
         name="amount"
         error="Invalid amount"  
         defaultValue="1000"
+        maskOptions=${CURRENCY_MASK.DECIMAL}
       ></form-control-monetary>
     `,
     });
@@ -37,7 +39,7 @@ describe('form-control-monetary', () => {
     const inputHandlerMock = jest.fn();
     const page = await newSpecPage({
       components: [MonetaryInput],
-      html: `<form-control-monetary></form-control-monetary>`,
+      html: `<form-control-monetary maskOptions=${CURRENCY_MASK.DECIMAL}></form-control-monetary>`,
     });
 
     page.rootInstance.inputHandler = inputHandlerMock;
@@ -58,7 +60,7 @@ describe('form-control-monetary', () => {
   it('emits formControlBlur on input blur', async () => {
     const page = await newSpecPage({
       components: [MonetaryInput],
-      html: `<form-control-monetary></form-control-monetary>`,
+      html: `<form-control-monetary maskOptions=${CURRENCY_MASK.DECIMAL}></form-control-monetary>`,
     });
 
     const blurSpy = jest.fn();
@@ -74,7 +76,7 @@ describe('form-control-monetary', () => {
   it('displays error message when error prop is set', async () => {
     const page = await newSpecPage({
       components: [MonetaryInput],
-      html: `<form-control-monetary error="Invalid amount"></form-control-monetary>`,
+      html: `<form-control-monetary error="Invalid amount" maskOptions=${CURRENCY_MASK.DECIMAL}></form-control-monetary>`,
     });
 
     const errorDiv = page.root.shadowRoot.querySelector('.invalid-feedback');

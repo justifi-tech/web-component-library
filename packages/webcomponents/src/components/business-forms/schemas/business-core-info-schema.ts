@@ -8,6 +8,7 @@ import {
   phoneValidation, 
   taxIdValidation, 
   websiteUrlValidation,
+  dateOfIncorporationValidation,
   businessStructureValidation
 } from './schema-validations';
 
@@ -22,6 +23,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     business_structure: businessStructureValidation.required('Select business structure'),
     industry: industryValidation.required('Enter a business industry'),
     tax_id: taxIdValidation.required('Enter tax id'),
+    date_of_incorporation: dateOfIncorporationValidation.required('Enter date of incorporation'),
   });
 
   const easySchema = object({
@@ -34,6 +36,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     business_structure: businessStructureValidation.nullable(),
     industry: industryValidation.nullable(),
     tax_id: taxIdValidation.nullable(),
+    date_of_incorporation: dateOfIncorporationValidation.nullable(),
   });
 
   return allowOptionalFields ? easySchema : schema;

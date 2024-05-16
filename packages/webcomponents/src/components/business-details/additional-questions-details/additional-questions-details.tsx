@@ -37,7 +37,7 @@ export class AdditionalQuestionsDetails {
                 value={this.additionalQuestions.business_payment_volume?.toString()}
               />
             </div>
-            <div class="col-12 col-md-6">
+            {/* <div class="col-12 col-md-6">
               <DetailItem
                 title="Business Dispute Volume"
                 value={this.additionalQuestions.business_dispute_volume?.toString()}
@@ -46,7 +46,7 @@ export class AdditionalQuestionsDetails {
                 title="Business Receivable Volume"
                 value={this.additionalQuestions.business_receivable_volume?.toString()}
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </Host>
