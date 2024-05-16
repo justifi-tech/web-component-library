@@ -7,9 +7,6 @@ import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 import mockGetCheckoutSuccess from './../../../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckoutSuccess from './../../../../../../mockData/mockPostCheckoutSuccess.json';
 import { PaymentMethodOptions } from '../payment-method-options';
-import { SavedPaymentMethod } from '../saved-payment-method';
-import { NewPaymentMethod } from '../new-payment-method';
-import { SezzelPaymentMethod } from '../sezzel-payment-method';
 
 describe('justifi-checkout-core', () => {
   it('should display loading state correclty', async () => {
