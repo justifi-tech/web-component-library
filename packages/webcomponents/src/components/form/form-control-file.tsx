@@ -7,7 +7,6 @@ import {
   EventEmitter,
   State,
   Element,
-  Watch,
 } from '@stencil/core';
 
 @Component({
@@ -20,7 +19,6 @@ export class FileInput {
   @Prop() label: string;
   @Prop() name: any;
   @Prop() error: string;
-  @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
   @State() input: string;
@@ -28,24 +26,19 @@ export class FileInput {
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  @Watch('file')
-  handleDefaultValueChange(newValue: string) {
-    console.log('file', newValue);
+  updateInput(newValue: any) {
+    const inputElement = this.el.shadowRoot.querySelector('input');
+    if (inputElement) {
+      inputElement.value = newValue || '';
+    }
   }
 
-  // updateInput(newValue: any) {
-  //   const inputElement = this.el.shadowRoot.querySelector('input');
-  //   if (inputElement) {
-  //     inputElement.value = newValue || '';
-  //   }
-  // }
-
-  // handleFormControlInput(event: any) {
-  //   const target = event.target;
-  //   const name = target.getAttribute('name');
-  //   this.inputHandler(name, target.value);
-  //   this.formControlInput.emit(target.value);
-  // }
+  handleFormControlInput(event: any) {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.inputHandler(name, target.value);
+    this.formControlInput.emit(target.value);
+  }
 
   handleFileChange(event: any) {
     this.file = event.target.files[0];
@@ -64,10 +57,10 @@ export class FileInput {
           class={this.error ? 'form-control is-invalid' : 'form-control'}
           disabled={this.disabled}
           onChange={(event: any) => this.handleFileChange(event)}
-          // onInput={(event: any) => this.handleFormControlInput(event)}
+          onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
         />
-        <span class="error">{this.error}</span>
+        {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
     );
   }
