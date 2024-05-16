@@ -22,7 +22,7 @@ export class PaymentProvisioning {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() totalSteps: number = 5;
+  @State() totalSteps: number = 6;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   get title() {
@@ -42,6 +42,7 @@ export class PaymentProvisioning {
   private additionalQuestionsRef: any;
   private representativeRef: any;
   private ownersRef: any;
+  private documentUploadRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -85,6 +86,13 @@ export class PaymentProvisioning {
                 onServerError={this.handleServerErrors}
                 allowOptionalFields={this.allowOptionalFields}
               />,
+    5: () => <justifi-business-document-upload-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[5] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+              />,
   };
 
   componentWillLoad() {
@@ -93,7 +101,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.documentUploadRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 
