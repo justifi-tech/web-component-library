@@ -8,10 +8,11 @@ import {
   Watch,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
+import { CURRENCY_MASK } from '../../utils/form-input-masks';
 
 @Component({
   tag: 'form-control-monetary',
-  styleUrl: 'form-control-number.scss',
+  styleUrl: 'form-control-monetary.scss',
   shadow: true,
 })
 export class MonetaryInput {
@@ -20,6 +21,7 @@ export class MonetaryInput {
   @Prop() error: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() maskOptions: any = CURRENCY_MASK.DECIMAL;
 
   private imask: InputMask<any> | null = null;
 
@@ -45,14 +47,7 @@ export class MonetaryInput {
   private initializeIMask() {
     if (!this.textInput) return;
 
-    this.imask = IMask(this.textInput, {
-      mask: Number,
-      scale: 2,
-      thousandsSeparator: ',',
-      padFractionalZeros: true,
-      normalizeZeros: true,
-      radix: '.',
-    });
+    this.imask = IMask(this.textInput, this.maskOptions);
 
     this.imask.on('accept', () => {
       const rawValue = this.imask.unmaskedValue;
@@ -75,16 +70,19 @@ export class MonetaryInput {
         <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
-        <input
-          ref={el => (this.textInput = el as HTMLInputElement)}
-          id={this.name}
-          name={this.name}
-          onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
-          type="text"
-        />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input
+            ref={el => (this.textInput = el as HTMLInputElement)}
+            id={this.name}
+            name={this.name}
+            onBlur={() => this.formControlBlur.emit()}
+            part={`input ${this.error && 'input-invalid'}`}
+            class={this.error ? 'form-control monetary is-invalid' : 'form-control monetary'}
+            type="text"
+          />
+          {this.error && <div class="invalid-feedback">{this.error}</div>}
+        </div>
       </Host>
     );
   }

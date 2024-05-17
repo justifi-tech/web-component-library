@@ -1,15 +1,24 @@
 import { string } from "yup";
-import { BusinessStructureOptions, BusinessTypeOptions } from "../utils/business-form-types";
 import StateOptions from "../../../utils/state-options";
 import { 
+  businessStructureOptions, 
+  businessServiceReceivedOptions, 
+  businessTypeOptions, 
+  recurringPaymentsOptions, 
+  seasonalBusinessOptions } 
+from "../utils/business-form-options";
+import { 
   businessNameRegex, 
+  numbersOnlyRegex, 
   phoneRegex, 
+  poBoxRegex, 
   ssnRegex, 
+  streetAddressRegex, 
   stringLettersOnlyRegex, 
   taxIdRegex, 
   transformEmptyString, 
   urlRegex } 
-  from "./schema-helpers";
+from "./schema-helpers";
 
 // Common Validations
 
@@ -40,11 +49,11 @@ export const websiteUrlValidation = string()
   .transform(transformEmptyString);
 
 export const businessTypeValidation = string()
-  .oneOf(BusinessTypeOptions.map((option) => option.value), 'Select business type')
+  .oneOf(businessTypeOptions.map((option) => option.value), 'Select business type')
   .transform(transformEmptyString);
 
 export const businessStructureValidation = string()
-  .oneOf(BusinessStructureOptions.map((option) => option.value), 'Select business structure')
+  .oneOf(businessStructureOptions.map((option) => option.value), 'Select business structure')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
@@ -55,6 +64,20 @@ export const industryValidation = string()
 
 export const taxIdValidation = string()
   .matches(taxIdRegex, 'Enter valid tax id')
+  .test('not-repeat', 'Enter valid tax id', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .test('not-seq', 'Enter valid tax id', (value) => {
+    return value !== '123456789';
+  })
+  .transform(transformEmptyString);
+
+export const dateOfIncorporationValidation = string()
+  .test('not-future', 'Date of incorporation cannot be in the future', (value) => {
+    const inputDate = new Date(value);
+    const today = new Date();
+    return inputDate <= today;
+  })
   .transform(transformEmptyString);
 
 // Identity Validations
@@ -104,18 +127,24 @@ export const ssnValidation = string()
 export const lineOneValidation = string()
   .min(5, 'Address must be at least 5 characters')
   .max(100, 'Address must be less than 100 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Enter valid address line 1')
+  .matches(streetAddressRegex, 'Enter valid address line 1')
+  .test('not-po-box', 'A PO Box is not a valid address entry', (value) => {
+    return !poBoxRegex.test(value);
+  })
   .transform(transformEmptyString);
 
 export const lineTwoValidation = string()
   .max(100, 'Address must be less than 100 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z0-9\s,.'-]*$/, 'Enter valid address line 2')
+  .matches(streetAddressRegex, 'Enter valid address line 2')
+  .test('not-po-box', 'A PO Box is not a valid address entry', (value) => {
+    return !poBoxRegex.test(value);
+  })
   .transform(transformEmptyString);
 
 export const cityValidation = string()
   .min(2, 'City must be at least 2 characters')
   .max(50, 'City must be less than 50 characters')
-  .matches(/^(?!^\s+$)[a-zA-Z\s]*$/, 'Enter valid city')
+  .matches(stringLettersOnlyRegex, 'Enter valid city')
   .transform(transformEmptyString);
 
 export const stateValidation = string()
@@ -124,4 +153,37 @@ export const stateValidation = string()
 
 export const postalValidation = string()
   .matches(/^[0-9]{5}$/, 'Enter valid postal code')
+  .transform(transformEmptyString);
+
+// Additional Questions Validations
+
+export const revenueValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid revenue')
+  .transform(transformEmptyString);
+
+export const paymentVolumeValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid payment volume')
+  .transform(transformEmptyString);
+
+export const whenServiceReceivedValidation = string()
+  .oneOf(businessServiceReceivedOptions.map((option) => option.value), 'Select when service is received')
+  .transform(transformEmptyString);
+
+export const recurringPaymentsValidation = string()
+  .oneOf(recurringPaymentsOptions.map((option) => option.value), 'Select recurring payments')
+  .transform(transformEmptyString);
+
+export const recurringPaymentsPercentageValidation = string()
+  .when('business_recurring_payments', {
+    is: (val: any) => val === 'Yes',
+    then: (schema) => schema.required('Enter recurring payments percentage'),
+    otherwise: (schema) => schema.nullable(),
+  })
+  .transform(transformEmptyString);
+
+export const seasonalBusinessValidation = string()
+  .oneOf(seasonalBusinessOptions.map((option) => option.value), 'Select seasonal business')
+  .transform(transformEmptyString);
+
+export const otherPaymentDetailsValidation = string()
   .transform(transformEmptyString);
