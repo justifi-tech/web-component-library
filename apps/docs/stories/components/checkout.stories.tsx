@@ -25,13 +25,13 @@ const meta: Meta = {
       }
     },
     'checkout-id': {
-      description: 'tbd', // todo
+      description: 'Checkout ID `string`',
       table: {
         category: 'props'
       }
     },
     'submitted': {
-      description: 'tbd', // todo
+      description: 'Emitted when the server response is received.  Will not be raised if form vailidation fails.',
       table: {
         category: 'events'
       },
