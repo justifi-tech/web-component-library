@@ -6,7 +6,7 @@ import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Payment Form',
@@ -18,36 +18,6 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'account-id': {
-      type: 'string',
-      description: 'Account ID `string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'client-id': {
-      type: 'string',
-      description: 'Client ID `string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'web-component-token': {
-      type: 'string',
-      description: 'Web Component Token `string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props'
-      }
-    },
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
@@ -156,7 +126,7 @@ const Template = (args: any) => {
         ${getAttributeString('bank-account')}
         ${getAttributeString('email')}
         ${getAttributeString('client-id')}
-        ${getAttributeString('web-component-token')}
+        ${getAttributeString('auth-token')}
         ${getAttributeString('account-id')}
         ${getAttributeString('submit-button-text')}
       />

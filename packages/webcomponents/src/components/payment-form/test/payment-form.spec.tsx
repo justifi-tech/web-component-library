@@ -8,7 +8,7 @@ import { PaymentMethodForm } from '../../payment-method-form/payment-method-form
 import { BillingForm } from '../../billing-form/billing-form';
 
 describe('justifi-payment-form', () => {
-  it('should throw error if both clientId and webComponentToken are not provided', async () => {
+  it('should throw error if both clientId and authToken are not provided', async () => {
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
@@ -21,7 +21,7 @@ describe('justifi-payment-form', () => {
     expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
       detail: {
         errorCode: 'missing-props',
-        message: 'clientId or webComponentToken is required',
+        message: 'clientId or authToken is required',
         severity: 'error',
       }
     }));

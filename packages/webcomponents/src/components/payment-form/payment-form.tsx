@@ -17,7 +17,7 @@ export class PaymentForm {
   @Prop() card?: boolean = true;
   @Prop() email?: string;
   @Prop() clientId?: string;
-  @Prop() webComponentToken?: string;
+  @Prop() authToken?: string;
   @Prop() accountId?: string;
   @Prop() submitButtonText?: string;
 
@@ -35,7 +35,7 @@ export class PaymentForm {
     if (!this.validateProps()) {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
-        message: 'clientId or webComponentToken is required',
+        message: 'clientId or authToken is required',
         severity: ComponentErrorSeverity.ERROR
       });
       this.submitButtonEnabled = false;
@@ -67,11 +67,11 @@ export class PaymentForm {
   }
 
   private validateProps(): boolean {
-    return !!(this.clientId || this.webComponentToken);
+    return !!(this.clientId || this.authToken);
   }
 
   private getToken(): string {
-    return this.webComponentToken || this.clientId;
+    return this.authToken || this.clientId;
   }
 
   async submit(event) {
