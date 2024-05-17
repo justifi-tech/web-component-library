@@ -50,17 +50,22 @@ export class FileInput {
         <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
-        <input
-          type="file"
-          name={this.name}
-          part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
-          disabled={this.disabled}
-          onChange={(event: any) => this.handleFileChange(event)}
-          onInput={(event: any) => this.handleFormControlInput(event)}
-          onBlur={() => this.formControlBlur.emit()}
-        />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <div class="input-group mb-3">
+          <input
+            type="file"
+            name={this.name}
+            part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
+            class={this.error ? 'form-control file is-invalid' : 'form-control file'}
+            disabled={this.disabled}
+            onChange={(event: any) => this.handleFileChange(event)}
+            onInput={(event: any) => this.handleFormControlInput(event)}
+            onBlur={() => this.formControlBlur.emit()}
+          />
+          <span class="input-group-text">
+            <span class='badge text-bg-success' title='test'>File Uploaded</span>
+          </span>
+          {this.error && <div class="invalid-feedback">{this.error}</div>}
+        </div>
       </Host>
     );
   }

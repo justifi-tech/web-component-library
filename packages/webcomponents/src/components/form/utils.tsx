@@ -23,3 +23,16 @@ export const filterPostalInput = (e: KeyboardEvent) => {
     e.preventDefault();
   }
 };
+
+export const mapDocumentStatusToBadge = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return <span class='badge bg-warning text-dark'>Pending</span>;
+    case 'uploaded':
+      return <span class='badge bg-success'>Approved</span>;
+    case 'canceled':
+      return <span class='badge bg-danger'>Canceled</span>;
+    default:
+      return <span class='badge bg-secondary'>Unknown</span>;
+  }
+}
