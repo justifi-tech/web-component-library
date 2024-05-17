@@ -13,24 +13,25 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     'checkout-id': '123',
-    theme: ThemeNames.Light
+    'Theme': ThemeNames.Light
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    theme: {
+    'Theme': {
+      description: 'Select a theme to preview the component in',
       options: Object.values(ThemeNames),
       control: {
         type: 'select',
       }
     },
     'checkout-id': {
-      description: 'tbd',
+      description: 'tbd', // todo
       table: {
         category: 'props'
       }
     },
     'submitted': {
-      description: 'tbd',
+      description: 'tbd', // todo
       table: {
         category: 'events'
       },
@@ -62,7 +63,7 @@ export const Basic: StoryObj = {};
 Basic.decorators = [
   (story: any, storyArgs: any) => {
     // Import the style here to not pollute other framework stories
-    const selectedTheme = storyArgs.args.theme as ThemeNames;
+    const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
     const styleElement = document.createElement('style');
     styleElement.textContent = themes[selectedTheme];
 
