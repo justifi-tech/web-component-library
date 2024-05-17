@@ -59,3 +59,13 @@ export enum OwnerFormClickActions {
   addOwnerForm = 'addOwnerForm',
   updateOwner = 'updateOwner'
 }
+
+export enum DocumentFormServerErrors {
+  fetchData = 'Error retrieving document data',
+  postData = 'Error adding document data'
+}
+
+export interface DocumentFormServerErrorEvent {
+  data?: any;
+  message: DocumentFormServerErrors;
+}

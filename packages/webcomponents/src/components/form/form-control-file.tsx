@@ -8,6 +8,7 @@ import {
   State,
   Element,
 } from '@stencil/core';
+import { FileChangeEvent } from '../../api/Document';
 
 @Component({
   tag: 'form-control-file',
@@ -18,6 +19,7 @@ export class FileInput {
   @Element() el: HTMLElement;
   @Prop() label: string;
   @Prop() name: any;
+  @Prop() documentType: string;
   @Prop() error: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
@@ -25,6 +27,7 @@ export class FileInput {
   @State() file: File;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
+  @Event() fileChange: EventEmitter<FileChangeEvent>;
 
   updateInput(newValue: any) {
     const inputElement = this.el.shadowRoot.querySelector('input');
@@ -42,6 +45,7 @@ export class FileInput {
 
   handleFileChange(event: any) {
     this.file = event.target.files[0];
+    this.fileChange.emit({file: this.file, document_type: this.documentType});
   }
 
   render() {

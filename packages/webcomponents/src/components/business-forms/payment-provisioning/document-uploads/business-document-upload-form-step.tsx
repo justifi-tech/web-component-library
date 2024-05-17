@@ -1,10 +1,13 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServerErrors } from '../../utils/business-form-types';
 import { IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { documentSchema } from '../../schemas/business-document-upload-schema';
+import { FileChangeEvent } from '../../../../components';
+import { DocPayload } from '../../../../api/Document';
+
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -17,26 +20,37 @@ export class BusinessDocumentFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() documents: any;
+  @State() bankStatementPayload: any;
+  @State() otherPayload: any;
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
+  @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
 
   private api: any;
 
   get businessEndpoint() {
-    return `entities/business/${this.businessId}`
+    return `entities/business/${this.businessId}`;
   }
 
-  fetchData = async () => {
+  get documentEndpoint() {
+    return 'entities/document';
+  }
+
+  private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.documents = response.data.documents;
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
+      this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
     }
+  }
+
+  @Watch('otherPayload')
+  handlePayloadChange(newValue: any) {
+    console.log('otherPayload', newValue);
   }
 
   // private sendData = async (onSuccess?: () => void) => {
@@ -51,10 +65,43 @@ export class BusinessDocumentFormStep {
   //     this.formLoading.emit(false);
   //   }
   // }
+
+   postDocumentRecord = async (onSuccess?: () => void) => {
+    this.formLoading.emit(true);
+    try {
+      const payload = this.otherPayload;
+      const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
+      this.handleResponse(response, onSuccess);
+    } catch (error) {
+      this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
+    } finally {
+      this.formLoading.emit(false);
+    }
+  }
+
+  private composeDocumentPayload = (e: CustomEvent<FileChangeEvent>) => {
+    const docInfo = e.detail;
+    const docType = docInfo.document_type;
+    const payload = { ...new DocPayload(docInfo, this.businessId) };
+    this.assignPayload(payload, docType);
+  }
+
+  assignPayload = (payload: any, docType: string) => {
+    switch (docType) {
+      case 'bank_statement':
+        this.bankStatementPayload = payload;
+        break;
+      case 'other':
+        this.otherPayload = payload;
+        break;
+      default:
+        break;
+    }
+  }
   
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
+      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
     } else {
       onSuccess();
     }
@@ -66,6 +113,7 @@ export class BusinessDocumentFormStep {
   @Method()
   async validateAndSubmit({ onSuccess }) {
     this.formController.validateAndSubmit(() => console.log('onSuccess', onSuccess));
+    this.postDocumentRecord(onSuccess);
   }
 
   componentWillLoad() {
@@ -108,6 +156,8 @@ export class BusinessDocumentFormStep {
                 label="Bank Statement Upload"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
+                documentType='other'
+                onFileChange={this.composeDocumentPayload}
               />
             </div>
           </fieldset>
