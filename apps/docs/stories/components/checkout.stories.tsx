@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs } from '../utils';
 import themes, { ThemeNames } from '../themes';
+import { setUpMocks } from '../utils/mockAllServices';
 
 import '@justifi/webcomponents/dist/module/justifi-checkout';
 
@@ -62,6 +63,8 @@ const meta: Meta = {
 export const Basic: StoryObj = {};
 Basic.decorators = [
   (story: any, storyArgs: any) => {
+    setUpMocks();
+
     // Import the style here to not pollute other framework stories
     const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
     const styleElement = document.createElement('style');
@@ -69,6 +72,7 @@ Basic.decorators = [
 
     return `${styleElement.outerHTML}${story()}`;
   },
+  // @ts-ignore
   withActions
 ];
 
