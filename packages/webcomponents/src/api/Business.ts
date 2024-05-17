@@ -1,4 +1,5 @@
 import { Identity, Representative } from './Identity';
+import { IDocument } from './Document';
 import { BankAccount } from './shared';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
@@ -62,22 +63,6 @@ export class Address implements IAddress {
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
   }
-}
-
-export interface Document {
-  business_id: string;
-  created_at: string;
-  description: string | null;
-  document_type: string;
-  file_name: string;
-  file_type: string;
-  id: string;
-  identity_id: string;
-  metadata: any;
-  platform_account_id: string;
-  presigned_url: string | null;
-  status: string;
-  updated_at: string;
 }
 
 export interface ProductCategories {
@@ -162,7 +147,7 @@ export interface IBusiness {
   business_structure: BusinessStructure;
   bank_accounts: BankAccount[];
   created_at: string;
-  documents: Document[];
+  documents: IDocument[];
   doing_business_as: string;
   email: string;
   id: string;
@@ -187,7 +172,7 @@ export class Business implements IBusiness {
   public business_structure: BusinessStructure;
   public bank_accounts: BankAccount[];
   public created_at: string;
-  public documents: Document[];
+  public documents: IDocument[];
   public doing_business_as: string;
   public email: string;
   public id: string;
