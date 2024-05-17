@@ -3,7 +3,6 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PaymentForm } from '../payment-form';
 import { PaymentMethodTypes } from '../../../api';
 import { BillingFormFields } from '../../billing-form/billing-form-schema';
-import { config } from '../../../../config';
 import { PaymentMethodSelector } from '../payment-method-selector';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 import { BillingForm } from '../../billing-form/billing-form';
@@ -184,47 +183,23 @@ describe('justifi-payment-form', () => {
 
   // Render Testing
   it('should correctly render the child components based on the given props and state', async () => {
-    // Set up new PaymentForm with specific props and state
-    const component = new PaymentForm();
-    component.bankAccount = true;
-    component.card = true;
-    component.email = 'test@test.com';
-    component.clientId = 'abc123';
-    component.accountId = 'def456';
-    component.submitButtonText = 'Submit';
-
-    // Cast to any to bypass type checker and directly set private properties
-    (component as any).submitButtonEnabled = true;
-    (component as any).selectedPaymentMethodType = PaymentMethodTypes.card;
-    (component as any).allowedPaymentMethodTypes = [PaymentMethodTypes.card, PaymentMethodTypes.bankAccount];
-
     // Render the component
     const { root } = await newSpecPage({
       components: [PaymentForm],
-      html: `<justifi-payment-form payment-method-form-type="card"></justifi-payment-form>`,
+      template: () => (
+        <justifi-payment-form
+          bankAccount
+          card
+          email="test@test.com"
+          clientId="abc123"
+          accountId="def456"
+          submit-button-text="Submit"
+          payment-method-form-type="card"
+        />),
     });
 
     // Assert that the rendered output is correct
-    expect(root).toEqualHtml(`
-      <justifi-payment-form payment-method-form-type="card">
-        <mock:shadow-root>
-          <form class="gy-3 row">
-            <div class="col-12">
-              <justifi-payment-method-form payment-method-form-type="card" iframeorigin="${config.iframeOrigin}"></justifi-payment-method-form>
-            </div>
-            <div class="col-12">
-              <justifi-billing-form legend="Billing Info"></justifi-billing-form>
-            </div>
-            <slot name="insurance"></slot>
-            <div class="col-12">
-              <button class="btn btn-primary jfi-submit-button" data-testid="submit-button" type="submit">
-                Submit
-              </button>
-            </div>
-          </form>
-        </mock:shadow-root>
-      </justifi-payment-form>
-    `);
+    expect(root).toMatchSnapshot();
   });
 
   it('emits error event when submit fails', async () => {

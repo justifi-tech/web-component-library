@@ -143,17 +143,22 @@ const meta: Meta = {
 }
 
 const Template = (args: any) => {
+  // Set the prop only if it is defined
+  const getAttributeString = (attrName: string) => {
+    return args[attrName] ? `${attrName}="${args[attrName]}"` : '';
+  };
+
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
     <div>
       <justifi-payment-form
-        card="${args.card}"
-        bank-account="${args['bank-account']}"
-        email="${args.email}"
-        client-id="${args['client-id']}"
-        web-component-token="${args['web-component-token']}"
-        account-id="${args['account-id']}"
-        submit-button-text="${args['submit-button-text']}"
+        ${getAttributeString('card')}
+        ${getAttributeString('bank-account')}
+        ${getAttributeString('email')}
+        ${getAttributeString('client-id')}
+        ${getAttributeString('web-component-token')}
+        ${getAttributeString('account-id')}
+        ${getAttributeString('submit-button-text')}
       />
     </div>
     <style>

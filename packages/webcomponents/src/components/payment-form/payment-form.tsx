@@ -38,6 +38,7 @@ export class PaymentForm {
         message: 'clientId or webComponentToken is required',
         severity: ComponentErrorSeverity.ERROR
       });
+      this.submitButtonEnabled = false;
     }
   }
 
