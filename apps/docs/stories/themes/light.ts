@@ -9,7 +9,7 @@ justifi-checkout {
   margin: 5% auto;
   padding: 40px;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 0px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
