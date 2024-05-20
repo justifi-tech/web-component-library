@@ -23,11 +23,16 @@ export class FileInput {
   @Prop() error: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
+  @Prop() statusAdornment: string;
   @State() input: string;
   @State() file: File;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
   @Event() fileChange: EventEmitter<FileChangeEvent>;
+
+  get statusBadge() {
+    return !!this.statusAdornment;
+  }
 
   updateInput(newValue: any) {
     const inputElement = this.el.shadowRoot.querySelector('input');
@@ -59,15 +64,17 @@ export class FileInput {
             type="file"
             name={this.name}
             part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
-            class={this.error ? 'form-control file is-invalid' : 'form-control file'}
+            class={`form-control ${this.error && 'is-invalid'} ${this.statusBadge && 'file'}`}
             disabled={this.disabled}
             onChange={(event: any) => this.handleFileChange(event)}
             onInput={(event: any) => this.handleFormControlInput(event)}
             onBlur={() => this.formControlBlur.emit()}
           />
-          <span class="input-group-text">
-            <span class='badge text-bg-success' title='test'>File Uploaded</span>
-          </span>
+          {this.statusBadge && 
+            <span class="input-group-text">
+              <span class='badge text-bg-success' title='test'>{this.statusAdornment}</span>
+            </span>
+          }
           {this.error && <div class="invalid-feedback">{this.error}</div>}
         </div>
       </Host>

@@ -158,6 +158,7 @@ export class BusinessDocumentFormStep {
                 error={this.errors?.bank_statement}
                 documentType='other'
                 onFileChange={this.composeDocumentPayload}
+                statusAdornment={'Pending'}
               />
             </div>
           </fieldset>
