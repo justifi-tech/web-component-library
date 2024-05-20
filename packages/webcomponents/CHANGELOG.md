@@ -1,5 +1,15 @@
 ### Changelog
 
+## 4.13.0-rc.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
 ## 4.12.2
 
 ### Patch Changes

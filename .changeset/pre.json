@@ -5,5 +5,8 @@
     "@repo/docs": "0.0.9",
     "@justifi/webcomponents": "4.12.2"
   },
-  "changesets": []
+  "changesets": [
+    "brown-actors-smile",
+    "smart-lies-reflect"
+  ]
 }
