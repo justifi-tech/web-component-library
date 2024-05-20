@@ -63,3 +63,16 @@ export const mockAllServices = ({ bypass }: MockAllServicesConfig) => {
     },
   });
 };
+
+export const setUpMocks = () => {
+  const isMocksEnabled = __VITE_STORYBOOK_MOCKS_ENABLED__ === 'true';
+  const isChromaticBuild = __VITE_STORYBOOK_CHROMATIC_BUILD__ === 'true';
+
+  if (isMocksEnabled) {
+    // Use mock data for GrossPaymentChart only in Chromatic builds for consistent screenshots.
+    // For regular Storybook, use proxyApi to view dynamic data, especially to see dates from the past 30 days.
+    mockAllServices({
+      bypass: isChromaticBuild ? [] : [API_PATHS.GROSS_VOLUME],
+    });
+  }
+};
