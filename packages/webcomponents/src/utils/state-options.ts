@@ -1,5 +1,9 @@
 const StateOptions = [
   {
+    label: 'Choose state',
+    value: '',
+  },
+  {
     label: 'Alabama',
     value: 'AL',
   },
