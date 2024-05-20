@@ -4,5 +4,6 @@ export interface PaymentMethodPayload {
     order_uuid: string;
     status: string;
     session_uuid: string;
-  }
+  },
+  error?: string[]
 }

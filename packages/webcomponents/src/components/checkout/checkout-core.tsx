@@ -24,7 +24,6 @@ export class CheckoutCore {
   @State() isLoading: boolean = false;
   @State() checkout: ICheckout;
   @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
   @State() creatingNewPaymentMethod: boolean = false;
 
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
@@ -53,9 +52,7 @@ export class CheckoutCore {
         this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
-        this.errorMessage = error;
         this.isLoading = false;
-
         this.errorEvent.emit({
           errorCode: code,
           message: error,
@@ -89,7 +86,9 @@ export class CheckoutCore {
 
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
-    if (payload.token) {
+    if (payload.error) {
+      // TODO: handle tokenize error
+    } else if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
