@@ -90,31 +90,40 @@ export class CheckoutCore {
       this.isLoading = false;
     }
     else if (payload.error) {
-      this.errorEvent.emit({
-        errorCode: (payload.error.code as ComponentErrorCodes),
-        message: payload.error.message,
+      this.onError({
+        code: (payload.error.code as ComponentErrorCodes),
+        error: payload.error.message,
         severity: ComponentErrorSeverity.ERROR,
       });
-      this.isLoading = false;
     }
     else if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
-        onError: this.onSubmitted,
+        onError: this.onError,
       })
     }
     else if (payload.bnpl?.status === 'success') {
       this.complete({
         payment: { payment_mode: 'bnpl' },
         onSuccess: this.onSubmitted,
-        onError: this.onSubmitted,
+        onError: this.onError,
       })
     }
   }
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
     this.submitted.emit(data);
+    this.isLoading = false;
+  };
+
+  onError = ({ error, code, severity }: { error: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity }) => {
+    console.log('this.onError', error, code, severity)
+    this.errorEvent.emit({
+      errorCode: code,
+      message: error,
+      severity,
+    });
     this.isLoading = false;
   };
 
