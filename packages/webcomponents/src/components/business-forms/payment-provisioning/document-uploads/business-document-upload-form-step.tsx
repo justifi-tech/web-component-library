@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServerErrors } from '../../utils/business-form-types';
 import { IBusiness } from '../../../../api/Business';
@@ -6,7 +6,7 @@ import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { documentSchema } from '../../schemas/business-document-upload-schema';
 import { FileChangeEvent } from '../../../../components';
-import { DocPayload } from '../../../../api/Document';
+import { DocumentUploadData } from '../../../../api/Document';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class BusinessDocumentFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() documents: any;
-  @State() bankStatementPayload: any;
+  @State() bankStatementData: any;
   @State() otherPayload: any;
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -48,30 +48,18 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  @Watch('otherPayload')
-  handlePayloadChange(newValue: any) {
-    console.log('otherPayload', newValue);
+  private getData = async () => {
+    const response = await this.api.get('entities/document');
+    console.log(response);
   }
 
-  // private sendData = async (onSuccess?: () => void) => {
-  //   this.formLoading.emit(true);
-  //   try {
-  //     const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-  //     const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-  //     this.handleResponse(response, onSuccess);
-  //   } catch (error) {
-  //     this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
-  //   } finally {
-  //     this.formLoading.emit(false);
-  //   }
-  // }
 
-   postDocumentRecord = async (onSuccess?: () => void) => {
+  createDocumentRecord = async (docData: DocumentUploadData, onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
-      const payload = this.otherPayload;
+      const payload = docData.record_data;
       const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
-      this.handleResponse(response, onSuccess);
+      this.handleDocRecordResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
     } finally {
@@ -79,27 +67,50 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  private composeDocumentPayload = (e: CustomEvent<FileChangeEvent>) => {
-    const docInfo = e.detail;
-    const docType = docInfo.document_type;
-    const payload = { ...new DocPayload(docInfo, this.businessId) };
-    this.assignPayload(payload, docType);
+  handleDocRecordResponse = (response: any, onSuccess: () => void) => {
+    if (response.error) {
+      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
+    } else {
+      onSuccess();
+    }
   }
 
-  assignPayload = (payload: any, docType: string) => {
-    switch (docType) {
+  uploadDocument = async (fileData: any, onSuccess?: () => void) => {
+    const file = fileData.file;
+    // const 
+    this.formLoading.emit(true);
+    try {
+      const response = await this.api.put(this.documentEndpoint, JSON.stringify(file));
+      this.handleUploadResponse(response, onSuccess);
+    } catch (error) {
+      this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
+    } finally {
+      this.formLoading.emit(false);
+    }
+  }
+
+  handleFileChange = (e: CustomEvent<FileChangeEvent>) => {
+    const docInfo = e.detail;
+    const fileData = new DocumentUploadData(docInfo);
+    fileData.setRecordData(this.businessId);
+    this.holdFileData(fileData);
+  }
+
+
+  holdFileData = (fileData: DocumentUploadData) => {
+    switch (fileData.document_type) {
       case 'bank_statement':
-        this.bankStatementPayload = payload;
+        this.bankStatementData = fileData;
         break;
       case 'other':
-        this.otherPayload = payload;
+        this.otherPayload = fileData;
         break;
       default:
         break;
     }
   }
   
-  handleResponse(response, onSuccess) {
+  handleUploadResponse(response, onSuccess) {
     if (response.error) {
       this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
     } else {
@@ -112,8 +123,7 @@ export class BusinessDocumentFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => console.log('onSuccess', onSuccess));
-    this.postDocumentRecord(onSuccess);
+    this.formController.validateAndSubmit(() => this.createDocumentRecord(onSuccess));
   }
 
   componentWillLoad() {
@@ -125,6 +135,7 @@ export class BusinessDocumentFormStep {
     this.formController = new FormController(documentSchema);
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
+    this.getData();
   }
 
   componentDidLoad() {
@@ -150,14 +161,25 @@ export class BusinessDocumentFormStep {
           <fieldset>
             <legend>Document Uploads</legend>
             <hr />
-            <div class="col-12">
+            {/* <div class="col-12">
               <form-control-file
                 name="bank_statement"
                 label="Bank Statement Upload"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
                 documentType='other'
-                onFileChange={this.composeDocumentPayload}
+                onFileChange={this.handleFileChange}
+                statusAdornment={'Pending'}
+              />
+            </div> */}
+            <div class="col-12">
+              <form-control-file
+                name="other"
+                label="Other"
+                inputHandler={this.inputHandler}
+                error={this.errors?.other}
+                documentType='other'
+                onFileChange={this.handleFileChange}
                 statusAdornment={'Pending'}
               />
             </div>
