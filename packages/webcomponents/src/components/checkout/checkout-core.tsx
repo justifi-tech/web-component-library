@@ -86,27 +86,30 @@ export class CheckoutCore {
 
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
-    if (payload.error) {
+    if (!payload) {
+      this.isLoading = false;
+    }
+    else if (payload?.error) {
       this.errorEvent.emit({
         errorCode: (payload.error.code as ComponentErrorCodes),
         message: payload.error.message,
         severity: ComponentErrorSeverity.ERROR,
       });
       this.isLoading = false;
-    } else if (payload.token) {
+    }
+    else if (payload?.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
         onError: this.onSubmitted,
       })
-    } else if (payload.bnpl?.status === 'success') {
+    }
+    else if (payload?.bnpl?.status === 'success') {
       this.complete({
         payment: { payment_mode: 'bnpl' },
         onSuccess: this.onSubmitted,
         onError: this.onSubmitted,
       })
-    } else {
-      this.isLoading = false;
     }
   }
 
