@@ -1,3 +1,4 @@
+
 export interface PaymentMethodPayload {
   token?: string;
   bnpl?: {
@@ -5,5 +6,9 @@ export interface PaymentMethodPayload {
     status: string;
     session_uuid: string;
   },
-  error?: string[]
+  error?: {
+    code: string;
+    message: string;
+    decline_code: string;
+  };
 }

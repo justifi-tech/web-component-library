@@ -3,7 +3,7 @@ import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
-import { ComponentError } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -87,7 +87,12 @@ export class CheckoutCore {
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
     if (payload.error) {
-      // TODO: handle tokenize error
+      this.errorEvent.emit({
+        errorCode: (payload.error.code as ComponentErrorCodes),
+        message: payload.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      this.isLoading = false;
     } else if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },

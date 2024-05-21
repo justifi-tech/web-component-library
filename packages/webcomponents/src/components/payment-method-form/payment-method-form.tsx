@@ -66,6 +66,7 @@ export class PaymentMethodForm {
       account,
       componentVersion: packageJson.version,
     });
+    // tokenize error emit here, bubbles all the way up to Checkout
   }
 
   @Method()

@@ -18,7 +18,6 @@ export class Checkout {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
-
   componentWillLoad() {
     this.initializeGetCheckout();
   }

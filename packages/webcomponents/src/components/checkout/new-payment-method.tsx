@@ -32,8 +32,14 @@ export class NewPaymentMethod {
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
 
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
-    const token = await this.tokenize();
-    return { token: token };
+
+    const tokenizeResponse = await this.tokenize();
+
+    if (tokenizeResponse.error) {
+      return { error: tokenizeResponse.error };
+    } else {
+      return { token: tokenizeResponse.card?.token || tokenizeResponse.bank_account?.token };
+    }
   }
 
   async tokenize() {
@@ -42,18 +48,9 @@ export class NewPaymentMethod {
       const paymentMethodData = { ...billingFormFieldValues };
       const clientId = this.clientId;
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
-
-      if (tokenizeResponse.error) {
-        console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
-        return null;
-      }
-
-      const data = tokenizeResponse.data;
-      const tokenizedPaymentMethod = (data as any).card || (data as any).ach; // fix the response types to avoid this
-      return tokenizedPaymentMethod.token;
+      return tokenizeResponse;
     } catch (error) {
-      console.error(`An error occured submitting the form: ${error}`);
-      return null;
+      return error;
     }
   }
 
