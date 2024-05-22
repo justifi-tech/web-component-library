@@ -60,6 +60,16 @@ export class BusinessBankAccountFormStep {
     }
   }
 
+  testBankData = async () => {
+    const bankAccountResponse = await this.api.get(this.bankAccountEndpoint);
+    console.log(bankAccountResponse);
+  }
+
+  testDocData = async () => {
+    const documentsResponse = await this.api.get('entities/document');
+    console.log(documentsResponse);
+  }
+
   // private sendData = async (onSuccess?: () => void) => {
   //   this.formLoading.emit(true);
   //   try {
@@ -96,6 +106,8 @@ export class BusinessBankAccountFormStep {
     this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
+    this.testBankData();
+    this.testDocData();
   }
 
   componentDidLoad() {
