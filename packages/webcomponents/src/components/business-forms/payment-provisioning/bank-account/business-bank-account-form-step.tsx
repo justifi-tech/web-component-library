@@ -43,6 +43,10 @@ export class BusinessBankAccountFormStep {
     return `entities/bank_accounts`
   }
 
+  get disabledStatus() {
+    return this.bankInfo.status === 'verified';
+  }
+
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
