@@ -17,7 +17,7 @@ export const LoadingSpinner = () => (
   </div>
 );
 
-export const filterPostalInput = (e: KeyboardEvent) => {
+export const numberOnlyHandler = (e: KeyboardEvent) => {
   const specialKeys = ['Backspace', 'Tab', 'Enter'];
   if (!/^\d$/.test(e.key) && !specialKeys.includes(e.key)) {
     e.preventDefault();

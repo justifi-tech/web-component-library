@@ -7,7 +7,7 @@ import { addressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';
 import StateOptions from '../../../../utils/state-options';
-import { filterPostalInput } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -159,7 +159,7 @@ export class LegalAddressFormStep {
                   defaultValue={legalAddressDefaultValue?.postal_code}
                   error={this.errors?.postal_code}
                   maxLength={5}
-                  keyDownHandler={filterPostalInput}
+                  keyDownHandler={numberOnlyHandler}
                 />
               </div>
               <div class="col-12">
