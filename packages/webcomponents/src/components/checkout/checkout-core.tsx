@@ -3,7 +3,7 @@ import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
-import { ComponentError } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -86,27 +86,43 @@ export class CheckoutCore {
 
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
-    if (payload.error) {
-      // TODO: handle tokenize error
-    } else if (payload.token) {
+    if (!payload) {
+      this.isLoading = false;
+    }
+    else if (payload.error) {
+      this.onError({
+        code: (payload.error.code as ComponentErrorCodes),
+        error: payload.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+    else if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
-        onError: this.onSubmitted,
+        onError: this.onError,
       })
-    } else if (payload.bnpl?.status === 'success') {
+    }
+    else if (payload.bnpl?.status === 'success') {
       this.complete({
         payment: { payment_mode: 'bnpl' },
         onSuccess: this.onSubmitted,
-        onError: this.onSubmitted,
+        onError: this.onError,
       })
-    } else {
-      this.isLoading = false;
     }
   }
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
     this.submitted.emit(data);
+    this.isLoading = false;
+  };
+
+  onError = ({ error, code, severity }: { error: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity }) => {
+    this.errorEvent.emit({
+      errorCode: code,
+      message: error,
+      severity,
+    });
     this.isLoading = false;
   };
 

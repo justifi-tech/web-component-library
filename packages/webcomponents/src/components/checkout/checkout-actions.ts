@@ -34,8 +34,7 @@ export const makeCheckoutComplete = ({ authToken, checkoutId, service }) =>
       const response = await service.complete(authToken, checkoutId, payment);
 
       if (!response.error) {
-        const checkout = response.data;
-        onSuccess({ checkout });
+        onSuccess(response);
       } else {
         const responseError = getErrorMessage(response.error);
         const code = getErrorCode(response.error?.code);

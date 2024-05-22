@@ -105,9 +105,7 @@ describe('makeCheckoutComplete', () => {
     });
     await completeCheckout({ payment, onSuccess, onError });
 
-    expect(onSuccess).toHaveBeenCalledWith({
-      checkout: new Checkout(mockResponse.data as unknown as ICheckout),
-    });
+    expect(onSuccess).toHaveBeenCalledWith(mockResponse);
     expect(onError).not.toHaveBeenCalled();
   });
 

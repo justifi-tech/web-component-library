@@ -4,8 +4,7 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
-  tag: 'justifi-checkout',
-  shadow: true,
+  tag: 'justifi-checkout'
 })
 export class Checkout {
   @Prop() iframeOrigin?: string;
@@ -17,7 +16,6 @@ export class Checkout {
   @State() errorMessage: string = '';
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-
 
   componentWillLoad() {
     this.initializeGetCheckout();
