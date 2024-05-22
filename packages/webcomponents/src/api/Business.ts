@@ -1,5 +1,5 @@
 import { Identity, Representative } from './Identity';
-import { BankAccount } from './shared';
+import { BankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
 export enum BusinessType {

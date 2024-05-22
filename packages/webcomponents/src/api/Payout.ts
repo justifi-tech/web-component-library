@@ -1,4 +1,4 @@
-import { BankAccount } from "./shared";
+import { BankAccount } from './BankAccount';
 
 export enum PayoutStatuses {
   paid = 'paid',
