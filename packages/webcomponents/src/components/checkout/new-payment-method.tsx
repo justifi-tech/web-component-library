@@ -38,7 +38,8 @@ export class NewPaymentMethod {
     if (tokenizeResponse.error) {
       return { error: tokenizeResponse.error };
     } else {
-      return { token: tokenizeResponse.card?.token || tokenizeResponse.bank_account?.token };
+      const tokenizeRessponseData = tokenizeResponse.data;
+      return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
     }
   }
 

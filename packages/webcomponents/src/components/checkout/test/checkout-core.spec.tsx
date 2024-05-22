@@ -131,7 +131,7 @@ describe('justifi-checkout-core', () => {
       authToken: '',
       checkoutId: '',
       service: {
-        fetchCheckout: async () => mockPostCheckoutSuccess,
+        complete: async () => mockPostCheckoutSuccess,
       }
     });
 
@@ -156,7 +156,7 @@ describe('justifi-checkout-core', () => {
 
     expect(submittedSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        detail: { "code": "fetch-error", "error": "service.complete is not a function", "severity": "error" }
+        detail: mockPostCheckoutSuccess
       })
     );
   });

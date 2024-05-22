@@ -118,7 +118,6 @@ export class CheckoutCore {
   };
 
   onError = ({ error, code, severity }: { error: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity }) => {
-    console.log('this.onError', error, code, severity)
     this.errorEvent.emit({
       errorCode: code,
       message: error,
