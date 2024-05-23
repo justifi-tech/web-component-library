@@ -159,6 +159,8 @@ export const Basic: Story = {
 export const Styled: Story = {
   args: {
     ...storyBaseArgs.args,
+    card: true,
+    'bank-account': true,
     cssVariables: `
     --jfi-primary-color: #212529;
     --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';
