@@ -152,7 +152,7 @@ const Template = (args: any) => {
 };
 
 export const Basic: Story = {
-  args: { ...storyBaseArgs.args },
+  args: { ...storyBaseArgs.args, 'card': true, 'bank-account': true },
   render: Template,
 };
 
