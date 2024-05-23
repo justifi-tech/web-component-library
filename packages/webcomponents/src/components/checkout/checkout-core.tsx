@@ -3,6 +3,7 @@ import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -23,11 +24,10 @@ export class CheckoutCore {
   @State() isLoading: boolean = false;
   @State() checkout: ICheckout;
   @State() serverError: boolean = false;
-  @State() errorMessage: string = '';
   @State() creatingNewPaymentMethod: boolean = false;
-  @State() selectedPaymentMethodToken: string;
 
-  @Event() submitted: EventEmitter<ICheckoutCompleteResponse>;
+  @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -46,16 +46,19 @@ export class CheckoutCore {
 
   fetchData(): void {
     this.isLoading = true;
-
     this.getCheckout({
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
         this.isLoading = false;
       },
-      onError: (errorMessage) => {
-        this.errorMessage = errorMessage;
+      onError: ({ error, code, severity }) => {
         this.isLoading = false;
-      },
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+      }
     });
   };
 
@@ -83,25 +86,43 @@ export class CheckoutCore {
 
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
-    if (payload.token) {
+    if (!payload) {
+      this.isLoading = false;
+    }
+    else if (payload.error) {
+      this.onError({
+        code: (payload.error.code as ComponentErrorCodes),
+        error: payload.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+    else if (payload.token) {
       this.complete({
         payment: { payment_mode: 'ecom', payment_token: payload.token },
         onSuccess: this.onSubmitted,
-        onError: this.onSubmitted,
+        onError: this.onError,
       })
-    } else if (payload.bnpl?.status === 'success') {
+    }
+    else if (payload.bnpl?.status === 'success') {
       this.complete({
         payment: { payment_mode: 'bnpl' },
         onSuccess: this.onSubmitted,
-        onError: this.onSubmitted,
+        onError: this.onError,
       })
-    } else {
-      this.isLoading = false;
     }
   }
 
-  onSubmitted = (data) => {
+  onSubmitted = (data: ICheckoutCompleteResponse) => {
     this.submitted.emit(data);
+    this.isLoading = false;
+  };
+
+  onError = ({ error, code, severity }: { error: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity }) => {
+    this.errorEvent.emit({
+      errorCode: code,
+      message: error,
+      severity,
+    });
     this.isLoading = false;
   };
 

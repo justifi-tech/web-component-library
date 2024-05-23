@@ -2,36 +2,34 @@
 
 exports[`justifi-checkout renders 1`] = `
 <justifi-checkout>
-  <mock:shadow-root>
-    <justifi-checkout-core>
-      <mock:shadow-root>
-        <div class="gy-3 jfi-checkout-core row">
-          <div class="col-12 mb-4">
-            <h2 class="fs-5 fw-bold jfi-header pb-3">
-              Summary
-            </h2>
-          </div>
-          <div class="col-12">
-            <h2 class="fs-5 fw-bold jfi-header pb-3">
-              Payment
-            </h2>
-            <h3 class="fs-6 fw-bold lh-lg">
-              Select payment type
-            </h3>
-            <div class="d-flex flex-column">
-              <justifi-payment-method-options show-ach="" show-card=""></justifi-payment-method-options>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
-                Pay
-              </button>
-            </div>
+  <justifi-checkout-core>
+    <mock:shadow-root>
+      <div class="gy-3 jfi-checkout-core row">
+        <div class="col-12 mb-4">
+          <h2 class="fs-5 fw-bold jfi-header pb-3">
+            Summary
+          </h2>
+        </div>
+        <div class="col-12">
+          <h2 class="fs-5 fw-bold jfi-header pb-3">
+            Payment
+          </h2>
+          <h3 class="fs-6 fw-bold lh-lg">
+            Select payment type
+          </h3>
+          <div class="d-flex flex-column">
+            <justifi-payment-method-options show-ach="" show-card=""></justifi-payment-method-options>
           </div>
         </div>
-      </mock:shadow-root>
-    </justifi-checkout-core>
-  </mock:shadow-root>
+        <div class="col-12">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
+              Pay
+            </button>
+          </div>
+        </div>
+      </div>
+    </mock:shadow-root>
+  </justifi-checkout-core>
 </justifi-checkout>
 `;

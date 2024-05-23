@@ -1,0 +1,42 @@
+{
+  "id": "cho_SuaBaIa78dedf9934cf4vrbHVX",
+  "type": "checkout",
+  "page_info": null,
+  "data": {
+    "payment_intent_id": "pi_7BlZYsKGktASDFdchjgkz",
+    "account_id": "acc_4Et9iXrAARKSZ4KSoiQGTYr",
+    "platform_account_id": "acc_2erNb3aRBy2iWaYUOczmx4",
+    "payment_amount": "8592",
+    "payment_client_id": "test_ef88f04afebc3c018de30fd3652d7cee",
+    "payment_description": "4x Cases of Celsius Energy Drink",
+    "payment_methods": [
+      {
+        "id": "pm_7PA97VwNKZskBhKf24kRTY",
+        "status": "valid",
+        "invalid_reason": null,
+        "name": "Julia Garnett",
+        "brand": "visa",
+        "acct_last_four": "1111",
+        "month": "10",
+        "year": "2042",
+        "address_line1_check": "pass",
+        "address_postal_code_check": "pass",
+        "bin_details": null
+      }
+    ],
+    "payment_method_group_id": "pmg_23YT1LVnpsrdXExZYxIjav",
+    "payment_settings": {
+      "ach_payments": true,
+      "bnpl_payments": true,
+      "credit_card_payments": true
+    },
+    "bnpl": {
+      "provider": "sezzle",
+      "provider_client_id": "sz_pub_Zfhyb9x0fetB2TjYUejTTP3Kb3TRi1xE",
+      "provider_mode": "sandbox",
+      "provider_checkout_url": "https://sandbox.checkout.sezzle.com?id=7b5321f9-98f2-as33-bFb8-98723423",
+      "provider_order_id": "b857a9be-ebf3-40f8-86a4-0e77dc6e14df",
+      "provider_api_version": "v2"
+    }
+  }
+}
