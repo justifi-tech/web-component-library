@@ -3,7 +3,7 @@ export enum ComponentErrorCodes {
   FETCH_ERROR = 'fetch-error',
   UNKNOWN_ERROR = 'unknown-error',
   TOKENIZE_ERROR = 'tokenize-error',
-  NOT_AUTHENTICATED = 'not-authenticated',
+  NOT_AUTHENTICATED = 'not-authenticated'
 }
 
 export enum ComponentErrorSeverity {

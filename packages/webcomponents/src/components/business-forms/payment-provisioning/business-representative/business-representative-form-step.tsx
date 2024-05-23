@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
@@ -8,7 +8,7 @@ import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Representative } from '../../../../api/Identity';
-
+import { deconstructDate } from '../../utils/helpers';
 
 @Component({
   tag: 'justifi-business-representative-form-step',
@@ -108,6 +108,25 @@ export class BusinessRepresentativeFormStep {
     });
   }
 
+  onDateOfBirthUpdate = (event): void => {
+    if (event.detail === '') {
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        dob_day: null,
+        dob_month: null,
+        dob_year: null,
+      });
+    } else {
+      const dob_values = deconstructDate(event.detail);
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        dob_day: dob_values.dob_day,
+        dob_month: dob_values.dob_month,
+        dob_year: dob_values.dob_year,
+      });
+    }
+  }
+
   render() {
     const representativeDefaultValue =
       this.formController.getInitialValues();
@@ -156,48 +175,24 @@ export class BusinessRepresentativeFormStep {
                   mask={PHONE_MASKS.US}
                 />
               </div>
-              <div class="col-12">
-                <label part="label" class="form-label">
-                  Birth Date
-                </label>
-              </div>
               <div class="col-12 col-md-4">
-                <form-control-datepart
-                  name="dob_day"
-                  label="Day"
-                  defaultValue={representativeDefaultValue?.dob_day}
-                  error={this.errors.dob_day}
+                <form-control-date
+                  name="dob_full"
+                  label="Birth Date"
+                  defaultValue={representativeDefaultValue?.dob_full}
+                  error={this.errors.dob_full}
                   inputHandler={this.inputHandler}
-                  type="day"
+                  onFormControlInput={this.onDateOfBirthUpdate}
                 />
               </div>
-              <div class="col-12 col-md-4">
-                <form-control-datepart
-                  name="dob_month"
-                  label="Month"
-                  defaultValue={representativeDefaultValue?.dob_month}
-                  error={this.errors.dob_month}
-                  inputHandler={this.inputHandler}
-                  type="month"
-                />
-              </div>
-              <div class="col-12 col-md-4">
-                <form-control-datepart
-                  name="dob_year"
-                  label="Year"
-                  defaultValue={representativeDefaultValue?.dob_year}
-                  error={this.errors.dob_year}
-                  inputHandler={this.inputHandler}
-                  type="year"
-                />
-              </div>
-              <div class="col-12">
-                <form-control-number
+              <div class="col-12 col-md-8">
+                <form-control-number-masked
                   name="identification_number"
-                  label="EIN/SSN"
+                  label="SSN"
                   defaultValue={representativeDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}
+                  mask={SSN_MASK}
                 />
               </div>
               <div class="col-12">

@@ -8,7 +8,7 @@ describe('text-input', () => {
       html: `<text-input></text-input>`,
     });
     expect(page.root).toEqualHtml(`
-      <text-input exportparts="label,input,input-invalid">
+      <text-input exportparts="label,input,input-invalid,invalid-feedback">
         <mock:shadow-root>
           <label class="form-label" part="label"></label>
           <input class="form-control" part="input" type="text">
@@ -23,7 +23,7 @@ describe('text-input', () => {
       html: `<text-input name="test" label="Test" default-value="Hello"></text-input>`,
     });
     expect(page.root).toEqualHtml(`
-      <text-input name="test" label="Test" default-value="Hello" exportparts="label,input,input-invalid">
+      <text-input name="test" label="Test" default-value="Hello" exportparts="label,input,input-invalid,invalid-feedback">
         <mock:shadow-root>
           <label class="form-label" part="label">Test</label>
           <input class="form-control" name="test" part="input" type="text" value="Hello">
@@ -38,11 +38,11 @@ describe('text-input', () => {
       html: `<text-input error="Something went wrong"></text-input>`,
     });
     expect(page.root).toEqualHtml(`
-      <text-input error="Something went wrong" exportparts="label,input,input-invalid">
+      <text-input error="Something went wrong" exportparts="label,input,input-invalid,invalid-feedback">
         <mock:shadow-root>
           <label class="form-label" part="label"></label>
           <input class="form-control is-invalid" part="input input-invalid" type="text">
-          <div class="invalid-feedback">Something went wrong</div>
+          <div class="invalid-feedback" part="invalid-feedback">Something went wrong</div>
         </mock:shadow-root>
       </text-input>
     `);

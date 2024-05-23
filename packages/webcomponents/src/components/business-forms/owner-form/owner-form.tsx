@@ -1,18 +1,19 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../form/form';
-import { PHONE_MASKS } from '../../../utils/form-input-masks';
+import { PHONE_MASKS, SSN_MASK } from '../../../utils/form-input-masks';
 import { Api, IApiResponse } from '../../../api';
 import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 import { LoadingSpinner } from '../../form/utils';
+import { deconstructDate } from '../utils/helpers';
 import { 
   OwnerFormSubmitEvent, 
   OwnerFormServerErrorEvent, 
   OwnerFormServerErrors, 
   OwnerFormClickEvent, 
-  OwnerFormClickActions} 
+  OwnerFormClickActions } 
   from '../utils/business-form-types';
 
 @Component({
@@ -69,17 +70,20 @@ export class BusinessOwnerForm {
     this.formLoading.emit(this.isLoading);
   }
 
+  instantiateOwner = (data: Identity) => {
+    this.owner = { ...new Owner(data) };
+    this.formController.setInitialValues(this.owner);
+  }
+
   private fetchData = async () => {
     if (!this.ownerId) {
-      this.owner = { ...new Owner({}) };
-      this.formController.setInitialValues(this.owner);
+      this.instantiateOwner({});
       return;
     }
     this.isLoading = true;
     try {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
-      this.owner = { ...new Owner(response.data)};
-      this.formController.setInitialValues(this.owner);
+      this.instantiateOwner(response.data);
     } catch (error) {
       this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
     } finally {
@@ -114,6 +118,7 @@ export class BusinessOwnerForm {
       this.serverError.emit({ data: response.error, message: errorMessage });
       return false;
     } else {
+      this.instantiateOwner(response.data);
       return true;
     }
   }
@@ -153,6 +158,25 @@ export class BusinessOwnerForm {
     });
   }
 
+  onDateOfBirthUpdate = (event): void => {
+    if (event.detail === '') {
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        dob_day: null,
+        dob_month: null,
+        dob_year: null,
+      });
+    } else {
+      const dob_values = deconstructDate(event.detail);
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        dob_day: dob_values.dob_day,
+        dob_month: dob_values.dob_month,
+        dob_year: dob_values.dob_year,
+      });
+    }
+  }
+
   handleAddOwner = () => {
     const eventName = this.ownerId ? OwnerFormClickActions.updateOwner : OwnerFormClickActions.addOwner;
     this.clickEvent.emit({ name: eventName });
@@ -170,12 +194,15 @@ export class BusinessOwnerForm {
 
   @Method()
   async submit(): Promise<boolean> {
-    return this.sendData();
+    const isValid = await this.validate();
+    if (isValid) {
+      return this.sendData();
+    }
   }
 
-  validateAndSubmit = (event: any) => {
+  validateAndSubmit = async (event: any) => {
     event.preventDefault();
-    const isValid = this.formController.validate();
+    const isValid = await this.validate();
     if (isValid) {
       this.submit();
     }
@@ -229,48 +256,24 @@ export class BusinessOwnerForm {
                   mask={PHONE_MASKS.US}
                 />
               </div>
-              <div class="col-12">
-                <label part="label" class="form-label">
-                  Birth Date
-                </label>
-              </div>
               <div class="col-12 col-md-4">
-                <form-control-datepart
-                  name="dob_day"
-                  label="Day"
-                  defaultValue={ownerDefaultValue?.dob_day}
-                  error={this.errors.dob_day}
+                <form-control-date
+                  name="dob_full"
+                  label="Birth Date"
+                  defaultValue={ownerDefaultValue?.dob_full}
+                  error={this.errors.dob_full}
                   inputHandler={this.inputHandler}
-                  type="day"
+                  onFormControlInput={this.onDateOfBirthUpdate}
                 />
               </div>
-              <div class="col-12 col-md-4">
-                <form-control-datepart
-                  name="dob_month"
-                  label="Month"
-                  defaultValue={ownerDefaultValue?.dob_month}
-                  error={this.errors.dob_month}
-                  inputHandler={this.inputHandler}
-                  type="month"
-                />
-              </div>
-              <div class="col-12 col-md-4">
-                <form-control-datepart
-                  name="dob_year"
-                  label="Year"
-                  defaultValue={ownerDefaultValue?.dob_year}
-                  error={this.errors.dob_year}
-                  inputHandler={this.inputHandler}
-                  type="year"
-                />
-              </div>
-              <div class="col-12">
-                <form-control-number
+              <div class="col-12 col-md-8">
+                <form-control-number-masked
                   name="identification_number"
-                  label="EIN/SSN"
+                  label="SSN"
                   defaultValue={ownerDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}
+                  mask={SSN_MASK}
                 />
               </div>
               <div class="col-12">

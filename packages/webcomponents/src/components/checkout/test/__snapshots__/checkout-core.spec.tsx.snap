@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-checkout-core should display error state correctly 1`] = `<checkout-core />`;
+
+exports[`justifi-checkout-core should display loading state correclty 1`] = `
+<justifi-checkout-core>
+  <mock:shadow-root>
+    <div class="gy-3 jfi-checkout-core row">
+      <div class="col-12 mb-4">
+        <h2 class="fs-5 fw-bold jfi-header pb-3">
+          Summary
+        </h2>
+      </div>
+      <div class="col-12">
+        <h2 class="fs-5 fw-bold jfi-header pb-3">
+          Payment
+        </h2>
+        <h3 class="fs-6 fw-bold lh-lg">
+          Select payment type
+        </h3>
+        <div class="d-flex flex-column">
+          <justifi-payment-method-options show-ach="" show-card=""></justifi-payment-method-options>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
+            Pay
+          </button>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</justifi-checkout-core>
+`;
+
+exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
+<justifi-checkout-core>
+  <mock:shadow-root>
+    <div class="gy-3 jfi-checkout-core row">
+      <div class="col-12 mb-4">
+        <h2 class="fs-5 fw-bold jfi-header pb-3">
+          Summary
+        </h2>
+        <div>
+          <div class="jfi-payment-description">
+            4x Cases of Celsius Energy Drink
+          </div>
+          <div class="jfi-payment-total">
+            <span class="jfi-payment-total-label">
+              Total
+            </span>
+            <span class="jfi-payment-total-amount">
+              $85.92
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <h2 class="fs-5 fw-bold jfi-header pb-3">
+          Payment
+        </h2>
+        <h3 class="fs-6 fw-bold lh-lg">
+          Select payment type
+        </h3>
+        <div class="d-flex flex-column">
+          <justifi-payment-method-options account-id="acc_4Et9iXrAARKSZ4KSoiQGTYr" client-id="test_ef88f04afebc3c018de30fd3652d7cee" paymentamount="8592" show-ach="" show-card=""></justifi-payment-method-options>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
+            Pay
+          </button>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</justifi-checkout-core>
+`;

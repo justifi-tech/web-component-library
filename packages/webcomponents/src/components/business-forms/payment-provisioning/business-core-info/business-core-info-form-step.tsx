@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { BusinessTypeOptions, BusinessStructureOptions } from '../../utils/business-form-select-options';
 import { FormController } from '../../../form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, IBusiness, ICoreBusinessInfo } from '../../../../api/Business';
@@ -9,6 +8,7 @@ import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { businessStructureOptions, businessTypeOptions } from '../../utils/business-form-options';
 
 /**
  *
@@ -118,7 +118,7 @@ export class BusinessCoreInfoFormStep {
             <legend>General Info</legend>
             <hr />
             <div class="row gy-3">
-              <div class="col-12 col-md-6">
+              <div class="col-12">
                 <form-control-text
                   name="legal_name"
                   label="Legal Name"
@@ -127,7 +127,7 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-6">
+              <div class="col-12 col-md-8">
                 <form-control-text
                   name="doing_business_as"
                   label="Doing Business As (DBA)"
@@ -136,11 +136,20 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
+              <div class="col-12 col-md-4">
+                <form-control-date
+                  name="date_of_incorporation"
+                  label="Date of Incorporation"
+                  defaultValue={coreInfoDefaultValue.date_of_incorporation}
+                  error={this.errors.date_of_incorporation}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
               <div class="col-12 col-md-6">
                 <form-control-select
                   name="business_type"
                   label="Business Type"
-                  options={BusinessTypeOptions}
+                  options={businessTypeOptions}
                   defaultValue={coreInfoDefaultValue.business_type}
                   error={this.errors.business_type}
                   inputHandler={this.inputHandler}
@@ -150,13 +159,13 @@ export class BusinessCoreInfoFormStep {
                 <form-control-select
                   name="business_structure"
                   label="Business Structure"
-                  options={BusinessStructureOptions}
+                  options={businessStructureOptions}
                   defaultValue={coreInfoDefaultValue.business_structure}
                   error={this.errors.business_structure}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <form-control-text
                   name="industry"
                   label="Industry"
@@ -165,7 +174,7 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <form-control-number-masked
                   name="tax_id"
                   label="Tax ID"

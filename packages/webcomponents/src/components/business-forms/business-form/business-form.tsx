@@ -21,6 +21,8 @@ export class BusinessForm {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
+  @Prop() formTitle?: string = 'Business Information';
+  @Prop() removeTitle?: boolean = false;
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
@@ -31,6 +33,10 @@ export class BusinessForm {
     console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
     this.clickEventNew.emit(event);
     this.clickEventOld.emit(event);
+  }
+
+  get title() {
+    return this.removeTitle ? '' : this.formTitle;
   }
 
   get disabledState() {
@@ -47,6 +53,11 @@ export class BusinessForm {
 
   private formController: FormController;
   private api: any;
+
+  instantiateBusiness = (data: IBusiness) => {
+    const business = new Business(data);
+    this.formController.setInitialValues({ ...business });
+  }
 
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
@@ -78,8 +89,7 @@ export class BusinessForm {
     this.isLoading = true;
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      const business = new Business(response.data);
-      this.formController.setInitialValues({ ...business });
+      this.instantiateBusiness(response.data);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.fetchData;
     } finally {
@@ -97,6 +107,7 @@ export class BusinessForm {
       this.errorMessage = BusinessFormServerErrors.patchData;
     } 
     this.submitted.emit({ data: response });
+    this.instantiateBusiness(response.data);
   }
 
   render() {
@@ -105,7 +116,7 @@ export class BusinessForm {
         <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
             <div class="col-12 mb-4">
-              <h1>Business Information</h1>
+              <h1>{this.title}</h1>
             </div>
             {this.showErrors && FormAlert(this.errorMessage)}
             <div class="col-12 mb-4">
@@ -120,9 +131,6 @@ export class BusinessForm {
             <div class="col-12 mb-4">
               <justifi-business-representative formController={this.formController} />
             </div>
-            {/* <div class="col-12 mb-4">
-              <justifi-business-owners formController={this.formController} />
-            </div> */}
             <div class="col-12 d-flex flex-row-reverse">
               <button
                 type="submit"

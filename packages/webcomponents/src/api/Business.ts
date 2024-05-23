@@ -1,6 +1,13 @@
 import { Identity, Representative } from './Identity';
 import { BankAccount } from './shared';
-import { getStateAbbreviation } from '../utils/utils';
+import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
+
+export enum BusinessType {
+  individual = 'individual',
+  for_profit = 'for_profit',
+  non_profit = 'non_profit',
+  government_entity = 'government_entity',
+}
 
 export enum BusinessStructure {
   sole_proprietorship = 'sole_proprietorship',
@@ -16,13 +23,6 @@ export enum BusinessStructure {
   government_unit = 'government_unit',
   government_instrumentality = 'government_instrumentality',
   tax_exempt_government_instrumentality = 'tax_exempt_government_instrumentality',
-}
-
-export enum BusinessType {
-  individual = 'individual',
-  for_profit = 'for_profit',
-  non_profit = 'non_profit',
-  government_entity = 'government_entity',
 }
 
 export interface IAddress {
@@ -90,27 +90,36 @@ export interface ProductCategories {
 export interface IAdditionalQuestions {
   business_revenue?: string;
   business_payment_volume?: string;
-  business_dispute_volume?: string;
-  business_receivable_volume?: string;
+  business_when_service_received?: string;
+  business_recurring_payments?: string;
+  business_recurring_payments_percentage?: string;
+  business_seasonal?: string;
+  business_other_payment_details?: string;
 }
 
 export class AdditionalQuestions implements IAdditionalQuestions {
   public business_revenue?: string;
   public business_payment_volume?: string;
-  public business_dispute_volume?: string;
-  public business_receivable_volume?: string;
+  public business_when_service_received?: string;
+  public business_recurring_payments?: string;
+  public business_recurring_payments_percentage?: string;
+  public business_seasonal?: string;
+  public business_other_payment_details?: string;
 
   constructor(additionalQuestions: IAdditionalQuestions) {
     this.business_revenue = additionalQuestions.business_revenue;
     this.business_payment_volume = additionalQuestions.business_payment_volume;
-    this.business_dispute_volume = additionalQuestions.business_dispute_volume;
-    this.business_receivable_volume = additionalQuestions.business_receivable_volume;
+    this.business_when_service_received = additionalQuestions.business_when_service_received;
+    this.business_recurring_payments = additionalQuestions.business_recurring_payments;
+    this.business_recurring_payments_percentage = additionalQuestions.business_recurring_payments_percentage;
+    this.business_seasonal = additionalQuestions.business_seasonal;
+    this.business_other_payment_details = additionalQuestions.business_other_payment_details;
   }
 }
 
 export interface ICoreBusinessInfo {
-  business_structure?: BusinessStructure;
   business_type?: BusinessType;
+  business_structure?: BusinessStructure;
   legal_name?: string;
   doing_business_as?: string;
   industry?: string;
@@ -118,11 +127,12 @@ export interface ICoreBusinessInfo {
   website_url?: string;
   email?: string;
   phone?: string;
+  date_of_incorporation?: string;
 }
 
 export class CoreBusinessInfo implements ICoreBusinessInfo {
-  public business_structure: BusinessStructure;
   public business_type: BusinessType;
+  public business_structure: BusinessStructure;
   public legal_name: string;
   public doing_business_as: string;
   public industry: string;
@@ -130,10 +140,11 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
   public website_url: string;
   public email: string;
   public phone: string;
+  public date_of_incorporation: string;
 
   constructor(coreBusinessInfo: ICoreBusinessInfo) {
-    this.business_structure = coreBusinessInfo.business_structure;
     this.business_type = coreBusinessInfo.business_type;
+    this.business_structure = coreBusinessInfo.business_structure;
     this.legal_name = coreBusinessInfo.legal_name;
     this.doing_business_as = coreBusinessInfo.doing_business_as;
     this.industry = coreBusinessInfo.industry;
@@ -141,13 +152,14 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
     this.website_url = coreBusinessInfo.website_url;
     this.email = coreBusinessInfo.email;
     this.phone = coreBusinessInfo.phone;
+    this.date_of_incorporation = coreBusinessInfo.date_of_incorporation;
   }
 }
 
 export interface IBusiness {
   additional_questions: IAdditionalQuestions | {};
-  business_structure: BusinessStructure;
   business_type: BusinessType;
+  business_structure: BusinessStructure;
   bank_accounts: BankAccount[];
   created_at: string;
   documents: Document[];
@@ -166,12 +178,13 @@ export interface IBusiness {
   tax_id: string;
   updated_at: string;
   website_url: string;
+  date_of_incorporation?: string;
 }
 
 export class Business implements IBusiness {
-  public additional_questions: IAdditionalQuestions | {};
-  public business_structure: BusinessStructure;
+  public additional_questions: AdditionalQuestions | {};
   public business_type: BusinessType;
+  public business_structure: BusinessStructure;
   public bank_accounts: BankAccount[];
   public created_at: string;
   public documents: Document[];
@@ -189,13 +202,14 @@ export class Business implements IBusiness {
   public tax_id: string;
   public updated_at: string;
   public website_url: string;
+  public date_of_incorporation?: string;
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
-    this.additional_questions = business.additional_questions || {};
+    this.additional_questions = { ...new AdditionalQuestions(business.additional_questions || {})};
     this.bank_accounts = business.bank_accounts;
-    this.business_structure = business.business_structure;
     this.business_type = business.business_type;
+    this.business_structure = business.business_structure;
     this.created_at = business.created_at;
     this.documents = business.documents;
     this.doing_business_as = business.doing_business_as;
@@ -209,10 +223,11 @@ export class Business implements IBusiness {
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
     this.product_categories = business.product_categories;
-    this.representative = new Representative(business.representative || {});
+    this.representative = { ...new Representative(business.representative || {}) };
     this.tax_id = business.tax_id;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
+    this.date_of_incorporation = business.date_of_incorporation;
   }
 }
 

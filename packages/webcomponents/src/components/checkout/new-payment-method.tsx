@@ -1,6 +1,7 @@
 import { Component, h, Prop, Method, Event, EventEmitter } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -24,14 +25,22 @@ export class NewPaymentMethod {
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
 
   @Method()
-  async getPaymentMethodToken(): Promise<string> {
+  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
 
     if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
-    return await this.tokenize();
+
+    const tokenizeResponse = await this.tokenize();
+
+    if (tokenizeResponse.error) {
+      return { error: tokenizeResponse.error };
+    } else {
+      const tokenizeRessponseData = tokenizeResponse.data;
+      return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
+    }
   }
 
   async tokenize() {
@@ -40,18 +49,9 @@ export class NewPaymentMethod {
       const paymentMethodData = { ...billingFormFieldValues };
       const clientId = this.clientId;
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
-
-      if (tokenizeResponse.error) {
-        console.error(`An error occured submitting the form: ${tokenizeResponse.error.message}`);
-        return null;
-      }
-
-      const data = tokenizeResponse.data;
-      const tokenizedPaymentMethod = (data as any).card || (data as any).ach; // fix the response types to avoid this
-      return tokenizedPaymentMethod.token;
+      return tokenizeResponse;
     } catch (error) {
-      console.error(`An error occured submitting the form: ${error}`);
-      return null;
+      return error;
     }
   }
 
@@ -79,7 +79,7 @@ export class NewPaymentMethod {
     return (
       <div class="payment-method">
         <div
-          class={`payment-method-header p-3 border-bottom`}
+          class={`payment-method-header p-3`}
           onClick={() => this.onPaymentMethodOptionClick()}>
           <input
             type="radio"

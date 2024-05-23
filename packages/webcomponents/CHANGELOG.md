@@ -1,5 +1,79 @@
 ### Changelog
 
+## 4.13.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+- 30e7011: - Add: Handle Checkout component errors from tokenize calls (new payment methods)
+  - Add: Handle Checkout component errors from checkout.complete calls (paying the checkout, possibly with the token from tokenize)
+  - Fix: Reset Checkout component isLoading state when new-payment-method form has client-side errors
+- `BusinessForm` and `PaymentProvisioning` components: Updated Additional Questions form section
+  - removed existing input fields meant to capture `business_dispute_volume` and `business_receivable_volume`
+  - Updated questions / labels to be more clear for fields capturing `business_revenue` and `business_payment_volume`
+  - Added input fields to capture the following data: `business_when_service_received`, `business_recurring_payments`, `business_recurring_payments_percentage`, `business_seasonal`, and `business_other_payment_details`
+  - Improved form validation for each input field in this section. 
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
+## 4.13.0-rc.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
+## 4.12.2
+
+### Patch Changes
+
+- 44bef77: - Fixed bug preventing `CardForm` and `BankAccountForm` from consistently emitting `ready` event.
+- 7eb227a: - `BusinessForm` and `PaymentProvisioning` - revert change that removed `business_structure` option from form in.
+
+## 4.12.1
+
+### Patch Changes
+
+- 2cdfe07: - BusinessForm and PaymentProvisioning - Improved form validations for representative and owner sections.
+- a445df6: - BusinessForm and PaymentProvisioning - fix bug preventing `identity.identification_number` from being included in data submitted via forms.
+
+## 4.12.0
+
+### Minor Changes
+
+- b94482f: Add new CSS variables and styling capabilities to Checkout component:
+  ```
+    --jfi-body-color
+    --jfi-header-color
+    --jfi-header-border
+    --jfi-radio-button-box-shadow-focus
+    --jfi-radio-button-border-color-focus
+    --jfi-radio-button-group-color
+    --jfi-radio-button-group-color-hover
+    --jfi-radio-button-group-divider
+    --jfi-radio-button-group-background-color
+    --jfi-radio-button-group-background-color-hover
+    --jfi-submit-button-line-height
+    --jfi-submit-button-text-transform
+    --jfi-error-message-color
+  ```
+- b0eb85b: - BusinessForm and PaymentProvisioning - added new optional prop, `form-title`, which allows devs to add their own custom title to override the default `Business Information`.
+  - BusinessForm and PaymentProvisioning - added new optional prop, `removeTitle`, which allows devs to remove the existing title altogether.
+- b5d079e: - Improved validation rules for first section of BusinessForm and PaymentProvisioning components.
+  - Removed `business_structure` input field from both BusinessForm and PaymentProvisioning components.
+  - Removed `business_structure` property from BusinessDetails component.
+  - `tax_id` is now required by default for both BusinessForm and PaymentProvisioning components.
+
+### Patch Changes
+
+- eb300a4: - PaymentProvisioning component - fixed bug that allowed individual owner form to be submitted without proper form validation.
+- b2839c8: - BusinessForm and PaymentProvisioning components: added single date input to replace 3 separate date inputs used to manage birth day, birth month, and birth year.
+
 ## 4.11.0
 
 ### Minor Changes
@@ -13,7 +87,6 @@
   - Postal Code fields - limited to 5 characters and numerical values only.
 - 79a6924: Added an error-event to all components
 - eb9efb6: PaymentProvisioning component - Added optional prop, `allow-optional-fields`, to allow for quicker form completion with less strict validation requirements.
-
 
 ### Patch Changes
 

@@ -21,7 +21,7 @@ export class TextInput {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts="label,input,input-invalid,invalid-feedback">
         <label part="label" class="form-label">
           {this.label}
         </label>
@@ -33,7 +33,7 @@ export class TextInput {
           part={`input${this.error ? ' input-invalid' : ''}`}
           class={this.error ? 'form-control is-invalid' : 'form-control'}
         />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        {this.error && <div class="invalid-feedback" part="invalid-feedback">{this.error}</div>}
       </Host>
     );
   }
