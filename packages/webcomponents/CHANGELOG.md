@@ -1,5 +1,18 @@
 ### Changelog
 
+## 4.13.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+- 30e7011: - Add: Handle Checkout component errors from tokenize calls (new payment methods)
+  - Add: Handle Checkout component errors from checkout.complete calls (paying the checkout, possibly with the token from tokenize)
+  - Fix: Reset Checkout component isLoading state when new-payment-method form has client-side errors
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
 ## 4.13.0-rc.0
 
 ### Minor Changes
