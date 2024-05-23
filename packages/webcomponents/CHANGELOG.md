@@ -8,6 +8,11 @@
 - 30e7011: - Add: Handle Checkout component errors from tokenize calls (new payment methods)
   - Add: Handle Checkout component errors from checkout.complete calls (paying the checkout, possibly with the token from tokenize)
   - Fix: Reset Checkout component isLoading state when new-payment-method form has client-side errors
+- `BusinessForm` and `PaymentProvisioning` components: Updated Additional Questions form section
+  - removed existing input fields meant to capture `business_dispute_volume` and `business_receivable_volume`
+  - Updated questions / labels to be more clear for fields capturing `business_revenue` and `business_payment_volume`
+  - Added input fields to capture the following data: `business_when_service_received`, `business_recurring_payments`, `business_recurring_payments_percentage`, `business_seasonal`, and `business_other_payment_details`
+  - Improved form validation for each input field in this section. 
 
 ### Patch Changes
 
