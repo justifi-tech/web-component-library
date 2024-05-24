@@ -33,7 +33,8 @@ const generateStyleBlock = (styleArg: any) => {
       const cssProperties = styleArg[styleArgKey];
     const cssRules = Object.keys(cssProperties).map((cssProperty) => {
           return `${cssProperty}: ${cssProperties[cssProperty]};`;
-    }).join('');
+        })
+        .join('');
 
     return (`
       ${selector} {
@@ -60,4 +61,20 @@ export const customStoryDecorator = (storyComponent: any, storyContext: any) => 
 
   fragment.appendChild(component);
   return fragment;
+};
+
+// args is an object with key value pairs
+interface Args {
+  [key: string]: string;
+}
+export const getAttributesString = (args: Args) => {
+  // forEeach key in args return the attribute string only if it has a value
+
+  return Object.keys(args)
+    .map((key) => {
+      if (args[key]) {
+        return `${key}="${args[key]}"`;
+      }
+    })
+    .join(' ');
 };

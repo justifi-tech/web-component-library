@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs } from '../utils';
+import { StoryBaseArgs, getAttributesString } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
@@ -113,22 +113,11 @@ const meta: Meta = {
 }
 
 const Template = (args: any) => {
-  // Set the prop only if it is defined
-  const getAttributeString = (attrName: string) => {
-    return args[attrName] ? `${attrName}="${args[attrName]}"` : '';
-  };
-
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
     <div>
       <justifi-payment-form
-        ${getAttributeString('card')}
-        ${getAttributeString('bank-account')}
-        ${getAttributeString('email')}
-        ${getAttributeString('client-id')}
-        ${getAttributeString('auth-token')}
-        ${getAttributeString('account-id')}
-        ${getAttributeString('submit-button-text')}
+        ${getAttributesString(args)}
       />
     </div>
     <style>
