@@ -33,10 +33,10 @@ ${codeExampleHead('bank-account-form')}
       };
       /*
         * ACCOUNT_ID is the sub account for which you are tokenizing
-        * WEB-COMPONENT-TOKEN can be used in place of CLIENT_ID.  WEB-COMPONENT-TOKENs are 
+        * AUTH-TOKEN can be used in place of CLIENT_ID.  AUTH-TOKENs are 
         * created using JusitFi's API as described above.
       */
-      bankAccountForm.tokenize('CLIENT_ID/WEB-COMPONENT-TOKEN', paymentMethodData, 'ACCOUNT_ID')
+      bankAccountForm.tokenize('CLIENT_ID/AUTH-TOKEN', paymentMethodData, 'ACCOUNT_ID')
         .then((data) => {
           // This is where you can submit the form and use the payment method token
           // on your backend

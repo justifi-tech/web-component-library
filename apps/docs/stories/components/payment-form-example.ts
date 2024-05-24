@@ -14,7 +14,7 @@ ${codeExampleHead('justifi-payment-form')}
 
 <body>
   <justifi-payment-form
-    client-id="test_df97f04afebc3c018de30df3562d7cdd" // web-component-token="your-web-component-token"
+    client-id="test_df97f04afebc3c018de30df3562d7cdd" // auth-token="your-auth-token"
     account-id="acc_5Et9iXrSSAZR2KSouQGAWi"
     bank-account="true"
     card="true"

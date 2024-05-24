@@ -6,6 +6,7 @@ import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
 const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
 storyBaseArgs.argTypes['client-id'].table.disable = true;
+storyBaseArgs.argTypes['account-id'].table.disable = true;
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Bank Account Form',
