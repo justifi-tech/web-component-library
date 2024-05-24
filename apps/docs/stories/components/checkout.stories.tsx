@@ -32,11 +32,18 @@ const meta: Meta = {
       }
     },
     'submitted': {
-      description: 'Emitted when the server response is received.  Will not be raised if form vailidation fails.',
+      description: 'Emitted when the server response is received after submitting.  Will not be raised if form vailidation fails.',
       table: {
         category: 'events'
       },
       action: true
+    },
+    'error-event': {
+      description: '`ComponentError`',
+      table: {
+        category: 'events',
+      },
+      action: true,
     },
     'loadFontsOnParent': {
       description: '`loadFontsOnParent() => Promise<any>`',
