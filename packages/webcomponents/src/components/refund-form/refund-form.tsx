@@ -125,7 +125,7 @@ export class RefundForm {
     if (!this.authToken) {
       console.warn('Warning: Missing auth-token.');
     }
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
   }
 
   render() {

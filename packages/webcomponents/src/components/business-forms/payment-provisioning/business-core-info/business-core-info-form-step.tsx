@@ -66,14 +66,14 @@ export class BusinessCoreInfoFormStep {
       this.formLoading.emit(false);
     }
   }
-  
+
   handleResponse(response, onSuccess) {
     if (response.error) {
       this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'coreInfo' }});
+    this.submitted.emit({ data: response, metadata: { completedStep: 'coreInfo' } });
   }
 
   @Method()
@@ -88,12 +88,12 @@ export class BusinessCoreInfoFormStep {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessCoreInfoSchema(this.allowOptionalFields));
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
   componentDidLoad() {
-    this.formController.values.subscribe(values => 
+    this.formController.values.subscribe(values =>
       this.coreInfo = { ...values }
     );
     this.formController.errors.subscribe(errors => {

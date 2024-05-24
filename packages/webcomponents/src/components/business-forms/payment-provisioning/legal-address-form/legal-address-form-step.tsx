@@ -5,7 +5,7 @@ import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/payload-parsers';
 import { addressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent  } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import StateOptions from '../../../../utils/state-options';
 import { filterPostalInput } from '../../../form/utils';
 
@@ -52,7 +52,7 @@ export class LegalAddressFormStep {
     this.formLoading.emit(true);
     try {
       const payload = parseAddressInfo(this.formController.values.getValue());
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload}));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -67,7 +67,7 @@ export class LegalAddressFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'legalAddress' }});
+    this.submitted.emit({ data: response, metadata: { completedStep: 'legalAddress' } });
   }
 
   @Method()
@@ -82,7 +82,7 @@ export class LegalAddressFormStep {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(addressSchema(this.allowOptionalFields));
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 

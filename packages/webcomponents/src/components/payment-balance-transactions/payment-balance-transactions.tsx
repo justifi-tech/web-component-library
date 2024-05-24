@@ -63,7 +63,7 @@ export class PaymentBalanceTransactions {
     const endpoint = `account/${this.accountId}/payments/${this.paymentId}/payment_balance_transactions`;
 
     const response: IApiResponseCollection<IPaymentBalanceTransaction[]> =
-      await Api(this.authToken, config.proxyApiOrigin).get(endpoint, this.params);
+      await Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint, this.params);
 
     if (!response.error) {
       this.paging = {

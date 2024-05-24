@@ -26,7 +26,7 @@ export class AdditionalQuestionsFormStep {
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
-  
+
   private api: any;
 
   get businessEndpoint() {
@@ -50,7 +50,7 @@ export class AdditionalQuestionsFormStep {
     this.formLoading.emit(true);
     try {
       const payload = this.formController.values.getValue();
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload}));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ additional_questions: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -65,7 +65,7 @@ export class AdditionalQuestionsFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'additionalQuestions' }});
+    this.submitted.emit({ data: response, metadata: { completedStep: 'additionalQuestions' } });
   }
 
   @Method()
@@ -80,7 +80,7 @@ export class AdditionalQuestionsFormStep {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(additionalQuestionsSchema(this.allowOptionalFields));
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
