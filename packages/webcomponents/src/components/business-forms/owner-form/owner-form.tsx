@@ -8,12 +8,13 @@ import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 import { LoadingSpinner } from '../../form/utils';
 import { deconstructDate } from '../utils/helpers';
-import { 
-  OwnerFormSubmitEvent, 
-  OwnerFormServerErrorEvent, 
-  OwnerFormServerErrors, 
-  OwnerFormClickEvent, 
-  OwnerFormClickActions } 
+import {
+  OwnerFormSubmitEvent,
+  OwnerFormServerErrorEvent,
+  OwnerFormServerErrors,
+  OwnerFormClickEvent,
+  OwnerFormClickActions
+}
   from '../utils/business-form-types';
 
 @Component({
@@ -99,7 +100,7 @@ export class BusinessOwnerForm {
         const response = await this.api.patch(this.identityEndpoint, JSON.stringify(payload));
         return this.handleResponse(response);
       } else {
-        const payload = { ...parseIdentityInfo(this.formController.values.getValue()), business_id: this.businessId};
+        const payload = { ...parseIdentityInfo(this.formController.values.getValue()), business_id: this.businessId };
         const response = await this.api.post(this.identityEndpoint, JSON.stringify(payload));
         this.ownerId = response.data.id;
         return this.handleResponse(response);
@@ -112,7 +113,7 @@ export class BusinessOwnerForm {
   }
 
   handleResponse(response: any) {
-    this.submitted.emit({ data: response, metadata: { ownerId: this.ownerId }});
+    this.submitted.emit({ data: response, metadata: { ownerId: this.ownerId } });
     let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
     if (response.error) {
       this.serverError.emit({ data: response.error, message: errorMessage });
@@ -128,7 +129,7 @@ export class BusinessOwnerForm {
     if (!this.authToken) console.error(missingAuthTokenMessage);
 
     this.formController = new FormController(identitySchema('owner', this.allowOptionalFields));
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 

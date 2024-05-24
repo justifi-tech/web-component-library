@@ -63,7 +63,7 @@ export class BusinessRepresentativeFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' }});
+    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' } });
   }
 
   @Method()
@@ -78,7 +78,7 @@ export class BusinessRepresentativeFormStep {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(identitySchema('representative', this.allowOptionalFields));
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
@@ -101,10 +101,10 @@ export class BusinessRepresentativeFormStep {
   onAddressFormUpdate = (values: any): void => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
-        address: {
-          ...this.formController.values.getValue().address,
-          ...values,
-        }
+      address: {
+        ...this.formController.values.getValue().address,
+        ...values,
+      }
     });
   }
 
