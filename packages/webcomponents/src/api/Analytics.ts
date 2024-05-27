@@ -12,7 +12,7 @@ interface iBasicData {
   error?: any;
 }
 
-const getEvents = (component) =>
+const getEventNames = (component) =>
   Object.keys(component)
     .filter((key) => typeof component[key] === 'object' && component[key].emit)
     .map(camelToKebab);
@@ -54,7 +54,7 @@ class JustifiAnalytics {
   };
 
   private trackCustomEvents() {
-    this.eventEmitters = getEvents(this.componentInstance);
+    this.eventEmitters = getEventNames(this.componentInstance);
 
     // for each event, add an event listener
     this.eventEmitters.forEach((eventName) => {
