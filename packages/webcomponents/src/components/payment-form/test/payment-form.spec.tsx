@@ -7,6 +7,14 @@ import { config } from '../../../../config';
 import { PaymentMethodSelector } from '../payment-method-selector';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 import { BillingForm } from '../../billing-form/billing-form';
+import JustifiAnalytics from '../../../api/Analytics';
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+})
 
 describe('justifi-payment-form', () => {
   it('should update submitButtonEnabled state when enableSubmitButton method is called', async () => {

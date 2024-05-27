@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormAlert, LoadingSpinner } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import JustifiAnalytics from '../../../api/Analytics';
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -23,7 +24,24 @@ export class PaymentProvisioning {
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
   @State() totalSteps: number = 5;
-  @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+
+  analtyics: JustifiAnalytics;
+
+  componentWillLoad() {
+    this.analtyics = new JustifiAnalytics(this);
+    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
+    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    if (!this.authToken) console.error(missingAuthTokenMessage);
+    if (!this.businessId) console.error(missingBusinessIdMessage);
+
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
+    this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
+  }
+
+  disconnectedCallback() {
+    this.analtyics.cleanup();
+  }
 
   get title() {
     return this.removeTitle ? '' : this.formTitle;
@@ -46,56 +64,46 @@ export class PaymentProvisioning {
 
   componentStepMapping = {
     0: () => <justifi-business-core-info-form-step
-                businessId={this.businessId}
-                authToken={this.authToken}
-                ref={(el) => this.refs[0] = el}
-                onFormLoading={this.handleFormLoading}
-                onServerError={this.handleServerErrors}
-                allowOptionalFields={this.allowOptionalFields}
-              />,
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[0] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
     1: () => <justifi-legal-address-form-step
-                businessId={this.businessId}
-                authToken={this.authToken}
-                ref={(el) => this.refs[1] = el}
-                onFormLoading={this.handleFormLoading}
-                onServerError={this.handleServerErrors}
-                allowOptionalFields={this.allowOptionalFields}
-              />,
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[1] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
     2: () => <justifi-additional-questions-form-step
-                businessId={this.businessId}
-                authToken={this.authToken}
-                ref={(el) => this.refs[2] = el}
-                onFormLoading={this.handleFormLoading}
-                onServerError={this.handleServerErrors}
-                allowOptionalFields={this.allowOptionalFields}
-              />,
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[2] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
     3: () => <justifi-business-representative-form-step
-                businessId={this.businessId}
-                authToken={this.authToken}
-                ref={(el) => this.refs[3] = el}
-                onFormLoading={this.handleFormLoading}
-                onServerError={this.handleServerErrors}
-                allowOptionalFields={this.allowOptionalFields}
-              />,
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[3] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
     4: () => <justifi-business-owners-form-step
-                businessId={this.businessId}
-                authToken={this.authToken}
-                ref={(el) => this.refs[4] = el}
-                onFormLoading={this.handleFormLoading}
-                onServerError={this.handleServerErrors}
-                allowOptionalFields={this.allowOptionalFields}
-              />,
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[4] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
   };
-
-  componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
-    this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
-  }
 
   handleFormLoading = (e: CustomEvent) => {
     this.formLoading = e.detail;
@@ -113,9 +121,9 @@ export class PaymentProvisioning {
     return this.currentStep < this.totalSteps;
   }
 
-  incrementSteps = () => { 
+  incrementSteps = () => {
     if (this.currentStep < this.totalSteps) {
-      return this.currentStep++; 
+      return this.currentStep++;
     }
   }
   decrementSteps = () => { return this.currentStep--; }
@@ -178,7 +186,7 @@ export class PaymentProvisioning {
                 class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                 onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
                 disabled={this.formLoading}>
-                {this.formLoading ? LoadingSpinner() : 'Submit' }
+                {this.formLoading ? LoadingSpinner() : 'Submit'}
               </button>
             )}
           </div>
