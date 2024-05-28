@@ -211,9 +211,15 @@ export const accountNumberValidation = string()
   .min(8, 'Account number must be at least 8 digits')
   .max(17, 'Account number must be less than 17 digits')
   .matches(numbersOnlyRegex, 'Enter valid account number')
+  .test('not-repeat', 'Enter valid account number', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
   .transform(transformEmptyString);
 
 export const routingNumberValidation = string()
   .length(9, 'Routing number must be 9 digits')
   .matches(numbersOnlyRegex, 'Enter valid routing number')
+  .test('not-repeat', 'Enter valid routing number', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
   .transform(transformEmptyString);

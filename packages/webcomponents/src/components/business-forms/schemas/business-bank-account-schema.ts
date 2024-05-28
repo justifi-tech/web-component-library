@@ -24,7 +24,7 @@ export const businessBankAccountSchema = (allowOptionalFields?: boolean) => {
     account_owner_name: identityNameValidation.nullable(),
     account_type: accountTypeValidation.nullable(),
     account_number: accountNumberValidation.nullable(),
-    routing_number: routingNumberValidation.required('Enter routing number')
+    routing_number: routingNumberValidation.nullable()
   });
 
   return allowOptionalFields ? easySchema : schema;

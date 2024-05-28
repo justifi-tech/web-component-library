@@ -28,7 +28,7 @@ export class BusinessBankAccountFormStep {
   @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() bankInfo: any = {};
+  @State() bankAccount: any;
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
@@ -43,16 +43,13 @@ export class BusinessBankAccountFormStep {
     return `entities/bank_accounts`
   }
 
-  get disabledStatus() {
-    return this.bankInfo.status === 'verified';
-  }
-
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.bankInfo = response.data.bank_accounts[0] || {};
-      this.formController.setInitialValues({ ...this.bankInfo });
+      console.log(response.data)
+      this.bankAccount = {};
+      this.formController.setInitialValues({ ...this.bankAccount });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
@@ -60,28 +57,22 @@ export class BusinessBankAccountFormStep {
     }
   }
 
-  testBankData = async () => {
-    const bankAccountResponse = await this.api.get(this.bankAccountEndpoint);
-    console.log(bankAccountResponse);
-  }
 
-  testDocData = async () => {
-    const documentsResponse = await this.api.get('entities/document');
-    console.log(documentsResponse);
+  private sendData = async (onSuccess?: () => void) => {
+    this.formLoading.emit(true);
+    try {
+      const formValues = this.formController.values.getValue();
+      const payload = { ...formValues, business_id: this.businessId }
+      console.log(payload)
+      
+      const response = await this.api.patch(this.bankAccountEndpoint, JSON.stringify(payload));
+      this.handleResponse(response, onSuccess);
+    } catch (error) {
+      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+    } finally {
+      this.formLoading.emit(false);
+    }
   }
-
-  // private sendData = async (onSuccess?: () => void) => {
-  //   this.formLoading.emit(true);
-  //   try {
-  //     const payload = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-  //     const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
-  //     this.handleResponse(response, onSuccess);
-  //   } catch (error) {
-  //     this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
-  //   } finally {
-  //     this.formLoading.emit(false);
-  //   }
-  // }
 
   handleResponse(response, onSuccess) {
     if (response.error) {
@@ -89,12 +80,12 @@ export class BusinessBankAccountFormStep {
     } else {
       onSuccess();
     }
-    // this.submitted.emit({ data: response, metadata: { completedStep: 'bankInfo' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: 'bankAccount' } });
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => console.log(onSuccess));
+    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
   componentWillLoad() {
@@ -106,13 +97,11 @@ export class BusinessBankAccountFormStep {
     this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
     this.api = Api(this.authToken, config.proxyApiOrigin);
     this.fetchData();
-    this.testBankData();
-    this.testDocData();
   }
 
   componentDidLoad() {
     this.formController.values.subscribe(values =>
-      this.bankInfo = { ...values }
+      this.bankAccount = { ...values }
     );
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
@@ -127,7 +116,7 @@ export class BusinessBankAccountFormStep {
   }
 
   render() {
-    const bankInfoDefaultValue = this.formController.getInitialValues();
+    const bankAccountDefaultValue = this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
@@ -140,7 +129,7 @@ export class BusinessBankAccountFormStep {
                 <form-control-text
                   name="bank_name"
                   label="Bank Name"
-                  defaultValue={bankInfoDefaultValue.bank_name}
+                  defaultValue={bankAccountDefaultValue.bank_name}
                   error={this.errors.bank_name}
                   inputHandler={this.inputHandler}
                 />
@@ -149,7 +138,7 @@ export class BusinessBankAccountFormStep {
                 <form-control-text
                   name="nickname"
                   label="Nickname"
-                  defaultValue={bankInfoDefaultValue.nickname}
+                  defaultValue={bankAccountDefaultValue.nickname}
                   error={this.errors.nickname}
                   inputHandler={this.inputHandler}
                 />
@@ -158,7 +147,7 @@ export class BusinessBankAccountFormStep {
                 <form-control-text
                   name="account_owner_name"
                   label="Account Owner Name"
-                  defaultValue={bankInfoDefaultValue.account_owner_name}
+                  defaultValue={bankAccountDefaultValue.account_owner_name}
                   error={this.errors.account_owner_name}
                   inputHandler={this.inputHandler}
                 />
@@ -168,7 +157,7 @@ export class BusinessBankAccountFormStep {
                   name="account_type"
                   label="Account Type"
                   options={bankAccountTypeOptions}
-                  defaultValue={bankInfoDefaultValue.account_type}
+                  defaultValue={bankAccountDefaultValue.account_type}
                   error={this.errors.account_type}
                   inputHandler={this.inputHandler}
                 />
@@ -177,7 +166,7 @@ export class BusinessBankAccountFormStep {
                 <form-control-text
                   name="account_number"
                   label="Account Number"
-                  defaultValue={bankInfoDefaultValue.account_number}
+                  defaultValue={bankAccountDefaultValue.account_number}
                   maxLength={17}
                   error={this.errors.account_number}
                   inputHandler={this.inputHandler}
@@ -188,7 +177,7 @@ export class BusinessBankAccountFormStep {
                 <form-control-text
                   name="routing_number"
                   label="Routing Number"
-                  defaultValue={bankInfoDefaultValue.routing_number}
+                  defaultValue={bankAccountDefaultValue.routing_number}
                   maxLength={9}
                   error={this.errors.routing_number}
                   inputHandler={this.inputHandler}
