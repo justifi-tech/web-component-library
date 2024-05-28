@@ -49,6 +49,22 @@ export class PaymentForm {
     this.submitButtonEnabled = false;
   }
 
+  showPaymentMethodTypeSelector() {
+    return this.card && this.bankAccount;
+  }
+
+  getSelectedPaymentMethodType() {
+    if (this.showPaymentMethodTypeSelector()) {
+      return this.selectedPaymentMethodType;
+    } else if (this.card) {
+      return PaymentMethodTypes.card;
+    } else if (this.bankAccount) {
+      return PaymentMethodTypes.bankAccount;
+    } else {
+      return PaymentMethodTypes.card;
+    }
+  }
+
   paymentMethodSelectedHandler(event: CustomEvent) {
     const paymentMethodType: PaymentMethodTypes = event.detail;
     this.selectedPaymentMethodType = paymentMethodType;
@@ -92,17 +108,17 @@ export class PaymentForm {
     return (
       <Host>
         <form class="row gy-3">
-          {this.card && this.bankAccount && (
+          {this.showPaymentMethodTypeSelector() && (
             <div class="col-12">
               <justifi-payment-method-selector
-                selectedPaymentMethodType={this.selectedPaymentMethodType}
+                selectedPaymentMethodType={this.getSelectedPaymentMethodType()}
                 onPaymentMethodSelected={event => this.paymentMethodSelectedHandler(event)}
               />
             </div>
           )}
           <div class="col-12">
             <justifi-payment-method-form
-              payment-method-form-type={this.selectedPaymentMethodType}
+              payment-method-form-type={this.getSelectedPaymentMethodType()}
               iframeOrigin={config.iframeOrigin}
               ref={el => {
                 if (el) {
