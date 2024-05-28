@@ -26,10 +26,10 @@ export class PaymentProvisioning {
   @State() totalSteps: number = 5;
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
-  analtyics: JustifiAnalytics;
+  analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    this.analtyics = new JustifiAnalytics(this);
+    this.analytics = new JustifiAnalytics(this);
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
     if (!this.authToken) console.error(missingAuthTokenMessage);
@@ -40,7 +40,7 @@ export class PaymentProvisioning {
   }
 
   disconnectedCallback() {
-    this.analtyics.cleanup();
+    this.analytics.cleanup();
   }
 
   get title() {
