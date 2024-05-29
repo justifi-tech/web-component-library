@@ -6,8 +6,8 @@ import {
   businessTypeOptions, 
   recurringPaymentsOptions, 
   seasonalBusinessOptions, 
-  bankAccountTypeOptions} 
-from "../utils/business-form-options";
+  bankAccountTypeOptions
+} from "../utils/business-form-options";
 import { 
   businessNameRegex, 
   numbersOnlyRegex, 
@@ -18,8 +18,9 @@ import {
   stringLettersOnlyRegex, 
   taxIdRegex, 
   transformEmptyString, 
-  urlRegex } 
-from "./schema-helpers";
+  urlRegex, 
+  validateRoutingNumber
+} from "./schema-helpers";
 
 // Common Validations
 
@@ -221,5 +222,8 @@ export const routingNumberValidation = string()
   .matches(numbersOnlyRegex, 'Enter valid routing number')
   .test('not-repeat', 'Enter valid routing number', (value) => {
     return !/^(\d)\1+$/.test(value);
+  })
+  .test('valid', 'Enter valid routing number', (value) => {
+    return validateRoutingNumber(value);
   })
   .transform(transformEmptyString);

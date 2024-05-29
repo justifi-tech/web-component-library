@@ -18,7 +18,7 @@ export const LoadingSpinner = () => (
 );
 
 export const numberOnlyHandler = (e: KeyboardEvent) => {
-  const specialKeys = ['Backspace', 'Tab', 'Enter'];
+  const specialKeys = ['Backspace', 'Tab', 'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Delete'];
   if (!/^\d$/.test(e.key) && !specialKeys.includes(e.key)) {
     e.preventDefault();
   }

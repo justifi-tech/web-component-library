@@ -53,7 +53,6 @@ export class BusinessBankAccountFormStep {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
-      console.log(this.bankAccount)
     }
   }
 
