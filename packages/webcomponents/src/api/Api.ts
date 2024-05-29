@@ -22,16 +22,33 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: PagingInfo;
 }
 
-const Api = (authToken: string, apiOrigin: string) => {
+interface IApiProps {
+  authToken?: string;
+  apiOrigin: string;
+}
+
+const Api = ({ authToken, apiOrigin }: IApiProps) => {
   async function getAuthorizationHeader() {
+    if (!authToken) {
+      return {
+        'Content-Type': 'application/json',
+      };
+    }
+
     return {
-      'Authorization': `Bearer ${authToken}`,
+      Authorization: `Bearer ${authToken}`,
       'Idempotency-Key': uuidv4(),
       'Content-Type': 'application/json',
     };
   }
 
-  async function makeRequest(endpoint: string, method: string, params?: any, body?: any, signal?: AbortSignal) {
+  async function makeRequest(
+    endpoint: string,
+    method: string,
+    params?: any,
+    body?: any,
+    signal?: AbortSignal
+  ) {
     const url = `${apiOrigin}/v1/${endpoint}`;
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
     const response = await fetch(requestUrl, {
@@ -51,8 +68,17 @@ const Api = (authToken: string, apiOrigin: string) => {
     return makeRequest(endpoint, 'GET', params, null, signal);
   }
 
-  async function post(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
+  async function post(
+    endpoint: string,
+    body?: any,
+    params?: any,
+    signal?: AbortSignal
+  ) {
     return makeRequest(endpoint, 'POST', params, body, signal);
+  }
+
+  async function put(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
+    return makeRequest(endpoint, 'PUT', params, body, signal);
   }
 
   async function patch(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
@@ -63,7 +89,7 @@ const Api = (authToken: string, apiOrigin: string) => {
     return makeRequest(endpoint, 'DELETE', params, null, signal);
   }
 
-  return { get, post, patch, destroy };
+  return { get, post, put, patch, destroy };
 };
 
 function handleError(requestUrl: string): void {

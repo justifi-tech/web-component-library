@@ -1,18 +1,21 @@
-import { Component, Prop, h, State, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
-  tag: 'justifi-checkout',
-  shadow: true,
+  tag: 'justifi-checkout'
 })
 export class Checkout {
   @Prop() iframeOrigin?: string;
   @Prop() authToken: string;
   @Prop() checkoutId: string;
+
   @State() getCheckout: Function;
   @State() complete: Function;
   @State() errorMessage: string = '';
+
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     this.initializeGetCheckout();
@@ -31,7 +34,11 @@ export class Checkout {
         service: new CheckoutService()
       });
     } else {
-      this.errorMessage = 'auth-token and checkout-id are required';
+      this.errorEvent.emit({
+        message: 'auth-token and checkout-id are required',
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   }
 

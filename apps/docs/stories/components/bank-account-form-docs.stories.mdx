@@ -1,7 +1,18 @@
-import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
 import example from './bank-account-form-example';
+import { Authorization } from '../utils/documentation-components';
 
-<Meta title="Payment Facilitation/Payments/Bank Account Form" Components="justifi-bank-account-form" />
+<Meta
+  title="Payment Facilitation/Payments/Bank Account Form"
+  Components="justifi-bank-account-form"
+/>
 
 <Title />
 Component to render the necessary fields to enter proper bank account information.
@@ -19,6 +30,12 @@ Component to render the necessary fields to enter proper bank account informatio
 ---
 
 <ArgTypes />
+
+<Authorization
+  actions={['write']}
+  entity="tokenize"
+  identification="account_id"
+/>
 
 # Styling
 

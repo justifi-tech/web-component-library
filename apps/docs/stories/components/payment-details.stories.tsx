@@ -28,8 +28,6 @@ const meta: Meta = {
     actions: {
       handles: ['error-event'],
     },
-  },
-  parameters: {
     chromatic: {
       delay: 2000,
     }

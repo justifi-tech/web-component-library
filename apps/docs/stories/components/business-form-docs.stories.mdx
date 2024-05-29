@@ -1,14 +1,21 @@
-import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
 import example from './business-form-example';
+import { Authorization } from '../utils/documentation-components';
 
-<Meta
-  title="Entities/BusinessForm"
-  Components="justifi-business-form"
-/>
+<Meta title="Entities/BusinessForm" Components="justifi-business-form" />
 
 <Title />
-Component to render a business onboarding form.
+Component to render a business onboarding form. You will need to first create a business
+via [Business API](https://docs.justifi.tech/api-spec#tag/Business) to get the business-id
+required for this component.
 
 # Index
 
@@ -21,6 +28,12 @@ Component to render a business onboarding form.
 
 <ArgTypes exclude={['css-variables']} />
 
+<Authorization
+  actions={['write']}
+  entity="business"
+  identification="business_id"
+/>
+
 # Styling
 
 ---
@@ -32,7 +45,9 @@ The `<justifi-business-form>` can be customized by using the exported `parts`.
 <ExportedParts
   compact
   component="justifi-business-form"
-  tags={filterDocsByTag('justifi-business-form').docsTags.map(part => part.text)}
+  tags={filterDocsByTag('justifi-business-form').docsTags.map(
+    (part) => part.text
+  )}
 />
 
 # Example Usage

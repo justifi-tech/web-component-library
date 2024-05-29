@@ -7,7 +7,7 @@ export class ReportsService {
     accountId: string,
     authToken: string
   ): Promise<IApiResponse<GrossVolumeReport>> {
-    const api = Api(authToken, config.proxyApiOrigin);
+    const api = Api({ authToken: authToken, apiOrigin: config.proxyApiOrigin });
     const endpoint = `account/${accountId}/reports/gross_volume`;
     return api.get(endpoint);
   }

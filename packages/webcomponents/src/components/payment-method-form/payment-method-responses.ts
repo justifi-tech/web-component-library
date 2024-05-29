@@ -4,6 +4,7 @@ interface PaymentMethodCreateResponseWrapper {
   error?: {
     code: string;
     message: string;
+    decline_code: string;
   };
   page_info: string;
 }

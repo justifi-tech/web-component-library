@@ -53,7 +53,7 @@ export class SubaccountsList {
       return;
     }
     this.loading = true;
-    const api = Api(this.authToken, config.privateApiOrigin);
+    const api = Api({ authToken: this.authToken, apiOrigin: config.privateApiOrigin });
     const endpoint = `account/${this.accountId}/seller_accounts`;
 
 

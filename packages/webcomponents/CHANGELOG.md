@@ -1,5 +1,40 @@
 ### Changelog
 
+## 4.13.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+- 30e7011: - Add: Handle Checkout component errors from tokenize calls (new payment methods)
+  - Add: Handle Checkout component errors from checkout.complete calls (paying the checkout, possibly with the token from tokenize)
+  - Fix: Reset Checkout component isLoading state when new-payment-method form has client-side errors
+- `BusinessForm` and `PaymentProvisioning` components: Updated Additional Questions form section
+  - removed existing input fields meant to capture `business_dispute_volume` and `business_receivable_volume`
+  - Updated questions / labels to be more clear for fields capturing `business_revenue` and `business_payment_volume`
+  - Added input fields to capture the following data: `business_when_service_received`, `business_recurring_payments`, `business_recurring_payments_percentage`, `business_seasonal`, and `business_other_payment_details`
+  - Improved form validation for each input field in this section. 
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
+## 4.13.0-rc.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
+## 4.12.2
+
+### Patch Changes
+
+- 44bef77: - Fixed bug preventing `CardForm` and `BankAccountForm` from consistently emitting `ready` event.
+- 7eb227a: - `BusinessForm` and `PaymentProvisioning` - revert change that removed `business_structure` option from form in.
+
 ## 4.12.1
 
 ### Patch Changes

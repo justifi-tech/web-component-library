@@ -11,7 +11,7 @@ const meta: Meta = {
   title: 'Payment Facilitation/Payments/Card Form',
   component: 'justifi-card-form',
   args: {
-    ...storyBaseArgs.args
+    ...storyBaseArgs.args,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -93,7 +93,6 @@ const handleValidateClick = async (cardForm: HTMLJustifiCardFormElement) => {
 const handleTokenizeClick = async (cardForm: HTMLJustifiCardFormElement, paymentMethodData: any) => {
   const clientId = storyBaseArgs.args['client-id'] || '';
   const accountId = storyBaseArgs.args['account-id'] || '';
-  console.log('clientID', clientId);
   await cardForm.tokenize(clientId, paymentMethodData, accountId);
 };
 
