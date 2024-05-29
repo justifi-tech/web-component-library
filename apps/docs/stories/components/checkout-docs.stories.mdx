@@ -1,11 +1,22 @@
-import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
 import example from './checkout-example';
+import { AuthTokenDescription } from '../../stories/utils/documentation-components.tsx';
 
-<Meta title="Payment Facilitation/Payments/Checkout" Components="justifi-checkout" />
+<Meta
+  title="Payment Facilitation/Payments/Checkout"
+  Components="justifi-checkout"
+/>
 
 <Title />
-Component to render the necessary fields to enter proper credit card information.
-
+Component to render the necessary fields to enter proper payment method information
+and process a payment.
 
 # Index
 
@@ -18,6 +29,15 @@ Component to render the necessary fields to enter proper credit card information
 ---
 
 <ArgTypes exclude={['css-variables']} />
+
+<h1>Authorization</h1>
+<hr />
+Authorization can be performed by using an <code>auth-token</code>
+<ul>
+  <li>
+    <AuthTokenDescription />
+  </li>
+</ul>
 
 # Styling
 

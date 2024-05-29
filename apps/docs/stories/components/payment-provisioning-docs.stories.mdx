@@ -1,6 +1,14 @@
-import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
 import example from './payment-provisioning-example';
+import { Authorization } from '../utils/documentation-components';
 
 <Meta
   title="Entities/Payment Provisioning (BETA)"
@@ -8,7 +16,9 @@ import example from './payment-provisioning-example';
 />
 
 <Title />
-Component to render a business onboarding form, segmented into multiple steps.
+Component to render a business onboarding form, segmented into multiple steps. You
+will need to first create a business via [Business API](https://docs.justifi.tech/api-spec#tag/Business)
+to get the business-id required for this component.
 
 # Index
 
@@ -22,6 +32,11 @@ Component to render a business onboarding form, segmented into multiple steps.
 
 <ArgTypes exclude={['css-variables']} />
 
+<Authorization
+  actions={['write']}
+  entity="business"
+  identification="business_id"
+/>
 
 # Styling
 
@@ -34,9 +49,10 @@ The `<justifi-payment-provisioning>` can be customized by using the exported `pa
 <ExportedParts
   compact
   component="justifi-payment-provisioning"
-  tags={filterDocsByTag('justifi-payment-provisioning').docsTags.map(part => part.text)}
+  tags={filterDocsByTag('justifi-payment-provisioning').docsTags.map(
+    (part) => part.text
+  )}
 />
-
 
 # Example Usage
 

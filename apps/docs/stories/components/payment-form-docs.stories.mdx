@@ -1,12 +1,24 @@
-import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
 import dedent from 'ts-dedent';
 import { filterDocsByTag } from '../utils';
 import example from './payment-form-example';
+import { Authorization } from '../utils/documentation-components';
 
-<Meta title="Payment Facilitation/Payments/Payment Form" Components="justifi-payment-form" />
+<Meta
+  title="Payment Facilitation/Payments/Payment Form"
+  Components="justifi-payment-form"
+/>
 
 <Title />
-Component to render an entire form including a switch to use a credit card or bank account, a submit button and all fields required for proper use.
+Component to render an entire form including a switch to use a credit card or bank
+account, a submit button and all fields required for proper use.
 
 # Index
 
@@ -19,6 +31,12 @@ Component to render an entire form including a switch to use a credit card or ba
 ---
 
 <ArgTypes exclude={['css-variables']} />
+
+<Authorization
+  actions={['write']}
+  entity="tokenize"
+  identification="account_id"
+/>
 
 # Styling
 
@@ -48,27 +66,27 @@ Some of the `CSS variables` specific to this component are listed below:
   --jfi-radio-button-border-color-selected-hover
   --jfi-radio-button-border-color-hover
 
-  /* submit button */
-  --jfi-submit-button-color
-  --jfi-submit-button-background-color
-  --jfi-submit-button-border-color
-  --jfi-submit-button-padding
-  --jfi-submit-button-font-size
-  --jfi-submit-button-border-radius
-  --jfi-submit-button-color-hover
-  --jfi-submit-button-background-color-hover
-  --jfi-submit-button-border-color-hover
-  --jfi-submit-button-color-focus
-  --jfi-submit-button-background-color-focus
-  --jfi-submit-button-border-color-focus
-  --jfi-submit-button-color-active
-  --jfi-submit-button-background-color-active
-  --jfi-submit-button-border-color-active
-  --jfi-sumbit-button-width
-  --jfi-submit-button-box-shadow
-  --jfi-submit-button-color-loading
-  --jfi-submit-button-background-color-loading
-  --jfi-submit-button-border-color-loading
+/_ submit button _/
+--jfi-submit-button-color
+--jfi-submit-button-background-color
+--jfi-submit-button-border-color
+--jfi-submit-button-padding
+--jfi-submit-button-font-size
+--jfi-submit-button-border-radius
+--jfi-submit-button-color-hover
+--jfi-submit-button-background-color-hover
+--jfi-submit-button-border-color-hover
+--jfi-submit-button-color-focus
+--jfi-submit-button-background-color-focus
+--jfi-submit-button-border-color-focus
+--jfi-submit-button-color-active
+--jfi-submit-button-background-color-active
+--jfi-submit-button-border-color-active
+--jfi-sumbit-button-width
+--jfi-submit-button-box-shadow
+--jfi-submit-button-color-loading
+--jfi-submit-button-background-color-loading
+--jfi-submit-button-border-color-loading
 `}
 />
 

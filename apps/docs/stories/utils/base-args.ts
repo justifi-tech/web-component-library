@@ -14,7 +14,7 @@ const args: ArgValues = {
 const argTypes: ArgTypes = {
   'auth-token': {
     type: 'string',
-    description: 'Auth token `string`',
+    description: 'Auth token `string`. See Authorization below',
     control: {
       type: 'text',
     },
@@ -34,7 +34,7 @@ const argTypes: ArgTypes = {
   },
   'business-id': {
     type: 'string',
-    description: 'Business ID `string`',
+    description: 'Business ID `string`, the id of the business you create via API',
     control: {
       type: 'text',
     },
