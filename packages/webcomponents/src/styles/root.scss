@@ -42,9 +42,9 @@
   --jfi-radio-button-color: var(--jfi-primary-color);
   --jfi-radio-button-background-color: transparent;
   --jfi-radio-button-color-selected: white;
-  --jfi-radio-button-background-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-border-color: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-selected: var(--jfi-primary-color);
+  --jfi-radio-button-background-color-selected: #{$dark};
+  --jfi-radio-button-border-color: #{$secondary};
+  --jfi-radio-button-border-color-selected: #{$dark};
   --jfi-radio-button-padding: #{$input-padding-y $input-padding-x};
   --jfi-radio-button-font-size: #{$input-font-size};
   --jfi-radio-button-color-hover: var(--jfi-primary-color);
@@ -54,7 +54,7 @@
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
 
-  --jfi-radio-button-box-shadow-focus: #{$form-check-input-focus-box-shadow};
+  --jfi-radio-button-box-shadow-focus: 0 0 0 .25em rgb(108, 117, 125, 0.25);
   --jfi-radio-button-border-color-focus: #{$form-check-input-focus-border};
 
   --jfi-radio-button-group-color: var(--jfi-body-color);
