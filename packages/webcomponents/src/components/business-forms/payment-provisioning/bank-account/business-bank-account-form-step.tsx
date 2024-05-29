@@ -47,13 +47,13 @@ export class BusinessBankAccountFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      console.log(response.data)
-      this.bankAccount = {};
+      this.bankAccount = response.data.bank_accounts[0] || {};
       this.formController.setInitialValues({ ...this.bankAccount });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
+      console.log(this.bankAccount)
     }
   }
 
@@ -65,7 +65,7 @@ export class BusinessBankAccountFormStep {
       const payload = { ...formValues, business_id: this.businessId }
       console.log(payload)
       
-      const response = await this.api.patch(this.bankAccountEndpoint, JSON.stringify(payload));
+      const response = await this.api.post(this.bankAccountEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
