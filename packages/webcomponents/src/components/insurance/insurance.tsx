@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
-import { ErrorState } from '../details/utils';
 import { InsuranceService } from '../../api/services/insurance.service';
 import { makeGetQuote } from './insurance-actions';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
@@ -13,7 +12,6 @@ export class Insurance {
   @Prop() authToken: string;
   @Prop() quoteId: string;
 
-  @State() errorMessage: string;
   @State() getQuote: Function;
   @State() quote: any;
 
@@ -25,10 +23,9 @@ export class Insurance {
 
   private initializeGetQuote() {
     if (!this.authToken) {
-      this.errorMessage = 'Invalid auth token';
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
-        message: this.errorMessage,
+        message: 'Missing authToken',
         severity: ComponentErrorSeverity.ERROR,
       });
       return;
@@ -42,9 +39,6 @@ export class Insurance {
   }
 
   render() {
-    if (this.errorMessage) {
-      return <Host>{ErrorState(this.errorMessage)}</Host>;
-    }
     return (
       <Host>
         {JSON.stringify(this.quote)}

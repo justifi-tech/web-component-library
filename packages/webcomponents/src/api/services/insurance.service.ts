@@ -13,7 +13,7 @@ export class InsuranceService implements IInsuranceService {
     quoteId: string,
     authToken: string
   ): Promise<IApiResponse<IQuote>> {
-    const endpoint = `payments/${quoteId}`;
-    return Api(authToken, config.proxyApiOrigin).get(endpoint);
+    const endpoint = `quotes/${quoteId}`;
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
 }
