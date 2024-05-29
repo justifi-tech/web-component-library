@@ -1,5 +1,16 @@
 ### Changelog
 
+## 4.14.0
+
+### Minor Changes
+
+- 0183890: Add `authToken` prop to PaymentForm
+  Update `Authorization` section in docs
+
+### Patch Changes
+
+- 0189492: Fix issue with PaymentForm where card form is being shown instead of bank account form when card prop is false and bank-account prop is true
+
 ## 4.13.0
 
 ### Minor Changes
@@ -12,7 +23,7 @@
   - removed existing input fields meant to capture `business_dispute_volume` and `business_receivable_volume`
   - Updated questions / labels to be more clear for fields capturing `business_revenue` and `business_payment_volume`
   - Added input fields to capture the following data: `business_when_service_received`, `business_recurring_payments`, `business_recurring_payments_percentage`, `business_seasonal`, and `business_other_payment_details`
-  - Improved form validation for each input field in this section. 
+  - Improved form validation for each input field in this section.
 
 ### Patch Changes
 
