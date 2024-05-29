@@ -3,17 +3,17 @@ import { config } from '../../../config';
 
 export interface IInsuranceService {
   fetchQuote(
-    quoteId: string,
-    authToken: string
+    authToken: string,
+    payload: any
   ): Promise<IApiResponse<IQuote>>;
 }
 
 export class InsuranceService implements IInsuranceService {
   async fetchQuote(
-    quoteId: string,
-    authToken: string
+    authToken: string,
+    payload: any
   ): Promise<IApiResponse<IQuote>> {
-    const endpoint = `quotes/${quoteId}`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
+    const endpoint = 'insurance/quotes';
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }

@@ -1,10 +1,10 @@
 import { InsuranceService } from '../../api/services/insurance.service';
 import { getErrorMessage } from '../../api/services/utils';
 
-export const makeGetQuote = ({ authToken, quoteId, service }) =>
+export const makeGetQuote = ({ authToken, payload, service }) =>
   async ({ onSuccess, onError }) => {
     try {
-      const response = await (service as InsuranceService).fetchQuote(authToken, quoteId);
+      const response = await (service as InsuranceService).fetchQuote(authToken, payload);
 
       if (!response.error) {
         const quote = response.data;
