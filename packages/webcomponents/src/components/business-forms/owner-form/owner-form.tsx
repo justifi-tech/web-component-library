@@ -46,7 +46,7 @@ export class BusinessOwnerForm {
   }
 
   get identificationNumberLabel() {
-    return this.owner.ssn_last4 ? 'Change SSN (Optional)' : 'SSN';
+    return this.owner.ssn_last4 ? 'Change SSN (optional)' : 'SSN';
   }
 
   get formTitle() {
@@ -93,6 +93,7 @@ export class BusinessOwnerForm {
       this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
     } finally {
       this.isLoading = false;
+      console.log(this.formController.getInitialValues());
     }
   }
 
