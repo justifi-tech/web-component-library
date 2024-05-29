@@ -1,6 +1,9 @@
 import { object, string } from 'yup';
 import { RegExZip } from '../../utils/utils';
 
+// All of these schema validations already exist in the schema files in business-form directory. 
+// I want to make a common schema directory for top level access to all schema files. I guess?
+
 export interface BillingFormFields {
   name: string;
   address_line1: string;
