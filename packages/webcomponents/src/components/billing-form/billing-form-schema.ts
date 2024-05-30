@@ -1,9 +1,12 @@
-import { object, string } from 'yup';
-import { RegExZip } from '../../utils/utils';
-
-// All of these schema validations already exist in the schema files in business-form directory. 
-// I want to make a common schema directory for top level access to all schema files. I guess?
-
+import { object } from 'yup';
+import { 
+  cityValidation,
+  identityNameValidation, 
+  lineOneValidation, 
+  lineTwoValidation,
+  postalValidation,
+  stateValidation
+} from '../business-forms/schemas/schema-validations';
 export interface BillingFormFields {
   name: string;
   address_line1: string;
@@ -14,12 +17,12 @@ export interface BillingFormFields {
 }
 
 const BillingFormSchema = object({
-  name: string().required('Enter name'),
-  address_line1: string().required('Enter street address'),
-  address_line2: string(),
-  address_city: string().required('Enter city'),
-  address_state: string().required('Choose state'),
-  address_postal_code: string().required('Enter ZIP').matches(RegExZip, 'Enter a valid ZIP').min(5, 'Enter a valid ZIP'),
+  name: identityNameValidation.required('Enter full name'),
+  address_line1: lineOneValidation.required('Enter street address'),
+  address_line2: lineTwoValidation.nullable(),
+  address_city: cityValidation.required('Enter city'),
+  address_state: stateValidation.required('Select state'),
+  address_postal_code: postalValidation.required('Enter postal code'),
 });
 
 export default BillingFormSchema;
