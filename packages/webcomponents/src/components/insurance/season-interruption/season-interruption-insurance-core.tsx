@@ -39,6 +39,7 @@ export class SeasonInterruptionInsuranceCore {
   @State() quote: any;
   @State() isLoading: boolean = false;
 
+  @Event({ eventName: 'insurance-changed' }) insuranceChanged: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
@@ -72,8 +73,14 @@ export class SeasonInterruptionInsuranceCore {
     return doc.body.textContent || "";
   }
 
+  convertToHtml(html: string): string {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.innerHTML || "";
+  }
+
   onChangeHandler(event: any) {
     console.log(event.target.value);
+    this.insuranceChanged.emit();
     // await accept call
     // emit event to checkout
   }
@@ -110,6 +117,7 @@ export class SeasonInterruptionInsuranceCore {
             Decline coverage
           </label>
         </div>
+        <div innerHTML={this.convertToHtml(this.quote.product.legal_disclaimer)}></div>
       </Host>
     );
   }
