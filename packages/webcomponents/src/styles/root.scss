@@ -54,7 +54,7 @@
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
 
-  --jfi-radio-button-box-shadow-focus: 0 0 0 .25em rgb(108, 117, 125, 0.25);
+  --jfi-radio-button-box-shadow-focus: 0 0 #{$focus-ring-blur} #{$focus-ring-width}em rgba($secondary, $focus-ring-opacity);
   --jfi-radio-button-border-color-focus: #{$form-check-input-focus-border};
 
   --jfi-radio-button-group-color: var(--jfi-body-color);

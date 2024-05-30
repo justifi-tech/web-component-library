@@ -26,7 +26,6 @@
     &:checked:focus {
       background-color: var(--jfi-radio-button-background-color-selected);
       border-color: var(--jfi-radio-button-border-color-selected);
-      box-shadow: var(--jfi-radio-button-box-shadow-focus);
     }
 
     &:focus {
