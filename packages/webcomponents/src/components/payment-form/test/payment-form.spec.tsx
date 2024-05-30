@@ -61,7 +61,7 @@ describe('justifi-payment-form', () => {
 
     // Assert that the properties exist and have the expected default values
     expect(paymentForm).toHaveProperty('bankAccount', undefined);
-    expect(paymentForm).toHaveProperty('card', true);
+    expect(paymentForm).toHaveProperty('card', undefined);
     expect(paymentForm).toHaveProperty('email', undefined);
     expect(paymentForm).toHaveProperty('clientId', undefined);
     expect(paymentForm).toHaveProperty('accountId', undefined);
