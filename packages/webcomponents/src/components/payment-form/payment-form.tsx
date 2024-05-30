@@ -14,7 +14,7 @@ import { getErrorMessage } from '../../api/services/utils';
 })
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
-  @Prop() card?: boolean = true;
+  @Prop() card?: boolean;
   @Prop() email?: string;
   @Prop() clientId?: string;
   @Prop() authToken?: string;
