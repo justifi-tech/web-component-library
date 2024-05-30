@@ -43,6 +43,14 @@ export class BusinessBankAccountFormStep {
     return `entities/bank_accounts`
   }
 
+  get formDisabled() {
+    return !!this.bankAccount;
+  }
+
+  // Last steps here with the bank account form:
+  // If a bank account is returned from the API and loaded into the form - let's disable the form fields here for now.
+  // Allow Submit / Next to be clicked but no actual post is made. 
+
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
@@ -53,6 +61,7 @@ export class BusinessBankAccountFormStep {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
+      console.log(this.formDisabled)
     }
   }
 
@@ -84,6 +93,7 @@ export class BusinessBankAccountFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
+    this.formDisabled ? onSuccess() :
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
@@ -131,6 +141,7 @@ export class BusinessBankAccountFormStep {
                   defaultValue={bankAccountDefaultValue.bank_name}
                   error={this.errors.bank_name}
                   inputHandler={this.inputHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
@@ -140,6 +151,7 @@ export class BusinessBankAccountFormStep {
                   defaultValue={bankAccountDefaultValue.nickname}
                   error={this.errors.nickname}
                   inputHandler={this.inputHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
@@ -149,6 +161,7 @@ export class BusinessBankAccountFormStep {
                   defaultValue={bankAccountDefaultValue.account_owner_name}
                   error={this.errors.account_owner_name}
                   inputHandler={this.inputHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
@@ -159,6 +172,7 @@ export class BusinessBankAccountFormStep {
                   defaultValue={bankAccountDefaultValue.account_type}
                   error={this.errors.account_type}
                   inputHandler={this.inputHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
@@ -170,6 +184,7 @@ export class BusinessBankAccountFormStep {
                   error={this.errors.account_number}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
@@ -181,6 +196,7 @@ export class BusinessBankAccountFormStep {
                   error={this.errors.routing_number}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               
