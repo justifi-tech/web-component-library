@@ -87,7 +87,7 @@ export class BusinessList {
     const endpoint = `entities/business`;
     let accountIDParam = { account_id: this.accountId };
 
-    const response: IApiResponseCollection<Business[]> = await Api(this.authToken, config.proxyApiOrigin,)
+    const response: IApiResponseCollection<Business[]> = await Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin },)
       .get(endpoint, { ...accountIDParam, ...this.params });
 
     if (!response.error) {

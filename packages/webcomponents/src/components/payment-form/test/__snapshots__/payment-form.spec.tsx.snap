@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-payment-form should correctly render the child components based on the given props and state 1`] = `
+<justifi-payment-form payment-method-form-type="card" submit-button-text="Submit">
+  <mock:shadow-root>
+    <form class="gy-3 row">
+      <div class="col-12">
+        <justifi-payment-method-selector selectedpaymentmethodtype="card"></justifi-payment-method-selector>
+      </div>
+      <div class="col-12">
+        <justifi-payment-method-form iframeorigin="https://js.justifi.ai/v2" payment-method-form-type="card"></justifi-payment-method-form>
+      </div>
+      <div class="col-12">
+        <justifi-billing-form legend="Billing Info"></justifi-billing-form>
+      </div>
+      <slot name="insurance"></slot>
+      <div class="col-12">
+        <button class="btn btn-primary jfi-submit-button" data-testid="submit-button" type="submit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </mock:shadow-root>
+</justifi-payment-form>
+`;

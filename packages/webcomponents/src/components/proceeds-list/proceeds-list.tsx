@@ -92,7 +92,7 @@ export class ProceedsList {
     this.loading = true;
     const endpoint = `account/${this.accountId}/proceeds`;
 
-    const response: IApiResponseCollection<Proceed[]> = await Api(this.authToken, config.privateApiOrigin)
+    const response: IApiResponseCollection<Proceed[]> = await Api({ authToken: this.authToken, apiOrigin: config.privateApiOrigin })
       .get(endpoint, this.params);
 
     if (!response.error) {

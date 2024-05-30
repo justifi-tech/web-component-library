@@ -1,5 +1,27 @@
 # @repo/docs
 
+## 0.1.0
+
+### Minor Changes
+
+- 0183890: Add `authToken` prop to PaymentForm
+  Update `Authorization` section in docs
+
+### Patch Changes
+
+- Updated dependencies [0189492]
+- Updated dependencies [0183890]
+  - @justifi/webcomponents@4.14.0
+
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies [548148c]
+- Updated dependencies [30e7011]
+- Updated dependencies [bad4f86]
+  - @justifi/webcomponents@4.13.0
+
 ## 0.0.10-rc.0
 
 ### Patch Changes

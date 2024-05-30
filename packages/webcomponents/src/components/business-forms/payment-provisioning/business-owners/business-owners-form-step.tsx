@@ -3,12 +3,13 @@ import { IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { Owner } from '../../../../api/Identity';
-import { 
-  BusinessFormServerErrorEvent, 
-  BusinessFormServerErrors, 
-  BusinessFormSubmitEvent, 
-  OwnerFormClickActions, 
-  OwnerFormClickEvent } 
+import {
+  BusinessFormServerErrorEvent,
+  BusinessFormServerErrors,
+  BusinessFormSubmitEvent,
+  OwnerFormClickActions,
+  OwnerFormClickEvent
+}
   from '../../utils/business-form-types';
 
 /**
@@ -61,7 +62,7 @@ export class BusinessOwnersFormStep {
       this.refs[ownerIndex] = ref;
     }
   }
-  
+
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
@@ -83,7 +84,7 @@ export class BusinessOwnersFormStep {
     this.formLoading.emit(true);
     try {
       const payload = await this.managePayload();
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({owners: payload}));
+      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ owners: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -120,13 +121,13 @@ export class BusinessOwnersFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
   private addOwnerForm = (fireClick?: boolean) => {
     this.newFormOpen = true;
-    const newOwner = { ...new Owner({})};
+    const newOwner = { ...new Owner({}) };
     this.owners = [...this.owners, newOwner];
     fireClick && this.clickEvent.emit({ name: OwnerFormClickActions.addOwnerForm });
   };
@@ -160,10 +161,10 @@ export class BusinessOwnersFormStep {
         <div class='col-12'>
           {this.owners.map((owner) => {
             return (
-              <justifi-owner-form 
+              <justifi-owner-form
                 key={owner.id}
-                authToken={this.authToken} 
-                businessId={this.businessId} 
+                authToken={this.authToken}
+                businessId={this.businessId}
                 ownerId={owner.id}
                 removeOwner={this.removeOwnerForm}
                 newFormOpen={this.newFormOpen}
@@ -171,12 +172,12 @@ export class BusinessOwnersFormStep {
                 onSubmitted={(e: CustomEvent) => this.handleOwnerSubmit(e)}
                 onFormLoading={(e: CustomEvent) => this.formLoading.emit(e.detail)}
                 allowOptionalFields={this.allowOptionalFields}
-                ref={(ref) => {this.matchRef(ref, owner.id)}}
+                ref={(ref) => { this.matchRef(ref, owner.id) }}
               />
             );
           })}
         </div>
-        {this.showAddOwnerButton && 
+        {this.showAddOwnerButton &&
           <div class='col-12'>
             <button class='btn btn-primary' onClick={() => this.addOwnerForm(true)}>Add Owner</button>
           </div>
