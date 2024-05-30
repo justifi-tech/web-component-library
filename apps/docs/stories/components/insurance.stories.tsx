@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs } from '../utils';
 
-import '@justifi/webcomponents/dist/module/justifi-insurance';
+import '@justifi/webcomponents/dist/module/justifi-season-interruption-insurance';
 
 const storyBaseArgs = new StoryBaseArgs(['auth-token']);
 
 const meta: Meta = {
-  title: 'Payment Facilitation/Payments/Insurance',
-  component: 'justifi-insurance',
+  title: 'Insurance/Season Interruption',
+  component: 'justifi-season-interruption-insurance',
   args: {
     ...storyBaseArgs.args,
     'checkout-id': '123'
@@ -33,7 +33,12 @@ const meta: Meta = {
     },
   },
   render: ({ label, ...args }) => {
-    return `<justifi-insurance auth-token="${args['auth-token']}" checkout-id="${args['checkout-id']}"></justifi-insurance>`;
+    return `
+      <justifi-season-interruption-insurance
+        auth-token="${args['auth-token']}"
+        checkout-id="${args['checkout-id']}">
+      </justifi-season-interruption-insurance>
+    `;
   }
 }
 

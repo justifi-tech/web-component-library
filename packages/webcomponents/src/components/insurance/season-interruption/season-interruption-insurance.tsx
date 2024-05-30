@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
-import { InsuranceService } from '../../api/services/insurance.service';
-import { makeGetQuote } from './insurance-actions';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { InsuranceService } from '../../../api/services/insurance.service';
+import { makeGetQuote } from '../insurance-actions';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 
 // POST /v1/insurance/quotes/
 //
@@ -57,10 +57,10 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 
 
 @Component({
-  tag: 'justifi-insurance',
+  tag: 'justifi-season-interruption-insurance',
   shadow: true,
 })
-export class Insurance {
+export class SeasonInterruptionInsurance {
   @Prop() authToken: string;
   @Prop() checkoutId: string;
 
@@ -110,7 +110,7 @@ export class Insurance {
 
   render() {
     return (
-      <justifi-insurance-core getQuote={this.getQuote}></justifi-insurance-core>
+      <justifi-season-interruption-insurance-core getQuote={this.getQuote}></justifi-season-interruption-insurance-core>
     );
   }
 }

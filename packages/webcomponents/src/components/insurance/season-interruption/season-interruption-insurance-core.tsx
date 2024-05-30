@@ -1,12 +1,12 @@
 import { Component, h, Host, Prop, State, Event, EventEmitter } from "@stencil/core";
-import { ComponentError } from "../../api/ComponentError";
+import { ComponentError } from "../../../api/ComponentError";
 
 @Component({
-  tag: 'justifi-insurance-core',
-  styleUrl: 'insurance-core.scss',
+  tag: 'justifi-season-interruption-insurance-core',
+  styleUrl: 'season-interruption-insurance-core.scss',
   shadow: true,
 })
-export class InsuranceCore {
+export class SeasonInterruptionInsuranceCore {
   @Prop() getQuote: Function;
 
   @State() quote: any;
