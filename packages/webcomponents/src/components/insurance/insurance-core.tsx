@@ -3,6 +3,7 @@ import { ComponentError } from "../../api/ComponentError";
 
 @Component({
   tag: 'justifi-insurance-core',
+  styleUrl: 'insurance-core.scss',
   shadow: true,
 })
 export class InsuranceCore {
@@ -41,6 +42,7 @@ export class InsuranceCore {
   render() {
     return (
       <Host>
+        <div>Quote:</div>
         <div>{JSON.stringify(this.quote)}</div>
       </Host>
     );
