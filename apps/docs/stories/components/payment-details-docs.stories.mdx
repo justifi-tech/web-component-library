@@ -1,6 +1,7 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
 import { codeExampleFull } from './payment-details-example';
+import { Authorization } from '../utils/documentation-components';
 
 <Meta
   title="Payment Facilitation/Merchant Tools/Payment Details"
@@ -11,26 +12,42 @@ import { codeExampleFull } from './payment-details-example';
 Component to display detailed information about a specific payment.
 
 # Index
+
 - [Props and methods](#props-and-methods)
 - [Styling](#styling)
   - [Exported Parts](#exported-parts)
 - [Example usage](#example-usage)
 
 # Props and methods
+
 ---
+
 <ArgTypes exclude={['css-variables']} />
 
+<Authorization
+  actions={['read', 'write']}
+  entity="account"
+  identification="account_id"
+/>
+
 # Styling
+
 ---
+
 The `<justifi-payment-details>` can be customized using the exported `parts`.
 
 ## Exported parts
+
 <ExportedParts
   compact
   component="justifi-payment-details"
-  tags={filterDocsByTag('justifi-payment-details').docsTags.map(part => part.text)}
+  tags={filterDocsByTag('justifi-payment-details').docsTags.map(
+    (part) => part.text
+  )}
 />
 
 # Example Usage
+
 ---
+
 <Source dark language="html" code={codeExampleFull} />

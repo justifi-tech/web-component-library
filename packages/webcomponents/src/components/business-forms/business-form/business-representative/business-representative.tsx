@@ -11,6 +11,10 @@ export class BusinessRepresentative {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
+
+  get identificationNumberLabel() {
+    return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
+  }
   
   componentDidLoad() {
     this.formController.errors.subscribe(
@@ -118,7 +122,7 @@ export class BusinessRepresentative {
             <div class="col-12 col-md-8">
               <form-control-number-masked
                 name="identification_number"
-                label="SSN"
+                label={this.identificationNumberLabel}
                 defaultValue={representativeDefaultValue?.identification_number}
                 error={this.errors.identification_number}
                 inputHandler={this.inputHandler}

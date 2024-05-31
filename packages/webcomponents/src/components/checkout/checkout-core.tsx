@@ -20,6 +20,11 @@ export class CheckoutCore {
   @Prop() complete: Function;
   @Prop() checkoutId: string;
 
+  @Prop() disableCreditCard?: boolean;
+  @Prop() disableBankAccount?: boolean;
+  @Prop() disableBnpl?: boolean;
+  @Prop() disablePaymentMethodGroup?: boolean;
+
   @State() hasLoadedFonts: boolean = false;
   @State() isLoading: boolean = false;
   @State() checkout: ICheckout;
@@ -156,8 +161,10 @@ export class CheckoutCore {
             <div class="d-flex flex-column">
               <justifi-payment-method-options
                 ref={(el) => (this.paymentMethodOptionsRef = el)}
-                show-card={this.checkout?.payment_settings?.credit_card_payments || true}
-                show-ach={this.checkout?.payment_settings?.ach_payments || true}
+                show-card={!this.disableCreditCard}
+                show-ach={!this.disableBankAccount}
+                show-bnpl={!this.disableBnpl}
+                show-saved-payment-methods={!this.disablePaymentMethodGroup}
                 bnpl={this.checkout?.bnpl}
                 client-id={this.checkout?.payment_client_id}
                 account-id={this.checkout?.account_id}
