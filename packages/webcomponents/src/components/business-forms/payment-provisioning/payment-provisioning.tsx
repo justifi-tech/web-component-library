@@ -1,6 +1,6 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
 import { FormAlert, LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -24,6 +24,15 @@ export class PaymentProvisioning {
   @State() currentStep: number = 0;
   @State() totalSteps: number = 1;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
+
+  // restore this file, and ensure that the entire form works
+  // get the submitted event emitting from the form component once emitted from its sub components!
+
+  @Listen('submitted')
+  handleSubmitted(e: CustomEvent) {
+    this.submitted.emit(e.detail);
+  }
 
   get title() {
     return this.removeTitle ? '' : this.formTitle;
