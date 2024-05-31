@@ -42,9 +42,9 @@
   --jfi-radio-button-color: var(--jfi-primary-color);
   --jfi-radio-button-background-color: transparent;
   --jfi-radio-button-color-selected: white;
-  --jfi-radio-button-background-color-selected: #{$dark};
-  --jfi-radio-button-border-color: #{$secondary};
-  --jfi-radio-button-border-color-selected: #{$dark};
+  --jfi-radio-button-background-color-selected: var(--jfi-primary-color);
+  --jfi-radio-button-border-color: var(--jfi-primary-color);
+  --jfi-radio-button-border-color-selected: var(--jfi-primary-color);
   --jfi-radio-button-padding: #{$input-padding-y $input-padding-x};
   --jfi-radio-button-font-size: #{$input-font-size};
   --jfi-radio-button-color-hover: var(--jfi-primary-color);
@@ -54,7 +54,7 @@
   --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
   --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
 
-  --jfi-radio-button-box-shadow-focus: 0 0 #{$focus-ring-blur} #{$focus-ring-width}em rgba($secondary, $focus-ring-opacity);
+  --jfi-radio-button-box-shadow-focus: #{$form-check-input-focus-box-shadow};
   --jfi-radio-button-border-color-focus: #{$form-check-input-focus-border};
 
   --jfi-radio-button-group-color: var(--jfi-body-color);
@@ -62,6 +62,12 @@
   --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
+
+  /* form radio input */
+  --jfi-radio-input-box-shadow-focus: #{$form-check-input-focus-box-shadow};
+  --jfi-radio-input-background-color-selected: #{$dark};
+  --jfi-radio-input-border-color: #{$secondary};
+  --jfi-radio-input-border-color-selected: #{$dark};
 
   /* submit button */
   --jfi-submit-button-color: white;
