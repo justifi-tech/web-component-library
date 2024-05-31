@@ -7,6 +7,7 @@ import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../form/utils';
+import { BankAccount } from '../../../../api/BankAccount';
 
 /**
  *
@@ -28,7 +29,7 @@ export class BusinessBankAccountFormStep {
   @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() bankAccount: any;
+  @State() bankAccount: BankAccount;
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
@@ -44,7 +45,7 @@ export class BusinessBankAccountFormStep {
   }
 
   get formDisabled() {
-    return !!this.bankAccount;
+    return !!this.bankAccount?.id;
   }
 
   // Last steps here with the bank account form:
@@ -55,24 +56,24 @@ export class BusinessBankAccountFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.bankAccount = response.data.bank_accounts[0] || {};
+      if (response.data.bank_accounts.length > 0) {
+        this.bankAccount = response.data.bank_accounts[0];
+      } else {
+        this.bankAccount = new BankAccount({});
+      }
       this.formController.setInitialValues({ ...this.bankAccount });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
-      console.log(this.formDisabled)
     }
   }
-
 
   private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
       const formValues = this.formController.values.getValue();
       const payload = { ...formValues, business_id: this.businessId }
-      console.log(payload)
-      
       const response = await this.api.post(this.bankAccountEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
