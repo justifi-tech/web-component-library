@@ -3,6 +3,7 @@ import webcomponentsPackageJson from '../../package.json';
 import { AnalyticsService } from './services/analytics.service';
 
 interface iBasicData {
+  resource_id: string;
   component_name: string;
   component_version: string;
   client_user_agent: string;
@@ -31,6 +32,18 @@ class JustifiAnalytics {
     this.trackCustomEvents();
   }
 
+  get resourceId() {
+    return (
+      this.componentInstance.accountId ||
+      this.componentInstance.businessId ||
+      this.componentInstance.paymentId ||
+      this.componentInstance.payoutId ||
+      this.componentInstance.clientId ||
+      this.componentInstance.checkoutId ||
+      this.componentInstance.authToken
+    );
+  }
+
   setUpBasicData() {
     this.basicData = {
       component_name: this.componentInstance.tagName,
@@ -39,6 +52,7 @@ class JustifiAnalytics {
       // navigator.platform is deprecated, use navigator.userAgent instead
       client_platform: navigator.userAgent,
       client_origin: window.location.origin,
+      resource_id: this.resourceId,
     };
   }
 
