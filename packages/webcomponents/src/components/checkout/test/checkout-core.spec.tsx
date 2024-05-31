@@ -9,7 +9,7 @@ import mockPostCheckoutSuccess from './../../../../../../mockData/mockPostChecko
 import { PaymentMethodOptions } from '../payment-method-options';
 
 describe('justifi-checkout-core', () => {
-  it('should display loading state correclty', async () => {
+  it('should display loading state correctly', async () => {
     const page = await newSpecPage({
       components: [CheckoutCore],
       template: () => <justifi-checkout-core />,

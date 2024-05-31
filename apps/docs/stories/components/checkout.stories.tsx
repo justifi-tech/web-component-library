@@ -31,6 +31,50 @@ const meta: Meta = {
         category: 'props'
       }
     },
+    'disable-credit-card': {
+      type: 'boolean',
+      control: {
+        type: 'boolean',
+      },
+      description: 'Disable new credit card payment method option',
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'undefined' }
+      }
+    },
+    'disable-bank-account': {
+      type: 'boolean',
+      control: {
+        type: 'boolean',
+      },
+      description: 'Disable new bank account payment method option',
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'undefined' }
+      }
+    },
+    'disable-bnpl': {
+      type: 'boolean',
+      control: {
+        type: 'boolean',
+      },
+      description: 'Disable BNPL payment method option',
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'undefined' }
+      }
+    },
+    'disable-payment-method-group': {
+      type: 'boolean',
+      control: {
+        type: 'boolean',
+      },
+      description: 'Disable saved payment methods option',
+      table: {
+        category: 'props',
+        defaultValue: { summary: 'undefined' }
+      }
+    },
     'submitted': {
       description: 'Emitted when the server response is received after submitting.  Will not be raised if form vailidation fails.',
       table: {
@@ -63,7 +107,28 @@ const meta: Meta = {
     },
   },
   render: ({ label, ...args }) => {
-    return `<justifi-checkout auth-token="${args['auth-token']}" checkout-id="${args['checkout-id']}"></justifi-checkout>`;
+    let component = `<justifi-checkout 
+    auth-token="${args['auth-token']}" 
+    checkout-id="${args['checkout-id']}"`;
+
+    if (args['disable-credit-card']) {
+      component += ` disable-credit-card`;
+    }
+
+    if (args['disable-bank-account']) {
+      component += ` disable-bank-account`;
+    }
+
+    if (args['disable-bnpl']) {
+      component += ` disable-bnpl`;
+    }
+
+    if (args['disable-payment-method-group']) {
+      component += ` disable-payment-method-group`;
+    }
+
+    component += `></justifi-checkout>`;
+    return component;
   }
 }
 

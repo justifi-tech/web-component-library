@@ -18,7 +18,7 @@ exports[`justifi-checkout renders 1`] = `
             Select payment type
           </h3>
           <div class="d-flex flex-column">
-            <justifi-payment-method-options show-ach="" show-card=""></justifi-payment-method-options>
+            <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
           </div>
         </div>
         <div class="col-12">
