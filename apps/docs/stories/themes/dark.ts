@@ -71,14 +71,14 @@ justifi-checkout {
 
   /* Below only used in justifi-payment-form */
   /* form radio group */
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-border-color: rgba(255, 255, 255, 0.7);
+  --jfi-radio-input-background-color: transparent;
+  --jfi-radio-input-border-color: rgba(255, 255, 255, 0.7);
 
-  --jfi-radio-button-background-color-selected: rgba(255, 120, 90, .5);
-  --jfi-radio-button-border-color-selected: rgba(255, 120, 90, 1);
+  --jfi-radio-input-background-color-selected: rgba(255, 120, 90, .5);
+  --jfi-radio-input-border-color-selected: rgba(255, 120, 90, 1);
 
-  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(255, 120, 90, 0.25);
-  --jfi-radio-button-border-color-focus: rgb(164, 201, 245);
+  --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(255, 120, 90, 0.25);
+  --jfi-radio-input-border-color-focus: rgb(164, 201, 245);
 
   --jfi-radio-button-padding: 5px;
   --jfi-radio-button-font-size: 16px;
