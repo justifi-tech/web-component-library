@@ -39,10 +39,7 @@ export class PaymentMethodOptions {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
     if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzel }));
-    }
-    if (this.showSavedPaymentMethods && this.savedPaymentMethods.length > 0) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.saved }));
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
     this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
   }
@@ -64,8 +61,7 @@ export class PaymentMethodOptions {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
           const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
-          const sezzel = paymentMethodOption.id === PaymentMethodTypes.sezzel;
-          const savedPayment = paymentMethodOption.id === PaymentMethodTypes.saved;
+          const sezzel = paymentMethodOption.id === PaymentMethodTypes.sezzle;
           if (newCard || newBankAccount) {
             return (
               <justifi-new-payment-method
@@ -94,7 +90,7 @@ export class PaymentMethodOptions {
                 }}>
               </justifi-sezzel-payment-method>);
           }
-          else if (savedPayment) {
+          else if (this.showSavedPaymentMethods) {
             return (
               <justifi-saved-payment-method
                 paymentMethodOption={paymentMethodOption}
