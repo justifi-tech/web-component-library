@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormAlert, LoadingSpinner } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 /**
@@ -22,17 +22,9 @@ export class PaymentProvisioning {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() totalSteps: number = 1;
+  @State() totalSteps: number = 6;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
-
-  // restore this file, and ensure that the entire form works
-  // get the submitted event emitting from the form component once emitted from its sub components!
-
-  @Listen('submitted')
-  handleSubmitted(e: CustomEvent) {
-    this.submitted.emit(e.detail);
-  }
 
   get title() {
     return this.removeTitle ? '' : this.formTitle;
@@ -46,63 +38,63 @@ export class PaymentProvisioning {
     return `entities/business/${this.businessId}`
   }
 
-  // private coreInfoRef: any;
-  // private legalAddressRef: any;
-  // private additionalQuestionsRef: any;
-  // private representativeRef: any;
-  // private ownersRef: any;
+  private coreInfoRef: any;
+  private legalAddressRef: any;
+  private additionalQuestionsRef: any;
+  private representativeRef: any;
+  private ownersRef: any;
   private bankAccountRef: any;
   private refs = [];
 
   componentStepMapping = {
-    // 0: () => <justifi-business-core-info-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[0] = el}
-    //             onFormLoading={this.handleFormLoading}
-    //             onServerError={this.handleServerErrors}
-    //             allowOptionalFields={this.allowOptionalFields}
-    //           />,
-    // 1: () => <justifi-legal-address-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[1] = el}
-    //             onFormLoading={this.handleFormLoading}
-    //             onServerError={this.handleServerErrors}
-    //             allowOptionalFields={this.allowOptionalFields}
-    //           />,
-    // 2: () => <justifi-additional-questions-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[2] = el}
-    //             onFormLoading={this.handleFormLoading}
-    //             onServerError={this.handleServerErrors}
-    //             allowOptionalFields={this.allowOptionalFields}
-    //           />,
-    // 3: () => <justifi-business-representative-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[3] = el}
-    //             onFormLoading={this.handleFormLoading}
-    //             onServerError={this.handleServerErrors}
-    //             allowOptionalFields={this.allowOptionalFields}
-    //           />,
-    // 4: () => <justifi-business-owners-form-step
-    //             businessId={this.businessId}
-    //             authToken={this.authToken}
-    //             ref={(el) => this.refs[4] = el}
-    //             onFormLoading={this.handleFormLoading}
-    //             onServerError={this.handleServerErrors}
-    //             allowOptionalFields={this.allowOptionalFields}
-    //           />,
-    0: () => <justifi-business-bank-account-form-step
-              businessId={this.businessId}
-              authToken={this.authToken}
-              ref={(el) => this.refs[0] = el}
-              onFormLoading={this.handleFormLoading}
-              onServerError={this.handleServerErrors}
-              allowOptionalFields={this.allowOptionalFields}
-            />,
+    0: () => <justifi-business-core-info-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[0] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+                allowOptionalFields={this.allowOptionalFields}
+              />,
+    1: () => <justifi-legal-address-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[1] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+                allowOptionalFields={this.allowOptionalFields}
+              />,
+    2: () => <justifi-additional-questions-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[2] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+                allowOptionalFields={this.allowOptionalFields}
+              />,
+    3: () => <justifi-business-representative-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[3] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+                allowOptionalFields={this.allowOptionalFields}
+              />,
+    4: () => <justifi-business-owners-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[4] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+                allowOptionalFields={this.allowOptionalFields}
+              />,
+    5: () => <justifi-business-bank-account-form-step
+                businessId={this.businessId}
+                authToken={this.authToken}
+                ref={(el) => this.refs[5] = el}
+                onFormLoading={this.handleFormLoading}
+                onServerError={this.handleServerErrors}
+                allowOptionalFields={this.allowOptionalFields}
+              />,
   };
 
   componentWillLoad() {
@@ -111,7 +103,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.bankAccountRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef];
     this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 

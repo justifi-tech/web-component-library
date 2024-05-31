@@ -48,18 +48,14 @@ export class BusinessBankAccountFormStep {
     return !!this.bankAccount?.id;
   }
 
-  // Last steps here with the bank account form:
-  // If a bank account is returned from the API and loaded into the form - let's disable the form fields here for now.
-  // Allow Submit / Next to be clicked but no actual post is made. 
-
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       if (response.data.bank_accounts.length > 0) {
-        this.bankAccount = response.data.bank_accounts[0];
+        this.bankAccount = { ...new BankAccount(response.data.bank_accounts[0]) };
       } else {
-        this.bankAccount = new BankAccount({});
+        this.bankAccount = { ...new BankAccount({}) };
       }
       this.formController.setInitialValues({ ...this.bankAccount });
     } catch (error) {
