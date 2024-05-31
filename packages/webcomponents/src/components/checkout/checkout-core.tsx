@@ -159,7 +159,6 @@ export class CheckoutCore {
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
-              show-saved-payment-methods={JSON.stringify(!this.disablePaymentMethodGroup)}
               <justifi-payment-method-options
                 ref={(el) => (this.paymentMethodOptionsRef = el)}
                 show-card={!this.disableCreditCard}
