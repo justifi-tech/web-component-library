@@ -68,16 +68,6 @@ export class SeasonInterruptionInsuranceCore {
     // });
   };
 
-  stripHtml(html: string): string {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent || "";
-  }
-
-  convertToHtml(html: string): string {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.innerHTML || "";
-  }
-
   onChangeHandler(event: any) {
     console.log(event.target.value);
     this.insuranceChanged.emit();
@@ -89,7 +79,7 @@ export class SeasonInterruptionInsuranceCore {
     return (
       <Host>
         <h2 class="fs-5 fw-bold pb-3 jfi-header">{this.quote.product.title}</h2>
-        <div>{this.stripHtml(this.quote.product.description)}</div>
+        <div innerHTML={this.quote.product.description}></div>
 
         <div>
           <input
@@ -117,7 +107,7 @@ export class SeasonInterruptionInsuranceCore {
             Decline coverage
           </label>
         </div>
-        <div innerHTML={this.convertToHtml(this.quote.product.legal_disclaimer)}></div>
+        <div innerHTML={this.quote.product.legal_disclaimer}></div>
       </Host>
     );
   }
