@@ -2,6 +2,14 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessDetails } from '../business-details';
 import { BusinessDetailsCore } from '../business-details-core';
+import JustifiAnalytics from '../../../api/Analytics';
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe('justifi-business-details', () => {
   it('initializes getBusiness on load with valid props', async () => {
