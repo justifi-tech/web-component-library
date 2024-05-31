@@ -20,7 +20,9 @@ describe('justifi-billing-form', () => {
     };
 
     await instance.fill(fields);
-    expect(instance.billingFields).toEqual(fields);
+    const values = await instance.getValues();
+
+    expect(values).toEqual(fields);
   });
 
   it('validates the form', async () => {
