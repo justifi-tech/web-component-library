@@ -19,10 +19,10 @@ const sezzleLogo = (
 );
 
 @Component({
-  tag: 'justifi-sezzel-payment-method',
+  tag: 'justifi-sezzle-payment-method',
   shadow: false,
 })
-export class SezzelPaymentMethod {
+export class SezzlePaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() bnpl: any; // type this
   @Prop() clientId: string;

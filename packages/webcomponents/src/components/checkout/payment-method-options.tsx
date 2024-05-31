@@ -27,7 +27,7 @@ export class PaymentMethodOptions {
 
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
-  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzelPaymentMethodElement;
+  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
@@ -61,7 +61,7 @@ export class PaymentMethodOptions {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
           const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
-          const sezzel = paymentMethodOption.id === PaymentMethodTypes.sezzle;
+          const sezzle = paymentMethodOption.id === PaymentMethodTypes.sezzle;
           if (newCard || newBankAccount) {
             return (
               <justifi-new-payment-method
@@ -76,9 +76,9 @@ export class PaymentMethodOptions {
                 }}
               />
             );
-          } else if (sezzel) {
+          } else if (sezzle) {
             return (
-              <justifi-sezzel-payment-method
+              <justifi-sezzle-payment-method
                 paymentMethodOption={paymentMethodOption}
                 is-selected={isSelected}
                 paymentAmount={this.paymentAmount}
@@ -88,7 +88,7 @@ export class PaymentMethodOptions {
                     this.selectedPaymentMethodOptionRef = el;
                   }
                 }}>
-              </justifi-sezzel-payment-method>);
+              </justifi-sezzle-payment-method>);
           }
           else if (this.showSavedPaymentMethods) {
             return (

@@ -22,7 +22,7 @@ export class CheckoutCore {
 
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
-  @Prop() disableBNPL?: boolean;
+  @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
 
   @State() hasLoadedFonts: boolean = false;
@@ -163,7 +163,7 @@ export class CheckoutCore {
                 ref={(el) => (this.paymentMethodOptionsRef = el)}
                 show-card={!this.disableCreditCard}
                 show-ach={!this.disableBankAccount}
-                show-bnpl={!this.disableBNPL}
+                show-bnpl={!this.disableBnpl}
                 show-saved-payment-methods={!this.disablePaymentMethodGroup}
                 bnpl={this.checkout?.bnpl}
                 client-id={this.checkout?.payment_client_id}

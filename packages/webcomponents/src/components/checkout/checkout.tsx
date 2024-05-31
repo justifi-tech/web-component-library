@@ -12,7 +12,7 @@ export class Checkout {
   @Prop() checkoutId: string;
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
-  @Prop() disableBNPL?: boolean;
+  @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
 
   @State() getCheckout: Function;
@@ -59,7 +59,7 @@ export class Checkout {
         complete={this.complete}
         disableCreditCard={this.disableCreditCard}
         disableBankAccount={this.disableBankAccount}
-        disableBNPL={this.disableBNPL}
+        disableBnpl={this.disableBnpl}
         disablePaymentMethodGroup={this.disablePaymentMethodGroup}
       ></justifi-checkout-core>
     );
