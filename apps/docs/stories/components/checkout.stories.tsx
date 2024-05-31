@@ -36,7 +36,7 @@ const meta: Meta = {
       control: {
         type: 'boolean',
       },
-      description: 'Disable credit card payment method',
+      description: 'Disable new credit card payment method option',
       table: {
         category: 'props',
         defaultValue: { summary: 'undefined' }
@@ -47,7 +47,7 @@ const meta: Meta = {
       control: {
         type: 'boolean',
       },
-      description: 'Disable bank account payment method',
+      description: 'Disable new bank account payment method option',
       table: {
         category: 'props',
         defaultValue: { summary: 'undefined' }
@@ -58,7 +58,7 @@ const meta: Meta = {
       control: {
         type: 'boolean',
       },
-      description: 'Disable BNPL payment method',
+      description: 'Disable BNPL payment method option',
       table: {
         category: 'props',
         defaultValue: { summary: 'undefined' }
@@ -69,7 +69,7 @@ const meta: Meta = {
       control: {
         type: 'boolean',
       },
-      description: 'Disable saved payment methods',
+      description: 'Disable saved payment methods option',
       table: {
         category: 'props',
         defaultValue: { summary: 'undefined' }

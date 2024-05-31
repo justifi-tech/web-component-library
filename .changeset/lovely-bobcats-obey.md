@@ -3,8 +3,8 @@
 ---
 
 - Added new props to `Checkout` component:
-  - `disable-credit-card`: Disables credit card payment method
-  - `disable-bank-account`: Disables bank account payment method
-  - `disable-bnpl`: Disables BNPL payment method
-  - `disable-payment-method-group`: Disables saved payment methods
+  - `disable-credit-card`: Disables new credit card payment method option
+  - `disable-bank-account`: Disable new bank account payment method option
+  - `disable-bnpl`: Disable BNPL payment method option
+  - `disable-payment-method-group`: Disable saved payment methods option
   
