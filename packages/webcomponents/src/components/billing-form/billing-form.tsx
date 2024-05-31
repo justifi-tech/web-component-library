@@ -2,7 +2,7 @@ import { Component, Host, h, State, Prop, Method } from '@stencil/core';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from '../../utils/state-options';
 import { FormController } from '../form/form';
-import { filterPostalInput } from '../form/utils';
+import { numberOnlyHandler } from '../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -123,7 +123,7 @@ export class BillingForm {
                   error={this.errors.address_postal_code}
                   inputHandler={this.inputHandler}
                   maxLength={5}
-                  keyDownHandler={filterPostalInput}
+                  keyDownHandler={numberOnlyHandler}
                 />
               </div>
             </div>
