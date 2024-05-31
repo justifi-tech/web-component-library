@@ -1,7 +1,6 @@
 import { ComponentInterface } from '@stencil/core';
 import webcomponentsPackageJson from '../../package.json';
 import { AnalyticsService } from './services/analytics.service';
-import { camelToKebab } from '../utils/utils';
 
 interface iBasicData {
   component_name: string;
@@ -11,11 +10,6 @@ interface iBasicData {
   client_origin: string;
   error?: any;
 }
-
-const getEventNames = (component) =>
-  Object.keys(component)
-    .filter((key) => typeof component[key] === 'object' && component[key].emit)
-    .map(camelToKebab);
 
 /**
  * @class JustifiAnalytics
@@ -54,7 +48,7 @@ class JustifiAnalytics {
   };
 
   private trackCustomEvents() {
-    this.eventEmitters = getEventNames(this.componentInstance);
+    this.eventEmitters = ['submitted', 'error-event'];
 
     // for each event, add an event listener
     this.eventEmitters.forEach((eventName) => {
