@@ -1,4 +1,4 @@
-import { object } from 'yup';
+import { object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
 import { 
   dobValidation, 
@@ -16,7 +16,8 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
     email: emailValidation.required(`Enter ${role} email`),
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
-    identification_number: ssnValidation.required('Enter SSN'),
+    ssn_last4: string().nullable(),
+    identification_number: ssnValidation,
     address: addressSchema(allowOptionalFields),
   });
 
@@ -26,6 +27,7 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
     email: emailValidation.nullable(),
     phone: phoneValidation.nullable(),
     dob_full: dobValidation(role).nullable(),
+    ssn_last4: string().nullable(),
     identification_number: ssnValidation.nullable(),
     address: addressSchema(allowOptionalFields),
   });

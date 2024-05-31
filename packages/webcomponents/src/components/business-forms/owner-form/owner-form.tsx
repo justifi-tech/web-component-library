@@ -45,6 +45,10 @@ export class BusinessOwnerForm {
     return this.ownerId ? `entities/identity/${this.ownerId}` : 'entities/identity';
   }
 
+  get identificationNumberLabel() {
+    return this.owner.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
+  }
+
   get formTitle() {
     return this.ownerId ? 'Edit Business Owner' : 'Add Business Owner';
   }
@@ -89,6 +93,7 @@ export class BusinessOwnerForm {
       this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
     } finally {
       this.isLoading = false;
+      console.log(this.formController.getInitialValues());
     }
   }
 
@@ -270,7 +275,7 @@ export class BusinessOwnerForm {
               <div class="col-12 col-md-8">
                 <form-control-number-masked
                   name="identification_number"
-                  label="SSN"
+                  label={this.identificationNumberLabel}
                   defaultValue={ownerDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}
