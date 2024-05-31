@@ -19,7 +19,7 @@ export class PayoutService implements IPayoutService {
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<IPayout[]>> {
-    const api = Api(authToken, config.proxyApiOrigin);
+    const api = Api({ authToken, apiOrigin: config.proxyApiOrigin });
     const endpoint = `account/${accountId}/payouts`;
     return api.get(endpoint, params);
   }
@@ -28,7 +28,7 @@ export class PayoutService implements IPayoutService {
     payoutId: string,
     authToken: string
   ): Promise<IApiResponse<IPayout>> {
-    const api = Api(authToken, config.proxyApiOrigin);
+    const api = Api({ authToken, apiOrigin: config.proxyApiOrigin });
     const endpoint = `payouts/${payoutId}`;
     return api.get(endpoint);
   }

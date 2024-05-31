@@ -6,7 +6,7 @@ export default `<!DOCTYPE html>
 ${codeExampleHead('justifi-checkout')}
 
 <body>
-  <justifi-checkout></justifi-checkout>
+  <justifi-checkout auth-token="token" checkout-id="abc123" ></justifi-checkout>
 </body>
 
 <script>

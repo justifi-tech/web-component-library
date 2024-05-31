@@ -26,8 +26,8 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event({eventName: 'click-event'}) clickEventNew: EventEmitter<BusinessFormClickEvent>;
-  @Event({eventName: 'clickEvent'}) clickEventOld: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'click-event' }) clickEventNew: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'clickEvent' }) clickEventOld: EventEmitter<BusinessFormClickEvent>;
 
   fireClickEvents(event: BusinessFormClickEvent) {
     console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
@@ -66,7 +66,7 @@ export class BusinessForm {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
@@ -105,7 +105,7 @@ export class BusinessForm {
   handleReponse(response) {
     if (response.error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
-    } 
+    }
     this.submitted.emit({ data: response });
     this.instantiateBusiness(response.data);
   }
@@ -136,7 +136,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit})}
+                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}
               >
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>

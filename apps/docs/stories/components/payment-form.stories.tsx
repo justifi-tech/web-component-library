@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs } from '../utils';
+import { StoryBaseArgs, getAttributesString } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Payment Form',
@@ -18,26 +18,6 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'account-id': {
-      type: 'string',
-      description: 'Account ID `string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props'
-      }
-    },
-    'client-id': {
-      type: 'string',
-      description: 'Client ID `string`',
-      control: {
-        type: 'text',
-      },
-      table: {
-        category: 'props'
-      }
-    },
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
@@ -137,12 +117,7 @@ const Template = (args: any) => {
   return `
     <div>
       <justifi-payment-form
-        card="${args.card}"
-        bank-account="${args['bank-account']}"
-        email="${args.email}"
-        client-id="${args['client-id']}"
-        account-id="${args['account-id']}"
-        submit-button-text="${args['submit-button-text']}"
+        ${getAttributesString(args)}
       />
     </div>
     <style>
@@ -166,13 +141,15 @@ const Template = (args: any) => {
 };
 
 export const Basic: Story = {
-  args: { ...storyBaseArgs.args },
+  args: { ...storyBaseArgs.args, 'card': true, 'bank-account': true },
   render: Template,
 };
 
 export const Styled: Story = {
   args: {
     ...storyBaseArgs.args,
+    card: true,
+    'bank-account': true,
     cssVariables: `
     --jfi-primary-color: #212529;
     --jfi-load-google-font: 'Roboto Mono:wght@200;400;700;900';

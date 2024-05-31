@@ -114,6 +114,11 @@ export const dobValidation = (role: string) => {
 
 export const ssnValidation = string()
   .matches(ssnRegex, 'Enter valid SSN')
+  .when('ssn_last4', {
+    is: (val: string) => !val || val.length === 0,
+    then: (schema) => schema.required('Enter SSN'),
+    otherwise: (schema) => schema.nullable(),
+  })
   .test('not-repeat', 'Enter valid SSN', (value) => {
     return !/^(\d)\1+$/.test(value);
   })

@@ -31,7 +31,7 @@ export class SubaccountDetails {
   }
 
   async fetchOnboardingData(): Promise<void> {
-    const api = Api(this.authToken, '');
+    const api = Api({ authToken: this.authToken, apiOrigin: '' });
     const endpoint = `onboarding/${this.subaccountId}`;
 
     const response: IApiResponse<IOnboardingData> = await api.get(endpoint);
@@ -43,7 +43,7 @@ export class SubaccountDetails {
   }
 
   async fetchSubAccountData(): Promise<void> {
-    const api = Api(this.authToken, config.privateApiOrigin);
+    const api = Api({ authToken: this.authToken, apiOrigin: config.privateApiOrigin });
     const endpoint = `account/${this.accountId}/seller_accounts/${this.subaccountId}`;
 
     const response: IApiResponse<ISubAccount> = await api.get(endpoint);

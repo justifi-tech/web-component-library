@@ -15,6 +15,6 @@ export class BusinessService implements IBusinessService {
     authToken: string
   ): Promise<IApiResponse<IBusiness>> {
     const endpoint = `entities/business/${businessId}`;
-    return Api(authToken, config.proxyApiOrigin).get(endpoint);
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
 }

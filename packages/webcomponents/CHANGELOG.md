@@ -1,5 +1,61 @@
 ### Changelog
 
+## 4.15.0
+
+### Minor Changes
+
+- 4f834b7: - Added new props to `Checkout` component:
+  - `disable-credit-card`: Disables new credit card payment method option
+  - `disable-bank-account`: Disable new bank account payment method option
+  - `disable-bnpl`: Disable BNPL payment method option
+  - `disable-payment-method-group`: Disable saved payment methods option
+
+### Patch Changes
+
+- 5820727: - `BusinessForm` and `PaymentProvisioning` components: Added conditional logic to require SSN for representatives and owners if `ssn_last4` is missing or null.
+  - Labels for SSN field conditionally update now. If `ssn_last4` is already defined for the given identity, the label shown will be `Change SSN (optional)` as opposed to `SSN`.
+- f304a5e: - Improved form validations for billing form fields in `PaymentForm` and `Checkout` components
+- d9b1e8c: - Fully resolved issue with the `PaymentForm` component props that show the bank-account form.
+
+## 4.14.0
+
+### Minor Changes
+
+- 0183890: Add `authToken` prop to PaymentForm
+  Update `Authorization` section in docs
+
+### Patch Changes
+
+- 0189492: Fix issue with PaymentForm where card form is being shown instead of bank account form when card prop is false and bank-account prop is true
+
+## 4.13.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+- 30e7011: - Add: Handle Checkout component errors from tokenize calls (new payment methods)
+  - Add: Handle Checkout component errors from checkout.complete calls (paying the checkout, possibly with the token from tokenize)
+  - Fix: Reset Checkout component isLoading state when new-payment-method form has client-side errors
+- `BusinessForm` and `PaymentProvisioning` components: Updated Additional Questions form section
+  - removed existing input fields meant to capture `business_dispute_volume` and `business_receivable_volume`
+  - Updated questions / labels to be more clear for fields capturing `business_revenue` and `business_payment_volume`
+  - Added input fields to capture the following data: `business_when_service_received`, `business_recurring_payments`, `business_recurring_payments_percentage`, `business_seasonal`, and `business_other_payment_details`
+  - Improved form validation for each input field in this section.
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
+## 4.13.0-rc.0
+
+### Minor Changes
+
+- 548148c: Add 'error' and 'submitted' events to Checkout component
+
+### Patch Changes
+
+- bad4f86: - `PaymentProvisioning` and `BusinessForm` components: updated address validation to prevent users from submitting PO Box addresses.
+
 ## 4.12.2
 
 ### Patch Changes

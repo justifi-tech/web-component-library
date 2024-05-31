@@ -1,6 +1,14 @@
-import { Meta, Title, Subtitle, Description, ArgTypes, Source } from '@storybook/blocks';
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
 import codeExample from './payouts-list-example';
+import { Authorization } from '../utils/documentation-components';
 
 <Meta
   title="Payment Facilitation/Merchant Tools/Payouts List"
@@ -23,6 +31,12 @@ Component to render a formated list of payouts for the requested account.
 
 <ArgTypes exclude={['css-variables']} />
 
+<Authorization
+  actions={['read', 'write']}
+  entity="account"
+  identification="account_id"
+/>
+
 # Styling
 
 ---
@@ -34,7 +48,9 @@ The `<justifi-payouts-list>` can be customized by using the exported `parts`.
 <ExportedParts
   compact
   component="justifi-payouts-list"
-  tags={filterDocsByTag('justifi-payouts-list').docsTags.map(part => part.text)}
+  tags={filterDocsByTag('justifi-payouts-list').docsTags.map(
+    (part) => part.text
+  )}
 />
 
 # Example Usage

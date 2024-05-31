@@ -21,6 +21,7 @@
       ]
     },
     "test:e2e": {},
+    "test:file": {},
     "lint": {},
     "dev": {
       "cache": false,

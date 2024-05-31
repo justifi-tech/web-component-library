@@ -8,13 +8,13 @@ ${codeExampleHead('justifi-payment-form')}
 /*
 * Props definition:
 *
-* client-id is your JustiFi API Credential Client Id
-* account-id is the merchant subaccount that you intend to tokenize the payment on.
+* client-id OR web-component-token: use either for authorization (see Authorization section above)
+* account-id is the merchant sub account that you intend to tokenize the payment method on
 */
 
 <body>
   <justifi-payment-form
-    client-id="test_df97f04afebc3c018de30df3562d7cdd"
+    client-id="test_df97f04afebc3c018de30df3562d7cdd" // auth-token="your-auth-token"
     account-id="acc_5Et9iXrSSAZR2KSouQGAWi"
     bank-account="true"
     card="true"

@@ -1,0 +1,79 @@
+{
+  "id": "chc_1sCz2z7ZngIgN8Mk71sud8",
+  "type": "checkout_completion",
+  "page_info": null,
+  "data": {
+    "payment_mode": "ecom",
+    "payment_token": "pm_6Pa97VwPLENKbhff32kbE1",
+    "payment_status": "succeeded",
+    "payment_response": {
+      "id": "pi_6blZYsKGktLASDIE82qrIrs",
+      "type": "payment_intent",
+      "data": {
+        "id": "pi_7BlZYGktsw3tRasdfC33qRaRs",
+        "account_id": "acc_4Et9iXrAARKSZ4KSoiQGTYr",
+        "amount": 8592,
+        "currency": "usd",
+        "description": "4x Cases of Celsius Energy Drink",
+        "last_error": null,
+        "metadata": null,
+        "status": "succeeded",
+        "payment_method": {
+          "signature": "4hi2fPwi38xdLzoIaG5eKn",
+          "customer_id": "cust_0mJiaT87evxe0udTFxRnbU",
+          "account_id": "acc_4Et9iXrAARKSZ4KSoiQGTYr",
+          "status": "valid",
+          "invalid_reason": null,
+          "card": {
+            "id": "pm_6Pa97VwPLENKbhff32kbE1",
+            "name": "Julia Garnett",
+            "acct_last_four": "1111",
+            "brand": "visa",
+            "token": "pm_6Pa97VwPLENKbhff32kbE1",
+            "metadata": null,
+            "month": "10",
+            "year": "2042",
+            "address_line1_check": "pass",
+            "address_postal_code_check": "pass",
+            "bin_details": null
+          }
+        },
+        "successful_payment_id": "py_ZwxB243mPYpd83XYgZyhasdf",
+        "created_at": "2024-05-13T19:32:46.232Z",
+        "updated_at": "2024-05-13T19:39:28.419Z"
+      },
+      "page_info": null
+    },
+    "checkout_id": "cho_SuaBaIa78dedf9934cf4vrbHVX",
+    "additional_transactions": [],
+    "checkout": {
+      "payment_intent_id": "pi_7BlZYsKGktASDFdchjgkz",
+      "account_id": "acc_4Et9iXrAARKSZ4KSoiQGTYr",
+      "platform_account_id": "acc_2erNb3aRBy2iWaYUOczmx4",
+      "payment_amount": "8592",
+      "payment_client_id": "test_ef88f04afebc3c018de30fd3652d7cee",
+      "payment_description": "4x Cases of Celsius Energy Drink",
+      "payment_methods": [
+        {
+          "id": "pm_7PA97VwNKZskBhKf24kRTY",
+          "status": "valid",
+          "invalid_reason": null,
+          "name": "Julia Garnett",
+          "brand": "visa",
+          "acct_last_four": "1111",
+          "month": "10",
+          "year": "2042",
+          "address_line1_check": "pass",
+          "address_postal_code_check": "pass",
+          "bin_details": null
+        }
+      ],
+      "payment_method_group_id": "pmg_23YT1LVnpsrdXExZYxIjav",
+      "payment_settings": {
+        "ach_payments": true,
+        "bnpl_payments": true,
+        "credit_card_payments": true
+      }
+    }
+  }
+}

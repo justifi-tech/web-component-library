@@ -31,6 +31,10 @@ export class BusinessRepresentativeFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  get identificationNumberLabel() {
+    return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
+  }
+
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
@@ -63,7 +67,7 @@ export class BusinessRepresentativeFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' }});
+    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' } });
   }
 
   @Method()
@@ -78,7 +82,7 @@ export class BusinessRepresentativeFormStep {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(identitySchema('representative', this.allowOptionalFields));
-    this.api = Api(this.authToken, config.proxyApiOrigin);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
@@ -101,10 +105,10 @@ export class BusinessRepresentativeFormStep {
   onAddressFormUpdate = (values: any): void => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
-        address: {
-          ...this.formController.values.getValue().address,
-          ...values,
-        }
+      address: {
+        ...this.formController.values.getValue().address,
+        ...values,
+      }
     });
   }
 
@@ -188,7 +192,7 @@ export class BusinessRepresentativeFormStep {
               <div class="col-12 col-md-8">
                 <form-control-number-masked
                   name="identification_number"
-                  label="SSN"
+                  label={this.identificationNumberLabel}
                   defaultValue={representativeDefaultValue?.identification_number}
                   error={this.errors.identification_number}
                   inputHandler={this.inputHandler}

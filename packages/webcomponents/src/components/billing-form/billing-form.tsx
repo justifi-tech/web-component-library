@@ -1,7 +1,8 @@
-import { Component, Host, h, State, Listen, Method, Prop } from '@stencil/core';
-import { ValidationError } from 'yup';
+import { Component, Host, h, State, Prop, Method } from '@stencil/core';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from '../../utils/state-options';
+import { FormController } from '../form/form';
+import { filterPostalInput } from '../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -18,104 +19,116 @@ export class BillingForm {
    * (Optional) A label for the form.
    */
   @Prop({ mutable: true }) legend?: string;
-  @State() billingFields: BillingFormFields = {
-    name: '',
-    address_line1: '',
-    address_line2: '',
-    address_city: '',
-    address_state: '',
-    address_postal_code: '',
-  };
+  @State() formController: FormController;
+  @State() billingInfo: {}
+  @State() errors: any = {};
 
-  @State() billingFieldsErrors: any = {};
-
-  @Listen('fieldReceivedInput')
-  setFormValue(event) {
-    const data = event.detail;
-    const billingFieldsClone = { ...this.billingFields };
-    if (data.name) {
-      billingFieldsClone[data.name] = data.value;
-      this.billingFields = billingFieldsClone;
-    }
+  componentWillLoad() {
+    this.formController = new FormController(BillingFormSchema);
   }
 
-  /**
-   * Method for filling the form with provided data
-   * @argument {BillingFormFields} fields - The fields to fill the form with
-   */
+  componentDidLoad() {
+    this.formController.values.subscribe(values =>
+      this.billingInfo = { ...values }
+    );
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
+  }
+
+  inputHandler = (name: string, value: string) => {
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      [name]: value,
+    });
+  }
+
+  @Method()
+  async getValues(): Promise<BillingFormFields> {
+    return this.formController.values.getValue();
+  }
+
   @Method()
   async fill(fields: BillingFormFields) {
-    this.billingFields = { ...fields };
+    this.formController.setValues(fields);
   }
 
-  /**
-   * Run validation on the form
-   */
   @Method()
-  async validate() {
-    const newErrors = {};
-    let isValid: boolean = true;
-
-    try {
-      await BillingFormSchema.validate(this.billingFields, { abortEarly: false });
-    } catch (err) {
-      isValid = false;
-      err.inner.map((item: ValidationError) => {
-        newErrors[item.path] = item.message;
-      });
-    }
-
-    this.billingFieldsErrors = newErrors;
-
+  async validate(): Promise<{ isValid: boolean }>{
+    let isValid: boolean = await this.formController.validate();
     return { isValid: isValid };
   }
 
-  /**
-   * Returns the values of the form as an object
-   * @returns {Promise<BillingFormFields>} The values of the form
-   */
-  @Method()
-  async getValues(): Promise<BillingFormFields> {
-    return this.billingFields;
-  }
-
   render() {
+
+    const billingFormDefaultValue = this.formController.getInitialValues();
+
     return (
       <Host exportparts="label,input,input-invalid">
-        <fieldset>
-          {this.legend && <legend>{this.legend}</legend>}
-          <div class="row gy-3">
-            <div class="col-12">
-              <text-input name="name" label="Full Name" defaultValue={this.billingFields.name} error={this.billingFieldsErrors.name} />
+        <form>
+          <fieldset>
+            {this.legend && <legend>{this.legend}</legend>}
+            <div class="row gy-3">
+              <div class="col-12">
+                <form-control-text
+                  name='name'
+                  label='Full Name'
+                  defaultValue={billingFormDefaultValue.name}
+                  error={this.errors.name}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-text
+                  name='address_line1'
+                  label='Street Address'
+                  defaultValue={billingFormDefaultValue.address_line1}
+                  error={this.errors.address_line1}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-text
+                  name='address_line2'
+                  label="Apartment, Suite, etc. (optional)"
+                  defaultValue={billingFormDefaultValue.address_line2}
+                  error={this.errors.address_line2}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-text
+                  name='address_city'
+                  label="City"
+                  defaultValue={billingFormDefaultValue.address_city}
+                  error={this.errors.address_city}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-select
+                  name='address_state'
+                  label='State'
+                  options={StateOptions}
+                  defaultValue={billingFormDefaultValue.address_state}
+                  error={this.errors.address_state}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-text
+                  name='address_postal_code'
+                  label="ZIP"
+                  defaultValue={billingFormDefaultValue.address_postal_code}
+                  error={this.errors.address_postal_code}
+                  inputHandler={this.inputHandler}
+                  maxLength={5}
+                  keyDownHandler={filterPostalInput}
+                />
+              </div>
             </div>
-            <div class="col-12">
-              <text-input name="address_line1" label="Street Address" defaultValue={this.billingFields.address_line1} error={this.billingFieldsErrors.address_line1} />
-            </div>
-            <div class="col-12">
-              <text-input
-                name="address_line2"
-                label="Apartment, Suite, etc. (optional)"
-                defaultValue={this.billingFields.address_line2}
-                error={this.billingFieldsErrors.address_line2}
-              />
-            </div>
-            <div class="col-12">
-              <text-input name="address_city" label="City" defaultValue={this.billingFields.address_city} error={this.billingFieldsErrors.address_city} />
-            </div>
-            <div class="col-12">
-              <select-input
-                name="address_state"
-                label="State"
-                options={StateOptions}
-                defaultValue={this.billingFields.address_state}
-                error={this.billingFieldsErrors.address_state}
-              />
-            </div>
-            <div class="col-12">
-              <text-input name="address_postal_code" label="ZIP" defaultValue={this.billingFields.address_postal_code} error={this.billingFieldsErrors.address_postal_code} />
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        </form>
       </Host>
     );
   }
