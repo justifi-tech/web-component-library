@@ -63,6 +63,12 @@
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
 
+  /* form radio input */
+  --jfi-radio-input-box-shadow-focus: #{$form-check-input-focus-box-shadow};
+  --jfi-radio-input-background-color-selected: #{$dark};
+  --jfi-radio-input-border-color: #{$secondary};
+  --jfi-radio-input-border-color-selected: #{$dark};
+
   /* submit button */
   --jfi-submit-button-color: white;
   --jfi-submit-button-background-color: var(--jfi-primary-color);

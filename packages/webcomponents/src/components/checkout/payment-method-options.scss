@@ -19,18 +19,18 @@
   }
 
   input[type="radio"] {
-    background-color: var(--jfi-radio-button-background-color);
-    border-color: var(--jfi-radio-button-border-color);
+    background-color: var(--jfi-radio-input-background-color);
+    border-color: var(--jfi-radio-input-border-color);
 
     &:checked,
     &:checked:focus {
-      background-color: var(--jfi-radio-button-background-color-selected);
-      border-color: var(--jfi-radio-button-border-color-selected);
+      background-color: var(--jfi-radio-input-background-color-selected);
+      border-color: var(--jfi-radio-input-border-color-selected);
     }
 
     &:focus {
-      border-color: var(--jfi-radio-button-border-color-focus);
-      box-shadow: var(--jfi-radio-button-box-shadow-focus);
+      border-color: var(--jfi-radio-input-border-color-focus);
+      box-shadow: var(--jfi-radio-input-box-shadow-focus);
     }
   }
 

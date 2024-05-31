@@ -10,6 +10,10 @@ export class Checkout {
   @Prop() iframeOrigin?: string;
   @Prop() authToken: string;
   @Prop() checkoutId: string;
+  @Prop() disableCreditCard?: boolean;
+  @Prop() disableBankAccount?: boolean;
+  @Prop() disableBnpl?: boolean;
+  @Prop() disablePaymentMethodGroup?: boolean;
 
   @State() getCheckout: Function;
   @State() complete: Function;
@@ -53,6 +57,10 @@ export class Checkout {
       <justifi-checkout-core
         getCheckout={this.getCheckout}
         complete={this.complete}
+        disableCreditCard={this.disableCreditCard}
+        disableBankAccount={this.disableBankAccount}
+        disableBnpl={this.disableBnpl}
+        disablePaymentMethodGroup={this.disablePaymentMethodGroup}
       ></justifi-checkout-core>
     );
   }

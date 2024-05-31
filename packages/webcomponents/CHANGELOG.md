@@ -1,5 +1,22 @@
 ### Changelog
 
+## 4.15.0
+
+### Minor Changes
+
+- 4f834b7: - Added new props to `Checkout` component:
+  - `disable-credit-card`: Disables new credit card payment method option
+  - `disable-bank-account`: Disable new bank account payment method option
+  - `disable-bnpl`: Disable BNPL payment method option
+  - `disable-payment-method-group`: Disable saved payment methods option
+
+### Patch Changes
+
+- 5820727: - `BusinessForm` and `PaymentProvisioning` components: Added conditional logic to require SSN for representatives and owners if `ssn_last4` is missing or null.
+  - Labels for SSN field conditionally update now. If `ssn_last4` is already defined for the given identity, the label shown will be `Change SSN (optional)` as opposed to `SSN`.
+- f304a5e: - Improved form validations for billing form fields in `PaymentForm` and `Checkout` components
+- d9b1e8c: - Fully resolved issue with the `PaymentForm` component props that show the bank-account form.
+
 ## 4.14.0
 
 ### Minor Changes
