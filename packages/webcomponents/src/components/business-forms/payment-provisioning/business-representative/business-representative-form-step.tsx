@@ -32,7 +32,7 @@ export class BusinessRepresentativeFormStep {
   }
 
   get identificationNumberLabel() {
-    return this.representative.ssn_last4 ? 'Change SSN (optional)' : 'SSN';
+    return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
   }
 
   private fetchData = async () => {

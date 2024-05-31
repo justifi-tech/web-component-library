@@ -46,7 +46,7 @@ export class BusinessOwnerForm {
   }
 
   get identificationNumberLabel() {
-    return this.owner.ssn_last4 ? 'Change SSN (optional)' : 'SSN';
+    return this.owner.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
   }
 
   get formTitle() {
