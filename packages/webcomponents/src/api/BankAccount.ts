@@ -1,37 +1,37 @@
 export interface IBankAccount {
-  id: string;
+  id?: string;
   account_owner_name?: string;
   full_name?: string;
-  account_type: string;
+  account_type?: string;
   acct_last_four?: string;
   account_number_last4?: string;
-  routing_number: string;
-  bank_name: string;
-  country: string;
-  currency: string;
-  nickname: string;
-  metadata: any;
-  business_id: string;
-  platform_account_id: string;
+  routing_number?: string;
+  bank_name?: string;
+  country?: string;
+  currency?: string;
+  nickname?: string;
+  metadata?: any;
+  business_id?: string;
+  platform_account_id?: string;
   created_at?: string;
   updated_at?: string;
 }
 
 export class BankAccount implements IBankAccount {
-  public id: string;
+  public id?: string;
   public account_owner_name?: string;
   public full_name?: string;
-  public account_type: string;
+  public account_type?: string;
   public acct_last_four?: string;
   public account_number_last4?: string;
-  public routing_number: string;
-  public bank_name: string;
-  public country: string;
-  public currency: string;
-  public nickname: string;
-  public metadata: any;
-  public business_id: string;
-  public platform_account_id: string;
+  public routing_number?: string;
+  public bank_name?: string;
+  public country?: string;
+  public currency?: string;
+  public nickname?: string;
+  public metadata?: any;
+  public business_id?: string;
+  public platform_account_id?: string;
   public created_at?: string;
   public updated_at?: string;
 
