@@ -38,9 +38,7 @@ class JustifiAnalytics {
       this.componentInstance.businessId ||
       this.componentInstance.paymentId ||
       this.componentInstance.payoutId ||
-      this.componentInstance.clientId ||
-      this.componentInstance.checkoutId ||
-      this.componentInstance.authToken
+      this.componentInstance.checkoutId
     );
   }
 
