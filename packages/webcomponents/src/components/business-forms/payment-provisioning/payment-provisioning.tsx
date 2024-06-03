@@ -22,12 +22,15 @@ export class PaymentProvisioning {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() totalSteps: number = 6;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
 
   get title() {
     return this.removeTitle ? '' : this.formTitle;
+  }
+
+  get totalSteps() { 
+    return Object.keys(this.componentStepMapping).length - 1; 
   }
 
   get showErrors() {
@@ -104,7 +107,6 @@ export class PaymentProvisioning {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef];
-    this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
   }
 
   handleFormLoading = (e: CustomEvent) => {
