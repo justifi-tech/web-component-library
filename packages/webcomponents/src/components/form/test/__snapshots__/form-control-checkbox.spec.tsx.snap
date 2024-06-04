@@ -6,7 +6,7 @@ exports[`form-control-checkbox renders with default props 1`] = `
     <label class="form-label" htmlfor="user ID" part="label">
       Select a checkbox
     </label>
-    <input class="form-select" id="user ID" name="user ID" part="input " type="checkbox">
+    <input class="form-check-input" id="user ID" name="user ID" part="input " type="checkbox">
   </mock:shadow-root>
 </form-control-checkbox>
 `;
