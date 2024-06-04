@@ -8,7 +8,6 @@ import { documentSchema } from '../../schemas/business-document-upload-schema';
 import { FileChangeEvent } from '../../../../components';
 import { DocumentUploadData } from '../../../../api/Document';
 
-
 @Component({
   tag: 'justifi-business-document-upload-form-step',
   styleUrl: 'business-document-upload-form-step.scss',
@@ -21,7 +20,7 @@ export class BusinessDocumentFormStep {
   @State() errors: any = {};
   @State() documents: any;
   @State() bankStatementData: any;
-  @State() otherPayload: any;
+  @State() otherData: any;
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
@@ -48,16 +47,13 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  private getData = async () => {
-    const response = await this.api.get('entities/document');
-    console.log(response);
-  }
-
+  // It's class related issues that are making the payload empty and causing issues posting to the API. Need to figure out the class logic with methods, etc in order to successfully submit this payload. Think on this. 
 
   createDocumentRecord = async (docData: DocumentUploadData, onSuccess?: () => void) => {
     this.formLoading.emit(true);
+    console.log('docData', docData);
+    const payload = docData.record_data;
     try {
-      const payload = docData.record_data;
       const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
       this.handleDocRecordResponse(response, onSuccess);
     } catch (error) {
@@ -71,22 +67,43 @@ export class BusinessDocumentFormStep {
     if (response.error) {
       this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
     } else {
-      onSuccess();
+      this.otherData.setPresignedUrl(response.data.presigned_url);
+      this.uploadDocument(this.otherData, onSuccess);
     }
   }
 
-  uploadDocument = async (fileData: any, onSuccess?: () => void) => {
-    const file = fileData.file;
-    // const 
-    this.formLoading.emit(true);
-    try {
-      const response = await this.api.put(this.documentEndpoint, JSON.stringify(file));
-      this.handleUploadResponse(response, onSuccess);
-    } catch (error) {
-      this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
-    } finally {
-      this.formLoading.emit(false);
+  // uploadDocument = async (fileData: any, onSuccess?: () => void) => {
+  //   const file = fileData.file;
+  //   // const 
+  //   this.formLoading.emit(true);
+  //   try {
+  //     const response = await this.api.put(this.documentEndpoint, JSON.stringify(file));
+  //     this.handleUploadResponse(response, onSuccess);
+  //   } catch (error) {
+  //     this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
+  //   } finally {
+  //     this.formLoading.emit(false);
+  //   }
+  // }
+
+  uploadDocument = async (fileData: DocumentUploadData, onSuccess: () => void) => {
+    console.log(onSuccess);
+    if (!fileData.presigned_url) {
+      throw new Error('Presigned URL is not set');
     }
+
+    const response = await fetch(fileData.presigned_url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json' },
+      body: JSON.stringify(fileData.file),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response;
   }
 
   handleFileChange = (e: CustomEvent<FileChangeEvent>) => {
@@ -98,12 +115,13 @@ export class BusinessDocumentFormStep {
 
 
   holdFileData = (fileData: DocumentUploadData) => {
+    console.log('fileData', fileData);
     switch (fileData.document_type) {
       case 'bank_statement':
         this.bankStatementData = fileData;
         break;
       case 'other':
-        this.otherPayload = fileData;
+        this.otherData = fileData;
         break;
       default:
         break;
@@ -123,7 +141,7 @@ export class BusinessDocumentFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => this.createDocumentRecord(onSuccess));
+    this.formController.validateAndSubmit(() => this.createDocumentRecord(this.otherData, onSuccess));
   }
 
   componentWillLoad() {
@@ -135,7 +153,6 @@ export class BusinessDocumentFormStep {
     this.formController = new FormController(documentSchema);
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
-    this.getData();
   }
 
   componentDidLoad() {

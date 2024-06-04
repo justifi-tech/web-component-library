@@ -93,16 +93,18 @@ export class DocumentUploadData {
     this.record_data = null;
   }
 
-  public setPresignedUrl(url: string) {
+  setPresignedUrl(url: string) {
     this.presigned_url = url;
+    return this.presigned_url;
   }
 
-  public setRecordData(business_id: string) {
+  setRecordData(business_id: string) {
     this.record_data = {
       business_id: business_id,
       document_type: this.document_type,
       file_name: this.file.name,
       file_type: this.file.type,
     };
+    return this.record_data;
   }
 }
