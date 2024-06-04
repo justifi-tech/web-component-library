@@ -59,7 +59,7 @@ export class CheckboxInput {
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
           part={`input ${this.error ? 'input-invalid' : ''}`}
-          class={this.error ? 'form-select is-invalid' : 'form-select'}
+          class={this.error ? 'form-check-input is-invalid' : 'form-check-input'}
           disabled={this.disabled}
         />
         {this.error && <div class="invalid-feedback">{this.error}</div>}
