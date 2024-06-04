@@ -36,6 +36,7 @@ export const API_PATHS = {
   BUSINESS_OWNER: '/entities/identity/:id',
   BUSINESS_DETAILS: '/entities/business/:id',
   CHECKOUT: '/checkouts/:id',
+  CHECKOUT_COMPLETE: '/checkouts/:id/complete',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYMENT_DETAILS: '/payments/:id',
   PAYMENTS_LIST: '/account/:id/payments',
@@ -88,7 +89,7 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // Checkout
       this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
-      this.post(API_PATHS.CHECKOUT, () => mockPostCheckout);
+      this.post(API_PATHS.CHECKOUT_COMPLETE, () => mockPostCheckout);
 
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
