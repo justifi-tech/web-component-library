@@ -4,7 +4,8 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
-  tag: 'justifi-checkout'
+  tag: 'justifi-checkout',
+  shadow: true,
 })
 export class Checkout {
   @Prop() iframeOrigin?: string;

@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { InsuranceService } from '../../../api/services/insurance.service';
-import { makeGetQuote } from '../insurance-actions';
+import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 
 // POST /v1/insurance/quotes/
@@ -65,15 +65,16 @@ export class SeasonInterruptionInsurance {
   @Prop() checkoutId: string;
 
   @State() getQuote: Function;
+  @State() toggleCoverage: Function;
   @State() quote: any;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    this.initializeGetQuote();
+    this.initializeServiceMethods();
   }
 
-  private initializeGetQuote() {
+  private initializeServiceMethods() {
     if (!this.authToken) {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
@@ -85,32 +86,22 @@ export class SeasonInterruptionInsurance {
 
     this.getQuote = makeGetQuote({
       authToken: this.authToken,
-      payload: {
-        "checkout_id": this.checkoutId,
-        "policy_type": "season_interruption",
-        "primary_identity": {
-          "state": "MN",
-          "email": "jon.erickson@justifi.tech",
-          "first_name": "Jon",
-          "last_name": "Erickson"
-        },
-        "policy_attributes": {
-          "insurable_amount": 1000,
-          "start_date": "2024-05-30",
-          "end_date": "2024-05-30",
-          "covered_identity": {
-            "first_name": "Eric",
-            "last_name": "Erickson"
-          }
-        }
-      },
+      service: new InsuranceService(),
+    });
+
+    this.toggleCoverage = makeToggleCoverage({
+      authToken: this.authToken,
       service: new InsuranceService(),
     });
   }
 
   render() {
     return (
-      <justifi-season-interruption-insurance-core getQuote={this.getQuote}></justifi-season-interruption-insurance-core>
+      <justifi-season-interruption-insurance-core
+        checkout-id={this.checkoutId}
+        getQuote={this.getQuote}
+        toggleCoverage={this.toggleCoverage}>
+      </justifi-season-interruption-insurance-core>
     );
   }
 }

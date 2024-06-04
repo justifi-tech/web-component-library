@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Host, Method, Listen } from '@stencil/core';
 import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -42,6 +42,11 @@ export class CheckoutCore {
       this.loadFontsOnParent();
       this.hasLoadedFonts = true;
     }
+  }
+
+  @Listen('insurance-updated')
+  handleInsuranceChanged() {
+    this.fetchData();
   }
 
   fetchData(): void {
