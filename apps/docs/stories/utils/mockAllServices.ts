@@ -1,4 +1,5 @@
 import { createServer } from 'miragejs';
+import mockBusinessOwner from '../../../../mockData/mockBusinessOwner.json';
 import mockBusinessDetails from '../../../../mockData/mockBusinessDetails.json';
 import mockGetCheckout from '../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckout from '../../../../mockData/mockPostCheckoutSuccess.json';
@@ -8,7 +9,30 @@ import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
 import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 
+const handleMockGrossVolumeChartMock = () => {
+  const isChromaticBuild = __VITE_STORYBOOK_CHROMATIC_BUILD__ === 'true';
+  if (isChromaticBuild) {
+    return mockGrossPaymentChart;
+  }
+
+  let dateBuffer = -1;
+
+  const mappedDates = mockGrossPaymentChart.data.dates.map((item: any) => {
+    return {
+      ...item,
+      // for each item in the array, assign a new date one day behind the current date
+      date: new Date(new Date().setDate(new Date().getDate() - ++dateBuffer))
+        .toISOString()
+        .split('T')[0],
+    };
+  });
+
+  mockGrossPaymentChart.data.dates = mappedDates;
+  return mockGrossPaymentChart;
+};
+
 export const API_PATHS = {
+  BUSINESS_OWNER: '/entities/identity/:id',
   BUSINESS_DETAILS: '/entities/business/:id',
   CHECKOUT: '/checkouts/:id',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
@@ -19,13 +43,23 @@ export const API_PATHS = {
 };
 
 type MockAllServicesConfig = {
-  bypass: string[];
+  bypass?: string[];
 };
 
-export const mockAllServices = ({ bypass }: MockAllServicesConfig) => {
+export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
+  const bypass = config.bypass || [];
   createServer({
     routes() {
       this.urlPrefix = 'https://wc-proxy.justifi.ai/v1';
+
+      // BusinessOwner
+      this.get(API_PATHS.BUSINESS_OWNER, () => mockBusinessOwner);
+
+      this.patch(API_PATHS.BUSINESS_OWNER, (_schema, request) => {
+        const id = request.params.id;
+        const newOwner = JSON.parse(request.requestBody);
+        return { ...mockBusinessOwner, ...newOwner, id };
+      });
 
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
@@ -37,7 +71,7 @@ export const mockAllServices = ({ bypass }: MockAllServicesConfig) => {
       });
 
       // GrossPaymentChart
-      this.get(API_PATHS.GROSS_VOLUME, () => mockGrossPaymentChart);
+      this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChartMock);
 
       // PaymentDetails
       this.get(API_PATHS.PAYMENT_DETAILS, () => mockPayment);
@@ -66,13 +100,10 @@ export const mockAllServices = ({ bypass }: MockAllServicesConfig) => {
 
 export const setUpMocks = () => {
   const isMocksEnabled = __VITE_STORYBOOK_MOCKS_ENABLED__ === 'true';
-  const isChromaticBuild = __VITE_STORYBOOK_CHROMATIC_BUILD__ === 'true';
 
   if (isMocksEnabled) {
     // Use mock data for GrossPaymentChart only in Chromatic builds for consistent screenshots.
     // For regular Storybook, use proxyApi to view dynamic data, especially to see dates from the past 30 days.
-    mockAllServices({
-      bypass: isChromaticBuild ? [] : [API_PATHS.GROSS_VOLUME],
-    });
+    mockAllServices();
   }
 };
