@@ -39,7 +39,7 @@ jobs:
           echo "::group::Build"
           pnpm clean
           pnpm install --frozen-lockfile
-          pnpm build
+          pnpm build:mocks
           echo "::endgroup::"
 
       - name: 'upload'
