@@ -3,6 +3,7 @@ import { ReportsService } from '../../api/services/reports.service';
 import { makeGetGrossPaymentChartData } from './get-gross-payment-chart-data';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-gross-payment-chart',
@@ -17,8 +18,15 @@ export class GrossPaymentChart {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetGrossPayment();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   @Watch('accountId')

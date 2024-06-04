@@ -179,6 +179,10 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
     .join(' ');
 }
 
+export function camelToKebab(str: string): string {
+  return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 export function flattenNestedObject(obj) {
   const result = {};
 

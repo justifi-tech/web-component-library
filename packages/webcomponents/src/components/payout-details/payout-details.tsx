@@ -3,6 +3,7 @@ import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayoutDetails } from './get-payout-details';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -18,8 +19,15 @@ export class PayoutDetails {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetPayout();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   @Watch('payoutId')

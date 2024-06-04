@@ -5,8 +5,9 @@ import {
   businessServiceReceivedOptions, 
   businessTypeOptions, 
   recurringPaymentsOptions, 
-  seasonalBusinessOptions } 
-from "../utils/business-form-options";
+  seasonalBusinessOptions, 
+  bankAccountTypeOptions
+} from "../utils/business-form-options";
 import { 
   businessNameRegex, 
   numbersOnlyRegex, 
@@ -17,8 +18,9 @@ import {
   stringLettersOnlyRegex, 
   taxIdRegex, 
   transformEmptyString, 
-  urlRegex } 
-from "./schema-helpers";
+  urlRegex, 
+  validateRoutingNumber
+} from "./schema-helpers";
 
 // Common Validations
 
@@ -191,4 +193,42 @@ export const seasonalBusinessValidation = string()
   .transform(transformEmptyString);
 
 export const otherPaymentDetailsValidation = string()
+  .transform(transformEmptyString);
+
+// Bank Account Validations
+
+export const bankNameValidation = string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(50, 'Name must be less than 50 characters')
+  .matches(stringLettersOnlyRegex, 'Enter valid bank name')
+  .transform(transformEmptyString);
+
+export const nicknameValidation = string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(50, 'Name must be less than 50 characters')
+  .matches(stringLettersOnlyRegex, 'Enter valid nickname')
+  .transform(transformEmptyString);
+
+export const accountTypeValidation = string()
+  .oneOf(bankAccountTypeOptions.map((option) => option.value), 'Select account type')
+  .transform(transformEmptyString);
+
+export const accountNumberValidation = string()
+  .min(8, 'Account number must be at least 8 digits')
+  .max(17, 'Account number must be less than 17 digits')
+  .matches(numbersOnlyRegex, 'Enter valid account number')
+  .test('not-repeat', 'Enter valid account number', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .transform(transformEmptyString);
+
+export const routingNumberValidation = string()
+  .length(9, 'Routing number must be 9 digits')
+  .matches(numbersOnlyRegex, 'Enter valid routing number')
+  .test('not-repeat', 'Enter valid routing number', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .test('valid', 'Enter valid routing number', (value) => {
+    return validateRoutingNumber(value);
+  })
   .transform(transformEmptyString);

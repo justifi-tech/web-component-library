@@ -2,7 +2,7 @@ import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { IAddress } from '../../../../api/Business';
 import StateOptions from '../../../../utils/state-options';
-import { filterPostalInput } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../form/utils';
 
 /**
  * @exportedPart label: Label for inputs
@@ -96,7 +96,7 @@ export class LegalAddressForm {
                 defaultValue={legalAddressDefaultValue?.postal_code}
                 error={this.errors?.legal_address?.postal_code}
                 maxLength={5}
-                keyDownHandler={filterPostalInput}
+                keyDownHandler={numberOnlyHandler}
               />
             </div>
             <div class="col-12">

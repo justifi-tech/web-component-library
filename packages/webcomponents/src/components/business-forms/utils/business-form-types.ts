@@ -19,7 +19,7 @@ interface BusinessFormEventMetaData {
   completedStep?: BusinessFormStep;
 }
 
-type BusinessFormStep = 'coreInfo' | 'legalAddress' | 'additionalQuestions' | 'representative' | 'owners';
+type BusinessFormStep = 'coreInfo' | 'legalAddress' | 'additionalQuestions' | 'representative' | 'owners' | 'bankAccount';
 
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',

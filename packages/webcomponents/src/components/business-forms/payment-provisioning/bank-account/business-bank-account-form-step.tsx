@@ -1,30 +1,35 @@
-import { Component, Host, Method, Prop, State, h, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import Api, { IApiResponse } from '../../../../api/Api';
-import { Address, IAddress, IBusiness } from '../../../../api/Business';
-import { parseAddressInfo } from '../../utils/payload-parsers';
-import { addressSchema } from '../../schemas/business-address-schema';
-import { config } from '../../../../../config';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
-import StateOptions from '../../../../utils/state-options';
+import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
+import { bankAccountTypeOptions } from '../../utils/business-form-options';
+import { Api, IApiResponse } from '../../../../api';
+import { config } from '../../../../../config';
+import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../form/utils';
+import { BankAccount } from '../../../../api/BankAccount';
 
 /**
+ *
+ * The difference between this component and business-generic-info-details
+ * is that this component is meant to be a form and send data
+ * and the other one  is meant to be just read only.
+ *
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-legal-address-form-step',
-  styleUrl: 'legal-address-form-step.scss',
+  tag: 'justifi-business-bank-account-form-step',
+  styleUrl: 'business-bank-account-form-step.scss',
 })
-export class LegalAddressFormStep {
+export class BusinessBankAccountFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: IAddress = {};
+  @State() bankAccount: BankAccount;
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
@@ -35,12 +40,24 @@ export class LegalAddressFormStep {
     return `entities/business/${this.businessId}`
   }
 
+  get bankAccountEndpoint() {
+    return `entities/bank_accounts`
+  }
+
+  get formDisabled() {
+    return !!this.bankAccount?.id;
+  }
+
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.legal_address = new Address(response.data.legal_address || {});
-      this.formController.setInitialValues({ ...this.legal_address });
+      if (response.data.bank_accounts.length > 0) {
+        this.bankAccount = { ...new BankAccount(response.data.bank_accounts[0]) };
+      } else {
+        this.bankAccount = { ...new BankAccount({}) };
+      }
+      this.formController.setInitialValues({ ...this.bankAccount });
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
@@ -51,8 +68,9 @@ export class LegalAddressFormStep {
   private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
-      const payload = parseAddressInfo(this.formController.values.getValue());
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ legal_address: payload }));
+      const formValues = this.formController.values.getValue();
+      const payload = { ...formValues, business_id: this.businessId }
+      const response = await this.api.post(this.bankAccountEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -67,11 +85,12 @@ export class LegalAddressFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'legalAddress' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: 'bankAccount' } });
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
+    this.formDisabled ? onSuccess() :
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
@@ -81,18 +100,18 @@ export class LegalAddressFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(addressSchema(this.allowOptionalFields));
+    this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 
   componentDidLoad() {
     this.formController.values.subscribe(values =>
-      this.legal_address = { ...values }
+      this.bankAccount = { ...values }
     );
-    this.formController.errors.subscribe(
-      errors => (this.errors = { ...errors }),
-    );
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
   }
 
   inputHandler = (name: string, value: string) => {
@@ -103,77 +122,81 @@ export class LegalAddressFormStep {
   }
 
   render() {
-    const legalAddressDefaultValue =
-      this.formController.getInitialValues();
+    const bankAccountDefaultValue = this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
         <form>
           <fieldset>
-            <legend>Business Legal Address</legend>
+            <legend>Bank Account Info</legend>
             <hr />
-            <div class="row gx-2 gy-2">
+            <div class="row gy-3">
               <div class="col-12">
                 <form-control-text
-                  name="line1"
-                  label="Legal Address"
+                  name="bank_name"
+                  label="Bank Name"
+                  defaultValue={bankAccountDefaultValue.bank_name}
+                  error={this.errors.bank_name}
                   inputHandler={this.inputHandler}
-                  defaultValue={legalAddressDefaultValue?.line1}
-                  error={this.errors?.line1}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
                 <form-control-text
-                  name="line2"
-                  label="Address Line 2"
+                  name="nickname"
+                  label="Nickname"
+                  defaultValue={bankAccountDefaultValue.nickname}
+                  error={this.errors.nickname}
                   inputHandler={this.inputHandler}
-                  defaultValue={legalAddressDefaultValue?.line2}
-                  error={this.errors?.line2}
-
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
                 <form-control-text
-                  name="city"
-                  label="City"
+                  name="account_owner_name"
+                  label="Account Owner Name"
+                  defaultValue={bankAccountDefaultValue.account_owner_name}
+                  error={this.errors.account_owner_name}
                   inputHandler={this.inputHandler}
-                  defaultValue={legalAddressDefaultValue?.city}
-                  error={this.errors?.city}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
                 <form-control-select
-                  name="state"
-                  label="State"
-                  options={StateOptions}
+                  name="account_type"
+                  label="Account Type"
+                  options={bankAccountTypeOptions}
+                  defaultValue={bankAccountDefaultValue.account_type}
+                  error={this.errors.account_type}
                   inputHandler={this.inputHandler}
-                  defaultValue={legalAddressDefaultValue?.state}
-                  error={this.errors?.state}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
                 <form-control-text
-                  name="postal_code"
-                  label="Postal Code"
+                  name="account_number"
+                  label="Account Number"
+                  defaultValue={bankAccountDefaultValue.account_number}
+                  maxLength={17}
+                  error={this.errors.account_number}
                   inputHandler={this.inputHandler}
-                  defaultValue={legalAddressDefaultValue?.postal_code}
-                  error={this.errors?.postal_code}
-                  maxLength={5}
                   keyDownHandler={numberOnlyHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
               <div class="col-12">
-                <form-control-select
-                  name="country"
-                  label="Country"
-                  options={[{ label: 'United States', value: 'USA' }]}
+                <form-control-text
+                  name="routing_number"
+                  label="Routing Number"
+                  defaultValue={bankAccountDefaultValue.routing_number}
+                  maxLength={9}
+                  error={this.errors.routing_number}
                   inputHandler={this.inputHandler}
-                  defaultValue={legalAddressDefaultValue?.country}
-                  error={this.errors?.country}
-                  // just for now so we skip handling country specificities
-                  disabled={true}
+                  keyDownHandler={numberOnlyHandler}
+                  disabled={this.formDisabled}
                 />
               </div>
+              
             </div>
           </fieldset>
         </form>

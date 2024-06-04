@@ -2,6 +2,7 @@ import { Component, Prop, h, State, Watch, Event, EventEmitter } from '@stencil/
 import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-checkout'
@@ -21,8 +22,15 @@ export class Checkout {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetCheckout();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   private initializeGetCheckout() {

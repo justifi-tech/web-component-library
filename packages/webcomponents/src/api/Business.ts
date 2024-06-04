@@ -1,6 +1,6 @@
 import { Identity, Representative } from './Identity';
 import { IDocument } from './Document';
-import { BankAccount } from './shared';
+import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
 export enum BusinessType {
@@ -145,7 +145,7 @@ export interface IBusiness {
   additional_questions: IAdditionalQuestions | {};
   business_type: BusinessType;
   business_structure: BusinessStructure;
-  bank_accounts: BankAccount[];
+  bank_accounts: IBankAccount[];
   created_at: string;
   documents: IDocument[];
   doing_business_as: string;
@@ -170,7 +170,7 @@ export class Business implements IBusiness {
   public additional_questions: AdditionalQuestions | {};
   public business_type: BusinessType;
   public business_structure: BusinessStructure;
-  public bank_accounts: BankAccount[];
+  public bank_accounts: IBankAccount[];
   public created_at: string;
   public documents: IDocument[];
   public doing_business_as: string;
