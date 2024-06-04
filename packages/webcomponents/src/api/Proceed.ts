@@ -1,4 +1,4 @@
-import { BankAccount } from "./shared";
+import { IBankAccount } from './BankAccount';
 
 export enum ProceedStatuses {
   paid = 'paid',
@@ -22,7 +22,7 @@ export interface IProceed {
   id: string;
   account_id: string;
   amount: number;
-  bank_account: BankAccount;
+  bank_account: IBankAccount;
   currency: 'usd';
   delivery_method: string;
   description: string;
@@ -44,7 +44,7 @@ export class Proceed implements IProceed {
   public id: string;
   public account_id: string;
   public amount: number;
-  public bank_account: BankAccount;
+  public bank_account: IBankAccount;
   public currency: 'usd';
   public delivery_method: string;
   public description: string;

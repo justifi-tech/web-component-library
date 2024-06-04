@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/c
 import { FormAlert, LoadingSpinner } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
+
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -23,8 +24,7 @@ export class PaymentProvisioning {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() totalSteps: number = 5;
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -35,8 +35,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef];
-    this.totalSteps = Object.keys(this.componentStepMapping).length - 1;
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef];
   }
 
   disconnectedCallback() {
@@ -45,6 +44,10 @@ export class PaymentProvisioning {
 
   get title() {
     return this.removeTitle ? '' : this.formTitle;
+  }
+
+  get totalSteps() { 
+    return Object.keys(this.componentStepMapping).length - 1; 
   }
 
   get showErrors() {
@@ -60,6 +63,7 @@ export class PaymentProvisioning {
   private additionalQuestionsRef: any;
   private representativeRef: any;
   private ownersRef: any;
+  private bankAccountRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -99,6 +103,14 @@ export class PaymentProvisioning {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[4] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
+5: () => <justifi-business-bank-account-form-step
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[5] = el}
       onFormLoading={this.handleFormLoading}
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
