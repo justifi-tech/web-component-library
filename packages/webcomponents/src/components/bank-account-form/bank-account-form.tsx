@@ -2,6 +2,7 @@ import { Component, Event, h, EventEmitter, Listen, Method, Prop, State, } from 
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../../utils/theme';
 import { config } from '../../../config';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-bank-account-form',
@@ -69,6 +70,16 @@ export class BankAccountForm {
   }
 
   private childRef?: HTMLJustifiPaymentMethodFormElement;
+
+  analytics: JustifiAnalytics;
+
+  componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
+  }
 
   /**
    *  Makes a tokenization request to the iframe

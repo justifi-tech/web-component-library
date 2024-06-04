@@ -5,7 +5,15 @@ import { PaymentDetailsCore } from "../payment-details-core";
 import { Details } from "../../details/details";
 import { PaymentService } from '../../../api/services/payment.service';
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
+import JustifiAnalytics from "../../../api/Analytics";
 jest.mock('../../../api/services/payment.service');
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe('payment-details', () => {
   const components = [PaymentDetails, PaymentDetailsCore, Details];

@@ -4,7 +4,15 @@ import { GrossPaymentChart } from "../gross-payment-chart";
 import { GrossPaymentChartCore } from "../gross-payment-chart-core";
 import { ReportsService } from "../../../api/services/reports.service";
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
+import JustifiAnalytics from "../../../api/Analytics";
 jest.mock("../../../api/services/reports.service");
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe('GrossPaymentChart', () => {
   it('renders an error when no accountId and authToken is passed', async () => {

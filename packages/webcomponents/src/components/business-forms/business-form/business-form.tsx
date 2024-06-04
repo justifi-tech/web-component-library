@@ -7,6 +7,7 @@ import { config } from '../../../../config';
 import { FormAlert } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
+import JustifiAnalytics from '../../../api/Analytics';
 
 /**
  * @exportedPart label: Label for inputs
@@ -28,6 +29,24 @@ export class BusinessForm {
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'click-event' }) clickEventNew: EventEmitter<BusinessFormClickEvent>;
   @Event({ eventName: 'clickEvent' }) clickEventOld: EventEmitter<BusinessFormClickEvent>;
+
+  analytics: JustifiAnalytics;
+
+  componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
+    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
+    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
+    if (!this.authToken) console.error(missingAuthTokenMessage);
+    if (!this.businessId) console.error(missingBusinessIdMessage);
+
+    this.formController = new FormController(businessFormSchema);
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.fetchData();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
+  }
 
   fireClickEvents(event: BusinessFormClickEvent) {
     console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
@@ -57,17 +76,6 @@ export class BusinessForm {
   instantiateBusiness = (data: IBusiness) => {
     const business = new Business(data);
     this.formController.setInitialValues({ ...business });
-  }
-
-  componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
-    this.formController = new FormController(businessFormSchema);
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
-    this.fetchData();
   }
 
   private sendData = async () => {
