@@ -2,6 +2,14 @@ import { newSpecPage } from '@stencil/core/testing';
 import { BankAccountForm } from '../bank-account-form';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 import { config } from '../../../../config';
+import JustifiAnalytics from '../../../api/Analytics';
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe('justifi-bank-account-form', () => {
   it('should pass validationMode prop to justifi-payment-method-form', async () => {

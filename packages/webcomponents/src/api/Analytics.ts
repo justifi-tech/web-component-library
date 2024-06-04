@@ -1,9 +1,9 @@
 import { ComponentInterface } from '@stencil/core';
 import webcomponentsPackageJson from '../../package.json';
 import { AnalyticsService } from './services/analytics.service';
-import { camelToKebab } from '../utils/utils';
 
 interface iBasicData {
+  resource_id: string;
   component_name: string;
   component_version: string;
   client_user_agent: string;
@@ -11,11 +11,6 @@ interface iBasicData {
   client_origin: string;
   error?: any;
 }
-
-const getEventNames = (component) =>
-  Object.keys(component)
-    .filter((key) => typeof component[key] === 'object' && component[key].emit)
-    .map(camelToKebab);
 
 /**
  * @class JustifiAnalytics
@@ -37,6 +32,16 @@ class JustifiAnalytics {
     this.trackCustomEvents();
   }
 
+  get resourceId() {
+    return (
+      this.componentInstance.accountId ||
+      this.componentInstance.businessId ||
+      this.componentInstance.paymentId ||
+      this.componentInstance.payoutId ||
+      this.componentInstance.checkoutId
+    );
+  }
+
   setUpBasicData() {
     this.basicData = {
       component_name: this.componentInstance.tagName,
@@ -45,6 +50,7 @@ class JustifiAnalytics {
       // navigator.platform is deprecated, use navigator.userAgent instead
       client_platform: navigator.userAgent,
       client_origin: window.location.origin,
+      resource_id: this.resourceId,
     };
   }
 
@@ -54,7 +60,7 @@ class JustifiAnalytics {
   };
 
   private trackCustomEvents() {
-    this.eventEmitters = getEventNames(this.componentInstance);
+    this.eventEmitters = ['submitted', 'error-event'];
 
     // for each event, add an event listener
     this.eventEmitters.forEach((eventName) => {

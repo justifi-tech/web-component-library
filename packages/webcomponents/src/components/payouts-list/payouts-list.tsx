@@ -4,6 +4,7 @@ import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 /**
   * @exportedPart table-head: Table head
@@ -38,8 +39,15 @@ export class PayoutsList {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetPayouts();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   @Watch('accountId')

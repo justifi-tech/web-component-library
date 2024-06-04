@@ -1,6 +1,13 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentProvisioning } from '../payment-provisioning';
+import JustifiAnalytics from '../../../../api/Analytics';
 
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe.skip('justifi-payment-provisioning', () => {
   let consoleSpy;

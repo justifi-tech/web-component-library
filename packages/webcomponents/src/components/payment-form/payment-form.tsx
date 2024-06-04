@@ -6,6 +6,7 @@ import { loadFontsOnParent } from '../../utils/utils';
 import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -28,10 +29,13 @@ export class PaymentForm {
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
 
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     if (!this.validateProps()) {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
@@ -44,6 +48,10 @@ export class PaymentForm {
 
   connectedCallback() {
     loadFontsOnParent();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   @Method()
