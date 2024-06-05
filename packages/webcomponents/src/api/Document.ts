@@ -49,29 +49,9 @@ export class Document implements IDocument {
 
 export interface FileChangeEvent {
   file: File;
+  fileString: string;
   document_type: string;
 }
-
-// export class DocPayload {
-//   public business_id: string;
-//   public file_name: string;
-//   public file_type: string;
-//   public document_type: string;
-
-//   constructor(docPayload: FileChangeEvent, businessId: string) {
-//     this.business_id = businessId;
-//     this.file_name = docPayload.file.name;
-//     this.file_type = docPayload.file.type;
-//     this.document_type = docPayload.document_type;
-//   }
-// }
-
-// export interface FileData {
-//   payload?: DocPayload;
-//   file?: File;
-//   documentType?: string;
-//   presigned_url?: string;
-// }
 
 export interface DocumentRecordData {
   business_id: string;
@@ -82,29 +62,25 @@ export interface DocumentRecordData {
 
 export class DocumentUploadData {
   public file: File;
+  public fileString: string;
   public document_type: string;
   public presigned_url: string | null;
   public record_data: DocumentRecordData | null;
 
-  constructor(fileData: FileChangeEvent) {
+  constructor(fileData: FileChangeEvent, business_id: string) {
     this.file = fileData.file;
+    this.fileString = fileData.fileString;
     this.document_type = fileData.document_type;
     this.presigned_url = null;
-    this.record_data = null;
-  }
-
-  setPresignedUrl(url: string) {
-    this.presigned_url = url;
-    return this.presigned_url;
-  }
-
-  setRecordData(business_id: string) {
     this.record_data = {
       business_id: business_id,
       document_type: this.document_type,
       file_name: this.file.name,
       file_type: this.file.type,
     };
-    return this.record_data;
+  }
+
+  setPresignedUrl(url: string) {
+    this.presigned_url = url;
   }
 }

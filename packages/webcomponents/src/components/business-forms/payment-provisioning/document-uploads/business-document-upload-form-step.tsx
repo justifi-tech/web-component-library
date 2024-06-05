@@ -19,8 +19,7 @@ export class BusinessDocumentFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() documents: any;
-  @State() bankStatementData: any;
-  @State() otherData: any;
+  @State() documentData: DocumentUploadData[] = [];
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
@@ -47,101 +46,66 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  // It's class related issues that are making the payload empty and causing issues posting to the API. Need to figure out the class logic with methods, etc in order to successfully submit this payload. Think on this. 
-
-  createDocumentRecord = async (docData: DocumentUploadData, onSuccess?: () => void) => {
-    this.formLoading.emit(true);
-    console.log('docData', docData);
+  createDocumentRecord = async (docData: DocumentUploadData) => {
     const payload = docData.record_data;
     try {
       const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
-      this.handleDocRecordResponse(response, onSuccess);
+      return this.handleDocRecordResponse(docData, response);
     } catch (error) {
       this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
-    } finally {
-      this.formLoading.emit(false);
+      return false;
     }
   }
 
-  handleDocRecordResponse = (response: any, onSuccess: () => void) => {
+  handleDocRecordResponse = (docData: DocumentUploadData,response: any) => {
+    console.log('made it to handleDocRecordResponse')
     if (response.error) {
       this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
+      return false;
     } else {
-      this.otherData.setPresignedUrl(response.data.presigned_url);
-      this.uploadDocument(this.otherData, onSuccess);
+      docData.setPresignedUrl(response.data.presigned_url);
+      return true;
     }
   }
 
-  // uploadDocument = async (fileData: any, onSuccess?: () => void) => {
-  //   const file = fileData.file;
-  //   // const 
-  //   this.formLoading.emit(true);
-  //   try {
-  //     const response = await this.api.put(this.documentEndpoint, JSON.stringify(file));
-  //     this.handleUploadResponse(response, onSuccess);
-  //   } catch (error) {
-  //     this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
-  //   } finally {
-  //     this.formLoading.emit(false);
-  //   }
-  // }
-
-  uploadDocument = async (fileData: DocumentUploadData, onSuccess: () => void) => {
-    console.log(onSuccess);
-    if (!fileData.presigned_url) {
+  uploadDocument = async (docData: DocumentUploadData) => {
+    if (!docData.presigned_url) {
       throw new Error('Presigned URL is not set');
     }
 
-    const response = await fetch(fileData.presigned_url, {
+    const response = await fetch(docData.presigned_url, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json' },
-      body: JSON.stringify(fileData.file),
+      body: docData.fileString,
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return false;
     }
 
-    return response;
+    return response.ok;
   }
 
   handleFileChange = (e: CustomEvent<FileChangeEvent>) => {
     const docInfo = e.detail;
-    const fileData = new DocumentUploadData(docInfo);
-    fileData.setRecordData(this.businessId);
-    this.holdFileData(fileData);
-  }
-
-
-  holdFileData = (fileData: DocumentUploadData) => {
-    console.log('fileData', fileData);
-    switch (fileData.document_type) {
-      case 'bank_statement':
-        this.bankStatementData = fileData;
-        break;
-      case 'other':
-        this.otherData = fileData;
-        break;
-      default:
-        break;
-    }
+    const docData = new DocumentUploadData(docInfo, this.businessId);
+    this.documentData.push(docData);
   }
   
-  handleUploadResponse(response, onSuccess) {
-    if (response.error) {
-      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
-    } else {
-      onSuccess();
-    }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'coreInfo' }});
+  handleSubmit = async () => {
+    console.log('documentData', this.documentData)
+    const documentRecords = this.documentData.map(docData => this.createDocumentRecord(docData));
+    const recordsCreated = await Promise.all(documentRecords);
+    if (!recordsCreated) { return; }
+
+    const uploads = this.documentData.map(docData => this.uploadDocument(docData));
+    const uploadsCompleted = await Promise.all(uploads);
+    if (!uploadsCompleted) { return; }
   }
-
-
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => this.createDocumentRecord(this.otherData, onSuccess));
+    this.formController.validateAndSubmit(() => this.handleSubmit());
+    console.log(onSuccess);
   }
 
   componentWillLoad() {
@@ -178,17 +142,17 @@ export class BusinessDocumentFormStep {
           <fieldset>
             <legend>Document Uploads</legend>
             <hr />
-            {/* <div class="col-12">
+            <div class="col-12">
               <form-control-file
                 name="bank_statement"
                 label="Bank Statement Upload"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
-                documentType='other'
+                documentType='bank_statement'
                 onFileChange={this.handleFileChange}
                 statusAdornment={'Pending'}
               />
-            </div> */}
+            </div>
             <div class="col-12">
               <form-control-file
                 name="other"

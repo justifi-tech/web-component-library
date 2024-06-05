@@ -26,6 +26,7 @@ export class FileInput {
   @Prop() statusAdornment: string;
   @State() input: string;
   @State() file: File;
+  @State() fileString: string;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
   @Event() fileChange: EventEmitter<FileChangeEvent>;
@@ -49,9 +50,25 @@ export class FileInput {
   }
 
   handleFileChange(event: any) {
-    this.file = event.target.files[0];
-    this.fileChange.emit({file: this.file, document_type: this.documentType});
+    this.createFile(event.target.files[0]);
   }
+
+  createFile(file: File) {
+    this.file = file;
+    let reader = new FileReader()
+    reader.onload = (e) => {
+      this.fileString = e.target.result as string;
+    }
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      this.fileChange.emit({ 
+        file: this.file, 
+        fileString: this.fileString, 
+        document_type: this.documentType 
+      });
+    }
+  }
+
 
   render() {
     return (
