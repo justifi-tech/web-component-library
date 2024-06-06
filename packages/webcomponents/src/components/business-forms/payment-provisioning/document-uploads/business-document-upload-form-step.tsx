@@ -5,8 +5,8 @@ import { IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { documentSchema } from '../../schemas/business-document-upload-schema';
-import { FileChangeEvent } from '../../../../components';
-import { DocumentUploadData } from '../../../../api/Document';
+import { FileSelectEvent } from '../../../../components';
+import { EntityDocumentType, EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -19,7 +19,7 @@ export class BusinessDocumentFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() documents: any;
-  @State() documentData: DocumentUploadData[] = [];
+  @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
@@ -46,7 +46,7 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  createDocumentRecord = async (docData: DocumentUploadData) => {
+  createDocumentRecord = async (docData: EntityDocument) => {
     const payload = docData.record_data;
     try {
       const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
@@ -57,8 +57,7 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  handleDocRecordResponse = (docData: DocumentUploadData,response: any) => {
-    console.log('made it to handleDocRecordResponse')
+  handleDocRecordResponse = (docData: EntityDocument,response: any) => {
     if (response.error) {
       this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
       return false;
@@ -68,7 +67,7 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  uploadDocument = async (docData: DocumentUploadData) => {
+  uploadDocument = async (docData: EntityDocument) => {
     if (!docData.presigned_url) {
       throw new Error('Presigned URL is not set');
     }
@@ -85,19 +84,25 @@ export class BusinessDocumentFormStep {
     return response.ok;
   }
 
-  handleFileChange = (e: CustomEvent<FileChangeEvent>) => {
-    const docInfo = e.detail;
-    const docData = new DocumentUploadData(docInfo, this.businessId);
-    this.documentData.push(docData);
+
+  storeFiles = (e: CustomEvent<FileSelectEvent>) => {
+    const fileList = Array.from(e.detail.fileList) as File[];
+    const docType = e.detail.document_type;
+    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
+    this.documentData[docType] = documentList;
+
+    console.log(this.documentData);
   }
   
   handleSubmit = async () => {
-    console.log('documentData', this.documentData)
-    const documentRecords = this.documentData.map(docData => this.createDocumentRecord(docData));
+    const docArray = Object.values(this.documentData).flat();
+    if (!docArray.length) { return; }
+
+    const documentRecords = docArray.map(docData => this.createDocumentRecord(docData));
     const recordsCreated = await Promise.all(documentRecords);
     if (!recordsCreated) { return; }
 
-    const uploads = this.documentData.map(docData => this.uploadDocument(docData));
+    const uploads = docArray.map(docData => this.uploadDocument(docData));
     const uploadsCompleted = await Promise.all(uploads);
     if (!uploadsCompleted) { return; }
   }
@@ -148,9 +153,10 @@ export class BusinessDocumentFormStep {
                 label="Bank Statement Upload"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
-                documentType='bank_statement'
-                onFileChange={this.handleFileChange}
+                documentType={EntityDocumentType.bankStatement}
+                onFileSelected={this.storeFiles}
                 statusAdornment={'Pending'}
+                multiple={true}
               />
             </div>
             <div class="col-12">
@@ -159,8 +165,8 @@ export class BusinessDocumentFormStep {
                 label="Other"
                 inputHandler={this.inputHandler}
                 error={this.errors?.other}
-                documentType='other'
-                onFileChange={this.handleFileChange}
+                documentType={EntityDocumentType.other}
+                onFileSelected={this.storeFiles}
                 statusAdornment={'Pending'}
               />
             </div>
@@ -169,5 +175,4 @@ export class BusinessDocumentFormStep {
       </Host>
     );
   }
-
 }

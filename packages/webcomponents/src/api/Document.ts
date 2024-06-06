@@ -47,29 +47,66 @@ export class Document implements IDocument {
   }
 }
 
-export interface FileChangeEvent {
-  file: File;
-  fileString: string;
-  document_type: string;
+export enum EntityDocumentType {
+  balanceSheet = 'balance_sheet',
+  bankStatement = 'bank_statement',
+  governmentId = 'government_id',
+  profitAndLossStatement = 'profit_and_loss_statement',
+  taxReturn = 'tax_return',
+  other = 'other',
 }
 
+// export interface FileSelectEvent {
+//   file: File;
+//   fileString: string;
+//   document_type: EntityDocumentType;
+// }
+
+export interface FileSelectEvent {
+  fileList: FileList;
+  document_type: EntityDocumentType;
+}
 export interface DocumentRecordData {
   business_id: string;
-  document_type: string;
+  document_type: EntityDocumentType;
   file_name: string;
   file_type: string;
 }
 
-export class DocumentUploadData {
+export class EntityDocumentStorage {
+  public balance_sheet: EntityDocument[];
+  public bank_statement: EntityDocument[];
+  public government_id: EntityDocument[];
+  public profit_and_loss_statement: EntityDocument[];
+  public tax_return: EntityDocument[];
+  public other: EntityDocument[];
+
+  constructor() {
+    this.balance_sheet = [];
+    this.bank_statement = [];
+    this.government_id = [];
+    this.profit_and_loss_statement = [];
+    this.tax_return = [];
+    this.other = [];
+  }
+}
+
+export interface FileData {
+  file: File;
+  document_type: EntityDocumentType;
+}
+
+
+export class EntityDocument {
   public file: File;
   public fileString: string;
-  public document_type: string;
+  public document_type: EntityDocumentType;
   public presigned_url: string | null;
   public record_data: DocumentRecordData | null;
 
-  constructor(fileData: FileChangeEvent, business_id: string) {
+  constructor(fileData: FileData, business_id: string) {
     this.file = fileData.file;
-    this.fileString = fileData.fileString;
+    this.fileString = this.getFileString();
     this.document_type = fileData.document_type;
     this.presigned_url = null;
     this.record_data = {
@@ -80,7 +117,16 @@ export class DocumentUploadData {
     };
   }
 
-  setPresignedUrl(url: string) {
+  public getFileString() {
+    let reader = new FileReader();
+    reader.onload = (e) => {
+     this.fileString = e.target.result as string;
+    };
+    reader.readAsDataURL(this.file);
+    return this.fileString;
+  }
+
+  public setPresignedUrl(url: string) {
     this.presigned_url = url;
   }
 }

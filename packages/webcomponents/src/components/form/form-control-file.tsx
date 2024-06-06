@@ -8,7 +8,7 @@ import {
   State,
   Element,
 } from '@stencil/core';
-import { FileChangeEvent } from '../../api/Document';
+import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
 
 @Component({
   tag: 'form-control-file',
@@ -19,56 +19,45 @@ export class FileInput {
   @Element() el: HTMLElement;
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() documentType: string;
-  @Prop() error: string;
+  @Prop() multiple?: boolean;
+  @Prop() documentType: EntityDocumentType;
+  @Prop() error?: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
   @Prop() statusAdornment: string;
   @State() input: string;
-  @State() file: File;
+  @State() files: File[];
   @State() fileString: string;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
-  @Event() fileChange: EventEmitter<FileChangeEvent>;
+  @Event() fileSelected: EventEmitter<FileSelectEvent>;
+
+  fileInput: HTMLInputElement;
 
   get statusBadge() {
     return !!this.statusAdornment;
   }
 
-  updateInput(newValue: any) {
-    const inputElement = this.el.shadowRoot.querySelector('input');
-    if (inputElement) {
-      inputElement.value = newValue || '';
-    }
+  componentDidLoad() {
+    this.fileInput = this.el.shadowRoot.querySelector('input');
   }
 
-  handleFormControlInput(event: any) {
+  handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
     this.formControlInput.emit(target.value);
   }
 
-  handleFileChange(event: any) {
-    this.createFile(event.target.files[0]);
-  }
-
-  createFile(file: File) {
-    this.file = file;
-    let reader = new FileReader()
-    reader.onload = (e) => {
-      this.fileString = e.target.result as string;
-    }
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      this.fileChange.emit({ 
-        file: this.file, 
-        fileString: this.fileString, 
-        document_type: this.documentType 
+  changeHandler = () => {
+    const inputFileList = this.fileInput.files;
+    if (inputFileList) {
+      this.fileSelected.emit({
+        fileList: inputFileList,
+        document_type: this.documentType
       });
     }
   }
-
 
   render() {
     return (
@@ -78,13 +67,15 @@ export class FileInput {
         </label>
         <div class="input-group mb-3">
           <input
+            ref={(el) => this.fileInput = el}
             type="file"
             name={this.name}
             part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
             class={`form-control ${this.error && 'is-invalid'} ${this.statusBadge && 'file'}`}
+            multiple={this.multiple}
             disabled={this.disabled}
-            onChange={(event: any) => this.handleFileChange(event)}
-            onInput={(event: any) => this.handleFormControlInput(event)}
+            onChange={this.changeHandler}
+            onInput={this.handleFormControlInput}
             onBlur={() => this.formControlBlur.emit()}
           />
           {this.statusBadge && 
