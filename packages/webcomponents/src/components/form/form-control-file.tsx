@@ -24,7 +24,6 @@ export class FileInput {
   @Prop() error?: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
-  @Prop() statusAdornment: string;
   @State() input: string;
   @State() files: File[];
   @State() fileString: string;
@@ -33,10 +32,6 @@ export class FileInput {
   @Event() fileSelected: EventEmitter<FileSelectEvent>;
 
   fileInput: HTMLInputElement;
-
-  get statusBadge() {
-    return !!this.statusAdornment;
-  }
 
   componentDidLoad() {
     this.fileInput = this.el.shadowRoot.querySelector('input');
@@ -71,18 +66,13 @@ export class FileInput {
             type="file"
             name={this.name}
             part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
-            class={`form-control ${this.error && 'is-invalid'} ${this.statusBadge && 'file'}`}
+            class={this.error ? 'form-control is-invalid' : 'form-control'}
             multiple={this.multiple}
             disabled={this.disabled}
             onChange={this.changeHandler}
             onInput={this.handleFormControlInput}
             onBlur={() => this.formControlBlur.emit()}
           />
-          {this.statusBadge && 
-            <span class="input-group-text">
-              <span class='badge text-bg-success' title='test'>{this.statusAdornment}</span>
-            </span>
-          }
           {this.error && <div class="invalid-feedback">{this.error}</div>}
         </div>
       </Host>

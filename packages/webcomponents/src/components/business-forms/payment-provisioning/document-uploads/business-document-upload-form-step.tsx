@@ -18,7 +18,7 @@ export class BusinessDocumentFormStep {
   @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() documents: any;
+  @State() documents: any = [];
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -32,85 +32,6 @@ export class BusinessDocumentFormStep {
 
   get documentEndpoint() {
     return 'entities/document';
-  }
-
-  private fetchData = async () => {
-    this.formLoading.emit(true);
-    try {
-      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.documents = response.data.documents;
-    } catch (error) {
-      this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
-    } finally {
-      this.formLoading.emit(false);
-    }
-  }
-
-  createDocumentRecord = async (docData: EntityDocument) => {
-    const payload = docData.record_data;
-    try {
-      const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
-      return this.handleDocRecordResponse(docData, response);
-    } catch (error) {
-      this.serverError.emit({ data: error, message: DocumentFormServerErrors.postData });
-      return false;
-    }
-  }
-
-  handleDocRecordResponse = (docData: EntityDocument,response: any) => {
-    if (response.error) {
-      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.postData });
-      return false;
-    } else {
-      docData.setPresignedUrl(response.data.presigned_url);
-      return true;
-    }
-  }
-
-  uploadDocument = async (docData: EntityDocument) => {
-    if (!docData.presigned_url) {
-      throw new Error('Presigned URL is not set');
-    }
-
-    const response = await fetch(docData.presigned_url, {
-      method: 'PUT',
-      body: docData.fileString,
-    });
-
-    if (!response.ok) {
-      return false;
-    }
-
-    return response.ok;
-  }
-
-
-  storeFiles = (e: CustomEvent<FileSelectEvent>) => {
-    const fileList = Array.from(e.detail.fileList) as File[];
-    const docType = e.detail.document_type;
-    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
-    this.documentData[docType] = documentList;
-
-    console.log(this.documentData);
-  }
-  
-  handleSubmit = async () => {
-    const docArray = Object.values(this.documentData).flat();
-    if (!docArray.length) { return; }
-
-    const documentRecords = docArray.map(docData => this.createDocumentRecord(docData));
-    const recordsCreated = await Promise.all(documentRecords);
-    if (!recordsCreated) { return; }
-
-    const uploads = docArray.map(docData => this.uploadDocument(docData));
-    const uploadsCompleted = await Promise.all(uploads);
-    if (!uploadsCompleted) { return; }
-  }
-
-  @Method()
-  async validateAndSubmit({ onSuccess }) {
-    this.formController.validateAndSubmit(() => this.handleSubmit());
-    console.log(onSuccess);
   }
 
   componentWillLoad() {
@@ -140,26 +61,155 @@ export class BusinessDocumentFormStep {
     });
   }
 
+  private fetchData = async () => {
+    this.formLoading.emit(true);
+    try {
+      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
+      this.documents = response.data.documents;
+    } catch (error) {
+      this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
+    } finally {
+      this.formLoading.emit(false);
+    }
+  }
+
+  createDocumentRecord = async (docData: EntityDocument) => {
+    const payload = docData.record_data;
+    try {
+      const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
+      return this.handleDocRecordResponse(docData, response);
+    } catch (error) {
+      this.serverError.emit({ data: error, message: DocumentFormServerErrors.sendData });
+      return false;
+    }
+  }
+
+  handleDocRecordResponse = (docData: EntityDocument,response: any) => {
+    if (response.error) {
+      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.sendData });
+      return false;
+    } else {
+      docData.setPresignedUrl(response.data.presigned_url);
+      return true;
+    }
+  }
+
+  uploadDocument = async (docData: EntityDocument) => {
+    if (!docData.presigned_url) {
+      throw new Error('Presigned URL is not set');
+    }
+
+    const response = await fetch(docData.presigned_url, {
+      method: 'PUT',
+      body: docData.fileString,
+    })
+
+    return this.handleUploadResponse(response);
+  }
+
+  handleUploadResponse = (response: any) => {
+    if (response.error) {
+      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.sendData });
+      return false;
+    } else {
+      this.submitted.emit({ data: response, metadata: { completedStep: 'documentUpload' } });
+      return true;
+    }
+  }
+
+  storeFiles = (e: CustomEvent<FileSelectEvent>) => {
+    const fileList = Array.from(e.detail.fileList) as File[];
+    const docType = e.detail.document_type;
+    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
+    this.documentData[docType] = documentList;
+  }
+  
+  sendData = async (onSuccess?: () => void) => {
+    this.formLoading.emit(true);
+    const docArray = Object.values(this.documentData).flat();
+    if (!docArray.length) { return; }
+
+    const documentRecords = docArray.map(docData => this.createDocumentRecord(docData));
+    const recordsCreated = await Promise.all(documentRecords);
+    if (!recordsCreated) { return; }
+
+    const uploads = docArray.map(docData => this.uploadDocument(docData));
+    const uploadsCompleted = await Promise.all(uploads);
+    if (!uploadsCompleted) { return; }
+
+    this.formLoading.emit(false);
+    await onSuccess();
+  }
+
+  @Method()
+  async validateAndSubmit({ onSuccess }) {
+    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <form>
           <fieldset>
-            <legend>Document Uploads</legend>
-            <hr />
-            <div class="col-12">
+          <legend>Document Uploads</legend>
+          <hr />
+          <div class="row gy-3">
+            <div class="col-12 col-md-6">
+              <form-control-file
+                name="balance_sheet"
+                label="Balance Sheet"
+                inputHandler={this.inputHandler}
+                error={this.errors?.balance_sheet}
+                documentType={EntityDocumentType.balanceSheet}
+                onFileSelected={this.storeFiles}
+                multiple={true}
+              />
+            </div>
+            <div class="col-12 col-md-6">
               <form-control-file
                 name="bank_statement"
-                label="Bank Statement Upload"
+                label="Please upload at least 3 months of Bank Statements"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
                 documentType={EntityDocumentType.bankStatement}
                 onFileSelected={this.storeFiles}
-                statusAdornment={'Pending'}
                 multiple={true}
               />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-6">
+              <form-control-file
+                name="government_id"
+                label="Government ID"
+                inputHandler={this.inputHandler}
+                error={this.errors?.government_id}
+                documentType={EntityDocumentType.governmentId}
+                onFileSelected={this.storeFiles}
+                multiple={true}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-file
+                name="profit_and_loss_statement"
+                label="Profit and Loss Statement"
+                inputHandler={this.inputHandler}
+                error={this.errors?.profit_and_loss_statement}
+                documentType={EntityDocumentType.profitAndLossStatement}
+                onFileSelected={this.storeFiles}
+                multiple={true}
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <form-control-file
+                name="tax_return"
+                label="Tax Return"
+                inputHandler={this.inputHandler}
+                error={this.errors?.tax_return}
+                documentType={EntityDocumentType.taxReturn}
+                onFileSelected={this.storeFiles}
+                multiple={true}
+              />
+            </div>
+            <div class="col-12 col-md-6">
               <form-control-file
                 name="other"
                 label="Other"
@@ -167,11 +217,12 @@ export class BusinessDocumentFormStep {
                 error={this.errors?.other}
                 documentType={EntityDocumentType.other}
                 onFileSelected={this.storeFiles}
-                statusAdornment={'Pending'}
+                multiple={true}
               />
             </div>
-          </fieldset>
-        </form>
+          </div>
+        </fieldset>
+      </form>
       </Host>
     );
   }

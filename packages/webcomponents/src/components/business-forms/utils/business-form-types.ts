@@ -19,7 +19,7 @@ interface BusinessFormEventMetaData {
   completedStep?: BusinessFormStep;
 }
 
-type BusinessFormStep = 'coreInfo' | 'legalAddress' | 'additionalQuestions' | 'representative' | 'owners' | 'bankAccount';
+type BusinessFormStep = 'coreInfo' | 'legalAddress' | 'additionalQuestions' | 'representative' | 'owners' | 'bankAccount' | 'documentUpload';
 
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',
@@ -62,7 +62,7 @@ export enum OwnerFormClickActions {
 
 export enum DocumentFormServerErrors {
   fetchData = 'Error retrieving document data',
-  postData = 'Error adding document data'
+  sendData = 'Error uploading document data'
 }
 
 export interface DocumentFormServerErrorEvent {

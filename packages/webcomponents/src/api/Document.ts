@@ -56,16 +56,18 @@ export enum EntityDocumentType {
   other = 'other',
 }
 
-// export interface FileSelectEvent {
-//   file: File;
-//   fileString: string;
-//   document_type: EntityDocumentType;
-// }
+export enum EntityDocumentStatus {
+  pending = 'pending',
+  uploaded = 'uploaded',
+  canceled = 'canceled',
+  needed = 'needed',
+}
 
 export interface FileSelectEvent {
   fileList: FileList;
   document_type: EntityDocumentType;
 }
+
 export interface DocumentRecordData {
   business_id: string;
   document_type: EntityDocumentType;
@@ -91,11 +93,10 @@ export class EntityDocumentStorage {
   }
 }
 
-export interface FileData {
+export interface EntityFileData {
   file: File;
   document_type: EntityDocumentType;
 }
-
 
 export class EntityDocument {
   public file: File;
@@ -104,7 +105,7 @@ export class EntityDocument {
   public presigned_url: string | null;
   public record_data: DocumentRecordData | null;
 
-  constructor(fileData: FileData, business_id: string) {
+  constructor(fileData: EntityFileData, business_id: string) {
     this.file = fileData.file;
     this.fileString = this.getFileString();
     this.document_type = fileData.document_type;
