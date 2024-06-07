@@ -26,7 +26,7 @@ export class CheckoutCore {
   @Prop() disablePaymentMethodGroup?: boolean;
 
   @State() hasLoadedFonts: boolean = false;
-  @State() isLoading: boolean = false;
+  @State() isLoading: boolean = true;
   @State() checkout: ICheckout;
   @State() serverError: boolean = false;
   @State() creatingNewPaymentMethod: boolean = false;
@@ -144,7 +144,7 @@ export class CheckoutCore {
           <div class="col-12 mb-4">
             {/* componentize this */}
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
-            {this.checkout && (
+            {!this.isLoading ? (
               <div>
                 <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
                 <div class="jfi-payment-total">
@@ -152,25 +152,27 @@ export class CheckoutCore {
                   <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
                 </div>
               </div>
-            )}
+            ) : <justifi-skeleton height="50px" />}
           </div>
 
           <div class="col-12">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
-              <justifi-payment-method-options
-                ref={(el) => (this.paymentMethodOptionsRef = el)}
-                show-card={!this.disableCreditCard}
-                show-ach={!this.disableBankAccount}
-                show-bnpl={!this.disableBnpl}
-                show-saved-payment-methods={!this.disablePaymentMethodGroup}
-                bnpl={this.checkout?.bnpl}
-                client-id={this.checkout?.payment_client_id}
-                account-id={this.checkout?.account_id}
-                savedPaymentMethods={this.checkout?.payment_methods || []}
-                paymentAmount={this.checkout?.payment_amount}
-              />
+              {this.isLoading ? (<justifi-skeleton variant="rounded" height="300px" />) : (
+                <justifi-payment-method-options
+                  ref={(el) => (this.paymentMethodOptionsRef = el)}
+                  show-card={!this.disableCreditCard}
+                  show-ach={!this.disableBankAccount}
+                  show-bnpl={!this.disableBnpl}
+                  show-saved-payment-methods={!this.disablePaymentMethodGroup}
+                  bnpl={this.checkout?.bnpl}
+                  client-id={this.checkout?.payment_client_id}
+                  account-id={this.checkout?.account_id}
+                  savedPaymentMethods={this.checkout?.payment_methods || []}
+                  paymentAmount={this.checkout?.payment_amount}
+                />
+              )}
             </div>
           </div>
           <div class="col-12">
