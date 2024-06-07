@@ -13,14 +13,3 @@ input[type='file'][disabled] {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-.input-group-text {
-  background-color: var(--jfi-form-control-background-color);
-  border-color: var(--jfi-form-control-border-color);
-  color: var(--jfi-form-control-color);
-}
-
-.file {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
