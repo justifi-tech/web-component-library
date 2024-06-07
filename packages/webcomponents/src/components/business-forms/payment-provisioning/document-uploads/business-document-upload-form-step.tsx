@@ -4,7 +4,7 @@ import { BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServ
 import { IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
-import { documentSchema } from '../../schemas/business-document-upload-schema';
+import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
 import { EntityDocumentType, EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 
@@ -40,7 +40,7 @@ export class BusinessDocumentFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(documentSchema);
+    this.formController = new FormController(businessDocumentSchema(this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
@@ -74,6 +74,7 @@ export class BusinessDocumentFormStep {
   }
 
   createDocumentRecord = async (docData: EntityDocument) => {
+    this.formLoading.emit(true);
     const payload = docData.record_data;
     try {
       const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
@@ -125,7 +126,6 @@ export class BusinessDocumentFormStep {
   }
   
   sendData = async (onSuccess?: () => void) => {
-    this.formLoading.emit(true);
     const docArray = Object.values(this.documentData).flat();
     if (!docArray.length) { return; }
 
@@ -157,67 +157,73 @@ export class BusinessDocumentFormStep {
             <div class="col-12 col-md-6">
               <form-control-file
                 name="balance_sheet"
-                label="Balance Sheet"
+                label="Upload FYE Balance Sheet documents"
                 inputHandler={this.inputHandler}
                 error={this.errors?.balance_sheet}
                 documentType={EntityDocumentType.balanceSheet}
                 onFileSelected={this.storeFiles}
                 multiple={true}
+                helpText='Please upload the most recent balance sheet for your business.'
               />
             </div>
             <div class="col-12 col-md-6">
               <form-control-file
                 name="bank_statement"
-                label="Please upload at least 3 months of Bank Statements"
+                label="Upload Voided Check / Bank Statement documents"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
                 documentType={EntityDocumentType.bankStatement}
                 onFileSelected={this.storeFiles}
                 multiple={true}
+                helpText='Please upload a voided check and/or 3 months of bank statements for the business.'
               />
             </div>
             <div class="col-12 col-md-6">
               <form-control-file
                 name="government_id"
-                label="Government ID"
+                label="Upload Government ID documents"
                 inputHandler={this.inputHandler}
                 error={this.errors?.government_id}
                 documentType={EntityDocumentType.governmentId}
                 onFileSelected={this.storeFiles}
                 multiple={true}
+                helpText='Please upload a government issued ID for the business owner.'
               />
             </div>
             <div class="col-12 col-md-6">
               <form-control-file
                 name="profit_and_loss_statement"
-                label="Profit and Loss Statement"
+                label="Upload Profit and Loss Statement documents"
                 inputHandler={this.inputHandler}
                 error={this.errors?.profit_and_loss_statement}
                 documentType={EntityDocumentType.profitAndLossStatement}
                 onFileSelected={this.storeFiles}
                 multiple={true}
+                helpText='Please upload the most recent profit and loss statement for your business.'
               />
             </div>
             <div class="col-12 col-md-6">
               <form-control-file
                 name="tax_return"
-                label="Tax Return"
+                label="Upload Tax Return documents"
                 inputHandler={this.inputHandler}
                 error={this.errors?.tax_return}
                 documentType={EntityDocumentType.taxReturn}
                 onFileSelected={this.storeFiles}
                 multiple={true}
+                helpText='Please upload the most recent tax return for your business.'
               />
             </div>
             <div class="col-12 col-md-6">
               <form-control-file
                 name="other"
-                label="Other"
+                label="Upload any other documents"
                 inputHandler={this.inputHandler}
                 error={this.errors?.other}
                 documentType={EntityDocumentType.other}
                 onFileSelected={this.storeFiles}
                 multiple={true}
+                helpText='Please upload any other documents that may be relevant to your business.'
               />
             </div>
           </div>

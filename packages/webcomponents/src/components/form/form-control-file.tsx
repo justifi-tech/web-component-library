@@ -24,6 +24,7 @@ export class FileInput {
   @Prop() error?: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
+  @Prop() helpText: string;
   @State() input: string;
   @State() files: File[];
   @State() fileString: string;
@@ -57,10 +58,10 @@ export class FileInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <div class="input-group mb-3">
+        <div class="form-group">
+          <label part="label" class="form-label" htmlFor={this.name}>
+            {this.label}
+          </label>
           <input
             ref={(el) => this.fileInput = el}
             type="file"
@@ -74,6 +75,9 @@ export class FileInput {
             onBlur={() => this.formControlBlur.emit()}
           />
           {this.error && <div class="invalid-feedback">{this.error}</div>}
+          <small id="passwordHelpBlock" class="form-text text-muted">
+            {this.helpText}
+          </small>
         </div>
       </Host>
     );
