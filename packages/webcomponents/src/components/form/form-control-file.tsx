@@ -55,6 +55,14 @@ export class FileInput {
     }
   }
 
+  helpTextBlock = () => {
+    return (
+      <small id="passwordHelpBlock" class="form-text text-muted">
+        {this.helpText}
+      </small>
+    );
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
@@ -75,9 +83,7 @@ export class FileInput {
             onBlur={() => this.formControlBlur.emit()}
           />
           {this.error && <div class="invalid-feedback">{this.error}</div>}
-          <small id="passwordHelpBlock" class="form-text text-muted">
-            {this.helpText}
-          </small>
+          {this.helpText && this.helpTextBlock()}
         </div>
       </Host>
     );
