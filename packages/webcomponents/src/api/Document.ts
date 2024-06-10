@@ -15,38 +15,6 @@ export interface IDocument {
   updated_at: string;
 }
 
-export class Document implements IDocument {
-  public business_id: string;
-  public created_at: string;
-  public description: string | null;
-  public document_type: string;
-  public file_name: string;
-  public file_type: string;
-  public id: string;
-  public identity_id: string;
-  public metadata: any;
-  public platform_account_id: string;
-  public presigned_url: string | null;
-  public status: string;
-  public updated_at: string;
-
-  constructor(document: IDocument) {
-    this.business_id = document.business_id;
-    this.created_at = document.created_at;
-    this.description = document.description;
-    this.document_type = document.document_type;
-    this.file_name = document.file_name;
-    this.file_type = document.file_type;
-    this.id = document.id;
-    this.identity_id = document.identity_id;
-    this.metadata = document.metadata;
-    this.platform_account_id = document.platform_account_id;
-    this.presigned_url = document.presigned_url;
-    this.status = document.status;
-    this.updated_at = document.updated_at;
-  }
-}
-
 export enum EntityDocumentType {
   balanceSheet = 'balance_sheet',
   bankStatement = 'bank_statement',
