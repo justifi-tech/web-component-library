@@ -152,12 +152,13 @@ export class BusinessDocumentFormStep {
         <form>
           <fieldset>
           <legend>Document Uploads</legend>
+          <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
           <hr />
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <form-control-file
                 name="balance_sheet"
-                label="Upload FYE Balance Sheet documents"
+                label="Upload FYE Balance Sheet"
                 inputHandler={this.inputHandler}
                 error={this.errors?.balance_sheet}
                 documentType={EntityDocumentType.balanceSheet}
@@ -169,7 +170,7 @@ export class BusinessDocumentFormStep {
             <div class="col-12 col-md-6">
               <form-control-file
                 name="bank_statement"
-                label="Upload Voided Check / Bank Statement documents"
+                label="Upload Voided Check / Bank Statements"
                 inputHandler={this.inputHandler}
                 error={this.errors?.bank_statement}
                 documentType={EntityDocumentType.bankStatement}
@@ -181,7 +182,7 @@ export class BusinessDocumentFormStep {
             <div class="col-12 col-md-6">
               <form-control-file
                 name="government_id"
-                label="Upload Government ID documents"
+                label="Upload Government ID"
                 inputHandler={this.inputHandler}
                 error={this.errors?.government_id}
                 documentType={EntityDocumentType.governmentId}
@@ -193,7 +194,7 @@ export class BusinessDocumentFormStep {
             <div class="col-12 col-md-6">
               <form-control-file
                 name="profit_and_loss_statement"
-                label="Upload Profit and Loss Statement documents"
+                label="Upload Profit and Loss Statement"
                 inputHandler={this.inputHandler}
                 error={this.errors?.profit_and_loss_statement}
                 documentType={EntityDocumentType.profitAndLossStatement}
@@ -205,7 +206,7 @@ export class BusinessDocumentFormStep {
             <div class="col-12 col-md-6">
               <form-control-file
                 name="tax_return"
-                label="Upload Tax Return documents"
+                label="Upload Tax Return"
                 inputHandler={this.inputHandler}
                 error={this.errors?.tax_return}
                 documentType={EntityDocumentType.taxReturn}
