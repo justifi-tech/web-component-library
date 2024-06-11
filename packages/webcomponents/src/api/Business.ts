@@ -142,7 +142,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
 }
 
 export interface IBusiness {
-  additional_questions: IAdditionalQuestions | {};
+  additional_questions: IAdditionalQuestions;
   business_type: BusinessType;
   business_structure: BusinessStructure;
   bank_accounts: IBankAccount[];
@@ -167,7 +167,7 @@ export interface IBusiness {
 }
 
 export class Business implements IBusiness {
-  public additional_questions: AdditionalQuestions | {};
+  public additional_questions: AdditionalQuestions;
   public business_type: BusinessType;
   public business_structure: BusinessStructure;
   public bank_accounts: IBankAccount[];

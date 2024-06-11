@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServerErrors } from '../../utils/business-form-types';
-import { IBusiness } from '../../../../api/Business';
+import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
@@ -19,6 +19,7 @@ export class BusinessDocumentFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() documents: any = [];
+  @State() business: Business;
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -32,6 +33,10 @@ export class BusinessDocumentFormStep {
 
   get documentEndpoint() {
     return 'entities/document';
+  }
+
+  get paymentVolume() {
+    return this.business?.additional_questions?.business_payment_volume;
   }
 
   componentWillLoad() {
@@ -65,7 +70,7 @@ export class BusinessDocumentFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.documents = response.data.documents;
+      this.business = { ...new Business(response.data) };
     } catch (error) {
       this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
     } finally {
@@ -164,7 +169,7 @@ export class BusinessDocumentFormStep {
                 documentType={EntityDocumentType.balanceSheet}
                 onFileSelected={this.storeFiles}
                 multiple={true}
-                helpText='Please upload the most recent balance sheet for your business.'
+                helpText='Please upload the most recent 2 years of balance sheets for your business.'
               />
             </div>
             <div class="col-12 col-md-6">
