@@ -1,6 +1,7 @@
 import { Component, h, Host, Prop, State, Event, EventEmitter } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
+import { insuranceValues } from "../insurance-state";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
@@ -16,13 +17,11 @@ export class SeasonInterruptionInsuranceCore {
   @State() isLoading: boolean = false;
   @State() accepted: boolean | undefined;
 
-  @Event({ eventName: 'insurance-updated' }) insuranceChanged: EventEmitter;
+  @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    if (this.getQuote) {
-      this.fetchData();
-    }
+    this.fetchData();
   };
 
   fetchData(): void {
@@ -40,8 +39,8 @@ export class SeasonInterruptionInsuranceCore {
         },
         policy_attributes: {
           insurable_amount: 1000,
-          start_date: "2024-06-04",
-          end_date: "2024-06-09",
+          start_date: "2024-06-30",
+          end_date: "2024-07-31",
           covered_identity: {
             first_name: "Eric",
             last_name: "Erickson"
@@ -64,7 +63,8 @@ export class SeasonInterruptionInsuranceCore {
   };
 
   updateInsurance() {
-    this.insuranceChanged.emit();
+    this.insuranceUpdated.emit();
+    insuranceValues['season_interruption'] = this.accepted;
   }
 
   onChangeHandler(event: any) {
@@ -118,6 +118,7 @@ export class SeasonInterruptionInsuranceCore {
           </label>
         </div>
         <div innerHTML={this.quote?.product.legal_disclaimer}></div>
+        {/* {insuranceErrors.get('state_interruption') && <div class="alert alert-danger mt-3">Please select an option</div>} */}
       </Host>
     );
   }

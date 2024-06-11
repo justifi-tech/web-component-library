@@ -1,9 +1,10 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Method, Listen } from '@stencil/core';
-import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
+import { Component, h, Prop, State, Event, EventEmitter, Host, Listen } from '@stencil/core';
+import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { validateInsuranceValues } from '../insurance/insurance-state';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -37,13 +38,6 @@ export class CheckoutCore {
     }
   }
 
-  connectedCallback() {
-    if (!this.hasLoadedFonts) {
-      this.loadFontsOnParent();
-      this.hasLoadedFonts = true;
-    }
-  }
-
   @Listen('insurance-updated')
   handleInsuranceChanged() {
     this.fetchData();
@@ -67,25 +61,11 @@ export class CheckoutCore {
     });
   };
 
-
-  @Method()
-  async loadFontsOnParent() {
-    const parent = document.body;
-    const fontsToLoad = extractComputedFontsToLoad();
-    if (!parent || !fontsToLoad) {
-      return null;
-    }
-
-    // This approach is needed to load the font in a parent of the component
-    const fonts = document.createElement('link');
-    fonts.rel = 'stylesheet';
-    fonts.href = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
-
-    parent.append(fonts);
-  }
-
   async submit(event) {
     event.preventDefault();
+
+    const insuranceInvalid = validateInsuranceValues();
+    if (insuranceInvalid) return;
 
     this.isLoading = true;
 
