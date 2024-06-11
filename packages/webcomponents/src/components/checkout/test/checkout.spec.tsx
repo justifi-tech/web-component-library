@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 describe('justifi-checkout', () => {
-  it('renders', async () => {
+  it('renders loading', async () => {
     const page = await newSpecPage({
       components: [Checkout, CheckoutCore],
       html: '<justifi-checkout></justifi-checkout>',

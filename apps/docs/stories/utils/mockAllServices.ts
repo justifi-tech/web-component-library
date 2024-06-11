@@ -34,6 +34,7 @@ const handleMockGrossVolumeChartMock = () => {
 
 export const API_PATHS = {
   BUSINESS_OWNER: '/entities/identity/:id',
+  ANALYTICS: '/analytics',
   BUSINESS_DETAILS: '/entities/business/:id',
   CHECKOUT: '/checkouts/:id',
   CHECKOUT_COMPLETE: '/checkouts/:id/complete',
@@ -90,6 +91,9 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       // Checkout
       this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
       this.post(API_PATHS.CHECKOUT_COMPLETE, () => mockPostCheckout);
+
+      // Analytics
+      this.post(API_PATHS.ANALYTICS, () => null);
 
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
