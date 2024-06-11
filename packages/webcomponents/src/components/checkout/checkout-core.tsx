@@ -172,7 +172,7 @@ export class CheckoutCore {
 
   get summary() {
     if (this.isLoading) {
-      return <justifi-skeleton height="50px" />;
+      return <justifi-skeleton height="24px" />;
     }
 
     if (this.isError) {
