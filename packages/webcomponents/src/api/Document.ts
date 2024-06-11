@@ -11,7 +11,7 @@ export interface IDocument {
   metadata: any;
   platform_account_id: string;
   presigned_url: string | null;
-  status: string;
+  status: EntityDocumentStatus;
   updated_at: string;
 }
 
