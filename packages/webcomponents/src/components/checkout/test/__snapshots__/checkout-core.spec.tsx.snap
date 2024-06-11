@@ -26,7 +26,11 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
       <div class="col-12">
         <div class="d-flex justify-content-end">
           <button class="btn btn-primary jfi-submit-button jfi-submit-button-loading" disabled="" part="pay-button" type="submit">
-            <justifi-loading-spinner></justifi-loading-spinner>
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">
+                Loading...
+              </span>
+            </div>
           </button>
         </div>
       </div>

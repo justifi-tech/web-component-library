@@ -190,9 +190,11 @@ export class CheckoutCore {
     );
   }
 
-  get loadingSpinner() {
-    return <justifi-loading-spinner />;
-  }
+  private loadingSpinner = (
+    <div class="spinner-border spinner-border-sm" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  );
 
   render() {
     return (
