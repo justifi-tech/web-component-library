@@ -29,6 +29,10 @@ export class PaymentMethodOptions {
 
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
+  connectedCallback() {
+    this.paymentMethodsChanged();
+  }
+
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
     this.paymentMethodOptions = this.savedPaymentMethods.map((paymentMethod) => new PaymentMethodOption(paymentMethod));

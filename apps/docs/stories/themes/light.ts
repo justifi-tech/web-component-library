@@ -118,6 +118,9 @@ justifi-checkout {
   --jfi-submit-button-color-loading: rgba(0, 0, 0, 0.5);
   --jfi-submit-button-border-color-loading: rgba(0, 0, 0, 0.5);
   --jfi-submit-button-background-color-loading: transparent;
+
+  /* Skeleton */
+  --jfi-skeleton-wave-bg: rgba(100, 100, 100, 0.6 );
 }
 `;
 
