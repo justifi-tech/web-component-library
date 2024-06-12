@@ -4,7 +4,8 @@ import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
-import { validateInsuranceValues } from '../insurance/insurance-state';
+import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -32,9 +33,18 @@ export class CheckoutCore {
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
+
   componentWillLoad() {
     if (this.getCheckout) {
       this.fetchData();
+
+      // Refresh the checkout data when insurance is added or removed
+      insuranceValuesOn('set', (key) => {
+        const value = insuranceValues[key]
+        if (value !== undefined) {
+          this.fetchData();
+        }
+      });
     }
   }
 

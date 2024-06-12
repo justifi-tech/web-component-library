@@ -1,7 +1,8 @@
 import { createStore } from '@stencil/store';
 
-const { state: insuranceValues } = createStore<any>({}); // { season_interruption: true | false | undefined }
-const { state: insuranceErrors } = createStore<any>({}); // { season_interruption: true (if value is undefined) }
+const { state: insuranceValues, on: insuranceValuesOn } = createStore<any>({});
+
+const { state: insuranceErrors } = createStore<any>({});
 
 const validateInsuranceValues = () => {
   let invalid = false;
@@ -17,4 +18,4 @@ const validateInsuranceValues = () => {
   return invalid;
 };
 
-export { insuranceValues, insuranceErrors, validateInsuranceValues };
+export { insuranceValues, insuranceValuesOn, insuranceErrors, validateInsuranceValues };
