@@ -9,7 +9,7 @@ exports[`justifi-checkout renders loading 1`] = `
           <h2 class="fs-5 fw-bold jfi-header pb-3">
             Summary
           </h2>
-          <justifi-skeleton height="50px"></justifi-skeleton>
+          <justifi-skeleton height="24px"></justifi-skeleton>
         </div>
         <div class="col-12">
           <h2 class="fs-5 fw-bold jfi-header pb-3">
