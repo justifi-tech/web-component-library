@@ -70,6 +70,7 @@ export class BusinessDocumentFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
+      this.documents = response.data.documents;
       this.business = { ...new Business(response.data) };
     } catch (error) {
       this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
