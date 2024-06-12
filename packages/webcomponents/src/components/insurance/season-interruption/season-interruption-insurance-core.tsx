@@ -1,7 +1,7 @@
 import { Component, h, Host, Prop, State, Event, EventEmitter } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
-import { insuranceValues } from "../insurance-state";
+import { insuranceValues, insuranceErrors } from "../insurance-state";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
@@ -49,6 +49,7 @@ export class SeasonInterruptionInsuranceCore {
       },
       onSuccess: ({ quote }) => {
         this.quote = quote
+        insuranceValues[quote.policy_type] = quote.accepted
         this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -62,18 +63,14 @@ export class SeasonInterruptionInsuranceCore {
     });
   };
 
-  updateInsurance() {
-    this.insuranceUpdated.emit();
-    insuranceValues['season_interruption'] = this.accepted;
-  }
-
   onChangeHandler(event: any) {
     this.accepted = event.target.value;
     this.toggleCoverage({
       quoteId: this.quote.id,
       payload: { accepted: this.accepted },
       onSuccess: () => {
-        this.updateInsurance();
+        this.insuranceUpdated.emit();
+        insuranceValues[this.quote.policy_type] = this.accepted;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -118,7 +115,7 @@ export class SeasonInterruptionInsuranceCore {
           </label>
         </div>
         <div innerHTML={this.quote?.product.legal_disclaimer}></div>
-        {/* {insuranceErrors.get('state_interruption') && <div class="alert alert-danger mt-3">Please select an option</div>} */}
+        {insuranceErrors[this.quote?.policy_type] && <div class="alert alert-danger mt-3">Please select an option</div>}
       </Host>
     );
   }
