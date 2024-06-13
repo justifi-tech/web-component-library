@@ -132,6 +132,7 @@ export class BusinessDocumentFormStep {
   }
 
   sendData = async (onSuccess?: () => void) => {
+    this.documentData.convertVoidedChecks();
     const docArray = Object.values(this.documentData).flat();
     if (!docArray.length) { return; }
 
@@ -143,7 +144,7 @@ export class BusinessDocumentFormStep {
     const uploadsCompleted = await Promise.all(uploads);
     if (!uploadsCompleted) { return; }
 
-    this.formLoading.emit(false);
+    uploadsCompleted && this.formLoading.emit(false);
     await onSuccess();
   }
 

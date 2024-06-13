@@ -3,7 +3,7 @@ import { EntityDocumentType } from "../../../../api/Document";
 const voidedCheck = {
   name: 'voided_check',
   label: 'Upload Voided Check',
-  documentType: EntityDocumentType.bankStatement,
+  documentType: EntityDocumentType.voidedCheck,
   helpText: 'Please upload a voided check for the business.'
 };
 
