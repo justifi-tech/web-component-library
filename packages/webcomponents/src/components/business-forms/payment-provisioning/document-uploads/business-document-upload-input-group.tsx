@@ -1,5 +1,3 @@
-// import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
-
 import { Component, Prop, Host, h } from '@stencil/core';
 import { FileSelectEvent } from '../../../../api/Document';
 import { inputConfigurations } from './input-configurations';
