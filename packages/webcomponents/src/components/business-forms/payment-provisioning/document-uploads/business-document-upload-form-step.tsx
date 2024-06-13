@@ -43,7 +43,6 @@ export class BusinessDocumentFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    console.log('paymentVolume', this.paymentVolume)
     this.formController = new FormController(businessDocumentSchema(this.paymentVolume, this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
@@ -178,7 +177,6 @@ export class BusinessDocumentFormStep {
       />
     );
   }
-
 
   render() {
     return (

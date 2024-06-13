@@ -37,9 +37,9 @@ const profitAndLossStatement = {
 
 const taxReturn = {
   name: 'tax_return',
-  label: 'Upload Tax Return',
+  label: 'Upload SS4 / Article of Incorporation',
   documentType: EntityDocumentType.taxReturn,
-  helpText: "Please upload the business's most recent tax return."
+  helpText: "Please upload the business's SS4 / Article of Incorporation."
 };
 
 const other = {

@@ -39,8 +39,12 @@ export class BusinessDocumentUploadInputGroup {
     return this.inputConfigs;
   }
 
+  componentWillLoad() {
+    this.getInputGroup();
+  }
+
   render() {
-    const inputsConfig = this.getInputGroup();
+    const inputsConfig = this.inputConfigs;
 
     return (
       <Host>
