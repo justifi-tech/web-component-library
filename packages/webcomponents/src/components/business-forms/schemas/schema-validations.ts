@@ -1,4 +1,4 @@
-import { string } from "yup";
+import { mixed, string } from "yup";
 import StateOptions from "../../../utils/state-options";
 import { 
   businessStructureOptions, 
@@ -232,3 +232,42 @@ export const routingNumberValidation = string()
     return validateRoutingNumber(value);
   })
   .transform(transformEmptyString);
+
+  // Document Upload Validations
+
+const documentUploadValidation = mixed();
+
+export const voidedCheckValidation = documentUploadValidation;
+
+export const taxReturnValidation = documentUploadValidation;
+
+export const governmentIdValidation = documentUploadValidation;
+
+export const otherDocumentValidation = documentUploadValidation;
+
+export const bankStatementValidation = (volume) => {
+  let vol = parseInt(volume);
+  return documentUploadValidation.when(volume, {
+    is: () => vol >= 250000,
+    then: (schema) => schema.required('Please select one or more files'),
+    otherwise: (schema) => schema.nullable(),
+  });
+}
+
+export const balanceSheetValidation = (volume) => {
+  let vol = parseInt(volume);
+  return documentUploadValidation.when(volume, {
+    is: () => vol >= 1000000,
+    then: (schema) => schema.required('Please select one or more files'),
+    otherwise: (schema) => schema.nullable(),
+  });
+}
+
+export const profitAndLossStatementValidation = (volume) => {
+  let vol = parseInt(volume);
+  return documentUploadValidation.when(volume, {
+    is: () => vol >= 1000000,
+    then: (schema) => schema.required('Please select one or more files'),
+    otherwise: (schema) => schema.nullable(),
+  });
+}
