@@ -182,7 +182,7 @@ export class PaymentProvisioning {
       <Host exportparts="label,input,input-invalid">
         <h1>{this.title}</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
-        <div class="my-4" id='form-container'>
+        <div class="my-4">
           {this.currentStepComponent()}
         </div>
         <div class="d-flex justify-content-between align-items-center">
