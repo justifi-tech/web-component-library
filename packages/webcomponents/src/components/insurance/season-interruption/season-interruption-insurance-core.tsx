@@ -95,7 +95,7 @@ export class SeasonInterruptionInsuranceCore {
             name="opt-in"
             value="true"
             onChange={(event: any) => this.onChangeHandler(event)}
-            class="btn-check jfi-btn-radio"
+            class="form-check-input me-2"
           />
           <label htmlFor="accept" class="btn btn-outline-primary jfi-btn-radio-label">
             Accept coverage for {formatCurrency(this.quote?.total_cents)}
@@ -108,7 +108,7 @@ export class SeasonInterruptionInsuranceCore {
             name="opt-in"
             value="false"
             onChange={(event: any) => this.onChangeHandler(event)}
-            class="btn-check jfi-btn-radio"
+            class="form-check-input me-2"
           />
           <label htmlFor="decline" class="btn btn-outline-primary jfi-btn-radio-label">
             Decline coverage
