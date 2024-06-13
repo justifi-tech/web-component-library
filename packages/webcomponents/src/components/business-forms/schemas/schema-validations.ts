@@ -239,7 +239,7 @@ const documentUploadValidation = mixed();
 
 export const voidedCheckValidation = documentUploadValidation;
 
-export const taxReturnValidation = documentUploadValidation;
+export const ss4Validation = documentUploadValidation;
 
 export const governmentIdValidation = documentUploadValidation;
 

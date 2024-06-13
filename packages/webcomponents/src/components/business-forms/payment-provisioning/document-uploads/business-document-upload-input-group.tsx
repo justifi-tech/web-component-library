@@ -19,7 +19,7 @@ export class BusinessDocumentUploadInputGroup {
   inputConfigs = [
     inputConfigurations.voidedCheck,
     inputConfigurations.governmentId,
-    inputConfigurations.taxReturn,
+    inputConfigurations.ss4,
     inputConfigurations.other,
   ];
 

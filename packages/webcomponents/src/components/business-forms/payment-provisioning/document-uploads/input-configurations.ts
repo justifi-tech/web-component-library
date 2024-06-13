@@ -35,10 +35,10 @@ const profitAndLossStatement = {
   helpText: 'Please upload the most recent profit and loss statements.'
 };
 
-const taxReturn = {
-  name: 'tax_return',
+const ss4 = {
+  name: 'ss4',
   label: 'Upload SS4 / Article of Incorporation',
-  documentType: EntityDocumentType.taxReturn,
+  documentType: EntityDocumentType.other,
   helpText: "Please upload the business's SS4 / Article of Incorporation."
 };
 
@@ -55,6 +55,6 @@ export const inputConfigurations = {
   balanceSheet,
   governmentId,
   profitAndLossStatement,
-  taxReturn,
+  ss4,
   other
 };

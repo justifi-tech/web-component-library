@@ -5,7 +5,7 @@ import {
   governmentIdValidation,
   otherDocumentValidation,
   profitAndLossStatementValidation,
-  taxReturnValidation,
+  ss4Validation,
   voidedCheckValidation
 } from './schema-validations';
 
@@ -13,7 +13,7 @@ export const businessDocumentSchema = (volume: string, allowOptionalFields?: boo
   const schema = object({
     voided_check: voidedCheckValidation.required('Please select one or more files'),
     government_id: governmentIdValidation.nullable(),
-    tax_return: taxReturnValidation.nullable(),
+    ss4: ss4Validation.nullable(),
     other: otherDocumentValidation.nullable(),
     balance_sheet: balanceSheetValidation(volume),
     bank_statement: bankStatementValidation(volume),
@@ -23,7 +23,7 @@ export const businessDocumentSchema = (volume: string, allowOptionalFields?: boo
   const easySchema = object({
     voided_check: voidedCheckValidation.nullable(),
     government_id: governmentIdValidation.nullable(),
-    tax_return: taxReturnValidation.nullable(),
+    ss4: ss4Validation.nullable(),
     other: otherDocumentValidation.nullable(),
     balance_sheet: balanceSheetValidation(volume).nullable(),
     bank_statement: bankStatementValidation(volume).nullable(),
