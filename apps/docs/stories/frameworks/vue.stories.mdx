@@ -1,6 +1,6 @@
-import { Meta, Source } from "@storybook/addon-docs";
-import dedent from "ts-dedent";
-import { CSSVars, extractWebcomponentsVersion } from "./../utils";
+import { Meta, Source } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+import { CSSVars, extractWebcomponentsVersion } from './../utils';
 
 <Meta title="Frameworks/Vue 3" />
 
@@ -28,6 +28,27 @@ Add the web components script and stylesheet to your project's `index.html` file
       <script type='module'
         src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js'></script>
     </head>
+  `)}
+/>
+
+or install it from NPM and import the component module in your Vue application:
+
+<Source
+  language="bash"
+  dark
+  code={dedent(`
+    npm install --save @justifi/webcomponents
+  `)}
+/>
+
+For instance, to use the `justifi-card-form` web component, import it in your Vue component.
+
+<Source
+  language="javascript"
+  dark
+  code={dedent(`
+    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
   `)}
 />
 
