@@ -13,6 +13,7 @@ export class BusinessTermsConditionsFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @State() acceptedTerms: any;
   @State() formController: FormController;
   @State() errors: any = {};
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
@@ -39,7 +40,7 @@ export class BusinessTermsConditionsFormStep {
     this.formLoading.emit(true);
     try {
       const payload = this.formController.values.getValue();
-      const response = await this.api.patch(this.termsConditionsEndpoint, JSON.stringify({ representative: payload }));
+      const response = await this.api.patch(this.termsConditionsEndpoint, payload);
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -62,6 +63,23 @@ export class BusinessTermsConditionsFormStep {
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
+  componentDidLoad() {
+    this.formController.values.subscribe(values =>
+      this.acceptedTerms = values.accepted
+    );
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
+  }
+
+  inputHandler = (name: string, value: boolean) => {
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      [name]: value,
+    });
+    console.log(this.formController.values.getValue());
+  }
+
   render() {
     return (
       <Host>
@@ -71,7 +89,12 @@ export class BusinessTermsConditionsFormStep {
             <hr />
             <div class="row-gy-3">
               <div class="col-12">
-                <form-control-checkbox />
+                <form-control-checkbox
+                  name="accepted"
+                  label="I agree to the terms and conditions"
+                  inputHandler={this.inputHandler}
+                  error={this.errors.accepted}
+                />
               </div>
             </div>
           </fieldset>
