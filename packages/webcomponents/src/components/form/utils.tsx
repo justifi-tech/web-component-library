@@ -39,4 +39,3 @@ export const numberOnlyHandler = (e: KeyboardEvent) => {
     e.preventDefault();
   }
 };
-

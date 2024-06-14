@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:mocks": "turbo run build:mocks",
     "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=false pnpm --filter @repo/docs dev'",
     "dev:mocks": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=true pnpm --filter @repo/docs dev'",
     "lint": "turbo run lint",

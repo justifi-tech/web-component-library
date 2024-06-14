@@ -1,10 +1,10 @@
-import { Meta, Source } from "@storybook/addon-docs";
+import { Meta, Source } from '@storybook/addon-docs';
 import {
   SummaryElement,
   extractWebcomponentsVersion,
   CSSVars,
-} from "./../utils";
-import dedent from "ts-dedent";
+} from './../utils';
+import dedent from 'ts-dedent';
 
 <Meta title="Frameworks/Angular" />
 
@@ -38,6 +38,27 @@ To integrate Justifi web components into your Angular application, use the `@jus
       <script type='module'
         src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js'></script>
     </head>
+  `)}
+/>
+
+Or install it from NPM and import in your Angular application:
+
+<Source
+  language="bash"
+  dark
+  code={dedent(`
+    npm install --save @justifi/webcomponents
+  `)}
+/>
+
+for instance, to use the `justifi-card-form` web component:
+
+<Source
+  language="javascript"
+  dark
+  code={dedent(`
+    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
   `)}
 />
 

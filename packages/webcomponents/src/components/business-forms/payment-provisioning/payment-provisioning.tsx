@@ -35,7 +35,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef];
   }
 
   disconnectedCallback() {
@@ -57,13 +57,13 @@ export class PaymentProvisioning {
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
-
   private coreInfoRef: any;
   private legalAddressRef: any;
   private additionalQuestionsRef: any;
   private representativeRef: any;
   private ownersRef: any;
   private bankAccountRef: any;
+  private documentUploadRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -107,10 +107,18 @@ export class PaymentProvisioning {
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
-5: () => <justifi-business-bank-account-form-step
+    5: () => <justifi-business-bank-account-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
+    6: () => <justifi-business-document-upload-form-step
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[6] = el}
       onFormLoading={this.handleFormLoading}
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
