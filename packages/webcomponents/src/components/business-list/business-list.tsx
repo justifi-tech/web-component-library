@@ -114,7 +114,7 @@ export class BusinessList {
         <justifi-table
           columnData={[
             ['Legal Name', 'The name associated with this Business'],
-            ['Business Type', 'The business type'],
+            ['Business Classification', 'The business classification'],
             ['Tax ID', 'The tax ID associated with this business'],
             ['Industry', 'The industry this business participates in'],
             [
@@ -125,7 +125,7 @@ export class BusinessList {
           ]}
           rowData={this.businesses.map((business: IBusiness) => [
             business.legal_name,
-            snakeCaseToHumanReadable(business.business_type),
+            snakeCaseToHumanReadable(business.classification),
             business.tax_id,
             business.industry,
             {
