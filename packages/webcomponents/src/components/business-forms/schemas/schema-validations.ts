@@ -1,12 +1,11 @@
 import { string } from "yup";
 import StateOptions from "../../../utils/state-options";
 import { 
-  businessStructureOptions, 
   businessServiceReceivedOptions, 
-  businessTypeOptions, 
   recurringPaymentsOptions, 
   seasonalBusinessOptions, 
-  bankAccountTypeOptions
+  bankAccountTypeOptions,
+  businessClassificationOptions
 } from "../utils/business-form-options";
 import { 
   businessNameRegex, 
@@ -50,12 +49,8 @@ export const websiteUrlValidation = string()
   .matches(urlRegex, 'Enter valid website url')
   .transform(transformEmptyString);
 
-export const businessTypeValidation = string()
-  .oneOf(businessTypeOptions.map((option) => option.value), 'Select business type')
-  .transform(transformEmptyString);
-
-export const businessStructureValidation = string()
-  .oneOf(businessStructureOptions.map((option) => option.value), 'Select business structure')
+export const businessClassificationValidation = string()
+  .oneOf(businessClassificationOptions.map((option) => option.value), 'Select business classification')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
