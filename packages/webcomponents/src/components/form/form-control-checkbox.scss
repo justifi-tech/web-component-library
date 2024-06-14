@@ -6,9 +6,13 @@
   display: block;
 }
 
-input[type='checkbox'][disabled] {
-  color: var(--jfi-form-control-disabled-color);
-  background-color: var(--jfi-form-control-disabled-background-color);
-  opacity: 0.5;
-  cursor: not-allowed;
+// input[type='checkbox'][disabled] {
+//   color: var(--jfi-form-control-disabled-color);
+//   opacity: 0.5;
+//   cursor: not-allowed;
+// }
+
+*::part(input[type='checkbox']) {
+  margin: var(--jfi-form-control-margin);
+  padding: var(--jfi-form-control-padding);
 }

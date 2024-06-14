@@ -19,7 +19,7 @@ export class CheckboxInput {
   @Prop() label: string;
   @Prop() name: any;
   @Prop() error: string;
-  @Prop() defaultValue: boolean;
+  @Prop() defaultValue?: boolean;
   @Prop() inputHandler: (name: string, value: boolean) => void;
   @Prop() disabled: boolean;
   @Event() formControlInput: EventEmitter<any>;
@@ -48,21 +48,23 @@ export class CheckboxInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <input
-          ref={el => (this.checkboxElement = el as HTMLInputElement)}
-          type="checkbox"
-          id={this.name}
-          name={this.name}
-          onInput={(event: any) => this.handleFormControlInput(event)}
-          onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error ? 'input-invalid' : ''}`}
-          class={this.error ? 'form-check-input is-invalid' : 'form-check-input'}
-          disabled={this.disabled}
-        />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <div class="form-check">
+          <label part="label" class="form-check-label" htmlFor={this.name}>
+            {this.label}
+          </label>
+          <input
+            ref={el => (this.checkboxElement = el as HTMLInputElement)}
+            type="checkbox"
+            id={this.name}
+            name={this.name}
+            onInput={(event: any) => this.handleFormControlInput(event)}
+            onBlur={() => this.formControlBlur.emit()}
+            part={`input ${this.error ? 'input-invalid' : ''}`}
+            class={this.error ? 'form-check-input is-invalid' : 'form-check-input'}
+            disabled={this.disabled}
+          />
+        </div>
+          {this.error && <div class="invalid-feedback">{this.error}</div>}
       </Host>
     );
   }
