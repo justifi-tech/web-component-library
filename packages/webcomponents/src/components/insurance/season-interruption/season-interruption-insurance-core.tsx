@@ -12,6 +12,15 @@ export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
   @Prop() getQuote: Function;
   @Prop() toggleCoverage: Function;
+  @Prop() primaryIdentityFirstName: string;
+  @Prop() primaryIdentityLastName: string;
+  @Prop() primaryIdentityState: string;
+  @Prop() primaryIdentityEmailAddress: string;
+  @Prop() policyAttributesInsurableAmount: number;
+  @Prop() policyAttributesStartDate?: string;
+  @Prop() policyAttributesEndDate?: string;
+  @Prop() coveredIdentityFirstName?: string;
+  @Prop() coveredIdentityLastName?: string;
 
   @State() quote: any;
   @State() isLoading: boolean = false;
@@ -32,18 +41,18 @@ export class SeasonInterruptionInsuranceCore {
         checkout_id: this.checkoutId,
         policy_type: "season_interruption",
         primary_identity: {
-          state: "MN",
-          email: "jon.erickson@justifi.tech",
-          first_name: "Jon",
-          last_name: "Erickson"
+          state: this.primaryIdentityState,
+          email: this.primaryIdentityEmailAddress,
+          first_name: this.primaryIdentityFirstName,
+          last_name: this.primaryIdentityLastName
         },
         policy_attributes: {
-          insurable_amount: 1000,
-          start_date: "2024-06-30",
-          end_date: "2024-07-31",
+          insurable_amount: this.policyAttributesInsurableAmount,
+          start_date: this.policyAttributesStartDate,
+          end_date: this.policyAttributesEndDate,
           covered_identity: {
-            first_name: "Eric",
-            last_name: "Erickson"
+            first_name: this.coveredIdentityFirstName,
+            last_name: this.coveredIdentityLastName
           }
         }
       },
@@ -86,7 +95,7 @@ export class SeasonInterruptionInsuranceCore {
     return (
       <Host>
         <h2 class="fs-5 fw-bold pb-3 jfi-header">{this.quote?.product.title}</h2>
-        <div innerHTML={this.quote?.product.description}></div>
+        <small innerHTML={this.quote?.product.description}></small>
 
         <div>
           <input
@@ -114,7 +123,7 @@ export class SeasonInterruptionInsuranceCore {
             Decline coverage
           </label>
         </div>
-        <div innerHTML={this.quote?.product.legal_disclaimer}></div>
+        <small innerHTML={this.quote?.product.legal_disclaimer}></small>
         {insuranceErrors[this.quote?.policy_type] && <div class="alert alert-danger mt-3">Please select an option</div>}
       </Host>
     );
