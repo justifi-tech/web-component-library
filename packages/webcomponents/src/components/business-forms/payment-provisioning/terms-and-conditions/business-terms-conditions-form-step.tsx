@@ -77,7 +77,6 @@ export class BusinessTermsConditionsFormStep {
       ...this.formController.values.getValue(),
       [name]: value,
     });
-    console.log(this.formController.values.getValue());
   }
 
   render() {
@@ -87,6 +86,8 @@ export class BusinessTermsConditionsFormStep {
           <fieldset>
             <legend>Terms and Conditions</legend>
             <hr />
+            <justifi-business-terms-conditions-text />
+            <br />
             <div class="row-gy-3">
               <div class="col-12">
                 <form-control-checkbox

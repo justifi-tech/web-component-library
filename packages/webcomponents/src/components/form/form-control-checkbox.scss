@@ -5,14 +5,3 @@
   @include host-base-styles;
   display: block;
 }
-
-// input[type='checkbox'][disabled] {
-//   color: var(--jfi-form-control-disabled-color);
-//   opacity: 0.5;
-//   cursor: not-allowed;
-// }
-
-*::part(input[type='checkbox']) {
-  margin: var(--jfi-form-control-margin);
-  padding: var(--jfi-form-control-padding);
-}
