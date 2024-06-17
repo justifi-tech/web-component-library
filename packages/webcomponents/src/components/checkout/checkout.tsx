@@ -54,6 +54,9 @@ export class Checkout {
       <justifi-checkout-core
         getCheckout={this.getCheckout}
         complete={this.complete}>
+        <div slot="insurance">
+          <slot name="insurance"></slot>
+        </div>
       </justifi-checkout-core>
     );
   }

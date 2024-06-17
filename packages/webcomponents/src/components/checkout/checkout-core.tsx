@@ -161,7 +161,9 @@ export class CheckoutCore {
               />
             </div>
           </div>
-          <slot name="insurance"></slot>
+          <div class="col-12">
+            <slot name="insurance"></slot>
+          </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
               <button
