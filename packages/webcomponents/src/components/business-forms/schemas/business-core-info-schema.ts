@@ -1,6 +1,5 @@
 import { object } from 'yup';
 import { 
-  businessTypeValidation,
   doingBusinessAsValidation,
   emailValidation,
   industryValidation,
@@ -9,7 +8,7 @@ import {
   taxIdValidation, 
   websiteUrlValidation,
   dateOfIncorporationValidation,
-  businessStructureValidation
+  businessClassificationValidation
 } from './schema-validations';
 
 export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
@@ -19,8 +18,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     email: emailValidation.required('Enter business email'),
     phone: phoneValidation.required('Enter phone number'),
     doing_business_as: doingBusinessAsValidation.required('Enter doing business as'),
-    business_type: businessTypeValidation.required('Select business type'),
-    business_structure: businessStructureValidation.required('Select business structure'),
+    classification: businessClassificationValidation.required('Select business classification'),
     industry: industryValidation.required('Enter a business industry'),
     tax_id: taxIdValidation.required('Enter tax id'),
     date_of_incorporation: dateOfIncorporationValidation.required('Enter date of incorporation'),
@@ -32,8 +30,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     email: emailValidation.nullable(),
     phone: phoneValidation.nullable(),
     doing_business_as: doingBusinessAsValidation.nullable(),
-    business_type: businessTypeValidation.nullable(),
-    business_structure: businessStructureValidation.nullable(),
+    classification: businessClassificationValidation.nullable(),
     industry: industryValidation.nullable(),
     tax_id: taxIdValidation.nullable(),
     date_of_incorporation: dateOfIncorporationValidation.nullable(),

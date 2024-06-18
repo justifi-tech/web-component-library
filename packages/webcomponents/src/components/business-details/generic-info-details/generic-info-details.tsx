@@ -26,12 +26,8 @@ export class GenericInfoDetails {
                 value={this.business?.doing_business_as}
               />
               <DetailItem
-                title="Business Type"
-                value={snakeCaseToHumanReadable(this.business?.business_type)}
-              />
-              <DetailItem
-                title="Business Structure"
-                value={snakeCaseToHumanReadable(this.business?.business_structure)}
+                title="Business Classification"
+                value={snakeCaseToHumanReadable(this.business?.classification)}
               />
               <DetailItem title="Industry" value={this.business?.industry} />
             </div>
