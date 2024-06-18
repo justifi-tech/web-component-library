@@ -132,7 +132,6 @@ export class BusinessDocumentFormStep {
   }
 
   sendData = async (onSuccess?: () => void) => {
-    this.documentData.convertVoidedChecks();
     const docArray = Object.values(this.documentData).flat();
     if (!docArray.length) { return; }
 

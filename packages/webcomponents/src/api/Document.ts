@@ -62,20 +62,6 @@ export class EntityDocumentStorage {
     this.tax_return = [];
     this.other = [];
   }
-
-  convertVoidedChecks(): void {
-    const merged = [...this.voided_check, ...this.bank_statement];
-    
-    merged.forEach(doc => {
-      doc.document_type = EntityDocumentType.bankStatement;
-      if (doc.record_data) {
-        doc.record_data.document_type = EntityDocumentType.bankStatement;
-      }
-    });
-
-    this.bank_statement = merged;
-    this.voided_check = [];
-  }
 }
 
 export interface EntityFileData {
