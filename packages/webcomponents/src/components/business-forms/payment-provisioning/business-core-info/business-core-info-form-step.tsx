@@ -7,7 +7,7 @@ import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema'
 import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessStructureOptions, businessTypeOptions } from '../../utils/business-form-options';
 
 /**
@@ -73,7 +73,7 @@ export class BusinessCoreInfoFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'coreInfo' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.coreInfo } });
   }
 
   @Method()

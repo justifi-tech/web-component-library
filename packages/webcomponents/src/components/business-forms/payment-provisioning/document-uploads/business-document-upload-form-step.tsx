@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServerErrors } from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServerErrors } from '../../utils/business-form-types';
 import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
@@ -119,7 +119,7 @@ export class BusinessDocumentFormStep {
       this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.sendData });
       return false;
     } else {
-      this.submitted.emit({ data: response, metadata: { completedStep: 'documentUpload' } });
+      this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.documentUpload } });
       return true;
     }
   }
