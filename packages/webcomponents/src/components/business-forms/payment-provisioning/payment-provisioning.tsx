@@ -35,7 +35,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
 
   disconnectedCallback() {
@@ -64,6 +64,7 @@ export class PaymentProvisioning {
   private ownersRef: any;
   private bankAccountRef: any;
   private documentUploadRef: any;
+  private termsRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -123,6 +124,14 @@ export class PaymentProvisioning {
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
+    7: () => <justifi-business-terms-conditions-form-step
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[7] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
+    />,
   };
 
   handleFormLoading = (e: CustomEvent) => {
@@ -171,7 +180,7 @@ export class PaymentProvisioning {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts="label,input,input-invalid, input-checkbox, input-checkbox-invalid">
         <h1>{this.title}</h1>
         {this.showErrors && FormAlert(this.errorMessage)}
         <div class="my-4">

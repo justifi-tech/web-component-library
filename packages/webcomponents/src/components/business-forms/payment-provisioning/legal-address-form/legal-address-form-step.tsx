@@ -5,7 +5,7 @@ import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/payload-parsers';
 import { addressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../form/utils';
 
@@ -67,7 +67,7 @@ export class LegalAddressFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'legalAddress' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.legalAddress } });
   }
 
   @Method()
