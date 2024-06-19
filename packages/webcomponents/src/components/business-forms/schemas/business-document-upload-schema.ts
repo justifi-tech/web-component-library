@@ -15,9 +15,9 @@ export const businessDocumentSchema = (volume: string, allowOptionalFields?: boo
     government_id: governmentIdValidation.nullable(),
     ss4: ss4Validation.nullable(),
     other: otherDocumentValidation.nullable(),
-    balance_sheet: balanceSheetValidation(volume),
-    bank_statement: bankStatementValidation(volume),
-    profit_and_loss_statement: profitAndLossStatementValidation(volume),
+    balance_sheet: balanceSheetValidation(volume, allowOptionalFields),
+    bank_statement: bankStatementValidation(volume, allowOptionalFields),
+    profit_and_loss_statement: profitAndLossStatementValidation(volume, allowOptionalFields),
   });
 
   const easySchema = object({
@@ -25,9 +25,9 @@ export const businessDocumentSchema = (volume: string, allowOptionalFields?: boo
     government_id: governmentIdValidation.nullable(),
     ss4: ss4Validation.nullable(),
     other: otherDocumentValidation.nullable(),
-    balance_sheet: balanceSheetValidation(volume).nullable(),
-    bank_statement: bankStatementValidation(volume).nullable(),
-    profit_and_loss_statement: profitAndLossStatementValidation(volume).nullable(),
+    balance_sheet: balanceSheetValidation(volume, allowOptionalFields),
+    bank_statement: bankStatementValidation(volume, allowOptionalFields),
+    profit_and_loss_statement: profitAndLossStatementValidation(volume, allowOptionalFields)
   });
 
   return allowOptionalFields ? easySchema : schema;

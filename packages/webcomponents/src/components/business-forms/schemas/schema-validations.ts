@@ -245,28 +245,28 @@ export const governmentIdValidation = documentUploadValidation;
 
 export const otherDocumentValidation = documentUploadValidation;
 
-export const bankStatementValidation = (volume) => {
+export const bankStatementValidation = (volume: string, allowOptionalFields: boolean) => {
   let vol = parseInt(volume);
   return documentUploadValidation.when(volume, {
-    is: () => vol >= 250000,
+    is: () => vol >= 250000 && !allowOptionalFields,
     then: (schema) => schema.required('Please select one or more files'),
     otherwise: (schema) => schema.nullable(),
   });
 }
 
-export const balanceSheetValidation = (volume) => {
+export const balanceSheetValidation = (volume: string, allowOptionalFields: boolean) => {
   let vol = parseInt(volume);
   return documentUploadValidation.when(volume, {
-    is: () => vol >= 1000000,
+    is: () => vol >= 1000000 && !allowOptionalFields,
     then: (schema) => schema.required('Please select one or more files'),
     otherwise: (schema) => schema.nullable(),
   });
 }
 
-export const profitAndLossStatementValidation = (volume) => {
+export const profitAndLossStatementValidation = (volume: string, allowOptionalFields: boolean) => {
   let vol = parseInt(volume);
   return documentUploadValidation.when(volume, {
-    is: () => vol >= 1000000,
+    is: () => vol >= 1000000 && !allowOptionalFields,
     then: (schema) => schema.required('Please select one or more files'),
     otherwise: (schema) => schema.nullable(),
   });
