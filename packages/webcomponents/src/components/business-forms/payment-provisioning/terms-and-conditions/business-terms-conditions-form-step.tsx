@@ -19,6 +19,7 @@ export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() userIP: string;
+  @State() acceptedTermsBefore: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -59,9 +60,8 @@ export class BusinessTermsConditionsFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      console.log(response);
+      this.acceptedTermsBefore = response.data.terms_conditions_accepted;
     } catch (error) {
-      console.log(error)
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
@@ -92,6 +92,7 @@ export class BusinessTermsConditionsFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
+    this.acceptedTermsBefore ? onSuccess() :
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
@@ -124,6 +125,7 @@ export class BusinessTermsConditionsFormStep {
                   label="I agree to the terms and conditions"
                   inputHandler={this.inputHandler}
                   error={this.errors.accepted}
+                  disabled={this.acceptedTermsBefore}
                 />
               </div>
             </div>

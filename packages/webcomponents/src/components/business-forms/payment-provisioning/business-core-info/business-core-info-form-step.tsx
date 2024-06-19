@@ -51,7 +51,6 @@ export class BusinessCoreInfoFormStep {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
-      console.log('Core Info:', this.coreInfo);
     }
   }
 
