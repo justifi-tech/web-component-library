@@ -1,85 +1,42 @@
-import { BusinessStructure, BusinessType } from "../../../api/Business";
+import { BusinessClassification } from "../../../api/Business";
 
 interface BusinessFormOption {
   label: string;
   value: string;
 }
 
-export const businessTypeOptions: BusinessFormOption[] = [
+export const businessClassificationOptions: BusinessFormOption[] = [
   {
-    label: 'Individual',
-    value: BusinessType.individual,
-  },
-  {
-    label: 'For Profit',
-    value: BusinessType.for_profit,
-  },
-  {
-    label: 'Non Profit',
-    value: BusinessType.non_profit,
-  },
-  {
-    label: 'Government Entity',
-    value: BusinessType.government_entity,
-  },
-];
-
-export const businessStructureOptions: BusinessFormOption[] = [
-  {
-    label: 'Choose business structure',
+    label: 'Choose business classification',
     value: '',
   },
   {
-    label: 'Sole Proprietorship',
-    value: BusinessStructure.sole_proprietorship,
+    label: 'Sole Proprietor',
+    value: BusinessClassification.sole_proprietor,
   },
   {
-    label: 'LLC (Single)',
-    value: BusinessStructure.single_llc,
+    label: 'Partnership',
+    value: BusinessClassification.partnership,
   },
   {
-    label: 'LLC (Multiple)',
-    value: BusinessStructure.multi_llc,
+    label: 'Corporation',
+    value: BusinessClassification.corporation,
   },
   {
-    label: 'Private Partnership',
-    value: BusinessStructure.private_partnership,
+    label: 'Public Company',
+    value: BusinessClassification.public_company,
   },
   {
-    label: 'Private Corporation',
-    value: BusinessStructure.private_corporation,
+    label: 'Limited',
+    value: BusinessClassification.limited,
   },
   {
-    label: 'Unincorporated Association',
-    value: BusinessStructure.unincorporated_association,
+    label: 'Non Profit',
+    value: BusinessClassification.non_profit,
   },
   {
-    label: 'Public Partnership',
-    value: BusinessStructure.public_partnership,
-  },
-  {
-    label: 'Public Corporation',
-    value: BusinessStructure.public_corporation,
-  },
-  {
-    label: 'Incorporated',
-    value: BusinessStructure.incorporated,
-  },
-  {
-    label: 'Unincorporated',
-    value: BusinessStructure.unincorporated,
-  },
-  {
-    label: 'Government Unit',
-    value: BusinessStructure.government_unit,
-  },
-  {
-    label: 'Government Instrumentality',
-    value: BusinessStructure.government_instrumentality,
-  },
-  {
-    label: 'Tax Exempt Government Instrumentality',
-    value: BusinessStructure.tax_exempt_government_instrumentality,
+    label: 'Government',
+    value: BusinessClassification.government,
   },
 ];
 
