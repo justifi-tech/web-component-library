@@ -35,6 +35,10 @@ export class BusinessTermsConditionsFormStep {
     return 'entities/terms_and_conditions'
   }
 
+  get formHelperText() {
+    return this.acceptedTermsBefore ? 'You have already accepted the terms and conditions.' : null
+  }
+
   get termsPayload() {
     return {
       business_id: this.businessId,
@@ -126,6 +130,7 @@ export class BusinessTermsConditionsFormStep {
                   inputHandler={this.inputHandler}
                   error={this.errors.accepted}
                   disabled={this.acceptedTermsBefore}
+                  helpText={this.formHelperText}
                 />
               </div>
             </div>

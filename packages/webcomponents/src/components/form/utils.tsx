@@ -11,6 +11,14 @@ export const FormAlert = (message: string) => (
   </div>
 );
 
+export const formHelpText = (text: string) => {
+  return (
+    <p class="form-text text-muted">
+      {text}
+    </p>
+  );
+}
+
 export const LoadingSpinner = () => (
   <div class="spinner-border spinner-border-sm" role="status">
     <span class="visually-hidden">Loading...</span>

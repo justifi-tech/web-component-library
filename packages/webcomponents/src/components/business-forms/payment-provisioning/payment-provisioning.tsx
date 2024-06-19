@@ -57,6 +57,7 @@ export class PaymentProvisioning {
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
+
   private coreInfoRef: any;
   private legalAddressRef: any;
   private additionalQuestionsRef: any;

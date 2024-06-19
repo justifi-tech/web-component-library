@@ -9,6 +9,7 @@ import {
   Element,
 } from '@stencil/core';
 import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
+import { formHelpText } from './utils';
 
 @Component({
   tag: 'form-control-file',
@@ -55,14 +56,6 @@ export class FileInput {
     }
   }
 
-  helpTextBlock = () => {
-    return (
-      <small id="passwordHelpBlock" class="form-text text-muted">
-        {this.helpText}
-      </small>
-    );
-  }
-
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
@@ -83,7 +76,7 @@ export class FileInput {
             onBlur={() => this.formControlBlur.emit()}
           />
           {this.error && <div class="invalid-feedback">{this.error}</div>}
-          {this.helpText && this.helpTextBlock()}
+          {this.helpText && formHelpText(this.helpText)}
         </div>
       </Host>
     );

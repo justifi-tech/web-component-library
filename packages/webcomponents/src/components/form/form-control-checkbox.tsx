@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Watch,
 } from '@stencil/core';
+import { formHelpText } from './utils';
 
 @Component({
   tag: 'form-control-checkbox',
@@ -22,6 +23,8 @@ export class CheckboxInput {
   @Prop() defaultValue?: boolean;
   @Prop() inputHandler: (name: string, value: boolean) => void;
   @Prop() disabled: boolean;
+  @Prop() helpText: string;
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -64,6 +67,7 @@ export class CheckboxInput {
             disabled={this.disabled}
           />
           {this.error && <div class="invalid-feedback">{this.error}</div>}
+          {this.helpText && formHelpText(this.helpText)}
         </div>
       </Host>
     );
