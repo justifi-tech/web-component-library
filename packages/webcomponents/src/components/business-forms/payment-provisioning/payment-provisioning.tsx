@@ -24,6 +24,7 @@ export class PaymentProvisioning {
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
+  @State() businessPaymentVolume: string;
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   analytics: JustifiAnalytics;
@@ -92,6 +93,7 @@ export class PaymentProvisioning {
       onFormLoading={this.handleFormLoading}
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
+      onSubmitted={this.setBusinessPaymentVolume}
     />,
     3: () => <justifi-business-representative-form-step
       businessId={this.businessId}
@@ -124,6 +126,7 @@ export class PaymentProvisioning {
       onFormLoading={this.handleFormLoading}
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
+      paymentVolume={this.businessPaymentVolume}
     />,
     7: () => <justifi-business-terms-conditions-form-step
       businessId={this.businessId}
@@ -141,6 +144,11 @@ export class PaymentProvisioning {
 
   handleServerErrors = (e: CustomEvent) => {
     this.errorMessage = e.detail.message;
+  }
+
+  setBusinessPaymentVolume = (e: CustomEvent) => {
+    let business = e.detail.data.data;
+    this.businessPaymentVolume = business?.additional_questions.business_payment_volume;
   }
 
   showPreviousStepButton() {

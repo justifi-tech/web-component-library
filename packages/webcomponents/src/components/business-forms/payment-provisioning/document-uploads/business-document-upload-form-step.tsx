@@ -6,7 +6,7 @@ import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
-import { EntityDocumentType, EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
+import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -16,11 +16,13 @@ export class BusinessDocumentFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() paymentVolume: string;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() documents: any = [];
   @State() business: Business;
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
+  @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
@@ -35,17 +37,13 @@ export class BusinessDocumentFormStep {
     return 'entities/document';
   }
 
-  get paymentVolume() {
-    return this.business?.additional_questions?.business_payment_volume;
-  }
-
   componentWillLoad() {
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(businessDocumentSchema(this.allowOptionalFields));
+    this.formController = new FormController(businessDocumentSchema(this.paymentVolume, this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
@@ -67,15 +65,17 @@ export class BusinessDocumentFormStep {
   }
 
   private fetchData = async () => {
+    this.renderState = 'loading';
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.documents = response.data.documents;
       this.business = { ...new Business(response.data) };
     } catch (error) {
       this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
+      this.renderState = 'error';
     } finally {
       this.formLoading.emit(false);
+      this.renderState = 'success';
     }
   }
 
@@ -91,7 +91,7 @@ export class BusinessDocumentFormStep {
     }
   }
 
-  handleDocRecordResponse = (docData: EntityDocument,response: any) => {
+  handleDocRecordResponse = (docData: EntityDocument, response: any) => {
     if (response.error) {
       this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.sendData });
       return false;
@@ -130,7 +130,7 @@ export class BusinessDocumentFormStep {
     const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
     this.documentData[docType] = documentList;
   }
-  
+
   sendData = async (onSuccess?: () => void) => {
     const docArray = Object.values(this.documentData).flat();
     if (!docArray.length) { return; }
@@ -143,7 +143,7 @@ export class BusinessDocumentFormStep {
     const uploadsCompleted = await Promise.all(uploads);
     if (!uploadsCompleted) { return; }
 
-    this.formLoading.emit(false);
+    uploadsCompleted && this.formLoading.emit(false);
     await onSuccess();
   }
 
@@ -152,90 +152,45 @@ export class BusinessDocumentFormStep {
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   }
 
+  get isLoading() {
+    return this.renderState === 'loading';
+  }
+
+  get isError() {
+    return this.renderState === 'error';
+  }
+
+  get formInputs() {
+    if (this.isError) {
+      return null;
+    }
+     if (this.isLoading) {
+      return <justifi-skeleton variant='rounded' height={'350px'} />;   
+    }
+
+    return (
+      <justifi-business-document-upload-input-group
+        paymentVolume={this.paymentVolume}
+        inputHandler={this.inputHandler}
+        storeFiles={this.storeFiles}
+        errors={this.errors}
+      />
+    );
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
         <form>
           <fieldset>
-          <legend>Document Uploads</legend>
-          <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
-          <hr />
-          <div class="row gy-3">
-            <div class="col-12 col-md-6">
-              <form-control-file
-                name="balance_sheet"
-                label="Upload FYE Balance Sheet"
-                inputHandler={this.inputHandler}
-                error={this.errors?.balance_sheet}
-                documentType={EntityDocumentType.balanceSheet}
-                onFileSelected={this.storeFiles}
-                multiple={true}
-                helpText='Please upload the most recent 2 years of balance sheets for your business.'
-              />
+            <legend>Document Uploads</legend>
+            <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
+            <hr />
+            <div class="d-flex flex-column">
+              {this.formInputs}
             </div>
-            <div class="col-12 col-md-6">
-              <form-control-file
-                name="bank_statement"
-                label="Upload Voided Check / Bank Statements"
-                inputHandler={this.inputHandler}
-                error={this.errors?.bank_statement}
-                documentType={EntityDocumentType.bankStatement}
-                onFileSelected={this.storeFiles}
-                multiple={true}
-                helpText='Please upload a voided check and/or 3 months of bank statements for the business.'
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-file
-                name="government_id"
-                label="Upload Government ID"
-                inputHandler={this.inputHandler}
-                error={this.errors?.government_id}
-                documentType={EntityDocumentType.governmentId}
-                onFileSelected={this.storeFiles}
-                multiple={true}
-                helpText='Please upload a government issued ID for the business owner.'
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-file
-                name="profit_and_loss_statement"
-                label="Upload Profit and Loss Statement"
-                inputHandler={this.inputHandler}
-                error={this.errors?.profit_and_loss_statement}
-                documentType={EntityDocumentType.profitAndLossStatement}
-                onFileSelected={this.storeFiles}
-                multiple={true}
-                helpText='Please upload the most recent profit and loss statement for your business.'
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-file
-                name="tax_return"
-                label="Upload Tax Return"
-                inputHandler={this.inputHandler}
-                error={this.errors?.tax_return}
-                documentType={EntityDocumentType.taxReturn}
-                onFileSelected={this.storeFiles}
-                multiple={true}
-                helpText='Please upload the most recent tax return for your business.'
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <form-control-file
-                name="other"
-                label="Upload any other documents"
-                inputHandler={this.inputHandler}
-                error={this.errors?.other}
-                documentType={EntityDocumentType.other}
-                onFileSelected={this.storeFiles}
-                multiple={true}
-                helpText='Please upload any other documents that may be relevant to your business.'
-              />
-            </div>
-          </div>
-        </fieldset>
-      </form>
+          </fieldset>
+        </form>
       </Host>
     );
   }

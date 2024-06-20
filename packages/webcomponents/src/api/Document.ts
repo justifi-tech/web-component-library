@@ -16,6 +16,7 @@ export interface IDocument {
 }
 
 export enum EntityDocumentType {
+  voidedCheck = 'voided_check',
   balanceSheet = 'balance_sheet',
   bankStatement = 'bank_statement',
   governmentId = 'government_id',
@@ -44,6 +45,7 @@ export interface DocumentRecordData {
 }
 
 export class EntityDocumentStorage {
+  public voided_check: EntityDocument[];
   public balance_sheet: EntityDocument[];
   public bank_statement: EntityDocument[];
   public government_id: EntityDocument[];
@@ -52,6 +54,7 @@ export class EntityDocumentStorage {
   public other: EntityDocument[];
 
   constructor() {
+    this.voided_check = [];
     this.balance_sheet = [];
     this.bank_statement = [];
     this.government_id = [];
