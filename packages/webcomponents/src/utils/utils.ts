@@ -241,3 +241,7 @@ export async function loadFontsOnParent() {
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
+
+export const isInRange = (num, min, max) => {
+  return num >= min && num <= max;
+};
