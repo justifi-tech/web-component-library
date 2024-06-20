@@ -3,6 +3,7 @@ import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPayments } from './get-payments';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 /**
   * @exportedPart table-head: Table head
@@ -37,8 +38,15 @@ export class PaymentsList {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetPayments();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   @Watch('accountId')

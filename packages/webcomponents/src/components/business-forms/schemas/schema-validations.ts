@@ -1,12 +1,12 @@
 import { string } from "yup";
 import StateOptions from "../../../utils/state-options";
 import { 
-  businessStructureOptions, 
   businessServiceReceivedOptions, 
-  businessTypeOptions, 
   recurringPaymentsOptions, 
-  seasonalBusinessOptions } 
-from "../utils/business-form-options";
+  seasonalBusinessOptions, 
+  bankAccountTypeOptions,
+  businessClassificationOptions
+} from "../utils/business-form-options";
 import { 
   businessNameRegex, 
   numbersOnlyRegex, 
@@ -17,8 +17,9 @@ import {
   stringLettersOnlyRegex, 
   taxIdRegex, 
   transformEmptyString, 
-  urlRegex } 
-from "./schema-helpers";
+  urlRegex, 
+  validateRoutingNumber
+} from "./schema-helpers";
 
 // Common Validations
 
@@ -48,12 +49,8 @@ export const websiteUrlValidation = string()
   .matches(urlRegex, 'Enter valid website url')
   .transform(transformEmptyString);
 
-export const businessTypeValidation = string()
-  .oneOf(businessTypeOptions.map((option) => option.value), 'Select business type')
-  .transform(transformEmptyString);
-
-export const businessStructureValidation = string()
-  .oneOf(businessStructureOptions.map((option) => option.value), 'Select business structure')
+export const businessClassificationValidation = string()
+  .oneOf(businessClassificationOptions.map((option) => option.value), 'Select business classification')
   .transform(transformEmptyString);
 
 export const industryValidation = string()
@@ -114,6 +111,11 @@ export const dobValidation = (role: string) => {
 
 export const ssnValidation = string()
   .matches(ssnRegex, 'Enter valid SSN')
+  .when('ssn_last4', {
+    is: (val: string) => !val || val.length === 0,
+    then: (schema) => schema.required('Enter SSN'),
+    otherwise: (schema) => schema.nullable(),
+  })
   .test('not-repeat', 'Enter valid SSN', (value) => {
     return !/^(\d)\1+$/.test(value);
   })
@@ -186,4 +188,42 @@ export const seasonalBusinessValidation = string()
   .transform(transformEmptyString);
 
 export const otherPaymentDetailsValidation = string()
+  .transform(transformEmptyString);
+
+// Bank Account Validations
+
+export const bankNameValidation = string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(50, 'Name must be less than 50 characters')
+  .matches(stringLettersOnlyRegex, 'Enter valid bank name')
+  .transform(transformEmptyString);
+
+export const nicknameValidation = string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(50, 'Name must be less than 50 characters')
+  .matches(stringLettersOnlyRegex, 'Enter valid nickname')
+  .transform(transformEmptyString);
+
+export const accountTypeValidation = string()
+  .oneOf(bankAccountTypeOptions.map((option) => option.value), 'Select account type')
+  .transform(transformEmptyString);
+
+export const accountNumberValidation = string()
+  .min(8, 'Account number must be at least 8 digits')
+  .max(17, 'Account number must be less than 17 digits')
+  .matches(numbersOnlyRegex, 'Enter valid account number')
+  .test('not-repeat', 'Enter valid account number', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .transform(transformEmptyString);
+
+export const routingNumberValidation = string()
+  .length(9, 'Routing number must be 9 digits')
+  .matches(numbersOnlyRegex, 'Enter valid routing number')
+  .test('not-repeat', 'Enter valid routing number', (value) => {
+    return !/^(\d)\1+$/.test(value);
+  })
+  .test('valid', 'Enter valid routing number', (value) => {
+    return validateRoutingNumber(value);
+  })
   .transform(transformEmptyString);

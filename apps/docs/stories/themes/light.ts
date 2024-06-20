@@ -77,14 +77,14 @@ justifi-season-interruption-insurance {
 
   /* Below only used in justifi-payment-form */
   /* form radio group */
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-border-color: #555;
+  --jfi-radio-input-background-color: transparent;
+  --jfi-radio-input-border-color: #555;
 
-  --jfi-radio-button-background-color-selected: #333;
-  --jfi-radio-button-border-color-selected: #333;
+  --jfi-radio-input-background-color-selected: #333;
+  --jfi-radio-input-border-color-selected: #333;
 
-  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(0, 0, 0, .25);
-  --jfi-radio-button-border-color-focus: #333;
+  --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(0, 0, 0, .25);
+  --jfi-radio-input-border-color-focus: #333;
 
   --jfi-radio-button-padding: 5px;
   --jfi-radio-button-font-size: 16px;
@@ -124,6 +124,9 @@ justifi-season-interruption-insurance {
   --jfi-submit-button-color-loading: rgba(0, 0, 0, 0.5);
   --jfi-submit-button-border-color-loading: rgba(0, 0, 0, 0.5);
   --jfi-submit-button-background-color-loading: transparent;
+
+  /* Skeleton */
+  --jfi-skeleton-wave-bg: rgba(100, 100, 100, 0.6 );
 }
 `;
 

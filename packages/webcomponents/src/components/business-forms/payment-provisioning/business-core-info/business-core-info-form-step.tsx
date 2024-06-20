@@ -8,7 +8,7 @@ import { config } from '../../../../../config';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
 import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
-import { businessStructureOptions, businessTypeOptions } from '../../utils/business-form-options';
+import { businessClassificationOptions } from '../../utils/business-form-options';
 
 /**
  *
@@ -51,6 +51,7 @@ export class BusinessCoreInfoFormStep {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
       this.formLoading.emit(false);
+      console.log('Core Info:', this.coreInfo);
     }
   }
 
@@ -127,12 +128,22 @@ export class BusinessCoreInfoFormStep {
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12">
                 <form-control-text
                   name="doing_business_as"
                   label="Doing Business As (DBA)"
                   defaultValue={coreInfoDefaultValue.doing_business_as}
                   error={this.errors.doing_business_as}
+                  inputHandler={this.inputHandler}
+                />
+              </div>
+              <div class="col-12 col-md-8">
+                <form-control-select
+                  name="classification"
+                  label="Business Classification"
+                  options={businessClassificationOptions}
+                  defaultValue={coreInfoDefaultValue.classification}
+                  error={this.errors.classification}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -142,26 +153,6 @@ export class BusinessCoreInfoFormStep {
                   label="Date of Incorporation"
                   defaultValue={coreInfoDefaultValue.date_of_incorporation}
                   error={this.errors.date_of_incorporation}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class="col-12 col-md-6">
-                <form-control-select
-                  name="business_type"
-                  label="Business Type"
-                  options={businessTypeOptions}
-                  defaultValue={coreInfoDefaultValue.business_type}
-                  error={this.errors.business_type}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class="col-12 col-md-6">
-                <form-control-select
-                  name="business_structure"
-                  label="Business Structure"
-                  options={businessStructureOptions}
-                  defaultValue={coreInfoDefaultValue.business_structure}
-                  error={this.errors.business_structure}
                   inputHandler={this.inputHandler}
                 />
               </div>

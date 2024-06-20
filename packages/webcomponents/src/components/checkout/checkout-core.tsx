@@ -22,10 +22,15 @@ export class CheckoutCore {
   @Prop() complete: Function;
   @Prop() checkoutId: string;
 
+  @Prop() disableCreditCard?: boolean;
+  @Prop() disableBankAccount?: boolean;
+  @Prop() disableBnpl?: boolean;
+  @Prop() disablePaymentMethodGroup?: boolean;
+
   @State() hasLoadedFonts: boolean = false;
-  @State() isLoading: boolean = false;
   @State() checkout: ICheckout;
-  @State() serverError: boolean = false;
+  @State() serverError: string;
+  @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
 
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
@@ -54,14 +59,15 @@ export class CheckoutCore {
   }
 
   fetchData(): void {
-    this.isLoading = true;
+    this.renderState = 'loading';
     this.getCheckout({
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
-        this.isLoading = false;
+        this.renderState = 'success';
       },
       onError: ({ error, code, severity }) => {
-        this.isLoading = false;
+        this.serverError = error;
+        this.renderState = 'error';
         this.errorEvent.emit({
           errorCode: code,
           message: error,
@@ -77,14 +83,16 @@ export class CheckoutCore {
     const insuranceInvalid = validateInsuranceValues();
     if (insuranceInvalid) return;
 
-    this.isLoading = true;
+    this.renderState = 'loading';
 
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
     if (!payload) {
-      this.isLoading = false;
+      this.renderState = 'error';
     }
     else if (payload.error) {
+      this.renderState = 'error';
+      this.serverError = payload.error.message;
       this.onError({
         code: (payload.error.code as ComponentErrorCodes),
         error: payload.error.message,
@@ -109,17 +117,73 @@ export class CheckoutCore {
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
     this.submitted.emit(data);
-    this.isLoading = false;
+    this.renderState = 'success';
   };
 
   onError = ({ error, code, severity }: { error: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity }) => {
+    this.serverError = error;
     this.errorEvent.emit({
       errorCode: code,
       message: error,
       severity,
     });
-    this.isLoading = false;
+    this.renderState = 'error';
   };
+
+  get isLoading() {
+    return this.renderState === 'loading';
+  }
+
+  get isError() {
+    return this.renderState === 'error';
+  }
+
+  get paymentType() {
+    if (this.isError) {
+      // For now, just return nothing to avoid breaking, but we can decide to show an error message here
+      // return <div style={{ color: 'red' }}>Error: {this.serverError}</div>;
+      return null;
+    }
+
+    if (this.isLoading) {
+      return <justifi-skeleton variant="rounded" height="300px" />;
+    }
+
+    return (
+      <justifi-payment-method-options
+        ref={(el) => (this.paymentMethodOptionsRef = el)}
+        show-card={!this.disableCreditCard}
+        show-ach={!this.disableBankAccount}
+        show-bnpl={!this.disableBnpl}
+        show-saved-payment-methods={!this.disablePaymentMethodGroup}
+        bnpl={this.checkout?.bnpl}
+        client-id={this.checkout?.payment_client_id}
+        account-id={this.checkout?.account_id}
+        savedPaymentMethods={this.checkout?.payment_methods || []}
+        paymentAmount={this.checkout?.payment_amount}
+      />
+    );
+  }
+
+  get summary() {
+    if (this.isLoading) {
+      return <justifi-skeleton height="24px" />;
+    }
+
+    if (this.isError) {
+      return null;
+    }
+
+    return (
+      <div>
+        <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
+        <div class="jfi-payment-total">
+          <span class="jfi-payment-total-label">Total</span>&nbsp;
+          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+        </div>
+      </div>
+    );
+  }
 
   private loadingSpinner = (
     <div class="spinner-border spinner-border-sm" role="status">
@@ -134,31 +198,14 @@ export class CheckoutCore {
           <div class="col-12 mb-4">
             {/* componentize this */}
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
-            {this.checkout && (
-              <div>
-                <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
-                <div class="jfi-payment-total">
-                  <span class="jfi-payment-total-label">Total</span>&nbsp;
-                  <span class="jfi-payment-total-amount">{formatCurrency(this.checkout.total_amount)}</span>
-                </div>
-              </div>
-            )}
-          </div>
+            {this.summary}
+          </div >
 
           <div class="col-12">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
-              <justifi-payment-method-options
-                ref={(el) => (this.paymentMethodOptionsRef = el)}
-                show-card={this.checkout?.payment_settings?.credit_card_payments || true}
-                show-ach={this.checkout?.payment_settings?.ach_payments || true}
-                bnpl={this.checkout?.bnpl}
-                client-id={this.checkout?.payment_client_id}
-                account-id={this.checkout?.account_id}
-                savedPaymentMethods={this.checkout?.payment_methods || []}
-                paymentAmount={this.checkout?.payment_amount}
-              />
+              {this.paymentType}
             </div>
           </div>
           <div class="col-12">
@@ -177,8 +224,8 @@ export class CheckoutCore {
               </button>
             </div>
           </div>
-        </div>
-      </Host>
+        </div >
+      </Host >
     );
   }
 }

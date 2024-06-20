@@ -6,6 +6,7 @@ import { loadFontsOnParent } from '../../utils/utils';
 import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -14,7 +15,7 @@ import { getErrorMessage } from '../../api/services/utils';
 })
 export class PaymentForm {
   @Prop() bankAccount?: boolean;
-  @Prop() card?: boolean = true;
+  @Prop() card?: boolean;
   @Prop() email?: string;
   @Prop() clientId?: string;
   @Prop() authToken?: string;
@@ -28,10 +29,13 @@ export class PaymentForm {
   @Event() submitted: EventEmitter<CreatePaymentMethodResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement;
 
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     if (!this.validateProps()) {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
@@ -44,6 +48,10 @@ export class PaymentForm {
 
   connectedCallback() {
     loadFontsOnParent();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   @Method()
@@ -59,6 +67,22 @@ export class PaymentForm {
   @Method()
   async disableSubmitButton() {
     this.submitButtonEnabled = false;
+  }
+
+  showPaymentMethodTypeSelector() {
+    return this.card && this.bankAccount;
+  }
+
+  getSelectedPaymentMethodType() {
+    if (this.showPaymentMethodTypeSelector()) {
+      return this.selectedPaymentMethodType;
+    } else if (this.card) {
+      return PaymentMethodTypes.card;
+    } else if (this.bankAccount) {
+      return PaymentMethodTypes.bankAccount;
+    } else {
+      return PaymentMethodTypes.card;
+    }
   }
 
   paymentMethodSelectedHandler(event: CustomEvent) {
@@ -112,17 +136,17 @@ export class PaymentForm {
     return (
       <Host>
         <form class="row gy-3">
-          {this.card && this.bankAccount && (
+          {this.showPaymentMethodTypeSelector() && (
             <div class="col-12">
               <justifi-payment-method-selector
-                selectedPaymentMethodType={this.selectedPaymentMethodType}
+                selectedPaymentMethodType={this.getSelectedPaymentMethodType()}
                 onPaymentMethodSelected={event => this.paymentMethodSelectedHandler(event)}
               />
             </div>
           )}
           <div class="col-12">
             <justifi-payment-method-form
-              payment-method-form-type={this.selectedPaymentMethodType}
+              payment-method-form-type={this.getSelectedPaymentMethodType()}
               iframeOrigin={config.iframeOrigin}
               ref={el => {
                 if (el) {

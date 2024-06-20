@@ -1,87 +1,46 @@
-import { BusinessStructure, BusinessType } from "../../../api/Business";
+import { BusinessClassification } from "../../../api/Business";
 
-export const businessTypeOptions: { label: string; value: BusinessType | string }[] = [
+interface BusinessFormOption {
+  label: string;
+  value: string;
+}
+
+export const businessClassificationOptions: BusinessFormOption[] = [
   {
-    label: 'Individual',
-    value: BusinessType.individual,
+    label: 'Choose business classification',
+    value: '',
   },
   {
-    label: 'For Profit',
-    value: BusinessType.for_profit,
+    label: 'Sole Proprietor',
+    value: BusinessClassification.sole_proprietor,
+  },
+  {
+    label: 'Partnership',
+    value: BusinessClassification.partnership,
+  },
+  {
+    label: 'Corporation',
+    value: BusinessClassification.corporation,
+  },
+  {
+    label: 'Public Company',
+    value: BusinessClassification.public_company,
+  },
+  {
+    label: 'Limited',
+    value: BusinessClassification.limited,
   },
   {
     label: 'Non Profit',
-    value: BusinessType.non_profit,
+    value: BusinessClassification.non_profit,
   },
   {
-    label: 'Government Entity',
-    value: BusinessType.government_entity,
+    label: 'Government',
+    value: BusinessClassification.government,
   },
 ];
 
-export const businessStructureOptions: {
-  label: string;
-  value: BusinessStructure | string;
-}[] = [
-    {
-      label: 'Choose business structure',
-      value: '',
-    },
-    {
-      label: 'Sole Proprietorship',
-      value: BusinessStructure.sole_proprietorship,
-    },
-    {
-      label: 'LLC (Single)',
-      value: BusinessStructure.single_llc,
-    },
-    {
-      label: 'LLC (Multiple)',
-      value: BusinessStructure.multi_llc,
-    },
-    {
-      label: 'Private Partnership',
-      value: BusinessStructure.private_partnership,
-    },
-    {
-      label: 'Private Corporation',
-      value: BusinessStructure.private_corporation,
-    },
-    {
-      label: 'Unincorporated Association',
-      value: BusinessStructure.unincorporated_association,
-    },
-    {
-      label: 'Public Partnership',
-      value: BusinessStructure.public_partnership,
-    },
-    {
-      label: 'Public Corporation',
-      value: BusinessStructure.public_corporation,
-    },
-    {
-      label: 'Incorporated',
-      value: BusinessStructure.incorporated,
-    },
-    {
-      label: 'Unincorporated',
-      value: BusinessStructure.unincorporated,
-    },
-    {
-      label: 'Government Unit',
-      value: BusinessStructure.government_unit,
-    },
-    {
-      label: 'Government Instrumentality',
-      value: BusinessStructure.government_instrumentality,
-    },
-    {
-      label: 'Tax Exempt Government Instrumentality',
-      value: BusinessStructure.tax_exempt_government_instrumentality,
-    },
-  ];
-
-export const businessServiceReceivedOptions: { label: string; value: string }[] = [
+export const businessServiceReceivedOptions: BusinessFormOption[] = [
   {
     label: 'Within 7 days',
     value: 'Within 7 days',
@@ -104,7 +63,7 @@ export const businessServiceReceivedOptions: { label: string; value: string }[] 
   }
 ];
 
-export const recurringPaymentsOptions: { label: string; value: string }[] = [
+export const recurringPaymentsOptions: BusinessFormOption[] = [
   {
     label: 'Yes',
     value: 'Yes',
@@ -115,7 +74,7 @@ export const recurringPaymentsOptions: { label: string; value: string }[] = [
   }
 ];
 
-export const seasonalBusinessOptions: { label: string; value: string }[] = [
+export const seasonalBusinessOptions: BusinessFormOption[] = [
   {
     label: 'Yes. The majority of the business revenue is generated in 3-6 months.',
     value: 'Yes',
@@ -123,5 +82,16 @@ export const seasonalBusinessOptions: { label: string; value: string }[] = [
   {
     label: 'No. The business revenue is generated evenly throughout the year.',
     value: 'No',
+  }
+];
+
+export const bankAccountTypeOptions: BusinessFormOption[] = [
+  {
+    label: 'Checking',
+    value: 'checking',
+  },
+  {
+    label: 'Savings',
+    value: 'savings',
   }
 ];

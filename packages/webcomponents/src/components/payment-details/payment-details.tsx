@@ -3,6 +3,7 @@ import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from './get-payment-details';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -41,9 +42,16 @@ export class PaymentDetails {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetPaymentDetails();
   }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
+  };
 
   @Watch('paymentId')
   @Watch('authToken')

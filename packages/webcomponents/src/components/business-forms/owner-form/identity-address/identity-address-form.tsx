@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../../../utils/state-options';
-import { filterPostalInput } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../form/utils';
 import { IAddress } from '../../../../api/Business';
 
 @Component({
@@ -72,7 +72,7 @@ export class IdentityAddressForm {
               defaultValue={this.defaultValues?.postal_code}
               error={this.errors?.postal_code}
               maxLength={5}
-              keyDownHandler={filterPostalInput}
+              keyDownHandler={numberOnlyHandler}
               inputHandler={this.inputHandler}
             />
           </div>

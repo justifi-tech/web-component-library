@@ -2,6 +2,7 @@ import { Component, Prop, h, State, Watch, Event, EventEmitter } from '@stencil/
 import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-checkout',
@@ -11,6 +12,10 @@ export class Checkout {
   @Prop() iframeOrigin?: string;
   @Prop() authToken: string;
   @Prop() checkoutId: string;
+  @Prop() disableCreditCard?: boolean;
+  @Prop() disableBankAccount?: boolean;
+  @Prop() disableBnpl?: boolean;
+  @Prop() disablePaymentMethodGroup?: boolean;
 
   @State() getCheckout: Function;
   @State() complete: Function;
@@ -18,8 +23,15 @@ export class Checkout {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetCheckout();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   private initializeGetCheckout() {
@@ -53,7 +65,11 @@ export class Checkout {
     return (
       <justifi-checkout-core
         getCheckout={this.getCheckout}
-        complete={this.complete}>
+        complete={this.complete}
+        disableCreditCard={this.disableCreditCard}
+        disableBankAccount={this.disableBankAccount}
+        disableBnpl={this.disableBnpl}
+        disablePaymentMethodGroup={this.disablePaymentMethodGroup}>
         <div slot="insurance">
           <slot name="insurance"></slot>
         </div>

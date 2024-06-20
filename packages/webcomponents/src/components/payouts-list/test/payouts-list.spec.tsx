@@ -3,7 +3,15 @@ import { newSpecPage } from "@stencil/core/testing";
 import { PayoutsList } from "../payouts-list";
 import { PayoutsListCore } from "../payouts-list-core";
 import { PayoutService } from '../../../api/services/payout.service';
+import JustifiAnalytics from "../../../api/Analytics";
 jest.mock('../../../api/services/payout.service');
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe('payouts-list', () => {
   it('renders an error message when accountId and authToken are not provided', async () => {

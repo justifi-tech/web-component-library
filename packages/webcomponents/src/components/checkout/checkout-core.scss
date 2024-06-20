@@ -4,6 +4,7 @@
 @import 'spinners';
 @import 'list-group';
 @import './jfi-header';
+@import 'bootstrap-utilities';
 
 :host {
   @include host-base-styles;

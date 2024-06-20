@@ -1,12 +1,20 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessForm } from '../business-form';
+import JustifiAnalytics from '../../../../api/Analytics';
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
 
 describe('justifi-business-form', () => {
   let consoleSpy;
 
   // Initialize the spy in the beforeEach
   beforeEach(() => {
-    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
   });
 
   // Restore the original function in the afterEach

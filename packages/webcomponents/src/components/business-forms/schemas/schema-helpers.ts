@@ -2,6 +2,20 @@
 export const transformEmptyString = (value: string) => {
   return value === '' ? null : value;
 }
+export const validateRoutingNumber = (routingNumber): boolean => {
+  if (!routingNumber) return false;
+
+  const integers = Array.from(String(routingNumber), Number);
+
+  if (integers.length === 9) {
+    const checksum = ((3 * (integers[0] + integers[3] + integers[6])) +
+      (7 * (integers[1] + integers[4] + integers[7])) +
+      (integers[2] + integers[5] + integers[8])) % 10;
+    if (checksum === 0) return true;
+  }
+
+  return false;
+}
 
 export const businessNameRegex = /^(?!^\s+$)[a-zA-Z0-9\s,&.-]*$/;
 

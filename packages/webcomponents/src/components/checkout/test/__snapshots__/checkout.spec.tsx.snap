@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`justifi-checkout renders 1`] = `
+exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout>
   <justifi-checkout-core>
     <mock:shadow-root>
@@ -9,6 +9,7 @@ exports[`justifi-checkout renders 1`] = `
           <h2 class="fs-5 fw-bold jfi-header pb-3">
             Summary
           </h2>
+          <justifi-skeleton height="24px"></justifi-skeleton>
         </div>
         <div class="col-12">
           <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -18,13 +19,17 @@ exports[`justifi-checkout renders 1`] = `
             Select payment type
           </h3>
           <div class="d-flex flex-column">
-            <justifi-payment-method-options show-ach="" show-card=""></justifi-payment-method-options>
+            <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
           </div>
         </div>
         <div class="col-12">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
-              Pay
+            <button class="btn btn-primary jfi-submit-button jfi-submit-button-loading" disabled="" part="pay-button" type="submit">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">
+                  Loading...
+                </span>
+              </div>
             </button>
           </div>
         </div>

@@ -6,6 +6,14 @@ import { BillingFormFields } from '../../billing-form/billing-form-schema';
 import { PaymentMethodSelector } from '../payment-method-selector';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 import { BillingForm } from '../../billing-form/billing-form';
+import JustifiAnalytics from '../../../api/Analytics';
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+})
 
 describe('justifi-payment-form', () => {
   it('should throw error if both clientId and authToken are not provided', async () => {
@@ -61,7 +69,7 @@ describe('justifi-payment-form', () => {
 
     // Assert that the properties exist and have the expected default values
     expect(paymentForm).toHaveProperty('bankAccount', undefined);
-    expect(paymentForm).toHaveProperty('card', true);
+    expect(paymentForm).toHaveProperty('card', undefined);
     expect(paymentForm).toHaveProperty('email', undefined);
     expect(paymentForm).toHaveProperty('clientId', undefined);
     expect(paymentForm).toHaveProperty('accountId', undefined);

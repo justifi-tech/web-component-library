@@ -1,10 +1,10 @@
-import { Meta, Source } from "@storybook/addon-docs";
-import dedent from "ts-dedent";
+import { Meta, Source } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
 import {
   SummaryElement,
   extractWebcomponentsVersion,
   CSSVars,
-} from "./../utils";
+} from './../utils';
 
 <Meta title="Frameworks/React" />
 
@@ -41,6 +41,29 @@ To use the web-components in a React app you need to add the CDN script and the 
   `}
 />
 
+or install it from NPM and import in your React application:
+
+<Source
+  language="bash"
+  dark
+  format={false}
+  code={dedent`
+    npm install --save @justifi/webcomponents
+  `}
+/>
+
+For instance, to use the `justifi-card-form` web component:
+
+<Source
+  language="javascript"
+  dark
+  format={false}
+  code={dedent`
+    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
+  `}
+/>
+
 Then you can use the components as any other HTML element:
 
 <Source
@@ -66,15 +89,21 @@ To integrate with TypeScript, declare the component in the JSX.IntrinsicElements
   dark
   format={false}
   code={dedent`
-    import React, { useState, DOMAttributes } from 'react';
+    // create a file called "register-web-components.ts"
+    import { JSX as LocalJSX } from '@justifi/webcomponents/dist/loader';
+    import { HTMLAttributes } from 'react';
 
-    type CustomElement<T> = Partial<T & DOMAttributes<T> & { children?: React.ReactNode }>;
+    type StencilToReact<T> = {
+      [P in keyof T]?: T[P] &
+        Omit<HTMLAttributes<Element>, 'className'> & {
+          class?: string;
+        };
+    };
 
     declare global {
-      namespace JSX {
-        interface IntrinsicElements {
-          'justifi-payment-form': CustomElement<any>; // Specify more specific types as needed
-        }
+      export namespace JSX {
+        interface IntrinsicElements
+          extends StencilToReact<LocalJSX.IntrinsicElements> {}
       }
     }
 

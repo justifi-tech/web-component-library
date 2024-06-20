@@ -3,6 +3,7 @@ import { ErrorState } from '../details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from './get-business';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 
 /**
  *
@@ -23,10 +24,20 @@ export class BusinessDetails {
   @State() errorMessage: string;
   @State() getBusiness: Function;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  analytics: JustifiAnalytics;
+
+  @Event({
+    eventName: 'error-event'
+  }) errorEvent: EventEmitter<ComponentError>;
+
 
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetBusiness();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   private initializeGetBusiness() {

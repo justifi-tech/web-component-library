@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-checkbox renders with default props 1`] = `
+<form-control-checkbox exportparts="label,input,input-invalid" label="Select a checkbox" name="user ID">
+  <mock:shadow-root>
+    <label class="form-label" htmlfor="user ID" part="label">
+      Select a checkbox
+    </label>
+    <input class="form-check-input" id="user ID" name="user ID" part="input " type="checkbox">
+  </mock:shadow-root>
+</form-control-checkbox>
+`;
