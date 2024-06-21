@@ -179,7 +179,7 @@ export class CheckoutCore {
         <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
         <div class="jfi-payment-total">
           <span class="jfi-payment-total-label">Total</span>&nbsp;
-          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.total_amount)}</span>
         </div>
       </div>
     );
@@ -224,8 +224,8 @@ export class CheckoutCore {
               </button>
             </div>
           </div>
-        </div >
-      </Host >
+        </div>
+      </Host>
     );
   }
 }
