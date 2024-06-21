@@ -91,6 +91,10 @@ export class SeasonInterruptionInsuranceCore {
     });
   }
 
+  get error() {
+    return insuranceErrors[this.quote?.policy_type];
+  }
+
   render() {
     return (
       <Host>
@@ -105,7 +109,7 @@ export class SeasonInterruptionInsuranceCore {
                 name="opt-in"
                 value="true"
                 onChange={(event: any) => this.onChangeHandler(event)}
-                class="form-check-input me-2"
+                class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
               />
               <label htmlFor="accept" class="btn btn-outline-primary jfi-btn-radio-label">
                 Accept coverage for {formatCurrency(this.quote?.total_cents)}
@@ -118,14 +122,18 @@ export class SeasonInterruptionInsuranceCore {
                 name="opt-in"
                 value="false"
                 onChange={(event: any) => this.onChangeHandler(event)}
-                class="form-check-input me-2"
+                class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
               />
               <label htmlFor="decline" class="btn btn-outline-primary jfi-btn-radio-label">
                 Decline coverage
               </label>
             </div>
+            <div
+              class="invalid-feedback"
+              style={{ display: this.error ? 'block' : 'none' }}>
+              Please select an option
+            </div>
             <small innerHTML={this.quote?.product.legal_disclaimer}></small>
-            {insuranceErrors[this.quote?.policy_type] && <div class="alert alert-danger mt-3">Please select an option</div>}
           </div>
         }
       </Host>
