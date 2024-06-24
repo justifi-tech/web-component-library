@@ -5,10 +5,3 @@
   @include host-base-styles;
   display: block;
 }
-
-input[type='file'][disabled] {
-  color: var(--jfi-form-control-disabled-color);
-  background-color: var(--jfi-form-control-disabled-background-color);
-  opacity: 0.5;
-  cursor: not-allowed;
-}
