@@ -5,29 +5,16 @@ import { Component, Prop, h } from '@stencil/core';
 })
 export class FormControlHelpText {
   @Prop() helpText: string;
-  @Prop() errorText: string;
-
-  private text: string;
-
-  get colorClass() {
-    return this.errorText ? 'text-danger' : 'text-muted';
-  }
 
   render() {
 
-    if (!this.helpText && !this.errorText) {
+    if (!this.helpText) {
       return null;
     }
 
-    if (this.errorText) {
-      this.text = this.errorText;
-    } else {
-      this.text = this.helpText;
-    }
-
     return (
-      <small class={`form-text ${this.colorClass}`} id='formHelpText'>
-        {this.text}
+      <small class='form-text text-muted' id='formHelpText'>
+        {this.helpText}
       </small>
     );
   }

@@ -76,7 +76,8 @@ export class FileInput {
             onInput={this.handleFormControlInput}
             onBlur={() => this.formControlBlur.emit()}
           />
-          <form-control-help-text helpText={this.helpText} errorText={this.errorText} />
+          <form-control-help-text helpText={this.helpText} />
+          <form-control-error-text errorText={this.errorText} />
         </div>
       </Host>
     );
