@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { TextInput } from '../form-control-text';
-import { FormHelpText } from '../form-helpers/form-help-text/form-help-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-text', () => {
 
@@ -119,17 +120,30 @@ describe('form-control-text', () => {
     expect(inputElement.disabled).toBeTruthy();
   });
 
+  it('shows help text when helpText prop is provided', async () => {
+    const page = await newSpecPage({
+      components: [TextInput, FormControlHelpText],
+      html: `<form-control-text help-text="This is a help text."></form-control-text>`,
+    });
+
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    expect(helpTextComponent).not.toBeNull();
+
+    const helpText = helpTextComponent.querySelector('.text-muted');
+    expect(helpText.textContent).toBe('This is a help text.');
+  });
+
   // Test 8: Error Prop
   it('shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
-      components: [TextInput, FormHelpText],
+      components: [TextInput, FormControlErrorText],
       html: `<form-control-text error-text="This field is required."></form-control-text>`,
     });
 
-    const helpTextComponent = page.root.querySelector('form-help-text');
-    expect(helpTextComponent).not.toBeNull();
+    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    expect(errorTextComponent).not.toBeNull();
 
-    const errorText = helpTextComponent.querySelector('.text-danger');
+    const errorText = errorTextComponent.querySelector('.text-danger');
     expect(errorText.textContent).toBe('This field is required.');
   });
 });

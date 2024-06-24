@@ -6,6 +6,8 @@ exports[`form-control-text renders with default props 1`] = `
     Username
   </label>
   <input class="form-control" id="username" name="username" part="input " type="text" value="">
-  <form-help-text></form-help-text>
+  <form-control-help-text></form-control-help-text>
+  <br>
+  <form-control-error-text></form-control-error-text>
 </form-control-text>
 `;

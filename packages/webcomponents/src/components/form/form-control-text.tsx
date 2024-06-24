@@ -72,7 +72,9 @@ export class TextInput {
           type="text"
           disabled={this.disabled}
         />
-        <form-help-text helpText={this.helpText} errorText={this.errorText} />
+        <form-control-help-text helpText={this.helpText} />
+        <br />
+        <form-control-error-text errorText={this.errorText} />
       </Host>
     );
   }
