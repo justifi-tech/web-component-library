@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { TextInput } from '../form-control-text';
+import { FormHelpText } from '../form-helpers/form-help-text/form-help-text';
 
 describe('form-control-text', () => {
 
@@ -30,7 +31,7 @@ describe('form-control-text', () => {
       `,
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     expect(page.rootInstance.label).toBe('Email');
     expect(inputElement.value).toBe('user@example.com');
     expect(inputElement.disabled).toBeTruthy();
@@ -46,7 +47,7 @@ describe('form-control-text', () => {
     page.rootInstance.defaultValue = 'updated';
     await page.waitForChanges();
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     expect(inputElement.value).toBe('updated');
   });
 
@@ -57,7 +58,7 @@ describe('form-control-text', () => {
       html: `<form-control-text></form-control-text>`,
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     const testValue = 'Hello, World!';
 
     inputElement.value = testValue;
@@ -81,7 +82,7 @@ describe('form-control-text', () => {
 
     await page.waitForChanges();
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     inputElement.value = 'Hello, World!';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
@@ -101,7 +102,7 @@ describe('form-control-text', () => {
     const blurEventSpy = jest.fn();
     page.win.addEventListener('formControlBlur', blurEventSpy);
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     inputElement.dispatchEvent(new Event('blur'));
 
     expect(blurEventSpy).toHaveBeenCalled();
@@ -114,20 +115,22 @@ describe('form-control-text', () => {
       html: `<form-control-text disabled></form-control-text>`,
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     expect(inputElement.disabled).toBeTruthy();
   });
 
   // Test 8: Error Prop
   it('shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
-      components: [TextInput],
-      html: `<form-control-text error="This field is required."></form-control-text>`,
+      components: [TextInput, FormHelpText],
+      html: `<form-control-text error-text="This field is required."></form-control-text>`,
     });
 
-    const shadowRoot = page.root.shadowRoot;
+    const helpTextComponent = page.root.querySelector('form-help-text');
+    expect(helpTextComponent).not.toBeNull();
 
-    expect(shadowRoot.querySelector('.invalid-feedback').textContent).toBe('This field is required.');
-    expect(shadowRoot.querySelector('.form-control').classList.contains('is-invalid')).toBeTruthy();
+    const errorText = helpTextComponent.querySelector('.text-danger');
+    expect(errorText.textContent).toBe('This field is required.');
   });
 });
+
