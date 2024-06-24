@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-file', () => {
 
@@ -95,6 +96,19 @@ describe('form-control-file', () => {
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.disabled).toBeTruthy();
+  });
+
+  it('shows help text when helpText prop is provided', async () => {
+    const page = await newSpecPage({
+      components: [FileInput, FormControlHelpText],
+      html: `<form-control-file help-text="Select a file to upload."></form-control-file>`,
+    });
+
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    expect(helpTextComponent).not.toBeNull();
+
+    const helpText = helpTextComponent.querySelector('.text-muted');
+    expect(helpText.textContent).toBe('Select a file to upload.');
   });
 
   it('shows error and applies error styling when error prop is provided', async () => {
