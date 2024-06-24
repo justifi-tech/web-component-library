@@ -56,6 +56,13 @@
   }
 }
 
+input[type='text'][disabled] {
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .jfi-submit-button {
   font-family: var(--jfi-layout-font-family);
   color: var(--jfi-submit-button-color);

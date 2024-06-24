@@ -11,22 +11,23 @@ import {
 } from '@stencil/core';
 
 @Component({
-  tag: 'form-control-text',
-  styleUrl: 'form-control-text.scss',
-  shadow: true,
+  tag: 'form-control-text'
 })
 export class TextInput {
   @Element() el: HTMLElement;
 
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() error: string;
+  @Prop() helpText?: string;
+  @Prop() errorText?: string;
   @Prop() defaultValue: string;
-  @Prop() keyDownHandler?: (event: any) => void;
   @Prop() maxLength?: number;
-  @Prop() disabled: boolean;
   @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() keyDownHandler?: (event: any) => void;
+  @Prop() disabled: boolean;
+
   @State() input: string;
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -36,7 +37,7 @@ export class TextInput {
   }
 
   updateInput(newValue: any) {
-    const inputElement = this.el.shadowRoot.querySelector('input');
+    const inputElement = this.el.querySelector('input');
     if (inputElement) {
       inputElement.value = newValue || '';
     }
@@ -66,13 +67,14 @@ export class TextInput {
           onBlur={() => this.formControlBlur.emit()}
           onKeyDown={(event: any) => this.keyDownHandler && this.keyDownHandler(event)}
           maxLength={this.maxLength}
-          part={`input ${this.error ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
+          part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
+          class={this.errorText ? 'form-control is-invalid' : 'form-control'}
           type="text"
-          disabled={this.disabled}
+          disabled={true}
         />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <form-help-text helpText={this.helpText} errorText={this.errorText} />
       </Host>
     );
   }
 }
+
