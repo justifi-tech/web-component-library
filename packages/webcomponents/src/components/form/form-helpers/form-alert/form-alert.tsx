@@ -1,9 +1,7 @@
 import { Component, Prop, h } from '@stencil/core';
 
 @Component({
-  tag: 'form-alert',
-  styleUrl: 'form-alert.scss',
-  shadow: true
+  tag: 'form-alert'
 })
 export class FormAlert {
   @Prop() text: string;
