@@ -10,7 +10,6 @@ import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document'
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
-  styleUrl: 'business-document-upload-form-step.scss',
 })
 export class BusinessDocumentFormStep {
   @Prop() authToken: string;

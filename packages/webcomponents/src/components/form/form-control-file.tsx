@@ -12,7 +12,6 @@ import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
 
 @Component({
   tag: 'form-control-file',
-  styleUrl: 'form-control-file.scss',
 })
 export class FileInput {
   @Element() el: HTMLElement;

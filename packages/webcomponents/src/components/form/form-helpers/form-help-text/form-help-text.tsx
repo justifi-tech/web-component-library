@@ -2,7 +2,6 @@ import { Component, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'form-help-text',
-  styleUrl: 'form-help-text.scss',
 })
 export class FormHelpText {
   @Prop() helpText: string;
