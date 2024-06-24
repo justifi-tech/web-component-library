@@ -70,7 +70,7 @@ export class TextInput {
           part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
           class={this.errorText ? 'form-control is-invalid' : 'form-control'}
           type="text"
-          disabled={true}
+          disabled={this.disabled}
         />
         <form-help-text helpText={this.helpText} errorText={this.errorText} />
       </Host>

@@ -169,7 +169,7 @@ export class RefundForm {
               inputHandler={(name: keyof RefundFormFields, value: any) =>
                 this.handleInput(name, value)
               }
-              error={this.errors.notes}
+              errorText={this.errors.notes}
             ></form-control-text>
           </div>
           {this.withButton && (

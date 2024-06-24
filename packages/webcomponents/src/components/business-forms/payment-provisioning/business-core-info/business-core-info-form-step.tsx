@@ -124,7 +124,7 @@ export class BusinessCoreInfoFormStep {
                   name="legal_name"
                   label="Legal Name"
                   defaultValue={coreInfoDefaultValue.legal_name}
-                  error={this.errors.legal_name}
+                  errorText={this.errors.legal_name}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -133,7 +133,7 @@ export class BusinessCoreInfoFormStep {
                   name="doing_business_as"
                   label="Doing Business As (DBA)"
                   defaultValue={coreInfoDefaultValue.doing_business_as}
-                  error={this.errors.doing_business_as}
+                  errorText={this.errors.doing_business_as}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -161,7 +161,7 @@ export class BusinessCoreInfoFormStep {
                   name="industry"
                   label="Industry"
                   defaultValue={coreInfoDefaultValue.industry}
-                  error={this.errors.industry}
+                  errorText={this.errors.industry}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -180,7 +180,7 @@ export class BusinessCoreInfoFormStep {
                   name="website_url"
                   label="Website URL"
                   defaultValue={coreInfoDefaultValue.website_url}
-                  error={this.errors.website_url}
+                  errorText={this.errors.website_url}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -189,7 +189,7 @@ export class BusinessCoreInfoFormStep {
                   name="email"
                   label="Email Address"
                   defaultValue={coreInfoDefaultValue.email}
-                  error={this.errors.email}
+                  errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
               </div>
