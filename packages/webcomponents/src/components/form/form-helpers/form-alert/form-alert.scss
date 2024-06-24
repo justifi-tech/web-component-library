@@ -1,0 +1,7 @@
+@import 'alert';
+@import 'bootstrap-utilities';
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
