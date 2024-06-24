@@ -1,9 +1,9 @@
 import { Component, Prop, h } from '@stencil/core';
 
 @Component({
-  tag: 'form-help-text',
+  tag: 'form-control-help-text',
 })
-export class FormHelpText {
+export class FormControlHelpText {
   @Prop() helpText: string;
   @Prop() errorText: string;
 

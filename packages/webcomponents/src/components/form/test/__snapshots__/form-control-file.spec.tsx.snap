@@ -7,7 +7,7 @@ exports[`form-control-file renders with default props 1`] = `
       Select a file
     </label>
     <input class="form-control" name="user ID" part="input " type="file">
-    <form-help-text></form-help-text>
+    <form-control-help-text></form-control-help-text>
   </div>
 </form-control-file>
 `;

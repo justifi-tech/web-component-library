@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
-import { FormHelpText } from '../form-helpers/form-help-text/form-help-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-file', () => {
 
@@ -99,11 +99,11 @@ describe('form-control-file', () => {
 
   it('shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
-      components: [FileInput, FormHelpText],
+      components: [FileInput, FormControlHelpText],
       html: `<form-control-file error-text="This field is required."></form-control-file>`,
     });
 
-    const helpTextComponent = page.root.querySelector('form-help-text');
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
     expect(helpTextComponent).not.toBeNull();
 
     const errorText = helpTextComponent.querySelector('.text-danger');
