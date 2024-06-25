@@ -256,7 +256,7 @@ export class BusinessOwnerForm {
                   name="phone"
                   label="Phone Number"
                   defaultValue={ownerDefaultValue?.phone}
-                  error={this.errors.phone}
+                  errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
@@ -276,7 +276,7 @@ export class BusinessOwnerForm {
                   name="identification_number"
                   label={this.identificationNumberLabel}
                   defaultValue={ownerDefaultValue?.identification_number}
-                  error={this.errors.identification_number}
+                  errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
                 />
