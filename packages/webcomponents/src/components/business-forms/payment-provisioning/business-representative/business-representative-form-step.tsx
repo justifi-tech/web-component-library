@@ -11,8 +11,7 @@ import { Representative } from '../../../../api/Identity';
 import { deconstructDate } from '../../utils/helpers';
 
 @Component({
-  tag: 'justifi-business-representative-form-step',
-  styleUrl: 'business-representative-form-step.scss',
+  tag: 'justifi-business-representative-form-step'
 })
 export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
