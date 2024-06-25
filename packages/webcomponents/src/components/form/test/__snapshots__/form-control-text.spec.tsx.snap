@@ -2,12 +2,13 @@
 
 exports[`form-control-text renders with default props 1`] = `
 <form-control-text exportparts="label,input,input-invalid" label="Username" name="username">
-  <label class="form-label" htmlfor="username" part="label">
-    Username
-  </label>
-  <input class="form-control" id="username" name="username" part="input " type="text" value="">
-  <form-control-help-text></form-control-help-text>
-  <br>
-  <form-control-error-text></form-control-error-text>
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" htmlfor="username" part="label">
+      Username
+    </label>
+    <input class="form-control" id="username" name="username" part="input " type="text" value="">
+    <form-control-help-text></form-control-help-text>
+    <form-control-error-text></form-control-error-text>
+  </div>
 </form-control-text>
 `;

@@ -58,6 +58,7 @@ describe('form-control-text', () => {
       components: [TextInput],
       html: `<form-control-text></form-control-text>`,
     });
+    page.rootInstance.inputHandler = jest.fn();
 
     const inputElement = page.root.querySelector('input');
     const testValue = 'Hello, World!';
