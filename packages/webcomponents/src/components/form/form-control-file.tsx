@@ -60,7 +60,7 @@ export class FileInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <div>
+        <div class="form-group d-flex flex-column">
           <label part="label" class="form-label" htmlFor={this.name}>
             {this.label}
           </label>
@@ -77,7 +77,6 @@ export class FileInput {
             onBlur={() => this.formControlBlur.emit()}
           />
           <form-control-help-text helpText={this.helpText} />
-          <br />
           <form-control-error-text errorText={this.errorText} />
         </div>
       </Host>
