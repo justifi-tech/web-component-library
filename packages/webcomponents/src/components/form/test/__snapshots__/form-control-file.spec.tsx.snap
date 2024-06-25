@@ -2,13 +2,12 @@
 
 exports[`form-control-file renders with default props 1`] = `
 <form-control-file exportparts="label,input,input-invalid" label="Select a file" name="user ID">
-  <div>
+  <div class="d-flex flex-column form-group">
     <label class="form-label" htmlfor="user ID" part="label">
       Select a file
     </label>
     <input class="form-control" name="user ID" part="input " type="file">
     <form-control-help-text></form-control-help-text>
-    <br>
     <form-control-error-text></form-control-error-text>
   </div>
 </form-control-file>
