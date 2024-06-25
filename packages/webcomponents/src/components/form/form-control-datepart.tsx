@@ -10,9 +10,7 @@ import {
 import IMask, { InputMask } from 'imask';
 
 @Component({
-  tag: 'form-control-datepart',
-  styleUrl: 'form-control-number.scss',
-  shadow: true,
+  tag: 'form-control-datepart'
 })
 export class DatePartInput {
   @Prop() label: string;

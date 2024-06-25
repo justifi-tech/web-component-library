@@ -12,6 +12,8 @@
   display: block;
 }
 
+// Part Styles
+
 *::part(label) {
   color: var(--jfi-form-label-color);
   font-family: var(--jfi-form-label-font-family);
@@ -55,6 +57,35 @@
     box-shadow: var(--jfi-form-control-box-shadow-error-focus);
   }
 }
+
+// Element Styles
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+input[type='number'][disabled] {
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input[type='text'][disabled] {
+  color: var(--jfi-form-control-disabled-color);
+  background-color: var(--jfi-form-control-disabled-background-color);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// Class Styles
 
 .jfi-submit-button {
   font-family: var(--jfi-layout-font-family);
