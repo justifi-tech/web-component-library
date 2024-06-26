@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-number-masked handles the disabled state 1`] = `
+<form-control-number-masked disabled="" exportparts="label,input,input-invalid" label="Age">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" part="label">
+      Age
+    </label>
+    <input class="form-control" disabled="" part="input undefined" type="text">
+    <form-control-help-text></form-control-help-text>
+    <form-control-error-text></form-control-error-text>
+  </div>
+</form-control-number-masked>
+`;
+
+exports[`form-control-number-masked renders with an error message 1`] = `
+<form-control-number-masked error-text="Invalid input" exportparts="label,input,input-invalid" label="Age">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" part="label">
+      Age
+    </label>
+    <input class="form-control is-invalid" part="input input-invalid" type="text">
+    <form-control-help-text></form-control-help-text>
+    <form-control-error-text errortext="Invalid input"></form-control-error-text>
+  </div>
+</form-control-number-masked>
+`;
+
+exports[`form-control-number-masked renders with default props 1`] = `
+<form-control-number-masked exportparts="label,input,input-invalid" label="Age">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" part="label">
+      Age
+    </label>
+    <input class="form-control" part="input undefined" type="text">
+    <form-control-help-text></form-control-help-text>
+    <form-control-error-text></form-control-error-text>
+  </div>
+</form-control-number-masked>
+`;
