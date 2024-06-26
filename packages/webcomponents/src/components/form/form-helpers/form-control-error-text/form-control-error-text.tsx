@@ -5,6 +5,7 @@ import { Component, Prop, h } from '@stencil/core';
 })
 export class FormControlErrorText {
   @Prop() errorText: string;
+  @Prop() name: string;
 
   render() {
 
@@ -13,7 +14,7 @@ export class FormControlErrorText {
     }
 
     return (
-      <small class='form-text text-danger' id='formErrorText'>
+      <small class='form-text text-danger' id={`form-error-text-${this.name}`}>
         {this.errorText}
       </small>
     );

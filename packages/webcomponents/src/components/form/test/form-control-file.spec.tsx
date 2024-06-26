@@ -8,12 +8,12 @@ describe('form-control-file', () => {
   it('renders with default props', async () => {
     const page = await newSpecPage({
       components: [FileInput],
-      html: `<form-control-file label="Select a file" name="user ID"></form-control-file>`,
+      html: `<form-control-file label="Select a file" name="bank_statement"></form-control-file>`,
     });
 
     expect(page.root).toMatchSnapshot();
     expect(page.rootInstance.label).toBe('Select a file');
-    expect(page.rootInstance.name).toBe('user ID');
+    expect(page.rootInstance.name).toBe('bank_statement');
   });
 
   it('renders with all props provided', async () => {
