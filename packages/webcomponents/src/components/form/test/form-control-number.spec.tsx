@@ -13,7 +13,7 @@ describe('form-control-number', () => {
   it('renders with an error message', async () => {
     const page = await newSpecPage({
       components: [NumberInput],
-      html: `<form-control-number label="Age" error="Invalid input"></form-control-number>`,
+      html: `<form-control-number label="Age" error-text="Invalid input"></form-control-number>`,
     });
     expect(page.root).toMatchSnapshot();
   });
@@ -31,13 +31,13 @@ describe('form-control-number', () => {
       components: [NumberInput],
       html: `<form-control-number label="Age"></form-control-number>`,
     });
-    let input = page.root.shadowRoot.querySelector('input');
+    let input = page.root.querySelector('input');
     expect(input.value).toBe(''); // Default should be empty
 
     page.root.defaultValue = '30';
     await page.waitForChanges();
 
-    input = page.root.shadowRoot.querySelector('input');
+    input = page.root.querySelector('input');
     expect(input.value).toBe('30');
   });
 
@@ -51,7 +51,7 @@ describe('form-control-number', () => {
     page.rootInstance.inputHandler = inputHandlerMock;
     await page.waitForChanges();
 
-    const input = page.root.shadowRoot.querySelector('input');
+    const input = page.root.querySelector('input');
     input.value = '25';
     await input.dispatchEvent(new Event('input', { bubbles: true }));
 
@@ -66,7 +66,7 @@ describe('form-control-number', () => {
     const blurSpy = jest.fn();
     page.win.addEventListener('formControlBlur', blurSpy);
 
-    const input = page.root.shadowRoot.querySelector('input');
+    const input = page.root.querySelector('input');
     await input.dispatchEvent(new CustomEvent('blur'));
 
     expect(blurSpy).toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('form-control-number', () => {
     const inputSpy = jest.fn();
     page.win.addEventListener('formControlInput', inputSpy);
 
-    const input = page.root.shadowRoot.querySelector('input');
+    const input = page.root.querySelector('input');
     input.value = '25';
     const mockEvent = new Event('input', { bubbles: true });
     Object.defineProperty(mockEvent, 'target', { value: input, enumerable: true });

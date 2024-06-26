@@ -34,7 +34,7 @@ export class NumberInput {
   }
 
   updateInput(newValue: any) {
-    const inputElement = this.el.shadowRoot.querySelector('input');
+    const inputElement = this.el.querySelector('input');
     if (inputElement) {
       inputElement.value = newValue || '';
     }
