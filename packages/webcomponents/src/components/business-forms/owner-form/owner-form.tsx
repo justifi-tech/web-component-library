@@ -229,7 +229,7 @@ export class BusinessOwnerForm {
                   name="name"
                   label="Full Name"
                   defaultValue={ownerDefaultValue?.name}
-                  error={this.errors.name}
+                  errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -238,7 +238,7 @@ export class BusinessOwnerForm {
                   name="title"
                   label="Title"
                   defaultValue={ownerDefaultValue?.title}
-                  error={this.errors.title}
+                  errorText={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -247,7 +247,7 @@ export class BusinessOwnerForm {
                   name="email"
                   label="Email Address"
                   defaultValue={ownerDefaultValue?.email}
-                  error={this.errors.email}
+                  errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
               </div>

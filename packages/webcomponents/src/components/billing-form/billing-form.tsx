@@ -74,7 +74,7 @@ export class BillingForm {
                   name='name'
                   label='Full Name'
                   defaultValue={billingFormDefaultValue.name}
-                  error={this.errors.name}
+                  errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -83,7 +83,7 @@ export class BillingForm {
                   name='address_line1'
                   label='Street Address'
                   defaultValue={billingFormDefaultValue.address_line1}
-                  error={this.errors.address_line1}
+                  errorText={this.errors.address_line1}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -92,7 +92,7 @@ export class BillingForm {
                   name='address_line2'
                   label="Apartment, Suite, etc. (optional)"
                   defaultValue={billingFormDefaultValue.address_line2}
-                  error={this.errors.address_line2}
+                  errorText={this.errors.address_line2}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -101,7 +101,7 @@ export class BillingForm {
                   name='address_city'
                   label="City"
                   defaultValue={billingFormDefaultValue.address_city}
-                  error={this.errors.address_city}
+                  errorText={this.errors.address_city}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -120,7 +120,7 @@ export class BillingForm {
                   name='address_postal_code'
                   label="ZIP"
                   defaultValue={billingFormDefaultValue.address_postal_code}
-                  error={this.errors.address_postal_code}
+                  errorText={this.errors.address_postal_code}
                   inputHandler={this.inputHandler}
                   maxLength={5}
                   keyDownHandler={numberOnlyHandler}
