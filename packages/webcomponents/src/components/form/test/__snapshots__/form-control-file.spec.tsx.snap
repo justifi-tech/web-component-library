@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`form-control-file renders with default props 1`] = `
-<form-control-file exportparts="label,input,input-invalid" label="Select a file" name="user ID">
+<form-control-file exportparts="label,input,input-invalid" label="Select a file" name="bank_statement">
   <div class="d-flex flex-column form-group">
-    <label class="form-label" htmlfor="user ID" part="label">
+    <label class="form-label" htmlfor="bank_statement" part="label">
       Select a file
     </label>
-    <input class="form-control" name="user ID" part="input " type="file">
-    <form-control-help-text></form-control-help-text>
-    <form-control-error-text></form-control-error-text>
+    <input class="form-control" name="bank_statement" part="input " type="file">
+    <form-control-help-text name="bank_statement"></form-control-help-text>
+    <form-control-error-text name="bank_statement"></form-control-error-text>
   </div>
 </form-control-file>
 `;
