@@ -13,6 +13,8 @@ export class SeasonInterruptionInsurance {
   @Prop() primaryIdentityFirstName: string;
   @Prop() primaryIdentityLastName: string;
   @Prop() primaryIdentityState: string;
+  @Prop() primaryIdentityPostalCode: string;
+  @Prop() primaryIdentityCountry: string;
   @Prop() primaryIdentityEmailAddress: string;
   @Prop() policyAttributesInsurableAmount: number;
   @Prop() policyAttributesStartDate?: string;
@@ -60,6 +62,8 @@ export class SeasonInterruptionInsurance {
         primary-identity-first-name={this.primaryIdentityFirstName}
         primary-identity-last-name={this.primaryIdentityLastName}
         primary-identity-state={this.primaryIdentityState}
+        primary-identity-postal-code={this.primaryIdentityPostalCode}
+        primary-identity-country={this.primaryIdentityCountry}
         primary-identity-email-address={this.primaryIdentityEmailAddress}
         policy-attributes-insurable-amount={this.policyAttributesInsurableAmount}
         policy-attributes-start-date={this.policyAttributesStartDate}
