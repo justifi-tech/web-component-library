@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { FormAlert, LoadingSpinner } from '../../form/utils';
+import { LoadingSpinner } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
 
@@ -49,10 +49,6 @@ export class PaymentProvisioning {
 
   get totalSteps() { 
     return Object.keys(this.componentStepMapping).length - 1; 
-  }
-
-  get showErrors() {
-    return this.errorMessage && !this.hideErrors;
   }
 
   get businessEndpoint() {
@@ -189,44 +185,46 @@ export class PaymentProvisioning {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid, input-checkbox, input-checkbox-invalid">
-        <h1>{this.title}</h1>
-        {this.showErrors && FormAlert(this.errorMessage)}
-        <div class="my-4">
-          {this.currentStepComponent()}
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            Step {this.currentStep + 1} of {this.totalSteps + 1}
+      <Host exportparts="label,input,input-invalid">
+        <div class="row gap-3">
+          <h1>{this.title}</h1>
+          <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
+          <div class="col-12 mb-4">
+            {this.currentStepComponent()}
           </div>
-          <div class="d-flex gap-2">
-            {this.showPreviousStepButton() && (
-              <button
-                type="button"
-                class="btn btn-secondary"
-                onClick={() => this.previousStepButtonOnClick()}
-                disabled={this.formLoading}>
-                Previous
-              </button>
-            )}
-            {this.showNextStepButton() && (
-              <button
-                type="button"
-                class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
-                onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
-                disabled={this.formLoading}>
-                {this.formLoading ? LoadingSpinner() : 'Next'}
-              </button>
-            )}
-            {this.showSubmitButton() && (
-              <button
-                type="submit"
-                class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
-                onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
-                disabled={this.formLoading}>
-                {this.formLoading ? LoadingSpinner() : 'Submit'}
-              </button>
-            )}
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              Step {this.currentStep + 1} of {this.totalSteps + 1}
+            </div>
+            <div class="d-flex gap-2">
+              {this.showPreviousStepButton() && (
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onClick={() => this.previousStepButtonOnClick()}
+                  disabled={this.formLoading}>
+                  Previous
+                </button>
+              )}
+              {this.showNextStepButton() && (
+                <button
+                  type="button"
+                  class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
+                  onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
+                  disabled={this.formLoading}>
+                  {this.formLoading ? LoadingSpinner() : 'Next'}
+                </button>
+              )}
+              {this.showSubmitButton() && (
+                <button
+                  type="submit"
+                  class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
+                  onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
+                  disabled={this.formLoading}>
+                  {this.formLoading ? LoadingSpinner() : 'Submit'}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </Host>

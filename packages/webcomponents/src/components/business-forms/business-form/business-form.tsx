@@ -4,7 +4,6 @@ import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { parseBusiness } from '../utils/payload-parsers';
 import { config } from '../../../../config';
-import { FormAlert } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
@@ -60,10 +59,6 @@ export class BusinessForm {
 
   get disabledState() {
     return this.isLoading;
-  }
-
-  get showErrors() {
-    return this.errorMessage && !this.hideErrors;
   }
 
   get businessEndpoint() {
@@ -123,10 +118,8 @@ export class BusinessForm {
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
-            <div class="col-12 mb-4">
-              <h1>{this.title}</h1>
-            </div>
-            {this.showErrors && FormAlert(this.errorMessage)}
+            <h1>{this.title}</h1>
+            <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
             <div class="col-12 mb-4">
               <justifi-business-core-info formController={this.formController} />
             </div>
@@ -144,8 +137,7 @@ export class BusinessForm {
                 type="submit"
                 class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}
-              >
+                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}>
                 {this.isLoading ? 'Loading...' : 'Submit'}
               </button>
             </div>

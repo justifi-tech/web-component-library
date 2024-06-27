@@ -4,9 +4,7 @@ import { inputConfigurations } from './input-configurations';
 import { isInRange } from '../../../../utils/utils';
 
 @Component({
-  tag: 'justifi-business-document-upload-input-group',
-  styleUrl: 'business-document-upload-form-step.scss',
-  shadow: true,
+  tag: 'justifi-business-document-upload-input-group'
 })
 export class BusinessDocumentUploadInputGroup {
   @Prop() paymentVolume: string;
@@ -56,7 +54,7 @@ export class BusinessDocumentUploadInputGroup {
               documentType={config.documentType}
               inputHandler={this.inputHandler}
               onFileSelected={this.storeFiles}
-              error={this.errors[config.name]}
+              errorText={this.errors[config.name]}
               multiple={true}
             />
           </div>
