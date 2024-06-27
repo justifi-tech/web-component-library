@@ -3,6 +3,7 @@
 @import 'buttons';
 @import 'spinners';
 @import 'list-group';
+@import './jfi-header';
 @import 'bootstrap-utilities';
 
 :host {
@@ -69,11 +70,6 @@ justifi-payment-method-form {
   font-size: var(--jfi-error-message-font-size);
   margin: var(--jfi-error-message-margin);
   line-height: normal;
-}
-
-.jfi-header {
-  color: var(--jfi-header-color);
-  border-bottom: var(--jfi-header-border);
 }
 
 .jfi-submit-button {

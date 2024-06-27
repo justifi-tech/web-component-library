@@ -1,5 +1,7 @@
 @import 'forms';
 @import 'buttons';
+@import 'bootstrap-utilities';
+@import './jfi-radio-button';
 
 :host {
   @include host-base-styles;
@@ -11,27 +13,6 @@
   color: var(--jfi-radio-button-group-color);
   background-color: var(--jfi-radio-button-group-background-color);
   border-bottom: var(--jfi-radio-button-group-divider);
-
-  input[type="radio"],
-  label {
-    cursor: pointer;
-  }
-
-  input[type="radio"] {
-    background-color: var(--jfi-radio-input-background-color);
-    border-color: var(--jfi-radio-input-border-color);
-
-    &:checked,
-    &:checked:focus {
-      background-color: var(--jfi-radio-input-background-color-selected);
-      border-color: var(--jfi-radio-input-border-color-selected);
-    }
-
-    &:focus {
-      border-color: var(--jfi-radio-input-border-color-focus);
-      box-shadow: var(--jfi-radio-input-box-shadow-focus);
-    }
-  }
 
   &:hover {
     color: var(--jfi-radio-button-group-color-hover);

@@ -44,7 +44,7 @@
 | `clientId`            | `client-id`      |             | `string`              | `undefined`           |
 | `iframeOrigin`        | `iframe-origin`  |             | `string`              | `config.iframeOrigin` |
 | `isSelected`          | `is-selected`    |             | `boolean`             | `undefined`           |
-| `paymentAmount`       | `payment-amount` |             | `string`              | `undefined`           |
+| `paymentAmount`       | `payment-amount` |             | `number`              | `undefined`           |
 | `paymentMethodOption` | --               |             | `PaymentMethodOption` | `undefined`           |
 
 
@@ -77,8 +77,8 @@ Type: `Promise<PaymentMethodPayload>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-method-options --> justifi-sezzel-payment-method
-  style justifi-sezzel-payment-method fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-method-options --> justifi-sezzle-payment-method
+  style justifi-sezzle-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

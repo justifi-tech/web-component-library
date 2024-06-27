@@ -1,9 +1,11 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
-import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
+import { Component, h, Prop, State, Event, EventEmitter, Host, Listen } from '@stencil/core';
+import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -36,17 +38,24 @@ export class CheckoutCore {
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
+
   componentWillLoad() {
     if (this.getCheckout) {
       this.fetchData();
+
+      // Refresh the checkout data when insurance is added or removed
+      insuranceValuesOn('set', (key) => {
+        const value = insuranceValues[key]
+        if (value !== undefined) {
+          this.fetchData();
+        }
+      });
     }
   }
 
-  connectedCallback() {
-    if (!this.hasLoadedFonts) {
-      this.loadFontsOnParent();
-      this.hasLoadedFonts = true;
-    }
+  @Listen('insurance-updated')
+  handleInsuranceChanged() {
+    this.fetchData();
   }
 
   fetchData(): void {
@@ -68,25 +77,11 @@ export class CheckoutCore {
     });
   };
 
-
-  @Method()
-  async loadFontsOnParent() {
-    const parent = document.body;
-    const fontsToLoad = extractComputedFontsToLoad();
-    if (!parent || !fontsToLoad) {
-      return null;
-    }
-
-    // This approach is needed to load the font in a parent of the component
-    const fonts = document.createElement('link');
-    fonts.rel = 'stylesheet';
-    fonts.href = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
-
-    parent.append(fonts);
-  }
-
   async submit(event) {
     event.preventDefault();
+
+    const insuranceInvalid = validateInsuranceValues();
+    if (insuranceInvalid) return;
 
     this.renderState = 'loading';
 
@@ -184,7 +179,7 @@ export class CheckoutCore {
         <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
         <div class="jfi-payment-total">
           <span class="jfi-payment-total-label">Total</span>&nbsp;
-          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.total_amount)}</span>
         </div>
       </div>
     );
@@ -204,7 +199,7 @@ export class CheckoutCore {
             {/* componentize this */}
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
             {this.summary}
-          </div>
+          </div >
 
           <div class="col-12">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
@@ -212,6 +207,9 @@ export class CheckoutCore {
             <div class="d-flex flex-column">
               {this.paymentType}
             </div>
+          </div>
+          <div class="col-12">
+            <slot name="insurance"></slot>
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">

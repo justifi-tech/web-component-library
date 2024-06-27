@@ -20,7 +20,7 @@ export class PaymentMethodOptions {
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
-  @Prop() paymentAmount: string;
+  @Prop() paymentAmount: number;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];

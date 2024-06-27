@@ -2,6 +2,7 @@
 
 exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout>
+  <!---->
   <justifi-checkout-core>
     <mock:shadow-root>
       <div class="gy-3 jfi-checkout-core row">
@@ -23,6 +24,9 @@ exports[`justifi-checkout renders loading 1`] = `
           </div>
         </div>
         <div class="col-12">
+          <slot name="insurance"></slot>
+        </div>
+        <div class="col-12">
           <div class="d-flex justify-content-end">
             <button class="btn btn-primary jfi-submit-button jfi-submit-button-loading" disabled="" part="pay-button" type="submit">
               <div class="spinner-border spinner-border-sm" role="status">
@@ -35,6 +39,7 @@ exports[`justifi-checkout renders loading 1`] = `
         </div>
       </div>
     </mock:shadow-root>
+    <div slot="insurance"></div>
   </justifi-checkout-core>
 </justifi-checkout>
 `;

@@ -29,7 +29,7 @@ export class SezzlePaymentMethod {
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
-  @Prop() paymentAmount: string;
+  @Prop() paymentAmount: number;
 
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;

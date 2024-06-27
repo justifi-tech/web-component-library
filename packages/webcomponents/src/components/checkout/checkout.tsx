@@ -5,7 +5,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
-  tag: 'justifi-checkout'
+  tag: 'justifi-checkout',
 })
 export class Checkout {
   @Prop() iframeOrigin?: string;
@@ -25,7 +25,7 @@ export class Checkout {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    this.analytics = new JustifiAnalytics(this);
+    // this.analytics = new JustifiAnalytics(this);
     this.initializeGetCheckout();
   }
 
@@ -68,8 +68,11 @@ export class Checkout {
         disableCreditCard={this.disableCreditCard}
         disableBankAccount={this.disableBankAccount}
         disableBnpl={this.disableBnpl}
-        disablePaymentMethodGroup={this.disablePaymentMethodGroup}
-      ></justifi-checkout-core>
+        disablePaymentMethodGroup={this.disablePaymentMethodGroup}>
+        <div slot="insurance">
+          <slot name="insurance"></slot>
+        </div>
+      </justifi-checkout-core>
     );
   }
 }
