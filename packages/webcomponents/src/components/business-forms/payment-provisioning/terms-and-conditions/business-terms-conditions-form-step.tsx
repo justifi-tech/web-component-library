@@ -5,7 +5,6 @@ import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
-import { IPService } from '../../../../api/services/ip.service';
 
 @Component({
   tag: 'justifi-business-terms-conditions-form-step'
@@ -17,7 +16,6 @@ export class BusinessTermsConditionsFormStep {
   
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() userIP: string;
   @State() acceptedTermsBefore: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
@@ -42,8 +40,7 @@ export class BusinessTermsConditionsFormStep {
     return {
       business_id: this.businessId,
       accepted: this.formController.values.getValue().accepted,
-      user_agent: window.navigator.userAgent,
-      ip: this.userIP,
+      user_agent: window.navigator.userAgent
     }
   }
 
@@ -55,7 +52,6 @@ export class BusinessTermsConditionsFormStep {
 
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.formController = new FormController(businessTermsConditionsSchema(this.allowOptionalFields));
-    this.userIP = await new IPService().fetchIP();
     this.fetchData();
   }
 
