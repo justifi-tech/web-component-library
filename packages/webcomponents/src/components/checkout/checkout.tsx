@@ -6,7 +6,6 @@ import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-checkout',
-  shadow: true,
 })
 export class Checkout {
   @Prop() iframeOrigin?: string;
