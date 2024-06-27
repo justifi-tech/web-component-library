@@ -8,8 +8,7 @@ import { IBusiness } from '../../../../api/Business';
 import { IPService } from '../../../../api/services/ip.service';
 
 @Component({
-  tag: 'justifi-business-terms-conditions-form-step',
-  styleUrl: 'business-terms-conditions-form-step.scss',
+  tag: 'justifi-business-terms-conditions-form-step'
 })
 export class BusinessTermsConditionsFormStep {
   @Prop() authToken: string;
@@ -128,7 +127,7 @@ export class BusinessTermsConditionsFormStep {
                   name="accepted"
                   label="I agree to the terms and conditions"
                   inputHandler={this.inputHandler}
-                  error={this.errors.accepted}
+                  errorText={this.errors.accepted}
                   disabled={this.acceptedTermsBefore}
                   helpText={this.formHelperText}
                 />
