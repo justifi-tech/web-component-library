@@ -74,6 +74,7 @@ export class SeasonInterruptionInsuranceCore {
 
   onChangeHandler(event: any) {
     this.accepted = event.target.value;
+    insuranceErrors[this.quote.policy_type] = false;
     this.toggleCoverage({
       quoteId: this.quote.id,
       payload: { accepted: this.accepted },
