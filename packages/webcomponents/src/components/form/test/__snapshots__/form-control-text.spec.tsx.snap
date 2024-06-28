@@ -1,7 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form-control-text renders with default props 1`] = `
-<form-control-text exportparts="label,input,input-invalid" label="Username" name="username">
+exports[`form-control-text Renders with all props provided 1`] = `
+<form-control-text exportparts="label,input,input-invalid">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" htmlfor="email" part="label">
+      Email
+    </label>
+    <input class="form-control is-invalid" disabled="" id="email" maxlength="50" name="email" part="input input-invalid  input-disabled" type="text" value="user@example.com">
+    <form-control-help-text>
+      <small class="form-text text-muted" id="form-help-text-undefined">
+        Enter your email
+      </small>
+    </form-control-help-text>
+    <form-control-error-text>
+      <small class="form-text text-danger" id="form-error-text-undefined">
+        Invalid email
+      </small>
+    </form-control-error-text>
+  </div>
+</form-control-text>
+`;
+
+exports[`form-control-text Renders with default props 1`] = `
+<form-control-text exportparts="label,input,input-invalid">
   <div class="d-flex flex-column form-group">
     <label class="form-label" htmlfor="username" part="label">
       Username
