@@ -37,7 +37,7 @@ describe('form-control-file', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('handles user input correctly', async () => {
+  it('Handles user input correctly', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -58,7 +58,7 @@ describe('form-control-file', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('emits formControlInput event on input', async () => {
+  it('Emits formControlInput event on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -81,7 +81,7 @@ describe('form-control-file', () => {
     expect(inputEventSpy).toHaveBeenCalled();
   });
 
-  it('emits formControlBlur event on blur', async () => {
+  it('Emits formControlBlur event on blur', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -102,7 +102,7 @@ describe('form-control-file', () => {
     expect(blurEventSpy).toHaveBeenCalled();
   });
 
-  it('disables input when disabled prop is true', async () => {
+  it('Disables input when disabled prop is true', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -118,7 +118,7 @@ describe('form-control-file', () => {
     expect(inputElement.disabled).toBeTruthy();
   });
 
-  it('shows help text when helpText prop is provided', async () => {
+  it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -138,7 +138,7 @@ describe('form-control-file', () => {
     expect(helpText.textContent).toBe('Select a file to upload.');
   });
 
-  it('shows error and applies error styling when error prop is provided', async () => {
+  it('Shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
