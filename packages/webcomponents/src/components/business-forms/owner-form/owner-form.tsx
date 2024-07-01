@@ -220,7 +220,8 @@ export class BusinessOwnerForm {
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
-            <legend>{this.formTitle}</legend>
+            <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
+            <br />
             <div class='row gy-3'>
               <div class="col-12 col-md-6">
                 <form-control-text

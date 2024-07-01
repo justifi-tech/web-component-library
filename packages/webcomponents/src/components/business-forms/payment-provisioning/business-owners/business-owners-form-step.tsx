@@ -157,7 +157,9 @@ export class BusinessOwnersFormStep {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <div class='col-12'>
+        <legend>Owners</legend>
+        <hr />
+        <div class='row gy-3'>
           {this.owners.map((owner) => {
             return (
               <justifi-owner-form
