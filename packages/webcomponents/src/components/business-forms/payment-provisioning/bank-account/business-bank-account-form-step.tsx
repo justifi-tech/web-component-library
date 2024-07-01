@@ -136,7 +136,7 @@ export class BusinessBankAccountFormStep {
                   name="bank_name"
                   label="Bank Name"
                   defaultValue={bankAccountDefaultValue.bank_name}
-                  error={this.errors.bank_name}
+                  errorText={this.errors.bank_name}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />
@@ -146,7 +146,7 @@ export class BusinessBankAccountFormStep {
                   name="nickname"
                   label="Nickname"
                   defaultValue={bankAccountDefaultValue.nickname}
-                  error={this.errors.nickname}
+                  errorText={this.errors.nickname}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />
@@ -156,7 +156,7 @@ export class BusinessBankAccountFormStep {
                   name="account_owner_name"
                   label="Account Owner Name"
                   defaultValue={bankAccountDefaultValue.account_owner_name}
-                  error={this.errors.account_owner_name}
+                  errorText={this.errors.account_owner_name}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />
@@ -178,7 +178,7 @@ export class BusinessBankAccountFormStep {
                   label="Account Number"
                   defaultValue={bankAccountDefaultValue.account_number}
                   maxLength={17}
-                  error={this.errors.account_number}
+                  errorText={this.errors.account_number}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
                   disabled={this.formDisabled}
@@ -190,7 +190,7 @@ export class BusinessBankAccountFormStep {
                   label="Routing Number"
                   defaultValue={bankAccountDefaultValue.routing_number}
                   maxLength={9}
-                  error={this.errors.routing_number}
+                  errorText={this.errors.routing_number}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
                   disabled={this.formDisabled}

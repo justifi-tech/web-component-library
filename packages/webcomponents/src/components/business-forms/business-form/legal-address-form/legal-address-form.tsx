@@ -57,7 +57,7 @@ export class LegalAddressForm {
                 label="Legal Address"
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.line1}
-                error={this.errors?.legal_address?.line1}
+                errorText={this.errors?.legal_address?.line1}
               />
             </div>
             <div class="col-12">
@@ -66,7 +66,7 @@ export class LegalAddressForm {
                 label="Address Line 2"
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.line2}
-                error={this.errors?.legal_address?.line2}
+                errorText={this.errors?.legal_address?.line2}
               />
             </div>
             <div class="col-12">
@@ -75,7 +75,7 @@ export class LegalAddressForm {
                 label="City"
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.city}
-                error={this.errors?.legal_address?.city}
+                errorText={this.errors?.legal_address?.city}
               />
             </div>
             <div class="col-12">
@@ -94,7 +94,7 @@ export class LegalAddressForm {
                 label="Postal Code"
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.postal_code}
-                error={this.errors?.legal_address?.postal_code}
+                errorText={this.errors?.legal_address?.postal_code}
                 maxLength={5}
                 keyDownHandler={numberOnlyHandler}
               />
