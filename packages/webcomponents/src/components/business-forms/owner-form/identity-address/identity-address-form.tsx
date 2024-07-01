@@ -4,9 +4,7 @@ import { numberOnlyHandler } from '../../../form/utils';
 import { IAddress } from '../../../../api/Business';
 
 @Component({
-  tag: 'justifi-identity-address-form',
-  styleUrl: 'identity-address-form.scss',
-  shadow: true,
+  tag: 'justifi-identity-address-form'
 })
 export class IdentityAddressForm {
   @Prop() handleFormUpdate: (values: any) => void;
