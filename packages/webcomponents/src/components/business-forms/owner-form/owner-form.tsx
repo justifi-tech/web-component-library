@@ -18,9 +18,7 @@ import {
   from '../utils/business-form-types';
 
 @Component({
-  tag: 'justifi-owner-form',
-  styleUrl: 'owner-form.scss',
-  shadow: true,
+  tag: 'justifi-owner-form'
 })
 export class BusinessOwnerForm {
   @Prop() authToken: string;

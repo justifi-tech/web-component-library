@@ -10,8 +10,7 @@ import { numberOnlyHandler } from '../../../form/utils';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-legal-address-form',
-  styleUrl: 'legal-address-form.scss',
+  tag: 'justifi-legal-address-form'
 })
 export class LegalAddressForm {
   @Prop() formController: FormController;

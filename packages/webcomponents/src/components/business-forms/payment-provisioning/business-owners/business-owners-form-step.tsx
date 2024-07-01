@@ -19,9 +19,7 @@ import {
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-owners-form-step',
-  styleUrl: 'business-owners-form-step.scss',
-  shadow: false,
+  tag: 'justifi-business-owners-form-step'
 })
 export class BusinessOwnersFormStep {
   @Prop() authToken: string;
