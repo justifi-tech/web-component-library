@@ -6,6 +6,7 @@ import { Owner } from '../../../../api/Identity';
 import {
   BusinessFormServerErrorEvent,
   BusinessFormServerErrors,
+  BusinessFormStep,
   BusinessFormSubmitEvent,
   OwnerFormClickActions,
   OwnerFormClickEvent
@@ -99,7 +100,7 @@ export class BusinessOwnersFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'owners' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.owners } });
   }
 
   @Method()

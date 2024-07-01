@@ -144,6 +144,7 @@ export interface IBusiness {
   product_categories: ProductCategories;
   representative: Identity | {};
   tax_id: string;
+  terms_conditions_accepted: boolean;
   updated_at: string;
   website_url: string;
   date_of_incorporation?: string;
@@ -167,6 +168,7 @@ export class Business implements IBusiness {
   public platform_account_id: string;
   public representative: Identity | {};
   public tax_id: string;
+  public terms_conditions_accepted: boolean;
   public updated_at: string;
   public website_url: string;
   public date_of_incorporation?: string;
@@ -191,6 +193,7 @@ export class Business implements IBusiness {
     this.product_categories = business.product_categories;
     this.representative = { ...new Representative(business.representative || {}) };
     this.tax_id = business.tax_id;
+    this.terms_conditions_accepted = business.terms_conditions_accepted;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
