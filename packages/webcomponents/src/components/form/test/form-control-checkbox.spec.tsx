@@ -27,7 +27,7 @@ describe('form-control-checkbox', () => {
       `,
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     expect(page.rootInstance.label).toBe('Select a checkbox');
     expect(inputElement.disabled).toBeTruthy();
   });
@@ -38,7 +38,7 @@ describe('form-control-checkbox', () => {
       html: `<form-control-checkbox></form-control-checkbox>`,
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     const testValue = true;
 
     inputElement.checked = testValue;
