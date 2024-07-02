@@ -63,6 +63,13 @@ export class NumberInputMasked {
     }
   }
 
+  handleFormControlInput(event: any) {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    console.log({ name, value: target.value })
+    this.formControlInput.emit({ name, value: target.value });
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
@@ -74,6 +81,7 @@ export class NumberInputMasked {
             ref={el => (this.textInput = el as HTMLInputElement)}
             id={this.name}
             name={this.name}
+            onInput={(event: any) => this.handleFormControlInput(event)}
             onBlur={() => this.formControlBlur.emit()}
             part={`input ${this.errorText && 'input-invalid'}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
