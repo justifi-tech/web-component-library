@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
@@ -20,8 +20,7 @@ import { BankAccount } from '../../../../api/BankAccount';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-bank-account-form-step',
-  styleUrl: 'business-bank-account-form-step.scss',
+  tag: 'justifi-business-bank-account-form-step'
 })
 export class BusinessBankAccountFormStep {
   @Prop() authToken: string;
@@ -85,7 +84,7 @@ export class BusinessBankAccountFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'bankAccount' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.bankAccount } });
   }
 
   @Method()

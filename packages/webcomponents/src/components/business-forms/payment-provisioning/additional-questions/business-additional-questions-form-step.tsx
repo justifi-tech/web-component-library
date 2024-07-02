@@ -4,7 +4,7 @@ import { AdditionalQuestions, IAdditionalQuestions, IBusiness } from '../../../.
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
 
@@ -65,7 +65,7 @@ export class AdditionalQuestionsFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'additionalQuestions' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.additionalQuestions } });
   }
 
   @Method()

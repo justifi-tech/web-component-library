@@ -10,8 +10,7 @@ import { numberOnlyHandler } from '../../../form/utils';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-legal-address-form',
-  styleUrl: 'legal-address-form.scss',
+  tag: 'justifi-legal-address-form'
 })
 export class LegalAddressForm {
   @Prop() formController: FormController;
@@ -50,7 +49,7 @@ export class LegalAddressForm {
         <fieldset>
           <legend>Business Legal Address</legend>
           <hr />
-          <div class="row gx-2 gy-2">
+          <div class="row gy-3">
             <div class="col-12">
               <form-control-text
                 name="line1"

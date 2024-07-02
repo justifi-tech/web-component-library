@@ -6,7 +6,7 @@ import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Representative } from '../../../../api/Identity';
 import { deconstructDate } from '../../utils/helpers';
 
@@ -66,7 +66,7 @@ export class BusinessRepresentativeFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.representative } });
   }
 
   @Method()

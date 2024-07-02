@@ -12,6 +12,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 @Component({
   tag: 'justifi-payment-provisioning',
   styleUrl: 'payment-provisioning.scss',
+  shadow: true
 })
 export class PaymentProvisioning {
   @Prop() authToken: string;
@@ -36,7 +37,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
 
   disconnectedCallback() {
@@ -54,6 +55,7 @@ export class PaymentProvisioning {
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
+
   private coreInfoRef: any;
   private legalAddressRef: any;
   private additionalQuestionsRef: any;
@@ -61,6 +63,7 @@ export class PaymentProvisioning {
   private ownersRef: any;
   private bankAccountRef: any;
   private documentUploadRef: any;
+  private termsRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -121,6 +124,14 @@ export class PaymentProvisioning {
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
       paymentVolume={this.businessPaymentVolume}
+    />,
+    7: () => <justifi-business-terms-conditions-form-step
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[7] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
     />,
   };
 

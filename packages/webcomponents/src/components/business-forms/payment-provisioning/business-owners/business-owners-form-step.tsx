@@ -6,6 +6,7 @@ import { Owner } from '../../../../api/Identity';
 import {
   BusinessFormServerErrorEvent,
   BusinessFormServerErrors,
+  BusinessFormStep,
   BusinessFormSubmitEvent,
   OwnerFormClickActions,
   OwnerFormClickEvent
@@ -18,9 +19,7 @@ import {
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-owners-form-step',
-  styleUrl: 'business-owners-form-step.scss',
-  shadow: false,
+  tag: 'justifi-business-owners-form-step'
 })
 export class BusinessOwnersFormStep {
   @Prop() authToken: string;
@@ -99,7 +98,7 @@ export class BusinessOwnersFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'owners' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.owners } });
   }
 
   @Method()
@@ -158,7 +157,9 @@ export class BusinessOwnersFormStep {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <div class='col-12'>
+        <legend>Owners</legend>
+        <hr />
+        <div class='row gy-3'>
           {this.owners.map((owner) => {
             return (
               <justifi-owner-form

@@ -5,7 +5,7 @@ import { Address, IAddress, IBusiness } from '../../../../api/Business';
 import { parseAddressInfo } from '../../utils/payload-parsers';
 import { addressSchema } from '../../schemas/business-address-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../form/utils';
 
@@ -15,8 +15,7 @@ import { numberOnlyHandler } from '../../../form/utils';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-legal-address-form-step',
-  styleUrl: 'legal-address-form-step.scss',
+  tag: 'justifi-legal-address-form-step'
 })
 export class LegalAddressFormStep {
   @Prop() authToken: string;
@@ -67,7 +66,7 @@ export class LegalAddressFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'legalAddress' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.legalAddress } });
   }
 
   @Method()
@@ -112,7 +111,7 @@ export class LegalAddressFormStep {
           <fieldset>
             <legend>Business Legal Address</legend>
             <hr />
-            <div class="row gx-2 gy-2">
+            <div class="row gy-3">
               <div class="col-12">
                 <form-control-text
                   name="line1"
