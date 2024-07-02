@@ -20,8 +20,7 @@ import { BankAccount } from '../../../../api/BankAccount';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-bank-account-form-step',
-  styleUrl: 'business-bank-account-form-step.scss',
+  tag: 'justifi-business-bank-account-form-step'
 })
 export class BusinessBankAccountFormStep {
   @Prop() authToken: string;

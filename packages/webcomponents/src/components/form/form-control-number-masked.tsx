@@ -10,14 +10,13 @@ import {
 import IMask, { InputMask } from 'imask';
 
 @Component({
-  tag: 'form-control-number-masked',
-  styleUrl: 'form-control-number.scss',
-  shadow: true,
+  tag: 'form-control-number-masked'
 })
 export class NumberInputMasked {
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() error: string;
+  @Prop() helpText?: string;
+  @Prop() errorText?: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() mask: string;
@@ -67,20 +66,23 @@ export class NumberInputMasked {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <input
-          ref={el => (this.textInput = el as HTMLInputElement)}
-          id={this.name}
-          name={this.name}
-          onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
-          type="text"
-          disabled={this.disabled}
-        />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <div class="form-group d-flex flex-column">
+          <label part="label" class="form-label" htmlFor={this.name}>
+            {this.label}
+          </label>
+          <input
+            ref={el => (this.textInput = el as HTMLInputElement)}
+            id={this.name}
+            name={this.name}
+            onBlur={() => this.formControlBlur.emit()}
+            part={`input ${this.errorText && 'input-invalid'}`}
+            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            type="text"
+            disabled={this.disabled}
+          />
+          <form-control-help-text helpText={this.helpText} />
+          <form-control-error-text errorText={this.errorText} />
+        </div>
       </Host>
     );
   }

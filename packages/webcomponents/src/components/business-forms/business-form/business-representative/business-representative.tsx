@@ -4,8 +4,7 @@ import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
 
 @Component({
-  tag: 'justifi-business-representative',
-  styleUrl: 'business-representative.scss',
+  tag: 'justifi-business-representative'
 })
 export class BusinessRepresentative {
   @Prop() formController: FormController;
@@ -104,7 +103,7 @@ export class BusinessRepresentative {
                 name="phone"
                 label="Phone Number"
                 defaultValue={representativeDefaultValue?.phone}
-                error={this.errors.phone}
+                errorText={this.errors.phone}
                 inputHandler={this.inputHandler}
                 mask={PHONE_MASKS.US}
               />
@@ -124,7 +123,7 @@ export class BusinessRepresentative {
                 name="identification_number"
                 label={this.identificationNumberLabel}
                 defaultValue={representativeDefaultValue?.identification_number}
-                error={this.errors.identification_number}
+                errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
                 mask={SSN_MASK}
               />

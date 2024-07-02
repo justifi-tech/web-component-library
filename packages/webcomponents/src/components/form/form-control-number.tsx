@@ -11,19 +11,19 @@ import {
 } from '@stencil/core';
 
 @Component({
-  tag: 'form-control-number',
-  styleUrl: 'form-control-number.scss',
-  shadow: true,
+  tag: 'form-control-number'
 })
 export class NumberInput {
   @Element() el: HTMLElement;
 
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() error: string;
+  @Prop() helpText?: string;
+  @Prop() errorText?: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
+
   @State() input: string;
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
@@ -34,7 +34,7 @@ export class NumberInput {
   }
 
   updateInput(newValue: any) {
-    const inputElement = this.el.shadowRoot.querySelector('input');
+    const inputElement = this.el.querySelector('input');
     if (inputElement) {
       inputElement.value = newValue || '';
     }
@@ -53,21 +53,24 @@ export class NumberInput {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <input
-          id={this.name}
-          name={this.name}
-          onInput={(event: any) => this.handleFormControlInput(event)}
-          onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error && 'input-invalid'}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
-          type="number"
-          disabled={this.disabled}
-        />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+      <Host exportparts='label,input,input-invalid'>
+        <div class='form-group d-flex flex-column'>
+          <label part="label" class="form-label" htmlFor={this.name}>
+            {this.label}
+          </label>
+          <input
+            id={this.name}
+            name={this.name}
+            onInput={(event: any) => this.handleFormControlInput(event)}
+            onBlur={() => this.formControlBlur.emit()}
+            part={`input ${this.errorText && 'input-invalid'}`}
+            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            type="number"
+            disabled={this.disabled}
+          />
+          <form-control-help-text helpText={this.helpText} />
+          <form-control-error-text errorText={this.errorText} />
+        </div>
       </Host>
     );
   }

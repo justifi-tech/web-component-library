@@ -15,8 +15,7 @@ import { numberOnlyHandler } from '../../../form/utils';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-legal-address-form-step',
-  styleUrl: 'legal-address-form-step.scss',
+  tag: 'justifi-legal-address-form-step'
 })
 export class LegalAddressFormStep {
   @Prop() authToken: string;
@@ -112,7 +111,7 @@ export class LegalAddressFormStep {
           <fieldset>
             <legend>Business Legal Address</legend>
             <hr />
-            <div class="row gx-2 gy-2">
+            <div class="row gy-3">
               <div class="col-12">
                 <form-control-text
                   name="line1"

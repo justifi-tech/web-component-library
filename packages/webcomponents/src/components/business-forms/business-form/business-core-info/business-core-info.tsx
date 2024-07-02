@@ -15,8 +15,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-core-info',
-  styleUrl: 'business-core-info.scss',
+  tag: 'justifi-business-core-info'
 })
 export class BusinessCoreInfo {
   @Prop() formController: FormController;
@@ -103,7 +102,7 @@ export class BusinessCoreInfo {
                 name="tax_id"
                 label="Tax ID"
                 defaultValue={coreInfoDefaultValue.tax_id}
-                error={this.errors.tax_id}
+                errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
                 mask={TAX_ID_MASKS.US}
               />
@@ -131,7 +130,7 @@ export class BusinessCoreInfo {
                 name="phone"
                 label="Phone Number"
                 defaultValue={coreInfoDefaultValue.phone}
-                error={this.errors.phone}
+                errorText={this.errors.phone}
                 inputHandler={this.inputHandler}
                 mask={PHONE_MASKS.US}
               />

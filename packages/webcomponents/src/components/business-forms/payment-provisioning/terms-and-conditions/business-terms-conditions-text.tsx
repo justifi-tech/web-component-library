@@ -2,8 +2,7 @@ import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'justifi-business-terms-conditions-text',
-  styleUrl: 'business-terms-conditions-text.scss',
-  shadow: true,
+  styleUrl: 'business-terms-conditions-text.scss'
 })
 export class BusinessTermsConditionsText {
 

@@ -21,8 +21,7 @@ import { businessClassificationOptions } from '../../utils/business-form-options
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-core-info-form-step',
-  styleUrl: 'business-core-info-form-step.scss',
+  tag: 'justifi-business-core-info-form-step'
 })
 export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
@@ -169,7 +168,7 @@ export class BusinessCoreInfoFormStep {
                   name="tax_id"
                   label="Tax ID"
                   defaultValue={coreInfoDefaultValue.tax_id}
-                  error={this.errors.tax_id}
+                  errorText={this.errors.tax_id}
                   inputHandler={this.inputHandler}
                   mask={TAX_ID_MASKS.US}
                 />
@@ -197,7 +196,7 @@ export class BusinessCoreInfoFormStep {
                   name="phone"
                   label="Phone Number"
                   defaultValue={coreInfoDefaultValue.phone}
-                  error={this.errors.phone}
+                  errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
