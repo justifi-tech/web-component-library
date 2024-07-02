@@ -175,5 +175,8 @@ describe('form-control-text', () => {
 
     const errorText = errorTextComponent.querySelector('.text-danger');
     expect(errorText.textContent).toBe('This field is required.');
+
+    const inputElement = page.root.querySelector('input');
+    expect(inputElement.classList.contains('is-invalid')).toBe(true);
   });
 });
