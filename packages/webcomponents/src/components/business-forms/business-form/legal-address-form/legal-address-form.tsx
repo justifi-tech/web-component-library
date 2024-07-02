@@ -49,7 +49,7 @@ export class LegalAddressForm {
         <fieldset>
           <legend>Business Legal Address</legend>
           <hr />
-          <div class="row gx-2 gy-2">
+          <div class="row gy-3">
             <div class="col-12">
               <form-control-text
                 name="line1"
