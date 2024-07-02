@@ -21,8 +21,7 @@ import { businessClassificationOptions } from '../../utils/business-form-options
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-core-info-form-step',
-  styleUrl: 'business-core-info-form-step.scss',
+  tag: 'justifi-business-core-info-form-step'
 })
 export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;

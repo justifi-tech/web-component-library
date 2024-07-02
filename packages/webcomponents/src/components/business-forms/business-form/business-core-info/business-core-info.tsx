@@ -15,8 +15,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-core-info',
-  styleUrl: 'business-core-info.scss',
+  tag: 'justifi-business-core-info'
 })
 export class BusinessCoreInfo {
   @Prop() formController: FormController;

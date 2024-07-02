@@ -4,8 +4,7 @@ import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
 
 @Component({
-  tag: 'justifi-business-representative',
-  styleUrl: 'business-representative.scss',
+  tag: 'justifi-business-representative'
 })
 export class BusinessRepresentative {
   @Prop() formController: FormController;
