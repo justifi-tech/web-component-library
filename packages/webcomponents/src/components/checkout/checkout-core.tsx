@@ -54,7 +54,6 @@ export class CheckoutCore {
   }
 
   fetchData(): void {
-    console.log('fetchData');
     this.renderState = 'loading';
     this.getCheckout({
       onSuccess: ({ checkout }) => {
