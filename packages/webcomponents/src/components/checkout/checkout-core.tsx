@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Listen } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -45,7 +45,7 @@ export class CheckoutCore {
 
       // Refresh the checkout data when insurance is added or removed
       insuranceValuesOn('set', (key) => {
-        const value = insuranceValues[key]
+        const value = insuranceValues[key];
         if (value !== undefined) {
           this.fetchData();
         }
@@ -53,12 +53,8 @@ export class CheckoutCore {
     }
   }
 
-  @Listen('insurance-updated')
-  handleInsuranceChanged() {
-    this.fetchData();
-  }
-
   fetchData(): void {
+    console.log('fetchData');
     this.renderState = 'loading';
     this.getCheckout({
       onSuccess: ({ checkout }) => {

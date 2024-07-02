@@ -61,8 +61,8 @@ export class SeasonInterruptionInsuranceCore {
         }
       },
       onSuccess: ({ quote }) => {
-        this.quote = quote
-        insuranceValues[quote.policy_type] = quote.accepted
+        this.quote = quote;
+        insuranceValues[quote.policy_type] = quote.accepted;
         this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
