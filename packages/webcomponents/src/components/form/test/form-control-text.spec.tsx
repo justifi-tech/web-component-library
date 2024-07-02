@@ -117,13 +117,18 @@ describe('form-control-text', () => {
     await page.waitForChanges();
 
     const inputElement = page.root.querySelector('input');
-    inputElement.value = 'Hello, World!';
+    inputElement.value = 'other-user@example.com';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
     await page.waitForChanges();
 
-    expect(inputEventSpy).toHaveBeenCalled();
+    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        name: 'email',
+        value: 'other-user@example.com'
+      }
+    }));
   });
 
   it('Emits formControlBlur event on blur', async () => {

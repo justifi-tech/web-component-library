@@ -47,7 +47,7 @@ export class TextInput {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
-    this.formControlInput.emit(target.value);
+    this.formControlInput.emit({ name, value: target.value });
   }
 
   componentDidLoad() {
