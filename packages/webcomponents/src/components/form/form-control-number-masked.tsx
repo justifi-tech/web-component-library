@@ -66,7 +66,6 @@ export class NumberInputMasked {
   handleFormControlInput(event: any) {
     const target = event.target;
     const name = target.getAttribute('name');
-    console.log({ name, value: target.value })
     this.formControlInput.emit({ name, value: target.value });
   }
 

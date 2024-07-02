@@ -121,7 +121,12 @@ describe('form-control-number-masked', () => {
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    expect(inputEventSpy).toHaveBeenCalled();
+    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        name: 'age',
+        value: '25',
+      }
+    }));
   });
 
   it('Emits formControlBlur event on blur', async () => {
