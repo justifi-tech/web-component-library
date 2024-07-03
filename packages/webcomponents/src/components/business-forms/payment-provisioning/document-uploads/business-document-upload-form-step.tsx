@@ -75,6 +75,7 @@ export class BusinessDocumentFormStep {
     } finally {
       this.formLoading.emit(false);
       this.renderState = 'success';
+      this.documents = this.business.documents;
     }
   }
 
@@ -159,6 +160,17 @@ export class BusinessDocumentFormStep {
     return this.renderState === 'error';
   }
 
+  get documentsOnFile() {
+    if (this.isError) {
+      return null;
+    }
+    if (this.isLoading) {
+      return <justifi-skeleton variant='rounded' height={'350px'} />;
+    }
+
+    return <justifi-business-documents-on-file documents={this.documents} />;
+  }
+
   get formInputs() {
     if (this.isError) {
       return null;
@@ -185,6 +197,7 @@ export class BusinessDocumentFormStep {
             <legend>Document Uploads</legend>
             <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
             <hr />
+            {this.documentsOnFile}
             <div class="d-flex flex-column">
               {this.formInputs}
             </div>
