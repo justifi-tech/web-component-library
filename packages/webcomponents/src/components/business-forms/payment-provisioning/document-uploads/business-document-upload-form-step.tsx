@@ -168,7 +168,7 @@ export class BusinessDocumentFormStep {
       return null;
     }
     if (this.isLoading) {
-      return <justifi-skeleton variant='rounded' height={'100px'} />;
+      return <justifi-skeleton variant='rounded' height={'50px'} />;
     }
 
     return <justifi-business-documents-on-file documents={this.existingDocuments} />;

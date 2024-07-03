@@ -9,7 +9,7 @@ export class BusinessDocumentsOnFile {
 
   render() {
 
-    if (this.documents.length <= 0) {
+    if (!this.documents.length) {
       return null;
     }
 
