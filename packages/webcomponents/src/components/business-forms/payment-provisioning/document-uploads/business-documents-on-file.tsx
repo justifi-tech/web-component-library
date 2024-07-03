@@ -1,15 +1,11 @@
 import { Component, h, Prop } from '@stencil/core';
-import { snakeCaseToHumanReadable } from '../../../../utils/utils';
+import { formatDate, formatTimeSeconds, snakeCaseToHumanReadable } from '../../../../utils/utils';
 
 @Component({
   tag: 'justifi-business-documents-on-file'
 })
 export class BusinessDocumentsOnFile {
   @Prop() documents: any = [];
-
-  componentDidLoad() {
-    console.log('Documents on file:', this.documents);
-  }
 
   render() {
 
@@ -26,9 +22,10 @@ export class BusinessDocumentsOnFile {
               <table class='table table-sm table-borderless'>
                 <thead part="table-head">
                   <tr part='table-head-row'>
-                    <th style={{ width: '40%'}} part="table-head-cell" scope='col'>File Name</th>
-                    <th style={{ width: '30%' }} part="table-head-cell" scope='col'>File Type</th>
-                    <th style={{ width: '30%' }} part="table-head-cell" scope='col'>Document Type</th>
+                    <th style={{ width: '25%'}} part="table-head-cell" scope='col'>File Name</th>
+                    <th style={{ width: '25%' }} part="table-head-cell" scope='col'>File Type</th>
+                    <th style={{ width: '25%' }} part="table-head-cell" scope='col'>Document Type</th>
+                    <th style={{ width: '25%' }} part="table-head-cell" scope='col'>Date Uploaded</th>
                   </tr>
                 </thead>
                 <tbody part='table-body'>
@@ -39,6 +36,7 @@ export class BusinessDocumentsOnFile {
                         <td part="table-cell">{document.file_name}</td>
                         <td part="table-cell">{document.file_type}</td>
                         <td part="table-cell">{snakeCaseToHumanReadable(document.document_type)}</td>
+                        <td part="table-cell">{`${formatDate(document.created_at)} - ${formatTimeSeconds(document.created_at)}`}</td>
                       </tr>
                     );
                   })}
