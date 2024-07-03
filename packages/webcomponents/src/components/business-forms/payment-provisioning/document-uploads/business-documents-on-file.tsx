@@ -17,7 +17,7 @@ export class BusinessDocumentsOnFile {
       <div>
         <div class='card'>
           <div class='card-body'>
-            <h5 class='card-title'>Documents on File</h5>
+            <h5 class='card-title'>Documents Already on File</h5>
             <div class='table-responsive'>
               <table class='table table-sm table-borderless'>
                 <thead part="table-head">
