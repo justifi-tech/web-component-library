@@ -12,6 +12,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 @Component({
   tag: 'justifi-payment-provisioning',
   styleUrl: 'payment-provisioning.scss',
+  shadow: true
 })
 export class PaymentProvisioning {
   @Prop() authToken: string;

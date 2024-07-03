@@ -11,8 +11,7 @@ import { Representative } from '../../../../api/Identity';
 import { deconstructDate } from '../../utils/helpers';
 
 @Component({
-  tag: 'justifi-business-representative-form-step',
-  styleUrl: 'business-representative-form-step.scss',
+  tag: 'justifi-business-representative-form-step'
 })
 export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
@@ -174,7 +173,7 @@ export class BusinessRepresentativeFormStep {
                   name="phone"
                   label="Phone Number"
                   defaultValue={representativeDefaultValue?.phone}
-                  error={this.errors.phone}
+                  errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
@@ -194,7 +193,7 @@ export class BusinessRepresentativeFormStep {
                   name="identification_number"
                   label={this.identificationNumberLabel}
                   defaultValue={representativeDefaultValue?.identification_number}
-                  error={this.errors.identification_number}
+                  errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
                 />
