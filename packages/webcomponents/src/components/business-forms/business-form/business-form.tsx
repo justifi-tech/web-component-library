@@ -16,6 +16,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 @Component({
   tag: 'justifi-business-form',
   styleUrl: 'business-form.scss',
+  shadow: true
 })
 export class BusinessForm {
   @Prop() authToken: string;
