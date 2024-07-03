@@ -134,49 +134,45 @@ export class CheckoutCore {
   }
 
   get paymentType() {
-    if (this.isError) {
-      // For now, just return nothing to avoid breaking, but we can decide to show an error message here
-      // return <div style={{ color: 'red' }}>Error: {this.serverError}</div>;
-      return null;
-    }
-
-    if (this.isLoading) {
-      return <justifi-skeleton variant="rounded" height="300px" />;
-    }
-
     return (
-      <justifi-payment-method-options
-        ref={(el) => (this.paymentMethodOptionsRef = el)}
-        show-card={!this.disableCreditCard}
-        show-ach={!this.disableBankAccount}
-        show-bnpl={!this.disableBnpl}
-        show-saved-payment-methods={!this.disablePaymentMethodGroup}
-        bnpl={this.checkout?.bnpl}
-        client-id={this.checkout?.payment_client_id}
-        account-id={this.checkout?.account_id}
-        savedPaymentMethods={this.checkout?.payment_methods || []}
-        paymentAmount={this.checkout?.payment_amount}
-      />
+      <section class={this.isError && 'visually-hidden'}>
+        {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
+        {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
+        <div class={!this.isLoading && 'visually-hidden'}>
+          <justifi-skeleton variant="rounded" height="300px" />
+        </div>
+        <div class={this.isLoading && 'visually-hidden'}>
+          <justifi-payment-method-options
+            ref={(el) => (this.paymentMethodOptionsRef = el)}
+            show-card={!this.disableCreditCard}
+            show-ach={!this.disableBankAccount}
+            show-bnpl={!this.disableBnpl}
+            show-saved-payment-methods={!this.disablePaymentMethodGroup}
+            bnpl={this.checkout?.bnpl}
+            client-id={this.checkout?.payment_client_id}
+            account-id={this.checkout?.account_id}
+            savedPaymentMethods={this.checkout?.payment_methods || []}
+            paymentAmount={this.checkout?.payment_amount}
+          />
+        </div>
+      </section>
     );
   }
 
   get summary() {
-    if (this.isLoading) {
-      return <justifi-skeleton height="24px" />;
-    }
-
-    if (this.isError) {
-      return null;
-    }
-
     return (
-      <div>
-        <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
-        <div class="jfi-payment-total">
-          <span class="jfi-payment-total-label">Total</span>&nbsp;
-          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.total_amount)}</span>
+      <section class={this.isError && 'visually-hidden'}>
+        <div class={!this.isLoading && 'visually-hidden'}>
+          <justifi-skeleton height="24px" />
         </div>
-      </div>
+        <div class={this.isLoading && 'visually-hidden'}>
+          <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
+          <div class="jfi-payment-total">
+            <span class="jfi-payment-total-label">Total</span>&nbsp;
+            <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout?.total_amount)}</span>
+          </div>
+        </div>
+      </section>
     );
   }
 
