@@ -59,12 +59,12 @@ export class PaymentProvisioning {
 
   private coreInfoRef: any;
   private legalAddressRef: any;
+  private additionalQuestionsRef: any;
   private representativeRef: any;
   private ownersRef: any;
   private bankAccountRef: any;
-  private termsRef: any;
-  private additionalQuestionsRef: any;
   private documentUploadRef: any;
+  private termsRef: any;
   private refs = [];
 
   componentStepMapping = {
