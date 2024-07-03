@@ -74,15 +74,12 @@ export class CheckoutCore {
 
   async submit(event) {
     event.preventDefault();
-
-    const insuranceInvalid = validateInsuranceValues();
-    if (insuranceInvalid) return;
-
     this.renderState = 'loading';
 
+    const insuranceInvalid = validateInsuranceValues();
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
-    if (!payload) {
+    if (insuranceInvalid) {
       this.renderState = 'error';
     }
     else if (payload.error) {
@@ -95,19 +92,22 @@ export class CheckoutCore {
       });
     }
     else if (payload.token) {
-      this.complete({
-        payment: { payment_mode: 'ecom', payment_token: payload.token },
-        onSuccess: this.onSubmitted,
-        onError: this.onError,
-      })
+      this.completeCheckout({ payment_mode: 'card', payment_token: payload.token });
     }
     else if (payload.bnpl?.status === 'success') {
-      this.complete({
-        payment: { payment_mode: 'bnpl' },
-        onSuccess: this.onSubmitted,
-        onError: this.onError,
-      })
+      this.completeCheckout({ payment_mode: 'bnpl' });
     }
+    else {
+      this.renderState = 'error';
+    }
+  }
+
+  completeCheckout = async (payment: { payment_mode: string, payment_token?: string }) => {
+    this.complete({
+      payment,
+      onSuccess: this.onSubmitted,
+      onError: this.onError,
+    });
   }
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
