@@ -15,13 +15,15 @@ export class BusinessDocumentFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() paymentVolume: string;
+
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() documents: any = [];
+  @State() existingDocuments: any = [];
+  @State() paymentVolume: string;
   @State() business: Business;
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
+
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
@@ -42,18 +44,8 @@ export class BusinessDocumentFormStep {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.formController = new FormController(businessDocumentSchema(this.paymentVolume, this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
-  }
-
-  componentDidLoad() {
-    this.formController.values.subscribe(values =>
-      this.documents = { ...values }
-    );
-    this.formController.errors.subscribe(
-      errors => (this.errors = { ...errors }),
-    );
   }
 
   inputHandler = (name: string, value: string) => {
@@ -69,14 +61,23 @@ export class BusinessDocumentFormStep {
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.business = { ...new Business(response.data) };
+      this.existingDocuments = response.data.documents;
+      this.paymentVolume = response.data.additional_questions.business_payment_volume;
     } catch (error) {
       this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
       this.renderState = 'error';
     } finally {
+      this.initializeFormController();
       this.formLoading.emit(false);
       this.renderState = 'success';
-      this.documents = this.business.documents;
     }
+  }
+
+  initializeFormController = () => {
+    this.formController = new FormController(businessDocumentSchema(this.paymentVolume, this.existingDocuments, this.allowOptionalFields));
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
   }
 
   createDocumentRecord = async (docData: EntityDocument) => {
@@ -133,7 +134,9 @@ export class BusinessDocumentFormStep {
 
   sendData = async (onSuccess?: () => void) => {
     const docArray = Object.values(this.documentData).flat();
-    if (!docArray.length) { return; }
+    if (!docArray.length) { 
+      return onSuccess();
+     }
 
     const documentRecords = docArray.map(docData => this.createDocumentRecord(docData));
     const recordsCreated = await Promise.all(documentRecords);
@@ -165,10 +168,10 @@ export class BusinessDocumentFormStep {
       return null;
     }
     if (this.isLoading) {
-      return <justifi-skeleton variant='rounded' height={'350px'} />;
+      return <justifi-skeleton variant='rounded' height={'100px'} />;
     }
 
-    return <justifi-business-documents-on-file documents={this.documents} />;
+    return <justifi-business-documents-on-file documents={this.existingDocuments} />;
   }
 
   get formInputs() {

@@ -20,6 +20,7 @@ import {
   urlRegex, 
   validateRoutingNumber
 } from "./schema-helpers";
+import { EntityDocumentType } from "../../../api/Document";
 
 // Common Validations
 
@@ -232,37 +233,51 @@ export const routingNumberValidation = string()
 
 const documentUploadValidation = mixed();
 
-export const voidedCheckValidation = documentUploadValidation;
-
 export const ss4Validation = documentUploadValidation;
 
 export const governmentIdValidation = documentUploadValidation;
 
 export const otherDocumentValidation = documentUploadValidation;
 
-export const bankStatementValidation = (volume: string, allowOptionalFields: boolean) => {
-  let vol = parseInt(volume);
-  return documentUploadValidation.when(volume, {
-    is: () => vol >= 250000 && !allowOptionalFields,
-    then: (schema) => schema.required('Please select one or more files'),
-    otherwise: (schema) => schema.nullable(),
-  });
+export const voidedCheckValidation = (documents: any[], allowOptionalFields: boolean) => {
+  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.voidedCheck);
+
+  if (existingDoc || allowOptionalFields) {
+    return documentUploadValidation.nullable();
+  } else {
+    return documentUploadValidation.required('Please select one or more files');
+  }
 }
 
-export const balanceSheetValidation = (volume: string, allowOptionalFields: boolean) => {
+export const bankStatementValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
   let vol = parseInt(volume);
-  return documentUploadValidation.when(volume, {
-    is: () => vol >= 1000000 && !allowOptionalFields,
-    then: (schema) => schema.required('Please select one or more files'),
-    otherwise: (schema) => schema.nullable(),
-  });
-}
+  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.bankStatement);
 
-export const profitAndLossStatementValidation = (volume: string, allowOptionalFields: boolean) => {
+  if (existingDoc || allowOptionalFields) {
+    return documentUploadValidation.nullable();
+  } else if (vol >= 250000 && !allowOptionalFields) {
+    return documentUploadValidation.required('Please select one or more files');
+  }
+};
+
+export const balanceSheetValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
   let vol = parseInt(volume);
-  return documentUploadValidation.when(volume, {
-    is: () => vol >= 1000000 && !allowOptionalFields,
-    then: (schema) => schema.required('Please select one or more files'),
-    otherwise: (schema) => schema.nullable(),
-  });
-}
+  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.balanceSheet);
+
+  if (existingDoc || allowOptionalFields) {
+    return documentUploadValidation.nullable();
+  } else if (vol >= 1000000 && !allowOptionalFields) {
+    return documentUploadValidation.required('Please select one or more files');
+  }
+};
+
+export const profitAndLossStatementValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
+  let vol = parseInt(volume);
+  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.profitAndLossStatement);
+  
+  if (existingDoc || allowOptionalFields) {
+    return documentUploadValidation.nullable();
+  } else if (vol >= 1000000 && !allowOptionalFields) {
+    return documentUploadValidation.required('Please select one or more files');
+  }
+};
