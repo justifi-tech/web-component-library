@@ -1,6 +1,7 @@
 @import 'reboot';
 @import 'grid';
 @import 'forms';
+@import 'bootstrap-utilities';
 
 :host {
   @include host-base-styles;

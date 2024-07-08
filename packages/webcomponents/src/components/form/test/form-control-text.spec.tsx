@@ -12,7 +12,7 @@ describe('form-control-text', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username'></form-control-text>,
+      template: () => <form-control-text label='Username' name='username'></form-control-text>
     });
 
     expect(page.root).toMatchSnapshot();

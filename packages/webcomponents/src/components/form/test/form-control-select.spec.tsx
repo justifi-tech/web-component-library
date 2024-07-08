@@ -1,61 +1,140 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SelectInput } from '../form-control-select';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-select', () => {
-  it('renders with default props', async () => {
-    const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select label="Test Select" name="test"></form-control-select>`,
+  const components = [SelectInput, FormControlErrorText, FormControlHelpText];
+  const mockInputHandler = jest.fn();
+  const options = [
+    { label: 'Pickup', value: 'pickup' },
+    { label: 'Delivery', value: 'delivery' }
+  ];
+
+  it('Renders with default props', async () => {
+      const page = await newSpecPage({
+      components: components,
+      template: () => <form-control-select label='Select your delivery method' name='delivery_method'/>
     });
 
     expect(page.root).toMatchSnapshot();
-    expect(page.rootInstance.label).toBe('Test Select');
-    expect(page.rootInstance.name).toBe('test');
+    expect(page.rootInstance.label).toBe('Select your delivery method');
+    expect(page.rootInstance.name).toBe('delivery_method');
   });
 
-  it('populates options correctly and handles selection', async () => {
-    const options = [
-      { label: 'Option 1', value: '1' },
-      { label: 'Option 2', value: '2' }
-    ];
+  it('Renders with all props provided', async () => {
     const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select></form-control-select>`,
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          defaultValue='pickup'
+          errorText='This field is required.'
+          helpText='Select your preferred delivery method'
+          disabled
+          inputHandler={mockInputHandler}
+          options={options}
+        />
     });
-    page.rootInstance.options = options;
-    await page.waitForChanges();
 
-    const selectElement = page.root.shadowRoot.querySelector('select');
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('Updates input value on defaultValue prop change', async () => {
+    // Initial render with the default value
+    let defaultValue = options[0].value;
+    let page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          defaultValue={defaultValue}
+          options={options}
+        />
+    });
+
+    let selectElement = page.root.querySelector('select');
+    expect(selectElement.value).toBe('pickup');
+
+    defaultValue = options[1].value;
+
+    // Re-render component with new defaultValue
+    page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          defaultValue={defaultValue}
+          options={options}
+        />
+    });
+    selectElement = page.root.querySelector('select');
+    expect(selectElement.value).toBe('delivery');
+  });
+
+  it('Populates options correctly', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          inputHandler={mockInputHandler}
+          options={options}
+        />
+    });
+
+    const selectElement = page.root.querySelector('select');
     expect(selectElement.children.length).toBe(options.length);
+
     expect(selectElement.children[0].textContent).toBe(options[0].label);
+    expect(selectElement.children[1].textContent).toBe(options[1].label);
 
-    selectElement.value = options[1].value;
-    expect(selectElement.value).toBe('2');
+    expect(selectElement.children[0].getAttribute('value')).toBe(options[0].value);
+    expect(selectElement.children[1].getAttribute('value')).toBe(options[1].value);
   });
 
-  it('shows error and applies error styling when error prop is provided', async () => {
+  it('Handles user input correctly', async () => {
     const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select error="This field is required."></form-control-select>`,
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          inputHandler={mockInputHandler}
+          options={options}
+        />
     });
 
-    const shadowRoot = page.root.shadowRoot;
-    expect(shadowRoot.querySelector('.invalid-feedback').textContent).toBe('This field is required.');
-    expect(shadowRoot.querySelector('.form-select').classList.contains('is-invalid')).toBeTruthy();
+    const selectElement = page.root.querySelector('select');
+    const testValue = options[1].value;
+
+    selectElement.value = testValue;
+    await selectElement.dispatchEvent(new Event('input'));
+
+    expect(selectElement.value).toBe(testValue);
   });
 
-  it('emits formControlInput event on input', async () => {
+  it('Emits formControlInput event on input', async () => {
     const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select></form-control-select>`,
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          inputHandler={mockInputHandler}
+          options={options}
+        />
     });
-
-    page.rootInstance.inputHandler = jest.fn();
 
     const inputEventSpy = jest.fn();
     page.root.addEventListener('formControlInput', inputEventSpy);
 
-    const selectElement = page.root.shadowRoot.querySelector('select');
+    const selectElement = page.root.querySelector('select');
     selectElement.value = '1';
     selectElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
@@ -63,43 +142,78 @@ describe('form-control-select', () => {
     expect(inputEventSpy).toHaveBeenCalled();
   });
 
-  it('emits formControlBlur event on blur', async () => {
+  it('Emits formControlBlur event on blur', async () => {
     const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select></form-control-select>`,
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          inputHandler={mockInputHandler}
+          options={options}
+        />
     });
 
     const blurEventSpy = jest.fn();
     page.root.addEventListener('formControlBlur', blurEventSpy);
 
-    const selectElement = page.root.shadowRoot.querySelector('select');
+    const selectElement = page.root.querySelector('select');
     selectElement.dispatchEvent(new Event('blur'));
 
     expect(blurEventSpy).toHaveBeenCalled();
   });
 
-  it('disables select when disabled prop is true', async () => {
+  it('Disables input when disabled prop is provided', async () => {
     const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select disabled="true"></form-control-select>`,
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          disabled
+        />
     });
 
-    const selectElement = page.root.shadowRoot.querySelector('select');
-
-    // This is weird, but the value of the disabled 
-    // attribute is an empty string on Stencil mock DOM
-    expect(selectElement.attributes.getNamedItem('disabled').value).toBe('');
+    const selectElement = page.root.querySelector('select');
+    expect(selectElement).toHaveAttribute('disabled');
   });
 
-  it('handles empty options array', async () => {
+  it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
-      components: [SelectInput],
-      html: `<form-control-select></form-control-select>`,
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          helpText='Select your preferred delivery method'
+        />
     });
-    page.rootInstance.options = [];
-    await page.waitForChanges();
 
-    const selectElement = page.root.shadowRoot.querySelector('select');
-    expect(selectElement.children.length).toBe(0);
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    expect(helpTextComponent).not.toBeNull();
+
+    const helpText = helpTextComponent.querySelector('.text-muted');
+    expect(helpText.textContent).toBe('Select your preferred delivery method');
+  });
+
+  it('Shows error and applies error styling when error prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-select
+          label='Select your delivery method'
+          name='delivery_method'
+          errorText='This field is required.'
+        />
+    });
+
+    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    expect(errorTextComponent).not.toBeNull();
+
+    const errorText = errorTextComponent.querySelector('.text-danger');
+    expect(errorText.textContent).toBe('This field is required.');
+
+    const selectElement = page.root.querySelector('select');
+    expect(selectElement.classList.contains('is-invalid')).toBe(true);
   });
 });
