@@ -28,6 +28,16 @@ const meta: Meta = {
       },
       action: true,
     },
+    'style': {
+      description: 'Component style overrides',
+      table: {
+        category: 'styles',
+      },
+      if: {
+        arg: 'custom-styled',
+        truthy: true,
+      }
+    },
   },
   parameters: {
     actions: {
@@ -44,7 +54,7 @@ const meta: Meta = {
   ],
 };
 
-export const Basic = {
+export const Example = {
   args: {
     ...storyBaseArgs.args,
     style: {

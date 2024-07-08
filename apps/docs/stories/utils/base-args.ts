@@ -95,7 +95,7 @@ const argTypes: ArgTypes = {
       type: 'boolean',
     },
     table: {
-      category: 'props',
+      category: 'styles',
     },
   },
 };

@@ -130,6 +130,6 @@ const Template = (args: any) => {
 // This fixes a typescript error
 Template.args = { ...storyBaseArgs.args, 'css-variables': CSSVarsExample };
 
-export const Basic = Template;
+export const Example = Template;
 
 export default meta;

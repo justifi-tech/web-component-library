@@ -132,8 +132,8 @@ const meta: Meta = {
   }
 }
 
-export const Basic: StoryObj = {};
-Basic.decorators = [
+export const Example: StoryObj = {};
+Example.decorators = [
   (story: any, storyArgs: any) => {
     setUpMocks();
 

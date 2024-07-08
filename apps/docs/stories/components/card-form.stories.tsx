@@ -139,6 +139,6 @@ const Template = (args: any) => {
 
 Template.args = { ...storyBaseArgs.args, 'css-variables': CSSVarsExample };
 
-export const Basic = Template;
+export const Example = Template;
 
 export default meta;
