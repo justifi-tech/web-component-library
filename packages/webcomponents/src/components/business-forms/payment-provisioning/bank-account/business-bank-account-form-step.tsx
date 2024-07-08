@@ -166,7 +166,7 @@ export class BusinessBankAccountFormStep {
                   label="Account Type"
                   options={bankAccountTypeOptions}
                   defaultValue={bankAccountDefaultValue.account_type}
-                  error={this.errors.account_type}
+                  errorText={this.errors.account_type}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />

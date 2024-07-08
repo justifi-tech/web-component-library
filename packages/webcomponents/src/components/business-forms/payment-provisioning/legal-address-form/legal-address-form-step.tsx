@@ -147,7 +147,7 @@ export class LegalAddressFormStep {
                   options={StateOptions}
                   inputHandler={this.inputHandler}
                   defaultValue={legalAddressDefaultValue?.state}
-                  error={this.errors?.state}
+                  errorText={this.errors?.state}
                 />
               </div>
               <div class="col-12">
@@ -168,7 +168,7 @@ export class LegalAddressFormStep {
                   options={[{ label: 'United States', value: 'USA' }]}
                   inputHandler={this.inputHandler}
                   defaultValue={legalAddressDefaultValue?.country}
-                  error={this.errors?.country}
+                  errorText={this.errors?.country}
                   // just for now so we skip handling country specificities
                   disabled={true}
                 />

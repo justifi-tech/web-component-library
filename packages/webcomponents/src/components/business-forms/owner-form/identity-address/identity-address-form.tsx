@@ -59,7 +59,7 @@ export class IdentityAddressForm {
               label="State"
               defaultValue={this.defaultValues?.state}
               options={StateOptions}
-              error={this.errors?.state}
+              errorText={this.errors?.state}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -81,7 +81,7 @@ export class IdentityAddressForm {
               options={[{ label: 'United States', value: 'USA' }]}
               inputHandler={this.inputHandler}
               defaultValue={this.defaultValues?.country}
-              error={this.errors?.country}
+              errorText={this.errors?.country}
               // just for now so we skip handling country specificities
               disabled={true}
             />
