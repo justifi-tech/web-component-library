@@ -9,20 +9,20 @@ import {
 } from '@stencil/core';
 
 @Component({
-  tag: 'form-control-select',
-  styleUrl: 'form-control-select.scss',
-  shadow: true,
+  tag: 'form-control-select'
 })
 export class SelectInput {
   selectElement!: HTMLSelectElement;
 
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() error: string;
+  @Prop() helpText?: string;
+  @Prop() errorText?: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() options: { label: string; value: string }[];
   @Prop() disabled: boolean;
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
@@ -58,15 +58,16 @@ export class SelectInput {
           name={this.name}
           onInput={(event: any) => this.handleFormControlInput(event)}
           onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.error ? 'input-invalid' : ''}`}
-          class={this.error ? 'form-select is-invalid' : 'form-select'}
+          part={`input ${this.errorText ? 'input-invalid' : ''}`}
+          class={this.errorText ? 'form-select is-invalid' : 'form-select'}
           disabled={this.disabled}
         >
           {this.options?.map(option => (
             <option value={option.value}>{option.label}</option>
           ))}
         </select>
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <form-control-help-text helpText={this.helpText} />
+        <form-control-error-text errorText={this.errorText} />
       </Host>
     );
   }
