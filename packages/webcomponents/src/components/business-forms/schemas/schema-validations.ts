@@ -240,7 +240,7 @@ export const governmentIdValidation = documentUploadValidation;
 export const otherDocumentValidation = documentUploadValidation;
 
 export const voidedCheckValidation = (documents: any[], allowOptionalFields: boolean) => {
-  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.voidedCheck);
+  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.voidedCheck);
 
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
@@ -250,34 +250,37 @@ export const voidedCheckValidation = (documents: any[], allowOptionalFields: boo
 }
 
 export const bankStatementValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
-  let vol = parseInt(volume);
-  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.bankStatement);
+  const vol = parseInt(volume);
+  const bankStatementRequiredAmount = 250000;
+  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.bankStatement);
 
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
-  } else if (vol >= 250000 && !allowOptionalFields) {
+  } else if (vol >= bankStatementRequiredAmount && !allowOptionalFields) {
     return documentUploadValidation.required('Please select one or more files');
   }
 };
 
 export const balanceSheetValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
-  let vol = parseInt(volume);
-  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.balanceSheet);
+  const vol = parseInt(volume);
+  const balanceSheetRequiredAmount = 1000000;
+  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.balanceSheet);
 
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
-  } else if (vol >= 1000000 && !allowOptionalFields) {
+  } else if (vol >= balanceSheetRequiredAmount && !allowOptionalFields) {
     return documentUploadValidation.required('Please select one or more files');
   }
 };
 
 export const profitAndLossStatementValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
-  let vol = parseInt(volume);
-  let existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.profitAndLossStatement);
+  const vol = parseInt(volume);
+  const profitLossRequiredAmount = 1000000;
+  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.profitAndLossStatement);
   
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
-  } else if (vol >= 1000000 && !allowOptionalFields) {
+  } else if (vol >= profitLossRequiredAmount && !allowOptionalFields) {
     return documentUploadValidation.required('Please select one or more files');
   }
 };
