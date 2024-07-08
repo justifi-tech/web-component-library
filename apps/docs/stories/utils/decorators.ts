@@ -5,13 +5,16 @@ type Props = { name: string; value: any }[];
 const getPropsAndStyles = (storyContext: any) => {
   const args = storyContext.args;
   const argNames = Object.keys(args);
-  const nonStyleArgs = argNames.filter((arg) => arg !== 'style');
+  const nonStyleArgs = argNames.filter(
+    (arg) => arg !== 'style' && arg !== 'custom-styled'
+  );
   const props: Props = nonStyleArgs.map((arg) => {
     return { name: arg, value: args[arg] };
   });
   const styleArg = args.style;
+  const customStyled = args['custom-styled'];
 
-  return { props: props, styleArg: styleArg }
+  return { props, styleArg, customStyled };
 };
 
 const applyArgsToStoryComponent = (storyComponent: any, props: Props) => {
@@ -28,36 +31,41 @@ const generateStyleBlock = (styleArg: any) => {
   const styleBlock = document.createElement('style');
   const styleArgKeys = Object.keys(styleArg);
 
-  styleBlock.innerHTML = styleArgKeys.map((styleArgKey) => {
+  styleBlock.innerHTML = styleArgKeys
+    .map((styleArgKey) => {
       const selector = styleArgKey;
       const cssProperties = styleArg[styleArgKey];
-    const cssRules = Object.keys(cssProperties).map((cssProperty) => {
+      const cssRules = Object.keys(cssProperties)
+        .map((cssProperty) => {
           return `${cssProperty}: ${cssProperties[cssProperty]};`;
         })
         .join('');
 
-    return (`
+      return `
       ${selector} {
         ${cssRules}
       }
-    `);
-  }).join('');
+    `;
+    })
+    .join('');
 
   return styleBlock;
-}
+};
 
-export const customStoryDecorator = (storyComponent: any, storyContext: any) => {
+export const customStoryDecorator = (
+  storyComponent: any,
+  storyContext: any
+) => {
   const fragment = new DocumentFragment();
-  const { props, styleArg } = getPropsAndStyles(storyContext);
-
+  const { props, styleArg, customStyled } = getPropsAndStyles(storyContext);
   setUpMocks();
 
   const component = applyArgsToStoryComponent(storyComponent, props);
 
-  if (styleArg) {
+  if (customStyled && styleArg) {
     const styleBlock = generateStyleBlock(styleArg);
-    fragment.prepend(styleBlock)
-  };
+    fragment.prepend(styleBlock);
+  }
 
   fragment.appendChild(component);
   return fragment;

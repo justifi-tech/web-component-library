@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { StoryBaseArgs, customStoryDecorator } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
-type Story = StoryObj;
-
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token', 'custom-styled']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Merchant Tools/Payments List',
@@ -46,10 +44,9 @@ const meta: Meta = {
   ],
 };
 
-export const Basic: Story = {};
-
-export const Styled: Story = {
+export const Basic = {
   args: {
+    ...storyBaseArgs.args,
     style: {
       'justifi-payments-list::part(table-head)': {},
       'justifi-payments-list::part(table-head-row)': {},
