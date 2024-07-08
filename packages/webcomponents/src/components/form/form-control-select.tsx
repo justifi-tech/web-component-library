@@ -49,25 +49,27 @@ export class SelectInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <select
-          ref={el => (this.selectElement = el as HTMLSelectElement)}
-          id={this.name}
-          name={this.name}
-          onInput={(event: any) => this.handleFormControlInput(event)}
-          onBlur={() => this.formControlBlur.emit()}
-          part={`input ${this.errorText ? 'input-invalid' : ''}`}
-          class={this.errorText ? 'form-select is-invalid' : 'form-select'}
-          disabled={this.disabled}
-        >
-          {this.options?.map(option => (
-            <option value={option.value}>{option.label}</option>
-          ))}
-        </select>
-        <form-control-help-text helpText={this.helpText} />
-        <form-control-error-text errorText={this.errorText} />
+        <div class="form-group d-flex flex-column">
+          <label part="label" class="form-label" htmlFor={this.name}>
+            {this.label}
+          </label>
+          <select
+            ref={el => (this.selectElement = el as HTMLSelectElement)}
+            id={this.name}
+            name={this.name}
+            onInput={(event: any) => this.handleFormControlInput(event)}
+            onBlur={() => this.formControlBlur.emit()}
+            part={`input ${this.errorText ? 'input-invalid' : ''}`}
+            class={this.errorText ? 'form-select is-invalid' : 'form-select'}
+            disabled={this.disabled}
+          >
+            {this.options?.map(option => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+          </select>
+          <form-control-help-text helpText={this.helpText} />
+          <form-control-error-text errorText={this.errorText} />
+        </div>
       </Host>
     );
   }
