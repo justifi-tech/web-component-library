@@ -10,29 +10,33 @@ import {
 } from '@stencil/core';
 
 @Component({
-  tag: 'form-control-date',
-  styleUrl: 'form-control-date.scss',
-  shadow: true,
+  tag: 'form-control-date'
 })
 export class DateInput {
+  dateInput!: HTMLInputElement;
+
   @Prop() label: string;
   @Prop() name: string;
-  @Prop() error: string;
+  @Prop() helpText?: string;
+  @Prop() errorText?: string;
   @Prop() defaultValue: string;
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
+
   @State() date: string
+  
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  dateInput!: HTMLInputElement;
-
-  private updateInput(value: any) {
+  updateInput(value: any) {
     this.dateInput.value = value;
   }
 
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
+  handleFormControlInput = (event: any) => {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.inputHandler(name, target.value);
+    this.formControlInput.emit({ name, value: target.value });
   }
 
   @Watch('defaultValue')
@@ -40,11 +44,8 @@ export class DateInput {
     this.updateInput(newValue);
   }
 
-  handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    this.inputHandler(name, target.value);
-    this.formControlInput.emit(target.value);
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
   }
 
   render() {
@@ -60,11 +61,12 @@ export class DateInput {
           name={this.name}
           onBlur={this.formControlBlur.emit}
           onChange={this.handleFormControlInput}
-          part={`input ${this.error && 'input-invalid'}`}
-          class={this.error ? 'form-control is-invalid' : 'form-control'}
+          part={`input ${this.errorText && 'input-invalid'}`}
+          class={this.errorText ? 'form-control is-invalid' : 'form-control'}
           disabled={this.disabled}
         />
-        {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <form-control-help-text helpText={this.helpText} />
+        <form-control-error-text errorText={this.errorText} />     
       </Host>
     );
   }
