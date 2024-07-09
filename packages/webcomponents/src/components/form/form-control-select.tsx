@@ -26,20 +26,20 @@ export class SelectInput {
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: string) {
-    this.updateInput(newValue);
-  }
-
-  updateInput(newValue: any) {
+  updateInput = (newValue: any) => {
     this.selectElement.value = newValue;
   }
 
-  handleFormControlInput(event: any) {
+  handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
     this.formControlInput.emit(target.value);
+  }
+
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
   }
 
   componentDidLoad() {
@@ -57,8 +57,8 @@ export class SelectInput {
             ref={el => (this.selectElement = el as HTMLSelectElement)}
             id={this.name}
             name={this.name}
-            onInput={(event: any) => this.handleFormControlInput(event)}
-            onBlur={() => this.formControlBlur.emit()}
+            onBlur={this.formControlBlur.emit}
+            onInput={this.handleFormControlInput}
             part={`input ${this.errorText ? 'input-invalid' : ''}`}
             class={this.errorText ? 'form-select is-invalid' : 'form-select'}
             disabled={this.disabled}
