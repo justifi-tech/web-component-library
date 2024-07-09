@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  State,
   Element,
   Watch,
 } from '@stencil/core';
@@ -25,8 +24,6 @@ export class TextInput {
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() keyDownHandler?: (event: any) => void;
   @Prop() disabled: boolean;
-
-  @State() input: string;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
