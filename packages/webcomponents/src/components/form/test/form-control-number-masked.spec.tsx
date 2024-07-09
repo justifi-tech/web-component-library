@@ -11,7 +11,7 @@ describe('form-control-number-masked', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number-masked label='Age' name='age' mask='00'></form-control-number-masked>,
+      template: () => <form-control-number-masked label='Age' name='age' mask='00'/>,
     });
     expect(page.root).toMatchSnapshot();
   });
