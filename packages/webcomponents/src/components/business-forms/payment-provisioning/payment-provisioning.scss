@@ -6,6 +6,8 @@
 @import 'progress';
 @import 'bootstrap-utilities';
 @import 'forms';
+@import 'card';
+@import 'tables';
 
 :host {
   @include host-base-styles;
@@ -128,4 +130,14 @@
   border-top-color: var(--jfi-submit-button-color-loading);
   border-bottom-color: var(--jfi-submit-button-color-loading);
   border-left-color: var(--jfi-submit-button-color-loading);
+}
+
+// Documents on File Table
+
+.row-border {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.row-border.first-row {
+  border-top: 1px solid #dee2e6;
 }
