@@ -87,12 +87,12 @@ describe('form-control-monetary', () => {
     });
 
     const inputElement = page.root.querySelector('input');
-    const testValue = '1234';
+    const testValue = '123456';
 
     inputElement.value = testValue;
     await inputElement.dispatchEvent(new Event('input'));
 
-    expect(inputElement.value).toBe('1,234');
+    expect(inputElement.value).toBe('123,456');
   });
 
   it('Handles input correctly with decimal mask', async () => {
