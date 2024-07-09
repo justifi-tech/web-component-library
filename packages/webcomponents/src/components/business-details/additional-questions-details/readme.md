@@ -7,21 +7,21 @@
 
 ## Properties
 
-| Property              | Attribute | Description | Type                  | Default     |
-| --------------------- | --------- | ----------- | --------------------- | ----------- |
-| `additionalQuestions` | --        |             | `AdditionalQuestions` | `undefined` |
+| Property              | Attribute | Description | Type                   | Default     |
+| --------------------- | --------- | ----------- | ---------------------- | ----------- |
+| `additionalQuestions` | --        |             | `IAdditionalQuestions` | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [justifi-business-details](..)
+ - [business-details-core](..)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-details --> additional-questions-details
+  business-details-core --> additional-questions-details
   style additional-questions-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

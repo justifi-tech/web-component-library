@@ -25,23 +25,11 @@
 
 ## Shadow Parts
 
-| Part      | Description |
-| --------- | ----------- |
-| `"label"` |             |
+| Part                 | Description |
+| -------------------- | ----------- |
+| `"invalid-feedback"` |             |
+| `"label"`            |             |
 
-
-## Dependencies
-
-### Used by
-
- - [justifi-billing-form](../billing-form)
-
-### Graph
-```mermaid
-graph TD;
-  justifi-billing-form --> select-input
-  style select-input fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 
