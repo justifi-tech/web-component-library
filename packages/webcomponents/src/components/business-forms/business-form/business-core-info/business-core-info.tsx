@@ -15,8 +15,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-core-info',
-  styleUrl: 'business-core-info.scss',
+  tag: 'justifi-business-core-info'
 })
 export class BusinessCoreInfo {
   @Prop() formController: FormController;
@@ -57,7 +56,7 @@ export class BusinessCoreInfo {
                 name="legal_name"
                 label="Legal Name"
                 defaultValue={coreInfoDefaultValue.legal_name}
-                error={this.errors.legal_name}
+                errorText={this.errors.legal_name}
                 inputHandler={this.inputHandler}
               />
             </div>
@@ -66,7 +65,7 @@ export class BusinessCoreInfo {
                 name="doing_business_as"
                 label="Doing Business As (DBA)"
                 defaultValue={coreInfoDefaultValue.doing_business_as}
-                error={this.errors.doing_business_as}
+                errorText={this.errors.doing_business_as}
                 inputHandler={this.inputHandler}
               />
             </div>
@@ -94,7 +93,7 @@ export class BusinessCoreInfo {
                 name="industry"
                 label="Industry"
                 defaultValue={coreInfoDefaultValue.industry}
-                error={this.errors.industry}
+                errorText={this.errors.industry}
                 inputHandler={this.inputHandler}
               />
             </div>
@@ -103,7 +102,7 @@ export class BusinessCoreInfo {
                 name="tax_id"
                 label="Tax ID"
                 defaultValue={coreInfoDefaultValue.tax_id}
-                error={this.errors.tax_id}
+                errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
                 mask={TAX_ID_MASKS.US}
               />
@@ -113,7 +112,7 @@ export class BusinessCoreInfo {
                 name="website_url"
                 label="Website URL"
                 defaultValue={coreInfoDefaultValue.website_url}
-                error={this.errors.website_url}
+                errorText={this.errors.website_url}
                 inputHandler={this.inputHandler}
               />
             </div>
@@ -122,7 +121,7 @@ export class BusinessCoreInfo {
                 name="email"
                 label="Email Address"
                 defaultValue={coreInfoDefaultValue.email}
-                error={this.errors.email}
+                errorText={this.errors.email}
                 inputHandler={this.inputHandler}
               />
             </div>
@@ -131,7 +130,7 @@ export class BusinessCoreInfo {
                 name="phone"
                 label="Phone Number"
                 defaultValue={coreInfoDefaultValue.phone}
-                error={this.errors.phone}
+                errorText={this.errors.phone}
                 inputHandler={this.inputHandler}
                 mask={PHONE_MASKS.US}
               />

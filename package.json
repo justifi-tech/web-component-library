@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "web-component-library",
   "scripts": {
     "build": "turbo run build",
     "build:mocks": "turbo run build:mocks",
@@ -21,7 +22,7 @@
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "prettier": "^3.1.1",
-    "turbo": "^1.x.x"
+    "turbo": "^2.0.6"
   },
   "workspaces": [
     "apps/*",

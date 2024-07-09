@@ -5,6 +5,9 @@
 @import 'spinners';
 @import 'progress';
 @import 'bootstrap-utilities';
+@import 'forms';
+@import 'card';
+@import 'tables';
 
 :host {
   @include host-base-styles;
@@ -42,6 +45,36 @@
     color: var(--jfi-form-control-color-focus);
     border-color: var(--jfi-form-control-border-color-focus);
     box-shadow: var(--jfi-form-control-box-shadow-focus);
+  }
+}
+
+*::part(input-checkbox) {
+  font-family: var(--jfi-layout-font-family);
+  border-color: var(--jfi-form-control-border-color);
+  border-width: var(--jfi-form-control-border-width);
+  border-bottom-width: var(--jfi-form-control-border-bottom-width);
+  border-left-width: var(--jfi-form-control-border-left-width);
+  border-right-width: var(--jfi-form-control-border-right-width);
+  border-top-width: var(--jfi-form-control-border-top-width);
+  border-style: var(--jfi-form-control-border-style);
+  box-shadow: var(--jfi-form-control-box-shadow);
+  color: var(--jfi-form-control-color);
+  line-height: var(--jfi-form-control-line-height);
+
+  &:focus {
+    color: var(--jfi-form-control-color-focus);
+    border-color: var(--jfi-form-control-border-color-focus);
+    box-shadow: var(--jfi-form-control-box-shadow-focus);
+  }
+}
+
+*::part(input-checkbox-invalid) {
+  border-color: var(--jfi-form-control-border-color-error);
+  box-shadow: var(--jfi-form-control-box-shadow-error);
+
+  &:focus {
+    border-color: var(--jfi-form-control-border-color-error);
+    box-shadow: var(--jfi-form-control-box-shadow-error-focus);
   }
 }
 
@@ -97,4 +130,14 @@
   border-top-color: var(--jfi-submit-button-color-loading);
   border-bottom-color: var(--jfi-submit-button-color-loading);
   border-left-color: var(--jfi-submit-button-color-loading);
+}
+
+// Documents on File Table
+
+.row-border {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.row-border.first-row {
+  border-top: 1px solid #dee2e6;
 }

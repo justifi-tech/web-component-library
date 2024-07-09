@@ -2,11 +2,15 @@
 
 exports[`form-control-checkbox renders with default props 1`] = `
 <form-control-checkbox exportparts="label,input,input-invalid" label="Select a checkbox" name="user ID">
-  <mock:shadow-root>
-    <label class="form-label" htmlfor="user ID" part="label">
-      Select a checkbox
-    </label>
-    <input class="form-check-input" id="user ID" name="user ID" part="input " type="checkbox">
-  </mock:shadow-root>
+  <div class="d-flex flex-column form-group">
+    <div class="form-check">
+      <input class="form-check-input" id="user ID" name="user ID" part="input-checkbox " type="checkbox">
+      <label class="form-check-label" htmlfor="user ID">
+        Select a checkbox
+      </label>
+    </div>
+    <form-control-help-text name="user ID"></form-control-help-text>
+    <form-control-error-text name="user ID"></form-control-error-text>
+  </div>
 </form-control-checkbox>
 `;

@@ -18,9 +18,7 @@ import {
   from '../utils/business-form-types';
 
 @Component({
-  tag: 'justifi-owner-form',
-  styleUrl: 'owner-form.scss',
-  shadow: true,
+  tag: 'justifi-owner-form'
 })
 export class BusinessOwnerForm {
   @Prop() authToken: string;
@@ -222,14 +220,15 @@ export class BusinessOwnerForm {
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
-            <legend>{this.formTitle}</legend>
+            <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
+            <br />
             <div class='row gy-3'>
               <div class="col-12 col-md-6">
                 <form-control-text
                   name="name"
                   label="Full Name"
                   defaultValue={ownerDefaultValue?.name}
-                  error={this.errors.name}
+                  errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -238,7 +237,7 @@ export class BusinessOwnerForm {
                   name="title"
                   label="Title"
                   defaultValue={ownerDefaultValue?.title}
-                  error={this.errors.title}
+                  errorText={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -247,7 +246,7 @@ export class BusinessOwnerForm {
                   name="email"
                   label="Email Address"
                   defaultValue={ownerDefaultValue?.email}
-                  error={this.errors.email}
+                  errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -256,7 +255,7 @@ export class BusinessOwnerForm {
                   name="phone"
                   label="Phone Number"
                   defaultValue={ownerDefaultValue?.phone}
-                  error={this.errors.phone}
+                  errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
@@ -276,7 +275,7 @@ export class BusinessOwnerForm {
                   name="identification_number"
                   label={this.identificationNumberLabel}
                   defaultValue={ownerDefaultValue?.identification_number}
-                  error={this.errors.identification_number}
+                  errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
                 />

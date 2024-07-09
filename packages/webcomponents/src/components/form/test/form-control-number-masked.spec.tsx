@@ -1,96 +1,97 @@
 import { h } from '@stencil/core';
-import { newSpecPage } from '@stencil/core/testing';
-import { TextInput } from '../form-control-text';
+import { newSpecPage } from "@stencil/core/testing";
+import { NumberInputMasked } from "../form-control-number-masked";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
 import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
-describe('form-control-text', () => {
-  const components = [TextInput, FormControlErrorText, FormControlHelpText];
+describe('form-control-number-masked', () => {
+  const components = [NumberInputMasked, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
-  const mockKeyDownHandler = jest.fn();
 
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username'></form-control-text>,
+      template: () => <form-control-number-masked label='Age' name='age'></form-control-number-masked>,
     });
-
     expect(page.root).toMatchSnapshot();
-    expect(page.rootInstance.label).toBe('Username');
-    expect(page.rootInstance.name).toBe('username');
   });
 
   it('Renders with all props provided', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-text
-          label='Email'
-          name='email'
-          defaultValue='user@example.com'
-          errorText='Invalid email'
-          helpText='Enter your email'
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          defaultValue='25'
+          errorText='Invalid age'
+          helpText='Enter your age'
           disabled
-          maxLength={50}
+          mask='00'
           inputHandler={mockInputHandler}
-          keyDownHandler={mockKeyDownHandler}
         >
-        </form-control-text>
+        </form-control-number-masked>
     });
 
     expect(page.root).toMatchSnapshot();
   });
 
-  it('Updates input value on defaultValue prop change', async () => {
+  it('Updates the input value when defaultValue changes', async () => {
     // Initial render with the default value
-    let defaultValue = 'user@example.com';
+    let defaultValue = '25';
     let page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-text
-          label='Email'
-          name='email'
+        <form-control-number-masked
+          label='Age'
+          name='age'
           defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
+          mask='00'
         >
-        </form-control-text>
+        </form-control-number-masked>
     });
-
     let inputElement = page.root.querySelector('input');
-    expect(inputElement.value).toBe('user@example.com');
+    expect(inputElement.value).toBe('25');
 
-    defaultValue = 'updated@example.com';
+    defaultValue = '30';
 
-    // Re-render component with new defaultValue
     page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-text
-          label='Email'
-          name='email'
+        <form-control-number-masked
+          label='Age'
+          name='age'
           defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
+          mask='00'
         >
-        </form-control-text>
+        </form-control-number-masked>
     });
 
     inputElement = page.root.querySelector('input');
-    expect(inputElement.value).toBe('updated@example.com');
+    expect(inputElement.value).toBe('30');
   });
 
   it('Handles user input correctly', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-text
-          label='Email'
-          name='email'
-          defaultValue='user@example.com'
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          defaultValue='25'
+          errorText='Invalid age'
+          helpText='Enter your age'
+          disabled
+          mask='00'
           inputHandler={mockInputHandler}
         >
-        </form-control-text>
+        </form-control-number-masked>
     });
 
     const inputElement = page.root.querySelector('input');
-    const testValue = 'Hello, World!';
+    const testValue = '30';
 
     inputElement.value = testValue;
     await inputElement.dispatchEvent(new Event('input'));
@@ -102,31 +103,28 @@ describe('form-control-text', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-text
-          label='Email'
-          name='email'
-          defaultValue='user@example.com'
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          defaultValue='25'
           inputHandler={mockInputHandler}
+          mask='00'
         >
-        </form-control-text>
+        </form-control-number-masked>
     });
 
     const inputEventSpy = jest.fn();
     page.root.addEventListener('formControlInput', inputEventSpy);
 
-    await page.waitForChanges();
-
     const inputElement = page.root.querySelector('input');
-    inputElement.value = 'other-user@example.com';
+    inputElement.value = '25';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    await page.waitForChanges();
-
     expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
       detail: {
-        name: 'email',
-        value: 'other-user@example.com'
+        name: 'age',
+        value: '25',
       }
     }));
   });
@@ -134,14 +132,19 @@ describe('form-control-text', () => {
   it('Emits formControlBlur event on blur', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text defaultValue='user@example.com' inputHandler={mockInputHandler}></form-control-text>
+      template: () =>
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          inputHandler={mockInputHandler}
+        >
+        </form-control-number-masked>
     });
-
     const blurEventSpy = jest.fn();
-    page.root.addEventListener('formControlBlur', blurEventSpy);
+    page.win.addEventListener('formControlBlur', blurEventSpy);
 
     const inputElement = page.root.querySelector('input');
-    inputElement.dispatchEvent(new Event('blur'));
+    await inputElement.dispatchEvent(new CustomEvent('blur'));
 
     expect(blurEventSpy).toHaveBeenCalled();
   });
@@ -149,37 +152,58 @@ describe('form-control-text', () => {
   it('Disables input when disabled prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' disabled></form-control-text>,
+      template: () =>
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          disabled
+          inputHandler={mockInputHandler}
+        >
+        </form-control-number-masked>
     });
 
     const inputElement = page.root.querySelector('input');
-    expect(inputElement.disabled).toBeTruthy();
+    expect(inputElement.disabled).toBe(true);
   });
 
   it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' helpText='This is the help text.'></form-control-text>,
+      template: () =>
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          helpText='Enter your age'
+          inputHandler={mockInputHandler}
+        >
+        </form-control-number-masked>
     });
 
     const helpTextComponent = page.root.querySelector('form-control-help-text');
     expect(helpTextComponent).not.toBeNull();
 
     const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('This is the help text.');
+    expect(helpText.textContent).toBe('Enter your age');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' errorText='This field is required.'></form-control-text>,
+      template: () =>
+        <form-control-number-masked
+          label='Age'
+          name='age'
+          errorText='Invalid age'
+          inputHandler={mockInputHandler}
+        >
+        </form-control-number-masked>
     });
 
     const errorTextComponent = page.root.querySelector('form-control-error-text');
     expect(errorTextComponent).not.toBeNull();
 
     const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('This field is required.');
+    expect(errorText.textContent).toBe('Invalid age');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

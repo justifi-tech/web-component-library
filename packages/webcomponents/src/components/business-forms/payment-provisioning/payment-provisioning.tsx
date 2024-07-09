@@ -12,6 +12,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 @Component({
   tag: 'justifi-payment-provisioning',
   styleUrl: 'payment-provisioning.scss',
+  shadow: true
 })
 export class PaymentProvisioning {
   @Prop() authToken: string;
@@ -21,10 +22,11 @@ export class PaymentProvisioning {
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
+ 
   @State() formLoading: boolean = false;
   @State() errorMessage: string = '';
   @State() currentStep: number = 0;
-  @State() businessPaymentVolume: string;
+
   @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
 
   analytics: JustifiAnalytics;
@@ -36,7 +38,7 @@ export class PaymentProvisioning {
     if (!this.authToken) console.error(missingAuthTokenMessage);
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
 
   disconnectedCallback() {
@@ -54,6 +56,7 @@ export class PaymentProvisioning {
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
+
   private coreInfoRef: any;
   private legalAddressRef: any;
   private additionalQuestionsRef: any;
@@ -61,6 +64,7 @@ export class PaymentProvisioning {
   private ownersRef: any;
   private bankAccountRef: any;
   private documentUploadRef: any;
+  private termsRef: any;
   private refs = [];
 
   componentStepMapping = {
@@ -87,7 +91,6 @@ export class PaymentProvisioning {
       onFormLoading={this.handleFormLoading}
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
-      onSubmitted={this.setBusinessPaymentVolume}
     />,
     3: () => <justifi-business-representative-form-step
       businessId={this.businessId}
@@ -120,7 +123,14 @@ export class PaymentProvisioning {
       onFormLoading={this.handleFormLoading}
       onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
-      paymentVolume={this.businessPaymentVolume}
+    />,
+    7: () => <justifi-business-terms-conditions-form-step
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[7] = el}
+      onFormLoading={this.handleFormLoading}
+      onServerError={this.handleServerErrors}
+      allowOptionalFields={this.allowOptionalFields}
     />,
   };
 
@@ -130,11 +140,6 @@ export class PaymentProvisioning {
 
   handleServerErrors = (e: CustomEvent) => {
     this.errorMessage = e.detail.message;
-  }
-
-  setBusinessPaymentVolume = (e: CustomEvent) => {
-    let business = e.detail.data.data;
-    this.businessPaymentVolume = business?.additional_questions.business_payment_volume;
   }
 
   showPreviousStepButton() {

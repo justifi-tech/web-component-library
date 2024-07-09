@@ -6,13 +6,12 @@ import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Representative } from '../../../../api/Identity';
 import { deconstructDate } from '../../utils/helpers';
 
 @Component({
-  tag: 'justifi-business-representative-form-step',
-  styleUrl: 'business-representative-form-step.scss',
+  tag: 'justifi-business-representative-form-step'
 })
 export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
@@ -67,7 +66,7 @@ export class BusinessRepresentativeFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'representative' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.representative } });
   }
 
   @Method()
@@ -147,7 +146,7 @@ export class BusinessRepresentativeFormStep {
                   name="name"
                   label="Full Name"
                   defaultValue={representativeDefaultValue?.name}
-                  error={this.errors.name}
+                  errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -156,7 +155,7 @@ export class BusinessRepresentativeFormStep {
                   name="title"
                   label="Title"
                   defaultValue={representativeDefaultValue?.title}
-                  error={this.errors.title}
+                  errorText={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -165,7 +164,7 @@ export class BusinessRepresentativeFormStep {
                   name="email"
                   label="Email Address"
                   defaultValue={representativeDefaultValue?.email}
-                  error={this.errors.email}
+                  errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
               </div>
@@ -174,7 +173,7 @@ export class BusinessRepresentativeFormStep {
                   name="phone"
                   label="Phone Number"
                   defaultValue={representativeDefaultValue?.phone}
-                  error={this.errors.phone}
+                  errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
@@ -194,7 +193,7 @@ export class BusinessRepresentativeFormStep {
                   name="identification_number"
                   label={this.identificationNumberLabel}
                   defaultValue={representativeDefaultValue?.identification_number}
-                  error={this.errors.identification_number}
+                  errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
                 />

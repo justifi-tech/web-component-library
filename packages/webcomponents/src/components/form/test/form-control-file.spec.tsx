@@ -1,45 +1,56 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-file', () => {
+  const components = [FileInput, FormControlErrorText, FormControlHelpText];
+  const mockInputHandler = jest.fn();
 
-  it('renders with default props', async () => {
+  it('Renders with default props', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `<form-control-file label="Select a file" name="user ID"></form-control-file>`,
+      components: components,
+      template: () => <form-control-file label='Profile Picture' name='profilePicture'></form-control-file>,
     });
 
     expect(page.root).toMatchSnapshot();
-    expect(page.rootInstance.label).toBe('Select a file');
-    expect(page.rootInstance.name).toBe('user ID');
+    expect(page.rootInstance.label).toBe('Profile Picture');
+    expect(page.rootInstance.name).toBe('profilePicture');
   });
 
-  it('renders with all props provided', async () => {
+  it('Renders with all props provided', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `
+      components: components,
+      template: () =>
         <form-control-file
-          label="Select a file"
-          name="email"
-          error="No file selected"
+          label='Resume'
+          name='resume'
+          errorText='Invalid file type'
+          helpText='Upload your resume in PDF format'
           disabled
-        ></form-control-file>
-      `,
+          inputHandler={mockInputHandler}
+        >
+        </form-control-file>
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
-    expect(page.rootInstance.label).toBe('Select a file');
-    expect(inputElement.disabled).toBeTruthy();
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('handles user input correctly', async () => {
+  it('Handles user input correctly', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `<form-control-file></form-control-file>`,
+      components: components,
+      template: () =>
+        <form-control-file
+          label='Government ID'
+          name='governmentId'
+          inputHandler={mockInputHandler}
+        >
+        </form-control-file>
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
-    const testValue = 'Hello, World!';
+    const inputElement = page.root.querySelector('input');
+    const testValue = 'govermnent-id.jpg';
 
     inputElement.value = testValue;
     await inputElement.dispatchEvent(new Event('input'));
@@ -47,64 +58,111 @@ describe('form-control-file', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('emits formControlInput event on input', async () => {
+  it('Emits formControlInput event on input', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `<form-control-file></form-control-file>`,
+      components: components,
+      template: () =>
+        <form-control-file
+          label='Government ID'
+          name='governmentId'
+          inputHandler={mockInputHandler}
+        >
+        </form-control-file>
     });
-
-    // Set a mock inputHandler to prevent it from being undefined
-    page.rootInstance.inputHandler = jest.fn();
 
     const inputEventSpy = jest.fn();
     page.root.addEventListener('formControlInput', inputEventSpy);
 
-    await page.waitForChanges();
-
-    const inputElement = page.root.shadowRoot.querySelector('input');
-    inputElement.value = 'Hello, World!';
+    const inputElement = page.root.querySelector('input');
+    inputElement.value = 'govermnent-id.jpg';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    await page.waitForChanges();
-
-    expect(inputEventSpy).toHaveBeenCalled();
+    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: expect.objectContaining({
+        name: 'governmentId',
+        value: 'govermnent-id.jpg'
+      })
+    }));
   });
 
-  it('emits formControlBlur event on blur', async () => {
+  it('Emits formControlBlur event on blur', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `<form-control-file></form-control-file>`,
+      components: components,
+      template: () =>
+        <form-control-file
+          label='Government ID'
+          name='governmentId'
+          inputHandler={mockInputHandler}
+        >
+        </form-control-file>
     });
 
     const blurEventSpy = jest.fn();
-    page.win.addEventListener('formControlBlur', blurEventSpy);
+    page.root.addEventListener('formControlBlur', blurEventSpy);
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     inputElement.dispatchEvent(new Event('blur'));
 
     expect(blurEventSpy).toHaveBeenCalled();
   });
 
-  it('disables input when disabled prop is true', async () => {
+  it('Disables input when disabled prop is true', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `<form-control-file disabled></form-control-file>`,
+      components: components,
+      template: () =>
+        <form-control-file
+          label='Government ID'
+          name='governmentId'
+          disabled
+        >
+        </form-control-file>
     });
 
-    const inputElement = page.root.shadowRoot.querySelector('input');
+    const inputElement = page.root.querySelector('input');
     expect(inputElement.disabled).toBeTruthy();
   });
 
-  it('shows error and applies error styling when error prop is provided', async () => {
+  it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
-      components: [FileInput],
-      html: `<form-control-file error="This field is required."></form-control-file>`,
+      components: components,
+      template: () =>
+        <form-control-file
+          label='Government ID'
+          name='governmentId'
+          inputHandler={mockInputHandler}
+          helpText='Select a file to upload.'
+        >
+        </form-control-file>
     });
 
-    const shadowRoot = page.root.shadowRoot;
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    expect(helpTextComponent).not.toBeNull();
 
-    expect(shadowRoot.querySelector('.invalid-feedback').textContent).toBe('This field is required.');
-    expect(shadowRoot.querySelector('.form-control').classList.contains('is-invalid')).toBeTruthy();
+    const helpText = helpTextComponent.querySelector('.text-muted');
+    expect(helpText.textContent).toBe('Select a file to upload.');
+  });
+
+  it('Shows error and applies error styling when error prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-file
+          label='Government ID'
+          name='governmentId'
+          inputHandler={mockInputHandler}
+          errorText='This field is required.'
+        >
+        </form-control-file>
+    });
+
+    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    expect(errorTextComponent).not.toBeNull();
+
+    const errorText = errorTextComponent.querySelector('.text-danger');
+    expect(errorText.textContent).toBe('This field is required.');
+
+    const inputElement = page.root.querySelector('input');
+    expect(inputElement.classList.contains('is-invalid')).toBe(true);
   });
 });

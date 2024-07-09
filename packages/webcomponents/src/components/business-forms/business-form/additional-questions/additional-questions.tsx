@@ -99,7 +99,7 @@ export class AdditionalQuestions {
                 name='business_recurring_payments_percentage'
                 label='What percent of revenue is generated from each recurring payment type offered?'
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_recurring_payments_percentage}
+                errorText={this.errors?.additional_questions?.business_recurring_payments_percentage}
                 defaultValue={additionalQuestionsDefaultValue?.business_recurring_payments_percentage}
               />
             </div>
@@ -118,7 +118,7 @@ export class AdditionalQuestions {
                 name='business_other_payment_details'
                 label='Is there anything else you would like us to know about how your customers pay the business?'
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_other_payment_details}
+                errorText={this.errors?.additional_questions?.business_other_payment_details}
                 defaultValue={additionalQuestionsDefaultValue?.business_other_payment_details}
               />
             </div>

@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
@@ -20,8 +20,7 @@ import { BankAccount } from '../../../../api/BankAccount';
  * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
-  tag: 'justifi-business-bank-account-form-step',
-  styleUrl: 'business-bank-account-form-step.scss',
+  tag: 'justifi-business-bank-account-form-step'
 })
 export class BusinessBankAccountFormStep {
   @Prop() authToken: string;
@@ -85,7 +84,7 @@ export class BusinessBankAccountFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'bankAccount' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.bankAccount } });
   }
 
   @Method()
@@ -136,7 +135,7 @@ export class BusinessBankAccountFormStep {
                   name="bank_name"
                   label="Bank Name"
                   defaultValue={bankAccountDefaultValue.bank_name}
-                  error={this.errors.bank_name}
+                  errorText={this.errors.bank_name}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />
@@ -146,7 +145,7 @@ export class BusinessBankAccountFormStep {
                   name="nickname"
                   label="Nickname"
                   defaultValue={bankAccountDefaultValue.nickname}
-                  error={this.errors.nickname}
+                  errorText={this.errors.nickname}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />
@@ -156,7 +155,7 @@ export class BusinessBankAccountFormStep {
                   name="account_owner_name"
                   label="Account Owner Name"
                   defaultValue={bankAccountDefaultValue.account_owner_name}
-                  error={this.errors.account_owner_name}
+                  errorText={this.errors.account_owner_name}
                   inputHandler={this.inputHandler}
                   disabled={this.formDisabled}
                 />
@@ -178,7 +177,7 @@ export class BusinessBankAccountFormStep {
                   label="Account Number"
                   defaultValue={bankAccountDefaultValue.account_number}
                   maxLength={17}
-                  error={this.errors.account_number}
+                  errorText={this.errors.account_number}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
                   disabled={this.formDisabled}
@@ -190,7 +189,7 @@ export class BusinessBankAccountFormStep {
                   label="Routing Number"
                   defaultValue={bankAccountDefaultValue.routing_number}
                   maxLength={9}
-                  error={this.errors.routing_number}
+                  errorText={this.errors.routing_number}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
                   disabled={this.formDisabled}

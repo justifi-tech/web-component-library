@@ -4,9 +4,7 @@ import { numberOnlyHandler } from '../../../form/utils';
 import { IAddress } from '../../../../api/Business';
 
 @Component({
-  tag: 'justifi-identity-address-form',
-  styleUrl: 'identity-address-form.scss',
-  shadow: true,
+  tag: 'justifi-identity-address-form'
 })
 export class IdentityAddressForm {
   @Prop() handleFormUpdate: (values: any) => void;
@@ -33,7 +31,7 @@ export class IdentityAddressForm {
               name="line1"
               label="Street Address"
               defaultValue={this.defaultValues?.line1}
-              error={this.errors?.line1}
+              errorText={this.errors?.line1}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -42,7 +40,7 @@ export class IdentityAddressForm {
               name="line2"
               label="Apartment, Suite, etc. (optional)"
               defaultValue={this.defaultValues?.line2}
-              error={this.errors?.line2}
+              errorText={this.errors?.line2}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -51,7 +49,7 @@ export class IdentityAddressForm {
               name="city"
               label="City"
               defaultValue={this.defaultValues?.city}
-              error={this.errors?.city}
+              errorText={this.errors?.city}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -70,7 +68,7 @@ export class IdentityAddressForm {
               name="postal_code"
               label="Postal Code"
               defaultValue={this.defaultValues?.postal_code}
-              error={this.errors?.postal_code}
+              errorText={this.errors?.postal_code}
               maxLength={5}
               keyDownHandler={numberOnlyHandler}
               inputHandler={this.inputHandler}

@@ -4,7 +4,7 @@ import { AdditionalQuestions, IAdditionalQuestions, IBusiness } from '../../../.
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
 
@@ -65,7 +65,7 @@ export class AdditionalQuestionsFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: 'additionalQuestions' } });
+    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.additionalQuestions } });
   }
 
   @Method()
@@ -156,7 +156,7 @@ export class AdditionalQuestionsFormStep {
                   name='business_recurring_payments_percentage'
                   label='What percent of revenue is generated from each recurring payment type offered?'
                   inputHandler={this.inputHandler}
-                  error={this.errors?.business_recurring_payments_percentage}
+                  errorText={this.errors?.business_recurring_payments_percentage}
                   defaultValue={additionalQuestionsDefaultValue?.business_recurring_payments_percentage}
                 />
               </div>
@@ -175,7 +175,7 @@ export class AdditionalQuestionsFormStep {
                   name='business_other_payment_details'
                   label='Is there anything else you would like us to know about how your customers pay the business?'
                   inputHandler={this.inputHandler}
-                  error={this.errors?.business_other_payment_details}
+                  errorText={this.errors?.business_other_payment_details}
                   defaultValue={additionalQuestionsDefaultValue?.business_other_payment_details}
                 />
               </div>
