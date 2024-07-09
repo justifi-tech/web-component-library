@@ -7,30 +7,60 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type             | Default     |
-| ---------------- | --------- | ----------- | ---------------- | ----------- |
-| `formController` | --        |             | `FormController` | `undefined` |
+| Property              | Attribute               | Description | Type      | Default     |
+| --------------------- | ----------------------- | ----------- | --------- | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean` | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`  | `undefined` |
+| `businessId`          | `business-id`           |             | `string`  | `undefined` |
+
+
+## Events
+
+| Event         | Description | Type                                        |
+| ------------- | ----------- | ------------------------------------------- |
+| `formLoading` |             | `CustomEvent<boolean>`                      |
+| `serverError` |             | `CustomEvent<BusinessFormServerErrorEvent>` |
+| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>`      |
+
+
+## Methods
+
+### `validateAndSubmit({ onSuccess }: { onSuccess: any; }) => Promise<void>`
+
+
+
+#### Parameters
+
+| Name  | Type                  | Description |
+| ----- | --------------------- | ----------- |
+| `__0` | `{ onSuccess: any; }` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Dependencies
 
 ### Used by
 
- - [justifi-business-form-stepped](..)
+ - [justifi-payment-provisioning](..)
 
 ### Depends on
 
-- [form-control-text](../../form)
-- [form-control-number](../../form)
-- [form-control-select](../../form)
+- [form-control-text](../../../form)
+- [form-control-select](../../../form)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-legal-address-form-step --> form-control-text
-  justifi-legal-address-form-step --> form-control-number
   justifi-legal-address-form-step --> form-control-select
-  justifi-business-form-stepped --> justifi-legal-address-form-step
+  form-control-text --> form-control-help-text
+  form-control-text --> form-control-error-text
+  justifi-payment-provisioning --> justifi-legal-address-form-step
   style justifi-legal-address-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

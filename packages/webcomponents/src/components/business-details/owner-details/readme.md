@@ -16,12 +16,12 @@
 
 ### Used by
 
- - [justifi-business-details](..)
+ - [business-details-core](..)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-details --> owner-details
+  business-details-core --> owner-details
   style owner-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
