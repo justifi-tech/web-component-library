@@ -10,7 +10,22 @@ exports[`justifi-checkout renders loading 1`] = `
           <h2 class="fs-5 fw-bold jfi-header pb-3">
             Summary
           </h2>
-          <justifi-skeleton height="24px"></justifi-skeleton>
+          <section>
+            <div>
+              <justifi-skeleton height="24px"></justifi-skeleton>
+            </div>
+            <div class="visually-hidden">
+              <div class="jfi-payment-description"></div>
+              <div class="jfi-payment-total">
+                <span class="jfi-payment-total-label">
+                  Total
+                </span>
+                <span class="jfi-payment-total-amount">
+                  $0.00
+                </span>
+              </div>
+            </div>
+          </section>
         </div>
         <div class="col-12">
           <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -20,7 +35,14 @@ exports[`justifi-checkout renders loading 1`] = `
             Select payment type
           </h3>
           <div class="d-flex flex-column">
-            <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+            <section>
+              <div>
+                <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+              </div>
+              <div class="visually-hidden">
+                <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+              </div>
+            </section>
           </div>
         </div>
         <div class="col-12">
