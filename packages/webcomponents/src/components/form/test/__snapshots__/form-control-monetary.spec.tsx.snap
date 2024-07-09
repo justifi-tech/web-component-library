@@ -1,32 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form-control-monetary displays error message when error prop is set 1`] = `
-<form-control-monetary error="Invalid amount" exportparts="label,input,input-invalid" maskoptions="[object" object]="">
-  <mock:shadow-root>
-    <label class="form-label" part="label"></label>
-    <div class="input-group mb-3">
+exports[`form-control-monetary Renders with all props provided 1`] = `
+<form-control-monetary exportparts="label,input,input-invalid">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" htmlfor="amount" part="label">
+      Amount
+    </label>
+    <div class="input-group">
       <span class="input-group-text">
         $
       </span>
-      <input class="form-control is-invalid monetary" part="input input-invalid" type="text">
-      <div class="invalid-feedback">
-        Invalid amount
-      </div>
+      <input class="form-control is-invalid monetary" id="amount" name="amount" part="input input-invalid" type="text" value="1,500">
     </div>
-  </mock:shadow-root>
+    <form-control-help-text>
+      <small class="form-text text-muted" id="form-help-text-undefined">
+        Enter payment amount
+      </small>
+    </form-control-help-text>
+    <form-control-error-text>
+      <small class="form-text text-danger" id="form-error-text-undefined">
+        Invalid amount
+      </small>
+    </form-control-error-text>
+  </div>
 </form-control-monetary>
 `;
 
 exports[`form-control-monetary renders correctly with default props 1`] = `
 <form-control-monetary exportparts="label,input,input-invalid">
-  <mock:shadow-root>
-    <label class="form-label" part="label"></label>
-    <div class="input-group mb-3">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" htmlfor="amount" part="label">
+      Amount
+    </label>
+    <div class="input-group">
       <span class="input-group-text">
         $
       </span>
-      <input class="form-control monetary" part="input undefined" type="text">
+      <input class="form-control monetary" id="amount" name="amount" part="input undefined" type="text">
     </div>
-  </mock:shadow-root>
+    <form-control-help-text></form-control-help-text>
+    <form-control-error-text></form-control-error-text>
+  </div>
 </form-control-monetary>
 `;
