@@ -23,6 +23,7 @@ export class MonetaryInput {
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() maskOptions: any = CURRENCY_MASK.DECIMAL;
+  @Prop() disabled: boolean;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
@@ -88,6 +89,7 @@ export class MonetaryInput {
               part={`input ${this.errorText && 'input-invalid'}`}
               class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
               type="text"
+              disabled={this.disabled}
             />
           </div>
           <form-control-help-text helpText={this.helpText} />
