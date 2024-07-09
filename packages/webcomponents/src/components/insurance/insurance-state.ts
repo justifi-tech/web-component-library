@@ -5,18 +5,20 @@ const { state: insuranceValues, on: insuranceValuesOn } = createStore<any>({});
 const { state: insuranceErrors } = createStore<any>({});
 
 const validateInsuranceValues = () => {
-  let invalid = false;
+  let valid = true;
 
   Object.keys(insuranceValues).forEach((key) => {
-    if (insuranceValues[key]) {
-      insuranceErrors[key] = false;
-    } else {
+    const noSelection = insuranceValues[key] === null;
+
+    if (noSelection) {
       insuranceErrors[key] = true;
-      invalid = true;
+      valid = false;
+    } else {
+      insuranceErrors[key] = false;
     }
   });
 
-  return { isValid: !invalid };
+  return { isValid: valid };
 };
 
 export { insuranceValues, insuranceValuesOn, insuranceErrors, validateInsuranceValues };
