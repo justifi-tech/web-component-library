@@ -11,37 +11,35 @@ import IMask, { InputMask } from 'imask';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
 
 @Component({
-  tag: 'form-control-monetary',
-  styleUrl: 'form-control-monetary.scss',
-  shadow: true,
+  tag: 'form-control-monetary'
 })
 export class MonetaryInput {
+  textInput!: HTMLInputElement;
+
   @Prop() label: string;
   @Prop() name: string;
-  @Prop() error: string;
+  @Prop() helpText?: string;
+  @Prop() errorText?: string;  
   @Prop() defaultValue: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() maskOptions: any = CURRENCY_MASK.DECIMAL;
 
-  private imask: InputMask<any> | null = null;
-
-  textInput!: HTMLInputElement;
-
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
+  
+  private imask: InputMask<any> | null = null;
 
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: string) {
-    this.updateInput(newValue);
+  updateInput(newValue: any) {
+    if (this.imask) {
+      this.imask.value = String(newValue);
+    }
   }
 
-  componentDidLoad() {
-    this.initializeIMask();
-    this.updateInput(this.defaultValue);
-  }
-
-  disconnectedCallback() {
-    this.imask?.destroy();
+  handleFormControlInput(event: any) {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    const rawValue = this.imask.unmaskedValue;
+    this.formControlInput.emit({ name: name, value: rawValue });
   }
 
   private initializeIMask() {
@@ -58,30 +56,42 @@ export class MonetaryInput {
     this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
   }
 
-  updateInput(newValue: any) {
-    if (this.imask) {
-      this.imask.value = String(newValue);
-    }
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
+  }
+
+  componentDidLoad() {
+    this.initializeIMask();
+    this.updateInput(this.defaultValue);
+  }
+
+  disconnectedCallback() {
+    this.imask?.destroy();
   }
 
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <div class="input-group mb-3">
-          <span class="input-group-text">$</span>
-          <input
-            ref={el => (this.textInput = el as HTMLInputElement)}
-            id={this.name}
-            name={this.name}
-            onBlur={() => this.formControlBlur.emit()}
-            part={`input ${this.error && 'input-invalid'}`}
-            class={this.error ? 'form-control monetary is-invalid' : 'form-control monetary'}
-            type="text"
-          />
-          {this.error && <div class="invalid-feedback">{this.error}</div>}
+        <div class="form-group d-flex flex-column">
+          <label part="label" class="form-label" htmlFor={this.name}>
+            {this.label}
+          </label>
+          <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input
+              ref={el => (this.textInput = el as HTMLInputElement)}
+              id={this.name}
+              name={this.name}
+              onInput={(event: any) => this.handleFormControlInput(event)}
+              onBlur={() => this.formControlBlur.emit()}
+              part={`input ${this.errorText && 'input-invalid'}`}
+              class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
+              type="text"
+            />
+          </div>
+          <form-control-help-text helpText={this.helpText} />
+          <form-control-error-text errorText={this.errorText} />
         </div>
       </Host>
     );
