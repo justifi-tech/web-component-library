@@ -29,19 +29,19 @@ export class NumberInputMasked {
 
   private imask: InputMask<any> | null = null;
 
-  updateInput(newValue: any) {
+  updateInput = (newValue: any) => {
     if (this.imask && newValue) {
       this.imask.value = String(newValue);
     }
   }
 
-  handleFormControlInput(event: any) {
+  handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.formControlInput.emit({ name: name, value: target.value });
   }
 
-  private initializeIMask() {
+  private initializeIMask = () => {
     if (!this.textInput) return;
 
     this.imask = IMask(this.textInput, {
@@ -81,8 +81,8 @@ export class NumberInputMasked {
             ref={el => (this.textInput = el as HTMLInputElement)}
             id={this.name}
             name={this.name}
-            onInput={(event: any) => this.handleFormControlInput(event)}
-            onBlur={() => this.formControlBlur.emit()}
+            onBlur={this.formControlBlur.emit}
+            onInput={this.handleFormControlInput}
             part={`input ${this.errorText && 'input-invalid'}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
