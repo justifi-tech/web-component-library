@@ -13,24 +13,28 @@
 | `businessId` | `business-id` |             | `string` | `undefined` |
 
 
+## Events
+
+| Event         | Description | Type                          |
+| ------------- | ----------- | ----------------------------- |
+| `error-event` |             | `CustomEvent<ComponentError>` |
+
+
 ## Dependencies
 
 ### Depends on
 
-- [generic-info-details](generic-info-details)
-- [legal-address-details](legal-address-details)
-- [representative-details](representative-details)
-- [owner-details](owner-details)
-- [additional-questions-details](additional-questions-details)
+- [business-details-core](.)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-details --> generic-info-details
-  justifi-business-details --> legal-address-details
-  justifi-business-details --> representative-details
-  justifi-business-details --> owner-details
-  justifi-business-details --> additional-questions-details
+  justifi-business-details --> business-details-core
+  business-details-core --> generic-info-details
+  business-details-core --> legal-address-details
+  business-details-core --> representative-details
+  business-details-core --> owner-details
+  business-details-core --> additional-questions-details
   style justifi-business-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
