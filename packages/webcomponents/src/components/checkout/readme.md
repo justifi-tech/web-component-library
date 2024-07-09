@@ -77,8 +77,8 @@ Type: `Promise<PaymentMethodPayload>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-method-options --> justifi-sezzel-payment-method
-  style justifi-sezzel-payment-method fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-method-options --> justifi-sezzle-payment-method
+  style justifi-sezzle-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
