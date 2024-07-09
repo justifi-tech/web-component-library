@@ -13,6 +13,8 @@ import IMask, { InputMask } from 'imask';
   tag: 'form-control-number-masked'
 })
 export class NumberInputMasked {
+  textInput!: HTMLInputElement;
+
   @Prop() label: string;
   @Prop() name: any;
   @Prop() helpText?: string;
@@ -22,40 +24,10 @@ export class NumberInputMasked {
   @Prop() mask: string;
   @Prop() disabled: boolean;
 
-  private imask: InputMask<any> | null = null;
-
-  textInput!: HTMLInputElement;
-
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: string) {
-    this.updateInput(newValue);
-  }
-
-  componentDidLoad() {
-    if (this.textInput && this.mask) {
-      this.imask = IMask(this.textInput, {
-        mask: this.mask,
-      });
-
-      this.imask.on('accept', () => {
-        const rawValue = this.imask.unmaskedValue;
-        this.inputHandler(this.name, rawValue);
-      });
-
-      this.textInput.addEventListener('blur', () => {
-        this.formControlBlur.emit();
-      });
-
-      this.updateInput(this.defaultValue);
-    }
-  }
-
-  disconnectedCallback() {
-    this.imask?.destroy();
-  }
+  private imask: InputMask<any> | null = null;
 
   updateInput(newValue: any) {
     if (this.imask && newValue) {
@@ -66,7 +38,36 @@ export class NumberInputMasked {
   handleFormControlInput(event: any) {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.formControlInput.emit({ name, value: target.value });
+    this.formControlInput.emit({ name: name, value: target.value });
+  }
+
+  private initializeIMask() {
+    if (!this.textInput) return;
+
+    this.imask = IMask(this.textInput, {
+      mask: this.mask,
+    });
+
+    this.imask.on('accept', () => {
+      const rawValue = this.imask.unmaskedValue;
+      this.inputHandler(this.name, rawValue);
+    });
+
+    this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
+  }
+
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
+  }
+
+  componentDidLoad() {
+    this.initializeIMask();
+    this.updateInput(this.defaultValue);
+  }
+
+  disconnectedCallback() {
+    this.imask?.destroy();
   }
 
   render() {

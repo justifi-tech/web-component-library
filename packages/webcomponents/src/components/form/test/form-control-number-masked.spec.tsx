@@ -11,7 +11,7 @@ describe('form-control-number-masked', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number-masked label='Age' name='age'></form-control-number-masked>,
+      template: () => <form-control-number-masked label='Age' name='age' mask='00'></form-control-number-masked>,
     });
     expect(page.root).toMatchSnapshot();
   });
@@ -29,8 +29,7 @@ describe('form-control-number-masked', () => {
           disabled
           mask='00'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number-masked>
+        />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -48,8 +47,7 @@ describe('form-control-number-masked', () => {
           defaultValue={defaultValue}
           inputHandler={mockInputHandler}
           mask='00'
-        >
-        </form-control-number-masked>
+        />
     });
     let inputElement = page.root.querySelector('input');
     expect(inputElement.value).toBe('25');
@@ -65,8 +63,7 @@ describe('form-control-number-masked', () => {
           defaultValue={defaultValue}
           inputHandler={mockInputHandler}
           mask='00'
-        >
-        </form-control-number-masked>
+        />
     });
 
     inputElement = page.root.querySelector('input');
@@ -86,8 +83,7 @@ describe('form-control-number-masked', () => {
           disabled
           mask='00'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number-masked>
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -109,8 +105,7 @@ describe('form-control-number-masked', () => {
           defaultValue='25'
           inputHandler={mockInputHandler}
           mask='00'
-        >
-        </form-control-number-masked>
+        />
     });
 
     const inputEventSpy = jest.fn();
@@ -137,8 +132,8 @@ describe('form-control-number-masked', () => {
           label='Age'
           name='age'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number-masked>
+          mask='00'
+        />
     });
     const blurEventSpy = jest.fn();
     page.win.addEventListener('formControlBlur', blurEventSpy);
@@ -158,8 +153,8 @@ describe('form-control-number-masked', () => {
           name='age'
           disabled
           inputHandler={mockInputHandler}
-        >
-        </form-control-number-masked>
+          mask='00'
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -175,8 +170,8 @@ describe('form-control-number-masked', () => {
           name='age'
           helpText='Enter your age'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number-masked>
+          mask='00'
+        />
     });
 
     const helpTextComponent = page.root.querySelector('form-control-help-text');
@@ -195,8 +190,8 @@ describe('form-control-number-masked', () => {
           name='age'
           errorText='Invalid age'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number-masked>
+          mask='00'
+        />
     });
 
     const errorTextComponent = page.root.querySelector('form-control-error-text');

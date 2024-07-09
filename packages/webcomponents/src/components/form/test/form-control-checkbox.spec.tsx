@@ -28,8 +28,7 @@ describe('form-control-checkbox', () => {
           errorText='You must accept the terms and conditions to continue'
           disabled
           inputHandler={mockInputHandler}
-        >
-        </form-control-checkbox>
+        />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -43,8 +42,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
-        >
-        </form-control-checkbox>
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -64,8 +62,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
-        >
-        </form-control-checkbox>
+        />
     });
 
     const inputEventSpy = jest.fn();
@@ -91,8 +88,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
-        >
-        </form-control-checkbox>
+        />
     });
 
     const blurEventSpy = jest.fn();
@@ -112,8 +108,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           inputHandler={mockInputHandler}
           disabled
-        >
-        </form-control-checkbox>
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -129,8 +124,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           helpText='Accept terms and conditions to continue'
           inputHandler={mockInputHandler}
-        >
-        </form-control-checkbox>
+        />
     });
 
     const helpTextComponent = page.root.querySelector('form-control-help-text');
@@ -149,8 +143,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           errorText='You must accept the terms and conditions to continue'
           inputHandler={mockInputHandler}
-        >
-        </form-control-checkbox>
+        />
     });
 
     const errorTextComponent = page.root.querySelector('form-control-error-text');
