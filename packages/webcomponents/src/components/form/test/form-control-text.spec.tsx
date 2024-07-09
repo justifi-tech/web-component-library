@@ -12,7 +12,7 @@ describe('form-control-text', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username'></form-control-text>,
+      template: () => <form-control-text label='Username' name='username'/>,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -34,8 +34,7 @@ describe('form-control-text', () => {
           maxLength={50}
           inputHandler={mockInputHandler}
           keyDownHandler={mockKeyDownHandler}
-        >
-        </form-control-text>
+        />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -51,8 +50,7 @@ describe('form-control-text', () => {
           label='Email'
           name='email'
           defaultValue={defaultValue}
-        >
-        </form-control-text>
+        />
     });
 
     let inputElement = page.root.querySelector('input');
@@ -68,8 +66,7 @@ describe('form-control-text', () => {
           label='Email'
           name='email'
           defaultValue={defaultValue}
-        >
-        </form-control-text>
+        />
     });
 
     inputElement = page.root.querySelector('input');
@@ -85,8 +82,7 @@ describe('form-control-text', () => {
           name='email'
           defaultValue='user@example.com'
           inputHandler={mockInputHandler}
-        >
-        </form-control-text>
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -107,8 +103,7 @@ describe('form-control-text', () => {
           name='email'
           defaultValue='user@example.com'
           inputHandler={mockInputHandler}
-        >
-        </form-control-text>
+        />
     });
 
     const inputEventSpy = jest.fn();
@@ -134,7 +129,7 @@ describe('form-control-text', () => {
   it('Emits formControlBlur event on blur', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text defaultValue='user@example.com' inputHandler={mockInputHandler}></form-control-text>
+      template: () => <form-control-text defaultValue='user@example.com' inputHandler={mockInputHandler}/>
     });
 
     const blurEventSpy = jest.fn();
@@ -149,7 +144,7 @@ describe('form-control-text', () => {
   it('Disables input when disabled prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' disabled></form-control-text>,
+      template: () => <form-control-text label='Username' name='username' disabled/>,
     });
 
     const inputElement = page.root.querySelector('input');
@@ -159,7 +154,7 @@ describe('form-control-text', () => {
   it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' helpText='This is the help text.'></form-control-text>,
+      template: () => <form-control-text label='Username' name='username' helpText='This is the help text.'/>,
     });
 
     const helpTextComponent = page.root.querySelector('form-control-help-text');
@@ -172,7 +167,7 @@ describe('form-control-text', () => {
   it('Shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' errorText='This field is required.'></form-control-text>,
+      template: () => <form-control-text label='Username' name='username' errorText='This field is required.'/>,
     });
 
     const errorTextComponent = page.root.querySelector('form-control-error-text');
