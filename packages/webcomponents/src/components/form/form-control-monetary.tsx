@@ -30,20 +30,20 @@ export class MonetaryInput {
   
   private imask: InputMask<any> | null = null;
 
-  updateInput(newValue: any) {
+  updateInput = (newValue: any) => {
     if (this.imask) {
       this.imask.value = String(newValue);
     }
   }
 
-  handleFormControlInput(event: any) {
+  handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     const rawValue = this.imask.unmaskedValue;
     this.formControlInput.emit({ name: name, value: rawValue });
   }
 
-  private initializeIMask() {
+  private initializeIMask = () => {
     if (!this.textInput) return;
 
     this.imask = IMask(this.textInput, this.maskOptions);
@@ -84,8 +84,8 @@ export class MonetaryInput {
               ref={el => (this.textInput = el as HTMLInputElement)}
               id={this.name}
               name={this.name}
-              onInput={(event: any) => this.handleFormControlInput(event)}
-              onBlur={() => this.formControlBlur.emit()}
+              onBlur={this.formControlBlur.emit}
+              onInput={this.handleFormControlInput}
               part={`input ${this.errorText && 'input-invalid'}`}
               class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
               type="text"
