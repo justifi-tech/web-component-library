@@ -38,7 +38,7 @@ export class CheckboxInput {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.checked);
-    this.formControlInput.emit(target.checked);
+    this.formControlInput.emit({ name, value: target.value });
   }
 
   componentDidLoad() {
