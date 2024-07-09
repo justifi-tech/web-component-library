@@ -6,6 +6,7 @@ const { state: insuranceErrors } = createStore<any>({});
 
 const validateInsuranceValues = () => {
   let invalid = false;
+
   Object.keys(insuranceValues).forEach((key) => {
     if (insuranceValues[key]) {
       insuranceErrors[key] = false;
@@ -15,7 +16,7 @@ const validateInsuranceValues = () => {
     }
   });
 
-  return invalid;
+  return { isValid: !invalid };
 };
 
 export { insuranceValues, insuranceValuesOn, insuranceErrors, validateInsuranceValues };

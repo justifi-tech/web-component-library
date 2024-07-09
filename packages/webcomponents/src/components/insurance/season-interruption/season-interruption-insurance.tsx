@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Method, Prop, State, h } from '@stencil/core';
 import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { validateInsuranceValues } from '../insurance-state';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -27,6 +28,11 @@ export class SeasonInterruptionInsurance {
   @State() quote: any;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    return validateInsuranceValues();
+  }
 
   componentWillLoad() {
     this.initializeServiceMethods();
