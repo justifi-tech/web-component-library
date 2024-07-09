@@ -16,12 +16,12 @@
 
 ### Used by
 
- - [justifi-business-details](..)
+ - [business-details-core](..)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-details --> generic-info-details
+  business-details-core --> generic-info-details
   style generic-info-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -16,13 +16,13 @@
 
 ### `fill(fields: BillingFormFields) => Promise<void>`
 
-Method for filling the form with provided data
+
 
 #### Parameters
 
-| Name     | Type                | Description                        |
-| -------- | ------------------- | ---------------------------------- |
-| `fields` | `BillingFormFields` | - The fields to fill the form with |
+| Name     | Type                | Description |
+| -------- | ------------------- | ----------- |
+| `fields` | `BillingFormFields` |             |
 
 #### Returns
 
@@ -32,17 +32,17 @@ Type: `Promise<void>`
 
 ### `getValues() => Promise<BillingFormFields>`
 
-Returns the values of the form as an object
+
 
 #### Returns
 
 Type: `Promise<BillingFormFields>`
 
-The values of the form
+
 
 ### `validate() => Promise<{ isValid: boolean; }>`
 
-Run validation on the form
+
 
 #### Returns
 
@@ -55,18 +55,22 @@ Type: `Promise<{ isValid: boolean; }>`
 
 ### Used by
 
+ - [justifi-new-payment-method](../checkout)
  - [justifi-payment-form](../payment-form)
 
 ### Depends on
 
-- [text-input](../text-input)
-- [select-input](../select-input)
+- [form-control-text](../form)
+- [form-control-select](../form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-billing-form --> text-input
-  justifi-billing-form --> select-input
+  justifi-billing-form --> form-control-text
+  justifi-billing-form --> form-control-select
+  form-control-text --> form-control-help-text
+  form-control-text --> form-control-error-text
+  justifi-new-payment-method --> justifi-billing-form
   justifi-payment-form --> justifi-billing-form
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

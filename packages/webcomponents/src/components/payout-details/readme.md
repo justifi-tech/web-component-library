@@ -12,6 +12,13 @@
 | `getPayout` | --        |             | `Function` | `undefined` |
 
 
+## Events
+
+| Event         | Description | Type                          |
+| ------------- | ----------- | ----------------------------- |
+| `error-event` |             | `CustomEvent<ComponentError>` |
+
+
 ## Dependencies
 
 ### Used by
