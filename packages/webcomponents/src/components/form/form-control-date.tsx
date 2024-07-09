@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  State,
   Watch,
 } from '@stencil/core';
 
@@ -22,8 +21,6 @@ export class DateInput {
   @Prop() defaultValue: string;
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
-
-  @State() date: string
   
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
@@ -60,13 +57,13 @@ export class DateInput {
           id={this.name}
           name={this.name}
           onBlur={this.formControlBlur.emit}
-          onChange={this.handleFormControlInput}
+          onInput={this.handleFormControlInput}
           part={`input ${this.errorText && 'input-invalid'}`}
           class={this.errorText ? 'form-control is-invalid' : 'form-control'}
           disabled={this.disabled}
         />
-        <form-control-help-text helpText={this.helpText} />
-        <form-control-error-text errorText={this.errorText} />     
+        <form-control-help-text helpText={this.helpText} name={this.name} />
+        <form-control-error-text errorText={this.errorText} name={this.name} />     
       </Host>
     );
   }
