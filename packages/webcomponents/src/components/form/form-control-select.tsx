@@ -67,8 +67,8 @@ export class SelectInput {
               <option value={option.value}>{option.label}</option>
             ))}
           </select>
-          <form-control-help-text helpText={this.helpText} />
-          <form-control-error-text errorText={this.errorText} />
+          <form-control-help-text helpText={this.helpText} name={this.name} />
+          <form-control-error-text errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

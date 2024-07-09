@@ -15,12 +15,12 @@ exports[`form-control-select Renders with all props provided 1`] = `
       </option>
     </select>
     <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-undefined">
+      <small class="form-text text-muted" id="form-help-text-delivery_method">
         Select your preferred delivery method
       </small>
     </form-control-help-text>
     <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-undefined">
+      <small class="form-text text-danger" id="form-error-text-delivery_method">
         This field is required.
       </small>
     </form-control-error-text>
