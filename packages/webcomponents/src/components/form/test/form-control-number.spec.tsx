@@ -11,7 +11,7 @@ describe('form-control-number', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number label='Age' name='age'></form-control-number>,
+      template: () => <form-control-number label='Age' name='age' />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -29,8 +29,7 @@ describe('form-control-number', () => {
           helpText='Enter your age'
           disabled
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -47,8 +46,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue={defaultValue}
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
     let inputElement = page.root.querySelector('input');
     expect(inputElement.value).toBe('25');
@@ -63,8 +61,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue={defaultValue}
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     inputElement = page.root.querySelector('input');
@@ -80,8 +77,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue='25'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -102,8 +98,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue='25'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     const inputEventSpy = jest.fn();
@@ -130,8 +125,7 @@ describe('form-control-number', () => {
           label='Age'
           name='age'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
     const blurEventSpy = jest.fn();
     page.win.addEventListener('formControlBlur', blurEventSpy);
@@ -151,8 +145,7 @@ describe('form-control-number', () => {
           name='age'
           disabled
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -168,8 +161,7 @@ describe('form-control-number', () => {
           name='age'
           helpText='Enter your age'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     const helpTextComponent = page.root.querySelector('form-control-help-text');
@@ -188,8 +180,7 @@ describe('form-control-number', () => {
           name='age'
           errorText='Invalid age'
           inputHandler={mockInputHandler}
-        >
-        </form-control-number>
+        />
     });
 
     const errorTextComponent = page.root.querySelector('form-control-error-text');

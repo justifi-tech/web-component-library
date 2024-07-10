@@ -8,12 +8,12 @@ exports[`form-control-number-masked Renders with all props provided 1`] = `
     </label>
     <input class="form-control is-invalid" disabled="" id="age" name="age" part="input input-invalid" type="text" value="25">
     <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-undefined">
+      <small class="form-text text-muted" id="form-help-text-age">
         Enter your age
       </small>
     </form-control-help-text>
     <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-undefined">
+      <small class="form-text text-danger" id="form-error-text-age">
         Invalid age
       </small>
     </form-control-error-text>

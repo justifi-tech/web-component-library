@@ -15,6 +15,10 @@ import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
 })
 export class FileInput {
   @Element() el: HTMLElement;
+  fileInput: HTMLInputElement;
+
+  @State() files: File[];
+  @State() fileString: string;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -25,16 +29,9 @@ export class FileInput {
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
 
-  @State() input: string;
-  @State() files: File[];
-  @State() fileString: string;
-
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
   @Event() fileSelected: EventEmitter<FileSelectEvent>;
-
-
-  fileInput: HTMLInputElement;
 
   componentDidLoad() {
     this.fileInput = this.el.querySelector('input');

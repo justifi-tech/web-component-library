@@ -1,41 +1,48 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckboxInput } from '../form-control-checkbox';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-checkbox', () => {
+  const components = [CheckboxInput, FormControlErrorText, FormControlHelpText];
+  const mockInputHandler = jest.fn();
 
-  it('renders with default props', async () => {
+  it('Renders with default props', async () => {
     const page = await newSpecPage({
-      components: [CheckboxInput],
-      html: `<form-control-checkbox label="Select a checkbox" name="user ID"></form-control-checkbox>`,
+      components: components,
+      template: () => <form-control-checkbox label='Accept Terms' name='accept' />,
     });
 
     expect(page.root).toMatchSnapshot();
-    expect(page.rootInstance.label).toBe('Select a checkbox');
-    expect(page.rootInstance.name).toBe('user ID');
   });
 
-  it('renders with all props provided', async () => {
+  it('Renders with all props provided', async () => {
     const page = await newSpecPage({
-      components: [CheckboxInput],
-      html: `
+      components: components,
+      template: () =>
         <form-control-checkbox
-          label="Select a checkbox"
-          name="email"
-          error="No checkbox selected"
+          label='Accept Terms'
+          name='accept'
+          helpText='Accept terms and conditions to continue'
+          errorText='You must accept the terms and conditions to continue'
           disabled
-        ></form-control-checkbox>
-      `,
+          inputHandler={mockInputHandler}
+        />
     });
 
-    const inputElement = page.root.querySelector('input');
-    expect(page.rootInstance.label).toBe('Select a checkbox');
-    expect(inputElement.disabled).toBeTruthy();
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('handles user input correctly', async () => {
+  it('Handles user input correctly', async () => {
     const page = await newSpecPage({
-      components: [CheckboxInput],
-      html: `<form-control-checkbox></form-control-checkbox>`,
+      components: components,
+      template: () =>
+        <form-control-checkbox
+          label='Accept Terms'
+          name='accept'
+          inputHandler={mockInputHandler}
+        />
     });
 
     const inputElement = page.root.querySelector('input');
@@ -47,16 +54,105 @@ describe('form-control-checkbox', () => {
     expect(inputElement.checked).toBe(testValue);
   });
 
-  it('emits formControlInput event on input', async () => {
+  it('Emits formControlInput event on input', async () => {
     const page = await newSpecPage({
-      components: [CheckboxInput],
-      html: `<form-control-checkbox></form-control-checkbox>`,
+      components: components,
+      template: () =>
+        <form-control-checkbox
+          label='Accept Terms'
+          name='accept'
+          inputHandler={mockInputHandler}
+        />
     });
-
-    // Set a mock inputHandler to prevent it from being undefined
-    page.rootInstance.inputHandler = jest.fn();
 
     const inputEventSpy = jest.fn();
     page.root.addEventListener('formControlInput', inputEventSpy);
+    const inputElement = page.root.querySelector('input');
+    inputElement.value = "true";
+
+    inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: expect.objectContaining({
+        name: 'accept',
+        value: "true",
+      }),
+    }));
+  });
+
+  it('Emits formControlBlur event on blur', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-checkbox
+          label='Accept Terms'
+          name='accept'
+          inputHandler={mockInputHandler}
+        />
+    });
+
+    const blurEventSpy = jest.fn();
+    page.root.addEventListener('formControlBlur', blurEventSpy);
+
+    const inputElement = page.root.querySelector('input');
+    await inputElement.dispatchEvent(new CustomEvent('blur'));
+    expect(blurEventSpy).toHaveBeenCalled();
+  });
+
+  it('Disables input when disabled prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-checkbox
+          label='Accept Terms'
+          name='accept'
+          inputHandler={mockInputHandler}
+          disabled
+        />
+    });
+
+    const inputElement = page.root.querySelector('input');
+    expect(inputElement).toHaveAttribute('disabled');
+  });
+
+  it('Shows help text when helpText prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-checkbox
+          label='Accept Terms'
+          name='accept'
+          helpText='Accept terms and conditions to continue'
+          inputHandler={mockInputHandler}
+        />
+    });
+
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    expect(helpTextComponent).not.toBeNull();
+
+    const helpText = helpTextComponent.querySelector('.text-muted');
+    expect(helpText.textContent).toBe('Accept terms and conditions to continue');
+  });
+
+  it('Shows error and applies error styling when error prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-checkbox
+          label='Accept Terms'
+          name='accept'
+          errorText='You must accept the terms and conditions to continue'
+          inputHandler={mockInputHandler}
+        />
+    });
+
+    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    expect(errorTextComponent).not.toBeNull();
+
+    const errorText = errorTextComponent.querySelector('.text-danger');
+    expect(errorText.textContent).toBe('You must accept the terms and conditions to continue');
+
+    const inputElement = page.root.querySelector('input');
+    expect(inputElement.classList.contains('is-invalid')).toBe(true);
   });
 });

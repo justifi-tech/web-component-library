@@ -13,6 +13,9 @@ import IMask, { InputMask } from 'imask';
   tag: 'form-control-number-masked'
 })
 export class NumberInputMasked {
+  textInput!: HTMLInputElement;
+  private imask: InputMask<any> | null = null;
+
   @Prop() label: string;
   @Prop() name: any;
   @Prop() helpText?: string;
@@ -22,51 +25,48 @@ export class NumberInputMasked {
   @Prop() mask: string;
   @Prop() disabled: boolean;
 
-  private imask: InputMask<any> | null = null;
-
-  textInput!: HTMLInputElement;
-
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
-
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
     this.updateInput(newValue);
   }
 
-  componentDidLoad() {
-    if (this.textInput && this.mask) {
-      this.imask = IMask(this.textInput, {
-        mask: this.mask,
-      });
-
-      this.imask.on('accept', () => {
-        const rawValue = this.imask.unmaskedValue;
-        this.inputHandler(this.name, rawValue);
-      });
-
-      this.textInput.addEventListener('blur', () => {
-        this.formControlBlur.emit();
-      });
-
-      this.updateInput(this.defaultValue);
-    }
-  }
+  @Event() formControlInput: EventEmitter<any>;
+  @Event() formControlBlur: EventEmitter<any>;
 
   disconnectedCallback() {
     this.imask?.destroy();
   }
+  
+  componentDidLoad() {
+    this.initializeIMask();
+    this.updateInput(this.defaultValue);
+  }
 
-  updateInput(newValue: any) {
+  private initializeIMask = () => {
+    if (!this.textInput) return;
+
+    this.imask = IMask(this.textInput, {
+      mask: this.mask,
+    });
+
+    this.imask.on('accept', () => {
+      const rawValue = this.imask.unmaskedValue;
+      this.inputHandler(this.name, rawValue);
+    });
+
+    this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
+  }
+  
+  handleFormControlInput = (event: any) => {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.formControlInput.emit({ name: name, value: target.value });
+  }
+  
+  updateInput = (newValue: any) => {
     if (this.imask && newValue) {
       this.imask.value = String(newValue);
     }
-  }
-
-  handleFormControlInput(event: any) {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    this.formControlInput.emit({ name, value: target.value });
   }
 
   render() {
@@ -80,15 +80,15 @@ export class NumberInputMasked {
             ref={el => (this.textInput = el as HTMLInputElement)}
             id={this.name}
             name={this.name}
-            onInput={(event: any) => this.handleFormControlInput(event)}
-            onBlur={() => this.formControlBlur.emit()}
+            onBlur={this.formControlBlur.emit}
+            onInput={this.handleFormControlInput}
             part={`input ${this.errorText && 'input-invalid'}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
             disabled={this.disabled}
           />
-          <form-control-help-text helpText={this.helpText} />
-          <form-control-error-text errorText={this.errorText} />
+          <form-control-help-text helpText={this.helpText} name={this.name} />
+          <form-control-error-text errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );
