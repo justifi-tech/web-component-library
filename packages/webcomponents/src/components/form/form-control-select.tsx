@@ -23,11 +23,16 @@ export class SelectInput {
   @Prop() options: { label: string; value: string }[];
   @Prop() disabled: boolean;
 
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
+  }
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  updateInput = (newValue: any) => {
-    this.selectElement.value = newValue;
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
   }
 
   handleFormControlInput = (event: any) => {
@@ -37,13 +42,8 @@ export class SelectInput {
     this.formControlInput.emit(target.value);
   }
 
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: string) {
-    this.updateInput(newValue);
-  }
-
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
+  updateInput = (newValue: any) => {
+    this.selectElement.value = newValue;
   }
 
   render() {
