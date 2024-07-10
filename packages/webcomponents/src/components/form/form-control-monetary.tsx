@@ -15,6 +15,7 @@ import { CURRENCY_MASK } from '../../utils/form-input-masks';
 })
 export class MonetaryInput {
   textInput!: HTMLInputElement;
+  private imask: InputMask<any> | null = null;
 
   @Prop() label: string;
   @Prop() name: string;
@@ -25,22 +26,21 @@ export class MonetaryInput {
   @Prop() maskOptions: any = CURRENCY_MASK.DECIMAL;
   @Prop() disabled: boolean;
 
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
-  
-  private imask: InputMask<any> | null = null;
-
-  updateInput = (newValue: any) => {
-    if (this.imask) {
-      this.imask.value = String(newValue);
-    }
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
   }
 
-  handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    const rawValue = this.imask.unmaskedValue;
-    this.formControlInput.emit({ name: name, value: rawValue });
+  @Event() formControlInput: EventEmitter<any>;
+  @Event() formControlBlur: EventEmitter<any>;
+
+  componentDidLoad() {
+    this.initializeIMask();
+    this.updateInput(this.defaultValue);
+  }
+
+  disconnectedCallback() {
+    this.imask?.destroy();
   }
 
   private initializeIMask = () => {
@@ -56,19 +56,18 @@ export class MonetaryInput {
 
     this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
   }
-
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: string) {
-    this.updateInput(newValue);
+  
+  handleFormControlInput = (event: any) => {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    const rawValue = this.imask.unmaskedValue;
+    this.formControlInput.emit({ name: name, value: rawValue });
   }
-
-  componentDidLoad() {
-    this.initializeIMask();
-    this.updateInput(this.defaultValue);
-  }
-
-  disconnectedCallback() {
-    this.imask?.destroy();
+  
+  updateInput = (newValue: any) => {
+    if (this.imask) {
+      this.imask.value = String(newValue);
+    }
   }
 
   render() {
