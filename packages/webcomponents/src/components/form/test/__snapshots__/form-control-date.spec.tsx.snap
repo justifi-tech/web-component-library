@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-control-date Renders with all props provided 1`] = `
+<form-control-date exportparts="label,input,input-invalid">
+  <label class="form-label" htmlfor="birthday" part="label">
+    Birthday
+  </label>
+  <input class="form-control is-invalid" disabled="" id="birthday" name="birthday" part="input input-invalid" type="date" value="1990-01-01">
+  <form-control-help-text>
+    <small class="form-text text-muted" id="form-help-text-birthday">
+      Enter your birthday
+    </small>
+  </form-control-help-text>
+  <form-control-error-text>
+    <small class="form-text text-danger" id="form-error-text-birthday">
+      Invalid date
+    </small>
+  </form-control-error-text>
+</form-control-date>
+`;
+
+exports[`form-control-date Renders with default props 1`] = `
+<form-control-date exportparts="label,input,input-invalid">
+  <label class="form-label" htmlfor="birthday" part="label">
+    Birthday
+  </label>
+  <input class="form-control" id="birthday" name="birthday" part="input undefined" type="date" value="undefined">
+  <form-control-help-text></form-control-help-text>
+  <form-control-error-text></form-control-error-text>
+</form-control-date>
+`;
