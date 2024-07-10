@@ -59,7 +59,7 @@ export class AdditionalQuestions {
                 name="business_revenue"
                 label="What is the business' estimated annual revenue from its primary business activies?"
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_revenue}
+                errorText={this.errors?.additional_questions?.business_revenue}
                 defaultValue={additionalQuestionsDefaultValue?.business_revenue}
                 maskOptions={CURRENCY_MASK.WHOLE}
               />
@@ -69,7 +69,7 @@ export class AdditionalQuestions {
                 name="business_payment_volume"
                 label="What is the business’ annual credit card & ACH volume anticipated to process?"
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_payment_volume}
+                errorText={this.errors?.additional_questions?.business_payment_volume}
                 defaultValue={additionalQuestionsDefaultValue?.business_payment_volume}
                 maskOptions={CURRENCY_MASK.WHOLE}
               />
