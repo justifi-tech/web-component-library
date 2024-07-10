@@ -21,17 +21,17 @@ export class CheckboxInput {
   @Prop() defaultValue?: boolean;
   @Prop() inputHandler: (name: string, value: boolean) => void;
   @Prop() disabled: boolean;
-
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
-
+  
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: boolean) {
     this.updateInput(newValue);
   }
 
-  updateInput = (newValue: any) => {
-    this.checkboxElement.checked = newValue;
+  @Event() formControlInput: EventEmitter<any>;
+  @Event() formControlBlur: EventEmitter<any>;
+
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
   }
 
   handleFormControlInput = (event: any) => {
@@ -41,8 +41,8 @@ export class CheckboxInput {
     this.formControlInput.emit({ name, value: target.value });
   }
 
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
+  updateInput = (newValue: any) => {
+    this.checkboxElement.checked = newValue;
   }
 
   render() {

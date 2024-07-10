@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  State,
   Element,
   Watch,
 } from '@stencil/core';
@@ -24,20 +23,16 @@ export class NumberInput {
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
 
-  @State() input: string;
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
-
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
     this.updateInput(newValue);
   }
 
-  updateInput = (newValue: any) => {
-    const inputElement = this.el.querySelector('input');
-    if (inputElement) {
-      inputElement.value = newValue || '';
-    }
+  @Event() formControlInput: EventEmitter<any>;
+  @Event() formControlBlur: EventEmitter<any>;
+
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
   }
 
   handleFormControlInput = (event: any) => {
@@ -46,9 +41,12 @@ export class NumberInput {
     this.inputHandler(name, target.value);
     this.formControlInput.emit({ name, value: target.value });
   }
-
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
+  
+  updateInput = (newValue: any) => {
+    const inputElement = this.el.querySelector('input');
+    if (inputElement) {
+      inputElement.value = newValue || '';
+    }
   }
 
   render() {
