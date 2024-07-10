@@ -1,86 +1,228 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
-import { MonetaryInput } from "../form-control-monetary";
 import { CURRENCY_MASK } from "../../../utils/form-input-masks";
+import { MonetaryInput } from "../form-control-monetary";
+import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
 describe('form-control-monetary', () => {
+  const components = [MonetaryInput, FormControlErrorText, FormControlHelpText];
+  const mockInputHandler = jest.fn();
+
   it('renders correctly with default props', async () => {
     const page = await newSpecPage({
-      components: [MonetaryInput],
-      html: `<form-control-monetary></form-control-monetary>`,
+      components: components,
+      template: () => 
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          maskOptions={CURRENCY_MASK.WHOLE}
+        />,
     });
     expect(page.root).toMatchSnapshot();
   });
 
-  it('handles props correctly', async () => {
+  it('Renders with all props provided', async () => {
     const page = await newSpecPage({
-      components: [MonetaryInput],
-      html: `
-      <form-control-monetary
-        label="Amount"
-        name="amount"
-        error="Invalid amount"  
-        defaultValue="1000"
-        maskOptions=${CURRENCY_MASK.DECIMAL}
-      ></form-control-monetary>
-    `,
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          helpText='Enter payment amount'
+          errorText='Invalid amount'
+          defaultValue='1500'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.WHOLE}
+        />,
     });
-    await page.waitForChanges();
-
-    const label = page.root.shadowRoot.querySelector('label');
-    const input = page.root.shadowRoot.querySelector('input');
-    const errorDiv = page.root.shadowRoot.querySelector('.invalid-feedback');
-
-    expect(label.textContent).toBe('Amount');
-    expect(input.getAttribute('name')).toBe('amount');
-    expect(errorDiv.textContent).toBe('Invalid amount');
+    expect(page.root).toMatchSnapshot();
   });
 
-  it('calls inputHandler and emits formControlInput on user input', async () => {
-    const inputHandlerMock = jest.fn();
-    const page = await newSpecPage({
-      components: [MonetaryInput],
-      html: `<form-control-monetary maskOptions=${CURRENCY_MASK.DECIMAL}></form-control-monetary>`,
+  it('Updates the input value when defaultValue changes', async () => {
+    // Initial render with the default value
+    let defaultValue = '1500';
+    let page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.WHOLE}
+        />,
     });
+    let inputElement = page.root.querySelector('input');
+    expect(inputElement.value).toBe('1,500');
 
-    page.rootInstance.inputHandler = inputHandlerMock;
-    await page.waitForChanges();
+    defaultValue = '3000';
 
-    const inputSpy = jest.fn();
-    page.win.addEventListener('formControlInput', inputSpy);
-
-    const input = page.root.shadowRoot.querySelector('input');
-    input.value = '1234.56';
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    await page.waitForChanges();
-
-    expect(inputHandlerMock).toHaveBeenCalled();
-    expect(inputSpy).toHaveBeenCalled();
+    // Re-render with the new default value
+    page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.WHOLE}
+        />,
+    });
+    inputElement = page.root.querySelector('input');
+    expect(inputElement.value).toBe('3,000');
   });
 
-  it('emits formControlBlur on input blur', async () => {
+  it('Handles input correctly with whole number mask', async () => {
     const page = await newSpecPage({
-      components: [MonetaryInput],
-      html: `<form-control-monetary maskOptions=${CURRENCY_MASK.DECIMAL}></form-control-monetary>`,
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.WHOLE}
+        />,
+    });
+
+    const inputElement = page.root.querySelector('input');
+    const testValue = '123456';
+
+    inputElement.value = testValue;
+    await inputElement.dispatchEvent(new Event('input'));
+
+    expect(inputElement.value).toBe('123,456');
+  });
+
+  it('Handles input correctly with decimal mask', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.DECIMAL}
+        />,
+    });
+
+    const inputElement = page.root.querySelector('input');
+    const testValue = '1234.56';
+
+    inputElement.value = testValue;
+    await inputElement.dispatchEvent(new Event('input'));
+
+    expect(inputElement.value).toBe('1,234.56');
+  });
+
+  it('Emits formControlInput event on input change', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.DECIMAL}
+        />,
+    });
+
+    const inputEventSpy = jest.fn();
+    page.root.addEventListener('formControlInput', inputEventSpy);
+
+    const inputElement = page.root.querySelector('input');
+    inputElement.value = '150.99';
+
+    inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        name: 'amount',
+        value: '150.99',
+      }
+    }));
+  });
+
+  it('Emits formControlBlur on input blur', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.DECIMAL}
+        />,
     });
 
     const blurSpy = jest.fn();
     page.win.addEventListener('formControlBlur', blurSpy);
 
-    const input = page.root.shadowRoot.querySelector('input');
+    const input = page.root.querySelector('input');
     input.dispatchEvent(new Event('blur', { bubbles: true }));
     await page.waitForChanges();
 
     expect(blurSpy).toHaveBeenCalled();
   });
 
-  it('displays error message when error prop is set', async () => {
+  it('Disables input when disabled prop is set', async () => {
     const page = await newSpecPage({
-      components: [MonetaryInput],
-      html: `<form-control-monetary error="Invalid amount" maskOptions=${CURRENCY_MASK.DECIMAL}></form-control-monetary>`,
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.DECIMAL}
+          disabled
+        />,
     });
 
-    const errorDiv = page.root.shadowRoot.querySelector('.invalid-feedback');
-    expect(errorDiv.textContent).toBe('Invalid amount');
-    expect(page.root).toMatchSnapshot();
+    const input = page.root.querySelector('input');
+    expect(input.disabled).toBe(true);
+  });
+
+  it('Shows help text when helpText prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.DECIMAL}
+          helpText='Enter payment amount'
+        />,
+    });
+
+    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    expect(helpTextComponent).not.toBeNull();
+
+    const helpText = helpTextComponent.querySelector('.text-muted');
+    expect(helpText.textContent).toBe('Enter payment amount');
+  });
+
+  it('Shows error and applies error styling when error prop is provided', async () => {
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-monetary
+          label='Amount'
+          name='amount'
+          inputHandler={mockInputHandler}
+          maskOptions={CURRENCY_MASK.DECIMAL}
+          errorText='Invalid amount'
+        />,
+    });
+
+    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    expect(errorTextComponent).not.toBeNull();
+
+    const errorText = errorTextComponent.querySelector('.text-danger');
+    expect(errorText.textContent).toBe('Invalid amount');
+
+    const inputElement = page.root.querySelector('input');
+    expect(inputElement.classList.contains('is-invalid')).toBe(true);
   });
 });
