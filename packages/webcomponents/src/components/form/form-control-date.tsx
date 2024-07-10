@@ -22,27 +22,27 @@ export class DateInput {
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
   
+  @Watch('defaultValue')
+  handleDefaultValueChange(newValue: string) {
+    this.updateInput(newValue);
+  }
+
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  updateInput(value: any) {
-    this.dateInput.value = value;
+  componentDidLoad() {
+    this.updateInput(this.defaultValue);
   }
-
+  
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
     this.formControlInput.emit({ name, value: target.value });
   }
-
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: string) {
-    this.updateInput(newValue);
-  }
-
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
+   
+  updateInput(value: any) {
+    this.dateInput.value = value;
   }
 
   render() {
