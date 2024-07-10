@@ -84,7 +84,7 @@ export class BusinessCoreInfo {
                 name="date_of_incorporation"
                 label="Date of Incorporation"
                 defaultValue={coreInfoDefaultValue.date_of_incorporation}
-                error={this.errors.date_of_incorporation}
+                errorText={this.errors.date_of_incorporation}
                 inputHandler={this.inputHandler}
               />
             </div>

@@ -265,7 +265,7 @@ export class BusinessOwnerForm {
                   name="dob_full"
                   label="Birth Date"
                   defaultValue={ownerDefaultValue?.dob_full}
-                  error={this.errors.dob_full}
+                  errorText={this.errors.dob_full}
                   inputHandler={this.inputHandler}
                   onFormControlInput={this.onDateOfBirthUpdate}
                 />
