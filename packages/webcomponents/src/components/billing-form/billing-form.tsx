@@ -111,7 +111,7 @@ export class BillingForm {
                   label='State'
                   options={StateOptions}
                   defaultValue={billingFormDefaultValue.address_state}
-                  error={this.errors.address_state}
+                  errorText={this.errors.address_state}
                   inputHandler={this.inputHandler}
                 />
               </div>

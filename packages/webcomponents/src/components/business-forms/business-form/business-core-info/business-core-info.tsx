@@ -75,7 +75,7 @@ export class BusinessCoreInfo {
                 label="Business Classification"
                 options={businessClassificationOptions}
                 defaultValue={coreInfoDefaultValue.classification}
-                error={this.errors.classification}
+                errorText={this.errors.classification}
                 inputHandler={this.inputHandler}
               />
             </div>

@@ -1,12 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form-control-select renders with default props 1`] = `
-<form-control-select exportparts="label,input,input-invalid" label="Test Select" name="test">
-  <mock:shadow-root>
-    <label class="form-label" htmlfor="test" part="label">
-      Test Select
+exports[`form-control-select Renders with all props provided 1`] = `
+<form-control-select exportparts="label,input,input-invalid">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" htmlfor="delivery_method" part="label">
+      Select your delivery method
     </label>
-    <select class="form-select" id="test" name="test" part="input "></select>
-  </mock:shadow-root>
+    <select class="form-select is-invalid" disabled="" id="delivery_method" name="delivery_method" part="input input-invalid">
+      <option value="pickup">
+        Pickup
+      </option>
+      <option value="delivery">
+        Delivery
+      </option>
+    </select>
+    <form-control-help-text>
+      <small class="form-text text-muted" id="form-help-text-delivery_method">
+        Select your preferred delivery method
+      </small>
+    </form-control-help-text>
+    <form-control-error-text>
+      <small class="form-text text-danger" id="form-error-text-delivery_method">
+        This field is required.
+      </small>
+    </form-control-error-text>
+  </div>
+</form-control-select>
+`;
+
+exports[`form-control-select Renders with default props 1`] = `
+<form-control-select exportparts="label,input,input-invalid">
+  <div class="d-flex flex-column form-group">
+    <label class="form-label" htmlfor="delivery_method" part="label">
+      Select your delivery method
+    </label>
+    <select class="form-select" id="delivery_method" name="delivery_method" part="input "></select>
+    <form-control-help-text></form-control-help-text>
+    <form-control-error-text></form-control-error-text>
+  </div>
 </form-control-select>
 `;
