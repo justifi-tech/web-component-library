@@ -17,6 +17,7 @@ export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;
+  @State() legal_name: string;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -32,6 +33,10 @@ export class BusinessTermsConditionsFormStep {
     return 'entities/terms_and_conditions'
   }
 
+  get provisioningEndpoint() {
+    return 'entities/provisioning'
+  }
+
   get formHelperText() {
     return this.acceptedTermsBefore ? 'You have already accepted the terms and conditions.' : null
   }
@@ -41,6 +46,14 @@ export class BusinessTermsConditionsFormStep {
       business_id: this.businessId,
       accepted: this.formController.values.getValue().accepted,
       user_agent: window.navigator.userAgent
+    }
+  }
+
+  get provsioningPayload() {
+    return {
+      new_account_name: this.legal_name,
+      business_id: this.businessId,
+      product_category: 'payment',
     }
   }
 
@@ -60,18 +73,33 @@ export class BusinessTermsConditionsFormStep {
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
+      this.legal_name = response.data.legal_name;
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
     } finally {
+      console.log('this.ProvisioningPayload', this.provsioningPayload);
       this.formLoading.emit(false);
     }
   }
 
-  private sendData = async (onSuccess?: () => void) => {
+  // private postTermsData = async (onSuccess?: () => void) => {
+  //   this.formLoading.emit(true);
+  //   try {
+  //     const payload = JSON.stringify(this.termsPayload);
+  //     const response = await this.api.post(this.termsConditionsEndpoint, payload);
+  //     this.handleResponse(response, onSuccess);
+  //   } catch (error) {
+  //     this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+  //   } finally {
+  //     this.formLoading.emit(false);
+  //   }
+  // }
+
+  private postProvisioningData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
-      const payload = JSON.stringify(this.termsPayload);
-      const response = await this.api.post(this.termsConditionsEndpoint, payload);
+      const payload = JSON.stringify(this.provsioningPayload);
+      const response = await this.api.post(this.provisioningEndpoint, payload);
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
@@ -91,8 +119,9 @@ export class BusinessTermsConditionsFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.acceptedTermsBefore ? onSuccess() :
-    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+    // this.acceptedTermsBefore ? onSuccess() :
+    // this.formController.validateAndSubmit(() => this.postTermsData(onSuccess));
+    this.postProvisioningData(onSuccess);
   };
 
   componentDidLoad() {
