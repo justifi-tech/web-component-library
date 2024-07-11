@@ -57,6 +57,10 @@ graph TD;
   justifi-business-core-info-form-step --> form-control-number-masked
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
+  form-control-select --> form-control-help-text
+  form-control-select --> form-control-error-text
+  form-control-date --> form-control-help-text
+  form-control-date --> form-control-error-text
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
   justifi-legal-address-form-step --> form-control-text
@@ -64,6 +68,8 @@ graph TD;
   justifi-additional-questions-form-step --> form-control-monetary
   justifi-additional-questions-form-step --> form-control-select
   justifi-additional-questions-form-step --> form-control-text
+  form-control-monetary --> form-control-help-text
+  form-control-monetary --> form-control-error-text
   justifi-business-representative-form-step --> form-control-text
   justifi-business-representative-form-step --> form-control-number-masked
   justifi-business-representative-form-step --> form-control-date

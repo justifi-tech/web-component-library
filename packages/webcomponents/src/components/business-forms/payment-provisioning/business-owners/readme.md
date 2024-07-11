@@ -65,8 +65,12 @@ graph TD;
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
+  form-control-date --> form-control-help-text
+  form-control-date --> form-control-error-text
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
+  form-control-select --> form-control-help-text
+  form-control-select --> form-control-error-text
   justifi-payment-provisioning --> justifi-business-owners-form-step
   style justifi-business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
