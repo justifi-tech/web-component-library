@@ -78,7 +78,8 @@ const meta: Meta = {
     actions: {
       handles: [
         'submitted',
-        'click-event'
+        'click-event',
+        'error-event'
       ]
     },
     chromatic: {

@@ -2,6 +2,8 @@ import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/c
 import { LoadingSpinner } from '../../form/utils';
 import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+
 
 /**
  * @exportedPart label: Label for inputs
@@ -17,26 +19,30 @@ import JustifiAnalytics from '../../../api/Analytics';
 export class PaymentProvisioning {
   @Prop() authToken: string;
   @Prop() businessId: string;
-  @Prop() testMode: boolean = false;
-  @Prop() hideErrors?: boolean = false;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
  
   @State() formLoading: boolean = false;
-  @State() errorMessage: string = '';
   @State() currentStep: number = 0;
+  @State() errorMessage: string;
 
-  @Event({eventName: 'click-event'}) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
+    if (!this.businessId || !this.authToken) {
+      this.errorMessage = 'Invalid business id or auth token';
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
 
     this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
@@ -73,7 +79,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     1: () => <justifi-legal-address-form-step
@@ -81,7 +86,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[1] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     2: () => <justifi-additional-questions-form-step
@@ -89,7 +93,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[2] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     3: () => <justifi-business-representative-form-step
@@ -97,7 +100,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[3] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     4: () => <justifi-business-owners-form-step
@@ -105,7 +107,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[4] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     5: () => <justifi-business-bank-account-form-step
@@ -113,7 +114,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     6: () => <justifi-business-document-upload-form-step
@@ -121,7 +121,6 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[6] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
     7: () => <justifi-business-terms-conditions-form-step
@@ -129,17 +128,12 @@ export class PaymentProvisioning {
       authToken={this.authToken}
       ref={(el) => this.refs[7] = el}
       onFormLoading={this.handleFormLoading}
-      onServerError={this.handleServerErrors}
       allowOptionalFields={this.allowOptionalFields}
     />,
   };
 
   handleFormLoading = (e: CustomEvent) => {
     this.formLoading = e.detail;
-  }
-
-  handleServerErrors = (e: CustomEvent) => {
-    this.errorMessage = e.detail.message;
   }
 
   showPreviousStepButton() {
@@ -183,7 +177,6 @@ export class PaymentProvisioning {
       <Host exportparts="label,input,input-invalid">
         <div class="row gap-3">
           <h1>{this.title}</h1>
-          <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
           <div class="col-12 mb-4">
             {this.currentStepComponent()}
           </div>
