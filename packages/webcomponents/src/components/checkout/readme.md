@@ -44,7 +44,7 @@
 | `clientId`            | `client-id`      |             | `string`              | `undefined`           |
 | `iframeOrigin`        | `iframe-origin`  |             | `string`              | `config.iframeOrigin` |
 | `isSelected`          | `is-selected`    |             | `boolean`             | `undefined`           |
-| `paymentAmount`       | `payment-amount` |             | `string`              | `undefined`           |
+| `paymentAmount`       | `payment-amount` |             | `number`              | `undefined`           |
 | `paymentMethodOption` | --               |             | `PaymentMethodOption` | `undefined`           |
 
 

@@ -10,7 +10,22 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Summary
         </h2>
-        <justifi-skeleton height="24px"></justifi-skeleton>
+        <section>
+          <div>
+            <justifi-skeleton height="24px"></justifi-skeleton>
+          </div>
+          <div class="visually-hidden">
+            <div class="jfi-payment-description"></div>
+            <div class="jfi-payment-total">
+              <span class="jfi-payment-total-label">
+                Total
+              </span>
+              <span class="jfi-payment-total-amount">
+                $0.00
+              </span>
+            </div>
+          </div>
+        </section>
       </div>
       <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -20,8 +35,18 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
           Select payment type
         </h3>
         <div class="d-flex flex-column">
-          <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+          <section>
+            <div>
+              <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+            </div>
+            <div class="visually-hidden">
+              <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+            </div>
+          </section>
         </div>
+      </div>
+      <div class="col-12">
+        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
@@ -47,19 +72,24 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Summary
         </h2>
-        <div>
-          <div class="jfi-payment-description">
-            4x Cases of Celsius Energy Drink
+        <section>
+          <div class="visually-hidden">
+            <justifi-skeleton height="24px"></justifi-skeleton>
           </div>
-          <div class="jfi-payment-total">
-            <span class="jfi-payment-total-label">
-              Total
-            </span>
-            <span class="jfi-payment-total-amount">
-              $85.92
-            </span>
+          <div>
+            <div class="jfi-payment-description">
+              4x Cases of Celsius Energy Drink
+            </div>
+            <div class="jfi-payment-total">
+              <span class="jfi-payment-total-label">
+                Total
+              </span>
+              <span class="jfi-payment-total-amount">
+                $85.92
+              </span>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
       <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -69,8 +99,18 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
           Select payment type
         </h3>
         <div class="d-flex flex-column">
-          <justifi-payment-method-options account-id="acc_4Et9iXrAARKSZ4KSoiQGTYr" client-id="test_ef88f04afebc3c018de30fd3652d7cee" paymentamount="8592" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+          <section>
+            <div class="visually-hidden">
+              <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+            </div>
+            <div>
+              <justifi-payment-method-options account-id="acc_4Et9iXrAARKSZ4KSoiQGTYr" client-id="test_ef88f04afebc3c018de30fd3652d7cee" paymentamount="8592" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+            </div>
+          </section>
         </div>
+      </div>
+      <div class="col-12">
+        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">

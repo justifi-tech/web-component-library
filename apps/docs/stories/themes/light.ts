@@ -13,6 +13,12 @@ justifi-checkout {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
+justifi-season-interruption-insurance {
+  display: block;
+  padding: 20px 20px 10px 20px;
+  border: 1px solid #ddd;
+}
+
 :root {
   /* new vars */
   --jfi-body-color: #333;
