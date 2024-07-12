@@ -1,17 +1,17 @@
 import { h } from '@stencil/core';
-import { newSpecPage } from '@stencil/core/testing';
-import { CheckboxInput } from '../form-control-checkbox';
+import { newSpecPage } from "@stencil/core/testing";
+import { DateInput } from "../form-control-date";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
 import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 
-describe('form-control-checkbox', () => {
-  const components = [CheckboxInput, FormControlErrorText, FormControlHelpText];
+describe('form-control-date', () => {
+  const components = [DateInput, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-checkbox label='Accept Terms' name='accept' />,
+      template: () => <form-control-date label='Birthday' name='birthday'/>,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -21,11 +21,12 @@ describe('form-control-checkbox', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
-          helpText='Accept terms and conditions to continue'
-          errorText='You must accept the terms and conditions to continue'
+        <form-control-date
+          label='Birthday'
+          name='birthday'
+          defaultValue='1990-01-01'
+          errorText='Invalid date'
+          helpText='Enter your birthday'
           disabled
           inputHandler={mockInputHandler}
         />
@@ -34,48 +35,84 @@ describe('form-control-checkbox', () => {
     expect(page.root).toMatchSnapshot();
   });
 
+  it('Updates the input value when defaultValue changes', async () => {
+    // Initial render with the default value
+    let defaultValue = '1990-01-01';
+    let page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-date
+          label='Birthday'
+          name='birthday'
+          defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
+        />
+    });
+    let inputElement = page.root.querySelector('input');
+    expect(inputElement.value).toBe('1990-01-01');
+
+    defaultValue = '2000-01-01';
+
+    // Re-render with the new default value
+    page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-date
+          label='Birthday'
+          name='birthday'
+          defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
+        />
+    });
+    inputElement = page.root.querySelector('input');
+    expect(inputElement.value).toBe('2000-01-01');
+  });
+
   it('Handles user input correctly', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
+        <form-control-date
+          label='Birthday'
+          name='birthday'
+          defaultValue='1990-01-01'
           inputHandler={mockInputHandler}
         />
     });
 
     const inputElement = page.root.querySelector('input');
-    const testValue = true;
+    const testValue = '2000-01-01';
 
-    inputElement.checked = testValue;
+    inputElement.value = testValue;
     await inputElement.dispatchEvent(new Event('input'));
 
-    expect(inputElement.checked).toBe(testValue);
+    expect(inputElement.value).toBe(testValue);
   });
 
   it('Emits formControlInput event on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
+        <form-control-date
+          label='Birthday'
+          name='birthday'
+          defaultValue='1990-01-01'
           inputHandler={mockInputHandler}
         />
     });
 
     const inputEventSpy = jest.fn();
-    page.root.addEventListener('formControlInput', inputEventSpy);
+    page.win.addEventListener('formControlInput', inputEventSpy);
+
     const inputElement = page.root.querySelector('input');
-    inputElement.value = "true";
+    inputElement.value = '2000-01-01';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
     expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
       detail: expect.objectContaining({
-        name: 'accept',
-        value: "true",
+        name: 'birthday',
+        value: '2000-01-01',
       }),
     }));
   });
@@ -84,18 +121,19 @@ describe('form-control-checkbox', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
+        <form-control-date
+          label='Birthday'
+          name='birthday'
           inputHandler={mockInputHandler}
         />
     });
 
     const blurEventSpy = jest.fn();
-    page.root.addEventListener('formControlBlur', blurEventSpy);
+    page.win.addEventListener('formControlBlur', blurEventSpy);
 
     const inputElement = page.root.querySelector('input');
-    await inputElement.dispatchEvent(new CustomEvent('blur'));
+    inputElement.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
+
     expect(blurEventSpy).toHaveBeenCalled();
   });
 
@@ -103,26 +141,26 @@ describe('form-control-checkbox', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
-          inputHandler={mockInputHandler}
+        <form-control-date
+          label='Date'
+          name='date'
           disabled
+          inputHandler={mockInputHandler}
         />
     });
 
     const inputElement = page.root.querySelector('input');
-    expect(inputElement).toHaveAttribute('disabled');
+    expect(inputElement.disabled).toBe(true);
   });
 
   it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
-          helpText='Accept terms and conditions to continue'
+        <form-control-date
+          label='Date'
+          name='date'
+          helpText='Select your date'
           inputHandler={mockInputHandler}
         />
     });
@@ -131,17 +169,17 @@ describe('form-control-checkbox', () => {
     expect(helpTextComponent).not.toBeNull();
 
     const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Accept terms and conditions to continue');
+    expect(helpText.textContent).toBe('Select your date');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-checkbox
-          label='Accept Terms'
-          name='accept'
-          errorText='You must accept the terms and conditions to continue'
+        <form-control-date
+          label='Date'
+          name='date'
+          errorText='Invalid date'
           inputHandler={mockInputHandler}
         />
     });
@@ -150,7 +188,7 @@ describe('form-control-checkbox', () => {
     expect(errorTextComponent).not.toBeNull();
 
     const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('You must accept the terms and conditions to continue');
+    expect(errorText.textContent).toBe('Invalid date');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

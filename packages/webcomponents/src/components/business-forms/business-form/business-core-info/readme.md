@@ -40,6 +40,10 @@ graph TD;
   justifi-business-core-info --> form-control-number-masked
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
+  form-control-select --> form-control-help-text
+  form-control-select --> form-control-error-text
+  form-control-date --> form-control-help-text
+  form-control-date --> form-control-error-text
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
   justifi-business-form --> justifi-business-core-info

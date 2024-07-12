@@ -183,7 +183,7 @@ export class BusinessRepresentativeFormStep {
                   name="dob_full"
                   label="Birth Date"
                   defaultValue={representativeDefaultValue?.dob_full}
-                  error={this.errors.dob_full}
+                  errorText={this.errors.dob_full}
                   inputHandler={this.inputHandler}
                   onFormControlInput={this.onDateOfBirthUpdate}
                 />

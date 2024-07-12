@@ -59,7 +59,7 @@ export class AdditionalQuestions {
                 name="business_revenue"
                 label="What is the business' estimated annual revenue from its primary business activies?"
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_revenue}
+                errorText={this.errors?.additional_questions?.business_revenue}
                 defaultValue={additionalQuestionsDefaultValue?.business_revenue}
                 maskOptions={CURRENCY_MASK.WHOLE}
               />
@@ -69,7 +69,7 @@ export class AdditionalQuestions {
                 name="business_payment_volume"
                 label="What is the business’ annual credit card & ACH volume anticipated to process?"
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_payment_volume}
+                errorText={this.errors?.additional_questions?.business_payment_volume}
                 defaultValue={additionalQuestionsDefaultValue?.business_payment_volume}
                 maskOptions={CURRENCY_MASK.WHOLE}
               />
@@ -79,7 +79,7 @@ export class AdditionalQuestions {
                 name='business_when_service_received'
                 label='On average, how long after paying will your customers typically receive their goods or services?'
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_when_service_received}
+                errorText={this.errors?.additional_questions?.business_when_service_received}
                 options={businessServiceReceivedOptions}
                 defaultValue={additionalQuestionsDefaultValue?.business_when_service_received}
               />
@@ -89,7 +89,7 @@ export class AdditionalQuestions {
                 name='business_recurring_payments'
                 label='Does your business offer recurring payments?'
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_recurring_payments}
+                errorText={this.errors?.additional_questions?.business_recurring_payments}
                 options={recurringPaymentsOptions}
                 defaultValue={additionalQuestionsDefaultValue?.business_recurring_payments}
               />
@@ -108,7 +108,7 @@ export class AdditionalQuestions {
                 name='business_seasonal'
                 label='Is this business seasonal?'
                 inputHandler={this.inputHandler}
-                error={this.errors?.additional_questions?.business_seasonal}
+                errorText={this.errors?.additional_questions?.business_seasonal}
                 options={seasonalBusinessOptions}
                 defaultValue={additionalQuestionsDefaultValue?.business_seasonal}
               />

@@ -60,6 +60,10 @@ graph TD;
   justifi-additional-questions-form-step --> form-control-monetary
   justifi-additional-questions-form-step --> form-control-select
   justifi-additional-questions-form-step --> form-control-text
+  form-control-monetary --> form-control-help-text
+  form-control-monetary --> form-control-error-text
+  form-control-select --> form-control-help-text
+  form-control-select --> form-control-error-text
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   justifi-payment-provisioning --> justifi-additional-questions-form-step

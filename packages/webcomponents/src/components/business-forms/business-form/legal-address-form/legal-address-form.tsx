@@ -84,7 +84,7 @@ export class LegalAddressForm {
                 options={StateOptions}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.state}
-                error={this.errors?.legal_address?.state}
+                errorText={this.errors?.legal_address?.state}
               />
             </div>
             <div class="col-12">
@@ -105,7 +105,7 @@ export class LegalAddressForm {
                 options={[{ label: 'United States', value: 'USA' }]}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.country}
-                error={this.errors?.legal_address?.country}
+                errorText={this.errors?.legal_address?.country}
                 // just for now so we skip handling country specificities
                 disabled={true}
               />
