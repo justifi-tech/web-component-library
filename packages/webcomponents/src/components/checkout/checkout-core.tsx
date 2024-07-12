@@ -1,9 +1,11 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
-import { extractComputedFontsToLoad, formatCurrency } from '../../utils/utils';
+import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
+import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -36,16 +38,18 @@ export class CheckoutCore {
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
+
   componentWillLoad() {
     if (this.getCheckout) {
       this.fetchData();
-    }
-  }
 
-  connectedCallback() {
-    if (!this.hasLoadedFonts) {
-      this.loadFontsOnParent();
-      this.hasLoadedFonts = true;
+      // Refresh the checkout data when insurance is added or removed
+      insuranceValuesOn('set', (key) => {
+        const value = insuranceValues[key];
+        if (value !== undefined) {
+          this.fetchData();
+        }
+      });
     }
   }
 
@@ -68,31 +72,14 @@ export class CheckoutCore {
     });
   };
 
-
-  @Method()
-  async loadFontsOnParent() {
-    const parent = document.body;
-    const fontsToLoad = extractComputedFontsToLoad();
-    if (!parent || !fontsToLoad) {
-      return null;
-    }
-
-    // This approach is needed to load the font in a parent of the component
-    const fonts = document.createElement('link');
-    fonts.rel = 'stylesheet';
-    fonts.href = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
-
-    parent.append(fonts);
-  }
-
   async submit(event) {
     event.preventDefault();
-
     this.renderState = 'loading';
 
+    const insuranceValidation = validateInsuranceValues();
     const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
 
-    if (!payload) {
+    if (!insuranceValidation.isValid) {
       this.renderState = 'error';
     }
     else if (payload.error) {
@@ -105,19 +92,22 @@ export class CheckoutCore {
       });
     }
     else if (payload.token) {
-      this.complete({
-        payment: { payment_mode: 'ecom', payment_token: payload.token },
-        onSuccess: this.onSubmitted,
-        onError: this.onError,
-      })
+      this.completeCheckout({ payment_mode: 'ecom', payment_token: payload.token });
     }
     else if (payload.bnpl?.status === 'success') {
-      this.complete({
-        payment: { payment_mode: 'bnpl' },
-        onSuccess: this.onSubmitted,
-        onError: this.onError,
-      })
+      this.completeCheckout({ payment_mode: 'bnpl' });
     }
+    else {
+      this.renderState = 'error';
+    }
+  }
+
+  completeCheckout = async (payment: { payment_mode: string, payment_token?: string }) => {
+    this.complete({
+      payment,
+      onSuccess: this.onSubmitted,
+      onError: this.onError,
+    });
   }
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
@@ -144,49 +134,45 @@ export class CheckoutCore {
   }
 
   get paymentType() {
-    if (this.isError) {
-      // For now, just return nothing to avoid breaking, but we can decide to show an error message here
-      // return <div style={{ color: 'red' }}>Error: {this.serverError}</div>;
-      return null;
-    }
-
-    if (this.isLoading) {
-      return <justifi-skeleton variant="rounded" height="300px" />;
-    }
-
     return (
-      <justifi-payment-method-options
-        ref={(el) => (this.paymentMethodOptionsRef = el)}
-        show-card={!this.disableCreditCard}
-        show-ach={!this.disableBankAccount}
-        show-bnpl={!this.disableBnpl}
-        show-saved-payment-methods={!this.disablePaymentMethodGroup}
-        bnpl={this.checkout?.bnpl}
-        client-id={this.checkout?.payment_client_id}
-        account-id={this.checkout?.account_id}
-        savedPaymentMethods={this.checkout?.payment_methods || []}
-        paymentAmount={this.checkout?.payment_amount}
-      />
+      <section>
+        {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
+        {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
+        <div class={!this.isLoading && 'visually-hidden'}>
+          <justifi-skeleton variant="rounded" height="300px" />
+        </div>
+        <div class={this.isLoading && 'visually-hidden'}>
+          <justifi-payment-method-options
+            ref={(el) => (this.paymentMethodOptionsRef = el)}
+            show-card={!this.disableCreditCard}
+            show-ach={!this.disableBankAccount}
+            show-bnpl={!this.disableBnpl}
+            show-saved-payment-methods={!this.disablePaymentMethodGroup}
+            bnpl={this.checkout?.bnpl}
+            client-id={this.checkout?.payment_client_id}
+            account-id={this.checkout?.account_id}
+            savedPaymentMethods={this.checkout?.payment_methods || []}
+            paymentAmount={this.checkout?.payment_amount}
+          />
+        </div>
+      </section>
     );
   }
 
   get summary() {
-    if (this.isLoading) {
-      return <justifi-skeleton height="24px" />;
-    }
-
-    if (this.isError) {
-      return null;
-    }
-
     return (
-      <div>
-        <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
-        <div class="jfi-payment-total">
-          <span class="jfi-payment-total-label">Total</span>&nbsp;
-          <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout.payment_amount)}</span>
+      <section>
+        <div class={!this.isLoading && 'visually-hidden'}>
+          <justifi-skeleton height="24px" />
         </div>
-      </div>
+        <div class={this.isLoading && 'visually-hidden'}>
+          <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
+          <div class="jfi-payment-total">
+            <span class="jfi-payment-total-label">Total</span>&nbsp;
+            <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout?.total_amount)}</span>
+          </div>
+        </div>
+      </section>
     );
   }
 
@@ -204,7 +190,7 @@ export class CheckoutCore {
             {/* componentize this */}
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
             {this.summary}
-          </div>
+          </div >
 
           <div class="col-12">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
@@ -212,6 +198,9 @@ export class CheckoutCore {
             <div class="d-flex flex-column">
               {this.paymentType}
             </div>
+          </div>
+          <div class="col-12">
+            <slot name="insurance"></slot>
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">

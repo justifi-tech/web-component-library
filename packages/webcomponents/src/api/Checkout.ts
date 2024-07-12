@@ -13,7 +13,7 @@ export interface ICheckout {
   payment_intent_id: string;
   account_id: string;
   platform_account_id: string;
-  payment_amount: string;
+  payment_amount: number;
   payment_client_id: string;
   payment_description: string;
   payment_methods: {
@@ -36,13 +36,15 @@ export interface ICheckout {
     credit_card_payments: boolean;
   };
   bnpl?: IBnpl;
+  total_amount: number;
+  insurance_amount: number;
 };
 
 export class Checkout implements ICheckout {
   payment_intent_id: string;
   account_id: string;
   platform_account_id: string;
-  payment_amount: string;
+  payment_amount: number;
   payment_client_id: string;
   payment_description: string;
   payment_methods: {
@@ -65,6 +67,8 @@ export class Checkout implements ICheckout {
     credit_card_payments: boolean;
   };
   bnpl?: IBnpl;
+  total_amount: number;
+  insurance_amount: number;
 
   constructor(data: ICheckout) {
     Object.assign(this, data);

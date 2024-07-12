@@ -20,7 +20,7 @@ export class PaymentMethodOptions {
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
-  @Prop() paymentAmount: string;
+  @Prop() paymentAmount: number;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
@@ -31,6 +31,7 @@ export class PaymentMethodOptions {
 
   connectedCallback() {
     this.paymentMethodsChanged();
+    this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
   }
 
   @Watch('savedPaymentMethods')
@@ -45,7 +46,6 @@ export class PaymentMethodOptions {
     if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
-    this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
   }
 
   @Listen('paymentMethodOptionSelected')

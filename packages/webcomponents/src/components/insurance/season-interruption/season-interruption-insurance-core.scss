@@ -1,0 +1,11 @@
+@import 'reboot';
+@import 'grid';
+@import 'forms';
+@import 'bootstrap-utilities';
+@import '../../checkout/jfi-header';
+@import '../../checkout/jfi-radio-button';
+
+:host {
+  @include host-base-styles;
+  display: block;
+}
