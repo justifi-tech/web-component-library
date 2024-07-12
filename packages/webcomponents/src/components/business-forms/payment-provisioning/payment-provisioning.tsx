@@ -4,7 +4,6 @@ import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/busin
 import JustifiAnalytics from '../../../api/Analytics';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 
-
 /**
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
@@ -17,17 +16,17 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
   shadow: true
 })
 export class PaymentProvisioning {
+  @State() formLoading: boolean = false;
+  @State() currentStep: number = 0;
+  @State() errorMessage: string;
+  
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
  
-  @State() formLoading: boolean = false;
-  @State() currentStep: number = 0;
-  @State() errorMessage: string;
-
-  @Event({eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
