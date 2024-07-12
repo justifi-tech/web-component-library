@@ -1,36 +1,56 @@
-import { InsuranceService } from '../../api/services/insurance.service';
-import { getErrorMessage } from '../../api/services/utils';
+import { getErrorCode, getErrorMessage } from '../../api/services/utils';
+import { ComponentErrorSeverity } from '../../api/ComponentError';
 
 export const makeGetQuote = ({ authToken, service }) =>
   async ({ payload, onSuccess, onError }) => {
     try {
-      const response = await (service as InsuranceService).fetchQuote(authToken, payload);
+      const response = await service.fetchQuote(authToken, payload);
 
       if (!response.error) {
         const quote = response.data;
         onSuccess({ quote });
       } else {
         const responseError = getErrorMessage(response.error);
-        return onError(responseError);
+        const code = getErrorCode(response.error?.code);
+        return onError({
+          error: responseError,
+          code,
+          severity: ComponentErrorSeverity.ERROR,
+        });
       }
     } catch (error) {
-      return onError(error.message || error);
+      const code = getErrorCode(error?.code);
+      return onError({
+        error: error.message || error,
+        code,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   };
 
 export const makeToggleCoverage = ({ authToken, service }) =>
   async ({ quoteId, payload, onSuccess, onError }) => {
     try {
-      const response = await (service as InsuranceService).toggleCoverage(authToken, quoteId, payload);
+      const response = await service.toggleCoverage(authToken, quoteId, payload);
 
       if (!response.error) {
         const quote = response.data;
         onSuccess({ quote });
       } else {
         const responseError = getErrorMessage(response.error);
-        return onError(responseError);
+        const code = getErrorCode(response.error?.code);
+        return onError({
+          error: responseError,
+          code,
+          severity: ComponentErrorSeverity.ERROR,
+        });
       }
     } catch (error) {
-      return onError(error.message || error);
+      const code = getErrorCode(error?.code);
+      return onError({
+        error: error.message || error,
+        code,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   };
