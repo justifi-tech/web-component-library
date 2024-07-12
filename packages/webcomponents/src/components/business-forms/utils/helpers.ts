@@ -21,7 +21,8 @@ export function constructDate(year: string, month: string, day: string): string 
   return `${year}-${filterNumber(month)}-${filterNumber(day)}`;
 }
 
-export function deconstructDate(date: string): { dob_year: string, dob_month: string, dob_day: string } {
-  const [dob_year, dob_month, dob_day] = date.split('-');
+export function deconstructDate(formInput: any): { dob_year: string, dob_month: string, dob_day: string } {
+  const dateString = formInput.value;
+  const [dob_year, dob_month, dob_day] = dateString.split('-');
   return { dob_year, dob_month, dob_day };
 }
