@@ -6,23 +6,27 @@ import { IBusiness } from '../../../../api/Business';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { config } from '../../../../../config';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Representative } from '../../../../api/Identity';
 import { deconstructDate } from '../../utils/helpers';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+
 
 @Component({
   tag: 'justifi-business-representative-form-step'
 })
 export class BusinessRepresentativeFormStep {
-  @Prop() authToken: string;
-  @Prop() businessId: string;
-  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: Representative = {};
+  
+  @Prop() authToken: string;
+  @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
+  
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -41,7 +45,12 @@ export class BusinessRepresentativeFormStep {
       this.representative = new Representative(response.data.representative || {});
       this.formController.setInitialValues({ ...this.representative });
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.FETCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
     }
@@ -54,7 +63,12 @@ export class BusinessRepresentativeFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ representative: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.PATCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
     }
@@ -62,7 +76,12 @@ export class BusinessRepresentativeFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.PATCH_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
     } else {
       onSuccess();
     }
@@ -75,14 +94,11 @@ export class BusinessRepresentativeFormStep {
   };
 
   componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
     this.formController = new FormController(identitySchema('representative', this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
-    this.fetchData();
+    if (this.businessId && this.authToken) {
+      this.fetchData();
+    }
   }
 
   componentDidLoad() {
