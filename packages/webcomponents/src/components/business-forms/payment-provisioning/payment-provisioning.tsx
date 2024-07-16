@@ -1,8 +1,10 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStep, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { makePostProvisioning } from './provision-actions';
+import { ProvisionService } from '../../../api/services/provision.service';
 
 /**
  * @exportedPart label: Label for inputs
@@ -19,54 +21,87 @@ export class PaymentProvisioning {
   @State() formLoading: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
-  
+  @State() postProvisioning: Function;
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
- 
+
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'submitted' }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    if (!this.businessId || !this.authToken) {
-      this.errorMessage = 'Invalid business id or auth token';
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        message: this.errorMessage,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    }
+    this.initializePostProvisioning();
 
-    this.refs = [this.termsRef];
+    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
 
   disconnectedCallback() {
     this.analytics.cleanup();
   }
 
+  private initializePostProvisioning() {
+    if (this.authToken && this.businessId) {
+      this.postProvisioning = makePostProvisioning({
+        authToken: this.authToken,
+        businessId: this.businessId,
+        product: 'payment',
+        service: new ProvisionService()
+      });
+    } else {
+      this.errorEvent.emit({
+        message: 'auth-token and business-id are required',
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  }
+
+  postProvisioningData() {
+    this.postProvisioning({
+      onSuccess: () => {
+        this.submitted.emit({ data: {}, metadata: { completedStep: BusinessFormStep.provisioning } });
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      }
+    });
+  }
+  
   get title() {
     return this.removeTitle ? '' : this.formTitle;
   }
 
-  get totalSteps() { 
-    return Object.keys(this.componentStepMapping).length - 1; 
+  get totalSteps() {
+    return Object.keys(this.componentStepMapping).length - 1;
   }
 
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
 
+  private coreInfoRef: any;
+  private legalAddressRef: any;
+  private additionalQuestionsRef: any;
+  private representativeRef: any;
+  private ownersRef: any;
+  private bankAccountRef: any;
+  private documentUploadRef: any;
   private termsRef: any;
   private refs = [];
 
   componentStepMapping = {
-    0: () => <justifi-business-terms-conditions-form-step
+    0: () => <justifi-business-core-info-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
@@ -121,6 +156,7 @@ export class PaymentProvisioning {
       ref={(el) => this.refs[7] = el}
       onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
+      onSubmitted={() => this.postProvisioningData()}
     />,
   };
 

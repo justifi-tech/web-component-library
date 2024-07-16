@@ -1,5 +1,5 @@
 export interface BusinessFormSubmitEvent {
-  data: any;
+  data?: any;
   metadata?: BusinessFormEventMetaData;
 }
 
@@ -27,7 +27,8 @@ export enum BusinessFormStep {
   owners = 'owners',
   bankAccount = 'bankAccount',
   documentUpload = 'documentUpload',
-  termsAndConditions = 'termsAndConditions'
+  termsAndConditions = 'termsAndConditions',
+  provisioning = 'provisioning'
 }
 
 export enum BusinessFormServerErrors {
