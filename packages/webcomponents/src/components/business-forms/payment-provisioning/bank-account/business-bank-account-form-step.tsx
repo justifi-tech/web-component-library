@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
@@ -8,6 +8,7 @@ import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 
 /**
  *
@@ -23,15 +24,17 @@ import { BankAccount } from '../../../../api/BankAccount';
   tag: 'justifi-business-bank-account-form-step'
 })
 export class BusinessBankAccountFormStep {
-  @Prop() authToken: string;
-  @Prop() businessId: string;
-  @Prop() allowOptionalFields?: boolean;
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: BankAccount;
+  
+  @Prop() authToken: string;
+  @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
+  
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -58,7 +61,12 @@ export class BusinessBankAccountFormStep {
       }
       this.formController.setInitialValues({ ...this.bankAccount });
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.FETCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
     }
@@ -72,7 +80,12 @@ export class BusinessBankAccountFormStep {
       const response = await this.api.post(this.bankAccountEndpoint, JSON.stringify(payload));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
     }
@@ -80,7 +93,12 @@ export class BusinessBankAccountFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
     } else {
       onSuccess();
     }
@@ -94,14 +112,11 @@ export class BusinessBankAccountFormStep {
   };
 
   componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
     this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
-    this.fetchData();
+    if (this.businessId && this.authToken) {
+      this.fetchData();
+    }
   }
 
   componentDidLoad() {

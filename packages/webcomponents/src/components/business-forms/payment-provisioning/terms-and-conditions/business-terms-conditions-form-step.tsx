@@ -1,27 +1,27 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormServerErrorEvent, BusinessFormServerErrors, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 
 @Component({
   tag: 'justifi-business-terms-conditions-form-step'
 })
 export class BusinessTermsConditionsFormStep {
+  @State() formController: FormController;
+  @State() errors: any = {};
+  @State() acceptedTermsBefore: boolean;
+  
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
   
-  @State() formController: FormController;
-  @State() errors: any = {};
-  @State() acceptedTermsBefore: boolean;
-  @State() legal_name: string;
-
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -58,14 +58,11 @@ export class BusinessTermsConditionsFormStep {
   }
 
   async componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.formController = new FormController(businessTermsConditionsSchema(this.allowOptionalFields));
-    this.fetchData();
+    if (this.businessId && this.authToken) {
+      this.fetchData();
+    }
   }
 
   private fetchData = async () => {
@@ -75,7 +72,12 @@ export class BusinessTermsConditionsFormStep {
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
       this.legal_name = response.data.legal_name;
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.FETCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       console.log('this.ProvisioningPayload', this.provsioningPayload);
       this.formLoading.emit(false);
@@ -102,7 +104,12 @@ export class BusinessTermsConditionsFormStep {
       const response = await this.api.post(this.provisioningEndpoint, payload);
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
     }
@@ -110,7 +117,12 @@ export class BusinessTermsConditionsFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
     } else {
       onSuccess();
     }

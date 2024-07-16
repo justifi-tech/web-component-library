@@ -3,9 +3,8 @@ import { IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { Owner } from '../../../../api/Identity';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import {
-  BusinessFormServerErrorEvent,
-  BusinessFormServerErrors,
   BusinessFormStep,
   BusinessFormSubmitEvent,
   OwnerFormClickActions,
@@ -22,16 +21,18 @@ import {
   tag: 'justifi-business-owners-form-step'
 })
 export class BusinessOwnersFormStep {
-  @Prop() authToken: string;
-  @Prop() businessId: string;
-  @Prop() allowOptionalFields?: boolean;
   @State() owners: Owner[] = [];
   @State() newFormOpen: boolean;
   @State() refs = [];
+
+  @Prop() authToken: string;
+  @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
+  
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<BusinessFormServerErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -72,7 +73,12 @@ export class BusinessOwnersFormStep {
         this.addOwnerForm();
       }
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.fetchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.FETCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
       this.manageRefs();
@@ -86,7 +92,12 @@ export class BusinessOwnersFormStep {
       const response = await this.api.patch(this.businessEndpoint, JSON.stringify({ owners: payload }));
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.serverError.emit({ data: error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.PATCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.formLoading.emit(false);
     }
@@ -94,7 +105,12 @@ export class BusinessOwnersFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: BusinessFormServerErrors.patchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.PATCH_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
     } else {
       onSuccess();
     }
@@ -115,13 +131,10 @@ export class BusinessOwnersFormStep {
   };
 
   componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
-    this.fetchData();
+    if (this.businessId && this.authToken) {
+      this.fetchData();
+    }  
   }
 
   private addOwnerForm = (fireClick?: boolean) => {
