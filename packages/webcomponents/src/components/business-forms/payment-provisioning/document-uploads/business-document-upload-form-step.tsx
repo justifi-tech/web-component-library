@@ -1,21 +1,18 @@
 import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormStep, BusinessFormSubmitEvent, DocumentFormServerErrorEvent, DocumentFormServerErrors } from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
 })
 export class BusinessDocumentFormStep {
-  @Prop() authToken: string;
-  @Prop() businessId: string;
-  @Prop() allowOptionalFields?: boolean;
-
   @State() formController: FormController;
   @State() errors: any = {};
   @State() existingDocuments: any = [];
@@ -23,10 +20,14 @@ export class BusinessDocumentFormStep {
   @State() business: Business;
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
+  
+  @Prop() authToken: string;
+  @Prop() businessId: string;
+  @Prop() allowOptionalFields?: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<DocumentFormServerErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -39,13 +40,10 @@ export class BusinessDocumentFormStep {
   }
 
   componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
-    this.fetchData();
+  this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    if (this.businessId && this.authToken) {
+      this.fetchData();
+    }
   }
 
   inputHandler = (name: string, value: string) => {
@@ -64,7 +62,12 @@ export class BusinessDocumentFormStep {
       this.existingDocuments = response.data.documents;
       this.paymentVolume = response.data.additional_questions.business_payment_volume;
     } catch (error) {
-      this.serverError.emit({ data: error, message: DocumentFormServerErrors.fetchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.FETCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
       this.renderState = 'error';
     } finally {
       this.initializeFormController();
@@ -87,14 +90,24 @@ export class BusinessDocumentFormStep {
       const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
       return this.handleDocRecordResponse(docData, response);
     } catch (error) {
-      this.serverError.emit({ data: error, message: DocumentFormServerErrors.sendData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
       return false;
     }
   }
 
   handleDocRecordResponse = (docData: EntityDocument, response: any) => {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.sendData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
       return false;
     } else {
       docData.setPresignedUrl(response.data.presigned_url);
@@ -117,7 +130,12 @@ export class BusinessDocumentFormStep {
 
   handleUploadResponse = (response: any) => {
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: DocumentFormServerErrors.sendData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
       return false;
     } else {
       this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.documentUpload } });

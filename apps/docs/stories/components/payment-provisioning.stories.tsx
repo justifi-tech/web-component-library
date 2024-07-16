@@ -12,8 +12,7 @@ const meta: Meta = {
   title: 'Entities/Payment Provisioning (BETA)',
   component: 'justifi-payment-provisioning',
   args: {
-    ...storyBaseArgs.args,
-    'test-mode': true
+    ...storyBaseArgs.args
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -31,17 +30,6 @@ const meta: Meta = {
     'remove-title': {
       type: 'boolean',
       description: 'This prop removes the title displayed at the top of the form.',
-      control: {
-        type: 'boolean',
-      },
-      table: {
-        category: 'props',
-        defaultValue: { summary: 'false' }
-      }
-    },
-    'hide-errors': {
-      type: 'boolean',
-      description: 'When set to `true`, this prop will hide all error alerts from the form, allowing developers more control over how they wish to handle errors.',
       control: {
         type: 'boolean',
       },
@@ -78,7 +66,8 @@ const meta: Meta = {
     actions: {
       handles: [
         'submitted',
-        'click-event'
+        'click-event',
+        'error-event'
       ]
     },
     chromatic: {

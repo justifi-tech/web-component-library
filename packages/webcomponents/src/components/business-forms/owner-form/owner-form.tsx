@@ -8,19 +8,18 @@ import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
 import { LoadingSpinner } from '../../form/utils';
 import { deconstructDate } from '../utils/helpers';
-import {
-  OwnerFormSubmitEvent,
-  OwnerFormServerErrorEvent,
-  OwnerFormServerErrors,
-  OwnerFormClickEvent,
-  OwnerFormClickActions
-}
-  from '../utils/business-form-types';
+import { OwnerFormSubmitEvent, OwnerFormClickEvent, OwnerFormClickActions } from '../utils/business-form-types';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 
 @Component({
   tag: 'justifi-owner-form'
 })
 export class BusinessOwnerForm {
+  @State() isLoading: boolean = false;
+  @State() formController: FormController;
+  @State() errors: any = {};
+  @State() owner: Owner = {};
+  
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
@@ -28,14 +27,11 @@ export class BusinessOwnerForm {
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
-  @State() isLoading: boolean = false;
-  @State() formController: FormController;
-  @State() errors: any = {};
-  @State() owner: Owner = {};
+  
   @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event() serverError: EventEmitter<OwnerFormServerErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -88,7 +84,12 @@ export class BusinessOwnerForm {
       const response: IApiResponse<Identity> = await this.api.get(this.identityEndpoint);
       this.instantiateOwner(response.data);
     } catch (error) {
-      this.serverError.emit({ data: error, message: OwnerFormServerErrors.fetchData });
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.FETCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.isLoading = false;
     }
@@ -108,7 +109,12 @@ export class BusinessOwnerForm {
         return this.handleResponse(response);
       }
     } catch (error) {
-      console.warn(error);
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.PATCH_ERROR,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error,
+      })
     } finally {
       this.isLoading = false;
     }
@@ -116,9 +122,14 @@ export class BusinessOwnerForm {
 
   handleResponse(response: any) {
     this.submitted.emit({ data: response, metadata: { ownerId: this.ownerId } });
-    let errorMessage = this.ownerId ? OwnerFormServerErrors.patchData : OwnerFormServerErrors.postData;
+    let errorCode = this.ownerId ? ComponentErrorCodes.PATCH_ERROR : ComponentErrorCodes.POST_ERROR;
     if (response.error) {
-      this.serverError.emit({ data: response.error, message: errorMessage });
+      this.errorEvent.emit({
+        errorCode: errorCode,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
       return false;
     } else {
       this.instantiateOwner(response.data);
@@ -127,12 +138,11 @@ export class BusinessOwnerForm {
   }
 
   componentWillLoad() {
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-
     this.formController = new FormController(identitySchema('owner', this.allowOptionalFields));
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
-    this.fetchData();
+    if (this.authToken) {
+      this.fetchData();
+    }
   }
 
   componentDidLoad() {
