@@ -12,7 +12,8 @@ export const getErrorCode = (code) => {
   switch (code) {
     case API_ERRORS.NOT_AUTHENTICATED:
       return ComponentErrorCodes.NOT_AUTHENTICATED;
-
+    case API_ERRORS.INVALID_PARAMETER:
+      return ComponentErrorCodes.INVALID_PARAMETER;
     // add more cases as needed
 
     default:
