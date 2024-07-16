@@ -60,6 +60,18 @@ const meta: Meta = {
       table: {
         category: 'events'
       }
+    },
+    'error-event': {
+      description: '`ComponentError` - emitted when a network error occurs in the component.',
+      table: {
+        category: 'events'
+      }
+    },
+    'provisioned': {
+      description: 'Emitted when the business has been successfully provisioned.',
+      table: {
+        category: 'events'
+      }
     }
   },
   parameters: {
@@ -67,7 +79,8 @@ const meta: Meta = {
       handles: [
         'submitted',
         'click-event',
-        'error-event'
+        'error-event',
+        'provisioned'
       ]
     },
     chromatic: {

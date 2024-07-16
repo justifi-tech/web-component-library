@@ -1,10 +1,13 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStep, BusinessFormSubmitEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { makeGetBusiness } from './business-actions';
 import { makePostProvisioning } from './provision-actions';
+import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
+import { checkProvisioningStatus } from '../utils/helpers';
 
 /**
  * @exportedPart label: Label for inputs
@@ -19,25 +22,28 @@ import { ProvisionService } from '../../../api/services/provision.service';
 })
 export class PaymentProvisioning {
   @State() formLoading: boolean = false;
+  @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
   @State() postProvisioning: Function;
+  @State() getBusiness: Function;
 
-  @Prop() authToken: string;
   @Prop() businessId: string;
+  @Prop() authToken: string;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
-  @Event({ eventName: 'submitted' }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'provisioned' }) provisioned: EventEmitter<any>;
 
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    this.initializePostProvisioning();
+    this.initializeApi();
+    this.fetchBusiness();
 
     this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
@@ -46,8 +52,13 @@ export class PaymentProvisioning {
     this.analytics.cleanup();
   }
 
-  private initializePostProvisioning() {
+  private initializeApi() {
     if (this.authToken && this.businessId) {
+      this.getBusiness = makeGetBusiness({
+        authToken: this.authToken,
+        businessId: this.businessId,
+        service: new BusinessService()
+      });
       this.postProvisioning = makePostProvisioning({
         authToken: this.authToken,
         businessId: this.businessId,
@@ -63,10 +74,32 @@ export class PaymentProvisioning {
     }
   }
 
+  fetchBusiness() {
+    this.getBusiness({
+      onSuccess: (response) => {
+        this.businessProvisioned = checkProvisioningStatus(response.data);
+        if (this.businessProvisioned) {
+          this.errorEvent.emit({
+            message: 'This business has already been provisioned',
+            errorCode: ComponentErrorCodes.ALREADY_PROVISIONED,
+            severity: ComponentErrorSeverity.INFO,
+          });
+        }
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      }
+    });
+  }
+
   postProvisioningData() {
     this.postProvisioning({
-      onSuccess: () => {
-        this.submitted.emit({ data: {}, metadata: { completedStep: BusinessFormStep.provisioning } });
+      onSuccess: (response) => {
+        this.provisioned.emit({ data: {response} });
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -88,6 +121,10 @@ export class PaymentProvisioning {
 
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
+  }
+
+  get formDisabled() {
+    return this.formLoading || this.businessProvisioned;
   }
 
   private coreInfoRef: any;
@@ -218,7 +255,7 @@ export class PaymentProvisioning {
                   type="button"
                   class="btn btn-secondary"
                   onClick={() => this.previousStepButtonOnClick()}
-                  disabled={this.formLoading}>
+                  disabled={this.formDisabled}>
                   Previous
                 </button>
               )}
@@ -227,7 +264,7 @@ export class PaymentProvisioning {
                   type="button"
                   class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                   onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
-                  disabled={this.formLoading}>
+                  disabled={this.formDisabled}>
                   {this.formLoading ? LoadingSpinner() : 'Next'}
                 </button>
               )}
@@ -236,7 +273,7 @@ export class PaymentProvisioning {
                   type="submit"
                   class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                   onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
-                  disabled={this.formLoading}>
+                  disabled={this.formDisabled}>
                   {this.formLoading ? LoadingSpinner() : 'Submit'}
                 </button>
               )}
