@@ -6,7 +6,7 @@ export enum ComponentErrorCodes {
   UNKNOWN_ERROR = 'unknown-error',
   TOKENIZE_ERROR = 'tokenize-error',
   NOT_AUTHENTICATED = 'not-authenticated',
-  ALREADY_PROVISIONED = 'already-provisioned',
+  PROVISION_REQUESTED = 'provision-already-requested',
 }
 
 export enum ComponentErrorSeverity {

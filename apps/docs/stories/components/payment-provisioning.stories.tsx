@@ -67,8 +67,8 @@ const meta: Meta = {
         category: 'events'
       }
     },
-    'provisioned': {
-      description: 'Emitted when the business has been successfully provisioned.',
+    'provision-submitted': {
+      description: 'Emitted when the form has submitted a request to provision the payments product.',
       table: {
         category: 'events'
       }
@@ -80,7 +80,7 @@ const meta: Meta = {
         'submitted',
         'click-event',
         'error-event',
-        'provisioned'
+        'provision-submitted'
       ]
     },
     chromatic: {

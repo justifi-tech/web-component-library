@@ -36,7 +36,7 @@ export class PaymentProvisioning {
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event({ eventName: 'provisioned' }) provisioned: EventEmitter<any>;
+  @Event({ eventName: 'provision-submitted' }) provisionSubmit: EventEmitter<any>;
 
   analytics: JustifiAnalytics;
 
@@ -80,8 +80,8 @@ export class PaymentProvisioning {
         this.businessProvisioned = checkProvisioningStatus(response.data);
         if (this.businessProvisioned) {
           this.errorEvent.emit({
-            message: 'This business has already been provisioned',
-            errorCode: ComponentErrorCodes.ALREADY_PROVISIONED,
+            message: 'A request to provision payments for this business has already been submitted.',
+            errorCode: ComponentErrorCodes.PROVISION_REQUESTED,
             severity: ComponentErrorSeverity.INFO,
           });
         }
@@ -99,7 +99,7 @@ export class PaymentProvisioning {
   postProvisioningData() {
     this.postProvisioning({
       onSuccess: (response) => {
-        this.provisioned.emit({ data: {response} });
+        this.provisionSubmit.emit({ data: {response} });
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
