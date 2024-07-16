@@ -27,7 +27,7 @@ export enum BusinessFormStep {
   owners = 'owners',
   bankAccount = 'bankAccount',
   documentUpload = 'documentUpload',
-  termsAndConditions = 'termsAndConditions',
+  termsAndConditions = 'termsAndConditions'
 }
 
 export enum BusinessFormServerErrors {
