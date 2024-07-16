@@ -1,3 +1,4 @@
+import { IBusiness } from "../../../components";
 import StateOptions from "../../../utils/state-options";
 
 export function getStateAbbreviation(stateName: string): string | undefined {
@@ -25,4 +26,12 @@ export function deconstructDate(formInput: any): { dob_year: string, dob_month: 
   const dateString = formInput.value;
   const [dob_year, dob_month, dob_day] = dateString.split('-');
   return { dob_year, dob_month, dob_day };
+}
+
+export function checkProvisioningStatus(business: IBusiness): boolean{
+  if (business.associated_accounts.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
