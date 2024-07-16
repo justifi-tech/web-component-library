@@ -5,8 +5,7 @@ type ArgNames =
   | 'client-id'
   | 'iframe-origin'
   | 'payment-id'
-  | 'payout-id'
-  | 'custom-styled';
+  | 'payout-id';
 type ArgValues = { [key in ArgNames]?: any };
 type ArgTypes = { [key in ArgNames]?: any };
 
@@ -18,7 +17,6 @@ const args: ArgValues = {
   'client-id': 'test_df97f04afebc3c018de30df3562d7cdd',
   'payment-id': 'py_1NNeEnf4FbelxDCQN2RHcE',
   'payout-id': 'po_17745yESnHyEgWNeunmhmR',
-  'custom-styled': false,
 };
 
 const argTypes: ArgTypes = {
@@ -86,16 +84,6 @@ const argTypes: ArgTypes = {
     },
     table: {
       category: 'props',
-    },
-  },
-  'custom-styled': {
-    type: 'boolean',
-    description: 'Use custom styles `boolean`',
-    control: {
-      type: 'boolean',
-    },
-    table: {
-      category: 'styles',
     },
   },
 };

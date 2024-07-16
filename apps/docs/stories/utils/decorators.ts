@@ -3,18 +3,22 @@ import { setUpMocks } from './mockAllServices';
 type Props = { name: string; value: any }[];
 
 const getPropsAndStyles = (storyContext: any) => {
-  const args = storyContext.args;
+  const {
+    args,
+    parameters: { themes } = { themes: {} }, // Default themes to an empty object if it's not present
+  } = storyContext;
+
   const argNames = Object.keys(args);
-  const nonStyleArgs = argNames.filter(
-    (arg) => arg !== 'style' && arg !== 'custom-styled'
-  );
-  const props: Props = nonStyleArgs.map((arg) => {
+  const nonThemeArgs = argNames.filter((arg) => arg !== 'theme');
+
+  const props: Props = nonThemeArgs.map((arg) => {
     return { name: arg, value: args[arg] };
   });
-  const styleArg = args.style;
-  const customStyled = args['custom-styled'];
 
-  return { props, styleArg, customStyled };
+  // Check if args['component-theme'] and themes are defined before accessing
+  const styleArg = args.theme && themes ? themes[args.theme] : undefined;
+
+  return { props, styleArg };
 };
 
 const applyArgsToStoryComponent = (storyComponent: any, props: Props) => {
@@ -57,12 +61,12 @@ export const customStoryDecorator = (
   storyContext: any
 ) => {
   const fragment = new DocumentFragment();
-  const { props, styleArg, customStyled } = getPropsAndStyles(storyContext);
+  const { props, styleArg } = getPropsAndStyles(storyContext);
   setUpMocks();
 
   const component = applyArgsToStoryComponent(storyComponent, props);
 
-  if (customStyled && styleArg) {
+  if (styleArg) {
     const styleBlock = generateStyleBlock(styleArg);
     fragment.prepend(styleBlock);
   }

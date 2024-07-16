@@ -4,7 +4,12 @@ import { CSSVarsExample, StoryBaseArgs, getAttributesString } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token', 'custom-styled']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token']);
+
+const themes: { [key: string]: any } = {
+  basic: {},
+  custom: CSSVarsExample,
+};
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Payment Form',
@@ -13,9 +18,19 @@ const meta: Meta = {
     ...storyBaseArgs.args,
     'email': 'test@test.com',
     'submit-button-text': 'Submit Payment',
+    'theme': 'basic',
+    'card': true,
+    'bank-account': true,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'theme': {
+      options: ['basic', 'custom'],
+      control: { type: 'select' },
+      table: {
+        category: 'theming'
+      }
+    },
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
@@ -120,7 +135,7 @@ const Template = (args: any) => {
     </div>
     <style>
       :root {
-        ${args['custom-styled'] ? args['css-variables'] : ''}
+        ${themes[args.theme]}
       }
     </style>
     <script>
@@ -136,13 +151,6 @@ const Template = (args: any) => {
     })()
     </script>
   `;
-};
-
-Template.args = {
-  ...storyBaseArgs.args,
-  'card': true,
-  'bank-account': true,
-  'css-variables': CSSVarsExample
 };
 
 export const Example = Template;

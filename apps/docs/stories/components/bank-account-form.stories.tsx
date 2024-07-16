@@ -4,18 +4,31 @@ import { CSSVarsExample, paymentMethodFormComponentMethods, StoryBaseArgs } from
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin', 'custom-styled']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
 storyBaseArgs.argTypes['client-id'].table.disable = true;
 storyBaseArgs.argTypes['account-id'].table.disable = true;
+
+const themes: { [key: string]: any } = {
+  basic: {},
+  custom: CSSVarsExample,
+};
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Bank Account Form',
   component: 'justifi-bank-account-form',
   args: {
     ...storyBaseArgs.args,
+    'theme': 'basic'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'theme': {
+      options: ['basic', 'custom'],
+      control: { type: 'select' },
+      table: {
+        category: 'theming'
+      }
+    },
     'validation-mode': {
       options: ['all', 'onBlur', 'onChange', 'onSubmit', 'onTouched'],
       control: { type: 'select' },
@@ -65,9 +78,24 @@ const meta: Meta = {
     },
   },
   decorators: [
-    story => `
-    ${story()}
-    <script>${addEvents()}</script>`,
+    (_story, context) => {
+      const { args } = context;
+      return `
+        <div>
+          <style>
+          :root {
+            ${themes[args.theme]}
+          }
+          </style>
+          <justifi-bank-account-form
+            data-testid="bank-account-form-iframe"
+            validation-mode="${args['validation-mode'] || 'onSubmit'}"
+          />
+        </div >
+        ${FormButtons}
+      
+        <script>${addEvents()}</script>`;
+    },
     // @ts-ignore
     withActions
   ],
@@ -110,26 +138,6 @@ const FormButtons = `
     <button id="tokenize-btn">Test Tokenize</button>
   </div>`;
 
-const Template = (args: any) => {
-  return `
-    <div>
-      <style>
-      :root {
-        ${args['custom-styled'] ? args['css-variables'] : ''}
-      }
-      </style>
-      <justifi-bank-account-form
-        data-testid="bank-account-form-iframe"
-        validation-mode="${args['validation-mode'] || 'onSubmit'}"
-      />
-    </div>
-    ${FormButtons}
-  `;
-};
-
-// This fixes a typescript error
-Template.args = { ...storyBaseArgs.args, 'css-variables': CSSVarsExample };
-
-export const Example = Template;
+export const Example = {};
 
 export default meta;

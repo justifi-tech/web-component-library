@@ -4,17 +4,30 @@ import { CSSVarsExample, StoryBaseArgs, paymentMethodFormComponentMethods } from
 
 import '@justifi/webcomponents/dist/module/justifi-card-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin', 'custom-styled']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
 storyBaseArgs.argTypes['client-id'].table.disable = true;
+
+const themes: { [key: string]: any } = {
+  basic: {},
+  custom: CSSVarsExample,
+}
 
 const meta: Meta = {
   title: 'Payment Facilitation/Payments/Card Form',
   component: 'justifi-card-form',
   args: {
     ...storyBaseArgs.args,
+    'theme': 'basic'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'theme': {
+      options: ['basic', 'custom'],
+      control: { type: 'select' },
+      table: {
+        category: 'theming'
+      }
+    },
     'single-line': {
       type: 'boolean',
       description: '`boolean` indicating if the Card Form should render in a single line layout',
@@ -74,9 +87,25 @@ const meta: Meta = {
     },
   },
   decorators: [
-    story => `
-    ${story()}
-    <script>${addEvents()}</script>`,
+    (_story, context) => {
+      const includeButtons = true;
+      const { args } = context;
+      return `
+        <div>
+          <style>
+          :root {
+            ${themes[args.theme]}
+          }
+          </style>
+          <justifi-card-form
+            data-testid="card-form-iframe"
+            validation-mode="${args['validation-mode'] || 'onSubmit'}"
+            single-line="${args['single-line']}"
+          />
+        </div>
+        ${includeButtons ? FormButtons : ''}
+        <script>${addEvents()}</script>`;
+    },
     // @ts-ignore
     withActions
   ],
@@ -117,28 +146,7 @@ const FormButtons = `
     <button id="tokenize-btn">Test Tokenize</button>
   </div>`;
 
-const Template = (args: any) => {
-  const includeButtons = true;
 
-  return `
-    <div>
-      <style>
-      :root {
-        ${args['custom-styled'] ? args['css-variables'] : ''}
-      }
-      </style>
-      <justifi-card-form
-        data-testid="card-form-iframe"
-        validation-mode="${args['validation-mode'] || 'onSubmit'}"
-        single-line="${args['single-line']}"
-      />
-    </div>
-    ${includeButtons ? FormButtons : ''}
-  `;
-};
-
-Template.args = { ...storyBaseArgs.args, 'css-variables': CSSVarsExample };
-
-export const Example = Template;
+export const Example = {};
 
 export default meta;

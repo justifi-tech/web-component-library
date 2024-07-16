@@ -4,16 +4,76 @@ import { StoryBaseArgs, customStoryDecorator } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token', 'custom-styled']);
+const themes = {
+  basic: {},
+  custom: {
+    'justifi-payments-list::part(table-head)': {},
+    'justifi-payments-list::part(table-head-row)': {},
+    'justifi-payments-list::part(table-head-cell)': {
+      'background-color': '#fff',
+      'font-weight': '600',
+      'font-size': '0.8rem',
+      'text-transform': 'uppercase',
+      'letter-spacing': '0.1em',
+    },
+    'justifi-payments-list::part(table-body)': {},
+    'justifi-payments-list::part(table-row)': {},
+    'justifi-payments-list::part(table-row):hover': {
+      'cursor': 'pointer',
+    },
+    'justifi-payments-list::part(table-row-even)': {},
+    'justifi-payments-list::part(table-row-odd)': {},
+    'justifi-payments-list::part(table-cell)': {
+      'background-color': 'transparent',
+      'font-weight': 'normal',
+      'font-size': '0.8rem',
+    },
+    'justifi-payments-list::part(loading-state-cell)': {},
+    'justifi-payments-list::part(loading-state-spinner)': {
+      'color': '#ccc',
+    },
+    'justifi-payments-list::part(error-state)': {},
+    'justifi-payments-list::part(empty-state)': {},
+    'justifi-payments-list::part(pagination-bar)': {
+      'background-color': '#fff',
+      'border-bottom': 'none',
+    },
+    'justifi-payments-list::part(page-button)': {
+      'border': 'none',
+      'background-color': 'transparent',
+      'text-transform': 'uppercase',
+      'font-weight': 'normal',
+      'font-size': '0.8rem',
+    },
+    'justifi-payments-list::part(page-button-disabled)': {
+      'opacity': '0.5',
+      'cursor': 'not-allowed',
+    },
+    'justifi-payments-list::part(page-arrow)': {
+      'display': 'none',
+    },
+    'justifi-payments-list::part(page-button-text)': {},
+  }
+}
+
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Merchant Tools/Payments List',
   component: 'justifi-payments-list',
   args: {
     ...storyBaseArgs.args,
+    'theme': 'basic',
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    'theme': {
+      options: ['basic', 'custom'],
+      control: { type: 'select' },
+      table: {
+        category: 'theming'
+      }
+    },
     'payment-row-clicked': {
       description: '`PaymentRowClicked`',
       table: {
@@ -28,16 +88,6 @@ const meta: Meta = {
       },
       action: true,
     },
-    'style': {
-      description: 'Component style overrides',
-      table: {
-        category: 'styles',
-      },
-      if: {
-        arg: 'custom-styled',
-        truthy: true,
-      }
-    },
   },
   parameters: {
     actions: {
@@ -46,6 +96,7 @@ const meta: Meta = {
     chromatic: {
       delay: 2000,
     },
+    themes
   },
   decorators: [
     customStoryDecorator,
@@ -54,58 +105,6 @@ const meta: Meta = {
   ],
 };
 
-export const Example = {
-  args: {
-    ...storyBaseArgs.args,
-    style: {
-      'justifi-payments-list::part(table-head)': {},
-      'justifi-payments-list::part(table-head-row)': {},
-      'justifi-payments-list::part(table-head-cell)': {
-        'background-color': '#fff',
-        'font-weight': '600',
-        'font-size': '0.8rem',
-        'text-transform': 'uppercase',
-        'letter-spacing': '0.1em',
-      },
-      'justifi-payments-list::part(table-body)': {},
-      'justifi-payments-list::part(table-row)': {},
-      'justifi-payments-list::part(table-row):hover': {
-        'cursor': 'pointer',
-      },
-      'justifi-payments-list::part(table-row-even)': {},
-      'justifi-payments-list::part(table-row-odd)': {},
-      'justifi-payments-list::part(table-cell)': {
-        'background-color': 'transparent',
-        'font-weight': 'normal',
-        'font-size': '0.8rem',
-      },
-      'justifi-payments-list::part(loading-state-cell)': {},
-      'justifi-payments-list::part(loading-state-spinner)': {
-        'color': '#ccc',
-      },
-      'justifi-payments-list::part(error-state)': {},
-      'justifi-payments-list::part(empty-state)': {},
-      'justifi-payments-list::part(pagination-bar)': {
-        'background-color': '#fff',
-        'border-bottom': 'none',
-      },
-      'justifi-payments-list::part(page-button)': {
-        'border': 'none',
-        'background-color': 'transparent',
-        'text-transform': 'uppercase',
-        'font-weight': 'normal',
-        'font-size': '0.8rem',
-      },
-      'justifi-payments-list::part(page-button-disabled)': {
-        'opacity': '0.5',
-        'cursor': 'not-allowed',
-      },
-      'justifi-payments-list::part(page-arrow)': {
-        'display': 'none',
-      },
-      'justifi-payments-list::part(page-button-text)': {},
-    }
-  }
-};
+export const Example = {};
 
 export default meta;
