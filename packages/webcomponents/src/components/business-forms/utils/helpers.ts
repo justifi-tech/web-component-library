@@ -28,10 +28,6 @@ export function deconstructDate(formInput: any): { dob_year: string, dob_month: 
   return { dob_year, dob_month, dob_day };
 }
 
-export function checkProvisioningStatus(business: IBusiness): boolean{
-  if (business.associated_accounts.length > 0) {
-    return true;
-  } else {
-    return false;
-  }
+export function checkProvisioningStatus(business: IBusiness): boolean {
+  return business.associated_accounts.length > 0;
 }
