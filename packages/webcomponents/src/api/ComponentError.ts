@@ -7,7 +7,7 @@ export enum ComponentErrorCodes {
   TOKENIZE_ERROR = 'tokenize-error',
   NOT_AUTHENTICATED = 'not-authenticated',
   INVALID_PARAMETER = 'invalid-parameter',
-  PROVISION_REQUESTED = 'provision-already-requested',
+  PROVISIONING_REQUESTED = 'provisioning-already-requested',
 }
 
 export enum ComponentErrorSeverity {

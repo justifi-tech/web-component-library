@@ -66,12 +66,6 @@ const meta: Meta = {
       table: {
         category: 'events'
       }
-    },
-    'provision-submitted': {
-      description: 'Emitted when the form has submitted a request to provision the payments product.',
-      table: {
-        category: 'events'
-      }
     }
   },
   parameters: {
@@ -79,8 +73,7 @@ const meta: Meta = {
       handles: [
         'submitted',
         'click-event',
-        'error-event',
-        'provision-submitted'
+        'error-event'
       ]
     },
     chromatic: {

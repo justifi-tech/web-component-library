@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { makeGetBusiness } from './business-actions';
@@ -36,7 +36,7 @@ export class PaymentProvisioning {
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event({ eventName: 'provision-submitted' }) provisionSubmit: EventEmitter<any>;
+  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -81,7 +81,7 @@ export class PaymentProvisioning {
         if (this.businessProvisioned) {
           this.errorEvent.emit({
             message: 'A request to provision payments for this business has already been submitted.',
-            errorCode: ComponentErrorCodes.PROVISION_REQUESTED,
+            errorCode: ComponentErrorCodes.PROVISIONING_REQUESTED,
             severity: ComponentErrorSeverity.INFO,
           });
         }
@@ -99,9 +99,10 @@ export class PaymentProvisioning {
   postProvisioningData() {
     this.postProvisioning({
       onSuccess: (response) => {
-        this.provisionSubmit.emit({ data: {response} });
+        this.submitted.emit({ data: { response } });
       },
       onError: ({ error, code, severity }) => {
+        this.submitted.emit({ data: { error } });
         this.errorEvent.emit({
           message: error,
           errorCode: code,
