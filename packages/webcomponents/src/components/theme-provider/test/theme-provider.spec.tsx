@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiThemeProvider } from '../justifi-theme-provider';
+import { ThemeProvider } from '../theme-provider';
 
 describe('justifi-theme-provider', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [JustifiThemeProvider],
+      components: [ThemeProvider],
       html: `<justifi-theme-provider></justifi-theme-provider>`,
     });
     expect(page.root).toEqualHtml(`

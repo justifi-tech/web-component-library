@@ -4,7 +4,7 @@ import { Component, Host, h } from '@stencil/core';
   tag: 'justifi-theme-provider',
   shadow: true,
 })
-export class JustifiThemeProvider {
+export class ThemeProvider {
 
   render() {
     return (
