@@ -77,10 +77,6 @@ export class PaymentProvisioningCore {
   private termsRef: any;
   private refs = [];
 
-  get totalSteps() {
-    return Object.keys(this.componentStepMapping).length - 1;
-  }
-
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
   }
@@ -89,8 +85,12 @@ export class PaymentProvisioningCore {
     return this.formLoading || this.businessProvisioned;
   }
 
-  get currentStepComponent() {
-    return this.componentStepMapping[this.currentStep]();
+  get totalSteps() {
+    return this.refs.length - 1;
+  }
+
+  get stepCounter() {
+    return `${this.currentStep + 1} of ${this.totalSteps + 1}`;
   }
 
   handleFormLoading = (e: CustomEvent) => {
@@ -115,80 +115,27 @@ export class PaymentProvisioningCore {
     this.clickEvent.emit({ name: clickEventName })
 
     const currentStep = this.refs[this.currentStep];
+    console.log('currentStep', currentStep);
     currentStep.validateAndSubmit({ onSuccess: this.incrementSteps });
   }
-
-  componentStepMapping = {
-    0: () => <justifi-business-core-info-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[0] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    1: () => <justifi-legal-address-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[1] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    2: () => <justifi-additional-questions-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[2] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    3: () => <justifi-business-representative-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[3] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    4: () => <justifi-business-owners-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[4] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    5: () => <justifi-business-bank-account-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[5] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    6: () => <justifi-business-document-upload-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[6] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
-    7: () => <justifi-business-terms-conditions-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[7] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-      onSubmitted={() => this.postProvisioningData()}
-    />,
-  };
   
   render() {
     return (
       <Host exportparts='label,input,input-invalid'>
         <div class='row gap-3'>
           <h1>{this.formTitle}</h1>
-          <div class='col-12 mb-4'>
-            {this.currentStepComponent}
-          </div>
+          <justifi-payment-provisioning-form-steps
+            businessId={this.businessId}
+            authToken={this.authToken}
+            refs={this.refs}
+            currentStep={this.currentStep}
+            allowOptionalFields={this.allowOptionalFields}
+            handleFormLoading={this.handleFormLoading}
+            onFormCompleted={() => this.postProvisioningData()}
+          />
           <div class='d-flex justify-content-between align-items-center'>
             <div class='d-flex align-items-center'>
-              Step {this.currentStep + 1} of {this.totalSteps + 1}
+              {this.stepCounter}
             </div>
             <justifi-payment-provisioning-form-buttons 
               currentStep={this.currentStep}

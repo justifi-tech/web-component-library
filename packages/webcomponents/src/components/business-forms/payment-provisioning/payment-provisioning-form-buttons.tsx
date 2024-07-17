@@ -13,16 +13,16 @@ export class PaymentProvisioningFormButtons {
   @Prop() previousStepButtonOnClick: Function;
   @Prop() nextStepButtonOnClick: Function
 
-  get hidePreviousStepButton() {
-    return this.currentStep === 0;
+  get showPreviousStepButton() {
+    return this.currentStep > 0;
   }
 
-  get hideNextStepButton() {
+  get showNextStepButton() {
+    return this.currentStep < this.totalSteps;
+  }
+
+  get showSubmitButton() {
     return this.currentStep === this.totalSteps;
-  }
-
-  get hideSubmitButton() {
-    return this.currentStep !== this.totalSteps;
   }
 
   render() {
@@ -33,7 +33,7 @@ export class PaymentProvisioningFormButtons {
           class='btn btn-secondary'
           onClick={() => this.previousStepButtonOnClick()}
           disabled={this.formDisabled}
-          hidden={this.hidePreviousStepButton}>
+          hidden={!this.showPreviousStepButton}>
           Previous
         </button>
         <button
@@ -41,7 +41,7 @@ export class PaymentProvisioningFormButtons {
           class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
           onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
           disabled={this.formDisabled}
-          hidden={this.hideNextStepButton}>
+          hidden={!this.showNextStepButton}>
           {this.formLoading ? LoadingSpinner() : 'Next'}
         </button>
         <button
@@ -49,7 +49,7 @@ export class PaymentProvisioningFormButtons {
           class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
           onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
           disabled={this.formDisabled}
-          hidden={this.hideSubmitButton}>
+          hidden={!this.showSubmitButton}>
           {this.formLoading ? LoadingSpinner() : 'Submit'}
         </button>
       </div>
