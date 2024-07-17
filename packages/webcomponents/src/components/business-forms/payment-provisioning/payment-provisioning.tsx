@@ -1,8 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import JustifiAnalytics from '../../../api/Analytics';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
-import { makeGetBusiness } from './business-actions';
-import { makePostProvisioning } from './provision-actions';
+import { makeGetBusiness, makePostProvisioning } from './payment-provisioning-actions';
 import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
 
