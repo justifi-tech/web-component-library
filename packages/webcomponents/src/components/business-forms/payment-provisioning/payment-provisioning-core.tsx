@@ -115,7 +115,6 @@ export class PaymentProvisioningCore {
     this.clickEvent.emit({ name: clickEventName })
 
     const currentStep = this.refs[this.currentStep];
-    console.log('currentStep', currentStep);
     currentStep.validateAndSubmit({ onSuccess: this.incrementSteps });
   }
   
