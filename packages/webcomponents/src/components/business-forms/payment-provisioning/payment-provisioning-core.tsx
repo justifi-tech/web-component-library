@@ -1,10 +1,10 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host } from "@stencil/core";
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from "../utils/business-form-types";
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
-import { checkProvisioningStatus } from "../utils/helpers";
+import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { checkProvisioningStatus } from '../utils/helpers';
 
 @Component({
-  tag: "justifi-payment-provisioning-core",
+  tag: 'justifi-payment-provisioning-core',
 })
 export class PaymentProvisioningCore {
   @State() formLoading: boolean = false;
@@ -180,14 +180,14 @@ export class PaymentProvisioningCore {
   
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
-        <div class="row gap-3">
+      <Host exportparts='label,input,input-invalid'>
+        <div class='row gap-3'>
           <h1>{this.formTitle}</h1>
-          <div class="col-12 mb-4">
+          <div class='col-12 mb-4'>
             {this.currentStepComponent}
           </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
+          <div class='d-flex justify-content-between align-items-center'>
+            <div class='d-flex align-items-center'>
               Step {this.currentStep + 1} of {this.totalSteps + 1}
             </div>
             <justifi-payment-provisioning-form-buttons 
