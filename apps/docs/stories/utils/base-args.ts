@@ -5,7 +5,8 @@ type ArgNames =
   | 'client-id'
   | 'iframe-origin'
   | 'payment-id'
-  | 'payout-id';
+  | 'payout-id'
+  | 'theme';
 type ArgValues = { [key in ArgNames]?: any };
 type ArgTypes = { [key in ArgNames]?: any };
 
@@ -17,6 +18,7 @@ const args: ArgValues = {
   'client-id': 'test_df97f04afebc3c018de30df3562d7cdd',
   'payment-id': 'py_1NNeEnf4FbelxDCQN2RHcE',
   'payout-id': 'po_17745yESnHyEgWNeunmhmR',
+  theme: 'basic',
 };
 
 const argTypes: ArgTypes = {
@@ -84,6 +86,15 @@ const argTypes: ArgTypes = {
     },
     table: {
       category: 'props',
+    },
+  },
+  theme: {
+    options: ['basic', 'custom'],
+    control: { type: 'select' },
+    description:
+      'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)',
+    table: {
+      category: 'theming',
     },
   },
 };

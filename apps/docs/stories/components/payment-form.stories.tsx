@@ -4,7 +4,7 @@ import { CSSVarsExample, StoryBaseArgs, getAttributesString } from '../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-payment-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token', 'theme']);
 
 const themes: { [key: string]: any } = {
   basic: {},
@@ -18,19 +18,11 @@ const meta: Meta = {
     ...storyBaseArgs.args,
     'email': 'test@test.com',
     'submit-button-text': 'Submit Payment',
-    'theme': 'basic',
     'card': true,
     'bank-account': true,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'theme': {
-      options: ['basic', 'custom'],
-      control: { type: 'select' },
-      table: {
-        category: 'theming'
-      }
-    },
     'bank-account': {
       type: 'boolean',
       description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',

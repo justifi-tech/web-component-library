@@ -4,7 +4,7 @@ import { CSSVarsExample, paymentMethodFormComponentMethods, StoryBaseArgs } from
 
 import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin', 'theme']);
 storyBaseArgs.argTypes['client-id'].table.disable = true;
 storyBaseArgs.argTypes['account-id'].table.disable = true;
 
@@ -18,17 +18,9 @@ const meta: Meta = {
   component: 'justifi-bank-account-form',
   args: {
     ...storyBaseArgs.args,
-    'theme': 'basic'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'theme': {
-      options: ['basic', 'custom'],
-      control: { type: 'select' },
-      table: {
-        category: 'theming'
-      }
-    },
     'validation-mode': {
       options: ['all', 'onBlur', 'onChange', 'onSubmit', 'onTouched'],
       control: { type: 'select' },

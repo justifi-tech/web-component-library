@@ -56,24 +56,16 @@ const themes: { [key: string]: any } = {
   }
 };
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token', 'theme']);
 
 const meta: Meta = {
   title: 'Payment Facilitation/Merchant Tools/Payouts List',
   component: 'justifi-payouts-list',
   args: {
     ...storyBaseArgs.args,
-    'theme': 'basic',
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'theme': {
-      options: ['basic', 'custom'],
-      control: { type: 'select' },
-      table: {
-        category: 'theming',
-      },
-    },
     'payout-row-clicked': {
       description: '`PayoutRowClicked`',
       table: {

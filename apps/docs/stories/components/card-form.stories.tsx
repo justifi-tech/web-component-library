@@ -4,7 +4,7 @@ import { CSSVarsExample, StoryBaseArgs, paymentMethodFormComponentMethods } from
 
 import '@justifi/webcomponents/dist/module/justifi-card-form';
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'iframe-origin', 'theme']);
 storyBaseArgs.argTypes['client-id'].table.disable = true;
 
 const themes: { [key: string]: any } = {
@@ -17,17 +17,9 @@ const meta: Meta = {
   component: 'justifi-card-form',
   args: {
     ...storyBaseArgs.args,
-    'theme': 'basic'
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'theme': {
-      options: ['basic', 'custom'],
-      control: { type: 'select' },
-      table: {
-        category: 'theming'
-      }
-    },
     'single-line': {
       type: 'boolean',
       description: '`boolean` indicating if the Card Form should render in a single line layout',
