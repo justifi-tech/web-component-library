@@ -22,7 +22,6 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
-      onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
     />,
     1: () => <justifi-legal-address-form-step
