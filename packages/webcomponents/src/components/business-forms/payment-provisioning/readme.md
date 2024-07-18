@@ -13,9 +13,7 @@
 | `authToken`           | `auth-token`            |             | `string`  | `undefined`              |
 | `businessId`          | `business-id`           |             | `string`  | `undefined`              |
 | `formTitle`           | `form-title`            |             | `string`  | `'Business Information'` |
-| `hideErrors`          | `hide-errors`           |             | `boolean` | `false`                  |
 | `removeTitle`         | `remove-title`          |             | `boolean` | `false`                  |
-| `testMode`            | `test-mode`             |             | `boolean` | `false`                  |
 
 
 ## Events
@@ -23,6 +21,7 @@
 | Event         | Description | Type                                  |
 | ------------- | ----------- | ------------------------------------- |
 | `click-event` |             | `CustomEvent<BusinessFormClickEvent>` |
+| `error-event` |             | `CustomEvent<ComponentError>`         |
 
 
 ## Dependencies
@@ -37,7 +36,6 @@
 - [justifi-business-bank-account-form-step](bank-account)
 - [justifi-business-document-upload-form-step](document-uploads)
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
-- [form-alert](../../form/form-helpers/form-alert)
 
 ### Graph
 ```mermaid
@@ -50,7 +48,6 @@ graph TD;
   justifi-payment-provisioning --> justifi-business-bank-account-form-step
   justifi-payment-provisioning --> justifi-business-document-upload-form-step
   justifi-payment-provisioning --> justifi-business-terms-conditions-form-step
-  justifi-payment-provisioning --> form-alert
   justifi-business-core-info-form-step --> form-control-text
   justifi-business-core-info-form-step --> form-control-select
   justifi-business-core-info-form-step --> form-control-date

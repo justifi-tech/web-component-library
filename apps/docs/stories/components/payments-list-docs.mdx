@@ -13,33 +13,27 @@ import {
 } from './payments-list-example';
 import { Authorization } from '../utils/documentation-components';
 
-<Meta
-  title="Payment Facilitation/Merchant Tools/Payments List"
-  Components="justifi-payments-list"
-/>
+<Meta title="Payment Facilitation/Merchant Tools/Payments List" Components="justifi-payments-list" />
 
 <Title />
+
 Component to render a formated list of payments for the requested account.
 
 # Index
 
-- [Props, events and methods](#props-events-and-methods)
-  - [Events usage](#events-usage)
-- [Styling](#styling)
-  - [Exported Parts](#exported-parts)
-- [Example usage](#example-usage)
+* [Props, events and methods](#props-events-and-methods)
+  * [Events usage](#events-usage)
+* [Styling](#styling)
+  * [Exported Parts](#exported-parts)
+* [Example usage](#example-usage)
 
 # Props, events and methods
 
----
+***
 
 <ArgTypes exclude={['theme']} />
 
-<Authorization
-  actions={['read', 'write']}
-  entity="account"
-  identification="account_id"
-/>
+<Authorization actions={['read', 'write']} entity="account" identification="account_id" />
 
 ## Events usage
 
@@ -49,7 +43,7 @@ All table components emit an event when a row is clicked with the necessary info
 
 # Styling
 
----
+***
 
 The `<justifi-payments-list>` can be customized by using the exported `parts`.
 
@@ -65,6 +59,6 @@ The `<justifi-payments-list>` can be customized by using the exported `parts`.
 
 # Example Usage
 
----
+***
 
 <Source dark language="html" code={codeExampleFull} />

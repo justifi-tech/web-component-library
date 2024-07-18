@@ -1,10 +1,15 @@
-import type { Meta } from '@storybook/web-components';
-import { withActions } from '@storybook/addon-actions/decorator';
-import { CSSVarsExample, StoryBaseArgs, getAttributesString } from '../utils';
+import type { Meta } from "@storybook/web-components";
+import { withActions } from "@storybook/addon-actions/decorator";
+import { CSSVarsExample, StoryBaseArgs, getAttributesString } from "../utils";
 
-import '@justifi/webcomponents/dist/module/justifi-payment-form';
+import "@justifi/webcomponents/dist/module/justifi-payment-form";
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'client-id', 'auth-token', 'theme']);
+const storyBaseArgs = new StoryBaseArgs([
+  "account-id",
+  "client-id",
+  "auth-token",
+  "theme",
+]);
 
 const themes: { [key: string]: any } = {
   basic: {},
@@ -12,100 +17,101 @@ const themes: { [key: string]: any } = {
 };
 
 const meta: Meta = {
-  title: 'Payment Facilitation/Payments/Payment Form',
-  component: 'justifi-payment-form',
+  title: "Payment Facilitation/Payments/Payment Form",
+  component: "justifi-payment-form",
   args: {
     ...storyBaseArgs.args,
-    'email': 'test@test.com',
-    'submit-button-text': 'Submit Payment',
-    'card': true,
-    'bank-account': true,
+    email: "test@test.com",
+    "submit-button-text": "Submit Payment",
+    card: true,
+    "bank-account": true,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'bank-account': {
-      type: 'boolean',
-      description: 'Boolean indicating if the Payment Form should render Bank Account inputs `boolean`',
+    "bank-account": {
+      type: "boolean",
+      description:
+        "Boolean indicating if the Payment Form should render Bank Account inputs `boolean`",
       control: {
-        type: 'boolean'
+        type: "boolean",
       },
       table: {
-        category: 'props'
-      }
+        category: "props",
+      },
     },
-    'card': {
-      type: 'boolean',
-      description: 'Boolean indicating if the Payment Form should render Card inputs `boolean`',
+    card: {
+      type: "boolean",
+      description:
+        "Boolean indicating if the Payment Form should render Card inputs `boolean`",
       control: {
-        type: 'boolean'
+        type: "boolean",
       },
       table: {
-        category: 'props'
-      }
+        category: "props",
+      },
     },
-    'email': {
-      type: 'string',
-      description: 'Email `string`',
+    email: {
+      type: "string",
+      description: "Email `string`",
       control: {
-        type: 'text'
+        type: "text",
       },
       table: {
-        category: 'props'
-      }
+        category: "props",
+      },
     },
-    'submit-button-text': {
-      type: 'string',
+    "submit-button-text": {
+      type: "string",
       control: {
-        type: 'text'
+        type: "text",
       },
       table: {
-        category: 'props'
-      }
-    },
-    'submitted': {
-      description: '`BankAccountCreateResponse` `CardCreateResponse` `PaymentMethodErrorResponse`',
-      table: {
-        category: 'events'
+        category: "props",
       },
     },
-    'error-event': {
-      description: '`ComponentError`',
+    submitted: {
+      description:
+        "`BankAccountCreateResponse` `CardCreateResponse` `PaymentMethodErrorResponse`",
       table: {
-        category: 'events'
+        category: "events",
       },
-      action: true
     },
-    'enableSubmitButton': {
-      description: '`enableSubmitButton() => Promise<void>`',
+    "error-event": {
+      description: "`ComponentError`",
       table: {
-        category: 'methods'
-      }
+        category: "events",
+      },
+      action: true,
     },
-    'disableSubmitButton': {
-      description: '`disableSubmitButton() => Promise<void>`',
+    enableSubmitButton: {
+      description: "`enableSubmitButton() => Promise<void>`",
       table: {
-        category: 'methods'
-      }
+        category: "methods",
+      },
     },
-    'fillBillingForm': {
-      description: '`fillBillingForm(fields: BillingFormFields) => Promise<void>`',
+    disableSubmitButton: {
+      description: "`disableSubmitButton() => Promise<void>`",
       table: {
-        category: 'methods'
-      }
+        category: "methods",
+      },
     },
-    'loadFontsOnParent': {
-      description: '`loadFontsOnParent() => Promise<any>`',
+    fillBillingForm: {
+      description:
+        "`fillBillingForm(fields: BillingFormFields) => Promise<void>`",
       table: {
-        category: 'methods'
-      }
+        category: "methods",
+      },
+    },
+    loadFontsOnParent: {
+      description: "`loadFontsOnParent() => Promise<any>`",
+      table: {
+        category: "methods",
+      },
     },
   },
   parameters: {
     actions: {
-      handles: [
-        'submitted',
-        'error-event'
-      ]
+      handles: ["submitted", "error-event"],
     },
     chromatic: {
       delay: 2000,
@@ -113,9 +119,9 @@ const meta: Meta = {
   },
   decorators: [
     // @ts-ignore
-    withActions
+    withActions,
   ],
-}
+};
 
 const Template = (args: any) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially

@@ -1,4 +1,4 @@
-import { Meta, Source } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/blocks';
 import dedent from 'ts-dedent';
 import {
   SummaryElement,
@@ -12,11 +12,11 @@ import {
 
 # Index
 
-- [Usage](#usage)
-- [Usage details](#usage-details)
-  - [Calling methods](#calling-methods)
-  - [Listening to events](#listening-to-events)
-- [Styling exported parts](#styling-exported-parts)
+* [Usage](#usage)
+* [Usage details](#usage-details)
+  * [Calling methods](#calling-methods)
+  * [Listening to events](#listening-to-events)
+* [Styling exported parts](#styling-exported-parts)
 
 # Usage
 
@@ -198,14 +198,14 @@ Styling works similarly to the vanilla web components.
 
 The following components can only be styled through CSS variables:
 
-- [BankAccountForm](?path=/docs/components-bankaccountform--docs)
-- [CardForm](?path=/docs/components-cardform--docs)
-- [PaymentForm](?path=/docs/components-paymentform--docs)
+* [BankAccountForm](?path=/docs/components-bankaccountform--docs)
+* [CardForm](?path=/docs/components-cardform--docs)
+* [PaymentForm](?path=/docs/components-paymentform--docs)
 
 You can easily override the variables in a `<style>` tag in any place of your App, both in the `<head>` of your root `index.html` or at any component level.
 
 <Source
-  language='jsx'
+  language="jsx"
   dark
   format={false}
   code={dedent`

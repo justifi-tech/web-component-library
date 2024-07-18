@@ -1,32 +1,32 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
-import { StoryBaseArgs, customStoryDecorator } from '../utils';
-import { withActions } from '@storybook/addon-actions/decorator';
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { StoryBaseArgs, customStoryDecorator } from "../utils";
+import { withActions } from "@storybook/addon-actions/decorator";
 
-import '@justifi/webcomponents/dist/module/justifi-gross-payment-chart';
+import "@justifi/webcomponents/dist/module/justifi-gross-payment-chart";
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
 const meta: Meta = {
-  title: 'Payment Facilitation/Merchant Tools/Gross Payments Chart',
-  component: 'justifi-gross-payment-chart',
+  title: "Payment Facilitation/Merchant Tools/Gross Payments Chart",
+  component: "justifi-gross-payment-chart",
   args: {
-    ...storyBaseArgs.args
+    ...storyBaseArgs.args,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'error-event': {
-      description: '`ComponentError`',
+    "error-event": {
+      description: "`ComponentError`",
       table: {
-        category: 'events'
+        category: "events",
       },
-      action: true
+      action: true,
     },
   },
   parameters: {
     actions: {
-      handles: ['error-event']
+      handles: ["error-event"],
     },
     chromatic: {
       delay: 2000,
@@ -36,8 +36,8 @@ const meta: Meta = {
     customStoryDecorator,
     // @ts-ignore - Ignore Storybook bug (reference to bug issue)
     // https://github.com/storybookjs/storybook/issues/22384
-    withActions
-  ]
+    withActions,
+  ],
 };
 
 export const Example: Story = {};

@@ -11,43 +11,37 @@ import { filterDocsByTag } from '../utils';
 import example from './payment-form-example';
 import { Authorization } from '../utils/documentation-components';
 
-<Meta
-  title="Payment Facilitation/Payments/Payment Form"
-  Components="justifi-payment-form"
-/>
+<Meta title="Payment Facilitation/Payments/Payment Form" Components="justifi-payment-form" />
 
 <Title />
+
 Component to render an entire form including a switch to use a credit card or bank
 account, a submit button and all fields required for proper use.
 
 # Index
 
-- [Props, events and methods](#props-events-and-methods)
-- [Styling](#styling)
-- [Example usage](#example-usage)
+* [Props, events and methods](#props-events-and-methods)
+* [Styling](#styling)
+* [Example usage](#example-usage)
 
 # Props, events and methods
 
----
+***
 
 <ArgTypes exclude={['theme']} />
 
-<Authorization
-  actions={['write']}
-  entity="tokenize"
-  identification="account_id"
-/>
+<Authorization actions={['write']} entity="tokenize" identification="account_id" />
 
 # Styling
 
----
+***
 
 The `<justifi-payment-form>` can be customized only through overriding `CSS variables`.
 
 Some of the `CSS variables` specific to this component are listed below:
 
 <Source
-  language='css'
+  language="css"
   dark
   code={dedent`
   /* form radio group */
@@ -94,6 +88,6 @@ Some of the `CSS variables` specific to this component are listed below:
 
 # Example Usage
 
----
+***
 
 <Source dark language="html" code={example} />

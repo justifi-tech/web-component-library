@@ -1,4 +1,4 @@
-import { Meta, Source } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/blocks';
 import {
   SummaryElement,
   extractWebcomponentsVersion,
@@ -12,13 +12,13 @@ import dedent from 'ts-dedent';
 
 # Index
 
-- [Usage](#usage)
-- [Integration Steps](#integration-steps)
-- [Props and Event Handling](#props-and-event-handling)
-- [Calling methods](#calling-methods)
-- [Styling](#styling)
-  - [Components styled with variables](#components-styled-with-variables)
-  - [Styling exported parts](#styling-exported-parts)
+* [Usage](#usage)
+* [Integration Steps](#integration-steps)
+* [Props and Event Handling](#props-and-event-handling)
+* [Calling methods](#calling-methods)
+* [Styling](#styling)
+  * [Components styled with variables](#components-styled-with-variables)
+  * [Styling exported parts](#styling-exported-parts)
 
 # Usage
 
@@ -91,7 +91,7 @@ for instance, to use the `justifi-card-form` web component:
 
 ## Props and Event Handling
 
-- **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. You may also use expressions for prop values as with any other Angular component:
+* **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. You may also use expressions for prop values as with any other Angular component:
 
 <Source
   language="html"
@@ -103,7 +103,7 @@ for instance, to use the `justifi-card-form` web component:
   `)}
 />
 
-- **Event Handling**: Listen to events using Angular's event binding syntax.
+* **Event Handling**: Listen to events using Angular's event binding syntax.
 
 <Source
   language="html"
@@ -174,7 +174,7 @@ Remember that the web component's methods will be available on the nativeElement
 
 ### Components Styled with Variables
 
-- **CSS Variables**: Style components using CSS variables. These can be set globally or scoped to a component.
+* **CSS Variables**: Style components using CSS variables. These can be set globally or scoped to a component.
 
 <Source
   language="css"
@@ -197,7 +197,7 @@ Remember that the web component's methods will be available on the nativeElement
 
 ### Styling Exported Parts
 
-- **Shadow Parts**: Style exported parts of components using the `part` attribute.
+* **Shadow Parts**: Style exported parts of components using the `part` attribute.
 
 <Source
   language="css"

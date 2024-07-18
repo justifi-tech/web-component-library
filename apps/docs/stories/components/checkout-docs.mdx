@@ -9,30 +9,31 @@ import {
 import example from './checkout-example';
 import { AuthTokenDescription } from '../../stories/utils/documentation-components.tsx';
 
-<Meta
-  title="Payment Facilitation/Payments/Checkout"
-  Components="justifi-checkout"
-/>
+<Meta title="Payment Facilitation/Payments/Checkout" Components="justifi-checkout" />
 
 <Title />
+
 Component to render the necessary fields to enter proper payment method information
 and process a payment.
 
 # Index
 
-- [Props, events and methods](#props-events-and-methods)
-- [Styling](#styling)
-- [Example usage](#example-usage)
+* [Props, events and methods](#props-events-and-methods)
+* [Styling](#styling)
+* [Example usage](#example-usage)
 
 # Props, events and methods
 
----
+***
 
 <ArgTypes exclude={['Theme']} />
 
 <h1>Authorization</h1>
+
 <hr />
+
 Authorization can be performed by using an <code>auth-token</code>
+
 <ul>
   <li>
     <AuthTokenDescription />
@@ -41,7 +42,7 @@ Authorization can be performed by using an <code>auth-token</code>
 
 # Styling
 
----
+***
 
 The `<justifi-checkout>` can be customized only through overriding `CSS variables`.
 
@@ -49,6 +50,6 @@ The `<justifi-checkout>` can be customized only through overriding `CSS variable
 
 # Example Usage
 
----
+***
 
 <Source dark language="html" code={example} />

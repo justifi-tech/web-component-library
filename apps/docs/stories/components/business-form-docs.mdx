@@ -13,30 +13,27 @@ import { Authorization } from '../utils/documentation-components';
 <Meta title="Entities/BusinessForm" Components="justifi-business-form" />
 
 <Title />
+
 Component to render a business onboarding form. You will need to first create a business
 via [Business API](https://docs.justifi.tech/api-spec#tag/Business) to get the business-id
 required for this component.
 
 # Index
 
-- [Props, events and methods](#props-events-and-methods)
-- [Example usage](#example-usage)
+* [Props, events and methods](#props-events-and-methods)
+* [Example usage](#example-usage)
 
 # Props, events and methods
 
----
+***
 
 <ArgTypes exclude={['css-variables']} />
 
-<Authorization
-  actions={['write']}
-  entity="business"
-  identification="business_id"
-/>
+<Authorization actions={['write']} entity="business" identification="business_id" />
 
 # Styling
 
----
+***
 
 The `<justifi-business-form>` can be customized by using the exported `parts`.
 
@@ -52,6 +49,6 @@ The `<justifi-business-form>` can be customized by using the exported `parts`.
 
 # Example Usage
 
----
+***
 
 <Source dark language="html" code={example} />

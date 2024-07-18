@@ -10,36 +10,30 @@ import { filterDocsByTag, ExportedParts } from '../utils';
 import codeExample from './payouts-list-example';
 import { Authorization } from '../utils/documentation-components';
 
-<Meta
-  title="Payment Facilitation/Merchant Tools/Payouts List"
-  Components="justifi-payouts-list"
-/>
+<Meta title="Payment Facilitation/Merchant Tools/Payouts List" Components="justifi-payouts-list" />
 
 <Title />
+
 Component to render a formated list of payouts for the requested account.
 
 # Index
 
-- [Props, events and methods](#props-events-and-methods)
-- [Styling](#styling)
-  - [Exported Parts](#exported-parts)
-- [Example usage](#example-usage)
+* [Props, events and methods](#props-events-and-methods)
+* [Styling](#styling)
+  * [Exported Parts](#exported-parts)
+* [Example usage](#example-usage)
 
 # Props, events and methods
 
----
+***
 
 <ArgTypes exclude={['theme']} />
 
-<Authorization
-  actions={['read', 'write']}
-  entity="account"
-  identification="account_id"
-/>
+<Authorization actions={['read', 'write']} entity="account" identification="account_id" />
 
 # Styling
 
----
+***
 
 The `<justifi-payouts-list>` can be customized by using the exported `parts`.
 
@@ -55,6 +49,6 @@ The `<justifi-payouts-list>` can be customized by using the exported `parts`.
 
 # Example Usage
 
----
+***
 
 <Source dark language="html" code={codeExample} />

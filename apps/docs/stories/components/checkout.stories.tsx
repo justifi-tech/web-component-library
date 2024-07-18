@@ -1,136 +1,136 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
-import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs } from '../utils';
-import themes, { ThemeNames } from '../themes';
-import { setUpMocks } from '../utils/mockAllServices';
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { withActions } from "@storybook/addon-actions/decorator";
+import { StoryBaseArgs } from "../utils";
+import themes, { ThemeNames } from "../themes";
+import { setUpMocks } from "../utils/mockAllServices";
 
-import '@justifi/webcomponents/dist/module/justifi-checkout';
+import "@justifi/webcomponents/dist/module/justifi-checkout";
 
-const storyBaseArgs = new StoryBaseArgs(['auth-token']);
+const storyBaseArgs = new StoryBaseArgs(["auth-token"]);
 
 const meta: Meta = {
-  title: 'Payment Facilitation/Payments/Checkout',
-  component: 'justifi-checkout',
+  title: "Payment Facilitation/Payments/Checkout",
+  component: "justifi-checkout",
   args: {
     ...storyBaseArgs.args,
-    'checkout-id': '123',
-    'Theme': ThemeNames.Light
+    "checkout-id": "123",
+    Theme: ThemeNames.Light,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    'Theme': {
-      description: 'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)',
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
       options: Object.values(ThemeNames),
       control: {
-        type: 'select',
-      }
+        type: "select",
+      },
     },
-    'checkout-id': {
-      description: 'Checkout ID `string`',
+    "checkout-id": {
+      description: "Checkout ID `string`",
       table: {
-        category: 'props'
-      }
+        category: "props",
+      },
     },
-    'disable-credit-card': {
-      type: 'boolean',
+    "disable-credit-card": {
+      type: "boolean",
       control: {
-        type: 'boolean',
+        type: "boolean",
       },
-      description: 'Disable new credit card payment method option',
+      description: "Disable new credit card payment method option",
       table: {
-        category: 'props',
-        defaultValue: { summary: 'undefined' }
-      }
+        category: "props",
+        defaultValue: { summary: "undefined" },
+      },
     },
-    'disable-bank-account': {
-      type: 'boolean',
+    "disable-bank-account": {
+      type: "boolean",
       control: {
-        type: 'boolean',
+        type: "boolean",
       },
-      description: 'Disable new bank account payment method option',
+      description: "Disable new bank account payment method option",
       table: {
-        category: 'props',
-        defaultValue: { summary: 'undefined' }
-      }
+        category: "props",
+        defaultValue: { summary: "undefined" },
+      },
     },
-    'disable-bnpl': {
-      type: 'boolean',
+    "disable-bnpl": {
+      type: "boolean",
       control: {
-        type: 'boolean',
+        type: "boolean",
       },
-      description: 'Disable BNPL payment method option',
+      description: "Disable BNPL payment method option",
       table: {
-        category: 'props',
-        defaultValue: { summary: 'undefined' }
-      }
+        category: "props",
+        defaultValue: { summary: "undefined" },
+      },
     },
-    'disable-payment-method-group': {
-      type: 'boolean',
+    "disable-payment-method-group": {
+      type: "boolean",
       control: {
-        type: 'boolean',
+        type: "boolean",
       },
-      description: 'Disable saved payment methods option',
+      description: "Disable saved payment methods option",
       table: {
-        category: 'props',
-        defaultValue: { summary: 'undefined' }
-      }
-    },
-    'submitted': {
-      description: 'Emitted when the server response is received after submitting.  Will not be raised if form vailidation fails.',
-      table: {
-        category: 'events'
+        category: "props",
+        defaultValue: { summary: "undefined" },
       },
-      action: true
     },
-    'error-event': {
-      description: '`ComponentError`',
+    submitted: {
+      description:
+        "Emitted when the server response is received after submitting.  Will not be raised if form vailidation fails.",
       table: {
-        category: 'events',
+        category: "events",
       },
       action: true,
     },
-    'loadFontsOnParent': {
-      description: '`loadFontsOnParent() => Promise<any>`',
+    "error-event": {
+      description: "`ComponentError`",
       table: {
-        category: 'methods'
-      }
+        category: "events",
+      },
+      action: true,
+    },
+    loadFontsOnParent: {
+      description: "`loadFontsOnParent() => Promise<any>`",
+      table: {
+        category: "methods",
+      },
     },
   },
   parameters: {
     actions: {
-      handles: [
-        'submitted'
-      ]
+      handles: ["submitted"],
     },
     chromatic: {
-      delay: 1000
+      delay: 1000,
     },
   },
   render: ({ label, ...args }) => {
     let component = `<justifi-checkout 
-    auth-token="${args['auth-token']}" 
-    checkout-id="${args['checkout-id']}"`;
+    auth-token="${args["auth-token"]}" 
+    checkout-id="${args["checkout-id"]}"`;
 
-    if (args['disable-credit-card']) {
+    if (args["disable-credit-card"]) {
       component += ` disable-credit-card`;
     }
 
-    if (args['disable-bank-account']) {
+    if (args["disable-bank-account"]) {
       component += ` disable-bank-account`;
     }
 
-    if (args['disable-bnpl']) {
+    if (args["disable-bnpl"]) {
       component += ` disable-bnpl`;
     }
 
-    if (args['disable-payment-method-group']) {
+    if (args["disable-payment-method-group"]) {
       component += ` disable-payment-method-group`;
     }
 
     component += `></justifi-checkout>`;
     return component;
-  }
-}
+  },
+};
 
 export const Example: StoryObj = {};
 Example.decorators = [
@@ -138,14 +138,14 @@ Example.decorators = [
     setUpMocks();
 
     // Import the style here to not pollute other framework stories
-    const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
-    const styleElement = document.createElement('style');
+    const selectedTheme = storyArgs.args["Theme"] as ThemeNames;
+    const styleElement = document.createElement("style");
     styleElement.textContent = themes[selectedTheme];
 
     return `${styleElement.outerHTML}${story()}`;
   },
   // @ts-ignore
-  withActions
+  withActions,
 ];
 
 export default meta;

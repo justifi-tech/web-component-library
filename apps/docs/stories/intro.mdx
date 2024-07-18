@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, Source } from '@storybook/addon-docs';
+import { Canvas, Meta, Story, Source } from '@storybook/blocks';
 import { Markdown } from '@storybook/blocks';
 import dedent from 'ts-dedent';
 import { extractWebcomponentsVersion, SummaryElement, CSSVars } from './utils';
@@ -8,19 +8,21 @@ import { extractWebcomponentsVersion, SummaryElement, CSSVars } from './utils';
 # Introduction to JustiFi Web Component Library
 
 {/* This function would be potentially dangerous in the context of a private repository */}
+
 {/* In this case since the repo is public, the package.json file is public already */}
+
 Latest Version: <code>{extractWebcomponentsVersion()}</code>
 
 # Index
 
-- [Usage](#usage)
-- [Default Styling](#default-styling)
-- [React](#react)
-- [Styling](#styling)
-  - [Styling iFramed components with variables](#styling-components-with-variables)
-    - [Loading Google Fonts](#loading-google-fonts)
-  - [Styling components with custom css](#styling-components-with-custom-css)
-- [Changelog](/docs/changelog--docs)
+* [Usage](#usage)
+* [Default Styling](#default-styling)
+* [React](#react)
+* [Styling](#styling)
+  * [Styling iFramed components with variables](#styling-components-with-variables)
+    * [Loading Google Fonts](#loading-google-fonts)
+  * [Styling components with custom css](#styling-components-with-custom-css)
+* [Changelog](/docs/changelog--docs)
 
 # Usage
 
@@ -115,9 +117,9 @@ Or import it in your `JS` file:
 
 The following components need to be styled by overriding `CSS variables`, since they are scoped within an iFrame:
 
-- [BankAccountForm](?path=/docs/components-bankaccountform--docs)
-- [CardForm](?path=/docs/components-cardform--docs)
-- [PaymentForm](?path=/docs/components-paymentform--docs)
+* [BankAccountForm](?path=/docs/components-bankaccountform--docs)
+* [CardForm](?path=/docs/components-cardform--docs)
+* [PaymentForm](?path=/docs/components-paymentform--docs)
 
 This is a complete list of variables as defined in this project's `root.scss`:
 
@@ -125,9 +127,11 @@ This is a complete list of variables as defined in this project's `root.scss`:
   <CSSVars />
 </SummaryElement>
 
-<Markdown>{`
-  **Note:** When customizing the \`--jfi-form-control-box-shadow\` variable, ensure that the \`--jfi-layout-padding\` is not set to \`0\`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
-`}</Markdown>
+<Markdown>
+  {`
+    **Note:** When customizing the \`--jfi-form-control-box-shadow\` variable, ensure that the \`--jfi-layout-padding\` is not set to \`0\`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
+  `}
+</Markdown>
 
 ## Loading Google fonts
 
