@@ -19,7 +19,7 @@ const meta: Meta = {
   argTypes: {
     ...storyBaseArgs.argTypes,
     'Theme': {
-      description: 'Select a theme to preview the component in',
+      description: 'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)',
       options: Object.values(ThemeNames),
       control: {
         type: 'select',
@@ -132,8 +132,8 @@ const meta: Meta = {
   }
 }
 
-export const Basic: StoryObj = {};
-Basic.decorators = [
+export const Example: StoryObj = {};
+Example.decorators = [
   (story: any, storyArgs: any) => {
     setUpMocks();
 
