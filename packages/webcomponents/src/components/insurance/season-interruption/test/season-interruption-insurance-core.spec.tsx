@@ -17,6 +17,24 @@ describe('justifi-season-interruption-insurance-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
+  it('loads and sets the quote to state correctly', async () => {
+    const getQuote = makeGetQuote({
+      authToken: '123',
+      service: {
+        fetchQuote: jest.fn().mockResolvedValue(mockSeasonInterruptionInsurance),
+      },
+    })
+
+    const page = await newSpecPage({
+      components: [SeasonInterruptionInsuranceCore],
+      template: () => <justifi-season-interruption-insurance-core auth-token="123" getQuote={getQuote} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
   it('should emit error event when fetch fails', async () => {
     const getQuote = makeGetQuote({
       authToken: '',
