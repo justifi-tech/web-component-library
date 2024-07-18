@@ -25,14 +25,16 @@ export class SeasonInterruptionInsuranceCore {
   @Prop() coveredIdentityLastName?: string;
 
   @State() quote: any;
-  @State() isLoading: boolean = false;
+  @State() isLoading: boolean = true;
   @State() accepted: boolean | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    this.fetchData();
+    if (this.getQuote) {
+      this.fetchData();
+    }
   };
 
   fetchData(): void {
