@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { SeasonInterruptionInsuranceCore } from '../season-interruption-insurance-core';
 import { makeGetQuote } from '../../insurance-actions';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../../api/shared';
+import mockSeasonInterruptionInsurance from '../../../../../../../mockData/mockSeasonInterruptionInsurance.json';
 
 describe('justifi-season-interruption-insurance-core', () => {
   it('should display loading state correctly', async () => {
@@ -70,5 +71,32 @@ describe('justifi-season-interruption-insurance-core', () => {
         }
       })
     );
+  });
+
+  it('validates that a selection was made', async () => {
+    const getQuote = makeGetQuote({
+      authToken: '123',
+      service: {
+        fetchQuote: jest.fn().mockResolvedValue(mockSeasonInterruptionInsurance),
+      },
+    })
+
+    const page = await newSpecPage({
+      components: [SeasonInterruptionInsuranceCore],
+      template: () => <justifi-season-interruption-insurance-core auth-token="123" getQuote={getQuote} />,
+    });
+
+    await page.waitForChanges();
+
+    const instance: any = page.rootInstance;
+
+    await instance.validate();
+    const { isValid } = await instance.validate();
+
+    await page.waitForChanges();
+
+    expect(isValid).toBe(false); // Assuming provided fields pass the validation
+
+    expect(page.root).toMatchSnapshot();
   });
 });
