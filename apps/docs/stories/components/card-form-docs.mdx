@@ -8,8 +8,13 @@ import {
 } from '@storybook/blocks';
 import example from './card-form-example';
 import { Authorization } from '../../stories/utils/documentation-components.tsx';
+import * as JustifiCardForm from './card-form.stories.tsx';
 
-<Meta title="Payment Facilitation/Payments/Card Form" Components="justifi-card-form" />
+<Meta
+  title="Payment Facilitation/Payments/Card Form"
+  Components="justifi-card-form"
+  of={JustifiCardForm}
+/>
 
 <Title />
 
@@ -19,23 +24,27 @@ Component to render the necessary fields to enter proper credit card information
 
 # Index
 
-***
+---
 
-* [Props, events and methods](#props-events-and-methods)
-* [Styling](#styling)
-* [Example usage](#example-usage)
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+- [Example usage](#example-usage)
 
 # Props, events and methods
 
-***
+---
 
 <ArgTypes exclude={['css-variables', 'theme']} />
 
-<Authorization actions={['write']} entity="tokenize" identification="account_id" />
+<Authorization
+  actions={['write']}
+  entity="tokenize"
+  identification="account_id"
+/>
 
 # Styling
 
-***
+---
 
 The `<justifi-card-form>` can be customized only through overriding `CSS variables`.
 
@@ -43,6 +52,6 @@ The `<justifi-card-form>` can be customized only through overriding `CSS variabl
 
 # Example Usage
 
-***
+---
 
 <Source dark language="html" code={example} />

@@ -8,8 +8,13 @@ import {
 } from '@storybook/blocks';
 import example from './bank-account-form-example';
 import { Authorization } from '../utils/documentation-components';
+import * as JustifiBankAccountForm from './bank-account-form.stories.tsx';
 
-<Meta title="Payment Facilitation/Payments/Bank Account Form" Components="justifi-bank-account-form" />
+<Meta
+  title="Payment Facilitation/Payments/Bank Account Form"
+  Components="justifi-bank-account-form"
+  of={JustifiBankAccountForm}
+/>
 
 <Title />
 
@@ -19,21 +24,25 @@ Component to render the necessary fields to enter proper bank account informatio
 
 # Index
 
-* [Props, events and methods](#props-events-and-methods)
-* [Styling](#styling)
-* [Example usage](#example-usage)
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+- [Example usage](#example-usage)
 
 # Props, events and methods
 
-***
+---
 
 <ArgTypes exclude={['theme']} />
 
-<Authorization actions={['write']} entity="tokenize" identification="account_id" />
+<Authorization
+  actions={['write']}
+  entity="tokenize"
+  identification="account_id"
+/>
 
 # Styling
 
-***
+---
 
 The `<justifi-bank-account-form>` can be customized only through overriding `CSS variables`.
 
@@ -41,6 +50,6 @@ The `<justifi-bank-account-form>` can be customized only through overriding `CSS
 
 # Example Usage
 
-***
+---
 
 <Source dark language="html" code={example} />

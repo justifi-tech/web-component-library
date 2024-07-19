@@ -9,8 +9,13 @@ import {
 import { filterDocsByTag, ExportedParts } from '../utils';
 import example from './business-form-example';
 import { Authorization } from '../utils/documentation-components';
+import * as JustifiBusinessForm from './business-form.stories.tsx';
 
-<Meta title="Entities/BusinessForm" Components="justifi-business-form" />
+<Meta
+  title="Entities/BusinessForm"
+  Components="justifi-business-form"
+  of={JustifiBusinessForm}
+/>
 
 <Title />
 
@@ -20,20 +25,24 @@ required for this component.
 
 # Index
 
-* [Props, events and methods](#props-events-and-methods)
-* [Example usage](#example-usage)
+- [Props, events and methods](#props-events-and-methods)
+- [Example usage](#example-usage)
 
 # Props, events and methods
 
-***
+---
 
 <ArgTypes exclude={['css-variables']} />
 
-<Authorization actions={['write']} entity="business" identification="business_id" />
+<Authorization
+  actions={['write']}
+  entity="business"
+  identification="business_id"
+/>
 
 # Styling
 
-***
+---
 
 The `<justifi-business-form>` can be customized by using the exported `parts`.
 
@@ -49,6 +58,6 @@ The `<justifi-business-form>` can be customized by using the exported `parts`.
 
 # Example Usage
 
-***
+---
 
 <Source dark language="html" code={example} />

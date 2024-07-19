@@ -1,6 +1,5 @@
 import { dirname, join } from 'path';
 import { mergeConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 
 const config = {
   framework: getAbsolutePath('@storybook/web-components-vite'),
@@ -28,12 +27,14 @@ const config = {
     const storybookChromaticBuild = process.env.VITE_STORYBOOK_CHROMATIC_BUILD;
 
     return mergeConfig(config, {
-      plugins: [react()],
       define: {
         __VITE_STORYBOOK_MOCKS_ENABLED__: JSON.stringify(storybookMocksEnabled),
         __VITE_STORYBOOK_CHROMATIC_BUILD__: JSON.stringify(
           storybookChromaticBuild
         ),
+      },
+      resolve: {
+        dedupe: ['@storybook/blocks'],
       },
     });
   },

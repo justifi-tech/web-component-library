@@ -9,8 +9,13 @@ import {
 import { filterDocsByTag, ExportedParts } from '../utils';
 import example from './payment-provisioning-example';
 import { Authorization } from '../utils/documentation-components';
+import * as JustifiPaymentProvisioning from './payment-provisioning.stories.tsx';
 
-<Meta title="Entities/Payment Provisioning (BETA)" Components="justifi-payment-provisioning" />
+<Meta
+  title="Entities/Payment Provisioning (BETA)"
+  Components="justifi-payment-provisioning"
+  of={JustifiPaymentProvisioning}
+/>
 
 <Title />
 
@@ -20,21 +25,25 @@ to get the business-id required for this component.
 
 # Index
 
-* [Props, events and methods](#props-events-and-methods)
-* [Styling](#styling)
-* [Example usage](#example-usage)
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+- [Example usage](#example-usage)
 
 # Props, events and methods
 
-***
+---
 
 <ArgTypes exclude={['css-variables']} />
 
-<Authorization actions={['write']} entity="business" identification="business_id" />
+<Authorization
+  actions={['write']}
+  entity="business"
+  identification="business_id"
+/>
 
 # Styling
 
-***
+---
 
 The `<justifi-payment-provisioning>` can be customized by using the exported `parts`.
 
@@ -50,6 +59,6 @@ The `<justifi-payment-provisioning>` can be customized by using the exported `pa
 
 # Example Usage
 
-***
+---
 
 <Source dark language="html" code={example} />

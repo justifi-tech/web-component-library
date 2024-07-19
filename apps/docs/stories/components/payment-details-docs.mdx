@@ -2,8 +2,13 @@ import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../utils';
 import { codeExampleFull } from './payment-details-example';
 import { Authorization } from '../utils/documentation-components';
+import * as JustifiPaymentDetails from './payment-details.stories.tsx';
 
-<Meta title="Payment Facilitation/Merchant Tools/Payment Details" Components="justifi-payment-details" />
+<Meta
+  title="Payment Facilitation/Merchant Tools/Payment Details"
+  Components="justifi-payment-details"
+  of={JustifiPaymentDetails}
+/>
 
 <Title />
 
@@ -11,22 +16,26 @@ Component to display detailed information about a specific payment.
 
 # Index
 
-* [Props and methods](#props-and-methods)
-* [Styling](#styling)
-  * [Exported Parts](#exported-parts)
-* [Example usage](#example-usage)
+- [Props and methods](#props-and-methods)
+- [Styling](#styling)
+  - [Exported Parts](#exported-parts)
+- [Example usage](#example-usage)
 
 # Props and methods
 
-***
+---
 
 <ArgTypes exclude={['css-variables']} />
 
-<Authorization actions={['read', 'write']} entity="account" identification="account_id" />
+<Authorization
+  actions={['read', 'write']}
+  entity="account"
+  identification="account_id"
+/>
 
 # Styling
 
-***
+---
 
 The `<justifi-payment-details>` can be customized using the exported `parts`.
 
@@ -42,6 +51,6 @@ The `<justifi-payment-details>` can be customized using the exported `parts`.
 
 # Example Usage
 
-***
+---
 
 <Source dark language="html" code={codeExampleFull} />

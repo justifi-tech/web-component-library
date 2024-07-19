@@ -10,8 +10,13 @@ import dedent from 'ts-dedent';
 import { filterDocsByTag } from '../utils';
 import example from './payment-form-example';
 import { Authorization } from '../utils/documentation-components';
+import * as JustifiPaymentForm from './payment-form.stories.tsx';
 
-<Meta title="Payment Facilitation/Payments/Payment Form" Components="justifi-payment-form" />
+<Meta
+  title="Payment Facilitation/Payments/Payment Form"
+  Components="justifi-payment-form"
+  of={JustifiPaymentForm}
+/>
 
 <Title />
 
@@ -20,21 +25,25 @@ account, a submit button and all fields required for proper use.
 
 # Index
 
-* [Props, events and methods](#props-events-and-methods)
-* [Styling](#styling)
-* [Example usage](#example-usage)
+- [Props, events and methods](#props-events-and-methods)
+- [Styling](#styling)
+- [Example usage](#example-usage)
 
 # Props, events and methods
 
-***
+---
 
 <ArgTypes exclude={['theme']} />
 
-<Authorization actions={['write']} entity="tokenize" identification="account_id" />
+<Authorization
+  actions={['write']}
+  entity="tokenize"
+  identification="account_id"
+/>
 
 # Styling
 
-***
+---
 
 The `<justifi-payment-form>` can be customized only through overriding `CSS variables`.
 
@@ -88,6 +97,6 @@ Some of the `CSS variables` specific to this component are listed below:
 
 # Example Usage
 
-***
+---
 
 <Source dark language="html" code={example} />
