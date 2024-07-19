@@ -26,6 +26,9 @@ const meta: Meta = {
         type: 'select',
       }
     },
+    'withInsurance': {
+      table: { disable: true }
+    },
     'checkout-id': {
       description: 'Checkout ID `string`',
       table: {
