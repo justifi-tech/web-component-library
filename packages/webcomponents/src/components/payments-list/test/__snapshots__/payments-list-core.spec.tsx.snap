@@ -7,7 +7,7 @@ table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 ">
-    <mock:shadow-root>
+    <template shadowrootmode="open">
       <div class="table-wrapper">
         <table class="table table-hover">
           <thead class="sticky-top table-head" part="table-head">
@@ -46,7 +46,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             <tr class="align-middle table-light">
               <td colspan="7" part="pagination-bar">
                 <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
-                  <mock:shadow-root>
+                  <template shadowrootmode="open">
                     <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                       <ul class="m-0 pagination">
                         <li class="disabled page-item">
@@ -71,14 +71,14 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                         </li>
                       </ul>
                     </nav>
-                  </mock:shadow-root>
+                  </template>
                 </pagination-menu>
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
-    </mock:shadow-root>
+    </template>
   </justifi-table>
 </payments-list-core>
 `;
@@ -90,7 +90,7 @@ table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 ">
-    <mock:shadow-root>
+    <template shadowrootmode="open">
       <div class="table-wrapper">
         <table class="table table-hover">
           <thead class="sticky-top table-head" part="table-head">
@@ -184,7 +184,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             <tr class="align-middle table-light">
               <td colspan="7" part="pagination-bar">
                 <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
-                  <mock:shadow-root>
+                  <template shadowrootmode="open">
                     <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                       <ul class="m-0 pagination">
                         <li class="disabled page-item">
@@ -209,14 +209,14 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                         </li>
                       </ul>
                     </nav>
-                  </mock:shadow-root>
+                  </template>
                 </pagination-menu>
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
-    </mock:shadow-root>
+    </template>
   </justifi-table>
 </payments-list-core>
 `;
