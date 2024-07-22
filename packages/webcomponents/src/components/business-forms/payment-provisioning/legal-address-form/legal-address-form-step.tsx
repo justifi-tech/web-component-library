@@ -1,6 +1,5 @@
 import { Component, Method, Prop, State, h, Event, EventEmitter, Watch } from '@stencil/core';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import { LegalAddressFormStepCore } from './legal-address-form-step-core';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 
@@ -13,7 +12,7 @@ import { BusinessService } from '../../../../api/services/business.service';
   tag: 'justifi-legal-address-form-step'
 })
 export class LegalAddressFormStep {
-  coreComponent: LegalAddressFormStepCore;
+  coreComponent: HTMLJustifiLegalAddressFormStepCoreElement;
 
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
@@ -61,7 +60,6 @@ export class LegalAddressFormStep {
   }
 
   render() {
-
     return (
       <justifi-legal-address-form-step-core
         authToken={this.authToken}
@@ -69,7 +67,7 @@ export class LegalAddressFormStep {
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
-        ref={(el) => this.coreComponent = el as any}
+        ref={el => this.coreComponent = el}
       />
     );
   }
