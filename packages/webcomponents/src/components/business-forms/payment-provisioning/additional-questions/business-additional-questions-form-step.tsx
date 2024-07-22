@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { AdditionalQuestionsFormStepCore } from './business-additional-questions-form-step-core';
 
 /**
  * @exportedPart label: Label for inputs
@@ -13,7 +12,7 @@ import { AdditionalQuestionsFormStepCore } from './business-additional-questions
   tag: 'justifi-additional-questions-form-step',
 })
 export class AdditionalQuestionsFormStep {
-  coreComponent: AdditionalQuestionsFormStepCore;
+  coreComponent: HTMLJustifiAdditionalQuestionsFormStepCoreElement;
 
   @State() getBusiness: Function;
   @State() patchBusiness: Function;

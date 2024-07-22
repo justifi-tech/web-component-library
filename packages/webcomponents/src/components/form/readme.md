@@ -40,7 +40,7 @@
 ### Used by
 
  - [justifi-additional-questions](../business-forms/business-form/additional-questions)
- - [justifi-additional-questions-form-step](../business-forms/payment-provisioning/additional-questions)
+ - [justifi-additional-questions-form-step-core](../business-forms/payment-provisioning/additional-questions)
  - [justifi-billing-form](../billing-form)
  - [justifi-business-bank-account-form-step](../business-forms/payment-provisioning/bank-account)
  - [justifi-business-core-info](../business-forms/business-form/business-core-info)
@@ -64,7 +64,7 @@ graph TD;
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   justifi-additional-questions --> form-control-text
-  justifi-additional-questions-form-step --> form-control-text
+  justifi-additional-questions-form-step-core --> form-control-text
   justifi-billing-form --> form-control-text
   justifi-business-bank-account-form-step --> form-control-text
   justifi-business-core-info --> form-control-text
