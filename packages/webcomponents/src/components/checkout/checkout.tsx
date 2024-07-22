@@ -25,7 +25,7 @@ export class Checkout {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    // this.analytics = new JustifiAnalytics(this);
+    this.analytics = new JustifiAnalytics(this);
     this.initializeGetCheckout();
   }
 

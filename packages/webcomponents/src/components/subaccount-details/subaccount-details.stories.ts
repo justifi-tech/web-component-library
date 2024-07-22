@@ -3,7 +3,7 @@ import { config } from '../../../config';
 export default {
   title: 'dev/Components/SubaccountDetails',
   component: 'justifi-subaccount-details',
-  parameters: {}
+  parameters: {},
 };
 
 class SubaccountDetailsArgs {
@@ -19,15 +19,15 @@ class SubaccountDetailsArgs {
 }
 
 const Template = (args: SubaccountDetailsArgs) => {
-  return (`
+  return `
     <justifi-subaccount-details
       data-testid="justifi-subaccounts-details"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
       subaccount-id="${args['subaccount-id']}"
     />
-  `);
+  `;
 };
 
-export const Basic = Template.bind({});
-Basic.args = new SubaccountDetailsArgs({});
+export const Example = Template.bind({});
+Example.args = new SubaccountDetailsArgs({});

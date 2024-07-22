@@ -18,24 +18,13 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     'form-title': {
       type: 'string',
-      description: 'This prop updates the value of the title displayed at the top of the form.',
+      description: 'This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.',
       control: {
         type: 'text',
       },
       table: {
         category: 'props',
         defaultValue: { summary: 'Business Information' }
-      }
-    },
-    'remove-title': {
-      type: 'boolean',
-      description: 'This prop removes the title displayed at the top of the form.',
-      control: {
-        type: 'boolean',
-      },
-      table: {
-        category: 'props',
-        defaultValue: { summary: 'false' }
       }
     },
     'allow-optional-fields': {
@@ -60,6 +49,12 @@ const meta: Meta = {
       table: {
         category: 'events'
       }
+    },
+    'error-event': {
+      description: '`ComponentError` - emitted when a network error occurs in the component.',
+      table: {
+        category: 'events'
+      }
     }
   },
   parameters: {
@@ -81,6 +76,6 @@ const meta: Meta = {
   ],
 };
 
-export const Basic: Story = {};
+export const Example: Story = {};
 
 export default meta;

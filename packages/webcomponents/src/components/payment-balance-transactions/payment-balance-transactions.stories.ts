@@ -1,4 +1,4 @@
-import { config } from "../../../config";
+import { config } from '../../../config';
 
 export default {
   title: 'dev/Components/PaymentBalanceTransactions',
@@ -11,7 +11,7 @@ class PaymentBalanceTransactionsArgs {
   'payment-id': string;
   'account-id': string;
 
-  'constructor'(args) {
+  constructor(args) {
     this['auth-token'] = args['auth-token'] || config.proxyAuthToken;
     this['payment-id'] = args['payment-id'] || config.examplePaymentId;
     this['account-id'] = args['account-id'] || config.exampleAccountId;
@@ -29,13 +29,13 @@ const Template = (args: PaymentBalanceTransactionsArgs) => {
   `;
 };
 
-export const Basic = Template.bind({});
-Basic.args = new PaymentBalanceTransactionsArgs({});
+export const Example = Template.bind({});
+Example.args = new PaymentBalanceTransactionsArgs({});
 
 export const Styled = Template.bind({});
 Styled.args = new PaymentBalanceTransactionsArgs({});
 Styled.decorators = [
-  Story => `
+  (Story) => `
     ${Story()}
   `,
 ];
