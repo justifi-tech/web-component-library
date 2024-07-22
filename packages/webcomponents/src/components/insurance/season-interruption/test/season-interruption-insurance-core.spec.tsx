@@ -4,8 +4,12 @@ import { SeasonInterruptionInsuranceCore } from '../season-interruption-insuranc
 import { makeGetQuote } from '../../insurance-actions';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../../api/shared';
 import mockSeasonInterruptionInsurance from '../../../../../../../mockData/mockSeasonInterruptionInsurance.json';
+import { insuranceValuesStore, insuranceErrorsStore } from '../../insurance-state';
 
 describe('justifi-season-interruption-insurance-core', () => {
+  beforeEach(() => insuranceValuesStore.dispose());
+  beforeEach(() => insuranceErrorsStore.dispose());
+
   it('should display loading state correctly', async () => {
     const page = await newSpecPage({
       components: [SeasonInterruptionInsuranceCore],
@@ -107,14 +111,11 @@ describe('justifi-season-interruption-insurance-core', () => {
     await page.waitForChanges();
 
     const instance: any = page.rootInstance;
-
-    await instance.validate();
     const { isValid } = await instance.validate();
 
     await page.waitForChanges();
 
     expect(isValid).toBe(false); // Assuming provided fields pass the validation
-
     expect(page.root).toMatchSnapshot();
   });
 });
