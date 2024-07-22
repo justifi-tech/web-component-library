@@ -6,6 +6,7 @@
     "build:mocks": "turbo run build:mocks",
     "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=false pnpm --filter @repo/docs dev'",
     "dev:mocks": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=true pnpm --filter @repo/docs dev'",
+    "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",

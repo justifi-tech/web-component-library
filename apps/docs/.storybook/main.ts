@@ -17,7 +17,9 @@ const config = {
     },
     '@chromatic-com/storybook',
   ],
-  docs: {},
+  docs: {
+    autodocs: false,
+  },
   staticDirs: ['../public'],
   core: {
     builder: '@storybook/builder-vite',

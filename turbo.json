@@ -16,7 +16,7 @@
         "storybook-static/**"
       ],
       "dependsOn": [
-        "^build"
+        "webcomponents#build"
       ]
     },
     "test": {
@@ -34,7 +34,27 @@
     "lint": {},
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": [
+        "webcomponents#build"
+      ]
+    },
+    "dev:mocks": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "webcomponents#build",
+        "webcomponents#dev"
+      ]
+    },
+    "preview-storybook": {
+      "outputs": [
+        "dist/**",
+        "storybook-static/**"
+      ],
+      "dependsOn": [
+        "build"
+      ]
     },
     "clean": {
       "cache": false
