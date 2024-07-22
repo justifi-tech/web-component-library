@@ -127,6 +127,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
 
 export interface IBusiness {
   additional_questions: IAdditionalQuestions;
+  associated_accounts: any[];
   classification: BusinessClassification;
   bank_accounts: IBankAccount[];
   created_at: string;
@@ -152,6 +153,7 @@ export interface IBusiness {
 
 export class Business implements IBusiness {
   public additional_questions: AdditionalQuestions;
+  public associated_accounts: any[];
   public classification: BusinessClassification;
   public bank_accounts: IBankAccount[];
   public created_at: string;
@@ -176,6 +178,7 @@ export class Business implements IBusiness {
 
   constructor(business: IBusiness) {
     this.additional_questions = { ...new AdditionalQuestions(business.additional_questions || {})};
+    this.associated_accounts = business.associated_accounts;
     this.classification = business.classification;
     this.bank_accounts = business.bank_accounts;
     this.created_at = business.created_at;

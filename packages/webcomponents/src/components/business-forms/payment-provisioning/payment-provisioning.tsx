@@ -1,8 +1,12 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { LoadingSpinner } from '../../form/utils';
-import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import JustifiAnalytics from '../../../api/Analytics';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { makeGetBusiness, makePostProvisioning } from './payment-provisioning-actions';
+import { BusinessService } from '../../../api/services/business.service';
+import { ProvisionService } from '../../../api/services/provision.service';
+import { checkProvisioningStatus } from '../utils/helpers';
 
 /**
  * @exportedPart label: Label for inputs
@@ -17,31 +21,28 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 })
 export class PaymentProvisioning {
   @State() formLoading: boolean = false;
+  @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
-  
-  @Prop() authToken: string;
+  @State() postProvisioning: Function;
+  @State() getBusiness: Function;
+
   @Prop() businessId: string;
+  @Prop() authToken: string;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
- 
+
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
 
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    if (!this.businessId || !this.authToken) {
-      this.errorMessage = 'Invalid business id or auth token';
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        message: this.errorMessage,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    }
+    this.initializeApi();
+    this.setBusinessProvisioned();
 
     this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
@@ -50,16 +51,80 @@ export class PaymentProvisioning {
     this.analytics.cleanup();
   }
 
+  private initializeApi() {
+    if (this.authToken && this.businessId) {
+      this.getBusiness = makeGetBusiness({
+        authToken: this.authToken,
+        businessId: this.businessId,
+        service: new BusinessService()
+      });
+      this.postProvisioning = makePostProvisioning({
+        authToken: this.authToken,
+        businessId: this.businessId,
+        product: 'payment',
+        service: new ProvisionService()
+      });
+    } else {
+      this.errorEvent.emit({
+        message: 'auth-token and business-id are required',
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  }
+
+  setBusinessProvisioned() {
+    this.getBusiness({
+      onSuccess: (response) => {
+        this.businessProvisioned = checkProvisioningStatus(response.data);
+        if (this.businessProvisioned) {
+          this.errorEvent.emit({
+            message: 'A request to provision payments for this business has already been submitted.',
+            errorCode: ComponentErrorCodes.PROVISIONING_REQUESTED,
+            severity: ComponentErrorSeverity.INFO,
+          });
+        }
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      }
+    });
+  }
+
+  postProvisioningData() {
+    this.postProvisioning({
+      onSuccess: (response) => {
+        this.submitted.emit({ data: { response } });
+      },
+      onError: ({ error, code, severity }) => {
+        this.submitted.emit({ data: { error } });
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      }
+    });
+  }
+  
   get title() {
     return this.removeTitle ? '' : this.formTitle;
   }
 
-  get totalSteps() { 
-    return Object.keys(this.componentStepMapping).length - 1; 
+  get totalSteps() {
+    return Object.keys(this.componentStepMapping).length - 1;
   }
 
   get businessEndpoint() {
     return `entities/business/${this.businessId}`
+  }
+
+  get formDisabled() {
+    return this.formLoading || this.businessProvisioned;
   }
 
   private coreInfoRef: any;
@@ -128,6 +193,7 @@ export class PaymentProvisioning {
       ref={(el) => this.refs[7] = el}
       onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
+      onSubmitted={() => this.postProvisioningData()}
     />,
   };
 
@@ -189,7 +255,7 @@ export class PaymentProvisioning {
                   type="button"
                   class="btn btn-secondary"
                   onClick={() => this.previousStepButtonOnClick()}
-                  disabled={this.formLoading}>
+                  disabled={this.formDisabled}>
                   Previous
                 </button>
               )}
@@ -198,7 +264,7 @@ export class PaymentProvisioning {
                   type="button"
                   class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                   onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
-                  disabled={this.formLoading}>
+                  disabled={this.formDisabled}>
                   {this.formLoading ? LoadingSpinner() : 'Next'}
                 </button>
               )}
@@ -207,7 +273,7 @@ export class PaymentProvisioning {
                   type="submit"
                   class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
                   onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
-                  disabled={this.formLoading}>
+                  disabled={this.formDisabled}>
                   {this.formLoading ? LoadingSpinner() : 'Submit'}
                 </button>
               )}

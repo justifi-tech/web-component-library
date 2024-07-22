@@ -60,6 +60,12 @@ const meta: Meta = {
       table: {
         category: 'events'
       }
+    },
+    'error-event': {
+      description: '`ComponentError` - emitted when a network error occurs in the component.',
+      table: {
+        category: 'events'
+      }
     }
   },
   parameters: {
