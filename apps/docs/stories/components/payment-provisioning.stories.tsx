@@ -18,24 +18,13 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     'form-title': {
       type: 'string',
-      description: 'This prop updates the value of the title displayed at the top of the form.',
+      description: 'This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.',
       control: {
         type: 'text',
       },
       table: {
         category: 'props',
         defaultValue: { summary: 'Business Information' }
-      }
-    },
-    'remove-title': {
-      type: 'boolean',
-      description: 'This prop removes the title displayed at the top of the form.',
-      control: {
-        type: 'boolean',
-      },
-      table: {
-        category: 'props',
-        defaultValue: { summary: 'false' }
       }
     },
     'allow-optional-fields': {
