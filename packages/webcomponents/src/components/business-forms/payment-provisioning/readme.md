@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property              | Attribute               | Description | Type                            | Default     |
@@ -13,11 +14,13 @@
 | `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void` | `undefined` |
 | `refs`                | --                      |             | `any[]`                         | `undefined` |
 
+
 ## Events
 
 | Event           | Description | Type               |
 | --------------- | ----------- | ------------------ |
 | `formCompleted` |             | `CustomEvent<any>` |
+
 
 ## Dependencies
 
@@ -37,7 +40,6 @@
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
-
 ```mermaid
 graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
@@ -94,6 +96,6 @@ graph TD;
   style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

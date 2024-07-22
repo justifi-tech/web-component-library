@@ -18,7 +18,7 @@ const config = {
     '@chromatic-com/storybook',
   ],
   docs: {
-    autodocs: false,
+    autodocs: true,
   },
   staticDirs: ['../public'],
   core: {
