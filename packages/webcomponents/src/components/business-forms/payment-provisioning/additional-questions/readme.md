@@ -46,7 +46,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning](..)
+ - [justifi-payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -66,7 +66,7 @@ graph TD;
   form-control-select --> form-control-error-text
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
-  justifi-payment-provisioning --> justifi-additional-questions-form-step
+  justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
   style justifi-additional-questions-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
