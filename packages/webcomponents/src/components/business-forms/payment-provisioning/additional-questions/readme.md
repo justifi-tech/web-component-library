@@ -16,11 +16,11 @@
 
 ## Events
 
-| Event         | Description | Type                                        |
-| ------------- | ----------- | ------------------------------------------- |
-| `formLoading` |             | `CustomEvent<boolean>`                      |
-| `serverError` |             | `CustomEvent<BusinessFormServerErrorEvent>` |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>`      |
+| Event         | Description | Type                                   |
+| ------------- | ----------- | -------------------------------------- |
+| `error-event` |             | `CustomEvent<ComponentError>`          |
+| `formLoading` |             | `CustomEvent<boolean>`                 |
+| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
 
 
 ## Methods

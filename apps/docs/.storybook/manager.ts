@@ -4,4 +4,7 @@ import './styles.css';
 
 addons.setConfig({
   theme: theme,
+  toolbar: {
+    zoom: { hidden: true },
+  },
 });

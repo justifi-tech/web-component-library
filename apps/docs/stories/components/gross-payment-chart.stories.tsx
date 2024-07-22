@@ -40,6 +40,6 @@ const meta: Meta = {
   ]
 };
 
-export const Basic: Story = {};
+export const Example: Story = {};
 
 export default meta;
