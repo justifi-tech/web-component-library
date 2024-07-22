@@ -10,6 +10,11 @@
         "^build"
       ]
     },
+    "test": {
+      "dependsOn": [
+        "build"
+      ]
+    },
     "test:e2e": {},
     "test:file": {},
     "lint": {},
