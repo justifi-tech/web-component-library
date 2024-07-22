@@ -32,7 +32,8 @@ export class LegalAddressFormStepCore {
   };
 
   get patchPayload() {
-    return parseAddressInfo(this.formController.values.getValue());
+    let formValues = parseAddressInfo(this.formController.values.getValue());
+    return JSON.stringify({ legal_address: formValues });
   }
 
   componentWillLoad() {
@@ -68,7 +69,7 @@ export class LegalAddressFormStepCore {
     let submittedData;
     this.formLoading.emit(true);
     this.patchBusiness({
-      payload: JSON.stringify({ legal_address: this.patchPayload }),
+      payload: this.patchPayload,
       onSuccess: (response) => {
         submittedData = response;
         onSuccess();
