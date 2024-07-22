@@ -50,7 +50,7 @@ export class AdditionalQuestionsFormStepCore {
     this.formLoading.emit(true);
     this.getBusiness({
       onSuccess: (response) => {
-        this.additional_questions = new AdditionalQuestions(response.data);
+        this.additional_questions = new AdditionalQuestions(response.data.additional_questions || {});
         this.formController.setInitialValues({ ...this.additional_questions });
       },
       onError: ({ error, code, severity }) => {
