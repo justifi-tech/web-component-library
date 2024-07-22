@@ -44,7 +44,7 @@
  - [justifi-billing-form](../billing-form)
  - [justifi-business-bank-account-form-step](../business-forms/payment-provisioning/bank-account)
  - [justifi-business-core-info](../business-forms/business-form/business-core-info)
- - [justifi-business-core-info-form-step](../business-forms/payment-provisioning/business-core-info)
+ - [justifi-business-core-info-form-step-core](../business-forms/payment-provisioning/business-core-info)
  - [justifi-business-representative](../business-forms/business-form/business-representative)
  - [justifi-business-representative-form-step](../business-forms/payment-provisioning/business-representative)
  - [justifi-identity-address-form](../business-forms/owner-form/identity-address)
@@ -68,7 +68,7 @@ graph TD;
   justifi-billing-form --> form-control-text
   justifi-business-bank-account-form-step --> form-control-text
   justifi-business-core-info --> form-control-text
-  justifi-business-core-info-form-step --> form-control-text
+  justifi-business-core-info-form-step-core --> form-control-text
   justifi-business-representative --> form-control-text
   justifi-business-representative-form-step --> form-control-text
   justifi-identity-address-form --> form-control-text
