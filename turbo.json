@@ -10,15 +10,6 @@
         "^build"
       ]
     },
-    "build:mocks": {
-      "outputs": [
-        "dist/**",
-        "storybook-static/**"
-      ],
-      "dependsOn": [
-        "webcomponents#build"
-      ]
-    },
     "test": {
       "dependsOn": [
         "^build"
@@ -32,21 +23,6 @@
     "test:e2e": {},
     "test:file": {},
     "lint": {},
-    "dev": {
-      "cache": false,
-      "persistent": true,
-      "dependsOn": [
-        "webcomponents#build"
-      ]
-    },
-    "dev:mocks": {
-      "cache": false,
-      "persistent": true,
-      "dependsOn": [
-        "webcomponents#build",
-        "webcomponents#dev"
-      ]
-    },
     "preview-storybook": {
       "outputs": [
         "dist/**",

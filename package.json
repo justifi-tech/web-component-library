@@ -3,9 +3,9 @@
   "name": "web-component-library",
   "scripts": {
     "build": "turbo run build",
-    "build:mocks": "turbo run build:mocks",
-    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=false pnpm --filter @repo/docs dev'",
-    "dev:mocks": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'cross-env VITE_STORYBOOK_MOCKS_ENABLED=true pnpm --filter @repo/docs dev'",
+    "build:mocks": "concurrently 'pnpm --filter @justifi/webcomponents build' 'pnpm --filter @repo/docs build:mocks'",
+    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev'",
+    "dev:mocks": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev:mocks'",
     "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",

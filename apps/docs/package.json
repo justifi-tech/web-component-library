@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "storybook dev -p 6006",
+    "dev:mocks": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true storybook dev -p 6006",
     "build": "storybook build",
     "build:mocks": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true storybook build",
     "build:chromatic": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true VITE_STORYBOOK_CHROMATIC_BUILD=true storybook build",
