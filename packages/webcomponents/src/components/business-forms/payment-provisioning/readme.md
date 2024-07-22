@@ -65,8 +65,9 @@ graph TD;
   form-control-date --> form-control-error-text
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
-  justifi-legal-address-form-step --> form-control-text
-  justifi-legal-address-form-step --> form-control-select
+  justifi-legal-address-form-step --> justifi-legal-address-form-step-core
+  justifi-legal-address-form-step-core --> form-control-text
+  justifi-legal-address-form-step-core --> form-control-select
   justifi-additional-questions-form-step --> form-control-monetary
   justifi-additional-questions-form-step --> form-control-select
   justifi-additional-questions-form-step --> form-control-text
