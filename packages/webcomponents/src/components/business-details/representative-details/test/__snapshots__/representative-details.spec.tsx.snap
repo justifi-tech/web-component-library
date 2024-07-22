@@ -2,7 +2,7 @@
 
 exports[`RepresentativeDetails should render 1`] = `
 <representative-details>
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <h5 class="mt-4" part="detail-section-title">
       Representative Details
     </h5>
@@ -95,6 +95,6 @@ exports[`RepresentativeDetails should render 1`] = `
         </div>
       </div>
     </div>
-  </template>
+  </mock:shadow-root>
 </representative-details>
 `;

@@ -2,7 +2,7 @@
 
 exports[`justifi-payment-form should correctly render the child components based on the given props and state 1`] = `
 <justifi-payment-form payment-method-form-type="card" submit-button-text="Submit">
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <form class="gy-3 row">
       <div class="col-12">
         <justifi-payment-method-selector selectedpaymentmethodtype="card"></justifi-payment-method-selector>
@@ -20,6 +20,6 @@ exports[`justifi-payment-form should correctly render the child components based
         </button>
       </div>
     </form>
-  </template>
+  </mock:shadow-root>
 </justifi-payment-form>
 `;

@@ -2,36 +2,36 @@
 
 exports[`payouts-list renders an error message when accountId and authToken are not provided 1`] = `
 <justifi-payouts-list>
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
         Account ID and Auth Token are required
       </div>
     </main>
-  </template>
+  </mock:shadow-root>
 </justifi-payouts-list>
 `;
 
 exports[`payouts-list renders an error message when accountId is not provided 1`] = `
 <justifi-payouts-list auth-token="abc">
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
         Account ID and Auth Token are required
       </div>
     </main>
-  </template>
+  </mock:shadow-root>
 </justifi-payouts-list>
 `;
 
 exports[`payouts-list renders an error message when authToken is not provided 1`] = `
 <justifi-payouts-list account-id="abc">
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
         Account ID and Auth Token are required
       </div>
     </main>
-  </template>
+  </mock:shadow-root>
 </justifi-payouts-list>
 `;

@@ -2,7 +2,7 @@
 
 exports[`additional-questions-details should render additional-questions-details 1`] = `
 <additional-questions-details>
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <h5 class="mt-4" part="detail-section-title">
       Additional Questions
     </h5>
@@ -29,6 +29,6 @@ exports[`additional-questions-details should render additional-questions-details
         </div>
       </div>
     </div>
-  </template>
+  </mock:shadow-root>
 </additional-questions-details>
 `;

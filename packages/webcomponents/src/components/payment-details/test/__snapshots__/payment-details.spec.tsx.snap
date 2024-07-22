@@ -2,36 +2,36 @@
 
 exports[`payment-details renders an error message when authToken is not provided 1`] = `
 <justifi-payment-details payment-id="abc">
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
         Payment ID and Auth Token are required
       </div>
     </main>
-  </template>
+  </mock:shadow-root>
 </justifi-payment-details>
 `;
 
 exports[`payment-details renders an error message when paymentId and authToken are not provided 1`] = `
 <justifi-payment-details>
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
         Payment ID and Auth Token are required
       </div>
     </main>
-  </template>
+  </mock:shadow-root>
 </justifi-payment-details>
 `;
 
 exports[`payment-details renders an error message when paymentId is not provided 1`] = `
 <justifi-payment-details auth-token="abc">
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
       <div>
         Payment ID and Auth Token are required
       </div>
     </main>
-  </template>
+  </mock:shadow-root>
 </justifi-payment-details>
 `;

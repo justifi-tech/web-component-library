@@ -2,7 +2,7 @@
 
 exports[`owner-details should render owner-details 1`] = `
 <owner-details>
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <h5 class="mt-4" part="detail-section-title">
       Owner Person Name's Details
     </h5>
@@ -97,6 +97,6 @@ exports[`owner-details should render owner-details 1`] = `
         </span>
       </div>
     </div>
-  </template>
+  </mock:shadow-root>
 </owner-details>
 `;

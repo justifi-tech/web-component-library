@@ -4,7 +4,7 @@ exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout>
   <!---->
   <justifi-checkout-core>
-    <template shadowrootmode="open">
+    <mock:shadow-root>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12 mb-4">
           <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -60,7 +60,7 @@ exports[`justifi-checkout renders loading 1`] = `
           </div>
         </div>
       </div>
-    </template>
+    </mock:shadow-root>
     <div slot="insurance"></div>
   </justifi-checkout-core>
 </justifi-checkout>

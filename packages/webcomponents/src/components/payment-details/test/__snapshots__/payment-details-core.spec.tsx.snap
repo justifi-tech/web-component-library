@@ -14,12 +14,12 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
 <payment-details-core>
   <justifi-details exportparts="detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
         detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info">
-    <template shadowrootmode="open">
+    <mock:shadow-root>
       <main class="p-2">
         <slot name="head-info"></slot>
         <slot name="detail-sections"></slot>
       </main>
-    </template>
+    </mock:shadow-root>
     <div class="p-2" part="detail-head" slot="head-info">
       <div class="align-items-center d-flex flex-row gap-2 mb-2">
         <h1 class="m-0" part="detail-title">

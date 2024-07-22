@@ -2,7 +2,7 @@
 
 exports[`LegalAddressDetails should render 1`] = `
 <legal-address-details>
-  <template shadowrootmode="open">
+  <mock:shadow-root>
     <h5 class="mt-4" part="detail-section-title">
       Business Legal Address Details
     </h5>
@@ -63,6 +63,6 @@ exports[`LegalAddressDetails should render 1`] = `
         </div>
       </div>
     </div>
-  </template>
+  </mock:shadow-root>
 </legal-address-details>
 `;
