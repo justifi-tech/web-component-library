@@ -66,22 +66,26 @@ export class BusinessCoreInfoFormStepCore {
   }
 
   private sendData = (onSuccess: () => void) => {
+    let submittedData;
     this.formLoading.emit(true);
     this.patchBusiness({
       payload: JSON.stringify(this.patchPayload),
       onSuccess: (response) => {
-        this.submitted.emit({ data: { response } });
+        submittedData = response;
         onSuccess();
       },
       onError: ({ error, code, severity }) => {
-        this.submitted.emit({ data: { error } });
+        submittedData = error;
         this.errorEvent.emit({
           message: error,
           errorCode: code,
           severity: severity
         });
       },
-      final: () => this.formLoading.emit(false)
+      final: () => {
+        this.submitted.emit({ data: { submittedData } });
+        this.formLoading.emit(false)
+      }
     });
   }
 
