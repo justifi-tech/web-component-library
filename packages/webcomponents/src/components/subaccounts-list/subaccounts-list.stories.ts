@@ -12,8 +12,8 @@ export default {
           console.log(e);
         })
       </script>
-    `
-  ]
+    `,
+  ],
 };
 
 class SubaccountsListArgs {
@@ -22,22 +22,22 @@ class SubaccountsListArgs {
 
   constructor(args) {
     this['auth-token'] = args['auth-token'] || config.privateAuthToken;
-    this['account-id'] = args['account-id'] || ''
+    this['account-id'] = args['account-id'] || '';
   }
 }
 
 const Template = (args: SubaccountsListArgs) => {
-  return (`
+  return `
     <justifi-subaccounts-list
       data-testid="justifi-subaccounts-list"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
     />
-  `);
+  `;
 };
 
-export const Basic = Template.bind({});
-Basic.args = new SubaccountsListArgs({});
+export const Example = Template.bind({});
+Example.args = new SubaccountsListArgs({});
 
 export const Styled = Template.bind({});
 Styled.args = new SubaccountsListArgs({});
@@ -73,5 +73,5 @@ Styled.decorators = [
         background-color: #F4F4F6;
       }
     </style>
-  `
-]
+  `,
+];

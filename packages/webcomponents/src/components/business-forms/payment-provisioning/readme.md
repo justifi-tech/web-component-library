@@ -7,25 +7,28 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type      | Default                  |
-| --------------------- | ----------------------- | ----------- | --------- | ------------------------ |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean` | `false`                  |
-| `authToken`           | `auth-token`            |             | `string`  | `undefined`              |
-| `businessId`          | `business-id`           |             | `string`  | `undefined`              |
-| `formTitle`           | `form-title`            |             | `string`  | `'Business Information'` |
-| `hideErrors`          | `hide-errors`           |             | `boolean` | `false`                  |
-| `removeTitle`         | `remove-title`          |             | `boolean` | `false`                  |
-| `testMode`            | `test-mode`             |             | `boolean` | `false`                  |
+| Property              | Attribute               | Description | Type                            | Default     |
+| --------------------- | ----------------------- | ----------- | ------------------------------- | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                       | `false`     |
+| `authToken`           | `auth-token`            |             | `string`                        | `undefined` |
+| `businessId`          | `business-id`           |             | `string`                        | `undefined` |
+| `currentStep`         | `current-step`          |             | `number`                        | `undefined` |
+| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void` | `undefined` |
+| `refs`                | --                      |             | `any[]`                         | `undefined` |
 
 
 ## Events
 
-| Event         | Description | Type                                  |
-| ------------- | ----------- | ------------------------------------- |
-| `click-event` |             | `CustomEvent<BusinessFormClickEvent>` |
+| Event           | Description | Type               |
+| --------------- | ----------- | ------------------ |
+| `formCompleted` |             | `CustomEvent<any>` |
 
 
 ## Dependencies
+
+### Used by
+
+ - [justifi-payment-provisioning-core](.)
 
 ### Depends on
 
@@ -37,20 +40,18 @@
 - [justifi-business-bank-account-form-step](bank-account)
 - [justifi-business-document-upload-form-step](document-uploads)
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
-- [form-alert](../../form/form-helpers/form-alert)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-provisioning --> justifi-business-core-info-form-step
-  justifi-payment-provisioning --> justifi-legal-address-form-step
-  justifi-payment-provisioning --> justifi-additional-questions-form-step
-  justifi-payment-provisioning --> justifi-business-representative-form-step
-  justifi-payment-provisioning --> justifi-business-owners-form-step
-  justifi-payment-provisioning --> justifi-business-bank-account-form-step
-  justifi-payment-provisioning --> justifi-business-document-upload-form-step
-  justifi-payment-provisioning --> justifi-business-terms-conditions-form-step
-  justifi-payment-provisioning --> form-alert
+  justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
+  justifi-payment-provisioning-form-steps --> justifi-legal-address-form-step
+  justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-document-upload-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
   justifi-business-core-info-form-step --> form-control-text
   justifi-business-core-info-form-step --> form-control-select
   justifi-business-core-info-form-step --> form-control-date
@@ -93,7 +94,8 @@ graph TD;
   justifi-business-terms-conditions-form-step --> form-control-checkbox
   form-control-checkbox --> form-control-help-text
   form-control-checkbox --> form-control-error-text
-  style justifi-payment-provisioning fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-provisioning-core --> justifi-payment-provisioning-form-steps
+  style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

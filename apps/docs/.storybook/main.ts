@@ -1,18 +1,26 @@
-import { mergeConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { mergeConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 const config = {
-  framework: "@storybook/web-components-vite",
-  stories: ["../stories/**/*.stories.@(mdx|ts|tsx)"],
+  framework: '@storybook/web-components-vite',
+  stories: ['../stories/**/*.stories.@(mdx|ts|tsx)'],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-docs",
+    '@storybook/addon-links',
+    {
+      name: '@storybook/addon-essentials',
+      options: {
+        measure: false,
+        outline: false,
+        backgrounds: false,
+        viewport: false,
+      },
+    },
+    '@storybook/addon-docs',
   ],
   docs: {
     autodocs: true,
   },
-  staticDirs: ["../public"],
+  staticDirs: ['../public'],
   async viteFinal(config) {
     const storybookMocksEnabled = process.env.VITE_STORYBOOK_MOCKS_ENABLED;
     const storybookChromaticBuild = process.env.VITE_STORYBOOK_CHROMATIC_BUILD;

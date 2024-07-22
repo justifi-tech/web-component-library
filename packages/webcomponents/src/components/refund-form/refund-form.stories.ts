@@ -105,8 +105,8 @@ const RefundFormTemplate = ({
   `;
 };
 
-export const Basic = RefundFormTemplate.bind({});
-Basic.args = {
+export const Example = RefundFormTemplate.bind({});
+Example.args = {
   authToken: '',
   paymentId: '',
   amount: 0,

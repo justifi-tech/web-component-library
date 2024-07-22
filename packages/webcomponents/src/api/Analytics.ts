@@ -64,12 +64,15 @@ class JustifiAnalytics {
 
     // for each event, add an event listener
     this.eventEmitters.forEach((eventName) => {
-      this.componentInstance.addEventListener(eventName, (event: any) =>
-        this.handleCustomEvent({
-          event_type: eventName,
-          data: { ...this.basicData, error: event.detail },
-        })
-      );
+      // if this.componentInstance.addEventListener is a function add the event listener
+      if (typeof this.componentInstance.addEventListener === 'function') {
+        this.componentInstance.addEventListener(eventName, (event: any) =>
+          this.handleCustomEvent({
+            event_type: eventName,
+            data: { ...this.basicData, error: event.detail },
+          })
+        );
+      }
     });
   }
 

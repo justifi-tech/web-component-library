@@ -16,12 +16,12 @@
 
 ## Events
 
-| Event         | Description | Type                                        |
-| ------------- | ----------- | ------------------------------------------- |
-| `click-event` |             | `CustomEvent<OwnerFormClickEvent>`          |
-| `formLoading` |             | `CustomEvent<boolean>`                      |
-| `serverError` |             | `CustomEvent<BusinessFormServerErrorEvent>` |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>`      |
+| Event         | Description | Type                                   |
+| ------------- | ----------- | -------------------------------------- |
+| `click-event` |             | `CustomEvent<OwnerFormClickEvent>`     |
+| `error-event` |             | `CustomEvent<ComponentError>`          |
+| `formLoading` |             | `CustomEvent<boolean>`                 |
+| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
 
 
 ## Methods
@@ -47,7 +47,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning](..)
+ - [justifi-payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -71,7 +71,7 @@ graph TD;
   justifi-identity-address-form --> form-control-select
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
-  justifi-payment-provisioning --> justifi-business-owners-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
   style justifi-business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -22,11 +22,11 @@ and the other one  is meant to be just read only.
 
 ## Events
 
-| Event         | Description | Type                                        |
-| ------------- | ----------- | ------------------------------------------- |
-| `formLoading` |             | `CustomEvent<boolean>`                      |
-| `serverError` |             | `CustomEvent<BusinessFormServerErrorEvent>` |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>`      |
+| Event         | Description | Type                                   |
+| ------------- | ----------- | -------------------------------------- |
+| `error-event` |             | `CustomEvent<ComponentError>`          |
+| `formLoading` |             | `CustomEvent<boolean>`                 |
+| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
 
 
 ## Methods
@@ -52,7 +52,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning](..)
+ - [justifi-payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -76,7 +76,7 @@ graph TD;
   form-control-date --> form-control-error-text
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
-  justifi-payment-provisioning --> justifi-business-core-info-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
   style justifi-business-core-info-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
