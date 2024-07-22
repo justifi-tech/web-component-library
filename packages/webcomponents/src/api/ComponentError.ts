@@ -5,7 +5,9 @@ export enum ComponentErrorCodes {
   POST_ERROR = 'post-error',
   UNKNOWN_ERROR = 'unknown-error',
   TOKENIZE_ERROR = 'tokenize-error',
-  NOT_AUTHENTICATED = 'not-authenticated'
+  NOT_AUTHENTICATED = 'not-authenticated',
+  INVALID_PARAMETER = 'invalid-parameter',
+  PROVISIONING_REQUESTED = 'provisioning-already-requested',
 }
 
 export enum ComponentErrorSeverity {

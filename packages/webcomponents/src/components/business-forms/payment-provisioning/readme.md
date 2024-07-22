@@ -1,9 +1,6 @@
 # justifi-business-info
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -15,14 +12,13 @@
 | `formTitle`           | `form-title`            |             | `string`  | `'Business Information'` |
 | `removeTitle`         | `remove-title`          |             | `boolean` | `false`                  |
 
-
 ## Events
 
-| Event         | Description | Type                                  |
-| ------------- | ----------- | ------------------------------------- |
-| `click-event` |             | `CustomEvent<BusinessFormClickEvent>` |
-| `error-event` |             | `CustomEvent<ComponentError>`         |
-
+| Event         | Description | Type                                   |
+| ------------- | ----------- | -------------------------------------- |
+| `click-event` |             | `CustomEvent<BusinessFormClickEvent>`  |
+| `error-event` |             | `CustomEvent<ComponentError>`          |
+| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
 
 ## Dependencies
 
@@ -38,6 +34,7 @@
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
+
 ```mermaid
 graph TD;
   justifi-payment-provisioning --> justifi-business-core-info-form-step
@@ -93,6 +90,6 @@ graph TD;
   style justifi-payment-provisioning fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
