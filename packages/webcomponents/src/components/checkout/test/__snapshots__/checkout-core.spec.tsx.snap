@@ -4,7 +4,7 @@ exports[`justifi-checkout-core should display error state correctly 1`] = `<chec
 
 exports[`justifi-checkout-core should display loading state correctly 1`] = `
 <justifi-checkout-core>
-  <mock:shadow-root>
+  <template shadowrootmode="open">
     <div class="gy-3 jfi-checkout-core row">
       <div class="col-12 mb-4">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -60,13 +60,13 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
         </div>
       </div>
     </div>
-  </mock:shadow-root>
+  </template>
 </justifi-checkout-core>
 `;
 
 exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
 <justifi-checkout-core>
-  <mock:shadow-root>
+  <template shadowrootmode="open">
     <div class="gy-3 jfi-checkout-core row">
       <div class="col-12 mb-4">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -120,6 +120,6 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
         </div>
       </div>
     </div>
-  </mock:shadow-root>
+  </template>
 </justifi-checkout-core>
 `;
