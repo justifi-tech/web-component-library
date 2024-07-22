@@ -42,7 +42,7 @@ export class PaymentProvisioning {
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
     this.initializeApi();
-    this.fetchBusiness();
+    this.setBusinessProvisioned();
 
     this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.documentUploadRef, this.termsRef];
   }
@@ -73,7 +73,7 @@ export class PaymentProvisioning {
     }
   }
 
-  fetchBusiness() {
+  setBusinessProvisioned() {
     this.getBusiness({
       onSuccess: (response) => {
         this.businessProvisioned = checkProvisioningStatus(response.data);
