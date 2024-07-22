@@ -2,23 +2,17 @@ import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { BusinessCoreInfoFormStepCore } from './business-core-info-form-step-core';
 
 /**
- *
- * The difference between this component and business-generic-info-details
- * is that this component is meant to be a form and send data
- * and the other one  is meant to be just read only.
- *
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
+ * @exportedPart input-invalid: Invalid state for inputs
  */
 @Component({
   tag: 'justifi-business-core-info-form-step'
 })
 export class BusinessCoreInfoFormStep {
-  coreComponent: BusinessCoreInfoFormStepCore;
+  coreComponent: HTMLJustifiBusinessCoreInfoFormStepCoreElement;
 
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
@@ -73,7 +67,7 @@ export class BusinessCoreInfoFormStep {
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
-        ref={(el) => this.coreComponent = el as any}
+        ref={el => this.coreComponent = el}
       />
     );
   }
