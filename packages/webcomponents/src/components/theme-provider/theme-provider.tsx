@@ -16,15 +16,32 @@ export class ThemeProvider {
     this.appendStylesheet(`https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${version}/dist/webcomponents/webcomponents.css`);
 
     if (this.href) {
-      this.appendStylesheet(this.href);
+      this.appendStylesheet(this.href, true);
     }
   }
 
-  appendStylesheet(href: string) {
+  appendStylesheet(href: string, customStyles = false) {
     const documentHead = document.head;
-    const baseStylesheet = document.createElement('link');
-    baseStylesheet.rel = 'stylesheet';
-    baseStylesheet.href = href;
-    documentHead.appendChild(baseStylesheet);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+
+    if (customStyles) {
+      // Wait to parse so that the browser has a chance to cache the stylesheet
+      link.onload = this.parseTheme.bind(this, href);
+    }
+
+    documentHead.appendChild(link);
+  }
+
+  parseTheme(href: string) {
+    fetch(href)
+      .then(response => response.text())
+      .then(css => {
+        console.log('Fetched stylesheet:', css);
+      })
+      .catch(error => {
+        console.error('Error fetching stylesheet:', error);
+      });
   }
 }
