@@ -1,0 +1,242 @@
+import { Meta, Source } from '@storybook/blocks';
+import dedent from 'ts-dedent';
+import {
+  SummaryElement,
+  extractWebcomponentsVersion,
+  CSSVars,
+} from './../utils';
+
+<Meta title="Frameworks/React" />
+
+# Justifi React web components
+
+# Index
+
+* [Usage](#usage)
+* [Usage details](#usage-details)
+  * [Calling methods](#calling-methods)
+  * [Listening to events](#listening-to-events)
+* [Styling exported parts](#styling-exported-parts)
+
+# Usage
+
+To use the web-components in a React app you need to add the CDN script and the link to the default styles to your `index.html` file:
+
+<Source
+  language="bash"
+  dark
+  format={false}
+  code={dedent`
+    <head>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.css"
+      />
+      <script
+        async
+        type="module"
+        src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+      />
+    </head>
+  `}
+/>
+
+or install it from NPM and import in your React application:
+
+<Source
+  language="bash"
+  dark
+  format={false}
+  code={dedent`
+    npm install --save @justifi/webcomponents
+  `}
+/>
+
+For instance, to use the `justifi-card-form` web component:
+
+<Source
+  language="javascript"
+  dark
+  format={false}
+  code={dedent`
+    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
+  `}
+/>
+
+Then you can use the components as any other HTML element:
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    <justifi-card-form
+      single-line="true"
+      validation-mode="onSubmit"
+    />
+`}
+/>
+
+# Usage details
+
+## Tyepscript integration
+
+To integrate with TypeScript, declare the component in the JSX.IntrinsicElements interface. This helps TypeScript understand the custom element, its attributes, and events.
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    // create a file called "register-web-components.ts"
+    import { JSX as LocalJSX } from '@justifi/webcomponents/dist/loader';
+    import { HTMLAttributes } from 'react';
+
+    type StencilToReact<T> = {
+      [P in keyof T]?: T[P] &
+        Omit<HTMLAttributes<Element>, 'className'> & {
+          class?: string;
+        };
+    };
+
+    declare global {
+      export namespace JSX {
+        interface IntrinsicElements
+          extends StencilToReact<LocalJSX.IntrinsicElements> {}
+      }
+    }
+
+`}
+/>
+
+## Calling Methods
+
+In some scenarios, you might need to programmatically call methods on the justifi-payment-form web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
+
+### Creating a Ref to the Component
+
+Create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    import React, { useRef } from 'react';
+
+    export default function CardFormComponent() {
+      // create the ref
+      const formRef = useRef(null);
+
+      const handleSubmit = () => {
+        const form = formRef.current;
+        if (form) {
+          form.tokenize();
+        }
+      };
+
+      return (
+        <justifi-card-form
+          // attach the ref to the web component
+          ref={formRef}
+          validation-mode="onBlur"
+        />
+      );
+    }
+
+`}
+/>
+
+## Listening to events
+
+React allows attaching event listeners directly to JSX components. For custom events emitted by justifi-payment-form, use the addEventListener method within a useEffect hook or a ref callback.
+
+Example of handling a custom event:
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    import React, { useEffect, useRef } from 'react';
+
+    export default function PaymentFormComponent() {
+      const formRef = useRef(null);
+
+      useEffect(() => {
+        const form = formRef.current;
+        if (form) {
+          const handleSubmit = (event) => {
+            // Handle the submit event
+          };
+          form.addEventListener('submitted', handleSubmit);
+
+          // Cleanup
+          return () => form.removeEventListener('submitted', handleSubmit);
+        }
+      }, []);
+
+      return (
+        <justifi-payment-form
+          ref={formRef}
+          client-id="your-client-id"
+          email="customer@example.com"
+          // ... other props
+        />
+      );
+    }
+
+`}
+/>
+
+# Styling
+
+Styling works similarly to the vanilla web components.
+
+## Components styled with variables
+
+The following components can only be styled through CSS variables:
+
+* [BankAccountForm](?path=/docs/components-bankaccountform--docs)
+* [CardForm](?path=/docs/components-cardform--docs)
+* [PaymentForm](?path=/docs/components-paymentform--docs)
+
+You can easily override the variables in a `<style>` tag in any place of your App, both in the `<head>` of your root `index.html` or at any component level.
+
+<Source
+  language="jsx"
+  dark
+  format={false}
+  code={dedent`
+    <YourComponent>
+      <style>
+        {\`:root {
+          --jfi-variable: 'override value';
+        }\`}
+      </style>
+
+      <JustifiPaymentForm />
+    </YourComponent>
+
+`}
+/>
+
+<SummaryElement title="See full list of CSS variables available">
+  <CSSVars />
+</SummaryElement>
+
+## Styling exported parts
+
+For components that are not in an iFrame, you'll find a list of `exportedparts` on their docs page.
+
+<Source
+  language="css"
+  dark
+  code={dedent`
+    /* Given an exportedpart of "label" for example */
+    the-component-tag:part(label) {
+      /* Your custom css */
+    }
+  `}
+/>

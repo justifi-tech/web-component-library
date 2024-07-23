@@ -19,22 +19,23 @@ export const config: Config = {
         './src/styles/_mixins.scss',
       ],
       includePaths: ['./node_modules/bootstrap/scss/'],
-    })
+    }),
   ],
   outputTargets: [
     {
-      type: 'dist'
+      type: 'dist',
     },
     {
       type: 'dist-custom-elements',
       dir: 'dist/module',
       customElementsExportBehavior: 'auto-define-custom-elements',
-      isPrimaryPackageOutputTarget: true
+      isPrimaryPackageOutputTarget: true,
     },
     {
       type: 'docs-json',
       file: './dist/docs.json',
     },
   ],
-  sourceMap: false
+  validatePrimaryPackageOutputTarget: true,
+  sourceMap: false,
 };

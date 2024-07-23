@@ -2,7 +2,7 @@
 
 exports[`GenericInfoDetails should render 1`] = `
 <generic-info-details>
-  <mock:shadow-root>
+  <template shadowrootmode="open">
     <h5 class="mt-4" part="detail-section-title">
       Business Generic Info Details
     </h5>
@@ -79,6 +79,6 @@ exports[`GenericInfoDetails should render 1`] = `
         </div>
       </div>
     </div>
-  </mock:shadow-root>
+  </template>
 </generic-info-details>
 `;
