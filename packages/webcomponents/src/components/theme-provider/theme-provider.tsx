@@ -9,6 +9,9 @@ export class ThemeProvider {
   @Prop() href: string; // URL to the theme css file
 
   componentWillLoad() {
+    // The order in which these stylesheets get appended is important for css overriding purposes.
+    // Make sure that the theme stylesheet which is passed via the href prop is appended last.
+
     // This should pull the local stylesheet in development
     this.appendStylesheet(`https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${version}/dist/webcomponents/webcomponents.css`);
 
