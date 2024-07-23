@@ -50,10 +50,11 @@ graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-document-upload-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
-  justifi-business-core-info-form-step --> form-control-text
-  justifi-business-core-info-form-step --> form-control-select
-  justifi-business-core-info-form-step --> form-control-date
-  justifi-business-core-info-form-step --> form-control-number-masked
+  justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
+  justifi-business-core-info-form-step-core --> form-control-text
+  justifi-business-core-info-form-step-core --> form-control-select
+  justifi-business-core-info-form-step-core --> form-control-date
+  justifi-business-core-info-form-step-core --> form-control-number-masked
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-select --> form-control-help-text

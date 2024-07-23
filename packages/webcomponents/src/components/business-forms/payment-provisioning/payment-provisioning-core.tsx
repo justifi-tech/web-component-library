@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Host, Listen } from '@stencil/core';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { checkProvisioningStatus } from '../utils/helpers';
@@ -7,7 +7,7 @@ import { checkProvisioningStatus } from '../utils/helpers';
   tag: 'justifi-payment-provisioning-core',
 })
 export class PaymentProvisioningCore {
-  @State() formLoading: boolean = false;
+  @State() loading: boolean = false;
   @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
@@ -82,7 +82,7 @@ export class PaymentProvisioningCore {
   }
 
   get formDisabled() {
-    return this.formLoading || this.businessProvisioned;
+    return this.loading || this.businessProvisioned;
   }
 
   get totalSteps() {
@@ -93,8 +93,9 @@ export class PaymentProvisioningCore {
     return `${this.currentStep + 1} of ${this.totalSteps + 1}`;
   }
 
-  handleFormLoading = (e: CustomEvent) => {
-    this.formLoading = e.detail;
+  @Listen('formLoading')
+  handleFormLoading(event: CustomEvent) {
+    this.loading = event.detail;
   }
   
   incrementSteps = () => {
@@ -139,7 +140,7 @@ export class PaymentProvisioningCore {
             <justifi-payment-provisioning-form-buttons 
               currentStep={this.currentStep}
               totalSteps={this.totalSteps}
-              formLoading={this.formLoading}
+              formLoading={this.loading}
               formDisabled={this.formDisabled}
               previousStepButtonOnClick={this.previousStepButtonOnClick}
               nextStepButtonOnClick={this.nextStepButtonOnClick}
