@@ -2,10 +2,10 @@
 
 exports[`justifi-season-interruption-insurance renders loading 1`] = `
 <justifi-season-interruption-insurance auth-token="123">
-  <mock:shadow-root>
+  <template shadowrootmode="open">
     <justifi-season-interruption-insurance-core>
-      <mock:shadow-root></mock:shadow-root>
+      <template shadowrootmode="open"></template>
     </justifi-season-interruption-insurance-core>
-  </mock:shadow-root>
+  </template>
 </justifi-season-interruption-insurance>
 `;

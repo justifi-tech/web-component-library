@@ -2,7 +2,7 @@
 
 exports[`justifi-season-interruption-insurance-core loads and sets the quote to state correctly 1`] = `
 <justifi-season-interruption-insurance-core auth-token="123">
-  <mock:shadow-root>
+  <template shadowrootmode="open">
     <div>
       <h2 class="fs-5 fw-bold jfi-header pb-3">
         Add Registration Protection
@@ -44,19 +44,19 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
         </p>
       </small>
     </div>
-  </mock:shadow-root>
+  </template>
 </justifi-season-interruption-insurance-core>
 `;
 
 exports[`justifi-season-interruption-insurance-core should display loading state correctly 1`] = `
 <justifi-season-interruption-insurance-core auth-token="123">
-  <mock:shadow-root></mock:shadow-root>
+  <template shadowrootmode="open"></template>
 </justifi-season-interruption-insurance-core>
 `;
 
 exports[`justifi-season-interruption-insurance-core validates that a selection was made 1`] = `
 <justifi-season-interruption-insurance-core auth-token="123">
-  <mock:shadow-root>
+  <template shadowrootmode="open">
     <div>
       <h2 class="fs-5 fw-bold jfi-header pb-3">
         Add Registration Protection
@@ -98,6 +98,6 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
         </p>
       </small>
     </div>
-  </mock:shadow-root>
+  </template>
 </justifi-season-interruption-insurance-core>
 `;
