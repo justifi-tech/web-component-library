@@ -21,20 +21,20 @@
     },
     "test": {
       "dependsOn": [
-        "^build"
-      ]
-    },
-    "test:watch": {
-      "dependsOn": [
-        "^build"
+        "build"
       ]
     },
     "test:e2e": {},
     "test:file": {},
     "lint": {},
-    "dev": {
-      "cache": false,
-      "persistent": true
+    "preview-storybook": {
+      "outputs": [
+        "dist/**",
+        "storybook-static/**"
+      ],
+      "dependsOn": [
+        "build"
+      ]
     },
     "clean": {
       "cache": false
