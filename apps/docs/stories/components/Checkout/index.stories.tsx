@@ -5,6 +5,7 @@ import themes, { ThemeNames } from "../../themes";
 import { setUpMocks } from "../../utils/mockAllServices";
 
 import "@justifi/webcomponents/dist/module/justifi-checkout";
+import "@justifi/webcomponents/dist/module/justifi-season-interruption-insurance";
 
 const storyBaseArgs = new StoryBaseArgs(["auth-token"]);
 

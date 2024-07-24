@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { withActions } from '@storybook/addon-actions/decorator';
-import { StoryBaseArgs, customStoryDecorator } from '../utils';
+import { StoryBaseArgs, customStoryDecorator } from '../../utils';
 
 import '@justifi/webcomponents/dist/module/justifi-season-interruption-insurance';
 

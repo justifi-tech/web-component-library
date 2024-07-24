@@ -37,7 +37,9 @@ export class SeasonInterruptionInsuranceCore {
   }
 
   componentWillLoad() {
+    console.log('### componentWillLoad')
     if (this.getQuote) {
+      console.log('### fetching data')
       this.fetchData();
     }
   };

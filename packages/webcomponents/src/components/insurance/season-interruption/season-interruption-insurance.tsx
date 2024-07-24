@@ -36,6 +36,7 @@ export class SeasonInterruptionInsurance {
   }
 
   componentWillLoad() {
+    console.log('### componentWillLoad ins season interruption');
     this.initializeServiceMethods();
   }
 
