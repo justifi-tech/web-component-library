@@ -1,16 +1,10 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
 import { IBusiness } from '../../../../api/Business';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { Owner } from '../../../../api/Identity';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import {
-  BusinessFormStep,
-  BusinessFormSubmitEvent,
-  OwnerFormClickActions,
-  OwnerFormClickEvent
-}
-  from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormSubmitEvent, BusinessFormClickActions, BusinessFormClickEvent } from '../../utils/business-form-types';
 
 /**
  * @exportedPart label: Label for inputs
@@ -30,7 +24,7 @@ export class BusinessOwnersFormStep {
   @Prop() allowOptionalFields?: boolean;
   
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
@@ -141,7 +135,7 @@ export class BusinessOwnersFormStep {
     this.newFormOpen = true;
     const newOwner = { ...new Owner({}) };
     this.owners = [...this.owners, newOwner];
-    fireClick && this.clickEvent.emit({ name: OwnerFormClickActions.addOwnerForm });
+    fireClick && this.clickEvent.emit({ name: BusinessFormClickActions.addOwnerForm });
   };
 
   private removeOwnerForm = (id: string) => {
@@ -154,7 +148,8 @@ export class BusinessOwnersFormStep {
     this.manageRefs();
   }
 
-  private handleOwnerSubmit = (event) => {
+  @Listen('submitted')
+   handleOwnerSubmit(event) {
     const ownerData = event.detail.data.data;
 
     const currentIndex = this.owners.findIndex(owner => owner.id === ownerData.id);
@@ -183,8 +178,6 @@ export class BusinessOwnersFormStep {
                 removeOwner={this.removeOwnerForm}
                 newFormOpen={this.newFormOpen}
                 ownersLength={this.owners.length}
-                onSubmitted={(e: CustomEvent) => this.handleOwnerSubmit(e)}
-                onFormLoading={(e: CustomEvent) => this.formLoading.emit(e.detail)}
                 allowOptionalFields={this.allowOptionalFields}
                 ref={(ref) => { this.matchRef(ref, owner.id) }}
               />

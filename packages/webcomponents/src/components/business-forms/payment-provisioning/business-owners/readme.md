@@ -18,7 +18,7 @@
 
 | Event         | Description | Type                                   |
 | ------------- | ----------- | -------------------------------------- |
-| `click-event` |             | `CustomEvent<OwnerFormClickEvent>`     |
+| `click-event` |             | `CustomEvent<BusinessFormClickEvent>`  |
 | `error-event` |             | `CustomEvent<ComponentError>`          |
 | `formLoading` |             | `CustomEvent<boolean>`                 |
 | `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
@@ -57,10 +57,11 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   justifi-business-owners-form-step --> justifi-owner-form
-  justifi-owner-form --> form-control-text
-  justifi-owner-form --> form-control-number-masked
-  justifi-owner-form --> form-control-date
-  justifi-owner-form --> justifi-identity-address-form
+  justifi-owner-form --> owner-form-core
+  owner-form-core --> form-control-text
+  owner-form-core --> form-control-number-masked
+  owner-form-core --> form-control-date
+  owner-form-core --> justifi-identity-address-form
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
