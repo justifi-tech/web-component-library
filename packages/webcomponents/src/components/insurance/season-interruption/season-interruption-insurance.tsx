@@ -2,7 +2,6 @@ import { Component, Event, EventEmitter, Method, Prop, State, h } from '@stencil
 import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
-import { validateInsuranceValues } from '../insurance-state';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -29,12 +28,15 @@ export class SeasonInterruptionInsurance {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  private seasonInterruptionCoreRef?: HTMLJustifiSeasonInterruptionInsuranceCoreElement;
+
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    return validateInsuranceValues();
+    return this.seasonInterruptionCoreRef.validate();
   }
 
   componentWillLoad() {
+    console.log('### componentWillLoad ins season interruption');
     this.initializeServiceMethods();
   }
 
@@ -62,6 +64,7 @@ export class SeasonInterruptionInsurance {
   render() {
     return (
       <justifi-season-interruption-insurance-core
+        ref={(el) => (this.seasonInterruptionCoreRef = el)}
         checkout-id={this.checkoutId}
         getQuote={this.getQuote}
         toggleCoverage={this.toggleCoverage}

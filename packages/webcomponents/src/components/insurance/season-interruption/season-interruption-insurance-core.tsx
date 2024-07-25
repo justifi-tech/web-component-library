@@ -1,7 +1,7 @@
-import { Component, h, Host, Prop, State, Event, EventEmitter } from "@stencil/core";
+import { Component, h, Host, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
-import { insuranceValues, insuranceErrors } from "../insurance-state";
+import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
@@ -25,14 +25,23 @@ export class SeasonInterruptionInsuranceCore {
   @Prop() coveredIdentityLastName?: string;
 
   @State() quote: any;
-  @State() isLoading: boolean = false;
+  @State() isLoading: boolean = true;
   @State() accepted: boolean | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    return validateInsuranceValues();
+  }
+
   componentWillLoad() {
-    this.fetchData();
+    console.log('### componentWillLoad')
+    if (this.getQuote) {
+      console.log('### fetching data')
+      this.fetchData();
+    }
   };
 
   fetchData(): void {

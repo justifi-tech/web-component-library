@@ -1,8 +1,10 @@
 import { createStore } from '@stencil/store';
 
-const { state: insuranceValues, on: insuranceValuesOn } = createStore<any>({});
+const insuranceValuesStore = createStore<any>({});
+const { state: insuranceValues, on: insuranceValuesOn } = insuranceValuesStore;
 
-const { state: insuranceErrors } = createStore<any>({});
+const insuranceErrorsStore = createStore<any>({});
+const { state: insuranceErrors } = insuranceErrorsStore;
 
 const validateInsuranceValues = () => {
   let valid = true;
@@ -21,4 +23,11 @@ const validateInsuranceValues = () => {
   return { isValid: valid };
 };
 
-export { insuranceValues, insuranceValuesOn, insuranceErrors, validateInsuranceValues };
+export {
+  insuranceValuesStore,
+  insuranceValues,
+  insuranceValuesOn,
+  insuranceErrorsStore,
+  insuranceErrors,
+  validateInsuranceValues
+};

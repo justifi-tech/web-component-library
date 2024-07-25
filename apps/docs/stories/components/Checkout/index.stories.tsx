@@ -5,6 +5,7 @@ import themes, { ThemeNames } from "../../themes";
 import { setUpMocks } from "../../utils/mockAllServices";
 
 import "@justifi/webcomponents/dist/module/justifi-checkout";
+import "@justifi/webcomponents/dist/module/justifi-season-interruption-insurance";
 
 const storyBaseArgs = new StoryBaseArgs(["auth-token"]);
 
@@ -25,6 +26,9 @@ const meta: Meta = {
       control: {
         type: "select",
       },
+    },
+    'withInsurance': {
+      table: { disable: true }
     },
     "checkout-id": {
       description: "Checkout ID `string`",
@@ -108,28 +112,43 @@ const meta: Meta = {
   },
   render: ({ label, ...args }) => {
     let component = `<justifi-checkout 
-    auth-token="${args["auth-token"]}" 
-    checkout-id="${args["checkout-id"]}"`;
+    auth-token="${args['auth-token']}" 
+    checkout-id="${args['checkout-id']}"`;
 
-    if (args["disable-credit-card"]) {
+    if (args['disable-credit-card']) {
       component += ` disable-credit-card`;
     }
 
-    if (args["disable-bank-account"]) {
+    if (args['disable-bank-account']) {
       component += ` disable-bank-account`;
     }
 
-    if (args["disable-bnpl"]) {
+    if (args['disable-bnpl']) {
       component += ` disable-bnpl`;
     }
 
-    if (args["disable-payment-method-group"]) {
+    if (args['disable-payment-method-group']) {
       component += ` disable-payment-method-group`;
     }
 
-    component += `></justifi-checkout>`;
+    component += `>`;
+
+    if (args.withInsurance) {
+      console.log('inserting insurance slot')
+
+      component += `
+        <div slot="insurance">
+          <justifi-season-interruption-insurance
+            checkout-id="${args['checkout-id']}"
+            auth-token="${args['auth-token']}"
+          />
+        </div>
+      `;
+    }
+
+    component += `</justifi-checkout>`;
     return component;
-  },
+  }
 };
 
 export const Example: StoryObj = {};
@@ -146,6 +165,22 @@ Example.decorators = [
   },
   // @ts-ignore
   withActions,
+];
+
+export const CheckoutInsurance: StoryObj = { args: { withInsurance: true } };
+CheckoutInsurance.decorators = [
+  (story: any, storyArgs: any) => {
+    setUpMocks();
+
+    // Import the style here to not pollute other framework stories
+    const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
+    const styleElement = document.createElement('style');
+    styleElement.textContent = themes[selectedTheme];
+
+    return `${styleElement.outerHTML}${story()}`;
+  },
+  // @ts-ignore
+  withActions
 ];
 
 export default meta;
