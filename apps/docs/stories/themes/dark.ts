@@ -90,7 +90,15 @@ justifi-checkout {
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: rgba(255, 120, 90, 0.25);
 
+  --jfi-radio-button-background-color: transparent;
+  --jfi-radio-button-border-color: rgba(255, 255, 255, 0.7);
 
+  --jfi-radio-button-background-color-selected: rgba(255, 120, 90, .5);
+  --jfi-radio-button-border-color-selected: rgba(255, 120, 90, 1);
+
+  --jfi-radio-button-border-color-focus: rgb(164, 201, 245);
+  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+  
   /* submit button */
   --jfi-submit-button-width: 100%;
   --jfi-submit-button-padding: 5px 15px;
