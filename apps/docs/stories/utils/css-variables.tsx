@@ -76,10 +76,12 @@ export const CSSVars = () => (
 
   /* Below only used in justifi-checkout */
   /* form radio input */
-  --jfi-radio-input-box-shadow-focus
-  --jfi-radio-input-background-color-selected
-  --jfi-radio-input-border-color
-  --jfi-radio-input-border-color-selected
+  --jfi-radio-button-background-color
+  --jfi-radio-button-border-color
+  --jfi-radio-button-background-color-selected
+  --jfi-radio-button-border-color-selected
+  --jfi-radio-button-border-color-focus
+  --jfi-radio-button-box-shadow-focus
 
   /* submit button */
   --jfi-submit-button-color
