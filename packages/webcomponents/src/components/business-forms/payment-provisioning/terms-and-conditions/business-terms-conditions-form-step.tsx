@@ -104,8 +104,12 @@ export class BusinessTermsConditionsFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.acceptedTermsBefore ? onSuccess() :
-    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+    if (this.acceptedTermsBefore) {
+      this.submitted.emit({ metadata: { completedStep: BusinessFormStep.termsAndConditions } });
+      onSuccess();
+    } else {
+      this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+    }
   };
 
   componentDidLoad() {

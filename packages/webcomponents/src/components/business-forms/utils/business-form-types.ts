@@ -1,5 +1,5 @@
 export interface BusinessFormSubmitEvent {
-  data: any;
+  data?: any;
   metadata?: BusinessFormEventMetaData;
 }
 

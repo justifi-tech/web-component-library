@@ -12,8 +12,8 @@ export default {
           console.log(e);
         })
       </script>
-    `
-  ]
+    `,
+  ],
 };
 
 class ProceedsListArgs {
@@ -27,17 +27,17 @@ class ProceedsListArgs {
 }
 
 const Template = (args: ProceedsListArgs) => {
-  return (`
+  return `
     <justifi-proceeds-list
       data-testid="justifi-proceeds-list"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
     />
-  `);
+  `;
 };
 
-export const Basic = Template.bind({});
-Basic.args = new ProceedsListArgs({});
+export const Example = Template.bind({});
+Example.args = new ProceedsListArgs({});
 
 export const Styled = Template.bind({});
 Styled.args = new ProceedsListArgs({});
@@ -73,5 +73,5 @@ Styled.decorators = [
         background-color: #F4F4F6;
       }
     </style>
-  `
-]
+  `,
+];

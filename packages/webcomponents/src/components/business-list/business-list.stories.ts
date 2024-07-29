@@ -3,7 +3,7 @@ import { config } from '../../../config';
 export default {
   title: 'dev/Components/BusinessList',
   component: 'justifi-business-list',
-  parameters: {}
+  parameters: {},
 };
 
 class BusinessListArgs {
@@ -17,17 +17,17 @@ class BusinessListArgs {
 }
 
 const Template = (args: BusinessListArgs) => {
-  return (`
+  return `
     <justifi-business-list
       data-testid="justifi-business-list"
       auth-token="${args['auth-token']}"
       account-id="${args['account-id']}"
     />
-  `);
+  `;
 };
 
-export const Basic = Template.bind({});
-Basic.args = new BusinessListArgs({});
+export const Example = Template.bind({});
+Example.args = new BusinessListArgs({});
 
 export const Styled = Template.bind({});
 Styled.args = new BusinessListArgs({});
@@ -63,8 +63,8 @@ Styled.decorators = [
         background-color: #F4F4F6;
       }
     </style>
-  `
-]
+  `,
+];
 
 export const Contained = Template.bind({});
 Contained.decorators = [
@@ -72,6 +72,6 @@ Contained.decorators = [
     <div style="position: relative; width: 900px; height: 300px; overflow-x: hidden;">
       ${Story()}
     </div>
-  `
-]
+  `,
+];
 Contained.args = new BusinessListArgs({});

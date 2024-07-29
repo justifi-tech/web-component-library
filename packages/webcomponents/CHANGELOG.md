@@ -1,5 +1,38 @@
 ### Changelog
 
+## 4.16.0
+
+### Minor Changes
+
+- 1ef4956: - Updated `BusinessForm` and `PaymentProvisioning` components to incorporate new business `classification` property, replaces fields for deprecated properties `business_structure` and `business_type`.
+- ea4eff5: - Updated error handling for network requests in `PaymentProvisioning` component.
+  -Component no longer renders visible alert in cases where network requests fail. It now emits an event, `error-event`, in line with other web components, allowing implementing developers to handle server errors as they see fit.
+  - Removed prop `hideErrors` from `PaymentProvisioning` as it is no longer applicable.
+- f549265: - Added new form step to `PaymentProvisioning` component to accept JustiFi terms and conditions.
+- c2a2f56: Add new season-interruption-insurance component
+- b8c422b: `PaymentProvisioning` - added form step for uploading documents required for provisioning payments product.
+- c745fe4: - Optimized render logic in `PaymentProvisioning` for better efficiency, stability, and performance.
+  - Removes prop `removeTitle` from `PaymentProvisioning` component.
+    - The `formTitle` prop can be used to remove the title by passing an empty string.
+- 722b929: - `PaymentProvisioning` - added new form step for posting bank account data.
+- aa11b6e: - `PaymentProvisioning` component now attempts to make POST request to provision payments product once the terms and conditions form step has been completed.
+  - Upon response from the provisioning request, the component will emit `submitted` event.
+  - When loading the component for a business that has already submitted a provisioning request, an `error-event` will be emitted with the error code: `provisioning-already-requested`, and the form buttons will be disabled.
+
+### Patch Changes
+
+- 9745efb: Fix a console error caused by Analytics
+- d11298e: - Added table to document upload form step in `PaymentProvisioning` component - shows already uploaded documents
+  - Adjusted validation logic for document upload form step to take into account already uploaded documents
+    - Example: If a document, such as `voided_check`, has already been uploaded, then form validation will NOT fire and user will NOT be required to submit a new document to proceed.
+- f2e7847: - Added legend text to Business Owners form step in `PaymentProvisioning` component
+  - Adjusted weight and size of legend text that heads each individial owner form rendered in this step.
+  - Removed duplicated styles and ensured top level `PaymentProvisioning` and `BusinessForm` are properly contained within shadow dom.
+    - children components of `PaymentProvisioning` and `BusinessForm` share style sheets where appropriate now, to improve styling logic and remove bloat.
+- 8cdabd8: - Improved internal component testing for form input components to ensure reliabiltiy and performance.
+  - Optimized render logic for form specific components for greater efficiency.
+  - General project improvements such as removing dead code, merging duplicate files, etc.
+
 ## 4.15.0
 
 ### Minor Changes
