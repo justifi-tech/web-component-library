@@ -48,7 +48,6 @@ export interface IdentityService {
 
   postIdentity(
     authToken: string,
-    businessId: string,
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>>;
 }
@@ -73,10 +72,9 @@ export class IdentityService implements IdentityService {
 
   async postIdentity(
     authToken: string,
-    businessId: string,
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>> {
-    const endpoint = `entities/business/${businessId}/identity`;
+    const endpoint = `entities/identity`;
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }

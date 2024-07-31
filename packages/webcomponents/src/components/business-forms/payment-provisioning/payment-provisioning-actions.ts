@@ -143,10 +143,10 @@ export const makePatchIdentity = ({ authToken, identityId, service }) =>
     }
   };
 
-export const makePostIdentity = ({ authToken, businessId, service }) =>
+export const makePostIdentity = ({ authToken, service }) =>
   async ({ payload, onSuccess, onError, final = () => {} }) => {
     try {
-      const response = await service.postIdentity(authToken, businessId, payload);
+      const response = await service.postIdentity(authToken, payload);
 
       if (!response.error) {
         onSuccess(response);
