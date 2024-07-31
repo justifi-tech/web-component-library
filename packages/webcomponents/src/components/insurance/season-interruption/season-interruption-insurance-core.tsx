@@ -5,7 +5,11 @@ import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../in
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
-  styleUrl: 'season-interruption-insurance-core.scss',
+  styleUrls: [
+    'season-interruption-insurance-core.css',
+    '../../checkout/radio-button.css',
+    '../../checkout/header.css',
+  ],
   shadow: true,
 })
 export class SeasonInterruptionInsuranceCore {

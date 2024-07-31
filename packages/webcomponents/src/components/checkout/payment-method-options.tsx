@@ -4,10 +4,11 @@ import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
+import StyledHost from '../../utils/styled-host';
 
 @Component({
   tag: 'justifi-payment-method-options',
-  styleUrl: 'payment-method-options.scss',
+  styleUrls: ['payment-method-options.css', 'radio-button.css'],
   shadow: false,
 })
 export class PaymentMethodOptions {
@@ -60,7 +61,7 @@ export class PaymentMethodOptions {
 
   render() {
     return (
-      <div>
+      <StyledHost>
         {this.paymentMethodOptions?.map((paymentMethodOption) => {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
@@ -108,7 +109,7 @@ export class PaymentMethodOptions {
             );
           }
         })}
-      </div>
+      </StyledHost>
     );
   }
 }

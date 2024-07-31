@@ -1,0 +1,20 @@
+input[type="radio"],
+label {
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  background-color: var(--jfi-radio-button-background-color);
+  border-color: var(--jfi-radio-button-border-color);
+}
+
+input[type="radio"]:checked,
+input[type="radio"]:checked:focus {
+  background-color: var(--jfi-radio-button-background-color-selected);
+  border-color: var(--jfi-radio-button-border-color-selected);
+}
+
+input[type="radio"]:focus {
+  border-color: var(--jfi-radio-button-border-color-focus);
+  box-shadow: var(--jfi-radio-button-box-shadow-focus);
+}

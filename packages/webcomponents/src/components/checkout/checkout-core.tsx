@@ -9,7 +9,7 @@ import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../
 
 @Component({
   tag: 'justifi-checkout-core',
-  styleUrl: 'checkout-core.scss',
+  styleUrls: ['checkout-core.css', 'header.css'],
   shadow: true,
 })
 export class CheckoutCore {
