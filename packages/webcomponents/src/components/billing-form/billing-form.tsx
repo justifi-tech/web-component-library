@@ -12,7 +12,7 @@ import StyledHost from '../../utils/styled-host';
  */
 @Component({
   tag: 'justifi-billing-form',
-  styleUrl: 'billing-form.scss',
+  styleUrl: 'billing-form.css',
   shadow: true,
 })
 export class BillingForm {
