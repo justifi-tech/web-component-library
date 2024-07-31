@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { ComponentError } from '../../../api/ComponentError';
 import { makeGetIdentity, makePatchIdentity, makePostIdentity } from '../payment-provisioning/payment-provisioning-actions';
 import { IdentityService } from '../../../api/services/business.service';
@@ -21,13 +21,11 @@ export class BusinessOwnerForm {
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
 
-  @Watch('authToken')
-  @Watch('ownerId')
-  @Watch('businessId')
-  propChanged() {
-    this.initializeApi();
-  }
-  
+  // @Watch('ownerId')
+  // propChanged() {
+  //   this.initializeApi();
+  // }
+
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   @Method()
@@ -50,23 +48,21 @@ export class BusinessOwnerForm {
   }
 
   private initializeApi() {
-    if (this.authToken && this.ownerId && this.businessId) {
-      this.getOwner = makeGetIdentity({
-        authToken: this.authToken,
-        identityId: this.ownerId,
-        service: new IdentityService()
-      });
-      this.patchOwner = makePatchIdentity({
-        authToken: this.authToken,
-        identityId: this.ownerId,
-        service: new IdentityService()
-      });
-      this.postOwner = makePostIdentity({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new IdentityService()
-      });
-    }
+    if (!this.authToken) { return;}
+    this.getOwner = makeGetIdentity({
+      authToken: this.authToken,
+      identityId: this.ownerId,
+      service: new IdentityService()
+    });
+    this.patchOwner = makePatchIdentity({
+      authToken: this.authToken,
+      identityId: this.ownerId,
+      service: new IdentityService()
+    });
+    this.postOwner = makePostIdentity({
+      authToken: this.authToken,
+      service: new IdentityService()
+    });
   }
   
   render() {
