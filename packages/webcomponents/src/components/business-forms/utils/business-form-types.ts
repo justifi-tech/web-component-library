@@ -17,6 +17,7 @@ export interface BusinessFormServerErrorEvent {
 // Eventually we can find other uses for MetaData to present to the implementer. 
 interface BusinessFormEventMetaData {
   completedStep?: BusinessFormStep;
+  ownerID?: string; 
 }
 
 export enum BusinessFormStep {
