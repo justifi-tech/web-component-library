@@ -1,8 +1,9 @@
-import { Component, Host, h, State, Prop, Method } from '@stencil/core';
+import { Component, h, State, Prop, Method } from '@stencil/core';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from '../../utils/state-options';
 import { FormController } from '../form/form';
 import { numberOnlyHandler } from '../form/utils';
+import StyledHost from '../../utils/styled-host';
 
 /**
  * @exportedPart label: Label for inputs
@@ -54,7 +55,7 @@ export class BillingForm {
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }>{
+  async validate(): Promise<{ isValid: boolean }> {
     let isValid: boolean = await this.formController.validate();
     return { isValid: isValid };
   }
@@ -64,7 +65,7 @@ export class BillingForm {
     const billingFormDefaultValue = this.formController.getInitialValues();
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <StyledHost exportparts="label,input,input-invalid">
         <form>
           <fieldset>
             {this.legend && <legend>{this.legend}</legend>}
@@ -129,7 +130,7 @@ export class BillingForm {
             </div>
           </fieldset>
         </form>
-      </Host>
+      </StyledHost>
     );
   }
 }
