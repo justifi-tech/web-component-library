@@ -44,10 +44,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [justifi-payment-provisioning-form-steps](..)
-
 ### Depends on
 
 - [form-control-text](../../../form)
@@ -72,7 +68,6 @@ graph TD;
   justifi-identity-address-form --> form-control-select
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
-  justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
   style justifi-business-representative-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

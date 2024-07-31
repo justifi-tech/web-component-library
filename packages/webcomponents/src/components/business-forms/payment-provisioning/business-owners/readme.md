@@ -62,6 +62,7 @@ graph TD;
   owner-form-core --> form-control-number-masked
   owner-form-core --> form-control-date
   owner-form-core --> justifi-identity-address-form
+  owner-form-core --> owner-form-buttons
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
