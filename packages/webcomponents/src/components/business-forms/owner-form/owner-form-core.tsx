@@ -3,10 +3,8 @@ import { FormController } from '../../form/form';
 import { Identity, Owner } from '../../../api/Identity';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError } from '../../../api/ComponentError';
-import { PHONE_MASKS, SSN_MASK } from '../../../utils/form-input-masks';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { parseIdentityInfo } from '../utils/payload-parsers';
-import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../utils/input-handlers';
 
 @Component({
   tag: 'owner-form-core'
@@ -79,10 +77,6 @@ export class BusinessOwnerFormCore {
     } else {
       return JSON.stringify({ ...formValues, business_id: this.businessId });
     }
-  }
-
-  get identificationNumberLabel() {
-    return this.owner.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
   }
 
   get formTitle() {
@@ -188,17 +182,6 @@ export class BusinessOwnerFormCore {
     });
   }
 
-  inputHandler = (name: string, value: string) => {
-    updateFormValues(this.formController, { [name]: value });
-  }
-
-  onAddressFormUpdate = (values: any): void => {
-    updateAddressFormValues(this.formController, {
-      ...this.formController.values.getValue().address,
-      ...values,
-    });
-  }
-
   instantiateOwner = async (data: Identity) => {
     this.owner = { ...new Owner(data) };
     await this.formController.setInitialValues(this.owner);
@@ -215,8 +198,6 @@ export class BusinessOwnerFormCore {
   }
 
   render() {
-    const ownerDefaultValue = this.formController.getInitialValues();
-
     return (
       <Host exportparts="label,input,input-invalid">
         <form onSubmit={this.validateAndSubmit}>
@@ -224,71 +205,13 @@ export class BusinessOwnerFormCore {
             <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
             <br />
             <div class='row gy-3'>
-              <div class="col-12 col-md-6">
-                <form-control-text
-                  name="name"
-                  label="Full Name"
-                  defaultValue={ownerDefaultValue.name}
-                  errorText={this.errors.name}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class="col-12 col-md-4">
-                <form-control-text
-                  name="title"
-                  label="Title"
-                  defaultValue={ownerDefaultValue.title}
-                  errorText={this.errors.title}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class="col-12 col-md-6">
-                <form-control-text
-                  name="email"
-                  label="Email Address"
-                  defaultValue={ownerDefaultValue.email}
-                  errorText={this.errors.email}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class="col-12 col-md-6">
-                <form-control-number-masked
-                  name="phone"
-                  label="Phone Number"
-                  defaultValue={ownerDefaultValue.phone}
-                  errorText={this.errors.phone}
-                  inputHandler={this.inputHandler}
-                  mask={PHONE_MASKS.US}
-                />
-              </div>
-              <div class="col-12 col-md-4">
-                <form-control-date
-                  name="dob_full"
-                  label="Birth Date"
-                  defaultValue={ownerDefaultValue.dob_full}
-                  errorText={this.errors.dob_full}
-                  inputHandler={this.inputHandler}
-                  onFormControlInput={(e) => updateDateOfBirthFormValues(e, this.formController)}
-                />
-              </div>
-              <div class="col-12 col-md-8">
-                <form-control-number-masked
-                  name="identification_number"
-                  label={this.identificationNumberLabel}
-                  defaultValue={ownerDefaultValue.identification_number}
-                  errorText={this.errors.identification_number}
-                  inputHandler={this.inputHandler}
-                  mask={SSN_MASK}
-                />
-              </div>
-              <div class="col-12">
-                <justifi-identity-address-form
-                  errors={this.errors.address}
-                  defaultValues={ownerDefaultValue.address}
-                  handleFormUpdate={this.onAddressFormUpdate}
-                />
-              </div>
-              <owner-form-buttons 
+              <owner-form-inputs
+                owner={this.owner}
+                ownerDefaultValue={this.formController.getInitialValues()}
+                errors={this.errors}
+                formController={this.formController}
+              />
+              <owner-form-buttons
                 isLoading={this.isLoading}
                 showRemoveButton={this.showRemoveButton}
                 submitButtonText={this.submitButtonText}
