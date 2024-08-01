@@ -215,8 +215,7 @@ export class BusinessOwnerFormCore {
   }
 
   render() {
-    const ownerDefaultValue =
-      this.formController.getInitialValues();
+    const ownerDefaultValue = this.formController.getInitialValues();
 
     return (
       <Host exportparts="label,input,input-invalid">
@@ -229,7 +228,7 @@ export class BusinessOwnerFormCore {
                 <form-control-text
                   name="name"
                   label="Full Name"
-                  defaultValue={ownerDefaultValue?.name}
+                  defaultValue={ownerDefaultValue.name}
                   errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
@@ -238,7 +237,7 @@ export class BusinessOwnerFormCore {
                 <form-control-text
                   name="title"
                   label="Title"
-                  defaultValue={ownerDefaultValue?.title}
+                  defaultValue={ownerDefaultValue.title}
                   errorText={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
@@ -247,7 +246,7 @@ export class BusinessOwnerFormCore {
                 <form-control-text
                   name="email"
                   label="Email Address"
-                  defaultValue={ownerDefaultValue?.email}
+                  defaultValue={ownerDefaultValue.email}
                   errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
@@ -256,7 +255,7 @@ export class BusinessOwnerFormCore {
                 <form-control-number-masked
                   name="phone"
                   label="Phone Number"
-                  defaultValue={ownerDefaultValue?.phone}
+                  defaultValue={ownerDefaultValue.phone}
                   errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
@@ -266,7 +265,7 @@ export class BusinessOwnerFormCore {
                 <form-control-date
                   name="dob_full"
                   label="Birth Date"
-                  defaultValue={ownerDefaultValue?.dob_full}
+                  defaultValue={ownerDefaultValue.dob_full}
                   errorText={this.errors.dob_full}
                   inputHandler={this.inputHandler}
                   onFormControlInput={(e) => updateDateOfBirthFormValues(e, this.formController)}
@@ -276,7 +275,7 @@ export class BusinessOwnerFormCore {
                 <form-control-number-masked
                   name="identification_number"
                   label={this.identificationNumberLabel}
-                  defaultValue={ownerDefaultValue?.identification_number}
+                  defaultValue={ownerDefaultValue.identification_number}
                   errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
@@ -285,7 +284,7 @@ export class BusinessOwnerFormCore {
               <div class="col-12">
                 <justifi-identity-address-form
                   errors={this.errors.address}
-                  defaultValues={ownerDefaultValue?.address}
+                  defaultValues={ownerDefaultValue.address}
                   handleFormUpdate={this.onAddressFormUpdate}
                 />
               </div>

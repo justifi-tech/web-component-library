@@ -21,11 +21,6 @@ export class BusinessOwnerForm {
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
 
-  // @Watch('ownerId')
-  // propChanged() {
-  //   this.initializeApi();
-  // }
-
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   @Method()
@@ -78,7 +73,7 @@ export class BusinessOwnerForm {
         removeOwner={this.removeOwner}
         newFormOpen={this.newFormOpen}
         ownersLength={this.ownersLength}
-        ref={el => this.coreComponent = el}
+        ref={ref => this.coreComponent = ref}
       />
     )
   }
