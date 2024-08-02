@@ -4,6 +4,7 @@ import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
+import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -28,6 +29,13 @@ export class PaymentMethodOptions {
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    if (this.selectedPaymentMethodOptionRef instanceof HTMLJustifiNewPaymentMethodElement) {
+      this.selectedPaymentMethodOptionRef.fillBillingForm(fields);
+    }
+  }
 
   connectedCallback() {
     this.paymentMethodsChanged();
