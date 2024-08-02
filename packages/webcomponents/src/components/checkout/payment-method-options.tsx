@@ -1,10 +1,9 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
-import StyledHost from '../../utils/styled-host';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -61,7 +60,7 @@ export class PaymentMethodOptions {
 
   render() {
     return (
-      <StyledHost>
+      <Host>
         {this.paymentMethodOptions?.map((paymentMethodOption) => {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
@@ -109,7 +108,7 @@ export class PaymentMethodOptions {
             );
           }
         })}
-      </StyledHost>
+      </Host>
     );
   }
 }

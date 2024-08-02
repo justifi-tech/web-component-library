@@ -3,7 +3,7 @@ import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from '../../utils/state-options';
 import { FormController } from '../form/form';
 import { numberOnlyHandler } from '../form/utils';
-import StyledHost from '../../utils/styled-host';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 /**
  * @exportedPart label: Label for inputs

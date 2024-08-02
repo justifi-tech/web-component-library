@@ -1,16 +1,16 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 
 @Component({
   tag: 'justifi-checkout-core',
   styleUrls: ['checkout-core.css', 'header.css'],
-  shadow: true,
 })
 export class CheckoutCore {
   /**
@@ -184,7 +184,7 @@ export class CheckoutCore {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <div class="row gy-3 jfi-checkout-core">
           <div class="col-12 mb-4">
             {/* componentize this */}
@@ -216,7 +216,7 @@ export class CheckoutCore {
             </div>
           </div>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }
