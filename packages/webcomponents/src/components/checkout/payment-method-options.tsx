@@ -32,8 +32,9 @@ export class PaymentMethodOptions {
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    if (this.selectedPaymentMethodOptionRef instanceof HTMLJustifiNewPaymentMethodElement) {
-      this.selectedPaymentMethodOptionRef.fillBillingForm(fields);
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    if (newPaymentMethodElement.fillBillingForm) {
+      newPaymentMethodElement.fillBillingForm(fields);
     }
   }
 
