@@ -2,6 +2,7 @@ import { Component, h, Prop, Method, Event, EventEmitter } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -23,6 +24,11 @@ export class NewPaymentMethod {
 
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    this.billingFormRef.fill(fields);
+  }
 
   @Method()
   async resolvePaymentMethod(): Promise<PaymentMethodPayload> {

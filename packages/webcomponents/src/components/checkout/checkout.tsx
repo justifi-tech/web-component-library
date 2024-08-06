@@ -1,8 +1,9 @@
-import { Component, Prop, h, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-checkout',
@@ -21,6 +22,8 @@ export class Checkout {
   @State() errorMessage: string = '';
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+
+  private checkoutCoreRef?: HTMLJustifiCheckoutCoreElement;
 
   analytics: JustifiAnalytics;
 
@@ -60,6 +63,11 @@ export class Checkout {
     this.initializeGetCheckout();
   }
 
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    this.checkoutCoreRef.fillBillingForm(fields);
+  }
+
   render() {
     return (
       <justifi-checkout-core
@@ -68,7 +76,12 @@ export class Checkout {
         disableCreditCard={this.disableCreditCard}
         disableBankAccount={this.disableBankAccount}
         disableBnpl={this.disableBnpl}
-        disablePaymentMethodGroup={this.disablePaymentMethodGroup}>
+        disablePaymentMethodGroup={this.disablePaymentMethodGroup}
+        ref={el => {
+          if (el) {
+            this.checkoutCoreRef = el;
+          }
+        }}>
         <div slot="insurance">
           <slot name="insurance"></slot>
         </div>

@@ -1,10 +1,11 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 
 @Component({
@@ -38,6 +39,10 @@ export class CheckoutCore {
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    this.paymentMethodOptionsRef.fillBillingForm(fields);
+  }
 
   componentWillLoad() {
     if (this.getCheckout) {
