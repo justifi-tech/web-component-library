@@ -46,14 +46,14 @@ export class PaymentMethodOptions {
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
     this.paymentMethodOptions = this.savedPaymentMethods.map((paymentMethod) => new PaymentMethodOption(paymentMethod));
+    if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
+    }
     if (this.showCard) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
     }
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
-    }
-    if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
   }
 
