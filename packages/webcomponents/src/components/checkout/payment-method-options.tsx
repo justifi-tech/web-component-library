@@ -16,6 +16,7 @@ export class PaymentMethodOptions {
   @Prop() showAch: boolean;
   @Prop() showBnpl: boolean;
   @Prop() showSavedPaymentMethods: boolean;
+  @Prop() paymentMethodGroupId?: string;
   @Prop() bnpl: IBnpl;
   @Prop() clientId: string;
   @Prop() accountId: string;
@@ -82,6 +83,7 @@ export class PaymentMethodOptions {
                 client-id={this.clientId}
                 account-id={this.accountId}
                 is-selected={isSelected}
+                paymentMethodGroupId={this.paymentMethodGroupId}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;
