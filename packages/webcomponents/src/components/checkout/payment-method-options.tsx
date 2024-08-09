@@ -17,6 +17,7 @@ export class PaymentMethodOptions {
   @Prop() showBnpl: boolean;
   @Prop() showSavedPaymentMethods: boolean;
   @Prop() bnpl: IBnpl;
+  @Prop() insuranceToggled: boolean;
   @Prop() clientId: string;
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
@@ -52,7 +53,7 @@ export class PaymentMethodOptions {
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
-    if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
+    if (this.showBnpl && this.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
   }
