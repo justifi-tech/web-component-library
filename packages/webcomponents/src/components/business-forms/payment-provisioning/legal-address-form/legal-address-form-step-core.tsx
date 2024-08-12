@@ -16,8 +16,6 @@ export class LegalAddressFormStepCore {
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
   
-  @Prop() authToken: string;
-  @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;

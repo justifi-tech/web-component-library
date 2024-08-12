@@ -62,8 +62,6 @@ export class LegalAddressFormStep {
   render() {
     return (
       <justifi-legal-address-form-step-core
-        authToken={this.authToken}
-        businessId={this.businessId}
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
