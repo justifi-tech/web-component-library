@@ -15,8 +15,6 @@ export class AdditionalQuestionsFormStepCore {
   @State() errors: any = {};
   @State() additional_questions: IAdditionalQuestions = {};
 
-  @Prop() authToken: string;
-  @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;

@@ -61,9 +61,7 @@ export class AdditionalQuestionsFormStep {
 
   render() {
     return (
-      <justifi-additional-questions-form-step-core 
-        authToken={this.authToken}
-        businessId={this.businessId}
+      <justifi-additional-questions-form-step-core
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
