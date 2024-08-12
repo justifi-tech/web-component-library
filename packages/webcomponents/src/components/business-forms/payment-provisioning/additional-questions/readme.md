@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type      | Default     |
-| --------------------- | ----------------------- | ----------- | --------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean` | `undefined` |
-| `authToken`           | `auth-token`            |             | `string`  | `undefined` |
-| `businessId`          | `business-id`           |             | `string`  | `undefined` |
+| Property              | Attribute               | Description | Type       | Default     |
+| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`   | `undefined` |
+| `businessId`          | `business-id`           |             | `string`   | `undefined` |
+| `getBusiness`         | --                      |             | `Function` | `undefined` |
+| `patchBusiness`       | --                      |             | `Function` | `undefined` |
 
 
 ## Events
@@ -46,7 +48,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning-form-steps](..)
+ - [justifi-additional-questions-form-step](.)
 
 ### Depends on
 
@@ -57,17 +59,17 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions-form-step --> form-control-monetary
-  justifi-additional-questions-form-step --> form-control-select
-  justifi-additional-questions-form-step --> form-control-text
+  justifi-additional-questions-form-step-core --> form-control-monetary
+  justifi-additional-questions-form-step-core --> form-control-select
+  justifi-additional-questions-form-step-core --> form-control-text
   form-control-monetary --> form-control-help-text
   form-control-monetary --> form-control-error-text
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
-  justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
-  style justifi-additional-questions-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
+  style justifi-additional-questions-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
