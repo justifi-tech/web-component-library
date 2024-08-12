@@ -114,7 +114,7 @@ const meta: Meta = {
       handles: ["submitted"],
     },
     chromatic: {
-      delay: 1000,
+      delay: 2000,
     },
   },
   render: ({ label, ...args }) => {

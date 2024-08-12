@@ -28,6 +28,9 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
         </section>
       </div>
       <div class="col-12">
+        <slot name="insurance"></slot>
+      </div>
+      <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Payment
         </h2>
@@ -44,9 +47,6 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
             </div>
           </section>
         </div>
-      </div>
-      <div class="col-12">
-        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
@@ -92,6 +92,9 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
         </section>
       </div>
       <div class="col-12">
+        <slot name="insurance"></slot>
+      </div>
+      <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Payment
         </h2>
@@ -108,9 +111,6 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
             </div>
           </section>
         </div>
-      </div>
-      <div class="col-12">
-        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
