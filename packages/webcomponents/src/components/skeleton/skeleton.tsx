@@ -2,7 +2,7 @@ import { Component, Prop, h, Host } from '@stencil/core';
 
 @Component({
   tag: 'justifi-skeleton',
-  styleUrl: 'skeleton.scss',
+  styleUrl: 'skeleton.css',
   shadow: true,
 })
 export class Skeleton {
