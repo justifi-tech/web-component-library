@@ -80,6 +80,13 @@ const meta: Meta = {
         defaultValue: { summary: "undefined" },
       },
     },
+    fillBillingForm: {
+      description:
+        "`fillBillingForm(fields: BillingFormFields) => Promise<void>`",
+      table: {
+        category: "methods",
+      },
+    },
     submitted: {
       description:
         "Emitted when the server response is received after submitting.  Will not be raised if form vailidation fails.",
@@ -107,7 +114,7 @@ const meta: Meta = {
       handles: ["submitted"],
     },
     chromatic: {
-      delay: 1000,
+      delay: 2000,
     },
   },
   render: ({ label, ...args }) => {

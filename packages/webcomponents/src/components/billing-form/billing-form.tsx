@@ -51,7 +51,7 @@ export class BillingForm {
 
   @Method()
   async fill(fields: BillingFormFields) {
-    this.formController.setValues(fields);
+    this.formController.setInitialValues(fields);
   }
 
   @Method()

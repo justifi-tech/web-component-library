@@ -4,6 +4,7 @@ import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
+import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -16,6 +17,7 @@ export class PaymentMethodOptions {
   @Prop() showBnpl: boolean;
   @Prop() showSavedPaymentMethods: boolean;
   @Prop() bnpl: IBnpl;
+  @Prop() insuranceToggled: boolean;
   @Prop() clientId: string;
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
@@ -28,6 +30,14 @@ export class PaymentMethodOptions {
   @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    if (newPaymentMethodElement.fillBillingForm) {
+      newPaymentMethodElement.fillBillingForm(fields);
+    }
+  }
 
   connectedCallback() {
     this.paymentMethodsChanged();
@@ -43,7 +53,7 @@ export class PaymentMethodOptions {
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
-    if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
+    if (this.showBnpl && this.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
   }
