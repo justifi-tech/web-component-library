@@ -68,7 +68,6 @@ export class NewPaymentMethod {
       } else {
         paymentMethodData = { ...billingFormFieldValues };
       }
-      console.log('paymentMethodData', paymentMethodData);
       const clientId = this.clientId;
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
       return tokenizeResponse;
