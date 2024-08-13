@@ -15,7 +15,7 @@ export class SaveNewPaymentMethod {
 
   render() {
     return (
-      <div class="mt-3 d-flex align-items-center">
+      <div class="mt-4 d-flex align-items-center">
         <input
           type="checkbox"
           checked={this.isChecked}
