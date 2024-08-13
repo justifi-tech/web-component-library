@@ -32,7 +32,6 @@ export class CheckoutCore {
   @State() serverError: string;
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
-  @State() paymentMethodGroupId: string;
   @State() insuranceToggled: boolean = false;
   
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
@@ -66,7 +65,6 @@ export class CheckoutCore {
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
         this.renderState = 'success';
-        this.paymentMethodGroupId = this.checkout?.payment_method_group_id;
       },
       onError: ({ error, code, severity }) => {
         this.serverError = error;
@@ -155,7 +153,7 @@ export class CheckoutCore {
             show-card={!this.disableCreditCard}
             show-ach={!this.disableBankAccount}
             show-bnpl={!this.disableBnpl}
-            paymentMethodGroupId={this.paymentMethodGroupId}
+            paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             bnpl={this.checkout?.bnpl}
             client-id={this.checkout?.payment_client_id}
