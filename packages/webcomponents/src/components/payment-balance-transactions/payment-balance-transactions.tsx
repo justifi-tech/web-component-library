@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import {
   Api,
   IApiResponseCollection,
@@ -17,9 +17,7 @@ import {
 import { config } from '../../../config';
 
 @Component({
-  tag: 'justifi-payment-balance-transactions',
-  styleUrl: 'payment-balance-transactions.scss',
-  shadow: true,
+  tag: 'justifi-payment-balance-transactions'
 })
 export class PaymentBalanceTransactions {
   @Prop() accountId: string;
@@ -84,7 +82,7 @@ export class PaymentBalanceTransactions {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <justifi-table
           columnData={[
             ['Processed On', 'The date each transaction occurred'],
@@ -118,7 +116,7 @@ export class PaymentBalanceTransactions {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }
