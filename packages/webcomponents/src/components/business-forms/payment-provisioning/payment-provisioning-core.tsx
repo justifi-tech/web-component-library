@@ -1,17 +1,20 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { checkProvisioningStatus } from '../utils/helpers';
+import StyledHost from '../../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
+  styleUrl: 'payment-provisioning.css',
+  shadow: true
 })
 export class PaymentProvisioningCore {
   @State() formLoading: boolean = false;
   @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
-  
+
   @Prop() businessId: string;
   @Prop() authToken: string;
   @Prop() allowOptionalFields?: boolean = false;
@@ -66,7 +69,7 @@ export class PaymentProvisioningCore {
       }
     });
   }
-  
+
   private coreInfoRef: any;
   private legalAddressRef: any;
   private additionalQuestionsRef: any;
@@ -96,7 +99,7 @@ export class PaymentProvisioningCore {
   handleFormLoading = (e: CustomEvent) => {
     this.formLoading = e.detail;
   }
-  
+
   incrementSteps = () => {
     if (this.currentStep < this.totalSteps) {
       return this.currentStep++;
@@ -117,10 +120,10 @@ export class PaymentProvisioningCore {
     const currentStep = this.refs[this.currentStep];
     currentStep.validateAndSubmit({ onSuccess: this.incrementSteps });
   }
-  
+
   render() {
     return (
-      <Host exportparts='label,input,input-invalid'>
+      <StyledHost exportparts='label,input,input-invalid'>
         <div class='row gap-3'>
           <h1>{this.formTitle}</h1>
           <justifi-payment-provisioning-form-steps
@@ -136,7 +139,7 @@ export class PaymentProvisioningCore {
             <div class='d-flex align-items-center'>
               {this.stepCounter}
             </div>
-            <justifi-payment-provisioning-form-buttons 
+            <justifi-payment-provisioning-form-buttons
               currentStep={this.currentStep}
               totalSteps={this.totalSteps}
               formLoading={this.formLoading}
@@ -146,7 +149,7 @@ export class PaymentProvisioningCore {
             />
           </div>
         </div>
-      </Host>
+      </StyledHost>
     )
   }
 }
