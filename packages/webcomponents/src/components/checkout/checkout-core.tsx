@@ -85,15 +85,12 @@ export class CheckoutCore {
     this.renderState = 'loading';
 
     const insuranceValidation = validateInsuranceValues();
+    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod(insuranceValidation);
 
-    if (!insuranceValidation.isValid) {
+    if (payload.validationError) {
       this.renderState = 'error';
-      return;
     }
-
-    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
-
-    if (payload.error) {
+    else if (payload.error) {
       this.renderState = 'error';
       this.serverError = payload.error.message;
       this.onError({

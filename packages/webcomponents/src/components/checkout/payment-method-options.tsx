@@ -64,8 +64,8 @@ export class PaymentMethodOptions {
   }
 
   @Method()
-  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
-    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod();
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
   }
 
   render() {
