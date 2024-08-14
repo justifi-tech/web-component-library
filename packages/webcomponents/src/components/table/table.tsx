@@ -14,7 +14,7 @@ export interface TableProps {
 
 @Component({
   tag: 'justifi-table',
-  styleUrl: './table.scss',
+  styleUrl: './table.css',
 })
 
 export class Table {
