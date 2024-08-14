@@ -15,6 +15,7 @@ import {
   snakeCaseToHumanReadable,
 } from '../../utils/utils';
 import { config } from '../../../config';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-payment-balance-transactions'
