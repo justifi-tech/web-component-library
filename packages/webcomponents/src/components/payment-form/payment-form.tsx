@@ -10,7 +10,7 @@ import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-payment-form',
-  styleUrl: 'payment-form.scss',
+  styleUrl: 'payment-form.css',
   shadow: true,
 })
 export class PaymentForm {
