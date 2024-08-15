@@ -11,6 +11,7 @@ import StyledHost from '../../utils/styled-host/styled-host';
 @Component({
   tag: 'justifi-checkout-core',
   styleUrls: ['checkout-core.css', 'header.css'],
+  shadow: true,
 })
 export class CheckoutCore {
   /**

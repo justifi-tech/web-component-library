@@ -8,8 +8,7 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
-  styleUrls: ['payment-method-options.css', 'radio-button.css'],
-  shadow: false,
+  styleUrls: ['payment-method-options.css', 'radio-button.css']
 })
 export class PaymentMethodOptions {
   @Prop() showCard: boolean;

@@ -11,7 +11,6 @@ const PaymentMethodTypeLabels = {
 
 @Component({
   tag: 'justifi-new-payment-method',
-  shadow: false,
 })
 export class NewPaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;

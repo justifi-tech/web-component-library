@@ -20,7 +20,6 @@ const sezzleLogo = (
 
 @Component({
   tag: 'justifi-sezzle-payment-method',
-  shadow: false,
 })
 export class SezzlePaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
