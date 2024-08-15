@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+
+a {
+  /*
+    `!important` should be used sparingly if ever. In this case there is an inline
+    style on links being returned from the server that needs to be overridden.
+  */
+  color: var(--jfi-body-color) !important;
+}
