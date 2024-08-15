@@ -31,7 +31,7 @@ export class NewPaymentMethod {
   }
 
   @Method()
-  async resolvePaymentMethod(insuranceValidation?: any): Promise<PaymentMethodPayload> {
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     const isValid = await this.validate();

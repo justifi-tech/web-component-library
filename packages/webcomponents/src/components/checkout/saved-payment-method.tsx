@@ -15,8 +15,8 @@ export class SavedPaymentMethod {
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
   @Method()
-  async resolvePaymentMethod(insuranceValidation?: any): Promise<PaymentMethodPayload> {
-    if (insuranceValidation && !insuranceValidation.isValid) {
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    if (!insuranceValidation.isValid) {
       return { validationError: true };
     }
     return { token: this.paymentMethodOption?.id };
