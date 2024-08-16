@@ -10,5 +10,6 @@ export interface PaymentMethodPayload {
     code: string;
     message: string;
     decline_code: string;
-  };
+  },
+  validationError?: boolean;
 }
