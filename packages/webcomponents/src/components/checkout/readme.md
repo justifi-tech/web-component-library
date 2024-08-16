@@ -57,9 +57,15 @@
 
 ## Methods
 
-### `resolvePaymentMethod() => Promise<PaymentMethodPayload>`
+### `resolvePaymentMethod(insuranceValidation?: any) => Promise<PaymentMethodPayload>`
 
 
+
+#### Parameters
+
+| Name                  | Type  | Description |
+| --------------------- | ----- | ----------- |
+| `insuranceValidation` | `any` |             |
 
 #### Returns
 

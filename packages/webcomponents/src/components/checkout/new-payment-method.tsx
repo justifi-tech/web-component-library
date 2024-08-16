@@ -31,13 +31,14 @@ export class NewPaymentMethod {
   }
 
   @Method()
-  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
-    const billingFormValidation = await this.billingFormRef.validate();
-    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+    const isValid = await this.validate();
 
-    if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
+    if (!isValid || !insuranceValidation.isValid) {
+      return { validationError: true };
+    }
 
     const tokenizeResponse = await this.tokenize();
 
@@ -47,6 +48,13 @@ export class NewPaymentMethod {
       const tokenizeRessponseData = tokenizeResponse.data;
       return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
     }
+  }
+
+  async validate(): Promise<boolean> {
+    const billingFormValidation = await this.billingFormRef.validate();
+    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+
+    return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
 
   async tokenize() {
