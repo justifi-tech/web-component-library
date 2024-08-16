@@ -72,6 +72,7 @@ export class Checkout {
     return (
       <justifi-checkout-core
         getCheckout={this.getCheckout}
+        authToken={this.authToken}
         complete={this.complete}
         disableCreditCard={this.disableCreditCard}
         disableBankAccount={this.disableBankAccount}

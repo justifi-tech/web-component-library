@@ -15,7 +15,7 @@ const PaymentMethodTypeLabels = {
 })
 export class NewPaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
-  @Prop() clientId: string;
+  @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() paymentMethodGroupId?: string;
@@ -68,7 +68,7 @@ export class NewPaymentMethod {
       } else {
         paymentMethodData = { ...billingFormFieldValues };
       }
-      const clientId = this.clientId;
+      const clientId = this.authToken;
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
       return tokenizeResponse;
     } catch (error) {

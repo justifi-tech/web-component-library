@@ -156,7 +156,7 @@ export class CheckoutCore {
             paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             bnpl={this.checkout?.bnpl}
-            client-id={this.checkout?.payment_client_id}
+            authToken={this.authToken}
             account-id={this.checkout?.account_id}
             savedPaymentMethods={this.checkout?.payment_methods || []}
             paymentAmount={this.checkout?.payment_amount}
