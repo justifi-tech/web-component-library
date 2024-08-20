@@ -7,7 +7,6 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 
-
 @Component({
   tag: 'justifi-checkout-core',
   styleUrl: 'checkout-core.scss',
@@ -34,7 +33,7 @@ export class CheckoutCore {
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
-
+  
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -66,7 +65,6 @@ export class CheckoutCore {
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
         this.renderState = 'success';
-
       },
       onError: ({ error, code, severity }) => {
         this.serverError = error;
@@ -155,9 +153,10 @@ export class CheckoutCore {
             show-card={!this.disableCreditCard}
             show-ach={!this.disableBankAccount}
             show-bnpl={!this.disableBnpl}
+            paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             bnpl={this.checkout?.bnpl}
-            client-id={this.checkout?.payment_client_id}
+            authToken={this.authToken}
             account-id={this.checkout?.account_id}
             savedPaymentMethods={this.checkout?.payment_methods || []}
             paymentAmount={this.checkout?.payment_amount}

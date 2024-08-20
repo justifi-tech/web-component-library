@@ -16,9 +16,10 @@ export class PaymentMethodOptions {
   @Prop() showAch: boolean;
   @Prop() showBnpl: boolean;
   @Prop() showSavedPaymentMethods: boolean;
+  @Prop() paymentMethodGroupId?: string;
   @Prop() bnpl: IBnpl;
   @Prop() insuranceToggled: boolean;
-  @Prop() clientId: string;
+  @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
@@ -80,9 +81,10 @@ export class PaymentMethodOptions {
             return (
               <justifi-new-payment-method
                 paymentMethodOption={paymentMethodOption}
-                client-id={this.clientId}
+                authToken={this.authToken}
                 account-id={this.accountId}
                 is-selected={isSelected}
+                paymentMethodGroupId={this.paymentMethodGroupId}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

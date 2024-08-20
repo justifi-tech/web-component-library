@@ -107,7 +107,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
               <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
             </div>
             <div>
-              <justifi-payment-method-options account-id="acc_5Et9iXrSSAZR2KSouQGAWi" client-id="test_e94e298293426cacb29c953b2047d6e8" paymentamount="1799" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+              <justifi-payment-method-options account-id="acc_5Et9iXrSSAZR2KSouQGAWi" paymentamount="1799" paymentmethodgroupid="pmg_12TH1LBNpsrdEXxWyxFjQv" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
             </div>
           </section>
         </div>

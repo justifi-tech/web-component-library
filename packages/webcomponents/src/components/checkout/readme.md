@@ -57,7 +57,7 @@
 
 ## Methods
 
-### `resolvePaymentMethod(insuranceValidation?: any) => Promise<PaymentMethodPayload>`
+### `resolvePaymentMethod(insuranceValidation: any) => Promise<PaymentMethodPayload>`
 
 
 

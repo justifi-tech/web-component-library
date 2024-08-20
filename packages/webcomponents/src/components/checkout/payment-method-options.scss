@@ -2,6 +2,7 @@
 @import 'buttons';
 @import 'bootstrap-utilities';
 @import './jfi-radio-button';
+@import './jfi-checkbox';
 
 :host {
   @include host-base-styles;
