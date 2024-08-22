@@ -60,6 +60,7 @@ export const industryValidation = string()
   .transform(transformEmptyString);
 
 export const taxIdValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid tax id, SSN, or EIN')
   .test('not-repeat', 'Enter valid tax id, SSN, or EIN', (value) => {
     return !/^(\d)\1+$/.test(value);
   })
