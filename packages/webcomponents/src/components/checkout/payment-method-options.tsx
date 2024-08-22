@@ -47,7 +47,15 @@ export class PaymentMethodOptions {
 
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
-    this.paymentMethodOptions = this.savedPaymentMethods.map((paymentMethod) => new PaymentMethodOption(paymentMethod));
+    this.paymentMethodOptions = this.savedPaymentMethods
+      .map((paymentMethod) => new PaymentMethodOption(paymentMethod))
+      .filter((paymentMethod) => {
+        // Don't saved card or bank account if they are disabled
+        return (
+          (this.showCard || paymentMethod.type !== PaymentMethodTypes.card) &&
+          (this.showAch || paymentMethod.type !== PaymentMethodTypes.bankAccount)
+        );
+      });
     if (this.showBnpl && this.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
