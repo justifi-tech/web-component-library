@@ -16,8 +16,10 @@ export class PaymentMethodOptions {
   @Prop() showAch: boolean;
   @Prop() showBnpl: boolean;
   @Prop() showSavedPaymentMethods: boolean;
+  @Prop() paymentMethodGroupId?: string;
   @Prop() bnpl: IBnpl;
-  @Prop() clientId: string;
+  @Prop() insuranceToggled: boolean;
+  @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
@@ -46,7 +48,7 @@ export class PaymentMethodOptions {
   @Watch('savedPaymentMethods')
   paymentMethodsChanged() {
     this.paymentMethodOptions = this.savedPaymentMethods.map((paymentMethod) => new PaymentMethodOption(paymentMethod));
-    if (this.showBnpl && this.bnpl?.provider === 'sezzle') {
+    if (this.showBnpl && this.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
     if (this.showCard) {
@@ -63,8 +65,8 @@ export class PaymentMethodOptions {
   }
 
   @Method()
-  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
-    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod();
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
   }
 
   render() {
@@ -79,9 +81,10 @@ export class PaymentMethodOptions {
             return (
               <justifi-new-payment-method
                 paymentMethodOption={paymentMethodOption}
-                client-id={this.clientId}
+                authToken={this.authToken}
                 account-id={this.accountId}
                 is-selected={isSelected}
+                paymentMethodGroupId={this.paymentMethodGroupId}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

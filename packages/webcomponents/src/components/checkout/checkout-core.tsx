@@ -7,7 +7,6 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 
-
 @Component({
   tag: 'justifi-checkout-core',
   styleUrl: 'checkout-core.scss',
@@ -33,7 +32,8 @@ export class CheckoutCore {
   @State() serverError: string;
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
-
+  @State() insuranceToggled: boolean = false;
+  
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -52,6 +52,7 @@ export class CheckoutCore {
       insuranceValuesOn('set', (key) => {
         const value = insuranceValues[key];
         if (value !== undefined) {
+          this.insuranceToggled = value;
           this.fetchData();
         }
       });
@@ -82,9 +83,9 @@ export class CheckoutCore {
     this.renderState = 'loading';
 
     const insuranceValidation = validateInsuranceValues();
-    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod(insuranceValidation);
 
-    if (!insuranceValidation.isValid) {
+    if (payload.validationError) {
       this.renderState = 'error';
     }
     else if (payload.error) {
@@ -152,12 +153,14 @@ export class CheckoutCore {
             show-card={!this.disableCreditCard}
             show-ach={!this.disableBankAccount}
             show-bnpl={!this.disableBnpl}
+            paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             bnpl={this.checkout?.bnpl}
-            client-id={this.checkout?.payment_client_id}
+            authToken={this.authToken}
             account-id={this.checkout?.account_id}
             savedPaymentMethods={this.checkout?.payment_methods || []}
             paymentAmount={this.checkout?.payment_amount}
+            insuranceToggled={this.insuranceToggled}
           />
         </div>
       </section>
@@ -195,17 +198,16 @@ export class CheckoutCore {
             {/* componentize this */}
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
             {this.summary}
-          </div >
-
+          </div>
+          <div class="col-12">
+            <slot name="insurance"></slot>
+          </div>
           <div class="col-12">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
               {this.paymentType}
             </div>
-          </div>
-          <div class="col-12">
-            <slot name="insurance"></slot>
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
