@@ -42,7 +42,7 @@ export class PaymentMethodOptions {
 
   connectedCallback() {
     this.paymentMethodsChanged();
-    this.selectedPaymentMethodId = this.paymentMethodOptions[0].id;
+    this.selectedPaymentMethodId = this.paymentMethodOptions[0]?.id;
   }
 
   @Watch('savedPaymentMethods')
