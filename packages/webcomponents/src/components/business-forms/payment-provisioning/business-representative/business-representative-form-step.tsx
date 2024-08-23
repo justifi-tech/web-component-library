@@ -34,10 +34,6 @@ export class BusinessRepresentativeFormStep {
     return `entities/business/${this.businessId}`
   }
 
-  get identificationNumberLabel() {
-    return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
-  }
-
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
@@ -151,70 +147,70 @@ export class BusinessRepresentativeFormStep {
       this.formController.getInitialValues();
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts='label,input,input-invalid'>
         <form>
           <fieldset>
             <legend>Representative</legend>
             <hr />
-            <div class="row gy-3">
-              <div class="col-12 col-md-8">
+            <div class='row gy-3'>
+              <div class='col-12 col-md-8'>
                 <form-control-text
-                  name="name"
-                  label="Full Name"
+                  name='name'
+                  label='Full Name'
                   defaultValue={representativeDefaultValue?.name}
                   errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-4">
+              <div class='col-12 col-md-4'>
                 <form-control-text
-                  name="title"
-                  label="Title"
+                  name='title'
+                  label='Title'
                   defaultValue={representativeDefaultValue?.title}
                   errorText={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-6">
+              <div class='col-12 col-md-6'>
                 <form-control-text
-                  name="email"
-                  label="Email Address"
+                  name='email'
+                  label='Email Address'
                   defaultValue={representativeDefaultValue?.email}
                   errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-6">
+              <div class='col-12 col-md-6'>
                 <form-control-number-masked
-                  name="phone"
-                  label="Phone Number"
+                  name='phone'
+                  label='Phone Number'
                   defaultValue={representativeDefaultValue?.phone}
                   errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
               </div>
-              <div class="col-12 col-md-4">
+              <div class='col-12 col-md-4'>
                 <form-control-date
-                  name="dob_full"
-                  label="Birth Date"
+                  name='dob_full'
+                  label='Birth Date'
                   defaultValue={representativeDefaultValue?.dob_full}
                   errorText={this.errors.dob_full}
                   inputHandler={this.inputHandler}
                   onFormControlInput={this.onDateOfBirthUpdate}
                 />
               </div>
-              <div class="col-12 col-md-8">
+              <div class='col-12 col-md-8'>
                 <form-control-number-masked
-                  name="identification_number"
-                  label={this.identificationNumberLabel}
+                  name='identification_number'
+                  label='SSN'
                   defaultValue={representativeDefaultValue?.identification_number}
                   errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
                 />
               </div>
-              <div class="col-12">
+              <div class='col-12'>
                 <justifi-identity-address-form
                   errors={this.errors.address}
                   defaultValues={representativeDefaultValue?.address}
