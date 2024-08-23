@@ -42,7 +42,6 @@ export class PaymentMethodOptions {
 
   connectedCallback() {
     this.paymentMethodsChanged();
-    this.selectedPaymentMethodId = this.paymentMethodOptions[0]?.id;
   }
 
   @Watch('savedPaymentMethods')
@@ -64,6 +63,9 @@ export class PaymentMethodOptions {
     }
     if (this.showAch) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
+    }
+    if (!this.selectedPaymentMethodId) {
+      this.selectedPaymentMethodId = this.paymentMethodOptions[0]?.id;
     }
   }
 
