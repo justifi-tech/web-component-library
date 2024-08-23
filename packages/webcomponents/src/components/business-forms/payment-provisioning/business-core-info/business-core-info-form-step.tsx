@@ -187,6 +187,7 @@ export class BusinessCoreInfoFormStep {
                   errorText={this.errors.tax_id}
                   inputHandler={this.inputHandler}
                   keyDownHandler={numberOnlyHandler}
+                  maxLength={9}
                 />
               </div>
               <div class='col-12'>
