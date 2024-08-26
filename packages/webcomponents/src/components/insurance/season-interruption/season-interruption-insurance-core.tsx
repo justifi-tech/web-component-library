@@ -8,7 +8,7 @@ import StyledHost from "../../../utils/styled-host/styled-host";
   tag: 'justifi-season-interruption-insurance-core',
   styleUrls: [
     'season-interruption-insurance-core.css',
-    '../../checkout/radio-button.css',
+    '../../checkout/form-check-input.css',
     '../../checkout/header.css',
   ],
   shadow: true,
