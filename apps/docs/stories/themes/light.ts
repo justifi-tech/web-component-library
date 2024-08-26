@@ -96,6 +96,15 @@ justifi-season-interruption-insurance {
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: rgba(0, 0, 0, .025);
 
+  --jfi-radio-button-background-color: transparent;
+  --jfi-radio-button-border-color: #333;
+
+  --jfi-radio-button-background-color-selected: #333;
+  --jfi-radio-button-border-color-selected: #333;
+
+  --jfi-radio-button-border-color-focus: #333;
+  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(0, 0, 0, .25);
+
   /* submit button */
   --jfi-submit-button-width: 100%;
   --jfi-submit-button-padding: 6px 18px;

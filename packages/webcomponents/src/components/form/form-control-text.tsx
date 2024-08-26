@@ -63,7 +63,8 @@ export class TextInput {
             name={this.name}
             onBlur={this.formControlBlur.emit}
             onInput={this.handleFormControlInput}
-            onKeyDown={(event: any) => this.keyDownHandler && this.keyDownHandler(event)}
+            onKeyDown={this.keyDownHandler}
+            onPaste={this.keyDownHandler}
             maxLength={this.maxLength}
             part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}

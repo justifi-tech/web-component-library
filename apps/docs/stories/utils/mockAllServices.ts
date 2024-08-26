@@ -8,6 +8,7 @@ import mockPayment from '../../../../mockData/mockPaymentDetailSuccess.json';
 import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
 import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
+import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInterruptionInsurance.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -43,6 +44,7 @@ export const API_PATHS = {
   PAYMENTS_LIST: '/account/:id/payments',
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
+  INSURANCE_QUOTES: '/insurance/quotes',
 };
 
 type MockAllServicesConfig = {
@@ -100,6 +102,8 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
+
+      this.post(API_PATHS.INSURANCE_QUOTES, () => mockSeasonInterruptionInsurance);
     },
   });
 };

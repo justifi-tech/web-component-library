@@ -28,6 +28,9 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
         </section>
       </div>
       <div class="col-12">
+        <slot name="insurance"></slot>
+      </div>
+      <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Payment
         </h2>
@@ -44,9 +47,6 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
             </div>
           </section>
         </div>
-      </div>
-      <div class="col-12">
-        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
@@ -78,18 +78,21 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
           </div>
           <div>
             <div class="jfi-payment-description">
-              4x Cases of Celsius Energy Drink
+              One Chocolate Donut
             </div>
             <div class="jfi-payment-total">
               <span class="jfi-payment-total-label">
                 Total
               </span>
               <span class="jfi-payment-total-amount">
-                $85.92
+                $17.99
               </span>
             </div>
           </div>
         </section>
+      </div>
+      <div class="col-12">
+        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
@@ -104,13 +107,10 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
               <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
             </div>
             <div>
-              <justifi-payment-method-options account-id="acc_4Et9iXrAARKSZ4KSoiQGTYr" client-id="test_ef88f04afebc3c018de30fd3652d7cee" paymentamount="8592" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+              <justifi-payment-method-options account-id="acc_5Et9iXrSSAZR2KSouQGAWi" paymentamount="1799" paymentmethodgroupid="pmg_12TH1LBNpsrdEXxWyxFjQv" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
             </div>
           </section>
         </div>
-      </div>
-      <div class="col-12">
-        <slot name="insurance"></slot>
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
