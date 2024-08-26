@@ -8,6 +8,7 @@ export enum ComponentErrorCodes {
   NOT_AUTHENTICATED = 'not-authenticated',
   INVALID_PARAMETER = 'invalid-parameter',
   PROVISIONING_REQUESTED = 'provisioning-already-requested',
+  SEZZLE_CHECKOUT_ERROR = 'sezzle-checkout-error',
 }
 
 export enum ComponentErrorSeverity {

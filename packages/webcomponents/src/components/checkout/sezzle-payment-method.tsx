@@ -3,6 +3,8 @@ import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { ComponentError } from '../../components';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 const sezzleLogo = (
   <img
@@ -39,6 +41,7 @@ export class SezzlePaymentMethod {
   private sezzleButtonRef: HTMLButtonElement;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentDidRender() {
     this.scriptRef.onload = () => {
@@ -49,8 +52,8 @@ export class SezzlePaymentMethod {
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!insuranceValidation.isValid) { 
-      return { validationError: true }; 
+    if (!insuranceValidation.isValid) {
+      return { validationError: true };
     }
     this.sezzleButtonRef.click();
     return this.sezzlePromise;
@@ -82,7 +85,15 @@ export class SezzlePaymentMethod {
       },
       onComplete: (event) => resolveSezzlePromise({ bnpl: event.data }),
       onCancel: (event) => resolveSezzlePromise({ bnpl: event.data }),
-      onFailure: (event) => resolveSezzlePromise({ bnpl: event.data }),
+      onFailure: (event) => {
+        this.errorEvent.emit({
+          errorCode: ComponentErrorCodes.SEZZLE_CHECKOUT_ERROR,
+          message: event.data,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        this.initializeSezzleCheckout(); // reset the checkout
+        return resolveSezzlePromise({ bnpl: event.data })
+      },
     });
     this.sezzleCheckout = checkout;
     this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
