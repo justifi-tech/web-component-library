@@ -15,14 +15,14 @@ export class SaveNewPaymentMethod {
 
   render() {
     return (
-      <div class="mt-4 d-flex align-items-center">
+      <div class="mt-4 form-check">
         <input
           type="checkbox"
           checked={this.isChecked}
           onChange={(event) => this.handleCheckboxChange(event)}
-          class="me-2"
+          class="form-check-input"
         />
-        <label class='checkbox-label'>
+        <label class="form-check-label">
           Save new payment method
         </label>
       </div>
