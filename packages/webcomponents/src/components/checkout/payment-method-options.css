@@ -2,6 +2,14 @@
   display: block;
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.checkbox-label {
+  cursor: auto;
+}
+
 .payment-method-header {
   cursor: pointer;
   color: var(--jfi-radio-button-group-color);
