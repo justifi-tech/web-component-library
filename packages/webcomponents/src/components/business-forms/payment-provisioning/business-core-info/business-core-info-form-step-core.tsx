@@ -5,9 +5,10 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { businessClassificationOptions } from '../../utils/business-form-options';
-import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { parseCoreInfo } from '../../utils/payload-parsers';
 import { flattenNestedObject } from '../../../../utils/utils';
+import { numberOnlyHandler } from '../../../form/utils';
 
 @Component({
   tag: 'justifi-business-core-info-form-step-core',
@@ -154,13 +155,14 @@ export class BusinessCoreInfoFormStepCore {
                 />
               </div>
               <div class='col-12 col-md-6'>
-                <form-control-number-masked
+                <form-control-text
                   name='tax_id'
-                  label='Tax ID'
+                  label='Tax ID (EIN or SSN)'
                   defaultValue={coreInfoDefaultValue.tax_id}
                   errorText={this.errors.tax_id}
                   inputHandler={this.inputHandler}
-                  mask={TAX_ID_MASKS.US}
+                  keyDownHandler={numberOnlyHandler}
+                  maxLength={9}
                 />
               </div>
               <div class='col-12'>

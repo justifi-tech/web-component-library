@@ -199,7 +199,7 @@ export class BusinessOwnerFormCore {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts='label,input,input-invalid'>
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
             <legend class='fw-semibold fs-5'>{this.formTitle}</legend>

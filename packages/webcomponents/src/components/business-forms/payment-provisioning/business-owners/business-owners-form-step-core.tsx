@@ -137,7 +137,7 @@ export class BusinessOwnersFormStepCore {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts='label,input,input-invalid'>
         <legend>Owners</legend>
         <hr />
         <div class='row gy-3'>
