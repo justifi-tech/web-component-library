@@ -1,4 +1,4 @@
-import { Component, h, Prop, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Method, Event, EventEmitter, Listen, State } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -14,15 +14,25 @@ const PaymentMethodTypeLabels = {
 })
 export class NewPaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
-  @Prop() clientId: string;
+  @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
+  @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
+
+  @State() saveNewPaymentMethodChecked: boolean = false;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
+
+
+  @Listen('checkboxChanged')
+  handleCheckboxChanged(event: CustomEvent<boolean>) {
+    this.saveNewPaymentMethodChecked = event.detail;
+  }
+
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
@@ -30,13 +40,14 @@ export class NewPaymentMethod {
   }
 
   @Method()
-  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
-    const billingFormValidation = await this.billingFormRef.validate();
-    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+    const isValid = await this.validate();
 
-    if (!billingFormValidation.isValid || !paymentMethodFormValidation.isValid) return;
+    if (!isValid || !insuranceValidation.isValid) {
+      return { validationError: true };
+    }
 
     const tokenizeResponse = await this.tokenize();
 
@@ -48,11 +59,23 @@ export class NewPaymentMethod {
     }
   }
 
+  async validate(): Promise<boolean> {
+    const billingFormValidation = await this.billingFormRef.validate();
+    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+
+    return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
+  }
+
   async tokenize() {
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
-      const paymentMethodData = { ...billingFormFieldValues };
-      const clientId = this.clientId;
+      let paymentMethodData;
+      if (this.saveNewPaymentMethodChecked) {
+        paymentMethodData = { ...billingFormFieldValues, payment_method_group_id: this.paymentMethodGroupId };
+      } else {
+        paymentMethodData = { ...billingFormFieldValues };
+      }
+      const clientId = this.authToken;
       const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
       return tokenizeResponse;
     } catch (error) {
@@ -76,6 +99,7 @@ export class NewPaymentMethod {
         </div>
         <h3 class="fs-6 fw-bold lh-lg mb-4">Billing address</h3>
         <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
     );
   }

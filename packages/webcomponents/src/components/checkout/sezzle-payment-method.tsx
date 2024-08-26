@@ -47,7 +47,10 @@ export class SezzlePaymentMethod {
   }
 
   @Method()
-  async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    if (!insuranceValidation.isValid) { 
+      return { validationError: true }; 
+    }
     this.sezzleButtonRef.click();
     return this.sezzlePromise;
   }

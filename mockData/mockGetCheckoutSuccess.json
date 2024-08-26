@@ -1,18 +1,18 @@
 {
-  "id": "cho_SuaBaIa78dedf9934cf4vrbHVX",
+  "id": "cho_3PoxcZqCXWOGm69e1XcGrW",
   "type": "checkout",
   "page_info": null,
   "data": {
-    "payment_intent_id": "pi_7BlZYsKGktASDFdchjgkz",
-    "account_id": "acc_4Et9iXrAARKSZ4KSoiQGTYr",
-    "platform_account_id": "acc_2erNb3aRBy2iWaYUOczmx4",
-    "payment_amount": "8592",
-    "total_amount": "8592",
-    "payment_client_id": "test_ef88f04afebc3c018de30fd3652d7cee",
-    "payment_description": "4x Cases of Celsius Energy Drink",
+    "id": "cho_3PoxcZqCXWOGm69e1XcGrW",
+    "payment_intent_id": null,
+    "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
+    "platform_account_id": "acc_3reNb4aNYy2iWDZQVczmx4",
+    "payment_amount": 1799,
+    "payment_currency": "USD",
+    "payment_description": "One Chocolate Donut",
     "payment_methods": [
       {
-        "id": "pm_7PA97VwNKZskBhKf24kRTY",
+        "id": "pm_7PA97VwNELPkBhKf24kVE0",
         "status": "valid",
         "invalid_reason": null,
         "name": "Julia Garnett",
@@ -25,19 +25,32 @@
         "bin_details": null
       }
     ],
-    "payment_method_group_id": "pmg_23YT1LVnpsrdXExZYxIjav",
+    "payment_method_group_id": "pmg_12TH1LBNpsrdEXxWyxFjQv",
+    "status": "created",
+    "mode": "test",
     "payment_settings": {
       "ach_payments": true,
       "bnpl_payments": true,
       "credit_card_payments": true
     },
+    "successful_payment_id": null,
+    "created_at": "2024-08-15T13:54:01.558Z",
+    "updated_at": "2024-08-15T13:54:01.558Z",
+    "total_amount": 1799,
+    "insurance_amount": 0,
+    "payment_client_id": "test_e94e298293426cacb29c953b2047d6e8",
+    "completions": [],
     "bnpl": {
       "provider": "sezzle",
-      "provider_client_id": "sz_pub_Zfhyb9x0fetB2TjYUejTTP3Kb3TRi1xE",
+      "provider_client_id": "sz_pub_Kfhyb9x0hdTb2JtUYejTTP3Kb2RTi1xV",
       "provider_mode": "sandbox",
-      "provider_checkout_url": "https://sandbox.checkout.sezzle.com?id=7b5321f9-98f2-as33-bFb8-98723423",
-      "provider_order_id": "b857a9be-ebf3-40f8-86a4-0e77dc6e14df",
-      "provider_api_version": "v2"
+      "provider_checkout_url": "https://sandbox.checkout.sezzle.com?id=8162a420-953e-4cdc-8a0d-10ba4ada4eee",
+      "provider_order_id": "939d82be-d319-4d6e-adb6-97b03336c281",
+      "balance": 1799,
+      "provider_api_version": "v2",
+      "status": "created",
+      "created_at": "2024-08-15T13:54:02.083Z",
+      "updated_at": "2024-08-15T13:54:02.083Z"
     }
   }
 }

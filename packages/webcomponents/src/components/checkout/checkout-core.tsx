@@ -66,7 +66,6 @@ export class CheckoutCore {
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
         this.renderState = 'success';
-
       },
       onError: ({ error, code, severity }) => {
         this.serverError = error;
@@ -85,9 +84,9 @@ export class CheckoutCore {
     this.renderState = 'loading';
 
     const insuranceValidation = validateInsuranceValues();
-    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod();
+    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod(insuranceValidation);
 
-    if (!insuranceValidation.isValid) {
+    if (payload.validationError) {
       this.renderState = 'error';
     }
     else if (payload.error) {
@@ -155,9 +154,10 @@ export class CheckoutCore {
             show-card={!this.disableCreditCard}
             show-ach={!this.disableBankAccount}
             show-bnpl={!this.disableBnpl}
+            paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             bnpl={this.checkout?.bnpl}
-            client-id={this.checkout?.payment_client_id}
+            authToken={this.authToken}
             account-id={this.checkout?.account_id}
             savedPaymentMethods={this.checkout?.payment_methods || []}
             paymentAmount={this.checkout?.payment_amount}
