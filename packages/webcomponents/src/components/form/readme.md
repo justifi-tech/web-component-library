@@ -51,7 +51,7 @@
  - [justifi-legal-address-form](../business-forms/business-form/legal-address-form)
  - [justifi-legal-address-form-step](../business-forms/payment-provisioning/legal-address-form)
  - [justifi-refund-form](../refund-form)
- - [owner-form-core](../business-forms/owner-form)
+ - [owner-form-inputs](../business-forms/owner-form)
 
 ### Depends on
 
@@ -75,7 +75,7 @@ graph TD;
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form-step --> form-control-text
   justifi-refund-form --> form-control-text
-  owner-form-core --> form-control-text
+  owner-form-inputs --> form-control-text
   style form-control-text fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

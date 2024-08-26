@@ -1,0 +1,25 @@
+{
+  "id": "iqu_7kkjuy7bhGUBuX5THb0Rls",
+  "type": "array",
+  "page_info": null,
+  "data": {
+    "id": "iqu_7kkjuy7bhGUBuX5THb0Rls",
+    "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+    "accepted": null,
+    "checkout_id": "cho_21a3LcNk4zsCuX5fKwJ2HT",
+    "currency": "USD",
+    "expiration_date": "2024-08-31T00:00:00.000Z",
+    "mode": "live",
+    "policy_type": "season_interruption",
+    "product": {
+      "title": "Add Registration Protection",
+      "description": "\u003cp\u003eProtect your registration and get your money back in the event of unforeseen circumstances that prevent participation, including sickness (including COVID-19), injury, inclement weather, transportation, job loss and other covered reasons.\u003c/p\u003e",
+      "legal_disclaimer": "\u003cp\u003eSelecting yes constitutes my electronic signature. I confirm that I have read, understand and agree to the \u003ca href=\"https://partner.battleface.com/library/vertical-insure-season-cancellation-and-interruption-es\" target=\"_blank\" style=\"color: black\"\u003epolicy terms and conditions\u003c/a\u003e, and \u003ca href=\"https://legal.verticalinsure.com/Important-Notices-and-Disclosures-Everspan-Season-Can.pdf\" target=\"_blank\" style=\"color: black\"\u003eimportant notices and disclosures\u003c/a\u003e, which includes fraud warnings, privacy notice, and consent to electronic signature and delivery.\u003c/p\u003e\n\n\u003cp\u003ebattleface Travel Insurance plans are underwritten by Everspan Insurance Company (an AZ Corporation, NAIC#  24961), with administrative office at One World Trade Center, 41st Floor, New York, NY 10007. Plans are offered and administered by battleface Insurance Services LLC, 45 East Lincoln Street, Columbus, OH 43215, National Producer Number 18731960 (FL License number L107363/CA License number 0M75381).\u003c/p\u003e"
+    },
+    "provider": "vertical_insure",
+    "provider_id": "xru592fy0bpdyy0zemzmym2x",
+    "total_cents": 79,
+    "created_at": "2024-07-17T19:46:44.418Z",
+    "updated_at": "2024-07-17T19:46:44.418Z"
+  }
+}

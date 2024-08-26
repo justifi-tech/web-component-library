@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type      | Default     |
-| --------------------- | ----------------------- | ----------- | --------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean` | `undefined` |
-| `authToken`           | `auth-token`            |             | `string`  | `undefined` |
-| `businessId`          | `business-id`           |             | `string`  | `undefined` |
+| Property              | Attribute               | Description | Type       | Default     |
+| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`   | `undefined` |
+| `businessId`          | `business-id`           |             | `string`   | `undefined` |
+| `getBusiness`         | --                      |             | `Function` | `undefined` |
+| `patchBusiness`       | --                      |             | `Function` | `undefined` |
 
 
 ## Events
@@ -47,7 +49,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning-form-steps](..)
+ - [justifi-business-owners-form-step](.)
 
 ### Depends on
 
@@ -56,13 +58,14 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-owners-form-step --> justifi-owner-form
+  justifi-business-owners-form-step-core --> justifi-owner-form
   justifi-owner-form --> owner-form-core
-  owner-form-core --> form-control-text
-  owner-form-core --> form-control-number-masked
-  owner-form-core --> form-control-date
-  owner-form-core --> justifi-identity-address-form
+  owner-form-core --> owner-form-inputs
   owner-form-core --> owner-form-buttons
+  owner-form-inputs --> form-control-text
+  owner-form-inputs --> form-control-number-masked
+  owner-form-inputs --> form-control-date
+  owner-form-inputs --> justifi-identity-address-form
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
@@ -73,8 +76,8 @@ graph TD;
   justifi-identity-address-form --> form-control-select
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
-  justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
-  style justifi-business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-owners-form-step --> justifi-business-owners-form-step-core
+  style justifi-business-owners-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

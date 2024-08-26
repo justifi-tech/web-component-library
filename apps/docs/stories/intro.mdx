@@ -15,14 +15,14 @@ Latest Version: <code>{extractWebcomponentsVersion()}</code>
 
 # Index
 
-* [Usage](#usage)
-* [Default Styling](#default-styling)
-* [React](#react)
-* [Styling](#styling)
-  * [Styling iFramed components with variables](#styling-components-with-variables)
-    * [Loading Google Fonts](#loading-google-fonts)
-  * [Styling components with custom css](#styling-components-with-custom-css)
-* [Changelog](/docs/changelog--docs)
+- [Usage](#usage)
+- [Default Styling](#default-styling)
+- [React](#react)
+- [Styling](#styling)
+  - [Styling iFramed components with variables](#styling-components-with-variables)
+    - [Loading Google Fonts](#loading-google-fonts)
+  - [Styling components with custom css](#styling-components-with-custom-css)
+- [Changelog](/docs/changelog--docs)
 
 # Usage
 
@@ -115,11 +115,11 @@ Or import it in your `JS` file:
 
 ## Styling components with variables
 
-The following components need to be styled by overriding `CSS variables`, since they are scoped within an iFrame:
+The following components need to be styled by overriding `CSS variables`, since they are scoped within an iFrame
 
-* [BankAccountForm](?path=/docs/components-bankaccountform--docs)
-* [CardForm](?path=/docs/components-cardform--docs)
-* [PaymentForm](?path=/docs/components-paymentform--docs)
+- [BankAccountForm](?path=/docs/payment-facilitation-payments-bank-account-form--docs)
+- [CardForm](?path=/docs/payment-facilitation-payments-card-form--docs)
+- [PaymentForm](?path=/docs/payment-facilitation-payments-payment-form--docs)
 
 This is a complete list of variables as defined in this project's `root.scss`:
 
@@ -127,18 +127,14 @@ This is a complete list of variables as defined in this project's `root.scss`:
   <CSSVars />
 </SummaryElement>
 
-<Markdown>
-  {`
-    **Note:** When customizing the \`--jfi-form-control-box-shadow\` variable, ensure that the \`--jfi-layout-padding\` is not set to \`0\`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
-  `}
-</Markdown>
+> **Note:** When customizing the `--jfi-form-control-box-shadow` variable, ensure that the `--jfi-layout-padding` is not set to `0`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
 
 ## Loading Google fonts
 
 In order to load custom fonts in the iFramed components, there's a special CSS variable that can be used: `--jfi-load-google-font`.
 The value provided should be a string commpatible with what's described in the following [official documentation from Google](https://developers.google.com/fonts/docs/css2).
 
-### Check out the [CardForm story for this to see it in action](?path=/docs/components-cardform--styled).
+### Check out the [CardForm story for this to see it in action](?path=/docs/payment-facilitation-payments-card-form--example).
 
 Usage examples:
 

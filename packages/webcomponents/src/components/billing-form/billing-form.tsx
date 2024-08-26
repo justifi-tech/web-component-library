@@ -50,11 +50,11 @@ export class BillingForm {
 
   @Method()
   async fill(fields: BillingFormFields) {
-    this.formController.setValues(fields);
+    this.formController.setInitialValues(fields);
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }>{
+  async validate(): Promise<{ isValid: boolean }> {
     let isValid: boolean = await this.formController.validate();
     return { isValid: isValid };
   }
