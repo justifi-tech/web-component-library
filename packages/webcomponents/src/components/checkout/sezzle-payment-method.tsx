@@ -5,6 +5,7 @@ import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { ComponentError } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import '../../sezzle/checkout';
 
 const sezzleLogo = (
   <img
@@ -37,17 +38,14 @@ export class SezzlePaymentMethod {
   @State() sezzleCheckout: any;
   @State() sezzlePromise: Promise<PaymentMethodPayload>;
 
-  private scriptRef: HTMLScriptElement;
   private sezzleButtonRef: HTMLButtonElement;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
-  componentDidRender() {
-    this.scriptRef.onload = () => {
-      this.sezzleButtonRef = document.createElement('button');
-      this.initializeSezzleCheckout();
-    };
+  componentDidLoad() {
+    this.sezzleButtonRef = document.createElement('button');
+    this.initializeSezzleCheckout();
   }
 
   @Method()
@@ -102,12 +100,6 @@ export class SezzlePaymentMethod {
   render() {
     return (
       <div class="payment-method">
-        <script
-          src="https://checkout-sdk.sezzle.com/checkout.min.js"
-          async={true}
-          ref={(el) => (this.scriptRef = el)}>
-        </script>
-
         <div
           class={`payment-method-header p-3`}
           onClick={() => this.onPaymentMethodOptionClick()}>
