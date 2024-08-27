@@ -1,3 +1,5 @@
+jest.mock('../../../utils/styled-host/modified-bootstrap.css', () => '');
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsListCore } from '../payments-list-core';
@@ -31,7 +33,7 @@ describe('payments-list-core', () => {
     const justifiTable = page.root.querySelector('justifi-table');
 
     expect(page.rootInstance.payments[0]).toEqual(expect.objectContaining({ account_id: mockPaymentsResponse.data[0].account_id }));
-    const rows = justifiTable.shadowRoot.querySelectorAll('[data-test-id="table-row"]');
+    const rows = justifiTable.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(mockPaymentsResponse.data.length);
     expect(mockPaymentsService.fetchPayments).toHaveBeenCalled();
     expect(page.root).toMatchSnapshot();
@@ -78,7 +80,7 @@ describe('payments-list-core', () => {
     await page.waitForChanges();
 
     const justifiTable = page.root.querySelector('justifi-table');
-    const firstRow = justifiTable.shadowRoot.querySelector('[data-test-id="table-row"]') as HTMLElement;
+    const firstRow = justifiTable.querySelector('[data-test-id="table-row"]') as HTMLElement;
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();

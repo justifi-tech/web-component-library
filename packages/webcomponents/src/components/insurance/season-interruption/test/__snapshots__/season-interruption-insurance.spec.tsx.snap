@@ -3,8 +3,10 @@
 exports[`justifi-season-interruption-insurance renders loading 1`] = `
 <justifi-season-interruption-insurance auth-token="123">
   <template shadowrootmode="open">
-    <justifi-season-interruption-insurance-core>
-      <template shadowrootmode="open"></template>
+    <justifi-season-interruption-insurance-core class="body">
+      <template shadowrootmode="open">
+        <style></style>
+      </template>
     </justifi-season-interruption-insurance-core>
   </template>
 </justifi-season-interruption-insurance>

@@ -1,3 +1,5 @@
+jest.mock('../../../utils/styled-host/modified-bootstrap.css', () => '');
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PayoutDetailsCore } from '../payout-details-core';
