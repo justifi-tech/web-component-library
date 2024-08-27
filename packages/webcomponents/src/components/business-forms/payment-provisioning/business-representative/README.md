@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type      | Default     |
-| --------------------- | ----------------------- | ----------- | --------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean` | `undefined` |
-| `authToken`           | `auth-token`            |             | `string`  | `undefined` |
-| `businessId`          | `business-id`           |             | `string`  | `undefined` |
+| Property              | Attribute               | Description | Type       | Default     |
+| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`   | `undefined` |
+| `businessId`          | `business-id`           |             | `string`   | `undefined` |
+| `getBusiness`         | --                      |             | `Function` | `undefined` |
+| `patchBusiness`       | --                      |             | `Function` | `undefined` |
 
 
 ## Events
@@ -46,7 +48,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning-form-steps](..)
+ - [justifi-business-representative-form-step](.)
 
 ### Depends on
 
@@ -58,10 +60,10 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-representative-form-step --> form-control-text
-  justifi-business-representative-form-step --> form-control-number-masked
-  justifi-business-representative-form-step --> form-control-date
-  justifi-business-representative-form-step --> justifi-identity-address-form
+  justifi-business-representative-form-step-core --> form-control-text
+  justifi-business-representative-form-step-core --> form-control-number-masked
+  justifi-business-representative-form-step-core --> form-control-date
+  justifi-business-representative-form-step-core --> justifi-identity-address-form
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
@@ -72,8 +74,8 @@ graph TD;
   justifi-identity-address-form --> form-control-select
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
-  justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
-  style justifi-business-representative-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-representative-form-step --> justifi-business-representative-form-step-core
+  style justifi-business-representative-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
