@@ -206,7 +206,6 @@ export class BusinessOwnerFormCore {
             <br />
             <div class='row gy-3'>
               <owner-form-inputs
-                owner={this.owner}
                 ownerDefaultValue={this.formController.getInitialValues()}
                 errors={this.errors}
                 formController={this.formController}

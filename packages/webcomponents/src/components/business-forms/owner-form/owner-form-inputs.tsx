@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
 import { PHONE_MASKS, SSN_MASK } from '../../../utils/form-input-masks';
-import { Owner } from '../../../api/Identity';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../utils/input-handlers';
 import { FormController } from '../../form/form';
 
@@ -8,7 +7,6 @@ import { FormController } from '../../form/form';
   tag: 'owner-form-inputs'
 })
 export class BusinessOwnerFormInputs {
-  @Prop() owner: Owner;
   @Prop() ownerDefaultValue: any;
   @Prop() errors: any;
   @Prop() formController: FormController;
