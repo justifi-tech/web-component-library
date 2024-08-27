@@ -1,12 +1,10 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { Identity, Representative } from '../../../../api/Identity';
 import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { FormController } from '../../../form/form';
 import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { identitySchema } from '../../schemas/business-identity-schema';
-import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
-import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 
 @Component({
   tag: 'justifi-business-representative-form-step-core',
@@ -44,17 +42,6 @@ export class BusinessRepresentativeFormStepCore {
   componentDidLoad() {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
-    });
-  }
-
-  inputHandler = (name: string, value: string) => {
-    updateFormValues(this.formController, { [name]: value });
-  }
-
-  onAddressFormUpdate = (values: any): void => {
-    updateAddressFormValues(this.formController, {
-      ...this.formController.values.getValue().address,
-      ...values,
     });
   }
 
@@ -101,84 +88,12 @@ export class BusinessRepresentativeFormStepCore {
   }
 
   render() {
-    const representativeDefaultValue =
-      this.formController.getInitialValues();
-
     return (
-      <Host exportparts='label,input,input-invalid'>
-        <form>
-          <fieldset>
-            <legend>Representative</legend>
-            <hr />
-            <div class='row gy-3'>
-              <div class='col-12 col-md-8'>
-                <form-control-text
-                  name='name'
-                  label='Full Name'
-                  defaultValue={representativeDefaultValue?.name}
-                  errorText={this.errors.name}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class='col-12 col-md-4'>
-                <form-control-text
-                  name='title'
-                  label='Title'
-                  defaultValue={representativeDefaultValue?.title}
-                  errorText={this.errors.title}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class='col-12 col-md-6'>
-                <form-control-text
-                  name='email'
-                  label='Email Address'
-                  defaultValue={representativeDefaultValue?.email}
-                  errorText={this.errors.email}
-                  inputHandler={this.inputHandler}
-                />
-              </div>
-              <div class='col-12 col-md-6'>
-                <form-control-number-masked
-                  name='phone'
-                  label='Phone Number'
-                  defaultValue={representativeDefaultValue?.phone}
-                  errorText={this.errors.phone}
-                  inputHandler={this.inputHandler}
-                  mask={PHONE_MASKS.US}
-                />
-              </div>
-              <div class='col-12 col-md-4'>
-                <form-control-date
-                  name='dob_full'
-                  label='Birth Date'
-                  defaultValue={representativeDefaultValue?.dob_full}
-                  errorText={this.errors.dob_full}
-                  inputHandler={this.inputHandler}
-                  onFormControlInput={(e) => updateDateOfBirthFormValues(e, this.formController)}
-                />
-              </div>
-              <div class='col-12 col-md-8'>
-                <form-control-number-masked
-                  name='identification_number'
-                  label='SSN'
-                  defaultValue={representativeDefaultValue?.identification_number}
-                  errorText={this.errors.identification_number}
-                  inputHandler={this.inputHandler}
-                  mask={SSN_MASK}
-                />
-              </div>
-              <div class='col-12'>
-                <justifi-identity-address-form
-                  errors={this.errors.address}
-                  defaultValues={representativeDefaultValue?.address}
-                  handleFormUpdate={this.onAddressFormUpdate}
-                />
-              </div>
-            </div>
-          </fieldset>
-        </form>
-      </Host>
+      <justifi-business-representative-form-inputs
+        representativeDefaultValue={this.formController.getInitialValues()}
+        errors={this.errors}
+        formController={this.formController}
+      />
     );
   }
 };
