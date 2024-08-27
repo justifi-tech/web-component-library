@@ -33,7 +33,7 @@ export class CheckoutCore {
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
-  
+
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -64,6 +64,22 @@ export class CheckoutCore {
     this.getCheckout({
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
+        const { status } = this.checkout;
+        if (status === 'completed' || status === 'expired') {
+          const errorCode = status === 'completed'
+            ? ComponentErrorCodes.CHECKOUT_COMPLETED
+            : ComponentErrorCodes.CHECKOUT_EXPIRED;
+
+          const message = status === 'completed'
+            ? 'Checkout has already been completed'
+            : 'Checkout has expired';
+
+          this.errorEvent.emit({
+            errorCode,
+            message,
+            severity: ComponentErrorSeverity.ERROR,
+          });
+        }
         this.renderState = 'success';
       },
       onError: ({ error, code, severity }) => {

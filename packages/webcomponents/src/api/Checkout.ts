@@ -38,7 +38,8 @@ export interface ICheckout {
   bnpl?: IBnpl;
   total_amount: number;
   insurance_amount: number;
-};
+  status?: string;
+}
 
 export class Checkout implements ICheckout {
   payment_intent_id: string;
@@ -69,6 +70,7 @@ export class Checkout implements ICheckout {
   bnpl?: IBnpl;
   total_amount: number;
   insurance_amount: number;
+  status?: string;
 
   constructor(data: ICheckout) {
     Object.assign(this, data);
