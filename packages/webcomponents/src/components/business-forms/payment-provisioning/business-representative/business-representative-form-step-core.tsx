@@ -6,10 +6,10 @@ import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
-import { deconstructDate } from '../../utils/helpers';
+import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 
 @Component({
-  tag: "justifi-business-representative-form-step-core",
+  tag: 'justifi-business-representative-form-step-core',
 })
 export class BusinessRepresentativeFormStepCore {
   @State() formController: FormController;
@@ -24,7 +24,7 @@ export class BusinessRepresentativeFormStepCore {
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event({ eventName: "error-event", bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -47,33 +47,15 @@ export class BusinessRepresentativeFormStepCore {
     });
   }
 
-  onAddressFormUpdate = (values: any): void => {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      address: {
-        ...this.formController.values.getValue().address,
-        ...values,
-      }
-    });
+  inputHandler = (name: string, value: string) => {
+    updateFormValues(this.formController, { [name]: value });
   }
 
-  onDateOfBirthUpdate = (event): void => {
-    if (event.detail === '') {
-      this.formController.setValues({
-        ...this.formController.values.getValue(),
-        dob_day: null,
-        dob_month: null,
-        dob_year: null,
-      });
-    } else {
-      const dob_values = deconstructDate(event.detail);
-      this.formController.setValues({
-        ...this.formController.values.getValue(),
-        dob_day: dob_values.dob_day,
-        dob_month: dob_values.dob_month,
-        dob_year: dob_values.dob_year,
-      });
-    }
+  onAddressFormUpdate = (values: any): void => {
+    updateAddressFormValues(this.formController, {
+      ...this.formController.values.getValue().address,
+      ...values,
+    });
   }
 
   private getData = () => {
@@ -115,13 +97,6 @@ export class BusinessRepresentativeFormStepCore {
         this.submitted.emit({ data: { submittedData } });
         this.formLoading.emit(false)
       }
-    });
-  }
-
-  inputHandler = (name: string, value: string) => {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      [name]: value,
     });
   }
 
@@ -180,7 +155,7 @@ export class BusinessRepresentativeFormStepCore {
                   defaultValue={representativeDefaultValue?.dob_full}
                   errorText={this.errors.dob_full}
                   inputHandler={this.inputHandler}
-                  onFormControlInput={this.onDateOfBirthUpdate}
+                  onFormControlInput={(e) => updateDateOfBirthFormValues(e, this.formController)}
                 />
               </div>
               <div class='col-12 col-md-8'>
@@ -206,4 +181,4 @@ export class BusinessRepresentativeFormStepCore {
       </Host>
     );
   }
-}
+};
