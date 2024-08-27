@@ -58,8 +58,6 @@ export class BusinessRepresentativeFormStep {
     return (
       <Host exportparts='label,input,input-invalid'>
         <justifi-business-representative-form-step-core 
-          authToken={this.authToken}
-          businessId={this.businessId}
           getBusiness={this.getBusiness}
           patchBusiness={this.patchBusiness}
           allowOptionalFields={this.allowOptionalFields}

@@ -14,8 +14,6 @@ export class BusinessRepresentativeFormStepCore {
   @State() errors: any = {};
   @State() representative: Identity = {};
 
-  @Prop() authToken: string;
-  @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
