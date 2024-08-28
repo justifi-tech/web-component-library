@@ -183,6 +183,13 @@ export function camelToKebab(str: string): string {
   return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
 }
 
+export function snakeToCamel(str: string): string {
+  if (!str) return '';
+  return str.replace(/([-_][a-z])/g, (group) =>
+    group.toUpperCase().replace('-', '').replace('_', '')
+  );
+}
+
 export function flattenNestedObject(obj) {
   const result = {};
 

@@ -39,10 +39,6 @@ export class BusinessOwnerForm {
     return this.ownerId ? `entities/identity/${this.ownerId}` : 'entities/identity';
   }
 
-  get identificationNumberLabel() {
-    return this.owner.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
-  }
-
   get formTitle() {
     return this.ownerId ? 'Edit Business Owner' : 'Add Business Owner';
   }
@@ -227,79 +223,79 @@ export class BusinessOwnerForm {
       this.formController.getInitialValues();
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts='label,input,input-invalid'>
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
             <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
             <br />
             <div class='row gy-3'>
-              <div class="col-12 col-md-6">
+              <div class='col-12 col-md-6'>
                 <form-control-text
-                  name="name"
-                  label="Full Name"
+                  name='name'
+                  label='Full Name'
                   defaultValue={ownerDefaultValue?.name}
                   errorText={this.errors.name}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-4">
+              <div class='col-12 col-md-4'>
                 <form-control-text
-                  name="title"
-                  label="Title"
+                  name='title'
+                  label='Title'
                   defaultValue={ownerDefaultValue?.title}
                   errorText={this.errors.title}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-6">
+              <div class='col-12 col-md-6'>
                 <form-control-text
-                  name="email"
-                  label="Email Address"
+                  name='email'
+                  label='Email Address'
                   defaultValue={ownerDefaultValue?.email}
                   errorText={this.errors.email}
                   inputHandler={this.inputHandler}
                 />
               </div>
-              <div class="col-12 col-md-6">
+              <div class='col-12 col-md-6'>
                 <form-control-number-masked
-                  name="phone"
-                  label="Phone Number"
+                  name='phone'
+                  label='Phone Number'
                   defaultValue={ownerDefaultValue?.phone}
                   errorText={this.errors.phone}
                   inputHandler={this.inputHandler}
                   mask={PHONE_MASKS.US}
                 />
               </div>
-              <div class="col-12 col-md-4">
+              <div class='col-12 col-md-4'>
                 <form-control-date
-                  name="dob_full"
-                  label="Birth Date"
+                  name='dob_full'
+                  label='Birth Date'
                   defaultValue={ownerDefaultValue?.dob_full}
                   errorText={this.errors.dob_full}
                   inputHandler={this.inputHandler}
                   onFormControlInput={this.onDateOfBirthUpdate}
                 />
               </div>
-              <div class="col-12 col-md-8">
+              <div class='col-12 col-md-8'>
                 <form-control-number-masked
-                  name="identification_number"
-                  label={this.identificationNumberLabel}
+                  name='identification_number'
+                  label='SSN'
                   defaultValue={ownerDefaultValue?.identification_number}
                   errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
                   mask={SSN_MASK}
                 />
               </div>
-              <div class="col-12">
+              <div class='col-12'>
                 <justifi-identity-address-form
                   errors={this.errors.address}
                   defaultValues={ownerDefaultValue?.address}
                   handleFormUpdate={this.onAddressFormUpdate}
                 />
               </div>
-              <div class="container d-flex gap-2">
+              <div class='container d-flex gap-2'>
                 <button
-                  type="submit"
+                  type='submit'
                   class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
                   onClick={() => this.handleAddOwner()}
                   disabled={this.isLoading}>
@@ -307,8 +303,8 @@ export class BusinessOwnerForm {
                 </button>
                 {this.showRemoveButton &&
                   <button
-                    type="button"
-                    class="btn btn-danger"
+                    type='button'
+                    class='btn btn-danger'
                     onClick={() => this.handleRemoveOwner()}>
                     Remove owner
                   </button>}

@@ -129,7 +129,7 @@ export class AdditionalQuestionsFormStep {
               <div class="col-12 col-md-6">
                 <form-control-monetary
                   name="business_revenue"
-                  label="What is the business' estimated annual revenue from its primary business activies?"
+                  label="What is the business' estimated annual revenue from its primary business activities?"
                   inputHandler={this.inputHandler}
                   errorText={this.errors?.business_revenue}
                   defaultValue={additionalQuestionsDefaultValue?.business_revenue}
@@ -139,7 +139,7 @@ export class AdditionalQuestionsFormStep {
               <div class="col-12 col-md-6">
                 <form-control-monetary
                   name="business_payment_volume"
-                  label="What is the business’ annual credit card & ACH volume anticipated to process?"
+                  label="What is the business' annual credit card & ACH volume anticipated to process?"
                   inputHandler={this.inputHandler}
                   errorText={this.errors?.business_payment_volume}
                   defaultValue={additionalQuestionsDefaultValue?.business_payment_volume}

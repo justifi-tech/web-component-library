@@ -1,26 +1,25 @@
-import { mixed, string } from "yup";
-import StateOptions from "../../../utils/state-options";
-import { 
-  businessServiceReceivedOptions, 
-  recurringPaymentsOptions, 
-  seasonalBusinessOptions, 
+import { mixed, string } from 'yup';
+import StateOptions from '../../../utils/state-options';
+import {
+  businessServiceReceivedOptions,
+  recurringPaymentsOptions,
+  seasonalBusinessOptions,
   bankAccountTypeOptions,
   businessClassificationOptions
-} from "../utils/business-form-options";
-import { 
-  businessNameRegex, 
-  numbersOnlyRegex, 
-  phoneRegex, 
-  poBoxRegex, 
-  ssnRegex, 
-  streetAddressRegex, 
-  stringLettersOnlyRegex, 
-  taxIdRegex, 
-  transformEmptyString, 
-  urlRegex, 
+} from '../utils/business-form-options';
+import {
+  businessNameRegex,
+  numbersOnlyRegex,
+  phoneRegex,
+  poBoxRegex,
+  ssnRegex,
+  streetAddressRegex,
+  stringLettersOnlyRegex,
+  transformEmptyString,
+  urlRegex,
   validateRoutingNumber
-} from "./schema-helpers";
-import { EntityDocumentType } from "../../../api/Document";
+} from './schema-helpers';
+import { EntityDocumentType } from '../../../api/Document';
 
 // Common Validations
 
@@ -61,11 +60,11 @@ export const industryValidation = string()
   .transform(transformEmptyString);
 
 export const taxIdValidation = string()
-  .matches(taxIdRegex, 'Enter valid tax id')
-  .test('not-repeat', 'Enter valid tax id', (value) => {
+  .matches(numbersOnlyRegex, 'Enter valid tax id, SSN, or EIN')
+  .test('not-repeat', 'Enter valid tax id, SSN, or EIN', (value) => {
     return !/^(\d)\1+$/.test(value);
   })
-  .test('not-seq', 'Enter valid tax id', (value) => {
+  .test('not-seq', 'Enter valid tax id, SSN, or EIN', (value) => {
     return value !== '123456789';
   })
   .transform(transformEmptyString);
