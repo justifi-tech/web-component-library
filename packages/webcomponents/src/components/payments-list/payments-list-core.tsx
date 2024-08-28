@@ -71,9 +71,29 @@ export class PaymentsListCore {
     });
   };
 
+  handleDateChange = (name: string, value: string) => {
+    this.params = { ...this.params, [name]: value };
+  }
+
   render() {
     return (
       <Host>
+        <div class="row gy-3 mb-4">
+          <div class="col-2">
+            <form-control-date
+              name="created_after"
+              label="Date from:"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+          <div class="col-2">
+            <form-control-date
+              name="created_before"
+              label="Date to:"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+        </div>
         <justifi-table
           rowClickHandler={e => {
             const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;

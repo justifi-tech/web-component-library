@@ -6,6 +6,14 @@ table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 ">
+  <div class="gy-3 mb-4 row">
+    <div class="col-2">
+      <form-control-date label="Date from:" name="created_after"></form-control-date>
+    </div>
+    <div class="col-2">
+      <form-control-date label="Date to:" name="created_before"></form-control-date>
+    </div>
+  </div>
   <justifi-table error-message="Fetch error" exportparts="
 table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
@@ -102,6 +110,14 @@ table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 ">
+  <div class="gy-3 mb-4 row">
+    <div class="col-2">
+      <form-control-date label="Date from:" name="created_after"></form-control-date>
+    </div>
+    <div class="col-2">
+      <form-control-date label="Date to:" name="created_before"></form-control-date>
+    </div>
+  </div>
   <justifi-table exportparts="
 table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
