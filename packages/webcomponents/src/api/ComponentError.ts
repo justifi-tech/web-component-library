@@ -8,8 +8,6 @@ export enum ComponentErrorCodes {
   NOT_AUTHENTICATED = 'not-authenticated',
   INVALID_PARAMETER = 'invalid-parameter',
   PROVISIONING_REQUESTED = 'provisioning-already-requested',
-  CHECKOUT_EXPIRED = 'checkout-expired',
-  CHECKOUT_COMPLETED = 'checkout-completed',
 }
 
 export enum ComponentErrorSeverity {
