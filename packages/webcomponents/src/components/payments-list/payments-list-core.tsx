@@ -82,14 +82,14 @@ export class PaymentsListCore {
           <div class="col-2">
             <form-control-date
               name="created_after"
-              label="Date from:"
+              label="Start Date"
               inputHandler={this.handleDateChange}
             />
           </div>
           <div class="col-2">
             <form-control-date
               name="created_before"
-              label="Date to:"
+              label="End Date"
               inputHandler={this.handleDateChange}
             />
           </div>
