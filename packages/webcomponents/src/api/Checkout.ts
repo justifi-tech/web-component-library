@@ -38,7 +38,7 @@ export interface ICheckout {
   bnpl?: IBnpl;
   total_amount: number;
   insurance_amount: number;
-  status?: string;
+  status: ICheckoutStatus;
 }
 
 export class Checkout implements ICheckout {
@@ -70,7 +70,7 @@ export class Checkout implements ICheckout {
   bnpl?: IBnpl;
   total_amount: number;
   insurance_amount: number;
-  status?: string;
+  status: ICheckoutStatus;
 
   constructor(data: ICheckout) {
     Object.assign(this, data);
@@ -86,3 +86,9 @@ export type ICheckoutCompleteResponse = IApiResponse<{
   additional_transactions: any[];
   checkout: ICheckout;
 }>;
+
+export type ICheckoutStatus = 'created' | 'completed' | 'attempted' | 'expired';
+
+export type ILoadedEventResponse = {
+  checkout_status: ICheckoutStatus;
+};

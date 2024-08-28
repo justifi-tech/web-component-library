@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@s
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
+import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
@@ -36,6 +36,7 @@ export class CheckoutCore {
 
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'loaded' }) loaded: EventEmitter<ILoadedEventResponse>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -65,21 +66,7 @@ export class CheckoutCore {
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
         const { status } = this.checkout;
-        if (status === 'completed' || status === 'expired') {
-          const errorCode = status === 'completed'
-            ? ComponentErrorCodes.CHECKOUT_COMPLETED
-            : ComponentErrorCodes.CHECKOUT_EXPIRED;
-
-          const message = status === 'completed'
-            ? 'Checkout has already been completed'
-            : 'Checkout has expired';
-
-          this.errorEvent.emit({
-            errorCode,
-            message,
-            severity: ComponentErrorSeverity.ERROR,
-          });
-        }
+        this.loaded.emit({ checkout_status: status });
         this.renderState = 'success';
       },
       onError: ({ error, code, severity }) => {
