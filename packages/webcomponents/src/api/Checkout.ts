@@ -38,7 +38,8 @@ export interface ICheckout {
   bnpl?: IBnpl;
   total_amount: number;
   insurance_amount: number;
-};
+  status: ICheckoutStatus;
+}
 
 export class Checkout implements ICheckout {
   payment_intent_id: string;
@@ -69,6 +70,7 @@ export class Checkout implements ICheckout {
   bnpl?: IBnpl;
   total_amount: number;
   insurance_amount: number;
+  status: ICheckoutStatus;
 
   constructor(data: ICheckout) {
     Object.assign(this, data);
@@ -84,3 +86,9 @@ export type ICheckoutCompleteResponse = IApiResponse<{
   additional_transactions: any[];
   checkout: ICheckout;
 }>;
+
+export type ICheckoutStatus = 'created' | 'completed' | 'attempted' | 'expired';
+
+export type ILoadedEventResponse = {
+  checkout_status: ICheckoutStatus;
+};
