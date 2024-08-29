@@ -1,9 +1,9 @@
 import { addons } from '@storybook/manager-api';
-import theme from './theme';
+import storybookTheme from './storybookTheme';
 import './styles.css';
 
 addons.setConfig({
-  theme: theme,
+  theme: storybookTheme,
   toolbar: {
     zoom: { hidden: true },
   },
