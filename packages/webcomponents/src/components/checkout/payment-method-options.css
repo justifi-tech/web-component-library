@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.payment-method-header {
+  cursor: pointer;
+  color: var(--jfi-radio-button-group-color);
+  background-color: var(--jfi-radio-button-group-background-color);
+  border-bottom: var(--jfi-radio-button-group-divider);
+}
+
+.payment-method-header:hover {
+  color: var(--jfi-radio-button-group-color-hover);
+  background-color: var(--jfi-radio-button-group-background-color-hover);
+}

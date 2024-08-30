@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-season-interruption-insurance-core loads and sets the quote to state correctly 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123">
+<justifi-season-interruption-insurance-core auth-token="123" class="body">
   <template shadowrootmode="open">
+    <style></style>
     <div>
       <h2 class="fs-5 fw-bold jfi-header pb-3">
         Add Registration Protection
@@ -14,13 +15,13 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
       </small>
       <div>
         <input class="form-check-input me-2" id="accept" name="opt-in" type="radio" value="true">
-        <label class="btn btn-outline-primary jfi-btn-radio-label" htmlfor="accept">
+        <label htmlfor="accept">
           Accept coverage for $0.79
         </label>
       </div>
-      <div>
+      <div class="mb-2">
         <input class="form-check-input me-2" id="decline" name="opt-in" type="radio" value="false">
-        <label class="btn btn-outline-primary jfi-btn-radio-label" htmlfor="decline">
+        <label htmlfor="decline">
           Decline coverage
         </label>
       </div>
@@ -49,14 +50,17 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
 `;
 
 exports[`justifi-season-interruption-insurance-core should display loading state correctly 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123">
-  <template shadowrootmode="open"></template>
+<justifi-season-interruption-insurance-core auth-token="123" class="body">
+  <template shadowrootmode="open">
+    <style></style>
+  </template>
 </justifi-season-interruption-insurance-core>
 `;
 
 exports[`justifi-season-interruption-insurance-core validates that a selection was made 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123">
+<justifi-season-interruption-insurance-core auth-token="123" class="body">
   <template shadowrootmode="open">
+    <style></style>
     <div>
       <h2 class="fs-5 fw-bold jfi-header pb-3">
         Add Registration Protection
@@ -68,13 +72,13 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
       </small>
       <div>
         <input class="form-check-input is-invalid me-2" id="accept" name="opt-in" type="radio" value="true">
-        <label class="btn btn-outline-primary jfi-btn-radio-label" htmlfor="accept">
+        <label htmlfor="accept">
           Accept coverage for $0.79
         </label>
       </div>
-      <div>
+      <div class="mb-2">
         <input class="form-check-input is-invalid me-2" id="decline" name="opt-in" type="radio" value="false">
-        <label class="btn btn-outline-primary jfi-btn-radio-label" htmlfor="decline">
+        <label htmlfor="decline">
           Decline coverage
         </label>
       </div>

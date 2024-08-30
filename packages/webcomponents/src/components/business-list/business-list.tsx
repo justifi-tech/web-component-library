@@ -1,9 +1,9 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 import { Business, IBusiness } from '../../api/Business';
 import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
 import { config } from '../../../config';
-
+import StyledHost from '../../utils/styled-host/styled-host';
 
 /**
  * @exportedPart table-head: Table head
@@ -24,7 +24,6 @@ import { config } from '../../../config';
  */
 @Component({
   tag: 'justifi-business-list',
-  styleUrl: 'business-list.scss',
   shadow: true,
 })
 export class BusinessList {
@@ -110,7 +109,7 @@ export class BusinessList {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <justifi-table
           columnData={[
             ['Legal Name', 'The name associated with this Business'],
@@ -158,7 +157,7 @@ export class BusinessList {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

@@ -1,11 +1,11 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
-  tag: 'payments-list-core',
-  styleUrl: 'payments-list.scss',
+  tag: 'payments-list-core'
 })
 
 export class PaymentsListCore {
@@ -19,7 +19,6 @@ export class PaymentsListCore {
 
   @Event({
     eventName: 'payment-row-clicked',
-
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
@@ -73,7 +72,7 @@ export class PaymentsListCore {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <justifi-table
           rowClickHandler={e => {
             const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
@@ -121,7 +120,7 @@ export class PaymentsListCore {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

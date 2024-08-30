@@ -4,8 +4,6 @@ import { SubaccountBankAccount } from '../../../api/SubAccount';
 
 @Component({
   tag: 'subaccount-bank-details',
-  styleUrl: 'subaccount-bank-details.scss',
-  shadow: true,
 })
 export class SubaccountBankDetails {
   @Prop() data: SubaccountBankAccount

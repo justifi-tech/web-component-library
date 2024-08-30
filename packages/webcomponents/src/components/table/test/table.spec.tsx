@@ -10,13 +10,13 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={true} />
     });
 
-    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    const loading = page.root.querySelector('.loading-state');
     expect(loading).toBeTruthy();
 
-    const loadingSpinner = page.root.shadowRoot.querySelector('.spinner-border');
+    const loadingSpinner = page.root.querySelector('.spinner-border');
     expect(loadingSpinner).toBeTruthy();
 
-    const error = await page.root.shadowRoot.querySelector('.error-state');
+    const error = await page.root.querySelector('.error-state');
     expect(error).toBeNull();
   })
 
@@ -26,13 +26,13 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} />
     });
 
-    const empty = page.root.shadowRoot.querySelector('.empty-state');
+    const empty = page.root.querySelector('.empty-state');
     expect(empty).toBeTruthy();
 
     const emptyStateMessage = empty.innerHTML;
     expect(emptyStateMessage).toBe('No results');
 
-    const error = await page.root.shadowRoot.querySelector('.error-state');
+    const error = await page.root.querySelector('.error-state');
     expect(error).toBeNull();
   });
 
@@ -43,10 +43,10 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} errorMessage={ERROR_TEXT} />
     });
 
-    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    const loading = page.root.querySelector('.loading-state');
     expect(loading).toBeNull();
 
-    const error = page.root.shadowRoot.querySelector('.error-state');
+    const error = page.root.querySelector('.error-state');
     expect(error).toBeTruthy();
 
     const errorText = error.innerHTML;
@@ -68,7 +68,7 @@ describe('justifi-table', () => {
       template: () => <justifi-table columnData={['test', 'test']} loading={false} paging={PAG} />
     });
 
-    const paginationBar = page.root.shadowRoot.querySelector('[part="pagination-bar"]');
+    const paginationBar = page.root.querySelector('[part="pagination-bar"]');
     expect(paginationBar).toBeTruthy();
   });
 
@@ -78,17 +78,17 @@ describe('justifi-table', () => {
       template: () => <justifi-table entityId={['123']} rowData={[['test']]} columnData={['test', 'test']} loading={false} />
     });
 
-    const row: HTMLElement = page.root.shadowRoot.querySelector('[data-row-entity-id]');
+    const row: HTMLElement = page.root.querySelector('[data-row-entity-id]');
     expect(row).toBeTruthy();
     expect(row.dataset.rowEntityId).toBe('123');
 
-    const loading = page.root.shadowRoot.querySelector('.loading-state');
+    const loading = page.root.querySelector('.loading-state');
     expect(loading).toBeNull();
 
-    const empty = page.root.shadowRoot.querySelector('.empty-state');
+    const empty = page.root.querySelector('.empty-state');
     expect(empty).toBeNull();
 
-    const error = await page.root.shadowRoot.querySelector('.error-state');
+    const error = await page.root.querySelector('.error-state');
     expect(error).toBeNull();
   });
 
@@ -109,7 +109,7 @@ describe('justifi-table', () => {
       ),
     });
 
-    const rows = page.root.shadowRoot.querySelectorAll('[data-test-id="table-row"]');
+    const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(rowData.length);
 
     rows.forEach((row, index) => {

@@ -13,8 +13,7 @@ import { Identity } from '../../../api/Identity';
  */
 @Component({
   tag: 'representative-details',
-  styleUrl: 'representative-details.scss',
-  shadow: true,
+  styleUrl: '../shared-business-details.css',
 })
 export class JustifiRepresentativeDetails {
   @Prop() representative: Identity;

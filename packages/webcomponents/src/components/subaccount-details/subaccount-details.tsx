@@ -1,13 +1,13 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { Api, IApiResponse } from '../../api';
 import { IOnboardingData, ISubAccount, SubAccount } from '../../api/SubAccount';
 import { EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { MapSubAccountStatusToBadge, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-subaccount-details',
-  styleUrl: 'subaccount-details.scss',
   shadow: true,
 })
 
@@ -69,7 +69,7 @@ export class SubaccountDetails {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         {this.loading && LoadingState}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.subaccount && this.onboardingData && (
@@ -98,7 +98,7 @@ export class SubaccountDetails {
             </div>
           </justifi-details>
         )}
-      </Host>
+      </StyledHost>
     );
   }
 }

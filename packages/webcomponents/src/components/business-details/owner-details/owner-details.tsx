@@ -5,8 +5,7 @@ import { Identity } from '../../../api/Identity';
 
 @Component({
   tag: 'owner-details',
-  styleUrl: 'owner-details.scss',
-  shadow: true,
+  styleUrl: '../shared-business-details.css',
 })
 export class OwnerDetails {
   @Prop() owners: Identity[];

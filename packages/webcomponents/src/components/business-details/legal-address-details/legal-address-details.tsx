@@ -5,8 +5,7 @@ import { isEmptyObject } from '../../../utils/utils';
 
 @Component({
   tag: 'legal-address-details',
-  styleUrl: 'legal-address-details.scss',
-  shadow: true,
+  styleUrl: '../shared-business-details.css',
 })
 export class LegalAddressDetails {
   @Prop() legalAddress: IAddress;

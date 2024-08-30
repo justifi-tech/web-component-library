@@ -1,15 +1,15 @@
-@import 'reboot';
-@import 'alert';
-@import 'grid';
-@import 'buttons';
-@import 'spinners';
-@import 'progress';
-@import 'bootstrap-utilities';
-@import 'forms';
-
 :host {
-  @include host-base-styles;
   display: block;
+}
+
+justifi-payment-method-form {
+  display: block;
+  margin-left: calc(var(--jfi-layout-padding) * -1);
+  margin-right: calc(var(--jfi-layout-padding) * -1);
+}
+
+.jfi-checkout-core {
+  color: var(--jfi-body-color);
 }
 
 *::part(label) {
@@ -38,52 +38,29 @@
   line-height: var(--jfi-form-control-line-height);
   margin: var(--jfi-form-control-margin);
   padding: var(--jfi-form-control-padding);
-
-  &:focus {
-    color: var(--jfi-form-control-color-focus);
-    border-color: var(--jfi-form-control-border-color-focus);
-    box-shadow: var(--jfi-form-control-box-shadow-focus);
-  }
 }
 
-*::part(input-checkbox) {
-  font-family: var(--jfi-layout-font-family);
-  border-color: var(--jfi-form-control-border-color);
-  border-width: var(--jfi-form-control-border-width);
-  border-bottom-width: var(--jfi-form-control-border-bottom-width);
-  border-left-width: var(--jfi-form-control-border-left-width);
-  border-right-width: var(--jfi-form-control-border-right-width);
-  border-top-width: var(--jfi-form-control-border-top-width);
-  border-style: var(--jfi-form-control-border-style);
-  box-shadow: var(--jfi-form-control-box-shadow);
-  color: var(--jfi-form-control-color);
-  line-height: var(--jfi-form-control-line-height);
-
-  &:focus {
-    color: var(--jfi-form-control-color-focus);
-    border-color: var(--jfi-form-control-border-color-focus);
-    box-shadow: var(--jfi-form-control-box-shadow-focus);
-  }
-}
-
-*::part(input-checkbox-invalid) {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error);
-
-  &:focus {
-    border-color: var(--jfi-form-control-border-color-error);
-    box-shadow: var(--jfi-form-control-box-shadow-error-focus);
-  }
+*::part(input):focus {
+  color: var(--jfi-form-control-color-focus);
+  border-color: var(--jfi-form-control-border-color-focus);
+  box-shadow: var(--jfi-form-control-box-shadow-focus);
 }
 
 *::part(input-invalid) {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error);
+}
 
-  &:focus {
-    border-color: var(--jfi-form-control-border-color-error);
-    box-shadow: var(--jfi-form-control-box-shadow-error-focus);
-  }
+*::part(input-invalid):focus {
+  border-color: var(--jfi-form-control-border-color-error);
+  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
+}
+
+*::part(invalid-feedback) {
+  color: var(--jfi-error-message-color);
+  font-size: var(--jfi-error-message-font-size);
+  margin: var(--jfi-error-message-margin);
+  line-height: normal;
 }
 
 .jfi-submit-button {
@@ -96,6 +73,8 @@
   border-radius: var(--jfi-submit-button-border-radius);
   width: var(--jfi-submit-button-width);
   box-shadow: var(--jfi-submit-button-box-shadow);
+  line-height: var(--jfi-submit-button-line-height);
+  text-transform: var(--jfi-submit-button-text-transform);
 }
 
 .jfi-submit-button:hover {
@@ -110,7 +89,7 @@
   border-color: var(--jfi-submit-button-border-color-focus);
 }
 
-// Extra selector for specificity
+/* Extra selector for specificity */
 .btn.jfi-submit-button:active {
   color: var(--jfi-submit-button-color-active);
   background-color: var(--jfi-submit-button-background-color-active);

@@ -5,8 +5,7 @@ import { snakeCaseToHumanReadable } from '../../../utils/utils';
 
 @Component({
   tag: 'generic-info-details',
-  styleUrl: 'generic-info-details.scss',
-  shadow: true,
+  styleUrl: '../shared-business-details.css',
 })
 export class GenericInfoDetails {
   @Prop() business: IBusiness;

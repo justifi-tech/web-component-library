@@ -5,8 +5,6 @@ import { formatLegalAddress } from '../../../utils/utils';
 
 @Component({
   tag: 'subaccount-merchant-details',
-  styleUrl: 'subaccount-merchant-details.scss',
-  shadow: true,
 })
 export class SubaccountMerchantDetails {
   @Prop() onboardingData: IOnboardingData;

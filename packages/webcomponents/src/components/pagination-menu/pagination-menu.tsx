@@ -7,9 +7,7 @@ export interface PaginationProps {
 }
 
 @Component({
-  tag: 'pagination-menu',
-  styleUrl: '../table/table.scss',
-  shadow: true,
+  tag: 'pagination-menu'
 })
 
 export class PaginationMenu {

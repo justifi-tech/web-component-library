@@ -1,3 +1,5 @@
+jest.mock('../../../../utils/styled-host/modified-bootstrap.css', () => '');
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SeasonInterruptionInsuranceCore } from '../season-interruption-insurance-core';

@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, State, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
@@ -7,10 +7,11 @@ import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-payment-form',
-  styleUrl: 'payment-form.scss',
+  styleUrl: 'payment-form.css',
   shadow: true,
 })
 export class PaymentForm {
@@ -134,7 +135,7 @@ export class PaymentForm {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <form class="row gy-3">
           {this.showPaymentMethodTypeSelector() && (
             <div class="col-12">
@@ -184,7 +185,7 @@ export class PaymentForm {
             </button>
           </div>
         </form>
-      </Host>
+      </StyledHost>
     );
   }
 }
