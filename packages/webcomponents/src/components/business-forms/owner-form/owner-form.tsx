@@ -19,7 +19,7 @@ export class BusinessOwnerForm {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() owner: Owner = {};
-  
+
   @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
@@ -27,7 +27,7 @@ export class BusinessOwnerForm {
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
-  
+
   @Event({ bubbles: true }) submitted: EventEmitter<OwnerFormSubmitEvent>;
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -293,7 +293,7 @@ export class BusinessOwnerForm {
                   handleFormUpdate={this.onAddressFormUpdate}
                 />
               </div>
-              <div class='container d-flex gap-2'>
+              <div class='col-12 d-flex gap-2'>
                 <button
                   type='submit'
                   class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
