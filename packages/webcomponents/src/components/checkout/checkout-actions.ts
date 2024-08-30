@@ -1,7 +1,8 @@
 import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
-export const makeGetCheckout = ({ authToken, checkoutId, service }) =>
+export const makeGetCheckout =
+  ({ authToken, checkoutId, service }) =>
   async ({ onSuccess, onError }) => {
     try {
       const response = await service.fetchCheckout(authToken, checkoutId);
@@ -28,7 +29,8 @@ export const makeGetCheckout = ({ authToken, checkoutId, service }) =>
     }
   };
 
-export const makeCheckoutComplete = ({ authToken, checkoutId, service }) =>
+export const makeCheckoutComplete =
+  ({ authToken, checkoutId, service }) =>
   async ({ payment, onSuccess, onError }) => {
     try {
       const response = await service.complete(authToken, checkoutId, payment);
