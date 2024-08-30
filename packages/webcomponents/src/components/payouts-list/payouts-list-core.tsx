@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import {
   PagingInfo,
   Payout,
@@ -9,10 +9,10 @@ import {
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
 import { ComponentError } from '../../api/ComponentError';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
-  tag: 'payouts-list-core',
-  styleUrl: 'payouts-list.scss',
+  tag: 'payouts-list-core'
 })
 
 export class PayoutsListCore {
@@ -100,7 +100,7 @@ export class PayoutsListCore {
 
   render() {
     return (
-      <Host exportedparts={tableExportedParts}>
+      <StyledHost exportedparts={tableExportedParts}>
         <div class="row gy-3 mb-4">
           <div class="col-2">
             <form-control-date
@@ -170,7 +170,7 @@ export class PayoutsListCore {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

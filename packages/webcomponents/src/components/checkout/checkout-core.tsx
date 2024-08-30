@@ -1,15 +1,16 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
+import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-checkout-core',
-  styleUrl: 'checkout-core.scss',
+  styleUrls: ['checkout-core.css', 'header.css'],
   shadow: true,
 })
 export class CheckoutCore {
@@ -33,9 +34,10 @@ export class CheckoutCore {
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
-  
+
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'loaded' }) loaded: EventEmitter<ILoadedEventResponse>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -64,6 +66,8 @@ export class CheckoutCore {
     this.getCheckout({
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
+        const { status } = this.checkout;
+        this.loaded.emit({ checkout_status: status });
         this.renderState = 'success';
       },
       onError: ({ error, code, severity }) => {
@@ -192,7 +196,7 @@ export class CheckoutCore {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <div class="row gy-3 jfi-checkout-core">
           <div class="col-12 mb-4">
             {/* componentize this */}
@@ -223,7 +227,7 @@ export class CheckoutCore {
             </div>
           </div>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }

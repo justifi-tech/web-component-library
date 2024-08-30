@@ -17,7 +17,7 @@ Chart.register(
 )
 @Component({
   tag: 'gross-payment-chart-core',
-  styleUrl: 'gross-payment-chart.scss',
+  styleUrl: 'gross-payment-chart.css',
 })
 
 export class GrossPaymentChartCore {

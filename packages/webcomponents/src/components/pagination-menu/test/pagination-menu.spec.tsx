@@ -35,7 +35,7 @@ describe('pagination-menu', () => {
       components: [PaginationMenu],
       html: `<pagination-menu></pagination-menu>`,
     });
-    expect(page.root.shadowRoot.querySelector('nav').getAttribute('aria-label')).toBe('Table pagination');
+    expect(page.root.querySelector('nav').getAttribute('aria-label')).toBe('Table pagination');
   });
 
   it('reflects passed properties', async () => {
@@ -67,8 +67,8 @@ describe('pagination-menu', () => {
 
     await page.waitForChanges();
 
-    const previousButton = page.root.shadowRoot.querySelector('.page-item:first-child');
-    const nextButton = page.root.shadowRoot.querySelector('.page-item:last-child');
+    const previousButton = page.root.querySelector('.page-item:first-child');
+    const nextButton = page.root.querySelector('.page-item:last-child');
 
     // Convert classList to a string for the assertion
     const previousButtonClasses = previousButton.className;
@@ -93,8 +93,8 @@ describe('pagination-menu', () => {
     page.root.paging = mockPagingInfo;
     await page.waitForChanges();
 
-    const previousButton = page.root.shadowRoot.querySelector('.page-item:first-child .page-link') as HTMLButtonElement;
-    const nextButton = page.root.shadowRoot.querySelector('.page-item:last-child .page-link') as HTMLButtonElement;
+    const previousButton = page.root.querySelector('.page-item:first-child .page-link') as HTMLButtonElement;
+    const nextButton = page.root.querySelector('.page-item:last-child .page-link') as HTMLButtonElement;
 
     previousButton.click();
     expect(mockPagingInfo.handleClickPrevious).toHaveBeenCalled();

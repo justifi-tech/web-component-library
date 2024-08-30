@@ -1,10 +1,4 @@
-@import 'reboot';
-@import 'grid';
-@import 'forms';
-@import 'bootstrap-utilities';
-
 :host {
-  @include host-base-styles;
   display: block;
 }
 
@@ -38,20 +32,20 @@ justifi-billing-form {
   line-height: var(--jfi-form-control-line-height);
   margin: var(--jfi-form-control-margin);
   padding: var(--jfi-form-control-padding);
+}
 
-  &:focus {
-    color: var(--jfi-form-control-color-focus);
-    border-color: var(--jfi-form-control-border-color-focus);
-    box-shadow: var(--jfi-form-control-box-shadow-focus);
-  }
+*::part(input):focus {
+  color: var(--jfi-form-control-color-focus);
+  border-color: var(--jfi-form-control-border-color-focus);
+  box-shadow: var(--jfi-form-control-box-shadow-focus);
 }
 
 *::part(input-invalid) {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error);
+}
 
-  &:focus {
-    border-color: var(--jfi-form-control-border-color-error);
-    box-shadow: var(--jfi-form-control-box-shadow-error-focus);
-  }
+*::part(input-invalid):focus {
+  border-color: var(--jfi-form-control-border-color-error);
+  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
 }
