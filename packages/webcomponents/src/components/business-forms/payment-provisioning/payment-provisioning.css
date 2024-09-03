@@ -2,7 +2,7 @@
   display: block;
 }
 
-*::part(label) {
+.body::part(label) {
   color: var(--jfi-form-label-color);
   font-family: var(--jfi-form-label-font-family);
   font-weight: var(--jfi-form-label-font-weight);
@@ -10,7 +10,7 @@
   margin: var(--jfi-form-label-margin);
 }
 
-*::part(input) {
+.body::part(input) {
   font-family: var(--jfi-layout-font-family);
   background-color: var(--jfi-form-control-background-color);
   border-color: var(--jfi-form-control-border-color);
@@ -30,13 +30,14 @@
   padding: var(--jfi-form-control-padding);
 }
 
-*::part(input):focus {
+.body::part(input):focus {
   color: var(--jfi-form-control-color-focus);
+  background-color: var(--jfi-form-control-background-color);
   border-color: var(--jfi-form-control-border-color-focus);
   box-shadow: var(--jfi-form-control-box-shadow-focus);
 }
 
-*::part(input-checkbox) {
+.body::part(input-checkbox) {
   font-family: var(--jfi-layout-font-family);
   border-color: var(--jfi-form-control-border-color);
   border-width: var(--jfi-form-control-border-width);
@@ -50,30 +51,39 @@
   line-height: var(--jfi-form-control-line-height);
 }
 
-*::part(input-checkbox):focus {
+.body::part(input-checkbox):focus {
   color: var(--jfi-form-control-color-focus);
   border-color: var(--jfi-form-control-border-color-focus);
   box-shadow: var(--jfi-form-control-box-shadow-focus);
 }
 
-*::part(input-checkbox-invalid) {
+.body::part(input-checkbox-invalid) {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error);
 }
 
-*::part(input-checkbox-invalid):focus {
+.body::part(input-checkbox-invalid):focus {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error-focus);
 }
 
-*::part(input-invalid) {
+.body::part(input-invalid) {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error);
 }
 
-*::part(input-invalid):focus {
+.body::part(input-invalid):focus {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error-focus);
+}
+
+.input-group-text {
+  border: var(--jfi-form-control-border-width) var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
+  border-radius: var(--jfi-form-control-border-radius);
+}
+
+.btn.btn-secondary {
+  border-radius: var(--jfi-submit-button-border-radius);
 }
 
 .jfi-submit-button {
