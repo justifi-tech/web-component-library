@@ -1,0 +1,20 @@
+.form-check-input,
+label {
+  cursor: pointer;
+}
+
+.form-check-input {
+  background-color: var(--jfi-radio-button-background-color);
+  border-color: var(--jfi-radio-button-border-color);
+}
+
+.form-check-input:checked,
+.form-check-input:checked:focus {
+  background-color: var(--jfi-radio-button-background-color-selected);
+  border-color: var(--jfi-radio-button-border-color-selected);
+}
+
+.form-check-input:focus {
+  border-color: var(--jfi-radio-button-border-color-focus);
+  box-shadow: var(--jfi-radio-button-box-shadow-focus);
+}

@@ -1,9 +1,9 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../api';
 import { formatCurrency, formatDate } from '../../utils/utils';
 import { Proceed, ProceedStatuses, ProceedStatusesSafeNames } from '../../api/Proceed';
 import { config } from '../../../config';
-
+import StyledHost from '../../utils/styled-host/styled-host';
 
 /**
   * @exportedPart table-head: Table head
@@ -26,7 +26,6 @@ import { config } from '../../../config';
 */
 @Component({
   tag: 'justifi-proceeds-list',
-  styleUrl: 'proceeds-list.scss',
   shadow: true,
 })
 
@@ -112,7 +111,7 @@ export class ProceedsList {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <justifi-table
           rowClickHandler={(e) => {
             const clickedProceedID = e.target.closest('tr').dataset.rowEntityId;
@@ -157,7 +156,7 @@ export class ProceedsList {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

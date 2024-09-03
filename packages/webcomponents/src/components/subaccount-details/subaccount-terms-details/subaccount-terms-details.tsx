@@ -4,8 +4,6 @@ import { DetailItem, DetailSectionTitle } from '../../details/utils';
 
 @Component({
   tag: 'subaccount-terms-details',
-  styleUrl: 'subaccount-terms-details.scss',
-  shadow: true,
 })
 export class SubaccountTermsDetails {
   @Prop() data: Terms

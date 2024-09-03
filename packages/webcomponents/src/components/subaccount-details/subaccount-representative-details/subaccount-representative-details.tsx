@@ -5,8 +5,6 @@ import { formatMediumDate } from '../../../utils/utils';
 
 @Component({
   tag: 'subaccount-representative-details',
-  styleUrl: 'subaccount-representative-details.scss',
-  shadow: true,
 })
 export class SubaccountRepresentativeDetails {
   @Prop() data: SubAccountIdentity

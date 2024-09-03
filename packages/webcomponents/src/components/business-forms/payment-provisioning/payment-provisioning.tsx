@@ -13,8 +13,6 @@ import { ProvisionService } from '../../../api/services/provision.service';
 
 @Component({
   tag: 'justifi-payment-provisioning',
-  styleUrl: 'payment-provisioning.scss',
-  shadow: true
 })
 export class PaymentProvisioning {
   @State() postProvisioning: Function;

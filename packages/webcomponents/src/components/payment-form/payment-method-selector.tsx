@@ -8,8 +8,7 @@ const PaymentMethodLabels = {
 
 @Component({
   tag: 'justifi-payment-method-selector',
-  styleUrl: 'payment-method-selector.scss',
-  shadow: true,
+  styleUrl: 'payment-method-selector.css',
 })
 export class PaymentMethodSelector {
   @Prop() selectedPaymentMethodType: PaymentMethodTypes;

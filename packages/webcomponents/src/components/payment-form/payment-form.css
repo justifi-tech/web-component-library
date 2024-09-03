@@ -1,13 +1,4 @@
-@import 'reboot';
-@import 'grid';
-@import 'buttons';
-@import 'spinners';
-@import 'list-group';
-@import './jfi-header';
-@import 'bootstrap-utilities';
-
 :host {
-  @include host-base-styles;
   display: block;
 }
 
@@ -15,10 +6,6 @@ justifi-payment-method-form {
   display: block;
   margin-left: calc(var(--jfi-layout-padding) * -1);
   margin-right: calc(var(--jfi-layout-padding) * -1);
-}
-
-.jfi-checkout-core {
-  color: var(--jfi-body-color);
 }
 
 *::part(label) {
@@ -47,29 +34,22 @@ justifi-payment-method-form {
   line-height: var(--jfi-form-control-line-height);
   margin: var(--jfi-form-control-margin);
   padding: var(--jfi-form-control-padding);
+}
 
-  &:focus {
-    color: var(--jfi-form-control-color-focus);
-    border-color: var(--jfi-form-control-border-color-focus);
-    box-shadow: var(--jfi-form-control-box-shadow-focus);
-  }
+*::part(input):focus {
+  color: var(--jfi-form-control-color-focus);
+  border-color: var(--jfi-form-control-border-color-focus);
+  box-shadow: var(--jfi-form-control-box-shadow-focus);
 }
 
 *::part(input-invalid) {
   border-color: var(--jfi-form-control-border-color-error);
   box-shadow: var(--jfi-form-control-box-shadow-error);
-
-  &:focus {
-    border-color: var(--jfi-form-control-border-color-error);
-    box-shadow: var(--jfi-form-control-box-shadow-error-focus);
-  }
 }
 
-*::part(invalid-feedback) {
-  color: var(--jfi-error-message-color);
-  font-size: var(--jfi-error-message-font-size);
-  margin: var(--jfi-error-message-margin);
-  line-height: normal;
+*::part(input-invalid):focus {
+  border-color: var(--jfi-form-control-border-color-error);
+  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
 }
 
 .jfi-submit-button {
@@ -82,8 +62,6 @@ justifi-payment-method-form {
   border-radius: var(--jfi-submit-button-border-radius);
   width: var(--jfi-submit-button-width);
   box-shadow: var(--jfi-submit-button-box-shadow);
-  line-height: var(--jfi-submit-button-line-height);
-  text-transform: var(--jfi-submit-button-text-transform);
 }
 
 .jfi-submit-button:hover {
@@ -98,7 +76,7 @@ justifi-payment-method-form {
   border-color: var(--jfi-submit-button-border-color-focus);
 }
 
-// Extra selector for specificity
+/* Extra selector for specificity */
 .btn.jfi-submit-button:active {
   color: var(--jfi-submit-button-color-active);
   background-color: var(--jfi-submit-button-background-color-active);

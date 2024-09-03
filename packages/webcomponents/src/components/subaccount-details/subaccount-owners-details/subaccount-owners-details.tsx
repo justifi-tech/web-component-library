@@ -4,8 +4,6 @@ import { DetailItem, DetailSectionTitle } from '../../details/utils';
 
 @Component({
   tag: 'subaccount-owners-details',
-  styleUrl: 'subaccount-owners-details.scss',
-  shadow: true,
 })
 export class SubaccountOwnersDetails {
   @Prop() data: SubAccountIdentity[]

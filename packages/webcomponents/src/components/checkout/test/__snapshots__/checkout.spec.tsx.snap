@@ -3,8 +3,9 @@
 exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout>
   <!---->
-  <justifi-checkout-core>
+  <justifi-checkout-core class="body">
     <template shadowrootmode="open">
+      <style></style>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12 mb-4">
           <h2 class="fs-5 fw-bold jfi-header pb-3">
