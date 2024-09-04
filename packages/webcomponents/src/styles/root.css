@@ -219,7 +219,6 @@
 
 ::part(input) {
   font-family: var(--jfi-layout-font-family);
-  background-color: var(--jfi-form-control-background-color);
   border-color: var(--jfi-form-control-border-color);
   border-width: var(--jfi-form-control-border-width);
   border-bottom-width: var(--jfi-form-control-border-bottom-width);
@@ -235,6 +234,10 @@
   line-height: var(--jfi-form-control-line-height);
   margin: var(--jfi-form-control-margin);
   padding: var(--jfi-form-control-padding);
+}
+
+::part(input):not(disabled) {
+  background-color: var(--jfi-form-control-background-color);
 }
 
 ::part(input):focus {
