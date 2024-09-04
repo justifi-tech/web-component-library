@@ -1,3 +1,4 @@
+import themes, { ThemeNames } from '../themes';
 import { setUpMocks } from './mockAllServices';
 
 type Props = { name: string; value: any }[];
@@ -89,4 +90,21 @@ export const getAttributesString = (args: Args) => {
       }
     })
     .join(' ');
+};
+
+
+export const themedStoryDecorator = (storyComponent: any, storyArgs: any) => {
+  setUpMocks();
+  const { props } = getPropsAndStyles(storyArgs);
+  const component = applyArgsToStoryComponent(storyComponent, props);
+  const fragment = new DocumentFragment();
+
+  // Import the style here to not pollute other framework stories
+  const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
+  const styleElement = document.createElement('style');
+  styleElement.textContent = themes[selectedTheme];
+
+  fragment.appendChild(styleElement);
+  fragment.appendChild(component);
+  return fragment;
 };
