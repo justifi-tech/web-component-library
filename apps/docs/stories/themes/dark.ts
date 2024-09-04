@@ -30,6 +30,11 @@ justifi-payment-provisioning {
   padding: 40px;
 }
 
+::part(input-group-text) {
+  background-color: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
 :root {
   /* new vars */
   --jfi-body-color: rgb(182, 190, 201);

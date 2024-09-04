@@ -2,11 +2,6 @@
   display: block;
 }
 
-.input-group-text {
-  border: var(--jfi-form-control-border-width) var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
-  border-radius: var(--jfi-form-control-border-radius);
-}
-
 .btn.btn-secondary {
   border-radius: var(--jfi-submit-button-border-radius);
 }

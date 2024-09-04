@@ -244,6 +244,19 @@
   box-shadow: var(--jfi-form-control-box-shadow-focus);
 }
 
+::part(input-group-input) {
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+::part(input-group-text) {
+  border: var(--jfi-form-control-border-width) var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
+  border-radius: var(--jfi-form-control-border-radius);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 ::part(input-checkbox) {
   font-family: var(--jfi-layout-font-family);
   border-color: var(--jfi-form-control-border-color);
