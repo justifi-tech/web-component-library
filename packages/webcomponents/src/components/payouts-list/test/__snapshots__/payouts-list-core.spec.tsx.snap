@@ -46,18 +46,21 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             <th part="table-head-cell" scope="col" title="The real-time status of each payout">
               Status
             </th>
+            <th part="table-head-cell" scope="col">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
           <tr>
-            <td class="error-state" colspan="10" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            <td class="error-state" colspan="11" data-test-id="table-error-state" part="error-state" style="text-align: center;">
               An unexpected error occurred: Fetch error
             </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="10" part="pagination-bar">
+            <td colspan="11" part="pagination-bar">
               <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                   <ul class="m-0 pagination">
@@ -139,6 +142,9 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             <th part="table-head-cell" scope="col" title="The real-time status of each payout">
               Status
             </th>
+            <th part="table-head-cell" scope="col">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
@@ -180,6 +186,9 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                 Paid
               </span>
             </td>
+            <td part="table-cell">
+              <span class="icon-download" title="Export CSV"></span>
+            </td>
           </tr>
           <tr data-row-entity-id="po_7SO8x5IehLv679EIvW5eX5" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
@@ -218,6 +227,9 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
+            </td>
+            <td part="table-cell">
+              <span class="icon-download" title="Export CSV"></span>
             </td>
           </tr>
           <tr data-row-entity-id="po_3YQ2iAevdMZqIUiCDg1Ge5" data-test-id="table-row" part="table-row table-row-odd">
@@ -258,6 +270,9 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                 Paid
               </span>
             </td>
+            <td part="table-cell">
+              <span class="icon-download" title="Export CSV"></span>
+            </td>
           </tr>
           <tr data-row-entity-id="po_17745yESnHyEgWNeunmhmR" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
@@ -297,11 +312,14 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                 Paid
               </span>
             </td>
+            <td part="table-cell">
+              <span class="icon-download" title="Export CSV"></span>
+            </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="10" part="pagination-bar">
+            <td colspan="11" part="pagination-bar">
               <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                   <ul class="m-0 pagination">

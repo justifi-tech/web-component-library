@@ -4,6 +4,7 @@ import { makeGetPayoutDetails } from './get-payout-details';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { makeGetPayoutCSV } from './get-payout-csv';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -15,6 +16,7 @@ export class PayoutDetails {
   @Prop() authToken: string;
 
   @State() getPayout: Function;
+  @State() getPayoutCSV: Function;
   @State() errorMessage: string = null;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -23,7 +25,7 @@ export class PayoutDetails {
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetPayout();
+    this.initializeServices();
   }
 
   disconnectedCallback() {
@@ -33,13 +35,17 @@ export class PayoutDetails {
   @Watch('payoutId')
   @Watch('authToken')
   propChanged() {
-    this.initializeGetPayout();
+    this.initializeServices();
   }
 
-  initializeGetPayout() {
+  initializeServices() {
     if (this.payoutId && this.authToken) {
       this.getPayout = makeGetPayoutDetails({
         id: this.payoutId,
+        authToken: this.authToken,
+        service: new PayoutService()
+      });
+      this.getPayoutCSV = makeGetPayoutCSV({
         authToken: this.authToken,
         service: new PayoutService()
       });
@@ -64,7 +70,11 @@ export class PayoutDetails {
     }
 
     return (
-      <payout-details-core getPayout={this.getPayout} onError-event={this.handleErrorEvent} />
+      <payout-details-core
+        getPayout={this.getPayout}
+        getPayoutCSV={this.getPayoutCSV}
+        onError-event={this.handleErrorEvent}
+      />
     );
   }
 }
