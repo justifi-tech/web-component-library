@@ -21,10 +21,10 @@ export const Button: FunctionalComponent<ButtonProps> = (props, children) => {
     secondary: ['button', 'button-secondary'],
   };
 
-  const getExportParts = () => {
-    const baseExportParts = exportPartMapping[props.variant];
-    if (props.isLoading) baseExportParts.push('button-loading');
-    return baseExportParts.join(',');
+  const getCSSParts = () => {
+    const baseCSSParts = exportPartMapping[props.variant];
+    if (props.isLoading) baseCSSParts.push('button-loading');
+    return baseCSSParts.join(' ');
   };
 
   console.log(props.clickHandler);
@@ -35,7 +35,7 @@ export const Button: FunctionalComponent<ButtonProps> = (props, children) => {
       class={classMap[props.variant]}
       onClick={props.clickHandler}
       disabled={props.isDisabled}
-      part={getExportParts()}
+      part={getCSSParts()}
       hidden={props.isHidden}
     >
       {props.isLoading ? ButtonSpinner() : children}
