@@ -7,6 +7,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import StyledHost from '../../utils/styled-host/styled-host';
+import { ButtonSpinner } from '../form/utils';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -188,12 +189,6 @@ export class CheckoutCore {
     );
   }
 
-  private loadingSpinner = (
-    <div class="spinner-border spinner-border-sm" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  );
-
   render() {
     return (
       <StyledHost>
@@ -222,7 +217,7 @@ export class CheckoutCore {
                 part="pay-button"
                 class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
               >
-                {this.isLoading ? this.loadingSpinner : 'Pay'}
+                {this.isLoading ? ButtonSpinner() : 'Pay'}
               </button>
             </div>
           </div>

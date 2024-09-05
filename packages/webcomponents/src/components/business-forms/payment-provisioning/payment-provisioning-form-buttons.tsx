@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { BusinessFormClickActions } from '../utils/business-form-types';
-import { LoadingSpinner } from '../../form/utils';
+import { Button } from '../../_common/button';
 
 @Component({
   tag: 'justifi-payment-provisioning-form-buttons'
@@ -28,30 +28,32 @@ export class PaymentProvisioningFormButtons {
   render() {
     return (
       <div class='d-flex gap-2'>
-        <button
-          type='button'
-          class='btn btn-secondary'
-          onClick={() => this.previousStepButtonOnClick()}
-          disabled={this.formDisabled}
-          hidden={!this.showPreviousStepButton}>
+        <Button
+          variant="secondary"
+          type="button"
+          clickHandler={() => this.previousStepButtonOnClick()}
+          isDisabled={this.formDisabled}
+          isHidden={!this.showPreviousStepButton}>
           Previous
-        </button>
-        <button
-          type='button'
-          class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
-          onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
-          disabled={this.formDisabled}
-          hidden={!this.showNextStepButton}>
-          {this.formLoading ? LoadingSpinner() : 'Next'}
-        </button>
-        <button
-          type='submit'
-          class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
-          onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
-          disabled={this.formDisabled}
-          hidden={!this.showSubmitButton}>
-          {this.formLoading ? LoadingSpinner() : 'Submit'}
-        </button>
+        </Button>
+        <Button
+          variant="primary"
+          type="button"
+          clickHandler={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
+          isDisabled={this.formDisabled}
+          isLoading={this.formLoading}
+          isHidden={!this.showNextStepButton}>
+          Next
+        </Button>
+        <Button
+          variant="primary"
+          type="submit"
+          clickHandler={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
+          isDisabled={this.formDisabled}
+          isLoading={this.formLoading}
+          isHidden={!this.showSubmitButton}>
+          Submit
+        </Button>
       </div>
     );
   }
