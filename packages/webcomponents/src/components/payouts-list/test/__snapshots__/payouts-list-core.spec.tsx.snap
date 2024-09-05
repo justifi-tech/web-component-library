@@ -54,18 +54,21 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             <th part="table-head-cell" scope="col" title="The real-time status of each payout">
               Status
             </th>
+            <th part="table-head-cell" scope="col">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
           <tr>
-            <td class="error-state" colspan="10" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            <td class="error-state" colspan="11" data-test-id="table-error-state" part="error-state" style="text-align: center;">
               An unexpected error occurred: Fetch error
             </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="10" part="pagination-bar">
+            <td colspan="11" part="pagination-bar">
               <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                   <ul class="m-0 pagination">
@@ -155,6 +158,9 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             <th part="table-head-cell" scope="col" title="The real-time status of each payout">
               Status
             </th>
+            <th part="table-head-cell" scope="col">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
@@ -196,6 +202,13 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                 Paid
               </span>
             </td>
+            <td part="table-cell">
+              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
+                <path d="M11 4h2v9h-2z"></path>
+                <path d="M5 18h14v2H5z"></path>
+              </svg>
+            </td>
           </tr>
           <tr data-row-entity-id="po_7SO8x5IehLv679EIvW5eX5" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
@@ -234,6 +247,13 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
+            </td>
+            <td part="table-cell">
+              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
+                <path d="M11 4h2v9h-2z"></path>
+                <path d="M5 18h14v2H5z"></path>
+              </svg>
             </td>
           </tr>
           <tr data-row-entity-id="po_3YQ2iAevdMZqIUiCDg1Ge5" data-test-id="table-row" part="table-row table-row-odd">
@@ -274,6 +294,13 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                 Paid
               </span>
             </td>
+            <td part="table-cell">
+              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
+                <path d="M11 4h2v9h-2z"></path>
+                <path d="M5 18h14v2H5z"></path>
+              </svg>
+            </td>
           </tr>
           <tr data-row-entity-id="po_17745yESnHyEgWNeunmhmR" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
@@ -313,11 +340,18 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                 Paid
               </span>
             </td>
+            <td part="table-cell">
+              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
+                <path d="M11 4h2v9h-2z"></path>
+                <path d="M5 18h14v2H5z"></path>
+              </svg>
+            </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="10" part="pagination-bar">
+            <td colspan="11" part="pagination-bar">
               <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                   <ul class="m-0 pagination">
