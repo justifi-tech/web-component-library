@@ -42,7 +42,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
         </div>
         <div class="m-4">
           <button class="align-items-center btn btn-outline-secondary d-flex">
-            Download CSV
+            Export CSV
           </button>
         </div>
       </div>
