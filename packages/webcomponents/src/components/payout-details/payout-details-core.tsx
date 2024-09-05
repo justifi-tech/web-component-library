@@ -7,7 +7,6 @@ import StyledHost from '../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'payout-details-core',
-  styleUrls: ['../../styles/icons.css'],
 })
 
 export class PayoutDetailsCore {

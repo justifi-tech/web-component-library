@@ -10,10 +10,10 @@ import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import StyledHost from '../../utils/styled-host/styled-host';
+import { DownloadIcon } from '../../assets/download-icon';
 
 @Component({
   tag: 'payouts-list-core',
-  styleUrls: ['../../styles/icons.css'],
 })
 
 export class PayoutsListCore {
@@ -96,7 +96,7 @@ export class PayoutsListCore {
     });
   };
 
-  downloadCSV = (payoutId: string) => async () => {
+  downloadCSV = (payoutId: string) => {
     this.getPayoutCSV({
       payoutId,
       onError: () => {
@@ -155,11 +155,11 @@ export class PayoutsListCore {
                   value: this.mapStatusToBadge(payout.status)
                 },
                 (
-                  <span
-                    class="icon-download"
+                  <DownloadIcon
                     title="Export CSV"
-                    onClick={this.downloadCSV(payout.id)}
-                  ></span>
+                    onClick={() => this.downloadCSV(payout.id)}
+                    style={{ height: '24px', width: '24px', cursor: 'pointer' }}
+                  />
                 )
               ]
             ))
