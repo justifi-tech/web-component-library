@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "4.17.0",
+  "version": "4.18.0",
   "description": "JustiFi Web Components",
   "collection": "dist/collection/collection-manifest.json",
   "main": "dist/index.cjs.js",
