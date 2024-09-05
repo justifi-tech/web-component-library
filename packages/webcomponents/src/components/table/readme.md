@@ -35,10 +35,6 @@
 
 ### Used by
 
- - [justifi-business-list](../business-list)
- - [justifi-payment-balance-transactions](../payment-balance-transactions)
- - [justifi-proceeds-list](../proceeds-list)
- - [justifi-subaccounts-list](../subaccounts-list)
  - [payments-list-core](../payments-list)
  - [payouts-list-core](../payouts-list)
 
@@ -50,10 +46,6 @@
 ```mermaid
 graph TD;
   justifi-table --> pagination-menu
-  justifi-business-list --> justifi-table
-  justifi-payment-balance-transactions --> justifi-table
-  justifi-proceeds-list --> justifi-table
-  justifi-subaccounts-list --> justifi-table
   payments-list-core --> justifi-table
   payouts-list-core --> justifi-table
   style justifi-table fill:#f9f,stroke:#333,stroke-width:4px
