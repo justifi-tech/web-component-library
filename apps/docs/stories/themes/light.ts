@@ -3,20 +3,32 @@ body {
   background-color: #efefef;
 }
 
-justifi-checkout {
+/* Card styling */
+
+justifi-checkout,
+justifi-payment-provisioning {
   display: block;
-  max-width: 400px;
   margin: 5% auto;
-  padding: 40px;
   background-color: #fff;
   border-radius: 0px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+
+justifi-checkout {
+  max-width: 400px;
+  padding: 40px;
 }
 
 justifi-season-interruption-insurance {
   display: block;
   padding: 20px 20px 10px 20px;
   border: 1px solid #ddd;
+}
+
+justifi-payment-provisioning {
+  max-width: 900px;
+  padding: 40px;
 }
 
 :root {

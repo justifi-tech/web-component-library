@@ -8,6 +8,9 @@ import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
 
 /**
+  * @exportedPart label: Label for inputs
+  * @exportedPart input: The input fields
+  * @exportedPart input-invalid: Invalid state for inputs
   * @exportedPart table-head: Table head
   * @exportedPart table-head-row: Head row
   * @exportedPart table-head-cell: Individual head cell

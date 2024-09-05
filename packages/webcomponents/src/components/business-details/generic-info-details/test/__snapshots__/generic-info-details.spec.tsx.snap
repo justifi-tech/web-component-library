@@ -48,7 +48,7 @@ exports[`GenericInfoDetails should render 1`] = `
             Tax ID
           </span>
           <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            string
+            895249796
           </span>
         </div>
         <div class="d-table-row gap-2">
