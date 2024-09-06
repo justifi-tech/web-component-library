@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { BusinessFormClickActions } from '../utils/business-form-types';
-import { Button } from '../../_common/button';
+import { Button } from '../../../shared';
 
 @Component({
   tag: 'justifi-payment-provisioning-form-buttons'
