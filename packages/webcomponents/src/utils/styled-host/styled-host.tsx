@@ -4,7 +4,7 @@ import modifiedBootstrap from './modified-bootstrap.css';
 
 const StyledHost: FunctionalComponent<HostAttributes> = (props, children) => {
   return (
-    <Host {...props} class="body">
+    <Host {...props} class="body" style={{ display: 'block' }}>
       <style>{modifiedBootstrap}</style>
       {children}
     </Host>

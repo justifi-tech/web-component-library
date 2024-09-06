@@ -6,7 +6,6 @@ import StyledHost from '../../../utils/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
-  styleUrl: 'payment-provisioning.css',
   shadow: true
 })
 export class PaymentProvisioningCore {
