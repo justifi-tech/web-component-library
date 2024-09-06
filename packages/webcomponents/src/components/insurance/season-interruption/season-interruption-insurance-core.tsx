@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
-import StyledHost from "../../../utils/styled-host/styled-host";
+import { StyledHost } from "../../../ui-components";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',

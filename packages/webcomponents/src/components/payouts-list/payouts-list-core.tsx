@@ -9,7 +9,7 @@ import {
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
 import { ComponentError } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core'

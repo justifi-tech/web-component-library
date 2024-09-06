@@ -3,7 +3,7 @@ import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../a
 import { Business, IBusiness } from '../../api/Business';
 import { formatDate, snakeCaseToHumanReadable } from '../../utils/utils';
 import { config } from '../../../config';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 /**
  * @exportedPart table-head: Table head

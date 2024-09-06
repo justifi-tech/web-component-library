@@ -4,7 +4,7 @@ import { IOnboardingData, ISubAccount, SubAccount } from '../../api/SubAccount';
 import { EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { MapSubAccountStatusToBadge, formatDate, formatTime } from '../../utils/utils';
 import { config } from '../../../config';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-subaccount-details',

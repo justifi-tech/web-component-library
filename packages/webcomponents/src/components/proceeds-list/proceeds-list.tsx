@@ -3,7 +3,7 @@ import { Api, IApiResponseCollection, PagingInfo, pagingDefaults } from '../../a
 import { formatCurrency, formatDate } from '../../utils/utils';
 import { Proceed, ProceedStatuses, ProceedStatusesSafeNames } from '../../api/Proceed';
 import { config } from '../../../config';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 /**
   * @exportedPart table-head: Table head

@@ -6,7 +6,7 @@ import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } 
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 import { ButtonSpinner } from '../form/utils';
 
 @Component({
