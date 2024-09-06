@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { CSSVarsExample, StoryBaseArgs, getAttributesString, themedStoryDecorator } from "../../utils";
+import { StoryBaseArgs, getAttributesString } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-payment-form";
 import themes, { ThemeNames } from "../../themes";
@@ -9,7 +9,6 @@ const storyBaseArgs = new StoryBaseArgs([
   "account-id",
   "client-id",
   "auth-token",
-  "theme",
 ]);
 
 const meta: Meta = {
