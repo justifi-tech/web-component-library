@@ -28,12 +28,20 @@
 
 ### Depends on
 
+- [form-control-date](../form)
+- [form-control-text](../form)
 - [justifi-table](../table)
 
 ### Graph
 ```mermaid
 graph TD;
+  payments-list-core --> form-control-date
+  payments-list-core --> form-control-text
   payments-list-core --> justifi-table
+  form-control-date --> form-control-help-text
+  form-control-date --> form-control-error-text
+  form-control-text --> form-control-help-text
+  form-control-text --> form-control-error-text
   justifi-table --> pagination-menu
   justifi-payments-list --> payments-list-core
   style payments-list-core fill:#f9f,stroke:#333,stroke-width:4px
