@@ -6,7 +6,7 @@ import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
-import { ButtonSpinner } from '../../form/utils';
+import { ButtonSpinner } from '../../../ui-components';
 import { deconstructDate } from '../utils/helpers';
 import { OwnerFormSubmitEvent, OwnerFormClickEvent, OwnerFormClickActions } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';

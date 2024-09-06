@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { checkProvisioningStatus } from '../utils/helpers';
-import StyledHost from '../../../ui-components/styled-host/styled-host';
+import { StyledHost } from '../../../ui-components';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',

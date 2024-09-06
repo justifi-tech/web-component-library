@@ -7,7 +7,7 @@ import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
-import { StyledHost } from '../../ui-components';
+import { Button, StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -168,21 +168,13 @@ export class PaymentForm {
           </div>
           <slot name='insurance' />
           <div class="col-12">
-            <button
-              data-testid="submit-button"
+            <Button
+              variant="primary"
               type="submit"
-              onClick={event => this.submit(event)}
-              disabled={!this.submitButtonEnabled || this.isLoading}
-              class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
-            >
-              {
-                this.isLoading ?
-                  <div class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div> :
-                  this.submitButtonText || 'Submit'
-              }
-            </button>
+              clickHandler={event => this.submit(event)}
+              isDisabled={!this.submitButtonEnabled || this.isLoading}>
+              {this.submitButtonText || 'Submit'}
+            </Button>
           </div>
         </form>
       </StyledHost>

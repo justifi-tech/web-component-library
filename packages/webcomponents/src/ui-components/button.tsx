@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from '@stencil/core';
-import { ButtonSpinner } from '../form/utils';
+import { ButtonSpinner } from './button-spinner';
 
 interface ButtonProps {
   variant: 'primary' | 'secondary';

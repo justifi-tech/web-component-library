@@ -6,8 +6,7 @@ import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } 
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-import { StyledHost } from '../../ui-components';
-import { ButtonSpinner } from '../form/utils';
+import { Button, StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -210,15 +209,14 @@ export class CheckoutCore {
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
-              <button
+              <Button
                 type="submit"
-                onClick={event => this.submit(event)}
-                disabled={this.isLoading}
-                part="pay-button"
-                class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
-              >
-                {this.isLoading ? ButtonSpinner() : 'Pay'}
-              </button>
+                variant="primary"
+                clickHandler={(e) => this.submit(e)}
+                isDisabled={this.isLoading}
+                isLoading={this.isLoading}>
+                Pay
+              </Button>
             </div>
           </div>
         </div>
