@@ -27,8 +27,6 @@ export const Button: FunctionalComponent<ButtonProps> = (props, children) => {
     return baseCSSParts.join(' ');
   };
 
-  console.log(props.clickHandler);
-
   return (
     <button
       type={(props.type) ? props.type : 'button'}
