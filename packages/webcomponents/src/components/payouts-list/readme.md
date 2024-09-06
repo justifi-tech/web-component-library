@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute | Description | Type       | Default     |
-| ------------ | --------- | ----------- | ---------- | ----------- |
-| `getPayouts` | --        |             | `Function` | `undefined` |
+| Property       | Attribute | Description | Type       | Default     |
+| -------------- | --------- | ----------- | ---------- | ----------- |
+| `getPayoutCSV` | --        |             | `Function` | `undefined` |
+| `getPayouts`   | --        |             | `Function` | `undefined` |
 
 
 ## Events
@@ -28,13 +29,14 @@
 
 ### Depends on
 
-- [justifi-table](../table)
+- [form-control-date](../form)
 
 ### Graph
 ```mermaid
 graph TD;
-  payouts-list-core --> justifi-table
-  justifi-table --> pagination-menu
+  payouts-list-core --> form-control-date
+  form-control-date --> form-control-help-text
+  form-control-date --> form-control-error-text
   justifi-payouts-list --> payouts-list-core
   style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

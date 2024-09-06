@@ -3,7 +3,6 @@ jest.mock('../../../utils/styled-host/modified-bootstrap.css', () => '');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsListCore } from '../payments-list-core';
-import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment } from '../../../api';
@@ -24,7 +23,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -49,7 +48,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -71,7 +70,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -99,7 +98,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -129,7 +128,7 @@ describe('payments-list-core', () => {
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} onError-event={errorEvent} />,
     });
 

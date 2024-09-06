@@ -1,5 +1,17 @@
 ### Changelog
 
+## 4.18.0
+
+### Minor Changes
+
+- e17c1a4: Added a date range filter on PaymentsList and PayoutsList components
+- ca31471: Adds a button for exporting payout details in a CSV files to payout details and payouts list pages
+
+### Patch Changes
+
+- 764dec4: - Fixed bug in `PaymentProvisioning` and `BusinessForm` components preventing users from submitting entity data if data contains `associated_account` or `terms_conditions_accepted` properties.
+- bce7242: Fix issues with PaymentProvisioning theming capabilities
+
 ## 4.17.0
 
 ### Minor Changes

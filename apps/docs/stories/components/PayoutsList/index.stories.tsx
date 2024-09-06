@@ -7,6 +7,43 @@ import "@justifi/webcomponents/dist/module/justifi-payouts-list";
 const themes: { [key: string]: any } = {
   basic: {},
   custom: {
+    "justifi-payouts-list::part(label)": {
+      color: "#212529",
+      "font-family": "Calibri, sans-serif",
+      "font-weight": "700",
+      "font-size": ".8rem",
+      margin: "0 0 .5rem 0",
+    },
+    "justifi-payouts-list::part(input)": {
+      "background-color": "#F4F4F6",
+      "border-color": "rgba(0, 0, 0, 0.42)",
+      "border-bottom-width": "1px",
+      "border-left-width": "0",
+      "border-right-width": "0",
+      "border-top-width": "0",
+      "border-radius": "4px 4px 0 0",
+      "border-style": "solid",
+      "box-shadow": "0 2px 4px rgba(0, 0, 0, 0.2)",
+      color: "#212529",
+      "font-size": ".8rem",
+      "font-weight": "400",
+      "line-height": "2",
+      margin: "0",
+      padding: ".5rem .875rem",
+    },
+    "justifi-payouts-list::part(input):focus": {
+      color: "#212529",
+      "border-color": "#fccc32",
+      "box-shadow": "none",
+    },
+    "justifi-payouts-list::part(input-invalid)": {
+      "border-color": "#C12727",
+      "box-shadow": "0 2px 4px rgba(0, 0, 0, 0.2)",
+    },
+    "justifi-payouts-list::part(input-invalid):focus": {
+      "border-color": "#C12727",
+      "box-shadow": "none",
+    },
     "justifi-payouts-list::part(table-head)": {},
     "justifi-payouts-list::part(table-head-row)": {},
     "justifi-payouts-list::part(table-head-cell)": {

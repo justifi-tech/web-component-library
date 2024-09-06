@@ -2,7 +2,6 @@ jest.mock('../../../utils/styled-host/modified-bootstrap.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { PayoutsListCore } from '../payouts-list-core';
 import mockSuccessResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
@@ -23,15 +22,13 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} />,
     });
 
     await page.waitForChanges();
 
-    const justifiTable = page.root.querySelector('justifi-table');
-
-    const rows = justifiTable.querySelectorAll('[data-test-id="table-row"]');
+    const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
 
     expect(rows.length).toBe(4);
     expect(page.root).toMatchSnapshot();
@@ -49,15 +46,13 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} />,
     });
 
     await page.waitForChanges();
 
-    const justifiTable = page.root.querySelector('justifi-table');
-
-    const error = justifiTable.querySelector('[data-test-id="table-error-state"]');
+    const error = page.root.querySelector('[data-test-id="table-error-state"]');
     expect(error).toBeTruthy();
     expect(page.root).toMatchSnapshot();
   });
@@ -76,7 +71,7 @@ describe('payouts-list-core', () => {
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} onError-event={errorSpy} />,
     });
 
@@ -103,7 +98,7 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} />,
     });
 
@@ -112,8 +107,7 @@ describe('payouts-list-core', () => {
     const rowClickedHandler = jest.fn();
     page.win.addEventListener('payout-row-clicked', rowClickedHandler);
 
-    const justifiTable = page.root.querySelector('justifi-table');
-    const rows = justifiTable.querySelectorAll('[data-test-id="table-row"]');
+    const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
 
     if (rows.length > 0) {
       (rows[0] as HTMLElement).click();
@@ -133,7 +127,7 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, Table, PaginationMenu],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} />,
     });
     await page.waitForChanges();

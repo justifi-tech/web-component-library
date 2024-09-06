@@ -1,8 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`payments-list-core displays an error state on failed data fetch 1`] = `
-<payments-list-core class="body">
+<payments-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+">
   <style></style>
+  <div class="gy-3 mb-4 row">
+    <div class="col-2">
+      <form-control-date label="Start Date" name="created_after"></form-control-date>
+    </div>
+    <div class="col-2">
+      <form-control-date label="End Date" name="created_before"></form-control-date>
+    </div>
+  </div>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">
@@ -75,8 +87,20 @@ exports[`payments-list-core displays an error state on failed data fetch 1`] = `
 `;
 
 exports[`payments-list-core renders properly with fetched data 1`] = `
-<payments-list-core class="body">
+<payments-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+">
   <style></style>
+  <div class="gy-3 mb-4 row">
+    <div class="col-2">
+      <form-control-date label="Start Date" name="created_after"></form-control-date>
+    </div>
+    <div class="col-2">
+      <form-control-date label="End Date" name="created_before"></form-control-date>
+    </div>
+  </div>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">

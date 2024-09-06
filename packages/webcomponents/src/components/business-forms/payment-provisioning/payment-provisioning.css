@@ -2,78 +2,8 @@
   display: block;
 }
 
-*::part(label) {
-  color: var(--jfi-form-label-color);
-  font-family: var(--jfi-form-label-font-family);
-  font-weight: var(--jfi-form-label-font-weight);
-  font-size: var(--jfi-form-label-font-size);
-  margin: var(--jfi-form-label-margin);
-}
-
-*::part(input) {
-  font-family: var(--jfi-layout-font-family);
-  background-color: var(--jfi-form-control-background-color);
-  border-color: var(--jfi-form-control-border-color);
-  border-width: var(--jfi-form-control-border-width);
-  border-bottom-width: var(--jfi-form-control-border-bottom-width);
-  border-left-width: var(--jfi-form-control-border-left-width);
-  border-right-width: var(--jfi-form-control-border-right-width);
-  border-top-width: var(--jfi-form-control-border-top-width);
-  border-radius: var(--jfi-form-control-border-radius);
-  border-style: var(--jfi-form-control-border-style);
-  box-shadow: var(--jfi-form-control-box-shadow);
-  color: var(--jfi-form-control-color);
-  font-size: var(--jfi-form-control-font-size);
-  font-weight: var(--jfi-form-control-font-weight);
-  line-height: var(--jfi-form-control-line-height);
-  margin: var(--jfi-form-control-margin);
-  padding: var(--jfi-form-control-padding);
-}
-
-*::part(input):focus {
-  color: var(--jfi-form-control-color-focus);
-  border-color: var(--jfi-form-control-border-color-focus);
-  box-shadow: var(--jfi-form-control-box-shadow-focus);
-}
-
-*::part(input-checkbox) {
-  font-family: var(--jfi-layout-font-family);
-  border-color: var(--jfi-form-control-border-color);
-  border-width: var(--jfi-form-control-border-width);
-  border-bottom-width: var(--jfi-form-control-border-bottom-width);
-  border-left-width: var(--jfi-form-control-border-left-width);
-  border-right-width: var(--jfi-form-control-border-right-width);
-  border-top-width: var(--jfi-form-control-border-top-width);
-  border-style: var(--jfi-form-control-border-style);
-  box-shadow: var(--jfi-form-control-box-shadow);
-  color: var(--jfi-form-control-color);
-  line-height: var(--jfi-form-control-line-height);
-}
-
-*::part(input-checkbox):focus {
-  color: var(--jfi-form-control-color-focus);
-  border-color: var(--jfi-form-control-border-color-focus);
-  box-shadow: var(--jfi-form-control-box-shadow-focus);
-}
-
-*::part(input-checkbox-invalid) {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error);
-}
-
-*::part(input-checkbox-invalid):focus {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
-}
-
-*::part(input-invalid) {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error);
-}
-
-*::part(input-invalid):focus {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
+.btn.btn-secondary {
+  border-radius: var(--jfi-submit-button-border-radius);
 }
 
 .jfi-submit-button {

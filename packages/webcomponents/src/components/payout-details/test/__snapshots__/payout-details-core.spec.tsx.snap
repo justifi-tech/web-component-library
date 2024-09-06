@@ -40,6 +40,11 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             po_17745yESnHyEgWNeunmhmR
           </span>
         </div>
+        <div class="m-4">
+          <button class="align-items-center btn btn-outline-secondary d-flex">
+            Export CSV
+          </button>
+        </div>
       </div>
     </div>
     <div slot="detail-sections">

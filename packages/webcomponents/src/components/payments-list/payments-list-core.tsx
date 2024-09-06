@@ -4,6 +4,7 @@ import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from 
 import { ComponentError } from '../../api/ComponentError';
 import StyledHost from '../../utils/styled-host/styled-host';
 import { EmptyState, ErrorState, LoadingState } from '../table/utils';
+import { tableExportedParts } from '../table/exported-parts';
 
 @Component({
   tag: 'payments-list-core',
@@ -125,9 +126,29 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
+  handleDateChange = (name: string, value: string) => {
+    this.params = { ...this.params, [name]: value };
+  }
+
   render() {
     return (
-      <StyledHost>
+      <StyledHost exportparts={tableExportedParts}>
+        <div class="row gy-3 mb-4">
+          <div class="col-2">
+            <form-control-date
+              name="created_after"
+              label="Start Date"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+          <div class="col-2">
+            <form-control-date
+              name="created_before"
+              label="End Date"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+        </div>
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">

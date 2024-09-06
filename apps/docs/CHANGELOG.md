@@ -1,5 +1,16 @@
 # @repo/docs
 
+## 0.1.4
+
+### Patch Changes
+
+- bce7242: Fix issues with PaymentProvisioning theming capabilities
+- Updated dependencies [e17c1a4]
+- Updated dependencies [764dec4]
+- Updated dependencies [bce7242]
+- Updated dependencies [ca31471]
+  - @justifi/webcomponents@4.18.0
+
 ## 0.1.3
 
 ### Patch Changes

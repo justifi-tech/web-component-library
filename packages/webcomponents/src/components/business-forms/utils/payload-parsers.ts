@@ -18,6 +18,8 @@ export const parseCoreInfo = (values: any) => {
   delete values.product_categories;
   delete values.created_at;
   delete values.updated_at;
+  delete values.associated_accounts;
+  delete values.terms_conditions_accepted
 
   return values;
 };
