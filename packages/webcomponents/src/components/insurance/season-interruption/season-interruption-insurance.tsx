@@ -2,6 +2,7 @@ import { Component, Event, EventEmitter, Method, Prop, State, h } from '@stencil
 import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import JustifiAnalytics from '../../../api/Analytics';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -30,13 +31,20 @@ export class SeasonInterruptionInsurance {
 
   private seasonInterruptionCoreRef?: HTMLJustifiSeasonInterruptionInsuranceCoreElement;
 
+  analytics: JustifiAnalytics;
+
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
     return this.seasonInterruptionCoreRef.validate();
   }
 
   componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
     this.initializeServiceMethods();
+  }
+
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
   private initializeServiceMethods() {

@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState, LoadingState } from '../details/utils';
 import { ComponentError } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 enum RENDER_STATES {
   LOADING = 'loading',

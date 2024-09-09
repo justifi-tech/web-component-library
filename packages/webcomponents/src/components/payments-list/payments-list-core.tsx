@@ -2,9 +2,9 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
 import { EmptyState, ErrorState, LoadingState } from '../table/utils';
 import { tableExportedParts } from '../table/exported-parts';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payments-list-core',

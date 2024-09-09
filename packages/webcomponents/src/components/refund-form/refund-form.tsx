@@ -11,7 +11,7 @@ import { Api } from '../../api';
 import { FormController } from '../form/form';
 import { config } from '../../../config';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 
 @Component({

@@ -8,10 +8,10 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
 import { DownloadIcon } from '../../assets/download-icon';
 import { tableExportedParts } from '../table/exported-parts';
 import { EmptyState, ErrorState, LoadingState } from '../table/utils';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core',

@@ -5,7 +5,7 @@ exports[`payments-list-core displays an error state on failed data fetch 1`] = `
 table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
-">
+" style="display: block;">
   <style></style>
   <div class="gy-3 mb-4 row">
     <div class="col-2">
@@ -91,7 +91,7 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
 table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
 table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
-">
+" style="display: block;">
   <style></style>
   <div class="gy-3 mb-4 row">
     <div class="col-2">

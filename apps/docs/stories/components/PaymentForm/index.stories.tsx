@@ -1,26 +1,22 @@
 import type { Meta } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { CSSVarsExample, StoryBaseArgs, getAttributesString } from "../../utils";
+import { StoryBaseArgs, getAttributesString } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-payment-form";
+import themes, { ThemeNames } from "../../themes";
 
 const storyBaseArgs = new StoryBaseArgs([
   "account-id",
   "client-id",
   "auth-token",
-  "theme",
 ]);
-
-const themes: { [key: string]: any } = {
-  basic: {},
-  custom: CSSVarsExample,
-};
 
 const meta: Meta = {
   title: "Payment Facilitation/Payments/Payment Form",
   component: "justifi-payment-form",
   args: {
     ...storyBaseArgs.args,
+    Theme: ThemeNames.Light,
     email: "test@test.com",
     "submit-button-text": "Submit Payment",
     card: true,
@@ -28,6 +24,14 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
     "bank-account": {
       type: "boolean",
       description:
@@ -118,23 +122,16 @@ const meta: Meta = {
     },
   },
   decorators: [
-    // @ts-ignore
-    withActions,
+    withActions
   ],
 };
 
 const Template = (args: any) => {
   // The <div> here should be replaced by a `display` property in the cardForm potentially
   return `
-    <div>
-      <justifi-payment-form
-        ${getAttributesString(args)}
-      />
-    </div>
+    <justifi-payment-form ${getAttributesString(args)}></justifi-payment-form>
     <style>
-      :root {
-        ${themes[args.theme]}
-      }
+      ${themes[args['Theme']]}
     </style>
     <script>
     (async () => {

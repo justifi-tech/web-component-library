@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`payout-details-core fetches payout details on connected callback 1`] = `
-<payout-details-core class="body">
+<payout-details-core class="body" style="display: block;">
   <style></style>
   <justifi-details>
     <div class="p-2" part="detail-head" slot="head-info">
@@ -151,7 +151,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
 `;
 
 exports[`payout-details-core handles fetch payout error correctly 1`] = `
-<payout-details-core class="body">
+<payout-details-core class="body" style="display: block;">
   <style></style>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
     <div>
@@ -162,7 +162,7 @@ exports[`payout-details-core handles fetch payout error correctly 1`] = `
 `;
 
 exports[`payout-details-core renders loading state initially 1`] = `
-<payout-details-core class="body">
+<payout-details-core class="body" style="display: block;">
   <style></style>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
     <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
