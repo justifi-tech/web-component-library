@@ -96,7 +96,7 @@ const themes: { [key: string]: any } = {
 const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token", "theme"]);
 
 const meta: Meta = {
-  title: "Payment Facilitation/Merchant Tools/Payouts List",
+  title: "Merchant Tools/Payouts List",
   component: "justifi-payouts-list",
   args: {
     ...storyBaseArgs.args,

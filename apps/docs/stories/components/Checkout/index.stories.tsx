@@ -10,7 +10,7 @@ import "@justifi/webcomponents/dist/module/justifi-season-interruption-insurance
 const storyBaseArgs = new StoryBaseArgs(["auth-token"]);
 
 const meta: Meta = {
-  title: "Payment Facilitation/Payments/Checkout",
+  title: "Payment Facilitation/Unified Fintech Checkout™",
   component: "justifi-checkout",
   args: {
     ...storyBaseArgs.args,
