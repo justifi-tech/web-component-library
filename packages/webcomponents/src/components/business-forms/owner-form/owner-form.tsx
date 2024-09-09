@@ -6,7 +6,7 @@ import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
-import { LoadingSpinner } from '../../form/utils';
+import { ButtonSpinner } from '../../../ui-components';
 import { deconstructDate } from '../utils/helpers';
 import { OwnerFormSubmitEvent, OwnerFormClickEvent, OwnerFormClickActions } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
@@ -299,7 +299,7 @@ export class BusinessOwnerForm {
                   class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
                   onClick={() => this.handleAddOwner()}
                   disabled={this.isLoading}>
-                  {this.isLoading ? LoadingSpinner() : this.submitButtonText}
+                  {this.isLoading ? ButtonSpinner() : this.submitButtonText}
                 </button>
                 {this.showRemoveButton &&
                   <button

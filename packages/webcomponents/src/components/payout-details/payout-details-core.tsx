@@ -3,7 +3,7 @@ import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { ComponentError } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payout-details-core',

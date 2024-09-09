@@ -6,6 +6,7 @@ body {
 /* Card styling */
 
 justifi-checkout,
+justifi-payment-form,
 justifi-payment-provisioning {
   display: block;
   margin: 5% auto;
@@ -14,7 +15,8 @@ justifi-payment-provisioning {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-justifi-checkout {
+justifi-checkout,
+justifi-payment-form {
   max-width: 400px;
   padding: 40px;
 }

@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { BusinessFormClickActions } from '../utils/business-form-types';
-import { LoadingSpinner } from '../../form/utils';
+import { Button } from '../../../ui-components';
 
 @Component({
   tag: 'justifi-payment-provisioning-form-buttons'
@@ -28,30 +28,32 @@ export class PaymentProvisioningFormButtons {
   render() {
     return (
       <div class='d-flex gap-2'>
-        <button
-          type='button'
-          class='btn btn-secondary'
+        <Button
+          variant="secondary"
+          type="button"
           onClick={() => this.previousStepButtonOnClick()}
           disabled={this.formDisabled}
           hidden={!this.showPreviousStepButton}>
           Previous
-        </button>
-        <button
-          type='button'
-          class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
+        </Button>
+        <Button
+          variant="primary"
+          type="button"
           onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
           disabled={this.formDisabled}
+          isLoading={this.formLoading}
           hidden={!this.showNextStepButton}>
-          {this.formLoading ? LoadingSpinner() : 'Next'}
-        </button>
-        <button
-          type='submit'
-          class={`btn btn-primary jfi-submit-button${this.formLoading ? ' jfi-submit-button-loading' : ''}`}
+          Next
+        </Button>
+        <Button
+          variant="primary"
+          type="submit"
           onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
           disabled={this.formDisabled}
+          isLoading={this.formLoading}
           hidden={!this.showSubmitButton}>
-          {this.formLoading ? LoadingSpinner() : 'Submit'}
-        </button>
+          Submit
+        </Button>
       </div>
     );
   }

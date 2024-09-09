@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { ErrorState } from './utils';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-details',

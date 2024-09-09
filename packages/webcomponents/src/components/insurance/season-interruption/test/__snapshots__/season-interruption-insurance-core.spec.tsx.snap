@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-season-interruption-insurance-core loads and sets the quote to state correctly 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123" class="body">
+<justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
     <div>
@@ -50,7 +50,7 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
 `;
 
 exports[`justifi-season-interruption-insurance-core should display loading state correctly 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123" class="body">
+<justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
   </template>
@@ -58,7 +58,7 @@ exports[`justifi-season-interruption-insurance-core should display loading state
 `;
 
 exports[`justifi-season-interruption-insurance-core validates that a selection was made 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123" class="body">
+<justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
     <div>

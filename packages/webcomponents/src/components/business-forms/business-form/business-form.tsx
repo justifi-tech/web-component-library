@@ -7,7 +7,7 @@ import { config } from '../../../../config';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
-import StyledHost from '../../../utils/styled-host/styled-host';
+import { StyledHost } from '../../../ui-components';
 
 /**
  * @exportedPart label: Label for inputs

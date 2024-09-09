@@ -3,7 +3,7 @@ import { Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { ComponentError } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payment-details-core',

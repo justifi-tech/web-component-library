@@ -6,7 +6,7 @@ import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } 
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-import StyledHost from '../../utils/styled-host/styled-host';
+import { Button, StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -188,12 +188,6 @@ export class CheckoutCore {
     );
   }
 
-  private loadingSpinner = (
-    <div class="spinner-border spinner-border-sm" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  );
-
   render() {
     return (
       <StyledHost>
@@ -215,15 +209,14 @@ export class CheckoutCore {
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
-              <button
+              <Button
                 type="submit"
-                onClick={event => this.submit(event)}
+                variant="primary"
+                onClick={(e) => this.submit(e)}
                 disabled={this.isLoading}
-                part="pay-button"
-                class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
-              >
-                {this.isLoading ? this.loadingSpinner : 'Pay'}
-              </button>
+                isLoading={this.isLoading}>
+                Pay
+              </Button>
             </div>
           </div>
         </div>

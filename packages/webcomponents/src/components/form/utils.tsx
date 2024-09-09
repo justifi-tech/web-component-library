@@ -1,11 +1,3 @@
-import { h } from '@stencil/core';
-
-export const LoadingSpinner = () => (
-  <div class="spinner-border spinner-border-sm" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-);
-
 export const numberOnlyHandler = (e: KeyboardEvent | ClipboardEvent) => {
   const specialKeys = ['Backspace', 'Tab', 'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Delete'];
 

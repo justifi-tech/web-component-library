@@ -9,8 +9,8 @@ import {
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
-import StyledHost from '../../utils/styled-host/styled-host';
 import { DownloadIcon } from '../../assets/download-icon';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core',
