@@ -31,27 +31,27 @@ export class PaymentProvisioningFormButtons {
         <Button
           variant="secondary"
           type="button"
-          clickHandler={() => this.previousStepButtonOnClick()}
-          isDisabled={this.formDisabled}
-          isHidden={!this.showPreviousStepButton}>
+          onClick={() => this.previousStepButtonOnClick()}
+          disabled={this.formDisabled}
+          hidden={!this.showPreviousStepButton}>
           Previous
         </Button>
         <Button
           variant="primary"
           type="button"
-          clickHandler={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
-          isDisabled={this.formDisabled}
+          onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.nextStep)}
+          disabled={this.formDisabled}
           isLoading={this.formLoading}
-          isHidden={!this.showNextStepButton}>
+          hidden={!this.showNextStepButton}>
           Next
         </Button>
         <Button
           variant="primary"
           type="submit"
-          clickHandler={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
-          isDisabled={this.formDisabled}
+          onClick={(e) => this.nextStepButtonOnClick(e, BusinessFormClickActions.submit)}
+          disabled={this.formDisabled}
           isLoading={this.formLoading}
-          isHidden={!this.showSubmitButton}>
+          hidden={!this.showSubmitButton}>
           Submit
         </Button>
       </div>

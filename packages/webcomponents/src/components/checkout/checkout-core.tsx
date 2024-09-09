@@ -212,8 +212,8 @@ export class CheckoutCore {
               <Button
                 type="submit"
                 variant="primary"
-                clickHandler={(e) => this.submit(e)}
-                isDisabled={this.isLoading}
+                onClick={(e) => this.submit(e)}
+                disabled={this.isLoading}
                 isLoading={this.isLoading}>
                 Pay
               </Button>

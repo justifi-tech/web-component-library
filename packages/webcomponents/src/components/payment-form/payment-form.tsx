@@ -171,8 +171,10 @@ export class PaymentForm {
             <Button
               variant="primary"
               type="submit"
-              clickHandler={event => this.submit(event)}
-              isDisabled={!this.submitButtonEnabled || this.isLoading}>
+              onClick={event => this.submit(event)}
+              disabled={!this.submitButtonEnabled || this.isLoading}
+              isLoading={this.isLoading}
+              data-testid="submit-button">
               {this.submitButtonText || 'Submit'}
             </Button>
           </div>

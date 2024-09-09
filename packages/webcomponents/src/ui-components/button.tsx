@@ -3,14 +3,14 @@ import { ButtonSpinner } from './button-spinner';
 
 interface ButtonProps {
   variant: 'primary' | 'secondary';
-  type: 'button' | 'submit' | 'reset';
-  clickHandler: (e: any) => void;
-  isDisabled?: boolean;
   isLoading?: boolean;
-  isHidden?: boolean;
 }
 
-export const Button: FunctionalComponent<ButtonProps> = (props, children) => {
+type ButtonElementProps = ButtonProps & {
+  [key: string]: any; // This allows any additional properties
+};
+
+export const Button: FunctionalComponent<ButtonElementProps> = (props, children) => {
   const classMap = {
     primary: 'btn btn-primary',
     secondary: 'btn btn-secondary',
@@ -29,12 +29,10 @@ export const Button: FunctionalComponent<ButtonProps> = (props, children) => {
 
   return (
     <button
-      type={(props.type) ? props.type : 'button'}
       class={classMap[props.variant]}
       onClick={props.clickHandler}
-      disabled={props.isDisabled}
       part={getCSSParts()}
-      hidden={props.isHidden}
+      {...props}
     >
       {props.isLoading ? ButtonSpinner() : children}
     </button>
