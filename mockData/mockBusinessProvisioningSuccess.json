@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "type": "onboarding",
+  "data": {
+    "account_type": "test",
+    "sub_account_id": "acc_xyz",
+    "platform_account_id": "acc_123",
+    "payload": {}
+  },
+  "page_info": "string"
+}
