@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
@@ -139,82 +139,79 @@ export class BusinessBankAccountFormStep {
     const bankAccountDefaultValue = this.formController.getInitialValues();
 
     return (
-      <Host exportparts="label,input,input-invalid">
-        <form>
-          <fieldset>
-            <legend>Bank Account Info</legend>
-            <hr />
-            <div class="row gy-3">
-              <div class="col-12">
-                <form-control-text
-                  name="bank_name"
-                  label="Bank Name"
-                  defaultValue={bankAccountDefaultValue.bank_name}
-                  errorText={this.errors.bank_name}
-                  inputHandler={this.inputHandler}
-                  disabled={this.formDisabled}
-                />
-              </div>
-              <div class="col-12">
-                <form-control-text
-                  name="nickname"
-                  label="Nickname"
-                  defaultValue={bankAccountDefaultValue.nickname}
-                  errorText={this.errors.nickname}
-                  inputHandler={this.inputHandler}
-                  disabled={this.formDisabled}
-                />
-              </div>
-              <div class="col-12">
-                <form-control-text
-                  name="account_owner_name"
-                  label="Account Owner Name"
-                  defaultValue={bankAccountDefaultValue.account_owner_name}
-                  errorText={this.errors.account_owner_name}
-                  inputHandler={this.inputHandler}
-                  disabled={this.formDisabled}
-                />
-              </div>
-              <div class="col-12">
-                <form-control-select
-                  name="account_type"
-                  label="Account Type"
-                  options={bankAccountTypeOptions}
-                  defaultValue={bankAccountDefaultValue.account_type}
-                  errorText={this.errors.account_type}
-                  inputHandler={this.inputHandler}
-                  disabled={this.formDisabled}
-                />
-              </div>
-              <div class="col-12">
-                <form-control-text
-                  name="account_number"
-                  label="Account Number"
-                  defaultValue={bankAccountDefaultValue.account_number}
-                  maxLength={17}
-                  errorText={this.errors.account_number}
-                  inputHandler={this.inputHandler}
-                  keyDownHandler={numberOnlyHandler}
-                  disabled={this.formDisabled}
-                />
-              </div>
-              <div class="col-12">
-                <form-control-text
-                  name="routing_number"
-                  label="Routing Number"
-                  defaultValue={bankAccountDefaultValue.routing_number}
-                  maxLength={9}
-                  errorText={this.errors.routing_number}
-                  inputHandler={this.inputHandler}
-                  keyDownHandler={numberOnlyHandler}
-                  disabled={this.formDisabled}
-                />
-              </div>
-              
+      <form>
+        <fieldset>
+          <legend>Bank Account Info</legend>
+          <hr />
+          <div class="row gy-3">
+            <div class="col-12">
+              <form-control-text
+                name="bank_name"
+                label="Bank Name"
+                defaultValue={bankAccountDefaultValue.bank_name}
+                errorText={this.errors.bank_name}
+                inputHandler={this.inputHandler}
+                disabled={this.formDisabled}
+              />
             </div>
-          </fieldset>
-        </form>
-      </Host>
+            <div class="col-12">
+              <form-control-text
+                name="nickname"
+                label="Nickname"
+                defaultValue={bankAccountDefaultValue.nickname}
+                errorText={this.errors.nickname}
+                inputHandler={this.inputHandler}
+                disabled={this.formDisabled}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="account_owner_name"
+                label="Account Owner Name"
+                defaultValue={bankAccountDefaultValue.account_owner_name}
+                errorText={this.errors.account_owner_name}
+                inputHandler={this.inputHandler}
+                disabled={this.formDisabled}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-select
+                name="account_type"
+                label="Account Type"
+                options={bankAccountTypeOptions}
+                defaultValue={bankAccountDefaultValue.account_type}
+                errorText={this.errors.account_type}
+                inputHandler={this.inputHandler}
+                disabled={this.formDisabled}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="account_number"
+                label="Account Number"
+                defaultValue={bankAccountDefaultValue.account_number}
+                maxLength={17}
+                errorText={this.errors.account_number}
+                inputHandler={this.inputHandler}
+                keyDownHandler={numberOnlyHandler}
+                disabled={this.formDisabled}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="routing_number"
+                label="Routing Number"
+                defaultValue={bankAccountDefaultValue.routing_number}
+                maxLength={9}
+                errorText={this.errors.routing_number}
+                inputHandler={this.inputHandler}
+                keyDownHandler={numberOnlyHandler}
+                disabled={this.formDisabled}
+              />
+            </div>
+          </div>
+        </fieldset>
+      </form>
     );
   }
 }

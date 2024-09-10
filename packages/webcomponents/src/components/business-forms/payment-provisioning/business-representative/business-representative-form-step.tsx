@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
@@ -56,14 +56,12 @@ export class BusinessRepresentativeFormStep {
 
   render() {
     return (
-      <Host exportparts='label,input,input-invalid'>
-        <justifi-business-representative-form-step-core 
-          getBusiness={this.getBusiness}
-          patchBusiness={this.patchBusiness}
-          allowOptionalFields={this.allowOptionalFields}
-          ref={el => this.coreComponent = el}
-        />
-      </Host>
+      <justifi-business-representative-form-step-core 
+        getBusiness={this.getBusiness}
+        patchBusiness={this.patchBusiness}
+        allowOptionalFields={this.allowOptionalFields}
+        ref={el => this.coreComponent = el}
+      />
     );
   }
 };

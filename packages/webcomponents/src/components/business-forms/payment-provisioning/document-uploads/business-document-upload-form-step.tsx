@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Business, IBusiness } from '../../../../api/Business';
@@ -215,19 +215,17 @@ export class BusinessDocumentFormStep {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
-        <form>
-          <fieldset>
-            <legend>Document Uploads</legend>
-            <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
-            <hr />
-            {this.documentsOnFile}
-            <div class="d-flex flex-column">
-              {this.formInputs}
-            </div>
-          </fieldset>
-        </form>
-      </Host>
+      <form>
+        <fieldset>
+          <legend>Document Uploads</legend>
+          <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
+          <hr />
+          {this.documentsOnFile}
+          <div class="d-flex flex-column">
+            {this.formInputs}
+          </div>
+        </fieldset>
+      </form>
     );
   }
 }
