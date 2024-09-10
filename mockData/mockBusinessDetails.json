@@ -14,6 +14,7 @@
     "mcc": "8021",
     "tax_id": "895249796",
     "date_of_incorporation": "2015-02-20",
+    "associated_accounts": [],
     "metadata": {},
     "legal_address": {
       "id": "addr_123xyz",
