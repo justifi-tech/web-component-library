@@ -10,10 +10,7 @@ import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { DownloadIcon } from '../../assets/download-icon';
 import { tableExportedParts } from '../table/exported-parts';
-import { StyledHost } from '../../ui-components';
-import { TableErrorState } from '../../ui-components/table-error-state';
-import { TableLoadingState } from '../../ui-components/table-loading-state';
-import { TableEmptyState } from '../../ui-components/table-empty-state';
+import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core',

@@ -3,10 +3,7 @@ import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
-import { StyledHost } from '../../ui-components';
-import { TableErrorState } from '../../ui-components/table-error-state';
-import { TableLoadingState } from '../../ui-components/table-loading-state';
-import { TableEmptyState } from '../../ui-components/table-empty-state';
+import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({
   tag: 'payments-list-core',
