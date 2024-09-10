@@ -1,11 +1,11 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
+import { StyledHost } from '../../ui-components';
 
 @Component({
-  tag: 'payments-list-core',
-  styleUrl: 'payments-list.scss',
+  tag: 'payments-list-core'
 })
 
 export class PaymentsListCore {
@@ -19,7 +19,6 @@ export class PaymentsListCore {
 
   @Event({
     eventName: 'payment-row-clicked',
-
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
@@ -71,9 +70,29 @@ export class PaymentsListCore {
     });
   };
 
+  handleDateChange = (name: string, value: string) => {
+    this.params = { ...this.params, [name]: value };
+  }
+
   render() {
     return (
-      <Host>
+      <StyledHost>
+        <div class="row gy-3 mb-4">
+          <div class="col-2">
+            <form-control-date
+              name="created_after"
+              label="Start Date"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+          <div class="col-2">
+            <form-control-date
+              name="created_before"
+              label="End Date"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+        </div>
         <justifi-table
           rowClickHandler={e => {
             const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
@@ -121,7 +140,7 @@ export class PaymentsListCore {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

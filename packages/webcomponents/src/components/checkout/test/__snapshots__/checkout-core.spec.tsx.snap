@@ -3,10 +3,11 @@
 exports[`justifi-checkout-core should display error state correctly 1`] = `<checkout-core />`;
 
 exports[`justifi-checkout-core should display loading state correctly 1`] = `
-<justifi-checkout-core>
+<justifi-checkout-core class="body" style="display: block;">
   <template shadowrootmode="open">
+    <style></style>
     <div class="gy-3 jfi-checkout-core row">
-      <div class="col-12 mb-4">
+      <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Summary
         </h2>
@@ -30,7 +31,7 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
       <div class="col-12">
         <slot name="insurance"></slot>
       </div>
-      <div class="col-12">
+      <div class="col-12 mt-4">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Payment
         </h2>
@@ -50,8 +51,8 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
-          <button class="btn btn-primary jfi-submit-button jfi-submit-button-loading" disabled="" part="pay-button" type="submit">
-            <div class="spinner-border spinner-border-sm" role="status">
+          <button class="btn btn-primary" disabled="" isloading="" part="button button-primary button-loading" type="submit" variant="primary">
+            <div class="spinner-border spinner-border-sm" part="button-spinner" role="status">
               <span class="visually-hidden">
                 Loading...
               </span>
@@ -65,10 +66,11 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
 `;
 
 exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
-<justifi-checkout-core>
+<justifi-checkout-core class="body" style="display: block;">
   <template shadowrootmode="open">
+    <style></style>
     <div class="gy-3 jfi-checkout-core row">
-      <div class="col-12 mb-4">
+      <div class="col-12">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Summary
         </h2>
@@ -94,7 +96,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
       <div class="col-12">
         <slot name="insurance"></slot>
       </div>
-      <div class="col-12">
+      <div class="col-12 mt-4">
         <h2 class="fs-5 fw-bold jfi-header pb-3">
           Payment
         </h2>
@@ -114,7 +116,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
-          <button class="btn btn-primary jfi-submit-button" part="pay-button" type="submit">
+          <button class="btn btn-primary" part="button button-primary" type="submit" variant="primary">
             Pay
           </button>
         </div>

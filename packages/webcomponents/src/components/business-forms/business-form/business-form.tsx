@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
@@ -7,6 +7,7 @@ import { config } from '../../../../config';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
+import { StyledHost } from '../../../ui-components';
 
 /**
  * @exportedPart label: Label for inputs
@@ -15,7 +16,7 @@ import JustifiAnalytics from '../../../api/Analytics';
  */
 @Component({
   tag: 'justifi-business-form',
-  styleUrl: 'business-form.scss',
+  styleUrl: 'business-form.css',
   shadow: true
 })
 export class BusinessForm {
@@ -116,7 +117,7 @@ export class BusinessForm {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <StyledHost exportparts="label,input,input-invalid">
         <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
             <h1>{this.title}</h1>
@@ -144,7 +145,7 @@ export class BusinessForm {
             </div>
           </div>
         </form>
-      </Host>
+      </StyledHost>
     );
   }
 }

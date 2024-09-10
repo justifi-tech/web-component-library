@@ -1,6 +1,9 @@
 import { createServer } from 'miragejs';
 import mockBusinessOwner from '../../../../mockData/mockBusinessOwner.json';
 import mockBusinessDetails from '../../../../mockData/mockBusinessDetails.json';
+import mockDocumentUpload from '../../../../mockData/mockDocumentRecordSuccess.json';
+import mockBusinessTerms from '../../../../mockData/mockBusinessTermsSuccess.json';
+import mockBusinessProvisioning from '../../../../mockData/mockBusinessProvisioningSuccess.json';
 import mockGetCheckout from '../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckout from '../../../../mockData/mockPostCheckoutSuccess.json';
 import mockGrossPaymentChart from '../../../../mockData/mockGrossVolumeReportSuccess.json';
@@ -34,9 +37,14 @@ const handleMockGrossVolumeChartMock = () => {
 };
 
 export const API_PATHS = {
-  BUSINESS_OWNER: '/entities/identity/:id',
+  EXISTING_BUSINESS_OWNER: '/entities/identity/:id',
+  NEW_BUSINESS_OWNER: '/entities/identity',
   ANALYTICS: '/analytics',
   BUSINESS_DETAILS: '/entities/business/:id',
+  BUSINESS_DOCUMENT_RECORD: '/entities/document',
+  BUSINESS_DOCUMENT_UPLOAD: '/:account/:document',
+  BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',
+  BUSINESS_PROVISIONING: '/entities/provisioning',
   CHECKOUT: '/checkouts/:id',
   CHECKOUT_COMPLETE: '/checkouts/:id/complete',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
@@ -55,16 +63,19 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
   const bypass = config.bypass || [];
   createServer({
     routes() {
+      // Primary URL prefix for API requests
       this.urlPrefix = 'https://wc-proxy.justifi.ai/v1';
 
       // BusinessOwner
-      this.get(API_PATHS.BUSINESS_OWNER, () => mockBusinessOwner);
+      this.get(API_PATHS.EXISTING_BUSINESS_OWNER, () => mockBusinessOwner);
 
-      this.patch(API_PATHS.BUSINESS_OWNER, (_schema, request) => {
+      this.patch(API_PATHS.EXISTING_BUSINESS_OWNER, (_schema, request) => {
         const id = request.params.id;
         const newOwner = JSON.parse(request.requestBody);
         return { ...mockBusinessOwner, ...newOwner, id };
       });
+
+      this.post(API_PATHS.NEW_BUSINESS_OWNER, () => mockBusinessOwner);
 
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
@@ -74,6 +85,12 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
         const newDetails = JSON.parse(request.requestBody);
         return { ...mockBusinessDetails, ...newDetails, id };
       });
+
+      this.post(API_PATHS.BUSINESS_DOCUMENT_RECORD, () => mockDocumentUpload);
+
+      this.post(API_PATHS.BUSINESS_TERMS_AND_CONDITIONS, () => mockBusinessTerms);
+
+      this.post(API_PATHS.BUSINESS_PROVISIONING, () => mockBusinessProvisioning);
 
       // GrossPaymentChart
       this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChartMock);
@@ -97,13 +114,23 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       // Analytics
       this.post(API_PATHS.ANALYTICS, () => null);
 
+      // InsuranceQuotes
+      this.post(API_PATHS.INSURANCE_QUOTES, () => mockSeasonInterruptionInsurance);
+
+      // Secondary URL prefix for API requests
+      this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
+      this.urlPrefix = 'https://entities-production-documents.s3.us-east-2.amazonaws.com'
+
+      // BusinessDocumentUpload
+
+      this.put(API_PATHS.BUSINESS_DOCUMENT_UPLOAD, () => null);
+
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
 
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
 
-      this.post(API_PATHS.INSURANCE_QUOTES, () => mockSeasonInterruptionInsurance);
     },
   });
 };

@@ -1,11 +1,16 @@
-import { Component, h, Host, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
+import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
+import { StyledHost } from "../../../ui-components";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
-  styleUrl: 'season-interruption-insurance-core.scss',
+  styleUrls: [
+    'season-interruption-insurance-core.css',
+    '../../checkout/form-check-input.css',
+    '../../checkout/header.css',
+  ],
   shadow: true,
 })
 export class SeasonInterruptionInsuranceCore {
@@ -37,9 +42,7 @@ export class SeasonInterruptionInsuranceCore {
   }
 
   componentWillLoad() {
-    console.log('### componentWillLoad')
     if (this.getQuote) {
-      console.log('### fetching data')
       this.fetchData();
     }
   };
@@ -111,7 +114,7 @@ export class SeasonInterruptionInsuranceCore {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         {!this.isLoading &&
           <div>
             <h2 class="fs-5 fw-bold pb-3 jfi-header">{this.quote?.product.title}</h2>
@@ -125,11 +128,11 @@ export class SeasonInterruptionInsuranceCore {
                 onChange={(event: any) => this.onChangeHandler(event)}
                 class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
               />
-              <label htmlFor="accept" class="btn btn-outline-primary jfi-btn-radio-label">
+              <label htmlFor="accept">
                 Accept coverage for {formatCurrency(this.quote?.total_cents)}
               </label>
             </div>
-            <div>
+            <div class="mb-2">
               <input
                 id="decline"
                 type="radio"
@@ -138,7 +141,7 @@ export class SeasonInterruptionInsuranceCore {
                 onChange={(event: any) => this.onChangeHandler(event)}
                 class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
               />
-              <label htmlFor="decline" class="btn btn-outline-primary jfi-btn-radio-label">
+              <label htmlFor="decline">
                 Decline coverage
               </label>
             </div>
@@ -150,7 +153,7 @@ export class SeasonInterruptionInsuranceCore {
             <small innerHTML={this.quote?.product.legal_disclaimer}></small>
           </div>
         }
-      </Host>
+      </StyledHost>
     );
   }
 };

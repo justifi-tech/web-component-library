@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property    | Attribute | Description | Type       | Default     |
-| ----------- | --------- | ----------- | ---------- | ----------- |
-| `getPayout` | --        |             | `Function` | `undefined` |
+| Property       | Attribute | Description | Type       | Default     |
+| -------------- | --------- | ----------- | ---------- | ----------- |
+| `getPayout`    | --        |             | `Function` | `undefined` |
+| `getPayoutCSV` | --        |             | `Function` | `undefined` |
 
 
 ## Events

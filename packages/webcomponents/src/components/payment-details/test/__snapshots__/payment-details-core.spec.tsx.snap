@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`payment-details-core displays an error state on failed data fetch 1`] = `
-<payment-details-core>
+<payment-details-core class="body" style="display: block;">
+  <style></style>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
     <div>
       Fetch error
@@ -11,10 +12,12 @@ exports[`payment-details-core displays an error state on failed data fetch 1`] =
 `;
 
 exports[`payment-details-core it renders properly with fetched data 1`] = `
-<payment-details-core>
-  <justifi-details exportparts="detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
-        detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info">
+<payment-details-core class="body" style="display: block;">
+  <style></style>
+  <justifi-details class="body" exportparts="detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
+        detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info" style="display: block;">
     <template shadowrootmode="open">
+      <style></style>
       <main class="p-2">
         <slot name="head-info"></slot>
         <slot name="detail-sections"></slot>

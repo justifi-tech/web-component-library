@@ -1,15 +1,16 @@
-import { Component, h, Prop, State, Event, EventEmitter, Host, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { Checkout, ICheckout, ICheckoutCompleteResponse } from '../../api/Checkout';
+import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { Button, StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout-core',
-  styleUrl: 'checkout-core.scss',
+  styleUrls: ['checkout-core.css', 'header.css'],
   shadow: true,
 })
 export class CheckoutCore {
@@ -33,9 +34,10 @@ export class CheckoutCore {
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
-  
+
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'loaded' }) loaded: EventEmitter<ILoadedEventResponse>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
@@ -64,6 +66,8 @@ export class CheckoutCore {
     this.getCheckout({
       onSuccess: ({ checkout }) => {
         this.checkout = new Checkout(checkout);
+        const { status } = this.checkout;
+        this.loaded.emit({ checkout_status: status });
         this.renderState = 'success';
       },
       onError: ({ error, code, severity }) => {
@@ -184,17 +188,11 @@ export class CheckoutCore {
     );
   }
 
-  private loadingSpinner = (
-    <div class="spinner-border spinner-border-sm" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  );
-
   render() {
     return (
-      <Host>
+      <StyledHost>
         <div class="row gy-3 jfi-checkout-core">
-          <div class="col-12 mb-4">
+          <div class="col-12">
             {/* componentize this */}
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Summary</h2>
             {this.summary}
@@ -202,7 +200,7 @@ export class CheckoutCore {
           <div class="col-12">
             <slot name="insurance"></slot>
           </div>
-          <div class="col-12">
+          <div class="col-12 mt-4">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
             <h3 class="fs-6 fw-bold lh-lg">Select payment type</h3>
             <div class="d-flex flex-column">
@@ -211,19 +209,18 @@ export class CheckoutCore {
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
-              <button
+              <Button
                 type="submit"
-                onClick={event => this.submit(event)}
+                variant="primary"
+                onClick={(e) => this.submit(e)}
                 disabled={this.isLoading}
-                part="pay-button"
-                class={`btn btn-primary jfi-submit-button ${this.isLoading ? 'jfi-submit-button-loading' : ''}`}
-              >
-                {this.isLoading ? this.loadingSpinner : 'Pay'}
-              </button>
+                isLoading={this.isLoading}>
+                Pay
+              </Button>
             </div>
           </div>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }

@@ -5,8 +5,12 @@ import { makeGetPayouts } from './get-payouts';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
 
 /**
+  * @exportedPart label: Label for inputs
+  * @exportedPart input: The input fields
+  * @exportedPart input-invalid: Invalid state for inputs
   * @exportedPart table-head: Table head
   * @exportedPart table-head-row: Head row
   * @exportedPart table-head-cell: Individual head cell
@@ -35,6 +39,7 @@ export class PayoutsList {
   @Prop() authToken: string;
 
   @State() getPayouts: Function;
+  @State() getPayoutCSV: Function;
   @State() errorMessage: string = null;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -43,7 +48,7 @@ export class PayoutsList {
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetPayouts();
+    this.initializeServices();
   }
 
   disconnectedCallback() {
@@ -53,16 +58,18 @@ export class PayoutsList {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeGetPayouts();
+    this.initializeServices();
   }
 
-  private initializeGetPayouts() {
+  private initializeServices() {
     if (this.accountId && this.authToken) {
-      this.getPayouts = makeGetPayouts({
+      const serviceParams = {
         id: this.accountId,
         authToken: this.authToken,
         service: new PayoutService(),
-      });
+      };
+      this.getPayouts = makeGetPayouts(serviceParams);
+      this.getPayoutCSV = makeGetPayoutCSV(serviceParams);
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
       this.errorEvent.emit({
@@ -84,7 +91,11 @@ export class PayoutsList {
 
     return (
       <Host exportedparts={tableExportedParts}>
-        <payouts-list-core getPayouts={this.getPayouts} onError-event={this.handleOnError} />
+        <payouts-list-core
+          getPayouts={this.getPayouts}
+          getPayoutCSV={this.getPayoutCSV}
+          onError-event={this.handleOnError}
+        />
       </Host>
     );
   }

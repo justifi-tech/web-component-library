@@ -13,8 +13,7 @@ import { isEmptyObject } from '../../../utils/utils';
  */
 @Component({
   tag: 'additional-questions-details',
-  styleUrl: 'additional-questions-details.scss',
-  shadow: true,
+  styleUrl: '../shared-business-details.css',
 })
 export class AdditionalQuestionsDetails {
   @Prop() additionalQuestions: IAdditionalQuestions

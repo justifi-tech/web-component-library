@@ -5,7 +5,6 @@ import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-saved-payment-method',
-  shadow: false,
 })
 export class SavedPaymentMethod {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;

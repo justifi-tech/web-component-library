@@ -4,6 +4,7 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { ILoadedEventResponse } from '../../api';
 
 @Component({
   tag: 'justifi-checkout',
@@ -22,6 +23,9 @@ export class Checkout {
   @State() errorMessage: string = '';
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  // The original event is emitted from the core component, 
+  // but we want to expose it here so it's documented in the storybook
+  @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
 
   private checkoutCoreRef?: HTMLJustifiCheckoutCoreElement;
 

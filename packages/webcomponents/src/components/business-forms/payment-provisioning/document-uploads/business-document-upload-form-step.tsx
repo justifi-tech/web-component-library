@@ -151,21 +151,24 @@ export class BusinessDocumentFormStep {
   }
 
   sendData = async (onSuccess?: () => void) => {
-    const docArray = Object.values(this.documentData).flat();
-    if (!docArray.length) { 
-      return onSuccess();
-     }
+    try {
+      const docArray = Object.values(this.documentData).flat();
+      if (!docArray.length) {
+        return onSuccess();
+      }
 
-    const documentRecords = docArray.map(docData => this.createDocumentRecord(docData));
-    const recordsCreated = await Promise.all(documentRecords);
-    if (!recordsCreated) { return; }
+      const documentRecords = docArray.map(docData => this.createDocumentRecord(docData));
+      const recordsCreated = await Promise.all(documentRecords);
+      if (!recordsCreated) { return; }
 
-    const uploads = docArray.map(docData => this.uploadDocument(docData));
-    const uploadsCompleted = await Promise.all(uploads);
-    if (!uploadsCompleted) { return; }
+      const uploads = docArray.map(docData => this.uploadDocument(docData));
+      const uploadsCompleted = await Promise.all(uploads);
+      if (!uploadsCompleted) { return; }
 
-    uploadsCompleted && this.formLoading.emit(false);
-    await onSuccess();
+      await onSuccess();
+    } finally {
+      this.formLoading.emit(false);
+    }
   }
 
   @Method()

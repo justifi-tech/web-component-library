@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState, LoadingState } from '../details/utils';
 import { ComponentError } from '../../api/ComponentError';
+import { StyledHost } from '../../ui-components';
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -10,8 +11,7 @@ enum RENDER_STATES {
 }
 
 @Component({
-  tag: 'business-details-core',
-  styleUrl: 'business-details.scss',
+  tag: 'business-details-core'
 })
 export class BusinessDetailsCore {
   @Prop() getBusiness: Function;
@@ -51,15 +51,15 @@ export class BusinessDetailsCore {
 
   render() {
     if (this.renderState === RENDER_STATES.LOADING) {
-      return <Host>{LoadingState()}</Host>;
+      return <StyledHost>{LoadingState()}</StyledHost>;
     }
 
     if (this.renderState === RENDER_STATES.ERROR) {
-      return <Host>{ErrorState(this.errorMessage)}</Host>;
+      return <StyledHost>{ErrorState(this.errorMessage)}</StyledHost>;
     }
 
     return (
-      <Host>
+      <StyledHost>
         <generic-info-details business={this.business} />
         <legal-address-details legalAddress={this.business.legal_address} />
         <representative-details representative={this.business.representative} />
@@ -67,7 +67,7 @@ export class BusinessDetailsCore {
         <additional-questions-details
           additionalQuestions={this.business.additional_questions}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

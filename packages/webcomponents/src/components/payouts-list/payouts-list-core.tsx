@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import {
   PagingInfo,
   Payout,
@@ -8,15 +8,17 @@ import {
 } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../table/exported-parts';
-import { ComponentError } from '../../api/ComponentError';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { DownloadIcon } from '../../assets/download-icon';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core',
-  styleUrl: 'payouts-list.scss',
 })
 
 export class PayoutsListCore {
   @Prop() getPayouts: Function;
+  @Prop() getPayoutCSV: Function;
 
   @State() payouts: Payout[] = [];
   @State() loading: boolean = true;
@@ -94,9 +96,42 @@ export class PayoutsListCore {
     });
   };
 
+  downloadCSV = (payoutId: string) => {
+    this.getPayoutCSV({
+      payoutId,
+      onError: () => {
+        this.errorEvent.emit({
+          errorCode: ComponentErrorCodes.FETCH_ERROR,
+          message: 'Failed to download CSV',
+          severity: ComponentErrorSeverity.ERROR
+        });
+      }
+    });
+  }
+
+  handleDateChange = (name: string, value: string) => {
+    this.params = { ...this.params, [name]: value };
+  }
+
   render() {
     return (
-      <Host exportedparts={tableExportedParts}>
+      <StyledHost exportedparts={tableExportedParts}>
+        <div class="row gy-3 mb-4">
+          <div class="col-2">
+            <form-control-date
+              name="created_after"
+              label="Date from:"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+          <div class="col-2">
+            <form-control-date
+              name="created_before"
+              label="Date to:"
+              inputHandler={this.handleDateChange}
+            />
+          </div>
+        </div>
         <justifi-table
           rowClickHandler={(e) => {
             const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;
@@ -113,7 +148,8 @@ export class PayoutsListCore {
             ['Fees', 'Sum of fees in each payout'],
             ['Other', 'Sum of less common transactions in each payout (disputes, ACH returns, fee refunds, and forwarded balances due to failed payouts)'],
             ['Payout Amount', 'The net sum of all transactions in each payout. This is the amount you\'ll see reflected on your bank statement'],
-            ['Status', 'The real-time status of each payout']
+            ['Status', 'The real-time status of each payout'],
+            ['Actions', '']
           ]}
           entityId={this.payouts.map((payout) => payout.id)}
           rowData={
@@ -137,7 +173,14 @@ export class PayoutsListCore {
                 {
                   type: 'inner',
                   value: this.mapStatusToBadge(payout.status)
-                }
+                },
+                (
+                  <DownloadIcon
+                    title="Export CSV"
+                    onClick={() => this.downloadCSV(payout.id)}
+                    style={{ height: '24px', width: '24px', cursor: 'pointer' }}
+                  />
+                )
               ]
             ))
           }
@@ -150,7 +193,7 @@ export class PayoutsListCore {
             handleClickPrevious: this.handleClickPrevious
           }}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

@@ -1,5 +1,35 @@
 ### Changelog
 
+## 4.18.0
+
+### Minor Changes
+
+- e17c1a4: Added a date range filter on PaymentsList and PayoutsList components
+- ca31471: Adds a button for exporting payout details in a CSV files to payout details and payouts list pages
+
+### Patch Changes
+
+- 764dec4: - Fixed bug in `PaymentProvisioning` and `BusinessForm` components preventing users from submitting entity data if data contains `associated_account` or `terms_conditions_accepted` properties.
+- bce7242: Fix issues with PaymentProvisioning theming capabilities
+
+## 4.17.0
+
+### Minor Changes
+
+- d1d9654: - Added new feature to `Checkout` component that allows users to save new payment methods. If the checkout session has an associated `payment_method_group_id` then users will see a checkbox allowing them to save a new Credit Card or Bank Account payment method for future use.
+- 4b0f66b: Add `fillBillingAddress` method to Checkout component
+- 3150b9a: - Moved `insurance` option above payment methods in `Checkout` component
+  - Disable BNPL payment method in `Checkout` component if insurance is accepted by user.
+- f6b1e74: - Updated field labels in `PaymentProvisioning` component.
+  - `Tax ID` field label has been updated to `Tax ID (EIN or SSN)`
+  - `SSN` field label no longer changes to `Update SSN (optional)` if submitting this form step again after the first time.
+
+### Patch Changes
+
+- 3d20448: Hides saved credit card/bank account payment methods when `disable-credit-card` or `disable-bank-account` props are true
+- a495cbc: - Fixed mispelled word in the additional questions form step for the `PaymentProvisioning` component. `activies` => `activities`
+- 15c714d: - Fixed bug in `Checkout` component with insurance where checkout session could be "completed" without making an insurance selection. It is now required to accept or decline insurance before completing a checkout with insurance.
+
 ## 4.16.0
 
 ### Minor Changes
@@ -18,6 +48,9 @@
 - aa11b6e: - `PaymentProvisioning` component now attempts to make POST request to provision payments product once the terms and conditions form step has been completed.
   - Upon response from the provisioning request, the component will emit `submitted` event.
   - When loading the component for a business that has already submitted a provisioning request, an `error-event` will be emitted with the error code: `provisioning-already-requested`, and the form buttons will be disabled.
+- Default `justifi-season-interruption-insurance` loading state to `true`
+- Move `validate` functionality to `justifi-season-interruption-insurance-core` and call it using a ref from within `justifi-season-interruption-insurance`
+- Update `insurance-state.ts` exports to include `insuranceValuesStore` and `insuranceErrorsStore`
 
 ### Patch Changes
 

@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BusinessDetailsCore should display error state correctly 1`] = `
-<business-details-core>
+<business-details-core class="body" style="display: block;">
+  <style></style>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
     <div>
       error
@@ -11,7 +12,8 @@ exports[`BusinessDetailsCore should display error state correctly 1`] = `
 `;
 
 exports[`BusinessDetailsCore should display loading state correclty 1`] = `
-<business-details-core>
+<business-details-core class="body" style="display: block;">
+  <style></style>
   <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
     <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
       <span class="visually-hidden">
@@ -23,7 +25,8 @@ exports[`BusinessDetailsCore should display loading state correclty 1`] = `
 `;
 
 exports[`BusinessDetailsCore should set business details correctly to state 1`] = `
-<business-details-core>
+<business-details-core class="body" style="display: block;">
+  <style></style>
   <generic-info-details></generic-info-details>
   <legal-address-details></legal-address-details>
   <representative-details></representative-details>

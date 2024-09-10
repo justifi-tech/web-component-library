@@ -1,0 +1,7 @@
+:host {
+  table-layout: fixed;
+}
+
+.table-wrapper {
+  overflow-x: scroll;
+}

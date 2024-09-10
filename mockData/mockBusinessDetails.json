@@ -12,8 +12,9 @@
     "classification": "corporation",
     "industry": "Big Business",
     "mcc": "8021",
-    "tax_id": "string",
+    "tax_id": "895249796",
     "date_of_incorporation": "2015-02-20",
+    "associated_accounts": [],
     "metadata": {},
     "legal_address": {
       "id": "addr_123xyz",
@@ -55,7 +56,7 @@
         {
           "id": "doc_abc123",
           "description": "My Document",
-          "file_name": "my_document",
+          "file_name": "Balance Sheed.pdf",
           "file_type": "pdf",
           "document_type": "balance_sheet",
           "business_id": "biz_abc123",
@@ -126,7 +127,7 @@
       {
         "id": "doc_abc123",
         "description": "My Document",
-        "file_name": "my_document",
+        "file_name": "Balance Sheets (2022-2023).pdf",
         "file_type": "pdf",
         "document_type": "balance_sheet",
         "business_id": "biz_abc123",
@@ -136,9 +137,60 @@
           "language": "english",
           "social_network": "@person"
         },
-        "status": "pending uploaded canceled",
-        "created_at": "2021-01-01T12:00:00Z",
-        "updated_at": "2021-01-01T12:00:00Z"
+        "status": "uploaded",
+        "created_at": "2024-08-18T12:00:00Z",
+        "updated_at": "2024-08-18T12:10:00Z"
+      },
+      {
+        "id": "doc_abc123",
+        "description": "My Document",
+        "file_name": "P&L Statement (2023).pdf",
+        "file_type": "pdf",
+        "document_type": "profit_and_loss_statement",
+        "business_id": "biz_abc123",
+        "identity_id": "idty_abc123",
+        "presigned_url": "https://test.test/doc_abc123/file_name.pdf",
+        "metadata": {
+          "language": "english",
+          "social_network": "@person"
+        },
+        "status": "uploaded",
+        "created_at": "2024-08-18T12:15:00Z",
+        "updated_at": "2024-08-18T12:25:00Z"
+      },
+      {
+        "id": "doc_abc123",
+        "description": "My Document",
+        "file_name": "Bank Statements Q1-Q2 (2024).pdf",
+        "file_type": "pdf",
+        "document_type": "bank_statement",
+        "business_id": "biz_abc123",
+        "identity_id": "idty_abc123",
+        "presigned_url": "https://test.test/doc_abc123/file_name.pdf",
+        "metadata": {
+          "language": "english",
+          "social_network": "@person"
+        },
+        "status": "uploaded",
+        "created_at": "2024-08-18T12:30:00Z",
+        "updated_at": "2024-08-18T12:40:00Z"
+      },
+      {
+        "id": "doc_abc123",
+        "description": "My Document",
+        "file_name": "Voided Check (2024).img",
+        "file_type": "img",
+        "document_type": "voided_check",
+        "business_id": "biz_abc123",
+        "identity_id": "idty_abc123",
+        "presigned_url": "https://test.test/doc_abc123/file_name.pdf",
+        "metadata": {
+          "language": "english",
+          "social_network": "@person"
+        },
+        "status": "uploaded",
+        "created_at": "2024-08-18T12:45:00Z",
+        "updated_at": "2024-08-18T12:55:00Z"
       }
     ],
     "bank_accounts": [
@@ -163,9 +215,9 @@
       "business_revenue": "84220",
       "business_payment_volume": "1000000",
       "business_when_service_received": "Within 7 days",
-      "business_recurring_payments": "true",
+      "business_recurring_payments": "Yes",
       "business_recurring_payments_percentage": "50% monthly, 50% annual",
-      "business_seasonal": "No. The business revenue is generated evenly throughout the year",
+      "business_seasonal": "No",
       "business_other_payment_details": "50% of revenue is taken 90 days in advance of service and 50% of revenue is taken 30 days in advance of service",
       "business_purchase_order_volume": "150",
       "business_invoice_volume": "500",
