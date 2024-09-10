@@ -1,12 +1,12 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payment } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { ComponentError } from '../../api/ComponentError';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payment-details-core',
-  styleUrl: 'payment-details.scss',
 })
 
 export class PaymentDetailsCore {
@@ -52,7 +52,7 @@ export class PaymentDetailsCore {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         {this.loading && LoadingState()}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && !this.errorMessage &&
@@ -114,7 +114,7 @@ export class PaymentDetailsCore {
               </div>
             </justifi-details>
           )}
-      </Host>
+      </StyledHost>
     );
   }
 }

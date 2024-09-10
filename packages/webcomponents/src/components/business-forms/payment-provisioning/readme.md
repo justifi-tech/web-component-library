@@ -72,10 +72,12 @@ graph TD;
   justifi-additional-questions-form-step-core --> form-control-text
   form-control-monetary --> form-control-help-text
   form-control-monetary --> form-control-error-text
-  justifi-business-representative-form-step --> form-control-text
-  justifi-business-representative-form-step --> form-control-number-masked
-  justifi-business-representative-form-step --> form-control-date
-  justifi-business-representative-form-step --> justifi-identity-address-form
+  justifi-business-representative-form-step --> justifi-business-representative-form-step-core
+  justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
+  justifi-business-representative-form-inputs --> form-control-text
+  justifi-business-representative-form-inputs --> form-control-number-masked
+  justifi-business-representative-form-inputs --> form-control-date
+  justifi-business-representative-form-inputs --> justifi-identity-address-form
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
   justifi-business-owners-form-step --> justifi-business-owners-form-step-core

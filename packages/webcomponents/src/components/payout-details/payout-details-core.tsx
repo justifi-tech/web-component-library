@@ -1,16 +1,17 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
 import { ComponentError } from '../../api/ComponentError';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'payout-details-core',
-  styleUrl: 'payout-details.scss',
 })
 
 export class PayoutDetailsCore {
   @Prop() getPayout: Function;
+  @Prop() getPayoutCSV: Function;
 
   @State() payout: Payout;
   @State() loading: boolean = true;
@@ -50,14 +51,32 @@ export class PayoutDetailsCore {
     });
   }
 
+  downloadCSV = () => {
+    this.getPayoutCSV({
+      payoutId: this.payout.id,
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity,
+        });
+      },
+    });
+  }
+
   render() {
     return (
-      <Host>
+      <StyledHost>
         {this.loading && LoadingState()}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.payout && (
           <justifi-details error-message={this.errorMessage}>
-            <EntityHeadInfo slot="head-info" badge={<span slot='badge' innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />} title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}>
+            <EntityHeadInfo
+              slot="head-info"
+              badge={<span slot='badge' innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
+              title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}
+            >
               <EntityHeadInfoItem
                 classes="border-1 border-end"
                 title="Updated At"
@@ -69,6 +88,11 @@ export class PayoutDetailsCore {
                 value={`${formatDate(this.payout.created_at)} ${formatTime(this.payout.created_at)}`}
               />
               <EntityHeadInfoItem title="ID" value={this.payout.id} />
+              <div class="m-4">
+                <button class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
+                  Export CSV
+                </button>
+              </div>
             </EntityHeadInfo>
             <div slot='detail-sections'>
               <DetailSectionTitle sectionTitle="Details" />
@@ -94,7 +118,7 @@ export class PayoutDetailsCore {
             </div>
           </justifi-details>
         )}
-      </Host>
+      </StyledHost>
     )
   }
 }

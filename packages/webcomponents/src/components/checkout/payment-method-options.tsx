@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
@@ -8,8 +8,7 @@ import { BillingFormFields } from '../billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
-  styleUrl: 'payment-method-options.scss',
-  shadow: false,
+  styleUrls: ['payment-method-options.css', 'form-check-input.css']
 })
 export class PaymentMethodOptions {
   @Prop() showCard: boolean;
@@ -81,7 +80,7 @@ export class PaymentMethodOptions {
 
   render() {
     return (
-      <div>
+      <Host>
         {this.paymentMethodOptions?.map((paymentMethodOption) => {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
@@ -130,7 +129,7 @@ export class PaymentMethodOptions {
             );
           }
         })}
-      </div>
+      </Host>
     );
   }
 }

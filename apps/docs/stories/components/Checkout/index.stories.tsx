@@ -102,6 +102,14 @@ const meta: Meta = {
       },
       action: true,
     },
+    "loaded": {
+      description:
+        "Return the checkout status once checkout is loaded. It can be `'created' | 'completed' | 'attempted' | 'expired'`",
+      table: {
+        category: "events",
+      },
+      action: true,
+    },
     loadFontsOnParent: {
       description: "`loadFontsOnParent() => Promise<any>`",
       table: {
@@ -111,7 +119,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted"],
+      handles: ["submitted", 'loaded', 'error-event'],
     },
     chromatic: {
       delay: 2000,

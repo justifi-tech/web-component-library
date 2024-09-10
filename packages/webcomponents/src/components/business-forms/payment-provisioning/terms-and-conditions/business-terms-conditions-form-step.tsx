@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { config } from '../../../../../config';
@@ -127,28 +127,26 @@ export class BusinessTermsConditionsFormStep {
 
   render() {
     return (
-      <Host>
-        <form>
-          <fieldset>
-            <legend>Terms and Conditions</legend>
-            <hr />
-            <justifi-business-terms-conditions-text />
-            <br />
-            <div class="row-gy-3">
-              <div class="col-12">
-                <form-control-checkbox
-                  name="accepted"
-                  label="I agree to the terms and conditions"
-                  inputHandler={this.inputHandler}
-                  errorText={this.errors.accepted}
-                  disabled={this.acceptedTermsBefore}
-                  helpText={this.formHelperText}
-                />
-              </div>
+      <form>
+        <fieldset>
+          <legend>Terms and Conditions</legend>
+          <hr />
+          <justifi-business-terms-conditions-text />
+          <br />
+          <div class="row-gy-3">
+            <div class="col-12">
+              <form-control-checkbox
+                name="accepted"
+                label="I agree to the terms and conditions"
+                inputHandler={this.inputHandler}
+                errorText={this.errors.accepted}
+                disabled={this.acceptedTermsBefore}
+                helpText={this.formHelperText}
+              />
             </div>
-          </fieldset>
-        </form>
-      </Host>
+          </div>
+        </fieldset>
+      </form>
     );
   }
 }

@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   h,
   State,
   Event,
@@ -12,11 +11,12 @@ import { Api } from '../../api';
 import { FormController } from '../form/form';
 import { config } from '../../../config';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
+import { StyledHost } from '../../ui-components';
 
 
 @Component({
   tag: 'justifi-refund-form',
-  styleUrl: 'refund-form.scss',
+  styleUrl: 'refund-form.css',
   shadow: true,
 })
 export class RefundForm {
@@ -130,7 +130,7 @@ export class RefundForm {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <h1>Refund</h1>
 
         {this.refundInfoText && (
@@ -184,7 +184,7 @@ export class RefundForm {
             </div>
           )}
         </form>
-      </Host>
+      </StyledHost>
     );
   }
 }

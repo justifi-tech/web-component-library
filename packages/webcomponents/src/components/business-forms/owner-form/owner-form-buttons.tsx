@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { LoadingSpinner } from '../../form/utils';
+import { Button } from '../../../ui-components';
 
 @Component({
   tag: 'owner-form-buttons'
@@ -15,20 +15,20 @@ export class OwnerFormButtons {
   render() {
     return (
       <div class='container d-flex gap-2'>
-        <button
+        <Button
+          variant='secondary'
           type='submit'
-          class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
           onClick={this.handleAddOwner}
           disabled={this.isLoading}>
-          {this.isLoading ? LoadingSpinner() : this.submitButtonText}
-        </button>
-        <button
+          {this.submitButtonText}
+        </Button>
+        <Button
+          variant='danger'
           type='button'
-          class='btn btn-danger'
           onClick={this.handleRemoveOwner}
           hidden={!this.showRemoveButton}>
           Remove owner
-        </button>
+        </Button>
       </div>
     );
   }

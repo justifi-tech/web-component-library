@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, State, Method, Event, EventEmitter } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
@@ -7,10 +7,11 @@ import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
+import { Button, StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-payment-form',
-  styleUrl: 'payment-form.scss',
+  styleUrl: 'payment-form.css',
   shadow: true,
 })
 export class PaymentForm {
@@ -134,7 +135,7 @@ export class PaymentForm {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <form class="row gy-3">
           {this.showPaymentMethodTypeSelector() && (
             <div class="col-12">
@@ -167,24 +168,18 @@ export class PaymentForm {
           </div>
           <slot name='insurance' />
           <div class="col-12">
-            <button
-              data-testid="submit-button"
+            <Button
+              variant="primary"
               type="submit"
               onClick={event => this.submit(event)}
               disabled={!this.submitButtonEnabled || this.isLoading}
-              class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
-            >
-              {
-                this.isLoading ?
-                  <div class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div> :
-                  this.submitButtonText || 'Submit'
-              }
-            </button>
+              isLoading={this.isLoading}
+              data-testid="submit-button">
+              {this.submitButtonText || 'Submit'}
+            </Button>
           </div>
         </form>
-      </Host>
+      </StyledHost>
     );
   }
 }

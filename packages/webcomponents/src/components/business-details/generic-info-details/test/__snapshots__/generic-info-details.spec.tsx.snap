@@ -2,83 +2,81 @@
 
 exports[`GenericInfoDetails should render 1`] = `
 <generic-info-details>
-  <template shadowrootmode="open">
-    <h5 class="mt-4" part="detail-section-title">
-      Business Generic Info Details
-    </h5>
-    <hr>
-    <div class="d-table gap-2 w-100">
-      <div class="gy-3 row">
-        <div class="col-12 col-md-6">
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Legal Name
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              Business Name
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Doing Business As (DBA)
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              Best Business
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Business Classification
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              Corporation
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Industry
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              Big Business
-            </span>
-          </div>
+  <h5 class="mt-4" part="detail-section-title">
+    Business Generic Info Details
+  </h5>
+  <hr>
+  <div class="d-table gap-2 w-100">
+    <div class="gy-3 row">
+      <div class="col-12 col-md-6">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Legal Name
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            Business Name
+          </span>
         </div>
-        <div class="col-12 col-md-6">
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Tax ID
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              string
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Website URL
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              https://justifi.ai
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Email Address
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              business@justifi.ai
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-              Phone Number
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-              6124011111
-            </span>
-          </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Doing Business As (DBA)
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            Best Business
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Business Classification
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            Corporation
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Industry
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            Big Business
+          </span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Tax ID
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            895249796
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Website URL
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            https://justifi.ai
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Email Address
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            business@justifi.ai
+          </span>
+        </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+            Phone Number
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+            6124011111
+          </span>
         </div>
       </div>
     </div>
-  </template>
+  </div>
 </generic-info-details>
 `;

@@ -1,9 +1,9 @@
 {
-  "id": "cho_3PoxcZqCXWOGm69e1XcGrW",
+  "id": "cho_qkHk4NXnSV0PVulNY4M8J",
   "type": "checkout",
   "page_info": null,
   "data": {
-    "id": "cho_3PoxcZqCXWOGm69e1XcGrW",
+    "id": "cho_qkHk4NXnSV0PVulNY4M8J",
     "payment_intent_id": null,
     "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
     "platform_account_id": "acc_3reNb4aNYy2iWDZQVczmx4",
@@ -12,7 +12,39 @@
     "payment_description": "One Chocolate Donut",
     "payment_methods": [
       {
+        "id": "pm_CVVljvGQiFrvZOCluxRtz",
+        "type": "bank_account",
+        "status": "valid",
+        "invalid_reason": null,
+        "account_owner_name": "Tiago Saft Fuelber",
+        "account_type": "checking",
+        "bank_name": null,
+        "acct_last_four": "6789"
+      },
+      {
+        "id": "pm_44kqDu0ac5f8TLu9vdSTQ",
+        "type": "card",
+        "status": "valid",
+        "invalid_reason": null,
+        "name": "Leslie Knope",
+        "brand": "visa",
+        "acct_last_four": "4242",
+        "month": "11",
+        "year": "25",
+        "address_line1_check": "pass",
+        "address_postal_code_check": "pass",
+        "bin_details": {
+          "type": "Debit",
+          "card_brand": "Visa",
+          "card_class": "Consumer",
+          "country": "United States of America",
+          "issuer": "Visa - Issuer Bank Not Available",
+          "funding_source": "Debit"
+        }
+      },
+      {
         "id": "pm_7PA97VwNELPkBhKf24kVE0",
+        "type": "card",
         "status": "valid",
         "invalid_reason": null,
         "name": "Julia Garnett",
@@ -26,7 +58,7 @@
       }
     ],
     "payment_method_group_id": "pmg_12TH1LBNpsrdEXxWyxFjQv",
-    "status": "created",
+    "status": "expired",
     "mode": "test",
     "payment_settings": {
       "ach_payments": true,
@@ -34,8 +66,10 @@
       "credit_card_payments": true
     },
     "successful_payment_id": null,
-    "created_at": "2024-08-15T13:54:01.558Z",
-    "updated_at": "2024-08-15T13:54:01.558Z",
+    "statement_descriptor": null,
+    "application_fees": null,
+    "created_at": "2024-08-08T15:47:45.376Z",
+    "updated_at": "2024-08-27T14:31:35.549Z",
     "total_amount": 1799,
     "insurance_amount": 0,
     "payment_client_id": "test_e94e298293426cacb29c953b2047d6e8",
@@ -44,13 +78,13 @@
       "provider": "sezzle",
       "provider_client_id": "sz_pub_Kfhyb9x0hdTb2JtUYejTTP3Kb2RTi1xV",
       "provider_mode": "sandbox",
-      "provider_checkout_url": "https://sandbox.checkout.sezzle.com?id=8162a420-953e-4cdc-8a0d-10ba4ada4eee",
-      "provider_order_id": "939d82be-d319-4d6e-adb6-97b03336c281",
+      "provider_checkout_url": "https://sandbox.checkout.sezzle.com?id=b5f96653-9d56-45d9-a760-c97973b6efdd",
+      "provider_order_id": "f573e219-33f1-4696-9e33-7afa61808a21",
       "balance": 1799,
       "provider_api_version": "v2",
       "status": "created",
-      "created_at": "2024-08-15T13:54:02.083Z",
-      "updated_at": "2024-08-15T13:54:02.083Z"
+      "created_at": "2024-08-08T15:47:45.815Z",
+      "updated_at": "2024-08-08T15:47:45.815Z"
     }
   }
 }

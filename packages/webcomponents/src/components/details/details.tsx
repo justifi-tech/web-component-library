@@ -1,9 +1,9 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { ErrorState } from './utils';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-details',
-  styleUrl: './details.scss',
   shadow: true,
 })
 
@@ -12,7 +12,7 @@ export class Details {
 
   render() {
     return (
-      <Host
+      <StyledHost
         exportParts='detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
         detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info'
       >
@@ -25,7 +25,7 @@ export class Details {
               <slot name='detail-sections' />
             </main>
         }
-      </Host>
+      </StyledHost>
     )
   }
 }

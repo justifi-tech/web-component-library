@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 import { FileSelectEvent } from '../../../../api/Document';
 import { inputConfigurations } from './input-configurations';
 import { isInRange } from '../../../../utils/utils';
@@ -43,24 +43,22 @@ export class BusinessDocumentUploadInputGroup {
     const inputsConfig = this.inputConfigs;
 
     return (
-      <Host>
-        <div class="row gy-3">
-        {inputsConfig.map(config => (
-          <div class="col-12 col-md-6">
-            <form-control-file
-              name={config.name}
-              label={config.label}
-              helpText={config.helpText}
-              documentType={config.documentType}
-              inputHandler={this.inputHandler}
-              onFileSelected={this.storeFiles}
-              errorText={this.errors[config.name]}
-              multiple={true}
-            />
-          </div>
-        ))}
+      <div class="row gy-3">
+      {inputsConfig.map(config => (
+        <div class="col-12 col-md-6">
+          <form-control-file
+            name={config.name}
+            label={config.label}
+            helpText={config.helpText}
+            documentType={config.documentType}
+            inputHandler={this.inputHandler}
+            onFileSelected={this.storeFiles}
+            errorText={this.errors[config.name]}
+            multiple={true}
+          />
         </div>
-      </Host>
+      ))}
+      </div>
     );
   }
 }
