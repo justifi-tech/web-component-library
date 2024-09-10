@@ -10,8 +10,6 @@
 | Property              | Attribute               | Description | Type       | Default     |
 | --------------------- | ----------------------- | ----------- | ---------- | ----------- |
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
-| `authToken`           | `auth-token`            |             | `string`   | `undefined` |
-| `businessId`          | `business-id`           |             | `string`   | `undefined` |
 | `getBusiness`         | --                      |             | `Function` | `undefined` |
 | `patchBusiness`       | --                      |             | `Function` | `undefined` |
 
@@ -52,18 +50,16 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [form-control-text](../../../form)
-- [form-control-number-masked](../../../form)
-- [form-control-date](../../../form)
-- [justifi-identity-address-form](../../owner-form/identity-address)
+- [justifi-business-representative-form-inputs](.)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-representative-form-step-core --> form-control-text
-  justifi-business-representative-form-step-core --> form-control-number-masked
-  justifi-business-representative-form-step-core --> form-control-date
-  justifi-business-representative-form-step-core --> justifi-identity-address-form
+  justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
+  justifi-business-representative-form-inputs --> form-control-text
+  justifi-business-representative-form-inputs --> form-control-number-masked
+  justifi-business-representative-form-inputs --> form-control-date
+  justifi-business-representative-form-inputs --> justifi-identity-address-form
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
