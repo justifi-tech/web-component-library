@@ -1,6 +1,7 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Listen, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method, Listen, Watch } from '@stencil/core';
 import { ComponentError } from '../../../../api/ComponentError';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { Button } from '../../../../ui-components';
 
 interface ownerPayloadItem { id: string; }
 
@@ -137,7 +138,7 @@ export class BusinessOwnersFormStepCore {
 
   render() {
     return (
-      <Host exportparts='label,input,input-invalid'>
+      <div>
         <legend>Owners</legend>
         <hr />
         <div class='row gy-3'>
@@ -157,15 +158,17 @@ export class BusinessOwnersFormStepCore {
             );
           })}
         </div>
-        <div class='col-12'>
-          <button
-            class='btn btn-primary'
-            onClick={() => this.addOwnerForm(true)}
-            hidden={!this.showAddOwnerButton}>
-            Add Owner
-          </button>
+        <div class='d-flex justify-content-start'>
+          <div class='gap-2'>
+            <Button
+              variant='primary'
+              onClick={() => this.addOwnerForm(true)}
+              hidden={!this.showAddOwnerButton}>
+              Add Owner
+            </Button>
+          </div>
         </div>
-      </Host>
+      </div>
     );
   }
 }

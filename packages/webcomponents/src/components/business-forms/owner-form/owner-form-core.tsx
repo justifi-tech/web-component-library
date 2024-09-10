@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { Identity, Owner } from '../../../api/Identity';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
@@ -199,29 +199,31 @@ export class BusinessOwnerFormCore {
 
   render() {
     return (
-      <Host exportparts='label,input,input-invalid'>
-        <form onSubmit={this.validateAndSubmit}>
-          <fieldset>
-            <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
-            <br />
-            <div class='row gy-3'>
-              <owner-form-inputs
-                ownerDefaultValue={this.formController.getInitialValues()}
-                errors={this.errors}
-                formController={this.formController}
-              />
-              <owner-form-buttons
-                isLoading={this.isLoading}
-                showRemoveButton={this.showRemoveButton}
-                submitButtonText={this.submitButtonText}
-                handleAddOwner={this.handleAddOwner}
-                handleRemoveOwner={this.handleRemoveOwner}
-              />
+      <form onSubmit={this.validateAndSubmit}>
+        <fieldset>
+          <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
+          <br />
+          <div class='row gy-3'>
+            <owner-form-inputs
+              ownerDefaultValue={this.formController.getInitialValues()}
+              errors={this.errors}
+              formController={this.formController}
+            />
+            <div class='col-12'>
+              <div class='d-flex justify-content-start'>
+                <owner-form-buttons
+                  isLoading={this.isLoading}
+                  showRemoveButton={this.showRemoveButton}
+                  submitButtonText={this.submitButtonText}
+                  handleAddOwner={this.handleAddOwner}
+                  handleRemoveOwner={this.handleRemoveOwner}
+                />
+              </div>
             </div>
-            <hr />
-          </fieldset>
-        </form>
-      </Host>
+          </div>
+          <hr />
+        </fieldset>
+      </form>
     );
   }
 }

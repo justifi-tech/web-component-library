@@ -14,20 +14,20 @@ export class OwnerFormButtons {
 
   render() {
     return (
-      <div class='container d-flex gap-2'>
+      <div class='d-flex gap-2'>
         <Button
-          variant='secondary'
+          variant='primary'
           type='submit'
           onClick={this.handleAddOwner}
           disabled={this.isLoading}>
           {this.submitButtonText}
         </Button>
         <Button
-          variant='danger'
+          variant='secondary'
           type='button'
           onClick={this.handleRemoveOwner}
           hidden={!this.showRemoveButton}>
-          Remove owner
+          Remove
         </Button>
       </div>
     );
