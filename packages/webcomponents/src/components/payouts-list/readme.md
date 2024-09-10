@@ -21,6 +21,18 @@
 | `payout-row-clicked` |             | `CustomEvent<Payout>`         |
 
 
+## Shadow Parts
+
+| Part                | Description |
+| ------------------- | ----------- |
+| `"pagination-bar"`  |             |
+| `"table-body"`      |             |
+| `"table-cell"`      |             |
+| `"table-head"`      |             |
+| `"table-head-cell"` |             |
+| `"table-head-row"`  |             |
+
+
 ## Dependencies
 
 ### Used by
@@ -30,11 +42,13 @@
 ### Depends on
 
 - [form-control-date](../form)
+- [pagination-menu](../pagination-menu)
 
 ### Graph
 ```mermaid
 graph TD;
   payouts-list-core --> form-control-date
+  payouts-list-core --> pagination-menu
   form-control-date --> form-control-help-text
   form-control-date --> form-control-error-text
   justifi-payouts-list --> payouts-list-core

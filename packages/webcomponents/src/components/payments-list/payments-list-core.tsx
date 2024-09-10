@@ -2,9 +2,11 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
-import { EmptyState, ErrorState, LoadingState } from '../table/utils';
 import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost } from '../../ui-components';
+import { TableErrorState } from '../../ui-components/table-error-state';
+import { TableLoadingState } from '../../ui-components/table-loading-state';
+import { TableEmptyState } from '../../ui-components/table-empty-state';
 
 @Component({
   tag: 'payments-list-core',
@@ -161,9 +163,18 @@ export class PaymentsListCore {
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
-              {this.loading && LoadingState(this.columnData.length)}
-              {this.showEmptyState && EmptyState(this.columnData.length)}
-              {this.showErrorState && ErrorState(this.columnData.length, this.errorMessage)}
+              <TableLoadingState
+                columnSpan={this.columnData.length}
+                isLoading={this.loading}
+              />
+              <TableEmptyState
+                isEmpty={this.showEmptyState}
+                columnSpan={this.columnData.length}
+              />
+              <TableErrorState
+                columnSpan={this.columnData.length}
+                errorMessage={this.errorMessage}
+              />
               {this.showRowData &&
                 this.rowData.map((data, index) => (
                   <tr
