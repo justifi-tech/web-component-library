@@ -50,10 +50,11 @@ graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-document-upload-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
-  justifi-business-core-info-form-step --> form-control-text
-  justifi-business-core-info-form-step --> form-control-select
-  justifi-business-core-info-form-step --> form-control-date
-  justifi-business-core-info-form-step --> form-control-number-masked
+  justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
+  justifi-business-core-info-form-step-core --> form-control-text
+  justifi-business-core-info-form-step-core --> form-control-select
+  justifi-business-core-info-form-step-core --> form-control-date
+  justifi-business-core-info-form-step-core --> form-control-number-masked
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-select --> form-control-help-text
@@ -62,24 +63,31 @@ graph TD;
   form-control-date --> form-control-error-text
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
-  justifi-legal-address-form-step --> form-control-text
-  justifi-legal-address-form-step --> form-control-select
-  justifi-additional-questions-form-step --> form-control-monetary
-  justifi-additional-questions-form-step --> form-control-select
-  justifi-additional-questions-form-step --> form-control-text
+  justifi-legal-address-form-step --> justifi-legal-address-form-step-core
+  justifi-legal-address-form-step-core --> form-control-text
+  justifi-legal-address-form-step-core --> form-control-select
+  justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
+  justifi-additional-questions-form-step-core --> form-control-monetary
+  justifi-additional-questions-form-step-core --> form-control-select
+  justifi-additional-questions-form-step-core --> form-control-text
   form-control-monetary --> form-control-help-text
   form-control-monetary --> form-control-error-text
-  justifi-business-representative-form-step --> form-control-text
-  justifi-business-representative-form-step --> form-control-number-masked
-  justifi-business-representative-form-step --> form-control-date
-  justifi-business-representative-form-step --> justifi-identity-address-form
+  justifi-business-representative-form-step --> justifi-business-representative-form-step-core
+  justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
+  justifi-business-representative-form-inputs --> form-control-text
+  justifi-business-representative-form-inputs --> form-control-number-masked
+  justifi-business-representative-form-inputs --> form-control-date
+  justifi-business-representative-form-inputs --> justifi-identity-address-form
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
-  justifi-business-owners-form-step --> justifi-owner-form
-  justifi-owner-form --> form-control-text
-  justifi-owner-form --> form-control-number-masked
-  justifi-owner-form --> form-control-date
-  justifi-owner-form --> justifi-identity-address-form
+  justifi-business-owners-form-step --> justifi-business-owners-form-step-core
+  justifi-business-owners-form-step-core --> justifi-owner-form
+  justifi-owner-form --> owner-form-core
+  owner-form-core --> owner-form-inputs
+  owner-form-inputs --> form-control-text
+  owner-form-inputs --> form-control-number-masked
+  owner-form-inputs --> form-control-date
+  owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-text
   justifi-business-bank-account-form-step --> form-control-select
   justifi-business-document-upload-form-step --> justifi-skeleton
