@@ -25,7 +25,7 @@ Developer considerations
 
 - On any task
   - [ ] Previous unit and e2e tests are passing
-  - [ ] Perform dev QA
+  - [ ] Perform dev QA on Chrome, Firefox, and Safari
 - On new features
   - [ ] Add unit tests
   - [ ] Add e2e tests
