@@ -6,7 +6,7 @@ import { Identity, Owner } from '../../../api/Identity';
 import { parseIdentityInfo } from '../utils/payload-parsers';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { config } from '../../../../config';
-import { ButtonSpinner } from '../../../ui-components';
+import { Button } from '../../../ui-components';
 import { deconstructDate } from '../utils/helpers';
 import { OwnerFormSubmitEvent, OwnerFormClickEvent, OwnerFormClickActions } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
@@ -294,20 +294,21 @@ export class BusinessOwnerForm {
                 />
               </div>
               <div class='col-12 d-flex gap-2'>
-                <button
-                  type='submit'
-                  class={`btn btn-primary jfi-submit-button${this.isLoading ? ' jfi-submit-button-loading' : ''}`}
+                <Button
+                  variant="primary"
+                  type="submit"
                   onClick={() => this.handleAddOwner()}
                   disabled={this.isLoading}>
-                  {this.isLoading ? ButtonSpinner() : this.submitButtonText}
-                </button>
+                  {this.submitButtonText}
+                </Button>
                 {this.showRemoveButton &&
-                  <button
-                    type='button'
-                    class='btn btn-danger'
-                    onClick={() => this.handleRemoveOwner()}>
-                    Remove owner
-                  </button>}
+                  <Button
+                    variant="danger"
+                    onClick={() => this.handleRemoveOwner()}
+                    disabled={this.isLoading}>
+                    Remove Owner
+                  </Button>
+                }
               </div>
             </div>
             <hr />

@@ -11,6 +11,7 @@ import {
   OwnerFormClickEvent
 }
   from '../../utils/business-form-types';
+import { Button } from '../../../../ui-components';
 
 /**
  * @exportedPart label: Label for inputs
@@ -28,7 +29,7 @@ export class BusinessOwnersFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  
+
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<OwnerFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -134,7 +135,7 @@ export class BusinessOwnersFormStep {
     this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     if (this.businessId && this.authToken) {
       this.fetchData();
-    }  
+    }
   }
 
   private addOwnerForm = (fireClick?: boolean) => {
@@ -190,12 +191,13 @@ export class BusinessOwnersFormStep {
               />
             );
           })}
+
+          {this.showAddOwnerButton &&
+            <div class='col-12'>
+              <Button variant='primary' type='button' clickHandler={() => this.addOwnerForm(true)}>Add Owner</Button>
+            </div>
+          }
         </div>
-        {this.showAddOwnerButton &&
-          <div class='col-12'>
-            <button class='btn btn-primary' onClick={() => this.addOwnerForm(true)}>Add Owner</button>
-          </div>
-        }
       </Host>
     );
   }

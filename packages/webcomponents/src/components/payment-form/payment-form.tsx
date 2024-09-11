@@ -174,6 +174,7 @@ export class PaymentForm {
               onClick={event => this.submit(event)}
               disabled={!this.submitButtonEnabled || this.isLoading}
               isLoading={this.isLoading}
+              style={{ width: '100%' }}
               data-testid="submit-button">
               {this.submitButtonText || 'Submit'}
             </Button>

@@ -2,7 +2,7 @@ import { FunctionalComponent, h } from '@stencil/core';
 import { ButtonSpinner } from './button-spinner';
 
 interface ButtonProps {
-  variant: 'primary' | 'secondary';
+  variant: 'primary' | 'secondary' | 'danger';
   isLoading?: boolean;
 }
 
@@ -12,11 +12,13 @@ type ButtonElementProps = ButtonProps & {
 
 export const Button: FunctionalComponent<ButtonElementProps> = (props, children) => {
   const classMap = {
+    danger: 'btn btn-danger',
     primary: 'btn btn-primary',
     secondary: 'btn btn-secondary',
   };
 
   const exportPartMapping = {
+    danger: ['button', 'button-danger'],
     primary: ['button', 'button-primary'],
     secondary: ['button', 'button-secondary'],
   };
