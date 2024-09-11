@@ -1,5 +1,5 @@
 ---
-"@justifi/webcomponents": patch
+"@justifi/webcomponents": minor
 ---
 
-- Optimized render logic of business legal address form step in `PaymentProvisioning` for better efficiency, stability, and performance.
+- Optimized render logic and stability of PaymentProvisioning form steps.
