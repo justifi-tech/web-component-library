@@ -17,6 +17,7 @@ export interface BusinessFormServerErrorEvent {
 // Eventually we can find other uses for MetaData to present to the implementer. 
 interface BusinessFormEventMetaData {
   completedStep?: BusinessFormStep;
+  ownerID?: string; 
 }
 
 export enum BusinessFormStep {
@@ -38,7 +39,11 @@ export enum BusinessFormServerErrors {
 export enum BusinessFormClickActions {
   nextStep = 'nextStep',
   previousStep = 'previousStep',
-  submit = 'submit'
+  submit = 'submit',
+  removeOwner = 'removeOwner',
+  addOwner = 'addOwner',
+  addOwnerForm = 'addOwnerForm',
+  updateOwner = 'updateOwner'
 }
 
 export interface OwnerFormSubmitEvent {
@@ -46,10 +51,6 @@ export interface OwnerFormSubmitEvent {
   metadata?: any;
 }
 
-export interface OwnerFormClickEvent {
-  data?: any;
-  name: OwnerFormClickActions;
-}
 
 export interface OwnerFormServerErrorEvent {
   data?: any;
@@ -60,13 +61,6 @@ export enum OwnerFormServerErrors {
   fetchData = 'Error retrieving owner data',
   patchData = 'Error updating owner data',
   postData = 'Error adding owner data'
-}
-
-export enum OwnerFormClickActions {
-  removeOwner = 'removeOwner',
-  addOwner = 'addOwner',
-  addOwnerForm = 'addOwnerForm',
-  updateOwner = 'updateOwner'
 }
 
 export enum DocumentFormServerErrors {

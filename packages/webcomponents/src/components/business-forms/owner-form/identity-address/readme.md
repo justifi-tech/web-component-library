@@ -20,7 +20,7 @@
 
  - [justifi-business-representative](../../business-form/business-representative)
  - [justifi-business-representative-form-inputs](../../payment-provisioning/business-representative)
- - [justifi-owner-form](..)
+ - [owner-form-inputs](..)
 
 ### Depends on
 
@@ -38,7 +38,7 @@ graph TD;
   form-control-select --> form-control-error-text
   justifi-business-representative --> justifi-identity-address-form
   justifi-business-representative-form-inputs --> justifi-identity-address-form
-  justifi-owner-form --> justifi-identity-address-form
+  owner-form-inputs --> justifi-identity-address-form
   style justifi-identity-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -80,11 +80,14 @@ graph TD;
   justifi-business-representative-form-inputs --> justifi-identity-address-form
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
-  justifi-business-owners-form-step --> justifi-owner-form
-  justifi-owner-form --> form-control-text
-  justifi-owner-form --> form-control-number-masked
-  justifi-owner-form --> form-control-date
-  justifi-owner-form --> justifi-identity-address-form
+  justifi-business-owners-form-step --> justifi-business-owners-form-step-core
+  justifi-business-owners-form-step-core --> justifi-owner-form
+  justifi-owner-form --> owner-form-core
+  owner-form-core --> owner-form-inputs
+  owner-form-inputs --> form-control-text
+  owner-form-inputs --> form-control-number-masked
+  owner-form-inputs --> form-control-date
+  owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-text
   justifi-business-bank-account-form-step --> form-control-select
   justifi-business-document-upload-form-step --> justifi-skeleton

@@ -27,6 +27,7 @@ export class NumberInputMasked {
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
+    this.initializeIMask();
     this.updateInput(newValue);
   }
 
@@ -38,8 +39,10 @@ export class NumberInputMasked {
   }
   
   componentDidLoad() {
-    this.initializeIMask();
-    this.updateInput(this.defaultValue);
+    if (this.textInput) {
+      this.initializeIMask();
+      this.updateInput(this.defaultValue);
+    }
   }
 
   private initializeIMask = () => {
@@ -50,8 +53,10 @@ export class NumberInputMasked {
     });
 
     this.imask.on('accept', () => {
-      const rawValue = this.imask.unmaskedValue;
-      this.inputHandler(this.name, rawValue);
+      const rawValue = this.imask?.unmaskedValue;
+      if (rawValue !== undefined) {
+        this.inputHandler(this.name, rawValue);
+      }
     });
 
     this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
