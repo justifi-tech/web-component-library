@@ -9,7 +9,7 @@ exports[`justifi-payment-form should correctly render the child components based
         <justifi-payment-method-selector selectedpaymentmethodtype="card"></justifi-payment-method-selector>
       </div>
       <div class="col-12">
-        <justifi-payment-method-form iframeorigin="https://js.justifi.ai/v2" payment-method-form-type="card"></justifi-payment-method-form>
+        <justifi-payment-method-form iframeorigin="https://components.justifi.ai/v1" payment-method-form-type="card"></justifi-payment-method-form>
       </div>
       <div class="col-12">
         <justifi-billing-form legend="Billing Info"></justifi-billing-form>
