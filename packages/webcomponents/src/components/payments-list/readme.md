@@ -20,6 +20,18 @@
 | `payment-row-clicked` |             | `CustomEvent<Payment>`        |
 
 
+## Shadow Parts
+
+| Part                | Description |
+| ------------------- | ----------- |
+| `"pagination-bar"`  |             |
+| `"table-body"`      |             |
+| `"table-cell"`      |             |
+| `"table-head"`      |             |
+| `"table-head-cell"` |             |
+| `"table-head-row"`  |             |
+
+
 ## Dependencies
 
 ### Used by
@@ -29,16 +41,15 @@
 ### Depends on
 
 - [form-control-date](../form)
-- [justifi-table](../table)
+- [pagination-menu](../pagination-menu)
 
 ### Graph
 ```mermaid
 graph TD;
   payments-list-core --> form-control-date
-  payments-list-core --> justifi-table
+  payments-list-core --> pagination-menu
   form-control-date --> form-control-help-text
   form-control-date --> form-control-error-text
-  justifi-table --> pagination-menu
   justifi-payments-list --> payments-list-core
   style payments-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

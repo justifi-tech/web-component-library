@@ -25,12 +25,14 @@
 
 ### Used by
 
- - [justifi-table](../table)
+ - [payments-list-core](../payments-list)
+ - [payouts-list-core](../payouts-list)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-table --> pagination-menu
+  payments-list-core --> pagination-menu
+  payouts-list-core --> pagination-menu
   style pagination-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

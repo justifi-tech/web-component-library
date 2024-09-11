@@ -1,5 +1,5 @@
 :root,
-[data-bs-theme=light] {
+[data-bs-theme='light'] {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -65,9 +65,16 @@
   --bs-dark-border-subtle: #adb5bd;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-font-sans-serif: system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --bs-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0)
+  );
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
@@ -116,13 +123,14 @@
   --bs-form-valid-color: #198754;
   --bs-form-valid-border-color: #198754;
   --bs-form-invalid-color: #dc3545;
-  --bs-form-invalid-border-color: #dc3545
+  --bs-form-invalid-border-color: #dc3545;
 }
 
 :root {
   --jfi-body-color: var(--bs-body-color);
   --jfi-header-color: var(--bs-body-color);
-  --jfi-header-border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  --jfi-header-border: var(--bs-border-width) var(--bs-border-style)
+    var(--bs-border-color);
   --jfi-layout-font-family: var(--bs-font-sans-serif);
   --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: 0.5rem;
@@ -141,7 +149,8 @@
   --jfi-form-control-border-style: solid;
   --jfi-form-control-box-shadow: none;
   --jfi-form-control-box-shadow-error: none;
-  --jfi-form-control-box-shadow-error-focus: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+  --jfi-form-control-box-shadow-error-focus: 0 0 0 0.25rem
+    rgba(220, 53, 69, 0.25);
   --jfi-form-control-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
   --jfi-form-control-color: var(--bs-body-color);
   --jfi-form-control-color-focus: input-color-focus;
@@ -168,7 +177,8 @@
   --jfi-radio-button-border-color-focus: #86b7fe;
   --jfi-radio-button-group-color: var(--jfi-body-color);
   --jfi-radio-button-group-color-hover: var(--jfi-body-color);
-  --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  --jfi-radio-button-group-divider: var(--bs-border-width)
+    var(--bs-border-style) var(--bs-border-color);
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
   --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
@@ -204,7 +214,9 @@
   --jfi-form-label-margin: 0 0 0.5rem 0;
   --jfi-error-message-color: var(--bs-form-invalid-color);
   --jfi-error-message-margin: 0.25rem 0 0 0;
-  --jfi-error-message-font-size: 0.875em
+  --jfi-error-message-font-size: 0.875em;
+
+  table-layout: fixed;
 }
 
 /* Use CSS variables in CSS parts */
@@ -254,7 +266,8 @@
 }
 
 ::part(input-group-text) {
-  border: var(--jfi-form-control-border-width) var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
+  border: var(--jfi-form-control-border-width)
+    var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
   border-radius: var(--jfi-form-control-border-radius);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -345,4 +358,8 @@
   border-top-color: var(--jfi-submit-button-color-loading);
   border-bottom-color: var(--jfi-submit-button-color-loading);
   border-left-color: var(--jfi-submit-button-color-loading);
+}
+
+.table-wrapper {
+  overflow-x: scroll;
 }

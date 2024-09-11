@@ -3,7 +3,6 @@ jest.mock('../../../ui-components/styled-host/modified-bootstrap.css', () => '')
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsListCore } from '../payments-list-core';
-import { Table } from '../../table/table';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment } from '../../../api';
@@ -24,16 +23,14 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
     await page.waitForChanges();
 
-    const justifiTable = page.root.querySelector('justifi-table');
-
     expect(page.rootInstance.payments[0]).toEqual(expect.objectContaining({ account_id: mockPaymentsResponse.data[0].account_id }));
-    const rows = justifiTable.querySelectorAll('[data-test-id="table-row"]');
+    const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(mockPaymentsResponse.data.length);
     expect(mockPaymentsService.fetchPayments).toHaveBeenCalled();
     expect(page.root).toMatchSnapshot();
@@ -51,7 +48,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -73,14 +70,13 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
     await page.waitForChanges();
 
-    const justifiTable = page.root.querySelector('justifi-table');
-    const firstRow = justifiTable.querySelector('[data-test-id="table-row"]') as HTMLElement;
+    const firstRow = page.root.querySelector('[data-test-id="table-row"]') as HTMLElement;
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();
@@ -102,7 +98,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -132,7 +128,7 @@ describe('payments-list-core', () => {
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, Table, PaginationMenu],
+      components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} onError-event={errorEvent} />,
     });
 
