@@ -62,7 +62,6 @@ export class BusinessCoreInfoFormStep {
   render() {
     return (
       <justifi-business-core-info-form-step-core 
-        authToken={this.authToken}
         businessId={this.businessId}
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}

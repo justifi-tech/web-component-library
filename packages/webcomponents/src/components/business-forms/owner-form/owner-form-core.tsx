@@ -16,7 +16,6 @@ export class BusinessOwnerFormCore {
   @State() errors: any = {};
   @State() owner: Owner = {};
 
-  @Prop() authToken: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
   @Prop() getOwner: Function;

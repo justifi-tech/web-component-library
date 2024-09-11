@@ -18,7 +18,6 @@ export class BusinessCoreInfoFormStepCore {
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
 
-  @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;

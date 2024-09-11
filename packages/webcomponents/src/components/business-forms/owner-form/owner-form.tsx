@@ -63,7 +63,6 @@ export class BusinessOwnerForm {
   render() {
     return (
       <owner-form-core 
-        authToken={this.authToken}
         ownerId={this.ownerId}
         businessId={this.businessId}
         getOwner={this.getOwner}
