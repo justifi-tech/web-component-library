@@ -10,7 +10,6 @@
 | Property              | Attribute               | Description | Type       | Default     |
 | --------------------- | ----------------------- | ----------- | ---------- | ----------- |
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
-| `authToken`           | `auth-token`            |             | `string`   | `undefined` |
 | `businessId`          | `business-id`           |             | `string`   | `undefined` |
 | `getBusiness`         | --                      |             | `Function` | `undefined` |
 | `patchBusiness`       | --                      |             | `Function` | `undefined` |
