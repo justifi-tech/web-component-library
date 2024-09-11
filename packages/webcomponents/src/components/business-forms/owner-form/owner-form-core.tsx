@@ -5,6 +5,7 @@ import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEve
 import { ComponentError } from '../../../api/ComponentError';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { parseIdentityInfo } from '../utils/payload-parsers';
+import { Button } from '../../../ui-components';
 
 @Component({
   tag: 'owner-form-core'
@@ -209,15 +210,22 @@ export class BusinessOwnerFormCore {
               errors={this.errors}
               formController={this.formController}
             />
-            <div class='col-12'>
-              <div class='d-flex justify-content-start'>
-                <owner-form-buttons
-                  isLoading={this.isLoading}
-                  showRemoveButton={this.showRemoveButton}
-                  submitButtonText={this.submitButtonText}
-                  handleAddOwner={this.handleAddOwner}
-                  handleRemoveOwner={this.handleRemoveOwner}
-                />
+            <div class='d-flex justify-content-start'>
+              <div class='d-flex gap-2'>
+                <Button
+                  variant='secondary'
+                  type='button'
+                  onClick={this.handleRemoveOwner}
+                  hidden={!this.showRemoveButton}>
+                  Remove
+                </Button>
+                <Button
+                  variant='primary'
+                  type='submit'
+                  onClick={this.handleAddOwner}
+                  disabled={this.isLoading}>
+                  {this.submitButtonText}
+                </Button>
               </div>
             </div>
           </div>

@@ -84,7 +84,6 @@ graph TD;
   justifi-business-owners-form-step-core --> justifi-owner-form
   justifi-owner-form --> owner-form-core
   owner-form-core --> owner-form-inputs
-  owner-form-core --> owner-form-buttons
   owner-form-inputs --> form-control-text
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
