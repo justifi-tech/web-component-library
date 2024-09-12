@@ -89,6 +89,7 @@ export class PaymentMethodForm {
 
     if (eventType === eventTypeMessage.ready) {
       this.paymentMethodFormReady.emit(data);
+      this.sendStyleOverrides();
     } else if (eventType === eventTypeMessage.tokenize) {
       this.paymentMethodFormTokenized.emit(data);
     } else if (eventType === eventTypeMessage.validate) {
@@ -132,7 +133,6 @@ export class PaymentMethodForm {
             iFrameResize({
               scrollbars: false,
             }, this.iframeElement);
-            this.sendStyleOverrides();
           }}
         ></iframe>
       </Host>
