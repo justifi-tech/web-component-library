@@ -157,6 +157,8 @@ describe('justifi-payment-method-form', () => {
         ),
       });
 
+      page.rootInstance.sendStyleOverrides = jest.fn();
+
       await page.waitForChanges();
 
       const eventSpy = jest.fn();
