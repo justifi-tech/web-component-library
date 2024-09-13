@@ -185,6 +185,7 @@
   --jfi-radio-input-background-color-selected: #212529;
   --jfi-radio-input-border-color: #6c757d;
   --jfi-radio-input-border-color-selected: #212529;
+  --jfi-skeleton-wave-animation-bg: rgba(100, 100, 100, 0.6);
   --jfi-submit-button-color: white;
   --jfi-submit-button-background-color: var(--jfi-primary-color);
   --jfi-submit-button-border-color: var(--jfi-primary-color);
@@ -220,6 +221,11 @@
 }
 
 /* Use CSS variables in CSS parts */
+
+::part(skeleton) {
+  background-color: var(--jfi-skeleton-wave-animation-bg, #f5f5f5);
+  animation: pulseAnimation 2s ease-in-out 0.5s infinite;
+}
 
 ::part(label) {
   color: var(--jfi-form-label-color);

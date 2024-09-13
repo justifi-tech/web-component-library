@@ -149,7 +149,7 @@ justifi-payment-provisioning {
   --jfi-submit-button-background-color-loading: transparent;
 
   /* Skeleton */
-  --jfi-skeleton-wave-bg: rgba(100, 100, 100, 0.6 );
+  --jfi-skeleton-wave-animation-bg: rgba(200, 200, 200, 1);
 }
 `;
 
