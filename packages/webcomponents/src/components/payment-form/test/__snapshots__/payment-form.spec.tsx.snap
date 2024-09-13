@@ -16,7 +16,7 @@ exports[`justifi-payment-form should correctly render the child components based
       </div>
       <slot name="insurance"></slot>
       <div class="col-12">
-        <button class="btn btn-primary" data-testid="submit-button" part="button button-primary" type="submit" variant="primary">
+        <button class="btn btn-primary" data-testid="submit-button" part="button button-primary" type="submit" variant="primary" style="width: 100%;">
           Submit
         </button>
       </div>
