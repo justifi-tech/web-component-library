@@ -8,7 +8,7 @@ import { businessDocumentSchema } from '../../schemas/business-document-upload-s
 import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import Skeleton from '../../../../ui-components/skeleton';
+import { Skeleton } from '../../../../ui-components';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
