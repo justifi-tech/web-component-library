@@ -12,8 +12,8 @@ interface SkeletonProps {
 // This component relies on "src/styles/animations.css" 
 // where it is defined the pulsation animation.
 // Because of shadow-dom, it's not possible to add it to the root.css.
-// Don't forget to include this file in the `styleUrl` 
-// property of the web - component that will render the Skeleton
+// Don't forget to include this file in the `styleUrls` 
+// property of the web component that will render the Skeleton
 export const Skeleton: FunctionalComponent<SkeletonProps> = ({
   component = 'div',
   height,
