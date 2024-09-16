@@ -10,7 +10,7 @@ import { Button, StyledHost, Skeleton } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout-core',
-  styleUrls: ['checkout-core.css', 'header.css', '../../styles/animations.css'],
+  styleUrls: ['checkout-core.css', 'header.css'],
   shadow: true,
 })
 export class CheckoutCore {

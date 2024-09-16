@@ -12,7 +12,6 @@ import { Skeleton } from '../../../../ui-components';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
-  styleUrls: ['../../../../styles/animations.css']
 })
 export class BusinessDocumentFormStep {
   @State() formController: FormController;
