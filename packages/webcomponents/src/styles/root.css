@@ -70,11 +70,9 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
-  --bs-gradient: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0)
-  );
+  --bs-gradient: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
@@ -129,8 +127,7 @@
 :root {
   --jfi-body-color: var(--bs-body-color);
   --jfi-header-color: var(--bs-body-color);
-  --jfi-header-border: var(--bs-border-width) var(--bs-border-style)
-    var(--bs-border-color);
+  --jfi-header-border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   --jfi-layout-font-family: var(--bs-font-sans-serif);
   --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: 0.5rem;
@@ -149,8 +146,7 @@
   --jfi-form-control-border-style: solid;
   --jfi-form-control-box-shadow: none;
   --jfi-form-control-box-shadow-error: none;
-  --jfi-form-control-box-shadow-error-focus: 0 0 0 0.25rem
-    rgba(220, 53, 69, 0.25);
+  --jfi-form-control-box-shadow-error-focus: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
   --jfi-form-control-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
   --jfi-form-control-color: var(--bs-body-color);
   --jfi-form-control-color-focus: input-color-focus;
@@ -177,8 +173,7 @@
   --jfi-radio-button-border-color-focus: #86b7fe;
   --jfi-radio-button-group-color: var(--jfi-body-color);
   --jfi-radio-button-group-color-hover: var(--jfi-body-color);
-  --jfi-radio-button-group-divider: var(--bs-border-width)
-    var(--bs-border-style) var(--bs-border-color);
+  --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   --jfi-radio-button-group-background-color: transparent;
   --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
   --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
@@ -266,8 +261,7 @@
 }
 
 ::part(input-group-text) {
-  border: var(--jfi-form-control-border-width)
-    var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
+  border: var(--jfi-form-control-border-width) var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
   border-radius: var(--jfi-form-control-border-radius);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -325,7 +319,6 @@
   padding: var(--jfi-submit-button-padding);
   font-size: var(--jfi-submit-button-font-size);
   border-radius: var(--jfi-submit-button-border-radius);
-  width: var(--jfi-submit-button-width);
   box-shadow: var(--jfi-submit-button-box-shadow);
 }
 

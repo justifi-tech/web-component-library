@@ -214,7 +214,8 @@ export class CheckoutCore {
                 variant="primary"
                 onClick={(e) => this.submit(e)}
                 disabled={this.isLoading}
-                isLoading={this.isLoading}>
+                isLoading={this.isLoading}
+                style={{ width: '100%' }}>
                 Pay
               </Button>
             </div>

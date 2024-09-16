@@ -49,7 +49,7 @@ export class BusinessOwnerFormCore {
   }
 
   @Method()
-   async validate(): Promise<boolean> {
+  async validate(): Promise<boolean> {
     return this.formController.validate();
   }
 
@@ -159,7 +159,7 @@ export class BusinessOwnerFormCore {
         this.postOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.submitted.emit({ 
+            this.submitted.emit({
               data: response,
               metadata: { ownerID: response.data.id }
             });
@@ -201,31 +201,29 @@ export class BusinessOwnerFormCore {
     return (
       <form onSubmit={this.validateAndSubmit}>
         <fieldset>
-          <legend class='fw-semibold fs-5'>{this.formTitle}</legend>
+          <legend class="fw-semibold fs-5">{this.formTitle}</legend>
           <br />
-          <div class='row gy-3'>
+          <div class="row gy-3">
             <owner-form-inputs
               ownerDefaultValue={this.formController.getInitialValues()}
               errors={this.errors}
               formController={this.formController}
             />
-            <div class='d-flex justify-content-start'>
-              <div class='d-flex gap-2'>
-                <Button
-                  variant='secondary'
-                  type='button'
-                  onClick={this.handleRemoveOwner}
-                  hidden={!this.showRemoveButton}>
-                  Remove
-                </Button>
-                <Button
-                  variant='primary'
-                  type='submit'
-                  onClick={this.handleAddOwner}
-                  disabled={this.isLoading}>
-                  {this.submitButtonText}
-                </Button>
-              </div>
+            <div class="d-flex gap-2 justify-content-start">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={this.handleRemoveOwner}
+                hidden={!this.showRemoveButton}>
+                Remove
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={this.handleAddOwner}
+                disabled={this.isLoading}>
+                {this.submitButtonText}
+              </Button>
             </div>
           </div>
           <hr />
