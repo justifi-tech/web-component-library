@@ -1,5 +1,17 @@
 # @repo/docs
 
+## 0.1.5
+
+### Patch Changes
+
+- 016af86: Create a Button ui component abstraction and use it in place of some of our submit buttons with loading states
+- Updated dependencies [016af86]
+- Updated dependencies [fa9acf6]
+- Updated dependencies [1055ae0]
+- Updated dependencies [45eab05]
+- Updated dependencies [b2b37a4]
+  - @justifi/webcomponents@4.19.0
+
 ## 0.1.4
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 ### Changelog
 
+## 4.19.0
+
+### Minor Changes
+
+- 1055ae0: - Ensure `error-event` is being emitted appropriately from each step and is of type `ComponentError`
+  - Optimized render logic and stability of `PaymentProvisioning` form steps
+
+### Patch Changes
+
+- 016af86: Create a Button ui component abstraction and use it in place of some of our submit buttons with loading states
+- fa9acf6: Fix Safari style bug on payment-method-form
+- 45eab05: -Fix bug in `PaymentProvisioning` component's document upload step where loading state is not removed if document upload request fails.
+- b2b37a4: Sends data to analytics from season-interrption-insurance component
+
 ## 4.18.0
 
 ### Minor Changes
