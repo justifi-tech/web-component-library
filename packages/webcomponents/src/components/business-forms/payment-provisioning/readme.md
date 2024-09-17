@@ -90,7 +90,6 @@ graph TD;
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-text
   justifi-business-bank-account-form-step --> form-control-select
-  justifi-business-document-upload-form-step --> justifi-skeleton
   justifi-business-document-upload-form-step --> justifi-business-documents-on-file
   justifi-business-document-upload-form-step --> justifi-business-document-upload-input-group
   justifi-business-document-upload-input-group --> form-control-file

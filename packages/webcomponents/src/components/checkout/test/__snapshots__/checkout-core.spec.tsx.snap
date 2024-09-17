@@ -13,7 +13,7 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
         </h2>
         <section>
           <div>
-            <justifi-skeleton height="24px"></justifi-skeleton>
+            <div part="skeleton" style="margin-top: 0; margin-bottom: 0; height: 24px; transform-origin: 0 55%; transform: scale(1, 0.60); border-radius: 4px/6.67px; ::before: [object Object];"></div>
           </div>
           <div class="visually-hidden">
             <div class="jfi-payment-description"></div>
@@ -41,7 +41,7 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
         <div class="d-flex flex-column">
           <section>
             <div>
-              <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+              <div part="skeleton" style="border-radius: 4px; height: 300px;"></div>
             </div>
             <div class="visually-hidden">
               <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
@@ -76,7 +76,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
         </h2>
         <section>
           <div class="visually-hidden">
-            <justifi-skeleton height="24px"></justifi-skeleton>
+            <div part="skeleton" style="margin-top: 0; margin-bottom: 0; height: 24px; transform-origin: 0 55%; transform: scale(1, 0.60); border-radius: 4px/6.67px; ::before: [object Object];"></div>
           </div>
           <div>
             <div class="jfi-payment-description">
@@ -106,7 +106,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
         <div class="d-flex flex-column">
           <section>
             <div class="visually-hidden">
-              <justifi-skeleton height="300px" variant="rounded"></justifi-skeleton>
+              <div part="skeleton" style="border-radius: 4px; height: 300px;"></div>
             </div>
             <div>
               <justifi-payment-method-options account-id="acc_5Et9iXrSSAZR2KSouQGAWi" paymentamount="1799" paymentmethodgroupid="pmg_12TH1LBNpsrdEXxWyxFjQv" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>

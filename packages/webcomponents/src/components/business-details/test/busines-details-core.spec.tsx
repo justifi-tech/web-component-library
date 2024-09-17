@@ -1,4 +1,4 @@
-jest.mock('../../../ui-components/styled-host/modified-bootstrap.css', () => '');
+jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";

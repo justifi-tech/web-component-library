@@ -1,4 +1,4 @@
-jest.mock('../../../../ui-components/styled-host/modified-bootstrap.css', () => '');
+jest.mock('../../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { newSpecPage } from '@stencil/core/testing';
 import { SeasonInterruptionInsurance } from '../season-interruption-insurance';

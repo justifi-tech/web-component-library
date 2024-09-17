@@ -8,6 +8,7 @@ import { businessDocumentSchema } from '../../schemas/business-document-upload-s
 import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { Skeleton } from '../../../../ui-components';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -20,7 +21,7 @@ export class BusinessDocumentFormStep {
   @State() business: Business;
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
-  
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
@@ -40,7 +41,7 @@ export class BusinessDocumentFormStep {
   }
 
   componentWillLoad() {
-  this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     if (this.businessId && this.authToken) {
       this.fetchData();
     }
@@ -189,7 +190,7 @@ export class BusinessDocumentFormStep {
       return null;
     }
     if (this.isLoading) {
-      return <justifi-skeleton variant='rounded' height={'50px'} />;
+      return <Skeleton variant='rounded' height={'50px'} />;
     }
 
     return <justifi-business-documents-on-file documents={this.existingDocuments} />;
@@ -199,8 +200,8 @@ export class BusinessDocumentFormStep {
     if (this.isError) {
       return null;
     }
-     if (this.isLoading) {
-      return <justifi-skeleton variant='rounded' height={'350px'} />;   
+    if (this.isLoading) {
+      return <Skeleton variant='rounded' height={'350px'} />;
     }
 
     return (

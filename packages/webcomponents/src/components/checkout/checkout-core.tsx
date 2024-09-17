@@ -6,7 +6,7 @@ import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } 
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-import { Button, StyledHost } from '../../ui-components';
+import { Button, StyledHost, Skeleton } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -149,7 +149,7 @@ export class CheckoutCore {
         {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
         {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
         <div class={!this.isLoading && 'visually-hidden'}>
-          <justifi-skeleton variant="rounded" height="300px" />
+          <Skeleton variant="rounded" height="300px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
           <justifi-payment-method-options
@@ -175,7 +175,7 @@ export class CheckoutCore {
     return (
       <section>
         <div class={!this.isLoading && 'visually-hidden'}>
-          <justifi-skeleton height="24px" />
+          <Skeleton height="24px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
           <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
