@@ -33,6 +33,11 @@ jobs:
         run: |
           pnpm install && ls -a
 
+      - name: Create .env file from secrets
+        run: |
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+
       - name: 'Build'
         shell: bash
         run: |
@@ -41,9 +46,6 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build:mocks
           echo "::endgroup::"
-        env:
-          IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
-          PROXY_API_ORIGIN: ${{ secrets.PROXY_API_ORIGIN }}
 
       - name: 'upload'
         uses: actions/upload-pages-artifact@v1.0.8
