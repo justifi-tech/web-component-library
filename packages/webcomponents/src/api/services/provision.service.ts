@@ -1,4 +1,3 @@
-import { config } from '../../../config';
 import Api, { IApiResponse } from '../Api';
 
 export interface IProvisionService {
@@ -7,7 +6,7 @@ export interface IProvisionService {
     businessId: string,
     product: string
   ): Promise<IApiResponse<any>>;
-};
+}
 
 export class ProvisionService implements IProvisionService {
   async postProvisioning(
@@ -18,9 +17,9 @@ export class ProvisionService implements IProvisionService {
     const endpoint = `entities/provisioning`;
     const payload = {
       business_id: businessId,
-      product_category: product
+      product_category: product,
     };
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
       endpoint,
       JSON.stringify(payload)
     );

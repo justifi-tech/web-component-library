@@ -1,7 +1,6 @@
 import { Component, Event, Prop, h, EventEmitter, Method, Listen, State } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../../utils/theme';
-import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
@@ -17,7 +16,7 @@ export class CardForm {
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
 
   /**
    * Boolean indicating if the Card Form should render in a single line

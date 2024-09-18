@@ -1,5 +1,4 @@
 import { Api, IApiResponse, ICheckout, ICheckoutCompleteResponse } from '..';
-import { config } from '../../../config';
 
 export interface ICheckoutService {
   fetchCheckout(
@@ -20,7 +19,7 @@ export class CheckoutService implements ICheckoutService {
     checkoutId: string
   ): Promise<IApiResponse<ICheckout>> {
     const endpoint = `checkouts/${checkoutId}`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
   }
   async complete(
     authToken: string,
@@ -34,7 +33,7 @@ export class CheckoutService implements ICheckoutService {
     if (payment.payment_token) {
       payload.payment_token = payment.payment_token;
     }
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
       endpoint,
       JSON.stringify(payload)
     );

@@ -41,6 +41,9 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build:mocks
           echo "::endgroup::"
+        env:
+          IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
+          PROXY_API_ORIGIN: ${{ secrets.PROXY_API_ORIGIN }}
 
       - name: 'upload'
         uses: actions/upload-pages-artifact@v1.0.8

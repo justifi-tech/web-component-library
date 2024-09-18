@@ -1,5 +1,4 @@
 import { Component, h, Prop, Method, Event, EventEmitter, Listen, State } from '@stencil/core';
-import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
@@ -13,7 +12,7 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;

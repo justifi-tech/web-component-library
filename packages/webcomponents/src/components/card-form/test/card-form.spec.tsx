@@ -1,7 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { CardForm } from '../card-form';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
-import { config } from '../../../../config';
 import JustifiAnalytics from '../../../api/Analytics';
 
 beforeEach(() => {
@@ -38,7 +37,7 @@ describe('justifi-card-form', () => {
     });
 
     const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
-    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe(config.iframeOrigin);
+    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe(IFRAME_ORIGIN);
   });
 
   it('should pass singleLine prop to justifi-payment-method-form', async () => {

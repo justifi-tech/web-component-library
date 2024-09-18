@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
-import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
@@ -17,7 +16,7 @@ export class CheckoutCore {
   /**
  * URL for the rendered iFrame. End-users need not use this.
  */
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
   @Prop() authToken: string;
   @Prop() getCheckout: Function;
   @Prop() complete: Function;

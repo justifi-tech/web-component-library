@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, Fragment, h, Prop, Method } from '@stencil/core';
-import { config } from '../../../config';
 import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 
@@ -7,7 +6,7 @@ import { PaymentMethodPayload } from './payment-method-payload';
   tag: 'justifi-saved-payment-method',
 })
 export class SavedPaymentMethod {
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
 

@@ -4,7 +4,6 @@ import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
-import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
@@ -27,11 +26,11 @@ export class BusinessBankAccountFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: BankAccount;
-  
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  
+
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -108,12 +107,12 @@ export class BusinessBankAccountFormStep {
   @Method()
   async validateAndSubmit({ onSuccess }) {
     this.formDisabled ? onSuccess() :
-    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+      this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
   componentWillLoad() {
     this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
     if (this.businessId && this.authToken) {
       this.fetchData();
     }

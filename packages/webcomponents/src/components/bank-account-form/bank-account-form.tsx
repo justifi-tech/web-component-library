@@ -1,7 +1,6 @@
 import { Component, Event, h, EventEmitter, Listen, Method, Prop, State, } from '@stencil/core';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../../utils/theme';
-import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
@@ -18,7 +17,7 @@ export class BankAccountForm {
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
 
   @State() internalStyleOverrides: Theme;
 

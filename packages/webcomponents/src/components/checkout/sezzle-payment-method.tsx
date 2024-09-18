@@ -1,5 +1,4 @@
 import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
-import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -22,7 +21,7 @@ const sezzleLogo = (
   tag: 'justifi-sezzle-payment-method',
 })
 export class SezzlePaymentMethod {
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
+  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
   @Prop() bnpl: any; // type this
   @Prop() clientId: string;
   @Prop() accountId: string;
@@ -48,8 +47,8 @@ export class SezzlePaymentMethod {
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!insuranceValidation.isValid) { 
-      return { validationError: true }; 
+    if (!insuranceValidation.isValid) {
+      return { validationError: true };
     }
     this.sezzleButtonRef.click();
     return this.sezzlePromise;

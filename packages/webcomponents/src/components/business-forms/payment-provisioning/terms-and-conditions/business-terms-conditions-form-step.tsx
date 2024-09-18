@@ -1,7 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
 import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
-import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
@@ -14,11 +13,11 @@ export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;
-  
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  
+
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -46,7 +45,7 @@ export class BusinessTermsConditionsFormStep {
   }
 
   async componentWillLoad() {
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
     this.formController = new FormController(businessTermsConditionsSchema(this.allowOptionalFields));
     if (this.businessId && this.authToken) {
       this.fetchData();

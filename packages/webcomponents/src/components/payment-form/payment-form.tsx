@@ -3,7 +3,6 @@ import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { loadFontsOnParent } from '../../utils/utils';
-import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
@@ -148,7 +147,7 @@ export class PaymentForm {
           <div class="col-12">
             <justifi-payment-method-form
               payment-method-form-type={this.getSelectedPaymentMethodType()}
-              iframeOrigin={config.iframeOrigin}
+              iframeOrigin={IFRAME_ORIGIN}
               ref={el => {
                 if (el) {
                   this.paymentMethodFormRef = el;

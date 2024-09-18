@@ -3,7 +3,6 @@ import { FormController } from '../../form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { parseBusiness } from '../utils/payload-parsers';
-import { config } from '../../../../config';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
@@ -41,7 +40,7 @@ export class BusinessForm {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
     this.fetchData();
   }
 
