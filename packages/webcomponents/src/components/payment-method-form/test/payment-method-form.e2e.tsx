@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 it('should emit "paymentMethodFormReady" when conditions are met', async () => {
   const page = await newE2EPage();
-  await page.setContent('<justifi-card-form iframe-origin="https://components.justifi-staging.com/v1" ></justifi-card-form>');
+  await page.setContent('<justifi-card-form></justifi-card-form>');
 
   const cardFormElement = await page.find('justifi-card-form');
   const paymentFormElement = await page.find('justifi-payment-method-form');
@@ -17,7 +17,7 @@ it('should emit "paymentMethodFormReady" when conditions are met', async () => {
 
 it('should emit "paymentMethodFormTokenize" when conditions are met', async () => {
   const page = await newE2EPage();
-  await page.setContent('<justifi-card-form iframe-origin="https://components.justifi-staging.com/v1"></justifi-card-form>');
+  await page.setContent('<justifi-card-form></justifi-card-form>');
 
   const cardFormElement = await page.find('justifi-card-form');
   const paymentFormElement = await page.find('justifi-payment-method-form');

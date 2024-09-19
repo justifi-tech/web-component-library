@@ -27,6 +27,22 @@ jobs:
       - name: NPM Install
         run: pnpm install
 
+      - name: Create .env file from secrets
+        shell: bash
+        run: |
+          cd ./packages/webcomponents
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+
+      - name: 'Build'
+        shell: bash
+        run: |
+          echo "::group::Build"
+          pnpm clean
+          pnpm install --frozen-lockfile
+          pnpm build
+          echo "::endgroup::"
+
       - name: Run unit tests
         run: pnpm test
 
