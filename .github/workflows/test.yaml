@@ -18,7 +18,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
-      
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -29,6 +29,13 @@ jobs:
 
       - name: Run unit tests
         run: pnpm test
+
+      - name: Create .env file from secrets
+        shell: bash
+        run: |
+          cd ./packages/webcomponents
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
 
       - name: Run E2E tests
         run: pnpm test:e2e
