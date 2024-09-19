@@ -64,7 +64,8 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
   createServer({
     routes() {
       // Primary URL prefix for API requests
-      this.urlPrefix = 'https://wc-proxy.justifi-staging.com/v1';
+      this.urlPrefix = __VITE_STORYBOOK_PROXY_API_ORIGIN__;
+      this.namespace = '/v1';
 
       // BusinessOwner
       this.get(API_PATHS.EXISTING_BUSINESS_OWNER, () => mockBusinessOwner);
