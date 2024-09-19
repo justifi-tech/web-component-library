@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 describe('justifi-bank-account-form', () => {
   it('should emit "bankAccountFormReady" event when "paymentMethodFormReady" event is fired', async () => {
     const page = await newE2EPage();
-    await page.setContent('<justifi-bank-account-form iframeOrigin="https://components.justifi-staging.com/v1"></justifi-bank-account-form>');
+    await page.setContent('<justifi-bank-account-form iframe-origin="https://components.justifi-staging.com/v1"></justifi-bank-account-form>');
 
     const bankAccountForm = await page.find('justifi-bank-account-form');
 
