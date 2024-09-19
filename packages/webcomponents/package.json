@@ -25,7 +25,6 @@
     "generate": "stencil generate",
     "test": "TZ=utc stencil test --spec",
     "test:watch": "TZ=utc stencil test --spec --watchAll",
-    "test:e2e": "stencil test --e2e",
     "test:file": "stencil test --spec --watch --"
   },
   "dependencies": {
@@ -55,7 +54,6 @@
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "jest-environment-node": "^29.7.0",
-    "puppeteer": "^21.0.0",
     "ts-jest": "^29.1.2"
   },
   "license": "MIT",
