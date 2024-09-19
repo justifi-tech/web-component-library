@@ -24,7 +24,11 @@
         "build"
       ]
     },
-    "test:e2e": {},
+    "test:e2e": {
+      "dependsOn": [
+        "build"
+      ]
+    },
     "test:file": {},
     "lint": {},
     "preview-storybook": {
