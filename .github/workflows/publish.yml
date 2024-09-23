@@ -39,9 +39,7 @@ jobs:
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env.production
 
       - name: Build packages
-        run: |
-          rm -rf ./packages/webcomponents/dist
-          pnpm build
+        run: pnpm build
 
       - name: Publish to NPM Registry
         run: |
