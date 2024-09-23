@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.19.1
+
+### Patch Changes
+
+- 092528d: - Updated option label for Business Classification in `PaymentProvisioning` component. The option labeled `Limited` is now displayed as `Limited Liability Company (LLC)`
+
 ## 4.19.0
 
 ### Minor Changes
