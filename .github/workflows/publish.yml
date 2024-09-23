@@ -37,8 +37,7 @@ jobs:
         shell: bash
         working-directory: ./packages/webcomponents
         run: |
-          cat .env.production
-          cat .env
+          cat .env.production && cat .env
 
       - name: Build packages
         working-directory: ./packages/webcomponents
