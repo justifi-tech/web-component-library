@@ -29,9 +29,9 @@ export const config: Config = {
   plugins: [
     replace({
       // IFRAME_ORIGIN: JSON.stringify(process.env.IFRAME_ORIGIN),
-      IFRAME_ORIGIN: 'https://components.justifi.ai/v1',
+      IFRAME_ORIGIN: JSON.stringify('https://components.justifi.ai/v1'),
       // PROXY_API_ORIGIN: JSON.stringify(process.env.PROXY_API_ORIGIN),
-      PROXY_API_ORIGIN: 'https://wc-proxy.justifi.ai',
+      PROXY_API_ORIGIN: JSON.stringify('https://wc-proxy.justifi.ai'),
       preventAssignment: true,
     }),
   ],
