@@ -27,26 +27,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Create .env file from secrets
-        shell: bash
-        working-directory: ./apps/docs
-        run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
-
-      - name: Create .env file from secrets
-        shell: bash
-        working-directory: ./packages/webcomponents
-        run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
-
-      - name: Check .env files
-        shell: bash
-        working-directory: ./packages/webcomponents
-        run: |
-          cat .env
-
       - name: Build webcomponents
         run: pnpm build
 
