@@ -27,7 +27,7 @@ export const businessClassificationOptions: BusinessFormOption[] = [
     value: BusinessClassification.public_company,
   },
   {
-    label: 'Limited',
+    label: 'Limited Liability Company (LLC)',
     value: BusinessClassification.limited,
   },
   {
