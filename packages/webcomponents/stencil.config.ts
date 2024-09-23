@@ -4,6 +4,8 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log('process.env', process.env);
+
 export const config: Config = {
   namespace: 'webcomponents',
   globalStyle: './src/styles/root.css',

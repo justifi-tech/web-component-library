@@ -25,7 +25,7 @@ jobs:
         run: pnpm install
 
       - name: Build packages
-        run: pnpm run build
+        run: pnpm build
         env:
           IFRAME_ORIGIN: ${{ secrets.IFRAME_ORIGIN }}
           ENTITIES_API_ORIGIN: 'https://api.justifi.ai/v2'
