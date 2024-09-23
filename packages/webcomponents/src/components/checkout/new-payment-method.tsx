@@ -26,6 +26,9 @@ export class NewPaymentMethod {
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
 
+  componentWillLoad() {
+    console.log('NewPaymentMethod: componentWillLoad iframeOrigin', this, this.iframeOrigin);
+  }
 
   @Listen('checkboxChanged')
   handleCheckboxChanged(event: CustomEvent<boolean>) {

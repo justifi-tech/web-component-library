@@ -46,6 +46,7 @@ export class CheckoutCore {
   }
 
   componentWillLoad() {
+    console.log('CheckoutCore: componentWillLoad iframeOrigin', this, this.iframeOrigin);
     if (this.getCheckout) {
       this.fetchData();
 

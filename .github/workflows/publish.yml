@@ -32,12 +32,13 @@ jobs:
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
 
       - name: Build packages
-        run: pnpm build
-        env:
-          IFRAME_ORIGIN: https://components.justifi.ai/v1
-          ENTITIES_API_ORIGIN: 'https://api.justifi.ai/v1'
-          PROXY_API_ORIGIN: 'https://wc-proxy.justifi.ai'
-          PRIVATE_API_ORIGIN: 'https://api.justifi.ai/v1'
+        shell: bash
+        run: |
+          echo "::group::Build"
+          pnpm clean
+          pnpm install --frozen-lockfile
+          pnpm build
+          echo "::endgroup::"
 
       - name: Publish to NPM Registry
         run: |
