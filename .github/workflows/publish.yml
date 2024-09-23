@@ -33,6 +33,11 @@ jobs:
 
       - name: Build packages
         run: pnpm build
+        env:
+          IFRAME_ORIGIN: https://components.justifi.ai/v1
+          ENTITIES_API_ORIGIN: 'https://api.justifi.ai/v1'
+          PROXY_API_ORIGIN: 'https://wc-proxy.justifi.ai'
+          PRIVATE_API_ORIGIN: 'https://api.justifi.ai/v1'
 
       - name: Publish to NPM Registry
         run: |
