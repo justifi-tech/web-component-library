@@ -24,13 +24,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Create .env file from secrets
+        shell: bash
+        working-directory: ./packages/webcomponents
+        run: |
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env.production
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env.production
+
       - name: Build packages
         run: pnpm build
-        env:
-          IFRAME_ORIGIN: 'https://components.justifi.ai/v1'
-          ENTITIES_API_ORIGIN: 'https://api.justifi.ai/v2'
-          PROXY_API_ORIGIN: 'https://wc-proxy.justifi.ai'
-          PRIVATE_API_ORIGIN: 'https://api.justifi.ai/v1'
 
       - name: Publish to NPM Registry
         run: |
