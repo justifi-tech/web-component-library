@@ -9,6 +9,7 @@ import {
   Watch,
 } from '@stencil/core';
 import { ToolTip } from '../../ui-components/tooltip';
+import tooltip from 'bootstrap/js/dist/tooltip';
 
 @Component({
   tag: 'form-control-text'
@@ -36,9 +37,9 @@ export class TextInput {
 
   componentDidLoad() {
     this.updateInput(this.defaultValue);
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = Array.from(tooltipTriggerList).map(tooltipTriggerEl => new (window as any).bootstrap.Tooltip(tooltipTriggerEl));
-    console.log('tooltipList', tooltipList);
+    const tooltipTriggerEl = this.el.querySelector('[data-bs-toggle="tooltip"]');
+    // @ts-ignore
+    const toolTip = new tooltip(tooltipTriggerEl);
   }
 
   handleFormControlInput = (event: any) => {
