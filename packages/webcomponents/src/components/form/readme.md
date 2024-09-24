@@ -30,9 +30,10 @@
 
 ## Shadow Parts
 
-| Part      | Description |
-| --------- | ----------- |
-| `"label"` |             |
+| Part                 | Description |
+| -------------------- | ----------- |
+| `"input-group-text"` |             |
+| `"label"`            |             |
 
 
 ## Dependencies
