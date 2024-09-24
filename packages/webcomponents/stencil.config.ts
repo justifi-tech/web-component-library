@@ -1,5 +1,8 @@
 import { Config } from '@stencil/core';
-import dotenvPlugin from 'rollup-plugin-dotenv';
+import dotenv from 'dotenv';
+import replace from '@rollup/plugin-replace';
+
+dotenv.config();
 
 export const config: Config = {
   namespace: 'webcomponents',
@@ -19,7 +22,12 @@ export const config: Config = {
       file: './dist/docs.json',
     },
   ],
-  plugins: [dotenvPlugin()],
+  plugins: [
+    replace({
+      PROXY_API_ORIGIN: JSON.stringify(process.env.PROXY_API_ORIGIN),
+      IFRAME_ORIGIN: JSON.stringify(process.env.IFRAME_ORIGIN),
+    }),
+  ],
   validatePrimaryPackageOutputTarget: true,
   sourceMap: false,
   testing: {
