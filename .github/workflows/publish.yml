@@ -28,16 +28,8 @@ jobs:
         shell: bash
         working-directory: ./packages/webcomponents
         run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env.production
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env.production
           echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
-
-      - name: Check .env files
-        shell: bash
-        working-directory: ./packages/webcomponents
-        run: |
-          cat .env.production && cat .env
 
       - name: Build packages
         working-directory: ./packages/webcomponents
