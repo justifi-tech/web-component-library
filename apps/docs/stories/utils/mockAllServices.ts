@@ -149,6 +149,6 @@ export const setUpMocks = () => {
   const isMocksEnabled = __VITE_STORYBOOK_MOCKS_ENABLED__ === 'true';
 
   if (isMocksEnabled) {
-    // mockAllServices();
+    mockAllServices();
   }
 };
