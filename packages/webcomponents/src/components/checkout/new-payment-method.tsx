@@ -1,8 +1,8 @@
 import { Component, h, Prop, Method, Event, EventEmitter, Listen, State } from '@stencil/core';
+import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-import { config } from '../../../config';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -26,10 +26,6 @@ export class NewPaymentMethod {
 
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
-
-  componentWillLoad() {
-    console.log('NewPaymentMethod: componentWillLoad iframeOrigin', this, this.iframeOrigin);
-  }
 
   @Listen('checkboxChanged')
   handleCheckboxChanged(event: CustomEvent<boolean>) {

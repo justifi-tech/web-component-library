@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { CardForm } from '../card-form';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
-import JustifiAnalytics from '../../../api/Analytics';
 import { config } from '../../../../config';
+import JustifiAnalytics from '../../../api/Analytics';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements

@@ -1,3 +1,5 @@
+import { config } from '../../../../config';
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentMethodForm } from '../payment-method-form';
@@ -5,7 +7,6 @@ import { PaymentMethodTypes } from '../../../api';
 import { FrameCommunicationService } from '../../../utils/frame-comunication-service';
 import { MessageEventType } from '../message-event-types';
 import packageJson from '../../../../package.json';
-import { config } from '../../../../config';
 
 describe('justifi-payment-method-form', () => {
   it('renders an iframe', async () => {

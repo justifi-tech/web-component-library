@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
+import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Button, StyledHost, Skeleton } from '../../ui-components';
-import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -47,7 +47,6 @@ export class CheckoutCore {
   }
 
   componentWillLoad() {
-    console.log('CheckoutCore: componentWillLoad iframeOrigin', this, this.iframeOrigin);
     if (this.getCheckout) {
       this.fetchData();
 

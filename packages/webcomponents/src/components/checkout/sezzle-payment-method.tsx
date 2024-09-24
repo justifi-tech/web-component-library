@@ -1,8 +1,8 @@
 import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
+import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { config } from '../../../config';
 
 const sezzleLogo = (
   <img

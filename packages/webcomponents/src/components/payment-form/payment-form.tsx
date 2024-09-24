@@ -3,11 +3,11 @@ import { PaymentMethodTypes } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { loadFontsOnParent } from '../../utils/utils';
+import { config } from '../../../config';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
 import { Button, StyledHost } from '../../ui-components';
-import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-payment-form',

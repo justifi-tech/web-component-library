@@ -3,11 +3,11 @@ import { FormController } from '../../form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { parseBusiness } from '../utils/payload-parsers';
+import { config } from '../../../../config';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { StyledHost } from '../../../ui-components';
-import { config } from '../../../../config';
 
 /**
  * @exportedPart label: Label for inputs

@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Fragment, h, Prop, Method } from '@stencil/core';
+import { config } from '../../../config';
 import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-saved-payment-method',

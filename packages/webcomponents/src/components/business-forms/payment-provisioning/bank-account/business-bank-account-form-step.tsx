@@ -4,11 +4,11 @@ import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
+import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import { config } from '../../../../../config';
 
 /**
  *
