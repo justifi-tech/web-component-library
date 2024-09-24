@@ -8,6 +8,7 @@ import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { config } from '../../../../../config';
 
 /**
  *
@@ -112,7 +113,7 @@ export class BusinessBankAccountFormStep {
 
   componentWillLoad() {
     this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     if (this.businessId && this.authToken) {
       this.fetchData();
     }

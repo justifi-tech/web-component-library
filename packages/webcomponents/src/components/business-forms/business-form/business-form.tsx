@@ -7,6 +7,7 @@ import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErr
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { StyledHost } from '../../../ui-components';
+import { config } from '../../../../config';
 
 /**
  * @exportedPart label: Label for inputs
@@ -40,7 +41,7 @@ export class BusinessForm {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     this.fetchData();
   }
 

@@ -5,10 +5,10 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                                               | Type                                                           | Default         |
-| ---------------- | ----------------- | --------------------------------------------------------- | -------------------------------------------------------------- | --------------- |
-| `iframeOrigin`   | `iframe-origin`   | URL for the rendered iFrame. End-users need not use this. | `string`                                                       | `IFRAME_ORIGIN` |
-| `validationMode` | `validation-mode` | When to trigger validation of the form.                   | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined`     |
+| Property         | Attribute         | Description                                               | Type                                                           | Default               |
+| ---------------- | ----------------- | --------------------------------------------------------- | -------------------------------------------------------------- | --------------------- |
+| `iframeOrigin`   | `iframe-origin`   | URL for the rendered iFrame. End-users need not use this. | `string`                                                       | `config.iframeOrigin` |
+| `validationMode` | `validation-mode` | When to trigger validation of the form.                   | `"all" \| "onBlur" \| "onChange" \| "onSubmit" \| "onTouched"` | `undefined`           |
 
 
 ## Events

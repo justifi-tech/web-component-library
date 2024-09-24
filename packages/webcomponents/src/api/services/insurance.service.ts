@@ -1,4 +1,5 @@
 import { Api, IApiResponse, IQuote } from '..';
+import { config } from '../../../config';
 
 export interface IInsuranceService {
   fetchQuote(authToken: string, payload: any): Promise<IApiResponse<IQuote>>;
@@ -15,7 +16,7 @@ export class InsuranceService implements IInsuranceService {
     payload: any
   ): Promise<IApiResponse<IQuote>> {
     const endpoint = 'insurance/quotes';
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
       endpoint,
       JSON.stringify(payload)
     );
@@ -26,7 +27,7 @@ export class InsuranceService implements IInsuranceService {
     payload: { accepted: boolean }
   ): Promise<IApiResponse<IQuote>> {
     const endpoint = `insurance/quotes/${quoteId}/toggle`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
       endpoint,
       JSON.stringify(payload)
     );

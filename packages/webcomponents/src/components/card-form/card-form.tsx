@@ -2,6 +2,7 @@ import { Component, Event, Prop, h, EventEmitter, Method, Listen, State } from '
 import { CreatePaymentMethodResponse } from '../payment-method-form/payment-method-responses';
 import { Theme } from '../../utils/theme';
 import JustifiAnalytics from '../../api/Analytics';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-card-form',
@@ -16,7 +17,7 @@ export class CardForm {
   /**
    * URL for the rendered iFrame. End-users need not use this.
    */
-  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
 
   /**
    * Boolean indicating if the Card Form should render in a single line

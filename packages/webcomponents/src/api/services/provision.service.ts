@@ -1,3 +1,4 @@
+import { config } from '../../../config';
 import Api, { IApiResponse } from '../Api';
 
 export interface IProvisionService {
@@ -19,7 +20,7 @@ export class ProvisionService implements IProvisionService {
       business_id: businessId,
       product_category: product,
     };
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
       endpoint,
       JSON.stringify(payload)
     );

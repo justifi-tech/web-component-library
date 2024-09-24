@@ -2,6 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { BankAccountForm } from '../bank-account-form';
 import { PaymentMethodForm } from '../../payment-method-form/payment-method-form';
 import JustifiAnalytics from '../../../api/Analytics';
+import { config } from '../../../../config';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -37,7 +38,7 @@ describe('justifi-bank-account-form', () => {
     });
 
     const paymentMethodForm = page.root.querySelector('justifi-payment-method-form');
-    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe(IFRAME_ORIGIN);
+    expect(paymentMethodForm.getAttribute('iframe-origin')).toBe(config.iframeOrigin);
   });
 
   it('should call the PaymentMethodForm validate method when invoked from the BankAccountForm component', async () => {

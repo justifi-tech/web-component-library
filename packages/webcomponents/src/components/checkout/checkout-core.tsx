@@ -6,6 +6,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Button, StyledHost, Skeleton } from '../../ui-components';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -16,7 +17,7 @@ export class CheckoutCore {
   /**
  * URL for the rendered iFrame. End-users need not use this.
  */
-  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() getCheckout: Function;
   @Prop() complete: Function;

@@ -11,6 +11,7 @@ import { Api } from '../../api';
 import { FormController } from '../form/form';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
 import { StyledHost } from '../../ui-components';
+import { config } from '../../../config';
 
 
 @Component({
@@ -124,7 +125,7 @@ export class RefundForm {
     if (!this.authToken) {
       console.warn('Warning: Missing auth-token.');
     }
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
   }
 
   render() {

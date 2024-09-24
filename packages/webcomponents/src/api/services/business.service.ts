@@ -1,6 +1,7 @@
 import Api, { IApiResponse } from '../Api';
 import { IBusiness } from '../Business';
 import { Identity } from '../Identity';
+import { config } from '../../../config';
 
 export interface IBusinessService {
   fetchBusiness(
@@ -20,7 +21,7 @@ export class BusinessService implements IBusinessService {
     authToken: string
   ): Promise<IApiResponse<IBusiness>> {
     const endpoint = `entities/business/${businessId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
 
   async patchBusiness(
@@ -29,7 +30,7 @@ export class BusinessService implements IBusinessService {
     payload: Partial<IBusiness>
   ): Promise<IApiResponse<IBusiness>> {
     const endpoint = `entities/business/${businessId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).patch(
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).patch(
       endpoint,
       payload
     );
@@ -60,7 +61,7 @@ export class IdentityService implements IdentityService {
     authToken: string
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity/${identityId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
 
   async patchIdentity(
@@ -69,7 +70,7 @@ export class IdentityService implements IdentityService {
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity/${identityId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).patch(
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).patch(
       endpoint,
       payload
     );
@@ -80,7 +81,7 @@ export class IdentityService implements IdentityService {
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
       endpoint,
       payload
     );

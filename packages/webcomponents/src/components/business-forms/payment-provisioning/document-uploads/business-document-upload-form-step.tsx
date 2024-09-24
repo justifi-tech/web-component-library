@@ -8,6 +8,7 @@ import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { Skeleton } from '../../../../ui-components';
+import { config } from '../../../../../config';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -40,7 +41,7 @@ export class BusinessDocumentFormStep {
   }
 
   componentWillLoad() {
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
     if (this.businessId && this.authToken) {
       this.fetchData();
     }

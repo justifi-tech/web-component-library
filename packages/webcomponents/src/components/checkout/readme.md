@@ -37,15 +37,15 @@
 
 ## Properties
 
-| Property              | Attribute        | Description | Type                  | Default         |
-| --------------------- | ---------------- | ----------- | --------------------- | --------------- |
-| `accountId`           | `account-id`     |             | `string`              | `undefined`     |
-| `bnpl`                | `bnpl`           |             | `any`                 | `undefined`     |
-| `clientId`            | `client-id`      |             | `string`              | `undefined`     |
-| `iframeOrigin`        | `iframe-origin`  |             | `string`              | `IFRAME_ORIGIN` |
-| `isSelected`          | `is-selected`    |             | `boolean`             | `undefined`     |
-| `paymentAmount`       | `payment-amount` |             | `number`              | `undefined`     |
-| `paymentMethodOption` | --               |             | `PaymentMethodOption` | `undefined`     |
+| Property              | Attribute        | Description | Type                  | Default               |
+| --------------------- | ---------------- | ----------- | --------------------- | --------------------- |
+| `accountId`           | `account-id`     |             | `string`              | `undefined`           |
+| `bnpl`                | `bnpl`           |             | `any`                 | `undefined`           |
+| `clientId`            | `client-id`      |             | `string`              | `undefined`           |
+| `iframeOrigin`        | `iframe-origin`  |             | `string`              | `config.iframeOrigin` |
+| `isSelected`          | `is-selected`    |             | `boolean`             | `undefined`           |
+| `paymentAmount`       | `payment-amount` |             | `number`              | `undefined`           |
+| `paymentMethodOption` | --               |             | `PaymentMethodOption` | `undefined`           |
 
 
 ## Events

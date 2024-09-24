@@ -2,6 +2,7 @@ import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { config } from '../../../config';
 
 const sezzleLogo = (
   <img
@@ -21,7 +22,7 @@ const sezzleLogo = (
   tag: 'justifi-sezzle-payment-method',
 })
 export class SezzlePaymentMethod {
-  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() bnpl: any; // type this
   @Prop() clientId: string;
   @Prop() accountId: string;

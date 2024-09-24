@@ -7,6 +7,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
 import { Button, StyledHost } from '../../ui-components';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -147,7 +148,7 @@ export class PaymentForm {
           <div class="col-12">
             <justifi-payment-method-form
               payment-method-form-type={this.getSelectedPaymentMethodType()}
-              iframeOrigin={IFRAME_ORIGIN}
+              iframeOrigin={config.iframeOrigin}
               ref={el => {
                 if (el) {
                   this.paymentMethodFormRef = el;

@@ -2,6 +2,7 @@ import { Component, h, Prop, Method, Event, EventEmitter, Listen, State } from '
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { config } from '../../../config';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -12,7 +13,7 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;

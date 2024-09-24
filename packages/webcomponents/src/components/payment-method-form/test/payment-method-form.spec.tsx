@@ -5,6 +5,7 @@ import { PaymentMethodTypes } from '../../../api';
 import { FrameCommunicationService } from '../../../utils/frame-comunication-service';
 import { MessageEventType } from '../message-event-types';
 import packageJson from '../../../../package.json';
+import { config } from '../../../../config';
 
 describe('justifi-payment-method-form', () => {
   it('renders an iframe', async () => {
@@ -13,13 +14,13 @@ describe('justifi-payment-method-form', () => {
       template: () => (
         <justifi-payment-method-form
           paymentMethodFormType={PaymentMethodTypes.card}
-          iframeOrigin={IFRAME_ORIGIN}
+          iframeOrigin={config.iframeOrigin}
         ></justifi-payment-method-form>
       ),
     });
     expect(page.root).toEqualHtml(`
     <justifi-payment-method-form>
-      <iframe id='justifi-payment-method-form-card' src='${IFRAME_ORIGIN}/card'></iframe>
+      <iframe id='justifi-payment-method-form-card' src='${config.iframeOrigin}/card'></iframe>
     </justifi-payment-method-form>
   `);
   });
@@ -31,13 +32,13 @@ describe('justifi-payment-method-form', () => {
         template: () => (
           <justifi-payment-method-form
             paymentMethodFormType={PaymentMethodTypes.card}
-            iframeOrigin={IFRAME_ORIGIN}
+            iframeOrigin={config.iframeOrigin}
           ></justifi-payment-method-form>
         ),
       });
       expect(page.root).toEqualHtml(`
     <justifi-payment-method-form>
-      <iframe id='justifi-payment-method-form-card' src='${IFRAME_ORIGIN}/card'></iframe>
+      <iframe id='justifi-payment-method-form-card' src='${config.iframeOrigin}/card'></iframe>
     </justifi-payment-method-form>
   `);
     });
@@ -48,13 +49,13 @@ describe('justifi-payment-method-form', () => {
         template: () => (
           <justifi-payment-method-form
             paymentMethodFormType={PaymentMethodTypes.bankAccount}
-            iframeOrigin={IFRAME_ORIGIN}
+            iframeOrigin={config.iframeOrigin}
           ></justifi-payment-method-form>
         ),
       });
       expect(page.root).toEqualHtml(`
     <justifi-payment-method-form>
-      <iframe id='justifi-payment-method-form-bankAccount' src='${IFRAME_ORIGIN}/bankAccount'></iframe>
+      <iframe id='justifi-payment-method-form-bankAccount' src='${config.iframeOrigin}/bankAccount'></iframe>
     </justifi-payment-method-form>
   `);
     });
@@ -66,14 +67,14 @@ describe('justifi-payment-method-form', () => {
           <justifi-payment-method-form
             paymentMethodFormType={PaymentMethodTypes.bankAccount}
             paymentMethodFormValidationMode='onChange'
-            iframeOrigin={IFRAME_ORIGIN}
+            iframeOrigin={config.iframeOrigin}
           ></justifi-payment-method-form>
         ),
       });
 
       expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe id='justifi-payment-method-form-bankAccount' src='${IFRAME_ORIGIN}/bankAccount?validationMode=onChange'></iframe>
+        <iframe id='justifi-payment-method-form-bankAccount' src='${config.iframeOrigin}/bankAccount?validationMode=onChange'></iframe>
       </justifi-payment-method-form>
     `);
     });
@@ -85,14 +86,14 @@ describe('justifi-payment-method-form', () => {
           <justifi-payment-method-form
             paymentMethodFormType={PaymentMethodTypes.bankAccount}
             paymentMethodFormValidationMode='onBlur'
-            iframeOrigin={IFRAME_ORIGIN}
+            iframeOrigin={config.iframeOrigin}
           ></justifi-payment-method-form>
         ),
       });
 
       expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe id='justifi-payment-method-form-bankAccount' src='${IFRAME_ORIGIN}/bankAccount?validationMode=onBlur'></iframe>
+        <iframe id='justifi-payment-method-form-bankAccount' src='${config.iframeOrigin}/bankAccount?validationMode=onBlur'></iframe>
       </justifi-payment-method-form>
     `);
     });
@@ -104,14 +105,14 @@ describe('justifi-payment-method-form', () => {
           <justifi-payment-method-form
             paymentMethodFormType={PaymentMethodTypes.card}
             singleLine={true}
-            iframeOrigin={IFRAME_ORIGIN}
+            iframeOrigin={config.iframeOrigin}
           ></justifi-payment-method-form>
         ),
       });
 
       expect(page.root).toEqualHtml(`
       <justifi-payment-method-form>
-        <iframe id='justifi-payment-method-form-card' src='${IFRAME_ORIGIN}/card?singleLine=true'></iframe>
+        <iframe id='justifi-payment-method-form-card' src='${config.iframeOrigin}/card?singleLine=true'></iframe>
       </justifi-payment-method-form>
     `);
     });
@@ -124,11 +125,11 @@ describe('justifi-payment-method-form', () => {
 
       const page = await newSpecPage({
         components: [PaymentMethodForm],
-        template: () => <justifi-payment-method-form iframeOrigin={IFRAME_ORIGIN}></justifi-payment-method-form>,
+        template: () => <justifi-payment-method-form iframeOrigin={config.iframeOrigin}></justifi-payment-method-form>,
       });
 
       // Manually set up the frameService to ensure it's available for the disconnectedCallback
-      page.rootInstance.frameService = new FrameCommunicationService(page.rootInstance.iframeElement, IFRAME_ORIGIN);
+      page.rootInstance.frameService = new FrameCommunicationService(page.rootInstance.iframeElement, config.iframeOrigin);
       page.rootInstance.frameService.addMessageListener(jest.fn()); // Add a dummy listener
 
       // Manually call disconnectedCallback to simulate the component being removed
@@ -150,7 +151,7 @@ describe('justifi-payment-method-form', () => {
         template: () => (
           <justifi-payment-method-form
             paymentMethodFormType={PaymentMethodTypes.card}
-            iframeOrigin={IFRAME_ORIGIN}
+            iframeOrigin={config.iframeOrigin}
           ></justifi-payment-method-form>
         ),
       });

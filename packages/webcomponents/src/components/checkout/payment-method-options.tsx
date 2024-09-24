@@ -4,6 +4,7 @@ import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -19,7 +20,7 @@ export class PaymentMethodOptions {
   @Prop() insuranceToggled: boolean;
   @Prop() authToken: string;
   @Prop() accountId: string;
-  @Prop({ mutable: true }) iframeOrigin?: string = IFRAME_ORIGIN;
+  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() paymentAmount: number;
 
