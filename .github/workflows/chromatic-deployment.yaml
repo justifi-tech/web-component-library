@@ -31,7 +31,7 @@ jobs:
         shell: bash
         working-directory: ./apps/docs
         run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "IFRAME_ORIGIN=TEST" >> .env
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
 
       - name: Check .env files
