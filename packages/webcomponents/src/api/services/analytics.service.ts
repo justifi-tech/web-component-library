@@ -15,6 +15,7 @@ interface iAnayticsBody {
 export class AnalyticsService {
   async record(body: iAnayticsBody): Promise<void> {
     const endpoint = 'analytics';
+    console.log('analytics.service PROXY_API_ORIGIN: ', PROXY_API_ORIGIN);
     return Api({ apiOrigin: PROXY_API_ORIGIN }).post(
       endpoint,
       JSON.stringify(body)
