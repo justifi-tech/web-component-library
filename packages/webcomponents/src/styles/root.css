@@ -211,6 +211,8 @@
   --jfi-error-message-color: var(--bs-form-invalid-color);
   --jfi-error-message-margin: 0.25rem 0 0 0;
   --jfi-error-message-font-size: 0.875em;
+  --jfi-tooltip-background-color: var(--bs-dark-bg-subtle);
+  --jfi-tooltip-color: var(--jfi-form-label-color)
 
   table-layout: fixed;
 }
@@ -361,4 +363,14 @@
 
 .table-wrapper {
   overflow-x: scroll;
+}
+
+.tooltip {
+  background-color: var(--jfi-tooltip-background-color);
+  color: var(--jfi-tooltip-color);
+  font-family: var(--jfi-layout-font-family);
+}
+
+.tooltip-arrow {
+  background-color: var(--jfi-tooltip-background-color);
 }

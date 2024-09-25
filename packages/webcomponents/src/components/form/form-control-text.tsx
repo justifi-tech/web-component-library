@@ -8,8 +8,6 @@ import {
   Element,
   Watch,
 } from '@stencil/core';
-import { ToolTip } from '../../ui-components/tooltip';
-import tooltip from 'bootstrap/js/dist/tooltip';
 
 @Component({
   tag: 'form-control-text'
@@ -21,6 +19,7 @@ export class TextInput {
   @Prop() name: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
+  @Prop() toolTipText?: string;
   @Prop() defaultValue: string;
   @Prop() maxLength?: number;
   @Prop() inputHandler: (name: string, value: string) => void;
@@ -37,9 +36,6 @@ export class TextInput {
 
   componentDidLoad() {
     this.updateInput(this.defaultValue);
-    const tooltipTriggerEl = this.el.querySelector('[data-bs-toggle="tooltip"]');
-    // @ts-ignore
-    const toolTip = new tooltip(tooltipTriggerEl);
   }
 
   handleFormControlInput = (event: any) => {
@@ -60,27 +56,25 @@ export class TextInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
-          <div class="input-group">
-            <input
-                id={this.name}
-                name={this.name}
-                onBlur={this.formControlBlur.emit}
-                onInput={this.handleFormControlInput}
-                onKeyDown={this.keyDownHandler}
-                onPaste={this.keyDownHandler}
-                maxLength={this.maxLength}
-                part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
-                class={this.errorText ? 'form-control is-invalid' : 'form-control'}
-                type="text"
-                disabled={this.disabled}
-              />
-              <span class="input-group-text" part="input-group-text">
-                <ToolTip text='This is a tooltip' />
-              </span>
+          <div class='d-flex gap-2'>
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tool-tip text={this.toolTipText} />
           </div>
+          <input
+            id={this.name}
+            name={this.name}
+            onBlur={this.formControlBlur.emit}
+            onInput={this.handleFormControlInput}
+            onKeyDown={this.keyDownHandler}
+            onPaste={this.keyDownHandler}
+            maxLength={this.maxLength}
+            part={`input input-group-input-start ${this.errorText && 'input-invalid'}`}
+            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            type="text"
+            disabled={this.disabled}
+          />
           <form-control-help-text helpText={this.helpText} name={this.name} />
           <form-control-error-text errorText={this.errorText} name={this.name} />
         </div>
