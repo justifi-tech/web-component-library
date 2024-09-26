@@ -22,14 +22,14 @@ export class AdditionalQuestionsFormStepCore {
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
-  
+
   @Method()
   async validateAndSubmit({ onSuccess }) {
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
   get patchPayload() {
-    let formValues = this.formController.values.getValue();
+    let formValues = new AdditionalQuestions(this.formController.values.getValue()).payload;
     return JSON.stringify({ additional_questions: formValues });
   }
 

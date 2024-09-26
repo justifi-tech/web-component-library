@@ -59,7 +59,7 @@ export class BusinessDocumentFormStep {
     this.formLoading.emit(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.business = { ...new Business(response.data) };
+      this.business = { ...new Business(response.data) } as Business;
       this.existingDocuments = response.data.documents;
       this.paymentVolume = response.data.additional_questions.business_payment_volume;
     } catch (error) {
