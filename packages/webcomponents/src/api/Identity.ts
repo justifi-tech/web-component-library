@@ -141,6 +141,7 @@ export class Representative implements Identity {
       dob_year: this.dob_year || '',
       email: this.email || '',
       is_owner: this.is_owner || false,
+      identification_number: this.identification_number || '',
       metadata: this.metadata || null,
       name: this.name || '',
       phone: this.phone || '',
