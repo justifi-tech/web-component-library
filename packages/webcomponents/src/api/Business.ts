@@ -24,7 +24,6 @@ export interface IAddress {
   country?: string;
   created_at?: string;
   updated_at?: string;
-  payload?: any;
 }
 
 export class Address implements IAddress {
