@@ -77,6 +77,7 @@ export class Owner implements Identity {
       dob_month: this.dob_month || '',
       dob_year: this.dob_year || '',
       email: this.email || '',
+      identification_number: this.identification_number || '',
       is_owner: this.is_owner || false,
       metadata: this.metadata || null,
       name: this.name || '',
