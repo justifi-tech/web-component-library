@@ -222,9 +222,9 @@ export class Business implements IBusiness {
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
-    this.additional_questions = {
-      ...new AdditionalQuestions(business.additional_questions || {}),
-    };
+    this.additional_questions = new AdditionalQuestions(
+      business.additional_questions || {}
+    );
     this.associated_accounts = business.associated_accounts;
     this.classification = business.classification;
     this.bank_accounts = business.bank_accounts;
@@ -234,16 +234,14 @@ export class Business implements IBusiness {
     this.email = business.email;
     this.id = business.id;
     this.industry = business.industry;
-    this.legal_address = { ...new Address(business.legal_address || {}) };
+    this.legal_address = new Address(business.legal_address || {});
     this.legal_name = business.legal_name;
     this.metadata = business.metadata;
     this.owners = business.owners;
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
     this.product_categories = business.product_categories;
-    this.representative = {
-      ...new Representative(business.representative || {}),
-    };
+    this.representative = new Representative(business.representative || {});
     this.tax_id = business.tax_id;
     this.terms_conditions_accepted = business.terms_conditions_accepted;
     this.updated_at = business.updated_at;
@@ -253,21 +251,8 @@ export class Business implements IBusiness {
 
   public get payload() {
     return {
-      additional_questions: {
-        business_revenue: this.additional_questions.business_revenue || '',
-        business_payment_volume:
-          this.additional_questions.business_payment_volume || '',
-        business_when_service_received:
-          this.additional_questions.business_when_service_received || '',
-        business_recurring_payments:
-          this.additional_questions.business_recurring_payments || '',
-        business_recurring_payments_percentage:
-          this.additional_questions.business_recurring_payments_percentage ||
-          '',
-        business_seasonal: this.additional_questions.business_seasonal || '',
-        business_other_payment_details:
-          this.additional_questions.business_other_payment_details || '',
-      },
+      additional_questions: new AdditionalQuestions(this.additional_questions)
+        .payload,
       classification: this.classification || '',
       doing_business_as: this.doing_business_as || '',
       email: this.email || '',
