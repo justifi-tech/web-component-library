@@ -33,8 +33,7 @@ export class BusinessCoreInfoFormStepCore {
   };
 
   get patchPayload() {
-    let formValues = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-    return JSON.stringify(formValues);
+    return parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
   }
 
   componentWillLoad() {

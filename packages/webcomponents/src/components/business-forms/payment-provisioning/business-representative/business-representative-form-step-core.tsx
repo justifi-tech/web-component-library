@@ -29,7 +29,7 @@ export class BusinessRepresentativeFormStepCore {
 
   get patchPayload() {
     let formValues = parseIdentityInfo(this.formController.values.getValue());
-    return JSON.stringify({ representative: formValues });
+    return { representative: formValues };
   }
 
   componentWillLoad() {

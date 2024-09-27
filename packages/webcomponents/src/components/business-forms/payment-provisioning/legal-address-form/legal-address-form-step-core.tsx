@@ -15,15 +15,15 @@ export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
-  
+
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
-  
+
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;  
-  
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+
   @Method()
   async validateAndSubmit({ onSuccess }) {
     this.formController.validateAndSubmit(() => this.sendData(onSuccess));
@@ -31,7 +31,7 @@ export class LegalAddressFormStepCore {
 
   get patchPayload() {
     let formValues = parseAddressInfo(this.formController.values.getValue());
-    return JSON.stringify({ legal_address: formValues });
+    return { legal_address: formValues };
   }
 
   componentWillLoad() {
@@ -50,8 +50,8 @@ export class LegalAddressFormStepCore {
     this.getBusiness({
       onSuccess: (response) => {
         this.legal_address = new Address(response.data.legal_address || {});
-        this.formController.setInitialValues({ ...this.legal_address });      
-    },
+        this.formController.setInitialValues({ ...this.legal_address });
+      },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
           message: error,

@@ -19,7 +19,7 @@ export class InsuranceService implements IInsuranceService {
     payload: any
   ): Promise<IApiResponse<IQuote>> {
     const endpoint = 'insurance/quotes';
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, JSON.stringify(payload));
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
   async toggleCoverage(
     authToken: string,
@@ -27,6 +27,6 @@ export class InsuranceService implements IInsuranceService {
     payload: { accepted: boolean; }
   ): Promise<IApiResponse<IQuote>> {
     const endpoint = `insurance/quotes/${quoteId}/toggle`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, JSON.stringify(payload));
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }

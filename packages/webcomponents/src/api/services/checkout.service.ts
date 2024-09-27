@@ -34,9 +34,6 @@ export class CheckoutService implements ICheckoutService {
     if (payment.payment_token) {
       payload.payment_token = payment.payment_token;
     }
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(
-      endpoint,
-      JSON.stringify(payload)
-    );
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }
