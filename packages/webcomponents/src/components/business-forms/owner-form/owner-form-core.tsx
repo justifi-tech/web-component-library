@@ -73,9 +73,9 @@ export class BusinessOwnerFormCore {
   get payload() {
     let formValues = parseIdentityInfo(this.formController.values.getValue());
     if (this.ownerId) {
-      return JSON.stringify(formValues);
+      return formValues
     } else {
-      return JSON.stringify({ ...formValues, business_id: this.businessId });
+      return { ...formValues, business_id: this.businessId };
     }
   }
 
