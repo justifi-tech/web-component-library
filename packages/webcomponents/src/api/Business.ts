@@ -10,7 +10,7 @@ export enum BusinessClassification {
   public_company = 'public_company',
   limited = 'limited',
   non_profit = 'non_profit',
-  government = 'government'
+  government = 'government',
 }
 
 export interface IAddress {
@@ -50,6 +50,18 @@ export class Address implements IAddress {
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
   }
+
+  public get payload() {
+    return {
+      platform_account_id: this.platform_account_id || '',
+      line1: this.line1 || '',
+      line2: this.line2 || '',
+      postal_code: this.postal_code || '',
+      city: this.city || '',
+      state: this.state || '',
+      country: this.country || '',
+    };
+  }
 }
 
 export interface ProductCategories {
@@ -67,6 +79,7 @@ export interface IAdditionalQuestions {
   business_recurring_payments_percentage?: string;
   business_seasonal?: string;
   business_other_payment_details?: string;
+  payload?: any;
 }
 
 export class AdditionalQuestions implements IAdditionalQuestions {
@@ -81,11 +94,28 @@ export class AdditionalQuestions implements IAdditionalQuestions {
   constructor(additionalQuestions: IAdditionalQuestions) {
     this.business_revenue = additionalQuestions.business_revenue;
     this.business_payment_volume = additionalQuestions.business_payment_volume;
-    this.business_when_service_received = additionalQuestions.business_when_service_received;
-    this.business_recurring_payments = additionalQuestions.business_recurring_payments;
-    this.business_recurring_payments_percentage = additionalQuestions.business_recurring_payments_percentage;
+    this.business_when_service_received =
+      additionalQuestions.business_when_service_received;
+    this.business_recurring_payments =
+      additionalQuestions.business_recurring_payments;
+    this.business_recurring_payments_percentage =
+      additionalQuestions.business_recurring_payments_percentage;
     this.business_seasonal = additionalQuestions.business_seasonal;
-    this.business_other_payment_details = additionalQuestions.business_other_payment_details;
+    this.business_other_payment_details =
+      additionalQuestions.business_other_payment_details;
+  }
+
+  public get payload() {
+    return {
+      business_revenue: this.business_revenue || '',
+      business_payment_volume: this.business_payment_volume || '',
+      business_when_service_received: this.business_when_service_received || '',
+      business_recurring_payments: this.business_recurring_payments || '',
+      business_recurring_payments_percentage:
+        this.business_recurring_payments_percentage || '',
+      business_seasonal: this.business_seasonal || '',
+      business_other_payment_details: this.business_other_payment_details || '',
+    };
   }
 }
 
@@ -123,6 +153,20 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
     this.phone = coreBusinessInfo.phone;
     this.date_of_incorporation = coreBusinessInfo.date_of_incorporation;
   }
+
+  public get payload() {
+    return {
+      classification: this.classification || '',
+      legal_name: this.legal_name || '',
+      doing_business_as: this.doing_business_as || '',
+      industry: this.industry || '',
+      tax_id: this.tax_id || '',
+      website_url: this.website_url || '',
+      email: this.email || '',
+      phone: this.phone || '',
+      date_of_incorporation: this.date_of_incorporation || '',
+    };
+  }
 }
 
 export interface IBusiness {
@@ -152,7 +196,7 @@ export interface IBusiness {
 }
 
 export class Business implements IBusiness {
-  public additional_questions: AdditionalQuestions;
+  public additional_questions: IAdditionalQuestions;
   public associated_accounts: any[];
   public classification: BusinessClassification;
   public bank_accounts: IBankAccount[];
@@ -177,7 +221,9 @@ export class Business implements IBusiness {
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
-    this.additional_questions = { ...new AdditionalQuestions(business.additional_questions || {})};
+    this.additional_questions = new AdditionalQuestions(
+      business.additional_questions || {}
+    );
     this.associated_accounts = business.associated_accounts;
     this.classification = business.classification;
     this.bank_accounts = business.bank_accounts;
@@ -187,19 +233,40 @@ export class Business implements IBusiness {
     this.email = business.email;
     this.id = business.id;
     this.industry = business.industry;
-    this.legal_address = { ...new Address(business.legal_address || {}) };
+    this.legal_address = new Address(business.legal_address || {});
     this.legal_name = business.legal_name;
     this.metadata = business.metadata;
     this.owners = business.owners;
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
     this.product_categories = business.product_categories;
-    this.representative = { ...new Representative(business.representative || {}) };
+    this.representative = new Representative(business.representative || {});
     this.tax_id = business.tax_id;
     this.terms_conditions_accepted = business.terms_conditions_accepted;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
+  }
+
+  public get payload() {
+    return {
+      additional_questions: new AdditionalQuestions(this.additional_questions)
+        .payload,
+      classification: this.classification || '',
+      doing_business_as: this.doing_business_as || '',
+      email: this.email || '',
+      industry: this.industry || '',
+      legal_address: new Address(this.legal_address).payload,
+      legal_name: this.legal_name || '',
+      metadata: this.metadata || {},
+      owners: this.owners.map((owner) => ({ id: owner.id })),
+      phone: this.phone || '',
+      platform_account_id: this.platform_account_id || '',
+      representative: new Representative(this.representative).payload,
+      tax_id: this.tax_id || '',
+      website_url: this.website_url || '',
+      date_of_incorporation: this.date_of_incorporation || '',
+    };
   }
 }
 

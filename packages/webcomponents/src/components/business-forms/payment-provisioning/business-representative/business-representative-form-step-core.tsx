@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { Identity, Representative } from '../../../../api/Identity';
-import { parseIdentityInfo } from '../../utils/payload-parsers';
 import { FormController } from '../../../form/form';
 import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
@@ -28,7 +27,7 @@ export class BusinessRepresentativeFormStepCore {
   }
 
   get patchPayload() {
-    let formValues = parseIdentityInfo(this.formController.values.getValue());
+    let formValues = new Representative(this.formController.values.getValue()).payload;
     return JSON.stringify({ representative: formValues });
   }
 
