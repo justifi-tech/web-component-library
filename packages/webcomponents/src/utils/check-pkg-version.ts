@@ -13,12 +13,14 @@ export const checkPkgVersion = async () => {
   const packageName = packageJson.name;
 
   const latest = await latestVersion(packageName);
+  const latestNotRC = latest.replace(/-rc.*/, '');
+
   // checkif there's a major version difference
   const versionParts = version.split('.');
   const latestParts = latest.split('.');
   if (versionParts[0] !== latestParts[0]) {
     console.warn(
-      `The package ${packageName} is out of date. The latest version is ${latest}. Please update.`
+      `The package ${packageName} is out of date. The latest version is ${latestNotRC}. Please update.`
     );
   }
 };
