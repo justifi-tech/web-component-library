@@ -8,6 +8,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { getErrorMessage } from '../../api/services/utils';
 import JustifiAnalytics from '../../api/Analytics';
 import { Button, StyledHost } from '../../ui-components';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 @Component({
   tag: 'justifi-payment-form',
@@ -36,6 +37,7 @@ export class PaymentForm {
   private billingFormRef?: HTMLJustifiBillingFormElement;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     if (!this.validateProps()) {
       this.errorEvent.emit({

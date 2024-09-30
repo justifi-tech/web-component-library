@@ -4,6 +4,7 @@ import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from './get-business';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 /**
  *
@@ -32,6 +33,7 @@ export class BusinessDetails {
 
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetBusiness();
   }

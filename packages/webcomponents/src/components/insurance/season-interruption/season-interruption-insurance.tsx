@@ -3,6 +3,7 @@ import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import JustifiAnalytics from '../../../api/Analytics';
+import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -39,6 +40,7 @@ export class SeasonInterruptionInsurance {
   }
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeServiceMethods();
   }
