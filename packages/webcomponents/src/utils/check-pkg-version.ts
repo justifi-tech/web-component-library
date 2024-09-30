@@ -13,7 +13,8 @@ export const checkPkgVersion = async () => {
   const packageName = packageJson.name;
 
   const latest = await latestVersion(packageName);
-  const latestNotRC = latest.replace(/-rc*/, '');
+  // remove rc from version and everything that comes after -rc
+  const latestNotRC = latest.replace(/-rc.*/, '');
 
   // checkif there's a major version difference
   const versionParts = version.split('.');
