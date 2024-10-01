@@ -5,7 +5,6 @@ import { Address, IAddress } from '../../../../api/Business';
 import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import StateOptions from '../../../../utils/state-options';
-import { parseAddressInfo } from '../../utils/payload-parsers';
 import { numberOnlyHandler } from '../../../form/utils';
 
 @Component({
@@ -30,7 +29,7 @@ export class LegalAddressFormStepCore {
   };
 
   get patchPayload() {
-    let formValues = parseAddressInfo(this.formController.values.getValue());
+    let formValues = new Address(this.formController.values.getValue()).payload;
     return { legal_address: formValues };
   }
 
