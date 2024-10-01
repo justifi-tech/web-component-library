@@ -107,6 +107,8 @@ export const Authorization = ({ actions, entity, identification }: Authorization
         <>
           <p>Authorization can be performed by using a <code>client-id</code> or an <code>auth-token</code>. Each option has its benefits and drawbacks.
           </p>
+          <p><strong>Note:</strong> While <code>client-id</code> is still supported, we now recommend using web component tokens (<code>auth-token</code>) for enhanced security and flexibility.
+          </p>
           <ul>
             <li>
               <AuthTokenDescription />
