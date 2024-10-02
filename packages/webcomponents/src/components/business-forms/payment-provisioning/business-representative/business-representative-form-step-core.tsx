@@ -28,7 +28,7 @@ export class BusinessRepresentativeFormStepCore {
 
   get patchPayload() {
     let formValues = new Representative(this.formController.values.getValue()).payload;
-    return JSON.stringify({ representative: formValues });
+    return { representative: formValues };
   }
 
   componentWillLoad() {

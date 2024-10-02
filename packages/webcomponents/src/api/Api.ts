@@ -74,15 +74,15 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     params?: any,
     signal?: AbortSignal
   ) {
-    return makeRequest(endpoint, 'POST', params, body, signal);
+    return makeRequest(endpoint, 'POST', params, JSON.stringify(body), signal);
   }
 
   async function put(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
-    return makeRequest(endpoint, 'PUT', params, body, signal);
+    return makeRequest(endpoint, 'PUT', params, JSON.stringify(body), signal);
   }
 
   async function patch(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
-    return makeRequest(endpoint, 'PATCH', params, body, signal);
+    return makeRequest(endpoint, 'PATCH', params, JSON.stringify(body), signal);
   }
 
   async function destroy(endpoint: string, params?: any, signal?: AbortSignal) {

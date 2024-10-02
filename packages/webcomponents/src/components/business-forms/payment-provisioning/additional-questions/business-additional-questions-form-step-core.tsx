@@ -30,7 +30,7 @@ export class AdditionalQuestionsFormStepCore {
 
   get patchPayload() {
     let formValues = new AdditionalQuestions(this.formController.values.getValue()).payload;
-    return JSON.stringify({ additional_questions: formValues });
+    return { additional_questions: formValues };
   }
 
   componentWillLoad() {

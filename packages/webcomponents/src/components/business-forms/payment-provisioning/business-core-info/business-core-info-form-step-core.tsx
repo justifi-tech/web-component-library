@@ -32,7 +32,7 @@ export class BusinessCoreInfoFormStepCore {
 
   get patchPayload() {
     let formValues = new CoreBusinessInfo(this.formController.values.getValue()).payload;
-    return JSON.stringify(formValues);
+    return formValues;
   }
 
   componentWillLoad() {

@@ -30,7 +30,7 @@ export class LegalAddressFormStepCore {
 
   get patchPayload() {
     let formValues = new Address(this.formController.values.getValue()).payload;
-    return JSON.stringify({ legal_address: formValues });
+    return { legal_address: formValues };
   }
 
   componentWillLoad() {

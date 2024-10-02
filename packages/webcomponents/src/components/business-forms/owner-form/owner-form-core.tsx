@@ -72,9 +72,9 @@ export class BusinessOwnerFormCore {
   get payload() {
     let formValues = new Owner(this.formController.values.getValue()).payload;
     if (this.ownerId) {
-      return JSON.stringify(formValues);
+      return formValues
     } else {
-      return JSON.stringify({ ...formValues, business_id: this.businessId });
+      return { ...formValues, business_id: this.businessId };
     }
   }
 

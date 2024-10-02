@@ -14,11 +14,11 @@ export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;
-  
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  
+
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -73,7 +73,7 @@ export class BusinessTermsConditionsFormStep {
   private sendData = async (onSuccess?: () => void) => {
     this.formLoading.emit(true);
     try {
-      const payload = JSON.stringify(this.termsPayload);
+      const payload = this.termsPayload;
       const response = await this.api.post(this.termsConditionsEndpoint, payload);
       this.handleResponse(response, onSuccess);
     } catch (error) {

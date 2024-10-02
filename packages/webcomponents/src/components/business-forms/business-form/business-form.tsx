@@ -80,7 +80,7 @@ export class BusinessForm {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
       const payload = new Business({ ...initialValues, ...values }).payload;
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const response = await this.api.patch(this.businessEndpoint, payload);
       this.handleReponse(response);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.patchData;

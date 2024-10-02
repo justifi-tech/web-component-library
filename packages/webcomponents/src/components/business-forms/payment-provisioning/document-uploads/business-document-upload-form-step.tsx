@@ -88,7 +88,7 @@ export class BusinessDocumentFormStep {
     this.formLoading.emit(true);
     const payload = docData.record_data;
     try {
-      const response = await this.api.post(this.documentEndpoint, JSON.stringify(payload));
+      const response = await this.api.post(this.documentEndpoint, payload);
       return this.handleDocRecordResponse(docData, response);
     } catch (error) {
       this.errorEvent.emit({
