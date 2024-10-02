@@ -4,7 +4,6 @@ import { Identity, Owner } from '../../../api/Identity';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError } from '../../../api/ComponentError';
 import { identitySchema } from '../schemas/business-identity-schema';
-import { parseIdentityInfo } from '../utils/payload-parsers';
 import { Button } from '../../../ui-components';
 
 @Component({
@@ -14,7 +13,7 @@ export class BusinessOwnerFormCore {
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() owner: Owner = {};
+  @State() owner: Owner = {} as Owner;
 
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
@@ -71,11 +70,11 @@ export class BusinessOwnerFormCore {
   }
 
   get payload() {
-    let formValues = parseIdentityInfo(this.formController.values.getValue());
+    let formValues = new Owner(this.formController.values.getValue()).payload;
     if (this.ownerId) {
-      return JSON.stringify(formValues);
+      return formValues
     } else {
-      return JSON.stringify({ ...formValues, business_id: this.businessId });
+      return { ...formValues, business_id: this.businessId };
     }
   }
 
@@ -183,7 +182,7 @@ export class BusinessOwnerFormCore {
   }
 
   instantiateOwner = async (data: Identity) => {
-    this.owner = { ...new Owner(data) };
+    this.owner = { ...new Owner(data) } as Owner;
     await this.formController.setInitialValues(this.owner);
   }
 

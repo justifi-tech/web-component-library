@@ -6,8 +6,6 @@ import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
-import { parseCoreInfo } from '../../utils/payload-parsers';
-import { flattenNestedObject } from '../../../../utils/utils';
 import { numberOnlyHandler } from '../../../form/utils';
 
 @Component({
@@ -33,8 +31,8 @@ export class BusinessCoreInfoFormStepCore {
   };
 
   get patchPayload() {
-    let formValues = parseCoreInfo(flattenNestedObject(this.formController.values.getValue()));
-    return JSON.stringify(formValues);
+    let formValues = new CoreBusinessInfo(this.formController.values.getValue()).payload;
+    return formValues;
   }
 
   componentWillLoad() {

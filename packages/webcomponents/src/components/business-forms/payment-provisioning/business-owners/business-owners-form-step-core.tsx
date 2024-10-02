@@ -12,7 +12,7 @@ export class BusinessOwnersFormStepCore {
   @State() ownersPayload: ownerPayloadItem[] = [];
   @State() refs: any = [];
   @State() newFormOpen: boolean;
-  
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
@@ -68,7 +68,7 @@ export class BusinessOwnersFormStepCore {
     let submittedData;
     this.formLoading.emit(true);
     this.patchBusiness({
-      payload: JSON.stringify({ owners: this.ownersPayload }),
+      payload: { owners: this.ownersPayload },
       onSuccess: (response) => {
         submittedData = response;
         onSuccess();

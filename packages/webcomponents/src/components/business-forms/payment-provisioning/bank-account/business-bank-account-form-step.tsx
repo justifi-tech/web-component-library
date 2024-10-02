@@ -77,7 +77,7 @@ export class BusinessBankAccountFormStep {
     try {
       const formValues = this.formController.values.getValue();
       const payload = { ...formValues, business_id: this.businessId }
-      const response = await this.api.post(this.bankAccountEndpoint, JSON.stringify(payload));
+      const response = await this.api.post(this.bankAccountEndpoint, payload);
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.errorEvent.emit({

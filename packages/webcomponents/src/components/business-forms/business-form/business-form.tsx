@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
-import { parseBusiness } from '../utils/payload-parsers';
 import { config } from '../../../../config';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
@@ -80,8 +79,8 @@ export class BusinessForm {
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
-      const payload = parseBusiness(values, initialValues);
-      const response = await this.api.patch(this.businessEndpoint, JSON.stringify(payload));
+      const payload = new Business({ ...initialValues, ...values }).payload;
+      const response = await this.api.patch(this.businessEndpoint, payload);
       this.handleReponse(response);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
