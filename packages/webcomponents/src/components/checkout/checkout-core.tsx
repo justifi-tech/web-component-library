@@ -33,6 +33,7 @@ export class CheckoutCore {
   @State() serverError: string;
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
+  @State() insuranceEnabled: boolean = true;
   @State() insuranceToggled: boolean = false;
 
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
@@ -198,7 +199,7 @@ export class CheckoutCore {
             {this.summary}
           </div>
           <div class="col-12">
-            <slot name="insurance"></slot>
+            {this.insuranceEnabled && (<slot name="insurance"></slot>)}
           </div>
           <div class="col-12 mt-4">
             <h2 class="fs-5 fw-bold pb-3 jfi-header">Payment</h2>
