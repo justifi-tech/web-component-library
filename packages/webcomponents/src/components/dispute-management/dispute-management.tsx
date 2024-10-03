@@ -8,8 +8,7 @@ export class DisputeManagement {
 
   render() {
     return (
-      <justifi-dispute-management-core>
-      </justifi-dispute-management-core>
+      <justifi-dispute-management-core></justifi-dispute-management-core>
     );
   }
 }
