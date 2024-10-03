@@ -1,5 +1,14 @@
 # @repo/docs
 
+## 0.1.7
+
+### Patch Changes
+
+- b7ba96d: Add security section to relevant component docs
+- b34b1e9: Add note that static client_id is not preferred
+- Updated dependencies [33fb666]
+  - @justifi/webcomponents@4.19.2
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.19.2
+
+### Patch Changes
+
+- 33fb666: Refactor POST/PUT/PATCH api calls so that payloads are stringified in the Api.ts rather than each instance
+
 ## 4.19.1
 
 ### Patch Changes
