@@ -50,9 +50,10 @@
 
 ## Events
 
-| Event                         | Description | Type               |
-| ----------------------------- | ----------- | ------------------ |
-| `paymentMethodOptionSelected` |             | `CustomEvent<any>` |
+| Event                         | Description | Type                          |
+| ----------------------------- | ----------- | ----------------------------- |
+| `error-event`                 |             | `CustomEvent<ComponentError>` |
+| `paymentMethodOptionSelected` |             | `CustomEvent<any>`            |
 
 
 ## Methods

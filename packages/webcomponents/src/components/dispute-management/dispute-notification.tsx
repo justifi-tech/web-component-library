@@ -1,9 +1,18 @@
-import { Component, h } from "@stencil/core";
+import { Component, h, Event, EventEmitter } from "@stencil/core";
 
 @Component({
   tag: 'justifi-dispute-notification',
 })
 export class DisputeNotification {
+  @Event() disputeAction: EventEmitter<{ accept?: boolean, challenge?: boolean }>;
+
+  acceptDispute() {
+    this.disputeAction.emit({ accept: true });
+  }
+
+  challengeDispute() {
+    this.disputeAction.emit({ challenge: true });
+  }
 
   render() {
     return (
@@ -40,8 +49,8 @@ export class DisputeNotification {
           </div>
         </div>
         <div class="d-flex gap-2 mt-4 justify-content-end">
-          <button class="btn btn-outline-primary">Accept dispute</button>
-          <button class="btn btn-primary">Challenge dispute</button>
+          <button class="btn btn-outline-primary" onClick={() => this.acceptDispute()}>Accept dispute</button>
+          <button class="btn btn-primary" onClick={() => this.challengeDispute()}>Challenge dispute</button>
         </div>
       </div>
     );

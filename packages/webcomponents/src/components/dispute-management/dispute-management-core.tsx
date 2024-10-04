@@ -1,4 +1,4 @@
-import { Component, h, State } from "@stencil/core";
+import { Component, h, Listen, State } from "@stencil/core";
 import { StyledHost } from "../../ui-components";
 
 @Component({
@@ -6,6 +6,16 @@ import { StyledHost } from "../../ui-components";
 })
 export class DisputeManagementCore {
   @State() isDisputeNotificationVisible = true;
+
+  @Listen('disputeAction')
+  disputeActionHandler(event: CustomEvent<{ accept?: boolean, challenge?: boolean }>) {
+    if (event.detail.challenge) {
+      this.isDisputeNotificationVisible = false;
+    }
+    if (event.detail.accept) {
+      console.log('accept dispute');
+    }
+  }
 
   render() {
     return (
