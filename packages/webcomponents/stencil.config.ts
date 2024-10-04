@@ -33,8 +33,4 @@ export const config: Config = {
   testing: {
     setupFiles: ['./setupTests.js'],
   },
-  buildEs5: false,
-  // Setting the minify flags to false will help retain console.logs
-  minifyJs: false,
-  minifyCss: false,
 };
