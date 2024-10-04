@@ -8,8 +8,8 @@ export class DisputeManagementCore {
   @State() isDisputeNotificationVisible = true;
 
   @Listen('disputeAction')
-  disputeActionHandler(event: CustomEvent<{ accept?: boolean, challenge?: boolean }>) {
-    if (event.detail.challenge) {
+  disputeActionHandler(event: CustomEvent<{ accept?: boolean, counter?: boolean }>) {
+    if (event.detail.counter) {
       this.isDisputeNotificationVisible = false;
     }
     if (event.detail.accept) {
@@ -23,7 +23,7 @@ export class DisputeManagementCore {
         {this.isDisputeNotificationVisible ? (
           <justifi-dispute-notification></justifi-dispute-notification>
         ) : (
-          <justifi-challenge-dispute></justifi-challenge-dispute>
+          <justifi-counter-dispute></justifi-counter-dispute>
         )}
       </StyledHost>
     );

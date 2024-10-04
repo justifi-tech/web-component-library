@@ -1,16 +1,16 @@
 import { Component, h } from "@stencil/core";
 
 @Component({
-  tag: 'justifi-challenge-dispute',
+  tag: 'justifi-counter-dispute',
 })
-export class ChallengeDispute {
+export class CouterDispute {
 
   render() {
     return (
       <div>
         <div class="row gy-3">
           <div class="col-12">
-            <h1 class="h4">Challenge Dispute</h1>
+            <h1 class="h4">Counter dispute</h1>
           </div>
 
           <div class="col-12">

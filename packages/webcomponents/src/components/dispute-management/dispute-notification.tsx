@@ -4,14 +4,14 @@ import { Component, h, Event, EventEmitter } from "@stencil/core";
   tag: 'justifi-dispute-notification',
 })
 export class DisputeNotification {
-  @Event() disputeAction: EventEmitter<{ accept?: boolean, challenge?: boolean }>;
+  @Event() disputeAction: EventEmitter<{ accept?: boolean, counter?: boolean }>;
 
   acceptDispute() {
     this.disputeAction.emit({ accept: true });
   }
 
-  challengeDispute() {
-    this.disputeAction.emit({ challenge: true });
+  counterDispute() {
+    this.disputeAction.emit({ counter: true });
   }
 
   render() {
@@ -19,7 +19,7 @@ export class DisputeNotification {
       <div>
         <h1 class="h4">This payment was disputed</h1>
         <p>The cardholder for this payment claims that the product was not received.</p>
-        <p>you can either challenge the dispute by presenting proof of the product's delivery to or use by the cardholder, or you can choose to accept the dispute right away, refund the cardholder, and resolve the matter.</p>
+        <p>you can either counter the dispute by presenting proof of the product's delivery to or use by the cardholder, or you can choose to accept the dispute right away, refund the cardholder, and resolve the matter.</p>
 
         <h2 class="h5">Dispute details</h2>
         <div class="d-table gap-2">
@@ -50,7 +50,7 @@ export class DisputeNotification {
         </div>
         <div class="d-flex gap-2 mt-4 justify-content-end">
           <button class="btn btn-outline-primary" onClick={() => this.acceptDispute()}>Accept dispute</button>
-          <button class="btn btn-primary" onClick={() => this.challengeDispute()}>Challenge dispute</button>
+          <button class="btn btn-primary" onClick={() => this.counterDispute()}>Counter dispute</button>
         </div>
       </div>
     );
