@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
-import { FormController } from '../../form/form';
+import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError } from '../../../api/ComponentError';

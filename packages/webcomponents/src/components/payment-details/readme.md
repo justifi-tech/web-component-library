@@ -27,7 +27,7 @@
 
 ### Depends on
 
-- [justifi-details](../details)
+- [justifi-details](../../ui-components/details)
 
 ### Graph
 ```mermaid
