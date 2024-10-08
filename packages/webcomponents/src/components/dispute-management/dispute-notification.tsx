@@ -49,7 +49,7 @@ export class DisputeNotification {
           </div>
         </div>
         <div class="d-flex gap-2 mt-4 justify-content-end">
-          <button class="btn btn-outline-primary" onClick={() => this.acceptDispute()}>Accept dispute</button>
+          <button class="btn btn-secondary" onClick={() => this.acceptDispute()}>Accept dispute</button>
           <button class="btn btn-primary" onClick={() => this.counterDispute()}>Counter dispute</button>
         </div>
       </div>

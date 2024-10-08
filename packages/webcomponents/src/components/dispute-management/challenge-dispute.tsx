@@ -49,7 +49,8 @@ export class CouterDispute {
                 />
               </div>
               <div class="col-12">
-                Billing address
+                <h3 class="h6">Billing address</h3>
+                <justifi-billing-form></justifi-billing-form>
               </div>
             </div>
           </div>
@@ -64,8 +65,11 @@ export class CouterDispute {
           </div>
 
           <div class="col-12">
-            <h2 class=""></h2>
+            <form-control-checkbox label="I understand that I can only submit this information once and have provided as much evidence as possible"></form-control-checkbox>
           </div>
+        </div>
+        <div class="d-flex gap-2 mt-4 justify-content-end">
+          <button class="btn btn-primary">Submit Evidence</button>
         </div>
       </div>
     );
