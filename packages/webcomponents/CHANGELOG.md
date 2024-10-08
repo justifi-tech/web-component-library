@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.19.3
+
+### Patch Changes
+
+- b48f8a0: Use environment variables and point iframe components to `iframe-components` application rather than `payments-js`
+
 ## 4.19.2
 
 ### Patch Changes
