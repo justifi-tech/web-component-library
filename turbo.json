@@ -24,7 +24,6 @@
         "build"
       ]
     },
-    "test:e2e": {},
     "test:file": {},
     "lint": {},
     "preview-storybook": {

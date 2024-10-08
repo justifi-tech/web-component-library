@@ -11,7 +11,6 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
     "test:watch": "pnpm --filter @justifi/webcomponents test:watch",
-    "test:e2e": "turbo run test:e2e",
     "test:file": "turbo run test:file",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",

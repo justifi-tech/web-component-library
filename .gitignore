@@ -9,3 +9,4 @@ node_modules
 .turbo
 packages/mockData/mockGrossVolumeReport.js.map
 packages/mockData/mockGrossVolumeReport.js
+apps/docs/.env

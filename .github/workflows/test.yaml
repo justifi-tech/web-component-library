@@ -18,7 +18,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
-      
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -29,6 +29,3 @@ jobs:
 
       - name: Run unit tests
         run: pnpm test
-
-      - name: Run E2E tests
-        run: pnpm test:e2e

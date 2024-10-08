@@ -64,7 +64,8 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
   createServer({
     routes() {
       // Primary URL prefix for API requests
-      this.urlPrefix = 'https://wc-proxy.justifi.ai/v1';
+      this.urlPrefix = __VITE_STORYBOOK_PROXY_API_ORIGIN__;
+      this.namespace = '/v1';
 
       // BusinessOwner
       this.get(API_PATHS.EXISTING_BUSINESS_OWNER, () => mockBusinessOwner);
@@ -88,9 +89,15 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       this.post(API_PATHS.BUSINESS_DOCUMENT_RECORD, () => mockDocumentUpload);
 
-      this.post(API_PATHS.BUSINESS_TERMS_AND_CONDITIONS, () => mockBusinessTerms);
+      this.post(
+        API_PATHS.BUSINESS_TERMS_AND_CONDITIONS,
+        () => mockBusinessTerms
+      );
 
-      this.post(API_PATHS.BUSINESS_PROVISIONING, () => mockBusinessProvisioning);
+      this.post(
+        API_PATHS.BUSINESS_PROVISIONING,
+        () => mockBusinessProvisioning
+      );
 
       // GrossPaymentChart
       this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChartMock);
@@ -115,11 +122,15 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       this.post(API_PATHS.ANALYTICS, () => null);
 
       // InsuranceQuotes
-      this.post(API_PATHS.INSURANCE_QUOTES, () => mockSeasonInterruptionInsurance);
+      this.post(
+        API_PATHS.INSURANCE_QUOTES,
+        () => mockSeasonInterruptionInsurance
+      );
 
       // Secondary URL prefix for API requests
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
-      this.urlPrefix = 'https://entities-production-documents.s3.us-east-2.amazonaws.com'
+      this.urlPrefix =
+        'https://entities-production-documents.s3.us-east-2.amazonaws.com';
 
       // BusinessDocumentUpload
 
@@ -130,7 +141,6 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
-
     },
   });
 };
