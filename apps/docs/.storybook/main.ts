@@ -1,5 +1,8 @@
+import * as dotenv from 'dotenv';
 import { dirname, join } from 'path';
 import { mergeConfig } from 'vite';
+
+dotenv.config();
 
 const config = {
   framework: getAbsolutePath('@storybook/web-components-vite'),
@@ -25,14 +28,16 @@ const config = {
     builder: '@storybook/builder-vite',
   },
   async viteFinal(config) {
-    const storybookMocksEnabled = process.env.VITE_STORYBOOK_MOCKS_ENABLED;
-    const storybookChromaticBuild = process.env.VITE_STORYBOOK_CHROMATIC_BUILD;
-
     return mergeConfig(config, {
       define: {
-        __VITE_STORYBOOK_MOCKS_ENABLED__: JSON.stringify(storybookMocksEnabled),
+        __VITE_STORYBOOK_MOCKS_ENABLED__: JSON.stringify(
+          process.env.VITE_STORYBOOK_MOCKS_ENABLED
+        ),
         __VITE_STORYBOOK_CHROMATIC_BUILD__: JSON.stringify(
-          storybookChromaticBuild
+          process.env.VITE_STORYBOOK_CHROMATIC_BUILD
+        ),
+        __VITE_STORYBOOK_PROXY_API_ORIGIN__: JSON.stringify(
+          process.env.PROXY_API_ORIGIN
         ),
       },
       resolve: {

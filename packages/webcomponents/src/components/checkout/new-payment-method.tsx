@@ -27,7 +27,6 @@ export class NewPaymentMethod {
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
 
-
   @Listen('checkboxChanged')
   handleCheckboxChanged(event: CustomEvent<boolean>) {
     this.saveNewPaymentMethodChecked = event.detail;

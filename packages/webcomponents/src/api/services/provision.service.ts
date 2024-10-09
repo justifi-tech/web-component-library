@@ -7,7 +7,7 @@ export interface IProvisionService {
     businessId: string,
     product: string
   ): Promise<IApiResponse<any>>;
-};
+}
 
 export class ProvisionService implements IProvisionService {
   async postProvisioning(
@@ -18,7 +18,7 @@ export class ProvisionService implements IProvisionService {
     const endpoint = `entities/provisioning`;
     const payload = {
       business_id: businessId,
-      product_category: product
+      product_category: product,
     };
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
