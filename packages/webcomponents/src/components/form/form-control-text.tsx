@@ -54,13 +54,14 @@ export class TextInput {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts="label,input,input-invalid,tooltip">
         <div class="form-group d-flex flex-column">
           <div class='d-flex gap-2'>
-            <label part="label" class="form-label" htmlFor={this.name}>
-              {this.label}
-            </label>
-            <form-control-tool-tip text={this.toolTipText} />
+            <custom-tool-tip text={this.toolTipText} exportparts='tooltip'>
+              <label part="label" class="form-label" htmlFor={this.name}>
+                {this.label}
+              </label>
+            </custom-tool-tip>
           </div>
           <input
             id={this.name}

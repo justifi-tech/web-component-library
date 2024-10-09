@@ -67,6 +67,7 @@ export class BusinessCoreInfoFormStep {
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
         ref={el => this.coreComponent = el}
+        exportparts='tooltip'
       />
     );
   }

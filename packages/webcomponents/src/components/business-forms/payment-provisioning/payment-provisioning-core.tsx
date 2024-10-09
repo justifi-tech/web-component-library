@@ -123,7 +123,7 @@ export class PaymentProvisioningCore {
 
   render() {
     return (
-      <StyledHost exportparts='label,input,input-invalid'>
+      <StyledHost exportparts='label,input,input-invalid,tooltip'>
         <div class='row gap-3'>
           <h1>{this.formTitle}</h1>
           <justifi-payment-provisioning-form-steps
@@ -134,6 +134,7 @@ export class PaymentProvisioningCore {
             allowOptionalFields={this.allowOptionalFields}
             handleFormLoading={this.handleFormLoading}
             onFormCompleted={() => this.postProvisioningData()}
+            exportparts='tooltip'
           />
           <div class='d-flex justify-content-between align-items-center'>
             <div class='d-flex align-items-center'>

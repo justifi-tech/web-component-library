@@ -122,6 +122,7 @@
   --bs-form-valid-border-color: #198754;
   --bs-form-invalid-color: #dc3545;
   --bs-form-invalid-border-color: #dc3545;
+
 }
 
 :root {
@@ -211,9 +212,6 @@
   --jfi-error-message-color: var(--bs-form-invalid-color);
   --jfi-error-message-margin: 0.25rem 0 0 0;
   --jfi-error-message-font-size: 0.875em;
-  --jfi-tooltip-background-color: var(--bs-dark-bg-subtle);
-  --jfi-tooltip-color: var(--jfi-form-label-color)
-
   table-layout: fixed;
 }
 
@@ -366,11 +364,51 @@
 }
 
 .tooltip {
-  background-color: var(--jfi-tooltip-background-color);
-  color: var(--jfi-tooltip-color);
+  background-color: #000; /* Bootstrap default background color */
+  color: #fff; /* Bootstrap default text color */
   font-family: var(--jfi-layout-font-family);
+  font-size: 0.875rem; /* Bootstrap default font size */
+  padding: 0.25rem 0.5rem; /* Bootstrap default padding */
+  border-radius: 0.25rem; /* Bootstrap default border radius */
+  max-width: 200px; /* Bootstrap default max width */
+  text-align: center; /* Bootstrap default text alignment */
+  opacity: 0; /* Bootstrap default opacity */
+  transition: opacity 0.15s; /* Bootstrap default transition */
 }
 
-.tooltip-arrow {
-  background-color: var(--jfi-tooltip-background-color);
+.tooltip.show {
+  opacity: 0.9; /* Bootstrap default show opacity */
+}
+
+.tooltip .tooltip-arrow {
+  position: absolute;
+  width: 0.8rem;
+  height: 0.4rem;
+  background-color: #000;
+  border: none; /* Remove any border */
+  margin: 0; /* Remove margin */
+}
+
+.tooltip[data-popper-placement^='top'] .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip[data-popper-placement^='bottom'] .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip[data-popper-placement^='left'] .tooltip-arrow {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tooltip[data-popper-placement^='right'] .tooltip-arrow {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }

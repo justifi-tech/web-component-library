@@ -38,6 +38,7 @@ graph TD;
   justifi-business-core-info --> form-control-select
   justifi-business-core-info --> form-control-date
   justifi-business-core-info --> form-control-number-masked
+  form-control-text --> custom-tool-tip
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-select --> form-control-help-text

@@ -23,6 +23,7 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
       allowOptionalFields={this.allowOptionalFields}
+      exportparts='tooltip'
     />,
     1: () => <justifi-legal-address-form-step
       businessId={this.businessId}

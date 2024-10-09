@@ -1,4 +1,4 @@
-# form-control-text
+# form-control-tool-tip
 
 
 
@@ -12,17 +12,26 @@
 | `text`   | `text`    |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part        | Description |
+| ----------- | ----------- |
+| `"tooltip"` |             |
+
+
 ## Dependencies
 
-### Depends on
+### Used by
 
-- [custom-tool-tip](../../ui-components)
+ - [form-control-text](../components/form)
+ - [form-control-tool-tip](../components/form)
 
 ### Graph
 ```mermaid
 graph TD;
+  form-control-text --> custom-tool-tip
   form-control-tool-tip --> custom-tool-tip
-  style form-control-tool-tip fill:#f9f,stroke:#333,stroke-width:4px
+  style custom-tool-tip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

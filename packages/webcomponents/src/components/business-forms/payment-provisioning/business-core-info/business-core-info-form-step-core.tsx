@@ -101,7 +101,7 @@ export class BusinessCoreInfoFormStepCore {
     const coreInfoDefaultValue = this.formController.getInitialValues();
 
     return (
-      <form>
+      <form exportparts='tooltip'>
         <fieldset>
           <legend>General Info</legend>
           <hr />
@@ -113,6 +113,7 @@ export class BusinessCoreInfoFormStepCore {
                 defaultValue={coreInfoDefaultValue.legal_name}
                 errorText={this.errors.legal_name}
                 inputHandler={this.inputHandler}
+                toolTipText='The legal name of your business as registered with the IRS'
               />
             </div>
             <div class='col-12'>

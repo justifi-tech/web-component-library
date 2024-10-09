@@ -65,6 +65,7 @@ graph TD;
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
   owner-form-inputs --> justifi-identity-address-form
+  form-control-text --> custom-tool-tip
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text
