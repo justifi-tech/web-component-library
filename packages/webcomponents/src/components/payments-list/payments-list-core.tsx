@@ -3,7 +3,8 @@ import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { Button, StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { TextFilter } from '../../ui-components/filters/text-filter';
 
 @Component({
   tag: 'payments-list-core',
@@ -15,7 +16,7 @@ export class PaymentsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any;
+  @State() params: any = {};
 
   @Event({
     eventName: 'payment-row-clicked',
@@ -80,6 +81,18 @@ export class PaymentsListCore {
     return this.payments.map((payment) => payment.id);
   }
 
+  get paymentStatusOptions() {
+    return [
+      { label: 'All', value: '' },
+      { label: 'Pending', value: 'pending' },
+      { label: 'Authorized', value: 'authorized' },
+      { label: 'Succeeded', value: 'succeeded' },
+      { label: 'Failed', value: 'failed' },
+      { label: 'Disputed', value: 'disputed' },
+      { label: 'Refunded', value: 'refunded' }
+    ]
+  }
+
   get columnData() {
     return [
       ['Made On', 'The date and time each payment was made'],
@@ -125,8 +138,16 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  handleDateChange = (name: string, value: string) => {
+  updateParamsOnChange = (name: string, value: string) => {
     this.params = { ...this.params, [name]: value };
+  }
+
+  setParamsOnChange = (value: any) => {
+    this.params = { ...this.params, ...value };
+  }
+
+  clearParams = () => {
+    this.params = {};
   }
 
   render() {
@@ -134,18 +155,39 @@ export class PaymentsListCore {
       <StyledHost exportparts={tableExportedParts}>
         <div class="row gy-3 mb-4">
           <div class="col-2">
+            <TextFilter
+              name="terminal_id"
+              label="Terminal ID"
+              setParamsOnChange={this.setParamsOnChange}
+              params={this.params}
+            />
+          </div>
+          <div class="col-2">
+            <form-control-select
+              name="payment_status"
+              label="Payment Status"
+              inputHandler={this.updateParamsOnChange}
+              options={this.paymentStatusOptions}
+            />
+          </div>
+          <div class="col-2">
             <form-control-date
               name="created_after"
               label="Start Date"
-              inputHandler={this.handleDateChange}
+              inputHandler={this.updateParamsOnChange}
             />
           </div>
           <div class="col-2">
             <form-control-date
               name="created_before"
               label="End Date"
-              inputHandler={this.handleDateChange}
+              inputHandler={this.updateParamsOnChange}
             />
+          </div>
+          <div class="col-2">
+            <Button variant="primary" onClick={this.clearParams}>
+              Clear Filters
+            </Button>
           </div>
         </div>
         <div class="table-wrapper">
