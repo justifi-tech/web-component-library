@@ -1,10 +1,9 @@
-import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
-import { Button, StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { TextFilter } from '../../ui-components/filters/text-filter';
+import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({
   tag: 'payments-list-core',
@@ -24,6 +23,16 @@ export class PaymentsListCore {
   }) rowClicked: EventEmitter<Payment>;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+
+  @Listen('clearParams')
+  clearFilters() {
+    this.clearParams();
+  }
+
+  @Listen('setParamsOnChange')
+  setParams(event: CustomEvent) {
+    this.setParamsOnChange(event.detail);
+  }
 
   @Watch('params')
   @Watch('getPayments')
@@ -138,9 +147,9 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  updateParamsOnChange = (name: string, value: string) => {
-    this.params = { ...this.params, [name]: value };
-  }
+  // updateParamsOnChange = (name: string, value: string) => {
+  //   this.params = { ...this.params, [name]: value };
+  // }
 
   setParamsOnChange = (value: any) => {
     this.params = { ...this.params, ...value };
@@ -153,24 +162,23 @@ export class PaymentsListCore {
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <div class="row gy-3 mb-4">
+        <table-filters params={this.params}>
           <div class="col-2">
-            <TextFilter
+            <text-filter
               name="terminal_id"
               label="Terminal ID"
-              setParamsOnChange={this.setParamsOnChange}
               params={this.params}
             />
           </div>
           <div class="col-2">
-            <form-control-select
+            <select-filter
               name="payment_status"
-              label="Payment Status"
-              inputHandler={this.updateParamsOnChange}
+              label="Status"
               options={this.paymentStatusOptions}
+              params={this.params}
             />
           </div>
-          <div class="col-2">
+          {/* <div class="col-2">
             <form-control-date
               name="created_after"
               label="Start Date"
@@ -183,13 +191,8 @@ export class PaymentsListCore {
               label="End Date"
               inputHandler={this.updateParamsOnChange}
             />
-          </div>
-          <div class="col-2">
-            <Button variant="primary" onClick={this.clearParams}>
-              Clear Filters
-            </Button>
-          </div>
-        </div>
+          </div> */}
+        </table-filters>
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
