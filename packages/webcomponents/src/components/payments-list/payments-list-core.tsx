@@ -29,7 +29,7 @@ export class PaymentsListCore {
     this.clearParams();
   }
 
-  @Listen('setParamsOnChange')
+  @Listen('emitParams')
   setParams(event: CustomEvent) {
     this.setParamsOnChange(event.detail);
   }
@@ -147,9 +147,9 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  // updateParamsOnChange = (name: string, value: string) => {
-  //   this.params = { ...this.params, [name]: value };
-  // }
+  updateParamsOnChange = (name: string, value: string) => {
+    this.params = { ...this.params, [name]: value };
+  }
 
   setParamsOnChange = (value: any) => {
     this.params = { ...this.params, ...value };
@@ -162,7 +162,7 @@ export class PaymentsListCore {
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <table-filters params={this.params}>
+        <div class="row gy-3 mb-4">
           <div class="col-2">
             <text-filter
               name="terminal_id"
@@ -178,21 +178,21 @@ export class PaymentsListCore {
               params={this.params}
             />
           </div>
-          {/* <div class="col-2">
-            <form-control-date
+          <div class="col-2">
+            <date-filter
               name="created_after"
               label="Start Date"
-              inputHandler={this.updateParamsOnChange}
+              params={this.params}
             />
           </div>
           <div class="col-2">
-            <form-control-date
+            <date-filter
               name="created_before"
               label="End Date"
-              inputHandler={this.updateParamsOnChange}
+              params={this.params}
             />
-          </div> */}
-        </table-filters>
+          </div>
+        </div>
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">

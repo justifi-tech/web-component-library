@@ -8,31 +8,27 @@ export class SelectFilter {
   @Prop() label: string;
   @Prop() options: { label: string; value: string }[];
   @Prop() params: any;
-  @Event() setParamsOnChange: EventEmitter<any>;
 
-  // private renderValue(selected: string) {
-  //   return this.t(`${this.optionTranslationKey}.${selected}`);
-  // }
+  @Event() emitParams: EventEmitter<any>;
 
   private handleChange(event: Event) {
     const target = event.target as HTMLSelectElement;
-    this.setParamsOnChange.emit({ [this.name]: target.value });
+    this.emitParams.emit({ [this.name]: target.value });
   }
   
 
   render() {
     return (
-      <div class="form-group">
-        <label class="form-label">
+      <div class='form-group'>
+        <label class='form-label'>
           {this.label}
         </label>
         <select
           name={this.name}
-          class="form-control"
-          // value={this.params[this.name] || ''}
+          class='form-control'
           onChange={(e) => this.handleChange(e)}
+          part={'input'}
         >
-          <option value="">All</option>
           {this.options.map((option: { label: string; value: string }, index) => (
             <option value={option.value} key={index}>
               {option.label}

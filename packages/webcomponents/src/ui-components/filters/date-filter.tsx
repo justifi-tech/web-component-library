@@ -1,9 +1,9 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
-  tag: 'text-filter'
+  tag: 'date-filter'
 })
-export class TextFilter {
+export class DateFilter {
   @Prop() name: string;
   @Prop() label: string;
   @Prop() params: any;
@@ -23,7 +23,7 @@ export class TextFilter {
           {this.label}
         </label>
         <input
-          type='text'
+          type='date'
           name={this.name}
           value={this.params[this.name] || ''}
           placeholder={this.placeholder}
