@@ -39,19 +39,19 @@
 
 ### Used by
 
- - [justifi-additional-questions](../business-forms/business-form/additional-questions)
- - [justifi-additional-questions-form-step-core](../business-forms/payment-provisioning/additional-questions)
- - [justifi-billing-form](../billing-form)
- - [justifi-business-bank-account-form-step](../business-forms/payment-provisioning/bank-account)
- - [justifi-business-core-info](../business-forms/business-form/business-core-info)
- - [justifi-business-core-info-form-step-core](../business-forms/payment-provisioning/business-core-info)
- - [justifi-business-representative](../business-forms/business-form/business-representative)
- - [justifi-business-representative-form-inputs](../business-forms/payment-provisioning/business-representative)
- - [justifi-identity-address-form](../business-forms/owner-form/identity-address)
- - [justifi-legal-address-form](../business-forms/business-form/legal-address-form)
- - [justifi-legal-address-form-step-core](../business-forms/payment-provisioning/legal-address-form)
- - [justifi-refund-form](../refund-form)
- - [owner-form-inputs](../business-forms/owner-form)
+ - [justifi-additional-questions](../../components/business-forms/business-form/additional-questions)
+ - [justifi-additional-questions-form-step-core](../../components/business-forms/payment-provisioning/additional-questions)
+ - [justifi-billing-form](../../components/billing-form)
+ - [justifi-business-bank-account-form-step](../../components/business-forms/payment-provisioning/bank-account)
+ - [justifi-business-core-info](../../components/business-forms/business-form/business-core-info)
+ - [justifi-business-core-info-form-step-core](../../components/business-forms/payment-provisioning/business-core-info)
+ - [justifi-business-representative](../../components/business-forms/business-form/business-representative)
+ - [justifi-business-representative-form-inputs](../../components/business-forms/payment-provisioning/business-representative)
+ - [justifi-identity-address-form](../../components/business-forms/owner-form/identity-address)
+ - [justifi-legal-address-form](../../components/business-forms/business-form/legal-address-form)
+ - [justifi-legal-address-form-step-core](../../components/business-forms/payment-provisioning/legal-address-form)
+ - [justifi-refund-form](../../components/refund-form)
+ - [owner-form-inputs](../../components/business-forms/owner-form)
 
 ### Depends on
 

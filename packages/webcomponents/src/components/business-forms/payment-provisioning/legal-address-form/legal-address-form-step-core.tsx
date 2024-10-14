@@ -1,11 +1,11 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { addressSchema } from '../../schemas/business-address-schema';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import StateOptions from '../../../../utils/state-options';
-import { numberOnlyHandler } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'

@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 
@@ -21,7 +21,7 @@ export class RepresentativeFormInputs {
       ...values,
     });
   }
-  
+
   render() {
     return (
       <form>

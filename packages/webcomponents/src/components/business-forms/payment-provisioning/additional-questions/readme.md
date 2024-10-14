@@ -50,9 +50,9 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [form-control-monetary](../../../form)
-- [form-control-select](../../../form)
-- [form-control-text](../../../form)
+- [form-control-monetary](../../../../ui-components/form)
+- [form-control-select](../../../../ui-components/form)
+- [form-control-text](../../../../ui-components/form)
 
 ### Graph
 ```mermaid

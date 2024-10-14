@@ -8,7 +8,7 @@ import {
 } from '@stencil/core';
 import RefundFormSchema, { RefundFormFields } from './refund-form-schema';
 import { Api } from '../../api';
-import { FormController } from '../form/form';
+import { FormController } from '../../ui-components/form/form';
 import { config } from '../../../config';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
 import { StyledHost } from '../../ui-components';
