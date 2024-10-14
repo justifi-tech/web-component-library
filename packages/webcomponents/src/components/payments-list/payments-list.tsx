@@ -4,6 +4,7 @@ import { makeGetPayments } from './get-payments';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 /**
   * @exportedPart label: Label for inputs
@@ -44,6 +45,7 @@ export class PaymentsList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetPayments();
   }

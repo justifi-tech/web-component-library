@@ -4,6 +4,7 @@ import { makeGetGrossPaymentChartData } from './get-gross-payment-chart-data';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 @Component({
   tag: 'justifi-gross-payment-chart',
@@ -21,6 +22,7 @@ export class GrossPaymentChart {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetGrossPayment();
   }
