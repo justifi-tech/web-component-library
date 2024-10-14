@@ -19,6 +19,7 @@ export class TextInput {
   @Prop() name: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
+  @Prop() toolTipText?: string;
   @Prop() defaultValue: string;
   @Prop() maxLength?: number;
   @Prop() inputHandler: (name: string, value: string) => void;
@@ -53,11 +54,15 @@ export class TextInput {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts="label,input,input-invalid,tooltip">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+          <div class='d-flex gap-2'>
+            <custom-tool-tip text={this.toolTipText} exportparts='tooltip'>
+              <label part="label" class="form-label" htmlFor={this.name}>
+                {this.label}
+              </label>
+            </custom-tool-tip>
+          </div>
           <input
             id={this.name}
             name={this.name}
@@ -66,7 +71,7 @@ export class TextInput {
             onKeyDown={this.keyDownHandler}
             onPaste={this.keyDownHandler}
             maxLength={this.maxLength}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
+            part={`input input-group-input-start ${this.errorText && 'input-invalid'}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
             disabled={this.disabled}

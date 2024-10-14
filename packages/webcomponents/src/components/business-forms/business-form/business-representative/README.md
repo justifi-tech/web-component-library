@@ -32,6 +32,7 @@ graph TD;
   justifi-business-representative --> form-control-number-masked
   justifi-business-representative --> form-control-date
   justifi-business-representative --> justifi-identity-address-form
+  form-control-text --> custom-tool-tip
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   form-control-number-masked --> form-control-help-text

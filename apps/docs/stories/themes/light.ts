@@ -15,6 +15,10 @@ justifi-payment-provisioning {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
+justifi-payment-provisioning::part(tooltip) {
+  background-color: red;
+}
+
 
 justifi-checkout,
 justifi-payment-form {

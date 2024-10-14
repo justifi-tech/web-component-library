@@ -34,6 +34,7 @@ export class PaymentsListCore {
     if (this.getPayments) {
       this.fetchData();
     }
+    console.log('Web components linked!')
   }
 
   fetchData(): void {

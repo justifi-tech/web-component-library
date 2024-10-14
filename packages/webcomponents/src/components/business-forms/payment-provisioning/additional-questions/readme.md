@@ -64,6 +64,7 @@ graph TD;
   form-control-monetary --> form-control-error-text
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
+  form-control-text --> custom-tool-tip
   form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
