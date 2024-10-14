@@ -4,14 +4,14 @@ import { Component, h, Event, EventEmitter } from "@stencil/core";
   tag: 'justifi-dispute-notification',
 })
 export class DisputeNotification {
-  @Event() disputeAction: EventEmitter<{ accept?: boolean, counter?: boolean }>;
+  @Event() updateStep: EventEmitter<{ step: 'submit' | 'next' }>;
 
   acceptDispute() {
-    this.disputeAction.emit({ accept: true });
+    this.updateStep.emit({ step: 'submit' });
   }
 
   counterDispute() {
-    this.disputeAction.emit({ counter: true });
+    this.updateStep.emit({ step: 'next' });
   }
 
   render() {

@@ -1,9 +1,16 @@
-import { Component, h } from "@stencil/core";
+import { Component, h, State } from "@stencil/core";
 
 @Component({
-  tag: 'justifi-counter-dispute',
+  tag: 'justifi-upload-dispute-evidence',
 })
-export class CouterDispute {
+export class UploadDisputeEvidence {
+  @State() shippingAddressSameAsBilling = true;
+
+  shippingAddressSameAsBillingChanged(name: string, value: boolean) {
+    console.log('name', name);
+    console.log('same?', value);
+    this.shippingAddressSameAsBilling = value;
+  }
 
   render() {
     return (
@@ -14,7 +21,7 @@ export class CouterDispute {
           </div>
 
           <div class="col-12">
-            <h2 class="h5">Upload evidence</h2>
+            <h2 class="h5">Step 2: Upload evidence</h2>
             <p>
               Upload as much of the recommended evidence as possible to build the best case for your counter-dispute.
               If you have additional evidence you would like to provide you may upload it as well.
@@ -36,12 +43,7 @@ export class CouterDispute {
           <div class="col-12">
             <h2 class="h5">Customer details</h2>
             <div class="row gy-3">
-              <div class="col-12">
-                <form-control-text
-                  name="customerName"
-                  label="Customer name"
-                />
-              </div>
+
               <div class="col-12">
                 <form-control-text
                   name="email"
@@ -49,7 +51,6 @@ export class CouterDispute {
                 />
               </div>
               <div class="col-12">
-                <h3 class="h6">Billing address</h3>
                 <justifi-billing-form></justifi-billing-form>
               </div>
             </div>
@@ -59,8 +60,18 @@ export class CouterDispute {
             <h2 class="h5">Shipping details</h2>
             <div class="row gy-3">
               <div class="col-12">
-                Shipping address
+                <form-control-checkbox
+                  name="shippingAddressSameAsBilling"
+                  label="Shipping address same as billing"
+                  defaultValue={this.shippingAddressSameAsBilling}
+                  inputHandler={this.shippingAddressSameAsBillingChanged}
+                />
               </div>
+              {!this.shippingAddressSameAsBilling && (
+                <div class="col-12">
+                  <justifi-billing-form></justifi-billing-form>
+                </div>
+              )}
             </div>
           </div>
 

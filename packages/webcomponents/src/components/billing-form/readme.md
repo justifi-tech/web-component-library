@@ -55,6 +55,7 @@ Type: `Promise<{ isValid: boolean; }>`
 
 ### Used by
 
+ - [justifi-counter-dispute](../dispute-management)
  - [justifi-new-payment-method](../checkout)
  - [justifi-payment-form](../payment-form)
 
@@ -72,6 +73,7 @@ graph TD;
   form-control-text --> form-control-error-text
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
+  justifi-counter-dispute --> justifi-billing-form
   justifi-new-payment-method --> justifi-billing-form
   justifi-payment-form --> justifi-billing-form
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
