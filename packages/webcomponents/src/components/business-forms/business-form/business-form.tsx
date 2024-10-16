@@ -7,6 +7,7 @@ import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErr
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { StyledHost } from '../../../ui-components';
+import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 /**
  * @exportedPart label: Label for inputs
@@ -33,6 +34,7 @@ export class BusinessForm {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
     const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';

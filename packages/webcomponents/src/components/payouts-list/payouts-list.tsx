@@ -6,6 +6,7 @@ import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 /**
   * @exportedPart label: Label for inputs
@@ -47,6 +48,7 @@ export class PayoutsList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeServices();
   }

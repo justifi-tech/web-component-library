@@ -4,6 +4,7 @@ import { makeGetPaymentDetails } from './get-payment-details';
 import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 /**
   * @exportedPart detail-loading-spinner
@@ -45,6 +46,7 @@ export class PaymentDetails {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetPaymentDetails();
   }

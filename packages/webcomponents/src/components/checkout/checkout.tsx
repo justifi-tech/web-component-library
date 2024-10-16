@@ -5,6 +5,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { ILoadedEventResponse } from '../../api';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 @Component({
   tag: 'justifi-checkout',
@@ -32,6 +33,7 @@ export class Checkout {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetCheckout();
   }
