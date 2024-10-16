@@ -19,7 +19,7 @@ export class DisputeNotification {
       <div>
         <h1 class="h4">This payment was disputed</h1>
         <p>The cardholder for this payment claims that the product was not received.</p>
-        <p>you can either counter the dispute by presenting proof of the product's delivery to or use by the cardholder, or you can choose to accept the dispute right away, refund the cardholder, and resolve the matter.</p>
+        <p>You can either counter the dispute by presenting proof of the product's delivery to or use by the cardholder, or you can choose to accept the dispute right away, refund the cardholder, and resolve the matter.</p>
 
         <h2 class="h5">Dispute details</h2>
         <div class="d-table gap-2">
