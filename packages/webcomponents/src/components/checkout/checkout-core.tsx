@@ -215,7 +215,7 @@ export class CheckoutCore {
                 disabled={this.isLoading}
                 isLoading={this.isLoading}
                 style={{ width: '100%' }}
-                part="submit-button"
+                part="button-primary"
               >
                 Pay
               </Button>

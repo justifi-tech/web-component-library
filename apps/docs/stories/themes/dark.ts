@@ -77,16 +77,17 @@ justifi-checkout::part(payment-method-header):hover {
   cursor: pointer;
 }
 
-justifi-checkout::part(submit-button) {
+justifi-checkout::part(button-primary) {
   background-color: #FFF05A;
   border-color: #FFF054;
   color: #000;
   border-radius: 4px;
 }
 
-justifi-checkout::part(submit-button):hover {
+justifi-checkout::part(button-primary):hover {
   background-color: #FFD25A;
-  border-color: @FFFD25A;
+  border-color: #FFD25A;
+  color: #000;
 }
 
 justifi-checkout::part(form-check-input) {

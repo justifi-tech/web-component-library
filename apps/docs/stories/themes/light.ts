@@ -113,7 +113,7 @@ justifi-checkout::part(form-check-input-checked) {
   background-color: #333;
 }
 
-justifi-checkout::part(submit-button) {
+justifi-checkout::part(button-primary) {
   width: 100%;
   padding: 6px 18px;
   font-size: 16px;
@@ -127,8 +127,10 @@ justifi-checkout::part(submit-button) {
   border-color: #333;
 }
 
-justifi-checkout::part(submit-button):hover {
+justifi-checkout::part(button-primary):hover {
   background-color: rgba(0, 0, 0, .05);
+  border-color: #333;
+  color: #333;
 }
 
 :root {
