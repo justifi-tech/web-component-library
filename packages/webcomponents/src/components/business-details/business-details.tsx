@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
-import { ErrorState } from '../details/utils';
+import { ErrorState } from '../../ui-components/details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from './get-business';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';

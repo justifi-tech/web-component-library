@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { PHONE_MASKS, SSN_MASK } from '../../../utils/form-input-masks';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../utils/input-handlers';
-import { FormController } from '../../form/form';
+import { FormController } from '../../../components';
 
 @Component({
   tag: 'owner-form-inputs'
@@ -21,7 +21,7 @@ export class BusinessOwnerFormInputs {
       ...values,
     });
   }
-  
+
   render() {
     return (
       <div class='row gy-3'>
