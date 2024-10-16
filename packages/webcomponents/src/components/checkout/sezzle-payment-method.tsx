@@ -98,7 +98,9 @@ export class SezzlePaymentMethod {
 
         <div
           class={`payment-method-header p-3`}
-          onClick={() => this.onPaymentMethodOptionClick()}>
+          onClick={() => this.onPaymentMethodOptionClick()}
+          part="payment-method-header"
+        >
           <input
             type="radio"
             name="paymentMethodType"

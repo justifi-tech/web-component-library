@@ -29,7 +29,11 @@ export class SavedPaymentMethod {
     return (
       <Fragment>
         <div class="payment-method">
-          <div class="payment-method-header p-3" onClick={() => this.onPaymentMethodOptionClick()}>
+          <div
+            class="payment-method-header p-3"
+            onClick={() => this.onPaymentMethodOptionClick()}
+            part="payment-method-header"
+          >
             <input
               type="radio"
               name="paymentMethodType"
@@ -38,10 +42,13 @@ export class SavedPaymentMethod {
               onClick={(event) => event.preventDefault()}
               checked={this.isSelected}
               class="form-check-input me-2"
+              part="radio-input"
             />
             <label
               htmlFor={this.paymentMethodOption?.id}
-              class="form-check-label">
+              class="form-check-label"
+              part="radio-input-label"
+            >
               {CardBrandLabels[this.paymentMethodOption?.brand]} *{this.paymentMethodOption?.acct_last_four}
             </label>
           </div>

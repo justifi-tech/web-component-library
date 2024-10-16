@@ -33,6 +33,104 @@ justifi-payment-provisioning {
   padding: 40px;
 }
 
+justifi-checkout::part(header) {
+  color: #333;
+  border-bottom: 1px solid #333;
+}
+
+justifi-checkout::part(sub-header) {
+  color: #333;
+}
+
+justifi-season-interruption-insurance::part(radio-input),
+justifi-checkout::part(radio-input) {
+  background-color: #fff;
+  border-color: #333;
+}
+
+justifi-season-interruption-insurance::part(radio-input-checked),
+justifi-checkout::part(radio-input-checked) {
+  background-color: #000;
+}
+justifi-season-interruption-insurance::part(radio-input-checked):focus,
+justifi-checkout::part(radio-input-checked):focus {
+  background-color: #333;
+  border-color: #333;
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
+}
+
+justifi-checkout::part(radio-input-label) {
+  color: #333;
+}
+
+justifi-checkout::part(input) {
+  background-color: transparent;
+  border-color: #555;
+  border-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-radius: 0;
+  border-style: solid;
+  box-shadow: none;
+  color: var(--jfi-body-color);
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.375rem 0.75rem;
+}
+
+justifi-checkout::part(input):focus {
+  border-color: #333;
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
+}
+
+justifi-checkout::part(input-invalid) {
+  border-color: rgb(138, 42, 35);
+  box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25);
+}
+
+justifi-season-interruption-insurance::part(radio-input-invalid) {
+  border-color: #dc3545;
+}
+
+justifi-checkout::part(input):disabled {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+justifi-checkout::part(form-check-input) {
+  border-color: #333;
+}
+
+justifi-checkout::part(form-check-input):focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
+}
+
+justifi-checkout::part(form-check-input-checked) {
+  background-color: #333;
+}
+
+justifi-checkout::part(submit-button) {
+  width: 100%;
+  padding: 6px 18px;
+  font-size: 16px;
+  box-shadow: none;
+  border-radius: 0px;
+  line-height: 1.75;
+  text-transform: none;
+
+  color: #333;
+  background-color: transparent;
+  border-color: #333;
+}
+
+justifi-checkout::part(submit-button):hover {
+  background-color: rgba(0, 0, 0, .05);
+}
+
 :root {
   /* new vars */
   --jfi-body-color: #333;
@@ -47,9 +145,6 @@ justifi-payment-provisioning {
   --jfi-layout-padding: 20px;
   --jfi-layout-form-control-spacing-x: 10px;
   --jfi-layout-form-control-spacing-y: 10px;
-
-  /* colors */
-  --jfi-primary-color: rgb(164, 201, 245);
 
   /* form control */
   --jfi-form-control-background-color: transparent;
@@ -88,65 +183,6 @@ justifi-payment-provisioning {
   --jfi-error-message-color: rgb(138, 42, 35);
   --jfi-error-message-margin: 8px 0 0 0;
   --jfi-error-message-font-size: 12px;
-
-  /* Below only used in justifi-payment-form */
-  /* form radio group */
-  --jfi-radio-input-background-color: transparent;
-  --jfi-radio-input-border-color: #555;
-
-  --jfi-radio-input-background-color-selected: #333;
-  --jfi-radio-input-border-color-selected: #333;
-
-  --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(0, 0, 0, .25);
-  --jfi-radio-input-border-color-focus: #333;
-
-  --jfi-radio-button-padding: 5px;
-  --jfi-radio-button-font-size: 16px;
-
-  --jfi-radio-button-group-width: 100%;
-  --jfi-radio-button-group-color: var(--jfi-body-color);
-  --jfi-radio-button-group-color-hover: initial;
-  --jfi-radio-button-group-divider: 1px solid rgba(0, 0, 0, 0.25);
-  --jfi-radio-button-group-background-color: transparent;
-  --jfi-radio-button-group-background-color-hover: rgba(0, 0, 0, .025);
-
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-border-color: #333;
-
-  --jfi-radio-button-background-color-selected: #333;
-  --jfi-radio-button-border-color-selected: #333;
-
-  --jfi-radio-button-border-color-focus: #333;
-  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(0, 0, 0, .25);
-
-  /* submit button */
-  --jfi-submit-button-width: 100%;
-  --jfi-submit-button-padding: 6px 18px;
-  --jfi-submit-button-font-size: 16px;
-  --jfi-submit-button-box-shadow: none;
-  --jfi-submit-button-border-radius: 0px;
-  --jfi-submit-button-line-height: 1.75;
-  --jfi-submit-button-text-transform: none;
-
-  --jfi-submit-button-color: #333;
-  --jfi-submit-button-background-color: transparent;
-  --jfi-submit-button-border-color: #333;
-
-  --jfi-submit-button-color-hover: #222;
-  --jfi-submit-button-background-color-hover: rgba(0, 0, 0, .05);
-  --jfi-submit-button-border-color-hover: #222;
-
-  --jfi-submit-button-color-focus: rgb(144, 202, 249);
-  --jfi-submit-button-background-color-focus: rgba(144, 202, 249, .1);
-  --jfi-submit-button-border-color-focus: rgba(144, 202, 249, 1);
-
-  --jfi-submit-button-color-active: rgb(144, 202, 249);
-  --jfi-submit-button-background-color-active: rgba(144, 202, 249, .25);
-  --jfi-submit-button-border-color-active: rgba(144, 202, 249, 1);
-
-  --jfi-submit-button-color-loading: rgba(0, 0, 0, 0.5);
-  --jfi-submit-button-border-color-loading: rgba(0, 0, 0, 0.5);
-  --jfi-submit-button-background-color-loading: transparent;
 
   /* Skeleton */
   --jfi-skeleton-wave-animation-bg: rgba(200, 200, 200, 1);

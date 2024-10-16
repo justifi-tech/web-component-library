@@ -2,13 +2,13 @@
 
 exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout>
-  <!---->
-  <justifi-checkout-core class="body" style="display: block;">
-    <template shadowrootmode="open">
+  <template shadowrootmode="open">
+    <justifi-checkout-core class="body" style="display: block;">
+      <!---->
       <style></style>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12">
-          <h2 class="fs-5 fw-bold jfi-header pb-3">
+          <h2 class="fs-5 fw-bold jfi-header pb-3" part="header">
             Summary
           </h2>
           <section>
@@ -29,13 +29,15 @@ exports[`justifi-checkout renders loading 1`] = `
           </section>
         </div>
         <div class="col-12">
-          <slot name="insurance"></slot>
+          <div slot="insurance">
+            <slot name="insurance"></slot>
+          </div>
         </div>
         <div class="col-12 mt-4">
-          <h2 class="fs-5 fw-bold jfi-header pb-3">
+          <h2 class="fs-5 fw-bold jfi-header pb-3" part="header">
             Payment
           </h2>
-          <h3 class="fs-6 fw-bold lh-lg">
+          <h3 class="fs-6 fw-bold lh-lg" part="sub-header">
             Select payment type
           </h3>
           <div class="d-flex flex-column">
@@ -51,7 +53,7 @@ exports[`justifi-checkout renders loading 1`] = `
         </div>
         <div class="col-12">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" disabled="" isloading="" part="button button-primary button-loading" type="submit" variant="primary" style="width: 100%;">
+            <button class="btn btn-primary" disabled="" isloading="" part="submit-button" type="submit" variant="primary" style="width: 100%;">
               <div class="spinner-border spinner-border-sm" part="button-spinner" role="status">
                 <span class="visually-hidden">
                   Loading...
@@ -61,8 +63,7 @@ exports[`justifi-checkout renders loading 1`] = `
           </div>
         </div>
       </div>
-    </template>
-    <div slot="insurance"></div>
-  </justifi-checkout-core>
+    </justifi-checkout-core>
+  </template>
 </justifi-checkout>
 `;
