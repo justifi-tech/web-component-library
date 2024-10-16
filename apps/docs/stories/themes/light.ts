@@ -33,37 +33,35 @@ justifi-payment-provisioning {
   padding: 40px;
 }
 
-justifi-checkout::part(header) {
+::part(header) {
   color: #333;
   border-bottom: 1px solid #333;
 }
 
-justifi-checkout::part(sub-header) {
+::part(sub-header) {
   color: #333;
 }
 
-justifi-season-interruption-insurance::part(radio-input),
-justifi-checkout::part(radio-input) {
+::part(radio-input) {
   background-color: #fff;
   border-color: #333;
 }
 
-justifi-season-interruption-insurance::part(radio-input-checked),
-justifi-checkout::part(radio-input-checked) {
+::part(radio-input-checked) {
   background-color: #000;
 }
-justifi-season-interruption-insurance::part(radio-input-checked):focus,
-justifi-checkout::part(radio-input-checked):focus {
+
+::part(radio-input-checked):focus {
   background-color: #333;
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
 }
 
-justifi-checkout::part(radio-input-label) {
+::part(radio-input-label) {
   color: #333;
 }
 
-justifi-checkout::part(input) {
+::part(input) {
   background-color: transparent;
   border-color: #555;
   border-width: 1px;
@@ -82,38 +80,38 @@ justifi-checkout::part(input) {
   padding: 0.375rem 0.75rem;
 }
 
-justifi-checkout::part(input):focus {
+::part(input):focus {
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
 }
 
-justifi-checkout::part(input-invalid) {
+::part(input-invalid) {
   border-color: rgb(138, 42, 35);
   box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25);
 }
 
-justifi-season-interruption-insurance::part(radio-input-invalid) {
+::part(radio-input-invalid) {
   border-color: #dc3545;
 }
 
-justifi-checkout::part(input):disabled {
+::part(input):disabled {
   background-color: transparent;
   color: rgba(255, 255, 255, 0.5);
 }
 
-justifi-checkout::part(form-check-input) {
+::part(form-check-input) {
   border-color: #333;
 }
 
-justifi-checkout::part(form-check-input):focus {
+::part(form-check-input):focus {
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
 }
 
-justifi-checkout::part(form-check-input-checked) {
+::part(form-check-input-checked) {
   background-color: #333;
 }
 
-justifi-checkout::part(button-primary) {
+::part(button-primary) {
   width: 100%;
   padding: 6px 18px;
   font-size: 16px;
@@ -127,7 +125,7 @@ justifi-checkout::part(button-primary) {
   border-color: #333;
 }
 
-justifi-checkout::part(button-primary):hover {
+::part(button-primary):hover {
   background-color: rgba(0, 0, 0, .05);
   border-color: #333;
   color: #333;

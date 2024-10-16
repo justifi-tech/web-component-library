@@ -37,65 +37,62 @@ justifi-payment-provisioning {
   color: #fff;
 }
 
-justifi-checkout::part(header) {
+::part(header) {
   color: #fff;
   border-bottom: 1px solid #fff;
 }
 
-justifi-checkout::part(sub-header) {
+::part(sub-header) {
   color: #fff;
 }
 
-justifi-season-interruption-insurance::part(radio-input),
-justifi-checkout::part(radio-input) {
+::part(radio-input) {
   background-color: transparent;
   border-color: #fff;
 }
 
-justifi-season-interruption-insurance::part(radio-input-checked),
-justifi-checkout::part(radio-input-checked) {
+::part(radio-input-checked) {
   background-color: rgba(255, 120, 90, .5);
   border-color: #ff785a;
 }
 
-justifi-season-interruption-insurance::part(radio-input-invalid) {
+::part(radio-input-invalid) {
   border-color: #dc3545;
 }
 
-justifi-season-interruption-insurance::part(radio-input-checked):focus,
-justifi-checkout::part(radio-input-checked):focus {
+::part(radio-input-checked):focus {
   border-color: #ff785a;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
 }
 
-justifi-checkout::part(radio-input-label) {
+::part(radio-input-label) {
   color: #fff;
 }
 
-justifi-checkout::part(payment-method-header):hover {
+::part(payment-method-header):hover {
   background-color: rgba(255, 120, 90, 0.25);
   cursor: pointer;
 }
 
-justifi-checkout::part(button-primary) {
+::part(button-primary) {
   background-color: #FFF05A;
   border-color: #FFF054;
   color: #000;
   border-radius: 4px;
 }
 
-justifi-checkout::part(button-primary):hover {
+::part(button-primary):hover {
   background-color: #FFD25A;
   border-color: #FFD25A;
   color: #000;
 }
 
-justifi-checkout::part(form-check-input) {
+::part(form-check-input) {
   background-color: transparent;
   border-color: #fff;
 }
 
-justifi-checkout::part(form-check-input-checked) {
+::part(form-check-input-checked) {
   background-color: rgba(255, 120, 90, .5);
   border-color: #ff785a;
 }
