@@ -27,6 +27,17 @@ export class UploadDisputeEvidence {
     this.addShippingAddress = value;
   }
 
+  addEvidence() {
+    this.evidence = [...this.evidence, { type: '', file: null }];
+  }
+
+  removeEvidence(index) {
+    console.log('remove evidence index', index);
+    console.log('evidence at index', this.evidence[index]);
+    this.evidence.splice(index, 1);
+    this.evidence = [...this.evidence];
+  }
+
   render() {
     return (
       <div>
@@ -83,29 +94,35 @@ export class UploadDisputeEvidence {
               Upload as much of the recommended evidence as possible to build the best case for your counter-dispute.
               If you have additional evidence you would like to provide you may upload it as well.
             </p>
-            {this.evidence.map((index) => (
-              <div class="row gy-3" key={index}>
+            {this.evidence.map((item, index) => (
+              <div class="row gy-3 gx-2" key={index}>
                 <div class="col-4">
                   <form-control-select
                     name="evidenceType"
-                    defaultValue=""
+                    defaultValue={item.type}
                     options={evidenceTypeOptions}
                   />
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                   <form-control-file
                     name="evidence"
                     multiple={false}
                   />
+                </div>
+                <div class="col-2">
+                  {/* mt-2 is a temp fix because our form controls do not hide empty labels which have a margin on them */}
+                  <button
+                    class="btn btn-danger mt-2"
+                    onClick={() => this.removeEvidence(index)}>
+                    Remove
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
           <div class="col-12">
-            <button class="btn btn-secondary" onClick={() => {
-              this.evidence = [...this.evidence, 1];
-            }}>Add Evidence +</button>
+            <button class="btn btn-secondary" onClick={() => this.addEvidence()}>Add Evidence +</button>
           </div>
 
           <hr />
@@ -141,7 +158,7 @@ export class UploadDisputeEvidence {
           </div>
 
           <div class="col-12">
-            <div class="row gy-3">
+            <div class="row gy-3 gx-2">
               <div class="col-12">
                 <form-control-checkbox
                   name="addShippingAddress"
@@ -158,11 +175,12 @@ export class UploadDisputeEvidence {
               )}
             </div>
           </div>
-
-          <div class="col-12">
-            <form-control-checkbox label="I understand that I can only submit this information once and have provided as much evidence as possible"></form-control-checkbox>
-          </div>
         </div>
+
+        <div class="alert alert-light" role="alert">
+          <form-control-checkbox label="I understand that I can only submit this information once and have provided as much evidence as possible"></form-control-checkbox>
+        </div>
+
         <div class="d-flex gap-2 mt-4 justify-content-end">
           <button class="btn btn-secondary">Cancel</button>
           <button class="btn btn-primary">Submit Counter Dispute</button>
