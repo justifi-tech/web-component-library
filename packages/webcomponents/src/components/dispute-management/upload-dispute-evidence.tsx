@@ -1,13 +1,30 @@
 import { Component, h, State } from "@stencil/core";
 
+const evidenceTypeOptions = [
+  { label: "Evidence type", value: "" },
+  { label: "Customer communication", value: "" },
+  { label: "Customer signature", value: "" },
+  { label: "Shipping documentation", value: "" },
+  { label: "Receipt", value: "" },
+  { label: "Other evidence", value: "" }
+]
+
 @Component({
   tag: 'justifi-upload-dispute-evidence',
 })
 export class UploadDisputeEvidence {
-  @State() shippingAddressSameAsBilling: boolean = true;
+  @State() addShippingAddress: boolean = false;
+  @State() addCustomerDetails: boolean = false;
+  @State() evidence = [];
 
-  shippingAddressSameAsBillingChanged(name: string, value: boolean) {
-    this.shippingAddressSameAsBilling = value;
+  addCustomerDetailsChanged(name: string, value: boolean) {
+    console.log(name, value);
+    this.addCustomerDetails = value;
+  }
+
+  addShippingAddressChanged(name: string, value: boolean) {
+    console.log(name, value);
+    this.addShippingAddress = value;
   }
 
   render() {
@@ -17,6 +34,8 @@ export class UploadDisputeEvidence {
           <div class="col-12">
             <h1 class="h4">Counter dispute</h1>
           </div>
+
+          <hr />
 
           <div class="col-12">
             <h2 class="h5">Why are you countering this dispute?</h2>
@@ -56,55 +75,84 @@ export class UploadDisputeEvidence {
             </div>
           </div>
 
+          <hr />
+
           <div class="col-12">
             <h2 class="h5">Upload evidence</h2>
             <p>
               Upload as much of the recommended evidence as possible to build the best case for your counter-dispute.
               If you have additional evidence you would like to provide you may upload it as well.
             </p>
-            <ul>
-              <li>Customer communication</li>
-              <li>Customer signature</li>
-              <li>Shipping documentation</li>
-              <li>Receipt</li>
-              <li>Other evidence</li>
-            </ul>
-            <form-control-file
-              name="evidence"
-              label="Upload files"
-              multiple={true}
-            />
+            {this.evidence.map((index) => (
+              <div class="row gy-3" key={index}>
+                <div class="col-4">
+                  <form-control-select
+                    name="evidenceType"
+                    defaultValue=""
+                    options={evidenceTypeOptions}
+                  />
+                </div>
+                <div class="col-8">
+                  <form-control-file
+                    name="evidence"
+                    multiple={false}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
 
           <div class="col-12">
-            <h2 class="h5">Customer details</h2>
-            <div class="row gy-3">
+            <button class="btn btn-secondary" onClick={() => {
+              this.evidence = [...this.evidence, 1];
+            }}>Add Evidence +</button>
+          </div>
 
+          <hr />
+
+          <div class="col-12">
+            <div class="row gy-3">
               <div class="col-12">
-                <form-control-text
-                  name="email"
-                  label="Email"
+                <form-control-checkbox
+                  name="addCustomerDetails"
+                  label="I would like to add information about the customer"
+                  defaultValue={this.addCustomerDetails}
+                  inputHandler={(name, value) => this.addCustomerDetailsChanged(name, value)}
                 />
               </div>
-              <div class="col-12">
-                <justifi-billing-form></justifi-billing-form>
-              </div>
+              {this.addCustomerDetails && (
+                <div class="col-12">
+                  <h2 class="h5">Customer information</h2>
+                  <div class="row gy-3">
+
+                    <div class="col-12">
+                      <form-control-text
+                        name="email"
+                        label="Email"
+                      />
+                    </div>
+                    <div class="col-12">
+                      <justifi-billing-form></justifi-billing-form>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
           <div class="col-12">
-            <h2 class="h5">Shipping details</h2>
             <div class="row gy-3">
               <div class="col-12">
                 <form-control-checkbox
-                  name="shippingAddressSameAsBilling"
-                  label="Shipping address same as billing"
-                  defaultValue={this.shippingAddressSameAsBilling}
-                  inputHandler={(name, value) => this.shippingAddressSameAsBillingChanged(name, value)}
+                  name="addShippingAddress"
+                  label="I would like to add a shipping address"
+                  defaultValue={this.addShippingAddress}
+                  inputHandler={(name, value) => this.addShippingAddressChanged(name, value)}
                 />
               </div>
-              {!this.shippingAddressSameAsBilling && (
+              {this.addShippingAddress && (
                 <div class="col-12">
+                  <h2 class="h5">Shipping address</h2>
                   <justifi-billing-form></justifi-billing-form>
                 </div>
               )}
