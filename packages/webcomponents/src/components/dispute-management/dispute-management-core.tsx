@@ -22,11 +22,10 @@ export class DisputeManagementCore {
     }
   }
 
-  componentStepMapping = {
-    0: () => <justifi-dispute-notification ref={(el) => this.refs[0] = el}></justifi-dispute-notification>,
-    1: () => <justifi-general-dispute-info ref={(el) => this.refs[1] = el}></justifi-general-dispute-info>,
-    2: () => <justifi-upload-dispute-evidence ref={(el) => this.refs[2] = el}></justifi-upload-dispute-evidence>,
-  };
+  componentStepMapping = [
+    () => <justifi-dispute-notification ref={(el) => this.refs[0] = el}></justifi-dispute-notification>,
+    () => <justifi-upload-dispute-evidence ref={(el) => this.refs[1] = el}></justifi-upload-dispute-evidence>,
+  ];
 
   get currentStepComponent() {
     return this.componentStepMapping[this.currentStep]();
