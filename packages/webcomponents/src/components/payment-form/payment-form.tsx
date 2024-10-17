@@ -47,6 +47,8 @@ export class PaymentForm {
       });
       this.submitButtonEnabled = false;
     }
+
+    console.warn('justifi-payment-form is being deprecated in V5 (next release). Please use justifi-checkout instead.');
   }
 
   connectedCallback() {
