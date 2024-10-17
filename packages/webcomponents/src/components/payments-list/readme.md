@@ -40,7 +40,7 @@
 
 ### Depends on
 
-- [form-control-date](../form)
+- [form-control-date](../../ui-components/form)
 - [pagination-menu](../pagination-menu)
 
 ### Graph

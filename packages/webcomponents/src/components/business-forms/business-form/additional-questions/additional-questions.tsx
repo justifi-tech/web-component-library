@@ -1,9 +1,9 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { FormController } from '../../../form/form';
-import { 
-  businessServiceReceivedOptions, 
-  recurringPaymentsOptions, 
-  seasonalBusinessOptions 
+import { FormController } from '../../../../components';
+import {
+  businessServiceReceivedOptions,
+  recurringPaymentsOptions,
+  seasonalBusinessOptions
 } from '../../utils/business-form-options';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 

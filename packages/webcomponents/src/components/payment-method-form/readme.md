@@ -72,7 +72,6 @@ Type: `Promise<any>`
  - [justifi-bank-account-form](../bank-account-form)
  - [justifi-card-form](../card-form)
  - [justifi-new-payment-method](../checkout)
- - [justifi-payment-form](../payment-form)
 
 ### Graph
 ```mermaid
@@ -80,7 +79,6 @@ graph TD;
   justifi-bank-account-form --> justifi-payment-method-form
   justifi-card-form --> justifi-payment-method-form
   justifi-new-payment-method --> justifi-payment-method-form
-  justifi-payment-form --> justifi-payment-method-form
   style justifi-payment-method-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

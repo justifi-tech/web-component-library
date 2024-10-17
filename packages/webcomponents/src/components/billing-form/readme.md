@@ -56,12 +56,11 @@ Type: `Promise<{ isValid: boolean; }>`
 ### Used by
 
  - [justifi-new-payment-method](../checkout)
- - [justifi-payment-form](../payment-form)
 
 ### Depends on
 
-- [form-control-text](../form)
-- [form-control-select](../form)
+- [form-control-text](../../ui-components/form)
+- [form-control-select](../../ui-components/form)
 
 ### Graph
 ```mermaid
@@ -73,7 +72,6 @@ graph TD;
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
   justifi-new-payment-method --> justifi-billing-form
-  justifi-payment-form --> justifi-billing-form
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

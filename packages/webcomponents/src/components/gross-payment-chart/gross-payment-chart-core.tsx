@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, Host, Prop, State, Watch, h } from '@st
 import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
-import { ErrorState, LoadingState } from '../details/utils';
+import { ErrorState, LoadingState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
 
 Chart.register(

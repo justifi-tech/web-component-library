@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../../form/form';
+import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';

@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { DetailSectionTitle, DetailItem } from '../../details/utils';
+import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/utils';
 import { IBusiness } from '../../../api/Business';
 import { snakeCaseToHumanReadable } from '../../../utils/utils';
 

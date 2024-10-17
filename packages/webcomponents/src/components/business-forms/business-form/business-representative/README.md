@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type             | Default     |
-| ---------------- | --------- | ----------- | ---------------- | ----------- |
-| `formController` | --        |             | `FormController` | `undefined` |
+| Property         | Attribute         | Description | Type             | Default     |
+| ---------------- | ----------------- | ----------- | ---------------- | ----------- |
+| `formController` | `form-controller` |             | `FormController` | `undefined` |
 
 
 ## Dependencies
@@ -20,9 +20,9 @@
 
 ### Depends on
 
-- [form-control-text](../../../form)
-- [form-control-number-masked](../../../form)
-- [form-control-date](../../../form)
+- [form-control-text](../../../../ui-components/form)
+- [form-control-number-masked](../../../../ui-components/form)
+- [form-control-date](../../../../ui-components/form)
 - [justifi-identity-address-form](../../owner-form/identity-address)
 
 ### Graph

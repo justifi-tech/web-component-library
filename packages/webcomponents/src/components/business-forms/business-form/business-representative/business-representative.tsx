@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../components';
 import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
 
@@ -14,7 +14,7 @@ export class BusinessRepresentative {
   get identificationNumberLabel() {
     return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
   }
-  
+
   componentDidLoad() {
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors.representative }),
@@ -46,7 +46,7 @@ export class BusinessRepresentative {
       },
     });
   }
-  
+
   onDateOfBirthUpdate = (event): void => {
     const dob_values = deconstructDate(event.detail);
 

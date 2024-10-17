@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { IPayout, Payout } from '../../api';
 import { MapPayoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../details/utils';
+import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { StyledHost } from '../../ui-components';
 

@@ -28,8 +28,8 @@
 
 ### Depends on
 
-- [form-control-monetary](../form)
-- [form-control-text](../form)
+- [form-control-monetary](../../ui-components/form)
+- [form-control-text](../../ui-components/form)
 
 ### Graph
 ```mermaid

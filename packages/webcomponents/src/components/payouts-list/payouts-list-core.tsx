@@ -9,7 +9,7 @@ import {
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { DownloadIcon } from '../../assets/download-icon';
-import { tableExportedParts } from '../table/exported-parts';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({

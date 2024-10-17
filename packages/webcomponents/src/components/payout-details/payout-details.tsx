@@ -1,7 +1,7 @@
 import { Component, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/core';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayoutDetails } from './get-payout-details';
-import { ErrorState } from '../details/utils';
+import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';

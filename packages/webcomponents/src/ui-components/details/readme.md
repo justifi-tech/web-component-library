@@ -16,8 +16,8 @@
 
 ### Used by
 
- - [payment-details-core](../payment-details)
- - [payout-details-core](../payout-details)
+ - [payment-details-core](../../components/payment-details)
+ - [payout-details-core](../../components/payout-details)
 
 ### Graph
 ```mermaid

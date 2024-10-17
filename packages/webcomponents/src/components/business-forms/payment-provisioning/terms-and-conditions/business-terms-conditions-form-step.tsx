@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';

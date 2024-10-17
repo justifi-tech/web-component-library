@@ -4,7 +4,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import mockPaymentDetailsResponse from '../../../../../../mockData/mockPaymentDetailSuccess.json';
 import { PaymentDetailsCore } from '../payment-details-core';
-import { Details } from '../../details/details';
+import { Details } from '../../../ui-components/details/details';
 import { makeGetPaymentDetails } from '../get-payment-details';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
