@@ -8,10 +8,8 @@ import { StyledHost } from "../../../ui-components";
   tag: 'justifi-season-interruption-insurance-core',
   styleUrls: [
     'season-interruption-insurance-core.css',
-    '../../checkout/form-check-input.css',
     '../../checkout/header.css',
   ],
-  shadow: true,
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
@@ -31,7 +29,7 @@ export class SeasonInterruptionInsuranceCore {
 
   @State() quote: any;
   @State() isLoading: boolean = true;
-  @State() accepted: boolean | undefined;
+  @State() accepted: 'true' | 'false' | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -115,7 +113,7 @@ export class SeasonInterruptionInsuranceCore {
   render() {
     return (
       <StyledHost>
-        {!this.isLoading &&
+        {!this.isLoading && (
           <div>
             <h2 class="fs-5 fw-bold pb-3 jfi-header">{this.quote?.product.title}</h2>
             <small innerHTML={this.quote?.product.description}></small>
@@ -127,8 +125,13 @@ export class SeasonInterruptionInsuranceCore {
                 value="true"
                 onChange={(event: any) => this.onChangeHandler(event)}
                 class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
+                part={`
+                  radio-input
+                  ${this.accepted === 'true' ? 'radio-input-checked' : ''}
+                  ${this.error ? 'radio-input-invalid' : ''}
+                `}
               />
-              <label htmlFor="accept">
+              <label htmlFor="accept" part="radio-input-label">
                 Accept coverage for {formatCurrency(this.quote?.total_cents)}
               </label>
             </div>
@@ -140,19 +143,25 @@ export class SeasonInterruptionInsuranceCore {
                 value="false"
                 onChange={(event: any) => this.onChangeHandler(event)}
                 class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
+                part={`
+                  radio-input
+                  ${this.accepted === 'false' ? 'radio-input-checked' : ''} 
+                  ${this.error ? 'radio-input-invalid' : ''}
+                `}
               />
-              <label htmlFor="decline">
+              <label htmlFor="decline" part="radio-input-label">
                 Decline coverage
               </label>
             </div>
             <div
               class="invalid-feedback"
-              style={{ display: this.error ? 'block' : 'none' }}>
+              style={{ display: this.error ? 'block' : 'none' }}
+            >
               Please select an option
             </div>
             <small innerHTML={this.quote?.product.legal_disclaimer}></small>
           </div>
-        }
+        )}
       </StyledHost>
     );
   }

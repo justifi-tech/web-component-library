@@ -21,6 +21,7 @@ export class SaveNewPaymentMethod {
           checked={this.isChecked}
           onChange={(event) => this.handleCheckboxChange(event)}
           class="form-check-input"
+          part={`form-check-input ${this.isChecked ? 'form-check-input-checked' : ''}`}
         />
         <label class="form-check-label">
           Save new payment method
