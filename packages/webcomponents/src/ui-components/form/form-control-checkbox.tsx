@@ -9,7 +9,7 @@ import {
 } from '@stencil/core';
 
 @Component({
-  tag: 'form-control-checkbox'
+  tag: 'form-control-checkbox',
 })
 export class CheckboxInput {
   checkboxElement!: HTMLInputElement;
@@ -21,7 +21,7 @@ export class CheckboxInput {
   @Prop() defaultValue?: boolean;
   @Prop() inputHandler: (name: string, value: boolean) => void;
   @Prop() disabled: boolean;
-  
+
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: boolean) {
     this.updateInput(newValue);
@@ -47,7 +47,7 @@ export class CheckboxInput {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host exportparts="radio-input-label,input,input-invalid">
         <div class='form-group d-flex flex-column'>
           <div class="form-check">
             <input
@@ -61,7 +61,7 @@ export class CheckboxInput {
               class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}
             />
-            <label class="form-check-label" htmlFor={this.name}>
+            <label class="form-check-label" htmlFor={this.name} part="radio-input-label">
               {this.label}
             </label>
           </div>

@@ -74,6 +74,13 @@ Type: `Promise<PaymentMethodPayload>`
 
 
 
+## Shadow Parts
+
+| Part                      | Description |
+| ------------------------- | ----------- |
+| `"payment-method-header"` |             |
+
+
 ## Dependencies
 
 ### Used by
