@@ -42,7 +42,8 @@
 
 - [text-filter](../../ui-components/filters)
 - [select-filter](../../ui-components/filters)
-- [form-control-date](../form)
+- [date-filter](../../ui-components/filters)
+- [table-filters-menu](../../ui-components/filters)
 - [pagination-menu](../pagination-menu)
 
 ### Graph
@@ -50,10 +51,10 @@
 graph TD;
   payments-list-core --> text-filter
   payments-list-core --> select-filter
-  payments-list-core --> form-control-date
+  payments-list-core --> date-filter
+  payments-list-core --> table-filters-menu
   payments-list-core --> pagination-menu
-  form-control-date --> form-control-help-text
-  form-control-date --> form-control-error-text
+  table-filters-menu --> custom-popper
   justifi-payments-list --> payments-list-core
   style payments-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

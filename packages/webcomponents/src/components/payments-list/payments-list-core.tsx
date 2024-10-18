@@ -159,18 +159,18 @@ export class PaymentsListCore {
     this.params = {};
   }
 
-  render() {
+  get filters() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
-        <div class="row gy-3 mb-4">
-          <div class="col-2">
+      <form class='paper p-4'>
+        <div class="row">
+          <div class="col-6">
             <text-filter
               name="terminal_id"
               label="Terminal ID"
               params={this.params}
             />
           </div>
-          <div class="col-2">
+          <div class="col-6">
             <select-filter
               name="payment_status"
               label="Status"
@@ -178,14 +178,14 @@ export class PaymentsListCore {
               params={this.params}
             />
           </div>
-          <div class="col-2">
+          <div class="col-6">
             <date-filter
               name="created_after"
               label="Start Date"
               params={this.params}
             />
           </div>
-          <div class="col-2">
+          <div class="col-6">
             <date-filter
               name="created_before"
               label="End Date"
@@ -193,6 +193,14 @@ export class PaymentsListCore {
             />
           </div>
         </div>
+      </form>
+    );
+  }
+
+  render() {
+    return (
+      <StyledHost exportparts={tableExportedParts}>
+        <table-filters-menu filters={this.filters} />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
