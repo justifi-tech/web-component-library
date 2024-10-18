@@ -193,15 +193,15 @@ export class CheckoutCore {
         <div class="row gy-3 jfi-checkout-core">
           <div class="col-12">
             {/* componentize this */}
-            <h2 class="fs-5 fw-bold pb-3 jfi-header" part="header">Summary</h2>
+            <h2 class="fs-5 fw-bold pb-3 jfi-header" part="header-2">Summary</h2>
             {this.summary}
           </div>
           <div class="col-12">
             <slot name="insurance"></slot>
           </div>
           <div class="col-12 mt-4">
-            <h2 class="fs-5 fw-bold pb-3 jfi-header" part="header">Payment</h2>
-            <h3 class="fs-6 fw-bold lh-lg" part="sub-header">Select payment type</h3>
+            <h2 class="fs-5 fw-bold pb-3 jfi-header" part="header-2">Payment</h2>
+            <h3 class="fs-6 fw-bold lh-lg" part="header-3">Select payment type</h3>
             <div class="d-flex flex-column">
               {this.paymentType}
             </div>

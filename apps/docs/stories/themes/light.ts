@@ -33,12 +33,12 @@ justifi-payment-provisioning {
   padding: 40px;
 }
 
-::part(header) {
+::part(header-2) {
   color: #333;
   border-bottom: 1px solid #333;
 }
 
-::part(sub-header) {
+::part(header-3) {
   color: #333;
 }
 
