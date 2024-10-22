@@ -1,37 +1,75 @@
-import { Component, Prop, State, h } from '@stencil/core';
-// import { StyledHost } from '../styled-host/styled-host';
+import { Component, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Button } from '../button';
 
 @Component({
   tag: 'table-filters-menu'
 })
 export class TableFiltersMenu {
-  @Prop() filters: any;
-
   @State() anchorButton: HTMLElement;
+  @State() menu: HTMLElement;
+  @State() showClearButton: boolean = false;
+  
+  @Prop() filters: any;
+  @Prop() params: any;
 
+  @Watch('params')
+  watchParamsHandler(newValue: any) {
+    this.showClearButton = Object.keys(newValue).length > 0;
+  }
 
-  componentDidLoad() {
-    console.log('anchorButton in tableFiltersMenu', this.anchorButton);
+  @Event() clearParams: EventEmitter;
+
+  @Listen('showEvent')
+  show() {
+    this.menu.classList.add('show');
+  }
+
+  @Listen('hideEvent')
+  hide() {
+    this.menu.classList.remove('show');
+  }
+
+  emitClearParams() {
+    this.clearParams.emit();
   }
 
   render() {
     return (
-      <div>
-        <button
-          type='button'
-          ref={(el) => (this.anchorButton = el)}
-          class='btn btn-primary'
-        >
-          {'Filters '}
-        </button>
-        <custom-popper
-          offset={[0, 15]}
-          strategy='fixed'
-          anchorRef={this.anchorButton}
-          trigger='click'
-        >
-          {this.filters}
-        </custom-popper>
+      <div class='d-flex gap-2'>
+        <div class='dropdown pb-3'>
+          <Button
+            variant='primary'
+            type='button dropdown-toggle'
+            ref={(el) => (this.anchorButton = el)}
+            class='btn btn-primary dropdown-toggle'
+            data-bs-toggle='dropdown'
+          >
+            {'Filters'}
+          </Button>
+          <custom-popper
+            offset={[20, 10]}
+            strategy='fixed'
+            anchorRef={this.anchorButton}
+            trigger='click'
+          >
+            <form 
+              class='dropdown-menu' 
+              ref={(el) => (this.menu = el)} 
+              onSubmit={(e) => e.preventDefault()}
+            >
+              {this.filters}
+            </form>
+          </custom-popper>
+        </div>
+        <div>
+          <Button 
+            variant='secondary'
+            onClick={() => this.emitClearParams()}
+            hidden={!this.showClearButton}
+          >
+            {'Clear Filters'}  
+          </Button>
+        </div>
       </div>
     );
   }

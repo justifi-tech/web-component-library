@@ -16,6 +16,14 @@
 | `trigger`   | `trigger`   |             | `string`                                                                                                                                                                                                     | `'click'`    |
 
 
+## Events
+
+| Event       | Description | Type               |
+| ----------- | ----------- | ------------------ |
+| `hideEvent` |             | `CustomEvent<any>` |
+| `showEvent` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by

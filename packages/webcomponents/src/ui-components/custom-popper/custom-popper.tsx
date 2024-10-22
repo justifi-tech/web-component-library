@@ -1,6 +1,5 @@
-import { Component, Prop, h, Element, State } from '@stencil/core';
+import { Component, Prop, h, State, Listen, Event, EventEmitter } from '@stencil/core';
 import { createPopper, Options, Placement, PositioningStrategy } from '@popperjs/core';
-// import { StyledHost } from '../styled-host/styled-host';
 
 @Component({
   tag: 'custom-popper',
@@ -14,35 +13,16 @@ export class CustomPopper {
 
   @State() isOpen: boolean = false;
 
-  @Element() el: HTMLElement;
+  @Event() showEvent: EventEmitter;
+  @Event() hideEvent: EventEmitter;
 
   private popperInstance: any;
   private popperContentRef: HTMLElement;
 
   componentDidLoad() {
     this.popperInstance = createPopper(this.anchorRef, this.popperContentRef, this.popperOptions);
-    console.log('popperInstance', this.popperInstance);
 
-    if (this.trigger === 'click') {
-      // this.anchorRef.addEventListener('click', this.show.bind(this));
-
-      window.addEventListener('click', (event) => {
-        let isPopperContent = event.target === this.popperContentRef;
-        let isPopperContentChild = this.popperContentRef.contains(event.target as Node);
-
-        console.log('isPopperContent', isPopperContent);
-        console.log('isPopperContentChild', isPopperContentChild);
-        console.log('event.target', event.target);
-        
-        if (event.target === this.anchorRef) {
-          this.show();
-        } else if (this.isOpen && !isPopperContent && !isPopperContentChild) {
-          this.hide();
-        }
-      }
-    )
-
-    } else if (this.trigger === 'hover') {
+    if (this.trigger === 'hover') {
       this.anchorRef.addEventListener('mouseenter', this.show.bind(this));
       this.anchorRef.addEventListener('mouseleave', this.hide.bind(this));
       this.popperContentRef.addEventListener('mouseenter', this.show.bind(this));
@@ -54,7 +34,32 @@ export class CustomPopper {
     }
   }
 
-  
+  disconnectedCallback() {
+    if (this.trigger === 'hover') {
+      this.anchorRef.removeEventListener('mouseenter', this.show.bind(this));
+      this.anchorRef.removeEventListener('mouseleave', this.hide.bind(this));
+      this.popperContentRef.removeEventListener('mouseenter', this.show.bind(this));
+      this.popperContentRef.removeEventListener('mouseleave', this.hide.bind(this));
+    } else if (this.trigger === 'focus') {
+      this.anchorRef.removeEventListener('focus', this.show.bind(this));
+      this.anchorRef.removeEventListener('blur', this.hide.bind(this));
+    }
+  }
+
+  @Listen('click', { target: 'window' })
+  handleClick(event: MouseEvent) {
+    const path = event.composedPath();
+    const isAnchorClicked = path.includes(this.anchorRef);
+    const isPopperContentClicked = path.includes(this.popperContentRef);
+
+    if (!this.isOpen && isAnchorClicked) {
+      this.show();
+    } else if (this.isOpen && !isPopperContentClicked) {
+      this.hide();
+    } else if (this.isOpen && isAnchorClicked) {
+      this.hide();
+    }
+  }
 
   private get popperOptions(): Options {
     return {
@@ -72,17 +77,18 @@ export class CustomPopper {
   }
 
   show() {
-    console.log('show runs');
     this.isOpen = true;
     this.popperContentRef.setAttribute('data-show', '');
+    this.popperInstance.update();
+    this.showEvent.emit();
   }
 
   hide(){
-    console.log('hide runs');
     this.isOpen = false;
     this.popperContentRef.removeAttribute('data-show');
+    this.popperInstance.update();
+    this.hideEvent.emit();
   }
-
 
   render() {
     return (
@@ -94,6 +100,7 @@ export class CustomPopper {
           }
           .popper-content[data-show] {
             display: block;
+            z-index: 1030;
           }
           `}
         </style>

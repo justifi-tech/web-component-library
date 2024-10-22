@@ -6,16 +6,22 @@ import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({
-  tag: 'payments-list-core',
+  tag: 'payments-list-core'
 })
 export class PaymentsListCore {
-  @Prop() getPayments: Function;
-
   @State() payments: Payment[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: any = {};
+  
+  @Prop() getPayments: Function;
+
+  @Watch('params')
+  @Watch('getPayments')
+  updateOnPropChange() {
+    this.fetchData();
+  }
 
   @Event({
     eventName: 'payment-row-clicked',
@@ -23,6 +29,12 @@ export class PaymentsListCore {
   }) rowClicked: EventEmitter<Payment>;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+
+  componentWillLoad() {
+    if (this.getPayments) {
+      this.fetchData();
+    }
+  }
 
   @Listen('clearParams')
   clearFilters() {
@@ -34,16 +46,12 @@ export class PaymentsListCore {
     this.setParamsOnChange(event.detail);
   }
 
-  @Watch('params')
-  @Watch('getPayments')
-  updateOnPropChange() {
-    this.fetchData();
+  setParamsOnChange = (value: any) => {
+    this.params = { ...this.params, ...value };
   }
 
-  componentWillLoad() {
-    if (this.getPayments) {
-      this.fetchData();
-    }
+  clearParams = () => {
+    this.params = {};
   }
 
   fetchData(): void {
@@ -147,72 +155,58 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  updateParamsOnChange = (name: string, value: string) => {
-    this.params = { ...this.params, [name]: value };
-  }
-
-  setParamsOnChange = (value: any) => {
-    this.params = { ...this.params, ...value };
-  }
-
-  clearParams = () => {
-    this.params = {};
-  }
-
   get filters() {
     return (
-      <form class='paper p-4'>
-        <div class="row">
-          <div class="col-6">
-            <text-filter
-              name="terminal_id"
-              label="Terminal ID"
-              params={this.params}
-            />
-          </div>
-          <div class="col-6">
-            <select-filter
-              name="payment_status"
-              label="Status"
-              options={this.paymentStatusOptions}
-              params={this.params}
-            />
-          </div>
-          <div class="col-6">
-            <date-filter
-              name="created_after"
-              label="Start Date"
-              params={this.params}
-            />
-          </div>
-          <div class="col-6">
-            <date-filter
-              name="created_before"
-              label="End Date"
-              params={this.params}
-            />
-          </div>
+      <div class='grid grid-cols-2 gap-3 p-1'>
+        <div class='p-2'>
+          <text-filter
+            name='terminal_id'
+            label='Terminal ID'
+            params={this.params}
+          />
         </div>
-      </form>
+        <div class='p-2'>
+          <select-filter
+            name='payment_status'
+            label='Status'
+            options={this.paymentStatusOptions}
+            params={this.params}
+          />
+        </div>
+        <div class='p-2'>
+          <date-filter
+            name='created_after'
+            label='Start Date'
+            params={this.params}
+          />
+        </div>
+        <div class='p-2'>
+          <date-filter
+            name='created_before'
+            label='End Date'
+            params={this.params}
+          />
+        </div>
+      </div>
     );
   }
 
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <table-filters-menu filters={this.filters} />
-        <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+        <table-filters-menu filters={this.filters} params={this.params} />
+        <div class='table-wrapper'>
+          <table class='table table-hover'>
+            <thead class='table-head sticky-top' part='table-head'>
+              <tr class='table-light text-nowrap' part='table-head-row'>
                 {this.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
+                  <th part='table-head-cell' scope='col' title={Array.isArray(column) ? column[1] : ''}>
                     {!Array.isArray(column) ? column : column[0]}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class='table-body' part='table-body'>
               <TableLoadingState
                 columnSpan={this.columnData.length}
                 isLoading={this.loading}
@@ -228,7 +222,7 @@ export class PaymentsListCore {
               {this.showRowData &&
                 this.rowData.map((data, index) => (
                   <tr
-                    data-test-id="table-row"
+                    data-test-id='table-row'
                     data-row-entity-id={this.entityId[index]}
                     onClick={this.rowClickHandler}
                     part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
@@ -236,18 +230,18 @@ export class PaymentsListCore {
                     {data.map((dataEntry: any) => {
                       let nestedHtml = dataEntry?.type;
                       if (nestedHtml) {
-                        return <td part="table-cell" innerHTML={dataEntry.value}></td>;
+                        return <td part='table-cell' innerHTML={dataEntry.value}></td>;
                       } else {
-                        return <td part="table-cell">{dataEntry}</td>;
+                        return <td part='table-cell'>{dataEntry}</td>;
                       }
                     })}
                   </tr>
                 ))}
             </tbody>
             {this.paging && (
-              <tfoot class="sticky-bottom">
-                <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.columnData?.length}>
+              <tfoot class='sticky-bottom'>
+                <tr class='table-light align-middle'>
+                  <td part='pagination-bar' colSpan={this.columnData?.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
