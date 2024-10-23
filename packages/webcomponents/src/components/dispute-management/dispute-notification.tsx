@@ -4,14 +4,16 @@ import { Component, h, Event, EventEmitter } from "@stencil/core";
   tag: 'justifi-dispute-notification',
 })
 export class DisputeNotification {
-  @Event() updateStep: EventEmitter<{ step: 'submit' | 'next' }>;
+  @Event() submit: EventEmitter;
+  @Event() clickEvent: EventEmitter;
 
   acceptDispute() {
-    this.updateStep.emit({ step: 'submit' });
+    // submit the dispute as forfeited, then emit submit event
+    this.submit.emit();
   }
 
-  counterDispute() {
-    this.updateStep.emit({ step: 'next' });
+  initiateCounterDispute() {
+    this.clickEvent.emit({ name: 'counterDispute' });
   }
 
   render() {
@@ -50,7 +52,7 @@ export class DisputeNotification {
         </div>
         <div class="d-flex gap-2 mt-4 justify-content-end">
           <button class="btn btn-secondary" onClick={() => this.acceptDispute()}>Accept dispute</button>
-          <button class="btn btn-primary" onClick={() => this.counterDispute()}>Counter dispute</button>
+          <button class="btn btn-primary" onClick={() => this.initiateCounterDispute()}>Counter dispute</button>
         </div>
       </div>
     );
