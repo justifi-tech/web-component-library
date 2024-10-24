@@ -53,11 +53,14 @@ export class TextInput {
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
-        <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+      <Host exportparts='label,input,input-invalid'>
+        <div class='form-group d-flex flex-column'>
+          <div class='d-flex gap-2'>
+            <label part='label' class='form-label' htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
           <input
             id={this.name}
             name={this.name}
@@ -68,10 +71,9 @@ export class TextInput {
             maxLength={this.maxLength}
             part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
-            type="text"
+            type='text'
             disabled={this.disabled}
           />
-          <form-control-help-text helpText={this.helpText} name={this.name} />
           <form-control-error-text errorText={this.errorText} name={this.name} />
         </div>
       </Host>
