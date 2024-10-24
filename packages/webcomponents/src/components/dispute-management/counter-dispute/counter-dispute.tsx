@@ -12,8 +12,11 @@ export class CounterDispute {
   @State() refs: any[] = [];
 
   componentStepMapping = [
-    () => <justifi-dispute-reason ref={(el) => this.refs[0] = el}></justifi-dispute-reason>,
-    () => <justifi-customer-details ref={(el) => this.refs[1] = el}></justifi-customer-details>,
+    () => <justifi-dispute-reason ref={(el) => this.refs['disputeReason'] = el}></justifi-dispute-reason>,
+    () => <justifi-customer-details ref={(el) => this.refs['customerDetails'] = el}></justifi-customer-details>,
+    () => <justifi-cancellation-policy ref={(el) => this.refs['cancellationPolicy'] = el}></justifi-cancellation-policy>,
+    () => <justifi-refund-policy ref={(el) => this.refs['refundPolicy'] = el}></justifi-refund-policy>,
+    () => <justifi-duplicate-charge ref={(el) => this.refs['duplicateCharge'] = el}></justifi-duplicate-charge>,
   ];
 
   get currentStepComponent() {
@@ -22,6 +25,10 @@ export class CounterDispute {
 
   get isLastStep() {
     return this.currentStep === this.componentStepMapping.length - 1;
+  }
+
+  get isFirstStep() {
+    return this.currentStep === 0;
   }
 
   onNext() {
@@ -34,7 +41,7 @@ export class CounterDispute {
   }
 
   onBack() {
-    if (this.currentStep === 0) {
+    if (this.isFirstStep) {
       this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
     } else {
       this.currentStep--;
@@ -55,7 +62,9 @@ export class CounterDispute {
 
         <div class="col-12">
           <div class="d-flex gap-2 mt-4 justify-content-end">
-            <button class="btn btn-secondary" onClick={() => this.onBack()}>Cancel</button>
+            <button class="btn btn-secondary" onClick={() => this.onBack()}>
+              {this.isFirstStep ? 'Cancel' : 'Back'}
+            </button>
             <button class="btn btn-primary" onClick={() => this.onNext()}>
               {this.isLastStep ? 'Submit Counter Dispute' : 'Next'}
             </button>

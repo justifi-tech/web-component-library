@@ -23,6 +23,7 @@ export class CustomerDetails {
             <form-control-text label="Purchase IP Address" name="customer_ip_address"></form-control-text>
           </div>
           <div class="col-12">
+            // TODO: Make this a text area later
             <form-control-text label="Billing Address" name="customer_billing_address"></form-control-text>
           </div>
         </div>
