@@ -7,6 +7,8 @@ import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment } from '../../../api';
 import { makeGetPayments } from '../get-payments';
+import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { SelectFilter } from '../../../ui-components/filters/select-filter';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
 
@@ -84,6 +86,124 @@ describe('payments-list-core', () => {
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();
+  });
+
+  it('shows table filter menu on filter button click', async () => {
+    const mockPaymentsService = {
+      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    };
+
+    const getPayments = makeGetPayments({
+      id: '123',
+      authToken: '123',
+      service: mockPaymentsService
+    });
+
+    const page = await newSpecPage({
+      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu],
+      template: () => <payments-list-core getPayments={getPayments} />,
+    });
+
+    await page.waitForChanges();
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    expect(filterButton).not.toBeNull();
+
+    filterButton.click();
+    await page.waitForChanges();
+
+    const filterMenu = page.root.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+  });
+
+  it('updates params and refetches data on filter interaction', async () => {
+    const mockPaymentsService = {
+      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    };
+
+    const getPayments = makeGetPayments({
+      id: '123',
+      authToken: '123',
+      service: mockPaymentsService
+    });
+
+    const page = await newSpecPage({
+      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu, SelectFilter],
+      template: () => <payments-list-core getPayments={getPayments} />,
+    });
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const selectFilter = filterMenu.querySelector('select-filter');
+    expect(selectFilter).not.toBeNull();
+
+    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
+    expect(selectFilterInput).not.toBeNull();
+
+    selectFilterInput.click();
+    
+    const selectOptions = selectFilterInput.querySelectorAll('option');
+    expect(selectOptions).not.toBeNull();
+    
+    const succeededOption = selectOptions[3] as HTMLOptionElement;
+    succeededOption.click();
+    selectFilterInput.value = 'succeeded';
+    selectFilterInput.dispatchEvent(new Event('change'));
+
+    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(2);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams).toEqual({"payment_status": "succeeded"});
+  });
+
+  it('clears filters and refetches data on clear filters interaction', async () => {
+    const mockPaymentsService = {
+      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    };
+
+    const getPayments = makeGetPayments({
+      id: '123',
+      authToken: '123',
+      service: mockPaymentsService
+    });
+
+    const page = await newSpecPage({
+      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu, SelectFilter],
+      template: () => <payments-list-core getPayments={getPayments} />,
+    });
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const selectFilter = filterMenu.querySelector('select-filter');
+    expect(selectFilter).not.toBeNull();
+
+    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
+    expect(selectFilterInput).not.toBeNull();
+    selectFilterInput.click();
+    
+    const selectOptions = selectFilterInput.querySelectorAll('option');
+    expect(selectOptions).not.toBeNull();
+    
+    const succeededOption = selectOptions[3] as HTMLOptionElement;
+    succeededOption.click();
+    selectFilterInput.value = 'succeeded';
+    selectFilterInput.dispatchEvent(new Event('change'));
+
+    const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
+    expect(clearButton).not.toBeNull();
+
+    clearButton.click();
+
+    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(3);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams).toEqual({});
   });
 
   it('updates params and refetches data on pagination interaction', async () => {

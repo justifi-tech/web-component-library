@@ -30,7 +30,7 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 */
 @Component({
   tag: 'justifi-payments-list',
-  shadow: true,
+  shadow: true
 })
 
 export class PaymentsList {

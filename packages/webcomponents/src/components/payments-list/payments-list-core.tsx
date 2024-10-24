@@ -1,21 +1,28 @@
-import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
-  tag: 'payments-list-core',
+  tag: 'payments-list-core'
 })
 export class PaymentsListCore {
-  @Prop() getPayments: Function;
-
   @State() payments: Payment[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any;
+  @State() params: any = {};
+  
+  @Prop() getPayments: Function;
+
+  @Watch('params')
+  @Watch('getPayments')
+  updateOnPropChange() {
+    this.fetchData();
+  }
 
   @Event({
     eventName: 'payment-row-clicked',
@@ -24,16 +31,29 @@ export class PaymentsListCore {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
-  @Watch('params')
-  @Watch('getPayments')
-  updateOnPropChange() {
-    this.fetchData();
-  }
-
   componentWillLoad() {
     if (this.getPayments) {
       this.fetchData();
     }
+  }
+
+  @Listen('clearParams')
+  clearFilters() {
+    this.clearParams();
+  }
+
+  @Listen('emitParams')
+  setParams(event: CustomEvent) {
+    this.setParamsOnChange(event.detail);
+  }
+
+  setParamsOnChange = (value: any) => {
+    // this.params = { ...this.params, ...value };
+    this.params = onFilterChange(value, this.params);
+  }
+
+  clearParams = () => {
+    this.params = {};
   }
 
   fetchData(): void {
@@ -78,6 +98,18 @@ export class PaymentsListCore {
 
   get entityId() {
     return this.payments.map((payment) => payment.id);
+  }
+
+  get paymentStatusOptions() {
+    return [
+      { label: 'All', value: '' },
+      { label: 'Pending', value: 'pending' },
+      { label: 'Authorized', value: 'authorized' },
+      { label: 'Succeeded', value: 'succeeded' },
+      { label: 'Failed', value: 'failed' },
+      { label: 'Disputed', value: 'disputed' },
+      { label: 'Refunded', value: 'refunded' }
+    ]
   }
 
   get columnData() {
@@ -125,41 +157,58 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  handleDateChange = (name: string, value: string) => {
-    this.params = { ...this.params, [name]: value };
+  get filters() {
+    return (
+      <div class='grid grid-cols-2 gap-3 p-1'>
+        <div class='p-2'>
+          <text-filter
+            name='terminal_id'
+            label='Terminal ID'
+            params={this.params}
+          />
+        </div>
+        <div class='p-2'>
+          <select-filter
+            name='payment_status'
+            label='Status'
+            options={this.paymentStatusOptions}
+            params={this.params}
+          />
+        </div>
+        <div class='p-2'>
+          <date-filter
+            name='created_after'
+            label='Start Date'
+            params={this.params}
+          />
+        </div>
+        <div class='p-2'>
+          <date-filter
+            name='created_before'
+            label='End Date'
+            params={this.params}
+          />
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <div class="row gy-3 mb-4">
-          <div class="col-2">
-            <form-control-date
-              name="created_after"
-              label="Start Date"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-          <div class="col-2">
-            <form-control-date
-              name="created_before"
-              label="End Date"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-        </div>
-        <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+        <table-filters-menu filters={this.filters} params={this.params} />
+        <div class='table-wrapper'>
+          <table class='table table-hover'>
+            <thead class='table-head sticky-top' part='table-head'>
+              <tr class='table-light text-nowrap' part='table-head-row'>
                 {this.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
+                  <th part='table-head-cell' scope='col' title={Array.isArray(column) ? column[1] : ''}>
                     {!Array.isArray(column) ? column : column[0]}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class='table-body' part='table-body'>
               <TableLoadingState
                 columnSpan={this.columnData.length}
                 isLoading={this.loading}
@@ -175,7 +224,7 @@ export class PaymentsListCore {
               {this.showRowData &&
                 this.rowData.map((data, index) => (
                   <tr
-                    data-test-id="table-row"
+                    data-test-id='table-row'
                     data-row-entity-id={this.entityId[index]}
                     onClick={this.rowClickHandler}
                     part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
@@ -183,18 +232,18 @@ export class PaymentsListCore {
                     {data.map((dataEntry: any) => {
                       let nestedHtml = dataEntry?.type;
                       if (nestedHtml) {
-                        return <td part="table-cell" innerHTML={dataEntry.value}></td>;
+                        return <td part='table-cell' innerHTML={dataEntry.value}></td>;
                       } else {
-                        return <td part="table-cell">{dataEntry}</td>;
+                        return <td part='table-cell'>{dataEntry}</td>;
                       }
                     })}
                   </tr>
                 ))}
             </tbody>
             {this.paging && (
-              <tfoot class="sticky-bottom">
-                <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.columnData?.length}>
+              <tfoot class='sticky-bottom'>
+                <tr class='table-light align-middle'>
+                  <td part='pagination-bar' colSpan={this.columnData?.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
