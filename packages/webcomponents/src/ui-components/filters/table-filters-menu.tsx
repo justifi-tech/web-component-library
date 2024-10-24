@@ -42,6 +42,7 @@ export class TableFiltersMenu {
             type='button dropdown-toggle'
             ref={(el) => (this.anchorButton = el)}
             class='btn btn-primary dropdown-toggle'
+            data-test-id='open-filters-button'
             data-bs-toggle='dropdown'
           >
             {'Filters'}
@@ -53,7 +54,8 @@ export class TableFiltersMenu {
             trigger='click'
           >
             <form 
-              class='dropdown-menu' 
+              class='dropdown-menu'
+              data-test-id='filter-menu'
               ref={(el) => (this.menu = el)} 
               onSubmit={(e) => e.preventDefault()}
             >
@@ -66,6 +68,7 @@ export class TableFiltersMenu {
             variant='secondary'
             onClick={() => this.emitClearParams()}
             hidden={!this.showClearButton}
+            data-test-id='clear-filters-button'
           >
             {'Clear Filters'}  
           </Button>
