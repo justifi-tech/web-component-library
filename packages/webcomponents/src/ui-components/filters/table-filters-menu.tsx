@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
 import { Button } from '../button';
+import { hasFilters } from './utils';
 
 @Component({
   tag: 'table-filters-menu'
@@ -14,7 +15,7 @@ export class TableFiltersMenu {
 
   @Watch('params')
   watchParamsHandler(newValue: any) {
-    this.showClearButton = Object.keys(newValue).length > 0;
+    this.showClearButton = hasFilters(newValue);
   }
 
   @Event() clearParams: EventEmitter;

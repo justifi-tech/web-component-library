@@ -4,6 +4,7 @@ import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from 
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
   tag: 'payments-list-core'
@@ -47,7 +48,8 @@ export class PaymentsListCore {
   }
 
   setParamsOnChange = (value: any) => {
-    this.params = { ...this.params, ...value };
+    // this.params = { ...this.params, ...value };
+    this.params = onFilterChange(value, this.params);
   }
 
   clearParams = () => {
