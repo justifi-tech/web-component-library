@@ -1,12 +1,12 @@
-import { Component, h, Prop, Event, EventEmitter, State, Watch } from "@stencil/core";
+import { Component, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
 
 @Component({
-  tag: "select-filter"
+  tag: 'select-filter'
 })
 export class SelectFilter {
   selectElement: HTMLSelectElement;
 
-  @State() currentValue: string = "";
+  @State() currentValue: string = '';
   @State() stateOptions: { label: string; value: string }[] = [];
 
   @Prop() name: string;
@@ -14,10 +14,10 @@ export class SelectFilter {
   @Prop() options: { label: string; value: string }[];
   @Prop() params: any;
 
-  @Watch("params")
+  @Watch('params')
   clearInput() {
     if (!this.params[this.name]) {
-      this.currentValue = "";
+      this.currentValue = '';
     }
   }
 

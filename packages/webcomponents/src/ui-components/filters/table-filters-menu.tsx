@@ -1,9 +1,9 @@
-import { Component, Event, EventEmitter, Listen, Prop, State, Watch, h } from "@stencil/core";
-import { Button } from "../button";
-import { hasFilters } from "./utils";
+import { Component, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Button } from '../button';
+import { hasFilters } from './utils';
 
 @Component({
-  tag: "table-filters-menu"
+  tag: 'table-filters-menu'
 })
 export class TableFiltersMenu {
   @State() anchorButton: HTMLElement;
@@ -13,21 +13,21 @@ export class TableFiltersMenu {
   @Prop() filters: any;
   @Prop() params: any;
 
-  @Watch("params")
+  @Watch('params')
   watchParamsHandler(newValue: any) {
     this.showClearButton = hasFilters(newValue);
   }
 
   @Event() clearParams: EventEmitter;
 
-  @Listen("showEvent")
+  @Listen('showEvent')
   show() {
-    this.menu.classList.add("show");
+    this.menu.classList.add('show');
   }
 
-  @Listen("hideEvent")
+  @Listen('hideEvent')
   hide() {
-    this.menu.classList.remove("show");
+    this.menu.classList.remove('show');
   }
 
   emitClearParams() {

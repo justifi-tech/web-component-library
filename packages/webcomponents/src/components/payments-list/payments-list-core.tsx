@@ -1,13 +1,13 @@
-import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from "@stencil/core";
-import { PagingInfo, Payment, pagingDefaults } from "../../api";
-import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from "../../utils/utils";
-import { ComponentError } from "../../api/ComponentError";
-import { tableExportedParts } from "../table/exported-parts";
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from "../../ui-components";
-import { onFilterChange } from "../../ui-components/filters/utils";
+import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
+import { PagingInfo, Payment, pagingDefaults } from '../../api';
+import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { ComponentError } from '../../api/ComponentError';
+import { tableExportedParts } from '../table/exported-parts';
+import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
-  tag: "payments-list-core"
+  tag: 'payments-list-core'
 })
 export class PaymentsListCore {
   @State() payments: Payment[] = [];
@@ -18,18 +18,18 @@ export class PaymentsListCore {
   
   @Prop() getPayments: Function;
 
-  @Watch("params")
-  @Watch("getPayments")
+  @Watch('params')
+  @Watch('getPayments')
   updateOnPropChange() {
     this.fetchData();
   }
 
   @Event({
-    eventName: "payment-row-clicked",
+    eventName: 'payment-row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
-  @Event({ eventName: "error-event" }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
     if (this.getPayments) {
@@ -37,18 +37,17 @@ export class PaymentsListCore {
     }
   }
 
-  @Listen("clearParams")
+  @Listen('clearParams')
   clearFilters() {
     this.clearParams();
   }
 
-  @Listen("emitParams")
+  @Listen('emitParams')
   setParams(event: CustomEvent) {
     this.setParamsOnChange(event.detail);
   }
 
   setParamsOnChange = (value: any) => {
-    // this.params = { ...this.params, ...value };
     this.params = onFilterChange(value, this.params);
   }
 
@@ -91,7 +90,7 @@ export class PaymentsListCore {
   };
 
   rowClickHandler = (e) => {
-    const clickedPaymentID = e.target.closest("tr").dataset.rowEntityId;
+    const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPaymentID) return;
     this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
   };
@@ -102,32 +101,32 @@ export class PaymentsListCore {
 
   get paymentStatusOptions() {
     return [
-      { label: "All", value: "" },
-      { label: "Pending", value: "pending" },
-      { label: "Authorized", value: "authorized" },
-      { label: "Succeeded", value: "succeeded" },
-      { label: "Failed", value: "failed" },
-      { label: "Disputed", value: "disputed" },
-      { label: "Refunded", value: "refunded" }
+      { label: 'All', value: '' },
+      { label: 'Pending', value: 'pending' },
+      { label: 'Authorized', value: 'authorized' },
+      { label: 'Succeeded', value: 'succeeded' },
+      { label: 'Failed', value: 'failed' },
+      { label: 'Disputed', value: 'disputed' },
+      { label: 'Refunded', value: 'refunded' }
     ]
   }
 
   get columnData() {
     return [
-      ["Made On", "The date and time each payment was made"],
-      ["Amount", "The dollar amount of each payment"],
-      ["Description", "The payment description, if you provided one"],
-      ["Cardholder", "The name associated with the payment method"],
-      ["Payment Method", "The brand and last 4 digits of the payment method"],
-      ["Status", "The current status of each payment"],
-      ["Payment ID", "The unique identifier of each payment"],
+      ['Made On', 'The date and time each payment was made'],
+      ['Amount', 'The dollar amount of each payment'],
+      ['Description', 'The payment description, if you provided one'],
+      ['Cardholder', 'The name associated with the payment method'],
+      ['Payment Method', 'The brand and last 4 digits of the payment method'],
+      ['Status', 'The current status of each payment'],
+      ['Payment ID', 'The unique identifier of each payment'],
     ];
   }
 
   get rowData() {
     return this.payments.map((payment) => [
       {
-        type: "head",
+        type: 'head',
         value: `
           <div class="fw-bold">${formatDate(payment.created_at)}</div>
           <div class="fw-bold">${formatTime(payment.created_at)}</div>
@@ -138,7 +137,7 @@ export class PaymentsListCore {
       payment.payment_method.payersName,
       payment.payment_method.lastFourDigits,
       {
-        type: "inner",
+        type: 'inner',
         value: MapPaymentStatusToBadge(payment.status),
       },
       payment.id,
