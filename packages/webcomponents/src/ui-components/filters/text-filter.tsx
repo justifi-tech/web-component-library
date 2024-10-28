@@ -1,7 +1,7 @@
-import { Component, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, State, Watch } from "@stencil/core";
 
 @Component({
-  tag: 'text-filter'
+  tag: "text-filter"
 })
 export class TextFilter {
   textElement: HTMLInputElement;
@@ -11,7 +11,7 @@ export class TextFilter {
   @Prop() params: any;
   @Prop() placeholder?: string;
 
-  @State() currentValue: string = '';
+  @State() currentValue: string = "";
 
   @Event() emitParams: EventEmitter<any>;
 
@@ -22,28 +22,28 @@ export class TextFilter {
     this.emitParams.emit({ [this.name]: target.value });
   }
 
-  @Watch('params')
+  @Watch("params")
   clearInput() {
     if (!this.params[this.name]) {
-      this.currentValue = '';
+      this.currentValue = "";
     }
   }
   
   render() {
     return (
-      <div class='form-group d-flex flex-column'>
-        <label part='label' class='form-label' htmlFor={this.name}>
+      <div class="form-group d-flex flex-column">
+        <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <input
-          type='text'
+          type="text"
           name={this.name}
           ref={(el) => (this.textElement = el as HTMLInputElement)}
           value={this.currentValue}
           placeholder={this.placeholder}
           onInput={this.handleInput}
-          part={'input'}
-          class={'form-control'}
+          part={"input"}
+          class={"form-control"}
         />
       </div>
     );

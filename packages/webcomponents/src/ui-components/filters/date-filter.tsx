@@ -1,10 +1,10 @@
-import { Component, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, State, Watch } from "@stencil/core";
 
 @Component({
-  tag: 'date-filter'
+  tag: "date-filter"
 })
 export class DateFilter {
-  @State() currentValue: string = '';
+  @State() currentValue: string = "";
   
   @Prop() name: string;
   @Prop() label: string;
@@ -13,10 +13,10 @@ export class DateFilter {
 
   @Event() emitParams: EventEmitter<any>;
 
-  @Watch('params')
+  @Watch("params")
   clearInput() {
     if (!this.params[this.name]) {
-      this.currentValue = '';
+      this.currentValue = "";
     }
   }
 
@@ -28,18 +28,18 @@ export class DateFilter {
 
   render() {
     return (
-      <div class='form-group d-flex flex-column'>
-        <label part='label' class='form-label' htmlFor={this.name}>
+      <div class="form-group d-flex flex-column">
+        <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <input
-          type='date'
+          type="date"
           name={this.name}
           value={this.currentValue}
           placeholder={this.placeholder}
           onChange={this.handleChange}
-          part={'input'}
-          class={'form-control'}
+          part={"input"}
+          class={"form-control"}
         />
       </div>
     );

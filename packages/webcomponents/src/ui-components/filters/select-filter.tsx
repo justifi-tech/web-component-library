@@ -1,12 +1,12 @@
-import { Component, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, State, Watch } from "@stencil/core";
 
 @Component({
-  tag: 'select-filter'
+  tag: "select-filter"
 })
 export class SelectFilter {
   selectElement: HTMLSelectElement;
 
-  @State() currentValue: string = '';
+  @State() currentValue: string = "";
   @State() stateOptions: { label: string; value: string }[] = [];
 
   @Prop() name: string;
@@ -14,10 +14,10 @@ export class SelectFilter {
   @Prop() options: { label: string; value: string }[];
   @Prop() params: any;
 
-  @Watch('params')
+  @Watch("params")
   clearInput() {
     if (!this.params[this.name]) {
-      this.currentValue = '';
+      this.currentValue = "";
     }
   }
 
@@ -35,16 +35,16 @@ export class SelectFilter {
 
   render() {
     return (
-      <div class='form-group'>
-        <label class='form-label' htmlFor={this.name}>
+      <div class="form-group">
+        <label class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <select
           name={this.name}
           ref={(el) => (this.selectElement = el as HTMLSelectElement)}
-          class='form-control'
+          class="form-control"
           onChange={this.handleChange}
-          part={'input'}
+          part={"input"}
         >
           {this.stateOptions.map((option, index) => (
             <option value={option.value} key={index} selected={this.currentValue === option.value}>
