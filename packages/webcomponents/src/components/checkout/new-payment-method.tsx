@@ -108,9 +108,9 @@ export class NewPaymentMethod {
     return (
       <div class="payment-method">
         <div
-          class={`payment-method-header p-3`}
+          class="radio-list-item p-3"
           onClick={() => this.onPaymentMethodOptionClick()}
-          part="payment-method-header"
+          part="radio-list-item"
         >
           <input
             type="radio"

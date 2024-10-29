@@ -96,9 +96,15 @@ justifi-payment-provisioning {
   color: #fff;
 }
 
-::part(payment-method-header):hover {
-  background-color: rgba(255, 120, 90, 0.25);
+::part(radio-list-item) {
   cursor: pointer;
+  color: #fff;
+  background-color: #191919;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+::part(radio-list-item):hover {
+  background-color: rgba(255, 120, 90, 0.25);
 }
 
 ::part(button) {

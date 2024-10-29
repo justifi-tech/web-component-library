@@ -73,6 +73,16 @@ justifi-payment-provisioning {
   margin-left: -1px; 
 }
 
+::part(radio-list-item) {
+  cursor: pointer;
+  color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+::part(radio-list-item):hover {
+  background-color: rgba(0, 0, 0, .025);
+}
+
 ::part(input) {
   background-color: transparent;
   border-color: #555;

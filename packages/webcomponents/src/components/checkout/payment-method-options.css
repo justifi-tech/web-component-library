@@ -2,14 +2,14 @@
   display: block;
 }
 
-.payment-method-header {
+.radio-list-item {
   cursor: pointer;
   color: var(--jfi-radio-button-group-color);
   background-color: var(--jfi-radio-button-group-background-color);
   border-bottom: var(--jfi-radio-button-group-divider);
 }
 
-.payment-method-header:hover {
+.radio-list-item:hover {
   color: var(--jfi-radio-button-group-color-hover);
   background-color: var(--jfi-radio-button-group-background-color-hover);
 }
