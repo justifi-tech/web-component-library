@@ -36,27 +36,27 @@ export class TableFiltersMenu {
 
   render() {
     return (
-      <div class='d-flex gap-2'>
-        <div class='dropdown pb-3'>
+      <div class="d-flex gap-2">
+        <div class="dropdown pb-3">
           <Button
-            variant='primary'
-            type='button dropdown-toggle'
+            variant="primary"
+            type="button dropdown-toggle"
             ref={(el) => (this.anchorButton = el)}
-            class='btn btn-primary dropdown-toggle'
-            data-test-id='open-filters-button'
-            data-bs-toggle='dropdown'
+            class="btn btn-primary dropdown-toggle"
+            data-test-id="open-filters-button"
+            data-bs-toggle="dropdown"
           >
-            {'Filters'}
+            {"Filters"}
           </Button>
           <custom-popper
             offset={[20, 10]}
-            strategy='fixed'
+            strategy="fixed"
             anchorRef={this.anchorButton}
-            trigger='click'
+            trigger="click"
           >
             <form 
-              class='dropdown-menu'
-              data-test-id='filter-menu'
+              class="dropdown-menu"
+              data-test-id="filter-menu"
               ref={(el) => (this.menu = el)} 
               onSubmit={(e) => e.preventDefault()}
             >
@@ -66,12 +66,12 @@ export class TableFiltersMenu {
         </div>
         <div>
           <Button 
-            variant='secondary'
+            variant="secondary"
             onClick={() => this.emitClearParams()}
             hidden={!this.showClearButton}
-            data-test-id='clear-filters-button'
+            data-test-id="clear-filters-button"
           >
-            {'Clear Filters'}  
+            {"Clear Filters"}  
           </Button>
         </div>
       </div>

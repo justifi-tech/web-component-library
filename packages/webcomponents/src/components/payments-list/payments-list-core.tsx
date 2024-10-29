@@ -48,7 +48,6 @@ export class PaymentsListCore {
   }
 
   setParamsOnChange = (value: any) => {
-    // this.params = { ...this.params, ...value };
     this.params = onFilterChange(value, this.params);
   }
 
@@ -129,8 +128,8 @@ export class PaymentsListCore {
       {
         type: 'head',
         value: `
-          <div class='fw-bold'>${formatDate(payment.created_at)}</div>
-          <div class='fw-bold'>${formatTime(payment.created_at)}</div>
+          <div class="fw-bold">${formatDate(payment.created_at)}</div>
+          <div class="fw-bold">${formatTime(payment.created_at)}</div>
         `,
       },
       formatCurrency(payment.amount),
@@ -159,33 +158,33 @@ export class PaymentsListCore {
 
   get filters() {
     return (
-      <div class='grid grid-cols-2 gap-3 p-1'>
-        <div class='p-2'>
+      <div class="grid grid-cols-2 gap-3 p-1">
+        <div class="p-2">
           <text-filter
-            name='terminal_id'
-            label='Terminal ID'
+            name="terminal_id"
+            label="Terminal ID"
             params={this.params}
           />
         </div>
-        <div class='p-2'>
+        <div class="p-2">
           <select-filter
-            name='payment_status'
-            label='Status'
+            name="payment_status"
+            label="Status"
             options={this.paymentStatusOptions}
             params={this.params}
           />
         </div>
-        <div class='p-2'>
+        <div class="p-2">
           <date-filter
-            name='created_after'
-            label='Start Date'
+            name="created_after"
+            label="Start Date"
             params={this.params}
           />
         </div>
-        <div class='p-2'>
+        <div class="p-2">
           <date-filter
-            name='created_before'
-            label='End Date'
+            name="created_before"
+            label="End Date"
             params={this.params}
           />
         </div>
@@ -197,18 +196,18 @@ export class PaymentsListCore {
     return (
       <StyledHost exportparts={tableExportedParts}>
         <table-filters-menu filters={this.filters} params={this.params} />
-        <div class='table-wrapper'>
-          <table class='table table-hover'>
-            <thead class='table-head sticky-top' part='table-head'>
-              <tr class='table-light text-nowrap' part='table-head-row'>
+        <div class="table-wrapper">
+          <table class="table table-hover">
+            <thead class="table-head sticky-top" part="table-head">
+              <tr class="table-light text-nowrap" part="table-head-row">
                 {this.columnData?.map((column) => (
-                  <th part='table-head-cell' scope='col' title={Array.isArray(column) ? column[1] : ''}>
+                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ""}>
                     {!Array.isArray(column) ? column : column[0]}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody class='table-body' part='table-body'>
+            <tbody class="table-body" part="table-body">
               <TableLoadingState
                 columnSpan={this.columnData.length}
                 isLoading={this.loading}
@@ -224,26 +223,26 @@ export class PaymentsListCore {
               {this.showRowData &&
                 this.rowData.map((data, index) => (
                   <tr
-                    data-test-id='table-row'
+                    data-test-id="table-row"
                     data-row-entity-id={this.entityId[index]}
                     onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
+                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                   >
                     {data.map((dataEntry: any) => {
                       let nestedHtml = dataEntry?.type;
                       if (nestedHtml) {
-                        return <td part='table-cell' innerHTML={dataEntry.value}></td>;
+                        return <td part="table-cell" innerHTML={dataEntry.value}></td>;
                       } else {
-                        return <td part='table-cell'>{dataEntry}</td>;
+                        return <td part="table-cell">{dataEntry}</td>;
                       }
                     })}
                   </tr>
                 ))}
             </tbody>
             {this.paging && (
-              <tfoot class='sticky-bottom'>
-                <tr class='table-light align-middle'>
-                  <td part='pagination-bar' colSpan={this.columnData?.length}>
+              <tfoot class="sticky-bottom">
+                <tr class="table-light align-middle">
+                  <td part="pagination-bar" colSpan={this.columnData?.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

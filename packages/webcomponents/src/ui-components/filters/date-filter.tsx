@@ -28,18 +28,18 @@ export class DateFilter {
 
   render() {
     return (
-      <div class='form-group d-flex flex-column'>
-        <label part='label' class='form-label' htmlFor={this.name}>
+      <div class="form-group d-flex flex-column">
+        <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <input
-          type='date'
+          type="date"
           name={this.name}
           value={this.currentValue}
           placeholder={this.placeholder}
           onChange={this.handleChange}
-          part={'input'}
-          class={'form-control'}
+          part={"input"}
+          class={"form-control"}
         />
       </div>
     );

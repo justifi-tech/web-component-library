@@ -105,7 +105,7 @@ export class CustomPopper {
           `}
         </style>
 
-      <div class='popper-content' ref={(el) => this.popperContentRef = el }>
+      <div class="popper-content" ref={(el) => this.popperContentRef = el }>
         <slot></slot>
       </div>
       </div>

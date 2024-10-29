@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, State, Watch } from "@stencil/core";
 
 @Component({
   tag: 'text-filter'
@@ -31,19 +31,19 @@ export class TextFilter {
   
   render() {
     return (
-      <div class='form-group d-flex flex-column'>
-        <label part='label' class='form-label' htmlFor={this.name}>
+      <div class="form-group d-flex flex-column">
+        <label part="label" class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <input
-          type='text'
+          type="text"
           name={this.name}
           ref={(el) => (this.textElement = el as HTMLInputElement)}
           value={this.currentValue}
           placeholder={this.placeholder}
           onInput={this.handleInput}
-          part={'input'}
-          class={'form-control'}
+          part={"input"}
+          class={"form-control"}
         />
       </div>
     );

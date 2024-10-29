@@ -35,16 +35,16 @@ export class SelectFilter {
 
   render() {
     return (
-      <div class='form-group'>
-        <label class='form-label' htmlFor={this.name}>
+      <div class="form-group">
+        <label class="form-label" htmlFor={this.name}>
           {this.label}
         </label>
         <select
           name={this.name}
           ref={(el) => (this.selectElement = el as HTMLSelectElement)}
-          class='form-control'
+          class="form-control"
           onChange={this.handleChange}
-          part={'input'}
+          part={"input"}
         >
           {this.stateOptions.map((option, index) => (
             <option value={option.value} key={index} selected={this.currentValue === option.value}>
