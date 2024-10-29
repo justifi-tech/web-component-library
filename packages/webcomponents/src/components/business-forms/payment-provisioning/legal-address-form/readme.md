@@ -58,10 +58,6 @@ Type: `Promise<void>`
 graph TD;
   justifi-legal-address-form-step-core --> form-control-text
   justifi-legal-address-form-step-core --> form-control-select
-  form-control-text --> form-control-help-text
-  form-control-text --> form-control-error-text
-  form-control-select --> form-control-help-text
-  form-control-select --> form-control-error-text
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core
   style justifi-legal-address-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

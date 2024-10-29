@@ -64,12 +64,12 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
       <tfoot class="sticky-bottom">
         <tr class="align-middle table-light">
           <td colspan="11" part="pagination-bar">
-            <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+            <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                <ul class="m-0 pagination">
-                  <li class="disabled page-item">
-                    <a class="page-link" href="#" part="page-button page-button-disabled">
-                      <span class="me-1" part="page-arrow">
+                <ul class="m-0 pagination" part="pagination">
+                  <li class="disabled page-item" part="page-item">
+                    <a class="page-link" href="#" part="page-link page-link-disabled">
+                      <span class="me-1" part="page-link-arrow">
                         «
                       </span>
                       <span part="page-button-text">
@@ -78,11 +78,11 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                     </a>
                   </li>
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="page-button page-button-disabled">
-                      <span part="page-button-text">
+                    <a class="page-link" href="#" part="page-link page-link-disabled">
+                      <span part="page-link-text">
                         Next
                       </span>
-                      <span class="ms-1" part="page-arrow">
+                      <span class="ms-1" part="page-link-arrow">
                         »
                       </span>
                     </a>
@@ -192,7 +192,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             </span>
           </td>
           <td part="table-cell">
-            <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+            <svg part="icon" title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
               <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
               <path d="M11 4h2v9h-2z"></path>
               <path d="M5 18h14v2H5z"></path>
@@ -238,7 +238,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             </span>
           </td>
           <td part="table-cell">
-            <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+            <svg part="icon" title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
               <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
               <path d="M11 4h2v9h-2z"></path>
               <path d="M5 18h14v2H5z"></path>
@@ -284,7 +284,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             </span>
           </td>
           <td part="table-cell">
-            <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+            <svg part="icon" title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
               <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
               <path d="M11 4h2v9h-2z"></path>
               <path d="M5 18h14v2H5z"></path>
@@ -330,7 +330,7 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             </span>
           </td>
           <td part="table-cell">
-            <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
+            <svg part="icon" title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
               <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
               <path d="M11 4h2v9h-2z"></path>
               <path d="M5 18h14v2H5z"></path>
@@ -341,12 +341,12 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
       <tfoot class="sticky-bottom">
         <tr class="align-middle table-light">
           <td colspan="11" part="pagination-bar">
-            <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+            <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                <ul class="m-0 pagination">
-                  <li class="disabled page-item">
-                    <a class="page-link" href="#" part="page-button page-button-disabled">
-                      <span class="me-1" part="page-arrow">
+                <ul class="m-0 pagination" part="pagination">
+                  <li class="disabled page-item" part="page-item">
+                    <a class="page-link" href="#" part="page-link page-link-disabled">
+                      <span class="me-1" part="page-link-arrow">
                         «
                       </span>
                       <span part="page-button-text">
@@ -355,11 +355,11 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
                     </a>
                   </li>
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="page-button page-button-disabled">
-                      <span part="page-button-text">
+                    <a class="page-link" href="#" part="page-link page-link-disabled">
+                      <span part="page-link-text">
                         Next
                       </span>
-                      <span class="ms-1" part="page-arrow">
+                      <span class="ms-1" part="page-link-arrow">
                         »
                       </span>
                     </a>

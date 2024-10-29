@@ -1,8 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SelectInput } from '../form-control-select';
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-select', () => {
   const components = [SelectInput, FormControlErrorText, FormControlHelpText];
@@ -13,9 +13,9 @@ describe('form-control-select', () => {
   ];
 
   it('Renders with default props', async () => {
-      const page = await newSpecPage({
+    const page = await newSpecPage({
       components: components,
-      template: () => <form-control-select label='Select your delivery method' name='delivery_method'/>
+      template: () => <form-control-select label='Select your delivery method' name='delivery_method' />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -189,11 +189,10 @@ describe('form-control-select', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    const helpTextComponent = page.root.querySelector('#form-help-text-delivery_method');
     expect(helpTextComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Select your preferred delivery method');
+    expect(helpTextComponent.textContent).toBe('Select your preferred delivery method');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
@@ -207,11 +206,10 @@ describe('form-control-select', () => {
         />
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-delivery_method');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('This field is required.');
+    expect(errorTextComponent.textContent).toBe('This field is required.');
 
     const selectElement = page.root.querySelector('select');
     expect(selectElement.classList.contains('is-invalid')).toBe(true);

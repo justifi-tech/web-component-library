@@ -2,13 +2,13 @@
 
 exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout>
-  <template shadowrootmode="open">
-    <justifi-checkout-core class="body" style="display: block;">
-      <!---->
+  <!---->
+  <justifi-checkout-core class="body" style="display: block;">
+    <template shadowrootmode="open">
       <style></style>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12">
-          <h2 class="fs-5 fw-bold jfi-header pb-3" part="header-2">
+          <h2 class="border-bottom fs-5 fw-bold header-2 pb-3" part="header-2">
             Summary
           </h2>
           <section>
@@ -16,12 +16,12 @@ exports[`justifi-checkout renders loading 1`] = `
               <div part="skeleton" style="margin-top: 0; margin-bottom: 0; height: 24px; transform-origin: 0 55%; transform: scale(1, 0.60); border-radius: 4px/6.67px; ::before: [object Object];"></div>
             </div>
             <div class="visually-hidden">
-              <div class="jfi-payment-description"></div>
-              <div class="jfi-payment-total">
-                <span class="jfi-payment-total-label">
+              <div part="summary-payment-description"></div>
+              <div part="summary-payment-total">
+                <span part="summary-payment-total-label">
                   Total
                 </span>
-                <span class="jfi-payment-total-amount">
+                <span part="summary-payment-total-amount">
                   $0.00
                 </span>
               </div>
@@ -29,15 +29,13 @@ exports[`justifi-checkout renders loading 1`] = `
           </section>
         </div>
         <div class="col-12">
-          <div slot="insurance">
-            <slot name="insurance"></slot>
-          </div>
+          <slot name="insurance"></slot>
         </div>
         <div class="col-12 mt-4">
-          <h2 class="fs-5 fw-bold jfi-header pb-3" part="header-2">
+          <h2 class="border-bottom fs-5 fw-bold header-2 pb-3" part="header-2">
             Payment
           </h2>
-          <h3 class="fs-6 fw-bold lh-lg" part="header-3">
+          <h3 class="fs-6 fw-bold header-3 lh-lg mb-4" part="header-3">
             Select payment type
           </h3>
           <div class="d-flex flex-column">
@@ -53,7 +51,7 @@ exports[`justifi-checkout renders loading 1`] = `
         </div>
         <div class="col-12">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" disabled="" isloading="" part="button-primary" type="submit" variant="primary" style="width: 100%;">
+            <button class="btn btn-primary" disabled="" isloading="" part="button button-primary button-loading" type="submit" variant="primary" style="width: 100%;">
               <div class="spinner-border spinner-border-sm" part="button-spinner" role="status">
                 <span class="visually-hidden">
                   Loading...
@@ -63,7 +61,8 @@ exports[`justifi-checkout renders loading 1`] = `
           </div>
         </div>
       </div>
-    </justifi-checkout-core>
-  </template>
+    </template>
+    <div slot="insurance"></div>
+  </justifi-checkout-core>
 </justifi-checkout>
 `;

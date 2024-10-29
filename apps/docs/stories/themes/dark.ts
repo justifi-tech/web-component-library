@@ -3,8 +3,6 @@ body {
   background-color: #161616;
 }
 
-/* Card styling */
-
 justifi-checkout,
 justifi-business-details,
 justifi-payment-form,
@@ -170,23 +168,23 @@ justifi-payouts-list {
   padding: 40px;
 }
 
-::part(detail-header-container) {
+::part(detail-head) {
   background-color: #191919;
   padding: 16px;
 }
 
-::part(detail-header-amount) {
+::part(detail-head-amount) {
   font-size: 2rem;
   font-weight: bold;
   color: #fff;
 }
 
-::part(detail-header-currency) {
+::part(detail-head-currency) {
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.7);
 }
 
-::part(detail-header-badge) {
+::part(detail-head-badge) {
   color: #fff;
   padding: 4px 8px;
   border-radius: 12px;
@@ -207,11 +205,12 @@ justifi-payouts-list {
   color: rgba(255, 255, 255, 0.7);
 }
 
-::part(detail-section-container) {
+::part(detail-section) {
   background-color: #191919; 
   padding: 16px;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-top: 25px;
 }
 
 ::part(detail-section-item) {
@@ -251,10 +250,6 @@ justifi-payment-details {
   padding: 16px;
 }
 
-::part(table-head) {}
-  
-::part(table-head-row) {}
-
 ::part(table-head-cell) {
   color: #fff;
   background-color: #333;
@@ -264,17 +259,9 @@ justifi-payment-details {
   letter-spacing: 0.1em;
 }
 
-::part(table-body) {}
-
-::part(table-row) {}
-
 ::part(table-row):hover {
   cursor: pointer;
 }
-
-::part(table-row-even) {}
-
-::part(table-row-odd) {}
 
 ::part(table-cell) {
   color: #fff;
@@ -283,15 +270,9 @@ justifi-payment-details {
   font-size: 0.8rem;
 }
 
-::part(loading-state-cell) {}
-
 ::part(loading-state-spinner) {
   color: #cccccc; 
 }
-
-::part(error-state) {}
-
-::part(empty-state) {}
 
 ::part(pagination-bar) {
   color: #fff;
@@ -304,11 +285,6 @@ justifi-payment-details {
   display: flex;
   gap: 10px;
 }
-
-/* For pagination buttons */
-
-
-::part(page-button-text) {}
 
 ::part(loading-state-cell) {
   background-color: #191919;
@@ -335,6 +311,22 @@ justifi-payment-details {
 
 ::part(card-body) {
   color: #fff;
+}
+
+::part(page-link) {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+}
+
+::part(page-link-disabled) {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+::part(page-link):hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 :root {

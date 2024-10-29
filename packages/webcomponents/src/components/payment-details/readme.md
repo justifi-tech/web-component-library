@@ -21,10 +21,10 @@
 
 ## Shadow Parts
 
-| Part                         | Description |
-| ---------------------------- | ----------- |
-| `"detail-header-badge"`      |             |
-| `"detail-section-container"` |             |
+| Part                  | Description |
+| --------------------- | ----------- |
+| `"detail-head-badge"` |             |
+| `"detail-section"`    |             |
 
 
 ## Dependencies

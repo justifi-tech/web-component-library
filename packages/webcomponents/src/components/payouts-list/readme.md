@@ -50,8 +50,6 @@
 graph TD;
   payouts-list-core --> form-control-date
   payouts-list-core --> pagination-menu
-  form-control-date --> form-control-help-text
-  form-control-date --> form-control-error-text
   justifi-payouts-list --> payouts-list-core
   style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

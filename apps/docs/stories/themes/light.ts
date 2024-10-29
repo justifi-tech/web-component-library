@@ -3,8 +3,6 @@ body {
   background-color: #efefef;
 }
 
-/* Card styling */
-
 justifi-checkout,
 justifi-payment-form,
 justifi-payment-provisioning,
@@ -94,7 +92,6 @@ justifi-payment-provisioning {
 }
 
 ::part(input):focus {
-
   background-color: transparent;
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
@@ -109,7 +106,7 @@ justifi-payment-provisioning {
   border-color: #dc3545;
 }
 
-::part(input-disabled) {
+::part(input):disabled {
   background-color: #e9ecef;
   color: #333;
 }
@@ -179,30 +176,30 @@ justifi-payment-details {
   padding: 40px;
 }
 
-::part(detail-section-block) {
+::part(detail-section) {
   margin-top: 25px;
 }
 
-::part(detail-header-container) {
+::part(detail-head) {
   background-color: #f9fafb;
   padding: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: none;
 }
 
-::part(detail-header-amount) {
+::part(detail-head-amount) {
   font-size: 2rem;
   font-weight: bold;
   color: #111827; 
   font-family: 'Roboto', sans-serif;
 }
 
-::part(detail-header-currency) {
+::part(detail-head-currency) {
   font-size: 1.5rem;
   color: #6b7280; 
   font-family: 'Roboto', sans-serif;
 }
 
-::part(detail-header-badge) {
+::part(detail-head-badge) {
   color: #065f46;
   padding: 4px 8px;
   border-radius: 12px;
@@ -224,7 +221,7 @@ justifi-payment-details {
   color: #374151;
 }
 
-::part(detail-section-container) {
+::part(detail-section) {
   background-color: #ffffff;
   padding: 16px;
   border-radius: 8px;
@@ -268,8 +265,6 @@ justifi-payouts-list {
   padding: 16px;
 }
 
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-
 justifi-payments-list::part(label),
 justifi-payouts-list::part(label) {
   color: #212529;
@@ -311,10 +306,6 @@ justifi-payouts-list::part(input-invalid) {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-::part(table-head) {}
-
-::part(table-head-row) {}
-
 ::part(table-head-cell) {
   background-color: #fff;
   font-weight: 600;
@@ -323,17 +314,9 @@ justifi-payouts-list::part(input-invalid) {
   letter-spacing: 0.1em;
 }
 
-::part(table-body) {}
-
-::part(table-row) {}
-
 ::part(table-row):hover {
   cursor: pointer;
 }
-
-::part(table-row-even) {}
-
-::part(table-row-odd) {}
 
 ::part(table-cell) {
   background-color: transparent;
@@ -341,41 +324,24 @@ justifi-payouts-list::part(input-invalid) {
   font-size: 0.8rem;
 }
 
-::part(loading-state-cell) {}
-
 ::part(loading-state-spinner) {
   color: #ccc;
 }
 
-::part(error-state) {}
-
-::part(empty-state) {}
-
-::part(pagination-bar) {
-  background-color: #fff;
-  border-bottom: none;
-}
-
-justifi-payments-list::part(button-secondary),
-justifi-payouts-list::part(button-secondary) {
-  border: none;
+::part(page-link) {
   background-color: transparent;
-  text-transform: uppercase;
-  font-weight: normal;
-  font-size: 0.8rem;
-} 
-
-justifi-payments-list::part(button-disabled),
-justifi-payouts-list::part(button-disabled) {
-  opacity: 0.5;
-  cursor: not-allowed;
-} 
-
-::part(page-arrow) {
-  display: none;
+  border: none;
 }
 
-::part(page-button-text) {}
+::part(page-link-disabled) {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+::part(page-link):hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 :root {
   /* new vars */

@@ -79,9 +79,9 @@ export const EntityHeadInfoItem = ({
 );
 
 export const EntityHeadInfo = ({ title, slot, badge }, children) => (
-  <div slot={slot} part="detail-header-container" class="p-2">
+  <div slot={slot} part="detail-head" class="p-2">
     <div class="d-flex flex-row align-items-center gap-2 mb-2">
-      <h1 class="m-0" part="details-header-amount">
+      <h1 class="m-0" part="detail-head-amount">
         {title}
       </h1>
       {badge}

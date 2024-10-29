@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Watch,
 } from '@stencil/core';
+import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-checkbox',
@@ -65,8 +66,8 @@ export class CheckboxInput {
               {this.label}
             </label>
           </div>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

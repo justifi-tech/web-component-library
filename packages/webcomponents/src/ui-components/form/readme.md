@@ -53,16 +53,9 @@
  - [justifi-refund-form](../../components/refund-form)
  - [owner-form-inputs](../../components/business-forms/owner-form)
 
-### Depends on
-
-- [form-control-help-text](./form-helpers/form-control-help-text)
-- [form-control-error-text](./form-helpers/form-control-error-text)
-
 ### Graph
 ```mermaid
 graph TD;
-  form-control-text --> form-control-help-text
-  form-control-text --> form-control-error-text
   justifi-additional-questions --> form-control-text
   justifi-additional-questions-form-step-core --> form-control-text
   justifi-billing-form --> form-control-text

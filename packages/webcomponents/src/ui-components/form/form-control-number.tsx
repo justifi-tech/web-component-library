@@ -8,6 +8,7 @@ import {
   Element,
   Watch,
 } from '@stencil/core';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-number'
@@ -41,7 +42,7 @@ export class NumberInput {
     this.inputHandler(name, target.value);
     this.formControlInput.emit({ name, value: target.value });
   }
-  
+
   updateInput = (newValue: any) => {
     const inputElement = this.el.querySelector('input');
     if (inputElement) {
@@ -66,8 +67,8 @@ export class NumberInput {
             type="number"
             disabled={this.disabled}
           />
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

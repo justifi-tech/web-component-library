@@ -1,8 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { NumberInputMasked } from "../form-control-number-masked";
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-number-masked', () => {
   const components = [NumberInputMasked, FormControlErrorText, FormControlHelpText];
@@ -11,7 +11,7 @@ describe('form-control-number-masked', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number-masked label='Age' name='age' mask='00'/>,
+      template: () => <form-control-number-masked label='Age' name='age' mask='00' />,
     });
     expect(page.root).toMatchSnapshot();
   });
@@ -174,11 +174,10 @@ describe('form-control-number-masked', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    const helpTextComponent = page.root.querySelector('#form-help-text-age');
     expect(helpTextComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Enter your age');
+    expect(helpTextComponent.textContent).toBe('Enter your age');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
@@ -194,11 +193,10 @@ describe('form-control-number-masked', () => {
         />
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-age');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('Invalid age');
+    expect(errorTextComponent.textContent).toBe('Invalid age');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

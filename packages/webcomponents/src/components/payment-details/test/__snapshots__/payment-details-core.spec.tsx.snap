@@ -23,12 +23,12 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
         <slot name="detail-sections"></slot>
       </main>
     </template>
-    <div class="p-2" part="detail-header-container" slot="head-info">
+    <div class="p-2" part="detail-head" slot="head-info">
       <div class="align-items-center d-flex flex-row gap-2 mb-2">
-        <h1 class="m-0" part="details-header-amount">
+        <h1 class="m-0" part="detail-head-amount">
           $234.56 USD
         </h1>
-        <span part="detail-header-badge" slot="badge">
+        <span part="detail-head-badge" slot="badge">
           <span class="badge bg-success" title="This payment was successfully captured">
             Successful
           </span>
@@ -61,7 +61,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
         </div>
       </div>
     </div>
-    <div part="detail-section-container" slot="detail-sections">
+    <div part="detail-section" slot="detail-sections">
       <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Details
       </h2>

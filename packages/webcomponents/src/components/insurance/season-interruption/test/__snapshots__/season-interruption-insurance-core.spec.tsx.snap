@@ -4,7 +4,7 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
 <justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
   <style></style>
   <div>
-    <h2 class="fs-5 fw-bold jfi-header pb-3">
+    <h2 class="border-bottom fs-5 fw-bold header-2 pb-3" part="header-2">
       Add Registration Protection
     </h2>
     <small part="text">
@@ -65,7 +65,7 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
 <justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
   <style></style>
   <div>
-    <h2 class="fs-5 fw-bold jfi-header pb-3">
+    <h2 class="border-bottom fs-5 fw-bold header-2 pb-3" part="header-2">
       Add Registration Protection
     </h2>
     <small part="text">

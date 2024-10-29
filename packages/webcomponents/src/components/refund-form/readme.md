@@ -36,10 +36,6 @@
 graph TD;
   justifi-refund-form --> form-control-monetary
   justifi-refund-form --> form-control-text
-  form-control-monetary --> form-control-help-text
-  form-control-monetary --> form-control-error-text
-  form-control-text --> form-control-help-text
-  form-control-text --> form-control-error-text
   style justifi-refund-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

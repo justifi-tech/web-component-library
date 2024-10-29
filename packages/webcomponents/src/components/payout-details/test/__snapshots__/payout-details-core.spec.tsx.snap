@@ -6,10 +6,10 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
   <justifi-details>
     <div class="p-2" part="detail-head" slot="head-info">
       <div class="align-items-center d-flex flex-row gap-2 mb-2">
-        <h1 class="m-0" part="detail-title">
+        <h1 class="m-0" part="detail-head-amount">
           $220.15 USD
         </h1>
-        <span slot="badge">
+        <span part="detail-head-badge" slot="badge">
           <span class="badge bg-success" title="Successfully deposited into your bank account">
             Paid
           </span>
@@ -41,13 +41,13 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </span>
         </div>
         <div class="m-4">
-          <button class="align-items-center btn btn-outline-secondary d-flex">
+          <button class="align-items-center btn btn-outline-secondary d-flex" part="button-secondary">
             Export CSV
           </button>
         </div>
       </div>
     </div>
-    <div slot="detail-sections">
+    <div part="detail-section" slot="detail-sections">
       <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Details
       </h2>

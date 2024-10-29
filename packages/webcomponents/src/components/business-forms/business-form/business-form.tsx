@@ -11,10 +11,13 @@ import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 /**
  * @exportedPart header-1: Header for the form
+ * @exportedPart header-2: Subheader for the form
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
+ * @exportedPart input-group-input: The input fields in a group
+ * @exportedPart input-group-text: The text in an input group (for example the $ sign in a currency input)
  * @exportedPart input-invalid: Invalid state for inputfs
- * @exportedPart button: The submit button
+ * @exportedPart button: Base styles for buttons
  * @exportedPart button-primary: The primary button
  * @exportedPart button-loading: The loading state for the button
  */

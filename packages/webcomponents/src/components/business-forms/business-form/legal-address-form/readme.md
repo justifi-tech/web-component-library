@@ -35,10 +35,6 @@
 graph TD;
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form --> form-control-select
-  form-control-text --> form-control-help-text
-  form-control-text --> form-control-error-text
-  form-control-select --> form-control-help-text
-  form-control-select --> form-control-error-text
   justifi-business-form --> justifi-legal-address-form
   style justifi-legal-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

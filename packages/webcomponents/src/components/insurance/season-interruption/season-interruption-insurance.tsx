@@ -6,6 +6,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 /**
+ * @exportedPart header-2: The header 2
  * @exportedPart text: The information text
  * @exportedPart radio-input: The radio input
  * @exportedPart radio-input-checked: The checked radio input

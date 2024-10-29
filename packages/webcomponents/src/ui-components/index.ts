@@ -9,4 +9,6 @@ export * from './headers/header-1';
 export * from './headers/header-2';
 export * from './headers/header-3';
 export * from './form/radio-input';
+export * from './form/form-helpers/form-control-help-text';
+export * from './form/form-helpers/form-control-error-text';
 export * from './details/details';

@@ -22,11 +22,11 @@
 
 ## Shadow Parts
 
-| Part                         | Description |
-| ---------------------------- | ----------- |
-| `"button-secondary"`         |             |
-| `"detail-header-badge"`      |             |
-| `"detail-section-container"` |             |
+| Part                  | Description |
+| --------------------- | ----------- |
+| `"button-secondary"`  |             |
+| `"detail-head-badge"` |             |
+| `"detail-section"`    |             |
 
 
 ## Dependencies

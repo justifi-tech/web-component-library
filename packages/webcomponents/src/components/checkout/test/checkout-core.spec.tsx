@@ -151,7 +151,7 @@ describe('justifi-checkout-core', () => {
     instance.paymentMethodOptionsRef = { resolvePaymentMethod: jest.fn().mockResolvedValue({ token: '123' }) };
 
     // Submit the form
-    const submitButton = page.root.querySelector('button[type="submit"]');
+    const submitButton = page.root.shadowRoot.querySelector('button[type="submit"]');
     (submitButton as HTMLElement).click();
 
     await page.waitForChanges();

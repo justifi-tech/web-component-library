@@ -48,8 +48,6 @@
 graph TD;
   payments-list-core --> form-control-date
   payments-list-core --> pagination-menu
-  form-control-date --> form-control-help-text
-  form-control-date --> form-control-error-text
   justifi-payments-list --> payments-list-core
   style payments-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

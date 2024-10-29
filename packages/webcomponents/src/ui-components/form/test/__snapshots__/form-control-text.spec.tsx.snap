@@ -6,17 +6,13 @@ exports[`form-control-text Renders with all props provided 1`] = `
     <label class="form-label" htmlfor="email" part="label">
       Email
     </label>
-    <input class="form-control is-invalid" disabled="" id="email" maxlength="50" name="email" part="input input-invalid  input-disabled" type="text" value="user@example.com">
-    <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-email">
-        Enter your email
-      </small>
-    </form-control-help-text>
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-email">
-        Invalid email
-      </small>
-    </form-control-error-text>
+    <input class="form-control is-invalid" disabled="" id="email" maxlength="50" name="email" part="input input-invalid " type="text" value="user@example.com">
+    <small class="form-text text-muted" id="form-help-text-email" part="input-help-text">
+      Enter your email
+    </small>
+    <small class="form-text text-danger" id="form-error-text-email" part="input-error-text">
+      Invalid email
+    </small>
   </div>
 </form-control-text>
 `;
@@ -28,8 +24,6 @@ exports[`form-control-text Renders with default props 1`] = `
       Username
     </label>
     <input class="form-control" id="username" name="username" part="input " type="text" value="">
-    <form-control-help-text></form-control-help-text>
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-text>
 `;
