@@ -9,7 +9,7 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 @Component({
   tag: 'justifi-checkout',
-  shadow: true,
+  styleUrls: ['checkout-core.css'],
 })
 export class Checkout {
   @Prop() iframeOrigin?: string;

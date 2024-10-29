@@ -46,6 +46,15 @@ justifi-payment-provisioning {
   color: #fff;
 }
 
+::part(input) {
+  background-color: transparent;
+}
+
+::part(input):focus {
+  border-color: #a4c9f5;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+}
+
 ::part(radio-input) {
   background-color: transparent;
   border-color: #fff;

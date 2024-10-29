@@ -2,13 +2,12 @@ import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
-import { StyledHost } from "../../../ui-components";
+import { Header2, StyledHost } from "../../../ui-components";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
   styleUrls: [
     'season-interruption-insurance-core.css',
-    '../../checkout/header.css',
   ],
 })
 export class SeasonInterruptionInsuranceCore {
@@ -115,7 +114,7 @@ export class SeasonInterruptionInsuranceCore {
       <StyledHost>
         {!this.isLoading && (
           <div>
-            <h2 class="fs-5 fw-bold pb-3 jfi-header">{this.quote?.product.title}</h2>
+            <Header2 text={this.quote?.product.title} />
             <small innerHTML={this.quote?.product.description}></small>
             <div>
               <input

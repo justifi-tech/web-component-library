@@ -5,3 +5,5 @@ export * from './table-empty-state';
 export * from './table-error-state';
 export * from './table-loading-state';
 export * from './skeleton';
+export * from './headers/header-2';
+export * from './headers/header-3';

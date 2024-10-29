@@ -6,11 +6,11 @@ import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } 
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
-import { Button, StyledHost, Skeleton } from '../../ui-components';
+import { Button, StyledHost, Skeleton, Header2, Header3 } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout-core',
-  styleUrls: ['checkout-core.css', 'header.css'],
+  shadow: true,
 })
 export class CheckoutCore {
   /**
@@ -177,10 +177,10 @@ export class CheckoutCore {
           <Skeleton height="24px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
-          <div class="jfi-payment-description">{this.checkout?.payment_description}</div>
-          <div class="jfi-payment-total">
-            <span class="jfi-payment-total-label">Total</span>&nbsp;
-            <span class="jfi-payment-total-amount">{formatCurrency(+this.checkout?.total_amount)}</span>
+          <div part="summary-payment-description">{this.checkout?.payment_description}</div>
+          <div part="summary-payment-total">
+            <span part="summary-payment-total-label">Total</span>&nbsp;
+            <span part="summary-payment-total-amount">{formatCurrency(+this.checkout?.total_amount)}</span>
           </div>
         </div>
       </section>
@@ -192,16 +192,15 @@ export class CheckoutCore {
       <StyledHost>
         <div class="row gy-3 jfi-checkout-core">
           <div class="col-12">
-            {/* componentize this */}
-            <h2 class="fs-5 fw-bold pb-3 jfi-header" part="header-2">Summary</h2>
+            <Header2 text="Summary" />
             {this.summary}
           </div>
           <div class="col-12">
             <slot name="insurance"></slot>
           </div>
           <div class="col-12 mt-4">
-            <h2 class="fs-5 fw-bold pb-3 jfi-header" part="header-2">Payment</h2>
-            <h3 class="fs-6 fw-bold lh-lg" part="header-3">Select payment type</h3>
+            <Header2 text="Payment" />
+            <Header3 text="Select payment type" />
             <div class="d-flex flex-column">
               {this.paymentType}
             </div>
@@ -215,7 +214,6 @@ export class CheckoutCore {
                 disabled={this.isLoading}
                 isLoading={this.isLoading}
                 style={{ width: '100%' }}
-                part="button-primary"
               >
                 Pay
               </Button>
