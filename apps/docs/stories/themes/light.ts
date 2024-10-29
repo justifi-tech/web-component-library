@@ -7,14 +7,19 @@ body {
 
 justifi-checkout,
 justifi-payment-form,
-justifi-payment-provisioning {
+justifi-payment-provisioning,
+justifi-business-form,
+justifi-season-interruption-insurance,
+justifi-payment-details,
+justifi-payout-details,
+justifi-payments-list,
+justifi-payouts-list {
   display: block;
   margin: 5% auto;
   background-color: #fff;
   border-radius: 0px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
-
 
 justifi-checkout,
 justifi-payment-form {
@@ -33,9 +38,14 @@ justifi-payment-provisioning {
   padding: 40px;
 }
 
+::part(header-1) {
+  color: #000;
+}
+
 ::part(header-2) {
   color: #333;
   border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
 }
 
 ::part(header-3) {
@@ -61,6 +71,10 @@ justifi-payment-provisioning {
   color: #333;
 }
 
+::part(input-group-input) {
+  margin-left: -1px; 
+}
+
 ::part(input) {
   background-color: transparent;
   border-color: #555;
@@ -76,11 +90,12 @@ justifi-payment-provisioning {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.5;
-  margin: 0;
   padding: 0.375rem 0.75rem;
 }
 
 ::part(input):focus {
+
+  background-color: transparent;
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
 }
@@ -94,9 +109,9 @@ justifi-payment-provisioning {
   border-color: #dc3545;
 }
 
-::part(input):disabled {
-  background-color: transparent;
-  color: rgba(255, 255, 255, 0.5);
+::part(input-disabled) {
+  background-color: #e9ecef;
+  color: #333;
 }
 
 ::part(form-check-input) {
@@ -111,15 +126,22 @@ justifi-payment-provisioning {
   background-color: #333;
 }
 
-::part(button-primary) {
-  width: 100%;
-  padding: 6px 18px;
+::part(button) {
+  padding: 0.375rem 0.75rem;
   font-size: 16px;
   box-shadow: none;
   border-radius: 0px;
-  line-height: 1.75;
+  line-height: 1.5;
   text-transform: none;
+}
 
+::part(button-spinner) {
+  border-top-color: rgba(0, 0, 0, 0.5);
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+  border-left-color: rgba(0, 0, 0, 0.5);
+}
+
+::part(button-primary) {
   color: #333;
   background-color: transparent;
   border-color: #333;
@@ -130,6 +152,230 @@ justifi-payment-provisioning {
   border-color: #333;
   color: #333;
 }
+
+::part(button-secondary) {
+  color: #333;
+  background-color: transparent;
+  border-color: #333;
+}
+
+::part(button-secondary):hover {
+  background-color: rgba(0, 0, 0, .05);
+  border-color: #333;
+  color: #333;
+}
+
+justifi-payment-provisioning::part(header-2),
+justifi-business-details::part(header-2) {
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+justifi-business-details,
+justifi-business-form,
+justifi-payment-details {
+  display: inline-block;
+  background-color: #fff;
+  padding: 40px;
+}
+
+::part(detail-section-block) {
+  margin-top: 25px;
+}
+
+::part(detail-header-container) {
+  background-color: #f9fafb;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+::part(detail-header-amount) {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827; 
+  font-family: 'Roboto', sans-serif;
+}
+
+::part(detail-header-currency) {
+  font-size: 1.5rem;
+  color: #6b7280; 
+  font-family: 'Roboto', sans-serif;
+}
+
+::part(detail-header-badge) {
+  color: #065f46;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+::part(detail-head-info-item) {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+::part(detail-head-info-item-title) {
+  font-weight: bold;
+  color: #4b5563; 
+}
+
+::part(detail-head-info-item-data) {
+  color: #374151;
+}
+
+::part(detail-section-container) {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+::part(detail-section-item) {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+::part(detail-section-item-title) {
+  font-weight: bold;
+  color: #374151;
+}
+
+::part(detail-section-item-data) {
+  color: #6b7280; 
+}
+
+::part(detail-metadata) {
+  background-color: #f3f4f6; 
+  padding: 16px;
+  border-radius: 8px;
+  color: #1f2937; 
+}
+
+justifi-payment-details::part(header-2) {
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+justifi-payment-details,
+justifi-payout-details,
+justifi-payments-list,
+justifi-payouts-list {
+  background-color: #f9fafb; 
+  color: #374151; 
+  padding: 16px;
+}
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+justifi-payments-list::part(label),
+justifi-payouts-list::part(label) {
+  color: #212529;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: .8rem;
+  margin: 0 0 .5rem 0;
+}
+
+justifi-payments-list::part(input),
+justifi-payouts-list::part(input) {
+  background-color: #F4F4F6;
+  border-color: rgba(0, 0, 0, 0.42);
+  border-bottom-width: 1px;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-radius: 4px 4px 0 0;
+  border-style: solid;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #212529;
+  font-size: .8rem;
+  font-weight: 400;
+  line-height: 2;
+  margin: 0;
+  padding: .5rem .875rem;
+}
+
+justifi-payments-list::part(input):focus,
+justifi-payouts-list::part(input):focus {
+  color: #212529;
+  border-color: #fccc32;
+  box-shadow: none;
+}
+
+justifi-payments-list::part(input-invalid),
+justifi-payouts-list::part(input-invalid) {
+  border-color: #C12727;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+::part(table-head) {}
+
+::part(table-head-row) {}
+
+::part(table-head-cell) {
+  background-color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+::part(table-body) {}
+
+::part(table-row) {}
+
+::part(table-row):hover {
+  cursor: pointer;
+}
+
+::part(table-row-even) {}
+
+::part(table-row-odd) {}
+
+::part(table-cell) {
+  background-color: transparent;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+::part(loading-state-cell) {}
+
+::part(loading-state-spinner) {
+  color: #ccc;
+}
+
+::part(error-state) {}
+
+::part(empty-state) {}
+
+::part(pagination-bar) {
+  background-color: #fff;
+  border-bottom: none;
+}
+
+justifi-payments-list::part(button-secondary),
+justifi-payouts-list::part(button-secondary) {
+  border: none;
+  background-color: transparent;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 0.8rem;
+} 
+
+justifi-payments-list::part(button-disabled),
+justifi-payouts-list::part(button-disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+} 
+
+::part(page-arrow) {
+  display: none;
+}
+
+::part(page-button-text) {}
 
 :root {
   /* new vars */
@@ -153,7 +399,7 @@ justifi-payment-provisioning {
   --jfi-form-control-border-color-error: rgb(138, 42, 35);
   --jfi-form-control-border-width: 1px;
   --jfi-form-control-border-bottom-width: 1px;
-  --jfi-form-control-border-left-width: 1px;
+  --jfi-form-control-border-left-width: 1px;  
   --jfi-form-control-border-right-width: 1px;
   --jfi-form-control-border-top-width: 1px;
   --jfi-form-control-border-radius: 0;

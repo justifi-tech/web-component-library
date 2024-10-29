@@ -6,7 +6,11 @@ exports[`form-control-select Renders with all props provided 1`] = `
     <label class="form-label" htmlfor="delivery_method" part="label">
       Select your delivery method
     </label>
-    <select class="form-select is-invalid" disabled="" id="delivery_method" name="delivery_method" part="input input-invalid">
+    <select class="form-select is-invalid" disabled="" id="delivery_method" name="delivery_method" part="
+              input
+              input-invalid
+              input-disabled
+            ">
       <option value="pickup">
         Pickup
       </option>
@@ -34,7 +38,11 @@ exports[`form-control-select Renders with default props 1`] = `
     <label class="form-label" htmlfor="delivery_method" part="label">
       Select your delivery method
     </label>
-    <select class="form-select" id="delivery_method" name="delivery_method" part="input "></select>
+    <select class="form-select" id="delivery_method" name="delivery_method" part="
+              input
+              
+              
+            "></select>
     <form-control-help-text></form-control-help-text>
     <form-control-error-text></form-control-error-text>
   </div>

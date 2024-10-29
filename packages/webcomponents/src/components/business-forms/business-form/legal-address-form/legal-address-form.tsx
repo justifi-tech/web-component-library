@@ -47,8 +47,7 @@ export class LegalAddressForm {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          <legend>Business Legal Address</legend>
-          <hr />
+          <legend part="header-2">Business Legal Address</legend>
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text

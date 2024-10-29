@@ -25,6 +25,7 @@
 
 | Part                | Description |
 | ------------------- | ----------- |
+| `"icon"`            |             |
 | `"pagination-bar"`  |             |
 | `"table-body"`      |             |
 | `"table-cell"`      |             |

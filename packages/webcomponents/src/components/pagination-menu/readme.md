@@ -19,6 +19,7 @@
 | -------------------- | ----------- |
 | `"page-arrow"`       |             |
 | `"page-button-text"` |             |
+| `"pagination-bar"`   |             |
 
 
 ## Dependencies

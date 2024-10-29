@@ -5,6 +5,13 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
+/**
+ * @exportedPart text: The information text
+ * @exportedPart radio-input: The radio input
+ * @exportedPart radio-input-checked: The checked radio input
+ * @exportedPart radio-input-invalid: The invalid radio input
+ * @exportedPart radio-input-label: The radio input label
+ */
 @Component({
   tag: 'justifi-season-interruption-insurance',
   shadow: true,

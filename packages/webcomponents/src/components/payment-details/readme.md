@@ -19,6 +19,14 @@
 | `error-event` |             | `CustomEvent<ComponentError>` |
 
 
+## Shadow Parts
+
+| Part                         | Description |
+| ---------------------------- | ----------- |
+| `"detail-header-badge"`      |             |
+| `"detail-section-container"` |             |
+
+
 ## Dependencies
 
 ### Used by

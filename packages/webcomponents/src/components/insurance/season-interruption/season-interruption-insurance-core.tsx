@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil
 import { ComponentError } from "../../../api/ComponentError";
 import { formatCurrency } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
-import { Header2, StyledHost } from "../../../ui-components";
+import { StyledHost, RadioInput, Header2 } from "../../../ui-components";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
@@ -115,51 +115,34 @@ export class SeasonInterruptionInsuranceCore {
         {!this.isLoading && (
           <div>
             <Header2 text={this.quote?.product.title} />
-            <small innerHTML={this.quote?.product.description}></small>
-            <div>
-              <input
-                id="accept"
-                type="radio"
-                name="opt-in"
-                value="true"
-                onChange={(event: any) => this.onChangeHandler(event)}
-                class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
-                part={`
-                  radio-input
-                  ${this.accepted === 'true' ? 'radio-input-checked' : ''}
-                  ${this.error ? 'radio-input-invalid' : ''}
-                `}
-              />
-              <label htmlFor="accept" part="radio-input-label">
-                Accept coverage for {formatCurrency(this.quote?.total_cents)}
-              </label>
-            </div>
-            <div class="mb-2">
-              <input
-                id="decline"
-                type="radio"
-                name="opt-in"
-                value="false"
-                onChange={(event: any) => this.onChangeHandler(event)}
-                class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
-                part={`
-                  radio-input
-                  ${this.accepted === 'false' ? 'radio-input-checked' : ''} 
-                  ${this.error ? 'radio-input-invalid' : ''}
-                `}
-              />
-              <label htmlFor="decline" part="radio-input-label">
-                Decline coverage
-              </label>
-            </div>
+            <small innerHTML={this.quote?.product.description} part="text"></small>
+            <RadioInput
+              id="accept"
+              name="opt-in"
+              value="true"
+              label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
+              checked={this.accepted}
+              error={this.error}
+              onChange={(event: any) => this.onChangeHandler(event)}
+            />
+            <RadioInput
+              id="decline"
+              name="opt-in"
+              value="false"
+              label="Decline coverage"
+              className="mb-2"
+              checked={this.accepted}
+              error={this.error}
+              onChange={(event: any) => this.onChangeHandler(event)}
+            />
             <div
               class="invalid-feedback"
               style={{ display: this.error ? 'block' : 'none' }}
             >
               Please select an option
             </div>
-            <small innerHTML={this.quote?.product.legal_disclaimer}></small>
-          </div>
+            <small innerHTML={this.quote?.product.legal_disclaimer} part="text"></small>
+          </div >
         )}
       </StyledHost>
     );

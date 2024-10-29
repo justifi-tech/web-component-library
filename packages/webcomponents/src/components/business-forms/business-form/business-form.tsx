@@ -6,17 +6,20 @@ import { config } from '../../../../config';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
-import { StyledHost } from '../../../ui-components';
+import { Button, Header1, StyledHost } from '../../../ui-components';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 /**
+ * @exportedPart header-1: Header for the form
  * @exportedPart label: Label for inputs
  * @exportedPart input: The input fields
  * @exportedPart input-invalid: Invalid state for inputfs
+ * @exportedPart button: The submit button
+ * @exportedPart button-primary: The primary button
+ * @exportedPart button-loading: The loading state for the button
  */
 @Component({
   tag: 'justifi-business-form',
-  styleUrl: 'business-form.css',
   shadow: true
 })
 export class BusinessForm {
@@ -118,10 +121,10 @@ export class BusinessForm {
 
   render() {
     return (
-      <StyledHost exportparts="label,input,input-invalid">
+      <StyledHost>
         <form onSubmit={this.validateAndSubmit}>
           <div class="row gap-3">
-            <h1>{this.title}</h1>
+            <Header1 text={this.title} />
             <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
             <div class="col-12 mb-4">
               <justifi-business-core-info formController={this.formController} />
@@ -136,13 +139,15 @@ export class BusinessForm {
               <justifi-business-representative formController={this.formController} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
-              <button
+              <Button
                 type="submit"
-                class="btn btn-primary jfi-submit-button"
                 disabled={this.disabledState}
-                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}>
-                {this.isLoading ? 'Loading...' : 'Submit'}
-              </button>
+                variant='primary'
+                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}
+                isLoading={this.isLoading}
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </form>

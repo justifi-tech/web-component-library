@@ -5,6 +5,7 @@ import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 
 /**
   * @exportedPart label: Label for inputs
@@ -90,6 +91,7 @@ export class PaymentsList {
       <payments-list-core
         getPayments={this.getPayments}
         onError-event={this.handleErrorEvent}
+        exportparts={`${tableExportedParts},label, pagination-buttons-container`}
       />
     );
   }

@@ -48,12 +48,11 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
       </div>
     </div>
     <div slot="detail-sections">
-      <h5 class="mt-4" part="detail-section-title">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Details
-      </h5>
-      <hr>
+      </h2>
       <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Date paid
           </span>
@@ -61,7 +60,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             Dec 28, 2023
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Statement Description
           </span>
@@ -69,7 +68,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             Payout
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Payout Method
           </span>
@@ -77,7 +76,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             standard
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Amount
           </span>
@@ -85,7 +84,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             $220.15
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Fee
           </span>
@@ -94,12 +93,11 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </span>
         </div>
       </div>
-      <h5 class="mt-4" part="detail-section-title">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Account
-      </h5>
-      <hr>
+      </h2>
       <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             ID
           </span>
@@ -107,7 +105,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             acc_5Et9iXrSSAZR2KSouQGAWi
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Account Type
           </span>
@@ -115,7 +113,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             checking
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Institution
           </span>
@@ -123,7 +121,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             checking
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Routing Number
           </span>
@@ -131,7 +129,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             110000000
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Account Number
           </span>
@@ -140,10 +138,9 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </span>
         </div>
       </div>
-      <h5 class="mt-4" part="detail-section-title">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Metadata
-      </h5>
-      <hr>
+      </h2>
       <div class="d-table gap-2 w-100"></div>
     </div>
   </justifi-details>

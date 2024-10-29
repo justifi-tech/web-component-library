@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({
@@ -131,7 +130,7 @@ export class PaymentsListCore {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
+      <StyledHost exportparts="label">
         <div class="row gy-3 mb-4">
           <div class="col-2">
             <form-control-date

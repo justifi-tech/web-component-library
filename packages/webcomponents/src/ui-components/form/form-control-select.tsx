@@ -59,7 +59,11 @@ export class SelectInput {
             name={this.name}
             onBlur={this.formControlBlur.emit}
             onInput={this.handleFormControlInput}
-            part={`input ${this.errorText ? 'input-invalid' : ''}`}
+            part={`
+              input
+              ${this.errorText ? 'input-invalid' : ''}
+              ${this.disabled ? 'input-disabled' : ''}
+            `}
             class={this.errorText ? 'form-select is-invalid' : 'form-select'}
             disabled={this.disabled}
           >

@@ -8,12 +8,29 @@ import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 /**
  * @exportedPart label: Label for inputs
+ * @exportedPart radio-input-label: 
  * @exportedPart input: The input fields
  * @exportedPart input-invalid: Invalid state for inputfs
+ * @exportedPart radio-input: The radio input fields
+ * @exportedPart radio-input-checked: The checked radio input fields
+ * @exportedPart radio-input-invalid: The invalid radio input fields
+ * @exportedPart input-group: The input group
+ * @exportedPart input-group-input: The input fields in a group
+ * @exportedPart input-group-text: The text in a group
+ * @exportedPart form-check-input: The form check input
+ * @exportedPart form-check-input-checked: The checked form check input
+ * @exportedPart button: The button
+ * @exportedPart button-spinner: The spinner for the button
+ * @exportedPart button-primary: The primary button
+ * @exportedPart button-secondary: The secondary button
+ * @exportedPart header-1: The header 1
+ * @exportedPart header-2: The header 2
+ * @exportedPart header-3: The header 3
  */
 
 @Component({
   tag: 'justifi-payment-provisioning',
+  shadow: true,
 })
 export class PaymentProvisioning {
   @State() postProvisioning: Function;

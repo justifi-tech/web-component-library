@@ -161,7 +161,12 @@ export class PayoutsListCore {
         <DownloadIcon
           title="Export CSV"
           onClick={() => this.downloadCSV(payout.id)}
-          style={{ height: '24px', width: '24px', cursor: 'pointer' }}
+          part="icon"
+          style={{
+            height: '24px',
+            width: '24px',
+            cursor: 'pointer',
+          }}
         />
       ),
     ]);

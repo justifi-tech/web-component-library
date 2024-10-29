@@ -12,6 +12,13 @@
 | `formController` | `form-controller` |             | `FormController` | `undefined` |
 
 
+## Shadow Parts
+
+| Part         | Description |
+| ------------ | ----------- |
+| `"header-2"` |             |
+
+
 ## Dependencies
 
 ### Used by

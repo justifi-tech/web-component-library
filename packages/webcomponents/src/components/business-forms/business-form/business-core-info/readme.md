@@ -18,6 +18,13 @@ and the other one  is meant to be just read only.
 | `formController` | --        |             | `FormController` | `undefined` |
 
 
+## Shadow Parts
+
+| Part         | Description |
+| ------------ | ----------- |
+| `"header-2"` |             |
+
+
 ## Dependencies
 
 ### Used by
