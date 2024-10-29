@@ -2,6 +2,12 @@
   display: block;
 }
 
+justifi-payment-method-form {
+  display: block;
+  margin-left: calc(var(--jfi-layout-padding) * -1);
+  margin-right: calc(var(--jfi-layout-padding) * -1);
+}
+
 justifi-payment-method-form iframe {
   border: none;
   width: 100%;
