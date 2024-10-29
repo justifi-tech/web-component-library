@@ -111,7 +111,6 @@ export class BusinessCoreInfoFormStepCore {
                 defaultValue={coreInfoDefaultValue.legal_name}
                 errorText={this.errors.legal_name}
                 inputHandler={this.inputHandler}
-                helpText='The legal name of your business as registered with the IRS'
               />
             </div>
             <div class='col-12'>
