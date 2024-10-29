@@ -34,9 +34,8 @@ graph TD;
   form-control-monetary --> form-control-error-text
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
-  form-control-text --> form-control-tooltip
+  form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
-  form-control-tooltip --> custom-popper
   justifi-business-form --> justifi-additional-questions
   style justifi-additional-questions fill:#f9f,stroke:#333,stroke-width:4px
 ```

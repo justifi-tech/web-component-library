@@ -55,15 +55,14 @@
 
 ### Depends on
 
-- [form-control-tooltip](./form-helpers/form-control-tooltip)
+- [form-control-help-text](./form-helpers/form-control-help-text)
 - [form-control-error-text](./form-helpers/form-control-error-text)
 
 ### Graph
 ```mermaid
 graph TD;
-  form-control-text --> form-control-tooltip
+  form-control-text --> form-control-help-text
   form-control-text --> form-control-error-text
-  form-control-tooltip --> custom-popper
   justifi-additional-questions --> form-control-text
   justifi-additional-questions-form-step-core --> form-control-text
   justifi-billing-form --> form-control-text
