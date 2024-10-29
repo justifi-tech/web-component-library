@@ -150,6 +150,18 @@ justifi-payment-provisioning {
 
   /* Skeleton */
   --jfi-skeleton-wave-animation-bg: rgba(200, 200, 200, 1);
+
+  /* Tooltip */
+  ::part(tooltip) {
+    --bs-tooltip-opacity: 1;
+    --bs-tooltip-border-radius: 0px;
+    border: 1px solid #222;
+  }
+
+  ::part(tooltip-inner) {
+    --bs-tooltip-bg: var(--bs-gray-200);
+    --bs-tooltip-color: var(--bs-dark);
+  }
 }
 `;
 
