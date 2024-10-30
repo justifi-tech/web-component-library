@@ -13,10 +13,14 @@ export class CounterDispute {
 
   componentStepMapping = [
     () => <justifi-dispute-reason ref={(el) => this.refs['disputeReason'] = el}></justifi-dispute-reason>,
+    () => <justifi-product-or-service ref={(el) => this.refs['productOrService'] = el}></justifi-product-or-service>,
     () => <justifi-customer-details ref={(el) => this.refs['customerDetails'] = el}></justifi-customer-details>,
     () => <justifi-cancellation-policy ref={(el) => this.refs['cancellationPolicy'] = el}></justifi-cancellation-policy>,
     () => <justifi-refund-policy ref={(el) => this.refs['refundPolicy'] = el}></justifi-refund-policy>,
     () => <justifi-duplicate-charge ref={(el) => this.refs['duplicateCharge'] = el}></justifi-duplicate-charge>,
+    () => <justifi-electronic-evidence ref={(el) => this.refs['electronicEvidence'] = el}></justifi-electronic-evidence>,
+    () => <justifi-shipping-details ref={(el) => this.refs['shippingDetails'] = el}></justifi-shipping-details>,
+    () => <justifi-additional-statement ref={(el) => this.refs['additionalStatement'] = el}></justifi-additional-statement>,
   ];
 
   get currentStepComponent() {
@@ -48,6 +52,9 @@ export class CounterDispute {
       this.clickEvent.emit({ name: DisputeManagementClickEvents.previousStep });
     }
   }
+
+  // Fields
+  // "additional_statement": "...",
 
   render() {
     return (

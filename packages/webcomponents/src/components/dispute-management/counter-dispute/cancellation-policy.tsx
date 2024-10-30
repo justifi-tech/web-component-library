@@ -13,13 +13,13 @@ export class CancellationPolicy {
             <h2 class="h5">Cancellation Policy</h2>
           </div>
           <div class="col-12">
-            <form-control-textarea label="Cancellation Policy Disclosure" name="cancellation_policy_disclosure"></form-control-textarea>
+            <form-control-textarea label="Cancellation Policy Disclosure" name="cancellation_policy_disclosure" />
           </div>
           <div class="col-12">
-            <form-control-textarea label="Cancellation Rebuttal" name="cancellation_rebuttal"></form-control-textarea>
+            <form-control-textarea label="Cancellation Rebuttal" name="cancellation_rebuttal" />
           </div>
           <div class="col-12">
-            <form-control-file label="Upload Cancellation Policy" name="cancellation_policy_file"></form-control-file>
+            <form-control-file label="Upload Cancellation Policy" name="cancellation_policy_file" />
           </div>
         </div>
       </div>
