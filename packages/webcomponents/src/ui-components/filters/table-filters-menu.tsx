@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
 import { Button } from '../button';
 import { hasFilters } from './utils';
 
@@ -10,15 +10,13 @@ export class TableFiltersMenu {
   @State() menu: HTMLElement;
   @State() showClearButton: boolean = false;
   
-  @Prop() filters: any;
   @Prop() params: any;
+  @Prop() clearParams: () => void;
 
   @Watch('params')
   watchParamsHandler(newValue: any) {
     this.showClearButton = hasFilters(newValue);
   }
-
-  @Event() clearParams: EventEmitter;
 
   @Listen('showEvent')
   show() {
@@ -28,10 +26,6 @@ export class TableFiltersMenu {
   @Listen('hideEvent')
   hide() {
     this.menu.classList.remove('show');
-  }
-
-  emitClearParams() {
-    this.clearParams.emit();
   }
 
   render() {
@@ -60,14 +54,15 @@ export class TableFiltersMenu {
               ref={(el) => (this.menu = el)} 
               onSubmit={(e) => e.preventDefault()}
             >
-              {this.filters}
+              // Render filter inputs here
+              <slot />
             </form>
           </custom-popper>
         </div>
         <div>
           <Button 
             variant="secondary"
-            onClick={() => this.emitClearParams()}
+            onClick={() => this.clearParams()}
             hidden={!this.showClearButton}
             data-test-id="clear-filters-button"
           >

@@ -1,10 +1,11 @@
-import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
+// import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
   tag: 'payments-list-core'
@@ -37,18 +38,9 @@ export class PaymentsListCore {
     }
   }
 
-  @Listen('clearParams')
-  clearFilters() {
-    this.clearParams();
-  }
-
-  @Listen('emitParams')
-  setParams(event: CustomEvent) {
-    this.setParamsOnChange(event.detail);
-  }
-
-  setParamsOnChange = (value: any) => {
-    this.params = onFilterChange(value, this.params);
+  setParamsOnChange = (name: string, value: string) => {
+    let newParams = { [name]: value };
+    this.params = onFilterChange(newParams, this.params);
   }
 
   clearParams = () => {
@@ -99,18 +91,6 @@ export class PaymentsListCore {
     return this.payments.map((payment) => payment.id);
   }
 
-  get paymentStatusOptions() {
-    return [
-      { label: 'All', value: '' },
-      { label: 'Pending', value: 'pending' },
-      { label: 'Authorized', value: 'authorized' },
-      { label: 'Succeeded', value: 'succeeded' },
-      { label: 'Failed', value: 'failed' },
-      { label: 'Disputed', value: 'disputed' },
-      { label: 'Refunded', value: 'refunded' }
-    ]
-  }
-
   get columnData() {
     return [
       ['Made On', 'The date and time each payment was made'],
@@ -156,46 +136,14 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  get filters() {
-    return (
-      <div class="grid grid-cols-2 gap-3 p-1">
-        <div class="p-2">
-          <text-filter
-            name="terminal_id"
-            label="Terminal ID"
-            params={this.params}
-          />
-        </div>
-        <div class="p-2">
-          <select-filter
-            name="payment_status"
-            label="Status"
-            options={this.paymentStatusOptions}
-            params={this.params}
-          />
-        </div>
-        <div class="p-2">
-          <date-filter
-            name="created_after"
-            label="Start Date"
-            params={this.params}
-          />
-        </div>
-        <div class="p-2">
-          <date-filter
-            name="created_before"
-            label="End Date"
-            params={this.params}
-          />
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <table-filters-menu filters={this.filters} params={this.params} />
+        <payments-list-filters 
+          params={this.params} 
+          setParamsOnChange={this.setParamsOnChange}
+          clearParams={this.clearParams}
+        />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">

@@ -8,7 +8,6 @@ import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.
 import { IApiResponseCollection, IPayment } from '../../../api';
 import { makeGetPayments } from '../get-payments';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
-import { SelectFilter } from '../../../ui-components/filters/select-filter';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
 
@@ -128,7 +127,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu, SelectFilter],
+      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -171,7 +170,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu, SelectFilter],
+      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 

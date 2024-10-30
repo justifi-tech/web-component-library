@@ -11,9 +11,9 @@
 | ----------- | ----------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ |
 | `anchorRef` | --          |             | `HTMLElement`                                                                                                                                                                                                | `undefined`  |
 | `offset`    | --          |             | `[number, number]`                                                                                                                                                                                           | `[0, 10]`    |
-| `placement` | `placement` |             | `"auto" \| "auto-end" \| "auto-start" \| "bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `"bottom"`   |
-| `strategy`  | `strategy`  |             | `"absolute" \| "fixed"`                                                                                                                                                                                      | `"absolute"` |
-| `trigger`   | `trigger`   |             | `string`                                                                                                                                                                                                     | `"click"`    |
+| `placement` | `placement` |             | `"auto" \| "auto-end" \| "auto-start" \| "bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom'`   |
+| `strategy`  | `strategy`  |             | `"absolute" \| "fixed"`                                                                                                                                                                                      | `'absolute'` |
+| `trigger`   | `trigger`   |             | `string`                                                                                                                                                                                                     | `'click'`    |
 
 
 ## Events
