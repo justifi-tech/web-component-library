@@ -1,5 +1,10 @@
 import { h } from '@stencil/core';
 
-export const Header3 = ({ text }) => {
-  return <h3 class="fs-6 fw-bold lh-lg mb-4 header-3" part="header-3">{text}</h3>;
+interface Header3Props {
+  text: string;
+  class?: string;
+}
+
+export const Header3 = (props: Header3Props) => {
+  return <h3 class={`header-3 ${props?.class}`} part="header-3">{props.text}</h3>;
 }

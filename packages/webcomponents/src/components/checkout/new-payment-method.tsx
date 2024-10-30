@@ -97,7 +97,7 @@ export class NewPaymentMethod {
             iframe-origin={this.iframeOrigin}
           />
         </div>
-        <Header3 text="Billing address" />
+        <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
         <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>

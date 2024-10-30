@@ -8,7 +8,7 @@ exports[`justifi-checkout renders loading 1`] = `
       <style></style>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12">
-          <h2 class="border-bottom fs-5 fw-bold header-2 pb-3" part="header-2">
+          <h2 class="fs-5 fw-bold header-2 pb-3" part="header-2">
             Summary
           </h2>
           <section>
@@ -32,10 +32,10 @@ exports[`justifi-checkout renders loading 1`] = `
           <slot name="insurance"></slot>
         </div>
         <div class="col-12 mt-4">
-          <h2 class="border-bottom fs-5 fw-bold header-2 pb-3" part="header-2">
+          <h2 class="fs-5 fw-bold header-2 pb-3" part="header-2">
             Payment
           </h2>
-          <h3 class="fs-6 fw-bold header-3 lh-lg mb-4" part="header-3">
+          <h3 class="fs-6 fw-bold header-3 lh-lg" part="header-3">
             Select payment type
           </h3>
           <div class="d-flex flex-column">

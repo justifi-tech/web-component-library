@@ -114,7 +114,7 @@ export class SeasonInterruptionInsuranceCore {
       <StyledHost>
         {!this.isLoading && (
           <div>
-            <Header2 text={this.quote?.product.title} />
+            <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
             <small innerHTML={this.quote?.product.description} part="text"></small>
             <RadioInput
               id="accept"

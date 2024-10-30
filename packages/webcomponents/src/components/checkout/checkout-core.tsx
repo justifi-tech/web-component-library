@@ -192,15 +192,15 @@ export class CheckoutCore {
       <StyledHost>
         <div class="row gy-3 jfi-checkout-core">
           <div class="col-12">
-            <Header2 text="Summary" />
+            <Header2 text="Summary" class="fs-5 fw-bold pb-3" />
             {this.summary}
           </div>
           <div class="col-12">
             <slot name="insurance"></slot>
           </div>
           <div class="col-12 mt-4">
-            <Header2 text="Payment" />
-            <Header3 text="Select payment type" />
+            <Header2 text="Payment" class="fs-5 fw-bold pb-3" />
+            <Header3 text="Select payment type" class="fs-6 fw-bold lh-lg" />
             <div class="d-flex flex-column">
               {this.paymentType}
             </div>
