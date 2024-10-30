@@ -1,4 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
+import { debounce } from 'lodash';
 
 @Component({
   tag: 'payments-list-filters'
@@ -7,6 +8,13 @@ export class PaymentsListFilters {
   @Prop() params: any = {};
   @Prop() setParamsOnChange: (name: string, value: string) => void;
   @Prop() clearParams: () => void;
+
+  private debouncedSetParamsOnChange: (name: string, value: string) => void;
+
+  componentWillLoad() {
+    // debounced input handler for text input
+    this.debouncedSetParamsOnChange = debounce(this.setParamsOnChange, 300);
+  }
 
   get paymentStatusOptions() {
     return [
@@ -28,7 +36,7 @@ export class PaymentsListFilters {
             <form-control-text 
               name="terminal_id"
               label="Terminal ID"
-              inputHandler={this.setParamsOnChange}
+              inputHandler={this.debouncedSetParamsOnChange}
               defaultValue={this.params.terminal_id}
             />
           </div>

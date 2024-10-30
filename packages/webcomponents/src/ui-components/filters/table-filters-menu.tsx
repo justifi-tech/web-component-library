@@ -54,7 +54,7 @@ export class TableFiltersMenu {
               ref={(el) => (this.menu = el)} 
               onSubmit={(e) => e.preventDefault()}
             >
-              // Render filter inputs here
+              {/* Render filter inputs here */}
               <slot />
             </form>
           </custom-popper>
