@@ -1,4 +1,4 @@
-import { Component, h, State, Prop, Method } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
 
 @Component({
@@ -14,7 +14,7 @@ export class TokenizePaymentMethod {
   @Prop() submitButtonText: string;
 
   componentWillLoad() {
-
+    this.isLoading = false;
   }
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
