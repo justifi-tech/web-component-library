@@ -53,9 +53,6 @@ export class CounterDispute {
     }
   }
 
-  // Fields
-  // "additional_statement": "...",
-
   render() {
     return (
       <div class="row gy-3">
