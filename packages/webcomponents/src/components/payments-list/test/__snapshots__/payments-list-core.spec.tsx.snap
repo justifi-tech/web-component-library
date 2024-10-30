@@ -7,7 +7,7 @@ table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 " style="display: block;">
   <style></style>
-  <table-filters-menu></table-filters-menu>
+  <payments-list-filters></payments-list-filters>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">
@@ -86,7 +86,7 @@ table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 " style="display: block;">
   <style></style>
-  <table-filters-menu></table-filters-menu>
+  <payments-list-filters></payments-list-filters>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">

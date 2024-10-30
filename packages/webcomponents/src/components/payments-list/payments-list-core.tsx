@@ -5,7 +5,6 @@ import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
-// import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
   tag: 'payments-list-core'

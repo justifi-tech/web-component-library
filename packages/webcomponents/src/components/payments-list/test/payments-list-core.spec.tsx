@@ -8,8 +8,11 @@ import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.
 import { IApiResponseCollection, IPayment } from '../../../api';
 import { makeGetPayments } from '../get-payments';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { PaymentsListFilters } from '../payments-list-filters';
+import { SelectInput } from '../../form/form-control-select';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
+const components = [PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters, SelectInput];
 
 describe('payments-list-core', () => {
   it('renders properly with fetched data', async () => {
@@ -99,7 +102,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu],
+      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters],
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -127,17 +130,17 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu],
+      components: components,
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
     filterButton.click();
 
-    const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
+    const filterMenu = page.root.querySelector('payments-list-filters') as HTMLElement;
     expect(filterMenu).not.toBeNull();
 
-    const selectFilter = filterMenu.querySelector('select-filter');
+    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
     expect(selectFilter).not.toBeNull();
 
     const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
@@ -151,7 +154,7 @@ describe('payments-list-core', () => {
     const succeededOption = selectOptions[3] as HTMLOptionElement;
     succeededOption.click();
     selectFilterInput.value = 'succeeded';
-    selectFilterInput.dispatchEvent(new Event('change'));
+    selectFilterInput.dispatchEvent(new Event('input'));
 
     expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
@@ -170,7 +173,7 @@ describe('payments-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PaymentsListCore, PaginationMenu, TableFiltersMenu],
+      components: components,
       template: () => <payments-list-core getPayments={getPayments} />,
     });
 
@@ -180,11 +183,12 @@ describe('payments-list-core', () => {
     const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
     expect(filterMenu).not.toBeNull();
 
-    const selectFilter = filterMenu.querySelector('select-filter');
+    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
     expect(selectFilter).not.toBeNull();
 
     const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
     expect(selectFilterInput).not.toBeNull();
+
     selectFilterInput.click();
     
     const selectOptions = selectFilterInput.querySelectorAll('option');
@@ -193,7 +197,7 @@ describe('payments-list-core', () => {
     const succeededOption = selectOptions[3] as HTMLOptionElement;
     succeededOption.click();
     selectFilterInput.value = 'succeeded';
-    selectFilterInput.dispatchEvent(new Event('change'));
+    selectFilterInput.dispatchEvent(new Event('input'));
 
     const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
     expect(clearButton).not.toBeNull();
