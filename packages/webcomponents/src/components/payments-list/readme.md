@@ -10,7 +10,7 @@
 | Property            | Attribute | Description | Type                                    | Default     |
 | ------------------- | --------- | ----------- | --------------------------------------- | ----------- |
 | `clearParams`       | --        |             | `() => void`                            | `undefined` |
-| `params`            | `params`  |             | `any`                                   | `{}`        |
+| `params`            | --        |             | `PaymentsParams`                        | `{}`        |
 | `setParamsOnChange` | --        |             | `(name: string, value: string) => void` | `undefined` |
 
 

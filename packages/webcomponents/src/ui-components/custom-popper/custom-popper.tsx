@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Listen, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, State, Event, EventEmitter } from '@stencil/core';
 import { createPopper, Options, Placement, PositioningStrategy } from '@popperjs/core';
 
 @Component({
@@ -22,12 +22,13 @@ export class CustomPopper {
   componentDidLoad() {
     this.popperInstance = createPopper(this.anchorRef, this.popperContentRef, this.popperOptions);
 
-    if (this.trigger === 'hover') {
+    if (this.trigger === 'click') {
+      window.addEventListener('click', this.handleClick.bind(this));
+    } else if (this.trigger === 'hover') {
       this.anchorRef.addEventListener('mouseenter', this.show.bind(this));
       this.anchorRef.addEventListener('mouseleave', this.hide.bind(this));
       this.popperContentRef.addEventListener('mouseenter', this.show.bind(this));
       this.popperContentRef.addEventListener('mouseleave', this.hide.bind(this));
-
     } else if (this.trigger === 'focus') {
       this.anchorRef.addEventListener('focus', this.show.bind(this));
       this.anchorRef.addEventListener('blur', this.hide.bind(this));
@@ -35,7 +36,10 @@ export class CustomPopper {
   }
 
   disconnectedCallback() {
-    if (this.trigger === 'hover') {
+    if (this.trigger === 'click') {
+      window.removeEventListener('click', this.handleClick.bind(this));
+    }
+    else if (this.trigger === 'hover') {
       this.anchorRef.removeEventListener('mouseenter', this.show.bind(this));
       this.anchorRef.removeEventListener('mouseleave', this.hide.bind(this));
       this.popperContentRef.removeEventListener('mouseenter', this.show.bind(this));
@@ -46,7 +50,6 @@ export class CustomPopper {
     }
   }
 
-  @Listen('click', { target: 'window' })
   handleClick(event: MouseEvent) {
     const path = event.composedPath();
     const isAnchorClicked = path.includes(this.anchorRef);

@@ -50,6 +50,7 @@ export class TableFiltersMenu {
           >
             <form 
               class="dropdown-menu"
+              part="dropdown-menu"
               data-test-id="filter-menu"
               ref={(el) => (this.menu = el)} 
               onSubmit={(e) => e.preventDefault()}

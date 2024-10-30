@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payment, pagingDefaults } from '../../api';
+import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
@@ -14,7 +14,7 @@ export class PaymentsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any = {};
+  @State() params: PaymentsParams = {};
   
   @Prop() getPayments: Function;
 

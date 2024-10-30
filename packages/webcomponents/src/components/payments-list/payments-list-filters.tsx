@@ -1,11 +1,12 @@
 import { Component, h, Prop } from '@stencil/core';
 import { debounce } from 'lodash';
+import { PaymentsParams } from '../../api';
 
 @Component({
   tag: 'payments-list-filters'
 })
 export class PaymentsListFilters {
-  @Prop() params: any = {};
+  @Prop() params: PaymentsParams = {};
   @Prop() setParamsOnChange: (name: string, value: string) => void;
   @Prop() clearParams: () => void;
 
