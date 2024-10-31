@@ -37,6 +37,21 @@ justifi-payment-provisioning {
   color: #fff;
 }
 
+::part(input) {
+  color: #fff;
+  background-color: #191919;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+::part(input):focus {
+  color: #fff;
+  background-color: #191919;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+}
+
 :root {
   /* new vars */
   --jfi-body-color: rgb(182, 190, 201);
