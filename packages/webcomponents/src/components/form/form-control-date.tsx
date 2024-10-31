@@ -14,13 +14,13 @@ import {
 export class DateInput {
   dateInput!: HTMLInputElement;
 
-  @Prop() label: string;
   @Prop() name: string;
+  @Prop() label: string;
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue: string;
-  @Prop() inputHandler: any;
-  @Prop() disabled: boolean;
+  @Prop() disabled?: boolean;
   
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {

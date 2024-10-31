@@ -1,5 +1,5 @@
-import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
-import { PagingInfo, Payment, pagingDefaults } from '../../api';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
@@ -14,7 +14,7 @@ export class PaymentsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any = {};
+  @State() params: PaymentsParams = {};
   
   @Prop() getPayments: Function;
 
@@ -35,24 +35,6 @@ export class PaymentsListCore {
     if (this.getPayments) {
       this.fetchData();
     }
-  }
-
-  @Listen('clearParams')
-  clearFilters() {
-    this.clearParams();
-  }
-
-  @Listen('emitParams')
-  setParams(event: CustomEvent) {
-    this.setParamsOnChange(event.detail);
-  }
-
-  setParamsOnChange = (value: any) => {
-    this.params = onFilterChange(value, this.params);
-  }
-
-  clearParams = () => {
-    this.params = {};
   }
 
   fetchData(): void {
@@ -95,20 +77,17 @@ export class PaymentsListCore {
     this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
   };
 
-  get entityId() {
-    return this.payments.map((payment) => payment.id);
+  setParamsOnChange = (name: string, value: string) => {
+    let newParams = { [name]: value };
+    this.params = onFilterChange(newParams, this.params);
   }
 
-  get paymentStatusOptions() {
-    return [
-      { label: 'All', value: '' },
-      { label: 'Pending', value: 'pending' },
-      { label: 'Authorized', value: 'authorized' },
-      { label: 'Succeeded', value: 'succeeded' },
-      { label: 'Failed', value: 'failed' },
-      { label: 'Disputed', value: 'disputed' },
-      { label: 'Refunded', value: 'refunded' }
-    ]
+  clearParams = () => {
+    this.params = {};
+  }
+
+  get entityId() {
+    return this.payments.map((payment) => payment.id);
   }
 
   get columnData() {
@@ -156,46 +135,14 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  get filters() {
-    return (
-      <div class="grid grid-cols-2 gap-3 p-1">
-        <div class="p-2">
-          <text-filter
-            name="terminal_id"
-            label="Terminal ID"
-            params={this.params}
-          />
-        </div>
-        <div class="p-2">
-          <select-filter
-            name="payment_status"
-            label="Status"
-            options={this.paymentStatusOptions}
-            params={this.params}
-          />
-        </div>
-        <div class="p-2">
-          <date-filter
-            name="created_after"
-            label="Start Date"
-            params={this.params}
-          />
-        </div>
-        <div class="p-2">
-          <date-filter
-            name="created_before"
-            label="End Date"
-            params={this.params}
-          />
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <table-filters-menu filters={this.filters} params={this.params} />
+        <payments-list-filters 
+          params={this.params} 
+          setParamsOnChange={this.setParamsOnChange}
+          clearParams={this.clearParams}
+        />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">

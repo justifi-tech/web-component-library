@@ -4,6 +4,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { makeGetBusiness, makePostProvisioning } from './payment-provisioning-actions';
 import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
+import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
 /**
  * @exportedPart label: Label for inputs
@@ -34,6 +35,7 @@ export class PaymentProvisioning {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeApi();
   }

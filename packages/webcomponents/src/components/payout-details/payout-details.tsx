@@ -5,6 +5,7 @@ import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -24,6 +25,7 @@ export class PayoutDetails {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
+    checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeServices();
   }

@@ -14,14 +14,14 @@ import {
 export class SelectInput {
   selectElement!: HTMLSelectElement;
 
-  @Prop() label: string;
   @Prop() name: any;
+  @Prop() label: string;
+  @Prop() options: { label: string; value: string }[];
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue: string;
-  @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() options: { label: string; value: string }[];
-  @Prop() disabled: boolean;
+  @Prop() disabled?: boolean;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
