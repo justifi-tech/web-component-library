@@ -1,21 +1,28 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payment, pagingDefaults } from '../../api';
+import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../table/exported-parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
-  tag: 'payments-list-core',
+  tag: 'payments-list-core'
 })
 export class PaymentsListCore {
-  @Prop() getPayments: Function;
-
   @State() payments: Payment[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any;
+  @State() params: PaymentsParams = {};
+  
+  @Prop() getPayments: Function;
+
+  @Watch('params')
+  @Watch('getPayments')
+  updateOnPropChange() {
+    this.fetchData();
+  }
 
   @Event({
     eventName: 'payment-row-clicked',
@@ -23,12 +30,6 @@ export class PaymentsListCore {
   }) rowClicked: EventEmitter<Payment>;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-
-  @Watch('params')
-  @Watch('getPayments')
-  updateOnPropChange() {
-    this.fetchData();
-  }
 
   componentWillLoad() {
     if (this.getPayments) {
@@ -76,6 +77,15 @@ export class PaymentsListCore {
     this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
   };
 
+  setParamsOnChange = (name: string, value: string) => {
+    let newParams = { [name]: value };
+    this.params = onFilterChange(newParams, this.params);
+  }
+
+  clearParams = () => {
+    this.params = {};
+  }
+
   get entityId() {
     return this.payments.map((payment) => payment.id);
   }
@@ -97,8 +107,8 @@ export class PaymentsListCore {
       {
         type: 'head',
         value: `
-          <div class='fw-bold'>${formatDate(payment.created_at)}</div>
-          <div class='fw-bold'>${formatTime(payment.created_at)}</div>
+          <div class="fw-bold">${formatDate(payment.created_at)}</div>
+          <div class="fw-bold">${formatTime(payment.created_at)}</div>
         `,
       },
       formatCurrency(payment.amount),
@@ -125,35 +135,20 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState;
   }
 
-  handleDateChange = (name: string, value: string) => {
-    this.params = { ...this.params, [name]: value };
-  }
-
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <div class="row gy-3 mb-4">
-          <div class="col-2">
-            <form-control-date
-              name="created_after"
-              label="Start Date"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-          <div class="col-2">
-            <form-control-date
-              name="created_before"
-              label="End Date"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-        </div>
+        <payments-list-filters 
+          params={this.params} 
+          setParamsOnChange={this.setParamsOnChange}
+          clearParams={this.clearParams}
+        />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
                 {this.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
+                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ""}>
                     {!Array.isArray(column) ? column : column[0]}
                   </th>
                 ))}
@@ -178,7 +173,7 @@ export class PaymentsListCore {
                     data-test-id="table-row"
                     data-row-entity-id={this.entityId[index]}
                     onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
+                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                   >
                     {data.map((dataEntry: any) => {
                       let nestedHtml = dataEntry?.type;

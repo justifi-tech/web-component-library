@@ -28,6 +28,7 @@
     "test:file": "stencil test --spec --watch --"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@stencil/core": "^4.0.5",
     "@stencil/store": "^2.0.8",
     "bootstrap": "^5.2.3",
@@ -36,6 +37,7 @@
     "dinero.js": "^1.9.1",
     "iframe-resizer": "^4.3.7",
     "imask": "^7.6.0",
+    "lodash": "^4.17.21",
     "rxjs": "^7.8.1",
     "ts-dedent": "^2.2.0",
     "uuid": "^9.0.0",
