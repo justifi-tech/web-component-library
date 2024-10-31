@@ -60,8 +60,9 @@ graph TD;
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
   justifi-business-representative-form-inputs --> justifi-identity-address-form
-  form-control-text --> form-control-help-text
+  form-control-text --> form-control-tooltip
   form-control-text --> form-control-error-text
+  form-control-tooltip --> custom-popper
   form-control-number-masked --> form-control-help-text
   form-control-number-masked --> form-control-error-text
   form-control-date --> form-control-help-text

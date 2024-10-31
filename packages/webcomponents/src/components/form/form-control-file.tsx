@@ -57,9 +57,9 @@ export class FileInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <div class='form-group d-flex flex-column'>
-          <div class='d-flex gap-2'>
-            <label part='label' class='form-label' htmlFor={this.name}>
+        <div class="form-group d-flex flex-column">
+          <div class="d-flex gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
               {this.label}
             </label>
             <form-control-tooltip helpText={this.helpText} />
@@ -68,8 +68,8 @@ export class FileInput {
             ref={(el) => this.fileInput = el}
             type="file"
             name={this.name}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
-            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            part={`input ${this.errorText ? "input-invalid " : ""}${this.disabled ? "input-disabled" : ""}`}
+            class={this.errorText ? "form-control is-invalid" : "form-control"}
             multiple={this.multiple}
             disabled={this.disabled}
             onChange={this.changeHandler}

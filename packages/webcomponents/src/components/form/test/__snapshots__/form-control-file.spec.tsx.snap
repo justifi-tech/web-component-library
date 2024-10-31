@@ -3,15 +3,15 @@
 exports[`form-control-file Renders with all props provided 1`] = `
 <form-control-file exportparts="label,input,input-invalid">
   <div class="d-flex flex-column form-group">
-    <label class="form-label" htmlfor="resume" part="label">
-      Resume
-    </label>
-    <input class="form-control is-invalid" disabled="" name="resume" part="input input-invalid  input-disabled" type="file">
-    <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-resume">
-        Upload your resume in PDF format
-      </small>
-    </form-control-help-text>
+    <div class="d-flex gap-2">
+      <label class="form-label" htmlfor="resume" part="label">
+        Resume
+      </label>
+      <form-control-tooltip>
+        <template shadowrootmode="open"></template>
+      </form-control-tooltip>
+    </div>
+    <input class="form-control is-invalid" disabled="" name="resume" part="input input-invalid input-disabled" type="file">
     <form-control-error-text>
       <small class="form-text text-danger" id="form-error-text-resume">
         Invalid file type
@@ -24,11 +24,15 @@ exports[`form-control-file Renders with all props provided 1`] = `
 exports[`form-control-file Renders with default props 1`] = `
 <form-control-file exportparts="label,input,input-invalid">
   <div class="d-flex flex-column form-group">
-    <label class="form-label" htmlfor="profilePicture" part="label">
-      Profile Picture
-    </label>
+    <div class="d-flex gap-2">
+      <label class="form-label" htmlfor="profilePicture" part="label">
+        Profile Picture
+      </label>
+      <form-control-tooltip>
+        <template shadowrootmode="open"></template>
+      </form-control-tooltip>
+    </div>
     <input class="form-control" name="profilePicture" part="input " type="file">
-    <form-control-help-text></form-control-help-text>
     <form-control-error-text></form-control-error-text>
   </div>
 </form-control-file>

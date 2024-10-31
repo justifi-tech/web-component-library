@@ -55,8 +55,9 @@ graph TD;
   justifi-business-core-info-form-step-core --> form-control-select
   justifi-business-core-info-form-step-core --> form-control-date
   justifi-business-core-info-form-step-core --> form-control-number-masked
-  form-control-text --> form-control-help-text
+  form-control-text --> form-control-tooltip
   form-control-text --> form-control-error-text
+  form-control-tooltip --> custom-popper
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
   form-control-date --> form-control-help-text
@@ -95,7 +96,6 @@ graph TD;
   justifi-business-document-upload-input-group --> form-control-file
   form-control-file --> form-control-tooltip
   form-control-file --> form-control-error-text
-  form-control-tooltip --> custom-popper
   justifi-business-terms-conditions-form-step --> justifi-business-terms-conditions-text
   justifi-business-terms-conditions-form-step --> form-control-checkbox
   form-control-checkbox --> form-control-help-text

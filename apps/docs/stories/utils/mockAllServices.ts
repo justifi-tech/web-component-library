@@ -53,6 +53,7 @@ export const API_PATHS = {
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
   INSURANCE_QUOTES: '/insurance/quotes',
+  PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
 type MockAllServicesConfig = {
@@ -136,9 +137,13 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       this.put(API_PATHS.BUSINESS_DOCUMENT_UPLOAD, () => null);
 
+      // Third URL prefix for package version check requests - allowing this request to bypass Mirage
+      this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
+      this.urlPrefix = 'https://registry.npmjs.org';
+      
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
-
+      
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
     },
