@@ -37,15 +37,6 @@ export class PaymentsListCore {
     }
   }
 
-  setParamsOnChange = (name: string, value: string) => {
-    let newParams = { [name]: value };
-    this.params = onFilterChange(newParams, this.params);
-  }
-
-  clearParams = () => {
-    this.params = {};
-  }
-
   fetchData(): void {
     this.loading = true;
 
@@ -85,6 +76,15 @@ export class PaymentsListCore {
     if (!clickedPaymentID) return;
     this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
   };
+
+  setParamsOnChange = (name: string, value: string) => {
+    let newParams = { [name]: value };
+    this.params = onFilterChange(newParams, this.params);
+  }
+
+  clearParams = () => {
+    this.params = {};
+  }
 
   get entityId() {
     return this.payments.map((payment) => payment.id);
