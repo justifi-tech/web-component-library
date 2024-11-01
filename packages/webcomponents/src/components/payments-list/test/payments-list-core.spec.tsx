@@ -23,7 +23,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService
+      service: mockPaymentsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -48,7 +49,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService
+      service: mockService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -70,7 +72,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService
+      service: mockPaymentsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -98,7 +101,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService
+      service: mockPaymentsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -126,7 +130,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService
+      service: mockPaymentsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -169,7 +174,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService
+      service: mockPaymentsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -217,7 +223,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService
+      service: mockPaymentsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
@@ -245,7 +252,8 @@ describe('payments-list-core', () => {
     const getPayments = makeGetPayments({
       id: 'some-id',
       authToken: 'some-auth',
-      service: mockService
+      service: mockService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const errorEvent = jest.fn();

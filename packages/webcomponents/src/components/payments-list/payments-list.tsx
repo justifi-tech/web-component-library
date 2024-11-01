@@ -5,6 +5,7 @@ import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { config } from '../../../config';
 
 /**
   * @exportedPart label: Label for inputs
@@ -34,12 +35,13 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 })
 
 export class PaymentsList {
-  @Prop() accountId: string;
-  @Prop() authToken: string;
-
   @State() getPayments: Function;
   @State() errorMessage: string = null;
-
+  
+  @Prop() accountId: string;
+  @Prop() authToken: string;
+  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
@@ -66,6 +68,7 @@ export class PaymentsList {
         id: this.accountId,
         authToken: this.authToken,
         service: new PaymentService(),
+        apiOrigin: this.apiOrigin,
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
