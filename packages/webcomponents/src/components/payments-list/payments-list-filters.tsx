@@ -33,6 +33,14 @@ export class PaymentsListFilters {
     return (
       <table-filters-menu params={this.params} clearParams={this.clearParams}>
         <div class="grid-cols-2 gap-3 p-1">
+        <div class="p-2">
+            <form-control-text 
+              name="payment_id"
+              label="Payment ID"
+              inputHandler={this.debouncedSetParamsOnChange}
+              defaultValue={this.params.payment_id}
+            />
+          </div>
           <div class="p-2">
             <form-control-text 
               name="terminal_id"
