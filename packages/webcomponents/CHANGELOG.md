@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.20.1
+
+### Patch Changes
+
+- fc3c4c6: - Added `payment_id` search filter to table filter menu in `payments-list` component. Users may now filter the list down to a specific payment based on a provided `payment_id`.
+
 ## 4.20.0
 
 ### Minor Changes
