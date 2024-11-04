@@ -79,10 +79,10 @@ Type: `Promise<PaymentMethodPayload>`
 
 ## Shadow Parts
 
-| Part                      | Description |
-| ------------------------- | ----------- |
-| `"payment-method-header"` |             |
-| `"radio-input-label"`     |             |
+| Part                  | Description |
+| --------------------- | ----------- |
+| `"radio-input-label"` |             |
+| `"radio-list-item"`   |             |
 
 
 ## Dependencies
