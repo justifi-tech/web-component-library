@@ -19,7 +19,7 @@ export class BusinessTermsConditionsText {
             <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">A. The JustiFi Payments Service</h3>
             <br />
 
-            <h4 class="card-subtitle" part="part-subtitle">Our Role</h4>
+            <h4 class="card-subtitle" part="card-subtitle">Our Role</h4>
             <p class='card-text' part="card-text">The JustiFi Payments service (“JustiFi Payments” or the “Payments Services”) is a: (i) payment account boarding; (ii) payment underwriting; and, (iii) payment data transmission service that helps you integrate with a payment processor (the “Processor”), as described more fully in this Agreement.</p>
             <p class='card-text' part="card-text">JustiFi is not a bank, payment institution, or money services business, but is instead, respectively, a supplier of the JustiFi Platform Services supplied under the JustiFi Platform Terms and of the Payments Services under this Agreement.</p>
 

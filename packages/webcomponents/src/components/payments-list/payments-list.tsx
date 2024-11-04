@@ -88,7 +88,7 @@ export class PaymentsList {
       <payments-list-core
         getPayments={this.getPayments}
         onError-event={this.handleErrorEvent}
-        exportparts={`${tableExportedParts},label, pagination-buttons-container`}
+        exportparts={tableExportedParts}
       />
     );
   }

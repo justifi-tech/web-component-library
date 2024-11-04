@@ -359,6 +359,6 @@
   border-left-color: var(--jfi-submit-button-color-loading);
 }
 
-.table-wrapper {
+::part(table-wrapper) {
   overflow-x: scroll;
 }
