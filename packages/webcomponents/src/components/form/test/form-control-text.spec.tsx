@@ -2,10 +2,10 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { TextInput } from '../form-control-text';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-text', () => {
-  const components = [TextInput, FormControlErrorText, FormControlHelpText];
+  const components = [TextInput, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
   const mockKeyDownHandler = jest.fn();
 
@@ -157,11 +157,17 @@ describe('form-control-text', () => {
       template: () => <form-control-text label='Username' name='username' helpText='This is the help text.'/>,
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
-    expect(helpTextComponent).not.toBeNull();
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
+    expect(tooltipComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('This is the help text.');
+    const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');
+    expect(tooltipIcon).not.toBeNull();
+
+    const tooltipElement = tooltipComponent.querySelector('.tooltip');
+    expect(tooltipElement).not.toBeNull();
+
+    const tooltipText = tooltipElement.querySelector('.tooltip-inner');
+    expect(tooltipText.textContent).toBe('This is the help text.');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {

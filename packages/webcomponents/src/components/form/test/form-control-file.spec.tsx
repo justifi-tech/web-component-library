@@ -2,11 +2,10 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
 import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-file', () => {
-  const components = [FileInput, FormControlErrorText, FormControlHelpText, TooltipComponent];
+  const components = [FileInput, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {
@@ -137,7 +136,7 @@ describe('form-control-file', () => {
         </form-control-file>
     });
 
-    const tooltipComponent = page.root.querySelector('form-control-tooltip').shadowRoot;
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
     expect(tooltipComponent).not.toBeNull();
 
     const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');

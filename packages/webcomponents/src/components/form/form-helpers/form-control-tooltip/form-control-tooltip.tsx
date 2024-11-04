@@ -1,9 +1,7 @@
 import { Component, Listen, Prop, State, h } from '@stencil/core';
-// import { StyledHost } from '../../../../ui-components';
 
 @Component({
-  tag: 'form-control-tooltip',
-  // shadow: true
+  tag: 'form-control-tooltip'
 })
 export class TooltipComponent {
   @State() anchorIcon: SVGElement;
@@ -27,7 +25,6 @@ export class TooltipComponent {
     }
 
     return (
-      // <StyledHost exportparts="tooltip,tooltip-inner,tooltip-icon">
         <div class="tooltip-container">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +51,6 @@ export class TooltipComponent {
             </div>
           </custom-popper>
         </div>
-      // </StyledHost>
     );
   }
 }
