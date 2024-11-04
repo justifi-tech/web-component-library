@@ -274,6 +274,7 @@ export interface IApplicationFee {
 }
 
 export interface PaymentsParams {
+  payment_id?: string;
   terminal_id?: string;
   payment_status?: PaymentStatuses;
   created_after?: string;

@@ -1,5 +1,19 @@
 ### Changelog
 
+## 4.20.1
+
+### Patch Changes
+
+- fc3c4c6: - Added `payment_id` search filter to table filter menu in `payments-list` component. Users may now filter the list down to a specific payment based on a provided `payment_id`.
+
+## 4.20.0
+
+### Minor Changes
+
+- 62ca009: - Add new filter menu to `payments-list` component. Contains previously shown start and end date filters, along with two new filters: terminal_id and payment_status.
+  - Add lodash as a project dependency for debouncing input handlers.
+  - Add popper.js as a project dependency.
+
 ## 4.19.3
 
 ### Patch Changes

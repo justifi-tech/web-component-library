@@ -137,10 +137,10 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       this.put(API_PATHS.BUSINESS_DOCUMENT_UPLOAD, () => null);
 
-      // Third URL prefix for package version check requests - allowing this request to bypass Mirage
+      // URL Prefix for NPM Package Check
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
       this.urlPrefix = 'https://registry.npmjs.org';
-      
+
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
       
