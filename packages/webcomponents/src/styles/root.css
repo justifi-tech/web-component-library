@@ -307,6 +307,6 @@
   border-left-color: var(--bs-primary);
 }
 
-.table-wrapper {
+::part(table-wrapper) {
   overflow-x: scroll;
 }

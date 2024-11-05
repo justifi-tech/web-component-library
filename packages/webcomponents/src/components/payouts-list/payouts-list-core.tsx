@@ -203,8 +203,8 @@ export class PayoutsListCore {
             />
           </div>
         </div>
-        <div class="table-wrapper">
-          <table class="table table-hover">
+        <div class="table-wrapper" part="table-wrapper">
+          <table class="table table-hover" part="table">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
                 {this.columnData.map((column) => (
