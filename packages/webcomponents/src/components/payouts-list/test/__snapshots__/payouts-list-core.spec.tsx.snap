@@ -15,8 +15,8 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
       <form-control-date label="Date to:" name="created_before"></form-control-date>
     </div>
   </div>
-  <div class="table-wrapper">
-    <table class="table table-hover">
+  <div class="table-wrapper" part="table-wrapper">
+    <table class="table table-hover" part="table">
       <thead class="sticky-top table-head" part="table-head">
         <tr class="table-light text-nowrap" part="table-head-row">
           <th part="table-head-cell" scope="col" title="The date each transaction occurred">
@@ -113,8 +113,8 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
       <form-control-date label="Date to:" name="created_before"></form-control-date>
     </div>
   </div>
-  <div class="table-wrapper">
-    <table class="table table-hover">
+  <div class="table-wrapper" part="table-wrapper">
+    <table class="table table-hover" part="table">
       <thead class="sticky-top table-head" part="table-head">
         <tr class="table-light text-nowrap" part="table-head-row">
           <th part="table-head-cell" scope="col" title="The date each transaction occurred">

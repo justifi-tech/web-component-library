@@ -125,14 +125,10 @@
 }
 
 :root {
-  --jfi-body-color: var(--bs-body-color);
-  --jfi-header-color: var(--bs-body-color);
-  --jfi-header-border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   --jfi-layout-font-family: var(--bs-font-sans-serif);
   --jfi-layout-padding: 4px;
   --jfi-layout-form-control-spacing-x: 0.5rem;
   --jfi-layout-form-control-spacing-y: 1rem;
-  --jfi-primary-color: #0d6efd;
   --jfi-form-control-background-color: var(--bs-body-bg);
   --jfi-form-control-border-color: var(--bs-border-color);
   --jfi-form-control-border-color-focus: #86b7fe;
@@ -155,54 +151,6 @@
   --jfi-form-control-line-height: 1.5;
   --jfi-form-control-margin: 0;
   --jfi-form-control-padding: 0.375rem 0.75rem;
-  --jfi-radio-button-color: var(--jfi-primary-color);
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-color-selected: white;
-  --jfi-radio-button-background-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-border-color: var(--jfi-form-control-border-color);
-  --jfi-radio-button-border-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-padding: 0.375rem 0.75rem;
-  --jfi-radio-button-font-size: 1rem;
-  --jfi-radio-button-color-hover: var(--jfi-primary-color);
-  --jfi-radio-button-color-selected-hover: white;
-  --jfi-radio-button-background-color-hover: transparent;
-  --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
-  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  --jfi-radio-button-border-color-focus: #86b7fe;
-  --jfi-radio-button-group-color: var(--jfi-body-color);
-  --jfi-radio-button-group-color-hover: var(--jfi-body-color);
-  --jfi-radio-button-group-divider: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
-  --jfi-radio-button-group-background-color: transparent;
-  --jfi-radio-button-group-background-color-hover: var(--bs-gray-100);
-  --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  --jfi-radio-input-background-color-selected: #212529;
-  --jfi-radio-input-border-color: #6c757d;
-  --jfi-radio-input-border-color-selected: #212529;
-  --jfi-skeleton-wave-animation-bg: rgba(100, 100, 100, 0.6);
-  --jfi-submit-button-color: white;
-  --jfi-submit-button-background-color: var(--jfi-primary-color);
-  --jfi-submit-button-border-color: var(--jfi-primary-color);
-  --jfi-submit-button-padding: 0.375rem 0.75rem;
-  --jfi-submit-button-font-size: 1rem;
-  --jfi-submit-button-border-radius: 0.375rem;
-  --jfi-submit-button-color-hover: white;
-  --jfi-submit-button-background-color-hover: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-hover: var(--jfi-primary-color);
-  --jfi-submit-button-color-focus: white;
-  --jfi-submit-button-background-color-focus: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-focus: var(--jfi-primary-color);
-  --jfi-submit-button-color-active: white;
-  --jfi-submit-button-background-color-active: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-active: var(--jfi-primary-color);
-  --jfi-submit-button-width: auto;
-  --jfi-submit-button-box-shadow: none;
-  --jfi-submit-button-color-loading: white;
-  --jfi-submit-button-background-color-loading: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-loading: var(--jfi-primary-color);
-  --jfi-submit-button-line-height: 1.5;
-  --jfi-submit-button-text-transform: initial;
   --jfi-form-label-color: #212529;
   --jfi-form-label-font-family: var(--bs-font-sans-serif);
   --jfi-form-label-font-size: 1rem;
@@ -218,7 +166,7 @@
 /* Use CSS variables in CSS parts */
 
 ::part(skeleton) {
-  background-color: var(--jfi-skeleton-wave-animation-bg, #f5f5f5);
+  background-color: rgba(100, 100, 100, 0.6);
   animation: pulseAnimation 2s ease-in-out 0.5s infinite;
 }
 
@@ -314,49 +262,49 @@
 }
 
 ::part(button) {
-  border-radius: var(--jfi-submit-button-border-radius);
+  border-radius: 0.375rem;
 }
 
 ::part(button-primary) {
   font-family: var(--jfi-layout-font-family);
-  color: var(--jfi-submit-button-color);
-  background-color: var(--jfi-submit-button-background-color);
-  border-color: var(--jfi-submit-button-border-color);
-  padding: var(--jfi-submit-button-padding);
-  font-size: var(--jfi-submit-button-font-size);
-  border-radius: var(--jfi-submit-button-border-radius);
-  box-shadow: var(--jfi-submit-button-box-shadow);
+  color: white;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.375rem;
+  box-shadow: none;
 }
 
 ::part(button-primary):hover {
-  color: var(--jfi-submit-button-color-hover);
-  background-color: var(--jfi-submit-button-background-color-hover);
-  border-color: var(--jfi-submit-button-border-color-hover);
+  color: white;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
 }
 
 ::part(button-primary):focus {
-  color: var(--jfi-submit-button-color-focus);
-  background-color: var(--jfi-submit-button-background-color-focus);
-  border-color: var(--jfi-submit-button-border-color-focus);
+  color: white;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
 }
 
 ::part(button-primary):active {
-  color: var(--jfi-submit-button-color-active);
-  background-color: var(--jfi-submit-button-background-color-active);
-  border-color: var(--jfi-submit-button-border-color-active);
+  color: white;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
 }
 
 ::part(button-loading) {
   min-width: 75px;
-  color: var(--jfi-submit-button-color-loading);
-  background-color: var(--jfi-submit-button-background-color-loading);
-  border-color: var(--jfi-submit-button-border-color-loading);
+  color: white;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
 }
 
 ::part(button-spinner) {
-  border-top-color: var(--jfi-submit-button-color-loading);
-  border-bottom-color: var(--jfi-submit-button-color-loading);
-  border-left-color: var(--jfi-submit-button-color-loading);
+  border-top-color: white;
+  border-bottom-color: var(--bs-primary);
+  border-left-color: var(--bs-primary);
 }
 
 ::part(table-wrapper) {
