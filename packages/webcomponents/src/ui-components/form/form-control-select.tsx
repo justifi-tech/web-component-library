@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Watch,
 } from '@stencil/core';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-select'
@@ -67,8 +68,8 @@ export class SelectInput {
               <option value={option.value}>{option.label}</option>
             ))}
           </select>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

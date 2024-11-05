@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-business-details";
+import { ThemeNames } from "../../themes";
 
 type Story = StoryObj;
 
@@ -13,9 +14,18 @@ const meta: Meta = {
   component: "justifi-business-details",
   args: {
     ...storyBaseArgs.args,
+    Theme: ThemeNames.Light,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
     "error-event": {
       description: "`ComponentError`",
       table: {

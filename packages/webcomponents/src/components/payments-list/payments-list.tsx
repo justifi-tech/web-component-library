@@ -5,6 +5,7 @@ import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 
 /**
   * @exportedPart label: Label for inputs
@@ -20,13 +21,10 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
   * @exportedPart loading-state-spinner: Spinner element for loading state
   * @exportedPart error-state: Row for Error state
   * @exportedPart empty-state: Row for Emtpy state
-  * @exportedPart pagination-bar: Pagination bar
-  * @exportedPart arrow: Both paging buttons
-  * @exportedPart arrow-left: Previous page button
-  * @exportedPart arrow-right: Next page button
-  * @exportedPart button-disabled: Disabled state for paging buttons
-  * @exportedPart previous-button-text: Text for Previous button
-  * @exportedPart next-button-text: Text for Next button
+  * @exportedPart pagination: Pagination bar
+  * @exportedPart page-item: Pagination button
+  * @exportedPart page-link: Pagination link
+  * @exportedPart page-link-disabled: Disabled pagination link
 */
 @Component({
   tag: 'justifi-payments-list',
@@ -90,6 +88,7 @@ export class PaymentsList {
       <payments-list-core
         getPayments={this.getPayments}
         onError-event={this.handleErrorEvent}
+        exportparts={tableExportedParts}
       />
     );
   }

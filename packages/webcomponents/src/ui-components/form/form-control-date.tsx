@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Watch,
 } from '@stencil/core';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-date'
@@ -21,7 +22,7 @@ export class DateInput {
   @Prop() defaultValue: string;
   @Prop() inputHandler: any;
   @Prop() disabled: boolean;
-  
+
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
     this.updateInput(newValue);
@@ -33,14 +34,14 @@ export class DateInput {
   componentDidLoad() {
     this.updateInput(this.defaultValue);
   }
-  
+
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
     this.formControlInput.emit({ name, value: target.value });
   }
-   
+
   updateInput(value: any) {
     this.dateInput.value = value;
   }
@@ -58,12 +59,12 @@ export class DateInput {
           name={this.name}
           onBlur={this.formControlBlur.emit}
           onInput={this.handleFormControlInput}
-          part={`input ${this.errorText && 'input-invalid'}`}
+          part={`input ${this.errorText ? 'input-invalid' : ''}`}
           class={this.errorText ? 'form-control is-invalid' : 'form-control'}
           disabled={this.disabled}
         />
-        <form-control-help-text helpText={this.helpText} name={this.name} />
-        <form-control-error-text errorText={this.errorText} name={this.name} />     
+        <FormControlHelpText helpText={this.helpText} name={this.name} />
+        <FormControlErrorText errorText={this.errorText} name={this.name} />
       </Host>
     );
   }

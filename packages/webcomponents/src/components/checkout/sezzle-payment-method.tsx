@@ -97,8 +97,10 @@ export class SezzlePaymentMethod {
         </script>
 
         <div
-          class={`payment-method-header p-3`}
-          onClick={() => this.onPaymentMethodOptionClick()}>
+          class="radio-list-item p-3"
+          onClick={() => this.onPaymentMethodOptionClick()}
+          part="radio-list-item"
+        >
           <input
             type="radio"
             name="paymentMethodType"
@@ -107,10 +109,13 @@ export class SezzlePaymentMethod {
             onClick={(event) => event.preventDefault()}
             checked={this.isSelected}
             class="form-check-input me-2"
+            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
           />
           <label
             htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label">
+            class="form-check-label"
+            part="radio-input-label"
+          >
             <div>Buy now, pay later with {sezzleLogo}</div>
             {this.installmentPlan && (
               <small>

@@ -27,10 +27,14 @@ export const ErrorState = (errorMessage: string) => (
   </main>
 );
 
-export const DetailSectionTitle: FunctionalComponent<{ sectionTitle: string }> = (props) => [
-  <h5 part="detail-section-title" class="mt-4">{props.sectionTitle}</h5>,
-  <hr />,
-];
+export const DetailSectionTitle: FunctionalComponent<{ sectionTitle: string }> = (props) => (
+  <h2
+    part="header-2"
+    class="mt-4 fs-5 border-bottom pb-3"
+  >
+    {props.sectionTitle}
+  </h2>
+);
 
 export const DetailItem = ({
   title,
@@ -40,7 +44,7 @@ export const DetailItem = ({
   value: string;
 }) =>
   title && value ? (
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span part="detail-section-item-title" class="fw-bold d-table-cell px-2">
         {title}
       </span>
@@ -77,7 +81,7 @@ export const EntityHeadInfoItem = ({
 export const EntityHeadInfo = ({ title, slot, badge }, children) => (
   <div slot={slot} part="detail-head" class="p-2">
     <div class="d-flex flex-row align-items-center gap-2 mb-2">
-      <h1 class="m-0" part="detail-title">
+      <h1 class="m-0" part="detail-head-amount">
         {title}
       </h1>
       {badge}

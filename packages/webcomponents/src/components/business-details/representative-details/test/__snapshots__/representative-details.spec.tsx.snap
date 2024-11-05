@@ -2,14 +2,13 @@
 
 exports[`RepresentativeDetails should render 1`] = `
 <representative-details>
-  <h5 class="mt-4" part="detail-section-title">
+  <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
     Representative Details
-  </h5>
-  <hr>
-  <div class="d-table gap-2 w-100">
+  </h2>
+  <div class="d-table gap-2 mt-3 w-100" part="detail-section-block">
     <div class="gy-3 row">
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Name
           </span>
@@ -17,7 +16,7 @@ exports[`RepresentativeDetails should render 1`] = `
             Person Name
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             ID
           </span>
@@ -25,7 +24,7 @@ exports[`RepresentativeDetails should render 1`] = `
             idty_xyz
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Address
           </span>
@@ -33,7 +32,7 @@ exports[`RepresentativeDetails should render 1`] = `
             123 Example St
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Created At
           </span>
@@ -43,7 +42,7 @@ exports[`RepresentativeDetails should render 1`] = `
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Title
           </span>
@@ -51,7 +50,7 @@ exports[`RepresentativeDetails should render 1`] = `
             President
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Is Owner?
           </span>
@@ -59,7 +58,7 @@ exports[`RepresentativeDetails should render 1`] = `
             true
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Date Of Birth
           </span>
@@ -67,7 +66,7 @@ exports[`RepresentativeDetails should render 1`] = `
             Jan 1, 1980
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Email
           </span>
@@ -75,7 +74,7 @@ exports[`RepresentativeDetails should render 1`] = `
             person.name@justifi.ai
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Phone
           </span>
@@ -83,7 +82,7 @@ exports[`RepresentativeDetails should render 1`] = `
             6124011111
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Updated At
           </span>

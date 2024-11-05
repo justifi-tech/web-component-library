@@ -6,17 +6,13 @@ exports[`form-control-file Renders with all props provided 1`] = `
     <label class="form-label" htmlfor="resume" part="label">
       Resume
     </label>
-    <input class="form-control is-invalid" disabled="" name="resume" part="input input-invalid  input-disabled" type="file">
-    <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-resume">
-        Upload your resume in PDF format
-      </small>
-    </form-control-help-text>
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-resume">
-        Invalid file type
-      </small>
-    </form-control-error-text>
+    <input class="form-control is-invalid" disabled="" name="resume" part="input input-invalid " type="file">
+    <small class="form-text text-muted" id="form-help-text-resume" part="input-help-text">
+      Upload your resume in PDF format
+    </small>
+    <small class="form-text text-danger" id="form-error-text-resume" part="input-error-text">
+      Invalid file type
+    </small>
   </div>
 </form-control-file>
 `;
@@ -28,8 +24,6 @@ exports[`form-control-file Renders with default props 1`] = `
       Profile Picture
     </label>
     <input class="form-control" name="profilePicture" part="input " type="file">
-    <form-control-help-text></form-control-help-text>
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-file>
 `;

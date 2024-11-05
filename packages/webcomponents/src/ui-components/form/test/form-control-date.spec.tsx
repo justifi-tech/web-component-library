@@ -1,8 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { DateInput } from "../form-control-date";
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-date', () => {
   const components = [DateInput, FormControlErrorText, FormControlHelpText];
@@ -11,7 +11,7 @@ describe('form-control-date', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-date label='Birthday' name='birthday'/>,
+      template: () => <form-control-date label='Birthday' name='birthday' />,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -165,11 +165,10 @@ describe('form-control-date', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    const helpTextComponent = page.root.querySelector('#form-help-text-date');
     expect(helpTextComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Select your date');
+    expect(helpTextComponent.textContent).toBe('Select your date');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
@@ -184,11 +183,10 @@ describe('form-control-date', () => {
         />
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-date');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('Invalid date');
+    expect(errorTextComponent.textContent).toBe('Invalid date');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

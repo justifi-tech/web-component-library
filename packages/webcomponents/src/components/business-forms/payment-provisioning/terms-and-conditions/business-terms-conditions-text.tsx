@@ -9,21 +9,21 @@ export class BusinessTermsConditionsText {
   render() {
     return (
       <div class='terms-container'>
-        <div class="card terms-conditions-card">
-          <div class="card-body terms-card-body">
-            <h2 class="card-title">JustiFi Technologies Inc. Terms and Conditions</h2>
+        <div class="card terms-conditions-card" part="card">
+          <div class="card-body terms-card-body" part="card-body">
+            <h2 class="card-title" part="card-title">JustiFi Technologies Inc. Terms and Conditions</h2>
 
-            <p class='card-text'>The Payment Terms and Conditions described herein constitute a legal agreement (“Agreement” or “JustiFi Technologies Inc. Terms”) between your business (the “Merchant”, “you” or “your”) and JustiFi Technologies Inc., organized under the laws of Minnesota with offices at 555 Vandalia St. St Paul, MN 55114, Suite #105. (“JustiFi”, “we”, “us”, or “our”).</p>
+            <p class='card-text' part="card-text">The Payment Terms and Conditions described herein constitute a legal agreement (“Agreement” or “JustiFi Technologies Inc. Terms”) between your business (the “Merchant”, “you” or “your”) and JustiFi Technologies Inc., organized under the laws of Minnesota with offices at 555 Vandalia St. St Paul, MN 55114, Suite #105. (“JustiFi”, “we”, “us”, or “our”).</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted">A. The JustiFi Payments Service</h3>
+            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">A. The JustiFi Payments Service</h3>
             <br />
 
-            <h4 class="card-subtitle">Our Role</h4>
-            <p class='card-text'>The JustiFi Payments service (“JustiFi Payments” or the “Payments Services”) is a: (i) payment account boarding; (ii) payment underwriting; and, (iii) payment data transmission service that helps you integrate with a payment processor (the “Processor”), as described more fully in this Agreement.</p>
-            <p class='card-text'>JustiFi is not a bank, payment institution, or money services business, but is instead, respectively, a supplier of the JustiFi Platform Services supplied under the JustiFi Platform Terms and of the Payments Services under this Agreement.</p>
+            <h4 class="card-subtitle" part="card-subtitle">Our Role</h4>
+            <p class='card-text' part="card-text">The JustiFi Payments service (“JustiFi Payments” or the “Payments Services”) is a: (i) payment account boarding; (ii) payment underwriting; and, (iii) payment data transmission service that helps you integrate with a payment processor (the “Processor”), as described more fully in this Agreement.</p>
+            <p class='card-text' part="card-text">JustiFi is not a bank, payment institution, or money services business, but is instead, respectively, a supplier of the JustiFi Platform Services supplied under the JustiFi Platform Terms and of the Payments Services under this Agreement.</p>
 
-            <h4 class="card-subtitle">The Processor</h4>
+            <h4 class="card-subtitle" part="card-subtitle">The Processor</h4>
             <p>JustiFi provides a managed orchestration layer and processes payments with multiple processors. &nbsp;JustiFi’s processing partners include Fiserv Inc., First Data LLC and Stripe, Inc. which is a technical services provider and may offer the services as an agent of one or more financial institutions in the United States (each, a “Financial Services Provider”). The processing is carried out by the Processor. &nbsp;By accepting this Agreement, you are also accepting and agreeing to be bound by the Processor Terms. JustiFi is not a party to the Processor Terms and is not liable to you in respect thereof. By accepting this Agreement and the Processor Terms you are agreeing to the creation of an account with the Processor for Payment Processing (the “Processor Account”). We reserve the right to change the Processor, subject to the terms of our agreement with the Processor. In the event of any inconsistency between this Agreement and the Processor Terms, this Agreement shall prevail, except in the event of any inconsistency between this Agreement and the Processor Terms concerning Payment Processing or the Processor Account, in which case the Processor Terms shall prevail.</p>
             <p>The Processor’s role is to accept and process credit card, debit card and other types of payments with respect to sales of your products and services through internet-based transactions (“Card Not Present Transactions" or “CNP Transactions”). Your Role is to utilize the Services, you must be a business located in the United States.</p>
 
@@ -64,7 +64,7 @@ export class BusinessTermsConditionsText {
             <p>You agree that JustiFi can provide disclosures and notices, including tax forms, that we deem appropriate regarding the Payments Services to you by posting such disclosures and notices in your JustiFi Account, emailing them to the email address listed in your JustiFi Account, or mailing them to the address listed in your JustiFi Account. You also agree that electronic disclosures and notices have the same meaning and effect as if we had provided you with a paper copy.</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted">B. Underwriting &amp; Obtaining a JustiFi Payments Services Account</h3>
+            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">B. Underwriting &amp; Obtaining a JustiFi Payments Services Account</h3>
             <br />
 
             <h4>Registration</h4>
@@ -84,7 +84,7 @@ export class BusinessTermsConditionsText {
             <p>In registering for a JustiFi Payments Account, you are obliged to identify the location from where you are operating the business that will use the Payments Services in United States. By registering for a JustiFi Payments Account, you are confirming that you are either a legal resident of United States or you are duly established and, if necessary, registered or licensed as a business entity authorized to conduct business in United States. The Payments Services and JustiFi Payments Account may only be used in United States. By accepting this Agreement, you confirm that you will satisfy these requirements.</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted">C. Processing Card Transactions, Managing Funds and Receiving Your Funds</h3>
+            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">C. Processing Card Transactions, Managing Funds and Receiving Your Funds</h3>
             <br />
 
             <h4>JustiFi Payments Fees</h4>
@@ -114,7 +114,7 @@ export class BusinessTermsConditionsText {
             <p>We reserve the right, upon notice to you, to charge a fee for mediating or investigating chargeback disputes.</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted">D. Termination and Other Legal Terms</h3>
+            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">D. Termination and Other Legal Terms</h3>
             <br />
 
             <h4>Term</h4>
@@ -177,8 +177,8 @@ export class BusinessTermsConditionsText {
             <p>This Agreement has been reviewed by you with the benefit of independent legal counsel to the extent you consider necessary, and any rule of construction to the effect that ambiguities are to be resolved against the drafting party shall not apply to the construction or interpretation of this Agreement. The rights conferred upon us in this Agreement are not intended to be exclusive of each other or of any other rights and remedies we may have at law or in equity. Rather, each and every right we may have under this Agreement, at law or in equity, is cumulative and concurrent, and in addition to every other right.</p>
             <p>This Agreement may be available in languages other than English. To the extent of any inconsistencies or conflicts between this English Agreement and the Agreements available in another language, the most current English version of the Agreement will prevail.</p>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     );
   }
 }

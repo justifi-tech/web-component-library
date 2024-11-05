@@ -3,6 +3,7 @@ import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { Header3 } from '../../ui-components';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -96,7 +97,7 @@ export class NewPaymentMethod {
             iframe-origin={this.iframeOrigin}
           />
         </div>
-        <h3 class="fs-6 fw-bold lh-lg mb-4">Billing address</h3>
+        <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
         <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
@@ -107,8 +108,10 @@ export class NewPaymentMethod {
     return (
       <div class="payment-method">
         <div
-          class={`payment-method-header p-3`}
-          onClick={() => this.onPaymentMethodOptionClick()}>
+          class="radio-list-item p-3"
+          onClick={() => this.onPaymentMethodOptionClick()}
+          part="radio-list-item"
+        >
           <input
             type="radio"
             name="paymentMethodType"
@@ -117,10 +120,13 @@ export class NewPaymentMethod {
             onClick={(event) => event.preventDefault()}
             checked={this.isSelected}
             class="form-check-input me-2"
+            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
           />
           <label
             htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label">
+            class="form-check-label"
+            part="radio-input-label"
+          >
             {PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
           </label>
         </div>

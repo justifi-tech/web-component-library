@@ -8,6 +8,7 @@ import {
   Watch,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
+import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-number-masked'
@@ -37,7 +38,7 @@ export class NumberInputMasked {
   disconnectedCallback() {
     this.imask?.destroy();
   }
-  
+
   componentDidLoad() {
     if (this.textInput) {
       this.initializeIMask();
@@ -61,13 +62,13 @@ export class NumberInputMasked {
 
     this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
   }
-  
+
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.formControlInput.emit({ name: name, value: target.value });
   }
-  
+
   updateInput = (newValue: any) => {
     if (this.imask && newValue) {
       this.imask.value = String(newValue);
@@ -92,8 +93,8 @@ export class NumberInputMasked {
             type="text"
             disabled={this.disabled}
           />
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

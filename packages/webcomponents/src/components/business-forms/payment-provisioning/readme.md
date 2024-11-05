@@ -55,14 +55,6 @@ graph TD;
   justifi-business-core-info-form-step-core --> form-control-select
   justifi-business-core-info-form-step-core --> form-control-date
   justifi-business-core-info-form-step-core --> form-control-number-masked
-  form-control-text --> form-control-help-text
-  form-control-text --> form-control-error-text
-  form-control-select --> form-control-help-text
-  form-control-select --> form-control-error-text
-  form-control-date --> form-control-help-text
-  form-control-date --> form-control-error-text
-  form-control-number-masked --> form-control-help-text
-  form-control-number-masked --> form-control-error-text
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core
   justifi-legal-address-form-step-core --> form-control-text
   justifi-legal-address-form-step-core --> form-control-select
@@ -70,8 +62,6 @@ graph TD;
   justifi-additional-questions-form-step-core --> form-control-monetary
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
-  form-control-monetary --> form-control-help-text
-  form-control-monetary --> form-control-error-text
   justifi-business-representative-form-step --> justifi-business-representative-form-step-core
   justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
   justifi-business-representative-form-inputs --> form-control-text
@@ -93,12 +83,8 @@ graph TD;
   justifi-business-document-upload-form-step --> justifi-business-documents-on-file
   justifi-business-document-upload-form-step --> justifi-business-document-upload-input-group
   justifi-business-document-upload-input-group --> form-control-file
-  form-control-file --> form-control-help-text
-  form-control-file --> form-control-error-text
   justifi-business-terms-conditions-form-step --> justifi-business-terms-conditions-text
   justifi-business-terms-conditions-form-step --> form-control-checkbox
-  form-control-checkbox --> form-control-help-text
-  form-control-checkbox --> form-control-error-text
   justifi-payment-provisioning-core --> justifi-payment-provisioning-form-steps
   style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```

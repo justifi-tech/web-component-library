@@ -8,6 +8,7 @@ import {
   Element,
   Watch,
 } from '@stencil/core';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-text'
@@ -66,13 +67,13 @@ export class TextInput {
             onKeyDown={this.keyDownHandler}
             onPaste={this.keyDownHandler}
             maxLength={this.maxLength}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
+            part={`input ${this.errorText ? 'input-invalid ' : ''}`}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
             disabled={this.disabled}
           />
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

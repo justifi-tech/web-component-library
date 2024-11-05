@@ -20,6 +20,15 @@
 | `error-event` |             | `CustomEvent<ComponentError>` |
 
 
+## Shadow Parts
+
+| Part                  | Description |
+| --------------------- | ----------- |
+| `"button-secondary"`  |             |
+| `"detail-head-badge"` |             |
+| `"detail-section"`    |             |
+
+
 ## Dependencies
 
 ### Used by

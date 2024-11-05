@@ -60,12 +60,6 @@ graph TD;
   justifi-additional-questions-form-step-core --> form-control-monetary
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
-  form-control-monetary --> form-control-help-text
-  form-control-monetary --> form-control-error-text
-  form-control-select --> form-control-help-text
-  form-control-select --> form-control-error-text
-  form-control-text --> form-control-help-text
-  form-control-text --> form-control-error-text
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   style justifi-additional-questions-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -25,10 +25,10 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
     </template>
     <div class="p-2" part="detail-head" slot="head-info">
       <div class="align-items-center d-flex flex-row gap-2 mb-2">
-        <h1 class="m-0" part="detail-title">
+        <h1 class="m-0" part="detail-head-amount">
           $234.56 USD
         </h1>
-        <span slot="badge">
+        <span part="detail-head-badge" slot="badge">
           <span class="badge bg-success" title="This payment was successfully captured">
             Successful
           </span>
@@ -61,13 +61,12 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
         </div>
       </div>
     </div>
-    <div slot="detail-sections">
-      <h5 class="mt-4" part="detail-section-title">
+    <div part="detail-section" slot="detail-sections">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Details
-      </h5>
-      <hr>
+      </h2>
       <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Amount
           </span>
@@ -75,7 +74,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             $234.56
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Fees
           </span>
@@ -83,7 +82,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             $2.00
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Refunded
           </span>
@@ -91,7 +90,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             $0.00
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Net
           </span>
@@ -99,7 +98,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             $232.56
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Status
           </span>
@@ -109,7 +108,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             </span>
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Payment ID
           </span>
@@ -117,7 +116,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             py_1NNeEnf4FbelxDCQN2RHcE
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Processing Fees
           </span>
@@ -125,7 +124,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             $2.00
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Description
           </span>
@@ -134,12 +133,11 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
           </span>
         </div>
       </div>
-      <h5 class="mt-4" part="detail-section-title">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Payment Method
-      </h5>
-      <hr>
+      </h2>
       <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             ID
           </span>
@@ -147,7 +145,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             pm_uICmv8696AatL4gRwa0Wq
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Last 4 Numbers
           </span>
@@ -155,7 +153,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             **** 6789
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Bank Name
           </span>
@@ -163,7 +161,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             Altra
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Account Owner
           </span>
@@ -172,10 +170,9 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
           </span>
         </div>
       </div>
-      <h5 class="mt-4" part="detail-section-title">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
         Metadata
-      </h5>
-      <hr>
+      </h2>
       <div class="d-table gap-2 w-100"></div>
     </div>
   </justifi-details>
