@@ -4,12 +4,12 @@
 
 .radio-list-item {
   cursor: pointer;
-  color: var(--jfi-radio-button-group-color);
-  background-color: var(--jfi-radio-button-group-background-color);
-  border-bottom: var(--jfi-radio-button-group-divider);
+  color: var(--bs-body-color);
+  background-color: transparent;
+  border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
 }
 
 .radio-list-item:hover {
-  color: var(--jfi-radio-button-group-color-hover);
-  background-color: var(--jfi-radio-button-group-background-color-hover);
+  color: var(--bs-body-color);
+  background-color: var(--bs-gray-100);
 }
