@@ -11,8 +11,8 @@ exports[`payments-list-core displays an error state on failed data fetch 1`] = `
       <form-control-date label="End Date" name="created_before"></form-control-date>
     </div>
   </div>
-  <div class="table-wrapper">
-    <table class="table table-hover">
+  <div class="table-wrapper" part="table-wrapper">
+    <table class="table table-hover" part="table">
       <thead class="sticky-top table-head" part="table-head">
         <tr class="table-light text-nowrap" part="table-head-row">
           <th part="table-head-cell" scope="col" title="The date and time each payment was made">
@@ -93,8 +93,8 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
       <form-control-date label="End Date" name="created_before"></form-control-date>
     </div>
   </div>
-  <div class="table-wrapper">
-    <table class="table table-hover">
+  <div class="table-wrapper" part="table-wrapper">
+    <table class="table table-hover" part="table">
       <thead class="sticky-top table-head" part="table-head">
         <tr class="table-light text-nowrap" part="table-head-row">
           <th part="table-head-cell" scope="col" title="The date and time each payment was made">
