@@ -9,7 +9,7 @@ export class CustomPopper {
   @Prop() offset: [number, number] = [0, 10];
   @Prop() strategy: PositioningStrategy = 'absolute';
   @Prop() trigger: string = 'click'; // 'click', 'hover', 'focus'
-  @Prop() anchorRef: HTMLElement;
+  @Prop() anchorRef: HTMLElement | SVGElement;
 
   @State() isOpen: boolean = false;
 

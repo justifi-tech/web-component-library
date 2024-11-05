@@ -71,7 +71,7 @@ justifi-payment-provisioning {
   --jfi-primary-color: rgb(164, 201, 245);
 
   /* form control */
-  --jfi-form-control-background-color: transparent;
+  --jfi-form-control-background-color: #191919;
   --jfi-form-control-border-color: rgba(255, 255, 255, 0.7);
   --jfi-form-control-border-color-focus: rgb(164, 201, 245);
   --jfi-form-control-border-color-error: #FF785A;
@@ -169,6 +169,16 @@ justifi-payment-provisioning {
 
    /* Skeleton */
   --jfi-skeleton-wave-animation-bg: rgba(255, 255, 255, 0.1);
+
+  /* Tooltip */
+  ::part(tooltip) {
+    --bs-tooltip-opacity: 1;
+  }
+
+  ::part(tooltip-inner) {
+    --bs-tooltip-bg: var(--bs-white);
+    --bs-tooltip-color: var(--bs-dark);
+  }
 }
 `;
 

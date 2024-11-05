@@ -463,6 +463,10 @@ svg {
   vertical-align: middle;
 }
 
+svg.bi.bi-question-square {
+  vertical-align: text-top;
+}
+
 table {
   caption-side: bottom;
   border-collapse: collapse;

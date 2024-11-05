@@ -35,8 +35,9 @@ graph TD;
   payments-list-filters --> form-control-select
   payments-list-filters --> form-control-date
   table-filters-menu --> custom-popper
-  form-control-text --> form-control-help-text
+  form-control-text --> form-control-tooltip
   form-control-text --> form-control-error-text
+  form-control-tooltip --> custom-popper
   form-control-select --> form-control-help-text
   form-control-select --> form-control-error-text
   form-control-date --> form-control-help-text
