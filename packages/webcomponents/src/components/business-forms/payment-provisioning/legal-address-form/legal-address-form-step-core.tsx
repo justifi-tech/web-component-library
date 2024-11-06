@@ -121,7 +121,6 @@ export class LegalAddressFormStepCore {
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.line2}
                 errorText={this.errors?.line2}
-    
               />
             </div>
             <div class="col-12">
