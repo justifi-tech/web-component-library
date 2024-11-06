@@ -463,7 +463,8 @@ svg {
   vertical-align: middle;
 }
 
-svg.bi.bi-question-square {
+ /* vertical alignment rule for tooltip SVG  */
+svg.tooltip-icon {
   vertical-align: text-top;
 }
 

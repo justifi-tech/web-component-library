@@ -35,7 +35,7 @@ graph TD;
   form-control-text --> form-control-tooltip
   form-control-text --> form-control-error-text
   form-control-tooltip --> custom-popper
-  form-control-select --> form-control-help-text
+  form-control-select --> form-control-tooltip
   form-control-select --> form-control-error-text
   justifi-business-representative --> justifi-identity-address-form
   justifi-business-representative-form-inputs --> justifi-identity-address-form
