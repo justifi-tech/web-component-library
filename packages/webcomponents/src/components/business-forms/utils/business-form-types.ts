@@ -27,8 +27,8 @@ interface BusinessFormEventMetaData {
 
 export enum BusinessFormStep {
   coreInfo = 'coreInfo',
-  legalAddress = 'legal_address',
-  additionalQuestions = 'additional_questions',
+  legalAddress = 'legalAddress',
+  additionalQuestions = 'additionalQuestions',
   representative = 'representative',
   owners = 'owners',
   bankAccount = 'bankAccount',
