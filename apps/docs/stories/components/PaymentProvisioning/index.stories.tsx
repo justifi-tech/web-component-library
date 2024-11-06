@@ -58,10 +58,14 @@ const meta: Meta = {
       },
     },
     'form-step-completed': {
-      description: 'Emitted when a form step is completed. Contains data from server response. The name of the completed form step is defined in `data.detail.formStep`.',
+      description: "Emitted when a form step is completed. Contains data from that form step's server response. The name of the completed form step is defined in `data.detail.formStep`.",
       table: {
-        category: 'events'
-      }
+        category: 'events',
+        defaultValue: {
+          summary: "Example Payload",
+          detail: `{ data: serverResponse, formStep: 'legal_address' }`
+        },
+      },
     },
     "click-event": {
       description:
