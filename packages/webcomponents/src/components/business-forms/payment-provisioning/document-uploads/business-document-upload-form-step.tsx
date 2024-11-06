@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../form/form';
-import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStep, BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
@@ -27,6 +27,7 @@ export class BusinessDocumentFormStep {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({ eventName: 'step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
@@ -140,6 +141,7 @@ export class BusinessDocumentFormStep {
       return false;
     } else {
       this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.documentUpload } });
+      this.stepCompleted.emit({ data: response, formStep: BusinessFormStepV2.documentUpload });
       return true;
     }
   }

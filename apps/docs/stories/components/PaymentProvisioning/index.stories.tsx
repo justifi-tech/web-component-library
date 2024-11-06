@@ -57,6 +57,12 @@ const meta: Meta = {
         category: "events",
       },
     },
+    'step-completed': {
+      description: 'Emitted when a form step is completed.',
+      table: {
+        category: 'events'
+      }
+    },
     "click-event": {
       description:
         "Emitted when controls are clicked.  Control name is defined in `data.detail.name`.",
@@ -73,7 +79,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted", "click-event", "error-event"],
+      handles: ["submitted", "step-completed", "click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,

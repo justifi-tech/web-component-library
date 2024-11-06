@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema';
 import { FormController } from '../../../form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
-import { BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormSubmitEvent, BusinessFormStepV2 } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
@@ -22,6 +22,7 @@ export class BusinessCoreInfoFormStepCore {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({ eventName: 'step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
@@ -83,6 +84,7 @@ export class BusinessCoreInfoFormStepCore {
       },
       final: () => {
         this.submitted.emit({ data: { submittedData } });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.businessInfo });
         this.formLoading.emit(false)
       }
     });
