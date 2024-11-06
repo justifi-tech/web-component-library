@@ -168,7 +168,7 @@ export class AdditionalQuestionsFormStepCore {
             <div class="col-12">
               <form-control-text
                 name="business_other_payment_details"
-                label="Is there anything else you would like us to know about how your customers pay the business?"
+                label="Is there anything else you would like us to know about how your customers pay the business? (optional)"
                 inputHandler={this.inputHandler}
                 errorText={this.errors?.business_other_payment_details}
                 defaultValue={additionalQuestionsDefaultValue?.business_other_payment_details}
