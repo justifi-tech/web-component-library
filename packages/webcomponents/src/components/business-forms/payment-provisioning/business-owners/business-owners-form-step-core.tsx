@@ -141,7 +141,7 @@ export class BusinessOwnersFormStepCore {
       <div>
         <div class="d-flex align-items-center gap-2">
           <legend class="mb-0">Owners</legend>
-          <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity; a board member or director." />
+          <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director." />
         </div>
         <hr class="mt-2" />
         <div class='row gy-3'>
