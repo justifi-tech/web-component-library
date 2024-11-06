@@ -170,7 +170,7 @@ export class BusinessCoreInfoFormStepCore {
             <div class="col-12">
               <form-control-text
                 name="website_url"
-                label="Website URL"
+                label="Business Website URL"
                 defaultValue={coreInfoDefaultValue.website_url}
                 errorText={this.errors.website_url}
                 inputHandler={this.inputHandler}
