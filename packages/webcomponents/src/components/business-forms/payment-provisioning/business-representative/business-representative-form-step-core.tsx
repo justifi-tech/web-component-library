@@ -18,7 +18,7 @@ export class BusinessRepresentativeFormStepCore {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event({ eventName: 'step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
+  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 

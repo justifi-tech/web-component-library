@@ -57,8 +57,8 @@ const meta: Meta = {
         category: "events",
       },
     },
-    'step-completed': {
-      description: 'Emitted when a form step is completed.',
+    'form-step-completed': {
+      description: 'Emitted when a form step is completed. Contains data from server response. The name of the completed form step is defined in `data.detail.formStep`.',
       table: {
         category: 'events'
       }
@@ -79,7 +79,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted", "step-completed", "click-event", "error-event"],
+      handles: ["submitted", "form-step-completed", "click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
