@@ -50,9 +50,12 @@ export class SelectInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+          <div class="d-flex align-items-start gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
           <select
             ref={el => (this.selectElement = el as HTMLSelectElement)}
             id={this.name}
@@ -67,7 +70,6 @@ export class SelectInput {
               <option value={option.value}>{option.label}</option>
             ))}
           </select>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
           <form-control-error-text errorText={this.errorText} name={this.name} />
         </div>
       </Host>
