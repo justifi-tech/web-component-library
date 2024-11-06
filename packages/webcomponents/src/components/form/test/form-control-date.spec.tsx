@@ -2,10 +2,10 @@ import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { DateInput } from "../form-control-date";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-date', () => {
-  const components = [DateInput, FormControlErrorText, FormControlHelpText];
+  const components = [DateInput, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {
@@ -165,11 +165,17 @@ describe('form-control-date', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
-    expect(helpTextComponent).not.toBeNull();
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
+    expect(tooltipComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Select your date');
+    const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');
+    expect(tooltipIcon).not.toBeNull();
+
+    const tooltipElement = tooltipComponent.querySelector('.tooltip');
+    expect(tooltipElement).not.toBeNull();
+
+    const tooltipText = tooltipElement.querySelector('.tooltip-inner');
+    expect(tooltipText.textContent).toBe('Select your date');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {

@@ -31,7 +31,7 @@ export class TooltipComponent {
             width="16"
             height="16"
             fill="currentColor"
-            class="bi bi-question-square"
+            class="bi bi-question-square tooltip-icon"
             viewBox="0 0 16 16"
             ref={(el) => (this.anchorIcon = el)}
             part="tooltip-icon"

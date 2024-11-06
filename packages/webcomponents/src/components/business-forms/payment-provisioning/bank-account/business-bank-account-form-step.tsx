@@ -141,8 +141,11 @@ export class BusinessBankAccountFormStep {
     return (
       <form>
         <fieldset>
-          <legend>Bank Account Info</legend>
-          <hr />
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0">Bank Account Info</legend>
+            <form-control-tooltip helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
+          </div>
+          <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text
@@ -195,6 +198,7 @@ export class BusinessBankAccountFormStep {
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 disabled={this.formDisabled}
+                helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
               />
             </div>
             <div class="col-12">
@@ -207,6 +211,7 @@ export class BusinessBankAccountFormStep {
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 disabled={this.formDisabled}
+                helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
               />
             </div>
           </div>

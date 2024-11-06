@@ -218,9 +218,11 @@ export class BusinessDocumentFormStep {
     return (
       <form>
         <fieldset>
-          <legend>Document Uploads</legend>
-          <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
-          <hr />
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0">Document Uploads</legend>
+            <form-control-tooltip helpText="Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category." />
+          </div>
+          <hr class="mt-2" />
           {this.documentsOnFile}
           <div class="d-flex flex-column">
             {this.formInputs}
