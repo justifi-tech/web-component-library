@@ -58,7 +58,7 @@ const meta: Meta = {
       },
     },
     'form-step-completed': {
-      description: "Emitted when a form step is completed. Contains data from that form step's server response. The name of the completed form step is defined in `data.detail.formStep`.",
+      description: "Emitted when a form step is completed after the user clicks 'Next'. Contains data from that form step's server response. The name of the completed form step is defined in `data.detail.formStep`.",
       table: {
         category: 'events',
         defaultValue: {
