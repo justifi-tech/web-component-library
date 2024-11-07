@@ -116,7 +116,7 @@ export class PaymentsListCore {
         type: 'inner',
         value: MapPaymentStatusToBadge(payment.status),
       },
-      'payment type!',
+      payment.paymentType,
       payment.description,
       payment.payment_method.payersName,
       payment.payment_method.lastFourDigits,
