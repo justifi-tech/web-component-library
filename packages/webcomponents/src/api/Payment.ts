@@ -16,6 +16,7 @@ export enum PaymentStatuses {
   authorized = 'authorized',
   succeeded = 'succeeded',
   failed = 'failed',
+  canceled = 'canceled',
   disputed = 'disputed',
   fully_refunded = 'fully_refunded',
   partially_refunded = 'partially_refunded',
