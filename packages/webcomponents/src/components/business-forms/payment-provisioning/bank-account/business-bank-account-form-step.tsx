@@ -109,8 +109,12 @@ export class BusinessBankAccountFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.formDisabled ? onSuccess() :
+    if (this.formDisabled) {
+      this.stepCompleted.emit({ data: null, formStep: BusinessFormStepV2.bankAccount, metadata: 'no data submitted' });
+      onSuccess();
+    } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+    };
   };
 
   componentWillLoad() {

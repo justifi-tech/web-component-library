@@ -157,6 +157,7 @@ export class BusinessDocumentFormStep {
     try {
       const docArray = Object.values(this.documentData).flat();
       if (!docArray.length) {
+        this.stepCompleted.emit({ data: null, formStep: BusinessFormStepV2.documentUpload, metadata: 'no data submitted' });
         return onSuccess();
       }
 

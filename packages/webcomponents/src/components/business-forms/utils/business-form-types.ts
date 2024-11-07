@@ -16,6 +16,7 @@ export interface BusinessFormServerErrorEvent {
 export interface BusinessFormStepCompletedEvent {
   data: any;
   formStep: BusinessFormStepV2;
+  metadata?: any;
 }
 
 // For right now we can use MetaData to track the step that was just completed during a submit event. 
