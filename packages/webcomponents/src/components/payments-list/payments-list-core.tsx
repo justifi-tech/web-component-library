@@ -111,7 +111,7 @@ export class PaymentsListCore {
           <div class="fw-bold">${formatTime(payment.created_at)}</div>
         `,
       },
-      formatCurrency(payment.amount),
+      formatCurrency(payment.amount, true, true),
       {
         type: 'inner',
         value: MapPaymentStatusToBadge(payment.status),
