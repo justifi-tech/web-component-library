@@ -52,7 +52,7 @@ const meta: Meta = {
     },
     submitted: {
       description:
-        "Emitted when the server response is received.  Will not be raised if form vailidation fails.",
+        "Emitted when the server response is received.  Will not be raised if form vailidation fails. <br> **NOTE**: This event's behavior will be modified in the next major release to only emit at the final form step completion. Please use the `form-step-completed` event to manage completion of individual form steps.",
       table: {
         category: "events",
       },
