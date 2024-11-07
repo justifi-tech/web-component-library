@@ -80,23 +80,27 @@ export class DateInput {
   render() {
     return (
       <Host exportparts="label,input,input-invalid">
-        <label part="label" class="form-label" htmlFor={this.name}>
-          {this.label}
-        </label>
-        <input
-          type={this.showTime ? 'datetime-local' : 'date'} // Conditionally set the input type
-          ref={el => (this.dateInput = el as HTMLInputElement)}
-          id={this.name}
-          name={this.name}
-          onBlur={this.formControlBlur.emit}
-          onInput={this.handleFormControlInput}
-          part={`input ${this.errorText && 'input-invalid'}`}
-          class={this.errorText ? 'form-control is-invalid' : 'form-control'}
-          disabled={this.disabled}
-          max={this.maxDate}
-        />
-        <form-control-help-text helpText={this.helpText} name={this.name} />
-        <form-control-error-text errorText={this.errorText} name={this.name} />     
+        <div class="form-group d-flex flex-column">
+          <div class="d-flex gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
+          <input
+            type={this.showTime ? 'datetime-local' : 'date'} // Conditionally set the input type
+            ref={el => (this.dateInput = el as HTMLInputElement)}
+            id={this.name}
+            name={this.name}
+            onBlur={this.formControlBlur.emit}
+            onInput={this.handleFormControlInput}
+            part={`input ${this.errorText && 'input-invalid'}`}
+            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            disabled={this.disabled}
+            max={this.maxDate}
+          />
+          <form-control-error-text errorText={this.errorText} name={this.name} />     
+        </div>
       </Host>
     );
   }
