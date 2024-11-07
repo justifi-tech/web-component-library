@@ -26,7 +26,11 @@ export class DateInput {
   
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
-    this.updateInput(this.convertToStandardDate(newValue));
+    if (this.filterTimeZone) {
+      this.updateInput(this.convertToLocal(newValue));
+    } else {
+      this.updateInput(newValue);
+    }
   }
 
   @Event() formControlInput: EventEmitter<any>;
@@ -41,7 +45,11 @@ export class DateInput {
   }
 
   componentDidLoad() {
-    this.updateInput(this.convertToStandardDate(this.defaultValue));
+    if (this.filterTimeZone) {
+      this.updateInput(this.convertToLocal(this.defaultValue));
+    } else {
+      this.updateInput(this.defaultValue);
+    }
   }
   
   handleFormControlInput = (event: any) => {
@@ -67,7 +75,7 @@ export class DateInput {
     return new Date(dateObj.toUTCString()).toISOString();
   }
 
-  convertToStandardDate(value: string): string {
+  convertToLocal(value: string): string {
     if (!value) return value;
     const date = new Date(value);
   
