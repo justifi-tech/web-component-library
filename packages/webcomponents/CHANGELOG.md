@@ -1,5 +1,27 @@
 ### Changelog
 
+## 4.21.0
+
+### Minor Changes
+
+- 0415586: - Refactored several form input labels in `payment-provisioning` component
+  - Optional fields now include `(optional)` in their form input labels
+  - Added tooltips to several fields in the `payment-provisioning` component. Tooltips render as a bootstrap SVG icon that will display help text when hovered with a mouse.
+- 7d565b9: - Implemented small conditional render logic to the `additional_questions` form step of the `payment-provisioning` component.
+  - `business_recurring_payments_percentage` field is only shown if the value of `business_recurring_payments` === `Yes`
+- dfa05d2: - Committed the following updates to the `payments-list` component:
+  - Removed `Payment ID` column
+  - Updated column name `Card Holder` to now say `Account Holder`
+  - Now showing currency type in `Amount` column
+  - Added `Type` column to show Card and ACH payments
+  - Changed wording of `Successful` payment status badge to `Succeeded`
+  - Added `Canceled` payment status badge for canceled payments
+  - Updated start and end date filter inputs to allow user to choose times, allowing for even more granular payment filtering
+- da46c7a: - Added new event to `payment-provisioning` component: `form-step-completed`
+  - This event will be emitted at the end of every form step in the `payment-provisioning` component.
+  - Event payload contains server response, as well as the name of the completed form step.
+  - Noted optional fields in the `document_upload` step of the `payment-provisioning` component by adding `(optional)` to the input label.
+
 ## 4.20.1
 
 ### Patch Changes
