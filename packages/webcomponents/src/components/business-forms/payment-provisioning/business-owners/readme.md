@@ -18,12 +18,13 @@
 
 ## Events
 
-| Event         | Description | Type                                   |
-| ------------- | ----------- | -------------------------------------- |
-| `click-event` |             | `CustomEvent<BusinessFormClickEvent>`  |
-| `error-event` |             | `CustomEvent<ComponentError>`          |
-| `formLoading` |             | `CustomEvent<boolean>`                 |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
+| Event                 | Description | Type                                          |
+| --------------------- | ----------- | --------------------------------------------- |
+| `click-event`         |             | `CustomEvent<BusinessFormClickEvent>`         |
+| `error-event`         |             | `CustomEvent<ComponentError>`                 |
+| `form-step-completed` |             | `CustomEvent<BusinessFormStepCompletedEvent>` |
+| `formLoading`         |             | `CustomEvent<boolean>`                        |
+| `submitted`           |             | `CustomEvent<BusinessFormSubmitEvent>`        |
 
 
 ## Methods

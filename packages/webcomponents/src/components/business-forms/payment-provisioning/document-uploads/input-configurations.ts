@@ -22,8 +22,8 @@ const balanceSheet = {
 };
 
 const governmentId = {
-  name: "government_id",
-  label: "Upload Government ID",
+  name: 'government_id',
+  label: 'Upload Government ID (optional)',
   documentType: EntityDocumentType.governmentId,
   helpText: "The ID must include a personal address."
 };
@@ -36,15 +36,15 @@ const profitAndLossStatement = {
 };
 
 const ss4 = {
-  name: "ss4",
-  label: "Upload SS4 / Article of Incorporation",
+  name: 'ss4',
+  label: 'Upload SS4 / Article of Incorporation (optional)',
   documentType: EntityDocumentType.taxReturn,
   helpText: "Please upload the business's SS4 / Article of Incorporation."
 };
 
 const other = {
-  name: "other",
-  label: "Upload any other documents",
+  name: 'other',
+  label: 'Upload any other documents (optional)',
   documentType: EntityDocumentType.other,
   helpText: "Please upload any other documents that may be relevant to your business."
 };
