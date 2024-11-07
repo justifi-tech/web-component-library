@@ -15,7 +15,7 @@ describe('identity-address', () => {
     <justifi-identity-address-form exportparts="label,input,input-invalid">
       <div class="row gy-3">
         <div class="col-12 col-md-8">
-          <form-control-text label="Street Address" name="line1"></form-control-text>
+          <form-control-text helptext="​​Enter your address exactly as stated on your driver's license. No PO Boxes." label="Street Address" name="line1"></form-control-text>
         </div>
 
         <div class="col-12 col-md-4">
@@ -63,7 +63,7 @@ describe('identity-address', () => {
     <justifi-identity-address-form exportparts="label,input,input-invalid">
       <div class="gy-3 row">
         <div class="col-12 col-md-8">
-          <form-control-text defaultValue="Street 1" label="Street Address" name="line1"></form-control-text>
+          <form-control-text defaultvalue="Street 1" helptext="​​Enter your address exactly as stated on your driver's license. No PO Boxes." label="Street Address" name="line1"></form-control-text>        
         </div>
         <div class="col-12 col-md-4">
           <form-control-text defaultValue="Apartment 1" label="Apartment, Suite, etc. (optional)" name="line2"></form-control-text>

@@ -51,6 +51,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [form-control-tooltip](../../../form/form-helpers/form-control-tooltip)
 - [form-control-monetary](../../../form)
 - [form-control-select](../../../form)
 - [form-control-text](../../../form)
@@ -58,16 +59,17 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-monetary
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
+  form-control-tooltip --> custom-popper
   form-control-monetary --> form-control-help-text
   form-control-monetary --> form-control-error-text
-  form-control-select --> form-control-help-text
+  form-control-select --> form-control-tooltip
   form-control-select --> form-control-error-text
   form-control-text --> form-control-tooltip
   form-control-text --> form-control-error-text
-  form-control-tooltip --> custom-popper
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   style justifi-additional-questions-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
