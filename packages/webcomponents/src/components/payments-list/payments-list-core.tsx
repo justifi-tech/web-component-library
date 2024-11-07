@@ -92,13 +92,13 @@ export class PaymentsListCore {
 
   get columnData() {
     return [
-      ['Made On', 'The date and time each payment was made'],
+      ['Date', 'The date and time each payment was made'],
       ['Amount', 'The dollar amount of each payment'],
-      ['Description', 'The payment description, if you provided one'],
-      ['Cardholder', 'The name associated with the payment method'],
-      ['Payment Method', 'The brand and last 4 digits of the payment method'],
       ['Status', 'The current status of each payment'],
-      ['Payment ID', 'The unique identifier of each payment'],
+      ['Type', 'The type of each payment'],
+      ['Description', 'The payment description, if you provided one'],
+      ['Account Holder', 'The name associated with the payment method'],
+      ['Payment Method', 'The brand and last 4 digits of the payment method'],
     ];
   }
 
@@ -111,15 +111,15 @@ export class PaymentsListCore {
           <div class="fw-bold">${formatTime(payment.created_at)}</div>
         `,
       },
-      formatCurrency(payment.amount),
-      payment.description,
-      payment.payment_method.payersName,
-      payment.payment_method.lastFourDigits,
+      formatCurrency(payment.amount, true, true),
       {
         type: 'inner',
         value: MapPaymentStatusToBadge(payment.status),
       },
-      payment.id,
+      payment.paymentType,
+      payment.description,
+      payment.payment_method.payersName,
+      payment.payment_method.lastFourDigits,
     ]);
   }
 

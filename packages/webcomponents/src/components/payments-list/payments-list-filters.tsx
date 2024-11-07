@@ -64,6 +64,8 @@ export class PaymentsListFilters {
               label="Start Date"
               inputHandler={this.setParamsOnChange}
               defaultValue={this.params.created_after}
+              showTime
+              filterTimeZone
             />
           </div>
           <div class="p-2">
@@ -72,6 +74,8 @@ export class PaymentsListFilters {
               label="End Date"
               inputHandler={this.setParamsOnChange}
               defaultValue={this.params.created_before}
+              showTime
+              filterTimeZone
             />
           </div>
         </div>

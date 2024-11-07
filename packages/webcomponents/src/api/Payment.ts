@@ -10,12 +10,19 @@ export enum PaymentMethodTypes {
   saved = 'saved',
 }
 
+export enum PaymentTypes {
+  card = 'Card',
+  bankAccount = 'ACH',
+  unknown = 'Unknown'
+}
+
 export enum PaymentStatuses {
   pending = 'pending',
   automatic = 'automatic',
   authorized = 'authorized',
   succeeded = 'succeeded',
   failed = 'failed',
+  canceled = 'canceled',
   disputed = 'disputed',
   fully_refunded = 'fully_refunded',
   partially_refunded = 'partially_refunded',
@@ -249,6 +256,14 @@ export class Payment implements IPayment {
       return PaymentDisputedStatuses.lost;
     } else {
       return PaymentDisputedStatuses.open;
+    }
+  }
+
+  get paymentType(): PaymentTypes {
+    if (this.payment_method) {
+      return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
+    } else {
+      return PaymentTypes.unknown;
     }
   }
 }
