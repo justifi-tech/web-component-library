@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
 import { FormController } from '../../../form/form';
 import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Business';
@@ -14,6 +14,16 @@ export class AdditionalQuestionsFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: IAdditionalQuestions = {};
+  @State() recurringPayments: boolean = false;
+
+  @Watch('additional_questions')
+  recurringPaymentsWatcher(newValue: any) {
+    if (newValue?.business_recurring_payments === 'Yes') {
+      this.recurringPayments = true;
+    } else {
+      this.recurringPayments = false;
+    }
+  } 
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -91,6 +101,7 @@ export class AdditionalQuestionsFormStepCore {
       ...this.formController.values.getValue(),
       [name]: value,
     });
+    this.additional_questions = new AdditionalQuestions({ ...this.formController.values.getValue(), [name]: value });
   }
 
   render() {
@@ -145,7 +156,7 @@ export class AdditionalQuestionsFormStepCore {
                 defaultValue={additionalQuestionsDefaultValue?.business_recurring_payments}
               />
             </div>
-            <div class="col-12">
+            <div class='col-12' hidden={!this.recurringPayments}>
               <form-control-text
                 name="business_recurring_payments_percentage"
                 label="What percent of revenue is generated from each recurring payment type offered?"
