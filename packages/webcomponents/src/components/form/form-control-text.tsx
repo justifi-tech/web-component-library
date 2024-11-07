@@ -55,7 +55,7 @@ export class TextInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <div class="d-flex gap-2">
+          <div class="d-flex align-items-start gap-2">
             <label part="label" class="form-label" htmlFor={this.name}>
               {this.label}
             </label>

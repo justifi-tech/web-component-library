@@ -33,6 +33,7 @@ export class IdentityAddressForm {
               defaultValue={this.defaultValues?.line1}
               errorText={this.errors?.line1}
               inputHandler={this.inputHandler}
+              helpText="​​Enter your address exactly as stated on your driver's license. No PO Boxes."
             />
           </div>
           <div class="col-12 col-md-4">

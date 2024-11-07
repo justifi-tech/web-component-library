@@ -35,13 +35,13 @@ graph TD;
   form-control-text --> form-control-tooltip
   form-control-text --> form-control-error-text
   form-control-tooltip --> custom-popper
-  form-control-number-masked --> form-control-help-text
+  form-control-number-masked --> form-control-tooltip
   form-control-number-masked --> form-control-error-text
-  form-control-date --> form-control-help-text
+  form-control-date --> form-control-tooltip
   form-control-date --> form-control-error-text
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
-  form-control-select --> form-control-help-text
+  form-control-select --> form-control-tooltip
   form-control-select --> form-control-error-text
   justifi-business-form --> justifi-business-representative
   style justifi-business-representative fill:#f9f,stroke:#333,stroke-width:4px
