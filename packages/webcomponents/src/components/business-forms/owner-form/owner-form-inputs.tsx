@@ -25,7 +25,7 @@ export class BusinessOwnerFormInputs {
   render() {
     return (
       <div class="row gy-3">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8">
           <form-control-text
             name="name"
             label="Full Name"
