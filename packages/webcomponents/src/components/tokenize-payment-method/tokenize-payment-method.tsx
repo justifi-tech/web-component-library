@@ -1,5 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
+import { ComponentError } from '../../components';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -13,15 +15,28 @@ export class TokenizePaymentMethod {
   @Prop() isLoading: boolean = true;
   @Prop() submitButtonText: string;
 
+  @Event() submitted: EventEmitter<{ token: string }>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+
   componentWillLoad() {
     this.isLoading = false;
   }
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
-  private tokenizePaymentMethod(event: CustomEvent) {
+  private async tokenizePaymentMethod(event: CustomEvent) {
     event.preventDefault();
-    this.paymentMethodOptionsRef.resolvePaymentMethod(null);
+    const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
+    console.log('tokenizeResponse', tokenizeResponse);
+    if (tokenizeResponse.error) {
+      this.errorEvent.emit({
+        errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
+        message: tokenizeResponse.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    } else if (tokenizeResponse.token) {
+      this.submitted.emit({ token: tokenizeResponse.token });
+    }
   }
 
   render() {
