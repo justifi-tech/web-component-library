@@ -138,6 +138,17 @@ export const MapPayoutStatusToBadge = (status: string) => {
   }
 };
 
+export const MapTerminalStatusToBadge = (status: string) => {
+  switch (status) {
+    case 'connected':
+      return "<span class='badge bg-success' title='This terminal is connected.'>Connected</span>";
+    case 'disconnected':
+      return "<span class='badge bg-danger' title='This terminal is disconnected.'>Disconnected</span>";
+    case 'unknown':
+      return "<span class='badge bg-secondary' title='The status of this terminal is unknown'>Unknown</span>";
+  }
+}
+
 /**
  * Converts a snake_case string to a human-readable format by replacing underscores with spaces and capitalizing the first letter of each word.
  *
@@ -228,4 +239,8 @@ export function isEmptyObject(obj) {
 
 export const isInRange = (num, min, max) => {
   return num >= min && num <= max;
+};
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
