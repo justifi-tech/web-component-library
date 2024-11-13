@@ -156,6 +156,12 @@ justifi-payment-provisioning {
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
 }
+  
+::part(input-focused) {
+  background-color: transparent;
+  border-color: #333;
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
+}
 
 ::part(input-invalid) {
   border-color: rgb(138, 42, 35);

@@ -7,25 +7,42 @@
 
 ## Properties
 
-| Property         | Attribute       | Description | Type                                    | Default     |
-| ---------------- | --------------- | ----------- | --------------------------------------- | ----------- |
-| `defaultValue`   | `default-value` |             | `string`                                | `undefined` |
-| `disabled`       | `disabled`      |             | `boolean`                               | `undefined` |
-| `errorText`      | `error-text`    |             | `string`                                | `undefined` |
-| `helpText`       | `help-text`     |             | `string`                                | `undefined` |
-| `inputHandler`   | --              |             | `(name: string, value: string) => void` | `undefined` |
-| `keyDownHandler` | --              |             | `(event: any) => void`                  | `undefined` |
-| `label`          | `label`         |             | `string`                                | `undefined` |
-| `maxLength`      | `max-length`    |             | `number`                                | `undefined` |
-| `name`           | `name`          |             | `any`                                   | `undefined` |
+| Property       | Attribute       | Description | Type     | Default     |
+| -------------- | --------------- | ----------- | -------- | ----------- |
+| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
+| `inputId`      | `input-id`      |             | `string` | `undefined` |
+| `label`        | `label`         |             | `string` | `undefined` |
 
 
-## Events
+## Methods
 
-| Event              | Description | Type               |
-| ------------------ | ----------- | ------------------ |
-| `formControlBlur`  |             | `CustomEvent<any>` |
-| `formControlInput` |             | `CustomEvent<any>` |
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<void>`
+
+
+
+#### Parameters
+
+| Name                    | Type     | Description |
+| ----------------------- | -------- | ----------- |
+| `clientId`              | `string` |             |
+| `paymentMethodMetadata` | `any`    |             |
+| `account`               | `string` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `validate() => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
 
 
 ## Shadow Parts
@@ -39,37 +56,13 @@
 
 ### Used by
 
- - [justifi-additional-questions](../../components/business-forms/business-form/additional-questions)
- - [justifi-additional-questions-form-step-core](../../components/business-forms/payment-provisioning/additional-questions)
- - [justifi-billing-form](../../components/billing-form)
- - [justifi-business-bank-account-form-step](../../components/business-forms/payment-provisioning/bank-account)
- - [justifi-business-core-info](../../components/business-forms/business-form/business-core-info)
- - [justifi-business-core-info-form-step-core](../../components/business-forms/payment-provisioning/business-core-info)
- - [justifi-business-representative](../../components/business-forms/business-form/business-representative)
- - [justifi-business-representative-form-inputs](../../components/business-forms/payment-provisioning/business-representative)
- - [justifi-identity-address-form](../../components/business-forms/owner-form/identity-address)
- - [justifi-legal-address-form](../../components/business-forms/business-form/legal-address-form)
- - [justifi-legal-address-form-step-core](../../components/business-forms/payment-provisioning/legal-address-form)
- - [justifi-refund-form](../../components/refund-form)
- - [owner-form-inputs](../../components/business-forms/owner-form)
+ - [card-form](../../components/checkout/card-form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-text
-  justifi-additional-questions-form-step-core --> form-control-text
-  justifi-billing-form --> form-control-text
-  justifi-business-bank-account-form-step --> form-control-text
-  justifi-business-core-info --> form-control-text
-  justifi-business-core-info-form-step-core --> form-control-text
-  justifi-business-representative --> form-control-text
-  justifi-business-representative-form-inputs --> form-control-text
-  justifi-identity-address-form --> form-control-text
-  justifi-legal-address-form --> form-control-text
-  justifi-legal-address-form-step-core --> form-control-text
-  justifi-refund-form --> form-control-text
-  owner-form-inputs --> form-control-text
-  style form-control-text fill:#f9f,stroke:#333,stroke-width:4px
+  card-form --> iframe-input
+  style iframe-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

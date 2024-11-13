@@ -27,11 +27,13 @@
 | ------------------- | ----------- |
 | `"icon"`            |             |
 | `"pagination-bar"`  |             |
+| `"table"`           |             |
 | `"table-body"`      |             |
 | `"table-cell"`      |             |
 | `"table-head"`      |             |
 | `"table-head-cell"` |             |
 | `"table-head-row"`  |             |
+| `"table-wrapper"`   |             |
 
 
 ## Dependencies

@@ -14,6 +14,9 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
+  private billingFormRef?: HTMLJustifiBillingFormElement;
+  private cardFormRef?: HTMLCardFormElement;
+
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() accountId: string;
@@ -25,14 +28,10 @@ export class NewPaymentMethod {
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
-  private billingFormRef?: HTMLJustifiBillingFormElement;
-  private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
-
   @Listen('checkboxChanged')
   handleCheckboxChanged(event: CustomEvent<boolean>) {
     this.saveNewPaymentMethodChecked = event.detail;
   }
-
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
@@ -41,27 +40,31 @@ export class NewPaymentMethod {
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
+    if (!this.cardFormRef || !this.billingFormRef) return;
 
-    const isValid = await this.validate();
+    try {
+      const isValid = await this.validate();
 
-    if (!isValid || !insuranceValidation.isValid) {
-      return { validationError: true };
-    }
+      if (!isValid || !insuranceValidation.isValid) {
+        return { validationError: true };
+      }
 
-    const tokenizeResponse = await this.tokenize();
+      const tokenizeResponse = await this.tokenize();
 
-    if (tokenizeResponse.error) {
-      return { error: tokenizeResponse.error };
-    } else {
-      const tokenizeRessponseData = tokenizeResponse.data;
-      return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
+      if (tokenizeResponse.error) {
+        return { error: tokenizeResponse.error };
+      } else {
+        const tokenizeRessponseData = tokenizeResponse.data;
+        return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
+      }
+    } catch (error) {
+      return { error };
     }
   }
 
   async validate(): Promise<boolean> {
     const billingFormValidation = await this.billingFormRef.validate();
-    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+    const paymentMethodFormValidation = await this.cardFormRef.validate();
 
     return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
@@ -76,8 +79,8 @@ export class NewPaymentMethod {
         paymentMethodData = { ...billingFormFieldValues };
       }
       const clientId = this.authToken;
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
-      return tokenizeResponse;
+
+      this.cardFormRef.tokenize(clientId, paymentMethodData, this.accountId);
     } catch (error) {
       return error;
     }
@@ -89,13 +92,9 @@ export class NewPaymentMethod {
 
   showNewPaymentMethodForm() {
     return (
-      <div class="mt-2 pb-4 border-bottom">
-        <div class="mb-3">
-          <justifi-payment-method-form
-            ref={(el) => (this.paymentMethodFormRef = el)}
-            payment-method-form-type={this.paymentMethodOption?.id}
-            iframe-origin={this.iframeOrigin}
-          />
+      <div class="mt-4 pb-4 border-bottom">
+        <div class="mb-4">
+          <card-form ref={(el) => this.cardFormRef = el} />
         </div>
         <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
         <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
