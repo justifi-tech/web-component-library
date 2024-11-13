@@ -32,11 +32,6 @@ export enum EntityDocumentStatus {
   needed = 'needed',
 }
 
-export interface FileSelectEvent {
-  fileList: FileList;
-  document_type: EntityDocumentType;
-}
-
 export interface DocumentRecordData {
   business_id: string;
   document_type: EntityDocumentType;
@@ -92,7 +87,7 @@ export class EntityDocument {
   public getFileString() {
     let reader = new FileReader();
     reader.onload = (e) => {
-     this.fileString = e.target.result as string;
+      this.fileString = e.target.result as string;
     };
     reader.readAsDataURL(this.file);
     return this.fileString;

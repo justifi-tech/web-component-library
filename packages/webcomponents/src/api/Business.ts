@@ -1,5 +1,5 @@
 import { Identity, Representative } from './Identity';
-import { IDocument } from './Document';
+import { IDocument } from './EntityDocument';
 import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 

@@ -1,26 +1,49 @@
 import { Component, Event, EventEmitter, h, State } from "@stencil/core";
 import { DisputeManagementClickEvents } from "../dispute";
+import { CounterDisputeFormStep } from "./counter-dispute-form-types";
+import { FormController } from "../../form/form";
+import { disputeResponseSchema } from "./schemas/dispute-reason-schema";
 
 @Component({
   tag: 'justifi-counter-dispute',
 })
 export class CounterDispute {
-  @Event() submit: EventEmitter;
   @Event() clickEvent: EventEmitter;
 
   @State() currentStep = 0;
   @State() refs: any[] = [];
+  @State() formController: FormController;
+
+
+  // temp piece of state to hold form values
+  @State() values: any = {};
+
+  componentWillLoad() {
+    this.formController = new FormController(disputeResponseSchema());
+    // temp subscription to values
+    this.formController.values.subscribe(values => this.values = values);
+  }
 
   componentStepMapping = [
-    () => <justifi-dispute-reason ref={(el) => this.refs['disputeReason'] = el}></justifi-dispute-reason>,
-    () => <justifi-product-or-service ref={(el) => this.refs['productOrService'] = el}></justifi-product-or-service>,
-    () => <justifi-customer-details ref={(el) => this.refs['customerDetails'] = el}></justifi-customer-details>,
-    () => <justifi-cancellation-policy ref={(el) => this.refs['cancellationPolicy'] = el}></justifi-cancellation-policy>,
-    () => <justifi-refund-policy ref={(el) => this.refs['refundPolicy'] = el}></justifi-refund-policy>,
-    () => <justifi-duplicate-charge ref={(el) => this.refs['duplicateCharge'] = el}></justifi-duplicate-charge>,
-    () => <justifi-electronic-evidence ref={(el) => this.refs['electronicEvidence'] = el}></justifi-electronic-evidence>,
-    () => <justifi-shipping-details ref={(el) => this.refs['shippingDetails'] = el}></justifi-shipping-details>,
-    () => <justifi-additional-statement ref={(el) => this.refs['additionalStatement'] = el}></justifi-additional-statement>,
+    () => (
+      <justifi-dispute-reason
+        ref={(el) => this.refs[CounterDisputeFormStep.disputeReason] = el}
+        form={this.formController}>
+      </justifi-dispute-reason>
+    ),
+    () => (
+      <justifi-product-or-service
+        ref={(el) => this.refs[CounterDisputeFormStep.productOrService] = el}
+        form={this.formController}>
+      </justifi-product-or-service>
+    ),
+    () => <justifi-customer-details ref={(el) => this.refs[CounterDisputeFormStep.customerDetails] = el}></justifi-customer-details>,
+    () => <justifi-cancellation-policy ref={(el) => this.refs[CounterDisputeFormStep.cancellationPolicy] = el}></justifi-cancellation-policy>,
+    () => <justifi-refund-policy ref={(el) => this.refs[CounterDisputeFormStep.refundPolicy] = el}></justifi-refund-policy>,
+    () => <justifi-duplicate-charge ref={(el) => this.refs[CounterDisputeFormStep.duplicateCharge] = el}></justifi-duplicate-charge>,
+    () => <justifi-electronic-evidence ref={(el) => this.refs[CounterDisputeFormStep.electronicEvidence] = el}></justifi-electronic-evidence>,
+    () => <justifi-shipping-details ref={(el) => this.refs[CounterDisputeFormStep.shippingDetails] = el}></justifi-shipping-details>,
+    () => <justifi-additional-statement ref={(el) => this.refs[CounterDisputeFormStep.additionalStatement] = el}></justifi-additional-statement>,
   ];
 
   get currentStepComponent() {
@@ -35,22 +58,26 @@ export class CounterDispute {
     return this.currentStep === 0;
   }
 
-  onNext() {
-    if (this.isLastStep) {
-      this.submit.emit();
-    } else {
-      this.currentStep++;
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.nextStep });
-    }
+  private onNext = async () => {
+    await this.formController.validateAndSubmit(() => {
+      if (this.isLastStep) {
+        this.clickEvent.emit({ name: DisputeManagementClickEvents.submit });
+      } else {
+        this.currentStep++;
+        this.clickEvent.emit({ name: DisputeManagementClickEvents.nextStep });
+      }
+    });
   }
 
-  onBack() {
-    if (this.isFirstStep) {
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
-    } else {
-      this.currentStep--;
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.previousStep });
-    }
+  private onBack = async () => {
+    await this.formController.validateAndSubmit(() => {
+      if (this.isFirstStep) {
+        this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
+      } else {
+        this.currentStep--;
+        this.clickEvent.emit({ name: DisputeManagementClickEvents.previousStep });
+      }
+    });
   }
 
   render() {

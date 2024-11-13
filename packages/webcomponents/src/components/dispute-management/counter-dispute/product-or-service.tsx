@@ -1,10 +1,23 @@
-import { Component, h, State } from "@stencil/core";
+import { Component, h, Prop, State } from "@stencil/core";
+import { FormController } from "../../form/form";
 
 @Component({
   tag: 'justifi-product-or-service',
 })
 export class ProductOrService {
-  @State() productOrService: string;
+  @Prop() form: FormController;
+  @State() errors: any = {};
+
+  componentDidLoad() {
+    this.form.errors.subscribe(errors => this.errors = { ...errors });
+  }
+
+  private inputHandler = (name: string, value: string) => {
+    this.form.setValues({
+      ...this.form.values.getValue(),
+      [name]: value
+    });
+  }
 
   render() {
     return (
@@ -14,13 +27,27 @@ export class ProductOrService {
             <h2 class="h5">Product & Service Details</h2>
           </div>
           <div class="col-12">
-            <form-control-text label="Product Description" name="product_description" />
+            <form-control-text
+              label="Product Description"
+              name="product_description"
+              inputHandler={this.inputHandler}
+              errorText={this.errors.product_description}
+            />
           </div>
           <div class="col-12">
-            <form-control-text label="Service Date" name="service_date" />
+            <form-control-text
+              label="Service Date"
+              name="service_date"
+              inputHandler={this.inputHandler}
+              errorText={this.errors.service_date}
+            />
           </div>
           <div class="col-12">
-            <form-control-file label="Service Documentation" name="service_documentation" />
+            <form-control-file
+              label="Service Documentation"
+              name="service_documentation"
+              errorText={this.errors.service_documentation}
+            />
           </div>
         </div>
       </div>

@@ -16,34 +16,36 @@ export class RadioInput {
 
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() value: any;
+  @Prop() value: string;
   @Prop() helpText?: string;
-  @Prop() errorText?: string;
-  @Prop() defaultChecked?: boolean;
-  @Prop() inputHandler: (name: string, value: boolean) => void;
+  @Prop() hasError?: boolean;
+  @Prop() defaultValue?: string;
+  @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
 
-  @Watch('defaultChecked')
-  handleDefaultValueChange(checked: boolean) {
-    this.updateInput(checked);
+  @Watch('defaultValue')
+  handleDefaultValueChange(value: string) {
+    this.updateInput(value);
   }
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
-    this.updateInput(this.defaultChecked);
+    this.updateInput(this.value);
   }
 
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.inputHandler(name, target.checked);
+    this.inputHandler(name, target.value);
     this.formControlInput.emit({ name, value: target.value });
   }
 
-  updateInput = (checked: boolean) => {
-    this.radioElement.checked = checked;
+  updateInput = (value: string) => {
+    if (this.defaultValue == value) {
+      this.radioElement.checked = true;
+    }
   }
 
   render() {
@@ -54,21 +56,19 @@ export class RadioInput {
             <input
               ref={el => (this.radioElement = el as HTMLInputElement)}
               type="radio"
-              id={this.name}
+              id={`${this.name}-${this.value}`}
               name={this.name}
               onBlur={this.formControlBlur.emit}
               onInput={this.handleFormControlInput}
-              part={`input-radio ${this.errorText ? 'input-radio-invalid' : ''}`}
-              class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
+              part={`input-radio ${this.hasError ? 'input-radio-invalid' : ''}`}
+              class={this.hasError ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}
               value={this.value}
             />
-            <label class="form-check-label" htmlFor={this.name}>
+            <label class="form-check-label" htmlFor={`${this.name}-${this.value}`}>
               {this.label}
             </label>
           </div>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

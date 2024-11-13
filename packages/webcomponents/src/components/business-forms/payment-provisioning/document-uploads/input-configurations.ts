@@ -1,4 +1,4 @@
-import { EntityDocumentType } from "../../../../api/Document";
+import { EntityDocumentType } from "../../../../api/EntityDocument";
 
 const voidedCheck = {
   name: "voided_check",
