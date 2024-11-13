@@ -1,7 +1,7 @@
 import { Component, Prop, h } from '@stencil/core';
-import { FileSelectEvent } from '../../../../api/EntityDocument';
 import { inputConfigurations } from './input-configurations';
 import { isInRange } from '../../../../utils/utils';
+import { FileSelectEvent } from '../../../form/form-control-file';
 
 @Component({
   tag: 'justifi-business-document-upload-input-group'
