@@ -39,49 +39,32 @@
 
 ### Used by
 
- - [justifi-additional-questions](../business-forms/business-form/additional-questions)
- - [justifi-additional-questions-form-step-core](../business-forms/payment-provisioning/additional-questions)
- - [justifi-billing-form](../billing-form)
- - [justifi-business-bank-account-form-step](../business-forms/payment-provisioning/bank-account)
- - [justifi-business-core-info](../business-forms/business-form/business-core-info)
- - [justifi-business-core-info-form-step-core](../business-forms/payment-provisioning/business-core-info)
- - [justifi-business-representative](../business-forms/business-form/business-representative)
- - [justifi-business-representative-form-inputs](../business-forms/payment-provisioning/business-representative)
- - [justifi-identity-address-form](../business-forms/owner-form/identity-address)
- - [justifi-legal-address-form](../business-forms/business-form/legal-address-form)
- - [justifi-legal-address-form-step-core](../business-forms/payment-provisioning/legal-address-form)
- - [justifi-refund-form](../refund-form)
- - [justifi-upload-dispute-evidence](../dispute-management)
- - [owner-form-inputs](../business-forms/owner-form)
- - [payments-list-filters](../payments-list)
+ - [justifi-additional-statement](../dispute-management/counter-dispute)
+ - [justifi-cancellation-policy](../dispute-management/counter-dispute)
+ - [justifi-customer-details](../dispute-management/counter-dispute)
+ - [justifi-duplicate-charge](../dispute-management/counter-dispute)
+ - [justifi-electronic-evidence](../dispute-management/counter-dispute)
+ - [justifi-refund-policy](../dispute-management/counter-dispute)
+ - [justifi-shipping-details](../dispute-management/counter-dispute)
 
 ### Depends on
 
-- [form-control-tooltip](./form-helpers/form-control-tooltip)
+- [form-control-help-text](./form-helpers/form-control-help-text)
 - [form-control-error-text](./form-helpers/form-control-error-text)
 
 ### Graph
 ```mermaid
 graph TD;
-  form-control-text --> form-control-tooltip
-  form-control-text --> form-control-error-text
-  form-control-tooltip --> custom-popper
-  justifi-additional-questions --> form-control-text
-  justifi-additional-questions-form-step-core --> form-control-text
-  justifi-billing-form --> form-control-text
-  justifi-business-bank-account-form-step --> form-control-text
-  justifi-business-core-info --> form-control-text
-  justifi-business-core-info-form-step-core --> form-control-text
-  justifi-business-representative --> form-control-text
-  justifi-business-representative-form-inputs --> form-control-text
-  justifi-identity-address-form --> form-control-text
-  justifi-legal-address-form --> form-control-text
-  justifi-legal-address-form-step-core --> form-control-text
-  justifi-refund-form --> form-control-text
-  justifi-upload-dispute-evidence --> form-control-text
-  owner-form-inputs --> form-control-text
-  payments-list-filters --> form-control-text
-  style form-control-text fill:#f9f,stroke:#333,stroke-width:4px
+  form-control-textarea --> form-control-help-text
+  form-control-textarea --> form-control-error-text
+  justifi-additional-statement --> form-control-textarea
+  justifi-cancellation-policy --> form-control-textarea
+  justifi-customer-details --> form-control-textarea
+  justifi-duplicate-charge --> form-control-textarea
+  justifi-electronic-evidence --> form-control-textarea
+  justifi-refund-policy --> form-control-textarea
+  justifi-shipping-details --> form-control-textarea
+  style form-control-textarea fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

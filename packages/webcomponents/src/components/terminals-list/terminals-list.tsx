@@ -85,15 +85,15 @@ export class TerminalsList {
   }
 
   render() {
-    // if (this.errorMessage) {
-    //   return ErrorState(this.errorMessage);
-    // }
-    // return (
-    //   <payments-list-core
-    //     getPayments={this.getPayments}
-    //     onError-event={this.handleErrorEvent}
-    //   />
-    // );
+    if (this.errorMessage) {
+      return ErrorState(this.errorMessage);
+    }
+    return (
+      <terminals-list-core 
+        getTerminals={this.getTerminals} 
+        onError-event={this.handleErrorEvent}
+      />
+    );
   }
 
 };

@@ -27,12 +27,14 @@
 
  - [payments-list-core](../payments-list)
  - [payouts-list-core](../payouts-list)
+ - [terminals-list-core](../terminals-list)
 
 ### Graph
 ```mermaid
 graph TD;
   payments-list-core --> pagination-menu
   payouts-list-core --> pagination-menu
+  terminals-list-core --> pagination-menu
   style pagination-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
