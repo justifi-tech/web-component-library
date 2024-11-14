@@ -1,6 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { makeGetCheckoutsList } from './get-checkouts';
-import { ErrorState } from '../details/utils';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
@@ -85,9 +84,6 @@ export class CheckoutsList {
   };
 
   render() {
-    if (this.errorMessage) {
-      return ErrorState(this.errorMessage);
-    }
     return (
       <checkouts-list-core
         getCheckoutsList={this.getCheckoutsList}

@@ -2,7 +2,6 @@ import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@st
 import { tableExportedParts } from '../table/exported-parts';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
-import { ErrorState } from '../details/utils';
 import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
@@ -87,10 +86,6 @@ export class PayoutsList {
   }
 
   render() {
-    if (this.errorMessage) {
-      return ErrorState(this.errorMessage);
-    }
-
     return (
       <Host exportedparts={tableExportedParts}>
         <payouts-list-core

@@ -37,7 +37,7 @@ export class CheckoutsListFilters {
               label="Status"
               options={this.checkoutStatusOptions}
               inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.status}
+              defaultValue={this.params.status || ''}
             />
           </div>
           <div class="p-2">
@@ -46,7 +46,7 @@ export class CheckoutsListFilters {
               label="Payment Mode"
               options={this.checkoutPaymentModeOptions}
               inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.payment_mode}
+              defaultValue={this.params.payment_mode || ''}
             />
           </div>
         </div>
