@@ -23,6 +23,7 @@ export class DateInput {
   @Prop() disabled?: boolean;
   @Prop() filterTimeZone?: boolean = false;
   @Prop() showTime?: boolean;
+  @Prop() maxDate?: string = this.currentDate;
   
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
@@ -36,7 +37,7 @@ export class DateInput {
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  get maxDate() {
+  get currentDate() {
     if (!this.showTime) {
       return new Date().toISOString().split('T')[0];
     } else {

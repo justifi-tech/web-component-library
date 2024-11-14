@@ -11,7 +11,7 @@ describe('form-control-date', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-date label='Birthday' name='birthday'/>,
+      template: () => <form-control-date label='Birthday' name='birthday' maxDate='2020-01-01'/>,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -29,6 +29,7 @@ describe('form-control-date', () => {
           helpText='Enter your birthday'
           disabled
           inputHandler={mockInputHandler}
+          maxDate='2020-01-01'
         />
     });
 

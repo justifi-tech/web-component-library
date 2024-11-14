@@ -23,7 +23,7 @@ exports[`form-control-date Renders with all props provided 1`] = `
         </div>
       </form-control-tooltip>
     </div>
-    <input class="form-control is-invalid" disabled="" id="birthday" max="2024-11-14" name="birthday" part="input input-invalid" type="date" value="1990-01-01">
+    <input class="form-control is-invalid" disabled="" id="birthday" max="2020-01-01" name="birthday" part="input input-invalid" type="date" value="1990-01-01">
     <form-control-error-text>
       <small class="form-text text-danger" id="form-error-text-birthday">
         Invalid date
@@ -42,7 +42,7 @@ exports[`form-control-date Renders with default props 1`] = `
       </label>
       <form-control-tooltip></form-control-tooltip>
     </div>
-    <input class="form-control" id="birthday" max="2024-11-14" name="birthday" part="input undefined" type="date" value="undefined">
+    <input class="form-control" id="birthday" max="2020-01-01" name="birthday" part="input undefined" type="date" value="undefined">
     <form-control-error-text></form-control-error-text>
   </div>
 </form-control-date>
