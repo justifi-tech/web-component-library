@@ -10,6 +10,9 @@ export interface IBnpl {
 }
 
 export interface ICheckout {
+  id: string;
+  created_at: string;
+  description: string;
   payment_intent_id: string;
   account_id: string;
   platform_account_id: string;
@@ -42,6 +45,9 @@ export interface ICheckout {
 }
 
 export class Checkout implements ICheckout {
+  id: string;
+  created_at: string;
+  description: string;
   payment_intent_id: string;
   account_id: string;
   platform_account_id: string;
@@ -77,8 +83,12 @@ export class Checkout implements ICheckout {
   }
 }
 
+export type ICheckoutPaymentMode = 'ecom' | 'bnpl';
+
+export type ICheckoutStatus = 'created' | 'completed' | 'attempted' | 'expired';
+
 export type ICheckoutCompleteResponse = IApiResponse<{
-  payment_mode: 'ecom' | 'bnpl';
+  payment_mode: ICheckoutPaymentMode;
   payment_token: null;
   payment_status: string;
   payment_response: null;
@@ -87,8 +97,11 @@ export type ICheckoutCompleteResponse = IApiResponse<{
   checkout: ICheckout;
 }>;
 
-export type ICheckoutStatus = 'created' | 'completed' | 'attempted' | 'expired';
-
 export type ILoadedEventResponse = {
   checkout_status: ICheckoutStatus;
 };
+
+export interface ICheckoutsParams {
+  status?: ICheckoutStatus;
+  payment_mode?: ICheckoutPaymentMode;
+}
