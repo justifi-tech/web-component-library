@@ -15,7 +15,7 @@ const PaymentMethodTypeLabels = {
 })
 export class NewPaymentMethod {
   private billingFormRef?: HTMLJustifiBillingFormElement;
-  private cardFormRef?: HTMLCardFormElement;
+  private paymentMethodFormRef?: HTMLCardFormElement;
 
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
@@ -40,7 +40,7 @@ export class NewPaymentMethod {
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!this.cardFormRef || !this.billingFormRef) return;
+    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     try {
       const isValid = await this.validate();
@@ -64,7 +64,7 @@ export class NewPaymentMethod {
 
   async validate(): Promise<boolean> {
     const billingFormValidation = await this.billingFormRef.validate();
-    const paymentMethodFormValidation = await this.cardFormRef.validate();
+    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
     return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
 
@@ -78,7 +78,7 @@ export class NewPaymentMethod {
         paymentMethodData = { ...billingFormFieldValues };
       }
       const clientId = this.authToken;
-      const tokenizeResponse = await this.cardFormRef.tokenize(clientId, paymentMethodData, this.accountId);
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
       return tokenizeResponse;
     } catch (error) {
       return error;
@@ -93,7 +93,12 @@ export class NewPaymentMethod {
     return (
       <div class="mt-4 pb-4 border-bottom">
         <div class="mb-4">
-          <card-form ref={(el) => this.cardFormRef = el} />
+          {this.paymentMethodOption?.id === 'card' ? (
+            <card-form ref={(el) => this.paymentMethodFormRef = el} />
+          ) : (
+            <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
+          )}
+
         </div>
         <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
         <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />

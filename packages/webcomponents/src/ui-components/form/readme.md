@@ -16,7 +16,7 @@
 
 ## Methods
 
-### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<void>`
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
 
 
 
@@ -30,7 +30,7 @@
 
 #### Returns
 
-Type: `Promise<void>`
+Type: `Promise<any>`
 
 
 
