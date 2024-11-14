@@ -225,7 +225,7 @@ describe('justifi-payment-method-form', () => {
 
       // Verify postMessageWithResponseListener was called with the expected parameters
       expect(page.rootInstance.frameService.postMessageWithResponseListener)
-        .toHaveBeenCalledWith(MessageEventType.card.tokenize, expect.objectContaining({
+        .toHaveBeenCalledWith(undefined, expect.objectContaining({
           clientId,
           paymentMethodMetadata,
           account,

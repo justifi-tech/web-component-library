@@ -3,6 +3,7 @@ import { FrameCommunicationService } from "../../utils/frame-comunication-servic
 import { StyledHost } from "../styled-host/styled-host";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
+import { MessageEventType } from "../../components/payment-method-form/message-event-types";
 
 @Component({
   tag: "iframe-input",
@@ -27,9 +28,7 @@ export class IframeInput {
   @Method()
   async validate(): Promise<any> {
     const response = await this.frameService
-      .postMessageWithResponseListener(
-        'validate'
-      );
+      .postMessageWithResponseListener(MessageEventType.paymentMethod.validate);
 
     this.isValid = response.isValid;
 
@@ -44,8 +43,7 @@ export class IframeInput {
     paymentMethodMetadata: any,
     account?: string,
   ) {
-    const eventType = 'tokenize';
-    return this.frameService.postMessageWithResponseListener(eventType, {
+    return this.frameService.postMessageWithResponseListener(MessageEventType.paymentMethod.tokenize, {
       clientId,
       paymentMethodMetadata,
       account,
