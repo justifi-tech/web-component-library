@@ -1,6 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
+import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
@@ -32,7 +33,6 @@ export class CheckoutCore {
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
-  @State() buttonIsLoading: boolean = false;
 
   @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -43,10 +43,6 @@ export class CheckoutCore {
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     this.paymentMethodOptionsRef.fillBillingForm(fields);
-  }
-
-  connectedCallback() {
-    window.addEventListener('tokenized', this.handleTokenizedEvent);
   }
 
   componentWillLoad() {
@@ -62,10 +58,6 @@ export class CheckoutCore {
         }
       });
     }
-  }
-
-  disconnectedCallback() {
-    window.removeEventListener('tokenized', this.handleTokenizedEvent);
   }
 
   fetchData(): void {
@@ -91,17 +83,30 @@ export class CheckoutCore {
 
   async submit(event) {
     event.preventDefault();
-    this.buttonIsLoading = true;
+    this.renderState = 'loading';
 
-    try {
-      const insuranceValidation = validateInsuranceValues();
-      this.paymentMethodOptionsRef.resolvePaymentMethod(insuranceValidation);
-    } catch (error) {
+    const insuranceValidation = validateInsuranceValues();
+    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod(insuranceValidation);
+
+    if (payload.validationError) {
+      this.renderState = 'error';
+    }
+    else if (payload.error) {
+      this.renderState = 'error';
+      this.serverError = payload.error.message;
       this.onError({
-        code: ComponentErrorCodes.UNKNOWN_ERROR,
-        error: 'An unknown error occurred',
+        code: (payload.error.code as ComponentErrorCodes),
+        error: payload.error.message,
         severity: ComponentErrorSeverity.ERROR,
       });
+    }
+    else if (payload.token) {
+      this.completeCheckout({ payment_mode: 'ecom', payment_token: payload.token });
+    }
+    else if (payload.bnpl?.status === 'success') {
+      this.completeCheckout({ payment_mode: 'bnpl' });
+    }
+    else {
       this.renderState = 'error';
     }
   }
@@ -128,34 +133,6 @@ export class CheckoutCore {
     });
     this.renderState = 'error';
   };
-
-  handleTokenizedEvent = (event: CustomEvent) => {
-    console.log('handleTokenizedEvet', event);
-    this.buttonIsLoading = false;
-    const payload = event.detail;
-
-    if (payload.validationError) {
-      this.renderState = 'error';
-    }
-    else if (payload.error) {
-      this.renderState = 'error';
-      this.serverError = payload.error.message;
-      this.onError({
-        code: (payload.error.code as ComponentErrorCodes),
-        error: payload.error.message,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
-    else if (payload.token) {
-      this.completeCheckout({ payment_mode: 'ecom', payment_token: payload.token });
-    }
-    else if (payload.bnpl?.status === 'success') {
-      this.completeCheckout({ payment_mode: 'bnpl' });
-    }
-    else {
-      this.renderState = 'error';
-    }
-  }
 
   get isLoading() {
     return this.renderState === 'loading';
@@ -234,8 +211,8 @@ export class CheckoutCore {
                 type="submit"
                 variant="primary"
                 onClick={(e) => this.submit(e)}
-                disabled={this.buttonIsLoading}
-                isLoading={this.buttonIsLoading}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}
                 style={{ width: '100%' }}
               >
                 Pay

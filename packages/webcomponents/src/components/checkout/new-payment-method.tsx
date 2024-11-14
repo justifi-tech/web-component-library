@@ -65,7 +65,6 @@ export class NewPaymentMethod {
   async validate(): Promise<boolean> {
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.cardFormRef.validate();
-
     return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
 
@@ -79,8 +78,8 @@ export class NewPaymentMethod {
         paymentMethodData = { ...billingFormFieldValues };
       }
       const clientId = this.authToken;
-
-      this.cardFormRef.tokenize(clientId, paymentMethodData, this.accountId);
+      const tokenizeResponse = await this.cardFormRef.tokenize(clientId, paymentMethodData, this.accountId);
+      return tokenizeResponse;
     } catch (error) {
       return error;
     }

@@ -26,7 +26,7 @@ export class CardForm {
     paymentMethodMetadata: any,
     account?: string,
   ) {
-    this.cardNumberIframeElement.tokenize(
+    return this.cardNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
       account,

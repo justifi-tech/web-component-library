@@ -46,7 +46,7 @@ export class IframeInput {
     account?: string,
   ) {
     const eventType = MessageEventType['card'].tokenize;
-    this.frameService.postMessage(eventType, {
+    return this.frameService.postMessageWithResponseListener(eventType, {
       clientId,
       paymentMethodMetadata,
       account,

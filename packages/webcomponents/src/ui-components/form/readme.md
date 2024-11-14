@@ -56,11 +56,13 @@ Type: `Promise<any>`
 
 ### Used by
 
+ - [bank-account-form](../../components/checkout/bank-account-form)
  - [card-form](../../components/checkout/card-form)
 
 ### Graph
 ```mermaid
 graph TD;
+  bank-account-form --> iframe-input
   card-form --> iframe-input
   style iframe-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
