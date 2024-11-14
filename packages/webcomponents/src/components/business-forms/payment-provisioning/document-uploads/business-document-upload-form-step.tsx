@@ -6,7 +6,7 @@ import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
-import { EntityDocument, EntityDocumentStorage } from '../../../../api/EntityDocument';
+import { EntityDocument, EntityDocumentStorage, EntityDocumentType } from '../../../../api/EntityDocument';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { Skeleton } from '../../../../ui-components';
 
@@ -149,7 +149,10 @@ export class BusinessDocumentFormStep {
   storeFiles = (e: CustomEvent<FileSelectEvent>) => {
     const fileList = Array.from(e.detail.fileList) as File[];
     const docType = e.detail.document_type;
-    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
+    const documentList = fileList.map(file => new EntityDocument({
+      file,
+      document_type: docType as EntityDocumentType
+    }, this.businessId));
     this.documentData[docType] = documentList;
   }
 
