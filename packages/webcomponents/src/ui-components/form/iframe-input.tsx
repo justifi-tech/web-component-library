@@ -77,7 +77,7 @@ export class IframeInput {
   }
 
   private get fontFamily() {
-    return getComputedStyle(document.body).fontFamily;
+    return btoa(getComputedStyle(document.body).fontFamily);
   }
 
   private get part() {
