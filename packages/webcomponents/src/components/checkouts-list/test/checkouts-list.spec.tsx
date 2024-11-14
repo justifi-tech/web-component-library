@@ -13,11 +13,11 @@ beforeEach(() => {
   JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
 });
 
-describe('payments-list', () => {
+describe('checkouts-list', () => {
   it('renders an error message when accountId and authToken are not provided', async () => {
     const page = await newSpecPage({
       components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-payments-list />,
+      template: () => <justifi-checkouts-list />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -26,7 +26,7 @@ describe('payments-list', () => {
   it('renders an error message when accountId is not provided', async () => {
     const page = await newSpecPage({
       components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-payments-list auth-token="abc" />,
+      template: () => <justifi-checkouts-list auth-token="abc" />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -35,7 +35,7 @@ describe('payments-list', () => {
   it('renders an error message when authToken is not provided', async () => {
     const page = await newSpecPage({
       components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-payments-list account-id="abc" />,
+      template: () => <justifi-checkouts-list account-id="abc" />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -45,20 +45,20 @@ describe('payments-list', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-payments-list onError-event={errorEvent} />,
+      template: () => <justifi-checkouts-list onError-event={errorEvent} />,
     });
     await page.waitForChanges();
     expect(errorEvent).toHaveBeenCalled();
   });
 
   it('emit an error event when fetch fails', async () => {
-    CheckoutService.prototype.fetchPayments = jest.fn().mockRejectedValue(new Error('Fetch error'));
+    CheckoutService.prototype.fetchCheckoutsList = jest.fn().mockRejectedValue(new Error('Fetch error'));
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [CheckoutsList, CheckoutsListCore],
       template: () => (
-        <justifi-payments-list
+        <justifi-checkouts-list
           account-id="abc"
           auth-token="abc"
           onError-event={errorEvent}

@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { makeGetCheckouts } from './get-checkouts';
+import { makeGetCheckoutsList } from './get-checkouts';
 import { ErrorState } from '../details/utils';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
@@ -35,7 +35,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 })
 
 export class CheckoutsList {
-  @State() getCheckouts: Function;
+  @State() getCheckoutsList: Function;
   @State() errorMessage: string = null;
 
   @Prop() accountId: string;
@@ -49,7 +49,7 @@ export class CheckoutsList {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetCheckouts();
+    this.initializeGetCheckoutsList();
   }
 
   disconnectedCallback() {
@@ -59,13 +59,12 @@ export class CheckoutsList {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeGetCheckouts();
+    this.initializeGetCheckoutsList();
   }
 
-  private initializeGetCheckouts() {
+  private initializeGetCheckoutsList() {
     if (this.accountId && this.authToken) {
-      this.getCheckouts = makeGetCheckouts({
-        id: this.accountId,
+      this.getCheckoutsList = makeGetCheckoutsList({
         authToken: this.authToken,
         service: new CheckoutService(),
         apiOrigin: this.apiOrigin,
@@ -91,7 +90,7 @@ export class CheckoutsList {
     }
     return (
       <checkouts-list-core
-        getCheckouts={this.getCheckouts}
+        getCheckoutsList={this.getCheckoutsList}
         onError-event={this.handleErrorEvent}
       />
     );

@@ -2,11 +2,11 @@ import { Checkout } from '../../api';
 import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
-export const makeGetCheckouts =
-  ({ id, authToken, service, apiOrigin }) =>
+export const makeGetCheckoutsList =
+  ({ authToken, service, apiOrigin }) =>
     async ({ params, onSuccess, onError }) => {
       try {
-        const response = await service.fetchCheckouts(id, authToken, params, apiOrigin);
+        const response = await service.fetchCheckoutsList(authToken, params, apiOrigin);
 
         if (!response.error) {
           const pagingInfo = {

@@ -16,7 +16,7 @@ export class CheckoutsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: ICheckoutsParams = {};
 
-  @Prop() getCheckouts: Function;
+  @Prop() getCheckoutsList: Function;
 
   @Watch('params')
   @Watch('getCheckouts')
@@ -25,14 +25,14 @@ export class CheckoutsListCore {
   }
 
   @Event({
-    eventName: 'payment-row-clicked',
+    eventName: 'checkout-row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Checkout>;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    if (this.getCheckouts) {
+    if (this.getCheckoutsList) {
       this.fetchData();
     }
   }
@@ -40,7 +40,7 @@ export class CheckoutsListCore {
   fetchData(): void {
     this.loading = true;
 
-    this.getCheckouts({
+    this.getCheckoutsList({
       params: this.params,
       onSuccess: ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;

@@ -4,50 +4,48 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckoutsListCore } from '../checkouts-list-core';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
-import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
-import { IApiResponseCollection, IPayment } from '../../../api';
-import { makeGetCheckouts } from '../get-checkouts';
+import mockSuccessResponse from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
+import { IApiResponseCollection, ICheckout } from '../../../api';
+import { makeGetCheckoutsList } from '../get-checkouts';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../form/form-control-select';
 
-const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
+const mockCheckoutsResponse = mockSuccessResponse as IApiResponseCollection<ICheckout[]>;
 const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters, SelectInput];
 
-describe('payments-list-core', () => {
+describe('checkouts-list-core', () => {
   it('renders properly with fetched data', async () => {
-    const mockPaymentsService = {
-      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsResponse),
     };
 
-    const getPayments = makeGetCheckouts({
-      id: '123',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: '123',
-      service: mockPaymentsService,
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     await page.waitForChanges();
 
-    expect(page.rootInstance.payments[0]).toEqual(expect.objectContaining({ account_id: mockPaymentsResponse.data[0].account_id }));
+    expect(page.rootInstance.checkouts[0]).toEqual(expect.objectContaining({ account_id: mockCheckoutsResponse.data[0].account_id }));
     const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
-    expect(rows.length).toBe(mockPaymentsResponse.data.length);
-    expect(mockPaymentsService.fetchPayments).toHaveBeenCalled();
+    expect(rows.length).toBe(mockCheckoutsResponse.data.length);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalled();
     expect(page.root).toMatchSnapshot();
   });
 
   it('displays an error state on failed data fetch', async () => {
     const mockService = {
-      fetchPayments: jest.fn().mockRejectedValue(new Error('Fetch error'))
+      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
 
-    const getPayments = makeGetCheckouts({
-      id: 'some-id',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: 'some-auth-token',
       service: mockService,
       apiOrigin: 'http://localhost:3000'
@@ -55,7 +53,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     await page.waitForChanges();
@@ -64,21 +62,20 @@ describe('payments-list-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('emits payment-row-clicked event on row click', async () => {
-    const mockPaymentsService = {
-      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+  it('emits checkout-row-clicked event on row click', async () => {
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsResponse),
     };
 
-    const getPayments = makeGetCheckouts({
-      id: '123',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: '123',
-      service: mockPaymentsService,
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     await page.waitForChanges();
@@ -87,27 +84,26 @@ describe('payments-list-core', () => {
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();
-    page.win.addEventListener('payment-row-clicked', spyEvent);
+    page.win.addEventListener('checkout-row-clicked', spyEvent);
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();
   });
 
   it('shows table filter menu on filter button click', async () => {
-    const mockPaymentsService = {
-      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsResponse),
     };
 
-    const getPayments = makeGetCheckouts({
-      id: '123',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: '123',
-      service: mockPaymentsService,
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     await page.waitForChanges();
@@ -123,26 +119,25 @@ describe('payments-list-core', () => {
   });
 
   it('updates params and refetches data on filter interaction', async () => {
-    const mockPaymentsService = {
-      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsResponse),
     };
 
-    const getPayments = makeGetCheckouts({
-      id: '123',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: '123',
-      service: mockPaymentsService,
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
       components: components,
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
     filterButton.click();
 
-    const filterMenu = page.root.querySelector('payments-list-filters') as HTMLElement;
+    const filterMenu = page.root.querySelector('checkouts-list-filters') as HTMLElement;
     expect(filterMenu).not.toBeNull();
 
     const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
@@ -161,26 +156,25 @@ describe('payments-list-core', () => {
     selectFilterInput.value = 'succeeded';
     selectFilterInput.dispatchEvent(new Event('input'));
 
-    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(2);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({ "payment_status": "succeeded" });
+    expect(updatedParams).toEqual({ "status": "succeeded" });
   });
 
   it('clears filters and refetches data on clear filters interaction', async () => {
-    const mockPaymentsService = {
-      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsResponse),
     };
 
-    const getPayments = makeGetCheckouts({
-      id: '123',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: '123',
-      service: mockPaymentsService,
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
       components: components,
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -210,26 +204,25 @@ describe('payments-list-core', () => {
 
     clearButton.click();
 
-    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(3);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(3);
     const updatedParams = page.rootInstance.params;
     expect(updatedParams).toEqual({});
   });
 
   it('updates params and refetches data on pagination interaction', async () => {
-    const mockPaymentsService = {
-      fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsResponse),
     };
 
-    const getPayments = makeGetCheckouts({
-      id: '123',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: '123',
-      service: mockPaymentsService,
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
     });
 
     await page.waitForChanges();
@@ -239,18 +232,17 @@ describe('payments-list-core', () => {
     await page.waitForChanges();
 
     // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
-    expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(2);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
     expect(updatedParams.after_cursor).toBe('nextCursor');
   });
 
   it('emits error event on fetch error', async () => {
     const mockService = {
-      fetchPayments: jest.fn().mockRejectedValue(new Error('Fetch error'))
+      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
 
-    const getPayments = makeGetCheckouts({
-      id: 'some-id',
+    const getCheckouts = makeGetCheckoutsList({
       authToken: 'some-auth',
       service: mockService,
       apiOrigin: 'http://localhost:3000'
@@ -260,7 +252,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} onError-event={errorEvent} />,
+      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();
