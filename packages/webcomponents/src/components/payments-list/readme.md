@@ -19,7 +19,6 @@
 ### Used by
 
  - [payments-list-core](.)
- - [terminals-list-core](../terminals-list)
 
 ### Depends on
 
@@ -44,7 +43,6 @@ graph TD;
   form-control-date --> form-control-tooltip
   form-control-date --> form-control-error-text
   payments-list-core --> payments-list-filters
-  terminals-list-core --> payments-list-filters
   style payments-list-filters fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

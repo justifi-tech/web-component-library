@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`terminals-list renders an error message when accountId and authToken are not provided 1`] = `
+<justifi-terminals-list>
+  <template shadowrootmode="open">
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </template>
+</justifi-terminals-list>
+`;
+
+exports[`terminals-list renders an error message when accountId is not provided 1`] = `
+<justifi-terminals-list auth-token="abc">
+  <template shadowrootmode="open">
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </template>
+</justifi-terminals-list>
+`;
+
+exports[`terminals-list renders an error message when authToken is not provided 1`] = `
+<justifi-terminals-list account-id="abc">
+  <template shadowrootmode="open">
+    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
+      <div>
+        Account ID and Auth Token are required
+      </div>
+    </main>
+  </template>
+</justifi-terminals-list>
+`;

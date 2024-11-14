@@ -81,8 +81,9 @@ export class TerminalsList {
   }
 
   handleErrorEvent = (event) => {
-    this.errorMessage = event.message;
-  }
+    this.errorMessage = event.detail.message;
+    this.errorEvent.emit(event.detail);
+  };
 
   render() {
     if (this.errorMessage) {

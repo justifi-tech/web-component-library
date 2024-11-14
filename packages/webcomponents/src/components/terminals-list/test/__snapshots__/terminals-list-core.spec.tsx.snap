@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`terminals-list-core displays an error state on failed data fetch 1`] = `
+<terminals-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+" style="display: block;">
+  <style></style>
+  <div class="table-wrapper">
+    <table class="table table-hover">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row">
+          <th part="table-head-cell" scope="col" title="The sub account associated with the terminal">
+            Sub Account
+          </th>
+          <th part="table-head-cell" scope="col" title="The nickname of the terminal">
+            Terminal Nickname
+          </th>
+          <th part="table-head-cell" scope="col" title="The provider ID of the terminal">
+            Provider ID
+          </th>
+          <th part="table-head-cell" scope="col" title="The status of the terminal">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body" part="table-body">
+        <tr>
+          <td class="error-state" colspan="4" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            An unexpected error occurred: Fetch error
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="4" part="pagination-bar">
+            <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span class="me-1" part="page-arrow">
+                        «
+                      </span>
+                      <span part="page-button-text">
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span part="page-button-text">
+                        Next
+                      </span>
+                      <span class="ms-1" part="page-arrow">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</terminals-list-core>
+`;
+
+exports[`terminals-list-core renders an error message when accountId and authToken are not provided 1`] = `<justifi-terminals-list-core />`;
+
+exports[`terminals-list-core renders an error message when accountId is not provided 1`] = `
+<justifi-terminals-list-core
+  auth-token="abc"
+/>
+`;
+
+exports[`terminals-list-core renders an error message when authToken is not provided 1`] = `
+<justifi-terminals-list-core
+  account-id="abc"
+/>
+`;
+
+exports[`terminals-list-core renders properly with fetched data 1`] = `
+<terminals-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+" style="display: block;">
+  <style></style>
+  <div class="table-wrapper">
+    <table class="table table-hover">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row">
+          <th part="table-head-cell" scope="col" title="The sub account associated with the terminal">
+            Sub Account
+          </th>
+          <th part="table-head-cell" scope="col" title="The nickname of the terminal">
+            Terminal Nickname
+          </th>
+          <th part="table-head-cell" scope="col" title="The provider ID of the terminal">
+            Provider ID
+          </th>
+          <th part="table-head-cell" scope="col" title="The status of the terminal">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body" part="table-body">
+        <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row table-row-odd">
+          <td part="table-cell"></td>
+          <td part="table-cell"></td>
+          <td part="table-cell">
+            453-760-515
+          </td>
+          <td part="table-cell">
+            <span class="badge bg-danger" title="This terminal is disconnected.">
+              Disconnected
+            </span>
+          </td>
+        </tr>
+        <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row table-row-even">
+          <td part="table-cell"></td>
+          <td part="table-cell"></td>
+          <td part="table-cell">
+            807-075-625
+          </td>
+          <td part="table-cell">
+            <span class="badge bg-danger" title="This terminal is disconnected.">
+              Disconnected
+            </span>
+          </td>
+        </tr>
+        <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row table-row-odd">
+          <td part="table-cell"></td>
+          <td part="table-cell"></td>
+          <td part="table-cell">
+            450-060-752
+          </td>
+          <td part="table-cell">
+            <span class="badge bg-success" title="This terminal is connected.">
+              Connected
+            </span>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="4" part="pagination-bar">
+            <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span class="me-1" part="page-arrow">
+                        «
+                      </span>
+                      <span part="page-button-text">
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span part="page-button-text">
+                        Next
+                      </span>
+                      <span class="ms-1" part="page-arrow">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</terminals-list-core>
+`;

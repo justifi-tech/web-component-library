@@ -22,8 +22,10 @@ export class TerminalService implements ITerminalService {
       apiOrigin = config.proxyApiOrigin;
     }
 
+    const headers = { Account: accountId };
+
     const api = Api({ authToken, apiOrigin: apiOrigin });
-    const endpoint = `account/${accountId}/terminals`;
-    return api.get(endpoint, params);
+    const endpoint = 'terminals';
+    return api.get(endpoint, params, null, headers);
   }
 }

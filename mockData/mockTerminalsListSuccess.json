@@ -1,0 +1,45 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+      "has_previous": false,
+      "has_next": false,
+      "start_cursor": "WyIyMDI0LTA4LTA1IDIwOjQ4OjI5LjE1ODY5NTAwMCIsIjg1NGVlYWIwLTBlNzktNDViNS1iNzQ1LTRjMDcxNWMyMzg5MyJd",
+      "end_cursor": "WyIyMDIzLTExLTIxIDIxOjM0OjM1LjUyMTQwOTAwMCIsIjA4MDU5YTkwLWM5MzItNDEyMS04YmM3LTYzNTM1N2QzMzhjOCJd"
+  },
+  "data": [
+      {
+          "id": "trm_43Y2lE9E2ULR8pvaKI6D5v",
+          "provider": "verifone",
+          "status": "disconnected",
+          "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+          "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
+          "provider_id": "453-760-515",
+          "verified_at": null,
+          "created_at": "2024-08-05T20:48:29.158Z",
+          "updated_at": "2024-09-25T15:52:31.298Z"
+      },
+      {
+          "id": "trm_6TFOXK5U0LZLyQ6y6t3sbj",
+          "provider": "verifone",
+          "status": "disconnected",
+          "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+          "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
+          "provider_id": "807-075-625",
+          "verified_at": null,
+          "created_at": "2024-08-05T20:15:21.765Z",
+          "updated_at": "2024-10-31T19:21:51.886Z"
+      },
+      {
+          "id": "trm_F8UyFyXcaTBwSDh1cMxjc",
+          "provider": "verifone",
+          "status": "connected",
+          "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+          "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
+          "provider_id": "450-060-752",
+          "verified_at": null,
+          "created_at": "2023-11-21T21:34:35.521Z",
+          "updated_at": "2023-11-29T21:36:29.026Z"
+      }
+  ]
+}
