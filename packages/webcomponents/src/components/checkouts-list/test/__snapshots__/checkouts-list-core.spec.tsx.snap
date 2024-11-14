@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`checkouts-list-core displays an error state on failed data fetch 1`] = `
+<checkouts-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+" style="display: block;">
+  <style></style>
+  <checkouts-list-filters></checkouts-list-filters>
+  <div class="table-wrapper">
+    <table class="table table-hover">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row">
+          <th part="table-head-cell" scope="col" title="The date each checkout occurred">
+            Processed On
+          </th>
+          <th part="table-head-cell" scope="col" title="The dollar amount of each checkout">
+            Payment Amount
+          </th>
+          <th part="table-head-cell" scope="col" title="The description of each checkout">
+            Payment Description
+          </th>
+          <th part="table-head-cell" scope="col" title="The unique identifier of the account associated with each checkout">
+            Account ID
+          </th>
+          <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
+            Payment Mode
+          </th>
+          <th part="table-head-cell" scope="col" title="The current status of each checkout">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body" part="table-body">
+        <tr>
+          <td class="error-state" colspan="6" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            An unexpected error occurred: Fetch error
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="6" part="pagination-bar">
+            <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span class="me-1" part="page-arrow">
+                        «
+                      </span>
+                      <span part="page-button-text">
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span part="page-button-text">
+                        Next
+                      </span>
+                      <span class="ms-1" part="page-arrow">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</checkouts-list-core>
+`;
+
+exports[`checkouts-list-core renders properly with fetched data 1`] = `
+<checkouts-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+" style="display: block;">
+  <style></style>
+  <checkouts-list-filters></checkouts-list-filters>
+  <div class="table-wrapper">
+    <table class="table table-hover">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row">
+          <th part="table-head-cell" scope="col" title="The date each checkout occurred">
+            Processed On
+          </th>
+          <th part="table-head-cell" scope="col" title="The dollar amount of each checkout">
+            Payment Amount
+          </th>
+          <th part="table-head-cell" scope="col" title="The description of each checkout">
+            Payment Description
+          </th>
+          <th part="table-head-cell" scope="col" title="The unique identifier of the account associated with each checkout">
+            Account ID
+          </th>
+          <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
+            Payment Mode
+          </th>
+          <th part="table-head-cell" scope="col" title="The current status of each checkout">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body" part="table-body">
+        <tr data-row-entity-id="cho_qkHk4NXnSV0PVulNY4M8J" data-test-id="table-row" part="table-row table-row-odd">
+          <td part="table-cell">
+            <div class="fw-bold">
+              Aug 8, 2024
+            </div>
+            <div class="fw-bold">
+              3:47pm
+            </div>
+          </td>
+          <td part="table-cell">
+            $17.99 USD
+          </td>
+          <td part="table-cell">
+            One Chocolate Donut
+          </td>
+          <td part="table-cell">
+            acc_5Et9iXrSSAZR2KSouQGAWi
+          </td>
+          <td part="table-cell">
+            ecom
+          </td>
+          <td part="table-cell"></td>
+        </tr>
+        <tr data-row-entity-id="cho_zWtk4NimSV1PVulNY4a7j" data-test-id="table-row" part="table-row table-row-even">
+          <td part="table-cell">
+            <div class="fw-bold">
+              Aug 8, 2024
+            </div>
+            <div class="fw-bold">
+              4:32pm
+            </div>
+          </td>
+          <td part="table-cell">
+            $17.99 USD
+          </td>
+          <td part="table-cell">
+            One Chocolate Donut
+          </td>
+          <td part="table-cell">
+            acc_5Et9iXrSSAZR2KSouQGAWi
+          </td>
+          <td part="table-cell">
+            ecom
+          </td>
+          <td part="table-cell"></td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="6" part="pagination-bar">
+            <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span class="me-1" part="page-arrow">
+                        «
+                      </span>
+                      <span part="page-button-text">
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="page-button page-button-disabled">
+                      <span part="page-button-text">
+                        Next
+                      </span>
+                      <span class="ms-1" part="page-arrow">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</checkouts-list-core>
+`;

@@ -35,17 +35,3 @@ exports[`checkouts-list renders an error message when authToken is not provided 
   </template>
 </justifi-checkouts-list>
 `;
-
-exports[`payments-list renders an error message when accountId and authToken are not provided 1`] = `<justifi-payments-list />`;
-
-exports[`payments-list renders an error message when accountId is not provided 1`] = `
-<justifi-payments-list
-  auth-token="abc"
-/>
-`;
-
-exports[`payments-list renders an error message when authToken is not provided 1`] = `
-<justifi-payments-list
-  account-id="abc"
-/>
-`;
