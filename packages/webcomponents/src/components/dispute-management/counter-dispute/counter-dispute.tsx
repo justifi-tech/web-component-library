@@ -67,7 +67,9 @@ export class CounterDispute {
   }
 
   private onSubmit = async () => {
-    this.clickEvent.emit({ name: DisputeManagementClickEvents.submit });
+    await this.currentStepComponentRef.validateAndSubmit(() => {
+      this.clickEvent.emit({ name: DisputeManagementClickEvents.submit });
+    });
   }
 
   render() {
