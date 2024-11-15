@@ -15,13 +15,8 @@ export class CounterDispute {
   @State() currentStepComponentRef: CounterDisputeStepElement;
   @State() formController: FormController;
 
-  // temp piece of state to hold form values
-  @State() values: any = {};
-
   componentWillLoad() {
     this.formController = new FormController(DisputeResponseSchema);
-    // temp subscription to values
-    this.formController.values.subscribe(values => this.values = values);
   }
 
   componentStepMapping = [

@@ -8,11 +8,9 @@ import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 export class DisputeReason {
   @State() form: FormController;
   @State() errors: any = {};
-  @State() values: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: () => void) {
-    console.log('validating and submitting', onSuccess);
     this.form.validateAndSubmit(() => this.sendData(onSuccess));
   };
 
@@ -21,9 +19,6 @@ export class DisputeReason {
   }
 
   componentDidLoad() {
-    this.form.values.subscribe(values =>
-      this.values = { ...values }
-    );
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
@@ -82,7 +77,6 @@ export class DisputeReason {
                 hasError={!!this.errors.reason}
                 value="other">
               </form-control-radio>
-              values: {JSON.stringify(this.values)}
               <form-control-error-text errorText={this.errors.reason} name="reason" />
             </div>
           </div>
