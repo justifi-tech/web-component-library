@@ -16,11 +16,12 @@
 
 ## Events
 
-| Event         | Description | Type                                   |
-| ------------- | ----------- | -------------------------------------- |
-| `error-event` |             | `CustomEvent<ComponentError>`          |
-| `formLoading` |             | `CustomEvent<boolean>`                 |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
+| Event                 | Description | Type                                          |
+| --------------------- | ----------- | --------------------------------------------- |
+| `error-event`         |             | `CustomEvent<ComponentError>`                 |
+| `form-step-completed` |             | `CustomEvent<BusinessFormStepCompletedEvent>` |
+| `formLoading`         |             | `CustomEvent<boolean>`                        |
+| `submitted`           |             | `CustomEvent<BusinessFormSubmitEvent>`        |
 
 
 ## Methods
@@ -50,6 +51,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
 - [form-control-monetary](../../../../ui-components/form)
 - [form-control-select](../../../../ui-components/form)
 - [form-control-text](../../../../ui-components/form)
@@ -57,9 +59,17 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-monetary
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
+  form-control-tooltip --> custom-popper
+  form-control-monetary --> form-control-help-text
+  form-control-monetary --> form-control-error-text
+  form-control-select --> form-control-tooltip
+  form-control-select --> form-control-error-text
+  form-control-text --> form-control-tooltip
+  form-control-text --> form-control-error-text
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   style justifi-additional-questions-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

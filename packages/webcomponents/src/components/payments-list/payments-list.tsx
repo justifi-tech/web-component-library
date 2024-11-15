@@ -6,6 +6,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
+import { config } from '../../../config';
 
 /**
   * @exportedPart label: Label for inputs
@@ -28,16 +29,17 @@ import { tableExportedParts } from '../../ui-components/table/exported-parts';
 */
 @Component({
   tag: 'justifi-payments-list',
-  shadow: true,
+  shadow: true
 })
 
 export class PaymentsList {
-  @Prop() accountId: string;
-  @Prop() authToken: string;
-
   @State() getPayments: Function;
   @State() errorMessage: string = null;
-
+  
+  @Prop() accountId: string;
+  @Prop() authToken: string;
+  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
@@ -64,6 +66,7 @@ export class PaymentsList {
         id: this.accountId,
         authToken: this.authToken,
         service: new PaymentService(),
+        apiOrigin: this.apiOrigin,
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';

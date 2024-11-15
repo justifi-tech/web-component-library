@@ -8,7 +8,7 @@ import {
   Element,
   Watch,
 } from '@stencil/core';
-import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
+import { FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-text'
@@ -16,15 +16,15 @@ import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 export class TextInput {
   @Element() el: HTMLElement;
 
-  @Prop() label: string;
   @Prop() name: any;
+  @Prop() label: string;
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue: string;
   @Prop() maxLength?: number;
-  @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() keyDownHandler?: (event: any) => void;
-  @Prop() disabled: boolean;
+  @Prop() disabled?: boolean;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
@@ -56,9 +56,12 @@ export class TextInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+          <div class="d-flex align-items-start gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
           <input
             id={this.name}
             name={this.name}
@@ -67,12 +70,11 @@ export class TextInput {
             onKeyDown={this.keyDownHandler}
             onPaste={this.keyDownHandler}
             maxLength={this.maxLength}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}`}
-            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            part={`input ${this.errorText ? "input-invalid " : ""}${this.disabled ? " input-disabled" : ""}`}
+            class={this.errorText ? "form-control is-invalid" : "form-control"}
             type="text"
             disabled={this.disabled}
           />
-          <FormControlHelpText helpText={this.helpText} name={this.name} />
           <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>

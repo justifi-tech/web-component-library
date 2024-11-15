@@ -39,37 +39,32 @@
 
 ### Used by
 
- - [justifi-additional-questions](../../components/business-forms/business-form/additional-questions)
- - [justifi-additional-questions-form-step-core](../../components/business-forms/payment-provisioning/additional-questions)
- - [justifi-billing-form](../../components/billing-form)
- - [justifi-business-bank-account-form-step](../../components/business-forms/payment-provisioning/bank-account)
- - [justifi-business-core-info](../../components/business-forms/business-form/business-core-info)
- - [justifi-business-core-info-form-step-core](../../components/business-forms/payment-provisioning/business-core-info)
- - [justifi-business-representative](../../components/business-forms/business-form/business-representative)
- - [justifi-business-representative-form-inputs](../../components/business-forms/payment-provisioning/business-representative)
- - [justifi-identity-address-form](../../components/business-forms/owner-form/identity-address)
- - [justifi-legal-address-form](../../components/business-forms/business-form/legal-address-form)
- - [justifi-legal-address-form-step-core](../../components/business-forms/payment-provisioning/legal-address-form)
- - [justifi-refund-form](../../components/refund-form)
- - [owner-form-inputs](../../components/business-forms/owner-form)
+ - [justifi-additional-statement](../../components/dispute-management/counter-dispute)
+ - [justifi-cancellation-policy](../../components/dispute-management/counter-dispute)
+ - [justifi-customer-details](../../components/dispute-management/counter-dispute)
+ - [justifi-duplicate-charge](../../components/dispute-management/counter-dispute)
+ - [justifi-electronic-evidence](../../components/dispute-management/counter-dispute)
+ - [justifi-refund-policy](../../components/dispute-management/counter-dispute)
+ - [justifi-shipping-details](../../components/dispute-management/counter-dispute)
+
+### Depends on
+
+- [form-control-help-text](./form-helpers/form-control-help-text)
+- [form-control-error-text](./form-helpers/form-control-error-text)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-text
-  justifi-additional-questions-form-step-core --> form-control-text
-  justifi-billing-form --> form-control-text
-  justifi-business-bank-account-form-step --> form-control-text
-  justifi-business-core-info --> form-control-text
-  justifi-business-core-info-form-step-core --> form-control-text
-  justifi-business-representative --> form-control-text
-  justifi-business-representative-form-inputs --> form-control-text
-  justifi-identity-address-form --> form-control-text
-  justifi-legal-address-form --> form-control-text
-  justifi-legal-address-form-step-core --> form-control-text
-  justifi-refund-form --> form-control-text
-  owner-form-inputs --> form-control-text
-  style form-control-text fill:#f9f,stroke:#333,stroke-width:4px
+  form-control-textarea --> form-control-help-text
+  form-control-textarea --> form-control-error-text
+  justifi-additional-statement --> form-control-textarea
+  justifi-cancellation-policy --> form-control-textarea
+  justifi-customer-details --> form-control-textarea
+  justifi-duplicate-charge --> form-control-textarea
+  justifi-electronic-evidence --> form-control-textarea
+  justifi-refund-policy --> form-control-textarea
+  justifi-shipping-details --> form-control-textarea
+  style form-control-textarea fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

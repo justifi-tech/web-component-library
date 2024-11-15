@@ -2,10 +2,10 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SelectInput } from '../form-control-select';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text';
+import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-select', () => {
-  const components = [SelectInput, FormControlErrorText, FormControlHelpText];
+  const components = [SelectInput, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
   const options = [
     { label: 'Pickup', value: 'pickup' },
@@ -189,10 +189,17 @@ describe('form-control-select', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('#form-help-text-delivery_method');
-    expect(helpTextComponent).not.toBeNull();
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
+    expect(tooltipComponent).not.toBeNull();
 
-    expect(helpTextComponent.textContent).toBe('Select your preferred delivery method');
+    const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');
+    expect(tooltipIcon).not.toBeNull();
+
+    const tooltipElement = tooltipComponent.querySelector('.tooltip');
+    expect(tooltipElement).not.toBeNull();
+
+    const tooltipText = tooltipElement.querySelector('.tooltip-inner');
+    expect(tooltipText.textContent).toBe('Select your preferred delivery method');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
