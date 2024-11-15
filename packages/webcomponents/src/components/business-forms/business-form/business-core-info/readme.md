@@ -46,14 +46,10 @@ graph TD;
   justifi-business-core-info --> form-control-date
   justifi-business-core-info --> form-control-number-masked
   form-control-text --> form-control-tooltip
-  form-control-text --> form-control-error-text
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
-  form-control-select --> form-control-error-text
   form-control-date --> form-control-tooltip
-  form-control-date --> form-control-error-text
   form-control-number-masked --> form-control-tooltip
-  form-control-number-masked --> form-control-error-text
   justifi-business-form --> justifi-business-core-info
   style justifi-business-core-info fill:#f9f,stroke:#333,stroke-width:4px
 ```

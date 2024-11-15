@@ -24,11 +24,9 @@ exports[`form-control-number-masked Renders with all props provided 1`] = `
       </form-control-tooltip>
     </div>
     <input class="form-control is-invalid" disabled="" id="age" name="age" part="input input-invalid" type="text" value="25">
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-age">
-        Invalid age
-      </small>
-    </form-control-error-text>
+    <small class="form-text text-danger" id="form-error-text-age" part="input-error-text">
+      Invalid age
+    </small>
   </div>
 </form-control-number-masked>
 `;
@@ -43,7 +41,6 @@ exports[`form-control-number-masked Renders with default props 1`] = `
       <form-control-tooltip></form-control-tooltip>
     </div>
     <input class="form-control" id="age" name="age" part="input undefined" type="text">
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-number-masked>
 `;

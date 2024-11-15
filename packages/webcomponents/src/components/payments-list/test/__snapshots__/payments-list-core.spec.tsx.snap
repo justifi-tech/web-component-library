@@ -1,7 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`payments-list-core displays an error state on failed data fetch 1`] = `
-<payments-list-core class="body" exportparts="label" style="display: block;">
+<payments-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+" style="display: block;">
   <style></style>
   <payments-list-filters></payments-list-filters>
   <div class="table-wrapper">
@@ -76,7 +80,11 @@ exports[`payments-list-core displays an error state on failed data fetch 1`] = `
 `;
 
 exports[`payments-list-core renders properly with fetched data 1`] = `
-<payments-list-core class="body" exportparts="label" style="display: block;">
+<payments-list-core class="body" exportparts="
+table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
+table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
+empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
+" style="display: block;">
   <style></style>
   <payments-list-filters></payments-list-filters>
   <div class="table-wrapper">

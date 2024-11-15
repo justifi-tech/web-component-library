@@ -50,13 +50,11 @@
 ### Depends on
 
 - [form-control-help-text](./form-helpers/form-control-help-text)
-- [form-control-error-text](./form-helpers/form-control-error-text)
 
 ### Graph
 ```mermaid
 graph TD;
   form-control-textarea --> form-control-help-text
-  form-control-textarea --> form-control-error-text
   justifi-additional-statement --> form-control-textarea
   justifi-cancellation-policy --> form-control-textarea
   justifi-customer-details --> form-control-textarea
