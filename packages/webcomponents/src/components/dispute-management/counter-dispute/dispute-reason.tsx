@@ -1,15 +1,36 @@
-import { Component, h, Prop, State } from "@stencil/core";
+import { Component, h, State, Method } from "@stencil/core";
 import { FormController } from "../../form/form";
+import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 
 @Component({
   tag: 'justifi-dispute-reason',
 })
 export class DisputeReason {
-  @Prop() form: FormController;
+  @State() form: FormController;
   @State() errors: any = {};
+  @State() values: any = {};
+
+  @Method()
+  async validateAndSubmit(onSuccess: () => void) {
+    console.log('validating and submitting', onSuccess);
+    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  };
+
+  componentWillLoad() {
+    this.form = new FormController(DisputeResponseSchema);
+  }
 
   componentDidLoad() {
-    this.form.errors.subscribe(errors => this.errors = { ...errors });
+    this.form.values.subscribe(values =>
+      this.values = { ...values }
+    );
+    this.form.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
+  }
+
+  private sendData = (onSuccess: () => void) => {
+    onSuccess();
   }
 
   private inputHandler = (name: string, value: string) => {
@@ -61,6 +82,7 @@ export class DisputeReason {
                 hasError={!!this.errors.reason}
                 value="other">
               </form-control-radio>
+              values: {JSON.stringify(this.values)}
               <form-control-error-text errorText={this.errors.reason} name="reason" />
             </div>
           </div>
