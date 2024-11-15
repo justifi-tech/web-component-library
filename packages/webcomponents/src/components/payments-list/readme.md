@@ -22,8 +22,10 @@
 
 ### Depends on
 
+- [table-filters-menu](../../ui-components/filters)
+- [form-control-text](../../ui-components/form)
+- [form-control-select](../../ui-components/form)
 - [form-control-date](../../ui-components/form)
-- [pagination-menu](../pagination-menu)
 
 ### Graph
 ```mermaid

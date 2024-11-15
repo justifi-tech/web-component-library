@@ -51,6 +51,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
 - [form-control-text](../../../../ui-components/form)
 - [form-control-select](../../../../ui-components/form)
 

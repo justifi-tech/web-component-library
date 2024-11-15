@@ -39,19 +39,13 @@
 
 ### Used by
 
- - [justifi-additional-questions](../../components/business-forms/business-form/additional-questions)
- - [justifi-additional-questions-form-step-core](../../components/business-forms/payment-provisioning/additional-questions)
- - [justifi-billing-form](../../components/billing-form)
- - [justifi-business-bank-account-form-step](../../components/business-forms/payment-provisioning/bank-account)
- - [justifi-business-core-info](../../components/business-forms/business-form/business-core-info)
- - [justifi-business-core-info-form-step-core](../../components/business-forms/payment-provisioning/business-core-info)
- - [justifi-business-representative](../../components/business-forms/business-form/business-representative)
- - [justifi-business-representative-form-inputs](../../components/business-forms/payment-provisioning/business-representative)
- - [justifi-identity-address-form](../../components/business-forms/owner-form/identity-address)
- - [justifi-legal-address-form](../../components/business-forms/business-form/legal-address-form)
- - [justifi-legal-address-form-step-core](../../components/business-forms/payment-provisioning/legal-address-form)
- - [justifi-refund-form](../../components/refund-form)
- - [owner-form-inputs](../../components/business-forms/owner-form)
+ - [justifi-additional-statement](../../components/dispute-management/counter-dispute)
+ - [justifi-cancellation-policy](../../components/dispute-management/counter-dispute)
+ - [justifi-customer-details](../../components/dispute-management/counter-dispute)
+ - [justifi-duplicate-charge](../../components/dispute-management/counter-dispute)
+ - [justifi-electronic-evidence](../../components/dispute-management/counter-dispute)
+ - [justifi-refund-policy](../../components/dispute-management/counter-dispute)
+ - [justifi-shipping-details](../../components/dispute-management/counter-dispute)
 
 ### Depends on
 
