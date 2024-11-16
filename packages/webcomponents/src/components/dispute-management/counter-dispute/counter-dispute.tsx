@@ -22,7 +22,7 @@ export class CounterDispute {
   componentStepMapping = [
     () => <justifi-dispute-reason ref={(el) => this.currentStepComponentRef = el}></justifi-dispute-reason>,
     () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el}></justifi-product-or-service>,
-    // () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el}></justifi-customer-details>,
+    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el}></justifi-customer-details>,
     // () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el}></justifi-cancellation-policy>,
     // () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el}></justifi-refund-policy>,
     // () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el}></justifi-duplicate-charge>,
@@ -47,6 +47,8 @@ export class CounterDispute {
     this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
   }
 
+  // after each of these steps where validateAndSubmit is called, reload the dispute
+  // and set isLoading, and pass defaults into each step
   private onBack = async () => {
     await this.currentStepComponentRef.validateAndSubmit(() => {
       this.currentStep--;
