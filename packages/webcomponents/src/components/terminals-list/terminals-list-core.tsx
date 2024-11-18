@@ -127,6 +127,11 @@ export class TerminalsListCore {
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
+        <terminals-list-filters
+          params={this.params}
+          setParamsOnChange={this.setParamsOnChange}
+          clearParams={this.clearParams}
+        />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
