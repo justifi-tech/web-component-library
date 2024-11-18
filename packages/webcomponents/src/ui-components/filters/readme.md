@@ -25,6 +25,7 @@
 ### Used by
 
  - [payments-list-filters](../../components/payments-list)
+ - [terminals-list-filters](../../components/terminals-list)
 
 ### Depends on
 
@@ -35,6 +36,7 @@
 graph TD;
   table-filters-menu --> custom-popper
   payments-list-filters --> table-filters-menu
+  terminals-list-filters --> table-filters-menu
   style table-filters-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
