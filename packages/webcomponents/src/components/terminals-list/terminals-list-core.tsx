@@ -11,6 +11,7 @@ import { onFilterChange } from '../../ui-components/filters/utils';
 })
 export class TerminalsListCore {
   @State() terminals: Terminal[] = [];
+  @State() subAccountNames: string[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;

@@ -26,7 +26,6 @@ export interface ITerminal {
   updated_at?: string | null;
   verified_at?: string | null;
   nickname?: string | null;
-  sub_account_name?: string | null;
 }
 
 export enum TerminalStatuses {
@@ -59,7 +58,6 @@ export class Terminal implements ITerminal {
     this.updated_at = data.updated_at || '';
     this.verified_at = data.verified_at || '';
     this.nickname = data.nickname || '';
-    this.sub_account_name = data.sub_account_name || '';
   }
 
   get providerDisplayName(): string {

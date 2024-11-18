@@ -69,20 +69,6 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
 </terminals-list-core>
 `;
 
-exports[`terminals-list-core renders an error message when accountId and authToken are not provided 1`] = `<justifi-terminals-list-core />`;
-
-exports[`terminals-list-core renders an error message when accountId is not provided 1`] = `
-<justifi-terminals-list-core
-  auth-token="abc"
-/>
-`;
-
-exports[`terminals-list-core renders an error message when authToken is not provided 1`] = `
-<justifi-terminals-list-core
-  account-id="abc"
-/>
-`;
-
 exports[`terminals-list-core renders properly with fetched data 1`] = `
 <terminals-list-core class="body" exportparts="
 table-head,table-head-row,table-head-cell,table-body,table-row,table-row-even,
