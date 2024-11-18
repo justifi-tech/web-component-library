@@ -5,7 +5,7 @@ import JustifiAnalytics from "../../../api/Analytics";
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
 import { StyledHost } from "../../../ui-components";
 import { DisputeService } from "../../../api/services/dispute.service";
-import { makeGetDisputeResponse } from "./get-dispute-response";
+import { makeGetDisputeResponse } from "./dispute-response-actions";
 
 @Component({
   tag: 'justifi-dispute-response',
