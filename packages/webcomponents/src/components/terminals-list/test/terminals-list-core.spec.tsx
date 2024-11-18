@@ -7,9 +7,12 @@ import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockTerminalsListSuccess.json';
 import { IApiResponseCollection, ITerminal } from '../../../api';
 import { makeGetTerminals } from '../get-terminals';
+import { TerminalsListFilters } from '../terminals-list-filters';
+import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { SelectInput } from '../../form/form-control-select';
 
 const mockTerminalsResponse = mockSuccessResponse as IApiResponseCollection<ITerminal[]>;
-const components = [TerminalsListCore, PaginationMenu];
+const components = [TerminalsListCore, PaginationMenu, TableFiltersMenu, TerminalsListFilters, SelectInput];
 
 describe('terminals-list-core', () => {
   it('renders properly with fetched data', async () => {
@@ -88,6 +91,128 @@ describe('terminals-list-core', () => {
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();
+  });
+
+  it('shows table filter menu on filter button click', async () => {
+    const mockTerminalsService = {
+      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
+    };
+
+    const getTerminals = makeGetTerminals({
+      id: '123',
+      authToken: '123',
+      service: mockTerminalsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: components,
+      template: () => <terminals-list-core getTerminals={getTerminals} />,
+    });
+
+    await page.waitForChanges();
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    expect(filterButton).not.toBeNull();
+
+    filterButton.click();
+    await page.waitForChanges();
+
+    const filterMenu = page.root.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+  });
+
+  it('updates params and refetches data on filter interaction', async () => {
+    const mockTerminalsService = {
+      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
+    };
+
+    const getTerminals = makeGetTerminals({
+      id: '123',
+      authToken: '123',
+      service: mockTerminalsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: components,
+      template: () => <terminals-list-core getTerminals={getTerminals} />,
+    });
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.querySelector('terminals-list-filters') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
+    expect(selectFilter).not.toBeNull();
+
+    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
+    expect(selectFilterInput).not.toBeNull();
+
+    selectFilterInput.click();
+    
+    const selectOptions = selectFilterInput.querySelectorAll('option');
+    expect(selectOptions).not.toBeNull();
+    
+    const succeededOption = selectOptions[3] as HTMLOptionElement;
+    succeededOption.click();
+    selectFilterInput.value = 'connected';
+    selectFilterInput.dispatchEvent(new Event('input'));
+
+    expect(mockTerminalsService.fetchTerminals).toHaveBeenCalledTimes(2);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams).toEqual({"status": "connected"});
+  });
+
+  it('clears filters and refetches data on clear filters interaction', async () => {
+    const mockTerminalsService = {
+      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
+    };
+
+    const getTerminals = makeGetTerminals({
+      id: '123',
+      authToken: '123',
+      service: mockTerminalsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: components,
+      template: () => <terminals-list-core getTerminals={getTerminals} />,
+    });
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
+    expect(selectFilter).not.toBeNull();
+
+    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
+    expect(selectFilterInput).not.toBeNull();
+
+    selectFilterInput.click();
+    
+    const selectOptions = selectFilterInput.querySelectorAll('option');
+    expect(selectOptions).not.toBeNull();
+    
+    const succeededOption = selectOptions[3] as HTMLOptionElement;
+    succeededOption.click();
+    selectFilterInput.value = 'connected';
+    selectFilterInput.dispatchEvent(new Event('input'));
+
+    const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
+    expect(clearButton).not.toBeNull();
+
+    clearButton.click();
+
+    expect(mockTerminalsService.fetchTerminals).toHaveBeenCalledTimes(3);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams).toEqual({});
   });
 
   it('updates params and refetches data on pagination interaction', async () => {
