@@ -71,3 +71,4 @@ export class DisputeResponseDocument {
     this.presigned_url = url;
   }
 }
+

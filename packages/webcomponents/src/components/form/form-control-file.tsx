@@ -9,7 +9,7 @@ import {
   Element,
 } from '@stencil/core';
 import { EntityDocumentType } from '../../api/EntityDocument';
-import { DisputeResponseDocumentType } from '../../api/DisputeResponseDocument';
+import { DisputeResponseDocumentType } from '../../api/Dispute';
 
 export interface FileSelectEvent {
   fileList: FileList;
