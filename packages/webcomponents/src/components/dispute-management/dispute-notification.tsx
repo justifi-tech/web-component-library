@@ -1,4 +1,5 @@
 import { Component, h, Event, EventEmitter } from "@stencil/core";
+import { DisputeManagementClickEvents } from "./dispute";
 
 @Component({
   tag: 'justifi-dispute-notification',
@@ -12,8 +13,8 @@ export class DisputeNotification {
     this.submitted.emit();
   }
 
-  initiateCounterDispute() {
-    this.clickEvent.emit({ name: 'counterDispute' });
+  initiateRespondToDispute() {
+    this.clickEvent.emit({ name: DisputeManagementClickEvents.respondToDispute });
   }
 
   render() {

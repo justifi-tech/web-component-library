@@ -1,15 +1,15 @@
-export interface CounterDisputeFormSubmitEvent {
+export interface DisputeResponseFormSubmitEvent {
   data?: any;
   metadata?: any;
 }
 
-export interface CounterDisputeFormStepCompletedEvent {
+export interface DisputeResponseFormStepCompletedEvent {
   data: any;
-  formStep: CounterDisputeFormStep;
+  formStep: DisputeResponseFormStep;
   metadata?: any;
 }
 
-export enum CounterDisputeFormStep {
+export enum DisputeResponseFormStep {
   disputeReason = 'dispute_reason',
   productOrService = 'product_or_service',
   customerDetails = 'customer_details',

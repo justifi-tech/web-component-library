@@ -8,7 +8,7 @@ import { DisputeService } from "../../../api/services/dispute.service";
 import { makeGetDisputeResponse } from "./get-dispute-response";
 
 @Component({
-  tag: 'justifi-counter-dispute',
+  tag: 'justifi-dispute-response',
   shadow: true
 })
 export class CounterDispute {
@@ -69,7 +69,7 @@ export class CounterDispute {
   render() {
     return (
       <StyledHost>
-        <justifi-counter-dispute-core
+        <justifi-dispute-response-core
           getDisputeResponse={this.getDisputeResponse}
           onError-event={this.handleErrorEvent}
         />

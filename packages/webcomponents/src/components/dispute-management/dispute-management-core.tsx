@@ -8,22 +8,22 @@ import { DisputeManagementClickEvents } from "./dispute";
 export class DisputeManagementCore {
   @Event() submitted: EventEmitter;
 
-  @State() showCounterDispute: boolean = false;
+  @State() showDisputeResponseForm: boolean = false;
 
   @Listen('clickEvent')
-  counterDisputeHandler(event: CustomEvent) {
-    if (event.detail.name === DisputeManagementClickEvents.counterDispute) {
-      this.showCounterDispute = true;
+  disputeResponseHandler(event: CustomEvent) {
+    if (event.detail.name === DisputeManagementClickEvents.respondToDispute) {
+      this.showDisputeResponseForm = true;
     }
     if (event.detail.name === DisputeManagementClickEvents.cancelDispute) {
-      this.showCounterDispute = false;
+      this.showDisputeResponseForm = false;
     }
   }
 
   render() {
     return (
       <StyledHost>
-        {this.showCounterDispute ? <justifi-counter-dispute /> : <justifi-dispute-notification />}
+        {this.showDisputeResponseForm ? <justifi-dispute-response /> : <justifi-dispute-notification />}
       </StyledHost>
     );
   }

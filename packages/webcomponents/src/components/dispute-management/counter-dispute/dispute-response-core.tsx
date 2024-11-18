@@ -3,10 +3,10 @@ import { DisputeManagementClickEvents } from "../dispute";
 import { FormController } from "../../form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 
-type CounterDisputeStepElement = HTMLElement & { validateAndSubmit: Function };
+type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
 
 @Component({
-  tag: 'justifi-counter-dispute-core',
+  tag: 'justifi-dispute-response-core',
 })
 export class CounterDisputeCore {
   @Prop() getDisputeResponse: Function;
@@ -14,7 +14,7 @@ export class CounterDisputeCore {
   @Event() clickEvent: EventEmitter;
 
   @State() currentStep = 0;
-  @State() currentStepComponentRef: CounterDisputeStepElement;
+  @State() currentStepComponentRef: DisputeResponseStepElement;
   @State() formController: FormController;
 
   componentWillLoad() {
