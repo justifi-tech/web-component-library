@@ -1,3 +1,5 @@
+import { DisputeStatus } from "./Dispute";
+
 export enum CaptureStrategy {
   automatic = 'automatic',
   manual = 'manual',
@@ -26,12 +28,6 @@ export enum PaymentStatuses {
   disputed = 'disputed',
   fully_refunded = 'fully_refunded',
   partially_refunded = 'partially_refunded',
-}
-
-export enum PaymentDisputedStatuses {
-  // if a dispute is 'won', we don't show a dispute status, just general status
-  lost = 'lost',
-  open = 'open',
 }
 
 export interface IPaymentMethod {
@@ -139,7 +135,7 @@ export class Card implements ICard {
   }
 }
 
-export interface IDispute {
+export interface IPaymentDispute {
   amount_cents: number;
   created_at: string;
   currency: string;
@@ -165,7 +161,7 @@ export interface IPayment {
   currency: 'usd';
   description: string;
   disputed: boolean;
-  disputes: IDispute[];
+  disputes: IPaymentDispute[];
   error_code: string | null;
   error_description: string | null;
   fee_amount: number;
@@ -199,7 +195,7 @@ export class Payment implements IPayment {
   public currency: 'usd';
   public description: string;
   public disputed: boolean;
-  public disputes: IDispute[];
+  public disputes: IPaymentDispute[];
   public error_code: string | null;
   public error_description: string | null;
   public fee_amount: number;
@@ -245,17 +241,17 @@ export class Payment implements IPayment {
     this.updated_at = payment.updated_at;
   }
 
-  get disputedStatus(): PaymentDisputedStatuses | null {
+  get disputedStatus(): DisputeStatus | null {
     const lost = this.disputes.some(
-      (dispute) => dispute.status === PaymentDisputedStatuses.lost
+      (dispute) => dispute.status === DisputeStatus.lost
     );
     // if a dispute is 'won', we don't show a dispute status, just general status
     if (!this.disputed) {
       return null;
     } else if (lost) {
-      return PaymentDisputedStatuses.lost;
+      return DisputeStatus.lost;
     } else {
-      return PaymentDisputedStatuses.open;
+      return DisputeStatus.open;
     }
   }
 

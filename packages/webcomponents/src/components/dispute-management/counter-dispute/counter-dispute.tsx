@@ -1,109 +1,79 @@
-import { Component, Event, EventEmitter, h, State } from "@stencil/core";
-import { DisputeManagementClickEvents } from "../dispute";
-import { FormController } from "../../form/form";
-import DisputeResponseSchema from "./schemas/dispute-reason-schema";
-
-type CounterDisputeStepElement = HTMLElement & { validateAndSubmit: Function };
+import { Component, h, Watch, State, Prop, Event, EventEmitter } from "@stencil/core";
+import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { config } from '../../../../config';
+import JustifiAnalytics from "../../../api/Analytics";
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
+import { StyledHost } from "../../../ui-components";
+import { DisputeService } from "../../../api/services/dispute.service";
+import { makeGetDisputeResponse } from "./get-dispute-response";
 
 @Component({
   tag: 'justifi-counter-dispute',
+  shadow: true
 })
 export class CounterDispute {
-  @Event() clickEvent: EventEmitter;
+  @State() getDisputeResponse: Function;
+  @State() errorMessage: string = null;
 
-  @State() currentStep = 0;
-  @State() currentStepComponentRef: CounterDisputeStepElement;
-  @State() formController: FormController;
+  @Prop() accountId: string;
+  @Prop() authToken: string;
+  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+
+  analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    this.formController = new FormController(DisputeResponseSchema);
+    checkPkgVersion();
+    this.analytics = new JustifiAnalytics(this);
+    this.initializeGetPayments();
   }
 
-  componentStepMapping = [
-    () => <justifi-dispute-reason ref={(el) => this.currentStepComponentRef = el}></justifi-dispute-reason>,
-    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el}></justifi-product-or-service>,
-    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el}></justifi-customer-details>,
-    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el}></justifi-cancellation-policy>,
-    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el}></justifi-refund-policy>,
-    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el}></justifi-duplicate-charge>,
-    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el}></justifi-electronic-evidence>,
-    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el}></justifi-shipping-details>,
-    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el}></justifi-additional-statement>,
-  ];
-
-  get currentStepComponent() {
-    return this.componentStepMapping[this.currentStep]();
+  initializeGetPayments() {
+    throw new Error("Method not implemented.");
   }
 
-  get isLastStep() {
-    return this.currentStep === this.componentStepMapping.length - 1;
+  disconnectedCallback() {
+    this.analytics.cleanup();
   }
 
-  get isFirstStep() {
-    return this.currentStep === 0;
+  @Watch('accountId')
+  @Watch('authToken')
+  propChanged() {
+    this.initializeGetDisputeResponse();
   }
 
-  private onCancel = () => {
-    this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
+  private initializeGetDisputeResponse() {
+    if (this.accountId && this.authToken) {
+      this.getDisputeResponse = makeGetDisputeResponse({
+        id: this.accountId,
+        authToken: this.authToken,
+        service: new DisputeService(),
+        apiOrigin: this.apiOrigin,
+      });
+    } else {
+      this.errorMessage = 'Account ID and Auth Token are required';
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
   }
 
-  // after each of these steps where validateAndSubmit is called, reload the dispute
-  // and set isLoading, and pass defaults into each step
-  private onBack = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(() => {
-      this.currentStep--;
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.previousStep });
-    });
-  }
-
-  private onNext = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(() => {
-      this.currentStep++;
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.nextStep });
-    });
-  }
-
-  private onSubmit = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(() => {
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.submit });
-    });
-  }
+  handleErrorEvent = (event) => {
+    this.errorMessage = event.detail.message;
+    this.errorEvent.emit(event.detail);
+  };
 
   render() {
     return (
-      <div class="row gy-3">
-        <div class="col-12">
-          <h1 class="h4">Counter dispute</h1>
-        </div>
-
-        <div class="col-12">
-          {this.currentStepComponent}
-        </div>
-
-        <div class="col-12">
-          <div class="d-flex gap-2 mt-4 justify-content-end">
-            {this.isFirstStep ? (
-              <button class="btn btn-secondary" onClick={() => this.onCancel()}>
-                Cancel
-              </button>
-            ) : (
-              <button class="btn btn-secondary" onClick={() => this.onBack()}>
-                Back
-              </button>
-            )}
-
-            {this.isLastStep ? (
-              <button class="btn btn-primary" onClick={() => this.onSubmit()}>
-                Submit Counter Dispute
-              </button>
-            ) : (
-              <button class="btn btn-primary" onClick={() => this.onNext()}>
-                Next
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
+      <StyledHost>
+        <justifi-counter-dispute-core
+          getDisputeResponse={this.getDisputeResponse}
+          onError-event={this.handleErrorEvent}
+        />
+      </StyledHost>
+    )
+  };
 };
