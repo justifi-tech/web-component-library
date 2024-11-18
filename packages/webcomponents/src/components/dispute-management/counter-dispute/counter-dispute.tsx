@@ -23,12 +23,12 @@ export class CounterDispute {
     () => <justifi-dispute-reason ref={(el) => this.currentStepComponentRef = el}></justifi-dispute-reason>,
     () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el}></justifi-product-or-service>,
     () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el}></justifi-customer-details>,
-    // () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el}></justifi-cancellation-policy>,
-    // () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el}></justifi-refund-policy>,
-    // () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el}></justifi-duplicate-charge>,
-    // () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el}></justifi-electronic-evidence>,
-    // () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el}></justifi-shipping-details>,
-    // () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el}></justifi-additional-statement>,
+    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el}></justifi-cancellation-policy>,
+    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el}></justifi-refund-policy>,
+    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el}></justifi-duplicate-charge>,
+    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el}></justifi-electronic-evidence>,
+    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el}></justifi-shipping-details>,
+    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el}></justifi-additional-statement>,
   ];
 
   get currentStepComponent() {

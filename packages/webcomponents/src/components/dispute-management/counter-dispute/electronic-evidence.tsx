@@ -1,9 +1,39 @@
-import { Component, h } from "@stencil/core";
+import { Component, h, State, Method } from "@stencil/core";
+import { FormController } from "../../form/form";
+import ElectronicEvidenceSchema from "./schemas/electronic-evidence-schema";
 
 @Component({
   tag: 'justifi-electronic-evidence',
 })
 export class ElectronicEvidence {
+  @State() form: FormController;
+  @State() errors: any = {};
+
+  @Method()
+  async validateAndSubmit(onSuccess: () => void) {
+    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  };
+
+  componentWillLoad() {
+    this.form = new FormController(ElectronicEvidenceSchema);
+  }
+
+  componentDidLoad() {
+    this.form.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
+  }
+
+  private sendData = (onSuccess: () => void) => {
+    onSuccess();
+  }
+
+  private inputHandler = (name: string, value: string) => {
+    this.form.setValues({
+      ...this.form.values.getValue(),
+      [name]: value
+    });
+  }
 
   render() {
     return (
@@ -17,6 +47,7 @@ export class ElectronicEvidence {
               label="Purchase IP Address"
               name="customer_purchase_ip_address"
               helpText="The IP address used by the customer during the purchase."
+              inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">
@@ -24,6 +55,7 @@ export class ElectronicEvidence {
               label="Activity Logs"
               name="access_activity_log"
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
+              inputHandler={this.inputHandler}
             />
           </div>
         </div>
