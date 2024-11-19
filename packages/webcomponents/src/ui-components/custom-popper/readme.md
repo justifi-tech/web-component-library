@@ -28,7 +28,7 @@
 
 ### Used by
 
- - [form-control-tooltip](../../components/form/form-helpers/form-control-tooltip)
+ - [form-control-tooltip](../form/form-helpers/form-control-tooltip)
  - [table-filters-menu](../filters)
 
 ### Graph

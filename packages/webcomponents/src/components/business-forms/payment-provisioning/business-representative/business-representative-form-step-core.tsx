@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { Identity, Representative } from '../../../../api/Identity';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { identitySchema } from '../../schemas/business-identity-schema';

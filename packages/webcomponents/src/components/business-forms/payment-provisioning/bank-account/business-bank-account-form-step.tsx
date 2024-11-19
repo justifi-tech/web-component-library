@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep, BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
-import { numberOnlyHandler } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 

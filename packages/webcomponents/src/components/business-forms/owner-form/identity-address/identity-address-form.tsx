@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import StateOptions from '../../../../utils/state-options';
-import { numberOnlyHandler } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { IAddress } from '../../../../api/Business';
 
 @Component({
