@@ -1,13 +1,11 @@
-import { Component, h, Method, Prop, State } from "@stencil/core";
+import { Component, h, Host, Method, Prop, State } from "@stencil/core";
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
-import { StyledHost } from "../styled-host/styled-host";
 import { MessageEventType } from "../../components/payment-method-form/message-event-types";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
 
 @Component({
   tag: "iframe-input",
-  shadow: true,
 })
 export class IframeInput {
   private iframeElement!: HTMLIFrameElement;
@@ -86,25 +84,23 @@ export class IframeInput {
 
   render() {
     return (
-      <StyledHost exportparts="input,label,input-focused,input-invalid" >
-        <div class="form-group d-flex flex-column">
-          <label htmlFor="" part="label">{this.label || ''}</label>
-          <div part={this.part}>
-            <iframe
-              id={this.inputId}
-              name={this.inputId}
-              src={this.iframeOrigin + `?fontFamily=${this.fontFamily}`}
-              ref={el => {
-                this.iframeElement = el as HTMLIFrameElement;
-                this.initializeFrameCommunicationService();
-              }}
-              height="100%"
-              width="100%"
-            />
-          </div>
-          <FormControlErrorText errorText={this.errorText} name={this.inputId} />
+      <Host class="form-group d-flex flex-column">
+        <label htmlFor="" part="label">{this.label || ''}</label>
+        <div part={this.part}>
+          <iframe
+            id={this.inputId}
+            name={this.inputId}
+            src={this.iframeOrigin + `?fontFamily=${this.fontFamily}`}
+            ref={el => {
+              this.iframeElement = el as HTMLIFrameElement;
+              this.initializeFrameCommunicationService();
+            }}
+            height="100%"
+            width="100%"
+          />
         </div>
-      </StyledHost>
+        <FormControlErrorText errorText={this.errorText} name={this.inputId} />
+      </Host>
     );
   }
 }

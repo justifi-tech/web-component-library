@@ -1,9 +1,7 @@
-import { Component, h, Method } from "@stencil/core";
-import { StyledHost } from "../../../ui-components";
+import { Component, h, Host, Method } from "@stencil/core";
 
 @Component({
   tag: "card-form",
-  shadow: true,
 })
 export class CardForm {
   private cardNumberIframeElement!: HTMLIframeInputElement;
@@ -35,43 +33,41 @@ export class CardForm {
 
   render() {
     return (
-      <StyledHost exportparts="input,label,input-focused,input-invalid" >
-        <div class="container-fluid p-0" >
-          <div class="mb-3">
+      <Host class="container-fluid p-0" >
+        <div class="mb-3">
+          <iframe-input
+            inputId="cardNumber"
+            ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
+            label="Card Number"
+            iframeOrigin={`${IFRAME_ORIGIN}/cardNumber`}
+          />
+        </div>
+        <div class="row">
+          <div class="col-4">
             <iframe-input
-              inputId="cardNumber"
-              ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
-              label="Card Number"
-              iframeOrigin={`${IFRAME_ORIGIN}/cardNumber`}
+              inputId="expirationMonth"
+              ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
+              label="Expiration"
+              iframeOrigin={`${IFRAME_ORIGIN}/expirationMonth`}
             />
           </div>
-          <div class="row">
-            <div class="col-4">
-              <iframe-input
-                inputId="expirationMonth"
-                ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
-                label="Expiration"
-                iframeOrigin={`${IFRAME_ORIGIN}/expirationMonth`}
-              />
-            </div>
-            <div class="col-4">
-              <iframe-input
-                inputId="expirationYear"
-                ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
-                iframeOrigin={`${IFRAME_ORIGIN}/expirationYear`}
-              />
-            </div>
-            <div class="col-4">
-              <iframe-input
-                inputId="CVV"
-                ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
-                label="CVV"
-                iframeOrigin={`${IFRAME_ORIGIN}/CVV`}
-              />
-            </div>
+          <div class="col-4">
+            <iframe-input
+              inputId="expirationYear"
+              ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
+              iframeOrigin={`${IFRAME_ORIGIN}/expirationYear`}
+            />
+          </div>
+          <div class="col-4">
+            <iframe-input
+              inputId="CVV"
+              ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
+              label="CVV"
+              iframeOrigin={`${IFRAME_ORIGIN}/CVV`}
+            />
           </div>
         </div>
-      </StyledHost>
+      </Host>
     );
   }
 }
