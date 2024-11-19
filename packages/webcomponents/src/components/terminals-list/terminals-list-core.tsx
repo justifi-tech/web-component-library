@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Terminal, TerminalsTableFilterParams, pagingDefaults } from '../../api';
+import { PagingInfo, SubAccount, Terminal, TerminalsTableFilterParams, pagingDefaults } from '../../api';
 import { MapTerminalStatusToBadge } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
@@ -11,18 +11,20 @@ import { onFilterChange } from '../../ui-components/filters/utils';
 })
 export class TerminalsListCore {
   @State() terminals: Terminal[] = [];
-  @State() subAccountNames: string[] = [];
+  @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: TerminalsTableFilterParams = {};
 
   @Prop() getTerminals: Function;
+  @Prop() getSubAccounts: Function;
 
   @Watch('params')
   @Watch('getTerminals')
+  @Watch('getSubAccounts')
   updateOnPropChange() {
-    this.fetchData();
+    this.fetchTerminals();
   }
 
   @Event({
@@ -33,19 +35,42 @@ export class TerminalsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    if (this.getTerminals) {
-      this.fetchData();
+    if (this.getTerminals && this.getSubAccounts) {
+      this.fetchTerminals();
     }
   }
 
-  fetchData(): void {
+  async fetchTerminals(): Promise<void> {
     this.loading = true;
-
+    
     this.getTerminals({
       params: this.params,
       onSuccess: ({ terminals, pagingInfo }) => {
         this.terminals = terminals;
         this.paging = pagingInfo;
+        this.fetchSubAccounts();
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+        this.loading = false;
+      },
+    });
+  }
+
+  async fetchSubAccounts(): Promise<void> {
+    this.getSubAccounts({
+      params: this.subAccountParams,
+      onSuccess: ({ subAccounts }) => {
+        this.subAccounts = subAccounts;
+        this.terminals = this.terminals.map((terminal) => {
+          terminal.sub_account_name = this.subAccounts.find((subAccount) => subAccount.id === terminal.account_id)?.name;
+          return terminal;
+        });
         this.loading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -59,6 +84,7 @@ export class TerminalsListCore {
       },
     });
   }
+
 
   handleClickPrevious = (beforeCursor: string) => {
     const newParams: any = { ...this.params };
@@ -85,6 +111,13 @@ export class TerminalsListCore {
 
   clearParams = () => {
     this.params = {};
+  }
+
+  get subAccountParams() {
+    let accountIdNumbers = this.terminals.map((terminal) => terminal.account_id);
+    let uniqueAccountIds = [...new Set(accountIdNumbers)];
+    let accountIdString = uniqueAccountIds.join(',');
+    return { sub_account_id: accountIdString };
   }
 
   get entityId() {
@@ -121,7 +154,7 @@ export class TerminalsListCore {
   }
 
   get showRowData() {
-    return !this.showEmptyState && !this.showErrorState;
+    return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
   render() {

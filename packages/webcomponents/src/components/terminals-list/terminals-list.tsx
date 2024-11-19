@@ -6,6 +6,8 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import { TerminalService } from '../../api/services/terminal.service';
 import { makeGetTerminals } from './get-terminals';
+import { SubAccountService } from '../../api/services/subaccounts.service';
+import { makeGetSubAccounts } from '../../api/get-subaccounts';
 
 /**
   * @exportedPart label: Label for inputs
@@ -36,6 +38,7 @@ import { makeGetTerminals } from './get-terminals';
 
 export class TerminalsList {
   @State() getTerminals: Function;
+  @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
 
   @Prop() accountId: string;
@@ -49,7 +52,7 @@ export class TerminalsList {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetTerminals();
+    this.initializeGetData();
   }
 
   disconnectedCallback() {
@@ -59,7 +62,12 @@ export class TerminalsList {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
+    this.initializeGetData();
+  }
+
+  private initializeGetData() {
     this.initializeGetTerminals();
+    this.initializeGetSubAccounts();
   }
 
   private initializeGetTerminals() {
@@ -80,6 +88,17 @@ export class TerminalsList {
     }
   }
 
+  private initializeGetSubAccounts() {
+    if (this.accountId && this.authToken) {
+      this.getSubAccounts = makeGetSubAccounts({
+        accountId: this.accountId,
+        authToken: this.authToken,
+        service: new SubAccountService(),
+        apiOrigin: this.apiOrigin
+      });
+    }
+  }
+
   handleErrorEvent = (event) => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
@@ -91,7 +110,8 @@ export class TerminalsList {
     }
     return (
       <terminals-list-core 
-        getTerminals={this.getTerminals} 
+        getTerminals={this.getTerminals}
+        getSubAccounts={this.getSubAccounts}
         onError-event={this.handleErrorEvent}
       />
     );

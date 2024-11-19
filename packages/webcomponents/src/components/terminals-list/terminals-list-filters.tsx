@@ -32,10 +32,10 @@ export class TerminalsListFilters {
         <div class="grid-cols-2 gap-3 p-1">
           <div class="p-2">
             <form-control-text 
-              name="id"
+              name="terminal_id"
               label="Terminal ID"
               inputHandler={this.debouncedSetParamsOnChange}
-              defaultValue={this.params.id}
+              defaultValue={this.params.terminal_id}
             />
           </div>
           <div class="p-2">

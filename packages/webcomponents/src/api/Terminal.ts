@@ -1,7 +1,7 @@
 import { capitalizeFirstLetter } from '../utils/utils';
 
 export interface TerminalsTableFilterParams {
-  id?: string;
+  terminal_id?: string;
   status?: string;
   account_id?: string;
   before_cursor?: string;
