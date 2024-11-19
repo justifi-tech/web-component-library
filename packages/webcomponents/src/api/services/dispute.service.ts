@@ -5,7 +5,7 @@ import { config } from '../../../config';
 export interface IDisputeService {
   fetchDispute(
     disputeId: string,
-    authToken: string
+    authToken: string,
   ): Promise<IApiResponse<IDispute>>;
 
   fetchDisputeResponse(

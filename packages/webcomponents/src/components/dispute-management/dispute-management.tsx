@@ -57,8 +57,6 @@ export class DisputeManagement {
     }
   }
 
-  disputeService = new DisputeService();
-
   handleErrorEvent = event => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);

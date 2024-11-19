@@ -4,9 +4,9 @@ import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetDispute =
   ({ id, authToken, service, apiOrigin }) =>
-    async ({ params, onSuccess, onError }) => {
+    async ({ onSuccess, onError }) => {
       try {
-        const response = await service.fetchDispute(id, authToken, params, apiOrigin);
+        const response = await service.fetchDispute(id, authToken, apiOrigin);
 
         if (!response.error) {
           const pagingInfo = {
