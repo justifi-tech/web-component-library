@@ -12,6 +12,8 @@ import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
 import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInterruptionInsurance.json';
+import mockTerminals from '../../../../mockData/mockTerminalsListSuccess.json';
+import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -53,6 +55,8 @@ export const API_PATHS = {
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
   INSURANCE_QUOTES: '/insurance/quotes',
+  TERMINALS_LIST: 'terminals',
+  SUB_ACCOUNTS_LIST: 'sub_accounts',
   PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
@@ -114,6 +118,12 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // PayoutsList
       this.get(API_PATHS.PAYOUTS_LIST, () => mockPayouts);
+
+      // TerminalsList
+      this.get(API_PATHS.TERMINALS_LIST, () => mockTerminals);
+
+      // SubAccountsList
+      this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
 
       // Checkout
       this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
