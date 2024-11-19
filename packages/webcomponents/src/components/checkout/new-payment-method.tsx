@@ -1,4 +1,4 @@
-import { Component, h, Prop, Method, Event, EventEmitter, Listen, State } from '@stencil/core';
+import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -104,7 +104,7 @@ export class NewPaymentMethod {
 
   render() {
     return (
-      <div class="payment-method">
+      <Host class="payment-method">
         <div
           class="radio-list-item p-3"
           onClick={() => this.onPaymentMethodOptionClick()}
@@ -130,7 +130,7 @@ export class NewPaymentMethod {
         </div>
 
         {this.isSelected ? this.showNewPaymentMethodForm() : null}
-      </div>
+      </Host>
     );
   }
 }
