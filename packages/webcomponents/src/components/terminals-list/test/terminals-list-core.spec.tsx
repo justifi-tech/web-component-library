@@ -9,7 +9,7 @@ import { IApiResponseCollection, ITerminal } from '../../../api';
 import { makeGetTerminals } from '../get-terminals';
 import { TerminalsListFilters } from '../terminals-list-filters';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
-import { SelectInput } from '../../form/form-control-select';
+import { SelectInput } from '../../../ui-components/form/form-control-select';
 
 const mockTerminalsResponse = mockSuccessResponse as IApiResponseCollection<ITerminal[]>;
 const components = [TerminalsListCore, PaginationMenu, TableFiltersMenu, TerminalsListFilters, SelectInput];
