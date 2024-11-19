@@ -8,7 +8,7 @@ jest.mock('../../../api/services/terminal.service');
 
 describe('makeGetTerminals', () => {
   const mockId = '123';
-  const mockAuthToken = 'token';
+  const mockAuthToken = 'fake_token_789';
   const mockParams = { limit: 10, page: 1 };
   const mockApiOrigin = 'http://localhost:3000';
 
