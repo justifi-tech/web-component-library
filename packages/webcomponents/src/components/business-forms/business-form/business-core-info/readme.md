@@ -26,10 +26,10 @@ and the other one  is meant to be just read only.
 
 ### Depends on
 
-- [form-control-text](../../../form)
-- [form-control-select](../../../form)
-- [form-control-date](../../../form)
-- [form-control-number-masked](../../../form)
+- [form-control-text](../../../../ui-components/form)
+- [form-control-select](../../../../ui-components/form)
+- [form-control-date](../../../../ui-components/form)
+- [form-control-number-masked](../../../../ui-components/form)
 
 ### Graph
 ```mermaid

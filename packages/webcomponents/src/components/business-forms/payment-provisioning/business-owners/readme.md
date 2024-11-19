@@ -54,7 +54,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [form-control-tooltip](../../../form/form-helpers/form-control-tooltip)
+- [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
 - [justifi-owner-form](../../owner-form)
 
 ### Graph
