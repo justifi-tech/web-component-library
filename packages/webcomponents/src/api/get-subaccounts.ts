@@ -3,10 +3,14 @@ import { ComponentErrorSeverity } from './ComponentError';
 import { getErrorCode, getErrorMessage } from './services/utils';
 
 export const makeGetSubAccounts =
-  ({ authToken, service }) =>
+  ({ accountId, authToken, service, apiOrigin }) =>
   async ({ params, onSuccess, onError }) => {
+
+    // Account ID must be passed as param to fetch SubAccounts
+    let newParams = { ...params, account_id: accountId };
+
     try {
-      const response = await service.fetchSubAccounts(authToken, params);
+      const response = await service.fetchSubAccounts(authToken, newParams, apiOrigin);
 
       if (!response.error) {
         const pagingInfo = {
@@ -35,3 +39,4 @@ export const makeGetSubAccounts =
       });
     }
   };
+  
