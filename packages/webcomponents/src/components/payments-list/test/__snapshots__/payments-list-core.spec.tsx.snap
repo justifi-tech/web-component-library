@@ -7,38 +7,31 @@ table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 " style="display: block;">
   <style></style>
-  <div class="gy-3 mb-4 row">
-    <div class="col-2">
-      <form-control-date label="Start Date" name="created_after"></form-control-date>
-    </div>
-    <div class="col-2">
-      <form-control-date label="End Date" name="created_before"></form-control-date>
-    </div>
-  </div>
+  <payments-list-filters></payments-list-filters>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">
         <tr class="table-light text-nowrap" part="table-head-row">
           <th part="table-head-cell" scope="col" title="The date and time each payment was made">
-            Made On
+            Date
           </th>
           <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
             Amount
+          </th>
+          <th part="table-head-cell" scope="col" title="The current status of each payment">
+            Status
+          </th>
+          <th part="table-head-cell" scope="col" title="The type of each payment">
+            Type
           </th>
           <th part="table-head-cell" scope="col" title="The payment description, if you provided one">
             Description
           </th>
           <th part="table-head-cell" scope="col" title="The name associated with the payment method">
-            Cardholder
+            Account Holder
           </th>
           <th part="table-head-cell" scope="col" title="The brand and last 4 digits of the payment method">
             Payment Method
-          </th>
-          <th part="table-head-cell" scope="col" title="The current status of each payment">
-            Status
-          </th>
-          <th part="table-head-cell" scope="col" title="The unique identifier of each payment">
-            Payment ID
           </th>
         </tr>
       </thead>
@@ -93,38 +86,31 @@ table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 " style="display: block;">
   <style></style>
-  <div class="gy-3 mb-4 row">
-    <div class="col-2">
-      <form-control-date label="Start Date" name="created_after"></form-control-date>
-    </div>
-    <div class="col-2">
-      <form-control-date label="End Date" name="created_before"></form-control-date>
-    </div>
-  </div>
+  <payments-list-filters></payments-list-filters>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">
         <tr class="table-light text-nowrap" part="table-head-row">
           <th part="table-head-cell" scope="col" title="The date and time each payment was made">
-            Made On
+            Date
           </th>
           <th part="table-head-cell" scope="col" title="The dollar amount of each payment">
             Amount
+          </th>
+          <th part="table-head-cell" scope="col" title="The current status of each payment">
+            Status
+          </th>
+          <th part="table-head-cell" scope="col" title="The type of each payment">
+            Type
           </th>
           <th part="table-head-cell" scope="col" title="The payment description, if you provided one">
             Description
           </th>
           <th part="table-head-cell" scope="col" title="The name associated with the payment method">
-            Cardholder
+            Account Holder
           </th>
           <th part="table-head-cell" scope="col" title="The brand and last 4 digits of the payment method">
             Payment Method
-          </th>
-          <th part="table-head-cell" scope="col" title="The current status of each payment">
-            Status
-          </th>
-          <th part="table-head-cell" scope="col" title="The unique identifier of each payment">
-            Payment ID
           </th>
         </tr>
       </thead>
@@ -139,7 +125,15 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             </div>
           </td>
           <td part="table-cell">
-            $234.56
+            $234.56 USD
+          </td>
+          <td part="table-cell">
+            <span class="badge bg-success" title="This payment was successfully captured">
+              Succeeded
+            </span>
+          </td>
+          <td part="table-cell">
+            Card
           </td>
           <td part="table-cell">
             payment
@@ -149,14 +143,6 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           </td>
           <td part="table-cell">
             **** 1111
-          </td>
-          <td part="table-cell">
-            <span class="badge bg-success" title="This payment was successfully captured">
-              Successful
-            </span>
-          </td>
-          <td part="table-cell">
-            py_66NWqoIBi7xnPmqv9By5jD
           </td>
         </tr>
         <tr data-row-entity-id="py_4VPDyBwelwI9HjufbgwqZK" data-test-id="table-row" part="table-row table-row-even">
@@ -169,7 +155,15 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
             </div>
           </td>
           <td part="table-cell">
-            $234.56
+            $234.56 USD
+          </td>
+          <td part="table-cell">
+            <span class="badge bg-success" title="This payment was successfully captured">
+              Succeeded
+            </span>
+          </td>
+          <td part="table-cell">
+            Card
           </td>
           <td part="table-cell">
             payment
@@ -179,14 +173,6 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           </td>
           <td part="table-cell">
             **** 1111
-          </td>
-          <td part="table-cell">
-            <span class="badge bg-success" title="This payment was successfully captured">
-              Successful
-            </span>
-          </td>
-          <td part="table-cell">
-            py_4VPDyBwelwI9HjufbgwqZK
           </td>
         </tr>
       </tbody>

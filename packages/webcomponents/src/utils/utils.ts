@@ -4,17 +4,16 @@ import { Address } from '../api/Business';
 
 export const RegExZip = /^\d{5}/;
 
-export function formatCurrency(amount: number, withSymbol = true): string {
+export function formatCurrency(amount: number, withSymbol = true, withCurrencyName = false): string {
   if (!amount) amount = 0;
 
   function format(amount: number): string {
     const formattedString = withSymbol ? '$0,0.00' : '0,0.00';
-    return Dinero({ amount: amount, currency: 'USD' }).toFormat(
-      formattedString
-    );
+    return Dinero({ amount: amount, currency: 'USD' }).toFormat(formattedString);
   }
 
-  return amount < 0 ? `(${format(-amount)})` : format(amount);
+  const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
+  return withCurrencyName ? `${formattedAmount} USD` : formattedAmount;
 }
 
 export function formatPercentage(amount: number): string {
@@ -97,22 +96,24 @@ export function extractComputedFontsToLoad() {
 
 export const MapPaymentStatusToBadge = (status: string) => {
   switch (status) {
+    case 'succeeded':
+      return "<span class='badge bg-success' title='This payment was successfully captured'>Succeeded</span>";
     case 'authorized':
       return "<span class='badge bg-primary' title='This card payment was authorized, but not captured. It could still succeed or fail.'>Authorized</span>";
-    case 'disputed':
-      return "<span class='badge bg-primary' title='The account holder disputed this payment. The amount has been returned and a fee assessed.'>Disputed</span>";
+    case 'pending':
+      return "<span class='badge bg-primary' title='This ACH payment was processed, but the funds haven't settled. It could still succeed or fail.'>Pending</span>";
     case 'achFailed':
       return "<span class='badge bg-danger' title='The funds couldn't be collected for this ACH payment (in addition to the original payment, an ACH return and fee will appear in a payout)'>Failed</span>";
     case 'failed':
       return "<span class='badge bg-danger' title='This card payment didn't go through (it won't appear in a payout)'>Failed</span>";
+    case 'canceled':
+      return "<span class='badge bg-danger' title='This payment was canceled'>Canceled</span>";
+    case 'disputed':
+      return "<span class='badge bg-secondary' title='The account holder disputed this payment. The amount has been returned and a fee assessed.'>Disputed</span>";
     case 'fully_refunded':
-      return "<span class='badge bg-primary' title='The full amount of this payment has been refunded'>Fully Refunded</span>";
+      return "<span class='badge bg-secondary' title='The full amount of this payment has been refunded'>Fully Refunded</span>";
     case 'partially_refunded':
-      return "<span class='badge bg-primary' title='A portion of this payment has been refunded'>Partially Refunded</span>";
-    case 'pending':
-      return "<span class='badge bg-secondary' title='This ACH payment was processed, but the funds haven't settled. It could still succeed or fail.'>Pending</span>";
-    case 'succeeded':
-      return "<span class='badge bg-success' title='This payment was successfully captured'>Successful</span>";
+      return "<span class='badge bg-secondary' title='A portion of this payment has been refunded'>Partially Refunded</span>";
   }
 };
 

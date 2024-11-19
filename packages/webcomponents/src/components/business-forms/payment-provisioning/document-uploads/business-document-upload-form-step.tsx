@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { FormController } from '../../../form/form';
-import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { FormController } from '../../../../ui-components/form/form';
+import { BusinessFormStep, BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
@@ -27,6 +27,7 @@ export class BusinessDocumentFormStep {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
@@ -140,6 +141,7 @@ export class BusinessDocumentFormStep {
       return false;
     } else {
       this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.documentUpload } });
+      this.stepCompleted.emit({ data: response, formStep: BusinessFormStepV2.documentUpload });
       return true;
     }
   }
@@ -155,6 +157,7 @@ export class BusinessDocumentFormStep {
     try {
       const docArray = Object.values(this.documentData).flat();
       if (!docArray.length) {
+        this.stepCompleted.emit({ data: null, formStep: BusinessFormStepV2.documentUpload, metadata: 'no data submitted' });
         return onSuccess();
       }
 
@@ -218,9 +221,11 @@ export class BusinessDocumentFormStep {
     return (
       <form>
         <fieldset>
-          <legend>Document Uploads</legend>
-          <p>Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category.</p>
-          <hr />
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0">Document Uploads</legend>
+            <form-control-tooltip helpText="Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category." />
+          </div>
+          <hr class="mt-2" />
           {this.documentsOnFile}
           <div class="d-flex flex-column">
             {this.formInputs}

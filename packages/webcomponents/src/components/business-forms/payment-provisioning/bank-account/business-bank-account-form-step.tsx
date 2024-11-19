@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
-import { FormController } from '../../../form/form';
-import { BusinessFormStep, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { FormController } from '../../../../ui-components/form/form';
+import { BusinessFormStep, BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
-import { numberOnlyHandler } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 
@@ -33,6 +33,7 @@ export class BusinessBankAccountFormStep {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
@@ -103,12 +104,17 @@ export class BusinessBankAccountFormStep {
       onSuccess();
     }
     this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.bankAccount } });
+    this.stepCompleted.emit({ data: response, formStep: BusinessFormStepV2.bankAccount });
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.formDisabled ? onSuccess() :
+    if (this.formDisabled) {
+      this.stepCompleted.emit({ data: null, formStep: BusinessFormStepV2.bankAccount, metadata: 'no data submitted' });
+      onSuccess();
+    } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+    };
   };
 
   componentWillLoad() {
@@ -141,8 +147,11 @@ export class BusinessBankAccountFormStep {
     return (
       <form>
         <fieldset>
-          <legend>Bank Account Info</legend>
-          <hr />
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0">Bank Account Info</legend>
+            <form-control-tooltip helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
+          </div>
+          <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text
@@ -195,6 +204,7 @@ export class BusinessBankAccountFormStep {
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 disabled={this.formDisabled}
+                helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
               />
             </div>
             <div class="col-12">
@@ -207,6 +217,7 @@ export class BusinessBankAccountFormStep {
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 disabled={this.formDisabled}
+                helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
               />
             </div>
           </div>
