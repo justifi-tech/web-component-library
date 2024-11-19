@@ -4,14 +4,17 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { TerminalsListCore } from '../terminals-list-core';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
-import mockSuccessResponse from '../../../../../../mockData/mockTerminalsListSuccess.json';
-import { IApiResponseCollection, ITerminal } from '../../../api';
+import mockTerminalSuccessResponse from '../../../../../../mockData/mockTerminalsListSuccess.json';
+import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
+import { IApiResponseCollection, ISubAccount, ITerminal } from '../../../api';
 import { makeGetTerminals } from '../get-terminals';
 import { TerminalsListFilters } from '../terminals-list-filters';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { makeGetSubAccounts } from '../../../api/get-subaccounts';
 
-const mockTerminalsResponse = mockSuccessResponse as IApiResponseCollection<ITerminal[]>;
+const mockTerminalsResponse = mockTerminalSuccessResponse as IApiResponseCollection<ITerminal[]>;
+const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
 const components = [TerminalsListCore, PaginationMenu, TableFiltersMenu, TerminalsListFilters, SelectInput];
 
 describe('terminals-list-core', () => {
@@ -26,10 +29,21 @@ describe('terminals-list-core', () => {
       service: mockTerminalsService,
       apiOrigin: 'http://localhost:3000'
     });
+    
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -53,9 +67,20 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -76,9 +101,20 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -105,9 +141,20 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -134,9 +181,20 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -178,9 +236,20 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -227,9 +296,20 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -256,11 +336,22 @@ describe('terminals-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} onError-event={errorEvent} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();
