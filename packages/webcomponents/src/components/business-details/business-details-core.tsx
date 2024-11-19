@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
-import { ErrorState, LoadingState } from '../details/utils';
+import { ErrorState, LoadingState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { StyledHost } from '../../ui-components';
 

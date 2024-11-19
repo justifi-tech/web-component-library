@@ -9,7 +9,7 @@ import { IApiResponseCollection, IPayment } from '../../../api';
 import { makeGetPayments } from '../get-payments';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PaymentsListFilters } from '../payments-list-filters';
-import { SelectInput } from '../../form/form-control-select';
+import { SelectInput } from '../../../ui-components/form/form-control-select';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
 const components = [PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters, SelectInput];

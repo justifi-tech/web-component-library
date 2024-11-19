@@ -6,3 +6,4 @@ export * from './Pagination';
 export * from './Payment';
 export * from './Payout';
 export * from './Terminal';
+export * from './SubAccount';
