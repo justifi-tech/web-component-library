@@ -91,6 +91,32 @@ export interface IDispute {
   updated_at: string;
 }
 
+export class Dispute implements IDispute {
+  public id: string;
+  public amount: number;
+  public currency: string;
+  public payment_id: string;
+  public reason: string;
+  public due_date: string;
+  public status: DisputeStatus;
+  public metadata: any;
+  public created_at: string;
+  public updated_at: string;
+
+  constructor(dispute: IDispute) {
+    this.id = dispute.id;
+    this.amount = dispute.amount;
+    this.currency = dispute.currency;
+    this.payment_id = dispute.payment_id;
+    this.reason = dispute.reason;
+    this.due_date = dispute.due_date;
+    this.status = dispute.status;
+    this.metadata = dispute.metadata;
+    this.created_at = dispute.created_at;
+    this.updated_at = dispute.updated_at;
+  }
+}
+
 export interface IDisputeResponse {
   additional_statement: string;
   cancellation_policy_disclosure: string;

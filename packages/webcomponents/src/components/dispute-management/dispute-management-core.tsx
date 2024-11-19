@@ -1,14 +1,23 @@
-import { Component, Event, EventEmitter, h, Listen, State } from "@stencil/core";
-import { StyledHost } from "../../ui-components";
+import { Component, Prop, Event, EventEmitter, h, Listen, State, Watch } from "@stencil/core";
 import { DisputeManagementClickEvents } from "./dispute";
+import { Dispute } from "../../api/Dispute";
+import { ComponentError } from "../../api/ComponentError";
 
 @Component({
   tag: 'justifi-dispute-management-core',
 })
 export class DisputeManagementCore {
+  @Prop() getDispute: Function;
+
+  @State() dispute: Dispute;
+  @State() loading: boolean = true;
+  @State() errorMessage: string;
+  @State() showDisputeResponseForm: boolean = false;
+
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>
+
   @Event() submitted: EventEmitter;
 
-  @State() showDisputeResponseForm: boolean = false;
 
   @Listen('clickEvent')
   disputeResponseHandler(event: CustomEvent) {
@@ -20,11 +29,44 @@ export class DisputeManagementCore {
     }
   }
 
+  componentWillLoad() {
+    if (this.getDispute) {
+      this.fetchData();
+    }
+  }
+
+  @Watch('getDispute')
+  updateOnPropChange() {
+    this.fetchData();
+  }
+
+  fetchData(): void {
+    this.loading = true;
+
+    this.getDispute({
+      onSuccess: ({ dispute }) => {
+        this.dispute = dispute;
+        this.loading = false;
+        this.errorMessage = null;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        })
+        this.loading = false;
+      },
+    });
+  }
+
   render() {
     return (
-      <StyledHost>
+      <div>
         {this.showDisputeResponseForm ? <justifi-dispute-response /> : <justifi-dispute-notification />}
-      </StyledHost>
+        Dispute: {JSON.stringify(this.dispute)}
+      </div>
     );
   }
 };
