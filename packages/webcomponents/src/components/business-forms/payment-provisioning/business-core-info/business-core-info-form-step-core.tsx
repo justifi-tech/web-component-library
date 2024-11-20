@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { BusinessFormStepCompletedEvent, BusinessFormSubmitEvent, BusinessFormStepV2 } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
-import { numberOnlyHandler } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 
 @Component({
   tag: 'justifi-business-core-info-form-step-core',

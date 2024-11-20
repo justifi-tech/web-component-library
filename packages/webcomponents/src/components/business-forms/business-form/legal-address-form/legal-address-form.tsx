@@ -1,8 +1,8 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../components';
 import { IAddress } from '../../../../api/Business';
 import StateOptions from '../../../../utils/state-options';
-import { numberOnlyHandler } from '../../../form/utils';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 
 /**
  * @exportedPart label: Label for inputs

@@ -39,13 +39,13 @@
 
 ### Used by
 
- - [justifi-additional-statement](../dispute-management/counter-dispute)
- - [justifi-cancellation-policy](../dispute-management/counter-dispute)
- - [justifi-customer-details](../dispute-management/counter-dispute)
- - [justifi-duplicate-charge](../dispute-management/counter-dispute)
- - [justifi-electronic-evidence](../dispute-management/counter-dispute)
- - [justifi-refund-policy](../dispute-management/counter-dispute)
- - [justifi-shipping-details](../dispute-management/counter-dispute)
+ - [justifi-additional-statement](../../components/dispute-management/counter-dispute)
+ - [justifi-cancellation-policy](../../components/dispute-management/counter-dispute)
+ - [justifi-customer-details](../../components/dispute-management/counter-dispute)
+ - [justifi-duplicate-charge](../../components/dispute-management/counter-dispute)
+ - [justifi-electronic-evidence](../../components/dispute-management/counter-dispute)
+ - [justifi-refund-policy](../../components/dispute-management/counter-dispute)
+ - [justifi-shipping-details](../../components/dispute-management/counter-dispute)
 
 ### Depends on
 

@@ -47,13 +47,18 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     method: string,
     params?: any,
     body?: any,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    headers?: HeadersInit
   ) {
     const url = `${apiOrigin}/v1/${endpoint}`;
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
+
+    const defaultHeaders = await getAuthorizationHeader();
+    const mergedHeaders = { ...defaultHeaders, ...headers };
+
     const response = await fetch(requestUrl, {
       method: method,
-      headers: await getAuthorizationHeader(),
+      headers: mergedHeaders,
       body: body,
       signal: signal,
     });
@@ -64,8 +69,8 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     handleError(requestUrl);
   }
 
-  async function get(endpoint: string, params?: any, signal?: AbortSignal) {
-    return makeRequest(endpoint, 'GET', params, null, signal);
+  async function get(endpoint: string, params?: any, signal?: AbortSignal, headers?: HeadersInit) {
+    return makeRequest(endpoint, 'GET', params, null, signal, headers);
   }
 
   async function post(

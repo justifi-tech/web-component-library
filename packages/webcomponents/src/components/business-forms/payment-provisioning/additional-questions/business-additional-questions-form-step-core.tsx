@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
-import { FormController } from '../../../form/form';
+import { FormController } from '../../../../ui-components/form/form';
 import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Business';
 import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../components';

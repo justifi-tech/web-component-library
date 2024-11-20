@@ -29,7 +29,7 @@
 
 ### Depends on
 
-- [form-alert](../../form/form-helpers/form-alert)
+- [form-alert](../../../ui-components/form/form-helpers/form-alert)
 - [justifi-business-core-info](business-core-info)
 - [justifi-legal-address-form](legal-address-form)
 - [justifi-additional-questions](additional-questions)

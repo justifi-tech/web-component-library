@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { tableExportedParts } from '../table/exported-parts';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
 import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
