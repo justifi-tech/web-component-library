@@ -1,7 +1,9 @@
-import { Component, h, Prop, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Method, State } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
 import { BillingFormFields, ComponentError } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
+import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -21,11 +23,14 @@ export class TokenizePaymentMethod {
   @Event() submitted: EventEmitter<{ token: string }>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
+  private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
+  analytics: JustifiAnalytics;
+
   componentWillLoad() {
+    checkPkgVersion();
+    this.analytics = new JustifiAnalytics(this);
     this.isLoading = false;
   }
-
-  private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
   @Method()
   async tokenizePaymentMethod(event?: CustomEvent) {
