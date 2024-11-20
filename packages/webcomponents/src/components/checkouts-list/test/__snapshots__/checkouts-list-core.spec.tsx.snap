@@ -7,7 +7,83 @@ table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 " style="display: block;">
   <style></style>
-  <checkouts-list-filters></checkouts-list-filters>
+  <checkouts-list-filters>
+    <table-filters-menu>
+      <!---->
+      <div class="d-flex gap-2">
+        <div class="dropdown pb-3">
+          <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+            Filters
+          </button>
+          <custom-popper strategy="fixed" trigger="click">
+            <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+              <div class="gap-3 grid-cols-2 p-1">
+                <div class="p-2">
+                  <form-control-select exportparts="label,input,input-invalid">
+                    <div class="d-flex flex-column form-group">
+                      <div class="align-items-start d-flex gap-2">
+                        <label class="form-label" htmlfor="status" part="label">
+                          Status
+                        </label>
+                        <form-control-tooltip></form-control-tooltip>
+                      </div>
+                      <select class="form-select" id="status" name="status" part="input ">
+                        <option value="">
+                          All
+                        </option>
+                        <option value="created">
+                          Created
+                        </option>
+                        <option value="completed">
+                          Completed
+                        </option>
+                        <option value="attempted">
+                          Attempted
+                        </option>
+                        <option value="expired">
+                          Expired
+                        </option>
+                      </select>
+                      <form-control-error-text name="status"></form-control-error-text>
+                    </div>
+                  </form-control-select>
+                </div>
+                <div class="p-2">
+                  <form-control-select exportparts="label,input,input-invalid">
+                    <div class="d-flex flex-column form-group">
+                      <div class="align-items-start d-flex gap-2">
+                        <label class="form-label" htmlfor="payment_mode" part="label">
+                          Payment Mode
+                        </label>
+                        <form-control-tooltip></form-control-tooltip>
+                      </div>
+                      <select class="form-select" id="payment_mode" name="payment_mode" part="input ">
+                        <option value="">
+                          All
+                        </option>
+                        <option value="ecom">
+                          E-commerce
+                        </option>
+                        <option value="bnpl">
+                          BNPL
+                        </option>
+                      </select>
+                      <form-control-error-text name="payment_mode"></form-control-error-text>
+                    </div>
+                  </form-control-select>
+                </div>
+              </div>
+            </form>
+          </custom-popper>
+        </div>
+        <div>
+          <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+    </table-filters-menu>
+  </checkouts-list-filters>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">
@@ -21,8 +97,8 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           <th part="table-head-cell" scope="col" title="The description of each checkout">
             Payment Description
           </th>
-          <th part="table-head-cell" scope="col" title="The unique identifier of the account associated with each checkout">
-            Account ID
+          <th part="table-head-cell" scope="col" title="The sub account associated with the checkout">
+            Sub Account
           </th>
           <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
             Payment Mode
@@ -83,7 +159,83 @@ table-row-odd,table-cell,loading-state-cell,loading-state-spinner,error-state,
 empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-button-text
 " style="display: block;">
   <style></style>
-  <checkouts-list-filters></checkouts-list-filters>
+  <checkouts-list-filters>
+    <table-filters-menu>
+      <!---->
+      <div class="d-flex gap-2">
+        <div class="dropdown pb-3">
+          <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+            Filters
+          </button>
+          <custom-popper strategy="fixed" trigger="click">
+            <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+              <div class="gap-3 grid-cols-2 p-1">
+                <div class="p-2">
+                  <form-control-select exportparts="label,input,input-invalid">
+                    <div class="d-flex flex-column form-group">
+                      <div class="align-items-start d-flex gap-2">
+                        <label class="form-label" htmlfor="status" part="label">
+                          Status
+                        </label>
+                        <form-control-tooltip></form-control-tooltip>
+                      </div>
+                      <select class="form-select" id="status" name="status" part="input ">
+                        <option value="">
+                          All
+                        </option>
+                        <option value="created">
+                          Created
+                        </option>
+                        <option value="completed">
+                          Completed
+                        </option>
+                        <option value="attempted">
+                          Attempted
+                        </option>
+                        <option value="expired">
+                          Expired
+                        </option>
+                      </select>
+                      <form-control-error-text name="status"></form-control-error-text>
+                    </div>
+                  </form-control-select>
+                </div>
+                <div class="p-2">
+                  <form-control-select exportparts="label,input,input-invalid">
+                    <div class="d-flex flex-column form-group">
+                      <div class="align-items-start d-flex gap-2">
+                        <label class="form-label" htmlfor="payment_mode" part="label">
+                          Payment Mode
+                        </label>
+                        <form-control-tooltip></form-control-tooltip>
+                      </div>
+                      <select class="form-select" id="payment_mode" name="payment_mode" part="input ">
+                        <option value="">
+                          All
+                        </option>
+                        <option value="ecom">
+                          E-commerce
+                        </option>
+                        <option value="bnpl">
+                          BNPL
+                        </option>
+                      </select>
+                      <form-control-error-text name="payment_mode"></form-control-error-text>
+                    </div>
+                  </form-control-select>
+                </div>
+              </div>
+            </form>
+          </custom-popper>
+        </div>
+        <div>
+          <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+    </table-filters-menu>
+  </checkouts-list-filters>
   <div class="table-wrapper">
     <table class="table table-hover">
       <thead class="sticky-top table-head" part="table-head">
@@ -97,8 +249,8 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           <th part="table-head-cell" scope="col" title="The description of each checkout">
             Payment Description
           </th>
-          <th part="table-head-cell" scope="col" title="The unique identifier of the account associated with each checkout">
-            Account ID
+          <th part="table-head-cell" scope="col" title="The sub account associated with the checkout">
+            Sub Account
           </th>
           <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
             Payment Mode
@@ -124,13 +276,13 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           <td part="table-cell">
             One Chocolate Donut
           </td>
-          <td part="table-cell">
-            acc_5Et9iXrSSAZR2KSouQGAWi
-          </td>
-          <td part="table-cell">
-            ecom
-          </td>
           <td part="table-cell"></td>
+          <td part="table-cell"></td>
+          <td part="table-cell">
+            <span class="badge bg-danger" title="The checkout has expired">
+              Expired
+            </span>
+          </td>
         </tr>
         <tr data-row-entity-id="cho_zWtk4NimSV1PVulNY4a7j" data-test-id="table-row" part="table-row table-row-even">
           <td part="table-cell">
@@ -147,13 +299,13 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           <td part="table-cell">
             One Chocolate Donut
           </td>
-          <td part="table-cell">
-            acc_5Et9iXrSSAZR2KSouQGAWi
-          </td>
-          <td part="table-cell">
-            ecom
-          </td>
           <td part="table-cell"></td>
+          <td part="table-cell"></td>
+          <td part="table-cell">
+            <span class="badge bg-danger" title="The checkout has expired">
+              Expired
+            </span>
+          </td>
         </tr>
       </tbody>
       <tfoot class="sticky-bottom">

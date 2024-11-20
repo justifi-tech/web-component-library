@@ -108,7 +108,6 @@ export class Checkout implements ICheckout {
   payment_amount: number;
   payment_client_id: string;
   payment_description: string;
-  payment_mode: ICheckoutPaymentMode;
   payment_methods: {
     id: string;
     status: string;
@@ -151,7 +150,6 @@ export class Checkout implements ICheckout {
     this.payment_amount = data.payment_amount;
     this.payment_client_id = data.payment_client_id;
     this.payment_description = data.payment_description;
-    this.payment_mode = this.paymentMode;
     this.payment_methods = data.payment_methods;
     this.payment_method_group_id = data.payment_method_group_id;
     this.payment_settings = data.payment_settings;

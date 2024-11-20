@@ -20,7 +20,7 @@ const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, Checkou
 describe('checkouts-list-core', () => {
   it('renders properly with fetched data', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -42,7 +42,7 @@ describe('checkouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [CheckoutsListCore, PaginationMenu],
+      components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
@@ -51,13 +51,13 @@ describe('checkouts-list-core', () => {
     expect(page.rootInstance.checkouts[0]).toEqual(expect.objectContaining({ account_id: mockCheckoutsListResponse.data[0].account_id }));
     const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(mockCheckoutsListResponse.data.length);
-    expect(mockCheckoutsService.fetchCheckoutsList).toHaveBeenCalled();
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalled();
     expect(page.root).toMatchSnapshot();
   });
 
   it('displays an error state on failed data fetch', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -80,7 +80,7 @@ describe('checkouts-list-core', () => {
 
 
     const page = await newSpecPage({
-      components: [CheckoutsListCore, PaginationMenu],
+      components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
@@ -92,7 +92,7 @@ describe('checkouts-list-core', () => {
 
   it('emits checkout-row-clicked event on row click', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -115,7 +115,7 @@ describe('checkouts-list-core', () => {
 
 
     const page = await newSpecPage({
-      components: [CheckoutsListCore, PaginationMenu],
+      components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
@@ -133,7 +133,7 @@ describe('checkouts-list-core', () => {
 
   it('shows table filter menu on filter button click', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -174,7 +174,7 @@ describe('checkouts-list-core', () => {
 
   it('updates params and refetches data on filter interaction', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -223,14 +223,14 @@ describe('checkouts-list-core', () => {
     selectFilterInput.value = 'succeeded';
     selectFilterInput.dispatchEvent(new Event('input'));
 
-    expect(mockCheckoutsService.fetchCheckoutsList).toHaveBeenCalledTimes(2);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
     expect(updatedParams).toEqual({ "status": "succeeded" });
   });
 
   it('clears filters and refetches data on clear filters interaction', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -284,14 +284,14 @@ describe('checkouts-list-core', () => {
 
     clearButton.click();
 
-    expect(mockCheckoutsService.fetchCheckoutsList).toHaveBeenCalledTimes(3);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(3);
     const updatedParams = page.rootInstance.params;
     expect(updatedParams).toEqual({});
   });
 
   it('updates params and refetches data on pagination interaction', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -314,7 +314,7 @@ describe('checkouts-list-core', () => {
 
 
     const page = await newSpecPage({
-      components: [CheckoutsListCore, PaginationMenu],
+      components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
@@ -325,14 +325,14 @@ describe('checkouts-list-core', () => {
     await page.waitForChanges();
 
     // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
-    expect(mockCheckoutsService.fetchCheckoutsList).toHaveBeenCalledTimes(2);
+    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
     expect(updatedParams.after_cursor).toBe('nextCursor');
   });
 
   it('emits error event on fetch error', async () => {
     const mockCheckoutsService = {
-      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -357,7 +357,7 @@ describe('checkouts-list-core', () => {
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [CheckoutsListCore, PaginationMenu],
+      components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} />,
     });
 
