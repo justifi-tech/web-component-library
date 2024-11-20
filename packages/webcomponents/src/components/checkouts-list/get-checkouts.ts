@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetCheckoutsList =
-  ({ authToken, service, apiOrigin }) =>
+  ({ accountId, authToken, service, apiOrigin }) =>
     async ({ params, onSuccess, onError }) => {
       try {
-        const response = await service.fetchCheckoutsList(authToken, params, apiOrigin);
+        const response = await service.fetchCheckoutsList(accountId, authToken, params, apiOrigin);
 
         if (!response.error) {
           const pagingInfo = {

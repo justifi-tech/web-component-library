@@ -7,6 +7,7 @@ import { IApiResponseCollection, ICheckout, Checkout } from '../../../api';
 jest.mock('../../../api/services/checkout.service');
 
 describe('makeGetCheckoutsList', () => {
+  const mockId = 'mock_id';
   const mockAuthToken = 'token';
   const mockParams = { limit: 10, page: 1 };
   const mockApiOrigin = 'http://localhost:3000';
@@ -33,6 +34,7 @@ describe('makeGetCheckoutsList', () => {
     );
 
     const getCheckoutsList = makeGetCheckoutsList({
+      accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
       apiOrigin: mockApiOrigin
@@ -58,6 +60,7 @@ describe('makeGetCheckoutsList', () => {
     mockServiceInstance.fetchCheckoutsList.mockRejectedValue(mockError);
 
     const getCheckoutsList = makeGetCheckoutsList({
+      accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
       apiOrigin: mockApiOrigin
@@ -81,6 +84,7 @@ describe('makeGetCheckoutsList', () => {
     mockServiceInstance.fetchCheckoutsList.mockRejectedValue(mockError);
 
     const getCheckoutsList = makeGetCheckoutsList({
+      accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
       apiOrigin: mockApiOrigin

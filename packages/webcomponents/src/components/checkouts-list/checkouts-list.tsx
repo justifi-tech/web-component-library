@@ -64,6 +64,7 @@ export class CheckoutsList {
   private initializeGetCheckoutsList() {
     if (this.accountId && this.authToken) {
       this.getCheckoutsList = makeGetCheckoutsList({
+        accountId: this.accountId,
         authToken: this.authToken,
         service: new CheckoutService(),
         apiOrigin: this.apiOrigin,

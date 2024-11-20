@@ -14,7 +14,10 @@ export interface ICheckoutService {
   ): Promise<IApiResponse<ICheckout>>;
 
   fetchCheckoutsList(
+    accountId: string,
     authToken: string,
+    params: any,
+    apiOrigin?: string
   ): Promise<IApiResponseCollection<ICheckout[]>>;
 
   complete(
@@ -34,10 +37,21 @@ export class CheckoutService implements ICheckoutService {
   }
 
   async fetchCheckoutsList(
+    accountId: string,
     authToken: string,
+    params: any,
+    apiOrigin?: string
   ): Promise<IApiResponseCollection<ICheckout[]>> {
+
+    if (!apiOrigin) {
+      apiOrigin = config.proxyApiOrigin;
+    }
+
+    const headers = { Account: accountId };
+
+    const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'checkouts';
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
+    return api.get(endpoint, params, null, headers);
   }
 
   async complete(
