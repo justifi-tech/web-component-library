@@ -32,6 +32,9 @@
 graph TD;
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-select --> form-control-tooltip
   justifi-business-representative --> justifi-identity-address-form
   justifi-business-representative-form-inputs --> justifi-identity-address-form
   owner-form-inputs --> justifi-identity-address-form

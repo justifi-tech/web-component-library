@@ -16,11 +16,12 @@
 
 ## Events
 
-| Event         | Description | Type                                   |
-| ------------- | ----------- | -------------------------------------- |
-| `error-event` |             | `CustomEvent<ComponentError>`          |
-| `formLoading` |             | `CustomEvent<boolean>`                 |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
+| Event                 | Description | Type                                          |
+| --------------------- | ----------- | --------------------------------------------- |
+| `error-event`         |             | `CustomEvent<ComponentError>`                 |
+| `form-step-completed` |             | `CustomEvent<BusinessFormStepCompletedEvent>` |
+| `formLoading`         |             | `CustomEvent<boolean>`                        |
+| `submitted`           |             | `CustomEvent<BusinessFormSubmitEvent>`        |
 
 
 ## Methods
@@ -50,14 +51,19 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
 - [form-control-text](../../../../ui-components/form)
 - [form-control-select](../../../../ui-components/form)
 
 ### Graph
 ```mermaid
 graph TD;
+  justifi-legal-address-form-step-core --> form-control-tooltip
   justifi-legal-address-form-step-core --> form-control-text
   justifi-legal-address-form-step-core --> form-control-select
+  form-control-tooltip --> custom-popper
+  form-control-text --> form-control-tooltip
+  form-control-select --> form-control-tooltip
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core
   style justifi-legal-address-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

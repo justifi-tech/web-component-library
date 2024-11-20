@@ -463,6 +463,11 @@ svg {
   vertical-align: middle;
 }
 
+ /* vertical alignment rule for tooltip SVG  */
+svg.tooltip-icon {
+  vertical-align: text-top;
+}
+
 table {
   caption-side: bottom;
   border-collapse: collapse;
@@ -3990,7 +3995,7 @@ fieldset:disabled .btn {
 }
 
 .dropdown-menu {
-  --bs-dropdown-zindex: 1000;
+  --bs-dropdown-zindex: 1030;
   --bs-dropdown-min-width: 10rem;
   --bs-dropdown-padding-x: 0;
   --bs-dropdown-padding-y: 0.5rem;
@@ -4018,7 +4023,7 @@ fieldset:disabled .btn {
   --bs-dropdown-header-color: #6c757d;
   --bs-dropdown-header-padding-x: 1rem;
   --bs-dropdown-header-padding-y: 0.5rem;
-  position: absolute;
+  position: fixed;
   z-index: var(--bs-dropdown-zindex);
   display: none;
   min-width: var(--bs-dropdown-min-width);
