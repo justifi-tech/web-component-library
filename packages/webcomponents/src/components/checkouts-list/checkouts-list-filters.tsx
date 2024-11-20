@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ICheckoutsParams, ICheckoutPaymentMode, ICheckoutStatus } from '../../api';
+import { ICheckoutsParams, ICheckoutStatus } from '../../api';
 
 @Component({
   tag: 'checkouts-list-filters'
@@ -19,7 +19,7 @@ export class CheckoutsListFilters {
     ]
   }
 
-  get checkoutPaymentModeOptions(): { label: string, value: ICheckoutPaymentMode | '' }[] {
+  get checkoutPaymentModeOptions(): { label: string, value: string }[] {
     return [
       { label: 'All', value: '' },
       { label: 'E-commerce', value: 'ecom' },

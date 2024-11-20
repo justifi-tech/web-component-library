@@ -52,7 +52,7 @@ describe('checkouts-list', () => {
   });
 
   it('emit an error event when fetch fails', async () => {
-    CheckoutService.prototype.fetchCheckoutsList = jest.fn().mockRejectedValue(new Error('Fetch error'));
+    CheckoutService.prototype.fetchCheckouts = jest.fn().mockRejectedValue(new Error('Fetch error'));
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({

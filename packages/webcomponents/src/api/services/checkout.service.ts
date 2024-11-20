@@ -13,7 +13,7 @@ export interface ICheckoutService {
     checkoutId: string
   ): Promise<IApiResponse<ICheckout>>;
 
-  fetchCheckoutsList(
+  fetchCheckouts(
     accountId: string,
     authToken: string,
     params: any,
@@ -36,7 +36,7 @@ export class CheckoutService implements ICheckoutService {
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
 
-  async fetchCheckoutsList(
+  async fetchCheckouts(
     accountId: string,
     authToken: string,
     params: any,

@@ -1,12 +1,12 @@
 import { CheckoutService } from '../../../api/services/checkout.service';
-import { makeGetCheckoutsList } from '../get-checkouts';
+import { makeGetCheckouts } from '../get-checkouts';
 import mockResponse from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
 import { IApiResponseCollection, ICheckout, Checkout } from '../../../api';
 
 // Mock the CheckoutService class
 jest.mock('../../../api/services/checkout.service');
 
-describe('makeGetCheckoutsList', () => {
+describe('makeGetCheckouts', () => {
   const mockId = 'mock_id';
   const mockAuthToken = 'token';
   const mockParams = { limit: 10, page: 1 };
@@ -21,7 +21,7 @@ describe('makeGetCheckoutsList', () => {
     mockServiceInstance = new CheckoutService() as jest.Mocked<CheckoutService>;
 
     // Explicitly mock fetchPayments as a jest mock function
-    mockServiceInstance.fetchCheckoutsList = jest.fn();
+    mockServiceInstance.fetchCheckouts = jest.fn();
   });
 
   it('should call onSuccess with checkouts and pagingInfo on successful fetch', async () => {
@@ -29,11 +29,11 @@ describe('makeGetCheckoutsList', () => {
     const onError = jest.fn();
 
     // Mock fetchCheckouts to resolve with mockResponse
-    mockServiceInstance.fetchCheckoutsList.mockResolvedValue(
+    mockServiceInstance.fetchCheckouts.mockResolvedValue(
       mockResponse as IApiResponseCollection<ICheckout[]>
     );
 
-    const getCheckoutsList = makeGetCheckoutsList({
+    const getCheckoutsList = makeGetCheckouts({
       accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
@@ -56,10 +56,10 @@ describe('makeGetCheckoutsList', () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    // Mock fetchCheckoutsList to reject with mockError
-    mockServiceInstance.fetchCheckoutsList.mockRejectedValue(mockError);
+    // Mock fetchCheckouts to reject with mockError
+    mockServiceInstance.fetchCheckouts.mockRejectedValue(mockError);
 
-    const getCheckoutsList = makeGetCheckoutsList({
+    const getCheckoutsList = makeGetCheckouts({
       accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
@@ -80,10 +80,10 @@ describe('makeGetCheckoutsList', () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    // Mock fetchCheckoutsList to reject with mockError
-    mockServiceInstance.fetchCheckoutsList.mockRejectedValue(mockError);
+    // Mock fetchCheckouts to reject with mockError
+    mockServiceInstance.fetchCheckouts.mockRejectedValue(mockError);
 
-    const getCheckoutsList = makeGetCheckoutsList({
+    const getCheckoutsList = makeGetCheckouts({
       accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,

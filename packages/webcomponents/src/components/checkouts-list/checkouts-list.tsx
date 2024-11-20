@@ -1,10 +1,12 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { makeGetCheckoutsList } from './get-checkouts';
+import { makeGetCheckouts } from './get-checkouts';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { SubAccountService } from '../../api/services/subaccounts.service';
+import { makeGetSubAccounts } from '../../api/get-subaccounts';
 
 /**
   * @exportedPart label: Label for inputs
@@ -34,7 +36,8 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 })
 
 export class CheckoutsList {
-  @State() getCheckoutsList: Function;
+  @State() getCheckouts: Function;
+  @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
 
   @Prop() accountId: string;
@@ -48,7 +51,7 @@ export class CheckoutsList {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetCheckoutsList();
+    this.initializeGetData();
   }
 
   disconnectedCallback() {
@@ -58,12 +61,17 @@ export class CheckoutsList {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeGetCheckoutsList();
+    this.initializeGetData();
   }
 
-  private initializeGetCheckoutsList() {
+  private initializeGetData() {
+    this.initializeGetCheckouts();
+    this.initializeGetSubAccounts();
+  }
+
+  private initializeGetCheckouts() {
     if (this.accountId && this.authToken) {
-      this.getCheckoutsList = makeGetCheckoutsList({
+      this.getCheckouts = makeGetCheckouts({
         accountId: this.accountId,
         authToken: this.authToken,
         service: new CheckoutService(),
@@ -79,6 +87,17 @@ export class CheckoutsList {
     }
   }
 
+  private initializeGetSubAccounts() {
+    if (this.accountId && this.authToken) {
+      this.getSubAccounts = makeGetSubAccounts({
+        accountId: this.accountId,
+        authToken: this.authToken,
+        service: new SubAccountService(),
+        apiOrigin: this.apiOrigin
+      });
+    }
+  }
+
   handleErrorEvent = (event) => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
@@ -87,7 +106,8 @@ export class CheckoutsList {
   render() {
     return (
       <checkouts-list-core
-        getCheckoutsList={this.getCheckoutsList}
+        getCheckouts={this.getCheckouts}
+        getSubAccounts={this.getSubAccounts}
         onError-event={this.handleErrorEvent}
       />
     );

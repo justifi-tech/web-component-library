@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Checkout, ICheckoutsParams, PagingInfo, pagingDefaults } from '../../api';
+import { Checkout, ICheckoutsParams, PagingInfo, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
-import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { MapCheckoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
@@ -11,17 +11,20 @@ import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from 
 })
 export class CheckoutsListCore {
   @State() checkouts: Checkout[] = [];
+  @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: ICheckoutsParams = {};
 
-  @Prop() getCheckoutsList: Function;
+  @Prop() getCheckouts: Function;
+  @Prop() getSubAccounts: Function;
 
   @Watch('params')
   @Watch('getCheckouts')
+  @Watch('getSubAccounts')
   updateOnPropChange() {
-    this.fetchData();
+    this.fetchCheckouts();
   }
 
   @Event({
@@ -32,19 +35,42 @@ export class CheckoutsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    if (this.getCheckoutsList) {
-      this.fetchData();
+    if (this.getCheckouts && this.getSubAccounts) {
+      this.fetchCheckouts();
     }
   }
 
-  fetchData(): void {
+  fetchCheckouts(): void {
     this.loading = true;
 
-    this.getCheckoutsList({
+    this.getCheckouts({
       params: this.params,
       onSuccess: ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
+        this.fetchSubAccounts();
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+        this.loading = false;
+      },
+    });
+  }
+
+  async fetchSubAccounts(): Promise<void> {
+    this.getSubAccounts({
+      params: this.subAccountParams,
+      onSuccess: ({ subAccounts }) => {
+        this.subAccounts = subAccounts;
+        this.checkouts = this.checkouts.map((checkout) => {
+          checkout.sub_account_name = this.subAccounts.find((subAccount) => subAccount.id === checkout.account_id)?.name;
+          return checkout;
+        });
         this.loading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -83,7 +109,15 @@ export class CheckoutsListCore {
   }
 
   clearParams = () => {
+    this.errorMessage = '';
     this.params = {};
+  }
+
+  get subAccountParams() {
+    let accountIdNumbers = this.checkouts.map((checkout) => checkout.account_id);
+    let uniqueAccountIds = [...new Set(accountIdNumbers)];
+    let accountIdString = uniqueAccountIds.join(',');
+    return { sub_account_id: accountIdString };
   }
 
   get entityId() {
@@ -95,7 +129,7 @@ export class CheckoutsListCore {
       ['Processed On', 'The date each checkout occurred'],
       ['Payment Amount', 'The dollar amount of each checkout'],
       ['Payment Description', 'The description of each checkout'],
-      ['Account ID', 'The unique identifier of the account associated with each checkout'],
+      ['Sub Account', 'The sub account associated with the checkout'],
       ['Payment Mode', 'The payment mode of each checkout'],
       ['Status', 'The current status of each checkout'],
     ];
@@ -112,11 +146,11 @@ export class CheckoutsListCore {
       },
       formatCurrency(checkout.payment_amount, true, true),
       checkout.payment_description,
-      checkout.account_id,
-      'ecom',
+      checkout.sub_account_name,
+      checkout.paymentMode,
       {
         type: 'inner',
-        value: MapPaymentStatusToBadge(checkout.status),
+        value: MapCheckoutStatusToBadge(checkout.status),
       },
     ]);
   }
@@ -130,7 +164,7 @@ export class CheckoutsListCore {
   }
 
   get showRowData() {
-    return !this.showEmptyState && !this.showErrorState;
+    return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
   render() {

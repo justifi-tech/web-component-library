@@ -4,14 +4,17 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckoutsListCore } from '../checkouts-list-core';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
-import mockSuccessResponse from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
-import { IApiResponseCollection, ICheckout } from '../../../api';
-import { makeGetCheckoutsList } from '../get-checkouts';
+import mockCheckoutsSuccess from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
+import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
+import { IApiResponseCollection, ICheckout, ISubAccount } from '../../../api';
+import { makeGetCheckouts } from '../get-checkouts';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { makeGetSubAccounts } from '../../../api/get-subaccounts';
 
-const mockCheckoutsListResponse = mockSuccessResponse as IApiResponseCollection<ICheckout[]>;
+const mockCheckoutsListResponse = mockCheckoutsSuccess as IApiResponseCollection<ICheckout[]>;
+const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
 const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters, SelectInput];
 
 describe('checkouts-list-core', () => {
@@ -20,16 +23,27 @@ describe('checkouts-list-core', () => {
       fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
       service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -42,20 +56,32 @@ describe('checkouts-list-core', () => {
   });
 
   it('displays an error state on failed data fetch', async () => {
-    const mockService = {
-      fetchCheckoutsList: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    const mockCheckoutsService = {
+      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
-      authToken: 'some-auth-token',
-      service: mockService,
+      authToken: '123',
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -69,16 +95,28 @@ describe('checkouts-list-core', () => {
       fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
       service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -98,16 +136,28 @@ describe('checkouts-list-core', () => {
       fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
       service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters],
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -127,16 +177,28 @@ describe('checkouts-list-core', () => {
       fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
       service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -171,16 +233,28 @@ describe('checkouts-list-core', () => {
       fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
       service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -220,16 +294,28 @@ describe('checkouts-list-core', () => {
       fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
       service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
     });
 
     await page.waitForChanges();
@@ -245,22 +331,34 @@ describe('checkouts-list-core', () => {
   });
 
   it('emits error event on fetch error', async () => {
-    const mockService = {
-      fetchCheckoutsList: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    const mockCheckoutsService = {
+      fetchCheckoutsList: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
 
-    const getCheckouts = makeGetCheckoutsList({
+    const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
-      authToken: 'some-auth',
-      service: mockService,
+      authToken: '123',
+      service: mockCheckoutsService,
       apiOrigin: 'http://localhost:3000'
     });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
 
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu],
-      template: () => <checkouts-list-core getCheckoutsList={getCheckouts} onError-event={errorEvent} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();
