@@ -9,7 +9,7 @@ import { IApiResponseCollection, ICheckout } from '../../../api';
 import { makeGetCheckoutsList } from '../get-checkouts';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { CheckoutsListFilters } from '../checkouts-list-filters';
-import { SelectInput } from '../../form/form-control-select';
+import { SelectInput } from '../../../ui-components/form/form-control-select';
 
 const mockCheckoutsListResponse = mockSuccessResponse as IApiResponseCollection<ICheckout[]>;
 const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters, SelectInput];

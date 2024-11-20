@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Checkout, ICheckoutsParams, PagingInfo, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { tableExportedParts } from '../table/exported-parts';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
