@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Method, State } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Method } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
 import { BillingFormFields, ComponentError } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
