@@ -15,6 +15,8 @@ export class TokenizePaymentMethod {
   @Prop() isLoading: boolean = true;
   @Prop() submitButtonText: string;
   @Prop() hideSubmitButton: boolean;
+  @Prop() disableCreditCard?: boolean;
+  @Prop() disableBankAccount?: boolean;
 
   @Event() submitted: EventEmitter<{ token: string }>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -55,8 +57,8 @@ export class TokenizePaymentMethod {
               <div class="col-12">
                 <justifi-payment-method-options
                   ref={(el) => (this.paymentMethodOptionsRef = el)}
-                  show-card={true}
-                  show-ach={true}
+                  show-card={!this.disableCreditCard}
+                  show-ach={!this.disableBankAccount}
                   show-bnpl={false}
                   paymentMethodGroupId={this.paymentMethodGroupId}
                   show-saved-payment-methods={false}
