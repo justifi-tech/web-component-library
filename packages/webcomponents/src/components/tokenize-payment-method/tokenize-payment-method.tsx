@@ -1,6 +1,6 @@
-import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Method } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
-import { ComponentError } from '../../components';
+import { BillingFormFields, ComponentError } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 
 @Component({
@@ -14,6 +14,7 @@ export class TokenizePaymentMethod {
   @Prop() paymentMethodGroupId: string;
   @Prop() isLoading: boolean = true;
   @Prop() submitButtonText: string;
+  @Prop() hideSubmitButton: boolean;
 
   @Event() submitted: EventEmitter<{ token: string }>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -24,10 +25,11 @@ export class TokenizePaymentMethod {
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
-  private async tokenizePaymentMethod(event: CustomEvent) {
-    event.preventDefault();
+  @Method()
+  async tokenizePaymentMethod(event?: CustomEvent) {
+    event && event.preventDefault();
+
     const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
-    console.log('tokenizeResponse', tokenizeResponse);
     if (tokenizeResponse.error) {
       this.errorEvent.emit({
         errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
@@ -37,6 +39,11 @@ export class TokenizePaymentMethod {
     } else if (tokenizeResponse.token) {
       this.submitted.emit({ token: tokenizeResponse.token });
     }
+  }
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    this.paymentMethodOptionsRef.fillBillingForm(fields);
   }
 
   render() {
@@ -58,14 +65,16 @@ export class TokenizePaymentMethod {
                 />
               </div>
               <div class="col-12">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={event => this.tokenizePaymentMethod(event)}
-                  isLoading={this.isLoading}
-                  data-testid="submit-button">
-                  {this.submitButtonText || 'Submit'}
-                </Button>
+                {!this.hideSubmitButton && (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={event => this.tokenizePaymentMethod(event)}
+                    isLoading={this.isLoading}
+                    data-testid="submit-button">
+                    {this.submitButtonText || 'Submit'}
+                  </Button>
+                )}
               </div>
             </div>
           </fieldset>
