@@ -111,7 +111,7 @@ export class CheckoutsListCore {
         `,
       },
       formatCurrency(checkout.payment_amount, true, true),
-      checkout.description,
+      checkout.payment_description,
       checkout.account_id,
       'ecom',
       {
