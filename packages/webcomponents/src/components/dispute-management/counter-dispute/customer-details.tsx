@@ -1,5 +1,5 @@
 import { Component, h, Method, State } from "@stencil/core";
-import { FormController } from "../../form/form";
+import { FormController } from "../../../ui-components/form/form";
 import CustomerDetailsSchema from "./schemas/customer-details-schema";
 
 @Component({

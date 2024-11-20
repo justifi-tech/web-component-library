@@ -1,6 +1,6 @@
 import { Component, h, Method, State } from "@stencil/core";
-import { FormController } from "../../form/form";
-import { FileSelectEvent } from "../../form/form-control-file";
+import { FormController } from "../../../ui-components/form/form";
+import { FileSelectEvent } from "../../../ui-components/form/form-control-file";
 import { DisputeResponseDocument, DisputeResponseDocumentType } from "../../../api/Dispute";
 import ProductOrServiceSchema from "./schemas/product-or-service-schema";
 

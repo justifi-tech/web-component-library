@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
 import { DisputeManagementClickEvents } from "../dispute";
-import { FormController } from "../../form/form";
+import { FormController } from "../../../ui-components/form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 
 type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
