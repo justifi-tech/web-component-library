@@ -11,7 +11,7 @@ const storyBaseArgs = new StoryBaseArgs([
 ]);
 
 const meta: Meta = {
-  title: "Payment Facilitation/TokenizePaymentMethod",
+  title: "Payment Facilitation/Tokenize Payment Method",
   component: "justifi-tokenize-payment-method",
   args: {
     ...storyBaseArgs.args,
