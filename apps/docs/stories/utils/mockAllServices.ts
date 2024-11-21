@@ -9,6 +9,7 @@ import mockPostCheckout from '../../../../mockData/mockPostCheckoutSuccess.json'
 import mockGrossPaymentChart from '../../../../mockData/mockGrossVolumeReportSuccess.json';
 import mockPayment from '../../../../mockData/mockPaymentDetailSuccess.json';
 import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
+import mockPostPaymentMethods from '../../../../mockData/mockPostPaymentMethodsSuccess.json';
 import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInterruptionInsurance.json';
@@ -50,6 +51,7 @@ export const API_PATHS = {
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYMENT_DETAILS: '/payments/:id',
   PAYMENTS_LIST: '/account/:id/payments',
+  PAYMENT_METHODS: '/payment_methods',
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
   INSURANCE_QUOTES: '/insurance/quotes',
@@ -128,7 +130,14 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
         () => mockSeasonInterruptionInsurance
       );
 
-      // Secondary URL prefix for API requests
+      // URL prefix for direct API requests (for iframed application requests which don't use the proxy)
+      this.namespace = '/v1/js'; // Reset the namespace to avoid prefixing with the primary URL prefix
+      this.urlPrefix = 'https://api.justifi.ai';
+
+      // PaymentMethods (TokenizePaymentMethod component)
+      this.post(API_PATHS.PAYMENT_METHODS, () => mockPostPaymentMethods);
+
+      // URL prefix for entity document uploads
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
       this.urlPrefix =
         'https://entities-production-documents.s3.us-east-2.amazonaws.com';
@@ -143,7 +152,7 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
-      
+
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
     },
