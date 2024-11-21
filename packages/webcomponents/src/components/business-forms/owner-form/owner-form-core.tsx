@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
 import { ComponentError } from '../../../api/ComponentError';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { Button } from '../../../ui-components';
@@ -30,8 +30,6 @@ export class BusinessOwnerFormCore {
     this.formLoading.emit(this.isLoading);
   }
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event({ bubbles: true }) ownerSubmitted: EventEmitter<any>;
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -135,16 +133,10 @@ export class BusinessOwnerFormCore {
         this.patchOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.submitted.emit({
-              data: response,
-              metadata: { ownerID: response.data.id }
-            });
-            this.ownerSubmitted.emit({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
           onError: ({ error, code, severity }) => {
-            this.submitted.emit({ data: { error } });
             this.errorEvent.emit({
               message: error,
               errorCode: code,
@@ -158,16 +150,10 @@ export class BusinessOwnerFormCore {
         this.postOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.submitted.emit({
-              data: response,
-              metadata: { ownerID: response.data.id }
-            });
-            this.ownerSubmitted.emit({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
           onError: ({ error, code, severity }) => {
-            this.submitted.emit({ data: { error } });
             this.errorEvent.emit({
               message: error,
               errorCode: code,
