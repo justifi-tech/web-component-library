@@ -2,16 +2,16 @@ import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { DateInput } from "../form-control-date";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text';
+import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-date', () => {
-  const components = [DateInput, FormControlErrorText, FormControlHelpText];
+  const components = [DateInput, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-date label='Birthday' name='birthday' />,
+      template: () => <form-control-date label='Birthday' name='birthday' maxDate='2020-01-01'/>,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -29,6 +29,7 @@ describe('form-control-date', () => {
           helpText='Enter your birthday'
           disabled
           inputHandler={mockInputHandler}
+          maxDate='2020-01-01'
         />
     });
 
@@ -165,10 +166,17 @@ describe('form-control-date', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('#form-help-text-date');
-    expect(helpTextComponent).not.toBeNull();
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
+    expect(tooltipComponent).not.toBeNull();
 
-    expect(helpTextComponent.textContent).toBe('Select your date');
+    const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');
+    expect(tooltipIcon).not.toBeNull();
+
+    const tooltipElement = tooltipComponent.querySelector('.tooltip');
+    expect(tooltipElement).not.toBeNull();
+
+    const tooltipText = tooltipElement.querySelector('.tooltip-inner');
+    expect(tooltipText.textContent).toBe('Select your date');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {

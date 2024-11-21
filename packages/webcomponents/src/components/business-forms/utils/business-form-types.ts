@@ -13,6 +13,12 @@ export interface BusinessFormServerErrorEvent {
   message: BusinessFormServerErrors;
 }
 
+export interface BusinessFormStepCompletedEvent {
+  data: any;
+  formStep: BusinessFormStepV2;
+  metadata?: any;
+}
+
 // For right now we can use MetaData to track the step that was just completed during a submit event. 
 // Eventually we can find other uses for MetaData to present to the implementer. 
 interface BusinessFormEventMetaData {
@@ -29,6 +35,17 @@ export enum BusinessFormStep {
   bankAccount = 'bankAccount',
   documentUpload = 'documentUpload',
   termsAndConditions = 'termsAndConditions'
+}
+
+export enum BusinessFormStepV2 {
+  businessInfo = 'business_info',
+  legalAddress = 'legal_address',
+  additionalQuestions = 'additional_questions',
+  representative = 'representative',
+  owners = 'owners',
+  bankAccount = 'bank_account',
+  documentUpload = 'document_upload',
+  termsAndConditions = 'terms_and_conditions'
 }
 
 export enum BusinessFormServerErrors {

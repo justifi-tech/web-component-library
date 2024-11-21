@@ -9,7 +9,7 @@ import {
   Element,
 } from '@stencil/core';
 import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
-import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
+import { FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-file',
@@ -59,22 +59,24 @@ export class FileInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+          <div class="d-flex align-items-start gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
           <input
             ref={(el) => this.fileInput = el}
             type="file"
             name={this.name}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}`}
-            class={this.errorText ? 'form-control is-invalid' : 'form-control'}
+            part={`input ${this.errorText ? "input-invalid " : ""}${this.disabled ? "input-disabled" : ""}`}
+            class={this.errorText ? "form-control is-invalid" : "form-control"}
             multiple={this.multiple}
             disabled={this.disabled}
             onChange={this.changeHandler}
             onInput={this.handleFormControlInput}
             onBlur={() => this.formControlBlur.emit()}
           />
-          <FormControlHelpText helpText={this.helpText} name={this.name} />
           <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>

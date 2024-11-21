@@ -47,6 +47,11 @@ graph TD;
   justifi-business-core-info --> form-control-select
   justifi-business-core-info --> form-control-date
   justifi-business-core-info --> form-control-number-masked
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-select --> form-control-tooltip
+  form-control-date --> form-control-tooltip
+  form-control-number-masked --> form-control-tooltip
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form --> form-control-select
   justifi-additional-questions --> form-control-monetary

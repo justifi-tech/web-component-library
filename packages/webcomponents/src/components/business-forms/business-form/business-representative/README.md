@@ -39,8 +39,13 @@ graph TD;
   justifi-business-representative --> form-control-number-masked
   justifi-business-representative --> form-control-date
   justifi-business-representative --> justifi-identity-address-form
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-number-masked --> form-control-tooltip
+  form-control-date --> form-control-tooltip
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
+  form-control-select --> form-control-tooltip
   justifi-business-form --> justifi-business-representative
   style justifi-business-representative fill:#f9f,stroke:#333,stroke-width:4px
 ```

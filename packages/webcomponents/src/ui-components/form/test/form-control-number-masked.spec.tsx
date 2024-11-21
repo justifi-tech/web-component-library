@@ -2,10 +2,10 @@ import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { NumberInputMasked } from "../form-control-number-masked";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text';
+import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-number-masked', () => {
-  const components = [NumberInputMasked, FormControlErrorText, FormControlHelpText];
+  const components = [NumberInputMasked, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {
@@ -174,10 +174,17 @@ describe('form-control-number-masked', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('#form-help-text-age');
-    expect(helpTextComponent).not.toBeNull();
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
+    expect(tooltipComponent).not.toBeNull();
 
-    expect(helpTextComponent.textContent).toBe('Enter your age');
+    const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');
+    expect(tooltipIcon).not.toBeNull();
+
+    const tooltipElement = tooltipComponent.querySelector('.tooltip');
+    expect(tooltipElement).not.toBeNull();
+
+    const tooltipText = tooltipElement.querySelector('.tooltip-inner');
+    expect(tooltipText.textContent).toBe('Enter your age');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {

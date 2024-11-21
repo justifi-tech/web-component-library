@@ -52,9 +52,19 @@ const meta: Meta = {
     },
     submitted: {
       description:
-        "Emitted when the server response is received.  Will not be raised if form vailidation fails.",
+        "Emitted when the server response is received.  Will not be raised if form vailidation fails. <br> **NOTE**: This event's behavior will be modified in the next major release to only emit at the final form step completion. Please use the `form-step-completed` event to manage completion of individual form steps.",
       table: {
         category: "events",
+      },
+    },
+    'form-step-completed': {
+      description: "Emitted when a form step is completed after the user clicks 'Next'. Contains data from that form step's server response. The name of the completed form step is defined in `data.detail.formStep`.",
+      table: {
+        category: 'events',
+        defaultValue: {
+          summary: "Example Payload",
+          detail: `{ data: serverResponse, formStep: 'legal_address' }`
+        },
       },
     },
     "click-event": {
@@ -73,7 +83,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted", "click-event", "error-event"],
+      handles: ["submitted", "form-step-completed", "click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
