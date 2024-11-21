@@ -6,10 +6,55 @@ import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
+const tableColumns = {
+  created_at: {
+    label: 'Processed On',
+    title: 'The date each checkout occurred',
+  },
+  payment_amount: {
+    label: 'Payment Amount',
+    title: 'The dollar amount of each checkout',
+  },
+  payment_description: {
+    label: 'Payment Description',
+    title: 'The description of each checkout',
+  },
+  sub_account_name: {
+    label: 'Sub Account',
+    title: 'The sub account associated with the checkout',
+  },
+  paymentMode: {
+    label: 'Payment Mode',
+    title: 'The payment mode of each checkout',
+  },
+  status: {
+    label: 'Status',
+    title: 'The current status of each checkout',
+  },
+}
+
+const tableCells = {
+  created_at: (value) => (
+    <th>
+      <div class="fw-bold">{formatDate(value)}</div>
+      <div class="fw-bold">{formatTime(value)}</div>
+    </th>
+  ),
+  payment_amount: (value) => (<td>{formatCurrency(value, true, true)}</td>),
+  payment_description: (value) => (<td>{value}</td>),
+  sub_account_name: (value) => (<td>{value}</td>),
+  paymentMode: (value) => (<td>{value}</td>),
+  status: (value) => (<td>{MapCheckoutStatusToBadge(value)}</td>),
+}
+
 @Component({
   tag: 'checkouts-list-core'
 })
 export class CheckoutsListCore {
+  @Prop() getCheckouts: Function;
+  @Prop() getSubAccounts: Function;
+  @Prop() columns: string;
+
   @State() checkouts: Checkout[] = [];
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
@@ -17,12 +62,10 @@ export class CheckoutsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: ICheckoutsParams = {};
 
-  @Prop() getCheckouts: Function;
-  @Prop() getSubAccounts: Function;
-
   @Watch('params')
   @Watch('getCheckouts')
   @Watch('getSubAccounts')
+  @Watch('columns')
   updateOnPropChange() {
     this.fetchCheckouts();
   }
@@ -48,7 +91,8 @@ export class CheckoutsListCore {
       onSuccess: ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
-        this.fetchSubAccounts();
+        // this.fetchSubAccounts();
+        this.loading = false; // temp
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -124,35 +168,20 @@ export class CheckoutsListCore {
     return this.checkouts.map((checkout) => checkout.id);
   }
 
+  get columnKeys() {
+    return this.columns.split(',');
+  }
+
   get columnData() {
-    return [
-      ['Processed On', 'The date each checkout occurred'],
-      ['Payment Amount', 'The dollar amount of each checkout'],
-      ['Payment Description', 'The description of each checkout'],
-      ['Sub Account', 'The sub account associated with the checkout'],
-      ['Payment Mode', 'The payment mode of each checkout'],
-      ['Status', 'The current status of each checkout'],
-    ];
+    return this.columnKeys.map((key) => tableColumns[key]);
   }
 
   get rowData() {
-    return this.checkouts.map((checkout) => [
-      {
-        type: 'head',
-        value: `
-          <div class="fw-bold">${formatDate(checkout.created_at)}</div>
-          <div class="fw-bold">${formatTime(checkout.created_at)}</div>
-        `,
-      },
-      formatCurrency(checkout.payment_amount, true, true),
-      checkout.payment_description,
-      checkout.sub_account_name,
-      checkout.paymentMode,
-      {
-        type: 'inner',
-        value: MapCheckoutStatusToBadge(checkout.status),
-      },
-    ]);
+    return this.checkouts.map((checkout) => {
+      return this.columnKeys.map((key) => {
+        return tableCells[key](checkout[key]);
+      });
+    });
   }
 
   get showEmptyState() {
@@ -180,8 +209,8 @@ export class CheckoutsListCore {
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
                 {this.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ""}>
-                    {!Array.isArray(column) ? column : column[0]}
+                  <th part="table-head-cell" scope="col" title={column.title}>
+                    {column.label}
                   </th>
                 ))}
               </tr>
@@ -199,24 +228,7 @@ export class CheckoutsListCore {
                 columnSpan={this.columnData.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData &&
-                this.rowData.map((data, index) => (
-                  <tr
-                    data-test-id="table-row"
-                    data-row-entity-id={this.entityId[index]}
-                    onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
-                  >
-                    {data.map((dataEntry: any) => {
-                      let nestedHtml = dataEntry?.type;
-                      if (nestedHtml) {
-                        return <td part="table-cell" innerHTML={dataEntry.value}></td>;
-                      } else {
-                        return <td part="table-cell">{dataEntry}</td>;
-                      }
-                    })}
-                  </tr>
-                ))}
+              {this.showRowData && this.rowData.map((data) => (<tr>{data}</tr>))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
