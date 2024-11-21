@@ -109,7 +109,6 @@ export class CheckoutsList {
         getCheckouts={this.getCheckouts}
         getSubAccounts={this.getSubAccounts}
         onError-event={this.handleErrorEvent}
-        columns="created_at,payment_description,payment_amount"
       />
     );
   }

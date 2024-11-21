@@ -1,51 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Checkout, ICheckoutsParams, PagingInfo, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
-import { MapCheckoutStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-
-const tableColumns = {
-  created_at: {
-    label: 'Processed On',
-    title: 'The date each checkout occurred',
-  },
-  payment_amount: {
-    label: 'Payment Amount',
-    title: 'The dollar amount of each checkout',
-  },
-  payment_description: {
-    label: 'Payment Description',
-    title: 'The description of each checkout',
-  },
-  sub_account_name: {
-    label: 'Sub Account',
-    title: 'The sub account associated with the checkout',
-  },
-  paymentMode: {
-    label: 'Payment Mode',
-    title: 'The payment mode of each checkout',
-  },
-  status: {
-    label: 'Status',
-    title: 'The current status of each checkout',
-  },
-}
-
-const tableCells = {
-  created_at: (value) => (
-    <th>
-      <div class="fw-bold">{formatDate(value)}</div>
-      <div class="fw-bold">{formatTime(value)}</div>
-    </th>
-  ),
-  payment_amount: (value) => (<td>{formatCurrency(value, true, true)}</td>),
-  payment_description: (value) => (<td>{value}</td>),
-  sub_account_name: (value) => (<td>{value}</td>),
-  paymentMode: (value) => (<td>{value}</td>),
-  status: (value) => (<td>{MapCheckoutStatusToBadge(value)}</td>),
-}
+import CheckoutsTable, { defaultColumnsKeys } from './checkouts-table';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -53,9 +12,10 @@ const tableCells = {
 export class CheckoutsListCore {
   @Prop() getCheckouts: Function;
   @Prop() getSubAccounts: Function;
-  @Prop() columns: string;
+  @Prop() columns: string = defaultColumnsKeys;
 
   @State() checkouts: Checkout[] = [];
+  @State() checkoutsTable: CheckoutsTable;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -91,7 +51,7 @@ export class CheckoutsListCore {
       onSuccess: ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
-        // this.fetchSubAccounts();
+        this.checkoutsTable = new CheckoutsTable(this.checkouts, this.columns);
         this.loading = false; // temp
       },
       onError: ({ error, code, severity }) => {
@@ -168,24 +128,8 @@ export class CheckoutsListCore {
     return this.checkouts.map((checkout) => checkout.id);
   }
 
-  get columnKeys() {
-    return this.columns.split(',');
-  }
-
-  get columnData() {
-    return this.columnKeys.map((key) => tableColumns[key]);
-  }
-
-  get rowData() {
-    return this.checkouts.map((checkout) => {
-      return this.columnKeys.map((key) => {
-        return tableCells[key](checkout[key]);
-      });
-    });
-  }
-
   get showEmptyState() {
-    return !this.loading && !this.errorMessage && this.rowData.length < 1;
+    return !this.loading && !this.errorMessage && this.checkoutsTable.rowData.length < 1;
   }
 
   get showErrorState() {
@@ -208,7 +152,7 @@ export class CheckoutsListCore {
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
-                {this.columnData?.map((column) => (
+                {this.checkoutsTable?.columnData?.map((column) => (
                   <th part="table-head-cell" scope="col" title={column.title}>
                     {column.label}
                   </th>
@@ -216,24 +160,25 @@ export class CheckoutsListCore {
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
+              {/* fix this, not working with new checkoutsTable */}
               <TableLoadingState
-                columnSpan={this.columnData.length}
+                columnSpan={this.checkoutsTable?.columnData.length}
                 isLoading={this.loading}
               />
               <TableEmptyState
                 isEmpty={this.showEmptyState}
-                columnSpan={this.columnData.length}
+                columnSpan={this.checkoutsTable?.columnData.length}
               />
               <TableErrorState
-                columnSpan={this.columnData.length}
+                columnSpan={this.checkoutsTable?.columnData.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData && this.rowData.map((data) => (<tr>{data}</tr>))}
+              {this.showRowData && this.checkoutsTable?.rowData.map((data) => (<tr>{data}</tr>))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.columnData?.length}>
+                  <td part="pagination-bar" colSpan={this.checkoutsTable?.columnData?.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
