@@ -66,7 +66,7 @@ export class TokenizePaymentMethod {
                   show-ach={!this.disableBankAccount}
                   show-bnpl={false}
                   paymentMethodGroupId={this.paymentMethodGroupId}
-                  show-saved-payment-methods={false}
+                  show-saved-payment-methods={true}
                   authToken={this.authToken}
                   account-id={this.accountId}
                 />
