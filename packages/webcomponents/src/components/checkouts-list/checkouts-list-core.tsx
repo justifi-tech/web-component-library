@@ -4,7 +4,8 @@ import { ComponentError } from '../../api/ComponentError';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import CheckoutsTable, { defaultColumnsKeys } from './checkouts-table';
+import { defaultColumnsKeys, checkoutTableColumns, checkoutTableCells } from './checkouts-table';
+import { Table } from '../../utils/table';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -15,7 +16,7 @@ export class CheckoutsListCore {
   @Prop() columns: string = defaultColumnsKeys;
 
   @State() checkouts: Checkout[] = [];
-  @State() checkoutsTable: CheckoutsTable;
+  @State() checkoutsTable: Table = new Table([], this.columns, checkoutTableColumns, checkoutTableCells);
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -48,10 +49,16 @@ export class CheckoutsListCore {
 
     this.getCheckouts({
       params: this.params,
-      onSuccess: ({ checkouts, pagingInfo }) => {
+      onSuccess: async ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
-        this.checkoutsTable = new CheckoutsTable(this.checkouts, this.columns);
+        this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
+        const shouldFetchSubAccounts = this.checkoutsTable.columnKeys.includes('sub_account_name');
+
+        if (shouldFetchSubAccounts) {
+          await this.fetchSubAccounts();
+        }
+
         this.loading = false; // temp
       },
       onError: ({ error, code, severity }) => {
@@ -152,33 +159,29 @@ export class CheckoutsListCore {
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
-                {this.checkoutsTable?.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={column.title}>
-                    {column.label}
-                  </th>
-                ))}
+                {this.checkoutsTable.columnData.map((column) => column)}
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
               {/* fix this, not working with new checkoutsTable */}
               <TableLoadingState
-                columnSpan={this.checkoutsTable?.columnData.length}
+                columnSpan={this.checkoutsTable.columnKeys.length}
                 isLoading={this.loading}
               />
               <TableEmptyState
                 isEmpty={this.showEmptyState}
-                columnSpan={this.checkoutsTable?.columnData.length}
+                columnSpan={this.checkoutsTable.columnKeys.length}
               />
               <TableErrorState
-                columnSpan={this.checkoutsTable?.columnData.length}
+                columnSpan={this.checkoutsTable.columnKeys.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData && this.checkoutsTable?.rowData.map((data) => (<tr>{data}</tr>))}
+              {this.showRowData && this.checkoutsTable.rowData.map((data) => (<tr>{data}</tr>))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.checkoutsTable?.columnData?.length}>
+                  <td part="pagination-bar" colSpan={this.checkoutsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

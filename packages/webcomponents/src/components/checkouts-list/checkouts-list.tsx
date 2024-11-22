@@ -43,6 +43,7 @@ export class CheckoutsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() columns: string;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -109,6 +110,7 @@ export class CheckoutsList {
         getCheckouts={this.getCheckouts}
         getSubAccounts={this.getSubAccounts}
         onError-event={this.handleErrorEvent}
+        columns={this.columns}
       />
     );
   }
