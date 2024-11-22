@@ -5,7 +5,7 @@ import { DisputeManagementClickEvents } from "../dispute";
   tag: 'justifi-counter-dispute',
 })
 export class CounterDispute {
-  @Event() submitted: EventEmitter;
+  @Event() submit: EventEmitter;
   @Event() clickEvent: EventEmitter;
 
   @State() currentStep = 0;
@@ -37,7 +37,7 @@ export class CounterDispute {
 
   onNext() {
     if (this.isLastStep) {
-      this.submitted.emit();
+      this.submit.emit();
     } else {
       this.currentStep++;
       this.clickEvent.emit({ name: DisputeManagementClickEvents.nextStep });

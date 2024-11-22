@@ -6,7 +6,7 @@ import { DisputeManagementClickEvents } from "./dispute";
   tag: 'justifi-dispute-management-core',
 })
 export class DisputeManagementCore {
-  @Event() submitted: EventEmitter;
+  @Event() submit: EventEmitter;
 
   @State() showCounterDispute: boolean = false;
 
