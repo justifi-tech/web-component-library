@@ -67,6 +67,8 @@ export class DisputeManagement {
       <StyledHost>
         <justifi-dispute-management-core
           getDispute={this.getDispute}
+          disputeId={this.disputeId}
+          authToken={this.authToken}
           onError-event={this.handleErrorEvent}
         />
       </StyledHost>

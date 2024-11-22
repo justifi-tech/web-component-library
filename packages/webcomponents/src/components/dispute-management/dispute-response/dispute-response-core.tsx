@@ -1,7 +1,9 @@
-import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
+import { Component, Event, EventEmitter, h, State, Prop, Watch } from "@stencil/core";
 import { DisputeManagementClickEvents } from "../dispute";
 import { FormController } from "../../../ui-components/form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
+import { IDisputeResponse } from "../../../api/Dispute";
+import { ComponentError } from "../../../components";
 
 type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
 
@@ -11,15 +13,14 @@ type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
 export class CounterDisputeCore {
   @Prop() getDisputeResponse: Function;
 
-  @Event() clickEvent: EventEmitter;
-
+  @State() isLoading: boolean = true;
+  @State() disputeResponse: IDisputeResponse;
   @State() currentStep = 0;
   @State() currentStepComponentRef: DisputeResponseStepElement;
   @State() formController: FormController;
 
-  componentWillLoad() {
-    this.formController = new FormController(DisputeResponseSchema);
-  }
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event() clickEvent: EventEmitter;
 
   componentStepMapping = [
     () => <justifi-dispute-reason ref={(el) => this.currentStepComponentRef = el}></justifi-dispute-reason>,
@@ -33,8 +34,37 @@ export class CounterDisputeCore {
     () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el}></justifi-additional-statement>,
   ];
 
-  loadData = () => {
-  };
+  componentWillLoad() {
+    this.formController = new FormController(DisputeResponseSchema);
+
+    if (this.getDisputeResponse) {
+      this.fetchData();
+    }
+  }
+
+  @Watch('getDisputeResponse')
+  updateOnPropChange() {
+    this.fetchData();
+  }
+
+  fetchData(): void {
+    this.isLoading = true;
+
+    this.getDisputeResponse({
+      onSuccess: ({ disputeResponse }) => {
+        this.disputeResponse = disputeResponse;
+        this.isLoading = false;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        })
+        this.isLoading = false;
+      },
+    });
+  }
 
   saveData = () => {
   };

@@ -15,7 +15,6 @@ export class CounterDispute {
   @State() getDisputeResponse: Function;
   @State() errorMessage: string = null;
 
-  @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() disputeId: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
@@ -41,9 +40,9 @@ export class CounterDispute {
   }
 
   private initializeGetDisputeResponse() {
-    if (this.accountId && this.authToken) {
+    if (this.disputeId && this.authToken) {
       this.getDisputeResponse = makeGetDisputeResponse({
-        id: this.accountId,
+        id: this.disputeId,
         authToken: this.authToken,
         service: new DisputeService(),
         apiOrigin: this.apiOrigin,

@@ -8,16 +8,15 @@ import { ComponentError } from "../../api/ComponentError";
 })
 export class DisputeManagementCore {
   @Prop() getDispute: Function;
+  @Prop() disputeId: string;
+  @Prop() authToken: string;
 
   @State() dispute: Dispute;
   @State() isLoading: boolean = true;
-  @State() errorMessage: string;
   @State() showDisputeResponseForm: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>
-
   @Event() submitted: EventEmitter;
-
 
   @Listen('clickEvent')
   disputeResponseHandler(event: CustomEvent) {
@@ -47,13 +46,11 @@ export class DisputeManagementCore {
       onSuccess: ({ dispute }) => {
         this.dispute = dispute;
         this.isLoading = false;
-        this.errorMessage = null;
         if (this.dispute.status == 'won' || this.dispute.status == 'lost') {
           this.showDisputeResponseForm = false;
         }
       },
       onError: ({ error, code, severity }) => {
-        this.errorMessage = error;
         this.errorEvent.emit({
           errorCode: code,
           message: error,
@@ -68,9 +65,15 @@ export class DisputeManagementCore {
     return (
       <div>
         {this.showDisputeResponseForm ? (
-          <justifi-dispute-response disputeId={this.dispute?.id} />
+          <justifi-dispute-response
+            disputeId={this.disputeId}
+            authToken={this.authToken}
+          />
         ) : (
-          <justifi-dispute-notification dispute={this.dispute} isLoading={this.isLoading} />
+          <justifi-dispute-notification
+            dispute={this.dispute}
+            isLoading={this.isLoading}
+          />
         )}
       </div>
     );
