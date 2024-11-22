@@ -131,6 +131,7 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       );
 
       // URL prefix for direct API requests (for iframed application requests which don't use the proxy)
+      // As of now this does not work because the request happens within the iframe and the iframe does not have access to the proxy
       this.namespace = '/v1/js'; // Reset the namespace to avoid prefixing with the primary URL prefix
       this.urlPrefix = 'https://api.justifi.ai';
 
