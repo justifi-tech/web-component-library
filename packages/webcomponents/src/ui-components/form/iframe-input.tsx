@@ -87,7 +87,6 @@ export class IframeInput {
   }
 
   private setFontFamily() {
-    this.hiddenInput = this.el.querySelector('input');
     this.fontFamily = getComputedStyle(this.hiddenInput).fontFamily;
     // btoa is used to encode long font-family strings so it can be passed to the iframe
     this.fontFamily = btoa(this.fontFamily);
