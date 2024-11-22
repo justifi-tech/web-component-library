@@ -57,9 +57,10 @@ export class CheckoutsListCore {
 
         if (shouldFetchSubAccounts) {
           await this.fetchSubAccounts();
+        } else {
+          this.loading = false;
         }
 
-        this.loading = false; // temp
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
