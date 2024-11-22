@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { formatCurrency, formatDate, formatTime, MapCheckoutStatusToBadge } from '../../utils/utils';
 
-export const defaultColumnsKeys = 'created_at,payment_amount,payment_description,paymentMode,status';
+export const defaultColumnsKeys = 'created_at,payment_amount,payment_description,payment_mode,status';
 
 export const checkoutTableColumns = {
   created_at: () => (
@@ -24,7 +24,7 @@ export const checkoutTableColumns = {
       Sub Account
     </th>
   ),
-  paymentMode: () => (
+  payment_mode: () => (
     <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
       Payment Mode
     </th>
@@ -46,6 +46,6 @@ export const checkoutTableCells = {
   payment_amount: (value) => (<td>{formatCurrency(value, true, true)} </td>),
   payment_description: (value) => (<td>{value}</td>),
   sub_account_name: (value) => (<td>{value}</td>),
-  paymentMode: (value) => (<td>{value}</td>),
+  payment_mode: (value) => (<td>{value}</td>),
   status: (value) => (<td innerHTML={MapCheckoutStatusToBadge(value)}></td>),
 }

@@ -167,7 +167,7 @@ export class Checkout implements ICheckout {
     this.completions = data.completions?.map((completion) => new Completion(completion));
   }
 
-  get paymentMode(): ICheckoutPaymentMode {
+  get payment_mode(): ICheckoutPaymentMode {
     let paymentMode: ICheckoutPaymentMode;
     
     if (!this.completions || this.completions.length === 0) {

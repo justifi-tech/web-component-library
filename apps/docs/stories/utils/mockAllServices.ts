@@ -6,6 +6,7 @@ import mockBusinessTerms from '../../../../mockData/mockBusinessTermsSuccess.jso
 import mockBusinessProvisioning from '../../../../mockData/mockBusinessProvisioningSuccess.json';
 import mockGetCheckout from '../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckout from '../../../../mockData/mockPostCheckoutSuccess.json';
+import mockCheckoutsList from '../../../../mockData/mockGetCheckoutsListSuccess.json';
 import mockGrossPaymentChart from '../../../../mockData/mockGrossVolumeReportSuccess.json';
 import mockPayment from '../../../../mockData/mockPaymentDetailSuccess.json';
 import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
@@ -47,6 +48,7 @@ export const API_PATHS = {
   BUSINESS_PROVISIONING: '/entities/provisioning',
   CHECKOUT: '/checkouts/:id',
   CHECKOUT_COMPLETE: '/checkouts/:id/complete',
+  CHECKOUTS_LIST: 'checkouts',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYMENT_DETAILS: '/payments/:id',
   PAYMENTS_LIST: '/account/:id/payments',
@@ -118,6 +120,7 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       // Checkout
       this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
       this.post(API_PATHS.CHECKOUT_COMPLETE, () => mockPostCheckout);
+      this.get(API_PATHS.CHECKOUTS_LIST, () => mockCheckoutsList);
 
       // Analytics
       this.post(API_PATHS.ANALYTICS, () => null);

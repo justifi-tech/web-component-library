@@ -117,6 +117,20 @@ const meta: Meta = {
       },
       action: true,
     },
+    "columns": {
+      description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
+      type: 'string',
+      table: {
+        category: "props",
+        defaultValue: {
+          summary: "created_at,payment_amount,payment_description,payment_mode,status",
+          detail: "The following columns are available: `created_at`, `payment_amount`, `payment_description`, `payment_mode`, `sub_account_name`, and `status`.",
+        }
+      },
+      control: {
+        type: "text",
+      },
+    }
   },
   parameters: {
     actions: {
