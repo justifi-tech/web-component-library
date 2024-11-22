@@ -16,7 +16,6 @@ export class TokenizePaymentMethod {
   @Prop() paymentMethodGroupId: string;
   @Prop() isLoading: boolean = true;
   @Prop() submitButtonText: string;
-  @Prop() hideSubmitButton: boolean;
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
 
@@ -72,16 +71,14 @@ export class TokenizePaymentMethod {
                 />
               </div>
               <div class="col-12">
-                {!this.hideSubmitButton && (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={event => this.tokenizePaymentMethod(event)}
-                    isLoading={this.isLoading}
-                    data-testid="submit-button">
-                    {this.submitButtonText || 'Submit'}
-                  </Button>
-                )}
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={event => this.tokenizePaymentMethod(event)}
+                  isLoading={this.isLoading}
+                  data-testid="submit-button">
+                  {this.submitButtonText || 'Submit'}
+                </Button>
               </div>
             </div>
           </fieldset>
