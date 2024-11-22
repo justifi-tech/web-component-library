@@ -14420,9 +14420,6 @@ fieldset:disabled .btn {
               <th part="table-head-cell" scope="col" title="The description of each checkout">
                 Payment Description
               </th>
-              <th part="table-head-cell" scope="col" title="The sub account associated with the checkout">
-                Sub Account
-              </th>
               <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
                 Payment Mode
               </th>
@@ -14433,7 +14430,7 @@ fieldset:disabled .btn {
           </thead>
           <tbody class="table-body" part="table-body">
             <tr>
-              <td class="loading-state" colspan="6" part="loading-state-cell" style="text-align: center;">
+              <td class="loading-state" colspan="5" part="loading-state-cell" style="text-align: center;">
                 <div class="spinner-border" part="loading-state-spinner" role="status">
                   <span class="visually-hidden">
                     Loading...
@@ -14444,7 +14441,7 @@ fieldset:disabled .btn {
           </tbody>
           <tfoot class="sticky-bottom">
             <tr class="align-middle table-light">
-              <td colspan="6" part="pagination-bar">
+              <td colspan="5" part="pagination-bar">
                 <pagination-menu></pagination-menu>
               </td>
             </tr>
@@ -28876,9 +28873,6 @@ fieldset:disabled .btn {
               <th part="table-head-cell" scope="col" title="The description of each checkout">
                 Payment Description
               </th>
-              <th part="table-head-cell" scope="col" title="The sub account associated with the checkout">
-                Sub Account
-              </th>
               <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
                 Payment Mode
               </th>
@@ -28889,7 +28883,7 @@ fieldset:disabled .btn {
           </thead>
           <tbody class="table-body" part="table-body">
             <tr>
-              <td class="loading-state" colspan="6" part="loading-state-cell" style="text-align: center;">
+              <td class="loading-state" colspan="5" part="loading-state-cell" style="text-align: center;">
                 <div class="spinner-border" part="loading-state-spinner" role="status">
                   <span class="visually-hidden">
                     Loading...
@@ -28900,7 +28894,7 @@ fieldset:disabled .btn {
           </tbody>
           <tfoot class="sticky-bottom">
             <tr class="align-middle table-light">
-              <td colspan="6" part="pagination-bar">
+              <td colspan="5" part="pagination-bar">
                 <pagination-menu></pagination-menu>
               </td>
             </tr>
@@ -43332,9 +43326,6 @@ fieldset:disabled .btn {
               <th part="table-head-cell" scope="col" title="The description of each checkout">
                 Payment Description
               </th>
-              <th part="table-head-cell" scope="col" title="The sub account associated with the checkout">
-                Sub Account
-              </th>
               <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
                 Payment Mode
               </th>
@@ -43345,7 +43336,7 @@ fieldset:disabled .btn {
           </thead>
           <tbody class="table-body" part="table-body">
             <tr>
-              <td class="loading-state" colspan="6" part="loading-state-cell" style="text-align: center;">
+              <td class="loading-state" colspan="5" part="loading-state-cell" style="text-align: center;">
                 <div class="spinner-border" part="loading-state-spinner" role="status">
                   <span class="visually-hidden">
                     Loading...
@@ -43356,7 +43347,7 @@ fieldset:disabled .btn {
           </tbody>
           <tfoot class="sticky-bottom">
             <tr class="align-middle table-light">
-              <td colspan="6" part="pagination-bar">
+              <td colspan="5" part="pagination-bar">
                 <pagination-menu></pagination-menu>
               </td>
             </tr>

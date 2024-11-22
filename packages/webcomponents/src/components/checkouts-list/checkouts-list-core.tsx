@@ -176,7 +176,16 @@ export class CheckoutsListCore {
                 columnSpan={this.checkoutsTable.columnKeys.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData && this.checkoutsTable.rowData.map((data) => (<tr>{data}</tr>))}
+              {this.showRowData && this.checkoutsTable.rowData.map((data, index) => (
+                <tr
+                  data-test-id="table-row"
+                  data-row-entity-id={this.entityId[index]}
+                  onClick={this.rowClickHandler}
+                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
+                >
+                  {data}
+                </tr>
+              ))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">

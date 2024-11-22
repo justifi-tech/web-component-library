@@ -97,9 +97,6 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
           <th part="table-head-cell" scope="col" title="The description of each checkout">
             Payment Description
           </th>
-          <th part="table-head-cell" scope="col" title="The sub account associated with the checkout">
-            Sub Account
-          </th>
           <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
             Payment Mode
           </th>
@@ -110,14 +107,14 @@ empty-state,pagination-bar,page-arrow,page-button,page-button-disabled,page-butt
       </thead>
       <tbody class="table-body" part="table-body">
         <tr>
-          <td class="error-state" colspan="6" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+          <td class="error-state" colspan="5" data-test-id="table-error-state" part="error-state" style="text-align: center;">
             An unexpected error occurred: Fetch error
           </td>
         </tr>
       </tbody>
       <tfoot class="sticky-bottom">
         <tr class="align-middle table-light">
-          <td colspan="6" part="pagination-bar">
+          <td colspan="5" part="pagination-bar">
             <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">

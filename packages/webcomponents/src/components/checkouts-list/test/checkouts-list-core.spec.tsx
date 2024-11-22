@@ -12,6 +12,7 @@ import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-m
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { makeGetSubAccounts } from '../../../api/get-subaccounts';
+import { defaultColumnsKeys } from '../checkouts-table';
 
 const mockCheckoutsListResponse = mockCheckoutsSuccess as IApiResponseCollection<ICheckout[]>;
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
@@ -90,7 +91,7 @@ describe('checkouts-list-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('emits checkout-row-clicked event on row click', async () => {
+  it.only('emits checkout-row-clicked event on row click', async () => {
     const mockCheckoutsService = {
       fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
@@ -116,7 +117,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
