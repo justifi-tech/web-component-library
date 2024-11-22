@@ -1,10 +1,16 @@
-import { Component, h, Event, EventEmitter } from "@stencil/core";
+import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
 import { DisputeManagementClickEvents } from "./dispute";
+import { IDispute } from "../../api/Dispute";
+import { formatCurrency } from "../../utils/utils";
+import { Skeleton } from "../../ui-components";
 
 @Component({
   tag: 'justifi-dispute-notification',
 })
 export class DisputeNotification {
+  @Prop() dispute: IDispute;
+  @Prop() isLoading: boolean;
+
   @Event() submitted: EventEmitter;
   @Event() clickEvent: EventEmitter;
 
@@ -31,7 +37,7 @@ export class DisputeNotification {
               Amount
             </span>
             <span part="detail-section-item-data" class="flex-1 d-table-cell text-wrap">
-              $50.00
+              {(this.isLoading) ? <Skeleton height="18px" width="80px" /> : formatCurrency(this.dispute?.amount)}
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -39,7 +45,7 @@ export class DisputeNotification {
               Reason
             </span>
             <span part="detail-section-item-data" class="flex-1 d-table-cell text-wrap">
-              Product not received
+              {(this.isLoading) ? <Skeleton height="18px" width="80px" /> : this.dispute?.reason}
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -47,7 +53,7 @@ export class DisputeNotification {
               Dispute ID
             </span>
             <span part="detail-section-item-data" class="flex-1 d-table-cell text-wrap">
-              dis_1234567890
+              {(this.isLoading) ? <Skeleton height="18px" width="140px" /> : this.dispute?.id}
             </span>
           </div>
         </div>

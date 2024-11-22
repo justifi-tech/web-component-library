@@ -10,7 +10,7 @@ export class DisputeManagementCore {
   @Prop() getDispute: Function;
 
   @State() dispute: Dispute;
-  @State() loading: boolean = true;
+  @State() isLoading: boolean = true;
   @State() errorMessage: string;
   @State() showDisputeResponseForm: boolean = false;
 
@@ -41,13 +41,16 @@ export class DisputeManagementCore {
   }
 
   fetchData(): void {
-    this.loading = true;
+    this.isLoading = true;
 
     this.getDispute({
       onSuccess: ({ dispute }) => {
         this.dispute = dispute;
-        this.loading = false;
+        this.isLoading = false;
         this.errorMessage = null;
+        if (this.dispute.status == 'won' || this.dispute.status == 'lost') {
+          this.showDisputeResponseForm = false;
+        }
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -56,7 +59,7 @@ export class DisputeManagementCore {
           message: error,
           severity,
         })
-        this.loading = false;
+        this.isLoading = false;
       },
     });
   }
@@ -64,8 +67,11 @@ export class DisputeManagementCore {
   render() {
     return (
       <div>
-        {this.showDisputeResponseForm ? <justifi-dispute-response /> : <justifi-dispute-notification />}
-        Dispute: {JSON.stringify(this.dispute)}
+        {this.showDisputeResponseForm ? (
+          <justifi-dispute-response disputeId={this.dispute?.id} />
+        ) : (
+          <justifi-dispute-notification dispute={this.dispute} isLoading={this.isLoading} />
+        )}
       </div>
     );
   }

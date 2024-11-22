@@ -17,6 +17,7 @@ export class CounterDispute {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
+  @Prop() disputeId: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -26,11 +27,7 @@ export class CounterDispute {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetPayments();
-  }
-
-  initializeGetPayments() {
-    throw new Error("Method not implemented.");
+    this.initializeGetDisputeResponse();
   }
 
   disconnectedCallback() {
@@ -72,6 +69,7 @@ export class CounterDispute {
         <justifi-dispute-response-core
           getDisputeResponse={this.getDisputeResponse}
           onError-event={this.handleErrorEvent}
+          dispute-id={this.disputeId}
         />
       </StyledHost>
     )
