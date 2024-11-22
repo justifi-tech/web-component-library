@@ -8,7 +8,7 @@ jest.mock('../../../api/services/checkout.service');
 
 describe('makeGetCheckouts', () => {
   const mockId = 'mock_id';
-  const mockAuthToken = 'token';
+  const mockAuthToken = 'mock_token';
   const mockParams = { limit: 10, page: 1 };
   const mockApiOrigin = 'http://localhost:3000';
 
