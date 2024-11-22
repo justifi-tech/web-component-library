@@ -10,27 +10,17 @@
   },
   "data": [
     {
-      "id": "cho_qkHk4NXnSV0PVulNY4M8J",
+      "id": "cho_1a2b3c4d5e6f7g8h9i0j",
       "payment_intent_id": null,
-      "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
-      "platform_account_id": "acc_3reNb4aNYy2iWDZQVczmx4",
-      "payment_amount": 1799,
+      "account_id": "subaccount_1",
+      "platform_account_id": "platform_1",
+      "payment_amount": 399,
       "payment_currency": "USD",
       "payment_description": "One Chocolate Donut",
       "description": "One Chocolate Donut",
       "payment_methods": [
         {
-          "id": "pm_CVVljvGQiFrvZOCluxRtz",
-          "type": "bank_account",
-          "status": "valid",
-          "invalid_reason": null,
-          "account_owner_name": "Tiago Saft Fuelber",
-          "account_type": "checking",
-          "bank_name": null,
-          "acct_last_four": "6789"
-        },
-        {
-          "id": "pm_44kqDu0ac5f8TLu9vdSTQ",
+          "id": "pm_1a2b3c4d5e6f7g8h9i0j",
           "type": "card",
           "status": "valid",
           "invalid_reason": null,
@@ -49,24 +39,10 @@
             "issuer": "Visa - Issuer Bank Not Available",
             "funding_source": "Debit"
           }
-        },
-        {
-          "id": "pm_7PA97VwNELPkBhKf24kVE0",
-          "type": "card",
-          "status": "valid",
-          "invalid_reason": null,
-          "name": "Julia Garnett",
-          "brand": "visa",
-          "acct_last_four": "1111",
-          "month": "10",
-          "year": "2042",
-          "address_line1_check": "pass",
-          "address_postal_code_check": "pass",
-          "bin_details": null
         }
       ],
-      "payment_method_group_id": "pmg_12TH1LBNpsrdEXxWyxFjQv",
-      "status": "expired",
+      "payment_method_group_id": "pmg_1a2b3c4d5e6f7g8h9i0j",
+      "status": "completed",
       "mode": "test",
       "payment_settings": {
         "ach_payments": true,
@@ -80,8 +56,14 @@
       "updated_at": "2024-08-27T14:31:35.549Z",
       "total_amount": 1799,
       "insurance_amount": 0,
-      "payment_client_id": "test_e94e298293426cacb29c953b2047d6e8",
-      "completions": [],
+      "payment_client_id": "test_1a2b3c4d5e6f7g8h9i0j",
+      "completions": [
+        {
+          "payment_mode": "card_present",
+          "created_at": "2024-08-08T15:47:45.815Z",
+          "updated_at": "2024-08-08T15:47:45.815Z"
+        }
+      ],
       "bnpl": {
         "provider": "sezzle",
         "provider_client_id": "sz_pub_Kfhyb9x0hdTb2JtUYejTTP3Kb2RTi1xV",
@@ -96,48 +78,17 @@
       }
     },
     {
-      "id": "cho_zWtk4NimSV1PVulNY4a7j",
+      "id": "cho_2b3c4d5e6f7g8h9i0j1a",
       "payment_intent_id": null,
-      "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
-      "platform_account_id": "acc_3reNb4aNYy2iWDZQVczmx4",
-      "payment_amount": 1799,
+      "account_id": "subaccount_2",
+      "platform_account_id": "platform_2",
+      "payment_amount": 1099,
       "payment_currency": "USD",
-      "payment_description": "One Chocolate Donut",
-      "description": "One Chocolate Donut",
+      "payment_description": "1 Dozen Chocolate Donuts",
+      "description": "1 Dozen Chocolate Donuts",
       "payment_methods": [
         {
-          "id": "pm_CVVljvGQiFrvZOCluxRtz",
-          "type": "bank_account",
-          "status": "valid",
-          "invalid_reason": null,
-          "account_owner_name": "Tiago Saft Fuelber",
-          "account_type": "checking",
-          "bank_name": null,
-          "acct_last_four": "6789"
-        },
-        {
-          "id": "pm_44kqDu0ac5f8TLu9vdSTQ",
-          "type": "card",
-          "status": "valid",
-          "invalid_reason": null,
-          "name": "Leslie Knope",
-          "brand": "visa",
-          "acct_last_four": "4242",
-          "month": "11",
-          "year": "25",
-          "address_line1_check": "pass",
-          "address_postal_code_check": "pass",
-          "bin_details": {
-            "type": "Debit",
-            "card_brand": "Visa",
-            "card_class": "Consumer",
-            "country": "United States of America",
-            "issuer": "Visa - Issuer Bank Not Available",
-            "funding_source": "Debit"
-          }
-        },
-        {
-          "id": "pm_7PA97VwNELPkBhKf24kVE0",
+          "id": "pm_2b3c4d5e6f7g8h9i0j1a",
           "type": "card",
           "status": "valid",
           "invalid_reason": null,
@@ -151,7 +102,7 @@
           "bin_details": null
         }
       ],
-      "payment_method_group_id": "pmg_12TH1LBNpsrdEXxWyxFjQv",
+      "payment_method_group_id": "pmg_2b3c4d5e6f7g8h9i0j1a",
       "status": "expired",
       "mode": "test",
       "payment_settings": {
@@ -166,8 +117,14 @@
       "updated_at": "2024-08-27T15:31:35.549Z",
       "total_amount": 1799,
       "insurance_amount": 0,
-      "payment_client_id": "test_e94e298293426cacb29c953b2047d6e8",
-      "completions": [],
+      "payment_client_id": "test_2b3c4d5e6f7g8h9i0j1a",
+      "completions": [
+        {
+          "payment_mode": "card_present",
+          "created_at": "2024-08-08T15:47:45.815Z",
+          "updated_at": "2024-08-08T15:47:45.815Z"
+        }
+      ],
       "bnpl": {
         "provider": "sezzle",
         "provider_client_id": "sz_pub_Kfhyb9x0hdTb2JtUYejTTP3Kb2RTi1xV",
@@ -180,6 +137,153 @@
         "created_at": "2024-08-08T16:32:54.815Z",
         "updated_at": "2024-08-08T16:32:54.815Z"
       }
+    },
+    {
+      "id": "cho_3c4d5e6f7g8h9i0j1a2b",
+      "payment_intent_id": null,
+      "account_id": "subaccount_3",
+      "platform_account_id": "platform_3",
+      "payment_amount": 1999,
+      "payment_currency": "USD",
+      "payment_description": "2 Dozen Chocolate Donuts - Website To Go Order",
+      "description": "2 Dozen Chocolate Donuts - Website To Go Order",
+      "payment_methods": [
+        {
+          "id": "pm_3c4d5e6f7g8h9i0j1a2b",
+          "type": "card",
+          "status": "valid",
+          "invalid_reason": null,
+          "name": "Julia Garnett",
+          "brand": "visa",
+          "acct_last_four": "1111",
+          "month": "10",
+          "year": "2042",
+          "address_line1_check": "pass",
+          "address_postal_code_check": "pass",
+          "bin_details": null
+        }
+      ],
+      "payment_method_group_id": "pmg_3c4d5e6f7g8h9i0j1a2b",
+      "status": "created",
+      "mode": "test",
+      "payment_settings": {
+        "ach_payments": true,
+        "bnpl_payments": true,
+        "credit_card_payments": true
+      },
+      "successful_payment_id": null,
+      "statement_descriptor": null,
+      "application_fees": null,
+      "created_at": "2024-08-08T16:32:54.376Z",
+      "updated_at": "2024-08-27T15:31:35.549Z",
+      "total_amount": 1799,
+      "insurance_amount": 0,
+      "payment_client_id": "test_3c4d5e6f7g8h9i0j1a2b",
+      "completions": [
+        {
+          "payment_mode": "ecom",
+          "created_at": "2024-08-08T15:47:45.815Z",
+          "updated_at": "2024-08-08T15:47:45.815Z"
+        }
+      ]
+    },
+    {
+      "id": "cho_4d5e6f7g8h9i0j1a2b3c",
+      "payment_intent_id": null,
+      "account_id": "subaccount_4",
+      "platform_account_id": "platform_4",
+      "payment_amount": 8999,
+      "payment_currency": "USD",
+      "payment_description": "Weekly Donut Box Subscription",
+      "description": "Weekly Donut Box Subscription",
+      "payment_methods": [
+        {
+          "id": "pm_4d5e6f7g8h9i0j1a2b3c",
+          "type": "card",
+          "status": "valid",
+          "invalid_reason": null,
+          "name": "Julia Garnett",
+          "brand": "visa",
+          "acct_last_four": "1111",
+          "month": "10",
+          "year": "2042",
+          "address_line1_check": "pass",
+          "address_postal_code_check": "pass",
+          "bin_details": null
+        }
+      ],
+      "payment_method_group_id": "pmg_4d5e6f7g8h9i0j1a2b3c",
+      "status": "created",
+      "mode": "test",
+      "payment_settings": {
+        "ach_payments": true,
+        "bnpl_payments": true,
+        "credit_card_payments": true
+      },
+      "successful_payment_id": null,
+      "statement_descriptor": null,
+      "application_fees": null,
+      "created_at": "2024-08-08T16:32:54.376Z",
+      "updated_at": "2024-08-27T15:31:35.549Z",
+      "total_amount": 1799,
+      "insurance_amount": 0,
+      "payment_client_id": "test_4d5e6f7g8h9i0j1a2b3c",
+      "completions": [
+        {
+          "payment_mode": "bnpl",
+          "created_at": "2024-08-08T15:47:45.815Z",
+          "updated_at": "2024-08-08T15:47:45.815Z"
+        }
+      ]
+    },
+    {
+      "id": "cho_5e6f7g8h9i0j1a2b3c4d",
+      "payment_intent_id": null,
+      "account_id": "subaccount_5",
+      "platform_account_id": "platform_5",
+      "payment_amount": 2499,
+      "payment_currency": "USD",
+      "payment_description": "Donut Shop Size M T Shirt - Website Order",
+      "description": "Donut Shop Size M T Shirt - Website Order",
+      "payment_methods": [
+        {
+          "id": "pm_5e6f7g8h9i0j1a2b3c4d",
+          "type": "card",
+          "status": "valid",
+          "invalid_reason": null,
+          "name": "Julia Garnett",
+          "brand": "visa",
+          "acct_last_four": "1111",
+          "month": "10",
+          "year": "2042",
+          "address_line1_check": "pass",
+          "address_postal_code_check": "pass",
+          "bin_details": null
+        }
+      ],
+      "payment_method_group_id": "pmg_5e6f7g8h9i0j1a2b3c4d",
+      "status": "attempted",
+      "mode": "test",
+      "payment_settings": {
+        "ach_payments": true,
+        "bnpl_payments": true,
+        "credit_card_payments": true
+      },
+      "successful_payment_id": null,
+      "statement_descriptor": null,
+      "application_fees": null,
+      "created_at": "2024-08-08T16:32:54.376Z",
+      "updated_at": "2024-08-27T15:31:35.549Z",
+      "total_amount": 1799,
+      "insurance_amount": 0,
+      "payment_client_id": "test_5e6f7g8h9i0j1a2b3c4d",
+      "completions": [
+        {
+          "payment_mode": "ecom",
+          "created_at": "2024-08-08T15:47:45.815Z",
+          "updated_at": "2024-08-08T15:47:45.815Z"
+        }
+      ]
     }
   ]
 }
