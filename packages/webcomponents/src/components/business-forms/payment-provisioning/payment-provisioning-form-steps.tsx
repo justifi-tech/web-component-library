@@ -68,7 +68,6 @@ export class PaymentProvisioningFormSteps {
       ref={(el) => this.refs[7] = el}
       onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
-      onSubmitted={() => this.formCompleted.emit()}
     />,
   };
 
