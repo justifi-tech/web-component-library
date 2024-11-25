@@ -9,8 +9,7 @@ import {
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { DownloadIcon } from '../../assets/download-icon';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core',
@@ -181,7 +180,7 @@ export class PayoutsListCore {
 
   render() {
     return (
-      <StyledHost exportedparts={tableExportedParts}>
+      <div>
         <div class="row gy-3 mb-4">
           <div class="col-2">
             <form-control-date
@@ -258,7 +257,7 @@ export class PayoutsListCore {
             )}
           </table>
         </div>
-      </StyledHost>
+      </div>
     );
   }
 }

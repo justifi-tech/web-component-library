@@ -6,11 +6,8 @@ export const makeGetSubAccounts =
   ({ accountId, authToken, service, apiOrigin }) =>
   async ({ params, onSuccess, onError }) => {
 
-    // Account ID must be passed as param to fetch SubAccounts
-    let newParams = { ...params, account_id: accountId };
-
     try {
-      const response = await service.fetchSubAccounts(authToken, newParams, apiOrigin);
+      const response = await service.fetchSubAccounts(accountId, authToken, params, apiOrigin);
 
       if (!response.error) {
         const pagingInfo = {

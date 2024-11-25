@@ -1,10 +1,12 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { PaymentService } from '../../api/services/payment.service';
-import { makeGetPayments } from './get-payments';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
-import JustifiAnalytics from '../../api/Analytics';
+import { makeGetCheckouts } from './get-checkouts';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
+import JustifiAnalytics from '../../api/Analytics';
+import { CheckoutService } from '../../api/services/checkout.service';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { SubAccountService } from '../../api/services/subaccounts.service';
+import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { StyledHost } from '../../ui-components/styled-host/styled-host';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
 
@@ -31,17 +33,19 @@ import { tableExportedParts } from '../../ui-components/table/exported-parts';
   * @exportedPart next-button-text: Text for Next button
 */
 @Component({
-  tag: 'justifi-payments-list',
+  tag: 'justifi-checkouts-list',
   shadow: true
 })
 
-export class PaymentsList {
-  @State() getPayments: Function;
+export class CheckoutsList {
+  @State() getCheckouts: Function;
+  @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
 
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() columns: string;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -50,7 +54,7 @@ export class PaymentsList {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetPayments();
+    this.initializeGetData();
   }
 
   disconnectedCallback() {
@@ -60,15 +64,20 @@ export class PaymentsList {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeGetPayments();
+    this.initializeGetData();
   }
 
-  private initializeGetPayments() {
+  private initializeGetData() {
+    this.initializeGetCheckouts();
+    this.initializeGetSubAccounts();
+  }
+
+  private initializeGetCheckouts() {
     if (this.accountId && this.authToken) {
-      this.getPayments = makeGetPayments({
-        id: this.accountId,
+      this.getCheckouts = makeGetCheckouts({
+        accountId: this.accountId,
         authToken: this.authToken,
-        service: new PaymentService(),
+        service: new CheckoutService(),
         apiOrigin: this.apiOrigin,
       });
     } else {
@@ -81,6 +90,17 @@ export class PaymentsList {
     }
   }
 
+  private initializeGetSubAccounts() {
+    if (this.accountId && this.authToken) {
+      this.getSubAccounts = makeGetSubAccounts({
+        accountId: this.accountId,
+        authToken: this.authToken,
+        service: new SubAccountService(),
+        apiOrigin: this.apiOrigin
+      });
+    }
+  }
+
   handleErrorEvent = (event) => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
@@ -89,9 +109,11 @@ export class PaymentsList {
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <payments-list-core
-          getPayments={this.getPayments}
+        <checkouts-list-core
+          getCheckouts={this.getCheckouts}
+          getSubAccounts={this.getSubAccounts}
           onError-event={this.handleErrorEvent}
+          columns={this.columns}
         />
       </StyledHost>
     );

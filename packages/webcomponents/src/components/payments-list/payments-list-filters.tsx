@@ -33,8 +33,8 @@ export class PaymentsListFilters {
     return (
       <table-filters-menu params={this.params} clearParams={this.clearParams}>
         <div class="grid-cols-2 gap-3 p-1">
-        <div class="p-2">
-            <form-control-text 
+          <div class="p-2">
+            <form-control-text
               name="payment_id"
               label="Payment ID"
               inputHandler={this.debouncedSetParamsOnChange}
@@ -42,7 +42,7 @@ export class PaymentsListFilters {
             />
           </div>
           <div class="p-2">
-            <form-control-text 
+            <form-control-text
               name="terminal_id"
               label="Terminal ID"
               inputHandler={this.debouncedSetParamsOnChange}
@@ -50,16 +50,16 @@ export class PaymentsListFilters {
             />
           </div>
           <div class="p-2">
-            <form-control-select 
+            <form-control-select
               name="payment_status"
               label="Status"
               options={this.paymentStatusOptions}
               inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.payment_status}
+              defaultValue={this.params.payment_status || ''}
             />
           </div>
           <div class="p-2">
-            <form-control-date 
+            <form-control-date
               name="created_after"
               label="Start Date"
               inputHandler={this.setParamsOnChange}

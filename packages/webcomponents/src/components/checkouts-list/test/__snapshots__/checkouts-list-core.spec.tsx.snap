@@ -1,0 +1,408 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`checkouts-list-core displays an error state on failed data fetch 1`] = `
+<checkouts-list-core>
+  <div>
+    <checkouts-list-filters>
+      <table-filters-menu>
+        <!---->
+        <div class="d-flex gap-2">
+          <div class="dropdown pb-3">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+              Filters
+            </button>
+            <custom-popper strategy="fixed" trigger="click">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+                <div class="gap-3 grid-cols-2 p-1">
+                  <div class="p-2">
+                    <form-control-select exportparts="label,input,input-invalid">
+                      <div class="d-flex flex-column form-group">
+                        <div class="align-items-start d-flex gap-2">
+                          <label class="form-label" htmlfor="status" part="label">
+                            Status
+                          </label>
+                          <form-control-tooltip></form-control-tooltip>
+                        </div>
+                        <select class="form-select" id="status" name="status" part="input ">
+                          <option value="">
+                            All
+                          </option>
+                          <option value="created">
+                            Created
+                          </option>
+                          <option value="completed">
+                            Completed
+                          </option>
+                          <option value="attempted">
+                            Attempted
+                          </option>
+                          <option value="expired">
+                            Expired
+                          </option>
+                        </select>
+                        <form-control-error-text name="status"></form-control-error-text>
+                      </div>
+                    </form-control-select>
+                  </div>
+                  <div class="p-2">
+                    <form-control-select exportparts="label,input,input-invalid">
+                      <div class="d-flex flex-column form-group">
+                        <div class="align-items-start d-flex gap-2">
+                          <label class="form-label" htmlfor="payment_mode" part="label">
+                            Payment Mode
+                          </label>
+                          <form-control-tooltip></form-control-tooltip>
+                        </div>
+                        <select class="form-select" id="payment_mode" name="payment_mode" part="input ">
+                          <option value="">
+                            All
+                          </option>
+                          <option value="ecom">
+                            E-commerce
+                          </option>
+                          <option value="bnpl">
+                            BNPL
+                          </option>
+                        </select>
+                        <form-control-error-text name="payment_mode"></form-control-error-text>
+                      </div>
+                    </form-control-select>
+                  </div>
+                </div>
+              </form>
+            </custom-popper>
+          </div>
+          <div>
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </table-filters-menu>
+    </checkouts-list-filters>
+    <div class="table-wrapper">
+      <table class="table table-hover">
+        <thead class="sticky-top table-head" part="table-head">
+          <tr class="table-light text-nowrap" part="table-head-row">
+            <th part="table-head-cell" scope="col" title="The date each checkout occurred">
+              Processed On
+            </th>
+            <th part="table-head-cell" scope="col" title="The dollar amount of each checkout">
+              Payment Amount
+            </th>
+            <th part="table-head-cell" scope="col" title="The description of each checkout">
+              Payment Description
+            </th>
+            <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
+              Payment Mode
+            </th>
+            <th part="table-head-cell" scope="col" title="The current status of each checkout">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body" part="table-body">
+          <tr>
+            <td class="error-state" colspan="5" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+              An unexpected error occurred: Fetch error
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="sticky-bottom">
+          <tr class="align-middle table-light">
+            <td colspan="5" part="pagination-bar">
+              <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span class="me-1" part="page-arrow">
+                          «
+                        </span>
+                        <span part="page-button-text">
+                          Previous
+                        </span>
+                      </a>
+                    </li>
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span part="page-button-text">
+                          Next
+                        </span>
+                        <span class="ms-1" part="page-arrow">
+                          »
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </pagination-menu>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</checkouts-list-core>
+`;
+
+exports[`checkouts-list-core renders properly with fetched data 1`] = `
+<checkouts-list-core>
+  <div>
+    <checkouts-list-filters>
+      <table-filters-menu>
+        <!---->
+        <div class="d-flex gap-2">
+          <div class="dropdown pb-3">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+              Filters
+            </button>
+            <custom-popper strategy="fixed" trigger="click">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+                <div class="gap-3 grid-cols-2 p-1">
+                  <div class="p-2">
+                    <form-control-select exportparts="label,input,input-invalid">
+                      <div class="d-flex flex-column form-group">
+                        <div class="align-items-start d-flex gap-2">
+                          <label class="form-label" htmlfor="status" part="label">
+                            Status
+                          </label>
+                          <form-control-tooltip></form-control-tooltip>
+                        </div>
+                        <select class="form-select" id="status" name="status" part="input ">
+                          <option value="">
+                            All
+                          </option>
+                          <option value="created">
+                            Created
+                          </option>
+                          <option value="completed">
+                            Completed
+                          </option>
+                          <option value="attempted">
+                            Attempted
+                          </option>
+                          <option value="expired">
+                            Expired
+                          </option>
+                        </select>
+                        <form-control-error-text name="status"></form-control-error-text>
+                      </div>
+                    </form-control-select>
+                  </div>
+                  <div class="p-2">
+                    <form-control-select exportparts="label,input,input-invalid">
+                      <div class="d-flex flex-column form-group">
+                        <div class="align-items-start d-flex gap-2">
+                          <label class="form-label" htmlfor="payment_mode" part="label">
+                            Payment Mode
+                          </label>
+                          <form-control-tooltip></form-control-tooltip>
+                        </div>
+                        <select class="form-select" id="payment_mode" name="payment_mode" part="input ">
+                          <option value="">
+                            All
+                          </option>
+                          <option value="ecom">
+                            E-commerce
+                          </option>
+                          <option value="bnpl">
+                            BNPL
+                          </option>
+                        </select>
+                        <form-control-error-text name="payment_mode"></form-control-error-text>
+                      </div>
+                    </form-control-select>
+                  </div>
+                </div>
+              </form>
+            </custom-popper>
+          </div>
+          <div>
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </table-filters-menu>
+    </checkouts-list-filters>
+    <div class="table-wrapper">
+      <table class="table table-hover">
+        <thead class="sticky-top table-head" part="table-head">
+          <tr class="table-light text-nowrap" part="table-head-row">
+            <th part="table-head-cell" scope="col" title="The date each checkout occurred">
+              Processed On
+            </th>
+            <th part="table-head-cell" scope="col" title="The dollar amount of each checkout">
+              Payment Amount
+            </th>
+            <th part="table-head-cell" scope="col" title="The description of each checkout">
+              Payment Description
+            </th>
+            <th part="table-head-cell" scope="col" title="The payment mode of each checkout">
+              Payment Mode
+            </th>
+            <th part="table-head-cell" scope="col" title="The current status of each checkout">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body" part="table-body">
+          <tr data-row-entity-id="cho_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row table-row-odd">
+            <th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                3:47pm
+              </div>
+            </th>
+            <td>
+              $3.99 USD
+            </td>
+            <td>
+              One Chocolate Donut
+            </td>
+            <td>
+              Card Present
+            </td>
+            <td>
+              <span class="badge bg-success" title="The checkout has been completed">
+                Completed
+              </span>
+            </td>
+          </tr>
+          <tr data-row-entity-id="cho_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row table-row-even">
+            <th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
+            </th>
+            <td>
+              $10.99 USD
+            </td>
+            <td>
+              1 Dozen Chocolate Donuts
+            </td>
+            <td>
+              Card Present
+            </td>
+            <td>
+              <span class="badge bg-danger" title="The checkout has expired">
+                Expired
+              </span>
+            </td>
+          </tr>
+          <tr data-row-entity-id="cho_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row table-row-odd">
+            <th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
+            </th>
+            <td>
+              $19.99 USD
+            </td>
+            <td>
+              2 Dozen Chocolate Donuts - Website To Go Order
+            </td>
+            <td>
+              E-commerce
+            </td>
+            <td>
+              <span class="badge bg-primary" title="The checkout has been created">
+                Created
+              </span>
+            </td>
+          </tr>
+          <tr data-row-entity-id="cho_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row table-row-even">
+            <th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
+            </th>
+            <td>
+              $89.99 USD
+            </td>
+            <td>
+              Weekly Donut Box Subscription
+            </td>
+            <td>
+              Buy Now Pay Later
+            </td>
+            <td>
+              <span class="badge bg-primary" title="The checkout has been created">
+                Created
+              </span>
+            </td>
+          </tr>
+          <tr data-row-entity-id="cho_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row table-row-odd">
+            <th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
+            </th>
+            <td>
+              $24.99 USD
+            </td>
+            <td>
+              Donut Shop Size M T Shirt - Website Order
+            </td>
+            <td>
+              E-commerce
+            </td>
+            <td>
+              <span class="badge bg-secondary" title="The checkout has been attempted">
+                Attempted
+              </span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="sticky-bottom">
+          <tr class="align-middle table-light">
+            <td colspan="5" part="pagination-bar">
+              <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span class="me-1" part="page-arrow">
+                          «
+                        </span>
+                        <span part="page-button-text">
+                          Previous
+                        </span>
+                      </a>
+                    </li>
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span part="page-button-text">
+                          Next
+                        </span>
+                        <span class="ms-1" part="page-arrow">
+                          »
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </pagination-menu>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</checkouts-list-core>
+`;
