@@ -30,7 +30,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
         </h1>
         <span part="detail-head-badge" slot="badge">
           <span class="badge bg-success" title="This payment was successfully captured">
-            Successful
+            Succeeded
           </span>
         </span>
       </div>
@@ -104,7 +104,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
           </span>
           <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
             <span class="badge bg-success" title="This payment was successfully captured">
-              Successful
+              Succeeded
             </span>
           </span>
         </div>

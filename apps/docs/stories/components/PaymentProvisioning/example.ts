@@ -21,6 +21,14 @@ ${codeExampleHead('justifi-payment-provisioning')}
       console.log("server response received", data);
     });
 
+    paymentProvisioning.addEventListener("form-step-completed", (data) => {
+      /* this event is raised when a form step is completed */
+      let serverResponse = data.detail.data;
+      let completedFormStep = data.detail.formStep;
+      console.log("data from server", serverResponse);
+      console.log("completed form step", completedFormStep);
+    }
+
     paymentProvisioning.addEventListener("click-event", (data) => {
       let name = data.detail.name;
 

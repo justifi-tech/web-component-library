@@ -2,10 +2,10 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text';
+import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-file', () => {
-  const components = [FileInput, FormControlErrorText, FormControlHelpText];
+  const components = [FileInput, FormControlErrorText, TooltipComponent];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {
@@ -123,7 +123,7 @@ describe('form-control-file', () => {
     expect(inputElement.disabled).toBeTruthy();
   });
 
-  it('Shows help text when helpText prop is provided', async () => {
+  it('Shows tooltip when helpText prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -136,10 +136,17 @@ describe('form-control-file', () => {
         </form-control-file>
     });
 
-    const helpTextComponent = page.root.querySelector('#form-help-text-governmentId');
-    expect(helpTextComponent).not.toBeNull();
+    const tooltipComponent = page.root.querySelector('form-control-tooltip');
+    expect(tooltipComponent).not.toBeNull();
 
-    expect(helpTextComponent.textContent).toBe('Select a file to upload.');
+    const tooltipIcon = tooltipComponent.querySelector('.bi-question-square');
+    expect(tooltipIcon).not.toBeNull();
+
+    const tooltipElement = tooltipComponent.querySelector('.tooltip');
+    expect(tooltipElement).not.toBeNull();
+
+    const tooltipText = tooltipElement.querySelector('.tooltip-inner');
+    expect(tooltipText.textContent).toBe('Select a file to upload.');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {

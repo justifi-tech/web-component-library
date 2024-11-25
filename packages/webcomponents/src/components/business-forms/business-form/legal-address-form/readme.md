@@ -35,6 +35,9 @@
 graph TD;
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form --> form-control-select
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-select --> form-control-tooltip
   justifi-business-form --> justifi-legal-address-form
   style justifi-legal-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

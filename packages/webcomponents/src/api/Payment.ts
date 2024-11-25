@@ -10,12 +10,19 @@ export enum PaymentMethodTypes {
   saved = 'saved',
 }
 
+export enum PaymentTypes {
+  card = 'Card',
+  bankAccount = 'ACH',
+  unknown = 'Unknown'
+}
+
 export enum PaymentStatuses {
   pending = 'pending',
   automatic = 'automatic',
   authorized = 'authorized',
   succeeded = 'succeeded',
   failed = 'failed',
+  canceled = 'canceled',
   disputed = 'disputed',
   fully_refunded = 'fully_refunded',
   partially_refunded = 'partially_refunded',
@@ -251,6 +258,14 @@ export class Payment implements IPayment {
       return PaymentDisputedStatuses.open;
     }
   }
+
+  get paymentType(): PaymentTypes {
+    if (this.payment_method) {
+      return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
+    } else {
+      return PaymentTypes.unknown;
+    }
+  }
 }
 
 export interface IRefund {
@@ -271,4 +286,14 @@ export interface IApplicationFee {
   currency: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface PaymentsParams {
+  payment_id?: string;
+  terminal_id?: string;
+  payment_status?: PaymentStatuses;
+  created_after?: string;
+  created_before?: string;
+  after_cursor?: string;
+  before_cursor?: string;
 }

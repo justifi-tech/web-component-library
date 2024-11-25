@@ -7,7 +7,7 @@ import {
   EventEmitter,
   Watch,
 } from '@stencil/core';
-import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
+import { FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-select'
@@ -15,14 +15,14 @@ import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 export class SelectInput {
   selectElement!: HTMLSelectElement;
 
-  @Prop() label: string;
   @Prop() name: any;
+  @Prop() label: string;
+  @Prop() options: { label: string; value: string }[];
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue: string;
-  @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() options: { label: string; value: string }[];
-  @Prop() disabled: boolean;
+  @Prop() disabled?: boolean;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
@@ -51,9 +51,12 @@ export class SelectInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+          <div class="d-flex align-items-start gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
           <select
             ref={el => (this.selectElement = el as HTMLSelectElement)}
             id={this.name}
@@ -68,7 +71,6 @@ export class SelectInput {
               <option value={option.value}>{option.label}</option>
             ))}
           </select>
-          <FormControlHelpText helpText={this.helpText} name={this.name} />
           <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>

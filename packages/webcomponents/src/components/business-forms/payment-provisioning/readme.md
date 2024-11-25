@@ -55,15 +55,23 @@ graph TD;
   justifi-business-core-info-form-step-core --> form-control-select
   justifi-business-core-info-form-step-core --> form-control-date
   justifi-business-core-info-form-step-core --> form-control-number-masked
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-select --> form-control-tooltip
+  form-control-date --> form-control-tooltip
+  form-control-number-masked --> form-control-tooltip
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core
+  justifi-legal-address-form-step-core --> form-control-tooltip
   justifi-legal-address-form-step-core --> form-control-text
   justifi-legal-address-form-step-core --> form-control-select
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
+  justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-monetary
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
   justifi-business-representative-form-step --> justifi-business-representative-form-step-core
   justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
+  justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-text
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
@@ -71,6 +79,7 @@ graph TD;
   justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
   justifi-business-owners-form-step --> justifi-business-owners-form-step-core
+  justifi-business-owners-form-step-core --> form-control-tooltip
   justifi-business-owners-form-step-core --> justifi-owner-form
   justifi-owner-form --> owner-form-core
   owner-form-core --> owner-form-inputs
@@ -78,11 +87,14 @@ graph TD;
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
   owner-form-inputs --> justifi-identity-address-form
+  justifi-business-bank-account-form-step --> form-control-tooltip
   justifi-business-bank-account-form-step --> form-control-text
   justifi-business-bank-account-form-step --> form-control-select
   justifi-business-document-upload-form-step --> justifi-business-documents-on-file
   justifi-business-document-upload-form-step --> justifi-business-document-upload-input-group
+  justifi-business-document-upload-form-step --> form-control-tooltip
   justifi-business-document-upload-input-group --> form-control-file
+  form-control-file --> form-control-tooltip
   justifi-business-terms-conditions-form-step --> justifi-business-terms-conditions-text
   justifi-business-terms-conditions-form-step --> form-control-checkbox
   justifi-payment-provisioning-core --> justifi-payment-provisioning-form-steps

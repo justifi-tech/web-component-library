@@ -67,6 +67,9 @@ Type: `Promise<{ isValid: boolean; }>`
 graph TD;
   justifi-billing-form --> form-control-text
   justifi-billing-form --> form-control-select
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-select --> form-control-tooltip
   justifi-new-payment-method --> justifi-billing-form
   style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

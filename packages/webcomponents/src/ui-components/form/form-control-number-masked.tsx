@@ -8,7 +8,7 @@ import {
   Watch,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
-import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
+import { FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-number-masked'
@@ -79,9 +79,12 @@ export class NumberInputMasked {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
-            {this.label}
-          </label>
+          <div class="d-flex align-items-start gap-2">
+            <label part="label" class="form-label" htmlFor={this.name}>
+              {this.label}
+            </label>
+            <form-control-tooltip helpText={this.helpText} />
+          </div>
           <input
             ref={el => (this.textInput = el as HTMLInputElement)}
             id={this.name}
@@ -93,7 +96,6 @@ export class NumberInputMasked {
             type="text"
             disabled={this.disabled}
           />
-          <FormControlHelpText helpText={this.helpText} name={this.name} />
           <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>

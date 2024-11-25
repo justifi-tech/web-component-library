@@ -36,6 +36,8 @@
 graph TD;
   justifi-refund-form --> form-control-monetary
   justifi-refund-form --> form-control-text
+  form-control-text --> form-control-tooltip
+  form-control-tooltip --> custom-popper
   style justifi-refund-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
