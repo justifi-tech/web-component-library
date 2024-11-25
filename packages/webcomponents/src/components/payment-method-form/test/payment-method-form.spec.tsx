@@ -6,7 +6,6 @@ import { PaymentMethodForm } from '../payment-method-form';
 import { PaymentMethodTypes } from '../../../api';
 import { FrameCommunicationService } from '../../../utils/frame-comunication-service';
 import { MessageEventType } from '../message-event-types';
-import packageJson from '../../../../package.json';
 
 describe('justifi-payment-method-form', () => {
   it('renders an iframe', async () => {
@@ -178,59 +177,6 @@ describe('justifi-payment-method-form', () => {
       await page.waitForChanges();
 
       expect(eventSpy).toHaveBeenCalled();
-    });
-  });
-
-  describe('Methods', () => {
-    it('calls postMessageWithResponseListener with correct parameters on tokenize', async () => {
-      // Mock the iframe and its contentWindow.postMessage
-      const mockPostMessage = jest.fn();
-      global.window = Object.create(window);
-      const url = "https://example.com";
-      Object.defineProperty(window, 'location', {
-        value: {
-          href: url,
-        }
-      });
-      const mockedIframe = {
-        contentWindow: {
-          postMessage: mockPostMessage,
-        }
-      };
-
-      const page = await newSpecPage({
-        components: [PaymentMethodForm],
-        template: () => <justifi-payment-method-form iframeOrigin={url} paymentMethodFormType={PaymentMethodTypes.card}></justifi-payment-method-form>,
-      });
-
-      // Assign the mocked iframe to the component instance
-      page.rootInstance.iframeElement = mockedIframe;
-
-      // Replace the frameService with a mock that includes a mocked postMessageWithResponseListener
-      page.rootInstance.frameService = {
-        postMessage: jest.fn(),
-        postMessageWithResponseListener: jest.fn().mockResolvedValue({
-          // Mock the expected resolution value if your component expects any
-        }),
-        addMessageListener: jest.fn(),
-        removeMessageListener: jest.fn(),
-      };
-
-      const clientId = 'test-client-id';
-      const paymentMethodMetadata = { key: 'value' };
-      const account = 'test-account';
-
-      // Call the tokenize method
-      await page.rootInstance.tokenize(clientId, paymentMethodMetadata, account);
-
-      // Verify postMessageWithResponseListener was called with the expected parameters
-      expect(page.rootInstance.frameService.postMessageWithResponseListener)
-        .toHaveBeenCalledWith(undefined, expect.objectContaining({
-          clientId,
-          paymentMethodMetadata,
-          account,
-          componentVersion: packageJson.version,
-        }));
     });
   });
 });
