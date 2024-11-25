@@ -2,8 +2,7 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
 import { MapPaymentStatusToBadge, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
 
 @Component({
@@ -137,7 +136,7 @@ export class PaymentsListCore {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
+      <div>
         <payments-list-filters 
           params={this.params} 
           setParamsOnChange={this.setParamsOnChange}
@@ -204,7 +203,7 @@ export class PaymentsListCore {
             )}
           </table>
         </div>
-      </StyledHost>
+      </div>
     );
   }
 }

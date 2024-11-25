@@ -6,9 +6,11 @@ import mockBusinessTerms from '../../../../mockData/mockBusinessTermsSuccess.jso
 import mockBusinessProvisioning from '../../../../mockData/mockBusinessProvisioningSuccess.json';
 import mockGetCheckout from '../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckout from '../../../../mockData/mockPostCheckoutSuccess.json';
+import mockCheckoutsList from '../../../../mockData/mockGetCheckoutsListSuccess.json';
 import mockGrossPaymentChart from '../../../../mockData/mockGrossVolumeReportSuccess.json';
 import mockPayment from '../../../../mockData/mockPaymentDetailSuccess.json';
 import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
+import mockPostPaymentMethods from '../../../../mockData/mockPostPaymentMethodsSuccess.json';
 import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInterruptionInsurance.json';
@@ -49,9 +51,11 @@ export const API_PATHS = {
   BUSINESS_PROVISIONING: '/entities/provisioning',
   CHECKOUT: '/checkouts/:id',
   CHECKOUT_COMPLETE: '/checkouts/:id/complete',
+  CHECKOUTS_LIST: 'checkouts',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYMENT_DETAILS: '/payments/:id',
   PAYMENTS_LIST: '/account/:id/payments',
+  PAYMENT_METHODS: '/payment_methods',
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
   INSURANCE_QUOTES: '/insurance/quotes',
@@ -128,6 +132,10 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       // Checkout
       this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
       this.post(API_PATHS.CHECKOUT_COMPLETE, () => mockPostCheckout);
+      this.get(API_PATHS.CHECKOUTS_LIST, () => mockCheckoutsList);
+
+      // SubAccounts
+      this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
 
       // Analytics
       this.post(API_PATHS.ANALYTICS, () => null);
@@ -138,7 +146,15 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
         () => mockSeasonInterruptionInsurance
       );
 
-      // Secondary URL prefix for API requests
+      // URL prefix for direct API requests (for iframed application requests which don't use the proxy)
+      // As of now this does not work because the request happens within the iframe and the iframe does not have access to the proxy
+      this.namespace = '/v1/js'; // Reset the namespace to avoid prefixing with the primary URL prefix
+      this.urlPrefix = 'https://api.justifi.ai';
+
+      // PaymentMethods (TokenizePaymentMethod component)
+      this.post(API_PATHS.PAYMENT_METHODS, () => mockPostPaymentMethods);
+
+      // URL prefix for entity document uploads
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
       this.urlPrefix =
         'https://entities-production-documents.s3.us-east-2.amazonaws.com';
@@ -153,7 +169,7 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // Ensure all other requests not handled by Mirage are sent to the real network
       this.passthrough(...bypass);
-      
+
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
     },

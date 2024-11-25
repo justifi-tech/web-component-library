@@ -25,6 +25,7 @@
 
 ### Used by
 
+ - [checkouts-list-core](../checkouts-list)
  - [payments-list-core](../payments-list)
  - [payouts-list-core](../payouts-list)
  - [terminals-list-core](../terminals-list)
@@ -32,6 +33,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  checkouts-list-core --> pagination-menu
   payments-list-core --> pagination-menu
   payouts-list-core --> pagination-menu
   terminals-list-core --> pagination-menu

@@ -24,6 +24,7 @@
 
 ### Used by
 
+ - [checkouts-list-filters](../../components/checkouts-list)
  - [payments-list-filters](../../components/payments-list)
  - [terminals-list-filters](../../components/terminals-list)
 
@@ -35,6 +36,7 @@
 ```mermaid
 graph TD;
   table-filters-menu --> custom-popper
+  checkouts-list-filters --> table-filters-menu
   payments-list-filters --> table-filters-menu
   terminals-list-filters --> table-filters-menu
   style table-filters-menu fill:#f9f,stroke:#333,stroke-width:4px
