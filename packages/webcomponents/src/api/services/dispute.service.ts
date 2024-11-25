@@ -8,19 +8,16 @@ export interface IDisputeService {
     authToken: string,
   ): Promise<IApiResponse<IDispute>>;
 
-  fetchDisputeResponse(
-    disputeId: string,
-    authToken: string
-  ): Promise<IApiResponse<IDispute>>;
-
   updateDisputeResponse(
     disputeId: string,
-    authToken: string
+    authToken: string,
+    payload: any
   ): Promise<IApiResponse<IDispute>>;
 
   submitDisputeResponse(
     disputeId: string,
-    authToken: string
+    authToken: string,
+    payload: any
   ): Promise<IApiResponse<IDispute>>;
 }
 
@@ -33,27 +30,21 @@ export class DisputeService implements IDisputeService {
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
 
-  async fetchDisputeResponse(
-    disputeId: string,
-    authToken: string
-  ): Promise<IApiResponse<IDispute>> {
-    const endpoint = `disputes/${disputeId}/response`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
-  }
-
   async updateDisputeResponse(
     disputeId: string,
-    authToken: string
+    authToken: string,
+    payload: any
   ): Promise<IApiResponse<IDispute>> {
     const endpoint = `disputes/${disputeId}/response`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).patch(endpoint);
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).patch(endpoint, payload);
   }
 
   async submitDisputeResponse(
     disputeId: string,
-    authToken: string
+    authToken: string,
+    payload: any
   ): Promise<IApiResponse<IDispute>> {
     const endpoint = `disputes/${disputeId}/response`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint);
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }
