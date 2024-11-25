@@ -91,7 +91,7 @@ describe('checkouts-list-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it.only('emits checkout-row-clicked event on row click', async () => {
+  it('emits checkout-row-clicked event on row click', async () => {
     const mockCheckoutsService = {
       fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
