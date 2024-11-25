@@ -33,6 +33,7 @@ export class BusinessOwnerFormCore {
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ bubbles: true }) ownerSubmitted: EventEmitter<any>;
 
   constructor() {
     this.validate = this.validate.bind(this);
@@ -133,6 +134,7 @@ export class BusinessOwnerFormCore {
         this.patchOwner({
           payload: this.payload,
           onSuccess: (response) => {
+            this.ownerSubmitted.emit({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
@@ -150,6 +152,7 @@ export class BusinessOwnerFormCore {
         this.postOwner({
           payload: this.payload,
           onSuccess: (response) => {
+            this.ownerSubmitted.emit({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
