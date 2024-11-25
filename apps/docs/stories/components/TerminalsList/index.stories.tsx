@@ -117,6 +117,19 @@ const meta: Meta = {
       },
       action: true,
     },
+    "columns": {
+      description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
+      type: 'string',
+      table: {
+        category: "props",
+        defaultValue: {
+          summary: "nickname,provider_id,status"
+        }
+      },
+      control: {
+        type: "text",
+      },
+    }
   },
   parameters: {
     actions: {

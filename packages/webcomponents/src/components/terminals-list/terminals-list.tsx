@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
@@ -8,6 +7,7 @@ import { TerminalService } from '../../api/services/terminal.service';
 import { makeGetTerminals } from './get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
+import { StyledHost, tableExportedParts } from '../../ui-components';
 
 /**
   * @exportedPart label: Label for inputs
@@ -40,11 +40,12 @@ export class TerminalsList {
   @State() getTerminals: Function;
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
-
+  
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
-
+  @Prop() columns: string;
+  
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
@@ -105,16 +106,15 @@ export class TerminalsList {
   };
 
   render() {
-    if (this.errorMessage) {
-      return ErrorState(this.errorMessage);
-    }
     return (
-      <terminals-list-core 
-        getTerminals={this.getTerminals}
-        getSubAccounts={this.getSubAccounts}
-        onError-event={this.handleErrorEvent}
-      />
+      <StyledHost exportparts={tableExportedParts}>
+        <terminals-list-core 
+          getTerminals={this.getTerminals}
+          getSubAccounts={this.getSubAccounts}
+          onError-event={this.handleErrorEvent}
+          columns={this.columns}
+        />
+      </StyledHost>
     );
   }
-
 };

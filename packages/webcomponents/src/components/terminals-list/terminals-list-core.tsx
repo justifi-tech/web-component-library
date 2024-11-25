@@ -1,28 +1,31 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, SubAccount, Terminal, TerminalsTableFilterParams, pagingDefaults } from '../../api';
-import { MapTerminalStatusToBadge } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
+import { defaultColumnsKeys, terminalTableColumns, terminalTableCells } from './terminals-table';
+import { Table } from '../../utils/table';
 
 @Component({
   tag: 'terminals-list-core'
 })
 export class TerminalsListCore {
+  @Prop() getTerminals: Function;
+  @Prop() getSubAccounts: Function;
+  @Prop() columns: string = defaultColumnsKeys;
+
   @State() terminals: Terminal[] = [];
+  @State() terminalsTable: Table = new Table([], this.columns, terminalTableColumns, terminalTableCells);
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: TerminalsTableFilterParams = {};
 
-  @Prop() getTerminals: Function;
-  @Prop() getSubAccounts: Function;
-
   @Watch('params')
   @Watch('getTerminals')
   @Watch('getSubAccounts')
+  @Watch('columns')
   updateOnPropChange() {
     this.fetchTerminals();
   }
@@ -40,15 +43,23 @@ export class TerminalsListCore {
     }
   }
 
-  async fetchTerminals(): Promise<void> {
+  fetchTerminals(): void {
     this.loading = true;
     
     this.getTerminals({
       params: this.params,
-      onSuccess: ({ terminals, pagingInfo }) => {
+      onSuccess: async ({ terminals, pagingInfo }) => {
         this.terminals = terminals;
         this.paging = pagingInfo;
-        this.fetchSubAccounts();
+        this.terminalsTable = new Table(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
+        const shouldFetchSubAccounts = this.terminalsTable.columnKeys.includes('sub_account_name');
+
+        if (shouldFetchSubAccounts) {
+          await this.fetchSubAccounts();
+        } else {
+          this.loading = false;
+        }
+        
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -85,7 +96,6 @@ export class TerminalsListCore {
     });
   }
 
-
   handleClickPrevious = (beforeCursor: string) => {
     const newParams: any = { ...this.params };
     delete newParams.after_cursor;
@@ -110,6 +120,7 @@ export class TerminalsListCore {
   }
 
   clearParams = () => {
+    this.errorMessage = '';
     this.params = {};
   }
 
@@ -124,29 +135,8 @@ export class TerminalsListCore {
     return this.terminals.map((terminal) => terminal.id);
   }
 
-  get columnData() {
-    return [
-      ['Sub Account', 'The sub account associated with the terminal'],
-      ['Terminal Nickname', 'The nickname of the terminal'],
-      ['Provider ID', 'The provider ID of the terminal'],
-      ['Status', 'The status of the terminal']
-    ];
-  };
-  
-  get rowData() {
-    return this.terminals.map((terminal) => [
-      terminal.sub_account_name,
-      terminal.nickname,
-      terminal.provider_id,
-      {
-        type: 'inner',
-        value: MapTerminalStatusToBadge(terminal.status)
-      }
-    ])
-  }
-
   get showEmptyState() {
-    return !this.loading && !this.errorMessage && this.rowData.length < 1;
+    return !this.loading && !this.errorMessage && this.terminalsTable.rowData.length < 1;
   }
 
   get showErrorState() {
@@ -159,7 +149,7 @@ export class TerminalsListCore {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
+      <div>
         <terminals-list-filters
           params={this.params}
           setParamsOnChange={this.setParamsOnChange}
@@ -167,51 +157,39 @@ export class TerminalsListCore {
         />
         <div class="table-wrapper">
           <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
+          <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
-                {this.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ""}>
-                    {!Array.isArray(column) ? column : column[0]}
-                  </th>
-                ))}
+                {this.terminalsTable.columnData.map((column) => column)}
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
               <TableLoadingState
-                columnSpan={this.columnData.length}
+                columnSpan={this.terminalsTable.columnKeys.length}
                 isLoading={this.loading}
               />
               <TableEmptyState
                 isEmpty={this.showEmptyState}
-                columnSpan={this.columnData.length}
+                columnSpan={this.terminalsTable.columnKeys.length}
               />
               <TableErrorState
-                columnSpan={this.columnData.length}
+                columnSpan={this.terminalsTable.columnKeys.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData &&
-                this.rowData.map((data, index) => (
-                  <tr
-                    data-test-id="table-row"
-                    data-row-entity-id={this.entityId[index]}
-                    onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
-                  >
-                    {data.map((dataEntry: any) => {
-                      let nestedHtml = dataEntry?.type;
-                      if (nestedHtml) {
-                        return <td part="table-cell" innerHTML={dataEntry.value}></td>;
-                      } else {
-                        return <td part="table-cell">{dataEntry}</td>;
-                      }
-                    })}
-                  </tr>
-                ))}
+              {this.showRowData && this.terminalsTable.rowData.map((data, index) => (
+                <tr
+                  data-test-id="table-row"
+                  data-row-entity-id={this.entityId[index]}
+                  onClick={this.rowClickHandler}
+                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
+                >
+                  {data}
+                </tr>
+              ))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.columnData?.length}>
+                  <td part="pagination-bar" colSpan={this.terminalsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
@@ -226,7 +204,7 @@ export class TerminalsListCore {
             )}
           </table>
         </div>
-      </StyledHost>
+      </div>
     );
   }
 }

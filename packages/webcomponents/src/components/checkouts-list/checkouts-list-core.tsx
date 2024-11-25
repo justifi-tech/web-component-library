@@ -163,7 +163,6 @@ export class CheckoutsListCore {
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
-              {/* fix this, not working with new checkoutsTable */}
               <TableLoadingState
                 columnSpan={this.checkoutsTable.columnKeys.length}
                 isLoading={this.loading}
