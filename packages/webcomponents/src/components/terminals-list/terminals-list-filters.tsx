@@ -44,7 +44,7 @@ export class TerminalsListFilters {
               label="Status"
               options={this.terminalStatusOptions}
               inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.status}
+              defaultValue={this.params.status || ''}
             />
           </div>
         </div>
