@@ -1,32 +1,36 @@
 # form-control-text
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property         | Attribute       | Description | Type                                    | Default     |
-| ---------------- | --------------- | ----------- | --------------------------------------- | ----------- |
-| `defaultValue`   | `default-value` |             | `string`                                | `undefined` |
-| `disabled`       | `disabled`      |             | `boolean`                               | `undefined` |
-| `errorText`      | `error-text`    |             | `string`                                | `undefined` |
-| `helpText`       | `help-text`     |             | `string`                                | `undefined` |
-| `inputHandler`   | --              |             | `(name: string, value: string) => void` | `undefined` |
-| `keyDownHandler` | --              |             | `(event: any) => void`                  | `undefined` |
-| `label`          | `label`         |             | `string`                                | `undefined` |
-| `maxLength`      | `max-length`    |             | `number`                                | `undefined` |
-| `name`           | `name`          |             | `any`                                   | `undefined` |
+| Property       | Attribute       | Description | Type     | Default     |
+| -------------- | --------------- | ----------- | -------- | ----------- |
+| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
+| `inputId`      | `input-id`      |             | `string` | `undefined` |
+| `label`        | `label`         |             | `string` | `undefined` |
 
+## Methods
 
-## Events
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<void>`
 
-| Event              | Description | Type               |
-| ------------------ | ----------- | ------------------ |
-| `formControlBlur`  |             | `CustomEvent<any>` |
-| `formControlInput` |             | `CustomEvent<any>` |
+#### Parameters
 
+| Name                    | Type     | Description |
+| ----------------------- | -------- | ----------- |
+| `clientId`              | `string` |             |
+| `paymentMethodMetadata` | `any`    |             |
+| `account`               | `string` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+### `validate() => Promise<any>`
+
+#### Returns
+
+Type: `Promise<any>`
 
 ## Shadow Parts
 
@@ -34,24 +38,24 @@
 | --------- | ----------- |
 | `"label"` |             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [justifi-additional-statement](../../components/dispute-management/counter-dispute)
- - [justifi-cancellation-policy](../../components/dispute-management/counter-dispute)
- - [justifi-customer-details](../../components/dispute-management/counter-dispute)
- - [justifi-duplicate-charge](../../components/dispute-management/counter-dispute)
- - [justifi-electronic-evidence](../../components/dispute-management/counter-dispute)
- - [justifi-refund-policy](../../components/dispute-management/counter-dispute)
- - [justifi-shipping-details](../../components/dispute-management/counter-dispute)
+- [justifi-additional-statement](../../components/dispute-management/counter-dispute)
+- [justifi-cancellation-policy](../../components/dispute-management/counter-dispute)
+- [justifi-customer-details](../../components/dispute-management/counter-dispute)
+- [justifi-duplicate-charge](../../components/dispute-management/counter-dispute)
+- [justifi-electronic-evidence](../../components/dispute-management/counter-dispute)
+- [justifi-refund-policy](../../components/dispute-management/counter-dispute)
+- [justifi-shipping-details](../../components/dispute-management/counter-dispute)
 
 ### Depends on
 
 - [form-control-help-text](./form-helpers/form-control-help-text)
 
 ### Graph
+
 ```mermaid
 graph TD;
   form-control-textarea --> form-control-help-text
@@ -65,6 +69,6 @@ graph TD;
   style form-control-textarea fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

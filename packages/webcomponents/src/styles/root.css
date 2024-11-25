@@ -22,7 +22,7 @@
   --bs-gray-600: #6c757d;
   --bs-gray-700: #495057;
   --bs-gray-800: #343a40;
-  --bs-gray-900: #212529;
+  --bs-gray-900: var(--bs-body-color);
   --bs-primary: #0d6efd;
   --bs-secondary: #6c757d;
   --bs-success: #198754;
@@ -30,7 +30,7 @@
   --bs-warning: #ffc107;
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
-  --bs-dark: #212529;
+  --bs-dark: var(--bs-body-color);
   --bs-primary-rgb: 13, 110, 253;
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
@@ -77,7 +77,7 @@
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
-  --bs-body-color: #212529;
+  --bs-body-color: var(--bs-body-color);
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg: #fff;
   --bs-body-bg-rgb: 255, 255, 255;
@@ -98,7 +98,7 @@
   --bs-link-hover-color: #0a58ca;
   --bs-link-hover-color-rgb: 10, 88, 202;
   --bs-code-color: #d63384;
-  --bs-highlight-color: #212529;
+  --bs-highlight-color: var(--bs-body-color);
   --bs-highlight-bg: #fff3cd;
   --bs-border-width: 1px;
   --bs-border-style: solid;
@@ -125,42 +125,11 @@
 }
 
 :root {
-  --jfi-layout-font-family: var(--bs-font-sans-serif);
-  --jfi-layout-padding: 4px;
-  --jfi-layout-form-control-spacing-x: 0.5rem;
-  --jfi-layout-form-control-spacing-y: 1rem;
-  --jfi-form-control-background-color: var(--bs-body-bg);
-  --jfi-form-control-border-color: var(--bs-border-color);
-  --jfi-form-control-border-color-focus: #86b7fe;
-  --jfi-form-control-border-color-error: #dc3545;
-  --jfi-form-control-border-width: 1px;
-  --jfi-form-control-border-bottom-width: 1px;
-  --jfi-form-control-border-left-width: 1px;
-  --jfi-form-control-border-right-width: 1px;
-  --jfi-form-control-border-top-width: 1px;
-  --jfi-form-control-border-radius: 0.375rem;
-  --jfi-form-control-border-style: solid;
-  --jfi-form-control-box-shadow: none;
-  --jfi-form-control-box-shadow-error: none;
-  --jfi-form-control-box-shadow-error-focus: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-  --jfi-form-control-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  --jfi-form-control-color: var(--bs-body-color);
-  --jfi-form-control-color-focus: input-color-focus;
-  --jfi-form-control-font-size: 1rem;
-  --jfi-form-control-font-weight: 400;
-  --jfi-form-control-line-height: 1.5;
-  --jfi-form-control-margin: 0;
-  --jfi-form-control-padding: 0.375rem 0.75rem;
-  --jfi-form-label-color: #212529;
-  --jfi-form-label-font-family: var(--bs-font-sans-serif);
-  --jfi-form-label-font-size: 1rem;
-  --jfi-form-label-font-weight: 400;
-  --jfi-form-label-margin: 0 0 0.5rem 0;
-  --jfi-error-message-color: var(--bs-form-invalid-color);
-  --jfi-error-message-margin: 0.25rem 0 0 0;
-  --jfi-error-message-font-size: 0.875em;
-
   table-layout: fixed;
+}
+
+body {
+  font-family: var(--bs-body-font-family);
 }
 
 /* Use CSS variables in CSS parts */
@@ -171,41 +140,52 @@
 }
 
 ::part(label) {
-  color: var(--jfi-form-label-color);
-  font-family: var(--jfi-form-label-font-family);
-  font-weight: var(--jfi-form-label-font-weight);
-  font-size: var(--jfi-form-label-font-size);
-  margin: var(--jfi-form-label-margin);
+  color: var(--bs-body-color);
+  font-family: var(--bs-font-sans-serif);
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+  min-height: 1.5rem;
 }
 
 ::part(input) {
-  font-family: var(--jfi-layout-font-family);
-  border-color: var(--jfi-form-control-border-color);
-  border-width: var(--jfi-form-control-border-width);
-  border-bottom-width: var(--jfi-form-control-border-bottom-width);
-  border-left-width: var(--jfi-form-control-border-left-width);
-  border-right-width: var(--jfi-form-control-border-right-width);
-  border-top-width: var(--jfi-form-control-border-top-width);
-  border-radius: var(--jfi-form-control-border-radius);
-  border-style: var(--jfi-form-control-border-style);
-  box-shadow: var(--jfi-form-control-box-shadow);
-  color: var(--jfi-form-control-color);
-  font-size: var(--jfi-form-control-font-size);
-  font-weight: var(--jfi-form-control-font-weight);
-  line-height: var(--jfi-form-control-line-height);
-  margin: var(--jfi-form-control-margin);
-  padding: var(--jfi-form-control-padding);
+  font-family: var(--bs-font-sans-serif);
+  border-color: var(--bs-border-color);
+  border-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-radius: 0.375rem;
+  border-style: solid;
+  box-shadow: none;
+  color: var(--bs-body-color);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.375rem 0.75rem;
+  height: 2.375rem;
+  max-height: 2.375rem;
+  overflow: hidden;
 }
 
 ::part(input):not(disabled) {
-  background-color: var(--jfi-form-control-background-color);
+  background-color: var(--bs-body-bg);
 }
 
 ::part(input):focus {
-  color: var(--jfi-form-control-color-focus);
-  background-color: var(--jfi-form-control-background-color);
-  border-color: var(--jfi-form-control-border-color-focus);
-  box-shadow: var(--jfi-form-control-box-shadow-focus);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  border-color: var(--bs-primary-border-subtle);
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+::part(input-focused) {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  border-color: var(--bs-primary-border-subtle);
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 ::part(input-group-input) {
@@ -215,50 +195,50 @@
 }
 
 ::part(input-group-text) {
-  border: var(--jfi-form-control-border-width) var(--jfi-form-control-border-style) var(--jfi-form-control-border-color);
-  border-radius: var(--jfi-form-control-border-radius);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.375rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 ::part(input-checkbox) {
-  font-family: var(--jfi-layout-font-family);
-  border-color: var(--jfi-form-control-border-color);
-  border-width: var(--jfi-form-control-border-width);
-  border-bottom-width: var(--jfi-form-control-border-bottom-width);
-  border-left-width: var(--jfi-form-control-border-left-width);
-  border-right-width: var(--jfi-form-control-border-right-width);
-  border-top-width: var(--jfi-form-control-border-top-width);
-  border-style: var(--jfi-form-control-border-style);
-  box-shadow: var(--jfi-form-control-box-shadow);
-  color: var(--jfi-form-control-color);
-  line-height: var(--jfi-form-control-line-height);
+  font-family: var(--bs-font-sans-serif);
+  border-color: var(--bs-border-color);
+  border-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-style: solid;
+  box-shadow: none;
+  color: var(--bs-body-color);
+  line-height: 1.5;
 }
 
 ::part(input-checkbox):focus {
-  color: var(--jfi-form-control-color-focus);
-  border-color: var(--jfi-form-control-border-color-focus);
-  box-shadow: var(--jfi-form-control-box-shadow-focus);
+  color: var(--bs-body-color);
+  border-color: var(--bs-primary-border-subtle);
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 ::part(input-checkbox-invalid) {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error);
+  border-color: var(--bs-form-invalid-border-color);
+  box-shadow: none;
 }
 
 ::part(input-checkbox-invalid):focus {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
+  border-color: var(--bs-form-invalid-border-color);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
 ::part(input-invalid) {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error);
+  border-color: var(--bs-form-invalid-border-color);
+  box-shadow: none;
 }
 
 ::part(input-invalid):focus {
-  border-color: var(--jfi-form-control-border-color-error);
-  box-shadow: var(--jfi-form-control-box-shadow-error-focus);
+  border-color: var(--bs-form-invalid-border-color);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
 ::part(button) {
@@ -266,7 +246,7 @@
 }
 
 ::part(button-primary) {
-  font-family: var(--jfi-layout-font-family);
+  font-family: var(--bs-font-sans-serif);
   color: white;
   background-color: var(--bs-primary);
   border-color: var(--bs-primary);

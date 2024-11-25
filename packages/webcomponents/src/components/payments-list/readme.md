@@ -1,9 +1,6 @@
 # justifi-payments-list
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -13,12 +10,11 @@
 | `params`            | --        |             | `PaymentsParams`                        | `{}`        |
 | `setParamsOnChange` | --        |             | `(name: string, value: string) => void` | `undefined` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [payments-list-core](.)
+- [payments-list-core](.)
 
 ### Depends on
 
@@ -28,6 +24,7 @@
 - [form-control-date](../../ui-components/form)
 
 ### Graph
+
 ```mermaid
 graph TD;
   payments-list-filters --> table-filters-menu
@@ -43,6 +40,6 @@ graph TD;
   style payments-list-filters fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
