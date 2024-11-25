@@ -123,8 +123,7 @@ const meta: Meta = {
       table: {
         category: "props",
         defaultValue: {
-          summary: "created_at,payment_amount,payment_description,payment_mode,status",
-          detail: "The following columns are available: `created_at`, `payment_amount`, `payment_description`, `payment_mode`, `sub_account_name`, and `status`.",
+          summary: "created_at,payment_amount,payment_description,payment_mode,status"
         }
       },
       control: {
