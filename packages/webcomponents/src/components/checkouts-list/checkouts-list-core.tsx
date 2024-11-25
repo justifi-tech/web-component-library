@@ -1,9 +1,8 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Checkout, ICheckoutsParams, PagingInfo, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { onFilterChange } from '../../ui-components/filters/utils';
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 
@@ -150,7 +149,7 @@ export class CheckoutsListCore {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
+      <div>
         <checkouts-list-filters
           params={this.params}
           setParamsOnChange={this.setParamsOnChange}
@@ -206,7 +205,7 @@ export class CheckoutsListCore {
             )}
           </table>
         </div>
-      </StyledHost>
+      </div>
     );
   }
 }

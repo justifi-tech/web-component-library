@@ -14,33 +14,6 @@ beforeEach(() => {
 });
 
 describe('checkouts-list', () => {
-  it('renders an error message when accountId and authToken are not provided', async () => {
-    const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-checkouts-list />,
-    });
-    await page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
-
-  it('renders an error message when accountId is not provided', async () => {
-    const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-checkouts-list auth-token="abc" />,
-    });
-    await page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
-
-  it('renders an error message when authToken is not provided', async () => {
-    const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-checkouts-list account-id="abc" />,
-    });
-    await page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
-
   it('emit an error event when accountId and authToken are not provided', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({

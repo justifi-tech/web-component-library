@@ -7,6 +7,8 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
+import { StyledHost } from '../../ui-components/styled-host/styled-host';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 
 /**
   * @exportedPart label: Label for inputs
@@ -106,12 +108,14 @@ export class CheckoutsList {
 
   render() {
     return (
-      <checkouts-list-core
-        getCheckouts={this.getCheckouts}
-        getSubAccounts={this.getSubAccounts}
-        onError-event={this.handleErrorEvent}
-        columns={this.columns}
-      />
+      <StyledHost exportparts={tableExportedParts}>
+        <checkouts-list-core
+          getCheckouts={this.getCheckouts}
+          getSubAccounts={this.getSubAccounts}
+          onError-event={this.handleErrorEvent}
+          columns={this.columns}
+        />
+      </StyledHost>
     );
   }
 }

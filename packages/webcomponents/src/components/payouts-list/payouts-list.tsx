@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { tableExportedParts } from '../../ui-components/table/exported-parts';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
@@ -6,6 +6,7 @@ import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { StyledHost } from '../../ui-components/styled-host/styled-host';
 
 /**
   * @exportedPart label: Label for inputs
@@ -87,13 +88,13 @@ export class PayoutsList {
 
   render() {
     return (
-      <Host exportedparts={tableExportedParts}>
+      <StyledHost exportedparts={tableExportedParts}>
         <payouts-list-core
           getPayouts={this.getPayouts}
           getPayoutCSV={this.getPayoutCSV}
           onError-event={this.handleOnError}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

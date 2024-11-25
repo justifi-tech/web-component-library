@@ -5,6 +5,8 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
+import { StyledHost } from '../../ui-components/styled-host/styled-host';
+import { tableExportedParts } from '../../ui-components/table/exported-parts';
 
 /**
   * @exportedPart label: Label for inputs
@@ -86,10 +88,12 @@ export class PaymentsList {
 
   render() {
     return (
-      <payments-list-core
-        getPayments={this.getPayments}
-        onError-event={this.handleErrorEvent}
-      />
+      <StyledHost exportparts={tableExportedParts}>
+        <payments-list-core
+          getPayments={this.getPayments}
+          onError-event={this.handleErrorEvent}
+        />
+      </StyledHost>
     );
   }
 }
