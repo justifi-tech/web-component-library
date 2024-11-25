@@ -10,8 +10,11 @@ export class DisputeReason {
   @State() errors: any = {};
 
   @Method()
-  async validateAndSubmit(onSuccess: () => void) {
-    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  async validateAndSubmit(onSuccess: (data: any) => void) {
+    this.form.validateAndSubmit(() => {
+      const formData = this.form.values.getValue();
+      onSuccess(formData);
+    });
   };
 
   componentWillLoad() {
@@ -22,10 +25,6 @@ export class DisputeReason {
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
-  }
-
-  private sendData = (onSuccess: () => void) => {
-    onSuccess();
   }
 
   private inputHandler = (name: string, value: string) => {
