@@ -5,14 +5,14 @@ import JustifiAnalytics from "../../../api/Analytics";
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
 import { StyledHost } from "../../../ui-components";
 import { DisputeService } from "../../../api/services/dispute.service";
-import { makeGetDisputeResponse } from "./dispute-response-actions";
+import { makeUpdateDisputeResponse } from "./dispute-response-actions";
 
 @Component({
   tag: 'justifi-dispute-response',
   shadow: true
 })
-export class CounterDispute {
-  @State() getDisputeResponse: Function;
+export class DisputeResponse {
+  @State() updateDisputeResponse: Function;
   @State() errorMessage: string = null;
 
   @Prop() authToken: string;
@@ -26,7 +26,7 @@ export class CounterDispute {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetDisputeResponse();
+    this.initializeUpdateDisputeResponse();
   }
 
   disconnectedCallback() {
@@ -36,16 +36,15 @@ export class CounterDispute {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeGetDisputeResponse();
+    this.initializeUpdateDisputeResponse();
   }
 
-  private initializeGetDisputeResponse() {
+  private initializeUpdateDisputeResponse() {
     if (this.disputeId && this.authToken) {
-      this.getDisputeResponse = makeGetDisputeResponse({
-        id: this.disputeId,
+      this.updateDisputeResponse = makeUpdateDisputeResponse({
+        disputeId: this.disputeId,
         authToken: this.authToken,
-        service: new DisputeService(),
-        apiOrigin: this.apiOrigin,
+        service: new DisputeService()
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
@@ -66,10 +65,11 @@ export class CounterDispute {
     return (
       <StyledHost>
         <justifi-dispute-response-core
-          getDisputeResponse={this.getDisputeResponse}
           onError-event={this.handleErrorEvent}
           dispute-id={this.disputeId}
+          updateDisputeResponse={this.updateDisputeResponse}
         />
+        this.updateDisputeResponse: {JSON.stringify(this.updateDisputeResponse)}
       </StyledHost>
     )
   };
