@@ -10,9 +10,10 @@
   "data": [
       {
         "id": "trm_43Y2lE9E2ULR8pvaKI6D5v",
+        "nickname": "Terminal 1",
         "provider": "verifone",
         "status": "disconnected",
-        "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+        "account_id": "subaccount_1",
         "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
         "provider_id": "453-760-515",
         "verified_at": null,
@@ -21,9 +22,10 @@
       },
       {
         "id": "trm_6TFOXK5U0LZLyQ6y6t3sbj",
+        "nickname": "Terminal 2",
         "provider": "verifone",
         "status": "disconnected",
-        "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+        "account_id": "subaccount_2",
         "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
         "provider_id": "807-075-625",
         "verified_at": null,
@@ -32,9 +34,10 @@
       },
       {
         "id": "trm_F8UyFyXcaTBwSDh1cMxjc",
+        "nickname": "Terminal 3",
         "provider": "verifone",
         "status": "connected",
-        "account_id": "acc_60hprQAMq8UzFmWQtTsSeB",
+        "account_id": "subaccount_3",
         "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
         "provider_id": "450-060-752",
         "verified_at": null,

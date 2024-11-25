@@ -189,7 +189,9 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
         </thead>
         <tbody class="table-body" part="table-body">
           <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row table-row-odd">
-            <td></td>
+            <td>
+              Terminal 1
+            </td>
             <td>
               453-760-515
             </td>
@@ -200,7 +202,9 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </td>
           </tr>
           <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row table-row-even">
-            <td></td>
+            <td>
+              Terminal 2
+            </td>
             <td>
               807-075-625
             </td>
@@ -211,7 +215,9 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </td>
           </tr>
           <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row table-row-odd">
-            <td></td>
+            <td>
+              Terminal 3
+            </td>
             <td>
               450-060-752
             </td>
