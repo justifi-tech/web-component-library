@@ -2,7 +2,7 @@ import { Component, Element, h, Host, Method, Prop, State } from "@stencil/core"
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
-import { MessageEventType } from "../../components/payment-method-form/message-event-types";
+import { MessageEventType } from "../../components/checkout/message-event-types";
 
 @Component({
   tag: "iframe-input",
@@ -34,7 +34,7 @@ export class IframeInput {
   @Method()
   async validate(): Promise<any> {
     const response = await this.frameService
-      .postMessageWithResponseListener(MessageEventType.paymentMethod.validate);
+      .postMessageWithResponseListener(MessageEventType.validate);
 
     this.isValid = response.isValid;
 
@@ -49,7 +49,7 @@ export class IframeInput {
     paymentMethodMetadata: any,
     account?: string,
   ) {
-    return this.frameService.postMessageWithResponseListener(MessageEventType.paymentMethod.tokenize, {
+    return this.frameService.postMessageWithResponseListener(MessageEventType.tokenize, {
       clientId,
       paymentMethodMetadata,
       account,
