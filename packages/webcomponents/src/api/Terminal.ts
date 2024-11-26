@@ -61,6 +61,6 @@ export class Terminal implements ITerminal {
     this.created_at = data.created_at || '';
     this.updated_at = data.updated_at || '';
     this.verified_at = data.verified_at || '';
-    this.nickname = data.nickname || '--';
+    this.nickname = data.nickname || '';
   }
 };
