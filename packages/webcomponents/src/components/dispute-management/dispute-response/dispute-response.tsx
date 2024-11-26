@@ -1,18 +1,24 @@
 import { Component, h, Watch, State, Prop, Event, EventEmitter } from "@stencil/core";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { config } from '../../../../config';
+import { StyledHost } from "../../../ui-components";
+import { makeUpdateDisputeResponse } from "./dispute-response-actions";
+import { IDispute } from "../../../components";
+import { IApiResponse } from "../../../api";
 import JustifiAnalytics from "../../../api/Analytics";
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
-import { StyledHost } from "../../../ui-components";
 import { DisputeService } from "../../../api/services/dispute.service";
-import { makeUpdateDisputeResponse } from "./dispute-response-actions";
 
 @Component({
   tag: 'justifi-dispute-response',
   shadow: true
 })
 export class DisputeResponse {
-  @State() updateDisputeResponse: Function;
+  @State() updateDisputeResponse: (args: {
+    payload: any,
+    onSuccess: (disputeResponse: any) => void,
+    onError: (disputeResponse: any) => void
+  }) => Promise<IApiResponse<IDispute>>;
   @State() errorMessage: string = null;
 
   @Prop() authToken: string;
@@ -69,7 +75,6 @@ export class DisputeResponse {
           dispute-id={this.disputeId}
           updateDisputeResponse={this.updateDisputeResponse}
         />
-        this.updateDisputeResponse: {JSON.stringify(this.updateDisputeResponse)}
       </StyledHost>
     )
   };

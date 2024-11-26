@@ -2,7 +2,8 @@ import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
 import { DisputeManagementClickEvents } from "../dispute";
 import { FormController } from "../../../ui-components/form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
-import { IDisputeResponse } from "../../../api/Dispute";
+import { IApiResponse } from "../../../api";
+import { IDispute, IDisputeResponse } from "../../../api/Dispute";
 import { ComponentError } from "../../../components";
 
 type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
@@ -11,7 +12,11 @@ type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
   tag: 'justifi-dispute-response-core',
 })
 export class DisputeResponseCore {
-  @Prop() updateDisputeResponse: Function;
+  @Prop() updateDisputeResponse: (args: {
+    payload: any,
+    onSuccess: (disputeResponse: any) => void,
+    onError: (disputeResponse: any) => void
+  }) => Promise<IApiResponse<IDispute>>;
 
   @State() isLoading: boolean = true;
   @State() disputeResponse: IDisputeResponse;
@@ -38,10 +43,10 @@ export class DisputeResponseCore {
     this.formController = new FormController(DisputeResponseSchema);
   }
 
-  saveData(data: any): void {
+  saveData(data: any): Promise<IApiResponse<IDispute>> {
     this.isLoading = true;
 
-    this.updateDisputeResponse({
+    return this.updateDisputeResponse({
       payload: data,
       onSuccess: ({ disputeResponse }) => {
         this.disputeResponse = disputeResponse;
