@@ -1,15 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import {
-  PagingInfo,
-  Payout,
-  PayoutStatuses,
-  PayoutStatusesSafeNames,
-  pagingDefaults,
-} from '../../api';
+import { PagingInfo, Payout, pagingDefaults } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { DownloadIcon } from '../../assets/download-icon';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { MapPayoutStatusToBadge } from './payouts-status';
 
 @Component({
   tag: 'payouts-list-core',
@@ -95,23 +90,6 @@ export class PayoutsListCore {
     this.params = { ...newParams, after_cursor: afterCursor };
   }
 
-  mapStatusToBadge = (status: PayoutStatuses) => {
-    switch (status) {
-      case PayoutStatuses.scheduled:
-        return `<span class="badge bg-primary" title='Batched and scheduled to be transferred'>${PayoutStatusesSafeNames[status]}</span>`;
-      case PayoutStatuses.in_transit:
-        return `<span class="badge bg-primary" title='Transfer to your bank account has been initiated'>${PayoutStatusesSafeNames[status]}</span>`;
-      case PayoutStatuses.failed:
-        return `<span class="badge bg-danger" title='Transfer to your bank account failed'>${PayoutStatusesSafeNames[status]}</span>`;
-      case PayoutStatuses.canceled:
-        return `<span class="badge bg-danger" title='Transfer to your bank account failed'>${PayoutStatusesSafeNames[status]}</span>`;
-      case PayoutStatuses.forwarded:
-        return `<span class="badge bg-secondary" title='The funds have been forwarded to your next successful payout'>${PayoutStatusesSafeNames[status]}</span>`;
-      case PayoutStatuses.paid:
-        return `<span class="badge bg-success" title='Successfully deposited into your bank account'>${PayoutStatusesSafeNames[status]}</span>`;
-    }
-  }
-
   rowClickHandler = (e) => {
     const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPayoutID) return;
@@ -155,7 +133,7 @@ export class PayoutsListCore {
       formatCurrency(payout.fees_total),
       formatCurrency(payout.other_total),
       formatCurrency(payout.amount),
-      { type: 'inner', value: this.mapStatusToBadge(payout.status) },
+      { type: 'inner', value: MapPayoutStatusToBadge(payout.status) },
       (
         <DownloadIcon
           title="Export CSV"

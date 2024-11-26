@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
-import { formatCurrency, formatDate, formatTime, MapCheckoutStatusToBadge } from '../../utils/utils';
+import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { MapCheckoutStatusToBadge } from './checkouts-status';
 
 export const defaultColumnsKeys = 'created_at,payment_amount,payment_description,payment_mode,status';
 

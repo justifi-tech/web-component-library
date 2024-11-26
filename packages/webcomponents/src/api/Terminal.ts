@@ -1,4 +1,3 @@
-import { capitalizeFirstLetter } from '../utils/utils';
 
 export interface TerminalsTableFilterParams {
   terminal_id?: string;
@@ -35,6 +34,10 @@ export enum TerminalStatuses {
   unknown = 'unknown',
 }
 
+export enum TerminalProviders {
+  verifone = 'verifone',
+}
+
 export class Terminal implements ITerminal {
   public id: string;
   public status: TerminalStatuses;
@@ -59,9 +62,5 @@ export class Terminal implements ITerminal {
     this.updated_at = data.updated_at || '';
     this.verified_at = data.verified_at || '';
     this.nickname = data.nickname || '';
-  }
-
-  get providerDisplayName(): string {
-    return capitalizeFirstLetter(this.provider);
   }
 };

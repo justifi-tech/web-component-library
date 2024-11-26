@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { MapTerminalStatusToBadge } from '../../utils/utils';
+import { MapTerminalStatusToBadge } from './terminals-status';
 
 export const defaultColumnsKeys = 'nickname,provider_id,status';
 
