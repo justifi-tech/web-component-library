@@ -1,5 +1,13 @@
 ### Changelog
 
+## 4.22.0
+
+### Minor Changes
+
+- 78cc46c: - Added new component: `justifi-checkouts-list` allows users to list and filter checkout sessions associated with their account.
+- 77f76aa: - Added new component: `justifi-tokenize-payment-method` allows tokenization of payment methods without creating a payment. This component will replace `justifi-payment-form` in the next major release.
+- 47b5b47: - Added new component: `justifi-terminals-list` allows users to list and filter terminal data associated with a particular account.
+
 ## 4.21.0
 
 ### Minor Changes
