@@ -22,7 +22,6 @@
 | `error-event`         |             | `CustomEvent<ComponentError>`                 |
 | `form-step-completed` |             | `CustomEvent<BusinessFormStepCompletedEvent>` |
 | `formLoading`         |             | `CustomEvent<boolean>`                        |
-| `submitted`           |             | `CustomEvent<BusinessFormSubmitEvent>`        |
 
 
 ## Methods
