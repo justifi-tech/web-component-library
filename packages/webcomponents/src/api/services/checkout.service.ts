@@ -1,11 +1,24 @@
-import { Api, IApiResponse, ICheckout, ICheckoutCompleteResponse } from '..';
 import { config } from '../../../config';
+import {
+  Api,
+  IApiResponse,
+  IApiResponseCollection,
+  ICheckout,
+  ICheckoutCompleteResponse
+} from '..';
 
 export interface ICheckoutService {
   fetchCheckout(
     authToken: string,
     checkoutId: string
   ): Promise<IApiResponse<ICheckout>>;
+
+  fetchCheckouts(
+    accountId: string,
+    authToken: string,
+    params: any,
+    apiOrigin?: string
+  ): Promise<IApiResponseCollection<ICheckout[]>>;
 
   complete(
     authToken: string,
@@ -22,6 +35,25 @@ export class CheckoutService implements ICheckoutService {
     const endpoint = `checkouts/${checkoutId}`;
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
   }
+
+  async fetchCheckouts(
+    accountId: string,
+    authToken: string,
+    params: any,
+    apiOrigin?: string
+  ): Promise<IApiResponseCollection<ICheckout[]>> {
+
+    if (!apiOrigin) {
+      apiOrigin = config.proxyApiOrigin;
+    }
+
+    const headers = { Account: accountId };
+
+    const api = Api({ authToken, apiOrigin: apiOrigin });
+    const endpoint = 'checkouts';
+    return api.get(endpoint, params, null, headers);
+  }
+
   async complete(
     authToken: string,
     checkoutId: string,

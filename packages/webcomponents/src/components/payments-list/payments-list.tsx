@@ -1,11 +1,10 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPayments } from './get-payments';
-import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
+import { StyledHost, tableExportedParts } from '../../ui-components';
 import { config } from '../../../config';
 
 /**
@@ -35,11 +34,11 @@ import { config } from '../../../config';
 export class PaymentsList {
   @State() getPayments: Function;
   @State() errorMessage: string = null;
-  
+
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
-  
+
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
@@ -84,15 +83,13 @@ export class PaymentsList {
   };
 
   render() {
-    if (this.errorMessage) {
-      return ErrorState(this.errorMessage);
-    }
     return (
-      <payments-list-core
-        getPayments={this.getPayments}
-        onError-event={this.handleErrorEvent}
-        exportparts={tableExportedParts}
-      />
+      <StyledHost exportparts={tableExportedParts}>
+        <payments-list-core
+          getPayments={this.getPayments}
+          onError-event={this.handleErrorEvent}
+        />
+      </StyledHost>
     );
   }
 }

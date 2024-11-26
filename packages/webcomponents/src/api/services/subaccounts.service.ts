@@ -3,6 +3,7 @@ import { config } from '../../../config';
 
 export interface ISubAccountService {
   fetchSubAccounts(
+    accountId: string,
     authToken: string,
     params: any,
     apiOrigin?: string
@@ -11,6 +12,7 @@ export interface ISubAccountService {
 
 export class SubAccountService implements ISubAccountService {
   async fetchSubAccounts(
+    accountId: string,
     authToken: string,
     params: any,
     apiOrigin?: string
@@ -19,9 +21,11 @@ export class SubAccountService implements ISubAccountService {
     if (!apiOrigin) {
       apiOrigin = config.proxyApiOrigin;
     }
+
+    const headers = { Account: accountId };
     
     const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'sub_accounts';
-    return api.get(endpoint, params);
+    return api.get(endpoint, params, null, headers);
   }
 }
