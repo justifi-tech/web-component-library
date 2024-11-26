@@ -12,7 +12,6 @@ import { StyledHost } from '../../ui-components';
  */
 @Component({
   tag: 'justifi-billing-form',
-  styleUrl: 'billing-form.css',
   shadow: true,
 })
 export class BillingForm {

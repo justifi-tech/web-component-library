@@ -94,7 +94,7 @@ justifi-payment-provisioning {
   border-radius: 0;
   border-style: solid;
   box-shadow: none;
-  color: var(--jfi-body-color);
+  color: #000;
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.5;

@@ -4,12 +4,18 @@ import { Address } from '../api/Business';
 
 export const RegExZip = /^\d{5}/;
 
-export function formatCurrency(amount: number, withSymbol = true, withCurrencyName = false): string {
+export function formatCurrency(
+  amount: number,
+  withSymbol = true,
+  withCurrencyName = false
+): string {
   if (!amount) amount = 0;
 
   function format(amount: number): string {
     const formattedString = withSymbol ? '$0,0.00' : '0,0.00';
-    return Dinero({ amount: amount, currency: 'USD' }).toFormat(formattedString);
+    return Dinero({ amount: amount, currency: 'USD' }).toFormat(
+      formattedString
+    );
   }
 
   const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
@@ -81,17 +87,6 @@ export function formatTimeSeconds(dateString: string): string {
 // eg. 123 Main St, Scranton, PA 11111
 export function formatAddress(address: Address): string {
   return `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`;
-}
-
-export function extractComputedFontsToLoad() {
-  const computedStyles = getComputedStyle(document.body);
-  return (
-    computedStyles
-      ?.getPropertyValue('--jfi-load-google-font')
-      ?.trim()
-      .replace(/'|"/g, '')
-      .replace(' ', '+') || null
-  );
 }
 
 export const MapPaymentStatusToBadge = (status: string) => {
@@ -192,34 +187,6 @@ export function composeQueryParams(values: string[]) {
     }
   });
   return queryParams.join('');
-}
-
-export async function loadFontsOnParent() {
-  const parent = document.body;
-  const fontsToLoad = extractComputedFontsToLoad();
-  if (!parent || !fontsToLoad) {
-    return null;
-  }
-
-  // Construct the font URL
-  const fontHref = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
-
-  // Check if a link element with the same href already exists
-  const existingFontLink = Array.from(document.querySelectorAll('link')).find(
-    (link) => link.href === fontHref
-  );
-
-  // If the font link already exists, there's no need to append a new one
-  if (existingFontLink) {
-    return;
-  }
-
-  // This approach is needed to load the font in a parent of the component
-  const fonts = document.createElement('link');
-  fonts.rel = 'stylesheet';
-  fonts.href = fontHref;
-
-  parent.append(fonts);
 }
 
 export function isEmptyObject(obj) {

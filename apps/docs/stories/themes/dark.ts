@@ -228,7 +228,7 @@ justifi-payouts-list {
 
 ::part(detail-section-item-title) {
   font-weight: bold;
-  color: var(--jfi-body-color); 
+  color: #fff; 
 }
 
 ::part(detail-section-item-data) {
@@ -251,8 +251,7 @@ justifi-payment-details::part(header-2) {
 
 justifi-payment-details {
   background-color: #191919; 
-  color: var(--jfi-body-color);
-  font-family: var(--jfi-layout-font-family);
+  color: #fff;
   padding: 16px;
 }
 
