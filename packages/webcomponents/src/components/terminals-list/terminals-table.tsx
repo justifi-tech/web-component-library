@@ -5,8 +5,8 @@ export const defaultColumnsKeys = 'nickname,provider_id,status';
 
 export const terminalTableColumns = {
   nickname: () => (
-    <th part="table-head-cell" scope="col" title="The nickname of the terminal">
-      Terminal Nickname
+    <th part="table-head-cell" scope="col" title="The nickname associated with the terminal">
+      Nickname
     </th>
   ),
   provider_id: () => (
