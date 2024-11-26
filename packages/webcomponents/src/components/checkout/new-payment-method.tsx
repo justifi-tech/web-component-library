@@ -101,8 +101,10 @@ export class NewPaymentMethod {
           )}
 
         </div>
-        <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
-        <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        <div part="billing-form">
+          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
+          <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        </div>
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
     );

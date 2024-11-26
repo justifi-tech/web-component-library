@@ -74,118 +74,47 @@ and import the component module using ES modules.
   `}
 />
 
-### Default styling
-
-In both cases, you most likely will also want to include the `CSS` file for the components to have their default styling (that you can override).
-
-It can be included from the CDN, which is easier to start with, but won't update as the version changes in the package installed in you `package.json`:
-
-<Source
-  language="html"
-  dark
-  format={false}
-  code={dedent`
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.css" />
-  `}
-/>
-
-If you want to include it from the `node_modules` you'll need to get this file to the static directory of your built app in your pipeline:
-
-<Source
-  language="html"
-  dark
-  format={false}
-  code={dedent`
-    <link rel="stylesheet" href="path/to/your/static/assets/webcomponents.css" />
-  `}
-/>
-
-Or import it in your `JS` file:
-
-<Source
-  language="javascript"
-  dark
-  format={false}
-  code={dedent`
-    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
-  `}
-/>
-
 # Styling
 
-## Styling components with variables
+## Overview
 
-The following components need to be styled by overriding `CSS variables`, since they are scoped within an iFrame
+Web components in this library utilize the [CSS Shadow Parts API](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) to allow you to style specific internal elements of components from outside the shadow DOM boundary. This approach ensures encapsulation while still providing flexibility for customization.
 
-- [BankAccountForm](?path=/docs/payment-facilitation-payments-bank-account-form--docs)
-- [CardForm](?path=/docs/payment-facilitation-payments-card-form--docs)
-- [PaymentForm](?path=/docs/payment-facilitation-payments-payment-form--docs)
+## Styling Components with Custom CSS
 
-This is a complete list of variables as defined in this project's `root.scss`:
+Each component exposes specific parts through its shadow DOM. These parts correspond to internal elements that you can target for custom styling. You can find a list of exportedParts for every component on their respective Docs page.
 
-<SummaryElement title="See full list of CSS variables available">
-  <CSSVars />
-</SummaryElement>
+## How to Use Exported Parts
 
-> **Note:** When customizing the `--jfi-form-control-box-shadow` variable, ensure that the `--jfi-layout-padding` is not set to `0`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
+To style a specific part of a component:
 
-## Loading Google fonts
+1 - Identify the part name from the `exportedParts` list (e.g., `label`).
+2 - Use the `::part` pseudo-element to target the component’s part in your CSS.
+3 - Apply your desired custom styles.
 
-In order to load custom fonts in the iFramed components, there's a special CSS variable that can be used: `--jfi-load-google-font`.
-The value provided should be a string commpatible with what's described in the following [official documentation from Google](https://developers.google.com/fonts/docs/css2).
+## Example
 
-### Check out the [CardForm story for this to see it in action](?path=/docs/payment-facilitation-payments-card-form--example).
-
-Usage examples:
+If a component exposes a part named `label`, you can style it as follows:
 
 <Source
   language="css"
   dark
   code={dedent`
-    :root {
-      /*
-        Note: The value provided to '--jfi-load-google-font' needs to be wrapped in quotes,
-        since it can contain characters incompatible with CSS that can't be used literally.
-
-        Also, as you'll see in the examples below, if more than one font-family
-        is to be loaded, any subsequent one except the first needs to be preceeded
-        by the '&family=' string, as described in the documentation linked above.
-      */
-
-      /* Load a single font (and it's default weight of 400) */
-      --jfi-load-google-font: 'Inter';
-
-      /* Load a font with multiple weights */
-      --jfi-load-google-font: 'Inter:wght@200;400;700;900';
-
-      /* Load multiple fonts */
-      --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
-
-      /* Load multiple fonts with multiple weights */
-      --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima:wght@200;400';
-
-      /* Then, any of these can be used with the following two variables */
-      --jfi-layout-font-family: Inter; /* Applies to all elements and is inherited */
-      --jfi-form-label-font-family: Agdasima; /* Applies exclusively to the form labels */
-    }
-
-`}
-/>
-
-## Styling components with custom css
-
-For every other component, you'll be able to see a list of `exportedparts` in their `Docs` page. These exported `parts` can be used in the following manner:
-
-<Source
-  language="css"
-  dark
-  code={dedent`
-    /* Given an exportedpart of "label" for example */
-    the-component-tag:part(label) {
-      /* Your custom css */
+    /* Targeting the "label" part */
+    the-component-tag::part(label) {
+      font-size: 16px;
+      color: #333;
+      background-color: #f8f9fa;
     }
   `}
+
 />
+
+In this example:
+
+the-component-tag is the tag name of the web component.
+label is the exported part you are targeting.
+The `::part(label)` selector allows you to apply styles to the internal label element of the component.
 
 # Report Issues
 
