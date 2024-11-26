@@ -1,10 +1,10 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { makeGetCheckouts } from './get-checkouts';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
-import JustifiAnalytics from '../../api/Analytics';
-import { CheckoutService } from '../../api/services/checkout.service';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { TerminalService } from '../../api/services/terminal.service';
+import { makeGetTerminals } from './get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { StyledHost, tableExportedParts } from '../../ui-components';
@@ -32,20 +32,20 @@ import { StyledHost, tableExportedParts } from '../../ui-components';
   * @exportedPart next-button-text: Text for Next button
 */
 @Component({
-  tag: 'justifi-checkouts-list',
+  tag: 'justifi-terminals-list',
   shadow: true
 })
 
-export class CheckoutsList {
-  @State() getCheckouts: Function;
+export class TerminalsList {
+  @State() getTerminals: Function;
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
-
+  
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
   @Prop() columns: string;
-
+  
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
@@ -67,17 +67,17 @@ export class CheckoutsList {
   }
 
   private initializeGetData() {
-    this.initializeGetCheckouts();
+    this.initializeGetTerminals();
     this.initializeGetSubAccounts();
   }
 
-  private initializeGetCheckouts() {
+  private initializeGetTerminals() {
     if (this.accountId && this.authToken) {
-      this.getCheckouts = makeGetCheckouts({
-        accountId: this.accountId,
+      this.getTerminals = makeGetTerminals({
+        id: this.accountId,
         authToken: this.authToken,
-        service: new CheckoutService(),
-        apiOrigin: this.apiOrigin,
+        service: new TerminalService(),
+        apiOrigin: this.apiOrigin
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
@@ -108,8 +108,8 @@ export class CheckoutsList {
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <checkouts-list-core
-          getCheckouts={this.getCheckouts}
+        <terminals-list-core 
+          getTerminals={this.getTerminals}
           getSubAccounts={this.getSubAccounts}
           onError-event={this.handleErrorEvent}
           columns={this.columns}
@@ -117,4 +117,4 @@ export class CheckoutsList {
       </StyledHost>
     );
   }
-}
+};

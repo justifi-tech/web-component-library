@@ -1,65 +1,65 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Checkout, ICheckoutsParams, PagingInfo, SubAccount, pagingDefaults } from '../../api';
+import { PagingInfo, SubAccount, Terminal, TerminalsTableFilterParams, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
-import { onFilterChange } from '../../ui-components/filters/utils';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { defaultColumnsKeys, checkoutTableColumns, checkoutTableCells } from './checkouts-table';
+import { onFilterChange } from '../../ui-components/filters/utils';
+import { defaultColumnsKeys, terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
 
 @Component({
-  tag: 'checkouts-list-core'
+  tag: 'terminals-list-core'
 })
-export class CheckoutsListCore {
-  @Prop() getCheckouts: Function;
+export class TerminalsListCore {
+  @Prop() getTerminals: Function;
   @Prop() getSubAccounts: Function;
   @Prop() columns: string = defaultColumnsKeys;
 
-  @State() checkouts: Checkout[] = [];
-  @State() checkoutsTable: Table = new Table([], this.columns, checkoutTableColumns, checkoutTableCells);
+  @State() terminals: Terminal[] = [];
+  @State() terminalsTable: Table = new Table([], this.columns, terminalTableColumns, terminalTableCells);
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: ICheckoutsParams = {};
+  @State() params: TerminalsTableFilterParams = {};
 
   @Watch('params')
-  @Watch('getCheckouts')
+  @Watch('getTerminals')
   @Watch('getSubAccounts')
   @Watch('columns')
   updateOnPropChange() {
-    this.fetchCheckouts();
+    this.fetchTerminals();
   }
 
   @Event({
-    eventName: 'checkout-row-clicked',
+    eventName: 'terminal-row-clicked',
     bubbles: true,
-  }) rowClicked: EventEmitter<Checkout>;
+  }) rowClicked: EventEmitter<Terminal>;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
-    if (this.getCheckouts && this.getSubAccounts) {
-      this.fetchCheckouts();
+    if (this.getTerminals && this.getSubAccounts) {
+      this.fetchTerminals();
     }
   }
 
-  fetchCheckouts(): void {
+  fetchTerminals(): void {
     this.loading = true;
-
-    this.getCheckouts({
+    
+    this.getTerminals({
       params: this.params,
-      onSuccess: async ({ checkouts, pagingInfo }) => {
-        this.checkouts = checkouts;
+      onSuccess: async ({ terminals, pagingInfo }) => {
+        this.terminals = terminals;
         this.paging = pagingInfo;
-        this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
-        const shouldFetchSubAccounts = this.checkoutsTable.columnKeys.includes('sub_account_name');
+        this.terminalsTable = new Table(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
+        const shouldFetchSubAccounts = this.terminalsTable.columnKeys.includes('sub_account_name');
 
         if (shouldFetchSubAccounts) {
           await this.fetchSubAccounts();
         } else {
           this.loading = false;
         }
-
+        
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -78,9 +78,9 @@ export class CheckoutsListCore {
       params: this.subAccountParams,
       onSuccess: ({ subAccounts }) => {
         this.subAccounts = subAccounts;
-        this.checkouts = this.checkouts.map((checkout) => {
-          checkout.sub_account_name = this.subAccounts.find((subAccount) => subAccount.id === checkout.account_id)?.name;
-          return checkout;
+        this.terminals = this.terminals.map((terminal) => {
+          terminal.sub_account_name = this.subAccounts.find((subAccount) => subAccount.id === terminal.account_id)?.name;
+          return terminal;
         });
         this.loading = false;
       },
@@ -109,9 +109,9 @@ export class CheckoutsListCore {
   };
 
   rowClickHandler = (e) => {
-    const clickedCheckoutID = e.target.closest('tr').dataset.rowEntityId;
-    if (!clickedCheckoutID) return;
-    this.rowClicked.emit(this.checkouts.find((checkout) => checkout.id === clickedCheckoutID));
+    const clickedTerminalID = e.target.closest('tr').dataset.rowEntityId;
+    if (!clickedTerminalID) return;
+    this.rowClicked.emit(this.terminals.find((terminal) => terminal.id === clickedTerminalID));
   };
 
   setParamsOnChange = (name: string, value: string) => {
@@ -125,18 +125,18 @@ export class CheckoutsListCore {
   }
 
   get subAccountParams() {
-    let accountIdNumbers = this.checkouts.map((checkout) => checkout.account_id);
+    let accountIdNumbers = this.terminals.map((terminal) => terminal.account_id);
     let uniqueAccountIds = [...new Set(accountIdNumbers)];
     let accountIdString = uniqueAccountIds.join(',');
     return { sub_account_id: accountIdString };
   }
 
   get entityId() {
-    return this.checkouts.map((checkout) => checkout.id);
+    return this.terminals.map((terminal) => terminal.id);
   }
 
   get showEmptyState() {
-    return !this.loading && !this.errorMessage && this.checkoutsTable.rowData.length < 1;
+    return !this.loading && !this.errorMessage && this.terminalsTable.rowData.length < 1;
   }
 
   get showErrorState() {
@@ -150,32 +150,32 @@ export class CheckoutsListCore {
   render() {
     return (
       <div>
-        <checkouts-list-filters
+        <terminals-list-filters
           params={this.params}
           setParamsOnChange={this.setParamsOnChange}
           clearParams={this.clearParams}
         />
         <div class="table-wrapper">
           <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
+          <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
-                {this.checkoutsTable.columnData.map((column) => column)}
+                {this.terminalsTable.columnData.map((column) => column)}
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
               <TableLoadingState
-                columnSpan={this.checkoutsTable.columnKeys.length}
+                columnSpan={this.terminalsTable.columnKeys.length}
                 isLoading={this.loading}
               />
               <TableEmptyState
                 isEmpty={this.showEmptyState}
-                columnSpan={this.checkoutsTable.columnKeys.length}
+                columnSpan={this.terminalsTable.columnKeys.length}
               />
               <TableErrorState
-                columnSpan={this.checkoutsTable.columnKeys.length}
+                columnSpan={this.terminalsTable.columnKeys.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData && this.checkoutsTable.rowData.map((data, index) => (
+              {this.showRowData && this.terminalsTable.rowData.map((data, index) => (
                 <tr
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
@@ -189,7 +189,7 @@ export class CheckoutsListCore {
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.checkoutsTable.columnData.length}>
+                  <td part="pagination-bar" colSpan={this.terminalsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

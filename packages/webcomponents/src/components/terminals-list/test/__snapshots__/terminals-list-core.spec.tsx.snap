@@ -1,0 +1,267 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`terminals-list-core displays an error state on failed data fetch 1`] = `
+<terminals-list-core>
+  <div>
+    <terminals-list-filters>
+      <table-filters-menu>
+        <!---->
+        <div class="d-flex gap-2">
+          <div class="dropdown pb-3">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+              Filters
+            </button>
+            <custom-popper strategy="fixed" trigger="click">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+                <div class="gap-3 grid-cols-2 p-1">
+                  <div class="p-2">
+                    <form-control-text label="Terminal ID" name="terminal_id"></form-control-text>
+                  </div>
+                  <div class="p-2">
+                    <form-control-select exportparts="label,input,input-invalid">
+                      <div class="d-flex flex-column form-group">
+                        <div class="align-items-start d-flex gap-2">
+                          <label class="form-label" htmlfor="status" part="label">
+                            Status
+                          </label>
+                          <form-control-tooltip></form-control-tooltip>
+                        </div>
+                        <select class="form-select" id="status" name="status" part="input ">
+                          <option value="">
+                            All
+                          </option>
+                          <option value="connected">
+                            Connected
+                          </option>
+                          <option value="disconnected">
+                            Disconnected
+                          </option>
+                          <option value="unknown">
+                            Unknown
+                          </option>
+                        </select>
+                        <form-control-error-text name="status"></form-control-error-text>
+                      </div>
+                    </form-control-select>
+                  </div>
+                </div>
+              </form>
+            </custom-popper>
+          </div>
+          <div>
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </table-filters-menu>
+    </terminals-list-filters>
+    <div class="table-wrapper">
+      <table class="table table-hover">
+        <thead class="sticky-top table-head" part="table-head">
+          <tr class="table-light text-nowrap" part="table-head-row">
+            <th part="table-head-cell" scope="col" title="The nickname of the terminal">
+              Terminal Nickname
+            </th>
+            <th part="table-head-cell" scope="col" title="The provider ID of the terminal">
+              Provider ID
+            </th>
+            <th part="table-head-cell" scope="col" title="The current status of each terminal">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body" part="table-body">
+          <tr>
+            <td class="error-state" colspan="3" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+              An unexpected error occurred: Fetch error
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="sticky-bottom">
+          <tr class="align-middle table-light">
+            <td colspan="3" part="pagination-bar">
+              <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span class="me-1" part="page-arrow">
+                          «
+                        </span>
+                        <span part="page-button-text">
+                          Previous
+                        </span>
+                      </a>
+                    </li>
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span part="page-button-text">
+                          Next
+                        </span>
+                        <span class="ms-1" part="page-arrow">
+                          »
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </pagination-menu>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</terminals-list-core>
+`;
+
+exports[`terminals-list-core renders properly with fetched data 1`] = `
+<terminals-list-core>
+  <div>
+    <terminals-list-filters>
+      <table-filters-menu>
+        <!---->
+        <div class="d-flex gap-2">
+          <div class="dropdown pb-3">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+              Filters
+            </button>
+            <custom-popper strategy="fixed" trigger="click">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+                <div class="gap-3 grid-cols-2 p-1">
+                  <div class="p-2">
+                    <form-control-text label="Terminal ID" name="terminal_id"></form-control-text>
+                  </div>
+                  <div class="p-2">
+                    <form-control-select exportparts="label,input,input-invalid">
+                      <div class="d-flex flex-column form-group">
+                        <div class="align-items-start d-flex gap-2">
+                          <label class="form-label" htmlfor="status" part="label">
+                            Status
+                          </label>
+                          <form-control-tooltip></form-control-tooltip>
+                        </div>
+                        <select class="form-select" id="status" name="status" part="input ">
+                          <option value="">
+                            All
+                          </option>
+                          <option value="connected">
+                            Connected
+                          </option>
+                          <option value="disconnected">
+                            Disconnected
+                          </option>
+                          <option value="unknown">
+                            Unknown
+                          </option>
+                        </select>
+                        <form-control-error-text name="status"></form-control-error-text>
+                      </div>
+                    </form-control-select>
+                  </div>
+                </div>
+              </form>
+            </custom-popper>
+          </div>
+          <div>
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </table-filters-menu>
+    </terminals-list-filters>
+    <div class="table-wrapper">
+      <table class="table table-hover">
+        <thead class="sticky-top table-head" part="table-head">
+          <tr class="table-light text-nowrap" part="table-head-row">
+            <th part="table-head-cell" scope="col" title="The nickname of the terminal">
+              Terminal Nickname
+            </th>
+            <th part="table-head-cell" scope="col" title="The provider ID of the terminal">
+              Provider ID
+            </th>
+            <th part="table-head-cell" scope="col" title="The current status of each terminal">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body" part="table-body">
+          <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row table-row-odd">
+            <td>
+              Terminal 1
+            </td>
+            <td>
+              453-760-515
+            </td>
+            <td>
+              <span class="badge bg-danger" title="This terminal is disconnected.">
+                Disconnected
+              </span>
+            </td>
+          </tr>
+          <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row table-row-even">
+            <td>
+              Terminal 2
+            </td>
+            <td>
+              807-075-625
+            </td>
+            <td>
+              <span class="badge bg-danger" title="This terminal is disconnected.">
+                Disconnected
+              </span>
+            </td>
+          </tr>
+          <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row table-row-odd">
+            <td>
+              Terminal 3
+            </td>
+            <td>
+              450-060-752
+            </td>
+            <td>
+              <span class="badge bg-success" title="This terminal is connected.">
+                Connected
+              </span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="sticky-bottom">
+          <tr class="align-middle table-light">
+            <td colspan="3" part="pagination-bar">
+              <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span class="me-1" part="page-arrow">
+                          «
+                        </span>
+                        <span part="page-button-text">
+                          Previous
+                        </span>
+                      </a>
+                    </li>
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="page-button page-button-disabled">
+                        <span part="page-button-text">
+                          Next
+                        </span>
+                        <span class="ms-1" part="page-arrow">
+                          »
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </pagination-menu>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</terminals-list-core>
+`;
