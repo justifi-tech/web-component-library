@@ -2,6 +2,7 @@ import { Component, Element, h, Host, Method, Prop, State } from "@stencil/core"
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
+import { iframeInputStyles } from "./iframe-input-styles-state";
 import { MessageEventType } from "../../components/payment-method-form/message-event-types";
 
 @Component({
@@ -10,22 +11,17 @@ import { MessageEventType } from "../../components/payment-method-form/message-e
 export class IframeInput {
   private iframeElement!: HTMLIFrameElement;
   private frameService: FrameCommunicationService;
-  private hiddenInput!: HTMLInputElement;
 
   @Element() el: HTMLElement;
 
   @State() isFocused: boolean = false;
   @State() isValid: boolean = true;
   @State() errorText: string;
-  @State() fontFamily: string;
+  @State() fontFamily: string = 'Arial';
 
   @Prop() inputId: string;
   @Prop() label: string;
   @Prop() iframeOrigin: string;
-
-  componentDidLoad() {
-    this.setFontFamily();
-  }
 
   disconnectedCallback() {
     this.frameService.removeMessageListener(this.dispatchMessageEvent);
@@ -83,19 +79,32 @@ export class IframeInput {
     return `input form-control-text ${this.isFocused ? 'input-focused' : ''} ${!this.isValid ? 'input-invalid' : ''}`;
   }
 
-  private setFontFamily() {
-    this.fontFamily = getComputedStyle(this.hiddenInput).fontFamily;
-    // btoa is used to encode long font-family strings so it can be passed to the iframe
-    this.fontFamily = btoa(this.fontFamily);
+  private get style() {
+    if (this.isFocused) {
+      if (!this.isValid) {
+        return iframeInputStyles.focusedAndInvalid;
+      }
+      return iframeInputStyles.focused;
+    }
+    return null;
   }
 
   render() {
     return (
       <Host class="form-group d-flex flex-column">
-        {/* hidden input with bootstrap styles so we can get the computed fontFamily and pass it to the iframe */}
-        <input ref={el => this.hiddenInput = el} type="text" class="form-control" style={{ display: 'none' }} />
-        <label htmlFor="" part="label">{this.label || ''}</label>
-        <div part={this.part}>
+        <label
+          class="form-label"
+          htmlFor=""
+          part="label"
+          style={{ height: '20px', minHeight: '20px' }}
+        >
+          {this.label || ''}
+        </label>
+        <div
+          class={`form-control ${this.isValid ? '' : 'is-invalid'}`}
+          part={this.part}
+          style={{ ...this.style, overflow: 'hidden' }}
+        >
           {this.fontFamily ? (
             <iframe
               id={this.inputId}
@@ -105,7 +114,7 @@ export class IframeInput {
                 this.iframeElement = el as HTMLIFrameElement;
                 this.initializeFrameCommunicationService();
               }}
-              height="100%"
+              height="20px"
               width="100%"
             />
           ) : null}

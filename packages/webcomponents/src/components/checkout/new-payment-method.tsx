@@ -92,6 +92,7 @@ export class NewPaymentMethod {
   showNewPaymentMethodForm() {
     return (
       <div class="mt-4 pb-4 border-bottom">
+        <hidden-input />
         <div class="mb-4">
           {this.paymentMethodOption?.id === 'card' ? (
             <card-form ref={(el) => this.paymentMethodFormRef = el} />
