@@ -77,7 +77,6 @@ export class DisputeResponseCore {
   }
 
   getPresignedFileUrl = async (document: any) => {
-    console.log('doc from dispute-response-core', document);
     this.createDisputeEvidence({
       payload: document,
       onSuccess: () => {
