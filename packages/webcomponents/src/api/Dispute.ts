@@ -34,29 +34,9 @@ export class DisputeResponseDocumentStorage {
   }
 }
 
-export interface DisputeResponseDocumentFileData {
-  file: File;
-  document_type: DisputeResponseDocumentType;
-}
-
 export class DisputeResponseDocument {
   public file: File;
   public fileString: string;
-  public document_type: DisputeResponseDocumentType;
-  public presigned_url: string | null;
-  public record_data: any | null;
-
-  constructor(fileData: DisputeResponseDocumentFileData) {
-    this.file = fileData.file;
-    this.fileString = this.getFileString();
-    this.document_type = fileData.document_type;
-    this.presigned_url = null;
-    this.record_data = {
-      document_type: this.document_type,
-      file_name: this.file.name,
-      file_type: this.file.type,
-    };
-  }
 
   public getFileString() {
     let reader = new FileReader();
@@ -67,8 +47,9 @@ export class DisputeResponseDocument {
     return this.fileString;
   }
 
-  public setPresignedUrl(url: string) {
-    this.presigned_url = url;
+  constructor(file: File) {
+    this.file = file;
+    this.fileString = this.getFileString();
   }
 }
 

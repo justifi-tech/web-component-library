@@ -2,7 +2,7 @@ import { Component, h, Watch, State, Prop, Event, EventEmitter } from "@stencil/
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { config } from '../../../../config';
 import { StyledHost } from "../../../ui-components";
-import { makeUpdateDisputeResponse } from "./dispute-response-actions";
+import { makeCreateDisputeEvidence, makeUpdateDisputeResponse } from "./dispute-response-actions";
 import { IDispute } from "../../../components";
 import { IApiResponse } from "../../../api";
 import JustifiAnalytics from "../../../api/Analytics";
@@ -19,6 +19,11 @@ export class DisputeResponse {
     onSuccess: (disputeResponse: any) => void,
     onError: (disputeResponse: any) => void
   }) => Promise<IApiResponse<IDispute>>;
+  @State() createDisputeEvidence: (args: {
+    payload: any,
+    onSuccess: (disputeResponse: any) => void,
+    onError: (disputeResponse: any) => void
+  }) => Promise<IApiResponse<any>>;
   @State() errorMessage: string = null;
 
   @Prop() authToken: string;
@@ -32,7 +37,7 @@ export class DisputeResponse {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeUpdateDisputeResponse();
+    this.initializeDisputeServiceMethods();
   }
 
   disconnectedCallback() {
@@ -42,12 +47,17 @@ export class DisputeResponse {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeUpdateDisputeResponse();
+    this.initializeDisputeServiceMethods();
   }
 
-  private initializeUpdateDisputeResponse() {
+  private initializeDisputeServiceMethods() {
     if (this.disputeId && this.authToken) {
       this.updateDisputeResponse = makeUpdateDisputeResponse({
+        disputeId: this.disputeId,
+        authToken: this.authToken,
+        service: new DisputeService()
+      });
+      this.createDisputeEvidence = makeCreateDisputeEvidence({
         disputeId: this.disputeId,
         authToken: this.authToken,
         service: new DisputeService()
@@ -74,6 +84,7 @@ export class DisputeResponse {
           onError-event={this.handleErrorEvent}
           dispute-id={this.disputeId}
           updateDisputeResponse={this.updateDisputeResponse}
+          createDisputeEvidence={this.createDisputeEvidence}
         />
       </StyledHost>
     )

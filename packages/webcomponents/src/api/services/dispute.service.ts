@@ -19,6 +19,12 @@ export interface IDisputeService {
     authToken: string,
     payload: any
   ): Promise<IApiResponse<IDispute>>;
+
+  createDisputeEvidence(
+    disputeId: string,
+    authToken: string,
+    payload: string
+  ): Promise<IApiResponse<any>>;
 }
 
 export class DisputeService implements IDisputeService {
@@ -46,5 +52,14 @@ export class DisputeService implements IDisputeService {
   ): Promise<IApiResponse<IDispute>> {
     const endpoint = `disputes/${disputeId}/response`;
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
+  }
+
+  async createDisputeEvidence(
+    disputeId: string,
+    authToken: string,
+    payload: any
+  ): Promise<IApiResponse<any>> {
+    const endpoint = `disputes/${disputeId}/evidence`;
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).put(endpoint, payload);
   }
 }

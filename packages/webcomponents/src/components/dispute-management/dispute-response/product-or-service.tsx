@@ -1,17 +1,16 @@
-import { Component, h, Method, State } from "@stencil/core";
+import { Component, h, Method, Prop, State } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
-import { FileSelectEvent } from "../../../ui-components/form/form-control-file";
-import { DisputeResponseDocument, DisputeResponseDocumentType } from "../../../api/Dispute";
 import ProductOrServiceSchema from "./schemas/product-or-service-schema";
+import { FileSelectEvent } from "../../../components";
 
 @Component({
   tag: 'justifi-product-or-service',
 })
 export class ProductOrService {
+  @Prop() handleFileSelection: (event: CustomEvent<FileSelectEvent>) => void;
   @State() form: FormController;
   @State() errors: any = {};
   @State() values: any = {};
-  @State() documentData: { [key: string]: DisputeResponseDocument[] } = {};
 
   @Method()
   async validateAndSubmit(onSuccess: () => void) {
@@ -33,16 +32,6 @@ export class ProductOrService {
 
   private sendData = (onSuccess: () => void) => {
     onSuccess();
-  }
-
-  private storeFiles = (e: CustomEvent<FileSelectEvent>) => {
-    const fileList = Array.from(e.detail.fileList) as File[];
-    const docType = e.detail.document_type;
-    const documentList = fileList.map(file => new DisputeResponseDocument({
-      file,
-      document_type: docType as DisputeResponseDocumentType
-    }));
-    this.documentData[docType] = documentList;
   }
 
   private inputHandler = (name: string, value: string) => {
@@ -79,7 +68,8 @@ export class ProductOrService {
             <form-control-file
               label="Service Documentation"
               name="service_documentation"
-              onFileSelected={this.storeFiles}
+              inputHandler={() => { return; }}
+              onFileSelected={this.handleFileSelection}
               errorText={this.errors.service_documentation}
             />
           </div>
