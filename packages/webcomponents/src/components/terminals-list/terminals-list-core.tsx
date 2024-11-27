@@ -3,7 +3,7 @@ import { PagingInfo, SubAccount, Terminal, TerminalsTableFilterParams, pagingDef
 import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
-import { defaultColumnsKeys, terminalTableColumns, terminalTableCells } from './terminals-table';
+import { terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
 
 @Component({
@@ -12,10 +12,10 @@ import { Table } from '../../utils/table';
 export class TerminalsListCore {
   @Prop() getTerminals: Function;
   @Prop() getSubAccounts: Function;
-  @Prop() columns: string = defaultColumnsKeys;
+  @Prop() columns: string;
 
   @State() terminals: Terminal[] = [];
-  @State() terminalsTable: Table = new Table([], this.columns, terminalTableColumns, terminalTableCells);
+  @State() terminalsTable: Table;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -38,6 +38,7 @@ export class TerminalsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
+    this.terminalsTable = new Table(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
     if (this.getTerminals && this.getSubAccounts) {
       this.fetchTerminals();
     }
@@ -51,7 +52,7 @@ export class TerminalsListCore {
       onSuccess: async ({ terminals, pagingInfo }) => {
         this.terminals = terminals;
         this.paging = pagingInfo;
-        this.terminalsTable = new Table(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
+        this.terminalsTable.collectionData = this.terminals;
         const shouldFetchSubAccounts = this.terminalsTable.columnKeys.includes('sub_account_name');
 
         if (shouldFetchSubAccounts) {

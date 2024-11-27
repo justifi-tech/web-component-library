@@ -3,7 +3,7 @@ import { Checkout, ICheckoutsParams, PagingInfo, SubAccount, pagingDefaults } fr
 import { ComponentError } from '../../api/ComponentError';
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { defaultColumnsKeys, checkoutTableColumns, checkoutTableCells } from './checkouts-table';
+import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 
 @Component({
@@ -12,10 +12,10 @@ import { Table } from '../../utils/table';
 export class CheckoutsListCore {
   @Prop() getCheckouts: Function;
   @Prop() getSubAccounts: Function;
-  @Prop() columns: string = defaultColumnsKeys;
+  @Prop() columns: string;
 
   @State() checkouts: Checkout[] = [];
-  @State() checkoutsTable: Table = new Table([], this.columns, checkoutTableColumns, checkoutTableCells);
+  @State() checkoutsTable: Table;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -38,6 +38,7 @@ export class CheckoutsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
+    this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
     if (this.getCheckouts && this.getSubAccounts) {
       this.fetchCheckouts();
     }
@@ -51,7 +52,7 @@ export class CheckoutsListCore {
       onSuccess: async ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
-        this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
+        this.checkoutsTable.collectionData = this.checkouts;
         const shouldFetchSubAccounts = this.checkoutsTable.columnKeys.includes('sub_account_name');
 
         if (shouldFetchSubAccounts) {
