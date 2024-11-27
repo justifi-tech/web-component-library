@@ -39,13 +39,13 @@
 
 ### Used by
 
- - [justifi-additional-statement](../../components/dispute-management/counter-dispute)
- - [justifi-cancellation-policy](../../components/dispute-management/counter-dispute)
- - [justifi-customer-details](../../components/dispute-management/counter-dispute)
- - [justifi-duplicate-charge](../../components/dispute-management/counter-dispute)
- - [justifi-electronic-evidence](../../components/dispute-management/counter-dispute)
- - [justifi-refund-policy](../../components/dispute-management/counter-dispute)
- - [justifi-shipping-details](../../components/dispute-management/counter-dispute)
+ - [justifi-additional-statement](../../components/dispute-management/dispute-response)
+ - [justifi-cancellation-policy](../../components/dispute-management/dispute-response)
+ - [justifi-customer-details](../../components/dispute-management/dispute-response)
+ - [justifi-duplicate-charge](../../components/dispute-management/dispute-response)
+ - [justifi-electronic-evidence](../../components/dispute-management/dispute-response)
+ - [justifi-refund-policy](../../components/dispute-management/dispute-response)
+ - [justifi-shipping-details](../../components/dispute-management/dispute-response)
 
 ### Depends on
 
