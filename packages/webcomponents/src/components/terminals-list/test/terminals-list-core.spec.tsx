@@ -12,6 +12,7 @@ import { TerminalsListFilters } from '../terminals-list-filters';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { makeGetSubAccounts } from '../../../api/get-subaccounts';
+import { defaultColumnsKeys } from '../terminals-table';
 
 const mockTerminalsResponse = mockTerminalSuccessResponse as IApiResponseCollection<ITerminal[]>;
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
@@ -43,7 +44,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -80,7 +81,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -114,7 +115,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -154,7 +155,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -194,7 +195,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -249,7 +250,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -309,7 +310,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -351,7 +352,7 @@ describe('terminals-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} onError-event={errorEvent} />,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();

@@ -8,6 +8,7 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { StyledHost, tableExportedParts } from '../../ui-components';
+import { defaultColumnsKeys } from './checkouts-table';
 
 /**
   * @exportedPart label: Label for inputs
@@ -44,7 +45,7 @@ export class CheckoutsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
-  @Prop() columns: string;
+  @Prop() columns: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 

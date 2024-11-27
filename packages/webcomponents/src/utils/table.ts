@@ -14,6 +14,10 @@ export class Table {
     });
   }
 
+  set collectionData(collection: any[]) {
+    this.collection = collection;
+  }
+
   constructor(
     collection: any[],
     columns: string,
