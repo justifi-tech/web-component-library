@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.22.1
+
+### Patch Changes
+
+- 4b3ea18: - Refactor render timing for list components that use new `columns` prop
+
 ## 4.22.0
 
 ### Minor Changes
