@@ -7,6 +7,7 @@ justifi-checkout,
 justifi-business-details,
 justifi-payment-form,
 justifi-payment-provisioning,
+justifi-tokenize-payment-method,
 justifi-payment-details,
 justifi-payouts-details,
 justifi-payments-list,
@@ -19,7 +20,8 @@ justifi-payouts-list {
 }
 
 justifi-checkout,
-justifi-payment-form {
+justifi-payment-form,
+justifi-tokenize-payment-method {
   max-width: 400px;
   padding: 40px;
 }
