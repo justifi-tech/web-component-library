@@ -31,7 +31,7 @@ export class TerminalsListCore {
   }
 
   @Event({
-    eventName: 'terminal-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Terminal>;
 

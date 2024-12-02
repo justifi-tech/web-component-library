@@ -24,8 +24,8 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "payment-row-clicked": {
-      description: "`PaymentRowClicked`",
+    "row-clicked": {
+      description: "`RowClicked`",
       table: {
         category: "events",
       },
@@ -41,7 +41,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["payment-row-clicked", "error-event"],
+      handles: ["row-clicked", "error-event"],
     },
     chromatic: {
       delay: 2000,

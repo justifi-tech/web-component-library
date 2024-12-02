@@ -31,7 +31,7 @@ export class CheckoutsListCore {
   }
 
   @Event({
-    eventName: 'checkout-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Checkout>;
 

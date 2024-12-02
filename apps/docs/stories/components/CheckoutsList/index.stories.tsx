@@ -103,8 +103,8 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    "checkout-row-clicked": {
-      description: "`CheckoutRowClicked`",
+    "row-clicked": {
+      description: "`RowClicked`",
       table: {
         category: "events",
       },
@@ -133,7 +133,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["checkout-row-clicked", "error-event"],
+      handles: ["row-clicked", "error-event"],
     },
     chromatic: {
       delay: 2000,
