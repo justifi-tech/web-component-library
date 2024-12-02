@@ -5,6 +5,40 @@ import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import "@justifi/webcomponents/dist/module/justifi-payouts-list";
 import { ThemeNames } from "../../themes";
 
+const examplePayload = {
+  "id": "po_xyz",
+  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
+  "amount": 100000,
+  "bank_account": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "full_name": "string",
+    "bank_name": "string",
+    "account_number_last4": 1111,
+    "routing_number": "string",
+    "country": "US",
+    "currency": "usd",
+    "nickname": "string",
+    "account_type": "checking"
+    },
+  "currency": "usd",
+  "delivery_method": "standard",
+  "description": "string",
+  "deposits_at": "2021-01-01T12:00:00Z",
+  "fees_total": 5000,
+  "refunds_count": 5,
+  "refunds_total": 10000,
+  "payments_count": 50,
+  "payments_total": 110000,
+  "payout_type": "ach cc",
+  "other_total": 100,
+  "status": "paid",
+  "metadata": {
+  "customer_payout_id": "cp_12345"
+  },
+  "created_at": "2021-01-01T12:00:00Z",
+  "updated_at": "2021-01-01T12:00:00Z"
+  }
+
 const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
 const meta: Meta = {
@@ -28,6 +62,10 @@ const meta: Meta = {
       description: "`RowClicked`",
       table: {
         category: "events",
+        defaultValue: {
+          summary: "Emits chosen Payout object on row click",
+          detail: JSON.stringify(examplePayload)
+        }
       },
       action: true,
     },

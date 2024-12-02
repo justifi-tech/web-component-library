@@ -4,6 +4,18 @@ import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-terminals-list";
 
+const examplePayload = {
+  "id": "trm_abc123",
+  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
+  "provider": "verifone",
+  "status": "disconnected",
+  "provider_id": "123-456-789",
+  "nickname": "My Favorite Terminal",
+  "verified_at": "2024-01-01T15:00:00Z",
+  "created_at": "2021-01-01T12:00:00Z",
+  "updated_at": "2021-01-01T12:00:00Z"
+  };
+
 const themes = {
   basic: {},
   custom: {
@@ -106,9 +118,13 @@ const meta: Meta = {
     "row-clicked": {
       description: "`RowClicked`",
       table: {
-        category: "events"
+        category: "events",
+        defaultValue: {
+          summary: "Emits chosen Terminal object on row click",
+          detail: JSON.stringify(examplePayload)
+        }
       },
-      action: true
+      action: true,
     },
     "error-event": {
       description: "`ComponentError`",
