@@ -61,7 +61,9 @@ justifi-tokenize-payment-method,
 justifi-payment-details,
 justifi-payouts-details,
 justifi-payments-list,
-justifi-payouts-list {
+justifi-payouts-list,
+justifi-checkouts-list,
+justifi-terminals-list {
   display: block;
   margin: 5% auto;
   background-color: #191919;
@@ -221,7 +223,9 @@ justifi-payment-provisioning,
 justifi-payment-details,
 justifi-payout-details,
 justifi-payments-list,
-justifi-payouts-list {
+justifi-payouts-list,
+justifi-checkouts-list,
+justifi-terminals-list {
   display: inline-block;
   padding: 40px;
 }
