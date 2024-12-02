@@ -64,7 +64,7 @@ describe('payments-list-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('emits payment-row-clicked event on row click', async () => {
+  it('emits row-clicked event on row click', async () => {
     const mockPaymentsService = {
       fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
     };
@@ -87,7 +87,7 @@ describe('payments-list-core', () => {
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();
-    page.win.addEventListener('payment-row-clicked', spyEvent);
+    page.win.addEventListener('row-clicked', spyEvent);
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();

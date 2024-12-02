@@ -4,6 +4,32 @@ import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-checkouts-list";
 
+const examplePayload = {
+  "id": "cho_xyz",
+  "account_id": "acc_xyz",
+  "platform_account_id": "acc_xyz",
+  "payment_amount": 10000,
+  "payment_currency": "usd",
+  "payment_description": "my_order_xyz",
+  "payment_methods": [ ],
+  "payment_method_group_id": "pmg_xyz",
+  "status": "created",
+  "mode": "test live",
+  "successful_payment_id": "py_xyz",
+  "statement_descriptor": "Big Business",
+  "application_fees": {
+  "card": {
+  "amount": 300
+  },
+  "bank_account": {
+  "amount": 150
+  }
+  },
+  "payment_settings": { },
+  "created_at": "2024-01-01T12:00:00Z",
+  "updated_at": "2024-01-01T12:00:00Z"
+  };
+
 const themes = {
   basic: {},
   custom: {
@@ -103,10 +129,14 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    "checkout-row-clicked": {
-      description: "`CheckoutRowClicked`",
+    "row-clicked": {
+      description: "`RowClicked`",
       table: {
         category: "events",
+        defaultValue: {
+          summary: "Emits chosen Checkout object on row click",
+          detail: JSON.stringify(examplePayload)
+        }
       },
       action: true,
     },
@@ -133,7 +163,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["checkout-row-clicked", "error-event"],
+      handles: ["row-clicked", "error-event"],
     },
     chromatic: {
       delay: 2000,
