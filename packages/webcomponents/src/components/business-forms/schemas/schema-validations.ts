@@ -37,9 +37,6 @@ export const businessNameValidation = string()
   .min(2, 'Name must be at least 2 characters')
   .max(100, 'Name must be less than 100 characters')
   .matches(businessNameRegex, 'Enter valid business name')
-  .test('special-characters', 'Invalid special character - you may use ', (value) => {
-    return !/[^a-zA-Z0-9\s,&.:.-]/.test(value);
-  })
   .transform(transformEmptyString);
 
 export const doingBusinessAsValidation = string()
@@ -85,7 +82,6 @@ export const dateOfIncorporationValidation = string()
 export const identityNameValidation = string()
   .min(2, 'Name must be at least 2 characters')
   .max(100, 'Name must be less than 100 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid name')
   .transform(transformEmptyString);
 
 export const identityTitleValidation = string()
