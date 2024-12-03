@@ -1,7 +1,6 @@
 import { createStore } from '@stencil/store';
 
 const iframeInputStylesStore = createStore<any>({
-  fontFamily: '',
   focused: {
     boxShadow: '',
     border: '',
@@ -9,6 +8,14 @@ const iframeInputStylesStore = createStore<any>({
   focusedAndInvalid: {
     boxShadow: '',
     border: '',
+  },
+  fontStyles: {
+    fontFamily: '',
+    fontSize: '',
+    fontWeight: '',
+    lineHeight: '',
+    margin: '',
+    padding: '',
   },
 });
 

@@ -1,4 +1,5 @@
 import { Component, Element, h, Host, Method, Prop, State } from "@stencil/core";
+import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
@@ -17,7 +18,6 @@ export class IframeInput {
   @State() isFocused: boolean = false;
   @State() isValid: boolean = true;
   @State() errorText: string;
-  @State() fontFamily: string = 'Arial';
 
   @Prop() inputId: string;
   @Prop() label: string;
@@ -89,6 +89,20 @@ export class IframeInput {
     return null;
   }
 
+  private get urlParams() {
+    // map the iframeInputStyles.fontStyles properties to the urlParams 
+    // and encode each property with btoa
+    const encodedObject = Object.fromEntries(
+      Object
+        .entries(iframeInputStyles.fontStyles)
+        .map(([key, value]) => [key, btoa(String(value))])
+    );
+
+    const params = new URLSearchParams(encodedObject).toString();
+
+    return params;
+  }
+
   render() {
     return (
       <Host class="form-group d-flex flex-column">
@@ -96,28 +110,29 @@ export class IframeInput {
           class="form-label"
           htmlFor=""
           part="label"
-          style={{ height: '20px', minHeight: '20px' }}
         >
           {this.label || ''}
         </label>
         <div
-          class={`form-control ${this.isValid ? '' : 'is-invalid'}`}
+          class={`d-flex p-0 form-control ${this.isValid ? '' : 'is-invalid'}`}
           part={this.part}
-          style={{ ...this.style, overflow: 'hidden' }}
+          style={{
+            ...this.style,
+            overflow: 'hidden',
+          }}
         >
-          {this.fontFamily ? (
-            <iframe
-              id={this.inputId}
-              name={this.inputId}
-              src={this.iframeOrigin + `?fontFamily=${this.fontFamily}`}
-              ref={el => {
-                this.iframeElement = el as HTMLIFrameElement;
-                this.initializeFrameCommunicationService();
-              }}
-              height="20px"
-              width="100%"
-            />
-          ) : null}
+          <iframe
+            id={this.inputId}
+            name={this.inputId}
+            src={`${this.iframeOrigin}?${this.urlParams}`}
+            ref={el => {
+              this.iframeElement = el as HTMLIFrameElement;
+              this.initializeFrameCommunicationService();
+            }}
+            width="100%"
+            height={0} // inits it as 0 to avoid the iframe from being displayed before the resize
+            onLoad={() => iFrameResize({ log: false }, this.iframeElement)}
+          />
         </div>
         <FormControlErrorText errorText={this.errorText} name={this.inputId} />
       </Host>

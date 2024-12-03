@@ -11,9 +11,31 @@ export class HiddenInput {
     const focusedStyles = await this.getFocusedStyles();
     iframeInputStylesSet('focused', focusedStyles);
 
-    const getFocusedAndInvalidStyles = await this.getFocusedAndInvalidStyles();
-    iframeInputStylesSet('focusedAndInvalid', getFocusedAndInvalidStyles);
+    const focusedAndInvalidStyles = await this.getFocusedAndInvalidStyles();
+    iframeInputStylesSet('focusedAndInvalid', focusedAndInvalidStyles);
+
+    const fontStyles = await this.getBaseFontStyles();
+    iframeInputStylesSet('fontStyles', fontStyles);
   }
+
+  private async getBaseFontStyles() {
+    return new Promise((resolve, _reject) => {
+      setTimeout(() => {
+        const computedStyles = getComputedStyle(this.hiddenInput);
+        const styles = {
+          fontFamily: computedStyles.fontFamily,
+          fontSize: computedStyles.fontSize,
+          fontWeight: computedStyles.fontWeight,
+          lineHeight: computedStyles.lineHeight,
+          margin: computedStyles.margin,
+          padding: computedStyles.padding,
+          color: computedStyles.color,
+        };
+
+        resolve(styles);
+      }, 500);
+    });
+  };
 
   private async getFocusedStyles() {
     return new Promise((resolve, _reject) => {
@@ -25,7 +47,7 @@ export class HiddenInput {
           boxShadow: computedStyles.boxShadow,
           border: computedStyles.border,
         });
-      }, 1000);
+      }, 500);
     });
   }
 
@@ -43,7 +65,7 @@ export class HiddenInput {
         };
 
         resolve(styles);
-      }, 1000);
+      }, 500);
     });
   }
 
@@ -54,6 +76,7 @@ export class HiddenInput {
           ref={el => this.hiddenInput = el}
           type="text"
           class="form-control"
+          part="input"
           tabindex="-1"
           style={{ height: '0', opacity: '0', pointerEvents: 'none' }}
         />
