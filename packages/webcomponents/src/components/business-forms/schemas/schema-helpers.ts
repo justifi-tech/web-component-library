@@ -17,7 +17,7 @@ export const validateRoutingNumber = (routingNumber): boolean => {
   return false;
 }
 
-export const businessNameRegex = /^(?!^\s+$)[a-zA-Z0-9\s,&.:.-]*$/;
+export const businessNameRegex = /^(?!^\s+$)(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9\s,&.:.-]*$/;
 
 export const phoneRegex = /^\d{10}$/;
 
