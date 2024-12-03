@@ -10,8 +10,8 @@ export class CustomerDetails {
   @State() errors: any = {};
 
   @Method()
-  async validateAndSubmit(onSuccess: () => void) {
-    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  async validateAndSubmit(onSuccess: (formData: any) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData));
   };
 
   componentWillLoad() {
@@ -22,10 +22,6 @@ export class CustomerDetails {
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
-  }
-
-  private sendData = (onSuccess: () => void) => {
-    onSuccess();
   }
 
   private inputHandler = (name: string, value: string) => {
