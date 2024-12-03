@@ -7,10 +7,12 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type       | Default     |
-| -------------- | --------- | ----------- | ---------- | ----------- |
-| `getPayoutCSV` | --        |             | `Function` | `undefined` |
-| `getPayouts`   | --        |             | `Function` | `undefined` |
+| Property         | Attribute | Description | Type       | Default     |
+| ---------------- | --------- | ----------- | ---------- | ----------- |
+| `columns`        | `columns` |             | `string`   | `undefined` |
+| `getPayoutCSV`   | --        |             | `Function` | `undefined` |
+| `getPayouts`     | --        |             | `Function` | `undefined` |
+| `getSubAccounts` | --        |             | `Function` | `undefined` |
 
 
 ## Events
@@ -23,14 +25,12 @@
 
 ## Shadow Parts
 
-| Part                | Description |
-| ------------------- | ----------- |
-| `"pagination-bar"`  |             |
-| `"table-body"`      |             |
-| `"table-cell"`      |             |
-| `"table-head"`      |             |
-| `"table-head-cell"` |             |
-| `"table-head-row"`  |             |
+| Part               | Description |
+| ------------------ | ----------- |
+| `"pagination-bar"` |             |
+| `"table-body"`     |             |
+| `"table-head"`     |             |
+| `"table-head-row"` |             |
 
 
 ## Dependencies
@@ -41,17 +41,12 @@
 
 ### Depends on
 
-- [form-control-date](../../ui-components/form)
 - [pagination-menu](../pagination-menu)
 
 ### Graph
 ```mermaid
 graph TD;
-  payouts-list-core --> form-control-date
   payouts-list-core --> pagination-menu
-  form-control-date --> form-control-tooltip
-  form-control-date --> form-control-error-text
-  form-control-tooltip --> custom-popper
   justifi-payouts-list --> payouts-list-core
   style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { MapPayoutStatusToBadge } from './payouts-status';
 
-export const defaultColumnsKeys = 'created_at,payments_total,refunds_total,fees_total,other_total,amount,status';
+export const defaultColumnsKeys = 'created_at,payments_total,refunds_total,fees_total,other_total,amount,status,csv';
 
 export const payoutsTableColumns = {
   created_at: () => (
@@ -44,6 +44,11 @@ export const payoutsTableColumns = {
       Status
     </th>
   ),
+  csv: () => (
+    <th part="table-head-cell" scope="col" title="Export CSV">
+      CSV
+    </th>
+  ),
 };
 
 export const payoutsTableCells = {
@@ -55,4 +60,11 @@ export const payoutsTableCells = {
   other_total: (value) => (<td>{value}</td>),
   amount: (value) => (<td>{value}</td>),
   status: (value) => (<td innerHTML={MapPayoutStatusToBadge(value)}></td>),
+  csv: () => (
+    <td>
+      <a href="#" onClick={() => alert('CSV Export Clicked')}>
+        Export CSV
+      </a>
+    </td>
+  ),
 };
