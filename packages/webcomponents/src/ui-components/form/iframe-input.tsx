@@ -18,6 +18,7 @@ export class IframeInput {
   @State() isFocused: boolean = false;
   @State() isValid: boolean = true;
   @State() errorText: string;
+  @State() iframeLoaded: boolean = false;
 
   @Prop() inputId: string;
   @Prop() label: string;
@@ -106,35 +107,46 @@ export class IframeInput {
   render() {
     return (
       <Host class="form-group d-flex flex-column">
-        <label
-          class="form-label"
-          htmlFor=""
-          part="label"
-        >
-          {this.label || ''}
-        </label>
-        <div
-          class={`d-flex p-0 form-control ${this.isValid ? '' : 'is-invalid'}`}
-          part={this.part}
-          style={{
-            ...this.style,
-            overflow: 'hidden',
-          }}
-        >
-          <iframe
-            id={this.inputId}
-            name={this.inputId}
-            src={`${this.iframeOrigin}?${this.urlParams}`}
-            ref={el => {
-              this.iframeElement = el as HTMLIFrameElement;
-              this.initializeFrameCommunicationService();
+        <div style={{
+          visibility: this.iframeLoaded ? 'visible' : 'hidden',
+          height: this.iframeLoaded ? 'auto' : '0',
+        }}>
+          <label
+            class="form-label"
+            htmlFor=""
+            part="label"
+          >
+            {this.label || ''}
+          </label>
+          <div
+            class={`p-0 d-flex form-control ${this.isValid ? '' : 'is-invalid'}`}
+            part={this.part}
+            style={{
+              ...this.style,
+              overflow: 'hidden',
             }}
-            width="100%"
-            height={0} // inits it as 0 to avoid the iframe from being displayed before the resize
-            onLoad={() => iFrameResize({ log: false }, this.iframeElement)}
-          />
+          >
+            <iframe
+              id={this.inputId}
+              name={this.inputId}
+              src={`${this.iframeOrigin}?${this.urlParams}`}
+              ref={el => {
+                this.iframeElement = el as HTMLIFrameElement;
+                this.initializeFrameCommunicationService();
+              }}
+              width="100%"
+              onLoad={() => {
+                iFrameResize({
+                  log: false,
+                  onResized: () => {
+                    this.iframeLoaded = true;
+                  }
+                }, this.iframeElement);
+              }}
+            />
+          </div>
+          <FormControlErrorText errorText={this.errorText} name={this.inputId} />
         </div>
-        <FormControlErrorText errorText={this.errorText} name={this.inputId} />
       </Host>
     );
   }
