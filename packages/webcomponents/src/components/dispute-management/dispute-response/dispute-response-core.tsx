@@ -73,11 +73,14 @@ export class DisputeResponseCore {
     this.isLoading = true;
     const fileList = Array.from(e.detail.fileList) as File[];
     const documentList = fileList.map(file => new DisputeResponseDocument(file));
-    documentList.forEach(async doc => await this.getPresignedFileUrl(doc));
+    documentList.forEach(async doc => {
+      const presigningResponse = (await this.getPresignedFileUrl(doc)).data;
+      await this.uploadDocument(doc, presigningResponse.presigned_url);
+    });
   }
 
-  getPresignedFileUrl = async (document: any) => {
-    this.createDisputeEvidence({
+  getPresignedFileUrl = async (document: any): Promise<IApiResponse<any>> => {
+    return this.createDisputeEvidence({
       payload: document,
       onSuccess: () => {
         this.isLoading = false;
@@ -91,6 +94,20 @@ export class DisputeResponseCore {
         this.isLoading = false;
       },
     })
+  }
+
+  uploadDocument = async (documentData: any, presignedUrl: string) => {
+    if (!documentData.presigned_url) {
+      throw new Error('Presigned URL is not set');
+    }
+
+    const response = await fetch(presignedUrl, {
+      method: 'PUT',
+      body: documentData.fileString,
+    })
+
+    // return this.handleUploadResponse(response);
+    console.log('upload response:', response);
   }
 
   get currentStepComponent() {
