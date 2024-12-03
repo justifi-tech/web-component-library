@@ -103,9 +103,9 @@ export class PayoutsListCore {
   get columnData() {
     return [
       ['Paid Out On', 'The date each transaction occurred'],
-      ['Type', 'The type of each transaction'],
-      ['Account', 'The ID of the account associated with each payout'],
-      ['Paid Out To', 'The bank account to which each payout was transferred'],
+      // ['Type', 'The type of each transaction'],
+      ['Sub Account Name', 'The name of the account associated with each payout'],
+      // ['Paid Out To', 'The bank account to which each payout was transferred'],
       ['Payments', 'Sum of payments in each payout'],
       ['Refunds', 'Sum of refunds in each payout'],
       ['Fees', 'Sum of fees in each payout'],
@@ -118,16 +118,10 @@ export class PayoutsListCore {
 
   get rowData() {
     return this.payouts.map((payout) => [
-      {
-        type: 'head',
-        value: `
-          <div class='fw-bold'>${formatDate(payout.created_at)}</div>
-          <div class='fw-bold'>${formatTime(payout.created_at)}</div>
-        `,
-      },
-      payout.payout_type,
-      payout.account_id,
-      `${payout.bank_account.full_name} ${payout.bank_account.account_number_last4}`,
+      formatDate(payout.created_at),
+      // payout.payout_type,
+      payout.sub_account_name,
+      // `${payout.bank_account.full_name} ${payout.bank_account.account_number_last4}`,
       formatCurrency(payout.payments_total),
       formatCurrency(payout.refunds_total),
       formatCurrency(payout.fees_total),

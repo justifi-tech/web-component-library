@@ -60,6 +60,7 @@ export class Payout implements IPayout {
   public metadata: Object | null;
   public created_at: string;
   public updated_at: string;
+  public sub_account_name: string;
 
   constructor(payout: IPayout) {
     this.id = payout.id;
