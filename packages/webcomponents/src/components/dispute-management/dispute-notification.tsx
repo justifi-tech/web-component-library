@@ -74,14 +74,20 @@ export class DisputeNotification {
           </div>
         )}
 
-        {this.dispute?.underReview && (<div>
-          <h1 class="h4">This payment is disputed and under review</h1>
-          <p>The cardholder is disputing this payment. A counter dispute has been submitted and is under review.</p>
-        </div>)}
+        {this.dispute?.underReview && (
+          <div>
+            <h1 class="h4">This payment is disputed and under review</h1>
+            <p>The cardholder is disputing this payment. A counter dispute has been submitted and is under review.</p>
+          </div>
+        )}
 
-        {this.dispute?.won && (<div>Dispute won</div>)}
+        {this.dispute?.won && (
+          <div>Dispute won</div>
+        )}
 
-        {this.dispute?.lost && (<div>Dispute lost</div>)}
+        {this.dispute?.lost && (
+          <div>Dispute lost</div>
+        )}
       </div>
     );
   }
