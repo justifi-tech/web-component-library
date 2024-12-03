@@ -245,13 +245,16 @@ export class Payment implements IPayment {
     const lost = this.disputes.some(
       (dispute) => dispute.status === DisputeStatus.lost
     );
+
     // if a dispute is 'won', we don't show a dispute status, just general status
+    // TODO: update this logic to work with new DisputeStatus enum
+    // (cast 'open' as DisputeStatus in the meantime to keep existing functionality)
     if (!this.disputed) {
       return null;
     } else if (lost) {
       return DisputeStatus.lost;
     } else {
-      return DisputeStatus.open;
+      return 'open' as DisputeStatus;
     }
   }
 

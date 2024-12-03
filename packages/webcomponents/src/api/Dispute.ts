@@ -56,7 +56,8 @@ export class DisputeResponseDocument {
 export enum DisputeStatus {
   won = 'won',
   lost = 'lost',
-  open = 'open',
+  underReview = 'under_review',
+  needsResponse = 'needs_response',
 }
 
 export interface IDispute {
@@ -83,6 +84,22 @@ export class Dispute implements IDispute {
   public metadata: any;
   public created_at: string;
   public updated_at: string;
+
+  get needsResponse() {
+    return this.status == DisputeStatus.needsResponse
+  }
+
+  get underReview() {
+    return this.status == DisputeStatus.underReview
+  }
+
+  get won() {
+    return this.status == DisputeStatus.won
+  }
+
+  get lost() {
+    return this.status == DisputeStatus.lost
+  }
 
   constructor(dispute: IDispute) {
     this.id = dispute.id;
