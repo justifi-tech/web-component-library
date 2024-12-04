@@ -3,6 +3,7 @@ import { withActions } from "@storybook/addon-actions/decorator";
 import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-business-form";
+import { ThemeNames } from "../../themes";
 
 type Story = StoryObj;
 
@@ -14,9 +15,18 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     "test-mode": true,
+    Theme: ThemeNames.Light,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
     "form-title": {
       type: "string",
       description:

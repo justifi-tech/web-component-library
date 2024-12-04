@@ -25,12 +25,15 @@
 
 | Part                | Description |
 | ------------------- | ----------- |
+| `"icon"`            |             |
 | `"pagination-bar"`  |             |
+| `"table"`           |             |
 | `"table-body"`      |             |
 | `"table-cell"`      |             |
 | `"table-head"`      |             |
 | `"table-head-cell"` |             |
 | `"table-head-row"`  |             |
+| `"table-wrapper"`   |             |
 
 
 ## Dependencies
@@ -50,7 +53,6 @@ graph TD;
   payouts-list-core --> form-control-date
   payouts-list-core --> pagination-menu
   form-control-date --> form-control-tooltip
-  form-control-date --> form-control-error-text
   form-control-tooltip --> custom-popper
   justifi-payouts-list --> payouts-list-core
   style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px

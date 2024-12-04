@@ -7,6 +7,29 @@ import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 
+/**
+  * @exportedPart detail-loading-spinner
+  * @exportedPart detail-loading-state
+  * 
+  * @exportedPart detail-head
+  * @exportedPart detail-head-info
+  * @exportedPart detail-head-info-item
+  * @exportedPart detail-head-info-item-title
+  * @exportedPart detail-head-info-item-data
+  * @exportedPart detail-head-badge
+  * 
+  * @exportedPart header-2
+  * 
+  * @exportedPart detail-empty-state
+  * @exportedPart detail-info
+  * @exportedPart detail-info-item
+  * @exportedPart detail-info-item-title
+  * @exportedPart detail-info-item-data
+  * @exportedPart detail-metadata
+  * @exportedPart detail-section
+  * @exportedPart detail-section-item-title
+  * @exportedPart detail-section-item-data
+*/
 @Component({
   tag: 'justifi-payout-details',
   shadow: true,

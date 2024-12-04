@@ -2,12 +2,11 @@
 
 exports[`owner-details should render owner-details 1`] = `
 <owner-details>
-  <h5 class="mt-4" part="detail-section-title">
+  <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
     Owner Person Name's Details
-  </h5>
-  <hr>
-  <div class="d-table gap-2 w-100">
-    <div class="d-table-row gap-2">
+  </h2>
+  <div class="d-table gap-2 mt-3 w-100" part="detail-section-block">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Name
       </span>
@@ -15,7 +14,7 @@ exports[`owner-details should render owner-details 1`] = `
         Person Name
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Title
       </span>
@@ -23,7 +22,7 @@ exports[`owner-details should render owner-details 1`] = `
         President
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Email
       </span>
@@ -31,7 +30,7 @@ exports[`owner-details should render owner-details 1`] = `
         person.name@justifi.ai
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Phone
       </span>
@@ -39,7 +38,7 @@ exports[`owner-details should render owner-details 1`] = `
         6124011111
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Date of Birth
       </span>
@@ -47,7 +46,7 @@ exports[`owner-details should render owner-details 1`] = `
         Jul 4, 1906
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Identification Number
       </span>
@@ -55,7 +54,7 @@ exports[`owner-details should render owner-details 1`] = `
         ********6789
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Line 1
       </span>
@@ -63,7 +62,7 @@ exports[`owner-details should render owner-details 1`] = `
         123 Example St
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Line 2
       </span>
@@ -71,7 +70,7 @@ exports[`owner-details should render owner-details 1`] = `
         Suite 101
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         City
       </span>
@@ -79,7 +78,7 @@ exports[`owner-details should render owner-details 1`] = `
         Minneapolis
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         State
       </span>
@@ -87,7 +86,7 @@ exports[`owner-details should render owner-details 1`] = `
         MN
       </span>
     </div>
-    <div class="d-table-row gap-2">
+    <div class="d-table-row gap-2" part="detail-section-item">
       <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
         Zip
       </span>

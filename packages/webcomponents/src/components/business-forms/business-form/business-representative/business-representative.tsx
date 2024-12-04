@@ -68,8 +68,7 @@ export class BusinessRepresentative {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          <legend>Representative</legend>
-          <hr />
+          <legend part="header-2">Representative</legend>
           <div class="row gy-3">
             <div class="col-12 col-md-8">
               <form-control-text

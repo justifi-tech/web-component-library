@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStep, BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
@@ -19,7 +19,6 @@ export class BusinessTermsConditionsFormStep {
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -100,14 +99,13 @@ export class BusinessTermsConditionsFormStep {
     } else {
       onSuccess();
     }
-    this.submitted.emit({ data: response, metadata: { completedStep: BusinessFormStep.termsAndConditions } });
-    this.stepCompleted.emit({ data: response, formStep: BusinessFormStepV2.termsAndConditions });
+    this.stepCompleted.emit({ data: response, formStep: BusinessFormStep.termsAndConditions });
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.acceptedTermsBefore) {
-      this.submitted.emit({ metadata: { completedStep: BusinessFormStep.termsAndConditions } });
+      this.stepCompleted.emit({ data: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
       onSuccess();
     } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));

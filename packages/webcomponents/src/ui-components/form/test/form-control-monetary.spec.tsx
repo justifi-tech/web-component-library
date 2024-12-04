@@ -2,8 +2,8 @@ import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { CURRENCY_MASK } from "../../../utils/form-input-masks";
 import { MonetaryInput } from "../form-control-monetary";
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-monetary', () => {
   const components = [MonetaryInput, FormControlErrorText, FormControlHelpText];
@@ -12,7 +12,7 @@ describe('form-control-monetary', () => {
   it('renders correctly with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => 
+      template: () =>
         <form-control-monetary
           label='Amount'
           name='amount'
@@ -196,11 +196,10 @@ describe('form-control-monetary', () => {
         />,
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    const helpTextComponent = page.root.querySelector('#form-help-text-amount');
     expect(helpTextComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Enter payment amount');
+    expect(helpTextComponent.textContent).toBe('Enter payment amount');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
@@ -216,11 +215,10 @@ describe('form-control-monetary', () => {
         />,
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-amount');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('Invalid amount');
+    expect(errorTextComponent.textContent).toBe('Invalid amount');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

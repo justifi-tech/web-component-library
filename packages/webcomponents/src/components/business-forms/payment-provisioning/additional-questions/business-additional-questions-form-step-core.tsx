@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Business';
-import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../components';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
@@ -29,7 +29,6 @@ export class AdditionalQuestionsFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -91,8 +90,7 @@ export class AdditionalQuestionsFormStepCore {
         });
       },
       final: () => {
-        this.submitted.emit({ data: { submittedData } });
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.additionalQuestions });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.additionalQuestions });
         this.formLoading.emit(false)
       }
     });

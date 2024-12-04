@@ -16,7 +16,7 @@ export class GenericInfoDetails {
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Business Generic Info Details" />
-        <div class="d-table gap-2 w-100">
+        <div class="d-table gap-2 w-100 mt-3" part="detail-section-block">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem title="Legal Name" value={this.business?.legal_name} />

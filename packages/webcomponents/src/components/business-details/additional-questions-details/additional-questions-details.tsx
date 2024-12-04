@@ -24,7 +24,7 @@ export class AdditionalQuestionsDetails {
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Additional Questions" />
-        <div class="d-table gap-2 w-100">
+        <div class="d-table gap-2 w-100 mt-3" part="detail-section-block">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem

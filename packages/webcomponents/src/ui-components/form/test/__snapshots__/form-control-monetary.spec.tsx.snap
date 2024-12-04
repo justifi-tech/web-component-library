@@ -12,16 +12,12 @@ exports[`form-control-monetary Renders with all props provided 1`] = `
       </span>
       <input class="form-control is-invalid monetary" id="amount" name="amount" part="input input-group-input input-invalid" type="text" value="1,500">
     </div>
-    <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-amount">
-        Enter payment amount
-      </small>
-    </form-control-help-text>
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-amount">
-        Invalid amount
-      </small>
-    </form-control-error-text>
+    <small class="form-text text-muted" id="form-help-text-amount" part="input-help-text">
+      Enter payment amount
+    </small>
+    <small class="form-text text-danger" id="form-error-text-amount" part="input-error-text">
+      Invalid amount
+    </small>
   </div>
 </form-control-monetary>
 `;
@@ -38,8 +34,6 @@ exports[`form-control-monetary renders correctly with default props 1`] = `
       </span>
       <input class="form-control monetary" id="amount" name="amount" part="input input-group-input undefined" type="text">
     </div>
-    <form-control-help-text></form-control-help-text>
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-monetary>
 `;

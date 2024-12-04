@@ -48,8 +48,7 @@ export class BusinessCoreInfo {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          <legend>General Info</legend>
-          <hr />
+          <legend part="header-2">General Info</legend>
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text

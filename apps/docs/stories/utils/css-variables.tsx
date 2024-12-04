@@ -15,9 +15,6 @@ export const CSSVars = () => (
   --jfi-layout-form-control-spacing-x
   --jfi-layout-form-control-spacing-y
 
-  /* colors */
-  --jfi-primary-color
-
   /* form control */
   --jfi-form-control-background-color
   --jfi-form-control-border-color
@@ -41,8 +38,6 @@ export const CSSVars = () => (
   --jfi-form-control-line-height
   --jfi-form-control-margin
   --jfi-form-control-padding
-  --jfi-form-control-disabled-background-color
-  --jfi-form-control-disabled-color
 
   /* form label */
   --jfi-form-label-color
@@ -56,54 +51,6 @@ export const CSSVars = () => (
   --jfi-error-message-margin
   --jfi-error-message-font-size
 
-  /* Below only used in justifi-payment-form */
-  /* form radio group */
-  --jfi-radio-button-color
-  --jfi-radio-button-background-color
-  --jfi-radio-button-color-selected
-  --jfi-radio-button-background-color-selected
-  --jfi-radio-button-border-color
-  --jfi-radio-button-border-color-selected
-  --jfi-radio-button-padding
-  --jfi-radio-button-font-size
-  --jfi-radio-button-color-hover
-  --jfi-radio-button-color-selected-hover
-  --jfi-radio-button-background-color-hover
-  --jfi-radio-button-background-color-selected-hover
-  --jfi-radio-button-border-color-selected-hover
-  --jfi-radio-button-border-color-hover
-  --jfi-radio-button-group-width
-
-  /* Below only used in justifi-checkout */
-  /* form radio input */
-  --jfi-radio-button-background-color
-  --jfi-radio-button-border-color
-  --jfi-radio-button-background-color-selected
-  --jfi-radio-button-border-color-selected
-  --jfi-radio-button-border-color-focus
-  --jfi-radio-button-box-shadow-focus
-
-  /* submit button */
-  --jfi-submit-button-color
-  --jfi-submit-button-background-color
-  --jfi-submit-button-border-color
-  --jfi-submit-button-padding
-  --jfi-submit-button-font-size
-  --jfi-submit-button-border-radius
-  --jfi-submit-button-color-hover
-  --jfi-submit-button-background-color-hover
-  --jfi-submit-button-border-color-hover
-  --jfi-submit-button-color-focus
-  --jfi-submit-button-background-color-focus
-  --jfi-submit-button-border-color-focus
-  --jfi-submit-button-color-active
-  --jfi-submit-button-background-color-active
-  --jfi-submit-button-border-color-active
-  --jfi-submit-button-width
-  --jfi-submit-button-box-shadow
-  --jfi-submit-button-color-loading
-  --jfi-submit-button-background-color-loading
-  --jfi-submit-button-border-color-loading
   `}
   />
 );
@@ -143,38 +90,4 @@ export const CSSVarsExample = `
   --jfi-error-message-color: #C12727;
   --jfi-error-message-margin: .25rem 0 0 0;
   --jfi-error-message-font-size: .875rem;
-
-  --jfi-submit-button-color: white;
-  --jfi-submit-button-background-color: #3F3F47;
-  --jfi-submit-button-border-color: var(--jfi-primary-color);
-  --jfi-submit-button-padding: 0.375rem 0.75rem;
-  --jfi-submit-button-font-size: 1rem;
-  --jfi-submit-button-border-radius: 1px;
-  --jfi-submit-button-color-hover: white;
-  --jfi-submit-button-background-color-hover: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-hover: var(--jfi-primary-color);
-  --jfi-submit-button-color-focus: white;
-  --jfi-submit-button-background-color-focus: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-focus: var(--jfi-primary-color);
-  --jfi-submit-button-color-active: white;
-  --jfi-submit-button-background-color-active: var(--jfi-primary-color);
-  --jfi-submit-button-border-color-active: var(--jfi-primary-color);
-  --jfi-submit-button-width: 100%;
-  --jfi-submit-button-box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
-
-  --jfi-radio-button-color: var(--jfi-primary-color);
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-color-selected: white;
-  --jfi-radio-button-background-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-border-color: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-selected: var(--jfi-primary-color);
-  --jfi-radio-button-padding: 0.375rem 0.75rem;
-  --jfi-radio-button-font-size: 1rem;
-  --jfi-radio-button-color-hover: var(--jfi-primary-color);
-  --jfi-radio-button-color-selected-hover: white;
-  --jfi-radio-button-background-color-hover: transparent;
-  --jfi-radio-button-background-color-selected-hover: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-selected-hover: var(--jfi-primary-color);
-  --jfi-radio-button-border-color-hover: var(--jfi-primary-color);
-  --jfi-radio-button-group-width: 100%;
 `;

@@ -2,14 +2,13 @@
 
 exports[`LegalAddressDetails should render 1`] = `
 <legal-address-details>
-  <h5 class="mt-4" part="detail-section-title">
+  <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
     Business Legal Address Details
-  </h5>
-  <hr>
-  <div class="d-table gap-2 w-100">
+  </h2>
+  <div class="d-table gap-2 mt-3 w-100" part="detail-section-block">
     <div class="gy-3 row">
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Country
           </span>
@@ -17,7 +16,7 @@ exports[`LegalAddressDetails should render 1`] = `
             USA
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Legal Address
           </span>
@@ -25,7 +24,7 @@ exports[`LegalAddressDetails should render 1`] = `
             123 Example St
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Address Line 2
           </span>
@@ -35,7 +34,7 @@ exports[`LegalAddressDetails should render 1`] = `
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             City
           </span>
@@ -43,7 +42,7 @@ exports[`LegalAddressDetails should render 1`] = `
             Minneapolis
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             State
           </span>
@@ -51,7 +50,7 @@ exports[`LegalAddressDetails should render 1`] = `
             MN
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Postal Code
           </span>

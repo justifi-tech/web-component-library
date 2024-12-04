@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
-import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
@@ -19,7 +19,6 @@ export class LegalAddressFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -81,8 +80,7 @@ export class LegalAddressFormStepCore {
         });
       },
       final: () => {
-        this.submitted.emit({ data: { submittedData } });
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.legalAddress });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.legalAddress });
         this.formLoading.emit(false)
       }
     });

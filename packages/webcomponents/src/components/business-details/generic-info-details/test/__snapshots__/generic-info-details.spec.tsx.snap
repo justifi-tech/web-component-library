@@ -2,14 +2,13 @@
 
 exports[`GenericInfoDetails should render 1`] = `
 <generic-info-details>
-  <h5 class="mt-4" part="detail-section-title">
+  <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
     Business Generic Info Details
-  </h5>
-  <hr>
-  <div class="d-table gap-2 w-100">
+  </h2>
+  <div class="d-table gap-2 mt-3 w-100" part="detail-section-block">
     <div class="gy-3 row">
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Legal Name
           </span>
@@ -17,7 +16,7 @@ exports[`GenericInfoDetails should render 1`] = `
             Business Name
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Doing Business As (DBA)
           </span>
@@ -25,7 +24,7 @@ exports[`GenericInfoDetails should render 1`] = `
             Best Business
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Business Classification
           </span>
@@ -33,7 +32,7 @@ exports[`GenericInfoDetails should render 1`] = `
             Corporation
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Industry
           </span>
@@ -43,7 +42,7 @@ exports[`GenericInfoDetails should render 1`] = `
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Tax ID
           </span>
@@ -51,7 +50,7 @@ exports[`GenericInfoDetails should render 1`] = `
             895249796
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Website URL
           </span>
@@ -59,7 +58,7 @@ exports[`GenericInfoDetails should render 1`] = `
             https://justifi.ai
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Email Address
           </span>
@@ -67,7 +66,7 @@ exports[`GenericInfoDetails should render 1`] = `
             business@justifi.ai
           </span>
         </div>
-        <div class="d-table-row gap-2">
+        <div class="d-table-row gap-2" part="detail-section-item">
           <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
             Phone Number
           </span>

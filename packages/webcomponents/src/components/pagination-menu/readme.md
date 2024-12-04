@@ -17,8 +17,11 @@
 
 | Part                 | Description |
 | -------------------- | ----------- |
-| `"page-arrow"`       |             |
 | `"page-button-text"` |             |
+| `"page-item"`        |             |
+| `"page-link-arrow"`  |             |
+| `"page-link-text"`   |             |
+| `"pagination"`       |             |
 
 
 ## Dependencies

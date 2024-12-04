@@ -75,7 +75,7 @@ export class PayoutDetailsCore {
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
-              badge={<span slot='badge' innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
+              badge={<span slot='badge' part="detail-head-badge" innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
               title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}
             >
               <EntityHeadInfoItem
@@ -90,12 +90,12 @@ export class PayoutDetailsCore {
               />
               <EntityHeadInfoItem title="ID" value={this.payout.id} />
               <div class="m-4">
-                <button class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
+                <button part="button-secondary" class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
                   Export CSV
                 </button>
               </div>
             </EntityHeadInfo>
-            <div slot='detail-sections'>
+            <div slot='detail-sections' part="detail-section">
               <DetailSectionTitle sectionTitle="Details" />
               <div class="d-table gap-2 w-100">
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />

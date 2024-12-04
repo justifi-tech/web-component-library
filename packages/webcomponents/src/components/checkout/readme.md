@@ -5,11 +5,14 @@
 ## Examples
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html dir="ltr" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <title>justifi-payment-form: Simple example</title>
 
     <!--
@@ -72,6 +75,14 @@
 Type: `Promise<PaymentMethodPayload>`
 
 
+
+
+## Shadow Parts
+
+| Part                  | Description |
+| --------------------- | ----------- |
+| `"radio-input-label"` |             |
+| `"radio-list-item"`   |             |
 
 
 ## Dependencies

@@ -8,8 +8,8 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 
 /**
  *
- * @exportedPart detail-section
- * @exportedPart detail-section-title
+ * @exportedPart header-2
+ * @exportedPart detail-section-block
  * @exportedPart detail-section-item-title
  * @exportedPart detail-section-item-data
  * @exportedPart detail-empty-state

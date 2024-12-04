@@ -1,8 +1,9 @@
-import { Component, h, Prop, Method, Event, EventEmitter, Listen, State } from '@stencil/core';
+import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { Header3 } from '../../ui-components';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -13,6 +14,9 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
+  private billingFormRef?: HTMLJustifiBillingFormElement;
+  private paymentMethodFormRef?: HTMLCardFormElement;
+
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() accountId: string;
@@ -24,14 +28,10 @@ export class NewPaymentMethod {
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
-  private billingFormRef?: HTMLJustifiBillingFormElement;
-  private paymentMethodFormRef?: HTMLJustifiPaymentMethodFormElement;
-
   @Listen('checkboxChanged')
   handleCheckboxChanged(event: CustomEvent<boolean>) {
     this.saveNewPaymentMethodChecked = event.detail;
   }
-
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
@@ -42,26 +42,29 @@ export class NewPaymentMethod {
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
-    const isValid = await this.validate();
+    try {
+      const isValid = await this.validate();
 
-    if (!isValid || !insuranceValidation.isValid) {
-      return { validationError: true };
-    }
+      if (!isValid || !insuranceValidation.isValid) {
+        return { validationError: true };
+      }
 
-    const tokenizeResponse = await this.tokenize();
+      const tokenizeResponse = await this.tokenize();
 
-    if (tokenizeResponse.error) {
-      return { error: tokenizeResponse.error };
-    } else {
-      const tokenizeRessponseData = tokenizeResponse.data;
-      return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
+      if (tokenizeResponse.error) {
+        return { error: tokenizeResponse.error };
+      } else {
+        const tokenizeRessponseData = tokenizeResponse.data;
+        return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
+      }
+    } catch (error) {
+      return { error };
     }
   }
 
   async validate(): Promise<boolean> {
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
-
     return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
 
@@ -88,15 +91,16 @@ export class NewPaymentMethod {
 
   showNewPaymentMethodForm() {
     return (
-      <div class="mt-2 pb-4 border-bottom">
-        <div class="mb-3">
-          <justifi-payment-method-form
-            ref={(el) => (this.paymentMethodFormRef = el)}
-            payment-method-form-type={this.paymentMethodOption?.id}
-            iframe-origin={this.iframeOrigin}
-          />
+      <div class="mt-4 pb-4 border-bottom">
+        <div class="mb-4">
+          {this.paymentMethodOption?.id === 'card' ? (
+            <card-form ref={(el) => this.paymentMethodFormRef = el} />
+          ) : (
+            <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
+          )}
+
         </div>
-        <h3 class="fs-6 fw-bold lh-lg mb-4">Billing address</h3>
+        <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
         <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
@@ -105,10 +109,12 @@ export class NewPaymentMethod {
 
   render() {
     return (
-      <div class="payment-method">
+      <Host class="payment-method">
         <div
-          class={`payment-method-header p-3`}
-          onClick={() => this.onPaymentMethodOptionClick()}>
+          class="radio-list-item p-3"
+          onClick={() => this.onPaymentMethodOptionClick()}
+          part="radio-list-item"
+        >
           <input
             type="radio"
             name="paymentMethodType"
@@ -117,16 +123,19 @@ export class NewPaymentMethod {
             onClick={(event) => event.preventDefault()}
             checked={this.isSelected}
             class="form-check-input me-2"
+            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
           />
           <label
             htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label">
+            class="form-check-label"
+            part="radio-input-label"
+          >
             {PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
           </label>
         </div>
 
         {this.isSelected ? this.showNewPaymentMethodForm() : null}
-      </div>
+      </Host>
     );
   }
 }
