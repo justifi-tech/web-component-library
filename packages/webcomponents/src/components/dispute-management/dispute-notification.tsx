@@ -28,8 +28,8 @@ export class DisputeNotification {
     return (
       <div>
         {this.isLoading && (
-          <div>
-            <Skeleton height={'28px'} styles={{ marginBottom: '16px' }} />
+          <div style={{ marginBottom: '8px' }}>
+            <Skeleton height={'28px'} width={'70%'} styles={{ marginBottom: '16px' }} />
             <Skeleton height={'18px'} styles={{ marginBottom: '8px' }} />
             <Skeleton height={'18px'} styles={{ marginBottom: '8px' }} />
           </div>
