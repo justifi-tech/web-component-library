@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payout, SubAccount, pagingDefaults } from '../../api';
+import { PagingInfo, Payout, PayoutsTableFilterParams, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
@@ -22,7 +22,7 @@ export class PayoutsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any;
+  @State() params: PayoutsTableFilterParams = {};
 
   @Watch('params')
   @Watch('getPayouts')

@@ -5,7 +5,7 @@ import { PayoutsTableFilterParams } from '../../api';
   tag: 'payouts-list-filters'
 })
 export class PayoutsListFilters {
-  @Prop() params: PayoutsTableFilterParams = {};
+  @Prop() params: PayoutsTableFilterParams;
   @Prop() setParamsOnChange: (name: string, value: string) => void;
   @Prop() clearParams: () => void;
 
@@ -21,6 +21,7 @@ export class PayoutsListFilters {
               inputHandler={this.setParamsOnChange}
               defaultValue={this.params.created_after}
               filterTimeZone
+              showTime
             />
           </div>
           <div class="p-2">
@@ -30,6 +31,7 @@ export class PayoutsListFilters {
               inputHandler={this.setParamsOnChange}
               defaultValue={this.params.created_before}
               filterTimeZone
+              showTime
             />
           </div>
         </div>

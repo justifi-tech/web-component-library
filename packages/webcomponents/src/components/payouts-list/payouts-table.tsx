@@ -2,12 +2,12 @@ import { h } from '@stencil/core';
 import { formatDate, formatCurrency } from '../../utils/utils';
 import { MapPayoutStatusToBadge } from './payouts-status';
 
-export const defaultColumnsKeys = 'deposits_at,sub_account_name,amount,status,payments_total,refunds_total,fees_total,other_total,csv';
+export const defaultColumnsKeys = 'created_at,amount,status,payments_total,refunds_total,fees_total,other_total,csv';
 
 export const payoutTableColumns = {
-  deposits_at: () => (
+  created_at: () => (
     <th part="table-head-cell" scope="col" title="The date the payout was deposited">
-      Deposited
+      Created
     </th>
   ),
   sub_account_name: () => (
@@ -51,7 +51,7 @@ export const payoutTableColumns = {
 };
 
 export const payoutTableCells = (downloadCSV) => ({
-  deposits_at: (value) => (
+  created_at: (value) => (
     <td>
       <div class="fw-bold">{formatDate(value)} </div>
     </td>
@@ -64,7 +64,6 @@ export const payoutTableCells = (downloadCSV) => ({
   amount: (value) => (<td>{formatCurrency(value)}</td>),
   status: (value) => (<td innerHTML={MapPayoutStatusToBadge(value)}></td>),
   csv: (value) => (
-    console.log('value', value),
     <td>
       <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(value); }}>
         CSV
