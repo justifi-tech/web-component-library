@@ -6,7 +6,6 @@ dotenv.config();
 
 export const config: Config = {
   namespace: 'webcomponents',
-  globalStyle: './src/styles/root.css',
   outputTargets: [
     {
       type: 'dist',

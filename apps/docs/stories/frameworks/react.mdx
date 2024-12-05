@@ -1,10 +1,6 @@
 import { Meta, Source } from '@storybook/blocks';
 import dedent from 'ts-dedent';
-import {
-  SummaryElement,
-  extractWebcomponentsVersion,
-  CSSVars,
-} from './../utils';
+import { SummaryElement, extractWebcomponentsVersion } from './../utils';
 
 <Meta title="Frameworks/React" />
 
@@ -28,10 +24,6 @@ To use the web-components in a React app you need to add the CDN script and the 
   format={false}
   code={dedent`
     <head>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.css"
-      />
       <script
         async
         type="module"
@@ -60,7 +52,6 @@ For instance, to use the `justifi-card-form` web component:
   format={false}
   code={dedent`
     import '@justifi/webcomponents/dist/module/justifi-card-form.js';
-    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
   `}
 />
 
@@ -193,38 +184,6 @@ Example of handling a custom event:
 # Styling
 
 Styling works similarly to the vanilla web components.
-
-## Components styled with variables
-
-The following components can only be styled through CSS variables:
-
-- [BankAccountForm](?path=/docs/payment-facilitation-payments-bank-account-form--docs)
-- [CardForm](?path=/docs/payment-facilitation-payments-card-form--docs)
-- [PaymentForm](?path=/docs/payment-facilitation-payments-payment-form--docs)
-
-You can easily override the variables in a `<style>` tag in any place of your App, both in the `<head>` of your root `index.html` or at any component level.
-
-<Source
-  language="jsx"
-  dark
-  format={false}
-  code={dedent`
-    <YourComponent>
-      <style>
-        {\`:root {
-          --jfi-variable: 'override value';
-        }\`}
-      </style>
-
-      <JustifiPaymentForm />
-    </YourComponent>
-
-`}
-/>
-
-<SummaryElement title="See full list of CSS variables available">
-  <CSSVars />
-</SummaryElement>
 
 ## Styling exported parts
 

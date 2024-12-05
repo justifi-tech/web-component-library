@@ -92,6 +92,7 @@ export class NewPaymentMethod {
   showNewPaymentMethodForm() {
     return (
       <div class="mt-4 pb-4 border-bottom">
+        <hidden-input />
         <div class="mb-4">
           {this.paymentMethodOption?.id === 'card' ? (
             <card-form ref={(el) => this.paymentMethodFormRef = el} />
@@ -100,8 +101,10 @@ export class NewPaymentMethod {
           )}
 
         </div>
-        <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
-        <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        <div part="billing-form">
+          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
+          <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        </div>
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
     );

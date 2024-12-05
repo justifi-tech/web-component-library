@@ -6,9 +6,6 @@ import { StyledHost, RadioInput, Header2 } from "../../../ui-components";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
-  styleUrls: [
-    'season-interruption-insurance-core.css',
-  ],
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
