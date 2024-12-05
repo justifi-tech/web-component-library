@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.22.2
+
+### Patch Changes
+
+- 1e07117: - Updated validation for account owner field in bank account form step of `justifi-payment-provisioning` component - this field will now accept numbers and some special characters.
+
 ## 4.22.1
 
 ### Patch Changes
