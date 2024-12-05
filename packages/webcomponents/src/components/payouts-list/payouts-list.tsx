@@ -80,6 +80,7 @@ export class PayoutsList {
         id: this.accountId,
         authToken: this.authToken,
         service: new PayoutService(),
+        apiOrigin: this.apiOrigin
       };
       this.getPayouts = makeGetPayouts(serviceParams);
       this.getPayoutCSV = makeGetPayoutCSV(serviceParams);
