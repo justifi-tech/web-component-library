@@ -48,7 +48,7 @@ describe('payouts-list-core', () => {
 
     const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
 
-    expect(rows.length).toBe(4);
+    expect(rows.length).toBe(5);
     expect(page.root).toMatchSnapshot();
   });
 

@@ -37,7 +37,7 @@ export class PayoutDetailsCore {
     this.getPayout({
       onSuccess: (payout: Payout) => {
         this.errorMessage = null;
-        this.payout = payout
+        this.payout = payout;
         this.loading = false;
       },
       onError: ({ error, code, severity }) => {

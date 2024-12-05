@@ -166,7 +166,7 @@ exports[`payouts-list-core renders properly 1`] = `
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
-          <tr data-row-entity-id="po_3LLEczAX869CcrZJhP4o2B" data-test-id="table-row" part="table-row table-row-odd">
+          <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row table-row-odd">
             <td>
               <div class="fw-bold">
                 Jan 18, 2024
@@ -198,7 +198,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_7SO8x5IehLv679EIvW5eX5" data-test-id="table-row" part="table-row table-row-even">
+          <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row table-row-even">
             <td>
               <div class="fw-bold">
                 Jan 17, 2024
@@ -208,8 +208,8 @@ exports[`payouts-list-core renders properly 1`] = `
               $226.02
             </td>
             <td>
-              <span class="badge bg-success" title="Successfully deposited into your bank account">
-                Paid
+              <span class="badge bg-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
+                Forwarded
               </span>
             </td>
             <td>
@@ -230,7 +230,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_3YQ2iAevdMZqIUiCDg1Ge5" data-test-id="table-row" part="table-row table-row-odd">
+          <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row table-row-odd">
             <td>
               <div class="fw-bold">
                 Jan 10, 2024
@@ -240,8 +240,8 @@ exports[`payouts-list-core renders properly 1`] = `
               $226.02
             </td>
             <td>
-              <span class="badge bg-success" title="Successfully deposited into your bank account">
-                Paid
+              <span class="badge bg-primary" title="Transfer to your bank account has been initiated">
+                In Transit
               </span>
             </td>
             <td>
@@ -262,7 +262,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_17745yESnHyEgWNeunmhmR" data-test-id="table-row" part="table-row table-row-even">
+          <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row table-row-even">
             <td>
               <div class="fw-bold">
                 Dec 28, 2023
@@ -272,8 +272,40 @@ exports[`payouts-list-core renders properly 1`] = `
               $220.15
             </td>
             <td>
-              <span class="badge bg-success" title="Successfully deposited into your bank account">
-                Paid
+              <span class="badge bg-primary" title="Batched and scheduled to be transferred">
+                Scheduled
+              </span>
+            </td>
+            <td>
+              $245.00
+            </td>
+            <td>
+              ($10.00)
+            </td>
+            <td>
+              $14.85
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              <a href="#">
+                CSV
+              </a>
+            </td>
+          </tr>
+          <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row table-row-odd">
+            <td>
+              <div class="fw-bold">
+                Dec 28, 2023
+              </div>
+            </td>
+            <td>
+              $220.15
+            </td>
+            <td>
+              <span class="badge bg-danger" title="Transfer to your bank account failed">
+                Canceled
               </span>
             </td>
             <td>
