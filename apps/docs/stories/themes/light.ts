@@ -12,7 +12,9 @@ justifi-season-interruption-insurance,
 justifi-payment-details,
 justifi-payout-details,
 justifi-payments-list,
-justifi-payouts-list {
+justifi-payouts-list,
+justifi-checkouts-list,
+justifi-terminals-list, {
   display: block;
   margin: 5% auto;
   background-color: #fff;
@@ -277,14 +279,18 @@ justifi-payment-details::part(header-2) {
 justifi-payment-details,
 justifi-payout-details,
 justifi-payments-list,
-justifi-payouts-list {
+justifi-payouts-list,
+justifi-checkouts-list,
+justifi-terminals-list {
   background-color: #f9fafb; 
   color: #374151; 
   padding: 16px;
 }
 
 justifi-payments-list::part(label),
-justifi-payouts-list::part(label) {
+justifi-payouts-list::part(label),
+justifi-checkouts-list::part(label),
+justifi-terminals-list::part(label) {
   color: #212529;
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
@@ -293,7 +299,9 @@ justifi-payouts-list::part(label) {
 }
 
 justifi-payments-list::part(input),
-justifi-payouts-list::part(input) {
+justifi-payouts-list::part(input),
+justifi-checkouts-list::part(input),
+justifi-terminals-list::part(input) {
   background-color: #F4F4F6;
   border-color: rgba(0, 0, 0, 0.42);
   border-bottom-width: 1px;
@@ -312,14 +320,18 @@ justifi-payouts-list::part(input) {
 }
 
 justifi-payments-list::part(input):focus,
-justifi-payouts-list::part(input):focus {
+justifi-payouts-list::part(input):focus,
+justifi-checkouts-list::part(input):focus,
+justifi-terminals-list::part(input):focus {
   color: #212529;
   border-color: #fccc32;
   box-shadow: none;
 }
 
 justifi-payments-list::part(input-invalid),
-justifi-payouts-list::part(input-invalid) {
+justifi-payouts-list::part(input-invalid),
+justifi-checkouts-list::part(input-invalid),
+justifi-terminals-list::part(input-invalid) {
   border-color: #C12727;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
