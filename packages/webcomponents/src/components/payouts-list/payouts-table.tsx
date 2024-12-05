@@ -1,12 +1,13 @@
 import { h } from '@stencil/core';
+import { formatDate, formatCurrency } from '../../utils/utils';
 import { MapPayoutStatusToBadge } from './payouts-status';
 
-export const defaultColumnsKeys = 'created_at,payments_total,refunds_total,fees_total,other_total,amount,status,csv';
+export const defaultColumnsKeys = 'deposits_at,sub_account_name,amount,status,payments_total,refunds_total,fees_total,other_total,csv';
 
-export const payoutsTableColumns = {
-  created_at: () => (
-    <th part="table-head-cell" scope="col" title="The date the payout was created">
-      Date
+export const payoutTableColumns = {
+  deposits_at: () => (
+    <th part="table-head-cell" scope="col" title="The date the payout was deposited">
+      Deposited
     </th>
   ),
   sub_account_name: () => (
@@ -45,26 +46,29 @@ export const payoutsTableColumns = {
     </th>
   ),
   csv: () => (
-    <th part="table-head-cell" scope="col" title="Export CSV">
-      CSV
-    </th>
+    <th part="table-head-cell" scope="col" title="Export CSV"/>
   ),
 };
 
-export const payoutsTableCells = {
-  created_at: (value) => (<td>{value}</td>),
-  sub_account_name: (value) => (<td>{value}</td>),
-  payments_total: (value) => (<td>{value}</td>),
-  refunds_total: (value) => (<td>{value}</td>),
-  fees_total: (value) => (<td>{value}</td>),
-  other_total: (value) => (<td>{value}</td>),
-  amount: (value) => (<td>{value}</td>),
-  status: (value) => (<td innerHTML={MapPayoutStatusToBadge(value)}></td>),
-  csv: () => (
+export const payoutTableCells = (downloadCSV) => ({
+  deposits_at: (value) => (
     <td>
-      <a href="#" onClick={() => alert('CSV Export Clicked')}>
-        Export CSV
+      <div class="fw-bold">{formatDate(value)} </div>
+    </td>
+  ),
+  sub_account_name: (value) => (<td>{value}</td>),
+  payments_total: (value) => (<td>{formatCurrency(value)}</td>),
+  refunds_total: (value) => (<td>{formatCurrency(value)}</td>),
+  fees_total: (value) => (<td>{formatCurrency(value)}</td>),
+  other_total: (value) => (<td>{formatCurrency(value)}</td>),
+  amount: (value) => (<td>{formatCurrency(value)}</td>),
+  status: (value) => (<td innerHTML={MapPayoutStatusToBadge(value)}></td>),
+  csv: (value) => (
+    console.log('value', value),
+    <td>
+      <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(value); }}>
+        CSV
       </a>
     </td>
   ),
-};
+});

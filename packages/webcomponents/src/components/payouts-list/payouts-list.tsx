@@ -117,6 +117,7 @@ export class PayoutsList {
           getPayoutCSV={this.getPayoutCSV}
           getSubAccounts={this.getSubAccounts}
           onError-event={this.handleOnError}
+          columns={this.columns}
         />
       </StyledHost>
     );

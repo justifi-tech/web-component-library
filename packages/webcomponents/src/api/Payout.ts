@@ -1,5 +1,12 @@
 import { IBankAccount } from './BankAccount';
 
+export interface PayoutsTableFilterParams {
+  created_after?: string;
+  created_before?: string;
+  before_cursor?: string;
+  after_cursor?: string;
+};
+
 export enum PayoutStatuses {
   paid = 'paid',
   failed = 'failed',
@@ -83,4 +90,9 @@ export class Payout implements IPayout {
     this.created_at = payout.created_at;
     this.updated_at = payout.updated_at;
   }
+
+  get csv(): string {
+    return this.id;
+  }
+
 }

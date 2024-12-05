@@ -3,7 +3,7 @@ import { PagingInfo, Payout, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
-import { payoutsTableCells, payoutsTableColumns } from './payouts-table';
+import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 
 @Component({
@@ -40,7 +40,7 @@ export class PayoutsListCore {
 
 
   componentWillLoad() {
-    this.payoutsTable = new Table(this.payouts, this.columns, payoutsTableColumns, payoutsTableCells);
+    this.payoutsTable = new Table(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));
     if (this.getPayouts && this.getSubAccounts) {
       this.fetchPayouts();
     }
@@ -166,22 +166,11 @@ export class PayoutsListCore {
   render() {
     return (
       <div>
-        {/* <div class="row gy-3 mb-4">
-          <div class="col-2">
-            <form-control-date
-              name="created_after"
-              label="Date from:"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-          <div class="col-2">
-            <form-control-date
-              name="created_before"
-              label="Date to:"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-        </div> */}
+        <payouts-list-filters
+          params={this.params}
+          setParamsOnChange={this.setParamsOnChange}
+          clearParams={this.clearParams}
+        />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">

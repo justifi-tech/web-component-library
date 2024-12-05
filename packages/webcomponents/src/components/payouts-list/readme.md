@@ -7,48 +7,35 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type       | Default     |
-| ---------------- | --------- | ----------- | ---------- | ----------- |
-| `columns`        | `columns` |             | `string`   | `undefined` |
-| `getPayoutCSV`   | --        |             | `Function` | `undefined` |
-| `getPayouts`     | --        |             | `Function` | `undefined` |
-| `getSubAccounts` | --        |             | `Function` | `undefined` |
-
-
-## Events
-
-| Event                | Description | Type                          |
-| -------------------- | ----------- | ----------------------------- |
-| `error-event`        |             | `CustomEvent<ComponentError>` |
-| `payout-row-clicked` |             | `CustomEvent<Payout>`         |
-
-
-## Shadow Parts
-
-| Part               | Description |
-| ------------------ | ----------- |
-| `"pagination-bar"` |             |
-| `"table-body"`     |             |
-| `"table-head"`     |             |
-| `"table-head-row"` |             |
+| Property            | Attribute | Description | Type                                    | Default     |
+| ------------------- | --------- | ----------- | --------------------------------------- | ----------- |
+| `clearParams`       | --        |             | `() => void`                            | `undefined` |
+| `params`            | --        |             | `PayoutsTableFilterParams`              | `{}`        |
+| `setParamsOnChange` | --        |             | `(name: string, value: string) => void` | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [justifi-payouts-list](.)
+ - [payouts-list-core](.)
 
 ### Depends on
 
-- [pagination-menu](../pagination-menu)
+- [table-filters-menu](../../ui-components/filters)
+- [form-control-date](../../ui-components/form)
 
 ### Graph
 ```mermaid
 graph TD;
-  payouts-list-core --> pagination-menu
-  justifi-payouts-list --> payouts-list-core
-  style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
+  payouts-list-filters --> table-filters-menu
+  payouts-list-filters --> form-control-date
+  table-filters-menu --> custom-popper
+  form-control-date --> form-control-tooltip
+  form-control-date --> form-control-error-text
+  form-control-tooltip --> custom-popper
+  payouts-list-core --> payouts-list-filters
+  style payouts-list-filters fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
