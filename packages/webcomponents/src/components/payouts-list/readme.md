@@ -10,7 +10,7 @@
 | Property            | Attribute | Description | Type                                    | Default     |
 | ------------------- | --------- | ----------- | --------------------------------------- | ----------- |
 | `clearParams`       | --        |             | `() => void`                            | `undefined` |
-| `params`            | --        |             | `PayoutsTableFilterParams`              | `{}`        |
+| `params`            | --        |             | `PayoutsTableFilterParams`              | `undefined` |
 | `setParamsOnChange` | --        |             | `(name: string, value: string) => void` | `undefined` |
 
 

@@ -3,63 +3,73 @@
 exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 <payouts-list-core>
   <div>
-    <div class="gy-3 mb-4 row">
-      <div class="col-2">
-        <form-control-date label="Date from:" name="created_after"></form-control-date>
-      </div>
-      <div class="col-2">
-        <form-control-date label="Date to:" name="created_before"></form-control-date>
-      </div>
-    </div>
+    <payouts-list-filters>
+      <table-filters-menu>
+        <!---->
+        <div class="d-flex gap-2">
+          <div class="dropdown pb-3">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+              Filters
+            </button>
+            <custom-popper strategy="fixed" trigger="click">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+                <div class="gap-3 grid-cols-2 p-1">
+                  <div class="p-2">
+                    <form-control-date filtertimezone="" label="Start Date" name="created_after" showtime=""></form-control-date>
+                  </div>
+                  <div class="p-2">
+                    <form-control-date filtertimezone="" label="End Date" name="created_before" showtime=""></form-control-date>
+                  </div>
+                </div>
+              </form>
+            </custom-popper>
+          </div>
+          <div>
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </table-filters-menu>
+    </payouts-list-filters>
     <div class="table-wrapper">
       <table class="table table-hover">
         <thead class="sticky-top table-head" part="table-head">
           <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell" scope="col" title="The date each transaction occurred">
-              Paid Out On
+            <th part="table-head-cell" scope="col" title="The date the payout was deposited">
+              Created
             </th>
-            <th part="table-head-cell" scope="col" title="The type of each transaction">
-              Type
-            </th>
-            <th part="table-head-cell" scope="col" title="The ID of the account associated with each payout">
-              Account
-            </th>
-            <th part="table-head-cell" scope="col" title="The bank account to which each payout was transferred">
-              Paid Out To
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of payments in each payout">
-              Payments
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of refunds in each payout">
-              Refunds
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of fees in each payout">
-              Fees
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of less common transactions in each payout">
-              Other
-            </th>
-            <th part="table-head-cell" scope="col" title="The net sum of all transactions in each payout">
-              Payout Amount
+            <th part="table-head-cell" scope="col" title="The total amount of the payout">
+              Amount
             </th>
             <th part="table-head-cell" scope="col" title="The real-time status of each payout">
               Status
             </th>
-            <th part="table-head-cell" scope="col">
-              Actions
+            <th part="table-head-cell" scope="col" title="The total payments amount associated with the payout">
+              Payments
             </th>
+            <th part="table-head-cell" scope="col" title="The total refunds amount associated with the payout">
+              Refunds
+            </th>
+            <th part="table-head-cell" scope="col" title="The total fees amount associated with the payout">
+              Fees
+            </th>
+            <th part="table-head-cell" scope="col" title="The total other amount">
+              Other
+            </th>
+            <th part="table-head-cell" scope="col" title="Export CSV"></th>
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
           <tr>
-            <td class="error-state" colspan="11" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            <td class="error-state" colspan="8" data-test-id="table-error-state" part="error-state" style="text-align: center;">
               An unexpected error occurred: Fetch error
             </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="11" part="pagination-bar">
+            <td colspan="8" part="pagination-bar">
               <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                   <ul class="m-0 pagination">
@@ -98,242 +108,196 @@ exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 exports[`payouts-list-core renders properly 1`] = `
 <payouts-list-core>
   <div>
-    <div class="gy-3 mb-4 row">
-      <div class="col-2">
-        <form-control-date label="Date from:" name="created_after"></form-control-date>
-      </div>
-      <div class="col-2">
-        <form-control-date label="Date to:" name="created_before"></form-control-date>
-      </div>
-    </div>
+    <payouts-list-filters>
+      <table-filters-menu>
+        <!---->
+        <div class="d-flex gap-2">
+          <div class="dropdown pb-3">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+              Filters
+            </button>
+            <custom-popper strategy="fixed" trigger="click">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+                <div class="gap-3 grid-cols-2 p-1">
+                  <div class="p-2">
+                    <form-control-date filtertimezone="" label="Start Date" name="created_after" showtime=""></form-control-date>
+                  </div>
+                  <div class="p-2">
+                    <form-control-date filtertimezone="" label="End Date" name="created_before" showtime=""></form-control-date>
+                  </div>
+                </div>
+              </form>
+            </custom-popper>
+          </div>
+          <div>
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </table-filters-menu>
+    </payouts-list-filters>
     <div class="table-wrapper">
       <table class="table table-hover">
         <thead class="sticky-top table-head" part="table-head">
           <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell" scope="col" title="The date each transaction occurred">
-              Paid Out On
+            <th part="table-head-cell" scope="col" title="The date the payout was deposited">
+              Created
             </th>
-            <th part="table-head-cell" scope="col" title="The type of each transaction">
-              Type
-            </th>
-            <th part="table-head-cell" scope="col" title="The ID of the account associated with each payout">
-              Account
-            </th>
-            <th part="table-head-cell" scope="col" title="The bank account to which each payout was transferred">
-              Paid Out To
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of payments in each payout">
-              Payments
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of refunds in each payout">
-              Refunds
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of fees in each payout">
-              Fees
-            </th>
-            <th part="table-head-cell" scope="col" title="Sum of less common transactions in each payout">
-              Other
-            </th>
-            <th part="table-head-cell" scope="col" title="The net sum of all transactions in each payout">
-              Payout Amount
+            <th part="table-head-cell" scope="col" title="The total amount of the payout">
+              Amount
             </th>
             <th part="table-head-cell" scope="col" title="The real-time status of each payout">
               Status
             </th>
-            <th part="table-head-cell" scope="col">
-              Actions
+            <th part="table-head-cell" scope="col" title="The total payments amount associated with the payout">
+              Payments
             </th>
+            <th part="table-head-cell" scope="col" title="The total refunds amount associated with the payout">
+              Refunds
+            </th>
+            <th part="table-head-cell" scope="col" title="The total fees amount associated with the payout">
+              Fees
+            </th>
+            <th part="table-head-cell" scope="col" title="The total other amount">
+              Other
+            </th>
+            <th part="table-head-cell" scope="col" title="Export CSV"></th>
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
           <tr data-row-entity-id="po_3LLEczAX869CcrZJhP4o2B" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+            <td>
               <div class="fw-bold">
                 Jan 18, 2024
               </div>
-              <div class="fw-bold">
-                1:33am
-              </div>
             </td>
-            <td part="table-cell">
-              cc
-            </td>
-            <td part="table-cell">
-              acc_5Et9iXrSSAZR2KSouQGAWi
-            </td>
-            <td part="table-cell">
-              Mock Jenny Rosen 6789
-            </td>
-            <td part="table-cell">
-              $234.56
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
-              $8.54
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
+            <td>
               $226.02
             </td>
-            <td part="table-cell">
+            <td>
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
-            <td part="table-cell">
-              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
-                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
-                <path d="M11 4h2v9h-2z"></path>
-                <path d="M5 18h14v2H5z"></path>
-              </svg>
+            <td>
+              $234.56
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              $8.54
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              <a href="#">
+                CSV
+              </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_7SO8x5IehLv679EIvW5eX5" data-test-id="table-row" part="table-row table-row-even">
-            <td part="table-cell">
+            <td>
               <div class="fw-bold">
                 Jan 17, 2024
               </div>
-              <div class="fw-bold">
-                1:15am
-              </div>
             </td>
-            <td part="table-cell">
-              cc
-            </td>
-            <td part="table-cell">
-              acc_5Et9iXrSSAZR2KSouQGAWi
-            </td>
-            <td part="table-cell">
-              Mock Jenny Rosen 6789
-            </td>
-            <td part="table-cell">
-              $234.56
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
-              $8.54
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
+            <td>
               $226.02
             </td>
-            <td part="table-cell">
+            <td>
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
-            <td part="table-cell">
-              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
-                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
-                <path d="M11 4h2v9h-2z"></path>
-                <path d="M5 18h14v2H5z"></path>
-              </svg>
+            <td>
+              $234.56
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              $8.54
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              <a href="#">
+                CSV
+              </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_3YQ2iAevdMZqIUiCDg1Ge5" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+            <td>
               <div class="fw-bold">
                 Jan 10, 2024
               </div>
-              <div class="fw-bold">
-                1:28am
-              </div>
             </td>
-            <td part="table-cell">
-              cc
-            </td>
-            <td part="table-cell">
-              acc_5Et9iXrSSAZR2KSouQGAWi
-            </td>
-            <td part="table-cell">
-              Mock Jenny Rosen 6789
-            </td>
-            <td part="table-cell">
-              $234.56
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
-              $8.54
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
+            <td>
               $226.02
             </td>
-            <td part="table-cell">
+            <td>
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
-            <td part="table-cell">
-              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
-                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
-                <path d="M11 4h2v9h-2z"></path>
-                <path d="M5 18h14v2H5z"></path>
-              </svg>
+            <td>
+              $234.56
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              $8.54
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              <a href="#">
+                CSV
+              </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_17745yESnHyEgWNeunmhmR" data-test-id="table-row" part="table-row table-row-even">
-            <td part="table-cell">
+            <td>
               <div class="fw-bold">
                 Dec 28, 2023
               </div>
-              <div class="fw-bold">
-                1:27am
-              </div>
             </td>
-            <td part="table-cell">
-              cc
-            </td>
-            <td part="table-cell">
-              acc_5Et9iXrSSAZR2KSouQGAWi
-            </td>
-            <td part="table-cell">
-              Mock Jenny Rosen 6789
-            </td>
-            <td part="table-cell">
-              $245.00
-            </td>
-            <td part="table-cell">
-              ($10.00)
-            </td>
-            <td part="table-cell">
-              $14.85
-            </td>
-            <td part="table-cell">
-              $0.00
-            </td>
-            <td part="table-cell">
+            <td>
               $220.15
             </td>
-            <td part="table-cell">
+            <td>
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
-            <td part="table-cell">
-              <svg title="Export CSV" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 24px; width: 24px; cursor: pointer;">
-                <path d="M12 15.5l-5-5 1.41-1.41L12 12.67l3.59-3.58L17 10.5l-5 5z"></path>
-                <path d="M11 4h2v9h-2z"></path>
-                <path d="M5 18h14v2H5z"></path>
-              </svg>
+            <td>
+              $245.00
+            </td>
+            <td>
+              ($10.00)
+            </td>
+            <td>
+              $14.85
+            </td>
+            <td>
+              $0.00
+            </td>
+            <td>
+              <a href="#">
+                CSV
+              </a>
             </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="11" part="pagination-bar">
+            <td colspan="8" part="pagination-bar">
               <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                   <ul class="m-0 pagination">
