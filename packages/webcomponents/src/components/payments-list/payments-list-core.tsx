@@ -83,6 +83,7 @@ export class PaymentsListCore {
   }
 
   clearParams = () => {
+    this.errorMessage = '';
     this.params = {};
   }
 
