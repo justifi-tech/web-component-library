@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { IPayout, Payout } from '../../api';
+import { Payout } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
@@ -35,9 +35,9 @@ export class PayoutDetailsCore {
     this.loading = true;
 
     this.getPayout({
-      onSuccess: (payout: IPayout) => {
+      onSuccess: (payout: Payout) => {
         this.errorMessage = null;
-        this.payout = payout;
+        this.payout = payout
         this.loading = false;
       },
       onError: ({ error, code, severity }) => {
