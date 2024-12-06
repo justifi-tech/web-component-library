@@ -52,19 +52,19 @@ export const payoutTableColumns = {
 
 export const payoutTableCells = (downloadCSV) => ({
   created_at: (value) => (
-    <td>
+    <td part="table-cell">
       <div class="fw-bold">{formatDate(value)} </div>
     </td>
   ),
-  sub_account_name: (value) => (<td>{value}</td>),
-  payments_total: (value) => (<td>{formatCurrency(value)}</td>),
-  refunds_total: (value) => (<td>{formatCurrency(value)}</td>),
-  fees_total: (value) => (<td>{formatCurrency(value)}</td>),
-  other_total: (value) => (<td>{formatCurrency(value)}</td>),
-  amount: (value) => (<td>{formatCurrency(value)}</td>),
-  status: (value) => (<td innerHTML={MapPayoutStatusToBadge(value)}></td>),
+  sub_account_name: (value) => (<td part="table-cell">{value}</td>),
+  payments_total: (value) => (<td part="table-cell">{formatCurrency(value)}</td>),
+  refunds_total: (value) => (<td part="table-cell">{formatCurrency(value)}</td>),
+  fees_total: (value) => (<td part="table-cell">{formatCurrency(value)}</td>),
+  other_total: (value) => (<td part="table-cell">{formatCurrency(value)}</td>),
+  amount: (value) => (<td part="table-cell">{formatCurrency(value)}</td>),
+  status: (value) => (<td part="table-cell" innerHTML={MapPayoutStatusToBadge(value)}></td>),
   csv: (value) => (
-    <td>
+    <td part="table-cell">
       <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(value); }}>
         CSV
       </a>

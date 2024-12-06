@@ -167,160 +167,160 @@ exports[`payouts-list-core renders properly 1`] = `
         </thead>
         <tbody class="table-body" part="table-body">
           <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row table-row-odd">
-            <td>
+            <td part="table-cell">
               <div class="fw-bold">
                 Jan 18, 2024
               </div>
             </td>
-            <td>
+            <td part="table-cell">
               $226.02
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
-            <td>
+            <td part="table-cell">
               $234.56
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               $8.54
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row table-row-even">
-            <td>
+            <td part="table-cell">
               <div class="fw-bold">
                 Jan 17, 2024
               </div>
             </td>
-            <td>
+            <td part="table-cell">
               $226.02
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
                 Forwarded
               </span>
             </td>
-            <td>
+            <td part="table-cell">
               $234.56
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               $8.54
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row table-row-odd">
-            <td>
+            <td part="table-cell">
               <div class="fw-bold">
                 Jan 10, 2024
               </div>
             </td>
-            <td>
+            <td part="table-cell">
               $226.02
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-primary" title="Transfer to your bank account has been initiated">
                 In Transit
               </span>
             </td>
-            <td>
+            <td part="table-cell">
               $234.56
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               $8.54
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row table-row-even">
-            <td>
+            <td part="table-cell">
               <div class="fw-bold">
                 Dec 28, 2023
               </div>
             </td>
-            <td>
+            <td part="table-cell">
               $220.15
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-primary" title="Batched and scheduled to be transferred">
                 Scheduled
               </span>
             </td>
-            <td>
+            <td part="table-cell">
               $245.00
             </td>
-            <td>
+            <td part="table-cell">
               ($10.00)
             </td>
-            <td>
+            <td part="table-cell">
               $14.85
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
           <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row table-row-odd">
-            <td>
+            <td part="table-cell">
               <div class="fw-bold">
                 Dec 28, 2023
               </div>
             </td>
-            <td>
+            <td part="table-cell">
               $220.15
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-danger" title="Transfer to your bank account failed">
                 Canceled
               </span>
             </td>
-            <td>
+            <td part="table-cell">
               $245.00
             </td>
-            <td>
+            <td part="table-cell">
               ($10.00)
             </td>
-            <td>
+            <td part="table-cell">
               $14.85
             </td>
-            <td>
+            <td part="table-cell">
               $0.00
             </td>
-            <td>
+            <td part="table-cell">
               <a href="#">
                 CSV
               </a>
