@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayouts =
-  ({ id, authToken, service }) =>
+  ({ id, authToken, service, apiOrigin }) =>
   async ({ params, onSuccess, onError }) => {
     try {
-      const response = await service.fetchPayouts(id, authToken, params);
+      const response = await service.fetchPayouts(id, authToken, params, apiOrigin);
 
       if (!response.error) {
         const pagingInfo = {
@@ -27,10 +27,9 @@ export const makeGetPayouts =
         });
       }
     } catch (error) {
-      const message = getErrorMessage(error);
       const code = getErrorCode(error?.code);
       return onError({
-        error: message,
+        error: error.message || error,
         code,
         severity: ComponentErrorSeverity.ERROR,
       });

@@ -158,7 +158,7 @@ export class TerminalsListCore {
         />
         <div class="table-wrapper">
           <table class="table table-hover">
-          <thead class="table-head sticky-top" part="table-head">
+            <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
                 {this.terminalsTable.columnData.map((column) => column)}
               </tr>

@@ -9,8 +9,8 @@ export class Table {
   }
 
   get rowData() {
-    return this.collection.map((checkout) => {
-      return this.columnKeys.map((key) => this.tableCells[key](checkout[key]));
+    return this.collection.map((dataEntry) => {
+      return this.columnKeys.map((key) => this.tableCells[key](dataEntry[key]));
     });
   }
 
