@@ -23,7 +23,6 @@ export class DisputeNotification {
     this.clickEvent.emit({ name: DisputeManagementClickEvents.respondToDispute });
   }
 
-
   render() {
     return (
       <div>

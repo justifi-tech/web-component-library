@@ -8,20 +8,12 @@ import {
   State,
   Element,
 } from '@stencil/core';
-import { EntityDocumentType } from '../../api/EntityDocument';
-import { DisputeEvidenceDocumentType } from '../../api/DisputeEvidenceDocument';
-
-export interface FileSelectEvent {
-  fileList: FileList;
-  document_type: EntityDocumentType | DisputeEvidenceDocumentType;
-}
 
 @Component({
-  tag: 'form-control-file',
+  tag: 'form-control-file-v2',
 })
 export class FileInput {
   @Element() el: HTMLElement;
-  fileInput: HTMLInputElement;
 
   @State() files: File[];
 
@@ -30,34 +22,11 @@ export class FileInput {
   @Prop() helpText?: string;
   @Prop() errorText?: string;
   @Prop() multiple?: boolean;
-  @Prop() documentType: EntityDocumentType | DisputeEvidenceDocumentType;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
-  @Event() fileSelected: EventEmitter<FileSelectEvent>;
-
-  componentDidLoad() {
-    this.fileInput = this.el.querySelector('input');
-  }
-
-  handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    this.inputHandler(name, target.value);
-    this.formControlInput.emit({ name, value: target.value });
-  }
-
-  changeHandler = () => {
-    const inputFileList = this.fileInput.files;
-    if (inputFileList) {
-      this.fileSelected.emit({
-        fileList: inputFileList,
-        document_type: this.documentType
-      });
-    }
-  }
 
   render() {
     return (
@@ -70,15 +39,12 @@ export class FileInput {
             <form-control-tooltip helpText={this.helpText} />
           </div>
           <input
-            ref={(el) => this.fileInput = el}
             type="file"
             name={this.name}
             part={`input ${this.errorText ? "input-invalid " : ""}${this.disabled ? "input-disabled" : ""}`}
             class={this.errorText ? "form-control is-invalid" : "form-control"}
             multiple={this.multiple}
             disabled={this.disabled}
-            onChange={this.changeHandler}
-            onInput={this.handleFormControlInput}
             onBlur={() => this.formControlBlur.emit()}
           />
           <form-control-error-text errorText={this.errorText} name={this.name} />

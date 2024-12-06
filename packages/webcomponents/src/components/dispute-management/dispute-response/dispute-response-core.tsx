@@ -3,8 +3,8 @@ import { DisputeManagementClickEvents } from "../dispute";
 import { FormController } from "../../../ui-components/form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 import { IApiResponse } from "../../../api";
-import { DisputeResponseDocument, IDispute, IDisputeResponse } from "../../../api/Dispute";
-import { ComponentError, FileSelectEvent } from "../../../components";
+import { IDispute, IDisputeResponse } from "../../../api/Dispute";
+import { ComponentError, DisputeEvidenceDocument } from "../../../components";
 
 type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
 
@@ -33,8 +33,7 @@ export class DisputeResponseCore {
   @Event() clickEvent: EventEmitter;
 
   componentStepMapping = [
-    // () => <justifi-dispute-reason ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} handleFileSelection={this.handleFileSelection} />,
+    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} />,
     () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} />,
     () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} />,
     () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} />,
@@ -69,20 +68,25 @@ export class DisputeResponseCore {
     });
   }
 
-  handleFileSelection = (e: CustomEvent<FileSelectEvent>) => {
-    this.isLoading = true;
-    const fileList = Array.from(e.detail.fileList) as File[];
-    const documentList = fileList.map(file => new DisputeResponseDocument(file));
-    documentList.forEach(async doc => {
-      const presigningResponse = (await this.getPresignedFileUrl(doc)).data;
-      await this.uploadDocument(doc, presigningResponse.presigned_url);
+  initializeFileUploads = async (documentList: any[]) => {
+    console.log('initializeFileUploads documentList', documentList);
+    const presignedUrlPromises: Promise<IApiResponse<any>>[] = documentList.map((document) => {
+      return this.getPresignedFileUrl(document);
     });
+
+    await Promise.all(presignedUrlPromises);
   }
 
-  getPresignedFileUrl = async (document: any): Promise<IApiResponse<any>> => {
+  getPresignedFileUrl = async (document: DisputeEvidenceDocument): Promise<IApiResponse<any>> => {
     return this.createDisputeEvidence({
-      payload: document,
-      onSuccess: () => {
+      payload: {
+        file_name: document.file_name,
+        file_type: document.file_type,
+        dispute_evidence_type: document.dispute_evidence_type,
+      },
+      onSuccess: (response) => {
+        document.presignedUrl = response.data.presigned_url;
+        this.uploadDocument(document);
         this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -96,15 +100,18 @@ export class DisputeResponseCore {
     })
   }
 
-  uploadDocument = async (documentData: any, presignedUrl: string) => {
-    if (!documentData.presigned_url) {
+  uploadDocument = async (document: DisputeEvidenceDocument) => {
+    const fileData = await document.getFileString();
+    console.log('uploadDocument presignedUrl', document.presignedUrl);
+
+    if (!document.presignedUrl) {
       throw new Error('Presigned URL is not set');
     }
 
-    const response = await fetch(presignedUrl, {
+    const response = await fetch(document.presignedUrl, {
       method: 'PUT',
-      body: documentData.fileString,
-    })
+      body: fileData,
+    });
 
     // return this.handleUploadResponse(response);
     console.log('upload response:', response);
@@ -126,21 +133,26 @@ export class DisputeResponseCore {
     this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
   }
 
+  private handleSubmit = async (formData, documentList) => {
+    if (documentList) await this.initializeFileUploads(documentList);
+    if (formData) await this.saveData(formData);
+  }
+
   // after each of these steps where validateAndSubmit is called, reload the dispute
   // and set isLoading, and pass defaults into each step
   private onBack = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(async (data) => {
-      await this.saveData(data);
-      this.currentStep--;
+    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList) => {
+      await this.handleSubmit(formData, documentList);
       this.clickEvent.emit({ name: DisputeManagementClickEvents.previousStep });
+      this.currentStep--;
     });
   }
 
   private onNext = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(async (data) => {
-      await this.saveData(data);
-      this.currentStep++;
+    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList) => {
+      await this.handleSubmit(formData, documentList);
       this.clickEvent.emit({ name: DisputeManagementClickEvents.nextStep });
+      this.currentStep++;
     });
   }
 

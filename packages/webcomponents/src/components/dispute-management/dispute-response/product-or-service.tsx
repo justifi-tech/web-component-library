@@ -1,20 +1,20 @@
-import { Component, h, Method, Prop, State } from "@stencil/core";
+import { Component, h, Method, State } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ProductOrServiceSchema from "./schemas/product-or-service-schema";
-import { FileSelectEvent } from "../../../components";
+import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-product-or-service',
 })
 export class ProductOrService {
-  @Prop() handleFileSelection: (event: CustomEvent<FileSelectEvent>) => void;
   @State() form: FormController;
   @State() errors: any = {};
   @State() values: any = {};
+  @State() documentList = [];
 
   @Method()
-  async validateAndSubmit(onSuccess: (formData: any) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList));
   };
 
   componentWillLoad() {
@@ -28,6 +28,15 @@ export class ProductOrService {
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
+  }
+
+  private handleFileSelection = (e: InputEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as DisputeEvidenceDocumentType;
+    const files = target.files as unknown as File[];
+    for (const file of files) {
+      this.documentList.push(new DisputeEvidenceDocument(file, name))
+    }
   }
 
   private inputHandler = (name: string, value: string) => {
@@ -61,11 +70,10 @@ export class ProductOrService {
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Service Documentation"
               name="service_documentation"
-              inputHandler={() => { return; }}
-              onFileSelected={this.handleFileSelection}
+              onChange={this.handleFileSelection}
               errorText={this.errors.service_documentation}
             />
           </div>
