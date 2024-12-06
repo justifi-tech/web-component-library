@@ -1,8 +1,7 @@
 import { object } from 'yup';
 import { 
-  cityValidation,
-  identityNameValidation, 
-  lineOneValidation, 
+  customStringValidation,
+  lineOneValidation,
   lineTwoValidation,
   postalValidation,
   stateValidation
@@ -17,10 +16,10 @@ export interface BillingFormFields {
 }
 
 const BillingFormSchema = object({
-  name: identityNameValidation.required('Enter full name'),
+  name: customStringValidation.required('Enter full name'),
   address_line1: lineOneValidation.required('Enter street address'),
   address_line2: lineTwoValidation.nullable(),
-  address_city: cityValidation.required('Enter city'),
+  address_city: customStringValidation.required('Enter city'),
   address_state: stateValidation.required('Select state'),
   address_postal_code: postalValidation.required('Enter postal code'),
 });

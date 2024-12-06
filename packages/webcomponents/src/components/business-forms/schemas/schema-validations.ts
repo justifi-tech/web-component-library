@@ -8,20 +8,30 @@ import {
   businessClassificationOptions
 } from '../utils/business-form-options';
 import {
-  businessNameRegex,
   numbersOnlyRegex,
   phoneRegex,
+  streetAddressRegex,
   poBoxRegex,
   ssnRegex,
-  streetAddressRegex,
-  stringLettersOnlyRegex,
   transformEmptyString,
   urlRegex,
-  validateRoutingNumber
+  validateRoutingNumber,
 } from './schema-helpers';
 import { EntityDocumentType } from '../../../api/Document';
 
 // Common Validations
+
+const invalidCharactersMessage = (char: string) => `Invalid character ${char} detected - Use only letters, numbers, and . , : & -.`;
+
+export const customStringValidation = string()
+  .min(2, 'Name must be at least 2 characters')
+  .max(100, 'Name must be less than 100 characters')
+  .test('valid-characters', function(value) {
+    if (!value) return true; // Skip validation if value is empty or null
+    const invalidChar = value.match(/[^a-zA-Z0-9.,:&-\s]/);
+    return invalidChar ? this.createError({ message: invalidCharactersMessage(invalidChar[0]) }) : true;
+  })
+  .transform(transformEmptyString);
 
 export const emailValidation = string()
   .email('Enter valid email')
@@ -33,30 +43,12 @@ export const phoneValidation = string()
 
 // Core Info Validations
 
-export const businessNameValidation = string()
-  .min(2, 'Name must be at least 2 characters')
-  .max(100, 'Name must be less than 100 characters')
-  .matches(businessNameRegex, 'Enter valid business name')
-  .transform(transformEmptyString);
-
-export const doingBusinessAsValidation = string()
-  .min(2, 'Name must be at least 2 characters')
-  .max(100, 'Name must be less than 100 characters')
-  .matches(businessNameRegex, 'Enter valid doing business as')
-  .transform(transformEmptyString);
-
 export const websiteUrlValidation = string()
   .matches(urlRegex, 'Enter valid website url')
   .transform(transformEmptyString);
 
 export const businessClassificationValidation = string()
   .oneOf(businessClassificationOptions.map((option) => option.value), 'Select business classification')
-  .transform(transformEmptyString);
-
-export const industryValidation = string()
-  .min(2, 'Industry must be at least 2 characters')
-  .max(50, 'Industry must be less than 50 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid industry')
   .transform(transformEmptyString);
 
 export const taxIdValidation = string()
@@ -77,18 +69,6 @@ export const dateOfIncorporationValidation = string()
   })
   .transform(transformEmptyString);
 
-// Identity Validations
-
-export const identityNameValidation = string()
-  .min(2, 'Name must be at least 2 characters')
-  .max(100, 'Name must be less than 100 characters')
-  .transform(transformEmptyString);
-
-export const identityTitleValidation = string()
-  .min(2, 'Title must be at least 2 characters')
-  .max(50, 'Title must be less than 50 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid title')
-  .transform(transformEmptyString);
 
 export const dobValidation = (role: string) => {
   return (
@@ -142,12 +122,6 @@ export const lineTwoValidation = string()
   })
   .transform(transformEmptyString);
 
-export const cityValidation = string()
-  .min(2, 'City must be at least 2 characters')
-  .max(50, 'City must be less than 50 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid city')
-  .transform(transformEmptyString);
-
 export const stateValidation = string()
   .oneOf(StateOptions.map((option) => option.value), 'Select state')
   .transform(transformEmptyString);
@@ -189,19 +163,6 @@ export const seasonalBusinessValidation = string()
 export const otherPaymentDetailsValidation = string()
   .transform(transformEmptyString);
 
-// Bank Account Validations
-
-export const bankNameValidation = string()
-  .min(2, 'Name must be at least 2 characters')
-  .max(50, 'Name must be less than 50 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid bank name')
-  .transform(transformEmptyString);
-
-export const nicknameValidation = string()
-  .min(2, 'Name must be at least 2 characters')
-  .max(50, 'Name must be less than 50 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid nickname')
-  .transform(transformEmptyString);
 
 export const accountTypeValidation = string()
   .oneOf(bankAccountTypeOptions.map((option) => option.value), 'Select account type')

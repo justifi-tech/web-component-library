@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 import { 
-  cityValidation,
+  customStringValidation,
   lineOneValidation, 
   lineTwoValidation,
   postalValidation,
@@ -11,7 +11,7 @@ export const addressSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     line1: lineOneValidation.required('Enter street address'),
     line2: lineTwoValidation.nullable(),
-    city: cityValidation.required('Enter city'),
+    city: customStringValidation.required('Enter city'),
     state: stateValidation.required('Select state'),
     postal_code: postalValidation.required('Enter postal code'),
     country: string().required('Select country')
@@ -20,7 +20,7 @@ export const addressSchema = (allowOptionalFields?: boolean) => {
   const easySchema = object({
     line1: lineOneValidation.nullable(),
     line2: lineTwoValidation.nullable(),
-    city: cityValidation.nullable(),
+    city: customStringValidation.nullable(),
     state: stateValidation.nullable(),
     postal_code: postalValidation.nullable(),
     country: string().required('Select country')

@@ -1,18 +1,17 @@
 import { object, string } from 'yup';
 import { addressSchema } from './business-address-schema';
-import { 
-  dobValidation, 
-  emailValidation, 
-  identityNameValidation, 
-  identityTitleValidation, 
-  phoneValidation, 
+import {
+  dobValidation,
+  emailValidation,
+  customStringValidation,
+  phoneValidation,
   ssnValidation
 } from './schema-validations';
 
 export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
   const schema = object({
-    name: identityNameValidation.required(`Enter ${role} name`),
-    title: identityTitleValidation.required(`Enter ${role} title`),
+    name: customStringValidation.required(`Enter ${role} name`),
+    title: customStringValidation.required(`Enter ${role} title`),
     email: emailValidation.required(`Enter ${role} email`),
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
@@ -22,8 +21,8 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
   });
 
   const easySchema = object({
-    name: identityNameValidation.required(`Enter ${role} name`),
-    title: identityTitleValidation.nullable(),
+    name: customStringValidation.required(`Enter ${role} name`),
+    title: customStringValidation.nullable(),
     email: emailValidation.nullable(),
     phone: phoneValidation.nullable(),
     dob_full: dobValidation(role).nullable(),
