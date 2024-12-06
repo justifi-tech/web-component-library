@@ -211,7 +211,7 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
               $123.45 USD
             </td>
             <td part="table-cell">
-              <span (it="" a="" appear="" class="badge bg-danger" go="" in="" payout)'="" t="" through="" title="This card payment didn" won't="">
+              <span class="badge bg-danger" title="This card payment did not go through (it will not appear in a payout)">
                 Failed
               </span>
             </td>
