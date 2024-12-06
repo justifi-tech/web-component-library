@@ -151,7 +151,7 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
               $234.56 USD
             </td>
             <td part="table-cell">
-              <span class="badge bg-primary" could="" fail.'="" it="" or="" settled.="" still="" succeed="" t="" title="This ACH payment was processed, but the funds haven">
+              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
                 Pending
               </span>
             </td>
@@ -241,7 +241,7 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
               $234.56 USD
             </td>
             <td part="table-cell">
-              <span class="badge bg-primary" could="" fail.'="" it="" or="" settled.="" still="" succeed="" t="" title="This ACH payment was processed, but the funds haven">
+              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
                 Pending
               </span>
             </td>
