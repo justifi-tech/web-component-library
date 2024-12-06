@@ -108,17 +108,17 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
           </tr>
         </thead>
         <tbody class="table-body" part="table-body">
-          <tr data-row-entity-id="py_66NWqoIBi7xnPmqv9By5jD" data-test-id="table-row" part="table-row table-row-odd">
+          <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row" part="table-row table-row-odd">
             <td part="table-cell">
               <div class="fw-bold">
-                Jan 17, 2024
+                May 1, 2024
               </div>
               <div class="fw-bold">
-                5:35pm
+                8:45am
               </div>
             </td>
             <td part="table-cell">
-              $234.56 USD
+              $123.45 USD
             </td>
             <td part="table-cell">
               <span class="badge bg-success" title="This payment was successfully captured">
@@ -129,26 +129,56 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
               Card
             </td>
             <td part="table-cell">
-              payment
+              one-time payment
             </td>
             <td part="table-cell">
               test card
             </td>
             <td part="table-cell">
-              **** 1111
+              **** 1234
             </td>
           </tr>
-          <tr data-row-entity-id="py_4VPDyBwelwI9HjufbgwqZK" data-test-id="table-row" part="table-row table-row-even">
+          <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
               <div class="fw-bold">
-                Jan 15, 2024
+                Jun 1, 2024
               </div>
               <div class="fw-bold">
-                8:52pm
+                8:45am
               </div>
             </td>
             <td part="table-cell">
               $234.56 USD
+            </td>
+            <td part="table-cell">
+              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
+                Pending
+              </span>
+            </td>
+            <td part="table-cell">
+              ACH
+            </td>
+            <td part="table-cell">
+              subscription payment
+            </td>
+            <td part="table-cell">
+              test bank account
+            </td>
+            <td part="table-cell">
+              **** 5678
+            </td>
+          </tr>
+          <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row" part="table-row table-row-odd">
+            <td part="table-cell">
+              <div class="fw-bold">
+                Jul 1, 2024
+              </div>
+              <div class="fw-bold">
+                8:45am
+              </div>
+            </td>
+            <td part="table-cell">
+              $345.67 USD
             </td>
             <td part="table-cell">
               <span class="badge bg-success" title="This payment was successfully captured">
@@ -159,13 +189,133 @@ exports[`payments-list-core renders properly with fetched data 1`] = `
               Card
             </td>
             <td part="table-cell">
-              payment
+              manual payment
             </td>
             <td part="table-cell">
               test card
             </td>
             <td part="table-cell">
-              **** 1111
+              **** 9101
+            </td>
+          </tr>
+          <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row" part="table-row table-row-even">
+            <td part="table-cell">
+              <div class="fw-bold">
+                May 1, 2024
+              </div>
+              <div class="fw-bold">
+                8:45am
+              </div>
+            </td>
+            <td part="table-cell">
+              $123.45 USD
+            </td>
+            <td part="table-cell">
+              <span class="badge bg-danger" title="This card payment did not go through (it will not appear in a payout)">
+                Failed
+              </span>
+            </td>
+            <td part="table-cell">
+              Card
+            </td>
+            <td part="table-cell">
+              one-time payment
+            </td>
+            <td part="table-cell">
+              test card
+            </td>
+            <td part="table-cell">
+              **** 1234
+            </td>
+          </tr>
+          <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row" part="table-row table-row-odd">
+            <td part="table-cell">
+              <div class="fw-bold">
+                Jun 1, 2024
+              </div>
+              <div class="fw-bold">
+                8:45am
+              </div>
+            </td>
+            <td part="table-cell">
+              $234.56 USD
+            </td>
+            <td part="table-cell">
+              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
+                Pending
+              </span>
+            </td>
+            <td part="table-cell">
+              ACH
+            </td>
+            <td part="table-cell">
+              subscription payment
+            </td>
+            <td part="table-cell">
+              test bank account
+            </td>
+            <td part="table-cell">
+              **** 5678
+            </td>
+          </tr>
+          <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row" part="table-row table-row-even">
+            <td part="table-cell">
+              <div class="fw-bold">
+                Jul 1, 2024
+              </div>
+              <div class="fw-bold">
+                8:45am
+              </div>
+            </td>
+            <td part="table-cell">
+              $345.67 USD
+            </td>
+            <td part="table-cell">
+              <span class="badge bg-secondary" title="The account holder disputed this payment. The amount has been returned and a fee assessed.">
+                Disputed
+              </span>
+            </td>
+            <td part="table-cell">
+              Card
+            </td>
+            <td part="table-cell">
+              manual payment
+            </td>
+            <td part="table-cell">
+              test card
+            </td>
+            <td part="table-cell">
+              **** 9101
+            </td>
+          </tr>
+          <tr data-row-entity-id="py_4D5E6F7G8H9I0J1K2L3M" data-test-id="table-row" part="table-row table-row-odd">
+            <td part="table-cell">
+              <div class="fw-bold">
+                Aug 1, 2024
+              </div>
+              <div class="fw-bold">
+                8:45am
+              </div>
+            </td>
+            <td part="table-cell">
+              $345.67 USD
+            </td>
+            <td part="table-cell">
+              <span class="badge bg-secondary" title="The full amount of this payment has been refunded">
+                Fully Refunded
+              </span>
+            </td>
+            <td part="table-cell">
+              Card
+            </td>
+            <td part="table-cell">
+              refund payment
+            </td>
+            <td part="table-cell">
+              test card
+            </td>
+            <td part="table-cell">
+              **** 1122
             </td>
           </tr>
         </tbody>

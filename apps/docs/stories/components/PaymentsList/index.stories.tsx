@@ -117,6 +117,19 @@ const meta: Meta = {
       },
       action: true,
     },
+    "columns": {
+      description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
+      type: 'string',
+      table: {
+        category: "props",
+        defaultValue: {
+          summary: "created_at,amount,status,payment_type,description,payers_name,last_four_digits"
+        }
+      },
+      control: {
+        type: "text",
+      },
+    }
   },
   parameters: {
     actions: {

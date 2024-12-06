@@ -10,6 +10,7 @@ import { makeGetPayments } from '../get-payments';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PaymentsListFilters } from '../payments-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { defaultColumnsKeys } from '../payments-table';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
 const components = [PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters, SelectInput];
@@ -29,7 +30,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -55,7 +56,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -78,7 +79,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -107,7 +108,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -136,7 +137,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -180,7 +181,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -229,7 +230,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -260,7 +261,7 @@ describe('payments-list-core', () => {
 
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
-      template: () => <payments-list-core getPayments={getPayments} onError-event={errorEvent} />,
+      template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} onError-event={errorEvent} />,
     });
 
     await page.waitForChanges();

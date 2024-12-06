@@ -39,14 +39,14 @@ export const checkoutTableColumns = {
 
 export const checkoutTableCells = {
   created_at: (value) => (
-    <th>
+    <td part="table-cell">
       <div class="fw-bold">{formatDate(value)} </div>
       < div class="fw-bold">{formatTime(value)} </div>
-    </th>
+    </td>
   ),
-  payment_amount: (value) => (<td>{formatCurrency(value, true, true)} </td>),
-  payment_description: (value) => (<td>{value}</td>),
-  sub_account_name: (value) => (<td>{value}</td>),
-  payment_mode: (value) => (<td>{value}</td>),
-  status: (value) => (<td innerHTML={MapCheckoutStatusToBadge(value)}></td>),
+  payment_amount: (value) => (<td part="table-cell">{formatCurrency(value, true, true)} </td>),
+  payment_description: (value) => (<td part="table-cell">{value}</td>),
+  sub_account_name: (value) => (<td part="table-cell">{value}</td>),
+  payment_mode: (value) => (<td part="table-cell">{value}</td>),
+  status: (value) => (<td part="table-cell" innerHTML={MapCheckoutStatusToBadge(value)}></td>),
 }

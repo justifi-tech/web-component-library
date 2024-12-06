@@ -249,120 +249,120 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
         </thead>
         <tbody class="table-body" part="table-body">
           <tr data-row-entity-id="cho_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row table-row-odd">
-            <th>
+            <td part="table-cell">
               <div class="fw-bold">
                 Aug 8, 2024
               </div>
               <div class="fw-bold">
                 3:47pm
               </div>
-            </th>
-            <td>
+            </td>
+            <td part="table-cell">
               $3.99 USD
             </td>
-            <td>
+            <td part="table-cell">
               One Chocolate Donut
             </td>
-            <td>
+            <td part="table-cell">
               Card Present
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-success" title="The checkout has been completed">
                 Completed
               </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row table-row-even">
-            <th>
+            <td part="table-cell">
               <div class="fw-bold">
                 Aug 8, 2024
               </div>
               <div class="fw-bold">
                 4:32pm
               </div>
-            </th>
-            <td>
+            </td>
+            <td part="table-cell">
               $10.99 USD
             </td>
-            <td>
+            <td part="table-cell">
               1 Dozen Chocolate Donuts
             </td>
-            <td>
+            <td part="table-cell">
               Card Present
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-danger" title="The checkout has expired">
                 Expired
               </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row table-row-odd">
-            <th>
+            <td part="table-cell">
               <div class="fw-bold">
                 Aug 8, 2024
               </div>
               <div class="fw-bold">
                 4:32pm
               </div>
-            </th>
-            <td>
+            </td>
+            <td part="table-cell">
               $19.99 USD
             </td>
-            <td>
+            <td part="table-cell">
               2 Dozen Chocolate Donuts - Website To Go Order
             </td>
-            <td>
+            <td part="table-cell">
               E-commerce
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-primary" title="The checkout has been created">
                 Created
               </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row table-row-even">
-            <th>
+            <td part="table-cell">
               <div class="fw-bold">
                 Aug 8, 2024
               </div>
               <div class="fw-bold">
                 4:32pm
               </div>
-            </th>
-            <td>
+            </td>
+            <td part="table-cell">
               $89.99 USD
             </td>
-            <td>
+            <td part="table-cell">
               Weekly Donut Box Subscription
             </td>
-            <td>
+            <td part="table-cell">
               Buy Now Pay Later
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-primary" title="The checkout has been created">
                 Created
               </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row table-row-odd">
-            <th>
+            <td part="table-cell">
               <div class="fw-bold">
                 Aug 8, 2024
               </div>
               <div class="fw-bold">
                 4:32pm
               </div>
-            </th>
-            <td>
+            </td>
+            <td part="table-cell">
               $24.99 USD
             </td>
-            <td>
+            <td part="table-cell">
               Donut Shop Size M T Shirt - Website Order
             </td>
-            <td>
+            <td part="table-cell">
               E-commerce
             </td>
-            <td>
+            <td part="table-cell">
               <span class="badge bg-secondary" title="The checkout has been attempted">
                 Attempted
               </span>

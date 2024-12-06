@@ -45,7 +45,7 @@ export class TerminalsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
-  @Prop() columns: string = defaultColumnsKeys;
+  @Prop() columns?: string = defaultColumnsKeys;
   
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
