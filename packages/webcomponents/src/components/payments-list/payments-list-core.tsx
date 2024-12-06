@@ -1,25 +1,28 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
-import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { onFilterChange } from '../../ui-components/filters/utils';
-import { MapPaymentStatusToBadge } from './payments-status';
+import { paymentTableCells, paymentTableColumns } from './payments-table';
+import { Table } from '../../utils/table';
 
 @Component({
   tag: 'payments-list-core'
 })
 export class PaymentsListCore {
+  @Prop() getPayments: Function;
+  @Prop() columns: string;
+
   @State() payments: Payment[] = [];
+  @State() paymentsTable: Table;
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: PaymentsParams = {};
   
-  @Prop() getPayments: Function;
-
   @Watch('params')
   @Watch('getPayments')
+  @Watch('columns')
   updateOnPropChange() {
     this.fetchData();
   }
@@ -32,6 +35,7 @@ export class PaymentsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
+    this.paymentsTable = new Table(this.payments, this.columns, paymentTableColumns, paymentTableCells);
     if (this.getPayments) {
       this.fetchData();
     }
@@ -45,6 +49,7 @@ export class PaymentsListCore {
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
+        this.paymentsTable.collectionData = this.payments;
         this.loading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -83,6 +88,7 @@ export class PaymentsListCore {
   }
 
   clearParams = () => {
+    this.errorMessage = '';
     this.params = {};
   }
 
@@ -90,41 +96,8 @@ export class PaymentsListCore {
     return this.payments.map((payment) => payment.id);
   }
 
-  get columnData() {
-    return [
-      ['Date', 'The date and time each payment was made'],
-      ['Amount', 'The dollar amount of each payment'],
-      ['Status', 'The current status of each payment'],
-      ['Type', 'The type of each payment'],
-      ['Description', 'The payment description, if you provided one'],
-      ['Account Holder', 'The name associated with the payment method'],
-      ['Payment Method', 'The brand and last 4 digits of the payment method'],
-    ];
-  }
-
-  get rowData() {
-    return this.payments.map((payment) => [
-      {
-        type: 'head',
-        value: `
-          <div class="fw-bold">${formatDate(payment.created_at)}</div>
-          <div class="fw-bold">${formatTime(payment.created_at)}</div>
-        `,
-      },
-      formatCurrency(payment.amount, true, true),
-      {
-        type: 'inner',
-        value: MapPaymentStatusToBadge(payment.status),
-      },
-      payment.paymentType,
-      payment.description,
-      payment.payment_method.payersName,
-      payment.payment_method.lastFourDigits,
-    ]);
-  }
-
   get showEmptyState() {
-    return !this.loading && !this.errorMessage && this.rowData.length < 1;
+    return !this.loading && !this.errorMessage && this.paymentsTable.rowData.length < 1;
   }
 
   get showErrorState() {
@@ -132,7 +105,7 @@ export class PaymentsListCore {
   }
 
   get showRowData() {
-    return !this.showEmptyState && !this.showErrorState;
+    return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
   render() {
@@ -147,49 +120,37 @@ export class PaymentsListCore {
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
-                {this.columnData?.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ""}>
-                    {!Array.isArray(column) ? column : column[0]}
-                  </th>
-                ))}
+                {this.paymentsTable.columnData.map((column) => column)}
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
               <TableLoadingState
-                columnSpan={this.columnData.length}
+                columnSpan={this.paymentsTable.columnData.length}
                 isLoading={this.loading}
               />
               <TableEmptyState
                 isEmpty={this.showEmptyState}
-                columnSpan={this.columnData.length}
+                columnSpan={this.paymentsTable.columnData.length}
               />
               <TableErrorState
-                columnSpan={this.columnData.length}
+                columnSpan={this.paymentsTable.columnData.length}
                 errorMessage={this.errorMessage}
               />
-              {this.showRowData &&
-                this.rowData.map((data, index) => (
-                  <tr
-                    data-test-id="table-row"
-                    data-row-entity-id={this.entityId[index]}
-                    onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
-                  >
-                    {data.map((dataEntry: any) => {
-                      let nestedHtml = dataEntry?.type;
-                      if (nestedHtml) {
-                        return <td part="table-cell" innerHTML={dataEntry.value}></td>;
-                      } else {
-                        return <td part="table-cell">{dataEntry}</td>;
-                      }
-                    })}
-                  </tr>
-                ))}
+              {this.showRowData && this.paymentsTable.rowData.map((data, index) => (
+                <tr
+                  data-test-id="table-row"
+                  data-row-entity-id={this.entityId[index]}
+                  onClick={this.rowClickHandler}
+                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
+                >
+                  {data}
+                </tr>
+              ))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.columnData?.length}>
+                  <td part="pagination-bar" colSpan={this.paymentsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

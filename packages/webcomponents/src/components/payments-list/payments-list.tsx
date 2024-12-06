@@ -5,8 +5,8 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
-import { StyledHost } from '../../ui-components/styled-host/styled-host';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
+import { StyledHost, tableExportedParts } from '../../ui-components';
+import { defaultColumnsKeys } from './payments-table';
 
 /**
   * @exportedPart label: Label for inputs
@@ -42,6 +42,7 @@ export class PaymentsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -92,6 +93,7 @@ export class PaymentsList {
         <payments-list-core
           getPayments={this.getPayments}
           onError-event={this.handleErrorEvent}
+          columns={this.columns}
         />
       </StyledHost>
     );
