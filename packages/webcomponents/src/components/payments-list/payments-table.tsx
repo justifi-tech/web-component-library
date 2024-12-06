@@ -44,15 +44,15 @@ export const paymentTableColumns = {
 
 export const paymentTableCells = {
   created_at: (value) => (
-    <td>
+    <td part="table-cell">
       <div class="fw-bold">{formatDate(value)}</div>
       <div class="fw-bold">{formatTime(value)}</div>
     </td>
   ),
-  amount: (value) => (<td>{formatCurrency(value, true, true)}</td>),
-  status: (value) => (<td innerHTML={MapPaymentStatusToBadge(value)}></td>),
-  payment_type: (value) => (<td>{value}</td>),
-  description: (value) => (<td>{value}</td>),
-  payers_name: (value) => (<td>{value}</td>),
-  last_four_digits: (value) => (<td>{value}</td>)
+  amount: (value) => (<td part="table-cell">{formatCurrency(value, true, true)}</td>),
+  status: (value) => (<td part="table-cell" innerHTML={MapPaymentStatusToBadge(value)}></td>),
+  payment_type: (value) => (<td part="table-cell">{value}</td>),
+  description: (value) => (<td part="table-cell">{value}</td>),
+  payers_name: (value) => (<td part="table-cell">{value}</td>),
+  last_four_digits: (value) => (<td part="table-cell">{value}</td>)
 };
