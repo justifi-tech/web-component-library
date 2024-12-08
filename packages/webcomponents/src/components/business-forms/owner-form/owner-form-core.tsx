@@ -189,7 +189,7 @@ export class BusinessOwnerFormCore {
     return (
       <form onSubmit={this.validateAndSubmit}>
         <fieldset>
-          <legend class="fw-semibold fs-5">{this.formTitle}</legend>
+          <legend class="fw-semibold fs-5" part="header-3">{this.formTitle}</legend>
           <br />
           <div class="row gy-3">
             <owner-form-inputs

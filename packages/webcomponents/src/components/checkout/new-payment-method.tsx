@@ -113,30 +113,16 @@ export class NewPaymentMethod {
   render() {
     return (
       <Host class="payment-method">
-        <div
-          class="radio-list-item p-3"
-          onClick={() => this.onPaymentMethodOptionClick()}
-          part="radio-list-item"
-        >
-          <input
-            type="radio"
+        <div class="radio-list-item p-3" part="radio-list-item">
+          <form-control-radio
             name="paymentMethodType"
-            id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
-            onClick={(event) => event.preventDefault()}
-            checked={this.isSelected}
-            class="form-check-input me-2"
-            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
+            label={PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
+            defaultChecked={this.isSelected}
+            inputHandler={() => this.onPaymentMethodOptionClick()}
+            disabled={false}
           />
-          <label
-            htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label"
-            part="radio-input-label"
-          >
-            {PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
-          </label>
         </div>
-
         {this.isSelected ? this.showNewPaymentMethodForm() : null}
       </Host>
     );

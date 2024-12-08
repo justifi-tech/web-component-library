@@ -32,7 +32,7 @@ exports[`form-control-monetary renders correctly with default props 1`] = `
       <span class="input-group-text" part="input-group-text">
         $
       </span>
-      <input class="form-control monetary" id="amount" name="amount" part="input input-group-input undefined" type="text">
+      <input class="form-control monetary" id="amount" name="amount" part="input input-group-input" type="text">
     </div>
   </div>
 </form-control-monetary>

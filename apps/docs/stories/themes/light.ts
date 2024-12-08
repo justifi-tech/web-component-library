@@ -1,5 +1,25 @@
 const light = `
 body {
+  font-size: 16px;
+}
+
+::part(color) {
+ color: #000;
+}
+
+::(header1) {
+color: blue;
+}
+
+::part(font-size) {
+  font-size: 1rem;
+}
+
+::(header-1) {
+  font-size: 2rem;
+}
+
+body {
   background-color: #efefef;
 }
 
@@ -14,7 +34,7 @@ justifi-payout-details,
 justifi-payments-list,
 justifi-payouts-list,
 justifi-checkouts-list,
-justifi-terminals-list, {
+justifi-terminals-list {
   display: block;
   margin: 5% auto;
   background-color: #fff;
@@ -54,6 +74,10 @@ justifi-payment-provisioning {
   color: #333;
 }
 
+::part(link) {
+  color: black;
+}
+
 ::part(radio-input) {
   background-color: #fff;
   border-color: #333;
@@ -63,7 +87,7 @@ justifi-payment-provisioning {
   background-color: #000;
 }
 
-::part(radio-input-checked):focus {
+::part(radio-input-focused) {
   background-color: #333;
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
@@ -79,7 +103,6 @@ justifi-payment-provisioning {
 
 ::part(radio-list-item) {
   cursor: pointer;
-  color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
@@ -105,12 +128,6 @@ justifi-payment-provisioning {
   padding: 0.375rem 0.75rem;
 }
 
-::part(input):focus {
-  background-color: transparent;
-  border-color: #333;
-  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
-}
-  
 ::part(input-focused) {
   background-color: transparent;
   border-color: #333;
@@ -135,7 +152,7 @@ justifi-payment-provisioning {
   border-color: #333;
 }
 
-::part(form-check-input):focus {
+::part(form-check-input-focused) {
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, .25);
 }
 
@@ -319,10 +336,10 @@ justifi-terminals-list::part(input) {
   padding: .5rem .875rem;
 }
 
-justifi-payments-list::part(input):focus,
-justifi-payouts-list::part(input):focus,
-justifi-checkouts-list::part(input):focus,
-justifi-terminals-list::part(input):focus {
+justifi-payments-list::part(input-focused),
+justifi-payouts-list::part(input-focused),
+justifi-checkouts-list::part(input-focused),
+justifi-terminals-list::part(input-focused) {
   color: #212529;
   border-color: #fccc32;
   box-shadow: none;

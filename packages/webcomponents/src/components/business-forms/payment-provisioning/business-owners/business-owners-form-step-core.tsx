@@ -139,11 +139,18 @@ export class BusinessOwnersFormStepCore {
   render() {
     return (
       <div>
-        <div class="d-flex align-items-center gap-2">
-          <legend class="mb-0">Owners</legend>
-          <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director." />
+        <div class="mb-4">
+          <legend
+            class="d-flex align-items-center justify-content-between mb-2"
+            part="header-2"
+          >
+            Owners
+            <form-control-tooltip
+              helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director."
+              className="ms-2"
+            />
+          </legend>
         </div>
-        <hr class="mt-2" />
         <div class='row gy-3'>
           {this.ownersPayload.map((owner) => {
             return (

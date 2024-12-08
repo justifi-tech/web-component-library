@@ -58,6 +58,14 @@ justifi-payment-provisioning {
   color: #fff;
 }
 
+::part(text) {
+  color: #fff;
+}
+
+::part(link) {
+  color: #fff;
+}
+
 ::part(input) {
   color: #fff;
   background-color: #191919;
@@ -65,7 +73,7 @@ justifi-payment-provisioning {
   -webkit-appearance: none;
 }
 
-::part(input):focus {
+::part(input-focused) {
   color: #fff;
   background-color: #191919;
   appearance: none;
@@ -91,7 +99,7 @@ justifi-payment-provisioning {
   border-color: #dc3545;
 }
 
-::part(radio-input-checked):focus {
+::part(radio-input-focused) {
   border-color: #ff785a;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
 }
@@ -109,6 +117,10 @@ justifi-payment-provisioning {
 
 ::part(radio-list-item):hover {
   background-color: rgba(255, 120, 90, 0.25);
+}
+
+::part(tooltip-icon) {
+  fill: #fff;
 }
 
 ::part(button) {

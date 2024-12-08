@@ -99,11 +99,16 @@ export class LegalAddressFormStepCore {
     return (
       <form>
         <fieldset>
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Legal Address of your Business</legend>
-            <form-control-tooltip helpText="No PO Boxes." />
+          <div class="mb-4">
+            <legend
+              class="d-flex align-items-center justify-content-between mb-2"
+              part="header-2"
+            >
+              Legal Address of your Business
+              <form-control-tooltip helpText="No PO Boxes." className="ms-2" />
+            </legend>
           </div>
-          <hr class="mt-2" />
+
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text
@@ -171,4 +176,3 @@ export class LegalAddressFormStepCore {
     );
   }
 }
-      

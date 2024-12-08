@@ -16,7 +16,7 @@ export class BusinessTermsConditionsText {
             <p class='card-text' part="card-text">The Payment Terms and Conditions described herein constitute a legal agreement (“Agreement” or “JustiFi Technologies Inc. Terms”) between your business (the “Merchant”, “you” or “your”) and JustiFi Technologies Inc., organized under the laws of Minnesota with offices at 555 Vandalia St. St Paul, MN 55114, Suite #105. (“JustiFi”, “we”, “us”, or “our”).</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">A. The JustiFi Payments Service</h3>
+            <h3 class="card-subtitle mb-2" part="card-subtitle">A. The JustiFi Payments Service</h3>
             <br />
 
             <h4 class="card-subtitle" part="card-subtitle">Our Role</h4>
@@ -64,7 +64,7 @@ export class BusinessTermsConditionsText {
             <p>You agree that JustiFi can provide disclosures and notices, including tax forms, that we deem appropriate regarding the Payments Services to you by posting such disclosures and notices in your JustiFi Account, emailing them to the email address listed in your JustiFi Account, or mailing them to the address listed in your JustiFi Account. You also agree that electronic disclosures and notices have the same meaning and effect as if we had provided you with a paper copy.</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">B. Underwriting &amp; Obtaining a JustiFi Payments Services Account</h3>
+            <h3 class="card-subtitle mb-2" part="card-subtitle">B. Underwriting &amp; Obtaining a JustiFi Payments Services Account</h3>
             <br />
 
             <h4>Registration</h4>
@@ -84,7 +84,7 @@ export class BusinessTermsConditionsText {
             <p>In registering for a JustiFi Payments Account, you are obliged to identify the location from where you are operating the business that will use the Payments Services in United States. By registering for a JustiFi Payments Account, you are confirming that you are either a legal resident of United States or you are duly established and, if necessary, registered or licensed as a business entity authorized to conduct business in United States. The Payments Services and JustiFi Payments Account may only be used in United States. By accepting this Agreement, you confirm that you will satisfy these requirements.</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">C. Processing Card Transactions, Managing Funds and Receiving Your Funds</h3>
+            <h3 class="card-subtitle mb-2" part="card-subtitle">C. Processing Card Transactions, Managing Funds and Receiving Your Funds</h3>
             <br />
 
             <h4>JustiFi Payments Fees</h4>
@@ -114,7 +114,7 @@ export class BusinessTermsConditionsText {
             <p>We reserve the right, upon notice to you, to charge a fee for mediating or investigating chargeback disputes.</p>
 
             <br />
-            <h3 class="card-subtitle mb-2 text-muted" part="card-subtitle">D. Termination and Other Legal Terms</h3>
+            <h3 class="card-subtitle mb-2" part="card-subtitle">D. Termination and Other Legal Terms</h3>
             <br />
 
             <h4>Term</h4>

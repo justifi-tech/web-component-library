@@ -1,8 +1,8 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
-import { formatCurrency } from "../../../utils/utils";
+import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
-import { StyledHost, RadioInput, Header2 } from "../../../ui-components";
+import { StyledHost, Header2 } from "../../../ui-components";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
@@ -82,8 +82,8 @@ export class SeasonInterruptionInsuranceCore {
     });
   };
 
-  onChangeHandler(event: any) {
-    this.accepted = event.target.value;
+  onChangeHandler(_name, value) {
+    this.accepted = value;
     insuranceErrors[this.quote.policy_type] = false;
     this.toggleCoverage({
       quoteId: this.quote.id,
@@ -113,24 +113,21 @@ export class SeasonInterruptionInsuranceCore {
           <div>
             <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
             <small innerHTML={this.quote?.product.description} part="text"></small>
-            <RadioInput
-              id="accept"
+            <form-control-radio
               name="opt-in"
               value="true"
               label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
-              checked={this.accepted}
-              error={this.error}
-              onChange={(event: any) => this.onChangeHandler(event)}
+              defaultChecked={this.accepted === 'true'}
+              inputHandler={this.onChangeHandler.bind(this)}
+              disabled={this.isLoading}
             />
-            <RadioInput
-              id="decline"
+            <form-control-radio
               name="opt-in"
               value="false"
               label="Decline coverage"
-              className="mb-2"
-              checked={this.accepted}
-              error={this.error}
-              onChange={(event: any) => this.onChangeHandler(event)}
+              defaultChecked={this.accepted === 'false'}
+              inputHandler={this.onChangeHandler.bind(this)}
+              disabled={this.isLoading}
             />
             <div
               class="invalid-feedback"
@@ -138,7 +135,13 @@ export class SeasonInterruptionInsuranceCore {
             >
               Please select an option
             </div>
-            <small innerHTML={this.quote?.product.legal_disclaimer} part="text"></small>
+            <small
+              innerHTML={processHTML(this.quote?.product.legal_disclaimer, [
+                html => removeAttribute(html, 'style'),
+                html => addAttribute(html, 'a', 'part', 'link'),
+              ])}
+              part="text"
+            ></small>
           </div >
         )}
       </StyledHost>

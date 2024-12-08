@@ -18,15 +18,13 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
                     <form-control-text label="Terminal ID" name="terminal_id"></form-control-text>
                   </div>
                   <div class="p-2">
-                    <form-control-select exportparts="label,input,input-invalid">
+                    <form-control-select>
                       <div class="d-flex flex-column form-group">
-                        <div class="align-items-start d-flex gap-2">
-                          <label class="form-label" htmlfor="status" part="label">
-                            Status
-                          </label>
+                        <label class="align-items-center d-flex form-label gap-2" htmlfor="status" part="label">
+                          Status
                           <form-control-tooltip></form-control-tooltip>
-                        </div>
-                        <select class="form-select" id="status" name="status" part="input ">
+                        </label>
+                        <select class="form-select" id="status" name="status" part="input">
                           <option value="">
                             All
                           </option>
@@ -133,15 +131,13 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
                     <form-control-text label="Terminal ID" name="terminal_id"></form-control-text>
                   </div>
                   <div class="p-2">
-                    <form-control-select exportparts="label,input,input-invalid">
+                    <form-control-select>
                       <div class="d-flex flex-column form-group">
-                        <div class="align-items-start d-flex gap-2">
-                          <label class="form-label" htmlfor="status" part="label">
-                            Status
-                          </label>
+                        <label class="align-items-center d-flex form-label gap-2" htmlfor="status" part="label">
+                          Status
                           <form-control-tooltip></form-control-tooltip>
-                        </div>
-                        <select class="form-select" id="status" name="status" part="input ">
+                        </label>
+                        <select class="form-select" id="status" name="status" part="input">
                           <option value="">
                             All
                           </option>

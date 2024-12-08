@@ -26,11 +26,18 @@ export class RepresentativeFormInputs {
     return (
       <form>
         <fieldset>
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Representative</legend>
-            <form-control-tooltip helpText="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form." />
+          <div class="mb-4">
+            <legend
+              class="d-flex align-items-center justify-content-between mb-2"
+              part="header-2"
+            >
+              Representative
+              <form-control-tooltip
+                helpText="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form."
+                className="ms-2"
+              />
+            </legend>
           </div>
-          <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12 col-md-8">
               <form-control-text

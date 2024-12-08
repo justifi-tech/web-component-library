@@ -13,8 +13,8 @@ export class Details {
   render() {
     return (
       <StyledHost
-        exportParts='detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
-        detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info'
+      // exportparts='detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
+      // detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info'
       >
         {
           this.errorMessage ?

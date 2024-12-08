@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Element,
   Watch,
+  State,
 } from '@stencil/core';
 
 @Component({
@@ -14,6 +15,8 @@ import {
 })
 export class TextInput {
   @Element() el: HTMLElement;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -51,9 +54,23 @@ export class TextInput {
     }
   }
 
+  private get part(): string {
+    let part = 'input';
+    if (this.errorText) {
+      part += ' input-invalid';
+    }
+    if (this.disabled) {
+      part += ' input-disabled';
+    }
+    if (this.isFocused) {
+      part += ' input-focused';
+    }
+    return part;
+  };
+
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
           <label part="label" class="form-label" htmlFor={this.name}>
             {this.label}
@@ -66,7 +83,7 @@ export class TextInput {
             onKeyDown={this.keyDownHandler}
             onPaste={this.keyDownHandler}
             maxLength={this.maxLength}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
+            part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             disabled={this.disabled}
           />

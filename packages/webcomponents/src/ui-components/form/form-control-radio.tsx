@@ -6,6 +6,7 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 
 @Component({
@@ -14,7 +15,9 @@ import {
 export class RadioInput {
   radioElement!: HTMLInputElement;
 
-  @Prop() label: string;
+  @State() isFocused: boolean = false;
+
+  @Prop() label: string | (() => HTMLElement | JSX.Element);
   @Prop() name: any;
   @Prop() value: any;
   @Prop() helpText?: string;
@@ -38,17 +41,33 @@ export class RadioInput {
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.inputHandler(name, target.checked);
-    this.formControlInput.emit({ name, value: target.value });
+    this.radioElement.checked = true;
+    this.inputHandler(name, this.value);
+    this.formControlInput.emit({ name, value: target.value === 'true' ? true : false });
   }
 
   updateInput = (checked: boolean) => {
+    this.isFocused = checked;
     this.radioElement.checked = checked;
+  }
+
+  private get part(): string {
+    let part = 'radio-input';
+    if (this.errorText) {
+      part += ' radio-input-invalid';
+    }
+    if (this.radioElement?.checked) {
+      part += ' radio-input-checked';
+    }
+    if (this.isFocused) {
+      part += ' radio-input-focused';
+    }
+    return part;
   }
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class='form-group d-flex flex-column'>
           <div class="form-check">
             <input
@@ -56,15 +75,19 @@ export class RadioInput {
               type="radio"
               id={this.name}
               name={this.name}
-              onBlur={this.formControlBlur.emit}
+              onFocus={() => { this.isFocused = true; }}
+              onBlur={() => {
+                this.isFocused = false;
+                this.formControlBlur.emit()
+              }}
               onInput={this.handleFormControlInput}
-              part={`input-radio ${this.errorText ? 'input-radio-invalid' : ''}`}
+              part={this.part}
               class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}
               value={this.value}
             />
-            <label class="form-check-label" htmlFor={this.name}>
-              {this.label}
+            <label class="radio-input-label" htmlFor={this.name} part="label">
+              {typeof this.label === 'function' ? this.label() : this.label}
             </label>
           </div>
           <form-control-help-text helpText={this.helpText} name={this.name} />

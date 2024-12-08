@@ -16,12 +16,12 @@ exports[`justifi-checkout renders loading 1`] = `
               <div part="skeleton" style="margin-top: 0; margin-bottom: 0; height: 24px; transform-origin: 0 55%; transform: scale(1, 0.60); border-radius: 4px/6.67px; ::before: [object Object];"></div>
             </div>
             <div class="visually-hidden">
-              <div part="summary-payment-description"></div>
-              <div part="summary-payment-total">
-                <span part="summary-payment-total-label">
+              <div part="summary-payment-description text"></div>
+              <div part="summary-payment-total text">
+                <span part="summary-payment-total-label text">
                   Total
                 </span>
-                <span part="summary-payment-total-amount">
+                <span part="summary-payment-total-amount text">
                   $0.00
                 </span>
               </div>

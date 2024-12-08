@@ -6,6 +6,7 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
 
@@ -14,6 +15,9 @@ import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
 })
 export class CheckboxInput {
   checkboxElement!: HTMLInputElement;
+
+  @State() isFocused: boolean = false;
+  @State() isChecked: boolean = false;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -38,17 +42,34 @@ export class CheckboxInput {
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
+    this.isChecked = target.checked;
     this.inputHandler(name, target.checked);
     this.formControlInput.emit({ name, value: target.value });
   }
 
   updateInput = (newValue: any) => {
-    this.checkboxElement.checked = newValue;
+    this.isChecked = newValue;
   }
+
+  private get part(): string {
+    let part = 'form-check-input';
+    if (this.errorText) {
+      part += ' input-invalid';
+    }
+    if (this.isFocused) {
+      part += ' form-check-input-focused';
+    }
+    console.log('this.isChecked: ', this.isChecked);
+    if (this.isChecked) {
+      part += ' form-check-input-checked';
+    }
+
+    return part;
+  };
 
   render() {
     return (
-      <Host exportparts="radio-input-label,input,input-invalid">
+      <Host>
         <div class='form-group d-flex flex-column'>
           <div class="form-check">
             <input
@@ -56,9 +77,14 @@ export class CheckboxInput {
               type="checkbox"
               id={this.name}
               name={this.name}
-              onBlur={this.formControlBlur.emit}
+              onChange={this.handleFormControlInput}
+              onFocus={() => { this.isFocused = true; }}
+              onBlur={() => {
+                this.isFocused = false;
+                this.formControlBlur.emit();
+              }}
               onInput={this.handleFormControlInput}
-              part={`input-checkbox ${this.errorText ? 'input-checkbox-invalid' : ''}`}
+              part={this.part}
               class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}
             />

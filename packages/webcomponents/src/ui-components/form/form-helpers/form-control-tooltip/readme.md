@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default     |
-| ---------- | ----------- | ----------- | -------- | ----------- |
-| `helpText` | `help-text` |             | `string` | `undefined` |
+| Property    | Attribute    | Description | Type     | Default     |
+| ----------- | ------------ | ----------- | -------- | ----------- |
+| `className` | `class-name` |             | `string` | `''`        |
+| `helpText`  | `help-text`  |             | `string` | `undefined` |
 
 
 ## Shadow Parts

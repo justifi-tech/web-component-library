@@ -129,8 +129,7 @@ export class BusinessTermsConditionsFormStep {
     return (
       <form>
         <fieldset>
-          <legend>Terms and Conditions</legend>
-          <hr />
+          <legend part="header-2">Terms and Conditions</legend>
           <justifi-business-terms-conditions-text />
           <br />
           <div class="row-gy-3">

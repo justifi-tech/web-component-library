@@ -4,6 +4,7 @@ import StateOptions from '../../utils/state-options';
 import { FormController } from '../../ui-components/form/form';
 import { numberOnlyHandler } from '../../ui-components/form/utils';
 import { StyledHost } from '../../ui-components';
+import formControlTextParts from '../../ui-components/form/input-base.parts';
 
 /**
  * @exportedPart label: Label for inputs
@@ -64,7 +65,7 @@ export class BillingForm {
     const billingFormDefaultValue = this.formController.getInitialValues();
 
     return (
-      <StyledHost exportparts="label,input,input-invalid">
+      <StyledHost exportparts={formControlTextParts}>
         <form>
           <fieldset>
             {this.legend && <legend>{this.legend}</legend>}

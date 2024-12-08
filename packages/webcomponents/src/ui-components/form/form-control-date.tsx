@@ -6,14 +6,18 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import { FormControlErrorText } from '../../ui-components';
+import { FormLabel } from './form-helpers/form-label';
 
 @Component({
   tag: 'form-control-date'
 })
 export class DateInput {
   dateInput!: HTMLInputElement;
+
+  @State() isFocused: boolean = false;
 
   @Prop() name: string;
   @Prop() label: string;
@@ -25,7 +29,7 @@ export class DateInput {
   @Prop() filterTimeZone?: boolean = false;
   @Prop() showTime?: boolean;
   @Prop() maxDate?: string = this.currentDate;
-  
+
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
     if (this.filterTimeZone) {
@@ -53,7 +57,7 @@ export class DateInput {
       this.updateInput(this.defaultValue);
     }
   }
-  
+
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const localValue = target.value;
@@ -67,7 +71,7 @@ export class DateInput {
       this.formControlInput.emit({ name: this.name, value: localValue });
     }
   }
-   
+
   updateInput(value: any) {
     this.dateInput.value = value;
   }
@@ -80,31 +84,48 @@ export class DateInput {
   convertToLocal(value: string): string {
     if (!value) return value;
     const date = new Date(value);
-  
+
     // Adjust the date to the local timezone
     const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  
+
     return this.showTime ? localDate.toISOString().slice(0, 16) : localDate.toISOString().split('T')[0];
+  }
+
+  private get part(): string {
+    let part = 'input';
+    if (this.errorText) {
+      part += ' input-invalid';
+    }
+    if (this.disabled) {
+      part += ' input-disabled';
+    }
+    if (this.isFocused) {
+      part += ' input-focused';
+    }
+    return part;
   }
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
-          <div class="d-flex gap-2">
-            <label part="label" class="form-label" htmlFor={this.name}>
-              {this.label}
-            </label>
-            <form-control-tooltip helpText={this.helpText} />
-          </div>
+          <FormLabel
+            htmlFor={this.name}
+            label={this.label}
+            helpText={this.helpText}
+          />
           <input
             type={this.showTime ? 'datetime-local' : 'date'} // Conditionally set the input type
             ref={el => (this.dateInput = el as HTMLInputElement)}
             id={this.name}
             name={this.name}
-            onBlur={this.formControlBlur.emit}
+            onFocus={() => { this.isFocused = true; }}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
             onInput={this.handleFormControlInput}
-            part={`input ${this.errorText && 'input-invalid'}`}
+            part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             disabled={this.disabled}
             max={this.maxDate}

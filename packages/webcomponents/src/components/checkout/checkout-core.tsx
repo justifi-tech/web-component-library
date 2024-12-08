@@ -177,10 +177,10 @@ export class CheckoutCore {
           <Skeleton height="24px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
-          <div part="summary-payment-description">{this.checkout?.payment_description}</div>
-          <div part="summary-payment-total">
-            <span part="summary-payment-total-label">Total</span>&nbsp;
-            <span part="summary-payment-total-amount">{formatCurrency(+this.checkout?.total_amount)}</span>
+          <div part="summary-payment-description text">{this.checkout?.payment_description}</div>
+          <div part="summary-payment-total text">
+            <span part="summary-payment-total-label text">Total</span>&nbsp;
+            <span part="summary-payment-total-amount text">{formatCurrency(+this.checkout?.total_amount)}</span>
           </div>
         </div>
       </section>

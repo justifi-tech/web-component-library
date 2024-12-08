@@ -45,6 +45,13 @@ Type: `Promise<void>`
 
 
 
+## Shadow Parts
+
+| Part         | Description |
+| ------------ | ----------- |
+| `"header-2"` |             |
+
+
 ## Dependencies
 
 ### Used by

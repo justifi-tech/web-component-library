@@ -12,37 +12,19 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
         Protect your registration and get your money back in the event of unforeseen circumstances that prevent participation, including sickness (including COVID-19), injury, inclement weather, transportation, job loss and other covered reasons.
       </p>
     </small>
-    <div>
-      <input class="form-check-input me-2" id="accept" name="opt-in" part="
-          radio-input
-          
-          
-        " type="radio" value="true">
-      <label htmlfor="accept" part="radio-input-label">
-        Accept coverage for $0.79
-      </label>
-    </div>
-    <div class="mb-2">
-      <input class="form-check-input me-2" id="decline" name="opt-in" part="
-          radio-input
-          
-          
-        " type="radio" value="false">
-      <label htmlfor="decline" part="radio-input-label">
-        Decline coverage
-      </label>
-    </div>
+    <form-control-radio label="Accept coverage for $0.79" name="opt-in" value="true"></form-control-radio>
+    <form-control-radio label="Decline coverage" name="opt-in" value="false"></form-control-radio>
     <div class="invalid-feedback" style="display: none;">
       Please select an option
     </div>
     <small part="text">
       <p>
         Selecting yes constitutes my electronic signature. I confirm that I have read, understand and agree to the
-        <a href="https://partner.battleface.com/library/vertical-insure-season-cancellation-and-interruption-es" target="_blank" style="color: black;">
+        <a href="https://partner.battleface.com/library/vertical-insure-season-cancellation-and-interruption-es" part="link" target="_blank">
           policy terms and conditions
         </a>
         , and
-        <a href="https://legal.verticalinsure.com/Important-Notices-and-Disclosures-Everspan-Season-Can.pdf" target="_blank" style="color: black;">
+        <a href="https://legal.verticalinsure.com/Important-Notices-and-Disclosures-Everspan-Season-Can.pdf" part="link" target="_blank">
           important notices and disclosures
         </a>
         , which includes fraud warnings, privacy notice, and consent to electronic signature and delivery.
@@ -73,37 +55,19 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
         Protect your registration and get your money back in the event of unforeseen circumstances that prevent participation, including sickness (including COVID-19), injury, inclement weather, transportation, job loss and other covered reasons.
       </p>
     </small>
-    <div>
-      <input class="form-check-input is-invalid me-2" id="accept" name="opt-in" part="
-          radio-input
-          
-          radio-input-invalid
-        " type="radio" value="true">
-      <label htmlfor="accept" part="radio-input-label">
-        Accept coverage for $0.79
-      </label>
-    </div>
-    <div class="mb-2">
-      <input class="form-check-input is-invalid me-2" id="decline" name="opt-in" part="
-          radio-input
-          
-          radio-input-invalid
-        " type="radio" value="false">
-      <label htmlfor="decline" part="radio-input-label">
-        Decline coverage
-      </label>
-    </div>
+    <form-control-radio label="Accept coverage for $0.79" name="opt-in" value="true"></form-control-radio>
+    <form-control-radio label="Decline coverage" name="opt-in" value="false"></form-control-radio>
     <div class="invalid-feedback" style="display: block;">
       Please select an option
     </div>
     <small part="text">
       <p>
         Selecting yes constitutes my electronic signature. I confirm that I have read, understand and agree to the
-        <a href="https://partner.battleface.com/library/vertical-insure-season-cancellation-and-interruption-es" target="_blank" style="color: black;">
+        <a href="https://partner.battleface.com/library/vertical-insure-season-cancellation-and-interruption-es" part="link" target="_blank">
           policy terms and conditions
         </a>
         , and
-        <a href="https://legal.verticalinsure.com/Important-Notices-and-Disclosures-Everspan-Season-Can.pdf" target="_blank" style="color: black;">
+        <a href="https://legal.verticalinsure.com/Important-Notices-and-Disclosures-Everspan-Season-Can.pdf" part="link" target="_blank">
           important notices and disclosures
         </a>
         , which includes fraud warnings, privacy notice, and consent to electronic signature and delivery.

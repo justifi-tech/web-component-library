@@ -101,30 +101,27 @@ export class SezzlePaymentMethod {
           onClick={() => this.onPaymentMethodOptionClick()}
           part="radio-list-item"
         >
-          <input
-            type="radio"
+          <form-control-radio
             name="paymentMethodType"
-            id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
-            onClick={(event) => event.preventDefault()}
-            checked={this.isSelected}
-            class="form-check-input me-2"
-            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
+            label={() => {
+              return (
+                <div>
+                  Buy now, pay later with {sezzleLogo}
+                  {this.installmentPlan && (
+                    <small>
+                      <span>{this.installmentPlan?.installments.length}</span>&nbsp;
+                      <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
+                      <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
+                    </small>
+                  )}
+                </div>
+              );
+            }}
+            defaultChecked={this.isSelected}
+            inputHandler={() => this.onPaymentMethodOptionClick()}
+            disabled={false}
           />
-          <label
-            htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label"
-            part="radio-input-label"
-          >
-            <div>Buy now, pay later with {sezzleLogo}</div>
-            {this.installmentPlan && (
-              <small>
-                <span>{this.installmentPlan?.installments.length}</span>&nbsp;
-                <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
-                <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
-              </small>
-            )}
-          </label>
         </div>
       </div>
     );

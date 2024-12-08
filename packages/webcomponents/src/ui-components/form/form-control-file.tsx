@@ -10,6 +10,7 @@ import {
 } from '@stencil/core';
 import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
 import { FormControlErrorText } from '../../ui-components';
+import { FormLabel } from './form-helpers/form-label';
 
 @Component({
   tag: 'form-control-file',
@@ -59,12 +60,11 @@ export class FileInput {
     return (
       <Host exportparts="label,input,input-invalid">
         <div class="form-group d-flex flex-column">
-          <div class="d-flex align-items-start gap-2">
-            <label part="label" class="form-label" htmlFor={this.name}>
-              {this.label}
-            </label>
-            <form-control-tooltip helpText={this.helpText} />
-          </div>
+          <FormLabel
+            htmlFor={this.name}
+            label={this.label}
+            helpText={this.helpText}
+          />
           <input
             ref={(el) => this.fileInput = el}
             type="file"

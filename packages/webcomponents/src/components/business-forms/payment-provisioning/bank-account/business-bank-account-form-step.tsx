@@ -145,11 +145,18 @@ export class BusinessBankAccountFormStep {
     return (
       <form>
         <fieldset>
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Bank Account Info</legend>
-            <form-control-tooltip helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
+          <div class="mb-4">
+            <legend
+              class="d-flex align-items-center justify-content-between mb-2"
+              part="header-2"
+            >
+              Bank Account Info
+              <form-control-tooltip
+                helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship."
+                className="ms-2"
+              />
+            </legend>
           </div>
-          <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text

@@ -23,7 +23,7 @@ export class AdditionalQuestionsFormStepCore {
     } else {
       this.recurringPayments = false;
     }
-  } 
+  }
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -110,11 +110,19 @@ export class AdditionalQuestionsFormStepCore {
     return (
       <form>
         <fieldset>
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Additional Questions</legend>
-            <form-control-tooltip helpText="This information helps us understand the business and identify and monitor trends to safeguard you and your customers." />
+          <div class="mb-4">
+            <legend
+              class="d-flex align-items-center justify-content-between mb-2"
+              part="header-2"
+            >
+              Additional Questions
+              <form-control-tooltip
+                helpText="This information helps us understand the business and identify and monitor trends to safeguard you and your customers."
+                className="ms-2"
+              />
+            </legend>
+
           </div>
-          <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <form-control-monetary

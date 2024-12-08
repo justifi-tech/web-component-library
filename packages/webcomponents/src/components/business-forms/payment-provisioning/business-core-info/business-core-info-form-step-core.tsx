@@ -101,10 +101,9 @@ export class BusinessCoreInfoFormStepCore {
     return (
       <form>
         <fieldset>
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Business Information</legend>
+          <div class="d-flex gap-2">
+            <legend class="mb-4" part="header-2">Business Information</legend>
           </div>
-          <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text

@@ -6,6 +6,7 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
@@ -17,6 +18,8 @@ import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 export class MonetaryInput {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: string;
@@ -71,6 +74,20 @@ export class MonetaryInput {
     }
   }
 
+  private get part(): string {
+    let part = 'input input-group-input';
+    if (this.errorText) {
+      part += ' input-invalid';
+    }
+    if (this.disabled) {
+      part += ' input-disabled';
+    }
+    if (this.isFocused) {
+      part += ' input-focused';
+    }
+    return part;
+  }
+
   render() {
     return (
       <Host exportparts="label,input,input-group-input,input-group-text,input-invalid">
@@ -84,9 +101,13 @@ export class MonetaryInput {
               ref={el => (this.textInput = el as HTMLInputElement)}
               id={this.name}
               name={this.name}
-              onBlur={this.formControlBlur.emit}
+              onFocus={() => { this.isFocused = true; }}
+              onBlur={() => {
+                this.isFocused = false;
+                this.formControlBlur.emit();
+              }}
               onInput={this.handleFormControlInput}
-              part={`input input-group-input ${this.errorText && 'input-invalid'}`}
+              part={this.part}
               class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
               type="text"
               disabled={this.disabled}

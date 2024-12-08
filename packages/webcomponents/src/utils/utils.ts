@@ -196,3 +196,50 @@ export function isEmptyObject(obj) {
 export const isInRange = (num, min, max) => {
   return num >= min && num <= max;
 };
+
+// Receives an HTML string and remove the style attributes
+export function removeAttribute(htmlString, attribute) {
+  // Create a temporary DOM element to parse the HTML string
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+
+  // Select all elements with a style attribute
+  const elementsWithStyle = tempDiv.querySelectorAll(`[${attribute}]`);
+
+  // Remove the style attribute from each element
+  elementsWithStyle.forEach((element) => {
+    element.removeAttribute(attribute);
+  });
+
+  // Return the updated HTML as a string
+  return tempDiv.innerHTML;
+}
+
+export function addAttribute(htmlString, tagName, attribute, value) {
+  // Create a temporary DOM element to parse the HTML string
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+
+  // Find all elements matching the specified tag name
+  const elements = tempDiv.getElementsByTagName(tagName);
+
+  // Add the part attribute to each found element
+  Array.from(elements).forEach((element) => {
+    element.setAttribute(attribute, value);
+  });
+
+  // Return the updated HTML as a string
+  return tempDiv.innerHTML;
+}
+
+// Receives an HTML string and an array of functions to apply to that string
+export function processHTML(htmlString, functions) {
+  let processedHTML = htmlString;
+  // Apply each function to the HTML string
+  functions.forEach((func) => {
+    processedHTML = func(processedHTML);
+  });
+
+  // Return the updated HTML as a string
+  return processedHTML;
+}
