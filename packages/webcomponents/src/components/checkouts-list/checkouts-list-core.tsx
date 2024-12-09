@@ -182,7 +182,14 @@ export class CheckoutsListCore {
                   onClick={this.rowClickHandler}
                   part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
-                  {data}
+                  {data.map((dataEntry: any) => {
+                    let nestedHtml = dataEntry?.type;
+                    if (nestedHtml) {
+                      return <td part="table-cell" innerHTML={dataEntry.value}></td>;
+                    } else {
+                      return <td part="table-cell">{dataEntry}</td>;
+                    }
+                  })}
                 </tr>
               ))}
             </tbody>

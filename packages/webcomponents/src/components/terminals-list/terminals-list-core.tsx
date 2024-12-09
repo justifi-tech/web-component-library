@@ -45,7 +45,7 @@ export class TerminalsListCore {
 
   fetchTerminals(): void {
     this.loading = true;
-    
+
     this.getTerminals({
       params: this.params,
       onSuccess: async ({ terminals, pagingInfo }) => {
@@ -59,7 +59,7 @@ export class TerminalsListCore {
         } else {
           this.loading = false;
         }
-        
+
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -157,7 +157,7 @@ export class TerminalsListCore {
         />
         <div class="table-wrapper">
           <table class="table table-hover">
-          <thead class="table-head sticky-top" part="table-head">
+            <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
                 {this.terminalsTable.columnData.map((column) => column)}
               </tr>
@@ -182,7 +182,14 @@ export class TerminalsListCore {
                   onClick={this.rowClickHandler}
                   part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
-                  {data}
+                  {data.map((dataEntry: any) => {
+                    let nestedHtml = dataEntry?.type;
+                    if (nestedHtml) {
+                      return <td part="table-cell" innerHTML={dataEntry.value}></td>;
+                    } else {
+                      return <td part="table-cell">{dataEntry}</td>;
+                    }
+                  })}
                 </tr>
               ))}
             </tbody>
