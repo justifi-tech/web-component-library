@@ -45,11 +45,10 @@ export class DateInput {
   }
 
   handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const localValue = target.value;
+    const dateValue = event.target.value;
 
-    this.inputHandler(this.name, localValue);
-    this.formControlInput.emit({ name: this.name, value: localValue });
+    this.inputHandler(this.name, dateValue);
+    this.formControlInput.emit({ name: this.name, value: dateValue });
   }
 
   updateInput(value: any) {
