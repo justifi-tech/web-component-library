@@ -3,7 +3,7 @@ import { DisputeManagementClickEvents } from "../dispute";
 import { FormController } from "../../../ui-components/form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 import { IApiResponse } from "../../../api";
-import { IDispute, IDisputeResponse } from "../../../api/Dispute";
+import { IDispute } from "../../../api/Dispute";
 import { ComponentError, DisputeEvidenceDocument } from "../../../components";
 
 type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
@@ -24,7 +24,8 @@ export class DisputeResponseCore {
   }) => Promise<IApiResponse<any>>;
 
   @State() isLoading: boolean = false;
-  @State() disputeResponse: IDisputeResponse;
+  @State() disputeResponse: any = {};
+  @State() documentList = [];
   @State() currentStep = 0;
   @State() currentStepComponentRef: DisputeResponseStepElement;
   @State() formController: FormController;
@@ -47,34 +48,34 @@ export class DisputeResponseCore {
     this.formController = new FormController(DisputeResponseSchema);
   }
 
-  saveData = async (formData: any):
-    Promise<IApiResponse<IDispute>> => {
-    this.isLoading = true;
-
+  saveData = async (formData: any): Promise<IApiResponse<IDispute>> => {
     return this.updateDisputeResponse({
       payload: formData,
-      onSuccess: ({ disputeResponse }) => {
-        this.disputeResponse = disputeResponse;
-        this.isLoading = false;
-      },
+      onSuccess: ({ disputeResponse }) => this.disputeResponse = disputeResponse,
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
           errorCode: code,
           message: error,
           severity,
         })
-        this.isLoading = false;
       },
     });
   }
 
-  initializeFileUploads = async (documentList: any[]) => {
-    console.log('initializeFileUploads documentList', documentList);
-    const presignedUrlPromises: Promise<IApiResponse<any>>[] = documentList.map((document) => {
+  initializeMakePresignedURLs = async () => {
+    const presignedUrlPromises: Promise<IApiResponse<any>>[] = this.documentList.map((document) => {
       return this.getPresignedFileUrl(document);
     });
 
-    await Promise.all(presignedUrlPromises);
+    return await Promise.all(presignedUrlPromises);
+  }
+
+  initializeFileUploads = async () => {
+    const uploadDocumentPromises: Promise<Response>[] = this.documentList.map((document) => {
+      return this.uploadDocument(document);
+    });
+
+    return Promise.all(uploadDocumentPromises);
   }
 
   getPresignedFileUrl = async (document: DisputeEvidenceDocument): Promise<IApiResponse<any>> => {
@@ -86,7 +87,6 @@ export class DisputeResponseCore {
       },
       onSuccess: (response) => {
         document.presignedUrl = response.data.presigned_url;
-        this.uploadDocument(document);
         this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -100,9 +100,8 @@ export class DisputeResponseCore {
     })
   }
 
-  uploadDocument = async (document: DisputeEvidenceDocument) => {
+  uploadDocument = async (document: DisputeEvidenceDocument): Promise<Response> => {
     const fileData = await document.getFileString();
-    console.log('uploadDocument presignedUrl', document.presignedUrl);
 
     if (!document.presignedUrl) {
       throw new Error('Presigned URL is not set');
@@ -113,8 +112,7 @@ export class DisputeResponseCore {
       body: fileData,
     });
 
-    // return this.handleUploadResponse(response);
-    console.log('upload response:', response);
+    return response;
   }
 
   get currentStepComponent() {
@@ -134,8 +132,16 @@ export class DisputeResponseCore {
   }
 
   private handleSubmit = async (formData, documentList) => {
-    if (documentList) await this.initializeFileUploads(documentList);
+    this.isLoading = true;
+
     if (formData) await this.saveData(formData);
+    if (documentList.length) {
+      this.documentList = documentList;
+      await this.initializeMakePresignedURLs();
+      await this.initializeFileUploads();
+    }
+
+    this.isLoading = false;
   }
 
   // after each of these steps where validateAndSubmit is called, reload the dispute

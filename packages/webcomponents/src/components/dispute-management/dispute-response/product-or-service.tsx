@@ -22,9 +22,9 @@ export class ProductOrService {
   }
 
   componentDidLoad() {
-    this.form.values.subscribe(values =>
-      this.values = { ...values }
-    );
+    this.form.values.subscribe(values => {
+      this.values = { ...values };
+    });
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
@@ -35,7 +35,7 @@ export class ProductOrService {
     const name = target.name as DisputeEvidenceDocumentType;
     const files = target.files as unknown as File[];
     for (const file of files) {
-      this.documentList.push(new DisputeEvidenceDocument(file, name))
+      this.documentList.push(new DisputeEvidenceDocument(file, name));
     }
   }
 

@@ -20,6 +20,7 @@
  - [form-control-checkbox](../..)
  - [form-control-date](../..)
  - [form-control-file](../..)
+ - [form-control-file-v2](../..)
  - [form-control-monetary](../..)
  - [form-control-number](../..)
  - [form-control-number-masked](../..)
@@ -34,6 +35,7 @@ graph TD;
   form-control-checkbox --> form-control-error-text
   form-control-date --> form-control-error-text
   form-control-file --> form-control-error-text
+  form-control-file-v2 --> form-control-error-text
   form-control-monetary --> form-control-error-text
   form-control-number --> form-control-error-text
   form-control-number-masked --> form-control-error-text
