@@ -7,6 +7,7 @@ body {
 
 justifi-checkout,
 justifi-payment-form,
+justifi-tokenize-payment-method,
 justifi-payment-provisioning {
   display: block;
   margin: 5% auto;
@@ -17,7 +18,8 @@ justifi-payment-provisioning {
 
 
 justifi-checkout,
-justifi-payment-form {
+justifi-payment-form,
+justifi-tokenize-payment-method {
   max-width: 400px;
   padding: 40px;
 }

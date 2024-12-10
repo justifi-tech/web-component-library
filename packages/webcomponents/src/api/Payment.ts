@@ -258,12 +258,20 @@ export class Payment implements IPayment {
     }
   }
 
-  get paymentType(): PaymentTypes {
+  get payment_type(): PaymentTypes {
     if (this.payment_method) {
       return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
     } else {
       return PaymentTypes.unknown;
     }
+  }
+
+  get payers_name(): string | null {
+    return this.payment_method.payersName;
+  }
+
+  get last_four_digits(): string | null {
+    return this.payment_method.lastFourDigits;
   }
 }
 

@@ -14,33 +14,6 @@ beforeEach(() => {
 });
 
 describe('payments-list', () => {
-  it('renders an error message when accountId and authToken are not provided', async () => {
-    const page = await newSpecPage({
-      components: [PaymentsList, PaymentsListCore],
-      template: () => <justifi-payments-list />,
-    });
-    await page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
-
-  it('renders an error message when accountId is not provided', async () => {
-    const page = await newSpecPage({
-      components: [PaymentsList, PaymentsListCore],
-      template: () => <justifi-payments-list auth-token="abc" />,
-    });
-    await page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
-
-  it('renders an error message when authToken is not provided', async () => {
-    const page = await newSpecPage({
-      components: [PaymentsList, PaymentsListCore],
-      template: () => <justifi-payments-list account-id="abc" />,
-    });
-    await page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
-
   it('emit an error event when accountId and authToken are not provided', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
@@ -48,7 +21,15 @@ describe('payments-list', () => {
       template: () => <justifi-payments-list onError-event={errorEvent} />,
     });
     await page.waitForChanges();
-    expect(errorEvent).toHaveBeenCalled();
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'missing-props',
+          message: 'Account ID and Auth Token are required',
+          severity: 'error',
+        },
+      })
+    );
   });
 
   it('emit an error event when fetch fails', async () => {

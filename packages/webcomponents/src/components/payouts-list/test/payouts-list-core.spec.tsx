@@ -5,10 +5,17 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { PayoutsListCore } from '../payouts-list-core';
 import mockSuccessResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
-import { IApiResponseCollection, IPayout } from '../../../api';
+import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
+import { IApiResponseCollection, IPayout, ISubAccount } from '../../../api';
 import { makeGetPayouts } from '../get-payouts';
+import { makeGetSubAccounts } from '../../../api/get-subaccounts';
+import { defaultColumnsKeys } from '../payouts-table';
+import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { PayoutsListFilters } from '../payouts-list-filters';
+import { DateInput } from '../../../ui-components/form/form-control-date';
 
 const mockPayoutsResponse = mockSuccessResponse as IApiResponseCollection<IPayout[]>;
+const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
 
 describe('payouts-list-core', () => {
   it('renders properly', async () => {
@@ -18,19 +25,32 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: '123',
       authToken: '123',
-      service: mockPayoutService
+      service: mockPayoutService,
+      apiOrigin: 'http://localhost:3000'
     });
 
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    // components.pop();
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} />,
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
 
     const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
 
-    expect(rows.length).toBe(4);
+    expect(rows.length).toBe(5);
     expect(page.root).toMatchSnapshot();
   });
 
@@ -42,12 +62,24 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockPayoutService
+      service: mockPayoutService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} />,
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -65,14 +97,26 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockPayoutService
+      service: mockPayoutService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} onError-event={errorSpy} />,
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -94,12 +138,24 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: '123',
       authToken: '123',
-      service: mockPayoutService
+      service: mockPayoutService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} />,
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -115,6 +171,147 @@ describe('payouts-list-core', () => {
     }
   });
 
+  it('shows table filter menu on filter button click', async () => {
+    const mockPayoutsService = {
+      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
+    };
+
+    const getPayouts = makeGetPayouts({
+      id: '123',
+      authToken: '123',
+      service: mockPayoutsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+    });
+
+    await page.waitForChanges();
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    expect(filterButton).not.toBeNull();
+
+    filterButton.click();
+    await page.waitForChanges();
+
+    const filterMenu = page.root.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+  });
+
+  it('updates params and refetches data on filter interaction', async () => {
+    const mockPayoutsService = {
+      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
+    };
+
+    const getPayouts = makeGetPayouts({
+      id: '123',
+      authToken: '123',
+      service: mockPayoutsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+    });
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.querySelector('payouts-list-filters') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const dateFilter = filterMenu.querySelector('form-control-date') as HTMLFormControlDateElement;
+    expect(dateFilter).not.toBeNull();
+
+    const dateFilterInput = dateFilter.querySelector('input');
+    expect(dateFilterInput).not.toBeNull();
+
+    dateFilterInput.value = '2021-01-01';
+    dateFilterInput.dispatchEvent(new Event('input'));
+
+    expect(mockPayoutsService.fetchPayouts).toHaveBeenCalledTimes(2);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams).toEqual({"created_after": "2021-01-01T00:00:00.000Z"});
+  });
+
+  it('clears filters and refetches data on clear filters interaction', async () => {
+    const mockPayoutsService = {
+      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
+    };
+
+    const getPayouts = makeGetPayouts({
+      id: '123',
+      authToken: '123',
+      service: mockPayoutsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+    });
+
+    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.querySelector('payouts-list-filters') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const dateFilter = filterMenu.querySelector('form-control-date') as HTMLFormControlDateElement;
+    expect(dateFilter).not.toBeNull();
+
+    const dateFilterInput = dateFilter.querySelector('input');
+    expect(dateFilterInput).not.toBeNull();
+
+    dateFilterInput.value = '2021-01-01';
+    dateFilterInput.dispatchEvent(new Event('input'));
+
+    const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
+    expect(clearButton).not.toBeNull();
+
+    clearButton.click();
+
+    expect(mockPayoutsService.fetchPayouts).toHaveBeenCalledTimes(3);
+    const updatedParams = page.rootInstance.params;
+    expect(updatedParams).toEqual({});
+  });
+
   it('updates params and refetches data on pagination interaction', async () => {
     const mockPayoutService = {
       fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
@@ -123,12 +320,24 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: '123',
       authToken: '123',
-      service: mockPayoutService
+      service: mockPayoutService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} />,
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
     await page.waitForChanges();
 

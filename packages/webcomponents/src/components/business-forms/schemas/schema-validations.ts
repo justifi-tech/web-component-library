@@ -82,7 +82,6 @@ export const dateOfIncorporationValidation = string()
 export const identityNameValidation = string()
   .min(2, 'Name must be at least 2 characters')
   .max(100, 'Name must be less than 100 characters')
-  .matches(stringLettersOnlyRegex, 'Enter valid name')
   .transform(transformEmptyString);
 
 export const identityTitleValidation = string()

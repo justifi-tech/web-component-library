@@ -1,0 +1,70 @@
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../utils';
+import { codeExampleFull, codeExampleEventHandling } from './example';
+import { Authorization } from '../../utils/documentation-components';
+import * as JustifiTerminalsList from './index.stories.tsx';
+
+<Meta
+  title="Merchant Tools/Terminals List"
+  Components="justifi-terminals-list"
+  of={JustifiTerminalsList}
+/>
+
+<Title />
+
+Component to render a formated list of terminals for the requested account.
+
+# Index
+
+- [Props, events and methods](#props-events-and-methods)
+  - [Events usage](#events-usage)
+- [Styling](#styling)
+  - [Exported Parts](#exported-parts)
+- [Example usage](#example-usage)
+
+# Props, events and methods
+
+---
+
+<ArgTypes exclude={['theme']} />
+
+<Authorization
+  actions={['read', 'write']}
+  entity="account"
+  identification="account_id"
+/>
+
+## Events usage
+
+All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
+
+<Source dark language="html" code={codeExampleEventHandling} />
+
+# Styling
+
+---
+
+The `<justifi-terminals-list>` can be customized by using the exported `parts`.
+
+## Exported parts
+
+<ExportedParts
+  compact
+  component="justifi-terminals-list"
+  tags={filterDocsByTag('justifi-terminals-list').docsTags.map(
+    (part) => part.text
+  )}
+/>
+
+# Example Usage
+
+---
+
+<Source dark language="html" code={codeExampleFull} />
