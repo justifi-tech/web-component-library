@@ -1,7 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { debounce } from 'lodash';
 import { PaymentsParams } from '../../api';
-import { convertToUTC, convertUTCToLocal } from '../../utils/utils';
+import { convertToUTC } from '../../utils/utils';
 
 @Component({
   tag: 'payments-list-filters'
@@ -10,6 +10,9 @@ export class PaymentsListFilters {
   @Prop() params: PaymentsParams = {};
   @Prop() setParamsOnChange: (name: string, value: string) => void;
   @Prop() clearParams: () => void;
+
+  @State() createdAfterInputValue: string;
+  @State() createdBeforeInputValue: string;
 
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
 
@@ -35,9 +38,15 @@ export class PaymentsListFilters {
     ]
   }
 
+  clearFilters = () => {
+    this.createdAfterInputValue = '';
+    this.createdBeforeInputValue = '';
+    this.clearParams();
+  }
+
   render() {
     return (
-      <table-filters-menu params={this.params} clearParams={this.clearParams}>
+      <table-filters-menu params={this.params} clearParams={this.clearFilters}>
         <div class="grid-cols-2 gap-3 p-1">
           <div class="p-2">
             <form-control-text
@@ -69,7 +78,7 @@ export class PaymentsListFilters {
               name="created_after"
               label="Start Date"
               inputHandler={this.handleDateInput}
-              defaultValue={convertUTCToLocal(this.params.created_after, true)}
+              defaultValue={this.createdAfterInputValue}
               showTime
             />
           </div>
@@ -78,7 +87,7 @@ export class PaymentsListFilters {
               name="created_before"
               label="End Date"
               inputHandler={this.handleDateInput}
-              defaultValue={convertUTCToLocal(this.params.created_before, true)}
+              defaultValue={this.createdBeforeInputValue}
               showTime
             />
           </div>
