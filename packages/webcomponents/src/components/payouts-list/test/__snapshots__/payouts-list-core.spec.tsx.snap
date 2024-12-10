@@ -3,35 +3,7 @@
 exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 <payouts-list-core>
   <div>
-    <payouts-list-filters>
-      <table-filters-menu>
-        <!---->
-        <div class="d-flex gap-2">
-          <div class="dropdown pb-3">
-            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
-              Filters
-            </button>
-            <custom-popper strategy="fixed" trigger="click">
-              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
-                <div class="gap-3 grid-cols-2 p-1">
-                  <div class="p-2">
-                    <form-control-date filtertimezone="" label="Start Date" name="created_after" showtime=""></form-control-date>
-                  </div>
-                  <div class="p-2">
-                    <form-control-date filtertimezone="" label="End Date" name="created_before" showtime=""></form-control-date>
-                  </div>
-                </div>
-              </form>
-            </custom-popper>
-          </div>
-          <div>
-            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
-              Clear Filters
-            </button>
-          </div>
-        </div>
-      </table-filters-menu>
-    </payouts-list-filters>
+    <payouts-list-filters></payouts-list-filters>
     <div class="table-wrapper">
       <table class="table table-hover">
         <thead class="sticky-top table-head" part="table-head">
@@ -108,35 +80,7 @@ exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 exports[`payouts-list-core renders properly 1`] = `
 <payouts-list-core>
   <div>
-    <payouts-list-filters>
-      <table-filters-menu>
-        <!---->
-        <div class="d-flex gap-2">
-          <div class="dropdown pb-3">
-            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
-              Filters
-            </button>
-            <custom-popper strategy="fixed" trigger="click">
-              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
-                <div class="gap-3 grid-cols-2 p-1">
-                  <div class="p-2">
-                    <form-control-date filtertimezone="" label="Start Date" name="created_after" showtime=""></form-control-date>
-                  </div>
-                  <div class="p-2">
-                    <form-control-date filtertimezone="" label="End Date" name="created_before" showtime=""></form-control-date>
-                  </div>
-                </div>
-              </form>
-            </custom-popper>
-          </div>
-          <div>
-            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
-              Clear Filters
-            </button>
-          </div>
-        </div>
-      </table-filters-menu>
-    </payouts-list-filters>
+    <payouts-list-filters></payouts-list-filters>
     <div class="table-wrapper">
       <table class="table table-hover">
         <thead class="sticky-top table-head" part="table-head">

@@ -21,17 +21,12 @@ export class DateInput {
   @Prop() helpText?: string;
   @Prop() errorText?: string;
   @Prop() disabled?: boolean;
-  @Prop() filterTimeZone?: boolean = false;
   @Prop() showTime?: boolean;
   @Prop() maxDate?: string = this.currentDate;
-  
+
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
-    if (this.filterTimeZone) {
-      this.updateInput(this.convertToLocal(newValue));
-    } else {
-      this.updateInput(newValue);
-    }
+    this.updateInput(newValue);
   }
 
   @Event() formControlInput: EventEmitter<any>;
@@ -46,44 +41,19 @@ export class DateInput {
   }
 
   componentDidLoad() {
-    if (this.filterTimeZone) {
-      this.updateInput(this.convertToLocal(this.defaultValue));
-    } else {
-      this.updateInput(this.defaultValue);
-    }
+    this.updateInput(this.defaultValue);
   }
-  
+
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const localValue = target.value;
 
-    if (this.filterTimeZone) {
-      const utcDate = this.convertToUTC(localValue);
-      this.inputHandler(this.name, utcDate);
-      this.formControlInput.emit({ name: this.name, value: utcDate });
-    } else {
-      this.inputHandler(this.name, localValue);
-      this.formControlInput.emit({ name: this.name, value: localValue });
-    }
+    this.inputHandler(this.name, localValue);
+    this.formControlInput.emit({ name: this.name, value: localValue });
   }
-   
+
   updateInput(value: any) {
     this.dateInput.value = value;
-  }
-
-  convertToUTC(value: string): string {
-    const dateObj = new Date(value);
-    return new Date(dateObj.toUTCString()).toISOString();
-  }
-
-  convertToLocal(value: string): string {
-    if (!value) return value;
-    const date = new Date(value);
-  
-    // Adjust the date to the local timezone
-    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  
-    return this.showTime ? localDate.toISOString().slice(0, 16) : localDate.toISOString().split('T')[0];
   }
 
   render() {

@@ -42,7 +42,7 @@ describe('payouts-list-core', () => {
 
     // components.pop();
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
@@ -78,7 +78,7 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
