@@ -1,3 +1,15 @@
+
+export function composeQueryParams(values: string[]) {
+  const queryParams = values.map((value) => {
+    if (value === values[0]) {
+      return (value = `?${value}`);
+    } else {
+      return (value = `&${value}`);
+    }
+  });
+  return queryParams.join('');
+}
+
 export const onFilterChange = (newFilters: any, params: any) => {
   let newParams: any = { ...params };
   delete newParams.before_cursor;

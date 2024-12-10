@@ -1,6 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { debounce } from 'lodash';
 import { PaymentsParams } from '../../api';
+import { convertToUTC } from '../../utils/utils';
 
 @Component({
   tag: 'payments-list-filters'
@@ -10,11 +11,19 @@ export class PaymentsListFilters {
   @Prop() setParamsOnChange: (name: string, value: string) => void;
   @Prop() clearParams: () => void;
 
+  @State() createdAfterInputValue: string;
+  @State() createdBeforeInputValue: string;
+
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
 
   componentWillLoad() {
     // debounced input handler for text input
     this.debouncedSetParamsOnChange = debounce(this.setParamsOnChange, 300);
+  }
+
+  handleDateInput = (name: string, value: string) => {
+    const utcDate = convertToUTC(value);
+    this.setParamsOnChange(name, utcDate);
   }
 
   get paymentStatusOptions() {
@@ -29,9 +38,15 @@ export class PaymentsListFilters {
     ]
   }
 
+  clearFilters = () => {
+    this.createdAfterInputValue = '';
+    this.createdBeforeInputValue = '';
+    this.clearParams();
+  }
+
   render() {
     return (
-      <table-filters-menu params={this.params} clearParams={this.clearParams}>
+      <table-filters-menu params={this.params} clearParams={this.clearFilters}>
         <div class="grid-cols-2 gap-3 p-1">
           <div class="p-2">
             <form-control-text
@@ -62,20 +77,18 @@ export class PaymentsListFilters {
             <form-control-date
               name="created_after"
               label="Start Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_after}
+              inputHandler={this.handleDateInput}
+              defaultValue={this.createdAfterInputValue}
               showTime
-              filterTimeZone
             />
           </div>
           <div class="p-2">
             <form-control-date
               name="created_before"
               label="End Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_before}
+              inputHandler={this.handleDateInput}
+              defaultValue={this.createdBeforeInputValue}
               showTime
-              filterTimeZone
             />
           </div>
         </div>
