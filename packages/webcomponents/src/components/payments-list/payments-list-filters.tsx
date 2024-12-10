@@ -20,7 +20,6 @@ export class PaymentsListFilters {
 
   handleDateInput = (name: string, value: string) => {
     const utcDate = convertToUTC(value);
-    console.log('utcDate', utcDate);
     this.setParamsOnChange(name, utcDate);
   }
 

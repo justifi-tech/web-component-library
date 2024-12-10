@@ -22,7 +22,6 @@ export class PayoutsListFilters {
     }
 
     const utcDate = convertToUTC(value);
-    console.log('utcDate', utcDate);
     this.setParamsOnChange(name, utcDate);
   }
 
