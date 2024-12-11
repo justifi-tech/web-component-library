@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payout, pagingDefaults } from '../../api';
-import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { PagingInfo, Payout, PayoutsTableFilterParams, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
-import { DownloadIcon } from '../../assets/download-icon';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { MapPayoutStatusToBadge } from './payouts-status';
+import { onFilterChange } from '../../ui-components/filters/utils';
+import { payoutTableCells, payoutTableColumns } from './payouts-table';
+import { Table } from '../../utils/table';
 
 @Component({
   tag: 'payouts-list-core',
@@ -12,13 +12,24 @@ import { MapPayoutStatusToBadge } from './payouts-status';
 
 export class PayoutsListCore {
   @Prop() getPayouts: Function;
+  @Prop() getSubAccounts: Function;
   @Prop() getPayoutCSV: Function;
+  @Prop() columns: string;
 
   @State() payouts: Payout[] = [];
+  @State() payoutsTable: Table;
+  @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: any;
+  @State() params: PayoutsTableFilterParams = {};
+
+  @Watch('params')
+  @Watch('getPayouts')
+  @Watch('getSubAccounts')
+  updateOnPropChange() {
+    this.fetchPayouts();
+  }
 
   @Event({
     eventName: 'payout-row-clicked',
@@ -27,19 +38,15 @@ export class PayoutsListCore {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
-  @Watch('params')
-  @Watch('getPayouts')
-  updateOnPropChange() {
-    this.fetchData();
-  }
 
   componentWillLoad() {
-    if (this.getPayouts) {
-      this.fetchData();
+    this.payoutsTable = new Table(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));
+    if (this.getPayouts && this.getSubAccounts) {
+      this.fetchPayouts();
     }
   }
 
-  fetchData(): void {
+  fetchPayouts(): void {
     this.loading = true;
 
     this.getPayouts({
@@ -47,6 +54,37 @@ export class PayoutsListCore {
       onSuccess: ({ payouts, pagingInfo }) => {
         this.payouts = payouts;
         this.paging = pagingInfo;
+        this.payoutsTable.collectionData = this.payouts;
+        const shouldFetchSubAccounts = this.payoutsTable.columnKeys.includes('sub_account_name');
+
+        if (shouldFetchSubAccounts) {
+          this.fetchSubAccounts();
+        } else {
+          this.loading = false;
+        }
+
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+        this.loading = false;
+      },
+    });
+  }
+
+  async fetchSubAccounts(): Promise<void> {
+    this.getSubAccounts({
+      params: this.subAccountParams,
+      onSuccess: ({ subAccounts }) => {
+        this.subAccounts = subAccounts;
+        this.payouts = this.payouts.map((payout) => {
+          payout.sub_account_name = this.subAccounts.find((subAccount) => subAccount.id === payout.account_id)?.name;
+          return payout;
+        });
         this.loading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -74,10 +112,6 @@ export class PayoutsListCore {
     });
   }
 
-  handleDateChange = (name: string, value: string) => {
-    this.params = { ...this.params, [name]: value };
-  }
-
   handleClickPrevious = (beforeCursor: string) => {
     const newParams = { ...this.params };
     delete newParams.after_cursor;
@@ -96,61 +130,29 @@ export class PayoutsListCore {
     this.rowClicked.emit(this.payouts.find((payout) => payout.id === clickedPayoutID));
   }
 
+  setParamsOnChange = (name: string, value: string) => {
+    let newParams = { [name]: value };
+    this.params = onFilterChange(newParams, this.params);
+  }
+
+  clearParams = () => {
+    this.errorMessage = '';
+    this.params = {};
+  }
+
+  get subAccountParams() {
+    let accountIdNumbers = this.payouts.map((payout) => payout.account_id);
+    let uniqueAccountIds = [...new Set(accountIdNumbers)];
+    let accountIdString = uniqueAccountIds.join(',');
+    return { sub_account_id: accountIdString };
+  }
+
   get entityId() {
     return this.payouts.map((payout) => payout.id);
   }
 
-  get columnData() {
-    return [
-      ['Paid Out On', 'The date each transaction occurred'],
-      ['Type', 'The type of each transaction'],
-      ['Account', 'The ID of the account associated with each payout'],
-      ['Paid Out To', 'The bank account to which each payout was transferred'],
-      ['Payments', 'Sum of payments in each payout'],
-      ['Refunds', 'Sum of refunds in each payout'],
-      ['Fees', 'Sum of fees in each payout'],
-      ['Other', 'Sum of less common transactions in each payout'],
-      ['Payout Amount', 'The net sum of all transactions in each payout'],
-      ['Status', 'The real-time status of each payout'],
-      ['Actions', ''],
-    ];
-  }
-
-  get rowData() {
-    return this.payouts.map((payout) => [
-      {
-        type: 'head',
-        value: `
-          <div class='fw-bold'>${formatDate(payout.created_at)}</div>
-          <div class='fw-bold'>${formatTime(payout.created_at)}</div>
-        `,
-      },
-      payout.payout_type,
-      payout.account_id,
-      `${payout.bank_account.full_name} ${payout.bank_account.account_number_last4}`,
-      formatCurrency(payout.payments_total),
-      formatCurrency(payout.refunds_total),
-      formatCurrency(payout.fees_total),
-      formatCurrency(payout.other_total),
-      formatCurrency(payout.amount),
-      { type: 'inner', value: MapPayoutStatusToBadge(payout.status) },
-      (
-        <DownloadIcon
-          title="Export CSV"
-          onClick={() => this.downloadCSV(payout.id)}
-          part="icon"
-          style={{
-            height: '24px',
-            width: '24px',
-            cursor: 'pointer',
-          }}
-        />
-      ),
-    ]);
-  }
-
   get showEmptyState() {
-    return !this.loading && !this.errorMessage && this.rowData.length < 1;
+    return !this.loading && !this.errorMessage && this.payoutsTable.rowData.length < 1;
   }
 
   get showErrorState() {
@@ -158,74 +160,52 @@ export class PayoutsListCore {
   }
 
   get showRowData() {
-    return !this.showEmptyState && !this.showErrorState;
+    return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
   render() {
     return (
       <div>
-        <div class="row gy-3 mb-4">
-          <div class="col-2">
-            <form-control-date
-              name="created_after"
-              label="Date from:"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-          <div class="col-2">
-            <form-control-date
-              name="created_before"
-              label="Date to:"
-              inputHandler={this.handleDateChange}
-            />
-          </div>
-        </div>
+        <payouts-list-filters
+          params={this.params}
+          setParamsOnChange={this.setParamsOnChange}
+          clearParams={this.clearParams}
+        />
         <div class="table-wrapper" part="table-wrapper">
           <table class="table table-hover" part="table">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
-                {this.columnData.map((column) => (
-                  <th part="table-head-cell" scope="col" title={Array.isArray(column) ? column[1] : ''}>
-                    {Array.isArray(column) ? column[0] : column}
-                  </th>
-                ))}
+                {this.payoutsTable.columnData.map((column) => column)}
               </tr>
             </thead>
             <tbody class="table-body" part="table-body">
               <TableLoadingState
-                columnSpan={this.columnData.length}
-                isLoading={this.loading}
-              />
-              <TableEmptyState
-                isEmpty={this.showEmptyState}
-                columnSpan={this.columnData.length}
-              />
-              <TableErrorState
-                columnSpan={this.columnData.length}
-                errorMessage={this.errorMessage}
-              />
-              {this.showRowData &&
-                this.rowData.map((data, index) => (
+                  columnSpan={this.payoutsTable.columnKeys.length}
+                  isLoading={this.loading}
+                />
+                <TableEmptyState
+                  isEmpty={this.showEmptyState}
+                  columnSpan={this.payoutsTable.columnKeys.length}
+                />
+                <TableErrorState
+                  columnSpan={this.payoutsTable.columnKeys.length}
+                  errorMessage={this.errorMessage}
+                />
+                {this.showRowData && this.payoutsTable.rowData.map((data, index) => (
                   <tr
                     data-test-id="table-row"
                     data-row-entity-id={this.entityId[index]}
                     onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? 'table-row-even' : 'table-row-odd'}`}
+                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                   >
-                    {data.map((dataEntry: any) => (
-                      dataEntry?.type ? (
-                        <td part="table-cell" innerHTML={dataEntry.value}></td>
-                      ) : (
-                        <td part="table-cell">{dataEntry}</td>
-                      )
-                    ))}
+                    {data}
                   </tr>
                 ))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.columnData.length}>
+                  <td part="pagination-bar" colSpan={this.payoutsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

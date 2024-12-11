@@ -38,6 +38,19 @@ const meta: Meta = {
       },
       action: true,
     },
+    "columns": {
+      description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
+      type: 'string',
+      table: {
+        category: "props",
+        defaultValue: {
+          summary: "created_at,amount,status,payments_total,refunds_total,fees_total,other_total,csv"
+        }
+      },
+      control: {
+        type: "text",
+      },
+    }
   },
   parameters: {
     actions: {

@@ -1,5 +1,17 @@
 ### Changelog
 
+## 4.22.2
+
+### Patch Changes
+
+- 1e07117: - Updated validation for account owner field in bank account form step of `justifi-payment-provisioning` component - this field will now accept numbers and some special characters.
+
+## 4.22.1
+
+### Patch Changes
+
+- 4b3ea18: - Refactor render timing for list components that use new `columns` prop
+
 ## 4.22.0
 
 ### Minor Changes

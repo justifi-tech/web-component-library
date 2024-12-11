@@ -21,7 +21,15 @@ describe('payments-list', () => {
       template: () => <justifi-payments-list onError-event={errorEvent} />,
     });
     await page.waitForChanges();
-    expect(errorEvent).toHaveBeenCalled();
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'missing-props',
+          message: 'Account ID and Auth Token are required',
+          severity: 'error',
+        },
+      })
+    );
   });
 
   it('emit an error event when fetch fails', async () => {

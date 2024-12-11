@@ -29,7 +29,7 @@ export class TerminalService implements ITerminalService {
 
     const headers = { Account: accountId };
 
-    const api = Api({ authToken, apiOrigin: apiOrigin });
+    const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals';
     return api.get(endpoint, params, null, headers);
   }
