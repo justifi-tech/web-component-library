@@ -1,17 +1,20 @@
-import { Component, h, Method, State } from "@stencil/core";
+import { Component, h, Method, Prop, State } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import CustomerDetailsSchema from "./schemas/customer-details-schema";
+import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-customer-details',
 })
 export class CustomerDetails {
+  @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
+  @State() documentList = [];
 
   @Method()
-  async validateAndSubmit(onSuccess: (formData: any) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList));
   };
 
   componentWillLoad() {
@@ -31,6 +34,15 @@ export class CustomerDetails {
     });
   }
 
+  private handleFileSelection = (e: InputEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as DisputeEvidenceDocumentType;
+    const files = target.files as unknown as File[];
+    for (const file of files) {
+      this.documentList.push(new DisputeEvidenceDocument(file, name));
+    }
+  }
+
   render() {
     return (
       <div>
@@ -42,6 +54,7 @@ export class CustomerDetails {
             <form-control-text
               label="Full Name"
               name="customer_name"
+              defaultValue={this.disputeResponse?.customer_name}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -49,6 +62,7 @@ export class CustomerDetails {
             <form-control-text
               label="Email"
               name="customer_email_address"
+              defaultValue={this.disputeResponse?.customer_email_address}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -57,21 +71,22 @@ export class CustomerDetails {
             <form-control-textarea
               label="Billing Address"
               name="customer_billing_address"
+              defaultValue={this.disputeResponse?.customer_billing_address}
               inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Customer Signature"
               name="customer_signature"
-              inputHandler={this.inputHandler}
+              onChange={this.handleFileSelection}
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Customer Communication"
               name="customer_communication"
-              inputHandler={this.inputHandler}
+              onChange={this.handleFileSelection}
             />
           </div>
         </div>

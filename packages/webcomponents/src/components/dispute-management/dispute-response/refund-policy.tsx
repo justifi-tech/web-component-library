@@ -1,13 +1,16 @@
-import { Component, h, State, Method } from "@stencil/core";
+import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import RefundPolicySchema from "./schemas/refund-policy-schema";
+import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-refund-policy',
 })
 export class RefundPolicy {
+  @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
+  @State() documentList: DisputeEvidenceDocument[] = [];
 
   @Method()
   async validateAndSubmit(onSuccess: () => void) {
@@ -35,6 +38,16 @@ export class RefundPolicy {
     });
   }
 
+
+  private handleFileSelection = (e: InputEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as DisputeEvidenceDocumentType;
+    const files = target.files as unknown as File[];
+    for (const file of files) {
+      this.documentList.push(new DisputeEvidenceDocument(file, name));
+    }
+  }
+
   render() {
     return (
       <div>
@@ -46,6 +59,7 @@ export class RefundPolicy {
             <form-control-textarea
               label="Refund Policy Disclosure"
               name="refund_policy_disclosure"
+              defaultValue={this.disputeResponse?.refund_policy_disclosure}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -53,21 +67,22 @@ export class RefundPolicy {
             <form-control-textarea
               label="Refund Refund Explanation"
               name="refund_refusal_explanation"
+              defaultValue={this.disputeResponse?.refund_refusal_explanation}
               inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Upload Refund Policy"
               name="refund_policy"
-              inputHandler={this.inputHandler}
+              onChange={this.handleFileSelection}
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Upload Receipt"
               name="receipt"
-              inputHandler={this.inputHandler}
+              onChange={this.handleFileSelection}
             />
           </div>
         </div>

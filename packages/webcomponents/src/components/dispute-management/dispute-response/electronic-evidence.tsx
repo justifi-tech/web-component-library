@@ -1,4 +1,4 @@
-import { Component, h, State, Method } from "@stencil/core";
+import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ElectronicEvidenceSchema from "./schemas/electronic-evidence-schema";
 
@@ -6,6 +6,7 @@ import ElectronicEvidenceSchema from "./schemas/electronic-evidence-schema";
   tag: 'justifi-electronic-evidence',
 })
 export class ElectronicEvidence {
+  @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
 
@@ -47,6 +48,7 @@ export class ElectronicEvidence {
               label="Purchase IP Address"
               name="customer_purchase_ip_address"
               helpText="The IP address used by the customer during the purchase."
+              defaultValue={this.disputeResponse?.customer_purchase_ip_address}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -55,6 +57,7 @@ export class ElectronicEvidence {
               label="Activity Logs"
               name="access_activity_log"
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
+              defaultValue={this.disputeResponse?.access_activity_log}
               inputHandler={this.inputHandler}
             />
           </div>

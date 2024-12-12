@@ -1,4 +1,4 @@
-import { Component, h, Method, State } from "@stencil/core";
+import { Component, h, Method, State, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ProductOrServiceSchema from "./schemas/product-or-service-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
@@ -7,6 +7,7 @@ import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../a
   tag: 'justifi-product-or-service',
 })
 export class ProductOrService {
+  @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() values: any = {};
@@ -57,6 +58,7 @@ export class ProductOrService {
             <form-control-text
               label="Product Description"
               name="product_description"
+              defaultValue={this.disputeResponse?.product_description}
               inputHandler={this.inputHandler}
               errorText={this.errors.product_description}
             />
@@ -65,6 +67,7 @@ export class ProductOrService {
             <form-control-text
               label="Service Date"
               name="service_date"
+              defaultValue={this.disputeResponse?.service_date}
               inputHandler={this.inputHandler}
               errorText={this.errors.service_date}
             />

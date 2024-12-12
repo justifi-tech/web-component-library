@@ -1,13 +1,16 @@
-import { Component, h, State, Method } from "@stencil/core";
+import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import DuplicateChargeSchema from "./schemas/duplicate-charge-schema";
+import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-duplicate-charge',
 })
 export class DuplicateCharge {
+  @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
+  @State() documentList: DisputeEvidenceDocument[] = [];
 
   @Method()
   async validateAndSubmit(onSuccess: () => void) {
@@ -35,6 +38,16 @@ export class DuplicateCharge {
     });
   }
 
+
+  private handleFileSelection = (e: InputEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as DisputeEvidenceDocumentType;
+    const files = target.files as unknown as File[];
+    for (const file of files) {
+      this.documentList.push(new DisputeEvidenceDocument(file, name));
+    }
+  }
+
   render() {
     return (
       <div>
@@ -46,6 +59,7 @@ export class DuplicateCharge {
             <form-control-text
               label="Original Payment ID"
               name="duplicate_charge_original_payment_id"
+              defaultValue={this.disputeResponse?.duplicate_charge_original_payment_id}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -53,14 +67,15 @@ export class DuplicateCharge {
             <form-control-textarea
               label="Duplicate Charge Explanation"
               name="duplicate_charge_explanation"
+              defaultValue={this.disputeResponse?.duplicate_charge_explanation}
               inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Duplicate Charge Documentation"
               name="duplicate_charge_documentation"
-              inputHandler={this.inputHandler}
+              onChange={this.handleFileSelection}
             />
           </div>
         </div>

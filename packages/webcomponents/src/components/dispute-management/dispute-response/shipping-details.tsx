@@ -1,13 +1,16 @@
-import { Component, h, State, Method } from "@stencil/core";
+import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ShippingDetailsSchema from "./schemas/shipping-details-schema";
+import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-shipping-details',
 })
 export class ShippingDetails {
+  @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
+  @State() documentList: DisputeEvidenceDocument[] = [];
 
   @Method()
   async validateAndSubmit(onSuccess: () => void) {
@@ -35,6 +38,15 @@ export class ShippingDetails {
     });
   }
 
+  private handleFileSelection = (e: InputEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as DisputeEvidenceDocumentType;
+    const files = target.files as unknown as File[];
+    for (const file of files) {
+      this.documentList.push(new DisputeEvidenceDocument(file, name));
+    }
+  }
+
   render() {
     return (
       <div>
@@ -46,6 +58,7 @@ export class ShippingDetails {
             <form-control-text
               label="Shipping Carrier Name"
               name="shipping_carrier"
+              defaultValue={this.disputeResponse?.shipping_carrier}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -53,6 +66,7 @@ export class ShippingDetails {
             <form-control-text
               label="Tracking Number"
               name="shipping_tracking_number"
+              defaultValue={this.disputeResponse?.shipping_tracking_number}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -60,6 +74,7 @@ export class ShippingDetails {
             <form-control-date
               label="Date Shipped"
               name="shipping_date"
+              defaultValue={this.disputeResponse?.shipping_date}
               inputHandler={this.inputHandler}
             />
           </div>
@@ -68,14 +83,15 @@ export class ShippingDetails {
             <form-control-textarea
               label="Shipping Address"
               name="shipping_address"
+              defaultValue={this.disputeResponse?.shipping_address}
               inputHandler={this.inputHandler}
             />
           </div>
           <div class="col-12">
-            <form-control-file
+            <form-control-file-v2
               label="Shipping Documentation"
               name="shipping_documentation"
-              inputHandler={this.inputHandler}
+              onChange={this.handleFileSelection}
             />
           </div>
         </div>

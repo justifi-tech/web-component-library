@@ -4,9 +4,8 @@ import { FormController } from "../../../ui-components/form/form";
 import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
-import { ComponentError, DisputeEvidenceDocument } from "../../../components";
-
-type DisputeResponseStepElement = HTMLElement & { validateAndSubmit: Function };
+import { ComponentError } from "../../../components";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -27,21 +26,21 @@ export class DisputeResponseCore {
   @State() disputeResponse: any = {};
   @State() documentList = [];
   @State() currentStep = 0;
-  @State() currentStepComponentRef: DisputeResponseStepElement;
+  @State() currentStepComponentRef: any;
   @State() formController: FormController;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event() clickEvent: EventEmitter;
 
   componentStepMapping = [
-    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} />,
-    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} />,
+    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
   ];
 
   componentWillLoad() {
@@ -51,7 +50,7 @@ export class DisputeResponseCore {
   saveData = async (formData: any): Promise<IApiResponse<IDispute>> => {
     return this.updateDisputeResponse({
       payload: formData,
-      onSuccess: ({ disputeResponse }) => this.disputeResponse = disputeResponse,
+      onSuccess: (response) => this.disputeResponse = { ...response.data },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
           errorCode: code,
@@ -134,7 +133,8 @@ export class DisputeResponseCore {
   private handleSubmit = async (formData, documentList) => {
     this.isLoading = true;
 
-    if (formData) await this.saveData(formData);
+    const hasFormData = Object.keys(formData).length;
+    if (hasFormData) await this.saveData(formData);
     if (documentList.length) {
       this.documentList = documentList;
       await this.initializeMakePresignedURLs();
