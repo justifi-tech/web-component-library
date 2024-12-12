@@ -17,5 +17,5 @@ export const hasFilters = (params: any) => {
   const paginationKeys = ['after_cursor', 'before_cursor'];
   const paramKeys = Object.keys(params);
   const filterKeys = paramKeys.filter((paramKey) => !paginationKeys.includes(paramKey));
-  return !!filterKeys.length;
+  return filterKeys.some((key) => params[key].length > 0);
 };

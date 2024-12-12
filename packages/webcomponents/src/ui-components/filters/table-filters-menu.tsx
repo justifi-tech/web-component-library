@@ -15,6 +15,7 @@ export class TableFiltersMenu {
 
   @Watch('params')
   watchParamsHandler(newValue: any) {
+    console.log('params changed', newValue);
     this.showClearButton = hasFilters(newValue);
   }
 
@@ -26,6 +27,10 @@ export class TableFiltersMenu {
   @Listen('hideEvent')
   hide() {
     this.menu.classList.remove('show');
+  }
+
+  componentWillLoad() {
+    this.showClearButton = hasFilters(this.params);
   }
 
   render() {
