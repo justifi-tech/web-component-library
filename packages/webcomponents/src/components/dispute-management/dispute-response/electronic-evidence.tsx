@@ -50,6 +50,7 @@ export class ElectronicEvidence {
               helpText="The IP address used by the customer during the purchase."
               defaultValue={this.disputeResponse?.customer_purchase_ip_address}
               inputHandler={this.inputHandler}
+              errorText={this.errors.customer_purchase_ip_address}
             />
           </div>
           <div class="col-12">
@@ -59,6 +60,7 @@ export class ElectronicEvidence {
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
               defaultValue={this.disputeResponse?.access_activity_log}
               inputHandler={this.inputHandler}
+              errorText={this.errors.access_activity_log}
             />
           </div>
         </div>

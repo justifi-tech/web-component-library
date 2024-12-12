@@ -56,6 +56,7 @@ export class CustomerDetails {
               name="customer_name"
               defaultValue={this.disputeResponse?.customer_name}
               inputHandler={this.inputHandler}
+              errorText={this.errors.customer_name}
             />
           </div>
           <div class="col-12">
@@ -64,6 +65,7 @@ export class CustomerDetails {
               name="customer_email_address"
               defaultValue={this.disputeResponse?.customer_email_address}
               inputHandler={this.inputHandler}
+              errorText={this.errors.customer_email_address}
             />
           </div>
           <div class="col-12">
@@ -73,6 +75,7 @@ export class CustomerDetails {
               name="customer_billing_address"
               defaultValue={this.disputeResponse?.customer_billing_address}
               inputHandler={this.inputHandler}
+              errorText={this.errors.customer_billing_address}
             />
           </div>
           <div class="col-12">

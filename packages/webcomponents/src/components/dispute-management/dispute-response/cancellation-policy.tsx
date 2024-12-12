@@ -60,6 +60,7 @@ export class CancellationPolicy {
               name="cancellation_policy_disclosure"
               defaultValue={this.disputeResponse?.cancellation_policy_disclosure}
               inputHandler={this.inputHandler}
+              errorText={this.errors.cancellation_policy_disclosure}
             />
           </div>
           <div class="col-12">
@@ -68,6 +69,7 @@ export class CancellationPolicy {
               name="cancellation_rebuttal"
               defaultValue={this.disputeResponse?.cancellation_rebuttal}
               inputHandler={this.inputHandler}
+              errorText={this.errors.cancellation_rebuttal}
             />
           </div>
           <div class="col-12">

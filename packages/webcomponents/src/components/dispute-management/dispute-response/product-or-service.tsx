@@ -10,7 +10,6 @@ export class ProductOrService {
   @Prop() disputeResponse: any;
   @State() form: FormController;
   @State() errors: any = {};
-  @State() values: any = {};
   @State() documentList = [];
 
   @Method()
@@ -23,9 +22,6 @@ export class ProductOrService {
   }
 
   componentDidLoad() {
-    this.form.values.subscribe(values => {
-      this.values = { ...values };
-    });
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });

@@ -61,6 +61,7 @@ export class DuplicateCharge {
               name="duplicate_charge_original_payment_id"
               defaultValue={this.disputeResponse?.duplicate_charge_original_payment_id}
               inputHandler={this.inputHandler}
+              errorText={this.errors.duplicate_charge_original_payment_id}
             />
           </div>
           <div class="col-12">
@@ -69,6 +70,7 @@ export class DuplicateCharge {
               name="duplicate_charge_explanation"
               defaultValue={this.disputeResponse?.duplicate_charge_explanation}
               inputHandler={this.inputHandler}
+              errorText={this.errors.duplicate_charge_explanation}
             />
           </div>
           <div class="col-12">

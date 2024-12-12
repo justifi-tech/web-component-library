@@ -60,6 +60,7 @@ export class AdditionalStatement {
               name="additional_statement"
               defaultValue={this.disputeResponse?.additional_statement}
               inputHandler={this.inputHandler}
+              errorText={this.errors.additional_statement}
             />
           </div>
           <div class="col-12">
