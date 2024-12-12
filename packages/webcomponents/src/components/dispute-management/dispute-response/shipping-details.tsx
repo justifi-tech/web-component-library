@@ -13,8 +13,8 @@ export class ShippingDetails {
   @State() documentList: DisputeEvidenceDocument[] = [];
 
   @Method()
-  async validateAndSubmit(onSuccess: () => void) {
-    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList));
   };
 
   componentWillLoad() {
@@ -60,6 +60,7 @@ export class ShippingDetails {
               name="shipping_carrier"
               defaultValue={this.disputeResponse?.shipping_carrier}
               inputHandler={this.inputHandler}
+              errorText={this.errors.shipping_carrier}
             />
           </div>
           <div class="col-12">
@@ -68,6 +69,7 @@ export class ShippingDetails {
               name="shipping_tracking_number"
               defaultValue={this.disputeResponse?.shipping_tracking_number}
               inputHandler={this.inputHandler}
+              errorText={this.errors.shipping_tracking_number}
             />
           </div>
           <div class="col-12">
@@ -76,6 +78,7 @@ export class ShippingDetails {
               name="shipping_date"
               defaultValue={this.disputeResponse?.shipping_date}
               inputHandler={this.inputHandler}
+              errorText={this.errors.shipping_date}
             />
           </div>
           <div class="col-12">
@@ -85,6 +88,7 @@ export class ShippingDetails {
               name="shipping_address"
               defaultValue={this.disputeResponse?.shipping_address}
               inputHandler={this.inputHandler}
+              errorText={this.errors.shipping_address}
             />
           </div>
           <div class="col-12">

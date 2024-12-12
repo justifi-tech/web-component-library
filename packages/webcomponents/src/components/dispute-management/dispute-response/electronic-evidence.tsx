@@ -1,6 +1,7 @@
 import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ElectronicEvidenceSchema from "./schemas/electronic-evidence-schema";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 
 @Component({
   tag: 'justifi-electronic-evidence',
@@ -11,8 +12,8 @@ export class ElectronicEvidence {
   @State() errors: any = {};
 
   @Method()
-  async validateAndSubmit(onSuccess: () => void) {
-    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, []));
   };
 
   componentWillLoad() {

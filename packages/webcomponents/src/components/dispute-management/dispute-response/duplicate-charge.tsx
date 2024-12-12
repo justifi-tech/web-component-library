@@ -13,8 +13,8 @@ export class DuplicateCharge {
   @State() documentList: DisputeEvidenceDocument[] = [];
 
   @Method()
-  async validateAndSubmit(onSuccess: () => void) {
-    this.form.validateAndSubmit(() => this.sendData(onSuccess));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList));
   };
 
   componentWillLoad() {
