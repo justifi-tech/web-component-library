@@ -80,26 +80,34 @@ export function formatTimeSeconds(dateString: string): string {
   return format(date, 'h:mm:ssaaa');
 }
 
-export const convertToUTC = (value: string, includeTime: boolean): string => {
-  const dateObj = new Date(value);
+interface UTCConversionOptions {
+  setEndOfDay?: boolean;
+  setExactTime?: boolean;
+}
 
-  if (includeTime) {
-    return new Date(dateObj.toUTCString()).toISOString();
-  } else {
+export const convertToUTC = (dateString: string, options: UTCConversionOptions): string => {
+  const { setEndOfDay, setExactTime } = options;
+  if (!dateString) return '';
+  
+  const dateObj = new Date(dateString);
+
+  if (setEndOfDay) {
     // Adjust the time to be at the very end of the day
     dateObj.setUTCHours(23, 59, 59, 999);
+    return new Date(dateObj.toUTCString()).toISOString();
+  } else if (setExactTime) {
     return new Date(dateObj.toUTCString()).toISOString();
   }
 };
 
-export interface DateFormattingOptions {
+interface localConversionOptions {
   showDisplayDate?: boolean;
   showInputDate?: boolean;
   showTime?: boolean;
   showInputDateTime?: boolean;
 }
 
-export const convertToLocal = (dateString: string, options: DateFormattingOptions ): string => {
+export const convertToLocal = (dateString: string, options: localConversionOptions ): string => {
   const { showDisplayDate, showInputDate, showTime, showInputDateTime } = options;
   if (!dateString) return '';
 

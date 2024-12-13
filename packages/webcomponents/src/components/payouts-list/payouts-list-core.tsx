@@ -137,6 +137,7 @@ export class PayoutsListCore {
   clearParams = () => {
     this.errorMessage = '';
     this.params = {};
+    console.log(this.params);
   }
 
   get subAccountParams() {

@@ -19,7 +19,7 @@ export class PaymentsListFilters {
   }
 
   handleDateInput = (name: string, value: string) => {
-    const utcDate = convertToUTC(value, true);
+    const utcDate = convertToUTC(value, { setExactTime: true });
     this.setParamsOnChange(name, utcDate);
   }
 
@@ -67,7 +67,7 @@ export class PaymentsListFilters {
           <div class="p-2">
             <form-control-date
               name="created_after"
-              label="Start Date"
+              label="Created After"
               inputHandler={this.handleDateInput}
               defaultValue={convertToLocal(this.params.created_after, { showInputDateTime: true }) || ''}
               showTime
@@ -76,7 +76,7 @@ export class PaymentsListFilters {
           <div class="p-2">
             <form-control-date
               name="created_before"
-              label="End Date"
+              label="Created Before"
               inputHandler={this.handleDateInput}
               defaultValue={convertToLocal(this.params.created_before, { showInputDateTime: true }) || ''}
               showTime
