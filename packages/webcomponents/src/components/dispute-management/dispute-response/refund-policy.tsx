@@ -65,7 +65,7 @@ export class RefundPolicy {
           </div>
           <div class="col-12">
             <form-control-textarea
-              label="Refund Refund Explanation"
+              label="Refund Refusal Explanation"
               name="refund_refusal_explanation"
               defaultValue={this.disputeResponse?.refund_refusal_explanation}
               inputHandler={this.inputHandler}
