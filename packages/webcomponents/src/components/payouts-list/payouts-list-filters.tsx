@@ -14,14 +14,13 @@ export class PayoutsListFilters {
   @State() createdBeforeInputValue: string;
 
   handleDateInput = (name: string, value: string) => {
-
     if (name === 'created_after') {
       this.createdAfterInputValue = value;
     } else if (name === 'created_before') {
       this.createdBeforeInputValue = value;
     }
-
-    const utcDate = convertToUTC(value);
+    
+    const utcDate = convertToUTC(value, false);
     this.setParamsOnChange(name, utcDate);
   }
 

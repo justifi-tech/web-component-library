@@ -80,10 +80,42 @@ export function formatTimeSeconds(dateString: string): string {
   return format(date, 'h:mm:ssaaa');
 }
 
-export const convertToUTC = (value: string): string => {
+export const convertToUTC = (value: string, includeTime: boolean): string => {
   const dateObj = new Date(value);
-  return new Date(dateObj.toUTCString()).toISOString();
+
+  if (includeTime) {
+    return new Date(dateObj.toUTCString()).toISOString();
+  } else {
+    // Adjust the time to be at the very end of the day
+    dateObj.setUTCHours(23, 59, 59, 999);
+    return new Date(dateObj.toUTCString()).toISOString();
+  }
 };
+
+export interface DateFormattingOptions {
+  showDisplayDate?: boolean;
+  showInputDate?: boolean;
+  showTime?: boolean;
+  showInputDateTime?: boolean;
+}
+
+export const convertToLocal = (dateString: string, options: DateFormattingOptions ): string => {
+  const { showDisplayDate, showInputDate, showTime, showInputDateTime } = options;
+  if (!dateString) return '';
+
+  const dateObj = new Date(dateString);
+  const localDate = new Date(dateObj.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+ 
+  if (showDisplayDate) {
+    return format(localDate, 'MMM d, yyyy');
+  } else if (showInputDate) {
+    return format(localDate, 'yyyy-MM-dd');
+  } else if (showTime) {
+    return format(localDate, 'h:mmaaa');
+  } else if (showInputDateTime) {
+    return format(localDate, 'yyyy-MM-dd\'T\'HH:mm');
+  }
+}
 
 // Address Formatting
 
