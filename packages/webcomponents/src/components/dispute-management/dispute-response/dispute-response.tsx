@@ -28,6 +28,7 @@ export class DisputeResponse {
 
   @Prop() authToken: string;
   @Prop() disputeId: string;
+  @Prop() disputeResponse: DisputeResponse;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -83,6 +84,7 @@ export class DisputeResponse {
         <justifi-dispute-response-core
           onError-event={this.handleErrorEvent}
           dispute-id={this.disputeId}
+          disputeResponse={this.disputeResponse}
           updateDisputeResponse={this.updateDisputeResponse}
           createDisputeEvidence={this.createDisputeEvidence}
         />

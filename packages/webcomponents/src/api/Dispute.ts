@@ -16,6 +16,7 @@ export interface IDispute {
   metadata: any;
   created_at: string;
   updated_at: string;
+  dispute_response?: IDisputeResponse;
 }
 
 export class Dispute implements IDispute {
@@ -29,6 +30,7 @@ export class Dispute implements IDispute {
   public metadata: any;
   public created_at: string;
   public updated_at: string;
+  public dispute_response?: DisputeResponse;
 
   get needsResponse() {
     return this.status == DisputeStatus.needsResponse
@@ -57,6 +59,7 @@ export class Dispute implements IDispute {
     this.metadata = dispute.metadata;
     this.created_at = dispute.created_at;
     this.updated_at = dispute.updated_at;
+    this.dispute_response = dispute.dispute_response ? new DisputeResponse(dispute.dispute_response) : undefined;
   }
 }
 

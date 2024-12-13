@@ -67,6 +67,7 @@ export class DisputeManagementCore {
         {this.showDisputeResponseForm ? (
           <justifi-dispute-response
             disputeId={this.disputeId}
+            disputeResponse={this.dispute.dispute_response}
             authToken={this.authToken}
           />
         ) : (

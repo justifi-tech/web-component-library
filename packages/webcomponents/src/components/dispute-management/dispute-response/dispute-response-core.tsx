@@ -21,9 +21,9 @@ export class DisputeResponseCore {
     onSuccess: (disputeResponse: any) => void,
     onError: (disputeResponse: any) => void
   }) => Promise<IApiResponse<any>>;
+  @Prop() disputeResponse: any = {};
 
   @State() isLoading: boolean = false;
-  @State() disputeResponse: any = {};
   @State() documentList = [];
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;

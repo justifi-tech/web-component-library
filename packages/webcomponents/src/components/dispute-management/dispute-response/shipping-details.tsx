@@ -27,10 +27,6 @@ export class ShippingDetails {
     });
   }
 
-  private sendData = (onSuccess: () => void) => {
-    onSuccess();
-  }
-
   private inputHandler = (name: string, value: string) => {
     this.form.setValues({
       ...this.form.values.getValue(),
