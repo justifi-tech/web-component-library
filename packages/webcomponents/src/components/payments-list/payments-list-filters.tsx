@@ -35,13 +35,9 @@ export class PaymentsListFilters {
     ]
   }
 
-  clearFilters = () => {
-    this.clearParams();
-  }
-
   render() {
     return (
-      <table-filters-menu params={this.params} clearParams={this.clearFilters}>
+      <table-filters-menu params={this.params} clearParams={this.clearParams}>
         <div class="grid-cols-2 gap-3 p-1">
           <div class="p-2">
             <form-control-text
