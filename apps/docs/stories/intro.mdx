@@ -73,45 +73,104 @@ and import the component module using ES modules.
 
 # Styling
 
-## Overview
+## How Parts Stack for Efficient Global Styling
 
-Web components in this library utilize the [CSS Shadow Parts API](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) to allow you to style specific internal elements of components from outside the shadow DOM boundary. This approach ensures encapsulation while still providing flexibility for customization.
+Parts are designed hierarchically to let you apply global styles like `color` or `font-family` universally, while components inherit these settings without repetitive targeting.
 
-## Styling Components with Custom CSS
+---
 
-Each component exposes specific parts through its shadow DOM. These parts correspond to internal elements that you can target for custom styling. You can find a list of exportedParts for every component on their respective Docs page.
+## Core Parts and Inheritance
 
-## How to Use Exported Parts
+1. **Base Parts**: `color`, `font-family`, and `background-color` define foundational styles.
 
-To style a specific part of a component:
+   - These propagate into higher-level parts like `text`, `button`, and `input`.
 
-1 - Identify the part name from the `exportedParts` list (e.g., `label`).
-2 - Use the `::part` pseudo-element to target the component’s part in your CSS.
-3 - Apply your desired custom styles.
+2. **Higher-Level Parts**:
+   - **`text`**: Combines `color` and `font-family` for typography.
+   - **`input`, `button`, `label`**: Inherit `text`, ensuring consistent styles across components.
 
-## Example
+---
 
-If a component exposes a part named `label`, you can style it as follows:
+## Global Styling in Action
+
+### Universal Font
+
+Set the font for all components using `font-family`:
 
 <Source
   language="css"
   dark
+  format={false}
   code={dedent`
-    /* Targeting the "label" part */
-    the-component-tag::part(label) {
-      font-size: 16px;
-      color: #333;
-      background-color: #f8f9fa;
-    }
-  `}
+      ::part(font-family) {
+        font-family: 'Roboto', sans-serif;
+      }
+      `}
+/>
+
+### Universal Text Color
+
+Set the text color once via `color`:
+
+<Source
+  language="css"
+  dark
+  format={false}
+  code={dedent`
+      ::part(color) {
+        color: #333;
+      }
+      `}
+/>
+
+These apply to all components that rely on `text`, including buttons, inputs, and headings.
+
+---
+
+## Component-Specific Overrides
+
+After defining global styles, customize specific components using their higher-level parts:
+
+### Buttons
+
+<Source
+  language="css"
+  dark
+  format={false}
+  code={dedent`
+      ::part(button-primary) {
+        background-color: #007bff;
+        color: #fff; /* Overrides \`color\` */
+      }
+      `}
 
 />
 
-In this example:
+### Input States
 
-the-component-tag is the tag name of the web component.
-label is the exported part you are targeting.
-The `::part(label)` selector allows you to apply styles to the internal label element of the component.
+<Source
+  language="css"
+  dark
+  format={false}
+  code={dedent`
+    ::part(input-focused) {
+      border-color: #007bff;
+      background-color: #f0f8ff;
+    }
+    `}
+/>
+
+---
+
+To view the full list of available parts for styling, consult the source file [here](https://github.com/justifi-tech/web-component-library/blob/main/packages/webcomponents/src/styles/parts.ts).
+
+## Best Practices
+
+1.  **Style Base Parts First**: Focus on `color` and `font-family` for global consistency.
+2.  **Override as Needed**: Use component-specific parts (e.g., `button-primary`) sparingly for deviations.
+3.  **Inspect and Leverage Stacking**: Ensure you understand how parts like `text` layer to avoid redundant styles.
+
+This hierarchy ensures maintainable, reusable styles across all components with minimal effort.
 
 # Report Issues
 
@@ -119,3 +178,7 @@ For bugs and issues, please:
 
 1 - Go to our [GitHub Issues](https://github.com/justifi-tech/web-component-library/issues).
 2 - Click "New Issue" and describe the problem.
+
+```
+
+```

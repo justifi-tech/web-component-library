@@ -5,28 +5,9 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
-import { StyledHost, tableExportedParts } from '../../ui-components';
+import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './payments-table';
 
-/**
-  * @exportedPart label: Label for inputs
-  * @exportedPart input: The input fields
-  * @exportedPart input-invalid: Invalid state for inputs  
-  * @exportedPart table-head: Table head
-  * @exportedPart table-head-row: Head row
-  * @exportedPart table-head-cell: Individual head cell
-  * @exportedPart table-body: Body of the table
-  * @exportedPart table-row: Row of the table
-  * @exportedPart table-cell: Individual cell of the table
-  * @exportedPart loading-state-cell: Row for loading state
-  * @exportedPart loading-state-spinner: Spinner element for loading state
-  * @exportedPart error-state: Row for Error state
-  * @exportedPart empty-state: Row for Emtpy state
-  * @exportedPart pagination: Pagination bar
-  * @exportedPart page-item: Pagination button
-  * @exportedPart page-link: Pagination link
-  * @exportedPart page-link-disabled: Disabled pagination link
-*/
 @Component({
   tag: 'justifi-payments-list',
   shadow: true
@@ -86,7 +67,7 @@ export class PaymentsList {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
+      <StyledHost>
         <payments-list-core
           getPayments={this.getPayments}
           onError-event={this.handleErrorEvent}

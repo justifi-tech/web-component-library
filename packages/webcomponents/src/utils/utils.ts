@@ -133,16 +133,6 @@ export const MapPayoutStatusToBadge = (status: string) => {
   }
 };
 
-/**
- * Converts a snake_case string to a human-readable format by replacing underscores with spaces and capitalizing the first letter of each word.
- *
- * @param snakeCaseStr - The string in snake_case format.
- * @returns The string transformed into a human-readable format.
- *
- * @example
- * const readable = toReadableString('sole_proprietorship');
- * console.log(readable); // Outputs: "Sole Proprietorship"
- */
 export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
   if (!snakeCaseStr) return '';
   return snakeCaseStr
@@ -196,3 +186,30 @@ export function isEmptyObject(obj) {
 export const isInRange = (num, min, max) => {
   return num >= min && num <= max;
 };
+
+export function removeAttribute(htmlString, attribute) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const elementsWithStyle = tempDiv.querySelectorAll(`[${attribute}]`);
+  elementsWithStyle.forEach((element) => {
+    element.removeAttribute(attribute);
+  });
+  return tempDiv.innerHTML;
+}
+
+export function addAttribute(htmlString, tagName, attribute, value) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const elements = tempDiv.getElementsByTagName(tagName);
+  Array.from(elements).forEach((element) => {
+    element.setAttribute(attribute, value);
+  });
+  return tempDiv.innerHTML;
+}
+export function processHTML(htmlString, functions) {
+  let processedHTML = htmlString;
+  functions.forEach((func) => {
+    processedHTML = func(processedHTML);
+  });
+  return processedHTML;
+}

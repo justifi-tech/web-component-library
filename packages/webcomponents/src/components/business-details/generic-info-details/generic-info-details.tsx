@@ -5,7 +5,6 @@ import { snakeCaseToHumanReadable } from '../../../utils/utils';
 
 @Component({
   tag: 'generic-info-details',
-  styleUrl: '../shared-business-details.css',
 })
 export class GenericInfoDetails {
   @Prop() business: IBusiness;
@@ -16,7 +15,7 @@ export class GenericInfoDetails {
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Business Generic Info Details" />
-        <div class="d-table gap-2 w-100 mt-3" part="detail-section-block">
+        <div class="d-table gap-2 w-100 mt-3">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem title="Legal Name" value={this.business?.legal_name} />

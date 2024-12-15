@@ -8,11 +8,11 @@ exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
         <!---->
         <div class="d-flex gap-2">
           <div class="dropdown pb-3">
-            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button-primary button text color font-family " type="button dropdown-toggle" variant="primary">
               Filters
             </button>
             <custom-popper strategy="fixed" trigger="click">
-              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu text color font-family">
                 <div class="gap-3 grid-cols-2 p-1">
                   <div class="p-2">
                     <form-control-date filtertimezone="" label="Start Date" name="created_after" showtime=""></form-control-date>
@@ -25,70 +25,70 @@ exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
             </custom-popper>
           </div>
           <div>
-            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button-secondary button text color font-family " variant="secondary">
               Clear Filters
             </button>
           </div>
         </div>
       </table-filters-menu>
     </payouts-list-filters>
-    <div class="table-wrapper" part="table-wrapper">
-      <table class="table table-hover" part="table">
-        <thead class="sticky-top table-head" part="table-head">
-          <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell" scope="col" title="The date the payout was deposited">
+    <div class="table-wrapper">
+      <table class="table table-hover" part="table text color font-family background-color">
+        <thead class="sticky-top table-head">
+          <tr class="table-light text-nowrap">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
               Created
             </th>
-            <th part="table-head-cell" scope="col" title="The total amount of the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total amount of the payout">
               Amount
             </th>
-            <th part="table-head-cell" scope="col" title="The real-time status of each payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The real-time status of each payout">
               Status
             </th>
-            <th part="table-head-cell" scope="col" title="The total payments amount associated with the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total payments amount associated with the payout">
               Payments
             </th>
-            <th part="table-head-cell" scope="col" title="The total refunds amount associated with the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total refunds amount associated with the payout">
               Refunds
             </th>
-            <th part="table-head-cell" scope="col" title="The total fees amount associated with the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total fees amount associated with the payout">
               Fees
             </th>
-            <th part="table-head-cell" scope="col" title="The total other amount">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total other amount">
               Other
             </th>
-            <th part="table-head-cell" scope="col" title="Export CSV"></th>
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="Export CSV"></th>
           </tr>
         </thead>
-        <tbody class="table-body" part="table-body">
+        <tbody class="table-body">
           <tr>
-            <td class="error-state" colspan="8" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            <td class="error-state" colspan="8" data-test-id="table-error-state" part="table-error text color font-family" style="text-align: center;">
               An unexpected error occurred: Fetch error
             </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="8" part="pagination-bar">
+            <td colspan="8" part="table-cell text color font-family background-color">
               <pagination-menu>
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination" part="pagination">
-                    <li class="disabled page-item" part="page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span class="me-1" part="page-link-arrow">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span class="me-1">
                           «
                         </span>
-                        <span part="page-button-text">
+                        <span>
                           Previous
                         </span>
                       </a>
                     </li>
                     <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span part="page-link-text">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span>
                           Next
                         </span>
-                        <span class="ms-1" part="page-link-arrow">
+                        <span class="ms-1">
                           »
                         </span>
                       </a>
@@ -113,11 +113,11 @@ exports[`payouts-list-core renders properly 1`] = `
         <!---->
         <div class="d-flex gap-2">
           <div class="dropdown pb-3">
-            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button button-primary" type="button dropdown-toggle" variant="primary">
+            <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-test-id="open-filters-button" part="button-primary button text color font-family " type="button dropdown-toggle" variant="primary">
               Filters
             </button>
             <custom-popper strategy="fixed" trigger="click">
-              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu">
+              <form class="dropdown-menu" data-test-id="filter-menu" part="dropdown-menu text color font-family">
                 <div class="gap-3 grid-cols-2 p-1">
                   <div class="p-2">
                     <form-control-date filtertimezone="" label="Start Date" name="created_after" showtime=""></form-control-date>
@@ -130,197 +130,197 @@ exports[`payouts-list-core renders properly 1`] = `
             </custom-popper>
           </div>
           <div>
-            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button button-secondary" variant="secondary">
+            <button class="btn btn-secondary" data-test-id="clear-filters-button" hidden="" part="button-secondary button text color font-family " variant="secondary">
               Clear Filters
             </button>
           </div>
         </div>
       </table-filters-menu>
     </payouts-list-filters>
-    <div class="table-wrapper" part="table-wrapper">
-      <table class="table table-hover" part="table">
-        <thead class="sticky-top table-head" part="table-head">
-          <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell" scope="col" title="The date the payout was deposited">
+    <div class="table-wrapper">
+      <table class="table table-hover" part="table text color font-family background-color">
+        <thead class="sticky-top table-head">
+          <tr class="table-light text-nowrap">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
               Created
             </th>
-            <th part="table-head-cell" scope="col" title="The total amount of the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total amount of the payout">
               Amount
             </th>
-            <th part="table-head-cell" scope="col" title="The real-time status of each payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The real-time status of each payout">
               Status
             </th>
-            <th part="table-head-cell" scope="col" title="The total payments amount associated with the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total payments amount associated with the payout">
               Payments
             </th>
-            <th part="table-head-cell" scope="col" title="The total refunds amount associated with the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total refunds amount associated with the payout">
               Refunds
             </th>
-            <th part="table-head-cell" scope="col" title="The total fees amount associated with the payout">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total fees amount associated with the payout">
               Fees
             </th>
-            <th part="table-head-cell" scope="col" title="The total other amount">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total other amount">
               Other
             </th>
-            <th part="table-head-cell" scope="col" title="Export CSV"></th>
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="Export CSV"></th>
           </tr>
         </thead>
-        <tbody class="table-body" part="table-body">
-          <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+        <tbody class="table-body">
+          <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <div class="fw-bold">
                 Jan 18, 2024
               </div>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $226.02
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $234.56
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $8.54
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row table-row-even">
-            <td part="table-cell">
+          <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <div class="fw-bold">
                 Jan 17, 2024
               </div>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $226.02
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
                 Forwarded
               </span>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $234.56
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $8.54
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+          <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <div class="fw-bold">
                 Jan 10, 2024
               </div>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $226.02
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-primary" title="Transfer to your bank account has been initiated">
                 In Transit
               </span>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $234.56
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $8.54
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row table-row-even">
-            <td part="table-cell">
+          <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <div class="fw-bold">
                 Dec 28, 2023
               </div>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $220.15
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-primary" title="Batched and scheduled to be transferred">
                 Scheduled
               </span>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $245.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               ($10.00)
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $14.85
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
                 CSV
               </a>
             </td>
           </tr>
-          <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+          <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <div class="fw-bold">
                 Dec 28, 2023
               </div>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $220.15
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-danger" title="Transfer to your bank account failed">
                 Canceled
               </span>
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $245.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               ($10.00)
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $14.85
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $0.00
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
                 CSV
               </a>
@@ -329,26 +329,26 @@ exports[`payouts-list-core renders properly 1`] = `
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="8" part="pagination-bar">
+            <td colspan="8" part="table-cell text color font-family background-color">
               <pagination-menu>
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination" part="pagination">
-                    <li class="disabled page-item" part="page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span class="me-1" part="page-link-arrow">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span class="me-1">
                           «
                         </span>
-                        <span part="page-button-text">
+                        <span>
                           Previous
                         </span>
                       </a>
                     </li>
                     <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span part="page-link-text">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span>
                           Next
                         </span>
-                        <span class="ms-1" part="page-link-arrow">
+                        <span class="ms-1">
                           »
                         </span>
                       </a>

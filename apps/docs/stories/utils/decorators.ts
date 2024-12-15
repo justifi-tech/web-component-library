@@ -81,7 +81,12 @@ export const customStoryDecorator = (
     fragment.prepend(themeStyleBlock);
   }
 
-  fragment.appendChild(component);
+  // add a wrapper div with id component-wrapper to wrap the component
+  const componentWrapper = document.createElement('div');
+  componentWrapper.id = 'component-wrapper';
+  componentWrapper.appendChild(component);
+
+  fragment.appendChild(componentWrapper);
   return fragment;
 };
 
@@ -99,20 +104,4 @@ export const getAttributesString = (args: Args) => {
       }
     })
     .join(' ');
-};
-
-export const themedStoryDecorator = (storyComponent: any, storyArgs: any) => {
-  setUpMocks();
-  const { props } = getPropsAndStyles(storyArgs);
-  const component = applyArgsToStoryComponent(storyComponent, props);
-  const fragment = new DocumentFragment();
-
-  // Import the style here to not pollute other framework stories
-  const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
-  const styleElement = document.createElement('style');
-  styleElement.textContent = themes[selectedTheme];
-
-  fragment.appendChild(styleElement);
-  fragment.appendChild(component);
-  return fragment;
 };

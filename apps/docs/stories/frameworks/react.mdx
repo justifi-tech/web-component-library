@@ -12,11 +12,10 @@ import { SummaryElement, extractWebcomponentsVersion } from './../utils';
 - [Usage details](#usage-details)
   - [Calling methods](#calling-methods)
   - [Listening to events](#listening-to-events)
-- [Styling exported parts](#styling-exported-parts)
 
 # Usage
 
-To use the web-components in a React app you need to add the CDN script and the link to the default styles to your `index.html` file:
+To use the web-components in a React app you need to add the CDN script to your `index.html` file:
 
 <Source
   language="bash"
@@ -179,23 +178,4 @@ Example of handling a custom event:
     }
 
 `}
-/>
-
-# Styling
-
-Styling works similarly to the vanilla web components.
-
-## Styling exported parts
-
-For components that are not in an iFrame, you'll find a list of `exportedparts` on their docs page.
-
-<Source
-  language="css"
-  dark
-  code={dedent`
-    /* Given an exportedpart of "label" for example */
-    the-component-tag:part(label) {
-      /* Your custom css */
-    }
-  `}
 />

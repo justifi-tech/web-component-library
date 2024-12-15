@@ -1,11 +1,15 @@
-import { Component, h, Host } from "@stencil/core";
+import { Component, h, Host, State } from "@stencil/core";
 import { iframeInputStylesSet } from "./iframe-input-styles-state";
+import { inputFocused, inputInvalidAndFocused } from "../../styles/parts";
 
 @Component({
   tag: "hidden-input",
 })
 export class HiddenInput {
   private hiddenInput!: HTMLInputElement;
+
+  @State() isFocused: boolean = false;
+  @State() errorText: string = '';
 
   async componentDidLoad() {
     const focusedStyles = await this.getFocusedStyles();
@@ -54,11 +58,11 @@ export class HiddenInput {
   private async getFocusedAndInvalidStyles() {
     return new Promise((resolve, _reject) => {
       this.hiddenInput.focus();
-      this.hiddenInput.classList.add('is-invalid');
+      this.errorText = 'Error';
       setTimeout(() => {
         let computedStyles = getComputedStyle(this.hiddenInput);
         this.hiddenInput.blur();
-        this.hiddenInput.classList.remove('is-invalid');
+        this.errorText = '';
         const styles = {
           boxShadow: computedStyles.boxShadow,
           border: computedStyles.border,
@@ -69,6 +73,16 @@ export class HiddenInput {
     });
   }
 
+  private get part() {
+    if (this.isFocused && this.errorText) {
+      return inputInvalidAndFocused;
+    }
+    if (this.isFocused) {
+      return inputFocused;
+    }
+    return 'input';
+  }
+
   render() {
     return (
       <Host>
@@ -76,7 +90,9 @@ export class HiddenInput {
           ref={el => this.hiddenInput = el}
           type="text"
           class="form-control"
-          part="input"
+          onFocus={() => this.isFocused = true}
+          onBlur={() => this.isFocused = false}
+          part={this.part}
           tabindex="-1"
           style={{ height: '0', opacity: '0', pointerEvents: 'none' }}
         />

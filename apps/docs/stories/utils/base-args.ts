@@ -3,6 +3,7 @@ type ArgNames =
   | 'account-id'
   | 'business-id'
   | 'client-id'
+  | 'checkout-id'
   | 'iframe-origin'
   | 'payment-id'
   | 'payout-id'
@@ -11,11 +12,12 @@ type ArgValues = { [key in ArgNames]?: any };
 type ArgTypes = { [key in ArgNames]?: any };
 
 const args: ArgValues = {
-  'account-id': 'acc_5Et9iXrSSAZR2KSouQGAWi',
+  'account-id': 'acc_Tn4GLwvfQN30kaLuhYn1n',
   'auth-token':
-    'eyJraWQiOiJqdXN0aWZpLWUyNDgyMmU3ODE1MmEzZjRkMjU1IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguanVzdGlmaS5haS8iLCJhenAiOiJ3Y3RfNXpYcUpqRm1JZzJTa2ZpOGlVZUMwTyIsInN1YiI6IndjdF81elhxSmpGbUlnMlNrZmk4aVVlQzBPQHNlc3Npb25zIiwiYXVkIjoiaHR0cHM6Ly9hcGkuanVzdGlmaS5haS92MSIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsInBlcm1pc3Npb25zIjpbInJlYWQ6YWNjb3VudDphY2NfNUV0OWlYclNTQVpSMktTb3VRR0FXaSIsInJlYWQ6YnVzaW5lc3M6Yml6XzNiaDY5YnExcmszZG1YTm9BS1ZvbnUiXSwiZXhwIjoxNzI1OTgyNDc0LCJpYXQiOjE3MTgyMDY0NzQsInBsYXRmb3JtX2FjY291bnRfaWQiOiJhY2NfM3JlTmI0YU5ZeTJpV0RaUVZjem14NCJ9.EVnfeXD9-OYAm45GhJR9pTTA3o3Uf3iU2RGS4Yf-SrTeLaswZE6KmyuVIw_K2q-cqh4Cwe85QCMUh5HXKefLNjnJOGax35x_br1c3Tdl5kErqV1xMkXvdFdC_jdhaLzk9LbEAtQufPey5h-Wg5c8oosA_m7OK_OhqcJsABigzA1Ma0w585LH0Y1fhl_qHYFpg2HSMHLG1kGuXMOTMgJH4z9sA-OwDpvSKX8_yF_NlGR-SdymbM0vS7BCMi4uwlrSqAdafWYTFRIjNaPc9ncKLuageFm1k3xFk9gt3fzjzLpk7or7QOaRMHTrQTXT3l-g-g6PZc6dMFKVhWWkaK4S5w',
-  'business-id': 'biz_3bh69bq1rk3dmXNoAKVonu',
+    'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imx1ZWlDa2Qtdjd2M3hYVHduclNaUiJ9.eyJodHRwczovL2FwaS5qdXN0aWZpLmFpL3YxL3JvbGVzIjpbImFkbWluOnN1cGVyIl0sImlzcyI6Imh0dHBzOi8vYXV0aC5qdXN0aWZpLmFpLyIsInN1YiI6ImF1dGgwfDY3MzM4NDkzMThhMjZhMDFhYmU0OTE3ZiIsImF1ZCI6WyJodHRwczovL2FwaS5qdXN0aWZpLmFpL3YxIiwiaHR0cHM6Ly9qdXN0aWZpLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE3MzQwMDAzMzUsImV4cCI6MTczNDA4NjczNSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImF6cCI6IlpCZXE5TUl1VGZ2eEZaTndvSHlxbEdwNFc0YVlKVW90IiwicGVybWlzc2lvbnMiOltdfQ.IgDruoULMmH4M4ibtWXAGsYPAb_qNOeSDSwDmrHsXVlDmCEs81-BvKwRio4agw4aSOLtgUfhFNeBpEyrf3Qqb1oL5w_txCBn1hygAKvdPjmoaXQ5zu7FYczYXGo0fJVAD_cDwGkzx4Zq1t6uZYp5Gi1BKxpzsPCQmA-OcwnoOzP1EQF_AuyVZTto9a3I1-neIp3IZAfk97eW5QuPm7ef_eJXuRrW-MhpWaywdzt6eS3zGRINAa_aLmLErZmnzyhT5Cjnk9RyoQnmLP3jn-MaroWXPn0SCN7nBnTMkMOW7TQX3mSlpcUW94JKAoomzfmT1jap9RG3F8pHlV8ADhYjkA',
+  'business-id': 'biz_3vn86p1ZoSMm8jyvcXeVwg',
   'client-id': 'test_df97f04afebc3c018de30df3562d7cdd',
+  'checkout-id': 'cho_2ikwE6SeYWBHMSNnWudjki',
   'payment-id': 'py_1NNeEnf4FbelxDCQN2RHcE',
   'payout-id': 'po_17745yESnHyEgWNeunmhmR',
   theme: 'basic',
@@ -46,6 +48,16 @@ const argTypes: ArgTypes = {
     type: 'string',
     description:
       'Business ID `string`, the id of the business you create via API',
+    control: {
+      type: 'text',
+    },
+    table: {
+      category: 'props',
+    },
+  },
+  'checkout-id': {
+    type: 'string',
+    description: 'Checkout ID `string`',
     control: {
       type: 'text',
     },
@@ -92,7 +104,7 @@ const argTypes: ArgTypes = {
     options: ['basic', 'custom'],
     control: { type: 'select' },
     description:
-      'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)',
+      'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)',
     table: {
       category: 'theming',
     },

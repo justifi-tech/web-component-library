@@ -6,9 +6,11 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
 import { FormControlErrorText } from '../../ui-components';
+import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-number-masked'
@@ -16,6 +18,8 @@ import { FormControlErrorText } from '../../ui-components';
 export class NumberInputMasked {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -75,12 +79,25 @@ export class NumberInputMasked {
     }
   }
 
+  inputPart = () => {
+    if (this.errorText) {
+      return inputInvalid;
+    }
+    if (this.disabled) {
+      return inputDisabled;
+    }
+    if (this.isFocused) {
+      return inputFocused;
+    }
+    return input;
+  }
+
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
           <div class="d-flex align-items-start gap-2">
-            <label part="label" class="form-label" htmlFor={this.name}>
+            <label part={label} class="form-label" htmlFor={this.name}>
               {this.label}
             </label>
             <form-control-tooltip helpText={this.helpText} />
@@ -91,7 +108,7 @@ export class NumberInputMasked {
             name={this.name}
             onBlur={this.formControlBlur.emit}
             onInput={this.handleFormControlInput}
-            part={`input ${this.errorText && 'input-invalid'}`}
+            part={this.inputPart()}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
             disabled={this.disabled}

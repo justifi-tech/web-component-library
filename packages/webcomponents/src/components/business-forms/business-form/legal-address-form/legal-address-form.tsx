@@ -3,12 +3,8 @@ import { FormController } from '../../../../components';
 import { IAddress } from '../../../../api/Business';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { heading2 } from '../../../../styles/parts';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
- */
 @Component({
   tag: 'justifi-legal-address-form'
 })
@@ -45,9 +41,9 @@ export class LegalAddressForm {
       this.formController.getInitialValues().legal_address;
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <fieldset>
-          <legend part="header-2">Business Legal Address</legend>
+          <legend part={heading2}>Business Legal Address</legend>
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text
