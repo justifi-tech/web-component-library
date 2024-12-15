@@ -54,13 +54,13 @@ export class CheckboxInput {
     if (this.errorText) {
       return inputCheckboxInvalid;
     }
-    if (this.isFocused && this.checkboxElement.checked) {
+    if (this.isFocused && this.checkboxElement?.checked) {
       return inputCheckboxCheckedFocused;
     }
     if (this.isFocused) {
       return inputCheckboxFocused;
     }
-    if (this.checkboxElement.checked) {
+    if (this.checkboxElement?.checked) {
       return inputCheckboxChecked;
     }
     return inputCheckbox;

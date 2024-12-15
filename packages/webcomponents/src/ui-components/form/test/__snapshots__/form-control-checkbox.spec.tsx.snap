@@ -20,11 +20,11 @@ exports[`form-control-checkbox Renders with all props provided 1`] = `
 `;
 
 exports[`form-control-checkbox Renders with default props 1`] = `
-<form-control-checkbox exportparts="radio-input-label,input,input-invalid">
+<form-control-checkbox>
   <div class="d-flex flex-column form-group">
     <div class="form-check">
-      <input class="form-check-input" id="accept" name="accept" part="input-checkbox " type="checkbox">
-      <label class="form-check-label" htmlfor="accept" part="radio-input-label">
+      <input class="form-check-input" id="accept" name="accept" part="input-checkbox" type="checkbox">
+      <label class="form-check-label" htmlfor="accept" part="label text color font-family">
         Accept Terms
       </label>
     </div>

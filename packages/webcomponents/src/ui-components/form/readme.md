@@ -5,17 +5,65 @@
 
 ## Properties
 
-| Property                | Attribute    | Description | Type                       | Default     |
-| ----------------------- | ------------ | ----------- | -------------------------- | ----------- |
-| `checked`               | `checked`    |             | `"false" \| "true"`        | `'false'`   |
-| `className`             | `class-name` |             | `string`                   | `undefined` |
-| `error`                 | `error`      |             | `string`                   | `''`        |
-| `id` _(required)_       | `id`         |             | `string`                   | `undefined` |
-| `label` _(required)_    | `label`      |             | `string`                   | `undefined` |
-| `name` _(required)_     | `name`       |             | `string`                   | `undefined` |
-| `onChange` _(required)_ | --           |             | `(value: boolean) => void` | `undefined` |
-| `value` _(required)_    | `value`      |             | `string`                   | `undefined` |
+| Property       | Attribute       | Description | Type     | Default     |
+| -------------- | --------------- | ----------- | -------- | ----------- |
+| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
+| `inputId`      | `input-id`      |             | `string` | `undefined` |
+| `label`        | `label`         |             | `string` | `undefined` |
 
+
+## Methods
+
+### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+
+
+
+#### Parameters
+
+| Name                    | Type     | Description |
+| ----------------------- | -------- | ----------- |
+| `clientId`              | `string` |             |
+| `paymentMethodMetadata` | `any`    |             |
+| `account`               | `string` |             |
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `validate() => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+
+## Shadow Parts
+
+| Part      | Description |
+| --------- | ----------- |
+| `"label"` |             |
+
+
+## Dependencies
+
+### Used by
+
+ - [bank-account-form](../../components/checkout/bank-account-form)
+ - [card-form](../../components/checkout/card-form)
+
+### Graph
+```mermaid
+graph TD;
+  bank-account-form --> iframe-input
+  card-form --> iframe-input
+  style iframe-input fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
