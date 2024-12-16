@@ -1,6 +1,6 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 import { debounce } from 'lodash';
-import { paymentsListParams, onPaymentsParamsChange, clearParams } from './payments-list-params-state';
+import { queryParams, clearParams } from './payments-list-params-state';
 import { StyledHost } from '../../ui-components';
 
 @Component({
@@ -8,26 +8,16 @@ import { StyledHost } from '../../ui-components';
   shadow: true
 })
 export class PaymentsListFilters {
-  @State() params = { ...paymentsListParams };
 
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
 
   componentWillLoad() {
     // debounced input handler for text input
     this.debouncedSetParamsOnChange = debounce(this.setParamsOnChange, 300);
-
-    // Listen for changes to paymentsListParams and update state
-    onPaymentsParamsChange('set', () => {
-      this.params = { ...paymentsListParams };
-    });
-
   }
 
   setParamsOnChange = (name: string, value: string) => {
-    // Create a new object with the updated value
-    const updatedParams = { ...paymentsListParams, [name]: value };
-    // Assign the new object to the store
-    Object.assign(paymentsListParams, updatedParams);
+    queryParams[name] = value;
   }
 
   get paymentStatusOptions() {
@@ -45,14 +35,14 @@ export class PaymentsListFilters {
   render() {
     return (
       <StyledHost>
-        <table-filters-menu params={this.params} clearParams={clearParams}>
+        <table-filters-menu params={ {...queryParams} } clearParams={clearParams}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text
                 name="payment_id"
                 label="Payment ID"
                 inputHandler={this.debouncedSetParamsOnChange}
-                defaultValue={this.params.payment_id}
+                defaultValue={queryParams.payment_id}
               />
             </div>
             <div class="p-2">
@@ -60,7 +50,7 @@ export class PaymentsListFilters {
                 name="terminal_id"
                 label="Terminal ID"
                 inputHandler={this.debouncedSetParamsOnChange}
-                defaultValue={this.params.terminal_id}
+                defaultValue={queryParams.terminal_id}
               />
             </div>
             <div class="p-2">
@@ -69,7 +59,7 @@ export class PaymentsListFilters {
                 label="Status"
                 options={this.paymentStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.params.payment_status || ''}
+                defaultValue={queryParams.payment_status || ''}
               />
             </div>
             <div class="p-2">
@@ -77,7 +67,7 @@ export class PaymentsListFilters {
                 name="created_after"
                 label="Start Date"
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.params.created_after}
+                defaultValue={queryParams.created_after}
                 showTime
                 filterTimeZone
               />
@@ -87,7 +77,7 @@ export class PaymentsListFilters {
                 name="created_before"
                 label="End Date"
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.params.created_before}
+                defaultValue={queryParams.created_before}
                 showTime
                 filterTimeZone
               />

@@ -302,6 +302,4 @@ export interface PaymentsParams {
   payment_status?: PaymentStatuses;
   created_after?: string;
   created_before?: string;
-  after_cursor?: string;
-  before_cursor?: string;
 }

@@ -1,18 +1,18 @@
 import { createStore } from '@stencil/store';
 import { PaymentsParams } from '../../api';
 
-const paymentsListParamsStore = createStore<PaymentsParams>({});
-const { state: paymentsListParams, on: onPaymentsParamsChange } = paymentsListParamsStore;
+const initialState = {};
+
+const paymentsListQueryParams = createStore<PaymentsParams>(() => initialState);
+const { state: queryParams, on: onQueryParamsChange } = paymentsListQueryParams;
 
 const clearParams = () => {
-  Object.keys(paymentsListParams).forEach((key) => {
-    paymentsListParams[key] = '';
-  });
+  paymentsListQueryParams.reset();
 }
 
 export {
-  paymentsListParamsStore,
-  paymentsListParams,
-  onPaymentsParamsChange,
+  paymentsListQueryParams,
+  queryParams,
+  onQueryParamsChange,
   clearParams
 };

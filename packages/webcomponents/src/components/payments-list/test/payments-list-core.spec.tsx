@@ -11,7 +11,7 @@ import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-m
 import { PaymentsListFilters } from '../payments-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../payments-table';
-import { paymentsListParamsStore } from '../payments-list-params-state';
+import { paymentsListQueryParams } from '../payments-list-params-state';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
 const components = [PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters, SelectInput];
@@ -19,7 +19,7 @@ const components = [PaymentsListCore, PaginationMenu, TableFiltersMenu, Payments
 describe('payments-list-core pagination', () => {
 
   afterEach(() => {
-    paymentsListParamsStore.dispose();
+    paymentsListQueryParams.dispose();
     jest.resetAllMocks();
   });
 
@@ -48,7 +48,7 @@ describe('payments-list-core pagination', () => {
 
     // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
     expect(mockPaymentsService.fetchPayments).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
+    const updatedParams = page.rootInstance.pagingParams;
     expect(updatedParams.after_cursor).toBe('nextCursor');
   });
 });
@@ -170,10 +170,10 @@ describe('payments-list-core render and events', () => {
   });
 });
 
-describe.skip('payments-list-core filters', () => {
+describe('payments-list-core filters', () => {
 
   beforeEach(() => {
-    paymentsListParamsStore.dispose();
+    paymentsListQueryParams.dispose();
     jest.resetAllMocks();
   });
 
@@ -277,7 +277,7 @@ describe.skip('payments-list-core filters', () => {
       template: () => 
       <div>
         <justifi-payments-list-filters></justifi-payments-list-filters>
-        <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
+        <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys}></payments-list-core>,
       </div>
     });
 

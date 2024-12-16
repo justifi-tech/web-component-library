@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
+import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
-import { paymentsListParams, onPaymentsParamsChange } from './payments-list-params-state';
+import { queryParams, onQueryParamsChange } from './payments-list-params-state';
 
 @Component({
   tag: 'payments-list-core'
@@ -18,9 +18,9 @@ export class PaymentsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: PaymentsParams = paymentsListParams;
+  @State() pagingParams: any = {};
   
-  @Watch('params')
+  @Watch('pagingParams')
   @Watch('getPayments')
   @Watch('columns')
   updateOnPropChange() {
@@ -40,16 +40,23 @@ export class PaymentsListCore {
       this.fetchData();
     }
 
-    onPaymentsParamsChange('set', () => {
+    onQueryParamsChange('set', () => {
+      Object.keys(this.pagingParams).forEach((key) => {
+        delete this.pagingParams[key];
+      });
       this.fetchData();
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
     });
   }
 
   fetchData(): void {
     this.loading = true;
-
+    let requestParams = this.requestParams;
     this.getPayments({
-      params: this.params,
+      params: requestParams,
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
@@ -69,15 +76,15 @@ export class PaymentsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams: any = { ...this.params };
+    const newParams: any = { ...this.pagingParams };
     delete newParams.after_cursor;
-    paymentsListParams.before_cursor = beforeCursor;
+    this.pagingParams = { ...newParams, before_cursor: beforeCursor };
   };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams: any = { ...this.params };
+    const newParams: any = { ...this.pagingParams };
     delete newParams.before_cursor;
-    paymentsListParams.after_cursor = afterCursor;
+    this.pagingParams = { ...newParams, after_cursor: afterCursor };
   };
 
   rowClickHandler = (e) => {
@@ -100,6 +107,11 @@ export class PaymentsListCore {
 
   get showRowData() {
     return !this.showEmptyState && !this.showErrorState && !this.loading;
+  }
+
+  get requestParams() {
+    const combinedParams = { ...queryParams, ...this.pagingParams };
+    return combinedParams;
   }
 
   render() {
@@ -146,7 +158,6 @@ export class PaymentsListCore {
                         handleClickPrevious: this.handleClickPrevious,
                         handleClickNext: this.handleClickNext,
                       }}
-                      params={this.params}
                     />
                   </td>
                 </tr>

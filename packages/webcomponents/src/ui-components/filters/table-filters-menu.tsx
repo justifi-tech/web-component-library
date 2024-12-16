@@ -15,7 +15,6 @@ export class TableFiltersMenu {
 
   @Watch('params')
   watchParamsHandler(newValue: any) {
-    console.log('params changed', newValue);
     this.showClearButton = hasFilters(newValue);
   }
 
