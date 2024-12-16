@@ -4,7 +4,7 @@ import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Header3 } from '../../ui-components';
-import { radioListItem } from '../../styles/parts';
+import { billingForm, radioListItem } from '../../styles/parts';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -102,7 +102,7 @@ export class NewPaymentMethod {
           )}
 
         </div>
-        <div part="billing-form">
+        <div part={billingForm}>
           <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
           <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
         </div>
