@@ -81,6 +81,6 @@ export const radioListItem = `radio-list-item ${text}`;
 export const skeleton = `skeleton ${backgroundColor}`;
 
 // Component specific
-// So the billing form can be hidden, for exemple
+// This allows the billing form can be hidden, for exemple
 // ::part(billing-form) { display: none; }
 export const billingForm = `billing-form`;
