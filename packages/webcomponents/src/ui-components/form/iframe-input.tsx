@@ -78,7 +78,7 @@ export class IframeInput {
   }
 
   private get part() {
-    if (!this.isValid && this.isFocused) {
+    if (this.isFocused && !this.isValid) {
       return inputInvalidAndFocused;
     }
 
@@ -89,6 +89,7 @@ export class IframeInput {
     if (this.isFocused) {
       return inputFocused;
     }
+
     return input;
   }
 

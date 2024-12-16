@@ -1,6 +1,6 @@
 import { Component, h, Host, State } from "@stencil/core";
 import { iframeInputStylesSet } from "./iframe-input-styles-state";
-import { inputFocused, inputInvalidAndFocused } from "../../styles/parts";
+import { input, inputFocused, inputInvalid, inputInvalidAndFocused } from "../../styles/parts";
 
 @Component({
   tag: "hidden-input",
@@ -12,14 +12,14 @@ export class HiddenInput {
   @State() errorText: string = '';
 
   async componentDidLoad() {
+    const fontStyles = await this.getBaseFontStyles();
+    iframeInputStylesSet('fontStyles', fontStyles);
+
     const focusedStyles = await this.getFocusedStyles();
     iframeInputStylesSet('focused', focusedStyles);
 
     const focusedAndInvalidStyles = await this.getFocusedAndInvalidStyles();
     iframeInputStylesSet('focusedAndInvalid', focusedAndInvalidStyles);
-
-    const fontStyles = await this.getBaseFontStyles();
-    iframeInputStylesSet('fontStyles', fontStyles);
   }
 
   private async getBaseFontStyles() {
@@ -59,15 +59,15 @@ export class HiddenInput {
     return new Promise((resolve, _reject) => {
       this.hiddenInput.focus();
       this.errorText = 'Error';
+
       setTimeout(() => {
-        let computedStyles = getComputedStyle(this.hiddenInput);
-        this.hiddenInput.blur();
-        this.errorText = '';
+        const computedStyles = getComputedStyle(this.hiddenInput);
         const styles = {
           boxShadow: computedStyles.boxShadow,
           border: computedStyles.border,
         };
 
+        this.hiddenInput.blur();
         resolve(styles);
       }, 500);
     });
@@ -77,10 +77,16 @@ export class HiddenInput {
     if (this.isFocused && this.errorText) {
       return inputInvalidAndFocused;
     }
+
+    if (this.errorText) {
+      return inputInvalid;
+    }
+
     if (this.isFocused) {
       return inputFocused;
     }
-    return 'input';
+
+    return input;
   }
 
   render() {
@@ -89,7 +95,7 @@ export class HiddenInput {
         <input
           ref={el => this.hiddenInput = el}
           type="text"
-          class="form-control"
+          class={this.errorText ? "form-control is-invalid" : "form-control"}
           onFocus={() => this.isFocused = true}
           onBlur={() => this.isFocused = false}
           part={this.part}
