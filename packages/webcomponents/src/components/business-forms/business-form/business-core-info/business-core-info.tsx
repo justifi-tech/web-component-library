@@ -5,6 +5,13 @@ import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
 
+/**
+ *
+ * The difference between this component and business-core-info-details
+ * is that this component is meant to be a form and send data
+ * and the other one  is meant to be just read only.
+ *
+ */
 @Component({
   tag: 'justifi-business-core-info'
 })
