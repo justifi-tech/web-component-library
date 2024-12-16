@@ -43,7 +43,6 @@
  - [justifi-cancellation-policy](../../components/dispute-management/dispute-response)
  - [justifi-customer-details](../../components/dispute-management/dispute-response)
  - [justifi-duplicate-charge](../../components/dispute-management/dispute-response)
- - [justifi-electronic-evidence](../../components/dispute-management/dispute-response)
  - [justifi-refund-policy](../../components/dispute-management/dispute-response)
  - [justifi-shipping-details](../../components/dispute-management/dispute-response)
 
@@ -61,7 +60,6 @@ graph TD;
   justifi-cancellation-policy --> form-control-textarea
   justifi-customer-details --> form-control-textarea
   justifi-duplicate-charge --> form-control-textarea
-  justifi-electronic-evidence --> form-control-textarea
   justifi-refund-policy --> form-control-textarea
   justifi-shipping-details --> form-control-textarea
   style form-control-textarea fill:#f9f,stroke:#333,stroke-width:4px

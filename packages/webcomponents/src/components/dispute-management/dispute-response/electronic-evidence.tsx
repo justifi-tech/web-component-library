@@ -63,10 +63,10 @@ export class ElectronicEvidence {
           <div class="col-12">
             <form-control-file-v2
               label="Activity Logs"
-              name="access_activity_log"
+              name="activity_log"
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
               onChange={this.handleFileSelection}
-              errorText={this.errors.access_activity_log}
+              errorText={this.errors.activity_log}
             />
           </div>
         </div>
