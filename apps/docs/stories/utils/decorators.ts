@@ -32,47 +32,18 @@ const applyArgsToStoryComponent = (storyComponent: any, props: Props) => {
   return component;
 };
 
-const generateStyleBlock = (styleArg: any) => {
-  const styleBlock = document.createElement('style');
-  const styleArgKeys = Object.keys(styleArg);
-
-  styleBlock.innerHTML = styleArgKeys
-    .map((styleArgKey) => {
-      const selector = styleArgKey;
-      const cssProperties = styleArg[styleArgKey];
-      const cssRules = Object.keys(cssProperties)
-        .map((cssProperty) => {
-          return `${cssProperty}: ${cssProperties[cssProperty]};`;
-        })
-        .join('');
-
-      return `
-      ${selector} {
-        ${cssRules}
-      }
-    `;
-    })
-    .join('');
-
-  return styleBlock;
-};
-
 export const customStoryDecorator = (
   storyComponent: any,
   storyContext: any
 ) => {
   const fragment = new DocumentFragment();
-  const { props, styleArg } = getPropsAndStyles(storyContext);
+  const { props } = getPropsAndStyles(storyContext);
 
   setUpMocks();
 
   const component = applyArgsToStoryComponent(storyComponent, props);
 
   const theme = props.find((prop) => prop.name === 'Theme')?.value;
-  if (styleArg) {
-    const styleBlock = generateStyleBlock(styleArg);
-    fragment.prepend(styleBlock);
-  }
 
   if (theme) {
     const themeStyles = themes[theme as ThemeNames];
@@ -81,12 +52,26 @@ export const customStoryDecorator = (
     fragment.prepend(themeStyleBlock);
   }
 
-  // add a wrapper div with id component-wrapper to wrap the component
+  // Create a wrapper div with id "component-wrapper"
   const componentWrapper = document.createElement('div');
   componentWrapper.id = 'component-wrapper';
+
+  // Check for a "slot" property in props or storyContext
+  const slotContent =
+    props.find((prop) => prop.name === 'Slot')?.value || storyContext.args.slot;
+
+  if (slotContent) {
+    const tempDiv = document.createElement('div');
+    const content = slotContent(props);
+    tempDiv.innerHTML = content;
+    const child = tempDiv.firstElementChild;
+    component.appendChild(child);
+  }
+
   componentWrapper.appendChild(component);
 
   fragment.appendChild(componentWrapper);
+
   return fragment;
 };
 
