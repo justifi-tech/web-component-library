@@ -8,7 +8,6 @@ import { StyledHost } from '../../ui-components';
   shadow: true
 })
 export class PaymentsListFilters {
-
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
 
   componentWillLoad() {
