@@ -94,7 +94,7 @@ export class HiddenInput {
           onBlur={() => this.isFocused = false}
           part={this.part}
           tabindex="-1"
-          style={{ height: '0', opacity: '0', pointerEvents: 'none' }}
+          style={{ height: '0', opacity: '0', pointerEvents: 'none', animation: 'none' }}
         />
       </Host>
     );
