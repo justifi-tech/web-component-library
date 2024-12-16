@@ -106,7 +106,11 @@ export class NumberInputMasked {
             ref={el => (this.textInput = el as HTMLInputElement)}
             id={this.name}
             name={this.name}
-            onBlur={this.formControlBlur.emit}
+            onFocus={() => (this.isFocused = true)}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
             onInput={this.handleFormControlInput}
             part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
