@@ -62,7 +62,6 @@ export class PayoutsListCore {
         } else {
           this.loading = false;
         }
-
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -138,6 +137,7 @@ export class PayoutsListCore {
   clearParams = () => {
     this.errorMessage = '';
     this.params = {};
+    console.log(this.params);
   }
 
   get subAccountParams() {

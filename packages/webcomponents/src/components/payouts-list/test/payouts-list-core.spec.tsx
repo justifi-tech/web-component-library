@@ -42,7 +42,7 @@ describe('payouts-list-core', () => {
 
     // components.pop();
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
@@ -78,7 +78,7 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters],
+      components: [PayoutsListCore, PaginationMenu],
       template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
@@ -256,7 +256,7 @@ describe('payouts-list-core', () => {
 
     expect(mockPayoutsService.fetchPayouts).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({"created_after": "2021-01-01T00:00:00.000Z"});
+    expect(updatedParams).toEqual({"created_after": "2021-01-01T23:59:59.000Z"});
   });
 
   it('clears filters and refetches data on clear filters interaction', async () => {

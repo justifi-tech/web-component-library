@@ -33,7 +33,7 @@
     "@stencil/store": "^2.0.8",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.4.1",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
     "dinero.js": "^1.9.1",
     "iframe-resizer": "^4.3.7",
     "imask": "^7.6.0",

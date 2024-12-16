@@ -14,7 +14,7 @@ import packageJson from '../../../package.json';
 import getComputedTheme from '../../utils/get-computed-theme';
 import { CreatePaymentMethodResponse } from './payment-method-responses';
 import { PaymentMethodTypes } from '../../api';
-import { composeQueryParams } from '../../utils/utils';
+import { composeQueryParams } from '../../ui-components/filters/utils';
 import { FrameCommunicationService } from '../../utils/frame-comunication-service';
 
 @Component({
