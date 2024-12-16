@@ -1,5 +1,22 @@
 ### Changelog
 
+## 4.23.0
+
+### Minor Changes
+
+- c070ca4: - Add new optional prop to `justifi-payments-list` component: `columns`.
+  - This prop allows implementers manually set the columns shown when the table is rendered by passing a comma separated string of keys. Columns can be set to show or hide via this prop, or re-ordered.
+- 4d43aaa: - Refactored `justifi-payouts-list` component.
+  - Adjusted column names and layout - removed certain columns such as `Type`, and `Paid Out To`.
+  - Removed column header for `Actions` column, and updated CSV download icon to link displaying `CSV`
+  - Added new optional prop: `columns` - can be used to sort order of columns, and manually hide/show columns.
+  - Added new filter menu, moved start and end date filters inside menu.
+- 295d768: - Updated validation for multiple fields in `justifi-payment-provisioning` component - most text fields will now allow special characters in addition to alphanumerical characters.
+
+### Patch Changes
+
+- 03da843: - Improved functionality of date inputs across component library.
+
 ## 4.22.2
 
 ### Patch Changes
