@@ -79,7 +79,7 @@ export class NumberInputMasked {
     }
   }
 
-  inputPart = () => {
+  private get part() {
     if (this.errorText) {
       return inputInvalid;
     }
@@ -108,7 +108,7 @@ export class NumberInputMasked {
             name={this.name}
             onBlur={this.formControlBlur.emit}
             onInput={this.handleFormControlInput}
-            part={this.inputPart()}
+            part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
             disabled={this.disabled}
