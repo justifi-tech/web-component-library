@@ -5,6 +5,7 @@ import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
 import { iframeInputStyles } from "./iframe-input-styles-state";
 import { MessageEventType } from "../../components/checkout/message-event-types";
+import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from "../../styles/parts";
 
 @Component({
   tag: "iframe-input",
@@ -77,7 +78,18 @@ export class IframeInput {
   }
 
   private get part() {
-    return `input form-control-text ${this.isFocused ? 'input-focused' : ''} ${!this.isValid ? 'input-invalid' : ''}`;
+    if (!this.isValid && this.isFocused) {
+      return inputInvalidAndFocused;
+    }
+
+    if (!this.isValid) {
+      return inputInvalid;
+    }
+
+    if (this.isFocused) {
+      return inputFocused;
+    }
+    return input;
   }
 
   private get style() {
@@ -114,7 +126,7 @@ export class IframeInput {
           <label
             class="form-label"
             htmlFor=""
-            part="label"
+            part={label}
           >
             {this.label || ''}
           </label>
