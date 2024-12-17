@@ -1,7 +1,7 @@
 import { Component, h } from '@stencil/core';
 import { queryParams, clearParams } from './payouts-list-params-state';
 import { StyledHost } from '../../ui-components';
-
+import { convertToLocal, convertToUTC } from '../../utils/utils';
 @Component({
   tag: 'justifi-payouts-list-filters',
   shadow: true
@@ -10,6 +10,11 @@ export class PayoutsListFilters {
   
   setParamsOnChange = (name: string, value: string) => {
     queryParams[name] = value;
+  }
+
+  handleDateInput = (name: string, value: string) => {
+    const utcDate = convertToUTC(value, { setEndOfDay: true });
+    this.setParamsOnChange(name, utcDate);
   }
 
   render() {
@@ -21,9 +26,8 @@ export class PayoutsListFilters {
               <form-control-date
                 name="created_after"
                 label="Start Date"
-                inputHandler={this.setParamsOnChange}
-                defaultValue={queryParams.created_after}
-                filterTimeZone
+                inputHandler={this.handleDateInput}
+                defaultValue={convertToLocal(queryParams.created_after, { showInputDate: true })}
                 showTime
               />
             </div>
@@ -31,9 +35,8 @@ export class PayoutsListFilters {
               <form-control-date
                 name="created_before"
                 label="End Date"
-                inputHandler={this.setParamsOnChange}
-                defaultValue={queryParams.created_before}
-                filterTimeZone
+                inputHandler={this.handleDateInput}
+                defaultValue={convertToLocal(queryParams.created_before, { showInputDate: true })}
                 showTime
               />
             </div>

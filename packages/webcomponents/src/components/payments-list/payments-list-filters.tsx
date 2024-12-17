@@ -2,6 +2,7 @@ import { Component, h } from '@stencil/core';
 import { debounce } from 'lodash';
 import { queryParams, clearParams } from './payments-list-params-state';
 import { StyledHost } from '../../ui-components';
+import { convertToLocal, convertToUTC } from '../../utils/utils';
 
 @Component({
   tag: 'justifi-payments-list-filters',
@@ -17,6 +18,11 @@ export class PaymentsListFilters {
 
   setParamsOnChange = (name: string, value: string) => {
     queryParams[name] = value;
+  };
+
+  handleDateInput = (name: string, value: string) => {
+    const utcDate = convertToUTC(value, { setExactTime: true });
+    this.setParamsOnChange(name, utcDate);
   }
 
   get paymentStatusOptions() {
@@ -65,20 +71,18 @@ export class PaymentsListFilters {
               <form-control-date
                 name="created_after"
                 label="Start Date"
-                inputHandler={this.setParamsOnChange}
-                defaultValue={queryParams.created_after}
+                inputHandler={this.handleDateInput}
+                defaultValue={convertToLocal(queryParams.created_after, { showInputDateTime: true }) || ''}
                 showTime
-                filterTimeZone
               />
             </div>
             <div class="p-2">
               <form-control-date
                 name="created_before"
                 label="End Date"
-                inputHandler={this.setParamsOnChange}
-                defaultValue={queryParams.created_before}
+                inputHandler={this.handleDateInput}
+                defaultValue={convertToLocal(queryParams.created_before, { showInputDateTime: true }) || ''}
                 showTime
-                filterTimeZone
               />
             </div>
           </div>

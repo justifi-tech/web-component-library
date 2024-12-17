@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { MapPaymentStatusToBadge } from './payments-status';
-import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { formatCurrency, convertToLocal } from '../../utils/utils';
 
 export const defaultColumnsKeys = 'created_at,amount,status,payment_type,description,payers_name,last_four_digits';
 
@@ -45,8 +45,8 @@ export const paymentTableColumns = {
 export const paymentTableCells = {
   created_at: (value) => (
     <td part="table-cell">
-      <div class="fw-bold">{formatDate(value)}</div>
-      <div class="fw-bold">{formatTime(value)}</div>
+      <div class="fw-bold">{convertToLocal(value, { showDisplayDate: true })}</div>
+      <div class="fw-bold">{convertToLocal(value, { showTime: true})}</div>
     </td>
   ),
   amount: (value) => (<td part="table-cell">{formatCurrency(value, true, true)}</td>),

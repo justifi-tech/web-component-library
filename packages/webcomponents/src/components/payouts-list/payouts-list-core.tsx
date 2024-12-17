@@ -71,7 +71,6 @@ export class PayoutsListCore {
         } else {
           this.loading = false;
         }
-
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
