@@ -23,10 +23,26 @@ const getPropsAndStyles = (storyContext: any) => {
 };
 
 const applyArgsToStoryComponent = (storyComponent: any, props: Props) => {
-  const component = storyComponent();
+  const componentOutput = storyComponent(); // Call the story function
+
+  let component: HTMLElement;
+
+  if (typeof componentOutput === 'string') {
+    // If the output is an HTML string, parse it into an element
+    const template = document.createElement('template');
+    template.innerHTML = componentOutput.trim();
+    component = template.content.firstElementChild as HTMLElement;
+  } else if (componentOutput instanceof HTMLElement) {
+    // If already a DOM element, use it directly
+    component = componentOutput;
+  } else {
+    throw new Error('Unsupported component output type');
+  }
 
   props.forEach((prop) => {
-    component.setAttribute(prop.name, prop.value, prop);
+    if (prop.value !== undefined) {
+      component.setAttribute(prop.name, prop.value);
+    }
   });
 
   return component;
