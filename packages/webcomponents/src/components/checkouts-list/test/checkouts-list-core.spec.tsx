@@ -91,7 +91,7 @@ describe('checkouts-list-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('emits checkout-row-clicked event on row click', async () => {
+  it('emits row-clicked event on row click', async () => {
     const mockCheckoutsService = {
       fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
     };
@@ -126,7 +126,7 @@ describe('checkouts-list-core', () => {
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();
-    page.win.addEventListener('checkout-row-clicked', spyEvent);
+    page.win.addEventListener('row-clicked', spyEvent);
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();

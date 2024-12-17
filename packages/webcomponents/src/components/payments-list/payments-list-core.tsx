@@ -29,7 +29,7 @@ export class PaymentsListCore {
   }
 
   @Event({
-    eventName: 'payment-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
