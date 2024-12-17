@@ -1,9 +1,11 @@
-import type { Meta } from "@storybook/web-components";
+import type { Meta, StoryObj } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import { StoryBaseArgs } from "../../utils";
+import themes, { ThemeNames } from "../../themes";
+import { setUpMocks } from "../../utils/mockAllServices";
 
 import "@justifi/webcomponents/dist/module/justifi-payments-list";
-import { ThemeNames } from "../../themes";
+import "@justifi/webcomponents/dist/module/justifi-payments-list-filters";
 
 const examplePayload = {
   "id": "py_xyz",
@@ -55,6 +57,9 @@ const meta: Meta = {
         type: "select",
       },
     },
+    'withFilters': {
+      table: { disable: true }
+    },
     "row-clicked": {
       description: "`RowClicked`",
       table: {
@@ -95,13 +100,50 @@ const meta: Meta = {
       delay: 2000,
     },
   },
-  decorators: [
-    customStoryDecorator,
-    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
-    withActions, // https://github.com/storybookjs/storybook/issues/22384
-  ],
+  render: ({ label, ...args }) => {
+    let component = `<justifi-payments-list auth-token="${args["auth-token"]}" account-id="${args["account-id"]}"></justifi-payments-list>`;
+    
+    if (args.withFilters) {
+      component = `
+        <justifi-payments-list-filters></justifi-payments-list-filters>
+        <justifi-payments-list auth-token="${args["auth-token"]}" account-id="${args["account-id"]}"></justifi-payments-list>
+      `
+    }
+    
+    return component;
+  }
 };
 
-export const Example = {};
+export const Example: StoryObj = {};
+Example.decorators = [
+  (story: any, storyArgs: any) => {
+    setUpMocks();
+
+    // Import the style here to not pollute other framework stories
+    const selectedTheme = storyArgs.args["Theme"] as ThemeNames;
+    const styleElement = document.createElement("style");
+    styleElement.textContent = themes[selectedTheme];
+
+    return `${styleElement.outerHTML}${story()}`;
+  },
+  // @ts-ignore
+  withActions,
+];
+
+export const ExampleWithFilters: StoryObj = { args: { withFilters: true } };
+ExampleWithFilters.decorators = [
+  (story: any, storyArgs: any) => {
+    setUpMocks();
+
+    // Import the style here to not pollute other framework stories
+    const selectedTheme = storyArgs.args["Theme"] as ThemeNames;
+    const styleElement = document.createElement("style");
+    styleElement.textContent = themes[selectedTheme];
+
+    return `${styleElement.outerHTML}${story()}`;
+  },
+  // @ts-ignore
+  withActions,
+];
 
 export default meta;
