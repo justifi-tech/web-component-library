@@ -13,10 +13,10 @@
 
 ## Events
 
-| Event                 | Description | Type                          |
-| --------------------- | ----------- | ----------------------------- |
-| `error-event`         |             | `CustomEvent<ComponentError>` |
-| `payment-row-clicked` |             | `CustomEvent<Payment>`        |
+| Event         | Description | Type                          |
+| ------------- | ----------- | ----------------------------- |
+| `error-event` |             | `CustomEvent<ComponentError>` |
+| `row-clicked` |             | `CustomEvent<Payment>`        |
 
 
 ## Shadow Parts

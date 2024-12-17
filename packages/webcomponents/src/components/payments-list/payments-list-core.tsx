@@ -41,9 +41,8 @@ export class PaymentsListCore {
     }
 
     onQueryParamsChange('set', () => {
-      Object.keys(this.pagingParams).forEach((key) => {
-        delete this.pagingParams[key];
-      });
+      delete this.pagingParams.before_cursor;
+      delete this.pagingParams.after_cursor;
       this.fetchData();
     });
 
@@ -54,9 +53,9 @@ export class PaymentsListCore {
 
   fetchData(): void {
     this.loading = true;
-    let requestParams = this.requestParams;
+    
     this.getPayments({
-      params: requestParams,
+      params: this.requestParams,
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
@@ -76,15 +75,11 @@ export class PaymentsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams: any = { ...this.pagingParams };
-    delete newParams.after_cursor;
-    this.pagingParams = { ...newParams, before_cursor: beforeCursor };
+    this.pagingParams = { before_cursor: beforeCursor };
   };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams: any = { ...this.pagingParams };
-    delete newParams.before_cursor;
-    this.pagingParams = { ...newParams, after_cursor: afterCursor };
+    this.pagingParams = { after_cursor: afterCursor };
   };
 
   rowClickHandler = (e) => {
