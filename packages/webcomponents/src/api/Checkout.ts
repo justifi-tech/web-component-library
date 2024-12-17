@@ -225,6 +225,4 @@ export type ILoadedEventResponse = {
 export interface ICheckoutsParams {
   status?: ICheckoutStatus;
   payment_mode?: ICheckoutPaymentMode;
-  after_cursor?: string;
-  before_cursor?: string;
 }
