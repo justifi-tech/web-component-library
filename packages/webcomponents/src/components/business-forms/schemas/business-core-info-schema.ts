@@ -17,7 +17,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     website_url: websiteUrlValidation.required('Enter business website url'),
     email: emailValidation.required('Enter business email'),
     phone: phoneValidation.required('Enter phone number'),
-    doing_business_as: doingBusinessAsValidation.required('Enter doing business as'),
+    doing_business_as: doingBusinessAsValidation.nullable(),
     classification: businessClassificationValidation.required('Select business classification'),
     industry: industryValidation.required('Enter a business industry'),
     tax_id: taxIdValidation.required('Enter tax id, SSN, or EIN'),
