@@ -1,12 +1,15 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { tableExportedParts } from '../../ui-components/table/exported-parts';
+import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import JustifiAnalytics from '../../api/Analytics';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { config } from '../../../config';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from './get-payouts';
-import { ComponentError, ComponentErrorCodes } from '../../api/ComponentError';
-import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { StyledHost } from '../../ui-components/styled-host/styled-host';
+import { makeGetSubAccounts } from '../../api/get-subaccounts';
+import { SubAccountService } from '../../api/services/subaccounts.service';
+import { StyledHost, tableExportedParts } from '../../ui-components';
+import { defaultColumnsKeys } from './payouts-table';
 
 /**
   * @exportedPart label: Label for inputs
@@ -33,12 +36,15 @@ import { StyledHost } from '../../ui-components/styled-host/styled-host';
 })
 
 export class PayoutsList {
-  @Prop() accountId: string;
-  @Prop() authToken: string;
-
   @State() getPayouts: Function;
   @State() getPayoutCSV: Function;
+  @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
+  
+  @Prop() accountId: string;
+  @Prop() authToken: string;
+  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -47,7 +53,7 @@ export class PayoutsList {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeServices();
+    this.initializeGetData();
   }
 
   disconnectedCallback() {
@@ -57,15 +63,21 @@ export class PayoutsList {
   @Watch('accountId')
   @Watch('authToken')
   propChanged() {
-    this.initializeServices();
+    this.initializeGetData();
   }
 
-  private initializeServices() {
+  private initializeGetData() {
+    this.initializePayoutsServices();
+    this.initializeGetSubAccounts();
+  }
+
+  private initializePayoutsServices() {
     if (this.accountId && this.authToken) {
       const serviceParams = {
         id: this.accountId,
         authToken: this.authToken,
         service: new PayoutService(),
+        apiOrigin: this.apiOrigin
       };
       this.getPayouts = makeGetPayouts(serviceParams);
       this.getPayoutCSV = makeGetPayoutCSV(serviceParams);
@@ -73,7 +85,19 @@ export class PayoutsList {
       this.errorMessage = 'Account ID and Auth Token are required';
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
-        message: 'Account ID and Auth Token are required',
+        message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  }
+
+  private initializeGetSubAccounts() {
+    if (this.accountId && this.authToken) {
+      this.getSubAccounts = makeGetSubAccounts({
+        accountId: this.accountId,
+        authToken: this.authToken,
+        service: new SubAccountService(),
+        apiOrigin: this.apiOrigin
       });
     }
   }
@@ -89,7 +113,9 @@ export class PayoutsList {
         <payouts-list-core
           getPayouts={this.getPayouts}
           getPayoutCSV={this.getPayoutCSV}
+          getSubAccounts={this.getSubAccounts}
           onError-event={this.handleOnError}
+          columns={this.columns}
         />
       </StyledHost>
     );

@@ -44,7 +44,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -82,7 +82,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -158,7 +158,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters],
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -199,7 +199,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -255,7 +255,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -316,7 +316,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -359,7 +359,7 @@ describe('checkouts-list-core', () => {
 
     const page = await newSpecPage({
       components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} />,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();

@@ -188,59 +188,41 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
         <tbody class="table-body" part="table-body">
           <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row table-row-odd">
             <td part="table-cell">
-              <td>
-                Terminal 1
-              </td>
+              Terminal 1
             </td>
             <td part="table-cell">
-              <td>
-                453-760-515
-              </td>
+              453-760-515
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-danger" title="This terminal is disconnected.">
-                  Disconnected
-                </span>
-              </td>
+              <span class="badge bg-danger" title="This terminal is disconnected.">
+                Disconnected
+              </span>
             </td>
           </tr>
           <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
-              <td>
-                Terminal 2
-              </td>
+              Terminal 2
             </td>
             <td part="table-cell">
-              <td>
-                807-075-625
-              </td>
+              807-075-625
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-danger" title="This terminal is disconnected.">
-                  Disconnected
-                </span>
-              </td>
+              <span class="badge bg-danger" title="This terminal is disconnected.">
+                Disconnected
+              </span>
             </td>
           </tr>
           <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row table-row-odd">
             <td part="table-cell">
-              <td>
-                Terminal 3
-              </td>
+              Terminal 3
             </td>
             <td part="table-cell">
-              <td>
-                450-060-752
-              </td>
+              450-060-752
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-success" title="This terminal is connected.">
-                  Connected
-                </span>
-              </td>
+              <span class="badge bg-success" title="This terminal is connected.">
+                Connected
+              </span>
             </td>
           </tr>
         </tbody>

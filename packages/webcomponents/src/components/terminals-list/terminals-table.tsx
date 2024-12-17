@@ -27,8 +27,8 @@ export const terminalTableColumns = {
 }
 
 export const terminalTableCells = {
-  nickname: (value) => (<td>{value}</td>),
-  provider_id: (value) => (<td>{value}</td>),
-  sub_account_name: (value) => (<td>{value}</td>),
-  status: (value) => (<td innerHTML={MapTerminalStatusToBadge(value)}></td>),
+  nickname: (value) => (<td part="table-cell">{value}</td>),
+  provider_id: (value) => (<td part="table-cell">{value}</td>),
+  sub_account_name: (value) => (<td part="table-cell">{value}</td>),
+  status: (value) => (<td part="table-cell" innerHTML={MapTerminalStatusToBadge(value)}></td>),
 }

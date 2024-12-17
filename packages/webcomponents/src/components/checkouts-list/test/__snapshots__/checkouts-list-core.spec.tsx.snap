@@ -246,172 +246,122 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
         <tbody class="table-body" part="table-body">
           <tr data-row-entity-id="cho_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row table-row-odd">
             <td part="table-cell">
-              <th>
-                <div class="fw-bold">
-                  Aug 8, 2024
-                </div>
-                <div class="fw-bold">
-                  3:47pm
-                </div>
-              </th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                3:47pm
+              </div>
             </td>
             <td part="table-cell">
-              <td>
-                $3.99 USD
-              </td>
+              $3.99 USD
             </td>
             <td part="table-cell">
-              <td>
-                One Chocolate Donut
-              </td>
+              One Chocolate Donut
             </td>
             <td part="table-cell">
-              <td>
-                Card Present
-              </td>
+              Card Present
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-success" title="The checkout has been completed">
-                  Completed
-                </span>
-              </td>
+              <span class="badge bg-success" title="The checkout has been completed">
+                Completed
+              </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
-              <th>
-                <div class="fw-bold">
-                  Aug 8, 2024
-                </div>
-                <div class="fw-bold">
-                  4:32pm
-                </div>
-              </th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
             </td>
             <td part="table-cell">
-              <td>
-                $10.99 USD
-              </td>
+              $10.99 USD
             </td>
             <td part="table-cell">
-              <td>
-                1 Dozen Chocolate Donuts
-              </td>
+              1 Dozen Chocolate Donuts
             </td>
             <td part="table-cell">
-              <td>
-                Card Present
-              </td>
+              Card Present
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-danger" title="The checkout has expired">
-                  Expired
-                </span>
-              </td>
+              <span class="badge bg-danger" title="The checkout has expired">
+                Expired
+              </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row table-row-odd">
             <td part="table-cell">
-              <th>
-                <div class="fw-bold">
-                  Aug 8, 2024
-                </div>
-                <div class="fw-bold">
-                  4:32pm
-                </div>
-              </th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
             </td>
             <td part="table-cell">
-              <td>
-                $19.99 USD
-              </td>
+              $19.99 USD
             </td>
             <td part="table-cell">
-              <td>
-                2 Dozen Chocolate Donuts - Website To Go Order
-              </td>
+              2 Dozen Chocolate Donuts - Website To Go Order
             </td>
             <td part="table-cell">
-              <td>
-                E-commerce
-              </td>
+              E-commerce
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-primary" title="The checkout has been created">
-                  Created
-                </span>
-              </td>
+              <span class="badge bg-primary" title="The checkout has been created">
+                Created
+              </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row table-row-even">
             <td part="table-cell">
-              <th>
-                <div class="fw-bold">
-                  Aug 8, 2024
-                </div>
-                <div class="fw-bold">
-                  4:32pm
-                </div>
-              </th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
             </td>
             <td part="table-cell">
-              <td>
-                $89.99 USD
-              </td>
+              $89.99 USD
             </td>
             <td part="table-cell">
-              <td>
-                Weekly Donut Box Subscription
-              </td>
+              Weekly Donut Box Subscription
             </td>
             <td part="table-cell">
-              <td>
-                Buy Now Pay Later
-              </td>
+              Buy Now Pay Later
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-primary" title="The checkout has been created">
-                  Created
-                </span>
-              </td>
+              <span class="badge bg-primary" title="The checkout has been created">
+                Created
+              </span>
             </td>
           </tr>
           <tr data-row-entity-id="cho_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row table-row-odd">
             <td part="table-cell">
-              <th>
-                <div class="fw-bold">
-                  Aug 8, 2024
-                </div>
-                <div class="fw-bold">
-                  4:32pm
-                </div>
-              </th>
+              <div class="fw-bold">
+                Aug 8, 2024
+              </div>
+              <div class="fw-bold">
+                4:32pm
+              </div>
             </td>
             <td part="table-cell">
-              <td>
-                $24.99 USD
-              </td>
+              $24.99 USD
             </td>
             <td part="table-cell">
-              <td>
-                Donut Shop Size M T Shirt - Website Order
-              </td>
+              Donut Shop Size M T Shirt - Website Order
             </td>
             <td part="table-cell">
-              <td>
-                E-commerce
-              </td>
+              E-commerce
             </td>
             <td part="table-cell">
-              <td>
-                <span class="badge bg-secondary" title="The checkout has been attempted">
-                  Attempted
-                </span>
-              </td>
+              <span class="badge bg-secondary" title="The checkout has been attempted">
+                Attempted
+              </span>
             </td>
           </tr>
         </tbody>

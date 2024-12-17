@@ -4,8 +4,9 @@ import { makeGetPayments } from './get-payments';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { StyledHost, tableExportedParts } from '../../ui-components';
 import { config } from '../../../config';
+import { StyledHost, tableExportedParts } from '../../ui-components';
+import { defaultColumnsKeys } from './payments-table';
 
 /**
   * @exportedPart label: Label for inputs
@@ -38,6 +39,7 @@ export class PaymentsList {
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
@@ -88,6 +90,7 @@ export class PaymentsList {
         <payments-list-core
           getPayments={this.getPayments}
           onError-event={this.handleErrorEvent}
+          columns={this.columns}
         />
       </StyledHost>
     );
