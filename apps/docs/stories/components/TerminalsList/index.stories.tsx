@@ -1,9 +1,9 @@
-import type { Meta } from "@storybook/web-components";
-import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-terminals-list";
-import { ThemeNames } from "../../themes";
+import "@justifi/webcomponents/dist/module/justifi-terminals-list-filters";
 
 const examplePayload = {
   "id": "trm_abc123",
@@ -17,7 +17,9 @@ const examplePayload = {
   "updated_at": "2021-01-01T12:00:00Z"
 };
 
-const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token", "theme"]);
+type Story = StoryObj;
+
+const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
 const meta: Meta = {
   title: "Merchant Tools/Terminals List",
@@ -28,6 +30,14 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
     "row-clicked": {
       description: "`RowClicked`",
       table: {
@@ -70,11 +80,22 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
-    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
-    withActions, // https://github.com/storybookjs/storybook/issues/22384
   ]
 };
 
-export const Example = {};
+export const Example: Story = {};
+
+export const ExampleWithFilters: Story = {
+  args: {},
+  render: (args) => `
+    <div>
+      <justifi-terminals-list-filters></justifi-terminals-list-filters>
+      <justifi-terminals-list
+        auth-token="${args["auth-token"]}"
+        account-id="${args["account-id"]}">
+      </justifi-terminals-list>
+    </div>
+  `
+};
 
 export default meta;

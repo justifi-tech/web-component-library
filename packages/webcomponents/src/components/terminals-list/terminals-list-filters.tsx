@@ -4,7 +4,8 @@ import { queryParams, clearParams } from './terminals-list-params-state';
 import { StyledHost } from '../../ui-components';
 
 @Component({
-  tag: 'terminals-list-filters'
+  tag: 'justifi-terminals-list-filters',
+  shadow: true
 })
 export class TerminalsListFilters {
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
@@ -60,7 +61,6 @@ export class TerminalsListFilters {
           </div>
         </table-filters-menu>
       </StyledHost>
-      
     );
   }
 }

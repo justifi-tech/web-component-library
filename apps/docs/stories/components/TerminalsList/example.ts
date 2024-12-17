@@ -7,6 +7,8 @@ export const codeExampleFull = `
 ${codeExampleHead('justifi-terminals-list')}
 
 <body>
+  <!-- Optional: add the filters component -->
+  <justifi-terminals-list-filters></justifi-terminals-list-filters>
   <justifi-terminals-list></justifi-terminals-list>
 </body>
 

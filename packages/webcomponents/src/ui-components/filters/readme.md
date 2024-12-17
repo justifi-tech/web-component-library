@@ -26,8 +26,8 @@
 
  - [checkouts-list-filters](../../components/checkouts-list)
  - [justifi-payments-list-filters](../../components/payments-list)
+ - [justifi-terminals-list-filters](../../components/terminals-list)
  - [payouts-list-filters](../../components/payouts-list)
- - [terminals-list-filters](../../components/terminals-list)
 
 ### Depends on
 
@@ -39,8 +39,8 @@ graph TD;
   table-filters-menu --> custom-popper
   checkouts-list-filters --> table-filters-menu
   justifi-payments-list-filters --> table-filters-menu
+  justifi-terminals-list-filters --> table-filters-menu
   payouts-list-filters --> table-filters-menu
-  terminals-list-filters --> table-filters-menu
   style table-filters-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

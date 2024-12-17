@@ -19,6 +19,7 @@ const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCol
 const components = [TerminalsListCore, PaginationMenu, TableFiltersMenu, TerminalsListFilters, SelectInput];
 
 describe('terminals-list-core', () => {
+
   it('renders properly with fetched data', async () => {
     const mockTerminalsService = {
       fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
@@ -130,201 +131,6 @@ describe('terminals-list-core', () => {
     expect(spyEvent).toHaveBeenCalled();
   });
 
-  it('shows table filter menu on filter button click', async () => {
-    const mockTerminalsService = {
-      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
-    };
-
-    const getTerminals = makeGetTerminals({
-      id: '123',
-      authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    await page.waitForChanges();
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    expect(filterButton).not.toBeNull();
-
-    filterButton.click();
-    await page.waitForChanges();
-
-    const filterMenu = page.root.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-  });
-
-  it('updates params and refetches data on filter interaction', async () => {
-    const mockTerminalsService = {
-      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
-    };
-
-    const getTerminals = makeGetTerminals({
-      id: '123',
-      authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.querySelector('terminals-list-filters') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-
-    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
-    expect(selectFilter).not.toBeNull();
-
-    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
-    expect(selectFilterInput).not.toBeNull();
-
-    selectFilterInput.click();
-    
-    const selectOptions = selectFilterInput.querySelectorAll('option');
-    expect(selectOptions).not.toBeNull();
-    
-    const succeededOption = selectOptions[3] as HTMLOptionElement;
-    succeededOption.click();
-    selectFilterInput.value = 'connected';
-    selectFilterInput.dispatchEvent(new Event('input'));
-
-    expect(mockTerminalsService.fetchTerminals).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({"status": "connected"});
-  });
-
-  it('clears filters and refetches data on clear filters interaction', async () => {
-    const mockTerminalsService = {
-      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
-    };
-
-    const getTerminals = makeGetTerminals({
-      id: '123',
-      authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-
-    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
-    expect(selectFilter).not.toBeNull();
-
-    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
-    expect(selectFilterInput).not.toBeNull();
-
-    selectFilterInput.click();
-    
-    const selectOptions = selectFilterInput.querySelectorAll('option');
-    expect(selectOptions).not.toBeNull();
-    
-    const succeededOption = selectOptions[3] as HTMLOptionElement;
-    succeededOption.click();
-    selectFilterInput.value = 'connected';
-    selectFilterInput.dispatchEvent(new Event('input'));
-
-    const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
-    expect(clearButton).not.toBeNull();
-
-    clearButton.click();
-
-    expect(mockTerminalsService.fetchTerminals).toHaveBeenCalledTimes(3);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({});
-  });
-
-  it('updates params and refetches data on pagination interaction', async () => {
-    const mockTerminalsService = {
-      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
-    };
-
-    const getTerminals = makeGetTerminals({
-      id: '123',
-      authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    await page.waitForChanges();
-
-    // Assuming handleClickNext is accessible and modifies `params` which triggers a re-fetch
-    page.rootInstance.handleClickNext('nextCursor');
-    await page.waitForChanges();
-
-    // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
-    expect(mockTerminalsService.fetchTerminals).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams.after_cursor).toBe('nextCursor');
-  });
-
   it('emits error event on fetch error', async () => {
     const mockService = {
       fetchTerminals: jest.fn().mockRejectedValue(new Error('Fetch error'))
@@ -366,5 +172,48 @@ describe('terminals-list-core', () => {
         }
       })
     );
+  });
+});
+
+describe('terminals-list-core pagination', () => {
+
+  it('updates params and refetches data on pagination interaction', async () => {
+    const mockTerminalsService = {
+      fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
+    };
+
+    const getTerminals = makeGetTerminals({
+      id: '123',
+      authToken: '123',
+      service: mockTerminalsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: '123',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const page = await newSpecPage({
+      components: components,
+      template: () => <terminals-list-core getTerminals={getTerminals} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+    });
+
+    await page.waitForChanges();
+
+    // Assuming handleClickNext is accessible and modifies `params` which triggers a re-fetch
+    page.rootInstance.handleClickNext('nextCursor');
+    await page.waitForChanges();
+
+    // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
+    expect(mockTerminalsService.fetchTerminals).toHaveBeenCalledTimes(2);
+    const updatedParams = page.rootInstance.pagingParams;
+    expect(updatedParams.after_cursor).toBe('nextCursor');
   });
 });
