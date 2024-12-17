@@ -7,6 +7,8 @@ export const codeExampleFull = `
 ${codeExampleHead('justifi-payments-list')}
 
 <body>
+  <!-- Optional: add the filters component -->
+  <justifi-payments-list-filters></justifi-payments-list-filters>
   <justifi-payments-list></justifi-payments-list>
 </body>
 
