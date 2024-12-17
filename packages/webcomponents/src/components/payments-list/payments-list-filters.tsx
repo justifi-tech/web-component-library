@@ -74,7 +74,6 @@ export class PaymentsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={convertToLocal(queryParams.created_after, { showInputDateTime: true }) || ''}
                 showTime
-                filterTimeZone
               />
             </div>
             <div class="p-2">
@@ -84,7 +83,6 @@ export class PaymentsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={convertToLocal(queryParams.created_before, { showInputDateTime: true }) || ''}
                 showTime
-                filterTimeZone
               />
             </div>
           </div>
