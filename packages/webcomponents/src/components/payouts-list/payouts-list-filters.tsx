@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { PayoutsTableFilterParams } from '../../api';
+import { convertToLocal, convertToUTC } from '../../utils/utils';
 
 @Component({
   tag: 'payouts-list-filters'
@@ -9,6 +10,10 @@ export class PayoutsListFilters {
   @Prop() setParamsOnChange: (name: string, value: string) => void;
   @Prop() clearParams: () => void;
 
+  handleDateInput = (name: string, value: string) => {
+    const utcDate = convertToUTC(value, { setEndOfDay: true });
+    this.setParamsOnChange(name, utcDate);
+  }
 
   render() {
     return (
@@ -17,21 +22,17 @@ export class PayoutsListFilters {
           <div class="p-2">
             <form-control-date
               name="created_after"
-              label="Start Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_after}
-              filterTimeZone
-              showTime
+              label="Created After"
+              inputHandler={this.handleDateInput}
+              defaultValue={convertToLocal(this.params.created_after, { showInputDate: true })}
             />
           </div>
           <div class="p-2">
             <form-control-date
               name="created_before"
-              label="End Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_before}
-              filterTimeZone
-              showTime
+              label="Created Before"
+              inputHandler={this.handleDateInput}
+              defaultValue={convertToLocal(this.params.created_before, { showInputDate: true })}
             />
           </div>
         </div>
