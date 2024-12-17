@@ -32,7 +32,7 @@ export class PayoutsListCore {
   }
 
   @Event({
-    eventName: 'payout-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
 

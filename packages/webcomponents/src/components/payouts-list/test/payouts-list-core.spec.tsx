@@ -130,7 +130,7 @@ describe('payouts-list-core', () => {
     }));
   });
 
-  it('emits payout-row-clicked event on row click', async () => {
+  it('emits row-clicked event on row click', async () => {
     const mockPayoutService = {
       fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
     };
@@ -160,15 +160,14 @@ describe('payouts-list-core', () => {
 
     await page.waitForChanges();
 
-    const rowClickedHandler = jest.fn();
-    page.win.addEventListener('payout-row-clicked', rowClickedHandler);
+    const firstRow = page.root.querySelector('[data-test-id="table-row"]') as HTMLElement;
+    expect(firstRow).not.toBeNull();
 
-    const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
+    const spyEvent = jest.fn();
+    page.win.addEventListener('row-clicked', spyEvent);
 
-    if (rows.length > 0) {
-      (rows[0] as HTMLElement).click();
-      await page.waitForChanges();
-    }
+    firstRow.click();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('shows table filter menu on filter button click', async () => {
