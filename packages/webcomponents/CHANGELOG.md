@@ -1,5 +1,11 @@
 ### Changelog
 
+## 4.23.1
+
+### Patch Changes
+
+- 6705772: - Adjusted minimum character length for bank account number field in bank account form step of `justifi-payment-provisioning` component. The minimum character length has been adjusted from 8 to 7.
+
 ## 4.23.0
 
 ### Minor Changes
