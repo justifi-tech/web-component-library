@@ -1,9 +1,9 @@
 import { createStore } from '@stencil/store';
-import { ICheckoutsParams } from '../../api';
+import { CheckoutsQueryParams } from '../../api';
 
 const initialState = {};
 
-const checkoutsListQueryParams = createStore<ICheckoutsParams>(() => initialState);
+const checkoutsListQueryParams = createStore<CheckoutsQueryParams>(() => initialState);
 const { state: queryParams, on: onQueryParamsChange } = checkoutsListQueryParams;
 
 const clearParams = () => {

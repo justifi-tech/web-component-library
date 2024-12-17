@@ -222,7 +222,7 @@ export type ILoadedEventResponse = {
   checkout_status: ICheckoutStatus;
 };
 
-export interface ICheckoutsParams {
+export interface CheckoutsQueryParams {
   status?: ICheckoutStatus;
   payment_mode?: ICheckoutPaymentMode;
 }
