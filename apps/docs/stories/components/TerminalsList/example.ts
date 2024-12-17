@@ -20,7 +20,7 @@ export const codeExampleEventHandling = `
   (function() {
     const terminalList = document.querySelector('justifi-terminals-list');
     
-    terminalList.addEventListener('terminal-row-clicked', (event) => {
+    terminalList.addEventListener('row-clicked', (event) => {
       // event.detail contains all the necessary information to call an endpoint to get more details on this entity
       const entityID = event.detail.id;
   
