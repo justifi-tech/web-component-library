@@ -1,10 +1,12 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payout } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
-import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../../ui-components/details/utils';
+import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
-import { StyledHost } from '../../ui-components';
+import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
+import Spinner from '../../ui-components/spinner';
+import { badge } from '../../styles/parts';
 
 @Component({
   tag: 'payout-details-core',
@@ -69,13 +71,13 @@ export class PayoutDetailsCore {
   render() {
     return (
       <StyledHost>
-        {this.loading && LoadingState()}
+        {this.loading && <Spinner />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.payout && (
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
-              badge={<span slot='badge' part="detail-head-badge" innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
+              badge={<span slot='badge' part={badge} innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
               title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}
             >
               <EntityHeadInfoItem
@@ -90,12 +92,12 @@ export class PayoutDetailsCore {
               />
               <EntityHeadInfoItem title="ID" value={this.payout.id} />
               <div class="m-4">
-                <button part="button-secondary" class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
+                <Button variant="secondary" class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
                   Export CSV
-                </button>
+                </Button>
               </div>
             </EntityHeadInfo>
-            <div slot='detail-sections' part="detail-section">
+            <div slot='detail-sections'>
               <DetailSectionTitle sectionTitle="Details" />
               <div class="d-table gap-2 w-100">
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />

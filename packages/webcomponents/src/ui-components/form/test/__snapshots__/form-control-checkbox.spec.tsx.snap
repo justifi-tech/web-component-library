@@ -1,18 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`form-control-checkbox Renders with all props provided 1`] = `
-<form-control-checkbox exportparts="radio-input-label,input,input-invalid">
+<form-control-checkbox>
   <div class="d-flex flex-column form-group">
     <div class="form-check">
-      <input class="form-check-input is-invalid" disabled="" id="accept" name="accept" part="input-checkbox input-checkbox-invalid" type="checkbox">
-      <label class="form-check-label" htmlfor="accept" part="radio-input-label">
+      <input class="form-check-input is-invalid" disabled="" id="accept" name="accept" part="input-checkbox-invalid input-checkbox" type="checkbox">
+      <label class="form-check-label" htmlfor="accept" part="label text color font-family">
         Accept Terms
       </label>
     </div>
-    <small class="form-text text-muted" id="form-help-text-accept" part="input-help-text">
+    <small class="form-text text-muted" id="form-help-text-accept" part="text color font-family">
       Accept terms and conditions to continue
     </small>
-    <small class="form-text text-danger" id="form-error-text-accept" part="input-error-text">
+    <small class="form-text text-danger" id="form-error-text-accept" part="text-danger font-family">
       You must accept the terms and conditions to continue
     </small>
   </div>
@@ -20,11 +20,11 @@ exports[`form-control-checkbox Renders with all props provided 1`] = `
 `;
 
 exports[`form-control-checkbox Renders with default props 1`] = `
-<form-control-checkbox exportparts="radio-input-label,input,input-invalid">
+<form-control-checkbox>
   <div class="d-flex flex-column form-group">
     <div class="form-check">
-      <input class="form-check-input" id="accept" name="accept" part="input-checkbox " type="checkbox">
-      <label class="form-check-label" htmlfor="accept" part="radio-input-label">
+      <input class="form-check-input" id="accept" name="accept" part="input-checkbox" type="checkbox">
+      <label class="form-check-label" htmlfor="accept" part="label text color font-family">
         Accept Terms
       </label>
     </div>

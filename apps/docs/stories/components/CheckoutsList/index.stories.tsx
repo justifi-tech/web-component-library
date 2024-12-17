@@ -12,21 +12,21 @@ const examplePayload = {
   "payment_amount": 10000,
   "payment_currency": "usd",
   "payment_description": "my_order_xyz",
-  "payment_methods": [ ],
+  "payment_methods": [],
   "payment_method_group_id": "pmg_xyz",
   "status": "created",
   "mode": "test live",
   "successful_payment_id": "py_xyz",
   "statement_descriptor": "Big Business",
   "application_fees": {
-  "card": {
-  "amount": 300
+    "card": {
+      "amount": 300
+    },
+    "bank_account": {
+      "amount": 150
+    }
   },
-  "bank_account": {
-  "amount": 150
-  }
-  },
-  "payment_settings": { },
+  "payment_settings": {},
   "created_at": "2024-01-01T12:00:00Z",
   "updated_at": "2024-01-01T12:00:00Z"
 };
@@ -42,6 +42,14 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
     "row-clicked": {
       description: "`RowClicked`",
       table: {

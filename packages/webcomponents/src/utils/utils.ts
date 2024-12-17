@@ -4,12 +4,18 @@ import { Address } from '../api/Business';
 
 export const RegExZip = /^\d{5}/;
 
-export function formatCurrency(amount: number, withSymbol = true, withCurrencyName = false): string {
+export function formatCurrency(
+  amount: number,
+  withSymbol = true,
+  withCurrencyName = false
+): string {
   if (!amount) amount = 0;
 
   function format(amount: number): string {
     const formattedString = withSymbol ? '$0,0.00' : '0,0.00';
-    return Dinero({ amount: amount, currency: 'USD' }).toFormat(formattedString);
+    return Dinero({ amount: amount, currency: 'USD' }).toFormat(
+      formattedString
+    );
   }
 
   const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
@@ -83,27 +89,50 @@ export function formatAddress(address: Address): string {
   return `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`;
 }
 
-export function extractComputedFontsToLoad() {
-  const computedStyles = getComputedStyle(document.body);
-  return (
-    computedStyles
-      ?.getPropertyValue('--jfi-load-google-font')
-      ?.trim()
-      .replace(/'|"/g, '')
-      .replace(' ', '+') || null
-  );
-}
+export const MapPaymentStatusToBadge = (status: string) => {
+  switch (status) {
+    case 'succeeded':
+      return "<span class='badge bg-success' title='This payment was successfully captured'>Succeeded</span>";
+    case 'authorized':
+      return "<span class='badge bg-primary' title='This card payment was authorized, but not captured. It could still succeed or fail.'>Authorized</span>";
+    case 'pending':
+      return "<span class='badge bg-primary' title='This ACH payment was processed, but the funds haven't settled. It could still succeed or fail.'>Pending</span>";
+    case 'achFailed':
+      return "<span class='badge bg-danger' title='The funds couldn't be collected for this ACH payment (in addition to the original payment, an ACH return and fee will appear in a payout)'>Failed</span>";
+    case 'failed':
+      return "<span class='badge bg-danger' title='This card payment didn't go through (it won't appear in a payout)'>Failed</span>";
+    case 'canceled':
+      return "<span class='badge bg-danger' title='This payment was canceled'>Canceled</span>";
+    case 'disputed':
+      return "<span class='badge bg-secondary' title='The account holder disputed this payment. The amount has been returned and a fee assessed.'>Disputed</span>";
+    case 'fully_refunded':
+      return "<span class='badge bg-secondary' title='The full amount of this payment has been refunded'>Fully Refunded</span>";
+    case 'partially_refunded':
+      return "<span class='badge bg-secondary' title='A portion of this payment has been refunded'>Partially Refunded</span>";
+  }
+};
 
-/**
- * Converts a snake_case string to a human-readable format by replacing underscores with spaces and capitalizing the first letter of each word.
- *
- * @param snakeCaseStr - The string in snake_case format.
- * @returns The string transformed into a human-readable format.
- *
- * @example
- * const readable = toReadableString('sole_proprietorship');
- * console.log(readable); // Outputs: "Sole Proprietorship"
- */
+export const MapPayoutStatusToBadge = (status: string) => {
+  switch (status) {
+    case 'canceled':
+      return "<span class='badge bg-danger' title='Transfer to your bank account failed'>Canceled</span>";
+    case 'failed':
+      return "<span class='badge bg-danger' title='Transfer to your bank account failed'>Failed</span>";
+    case 'forwarded':
+      return "<span class='badge bg-secondary' title='This payout initially failed; the funds have been forwarded to your next successful payout'>Forwarded</span>";
+    case 'in_transit':
+      return "<span class='badge bg-primary' title='Transfer to your bank account has been initiated'>In Transit</span>";
+    case 'paid':
+      return "<span class='badge bg-success' title='Successfully deposited into your bank account'>Paid</span>";
+    case 'pending':
+      return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Pending</span>";
+    case 'scheduled':
+      return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Scheduled</span>";
+    case 'withdrawn':
+      return "<span class='badge bg-success' title='Negative payout balance successfully withdrawn from your bank account'>Withdrawn</span>";
+  }
+};
+
 export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
   if (!snakeCaseStr) return '';
   return snakeCaseStr
@@ -150,34 +179,6 @@ export function composeQueryParams(values: string[]) {
   return queryParams.join('');
 }
 
-export async function loadFontsOnParent() {
-  const parent = document.body;
-  const fontsToLoad = extractComputedFontsToLoad();
-  if (!parent || !fontsToLoad) {
-    return null;
-  }
-
-  // Construct the font URL
-  const fontHref = `https://fonts.googleapis.com/css2?family=${fontsToLoad}&display=swap`;
-
-  // Check if a link element with the same href already exists
-  const existingFontLink = Array.from(document.querySelectorAll('link')).find(
-    (link) => link.href === fontHref
-  );
-
-  // If the font link already exists, there's no need to append a new one
-  if (existingFontLink) {
-    return;
-  }
-
-  // This approach is needed to load the font in a parent of the component
-  const fonts = document.createElement('link');
-  fonts.rel = 'stylesheet';
-  fonts.href = fontHref;
-
-  parent.append(fonts);
-}
-
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
@@ -185,3 +186,30 @@ export function isEmptyObject(obj) {
 export const isInRange = (num, min, max) => {
   return num >= min && num <= max;
 };
+
+export function removeAttribute(htmlString, attribute) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const elementsWithStyle = tempDiv.querySelectorAll(`[${attribute}]`);
+  elementsWithStyle.forEach((element) => {
+    element.removeAttribute(attribute);
+  });
+  return tempDiv.innerHTML;
+}
+
+export function addAttribute(htmlString, tagName, attribute, value) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const elements = tempDiv.getElementsByTagName(tagName);
+  Array.from(elements).forEach((element) => {
+    element.setAttribute(attribute, value);
+  });
+  return tempDiv.innerHTML;
+}
+export function processHTML(htmlString, functions) {
+  let processedHTML = htmlString;
+  functions.forEach((func) => {
+    processedHTML = func(processedHTML);
+  });
+  return processedHTML;
+}

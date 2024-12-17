@@ -3,10 +3,10 @@
 exports[`payment-details renders an error message when authToken is not provided 1`] = `
 <justifi-payment-details payment-id="abc">
   <template shadowrootmode="open">
-    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-      <div>
+    <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+      <p part="text color font-family">
         Payment ID and Auth Token are required
-      </div>
+      </p>
     </main>
   </template>
 </justifi-payment-details>
@@ -15,10 +15,10 @@ exports[`payment-details renders an error message when authToken is not provided
 exports[`payment-details renders an error message when paymentId and authToken are not provided 1`] = `
 <justifi-payment-details>
   <template shadowrootmode="open">
-    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-      <div>
+    <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+      <p part="text color font-family">
         Payment ID and Auth Token are required
-      </div>
+      </p>
     </main>
   </template>
 </justifi-payment-details>
@@ -27,10 +27,10 @@ exports[`payment-details renders an error message when paymentId and authToken a
 exports[`payment-details renders an error message when paymentId is not provided 1`] = `
 <justifi-payment-details auth-token="abc">
   <template shadowrootmode="open">
-    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-      <div>
+    <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+      <p part="text color font-family">
         Payment ID and Auth Token are required
-      </div>
+      </p>
     </main>
   </template>
 </justifi-payment-details>

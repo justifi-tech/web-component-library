@@ -7,28 +7,9 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
-import { StyledHost, tableExportedParts } from '../../ui-components';
+import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './checkouts-table';
 
-/**
-  * @exportedPart label: Label for inputs
-  * @exportedPart input: The input fields
-  * @exportedPart input-invalid: Invalid state for inputs  
-  * @exportedPart table-head: Table head
-  * @exportedPart table-head-row: Head row
-  * @exportedPart table-head-cell: Individual head cell
-  * @exportedPart table-body: Body of the table
-  * @exportedPart table-row: Row of the table
-  * @exportedPart table-cell: Individual cell of the table
-  * @exportedPart loading-state-cell: Row for loading state
-  * @exportedPart loading-state-spinner: Spinner element for loading state
-  * @exportedPart error-state: Row for Error state
-  * @exportedPart empty-state: Row for Emtpy state
-  * @exportedPart pagination: Pagination bar
-  * @exportedPart page-item: Pagination button
-  * @exportedPart page-link: Pagination link
-  * @exportedPart page-link-disabled: Disabled pagination link
-*/
 @Component({
   tag: 'justifi-checkouts-list',
   shadow: true
@@ -105,7 +86,7 @@ export class CheckoutsList {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
+      <StyledHost>
         <checkouts-list-core
           getCheckouts={this.getCheckouts}
           getSubAccounts={this.getSubAccounts}

@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from '@stencil/core';
+import { skeleton } from '../styles/parts';
 
 interface SkeletonProps {
   component?: string;
@@ -11,7 +12,6 @@ interface SkeletonProps {
 
 // This component relies on "src/styles/animations.css" 
 // where it is defined the pulsation animation.
-// Because of shadow-dom, it's not possible to add it to the root.css.
 // Don't forget to include this file in the `styleUrls` 
 // property of the web component that will render the Skeleton
 export const Skeleton: FunctionalComponent<SkeletonProps> = ({
@@ -57,7 +57,7 @@ export const Skeleton: FunctionalComponent<SkeletonProps> = ({
   const TagType = component as any;
 
   return (
-    <TagType class={componentClassName} style={combinedStyle} part="skeleton" />
+    <TagType class={componentClassName} style={combinedStyle} part={skeleton} />
   );
 };
 

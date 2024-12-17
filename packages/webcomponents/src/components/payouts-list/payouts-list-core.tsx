@@ -5,6 +5,7 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
+import { table, tableCell } from '../../styles/parts';
 
 @Component({
   tag: 'payouts-list-core',
@@ -171,41 +172,40 @@ export class PayoutsListCore {
           setParamsOnChange={this.setParamsOnChange}
           clearParams={this.clearParams}
         />
-        <div class="table-wrapper" part="table-wrapper">
-          <table class="table table-hover" part="table">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+        <div class="table-wrapper">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
                 {this.payoutsTable.columnData.map((column) => column)}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class="table-body">
               <TableLoadingState
-                  columnSpan={this.payoutsTable.columnKeys.length}
-                  isLoading={this.loading}
-                />
-                <TableEmptyState
-                  isEmpty={this.showEmptyState}
-                  columnSpan={this.payoutsTable.columnKeys.length}
-                />
-                <TableErrorState
-                  columnSpan={this.payoutsTable.columnKeys.length}
-                  errorMessage={this.errorMessage}
-                />
-                {this.showRowData && this.payoutsTable.rowData.map((data, index) => (
-                  <tr
-                    data-test-id="table-row"
-                    data-row-entity-id={this.entityId[index]}
-                    onClick={this.rowClickHandler}
-                    part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
-                  >
-                    {data}
-                  </tr>
-                ))}
+                columnSpan={this.payoutsTable.columnKeys.length}
+                isLoading={this.loading}
+              />
+              <TableEmptyState
+                isEmpty={this.showEmptyState}
+                columnSpan={this.payoutsTable.columnKeys.length}
+              />
+              <TableErrorState
+                columnSpan={this.payoutsTable.columnKeys.length}
+                errorMessage={this.errorMessage}
+              />
+              {this.showRowData && this.payoutsTable.rowData.map((data, index) => (
+                <tr
+                  data-test-id="table-row"
+                  data-row-entity-id={this.entityId[index]}
+                  onClick={this.rowClickHandler}
+                >
+                  {data}
+                </tr>
+              ))}
             </tbody>
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.payoutsTable.columnData.length}>
+                  <td part={tableCell} colSpan={this.payoutsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

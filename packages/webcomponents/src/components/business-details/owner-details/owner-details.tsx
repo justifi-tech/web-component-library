@@ -5,7 +5,6 @@ import { Identity } from '../../../api/Identity';
 
 @Component({
   tag: 'owner-details',
-  styleUrl: '../shared-business-details.css',
 })
 export class OwnerDetails {
   @Prop() owners: Identity[];
@@ -18,7 +17,7 @@ export class OwnerDetails {
         {!!this?.owners.length && (
           this.owners.map(owner => [
             <DetailSectionTitle sectionTitle={`Owner ${owner?.name}'s Details`} />,
-            <div class="d-table gap-2 w-100 mt-3" part="detail-section-block">
+            <div class="d-table gap-2 w-100 mt-3">
               <DetailItem title="Name" value={owner?.name} />
               <DetailItem title="Title" value={owner?.title} />
               <DetailItem title="Email" value={owner?.email} />

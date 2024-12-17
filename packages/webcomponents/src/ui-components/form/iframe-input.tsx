@@ -1,8 +1,11 @@
 import { Component, Element, h, Host, Method, Prop, State } from "@stencil/core";
+import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
 import packageJson from '../../../package.json';
+import { iframeInputStyles } from "./iframe-input-styles-state";
 import { MessageEventType } from "../../components/checkout/message-event-types";
+import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from "../../styles/parts";
 
 @Component({
   tag: "iframe-input",
@@ -10,22 +13,17 @@ import { MessageEventType } from "../../components/checkout/message-event-types"
 export class IframeInput {
   private iframeElement!: HTMLIFrameElement;
   private frameService: FrameCommunicationService;
-  private hiddenInput!: HTMLInputElement;
 
   @Element() el: HTMLElement;
 
   @State() isFocused: boolean = false;
   @State() isValid: boolean = true;
   @State() errorText: string;
-  @State() fontFamily: string;
+  @State() iframeLoaded: boolean = false;
 
   @Prop() inputId: string;
   @Prop() label: string;
   @Prop() iframeOrigin: string;
-
-  componentDidLoad() {
-    this.setFontFamily();
-  }
 
   disconnectedCallback() {
     this.frameService.removeMessageListener(this.dispatchMessageEvent);
@@ -80,37 +78,88 @@ export class IframeInput {
   }
 
   private get part() {
-    return `input form-control-text ${this.isFocused ? 'input-focused' : ''} ${!this.isValid ? 'input-invalid' : ''}`;
+    if (this.isFocused && !this.isValid) {
+      return inputInvalidAndFocused;
+    }
+
+    if (!this.isValid) {
+      return inputInvalid;
+    }
+
+    if (this.isFocused) {
+      return inputFocused;
+    }
+
+    return input;
   }
 
-  private setFontFamily() {
-    this.fontFamily = getComputedStyle(this.hiddenInput).fontFamily;
-    // btoa is used to encode long font-family strings so it can be passed to the iframe
-    this.fontFamily = btoa(this.fontFamily);
+  private get style() {
+    if (this.isFocused) {
+      if (!this.isValid) {
+        return iframeInputStyles.focusedAndInvalid;
+      }
+      return iframeInputStyles.focused;
+    }
+    return null;
+  }
+
+  private get urlParams() {
+    // map the iframeInputStyles.fontStyles properties to the urlParams 
+    // and encode each property with btoa
+    const encodedObject = Object.fromEntries(
+      Object
+        .entries(iframeInputStyles.fontStyles)
+        .map(([key, value]) => [key, btoa(String(value))])
+    );
+
+    const params = new URLSearchParams(encodedObject).toString();
+
+    return params;
   }
 
   render() {
     return (
       <Host class="form-group d-flex flex-column">
-        {/* hidden input with bootstrap styles so we can get the computed fontFamily and pass it to the iframe */}
-        <input ref={el => this.hiddenInput = el} type="text" class="form-control" style={{ display: 'none' }} />
-        <label htmlFor="" part="label">{this.label || ''}</label>
-        <div part={this.part}>
-          {this.fontFamily ? (
+        <div style={{
+          visibility: this.iframeLoaded ? 'visible' : 'hidden',
+          height: this.iframeLoaded ? 'auto' : '0',
+        }}>
+          <label
+            class="form-label"
+            htmlFor=""
+            part={label}
+          >
+            {this.label || ''}
+          </label>
+          <div
+            class={`p-0 d-flex form-control ${this.isValid ? '' : 'is-invalid'}`}
+            part={this.part}
+            style={{
+              ...this.style,
+              overflow: 'hidden',
+            }}
+          >
             <iframe
               id={this.inputId}
               name={this.inputId}
-              src={this.iframeOrigin + `?fontFamily=${this.fontFamily}`}
+              src={`${this.iframeOrigin}?${this.urlParams}`}
               ref={el => {
                 this.iframeElement = el as HTMLIFrameElement;
                 this.initializeFrameCommunicationService();
               }}
-              height="100%"
               width="100%"
+              onLoad={() => {
+                iFrameResize({
+                  log: false,
+                  onResized: () => {
+                    this.iframeLoaded = true;
+                  }
+                }, this.iframeElement);
+              }}
             />
-          ) : null}
+          </div>
+          <FormControlErrorText errorText={this.errorText} name={this.inputId} />
         </div>
-        <FormControlErrorText errorText={this.errorText} name={this.inputId} />
       </Host>
     );
   }

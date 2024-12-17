@@ -13,17 +13,6 @@
 | `params` | --        |             | `{}`                 | `{}`                     |
 
 
-## Shadow Parts
-
-| Part                 | Description |
-| -------------------- | ----------- |
-| `"page-button-text"` |             |
-| `"page-item"`        |             |
-| `"page-link-arrow"`  |             |
-| `"page-link-text"`   |             |
-| `"pagination"`       |             |
-
-
 ## Dependencies
 
 ### Used by
