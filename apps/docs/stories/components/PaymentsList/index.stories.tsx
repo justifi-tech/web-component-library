@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs } from "../../utils";
-import themes, { ThemeNames } from "../../themes";
-import { setUpMocks } from "../../utils/mockAllServices";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-payments-list";
 import "@justifi/webcomponents/dist/module/justifi-payments-list-filters";
@@ -22,11 +20,11 @@ const examplePayload = {
   "currency": "usd",
   "description": "my_order_xyz",
   "disputed": false,
-  "disputes": [ ],
+  "disputes": [],
   "error_code": "credit_card_number_invalid",
   "error_description": "Credit Card Number Invalid (Failed LUHN checksum)",
   "is_test": true,
-  "metadata": { },
+  "metadata": {},
   "payment_intent_id": "pi_123xyz",
   "checkout_id": "cho_123",
   "payment_method": {},
@@ -36,7 +34,9 @@ const examplePayload = {
   "payment_mode": "ecom",
   "created_at": "2021-01-01T12:00:00Z",
   "updated_at": "2021-01-01T12:00:00Z"
-  };
+};
+
+type Story = StoryObj;
 
 const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
@@ -45,7 +45,7 @@ const meta: Meta = {
   component: "justifi-payments-list",
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light
+    Theme: ThemeNames.Light,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -57,9 +57,6 @@ const meta: Meta = {
         type: "select",
       },
     },
-    'withFilters': {
-      table: { disable: true }
-    },
     "row-clicked": {
       description: "`RowClicked`",
       table: {
@@ -69,14 +66,12 @@ const meta: Meta = {
           detail: JSON.stringify(examplePayload)
         }
       },
-      action: true,
     },
     "error-event": {
       description: "`ComponentError`",
       table: {
         category: "events",
       },
-      action: true,
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
@@ -100,50 +95,24 @@ const meta: Meta = {
       delay: 2000,
     },
   },
-  render: ({ label, ...args }) => {
-    let component = `<justifi-payments-list auth-token="${args["auth-token"]}" account-id="${args["account-id"]}"></justifi-payments-list>`;
-    
-    if (args.withFilters) {
-      component = `
-        <justifi-payments-list-filters></justifi-payments-list-filters>
-        <justifi-payments-list auth-token="${args["auth-token"]}" account-id="${args["account-id"]}"></justifi-payments-list>
-      `
-    }
-    
-    return component;
-  }
+  decorators: [
+    customStoryDecorator,
+  ]
 };
 
-export const Example: StoryObj = {};
-Example.decorators = [
-  (story: any, storyArgs: any) => {
-    setUpMocks();
+export const Example: Story = {};
 
-    // Import the style here to not pollute other framework stories
-    const selectedTheme = storyArgs.args["Theme"] as ThemeNames;
-    const styleElement = document.createElement("style");
-    styleElement.textContent = themes[selectedTheme];
-
-    return `${styleElement.outerHTML}${story()}`;
-  },
-  // @ts-ignore
-  withActions,
-];
-
-export const ExampleWithFilters: StoryObj = { args: { withFilters: true } };
-ExampleWithFilters.decorators = [
-  (story: any, storyArgs: any) => {
-    setUpMocks();
-
-    // Import the style here to not pollute other framework stories
-    const selectedTheme = storyArgs.args["Theme"] as ThemeNames;
-    const styleElement = document.createElement("style");
-    styleElement.textContent = themes[selectedTheme];
-
-    return `${styleElement.outerHTML}${story()}`;
-  },
-  // @ts-ignore
-  withActions,
-];
+export const ExampleWithFilters: Story = {
+  args: {},
+  render: (args) => `
+    <div>
+      <justifi-payments-list-filters></justifi-payments-list-filters>
+      <justifi-payments-list
+        auth-token="${args["auth-token"]}"
+        account-id="${args["account-id"]}">
+      </justifi-payments-list>
+    </div>
+  `
+};
 
 export default meta;
