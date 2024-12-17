@@ -19,6 +19,7 @@ const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCol
 const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters, SelectInput];
 
 describe('checkouts-list-core', () => {
+
   it('renders properly with fetched data', async () => {
     const mockCheckoutsService = {
       fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
@@ -79,7 +80,6 @@ describe('checkouts-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
-
     const page = await newSpecPage({
       components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
@@ -132,7 +132,51 @@ describe('checkouts-list-core', () => {
     expect(spyEvent).toHaveBeenCalled();
   });
 
-  
+  it('emits error event on fetch error', async () => {
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
+    };
+
+    const getCheckouts = makeGetCheckouts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockCheckoutsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+      apiOrigin: 'http://localhost:3000'
+    });
+
+    const errorEvent = jest.fn();
+
+    const page = await newSpecPage({
+      components: components,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} columns={defaultColumnsKeys} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'fetch-error',
+          message: 'Fetch error',
+          severity: 'error',
+        }
+      })
+    );
+  });
+});
+
+describe('checkouts-list-core pagination', () => {
 
   it('updates params and refetches data on pagination interaction', async () => {
     const mockCheckoutsService = {
@@ -173,49 +217,5 @@ describe('checkouts-list-core', () => {
     expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
     const updatedParams = page.rootInstance.pagingParams;
     expect(updatedParams.after_cursor).toBe('nextCursor');
-  });
-
-  it('emits error event on fetch error', async () => {
-    const mockCheckoutsService = {
-      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
-    };
-
-    const getCheckouts = makeGetCheckouts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-
-    const errorEvent = jest.fn();
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} columns={defaultColumnsKeys} />,
-    });
-
-    await page.waitForChanges();
-
-    expect(errorEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        detail: {
-          errorCode: 'fetch-error',
-          message: 'Fetch error',
-          severity: 'error',
-        }
-      })
-    );
   });
 });
