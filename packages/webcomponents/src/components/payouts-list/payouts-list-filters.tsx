@@ -1,41 +1,45 @@
-import { Component, h, Prop } from '@stencil/core';
-import { PayoutsTableFilterParams } from '../../api';
+import { Component, h } from '@stencil/core';
+import { queryParams, clearParams } from './payouts-list-params-state';
+import { StyledHost } from '../../ui-components';
 
 @Component({
-  tag: 'payouts-list-filters'
+  tag: 'justifi-payouts-list-filters',
+  shadow: true
 })
 export class PayoutsListFilters {
-  @Prop() params: PayoutsTableFilterParams;
-  @Prop() setParamsOnChange: (name: string, value: string) => void;
-  @Prop() clearParams: () => void;
-
+  
+  setParamsOnChange = (name: string, value: string) => {
+    queryParams[name] = value;
+  }
 
   render() {
     return (
-      <table-filters-menu params={this.params} clearParams={this.clearParams}>
-        <div class="grid-cols-2 gap-3 p-1">
-          <div class="p-2">
-            <form-control-date
-              name="created_after"
-              label="Start Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_after}
-              filterTimeZone
-              showTime
-            />
+      <StyledHost>
+        <table-filters-menu params={ {...queryParams} } clearParams={clearParams}>
+          <div class="grid-cols-2 gap-3 p-1">
+            <div class="p-2">
+              <form-control-date
+                name="created_after"
+                label="Start Date"
+                inputHandler={this.setParamsOnChange}
+                defaultValue={queryParams.created_after}
+                filterTimeZone
+                showTime
+              />
+            </div>
+            <div class="p-2">
+              <form-control-date
+                name="created_before"
+                label="End Date"
+                inputHandler={this.setParamsOnChange}
+                defaultValue={queryParams.created_before}
+                filterTimeZone
+                showTime
+              />
+            </div>
           </div>
-          <div class="p-2">
-            <form-control-date
-              name="created_before"
-              label="End Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_before}
-              filterTimeZone
-              showTime
-            />
-          </div>
-        </div>
-      </table-filters-menu>
+        </table-filters-menu>
+      </StyledHost>
     );
   }
 }

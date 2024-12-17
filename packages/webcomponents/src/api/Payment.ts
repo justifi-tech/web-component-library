@@ -296,7 +296,7 @@ export interface IApplicationFee {
   updated_at: string;
 }
 
-export interface PaymentsParams {
+export interface PaymentsQueryParams {
   payment_id?: string;
   terminal_id?: string;
   payment_status?: PaymentStatuses;
