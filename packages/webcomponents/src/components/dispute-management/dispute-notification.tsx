@@ -4,12 +4,12 @@ import { Component, h, Event, EventEmitter } from "@stencil/core";
   tag: 'justifi-dispute-notification',
 })
 export class DisputeNotification {
-  @Event() submit: EventEmitter;
+  @Event() submitted: EventEmitter;
   @Event() clickEvent: EventEmitter;
 
   acceptDispute() {
     // submit the dispute as forfeited, then emit submit event
-    this.submit.emit();
+    this.submitted.emit();
   }
 
   initiateCounterDispute() {
