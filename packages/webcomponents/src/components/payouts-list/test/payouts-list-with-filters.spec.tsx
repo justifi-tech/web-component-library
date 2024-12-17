@@ -2,19 +2,19 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { PaymentsList } from '../payments-list';
+import { PayoutsList } from '../payouts-list';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
-import { defaultColumnsKeys } from '../payments-table';
+import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
-import { PaymentsListFilters } from '../payments-list-filters';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { queryParams } from '../payments-list-params-state';
-import { PaymentsListCore } from '../payments-list-core';
+import { PayoutsListFilters } from '../payouts-list-filters';
+import { queryParams } from '../payouts-list-params-state';
+import { PayoutsListCore } from '../payouts-list-core';
+import { DateInput } from '../../../ui-components/form/form-control-date';
 
-const components = [PaymentsList, PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters, SelectInput];
+const components = [PayoutsList, PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput];
 
-describe('justifi-payments-list filters', () => {
-  const fetchDataSpy = jest.spyOn(PaymentsListCore.prototype, 'fetchData');
+describe('justifi-payouts-list filters', () => {
+  const fetchDataSpy = jest.spyOn(PayoutsListCore.prototype, 'fetchData');
   let page;
 
   afterEach(() => {
@@ -30,8 +30,8 @@ describe('justifi-payments-list filters', () => {
       flushQueue: true,
       template: () => 
       <div>
-        <justifi-payments-list-filters />
-        <justifi-payments-list 
+        <justifi-payouts-list-filters />
+        <justifi-payouts-list 
           account-id="abc"
           auth-token="abc" 
           columns={defaultColumnsKeys} 
@@ -55,8 +55,8 @@ describe('justifi-payments-list filters', () => {
       autoApplyChanges: true,
       template: () => 
       <div>
-        <justifi-payments-list-filters />
-        <justifi-payments-list 
+        <justifi-payouts-list-filters />
+        <justifi-payouts-list 
           account-id="abc"
           auth-token="abc" 
           columns={defaultColumnsKeys}
@@ -72,25 +72,18 @@ describe('justifi-payments-list filters', () => {
     const filterMenu = page.root.shadowRoot.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
     expect(filterMenu).not.toBeNull();
 
-    const selectFilter = page.root.shadowRoot.querySelector('form-control-select') as HTMLFormControlSelectElement;
-    expect(selectFilter).not.toBeNull();
+    const dateFilter = filterMenu.querySelector('form-control-date') as HTMLFormControlDateElement;
+    expect(dateFilter).not.toBeNull();
 
-    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
-    expect(selectFilterInput).not.toBeNull();
+    const dateFilterInput = dateFilter.querySelector('input');
+    expect(dateFilterInput).not.toBeNull();
 
-    selectFilterInput.click();
-    
-    const selectOptions = selectFilterInput.querySelectorAll('option');
-    expect(selectOptions).not.toBeNull();
-    
-    const succeededOption = selectOptions[3] as HTMLOptionElement;
-    succeededOption.click();
-    selectFilterInput.value = 'succeeded';
-    selectFilterInput.dispatchEvent(new Event('input'));
+    dateFilterInput.value = '2021-01-01';
+    dateFilterInput.dispatchEvent(new Event('input'));
 
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = queryParams;
-    expect(updatedParams).toEqual({"payment_status": "succeeded"});
+    expect(updatedParams).toEqual({"created_after": "2021-01-01T23:59:59.000Z"});
   });
 
   it('clears filters and refetches data on clear filters interaction', async () => {
@@ -101,8 +94,8 @@ describe('justifi-payments-list filters', () => {
       flushQueue: true,
       template: () => 
       <div>
-        <justifi-payments-list-filters />
-        <justifi-payments-list 
+        <justifi-payouts-list-filters />
+        <justifi-payouts-list 
           account-id="abc"
           auth-token="abc" 
           columns={defaultColumnsKeys} 
@@ -118,21 +111,16 @@ describe('justifi-payments-list filters', () => {
     const filterMenu = page.root.shadowRoot.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
     expect(filterMenu).not.toBeNull();
 
-    const selectFilter = page.root.shadowRoot.querySelector('form-control-select') as HTMLFormControlSelectElement;
-    expect(selectFilter).not.toBeNull();
+    const dateFilter = filterMenu.querySelector('form-control-date') as HTMLFormControlDateElement;
+    expect(dateFilter).not.toBeNull();
 
-    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
-    expect(selectFilterInput).not.toBeNull();
+    const dateFilterInput = dateFilter.querySelector('input');
+    expect(dateFilterInput).not.toBeNull();
 
-    selectFilterInput.click();
-    
-    const selectOptions = selectFilterInput.querySelectorAll('option');
-    expect(selectOptions).not.toBeNull();
-    
-    const succeededOption = selectOptions[3] as HTMLOptionElement;
-    succeededOption.click();
-    selectFilterInput.value = 'succeeded';
-    selectFilterInput.dispatchEvent(new Event('input'));
+    dateFilterInput.value = '2021-01-01';
+    dateFilterInput.dispatchEvent(new Event('input'));
+
+    expect(fetchDataSpy).toHaveBeenCalled();
 
     const clearButton = page.root.shadowRoot.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
     expect(clearButton).not.toBeNull();

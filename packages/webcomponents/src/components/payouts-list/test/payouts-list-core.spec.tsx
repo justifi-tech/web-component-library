@@ -18,6 +18,7 @@ const mockPayoutsResponse = mockSuccessResponse as IApiResponseCollection<IPayou
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
 
 describe('payouts-list-core', () => {
+
   it('renders properly', async () => {
     const mockPayoutService = {
       fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
@@ -169,147 +170,9 @@ describe('payouts-list-core', () => {
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();
   });
+});
 
-  it('shows table filter menu on filter button click', async () => {
-    const mockPayoutsService = {
-      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
-    };
-
-    const getPayouts = makeGetPayouts({
-      id: '123',
-      authToken: '123',
-      service: mockPayoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    await page.waitForChanges();
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    expect(filterButton).not.toBeNull();
-
-    filterButton.click();
-    await page.waitForChanges();
-
-    const filterMenu = page.root.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-  });
-
-  it('updates params and refetches data on filter interaction', async () => {
-    const mockPayoutsService = {
-      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
-    };
-
-    const getPayouts = makeGetPayouts({
-      id: '123',
-      authToken: '123',
-      service: mockPayoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.querySelector('payouts-list-filters') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-
-    const dateFilter = filterMenu.querySelector('form-control-date') as HTMLFormControlDateElement;
-    expect(dateFilter).not.toBeNull();
-
-    const dateFilterInput = dateFilter.querySelector('input');
-    expect(dateFilterInput).not.toBeNull();
-
-    dateFilterInput.value = '2021-01-01';
-    dateFilterInput.dispatchEvent(new Event('input'));
-
-    expect(mockPayoutsService.fetchPayouts).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({"created_after": "2021-01-01T00:00:00.000Z"});
-  });
-
-  it('clears filters and refetches data on clear filters interaction', async () => {
-    const mockPayoutsService = {
-      fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
-    };
-
-    const getPayouts = makeGetPayouts({
-      id: '123',
-      authToken: '123',
-      service: mockPayoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.querySelector('payouts-list-filters') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-
-    const dateFilter = filterMenu.querySelector('form-control-date') as HTMLFormControlDateElement;
-    expect(dateFilter).not.toBeNull();
-
-    const dateFilterInput = dateFilter.querySelector('input');
-    expect(dateFilterInput).not.toBeNull();
-
-    dateFilterInput.value = '2021-01-01';
-    dateFilterInput.dispatchEvent(new Event('input'));
-
-    const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
-    expect(clearButton).not.toBeNull();
-
-    clearButton.click();
-
-    expect(mockPayoutsService.fetchPayouts).toHaveBeenCalledTimes(3);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({});
-  });
+describe('payouts-list-core pagination', () => {
 
   it('updates params and refetches data on pagination interaction', async () => {
     const mockPayoutService = {
@@ -345,7 +208,7 @@ describe('payouts-list-core', () => {
 
     // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
     expect(mockPayoutService.fetchPayouts).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
+    const updatedParams = page.rootInstance.pagingParams;
     expect(updatedParams.after_cursor).toBe('nextCursor');
   });
 });
