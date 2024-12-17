@@ -1,10 +1,8 @@
 
-export interface TerminalsTableFilterParams {
+export interface TerminalsQueryParams {
   terminal_id?: string;
   status?: string;
   account_id?: string;
-  before_cursor?: string;
-  after_cursor?: string;
 }
 
 export interface ITerminalStatus {

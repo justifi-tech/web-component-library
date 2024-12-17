@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, SubAccount, Terminal, TerminalsTableFilterParams, pagingDefaults } from '../../api';
+import { PagingInfo, SubAccount, Terminal, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { onFilterChange } from '../../ui-components/filters/utils';
 import { terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
+import { queryParams, onQueryParamsChange } from './terminals-list-params-state';
 
 @Component({
   tag: 'terminals-list-core'
@@ -20,14 +20,14 @@ export class TerminalsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: TerminalsTableFilterParams = {};
+  @State() pagingParams: any = {};
 
-  @Watch('params')
+  @Watch('pagingParams')
   @Watch('getTerminals')
   @Watch('getSubAccounts')
   @Watch('columns')
   updateOnPropChange() {
-    this.fetchTerminals();
+    this.fetchData();
   }
 
   @Event({
@@ -40,15 +40,25 @@ export class TerminalsListCore {
   componentWillLoad() {
     this.terminalsTable = new Table(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
     if (this.getTerminals && this.getSubAccounts) {
-      this.fetchTerminals();
+      this.fetchData();
     }
+
+    onQueryParamsChange('set', () => {
+      delete this.pagingParams.before_cursor;
+      delete this.pagingParams.after_cursor;
+      this.fetchData();
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+    });
   }
 
-  fetchTerminals(): void {
+  fetchData(): void {
     this.loading = true;
 
     this.getTerminals({
-      params: this.params,
+      params: this.requestParams,
       onSuccess: async ({ terminals, pagingInfo }) => {
         this.terminals = terminals;
         this.paging = pagingInfo;
@@ -98,15 +108,11 @@ export class TerminalsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.after_cursor;
-    this.params = { ...newParams, before_cursor: beforeCursor };
+    this.pagingParams = { before_cursor: beforeCursor };
   };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.before_cursor;
-    this.params = { ...newParams, after_cursor: afterCursor };
+    this.pagingParams = { after_cursor: afterCursor };
   };
 
   rowClickHandler = (e) => {
@@ -115,14 +121,9 @@ export class TerminalsListCore {
     this.rowClicked.emit(this.terminals.find((terminal) => terminal.id === clickedTerminalID));
   };
 
-  setParamsOnChange = (name: string, value: string) => {
-    let newParams = { [name]: value };
-    this.params = onFilterChange(newParams, this.params);
-  }
-
-  clearParams = () => {
-    this.errorMessage = '';
-    this.params = {};
+  get requestParams() {
+    const combinedParams = { ...queryParams, ...this.pagingParams };
+    return combinedParams;
   }
 
   get subAccountParams() {
@@ -151,11 +152,6 @@ export class TerminalsListCore {
   render() {
     return (
       <div>
-        <terminals-list-filters
-          params={this.params}
-          setParamsOnChange={this.setParamsOnChange}
-          clearParams={this.clearParams}
-        />
         <div class="table-wrapper">
           <table class="table table-hover">
             <thead class="table-head sticky-top" part="table-head">
@@ -197,7 +193,6 @@ export class TerminalsListCore {
                         handleClickPrevious: this.handleClickPrevious,
                         handleClickNext: this.handleClickNext,
                       }}
-                      params={this.params}
                     />
                   </td>
                 </tr>
