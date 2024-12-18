@@ -86,18 +86,18 @@ export const identityTitleValidation = string()
 export const dobValidation = (role: string) => {
   return (
     string()
-      .test('min', 'Enter a valid date', (value) => {
-        const date = new Date(value);
-        const minDate = new Date('1902-01-01');
-        return date >= minDate;
-      })
-      .test('age', `${role} must be at least 18 years old`, (value) => {
-        const date = new Date(value);
-        const minAgeDate = new Date();
-        minAgeDate.setFullYear(minAgeDate.getFullYear() - 18);
-        return date <= minAgeDate;
-      })
-      .transform(transformEmptyString)
+    .test('min', 'Enter a valid date', (value) => {
+      const date = new Date(value);
+      const minDate = new Date('1902-01-01');
+      return date >= minDate;
+    })
+    .test('age', `${role} must be at least 18 years old`, (value) => {
+      const date = new Date(value);
+      const minAgeDate = new Date();
+      minAgeDate.setFullYear(minAgeDate.getFullYear() - 18);
+      return date <= minAgeDate;
+    })
+    .transform(transformEmptyString)
   )
 };
 
@@ -215,7 +215,7 @@ export const routingNumberValidation = string()
   })
   .transform(transformEmptyString);
 
-// Document Upload Validations
+  // Document Upload Validations
 
 const documentUploadValidation = mixed();
 
@@ -263,7 +263,7 @@ export const profitAndLossStatementValidation = (volume: string, documents: any[
   const vol = parseInt(volume);
   const profitLossRequiredAmount = 1000000;
   const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.profitAndLossStatement);
-
+  
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
   } else if (vol >= profitLossRequiredAmount && !allowOptionalFields) {
