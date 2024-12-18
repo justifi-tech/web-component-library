@@ -42,14 +42,6 @@ export class TerminalsListFilters {
               />
             </div>
             <div class="p-2">
-              <form-control-text
-                name="account_id"
-                label="Account ID"
-                inputHandler={this.debouncedSetParamsOnChange}
-                defaultValue={queryParams.account_id}
-              />
-            </div>
-            <div class="p-2">
               <form-control-select 
                 name="status"
                 label="Status"

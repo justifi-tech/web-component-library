@@ -51,6 +51,7 @@ export class TerminalsListCore {
 
     onQueryParamsChange('reset', () => {
       this.pagingParams = {};
+      this.errorMessage = '';
     });
   }
 

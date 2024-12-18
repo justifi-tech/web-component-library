@@ -2,7 +2,6 @@
 export interface TerminalsQueryParams {
   terminal_id?: string;
   status?: string;
-  account_id?: string;
 }
 
 export interface ITerminalStatus {

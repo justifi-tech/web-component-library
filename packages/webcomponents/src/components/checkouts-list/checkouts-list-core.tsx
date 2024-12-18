@@ -52,6 +52,7 @@ export class CheckoutsListCore {
 
     onQueryParamsChange('reset', () => {
       this.pagingParams = {};
+      this.errorMessage = '';
     });
   }
 
