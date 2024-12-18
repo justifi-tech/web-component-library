@@ -1,7 +1,5 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
 import { DisputeManagementClickEvents } from "../dispute";
-import { FormController } from "../../../ui-components/form/form";
-import DisputeResponseSchema from "./schemas/dispute-reason-schema";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
 import { ComponentError } from "../../../components";
@@ -32,7 +30,6 @@ export class DisputeResponseCore {
   @State() documentList = [];
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;
-  @State() formController: FormController;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event() clickEvent: EventEmitter;
@@ -47,10 +44,6 @@ export class DisputeResponseCore {
     () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
     () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
   ];
-
-  componentWillLoad() {
-    this.formController = new FormController(DisputeResponseSchema);
-  }
 
   saveData = async (formData: any): Promise<IApiResponse<IDispute>> => {
     if (this.isLastStep) {
