@@ -18,6 +18,7 @@ export class FileInput {
   fileInput: HTMLInputElement;
 
   @State() files: File[];
+  @State() fileString: string;
 
   @Prop() label: string;
   @Prop() name: any;

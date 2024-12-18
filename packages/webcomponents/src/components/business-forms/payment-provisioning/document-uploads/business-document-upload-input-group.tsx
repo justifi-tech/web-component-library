@@ -1,5 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
-import { FileSelectEvent } from '../../../../ui-components/form/form-control-file';
+import { FileSelectEvent } from '../../../../api/Document';
 import { inputConfigurations } from './input-configurations';
 import { isInRange } from '../../../../utils/utils';
 
@@ -26,8 +26,8 @@ export class BusinessDocumentUploadInputGroup {
       this.inputConfigs.unshift(inputConfigurations.bankStatements)
     } else if (volume >= 1000000) {
       this.inputConfigs.unshift(
-        inputConfigurations.balanceSheet,
-        inputConfigurations.profitAndLossStatement,
+        inputConfigurations.balanceSheet, 
+        inputConfigurations.profitAndLossStatement, 
         inputConfigurations.bankStatements
       )
     }
@@ -44,20 +44,20 @@ export class BusinessDocumentUploadInputGroup {
 
     return (
       <div class="row gy-3">
-        {inputsConfig.map(config => (
-          <div class="col-12 col-md-6">
-            <form-control-file
-              name={config.name}
-              label={config.label}
-              helpText={config.helpText}
-              documentType={config.documentType}
-              inputHandler={this.inputHandler}
-              onFileSelected={this.storeFiles}
-              errorText={this.errors[config.name]}
-              multiple={true}
-            />
-          </div>
-        ))}
+      {inputsConfig.map(config => (
+        <div class="col-12 col-md-6">
+          <form-control-file
+            name={config.name}
+            label={config.label}
+            helpText={config.helpText}
+            documentType={config.documentType}
+            inputHandler={this.inputHandler}
+            onFileSelected={this.storeFiles}
+            errorText={this.errors[config.name]}
+            multiple={true}
+          />
+        </div>
+      ))}
       </div>
     );
   }
