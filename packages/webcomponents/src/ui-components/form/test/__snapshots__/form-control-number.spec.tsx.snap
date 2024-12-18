@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`form-control-number Renders with all props provided 1`] = `
-<form-control-number exportparts="label,input,input-invalid">
+<form-control-number>
   <div class="d-flex flex-column form-group">
-    <label class="form-label" htmlfor="age" part="label">
+    <label class="form-label" htmlfor="age" part="label text color font-family">
       Age
     </label>
-    <input class="form-control is-invalid" disabled="" id="age" name="age" part="input input-invalid" type="number" value="25">
-    <small class="form-text text-muted" id="form-help-text-age" part="input-help-text">
+    <input class="form-control is-invalid" disabled="" id="age" name="age" part="input-invalid input text color font-family background-color" type="number" value="25">
+    <small class="form-text text-muted" id="form-help-text-age" part="text color font-family">
       Enter your age
     </small>
-    <small class="form-text text-danger" id="form-error-text-age" part="input-error-text">
+    <small class="form-text text-danger" id="form-error-text-age" part="text-danger font-family">
       Invalid age
     </small>
   </div>
@@ -18,12 +18,12 @@ exports[`form-control-number Renders with all props provided 1`] = `
 `;
 
 exports[`form-control-number Renders with default props 1`] = `
-<form-control-number exportparts="label,input,input-invalid">
+<form-control-number>
   <div class="d-flex flex-column form-group">
-    <label class="form-label" htmlfor="age" part="label">
+    <label class="form-label" htmlfor="age" part="label text color font-family">
       Age
     </label>
-    <input class="form-control" id="age" name="age" part="input undefined" type="number" value="">
+    <input class="form-control" id="age" name="age" part="input text color font-family background-color" type="number" value="">
   </div>
 </form-control-number>
 `;

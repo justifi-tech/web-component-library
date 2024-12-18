@@ -3,10 +3,10 @@
 exports[`payment-details-core displays an error state on failed data fetch 1`] = `
 <payment-details-core class="body" style="display: block;">
   <style></style>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-    <div>
+  <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+    <p part="text color font-family">
       Fetch error
-    </div>
+    </p>
   </main>
 </payment-details-core>
 `;
@@ -14,167 +14,162 @@ exports[`payment-details-core displays an error state on failed data fetch 1`] =
 exports[`payment-details-core it renders properly with fetched data 1`] = `
 <payment-details-core class="body" style="display: block;">
   <style></style>
-  <justifi-details class="body" exportparts="detail-empty-state, detail-metadata-title, detail-metadata, detail-section, detail-section-title, 
-        detail-section-item-title, detail-section-item-data, detail-head, detail-title, detail-head-info" style="display: block;">
-    <template shadowrootmode="open">
-      <style></style>
-      <main class="p-2">
-        <slot name="head-info"></slot>
-        <slot name="detail-sections"></slot>
-      </main>
-    </template>
-    <div class="p-2" part="detail-head" slot="head-info">
-      <div class="align-items-center d-flex flex-row gap-2 mb-2">
-        <h1 class="m-0" part="detail-head-amount">
-          $234.56 USD
-        </h1>
-        <span part="detail-head-badge" slot="badge">
-          <span class="badge bg-success" title="This payment was successfully captured">
-            Succeeded
-          </span>
-        </span>
-      </div>
-      <div class="align-items-top d-flex flex-row" part="detail-head-info">
-        <div class="border-1 border-end d-flex flex-column" part="detail-head-info-item">
-          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
-            Updated At
-          </span>
-          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
-            Dec 27, 2023 9:53pm
-          </span>
-        </div>
-        <div class="border-1 border-end d-flex flex-column" part="detail-head-info-item">
-          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
-            Created At
-          </span>
-          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
-            Dec 27, 2023 9:52pm
-          </span>
-        </div>
-        <div class="d-flex flex-column undefined" part="detail-head-info-item">
-          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
-            ID
-          </span>
-          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
-            py_1NNeEnf4FbelxDCQN2RHcE
-          </span>
-        </div>
-      </div>
-    </div>
-    <div part="detail-section" slot="detail-sections">
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
-        Details
-      </h2>
-      <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Amount
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            $234.56
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Fees
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            $2.00
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Refunded
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            $0.00
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Net
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            $232.56
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Status
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+  <justifi-details>
+    <!---->
+    <main class="p-2">
+      <div class="p-2" slot="head-info">
+        <div class="align-items-center d-flex flex-row gap-2 mb-2">
+          <h1 class="m-0" part="heading-1 heading text color font-family">
+            $234.56 USD
+          </h1>
+          <span part="badge text color font-family" slot="badge">
             <span class="badge bg-success" title="This payment was successfully captured">
               Succeeded
             </span>
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Payment ID
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            py_1NNeEnf4FbelxDCQN2RHcE
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Processing Fees
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            $2.00
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Description
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            payment
-          </span>
-        </div>
-      </div>
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
-        Payment Method
-      </h2>
-      <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            ID
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            pm_uICmv8696AatL4gRwa0Wq
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Last 4 Numbers
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            **** 6789
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Bank Name
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            Altra
-          </span>
-        </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
-            Account Owner
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
-            Julia Garnett
-          </span>
+        <div class="align-items-top d-flex flex-row" part="text color font-family">
+          <div class="border-1 border-end d-flex flex-column">
+            <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="heading-2 heading text color font-family">
+              Updated At
+            </span>
+            <span class="pe-2 ps-2 pt-2" part="text color font-family">
+              Dec 27, 2023 9:53pm
+            </span>
+          </div>
+          <div class="border-1 border-end d-flex flex-column">
+            <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="heading-2 heading text color font-family">
+              Created At
+            </span>
+            <span class="pe-2 ps-2 pt-2" part="text color font-family">
+              Dec 27, 2023 9:52pm
+            </span>
+          </div>
+          <div class="d-flex flex-column undefined">
+            <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="heading-2 heading text color font-family">
+              ID
+            </span>
+            <span class="pe-2 ps-2 pt-2" part="text color font-family">
+              py_1NNeEnf4FbelxDCQN2RHcE
+            </span>
+          </div>
         </div>
       </div>
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
-        Metadata
-      </h2>
-      <div class="d-table gap-2 w-100"></div>
-    </div>
+      <div slot="detail-sections">
+        <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
+          Details
+        </h2>
+        <div class="d-table gap-2 w-100">
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Amount
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              $234.56
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Fees
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              $2.00
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Refunded
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              $0.00
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Net
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              $232.56
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Status
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              <span class="badge bg-success" title="This payment was successfully captured">
+                Succeeded
+              </span>
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Payment ID
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              py_1NNeEnf4FbelxDCQN2RHcE
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Processing Fees
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              $2.00
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Description
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              payment
+            </span>
+          </div>
+        </div>
+        <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
+          Payment Method
+        </h2>
+        <div class="d-table gap-2 w-100">
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              ID
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              pm_uICmv8696AatL4gRwa0Wq
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Last 4 Numbers
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              **** 6789
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Bank Name
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              Altra
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Account Owner
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              Julia Garnett
+            </span>
+          </div>
+        </div>
+        <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
+          Metadata
+        </h2>
+        <div class="d-table gap-2 w-100"></div>
+      </div>
+    </main>
   </justifi-details>
 </payment-details-core>
 `;

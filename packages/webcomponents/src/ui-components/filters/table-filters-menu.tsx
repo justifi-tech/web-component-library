@@ -1,6 +1,7 @@
 import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
 import { Button } from '../button';
 import { hasFilters } from './utils';
+import { dropdownMenu } from '../../styles/parts';
 
 @Component({
   tag: 'table-filters-menu'
@@ -9,7 +10,7 @@ export class TableFiltersMenu {
   @State() anchorButton: HTMLElement;
   @State() menu: HTMLElement;
   @State() showClearButton: boolean = false;
-  
+
   @Prop() params: any;
   @Prop() clearParams: () => void;
 
@@ -48,11 +49,11 @@ export class TableFiltersMenu {
             anchorRef={this.anchorButton}
             trigger="click"
           >
-            <form 
+            <form
               class="dropdown-menu"
-              part="dropdown-menu"
+              part={dropdownMenu}
               data-test-id="filter-menu"
-              ref={(el) => (this.menu = el)} 
+              ref={(el) => (this.menu = el)}
               onSubmit={(e) => e.preventDefault()}
             >
               {/* Render filter inputs here */}
@@ -61,13 +62,13 @@ export class TableFiltersMenu {
           </custom-popper>
         </div>
         <div>
-          <Button 
+          <Button
             variant="secondary"
             onClick={() => this.clearParams()}
             hidden={!this.showClearButton}
             data-test-id="clear-filters-button"
           >
-            {"Clear Filters"}  
+            {"Clear Filters"}
           </Button>
         </div>
       </div>

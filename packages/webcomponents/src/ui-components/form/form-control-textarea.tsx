@@ -7,13 +7,17 @@ import {
   EventEmitter,
   Element,
   Watch,
+  State,
 } from '@stencil/core';
+import { input, inputDisabled, inputFocused, inputInvalid, inputInvalidAndFocused, label } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-textarea'
 })
 export class TextInput {
   @Element() el: HTMLElement;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -51,22 +55,42 @@ export class TextInput {
     }
   }
 
+  private get part() {
+    if (this.isFocused && this.errorText) {
+      return inputInvalidAndFocused;
+    }
+    if (this.errorText) {
+      return inputInvalid;
+    }
+    if (this.isFocused) {
+      return inputFocused;
+    }
+    if (this.disabled) {
+      return inputDisabled;
+    }
+    return input
+  }
+
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
+          <label part={label} class="form-label" htmlFor={this.name}>
             {this.label}
           </label>
           <textarea
             id={this.name}
             name={this.name}
-            onBlur={this.formControlBlur.emit}
+            onFocus={() => this.isFocused = true}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
             onInput={this.handleFormControlInput}
             onKeyDown={this.keyDownHandler}
             onPaste={this.keyDownHandler}
             maxLength={this.maxLength}
-            part={`input ${this.errorText ? 'input-invalid ' : ''}${this.disabled ? ' input-disabled' : ''}`}
+            part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             disabled={this.disabled}
           />

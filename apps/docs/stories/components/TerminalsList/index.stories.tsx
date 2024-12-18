@@ -28,6 +28,14 @@ const meta: Meta = {
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
     "row-clicked": {
       description: "`RowClicked`",
       table: {

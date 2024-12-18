@@ -6,6 +6,7 @@ import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/bu
 import { ComponentError } from '../../../../components';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-additional-questions-form-step-core',
@@ -23,7 +24,7 @@ export class AdditionalQuestionsFormStepCore {
     } else {
       this.recurringPayments = false;
     }
-  } 
+  }
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -111,7 +112,7 @@ export class AdditionalQuestionsFormStepCore {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Additional Questions</legend>
+            <legend class="mb-0" part={heading2}>Additional Questions</legend>
             <form-control-tooltip helpText="This information helps us understand the business and identify and monitor trends to safeguard you and your customers." />
           </div>
           <hr class="mt-2" />

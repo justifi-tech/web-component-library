@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator, themedStoryDecorator } from "../../utils";
+import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-payment-provisioning";
@@ -20,7 +20,7 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     Theme: {
       description:
-        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
       options: Object.values(ThemeNames),
       control: {
         type: "select",
@@ -90,7 +90,7 @@ const meta: Meta = {
     },
   },
   decorators: [
-    themedStoryDecorator,
+    customStoryDecorator,
     withActions, // https://github.com/storybookjs/storybook/issues/22384
   ],
 };

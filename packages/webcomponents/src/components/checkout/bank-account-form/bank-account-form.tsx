@@ -1,9 +1,7 @@
-import { Component, h, Method } from "@stencil/core";
-import { StyledHost } from "../../../ui-components";
+import { Component, h, Host, Method } from "@stencil/core";
 
 @Component({
   tag: "bank-account-form",
-  shadow: true,
 })
 export class BankAccountForm {
   private accountNumberIframeElement!: HTMLIframeInputElement;
@@ -31,7 +29,7 @@ export class BankAccountForm {
 
   render() {
     return (
-      <StyledHost exportparts="input,label,input-focused,input-invalid" >
+      <Host>
         <div class="container-fluid p-0" >
           <div class="row mb-3">
             <iframe-input
@@ -50,7 +48,7 @@ export class BankAccountForm {
             />
           </div>
         </div>
-      </StyledHost>
+      </Host>
     );
   }
 }

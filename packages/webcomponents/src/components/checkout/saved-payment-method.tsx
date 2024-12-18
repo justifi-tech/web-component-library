@@ -2,6 +2,7 @@ import { Component, Event, EventEmitter, Fragment, h, Prop, Method } from '@sten
 import { config } from '../../../config';
 import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { radioListItem } from '../../styles/parts';
 
 @Component({
   tag: 'justifi-saved-payment-method',
@@ -32,25 +33,16 @@ export class SavedPaymentMethod {
           <div
             class="radio-list-item p-3"
             onClick={() => this.onPaymentMethodOptionClick()}
-            part="radio-list-item"
+            part={radioListItem}
           >
-            <input
-              type="radio"
+            <form-control-radio
               name="paymentMethodType"
               id={this.paymentMethodOption?.id}
               value={this.paymentMethodOption?.id}
-              onClick={(event) => event.preventDefault()}
               checked={this.isSelected}
-              class="form-check-input me-2"
-              part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
+              inputHandler={() => this.onPaymentMethodOptionClick()}
+              label={`${CardBrandLabels[this.paymentMethodOption?.brand]} *${this.paymentMethodOption?.acct_last_four}`}
             />
-            <label
-              htmlFor={this.paymentMethodOption?.id}
-              class="form-check-label"
-              part="radio-input-label"
-            >
-              {CardBrandLabels[this.paymentMethodOption?.brand]} *{this.paymentMethodOption?.acct_last_four}
-            </label>
           </div>
         </div>
       </Fragment>

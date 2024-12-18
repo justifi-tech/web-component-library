@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`identity-address should render IdentityAddressForm component 1`] = `
+<justifi-identity-address-form>
+  <div class="gy-3 row">
+    <div class="col-12 col-md-8">
+      <form-control-text helptext="​​Enter your address exactly as stated on your driver's license. No PO Boxes." label="Street Address" name="line1"></form-control-text>
+    </div>
+    <div class="col-12 col-md-4">
+      <form-control-text label="Apartment, Suite, etc. (optional)" name="line2"></form-control-text>
+    </div>
+    <div class="col-12">
+      <form-control-text label="City" name="city"></form-control-text>
+    </div>
+    <div class="col-12 col-md-6">
+      <form-control-select label="State" name="state"></form-control-select>
+    </div>
+    <div class="col-12 col-md-6">
+      <form-control-text label="Postal Code" maxlength="5" name="postal_code"></form-control-text>
+    </div>
+    <div class="col-12">
+      <form-control-select disabled="" label="Country" name="country"></form-control-select>
+    </div>
+  </div>
+</justifi-identity-address-form>
+`;
+
+exports[`identity-address should render IdentityAddressForm component with defaults 1`] = `
+<justifi-identity-address-form>
+  <div class="gy-3 row">
+    <div class="col-12 col-md-8">
+      <form-control-text defaultvalue="Street 1" helptext="​​Enter your address exactly as stated on your driver's license. No PO Boxes." label="Street Address" name="line1"></form-control-text>
+    </div>
+    <div class="col-12 col-md-4">
+      <form-control-text defaultvalue="Apartment 1" label="Apartment, Suite, etc. (optional)" name="line2"></form-control-text>
+    </div>
+    <div class="col-12">
+      <form-control-text defaultvalue="City" label="City" name="city"></form-control-text>
+    </div>
+    <div class="col-12 col-md-6">
+      <form-control-select defaultvalue="State" label="State" name="state"></form-control-select>
+    </div>
+    <div class="col-12 col-md-6">
+      <form-control-text defaultvalue="12345" label="Postal Code" maxlength="5" name="postal_code"></form-control-text>
+    </div>
+    <div class="col-12">
+      <form-control-select defaultvalue="Country" disabled="" label="Country" name="country"></form-control-select>
+    </div>
+  </div>
+</justifi-identity-address-form>
+`;

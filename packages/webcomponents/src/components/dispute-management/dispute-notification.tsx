@@ -1,8 +1,11 @@
+
 import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
 import { DisputeManagementClickEvents } from "./dispute";
 import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
-import { Skeleton } from "../../ui-components";
+import { text } from "../../styles/parts";
+import { Skeleton, Button } from "../../ui-components";
+
 
 @Component({
   tag: 'justifi-dispute-notification',
@@ -35,7 +38,7 @@ export class DisputeNotification {
         )}
 
         {this.dispute?.needsResponse && (
-          <div>
+          <div part={text}>
             <h1 class="h4">This payment is disputed</h1>
             <p>The cardholder is disputing this payment. You may accept this dispute, or proceed to provide evidence in a counter dispute.</p>
 
@@ -67,8 +70,8 @@ export class DisputeNotification {
               </div>
             </div>
             <div class="d-flex gap-2 mt-4 justify-content-end">
-              <button class="btn btn-secondary" onClick={() => this.acceptDispute()}>Accept dispute</button>
-              <button class="btn btn-primary" onClick={() => this.initiateRespondToDispute()}>Counter dispute</button>
+              <Button variant="secondary" onClick={() => this.acceptDispute()}>Accept dispute</Button>
+              <Button variant="primary" onClick={() => this.initiateRespondToDispute()}>Counter dispute</Button>
             </div>
           </div>
         )}
