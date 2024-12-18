@@ -53,17 +53,31 @@ export class DisputeResponseCore {
   }
 
   saveData = async (formData: any): Promise<IApiResponse<IDispute>> => {
-    return this.updateDisputeResponse({
-      payload: formData,
-      onSuccess: (response) => this.disputeResponse = { ...response.data },
-      onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
-          errorCode: code,
-          message: error,
-          severity,
-        })
-      },
-    });
+    if (this.isLastStep) {
+      return this.submitDisputeResponse({
+        payload: formData,
+        onSuccess: (response) => this.disputeResponse = { ...response.data },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            errorCode: code,
+            message: error,
+            severity,
+          })
+        },
+      });
+    } else {
+      return this.updateDisputeResponse({
+        payload: formData,
+        onSuccess: (response) => this.disputeResponse = { ...response.data },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            errorCode: code,
+            message: error,
+            severity,
+          })
+        },
+      });
+    }
   }
 
   initializeMakePresignedURLs = async () => {
