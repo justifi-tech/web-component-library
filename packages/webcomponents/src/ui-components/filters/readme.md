@@ -24,7 +24,7 @@
 
 ### Used by
 
- - [checkouts-list-filters](../../components/checkouts-list)
+ - [justifi-checkouts-list-filters](../../components/checkouts-list)
  - [justifi-payments-list-filters](../../components/payments-list)
  - [justifi-payouts-list-filters](../../components/payouts-list)
  - [terminals-list-filters](../../components/terminals-list)
@@ -37,7 +37,7 @@
 ```mermaid
 graph TD;
   table-filters-menu --> custom-popper
-  checkouts-list-filters --> table-filters-menu
+  justifi-checkouts-list-filters --> table-filters-menu
   justifi-payments-list-filters --> table-filters-menu
   justifi-payouts-list-filters --> table-filters-menu
   terminals-list-filters --> table-filters-menu
