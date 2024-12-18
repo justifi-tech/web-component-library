@@ -1,9 +1,9 @@
-import type { Meta } from "@storybook/web-components";
-import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-checkouts-list";
-import { ThemeNames } from "../../themes";
+import "@justifi/webcomponents/dist/module/justifi-checkouts-list-filters";
 
 const examplePayload = {
   "id": "cho_xyz",
@@ -31,7 +31,9 @@ const examplePayload = {
   "updated_at": "2024-01-01T12:00:00Z"
 };
 
-const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token", "theme"]);
+type Story = StoryObj;
+
+const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
 const meta: Meta = {
   title: "Merchant Tools/Checkouts List",
@@ -92,11 +94,22 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
-    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
-    withActions, // https://github.com/storybookjs/storybook/issues/22384
-  ],
+  ]
 };
 
-export const Example = {};
+export const Example: Story = {};
+
+export const ExampleWithFilters: Story = {
+  args: {},
+  render: (args) => `
+    <div>
+      <justifi-checkouts-list-filters></justifi-checkouts-list-filters>
+      <justifi-checkouts-list
+        auth-token="${args["auth-token"]}"
+        account-id="${args["account-id"]}">
+      </justifi-checkouts-list>
+    </div>
+  `
+};
 
 export default meta;

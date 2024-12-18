@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`payments-list-core displays an error state on failed data fetch 1`] = `
+exports[`payments-list-core render and events displays an error state on failed data fetch 1`] = `
 <payments-list-core>
   <div>
-    <payments-list-filters></payments-list-filters>
     <div class="table-wrapper">
       <table class="table table-hover" part="table text color font-family background-color">
         <thead class="sticky-top table-head">
@@ -76,10 +75,9 @@ exports[`payments-list-core displays an error state on failed data fetch 1`] = `
 </payments-list-core>
 `;
 
-exports[`payments-list-core renders properly with fetched data 1`] = `
+exports[`payments-list-core render and events renders properly with fetched data 1`] = `
 <payments-list-core>
   <div>
-    <payments-list-filters></payments-list-filters>
     <div class="table-wrapper">
       <table class="table table-hover" part="table text color font-family background-color">
         <thead class="sticky-top table-head">

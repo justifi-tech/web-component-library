@@ -29,6 +29,10 @@ export class TableFiltersMenu {
     this.menu.classList.remove('show');
   }
 
+  componentWillLoad() {
+    this.showClearButton = hasFilters(this.params);
+  }
+
   render() {
     return (
       <div class="d-flex gap-2">
