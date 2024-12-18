@@ -53,6 +53,7 @@ export class PayoutsListCore {
 
     onQueryParamsChange('reset', () => {
       this.pagingParams = {};
+      this.errorMessage = '';
     });
   }
 
