@@ -95,8 +95,9 @@ export class DisputeResponse {
           onError-event={this.handleErrorEvent}
           dispute-id={this.disputeId}
           disputeResponse={this.disputeResponse}
-          updateDisputeResponse={this.updateDisputeResponse}
           createDisputeEvidence={this.createDisputeEvidence}
+          updateDisputeResponse={this.updateDisputeResponse}
+          submitDisputeResponse={this.submitDisputeResponse}
         />
       </StyledHost>
     )
