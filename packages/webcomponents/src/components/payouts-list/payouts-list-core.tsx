@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payout, PayoutsTableFilterParams, SubAccount, pagingDefaults } from '../../api';
+import { PagingInfo, Payout, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { onFilterChange } from '../../ui-components/filters/utils';
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
+import { queryParams, onQueryParamsChange } from './payouts-list-params-state';
 import { table, tableCell } from '../../styles/parts';
 
 @Component({
@@ -23,13 +23,13 @@ export class PayoutsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: PayoutsTableFilterParams = {};
+  @State() pagingParams: any = {};
 
-  @Watch('params')
+  @Watch('pagingParams')
   @Watch('getPayouts')
   @Watch('getSubAccounts')
   updateOnPropChange() {
-    this.fetchPayouts();
+    this.fetchData();
   }
 
   @Event({
@@ -39,19 +39,29 @@ export class PayoutsListCore {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
-
   componentWillLoad() {
     this.payoutsTable = new Table(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));
     if (this.getPayouts && this.getSubAccounts) {
-      this.fetchPayouts();
+      this.fetchData();
     }
+ 
+    onQueryParamsChange('set', () => {
+      delete this.pagingParams.before_cursor;
+      delete this.pagingParams.after_cursor;
+      this.fetchData();
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+      this.errorMessage = '';
+    });
   }
 
-  fetchPayouts(): void {
+  fetchData(): void {
     this.loading = true;
 
     this.getPayouts({
-      params: this.params,
+      params: this.requestParams,
       onSuccess: ({ payouts, pagingInfo }) => {
         this.payouts = payouts;
         this.paging = pagingInfo;
@@ -113,16 +123,12 @@ export class PayoutsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams = { ...this.params };
-    delete newParams.after_cursor;
-    this.params = { ...newParams, before_cursor: beforeCursor };
-  }
+    this.pagingParams = { before_cursor: beforeCursor };
+  };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams = { ...this.params };
-    delete newParams.before_cursor;
-    this.params = { ...newParams, after_cursor: afterCursor };
-  }
+    this.pagingParams = { after_cursor: afterCursor };
+  };
 
   rowClickHandler = (e) => {
     const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;
@@ -130,14 +136,9 @@ export class PayoutsListCore {
     this.rowClicked.emit(this.payouts.find((payout) => payout.id === clickedPayoutID));
   }
 
-  setParamsOnChange = (name: string, value: string) => {
-    let newParams = { [name]: value };
-    this.params = onFilterChange(newParams, this.params);
-  }
-
-  clearParams = () => {
-    this.errorMessage = '';
-    this.params = {};
+  get requestParams() {
+    const combinedParams = { ...queryParams, ...this.pagingParams };
+    return combinedParams;
   }
 
   get subAccountParams() {
@@ -166,15 +167,10 @@ export class PayoutsListCore {
   render() {
     return (
       <div>
-        <payouts-list-filters
-          params={this.params}
-          setParamsOnChange={this.setParamsOnChange}
-          clearParams={this.clearParams}
-        />
-        <div class="table-wrapper">
+        <div class="table-wrapper" part="table-wrapper">
           <table class="table table-hover" part={table}>
-            <thead class="table-head sticky-top">
-              <tr class="table-light text-nowrap">
+            <thead class="table-head sticky-top" part="table-head">
+              <tr class="table-light text-nowrap" part="table-head-row">
                 {this.payoutsTable.columnData.map((column) => column)}
               </tr>
             </thead>
@@ -211,7 +207,6 @@ export class PayoutsListCore {
                         handleClickPrevious: this.handleClickPrevious,
                         handleClickNext: this.handleClickNext,
                       }}
-                      params={this.params}
                     />
                   </td>
                 </tr>

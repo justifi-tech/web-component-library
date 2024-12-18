@@ -1,10 +1,8 @@
 import { IBankAccount } from './BankAccount';
 
-export interface PayoutsTableFilterParams {
+export interface PayoutsQueryParams {
   created_after?: string;
   created_before?: string;
-  before_cursor?: string;
-  after_cursor?: string;
 };
 
 export enum PayoutStatuses {

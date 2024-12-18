@@ -1,9 +1,9 @@
-import type { Meta } from "@storybook/web-components";
-import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-payouts-list";
-import { ThemeNames } from "../../themes";
+import "@justifi/webcomponents/dist/module/justifi-payouts-list-filters";
 
 const examplePayload = {
   "id": "po_xyz",
@@ -33,11 +33,13 @@ const examplePayload = {
   "other_total": 100,
   "status": "paid",
   "metadata": {
-  "customer_payout_id": "cp_12345"
+    "customer_payout_id": "cp_12345"
   },
   "created_at": "2021-01-01T12:00:00Z",
   "updated_at": "2021-01-01T12:00:00Z"
   }
+
+type Story = StoryObj;
 
 const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
@@ -100,11 +102,22 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
-    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
-    withActions, // https://github.com/storybookjs/storybook/issues/22384
-  ],
+  ]
 };
 
-export const Example = {};
+export const Example: Story = {};
+
+export const ExampleWithFilters: Story = {
+  args: {},
+  render: (args) => `
+    <div>
+      <justifi-payouts-list-filters></justifi-payouts-list-filters>
+      <justifi-payouts-list
+        auth-token="${args["auth-token"]}"
+        account-id="${args["account-id"]}">
+      </justifi-payouts-list>
+    </div>
+  `
+};
 
 export default meta;
