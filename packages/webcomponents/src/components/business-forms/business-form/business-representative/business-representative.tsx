@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../../components';
 import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-business-representative'
@@ -66,9 +67,9 @@ export class BusinessRepresentative {
       this.formController.getInitialValues().representative;
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <fieldset>
-          <legend part="header-2">Representative</legend>
+          <legend part={heading2}>Representative</legend>
           <div class="row gy-3">
             <div class="col-12 col-md-8">
               <form-control-text

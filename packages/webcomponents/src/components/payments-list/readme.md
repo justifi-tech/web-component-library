@@ -19,16 +19,6 @@
 | `row-clicked` |             | `CustomEvent<Payment>`        |
 
 
-## Shadow Parts
-
-| Part               | Description |
-| ------------------ | ----------- |
-| `"pagination-bar"` |             |
-| `"table-body"`     |             |
-| `"table-head"`     |             |
-| `"table-head-row"` |             |
-
-
 ## Dependencies
 
 ### Used by

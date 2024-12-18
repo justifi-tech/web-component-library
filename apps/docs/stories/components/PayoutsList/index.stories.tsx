@@ -54,7 +54,7 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     Theme: {
       description:
-        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
       options: Object.values(ThemeNames),
       control: {
         type: "select",

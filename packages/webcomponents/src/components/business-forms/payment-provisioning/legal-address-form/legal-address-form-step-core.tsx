@@ -6,6 +6,7 @@ import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/bu
 import { ComponentError } from '../../../../api/ComponentError';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -100,7 +101,7 @@ export class LegalAddressFormStepCore {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Legal Address of your Business</legend>
+            <legend class="mb-0" part={heading2}>Legal Address of your Business</legend>
             <form-control-tooltip helpText="No PO Boxes." />
           </div>
           <hr class="mt-2" />
@@ -171,4 +172,3 @@ export class LegalAddressFormStepCore {
     );
   }
 }
-      

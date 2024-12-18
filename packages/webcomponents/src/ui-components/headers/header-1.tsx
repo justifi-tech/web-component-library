@@ -1,4 +1,5 @@
 import { h } from '@stencil/core';
+import { heading1 } from '../../styles/parts';
 
 interface Header1Props {
   text: string;
@@ -6,5 +7,5 @@ interface Header1Props {
 }
 
 export const Header1 = (props: Header1Props) => {
-  return <h1 class={`header-1 ${props?.class}`} part="header-1">{props.text}</h1>
+  return <h1 class={`header-1 ${props?.class}`} part={heading1}>{props.text}</h1>
 }

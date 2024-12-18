@@ -25,8 +25,6 @@ Component to render a formated list of payouts for the requested account.
 
 - [Props, events and methods](#props-events-and-methods)
   - [Events usage](#events-usage)
-- [Styling](#styling)
-  - [Exported Parts](#exported-parts)
 - [Example usage](#example-usage)
 
 # Props, events and methods
@@ -47,21 +45,6 @@ All table components emit an event when a row is clicked with the necessary info
 
 <Source dark language="html" code={codeExampleEventHandling} />
 
-# Styling
-
----
-
-The `<justifi-payouts-list>` can be customized by using the exported `parts`.
-
-## Exported parts
-
-<ExportedParts
-  compact
-  component="justifi-payouts-list"
-  tags={filterDocsByTag('justifi-payouts-list').docsTags.map(
-    (part) => part.text
-  )}
-/>
 
 # Example Usage
 

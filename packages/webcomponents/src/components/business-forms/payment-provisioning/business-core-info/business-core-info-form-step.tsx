@@ -3,11 +3,6 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputs
- */
 @Component({
   tag: 'justifi-business-core-info-form-step'
 })
@@ -16,7 +11,7 @@ export class BusinessCoreInfoFormStep {
 
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
-  
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
@@ -26,7 +21,7 @@ export class BusinessCoreInfoFormStep {
   propChanged() {
     this.initializeApi();
   }
-  
+
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   @Method()
@@ -61,7 +56,7 @@ export class BusinessCoreInfoFormStep {
 
   render() {
     return (
-      <justifi-business-core-info-form-step-core 
+      <justifi-business-core-info-form-step-core
         businessId={this.businessId}
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}

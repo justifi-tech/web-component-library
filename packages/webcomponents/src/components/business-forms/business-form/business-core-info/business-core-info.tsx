@@ -3,6 +3,7 @@ import { businessClassificationOptions } from '../../utils/business-form-options
 import { FormController } from '../../../../ui-components/form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
+import { heading2 } from '../../../../styles/parts';
 
 /**
  *
@@ -10,9 +11,6 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
  * is that this component is meant to be a form and send data
  * and the other one  is meant to be just read only.
  *
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
   tag: 'justifi-business-core-info'
@@ -46,9 +44,9 @@ export class BusinessCoreInfo {
     const coreInfoDefaultValue = this.formController.getInitialValues();
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <fieldset>
-          <legend part="header-2">General Info</legend>
+          <legend part={heading2}>General Info</legend>
           <div class="row gy-3">
             <div class="col-12">
               <form-control-text
