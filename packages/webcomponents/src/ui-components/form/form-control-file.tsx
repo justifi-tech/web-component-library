@@ -8,13 +8,7 @@ import {
   State,
   Element,
 } from '@stencil/core';
-import { EntityDocumentType } from '../../api/Document';
-import { DisputeEvidenceDocumentType } from '../../api/DisputeEvidenceDocument';
-
-export interface FileSelectEvent {
-  fileList: FileList;
-  document_type: EntityDocumentType | DisputeEvidenceDocumentType;
-}
+import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
 
 @Component({
   tag: 'form-control-file',
@@ -30,7 +24,7 @@ export class FileInput {
   @Prop() helpText?: string;
   @Prop() errorText?: string;
   @Prop() multiple?: boolean;
-  @Prop() documentType: EntityDocumentType | DisputeEvidenceDocumentType;
+  @Prop() documentType: EntityDocumentType;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
 

@@ -32,6 +32,11 @@ export enum EntityDocumentStatus {
   needed = 'needed',
 }
 
+export interface FileSelectEvent {
+  fileList: FileList;
+  document_type: EntityDocumentType;
+}
+
 export interface DocumentRecordData {
   business_id: string;
   document_type: EntityDocumentType;
