@@ -3,11 +3,6 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
- */
 @Component({
   tag: 'justifi-legal-address-form-step'
 })
@@ -20,7 +15,7 @@ export class LegalAddressFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  
+
   @Watch('authToken')
   @Watch('businessId')
   propChanged() {

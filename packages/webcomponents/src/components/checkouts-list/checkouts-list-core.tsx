@@ -6,6 +6,7 @@ import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './checkouts-list-params-state';
 
+import { table, tableCell } from '../../styles/parts';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -155,13 +156,13 @@ export class CheckoutsListCore {
     return (
       <div>
         <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
                 {this.checkoutsTable.columnData.map((column) => column)}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class="table-body">
               <TableLoadingState
                 columnSpan={this.checkoutsTable.columnKeys.length}
                 isLoading={this.loading}
@@ -179,7 +180,6 @@ export class CheckoutsListCore {
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
-                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
                   {data}
                 </tr>
@@ -188,7 +188,7 @@ export class CheckoutsListCore {
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.checkoutsTable.columnData.length}>
+                  <td part={tableCell} colSpan={this.checkoutsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

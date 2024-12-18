@@ -6,14 +6,18 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import { FormControlErrorText } from '../../ui-components';
+import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-select'
 })
 export class SelectInput {
   selectElement!: HTMLSelectElement;
+
+  @State() isFocused: boolean = false;
 
   @Prop() name: any;
   @Prop() label: string;
@@ -47,12 +51,26 @@ export class SelectInput {
     this.selectElement.value = newValue;
   }
 
+  private get part() {
+    let part = input;
+    if (this.errorText) {
+      part = inputInvalid;
+    }
+    if (this.disabled) {
+      part = inputDisabled;
+    }
+    if (this.isFocused) {
+      part = inputFocused;
+    }
+    return part;
+  }
+
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
           <div class="d-flex align-items-start gap-2">
-            <label part="label" class="form-label" htmlFor={this.name}>
+            <label part={label} class="form-label" htmlFor={this.name}>
               {this.label}
             </label>
             <form-control-tooltip helpText={this.helpText} />
@@ -61,9 +79,13 @@ export class SelectInput {
             ref={el => (this.selectElement = el as HTMLSelectElement)}
             id={this.name}
             name={this.name}
-            onBlur={this.formControlBlur.emit}
+            onFocus={() => this.isFocused = true}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
             onInput={this.handleFormControlInput}
-            part={`input ${this.errorText ? 'input-invalid' : ''}`}
+            part={this.part}
             class={this.errorText ? 'form-select is-invalid' : 'form-select'}
             disabled={this.disabled}
           >

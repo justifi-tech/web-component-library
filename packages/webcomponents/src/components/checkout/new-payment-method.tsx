@@ -4,6 +4,7 @@ import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Header3 } from '../../ui-components';
+import { billingForm, radioListItem } from '../../styles/parts';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -92,6 +93,7 @@ export class NewPaymentMethod {
   showNewPaymentMethodForm() {
     return (
       <div class="mt-4 pb-4 border-bottom">
+        <hidden-input />
         <div class="mb-4">
           {this.paymentMethodOption?.id === 'card' ? (
             <card-form ref={(el) => this.paymentMethodFormRef = el} />
@@ -100,8 +102,10 @@ export class NewPaymentMethod {
           )}
 
         </div>
-        <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
-        <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        <div part={billingForm}>
+          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
+          <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        </div>
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
     );
@@ -113,25 +117,14 @@ export class NewPaymentMethod {
         <div
           class="radio-list-item p-3"
           onClick={() => this.onPaymentMethodOptionClick()}
-          part="radio-list-item"
+          part={radioListItem}
         >
-          <input
-            type="radio"
+          <form-control-radio
             name="paymentMethodType"
-            id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
-            onClick={(event) => event.preventDefault()}
             checked={this.isSelected}
-            class="form-check-input me-2"
-            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
+            label={PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
           />
-          <label
-            htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label"
-            part="radio-input-label"
-          >
-            {PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
-          </label>
         </div>
 
         {this.isSelected ? this.showNewPaymentMethodForm() : null}

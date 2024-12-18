@@ -5,6 +5,7 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './terminals-list-params-state';
+import { table, tableCell } from '../../styles/parts';
 
 @Component({
   tag: 'terminals-list-core'
@@ -154,13 +155,13 @@ export class TerminalsListCore {
     return (
       <div>
         <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
                 {this.terminalsTable.columnData.map((column) => column)}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class="table-body">
               <TableLoadingState
                 columnSpan={this.terminalsTable.columnKeys.length}
                 isLoading={this.loading}
@@ -178,7 +179,6 @@ export class TerminalsListCore {
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
-                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
                   {data}
                 </tr>
@@ -187,7 +187,7 @@ export class TerminalsListCore {
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.terminalsTable.columnData.length}>
+                  <td part={tableCell} colSpan={this.terminalsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

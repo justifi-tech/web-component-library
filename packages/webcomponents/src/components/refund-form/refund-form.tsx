@@ -16,7 +16,6 @@ import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-refund-form',
-  styleUrl: 'refund-form.css',
   shadow: true,
 })
 export class RefundForm {

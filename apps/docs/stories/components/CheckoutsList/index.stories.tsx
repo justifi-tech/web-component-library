@@ -19,12 +19,12 @@ const examplePayload = {
   "successful_payment_id": "py_xyz",
   "statement_descriptor": "Big Business",
   "application_fees": {
-  "card": {
-    "amount": 300
-  },
-  "bank_account": {
-    "amount": 150
-  }
+    "card": {
+      "amount": 300
+    },
+    "bank_account": {
+      "amount": 150
+    }
   },
   "payment_settings": {},
   "created_at": "2024-01-01T12:00:00Z",
@@ -46,7 +46,7 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     Theme: {
       description:
-        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
       options: Object.values(ThemeNames),
       control: {
         type: "select",

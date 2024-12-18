@@ -4,49 +4,49 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
 <terminals-list-core>
   <div>
     <div class="table-wrapper">
-      <table class="table table-hover">
-        <thead class="sticky-top table-head" part="table-head">
-          <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell" scope="col" title="The nickname associated with the terminal">
+      <table class="table table-hover" part="table text color font-family background-color">
+        <thead class="sticky-top table-head">
+          <tr class="table-light text-nowrap">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The nickname associated with the terminal">
               Nickname
             </th>
-            <th part="table-head-cell" scope="col" title="The provider ID of the terminal">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The provider ID of the terminal">
               Provider ID
             </th>
-            <th part="table-head-cell" scope="col" title="The current status of each terminal">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each terminal">
               Status
             </th>
           </tr>
         </thead>
-        <tbody class="table-body" part="table-body">
+        <tbody class="table-body">
           <tr>
-            <td class="error-state" colspan="3" data-test-id="table-error-state" part="error-state" style="text-align: center;">
+            <td class="error-state" colspan="3" data-test-id="table-error-state" part="table-error text color font-family" style="text-align: center;">
               An unexpected error occurred: Fetch error
             </td>
           </tr>
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="3" part="pagination-bar">
+            <td colspan="3" part="table-cell text color font-family background-color">
               <pagination-menu>
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination" part="pagination">
-                    <li class="disabled page-item" part="page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span class="me-1" part="page-link-arrow">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span class="me-1">
                           «
                         </span>
-                        <span part="page-button-text">
+                        <span>
                           Previous
                         </span>
                       </a>
                     </li>
                     <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span part="page-link-text">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span>
                           Next
                         </span>
-                        <span class="ms-1" part="page-link-arrow">
+                        <span class="ms-1">
                           »
                         </span>
                       </a>
@@ -67,55 +67,55 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
 <terminals-list-core>
   <div>
     <div class="table-wrapper">
-      <table class="table table-hover">
-        <thead class="sticky-top table-head" part="table-head">
-          <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell" scope="col" title="The nickname associated with the terminal">
+      <table class="table table-hover" part="table text color font-family background-color">
+        <thead class="sticky-top table-head">
+          <tr class="table-light text-nowrap">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The nickname associated with the terminal">
               Nickname
             </th>
-            <th part="table-head-cell" scope="col" title="The provider ID of the terminal">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The provider ID of the terminal">
               Provider ID
             </th>
-            <th part="table-head-cell" scope="col" title="The current status of each terminal">
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each terminal">
               Status
             </th>
           </tr>
         </thead>
-        <tbody class="table-body" part="table-body">
-          <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+        <tbody class="table-body">
+          <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               Terminal 1
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               453-760-515
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-danger" title="This terminal is disconnected.">
                 Disconnected
               </span>
             </td>
           </tr>
-          <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row table-row-even">
-            <td part="table-cell">
+          <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               Terminal 2
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               807-075-625
             </td>
-            <td part="table-cell">
+            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-danger" title="This terminal is disconnected.">
                 Disconnected
               </span>
             </td>
           </tr>
-          <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row table-row-odd">
-            <td part="table-cell">
+          <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               Terminal 3
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               450-060-752
             </td>
-            <td part="table-cell">
+            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-success" title="This terminal is connected.">
                 Connected
               </span>
@@ -124,26 +124,26 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
         </tbody>
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
-            <td colspan="3" part="pagination-bar">
+            <td colspan="3" part="table-cell text color font-family background-color">
               <pagination-menu>
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination" part="pagination">
-                    <li class="disabled page-item" part="page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span class="me-1" part="page-link-arrow">
+                  <ul class="m-0 pagination">
+                    <li class="disabled page-item">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span class="me-1">
                           «
                         </span>
-                        <span part="page-button-text">
+                        <span>
                           Previous
                         </span>
                       </a>
                     </li>
                     <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-link page-link-disabled">
-                        <span part="page-link-text">
+                      <a class="page-link" href="#" part="button-disabled button text color font-family">
+                        <span>
                           Next
                         </span>
-                        <span class="ms-1" part="page-link-arrow">
+                        <span class="ms-1">
                           »
                         </span>
                       </a>
