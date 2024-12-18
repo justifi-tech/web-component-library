@@ -1,4 +1,5 @@
 export enum DisputeEvidenceDocumentType {
+  activity_log = 'activity_log',
   cancellationPolicy = 'cancellation_policy',
   customerCommunication = 'customer_communication',
   customerSignature = 'customer_signature',
@@ -8,30 +9,6 @@ export enum DisputeEvidenceDocumentType {
   serviceDocumentation = 'service_documentation',
   shippingDocumentation = 'shipping_documentation',
   uncategorizedFile = 'uncategorized_file'
-}
-
-export class DisputeEvidenceDocumentStorage {
-  public [DisputeEvidenceDocumentType.cancellationPolicy]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.customerCommunication]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.customerSignature]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.duplicateChargeDocumentation]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.receipt]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.refundPolicy]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.serviceDocumentation]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.shippingDocumentation]: DisputeEvidenceDocument[];
-  public [DisputeEvidenceDocumentType.uncategorizedFile]: DisputeEvidenceDocument[];
-
-  constructor() {
-    this[DisputeEvidenceDocumentType.cancellationPolicy] = [];
-    this[DisputeEvidenceDocumentType.customerCommunication] = [];
-    this[DisputeEvidenceDocumentType.customerSignature] = [];
-    this[DisputeEvidenceDocumentType.duplicateChargeDocumentation] = [];
-    this[DisputeEvidenceDocumentType.receipt] = [];
-    this[DisputeEvidenceDocumentType.refundPolicy] = [];
-    this[DisputeEvidenceDocumentType.serviceDocumentation] = [];
-    this[DisputeEvidenceDocumentType.shippingDocumentation] = [];
-    this[DisputeEvidenceDocumentType.uncategorizedFile] = [];
-  }
 }
 
 export class DisputeEvidenceDocument {
