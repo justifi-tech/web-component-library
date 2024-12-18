@@ -12,15 +12,6 @@
 | `helpText` | `help-text` |             | `string` | `undefined` |
 
 
-## Shadow Parts
-
-| Part              | Description |
-| ----------------- | ----------- |
-| `"tooltip"`       |             |
-| `"tooltip-icon"`  |             |
-| `"tooltip-inner"` |             |
-
-
 ## Dependencies
 
 ### Used by

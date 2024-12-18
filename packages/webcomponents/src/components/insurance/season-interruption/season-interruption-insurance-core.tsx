@@ -1,17 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
-import { formatCurrency } from "../../../utils/utils";
+import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost, Header2 } from "../../../ui-components";
+import { text, textDanger } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
-  styleUrls: [
-    'season-interruption-insurance-core.css',
-    '../../checkout/form-check-input.css',
-    '../../checkout/header.css',
-  ],
-  shadow: true,
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
@@ -74,6 +69,14 @@ export class SeasonInterruptionInsuranceCore {
       },
       onSuccess: ({ quote }) => {
         this.quote = quote;
+        this.quote.product.description = processHTML(this.quote.product.description, [
+          (html) => removeAttribute(html, 'style'),
+          (html) => addAttribute(html, 'a', 'part', text)
+        ]);
+        this.quote.product.legal_disclaimer = processHTML(this.quote.product.legal_disclaimer, [
+          (html) => removeAttribute(html, 'style'),
+          (html) => addAttribute(html, 'a', 'part', text)
+        ]);
         insuranceValues[quote.policy_type] = quote.accepted;
         this.isLoading = false;
       },
@@ -88,8 +91,8 @@ export class SeasonInterruptionInsuranceCore {
     });
   };
 
-  onChangeHandler(event: any) {
-    this.accepted = event.target.value;
+  onChangeHandler(value: any) {
+    this.accepted = value;
     insuranceErrors[this.quote.policy_type] = false;
     this.toggleCoverage({
       quoteId: this.quote.id,
@@ -115,44 +118,34 @@ export class SeasonInterruptionInsuranceCore {
   render() {
     return (
       <StyledHost>
-        {!this.isLoading &&
+        {!this.isLoading && (
           <div>
-            <h2 class="fs-5 fw-bold pb-3 jfi-header">{this.quote?.product.title}</h2>
-            <small innerHTML={this.quote?.product.description}></small>
-            <div>
-              <input
-                id="accept"
-                type="radio"
-                name="opt-in"
-                value="true"
-                onChange={(event: any) => this.onChangeHandler(event)}
-                class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
-              />
-              <label htmlFor="accept">
-                Accept coverage for {formatCurrency(this.quote?.total_cents)}
-              </label>
-            </div>
-            <div class="mb-2">
-              <input
-                id="decline"
-                type="radio"
-                name="opt-in"
-                value="false"
-                onChange={(event: any) => this.onChangeHandler(event)}
-                class={this.error ? 'form-check-input me-2 is-invalid' : 'form-check-input me-2'}
-              />
-              <label htmlFor="decline">
-                Decline coverage
-              </label>
-            </div>
+            <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
+            <small innerHTML={this.quote?.product.description} part={text}></small>
+            <form-control-radio
+              label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
+              name="opt-in"
+              value={true}
+              checked={this.accepted}
+              inputHandler={this.onChangeHandler.bind(this)}
+            />
+            <form-control-radio
+              label="Decline coverage"
+              name="opt-in"
+              value={false}
+              checked={!this.accepted}
+              inputHandler={this.onChangeHandler.bind(this)}
+            />
             <div
               class="invalid-feedback"
-              style={{ display: this.error ? 'block' : 'none' }}>
+              style={{ display: this.error ? 'block' : 'none' }}
+              part={textDanger}
+            >
               Please select an option
             </div>
-            <small innerHTML={this.quote?.product.legal_disclaimer}></small>
-          </div>
-        }
+            <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
+          </div >
+        )}
       </StyledHost>
     );
   }

@@ -6,8 +6,11 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
+import { FormControlErrorText } from '../../ui-components';
+import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-number-masked'
@@ -15,6 +18,8 @@ import IMask, { InputMask } from 'imask';
 export class NumberInputMasked {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -37,7 +42,7 @@ export class NumberInputMasked {
   disconnectedCallback() {
     this.imask?.destroy();
   }
-  
+
   componentDidLoad() {
     if (this.textInput) {
       this.initializeIMask();
@@ -61,25 +66,38 @@ export class NumberInputMasked {
 
     this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
   }
-  
+
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.formControlInput.emit({ name: name, value: target.value });
   }
-  
+
   updateInput = (newValue: any) => {
     if (this.imask && newValue) {
       this.imask.value = String(newValue);
     }
   }
 
+  private get part() {
+    if (this.errorText) {
+      return inputInvalid;
+    }
+    if (this.disabled) {
+      return inputDisabled;
+    }
+    if (this.isFocused) {
+      return inputFocused;
+    }
+    return input;
+  }
+
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
           <div class="d-flex align-items-start gap-2">
-            <label part="label" class="form-label" htmlFor={this.name}>
+            <label part={label} class="form-label" htmlFor={this.name}>
               {this.label}
             </label>
             <form-control-tooltip helpText={this.helpText} />
@@ -88,14 +106,18 @@ export class NumberInputMasked {
             ref={el => (this.textInput = el as HTMLInputElement)}
             id={this.name}
             name={this.name}
-            onBlur={this.formControlBlur.emit}
+            onFocus={() => (this.isFocused = true)}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
             onInput={this.handleFormControlInput}
-            part={`input ${this.errorText && 'input-invalid'}`}
+            part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"
             disabled={this.disabled}
           />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

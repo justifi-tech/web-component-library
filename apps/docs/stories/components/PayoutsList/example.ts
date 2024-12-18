@@ -18,9 +18,9 @@ ${codeExampleHead('justifi-payouts-list')}
       console.error('error-event', event.detail);
     });
 
-    payoutsList.addEventListener('payout-row-clicked', (event) => {
+    payoutsList.addEventListener('row-clicked', (event) => {
       // here is where you would handle the event
-      console.log('payout-row-clicked', event.detail);
+      console.log('row-clicked', event.detail);
     });
   })();
 </script>

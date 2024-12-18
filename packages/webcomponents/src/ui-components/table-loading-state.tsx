@@ -1,4 +1,6 @@
 import { h } from '@stencil/core';
+import Spinner from './spinner';
+import { tableCell } from '../styles/parts';
 
 interface TableRenderStateProps {
   columnSpan: number;
@@ -15,10 +17,8 @@ export const TableLoadingState = (props: TableRenderStateProps) => {
 
   return (
     <tr>
-      <td class="loading-state" part="loading-state-cell" colSpan={columnSpan} style={{ textAlign: 'center' }}>
-        <div part="loading-state-spinner" class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+      <td class="loading-state" part={tableCell} colSpan={columnSpan} style={{ textAlign: 'center' }}>
+        <Spinner />
       </td>
     </tr>
   );

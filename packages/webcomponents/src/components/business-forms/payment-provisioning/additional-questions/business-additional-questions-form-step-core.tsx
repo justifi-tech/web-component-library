@@ -2,10 +2,11 @@ import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Business';
-import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../components';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-additional-questions-form-step-core',
@@ -23,13 +24,12 @@ export class AdditionalQuestionsFormStepCore {
     } else {
       this.recurringPayments = false;
     }
-  } 
+  }
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -91,8 +91,7 @@ export class AdditionalQuestionsFormStepCore {
         });
       },
       final: () => {
-        this.submitted.emit({ data: { submittedData } });
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.additionalQuestions });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.additionalQuestions });
         this.formLoading.emit(false)
       }
     });
@@ -113,7 +112,7 @@ export class AdditionalQuestionsFormStepCore {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Additional Questions</legend>
+            <legend class="mb-0" part={heading2}>Additional Questions</legend>
             <form-control-tooltip helpText="This information helps us understand the business and identify and monitor trends to safeguard you and your customers." />
           </div>
           <hr class="mt-2" />

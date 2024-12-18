@@ -1,187 +1,106 @@
 const dark = `
-body {
-  background-color: #161616;
-}
+  body {
+    background: #161616;
+  }
 
-/* Card styling */
+  #component-wrapper > * {
+    padding: 2rem;
+    display: block;
+    margin: 5% auto;
+    background-color: #222222;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
 
-justifi-checkout,
-justifi-payment-form,
-justifi-tokenize-payment-method,
-justifi-payment-provisioning {
-  display: block;
-  margin: 5% auto;
-  background-color: #191919;
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+  ::part(font-family) {
+    font-family: cursive;   
+  }
 
-justifi-checkout,
-justifi-payment-form,
-justifi-tokenize-payment-method {
-  max-width: 400px;
-  padding: 40px;
-}
+  ::part(color) {
+    color: lightblue;
+  }
 
-justifi-season-interruption-insurance {
-  display: block;
-  padding: 20px 20px 10px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
+  ::part(background-color) {
+    background-color: transparent;
+  }
 
-justifi-payment-provisioning {
-  max-width: 900px;
-  padding: 40px;
-}
+  ::part(input) {
+    background: transparent;
+  }
 
-::part(input-group-text) {
-  background-color: rgba(255,255,255,0.2);
-  color: #fff;
-}
+  ::part(input-focused) {
+    background-color: #191919;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+  }
 
-::part(input) {
-  color: #fff;
-  background-color: #191919;
-  appearance: none;
-  -webkit-appearance: none;
-}
+  ::part(input-radio) {
+    background-color: #191919;
+    border-color: lightblue;
+  }
 
-::part(input):focus {
-  color: #fff;
-  background-color: #191919;
-  appearance: none;
-  -webkit-appearance: none;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
-}
+  ::part(button) {
+    padding: 8px 16px;
+  }
 
-:root {
-  /* new vars */
-  --jfi-body-color: rgb(182, 190, 201);
-  --jfi-header-color: #fff;
-  --jfi-header-border: 1px solid #fff;
+  ::part(button-primary) {
+    background-color: #FFF05A;
+    border-color: #FFF054;
+    color: #000;
+    border-radius: 4px;
+  }
 
-  /* general */
-  --jfi-load-google-font: 'Open Sans', sans-serif;
+  ::part(button-primary):hover {
+    background-color: #FFD25A;
+    border-color: #FFD25A;
+    color: #000;
+  }
 
-  /* layout */
-  --jfi-layout-font-family: Arial, sans-serif;
-  --jfi-layout-padding: 20px;
-  --jfi-layout-form-control-spacing-x: 10px;
-  --jfi-layout-form-control-spacing-y: 10px;
+  ::part(button-secondary) {
+    background-color: #FFF05A;
+    border-color: #FFF054;
+    color: #000;
+    border-radius: 4px;
+  }
 
-  /* colors */
-  --jfi-primary-color: rgb(164, 201, 245);
+  ::part(button-secondary):hover {
+    background-color: #FFD25A;
+    border-color: #FFD25A;
+    color: #000;
+  }
 
-  /* form control */
-  --jfi-form-control-background-color: #191919;
-  --jfi-form-control-border-color: rgba(255, 255, 255, 0.7);
-  --jfi-form-control-border-color-focus: rgb(164, 201, 245);
-  --jfi-form-control-border-color-error: #FF785A;
-  --jfi-form-control-border-width: 1px;
-  --jfi-form-control-border-bottom-width: 1px;
-  --jfi-form-control-border-left-width: 1px;
-  --jfi-form-control-border-right-width: 1px;
-  --jfi-form-control-border-top-width: 1px;
-  --jfi-form-control-border-radius: 4px;
-  --jfi-form-control-border-style: solid;
-  --jfi-form-control-box-shadow: none;
-  --jfi-form-control-box-shadow-error: 0 0 0 0.25rem rgba(255, 120, 90, 0.25);
-  --jfi-form-control-box-shadow-error-focus: 0 0 0 0.25rem rgba(255, 120, 90, 0.5);
-  --jfi-form-control-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
-  --jfi-form-control-color: rgba(255, 255, 255, 1);
-  --jfi-form-control-color-focus: rgba(255, 255, 255, 1);
-  --jfi-form-control-font-size: 1rem;
-  --jfi-form-control-font-weight: normal;
-  --jfi-form-control-line-height: 1.5;
-  --jfi-form-control-margin: 0;
-  --jfi-form-control-padding: 0.375rem 0.75rem;
-  --jfi-form-control-disabled-background-color: transparent;
-  --jfi-form-control-disabled-color: rgba(255, 255, 255, 0.5);
+  ::part(button-link) {
+    color: #FFF05A;
+    background-color: transparent;
+    border-color: transparent;
+  }
 
-  /* form label */
-  --jfi-form-label-color: var(--jfi-body-color);
-  --jfi-form-label-font-family: Arial, sans-serif;
-  --jfi-form-label-font-size: 16px;
-  --jfi-form-label-font-weight: normal;
-  --jfi-form-label-margin: 0 0 0.5rem 0;
+  ::part(button-disabled) {
+    opacity: 0.5;
+  }
 
-  /* validation messages */
-  --jfi-error-message-color: #FF785A;
-  --jfi-error-message-margin: 5px;
-  --jfi-error-message-font-size: 12px;
+  ::part(table-cell-odd) {
+    background-color: #585858;
+  }
 
-  /* Below only used in justifi-payment-form */
-  /* form radio group */
-  --jfi-radio-input-background-color: transparent;
-  --jfi-radio-input-border-color: rgba(255, 255, 255, 0.7);
+  ::part(loading-spinner) {
+    border: 4px solid #f3f3f3;
+    border-right-color: transparent
+  }
 
-  --jfi-radio-input-background-color-selected: rgba(255, 120, 90, .5);
-  --jfi-radio-input-border-color-selected: rgba(255, 120, 90, 1);
+  ::part(dropdown-menu) {
+    background-color: #161616;
+  }
 
-  --jfi-radio-input-box-shadow-focus: 0 0 0 0.25rem rgba(255, 120, 90, 0.25);
-  --jfi-radio-input-border-color-focus: rgb(164, 201, 245);
-
-  --jfi-radio-button-padding: 5px;
-  --jfi-radio-button-font-size: 16px;
-
-  --jfi-radio-button-group-width: 100%;
-  --jfi-radio-button-group-color: var(--jfi-body-color);
-  --jfi-radio-button-group-color-hover: #fff;
-  --jfi-radio-button-group-divider: 1px solid rgba(255, 255, 255, 0.5);
-  --jfi-radio-button-group-background-color: transparent;
-  --jfi-radio-button-group-background-color-hover: rgba(255, 120, 90, 0.25);
-
-  --jfi-radio-button-background-color: transparent;
-  --jfi-radio-button-border-color: rgba(255, 255, 255, 0.7);
-
-  --jfi-radio-button-background-color-selected: rgba(255, 120, 90, .5);
-  --jfi-radio-button-border-color-selected: rgba(255, 120, 90, 1);
-
-  --jfi-radio-button-border-color-focus: rgb(164, 201, 245);
-  --jfi-radio-button-box-shadow-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+  ::part(radio-list-item) {
+    border-bottom: 1px solid #ddd;
+  }
   
-  /* submit button */
-  --jfi-submit-button-width: 100%;
-  --jfi-submit-button-padding: 5px 15px;
-  --jfi-submit-button-font-size: 16px;
-  --jfi-submit-button-box-shadow: none;
-  --jfi-submit-button-border-radius: 4px;
-  --jfi-submit-button-line-height: 1.75;
-  --jfi-submit-button-text-transform: uppercase;
-
-  --jfi-submit-button-color: #191919;
-  --jfi-submit-button-background-color: #FFF05A;
-  --jfi-submit-button-border-color: #FFF05A;
-
-  --jfi-submit-button-color-hover: #191919;
-  --jfi-submit-button-background-color-hover: #FFD25A;
-  --jfi-submit-button-border-color-hover: #FFD25A;
-
-  --jfi-submit-button-color-focus: #191919;
-  --jfi-submit-button-background-color-focus: #FFD25A;
-  --jfi-submit-button-border-color-focus: #FFD25A;
-
-  --jfi-submit-button-color-active: #191919;
-  --jfi-submit-button-background-color-active: #FFAA5A;
-  --jfi-submit-button-border-color-active: #FFAA5A;
-
-  --jfi-submit-button-color-loading: rgba(255, 255, 255, 1);
-  --jfi-submit-button-border-color-loading: rgba(255, 255, 255, 0.25);
-  --jfi-submit-button-background-color-loading: rgba(255, 255, 255, 0.25);
-
-   /* Skeleton */
-  --jfi-skeleton-wave-animation-bg: rgba(255, 255, 255, 0.1);
-
-  /* Tooltip */
-  ::part(tooltip) {
-    --bs-tooltip-opacity: 1;
+  ::part(radio-list-item):hover {
+    background-color: #333;
+    cursor: pointer;
   }
-
-  ::part(tooltip-inner) {
-    --bs-tooltip-bg: var(--bs-white);
-    --bs-tooltip-color: var(--bs-dark);
-  }
-}
 `;
 
 export default dark;

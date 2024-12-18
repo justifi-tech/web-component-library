@@ -13,13 +13,6 @@
 | `params`      | `params`  |             | `any`        | `undefined` |
 
 
-## Shadow Parts
-
-| Part              | Description |
-| ----------------- | ----------- |
-| `"dropdown-menu"` |             |
-
-
 ## Dependencies
 
 ### Used by

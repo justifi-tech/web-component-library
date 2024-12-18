@@ -90,7 +90,7 @@ describe('terminals-list-core', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('emits terminal-row-clicked event on row click', async () => {
+  it('emits row-clicked event on row click', async () => {
     const mockTerminalsService = {
       fetchTerminals: jest.fn().mockResolvedValue(mockTerminalsResponse),
     };
@@ -124,7 +124,7 @@ describe('terminals-list-core', () => {
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();
-    page.win.addEventListener('terminal-row-clicked', spyEvent);
+    page.win.addEventListener('row-clicked', spyEvent);
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();

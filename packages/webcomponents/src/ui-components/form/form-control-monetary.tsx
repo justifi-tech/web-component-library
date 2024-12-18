@@ -6,9 +6,12 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
+import { inputDisabled, inputFocused, inputGroup, inputInvalid, label, text } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-monetary'
@@ -16,6 +19,8 @@ import { CURRENCY_MASK } from '../../utils/form-input-masks';
 export class MonetaryInput {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: string;
@@ -70,29 +75,47 @@ export class MonetaryInput {
     }
   }
 
+  private get part() {
+    let part = inputGroup;
+    if (this.errorText) {
+      part = inputInvalid;
+    }
+    if (this.disabled) {
+      part = inputDisabled;
+    }
+    if (this.isFocused) {
+      part = inputFocused;
+    }
+    return part;
+  }
+
   render() {
     return (
-      <Host exportparts="label,input,input-group-input,input-group-text,input-invalid">
+      <Host>
         <div class="form-group d-flex flex-column">
-          <label part="label" class="form-label" htmlFor={this.name}>
+          <label part={label} class="form-label" htmlFor={this.name}>
             {this.label}
           </label>
           <div class="input-group">
-            <span class="input-group-text" part="input-group-text">$</span>
+            <span class="input-group-text" part={text}>$</span>
             <input
               ref={el => (this.textInput = el as HTMLInputElement)}
               id={this.name}
               name={this.name}
-              onBlur={this.formControlBlur.emit}
+              onFocus={() => this.isFocused = true}
+              onBlur={() => {
+                this.isFocused = false;
+                this.formControlBlur.emit();
+              }}
               onInput={this.handleFormControlInput}
-              part={`input input-group-input ${this.errorText && 'input-invalid'}`}
+              part={this.part}
               class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
               type="text"
               disabled={this.disabled}
             />
           </div>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

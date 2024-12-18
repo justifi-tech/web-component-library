@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { Identity, Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { identitySchema } from '../../schemas/business-identity-schema';
 
@@ -17,7 +17,6 @@ export class BusinessRepresentativeFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -79,8 +78,7 @@ export class BusinessRepresentativeFormStepCore {
         });
       },
       final: () => {
-        this.submitted.emit({ data: { submittedData } });
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.representative });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.representative });
         this.formLoading.emit(false)
       }
     });

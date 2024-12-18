@@ -7,31 +7,9 @@ import { TerminalService } from '../../api/services/terminal.service';
 import { makeGetTerminals } from './get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
-import { StyledHost, tableExportedParts } from '../../ui-components';
+import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './terminals-table';
 
-/**
-  * @exportedPart label: Label for inputs
-  * @exportedPart input: The input fields
-  * @exportedPart input-invalid: Invalid state for inputs  
-  * @exportedPart table-head: Table head
-  * @exportedPart table-head-row: Head row
-  * @exportedPart table-head-cell: Individual head cell
-  * @exportedPart table-body: Body of the table
-  * @exportedPart table-row: Row of the table
-  * @exportedPart table-cell: Individual cell of the table
-  * @exportedPart loading-state-cell: Row for loading state
-  * @exportedPart loading-state-spinner: Spinner element for loading state
-  * @exportedPart error-state: Row for Error state
-  * @exportedPart empty-state: Row for Emtpy state
-  * @exportedPart pagination-bar: Pagination bar
-  * @exportedPart arrow: Both paging buttons
-  * @exportedPart arrow-left: Previous page button
-  * @exportedPart arrow-right: Next page button
-  * @exportedPart button-disabled: Disabled state for paging buttons
-  * @exportedPart previous-button-text: Text for Previous button
-  * @exportedPart next-button-text: Text for Next button
-*/
 @Component({
   tag: 'justifi-terminals-list',
   shadow: true
@@ -41,12 +19,12 @@ export class TerminalsList {
   @State() getTerminals: Function;
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
-  
+
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
   @Prop() columns?: string = defaultColumnsKeys;
-  
+
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   analytics: JustifiAnalytics;
@@ -108,8 +86,8 @@ export class TerminalsList {
 
   render() {
     return (
-      <StyledHost exportparts={tableExportedParts}>
-        <terminals-list-core 
+      <StyledHost>
+        <terminals-list-core
           getTerminals={this.getTerminals}
           getSubAccounts={this.getSubAccounts}
           onError-event={this.handleErrorEvent}

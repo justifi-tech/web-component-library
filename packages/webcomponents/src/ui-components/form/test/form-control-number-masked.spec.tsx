@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { NumberInputMasked } from "../form-control-number-masked";
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
 import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-number-masked', () => {
@@ -11,7 +11,7 @@ describe('form-control-number-masked', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number-masked label='Age' name='age' mask='00'/>,
+      template: () => <form-control-number-masked label='Age' name='age' mask='00' />,
     });
     expect(page.root).toMatchSnapshot();
   });
@@ -200,11 +200,10 @@ describe('form-control-number-masked', () => {
         />
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-age');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('Invalid age');
+    expect(errorTextComponent.textContent).toBe('Invalid age');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

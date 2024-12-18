@@ -5,11 +5,14 @@
 ## Examples
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html dir="ltr" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <title>justifi-payment-form: Simple example</title>
 
     <!--
@@ -80,9 +83,15 @@ Type: `Promise<PaymentMethodPayload>`
 
  - [justifi-payment-method-options](.)
 
+### Depends on
+
+- [form-control-radio](../../ui-components/form)
+
 ### Graph
 ```mermaid
 graph TD;
+  justifi-sezzle-payment-method --> form-control-radio
+  form-control-radio --> form-control-help-text
   justifi-payment-method-options --> justifi-sezzle-payment-method
   style justifi-sezzle-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```

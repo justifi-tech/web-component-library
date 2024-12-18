@@ -6,14 +6,9 @@ import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
- */
-
 @Component({
   tag: 'justifi-payment-provisioning',
+  shadow: true,
 })
 export class PaymentProvisioning {
   @State() postProvisioning: Function;

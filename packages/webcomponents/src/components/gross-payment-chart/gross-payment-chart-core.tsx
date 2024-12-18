@@ -2,8 +2,9 @@ import { Component, Event, EventEmitter, Host, Prop, State, Watch, h } from '@st
 import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
-import { ErrorState, LoadingState } from '../../ui-components/details/utils';
+import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
+import Spinner from '../../ui-components/spinner';
 
 Chart.register(
   Colors,
@@ -17,7 +18,6 @@ Chart.register(
 )
 @Component({
   tag: 'gross-payment-chart-core',
-  styleUrl: 'gross-payment-chart.css',
 })
 
 export class GrossPaymentChartCore {
@@ -100,7 +100,7 @@ export class GrossPaymentChartCore {
   render() {
     return (
       <Host>
-        {this.loading && LoadingState()}
+        {this.loading && <Spinner />}
         {!this.errorMessage ? <canvas id="chart" ref={(elem) => this.chartRef = elem} /> : ErrorState(this.errorMessage)}
       </Host>
     );

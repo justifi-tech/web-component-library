@@ -6,14 +6,6 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 
-/**
- *
- * @exportedPart detail-section
- * @exportedPart detail-section-title
- * @exportedPart detail-section-item-title
- * @exportedPart detail-section-item-data
- * @exportedPart detail-empty-state
- */
 @Component({
   tag: 'justifi-business-details',
   shadow: true,

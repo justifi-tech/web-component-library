@@ -20,7 +20,7 @@ export const codeExampleEventHandling = `
   (function() {
     const checkoutList = document.querySelector('justifi-checkouts-list');
     
-    checkoutList.addEventListener('checkout-row-clicked', (event) => {
+    checkoutList.addEventListener('row-clicked', (event) => {
       // event.detail contains all the necessary information to call an endpoint to get more details on this entity
       const entityID = event.detail.id;
   

@@ -2,10 +2,11 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
-import { BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -19,7 +20,6 @@ export class LegalAddressFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
@@ -81,8 +81,7 @@ export class LegalAddressFormStepCore {
         });
       },
       final: () => {
-        this.submitted.emit({ data: { submittedData } });
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.legalAddress });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.legalAddress });
         this.formLoading.emit(false)
       }
     });
@@ -102,7 +101,7 @@ export class LegalAddressFormStepCore {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Legal Address of your Business</legend>
+            <legend class="mb-0" part={heading2}>Legal Address of your Business</legend>
             <form-control-tooltip helpText="No PO Boxes." />
           </div>
           <hr class="mt-2" />
@@ -173,4 +172,3 @@ export class LegalAddressFormStepCore {
     );
   }
 }
-      

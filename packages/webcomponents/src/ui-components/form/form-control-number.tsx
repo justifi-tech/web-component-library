@@ -7,13 +7,18 @@ import {
   EventEmitter,
   Element,
   Watch,
+  State,
 } from '@stencil/core';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
+import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-number'
 })
 export class NumberInput {
   @Element() el: HTMLElement;
+
+  @State() isFocused: boolean = false;
 
   @Prop() label: string;
   @Prop() name: any;
@@ -41,7 +46,7 @@ export class NumberInput {
     this.inputHandler(name, target.value);
     this.formControlInput.emit({ name, value: target.value });
   }
-  
+
   updateInput = (newValue: any) => {
     const inputElement = this.el.querySelector('input');
     if (inputElement) {
@@ -49,25 +54,42 @@ export class NumberInput {
     }
   }
 
+  private get part() {
+    if (this.isFocused && this.errorText) {
+      return inputInvalidAndFocused;
+    }
+    if (this.isFocused) {
+      return inputFocused;
+    }
+    if (this.errorText) {
+      return inputInvalid
+    }
+    return input;
+  }
+
   render() {
     return (
-      <Host exportparts='label,input,input-invalid'>
+      <Host>
         <div class='form-group d-flex flex-column'>
-          <label part="label" class="form-label" htmlFor={this.name}>
+          <label part={label} class="form-label" htmlFor={this.name}>
             {this.label}
           </label>
           <input
             id={this.name}
             name={this.name}
-            onBlur={this.formControlBlur.emit}
+            onFocus={() => this.isFocused = true}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
             onInput={this.handleFormControlInput}
-            part={`input ${this.errorText && 'input-invalid'}`}
+            part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="number"
             disabled={this.disabled}
           />
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

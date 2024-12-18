@@ -1,7 +1,8 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Listen, Watch } from '@stencil/core';
 import { ComponentError } from '../../../../api/ComponentError';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStep, BusinessFormStepCompletedEvent, BusinessFormStepV2, BusinessFormSubmitEvent } from '../../utils/business-form-types';
+import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { Button } from '../../../../ui-components';
+import { heading2 } from '../../../../styles/parts';
 
 interface ownerPayloadItem { id: string; }
 
@@ -19,7 +20,6 @@ export class BusinessOwnersFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ bubbles: true }) submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<BusinessFormClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -83,8 +83,7 @@ export class BusinessOwnersFormStepCore {
         });
       },
       final: () => {
-        this.submitted.emit({ data: submittedData, metadata: { completedStep: BusinessFormStep.owners } });
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStepV2.owners });
+        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.owners });
         this.formLoading.emit(false)
       }
     });
@@ -142,7 +141,7 @@ export class BusinessOwnersFormStepCore {
     return (
       <div>
         <div class="d-flex align-items-center gap-2">
-          <legend class="mb-0">Owners</legend>
+          <legend class="mb-0" part={heading2}>Owners</legend>
           <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director." />
         </div>
         <hr class="mt-2" />

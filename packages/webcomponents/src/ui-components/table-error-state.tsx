@@ -1,4 +1,5 @@
 import { h } from '@stencil/core';
+import { tableError } from '../styles/parts';
 
 interface TableRenderStateProps {
   columnSpan: number;
@@ -16,7 +17,7 @@ export const TableErrorState = (props: TableRenderStateProps) => {
     <tr>
       <td
         class="error-state"
-        part="error-state"
+        part={tableError}
         colSpan={columnSpan}
         data-test-id="table-error-state"
         style={{ textAlign: 'center' }}
