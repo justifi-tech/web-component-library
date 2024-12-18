@@ -16,6 +16,11 @@ export class DisputeResponseCore {
     onSuccess: (disputeResponse: any) => void,
     onError: (disputeResponse: any) => void
   }) => Promise<IApiResponse<IDispute>>;
+  @Prop() submitDisputeResponse: (args: {
+    payload: any,
+    onSuccess: (disputeResponse: any) => void,
+    onError: (disputeResponse: any) => void
+  }) => Promise<IApiResponse<IDispute>>;
   @Prop() createDisputeEvidence: (args: {
     payload: any,
     onSuccess: (disputeResponse: any) => void,

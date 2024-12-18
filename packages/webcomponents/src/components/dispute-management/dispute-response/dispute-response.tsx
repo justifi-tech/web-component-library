@@ -2,7 +2,7 @@ import { Component, h, Watch, State, Prop, Event, EventEmitter } from "@stencil/
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { config } from '../../../../config';
 import { StyledHost } from "../../../ui-components";
-import { makeCreateDisputeEvidence, makeUpdateDisputeResponse } from "./dispute-response-actions";
+import { makeCreateDisputeEvidence, makeUpdateDisputeResponse, makeSubmitDisputeResponse } from "./dispute-response-actions";
 import { IDispute } from "../../../components";
 import { IApiResponse } from "../../../api";
 import JustifiAnalytics from "../../../api/Analytics";
@@ -15,6 +15,11 @@ import { DisputeService } from "../../../api/services/dispute.service";
 })
 export class DisputeResponse {
   @State() updateDisputeResponse: (args: {
+    payload: any,
+    onSuccess: (disputeResponse: any) => void,
+    onError: (disputeResponse: any) => void
+  }) => Promise<IApiResponse<IDispute>>;
+  @State() submitDisputeResponse: (args: {
     payload: any,
     onSuccess: (disputeResponse: any) => void,
     onError: (disputeResponse: any) => void
@@ -59,6 +64,11 @@ export class DisputeResponse {
         service: new DisputeService()
       });
       this.createDisputeEvidence = makeCreateDisputeEvidence({
+        disputeId: this.disputeId,
+        authToken: this.authToken,
+        service: new DisputeService()
+      });
+      this.submitDisputeResponse = makeSubmitDisputeResponse({
         disputeId: this.disputeId,
         authToken: this.authToken,
         service: new DisputeService()
