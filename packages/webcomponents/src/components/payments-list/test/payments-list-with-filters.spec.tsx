@@ -3,7 +3,6 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsList } from '../payments-list';
-import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { defaultColumnsKeys } from '../payments-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PaymentsListFilters } from '../payments-list-filters';
@@ -11,7 +10,7 @@ import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { queryParams } from '../payments-list-params-state';
 import { PaymentsListCore } from '../payments-list-core';
 
-const components = [PaymentsList, PaymentsListCore, PaginationMenu, TableFiltersMenu, PaymentsListFilters, SelectInput];
+const components = [PaymentsList, PaymentsListCore, TableFiltersMenu, PaymentsListFilters, SelectInput];
 
 describe('justifi-payments-list filters', () => {
   const fetchDataSpy = jest.spyOn(PaymentsListCore.prototype, 'fetchData');
