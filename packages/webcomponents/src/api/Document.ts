@@ -92,7 +92,7 @@ export class EntityDocument {
   public getFileString() {
     let reader = new FileReader();
     reader.onload = (e) => {
-      this.fileString = e.target.result as string;
+     this.fileString = e.target.result as string;
     };
     reader.readAsDataURL(this.file);
     return this.fileString;
