@@ -27,7 +27,7 @@ export class AdditionalStatement {
     });
   }
 
-  private inputHandler = (name: string, value: string) => {
+  private inputHandler = (name: string, value: string | boolean) => {
     this.form.setValues({
       ...this.form.values.getValue(),
       [name]: value
@@ -66,6 +66,17 @@ export class AdditionalStatement {
               multiple={true}
               helpText="Upload any additional pieces of evidence that have not already been provided."
               onChange={this.handleFileSelection}
+            />
+          </div>
+          <div class="col-12">
+            <form-control-checkbox
+              name="forfeit"
+              label="I understand that this information can only be submitted once and have provided as much evidence as possible to support my claim."
+              inputHandler={(name, forfeit) => {
+                const acknowledgement = !forfeit;
+                this.inputHandler(name, acknowledgement)
+              }}
+              errorText={this.errors.forfeit}
             />
           </div>
         </div>
