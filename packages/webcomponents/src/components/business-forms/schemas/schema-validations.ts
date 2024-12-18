@@ -16,7 +16,7 @@ import {
   urlRegex,
   validateRoutingNumber
 } from './schema-helpers';
-import { EntityDocumentType } from '../../../api/EntityDocument';
+import { EntityDocumentType } from '../../../api/Document';
 
 // Common Validations
 

@@ -8,7 +8,7 @@ import {
   State,
   Element,
 } from '@stencil/core';
-import { EntityDocumentType } from '../../api/EntityDocument';
+import { EntityDocumentType } from '../../api/Document';
 import { DisputeEvidenceDocumentType } from '../../api/DisputeEvidenceDocument';
 
 export interface FileSelectEvent {

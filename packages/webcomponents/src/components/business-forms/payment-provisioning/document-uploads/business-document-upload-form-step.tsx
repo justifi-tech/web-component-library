@@ -6,7 +6,7 @@ import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
-import { EntityDocument, EntityDocumentStorage, EntityDocumentType } from '../../../../api/EntityDocument';
+import { EntityDocument, EntityDocumentStorage, EntityDocumentType } from '../../../../api/Document';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { Skeleton } from '../../../../ui-components';
 
