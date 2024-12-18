@@ -38,13 +38,13 @@ export class DisputeResponseCore {
   @Event() clickEvent: EventEmitter;
 
   componentStepMapping = [
-    // () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    // () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    // () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    // () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    // () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    // () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    // () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
     () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
   ];
 
