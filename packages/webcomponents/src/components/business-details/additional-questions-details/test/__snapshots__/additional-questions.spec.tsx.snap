@@ -2,25 +2,25 @@
 
 exports[`additional-questions-details should render additional-questions-details 1`] = `
 <additional-questions-details>
-  <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
+  <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
     Additional Questions
   </h2>
-  <div class="d-table gap-2 mt-3 w-100" part="detail-section-block">
+  <div class="d-table gap-2 mt-3 w-100">
     <div class="gy-3 row">
       <div class="col-12 col-md-6">
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Business Revenue
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             84220
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Business Payment Volume
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             1000000
           </span>
         </div>

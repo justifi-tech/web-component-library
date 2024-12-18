@@ -6,6 +6,7 @@ import { businessTermsConditionsSchema } from '../../schemas/business-terms-cond
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-business-terms-conditions-form-step'
@@ -129,7 +130,7 @@ export class BusinessTermsConditionsFormStep {
     return (
       <form>
         <fieldset>
-          <legend>Terms and Conditions</legend>
+          <legend part={heading2}>Terms and Conditions</legend>
           <hr />
           <justifi-business-terms-conditions-text />
           <br />

@@ -1,5 +1,3 @@
-import "@justifi/webcomponents/dist/webcomponents/webcomponents.css";
-
 export const parameters = {
   controls: {
     hideNoControlsWarning: true,
@@ -11,9 +9,9 @@ export const parameters = {
   },
   options: {
     storySort: {
-      method: "alphabetical",
-      order: ["Introduction", "Changelog", "Frameworks", "*"],
+      method: 'alphabetical',
+      order: ['Introduction', 'Changelog', 'Frameworks', '*'],
     },
   },
 };
-export const tags = ["autodocs"];
+export const tags = ['autodocs'];

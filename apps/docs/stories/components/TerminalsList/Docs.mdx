@@ -25,8 +25,6 @@ Component to render a formated list of terminals for the requested account.
 
 - [Props, events and methods](#props-events-and-methods)
   - [Events usage](#events-usage)
-- [Styling](#styling)
-  - [Exported Parts](#exported-parts)
 - [Example usage](#example-usage)
 
 # Props, events and methods
@@ -46,22 +44,6 @@ Component to render a formated list of terminals for the requested account.
 All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
 
 <Source dark language="html" code={codeExampleEventHandling} />
-
-# Styling
-
----
-
-The `<justifi-terminals-list>` can be customized by using the exported `parts`.
-
-## Exported parts
-
-<ExportedParts
-  compact
-  component="justifi-terminals-list"
-  tags={filterDocsByTag('justifi-terminals-list').docsTags.map(
-    (part) => part.text
-  )}
-/>
 
 # Example Usage
 

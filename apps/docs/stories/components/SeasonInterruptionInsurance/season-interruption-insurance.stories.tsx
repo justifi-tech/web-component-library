@@ -7,7 +7,7 @@ import { ThemeNames } from '../../themes';
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token']);
+const storyBaseArgs = new StoryBaseArgs(['account-id', 'auth-token', 'checkout-id']);
 
 const meta: Meta = {
   title: 'Insurance/Season Interruption Insurance',
@@ -19,7 +19,7 @@ const meta: Meta = {
   argTypes: {
     ...storyBaseArgs.argTypes,
     Theme: {
-      description: 'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)',
+      description: 'Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)',
       options: Object.values(ThemeNames),
       control: {
         type: 'select',

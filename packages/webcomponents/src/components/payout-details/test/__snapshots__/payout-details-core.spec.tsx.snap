@@ -4,141 +4,141 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
 <payout-details-core class="body" style="display: block;">
   <style></style>
   <justifi-details>
-    <div class="p-2" part="detail-head" slot="head-info">
+    <div class="p-2" slot="head-info">
       <div class="align-items-center d-flex flex-row gap-2 mb-2">
-        <h1 class="m-0" part="detail-head-amount">
+        <h1 class="m-0" part="heading-1 heading text color font-family">
           $220.15 USD
         </h1>
-        <span part="detail-head-badge" slot="badge">
+        <span part="badge text color font-family" slot="badge">
           <span class="badge bg-success" title="Successfully deposited into your bank account">
             Paid
           </span>
         </span>
       </div>
-      <div class="align-items-top d-flex flex-row" part="detail-head-info">
-        <div class="border-1 border-end d-flex flex-column" part="detail-head-info-item">
-          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
+      <div class="align-items-top d-flex flex-row" part="text color font-family">
+        <div class="border-1 border-end d-flex flex-column">
+          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="heading-2 heading text color font-family">
             Updated At
           </span>
-          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
+          <span class="pe-2 ps-2 pt-2" part="text color font-family">
             Dec 28, 2023 1:27am
           </span>
         </div>
-        <div class="border-1 border-end d-flex flex-column" part="detail-head-info-item">
-          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
+        <div class="border-1 border-end d-flex flex-column">
+          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="heading-2 heading text color font-family">
             Created At
           </span>
-          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
+          <span class="pe-2 ps-2 pt-2" part="text color font-family">
             Dec 28, 2023 1:27am
           </span>
         </div>
-        <div class="d-flex flex-column undefined" part="detail-head-info-item">
-          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="detail-head-info-item-title">
+        <div class="d-flex flex-column undefined">
+          <span class="border-1 border-bottom fw-bold pe-2 ps-2" part="heading-2 heading text color font-family">
             ID
           </span>
-          <span class="pe-2 ps-2 pt-2" part="detail-head-info-item-data">
+          <span class="pe-2 ps-2 pt-2" part="text color font-family">
             po_17745yESnHyEgWNeunmhmR
           </span>
         </div>
         <div class="m-4">
-          <button class="align-items-center btn btn-outline-secondary d-flex" part="button-secondary">
+          <button class="align-items-center btn btn-outline-secondary d-flex" part="button-secondary button text color font-family " variant="secondary">
             Export CSV
           </button>
         </div>
       </div>
     </div>
-    <div part="detail-section" slot="detail-sections">
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
+    <div slot="detail-sections">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
         Details
       </h2>
       <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Date paid
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             Dec 28, 2023
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Statement Description
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             Payout
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Payout Method
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             standard
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Amount
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             $220.15
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Fee
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             $14.85
           </span>
         </div>
       </div>
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
         Account
       </h2>
       <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             ID
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             acc_5Et9iXrSSAZR2KSouQGAWi
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Account Type
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             checking
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Institution
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             checking
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Routing Number
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             110000000
           </span>
         </div>
-        <div class="d-table-row gap-2" part="detail-section-item">
-          <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
             Account Number
           </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
             6789
           </span>
         </div>
       </div>
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
+      <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
         Metadata
       </h2>
       <div class="d-table gap-2 w-100"></div>
@@ -150,10 +150,10 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
 exports[`payout-details-core handles fetch payout error correctly 1`] = `
 <payout-details-core class="body" style="display: block;">
   <style></style>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-    <div>
+  <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+    <p part="text color font-family">
       Fetch error
-    </div>
+    </p>
   </main>
 </payout-details-core>
 `;
@@ -161,12 +161,12 @@ exports[`payout-details-core handles fetch payout error correctly 1`] = `
 exports[`payout-details-core renders loading state initially 1`] = `
 <payout-details-core class="body" style="display: block;">
   <style></style>
-  <main class="d-flex justify-content-center p-4 text-center" part="detail-loading-state" style="font-size: 1.2rem;">
-    <div class="spinner-border spinner-border-sm" part="detail-loading-spinner" role="status">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" part="loading-spinner" role="status">
       <span class="visually-hidden">
         Loading...
       </span>
     </div>
-  </main>
+  </div>
 </payout-details-core>
 `;

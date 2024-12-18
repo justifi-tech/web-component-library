@@ -12,13 +12,6 @@
 | `representative` | --        |             | `Identity` | `undefined` |
 
 
-## Shadow Parts
-
-| Part                     | Description |
-| ------------------------ | ----------- |
-| `"detail-section-block"` |             |
-
-
 ## Dependencies
 
 ### Used by

@@ -7,7 +7,6 @@ import JustifiAnalytics from '../../api/Analytics';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
-  styleUrl: 'tokenize-payment-method.css',
   shadow: true,
 })
 export class TokenizePaymentMethod {

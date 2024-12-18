@@ -77,23 +77,21 @@ Type: `Promise<PaymentMethodPayload>`
 
 
 
-## Shadow Parts
-
-| Part                  | Description |
-| --------------------- | ----------- |
-| `"radio-input-label"` |             |
-| `"radio-list-item"`   |             |
-
-
 ## Dependencies
 
 ### Used by
 
  - [justifi-payment-method-options](.)
 
+### Depends on
+
+- [form-control-radio](../../ui-components/form)
+
 ### Graph
 ```mermaid
 graph TD;
+  justifi-sezzle-payment-method --> form-control-radio
+  form-control-radio --> form-control-help-text
   justifi-payment-method-options --> justifi-sezzle-payment-method
   style justifi-sezzle-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
