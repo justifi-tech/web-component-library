@@ -7,6 +7,7 @@ import { ComponentError } from '../../../../api/ComponentError';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-business-core-info-form-step-core',
@@ -102,7 +103,7 @@ export class BusinessCoreInfoFormStepCore {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Business Information</legend>
+            <legend class="mb-0" part={heading2}>Business Information</legend>
           </div>
           <hr class="mt-2" />
           <div class="row gy-3">

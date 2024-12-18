@@ -2,95 +2,95 @@
 
 exports[`owner-details should render owner-details 1`] = `
 <owner-details>
-  <h2 class="border-bottom fs-5 mt-4 pb-3" part="header-2">
+  <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
     Owner Person Name's Details
   </h2>
-  <div class="d-table gap-2 mt-3 w-100" part="detail-section-block">
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+  <div class="d-table gap-2 mt-3 w-100">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Name
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         Person Name
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Title
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         President
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Email
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         person.name@justifi.ai
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Phone
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         6124011111
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Date of Birth
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         Jul 4, 1906
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Identification Number
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         ********6789
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Line 1
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         123 Example St
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Line 2
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         Suite 101
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         City
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         Minneapolis
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         State
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         MN
       </span>
     </div>
-    <div class="d-table-row gap-2" part="detail-section-item">
-      <span class="d-table-cell fw-bold px-2" part="detail-section-item-title">
+    <div class="d-table-row gap-2">
+      <span class="d-table-cell fw-bold px-2" part="text color font-family">
         Zip
       </span>
-      <span class="d-table-cell flex-1 px-2 text-wrap" part="detail-section-item-data">
+      <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
         55555
       </span>
     </div>

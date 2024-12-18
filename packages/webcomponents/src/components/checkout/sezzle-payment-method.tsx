@@ -3,6 +3,7 @@ import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { radioListItem } from '../../styles/parts';
 
 const sezzleLogo = (
   <img
@@ -99,32 +100,23 @@ export class SezzlePaymentMethod {
         <div
           class="radio-list-item p-3"
           onClick={() => this.onPaymentMethodOptionClick()}
-          part="radio-list-item"
+          part={radioListItem}
         >
-          <input
-            type="radio"
+          <form-control-radio
             name="paymentMethodType"
             id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
-            onClick={(event) => event.preventDefault()}
             checked={this.isSelected}
-            class="form-check-input me-2"
-            part={`radio-input ${this.isSelected ? 'radio-input-checked' : ''}`}
+            inputHandler={() => this.onPaymentMethodOptionClick()}
+            label={<div><div>Buy now, pay later with {sezzleLogo}</div>
+              {this.installmentPlan && (
+                <small>
+                  <span>{this.installmentPlan?.installments.length}</span>&nbsp;
+                  <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
+                  <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
+                </small>
+              )}</div>}
           />
-          <label
-            htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label"
-            part="radio-input-label"
-          >
-            <div>Buy now, pay later with {sezzleLogo}</div>
-            {this.installmentPlan && (
-              <small>
-                <span>{this.installmentPlan?.installments.length}</span>&nbsp;
-                <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
-                <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
-              </small>
-            )}
-          </label>
         </div>
       </div>
     );

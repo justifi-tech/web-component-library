@@ -3,17 +3,8 @@ import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/u
 import { IAdditionalQuestions } from '../../../api/Business';
 import { isEmptyObject } from '../../../utils/utils';
 
-/**
- *
- * @exportedPart detail-section
- * @exportedPart detail-section-title
- * @exportedPart detail-section-item-title
- * @exportedPart detail-section-item-data
- * @exportedPart detail-empty-state
- */
 @Component({
   tag: 'additional-questions-details',
-  styleUrl: '../shared-business-details.css',
 })
 export class AdditionalQuestionsDetails {
   @Prop() additionalQuestions: IAdditionalQuestions
@@ -24,7 +15,7 @@ export class AdditionalQuestionsDetails {
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Additional Questions" />
-        <div class="d-table gap-2 w-100 mt-3" part="detail-section-block">
+        <div class="d-table gap-2 w-100 mt-3">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem

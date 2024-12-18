@@ -1,9 +1,9 @@
 import type { Meta } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, getAttributesString } from "../../utils";
+import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-tokenize-payment-method";
-import themes, { ThemeNames } from "../../themes";
+import { ThemeNames } from "../../themes";
 
 const storyBaseArgs = new StoryBaseArgs([
   "account-id",
@@ -26,7 +26,7 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     Theme: {
       description:
-        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
       options: Object.values(ThemeNames),
       control: {
         type: "select",
@@ -106,30 +106,12 @@ const meta: Meta = {
     },
   },
   decorators: [
+    customStoryDecorator,
     withActions
   ],
 };
 
-const Template = (args: any) => {
-  // The <div> here should be replaced by a `display` property in the cardForm potentially
-  return `
-    <justifi-tokenize-payment-method ${getAttributesString(args)}></justifi-tokenize-payment-method>
-    <style>
-      ${themes[args['Theme']]}
-    </style>
-    <script>
-      const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
-
-      justifiTokenizePaymentMethod.addEventListener('submitted', (event) => {
-        console.log(event);
-      });
-
-      justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
-        console.log(event);
-      });
-    </script>
-  `;
-};
+const Template = {};
 
 export const Example = Template;
 

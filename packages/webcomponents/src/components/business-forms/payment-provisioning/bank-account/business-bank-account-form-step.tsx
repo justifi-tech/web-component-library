@@ -9,6 +9,7 @@ import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { heading2 } from '../../../../styles/parts';
 
 /**
  *
@@ -16,9 +17,6 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
  * is that this component is meant to be a form and send data
  * and the other one  is meant to be just read only.
  *
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
  */
 @Component({
   tag: 'justifi-business-bank-account-form-step'
@@ -146,7 +144,7 @@ export class BusinessBankAccountFormStep {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Bank Account Info</legend>
+            <legend class="mb-0" part={heading2}>Bank Account Info</legend>
             <form-control-tooltip helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />

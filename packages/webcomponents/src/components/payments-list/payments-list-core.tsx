@@ -5,6 +5,7 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { onFilterChange } from '../../ui-components/filters/utils';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
+import { table, tableCell } from '../../styles/parts';
 
 @Component({
   tag: 'payments-list-core'
@@ -19,7 +20,7 @@ export class PaymentsListCore {
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() params: PaymentsParams = {};
-  
+
   @Watch('params')
   @Watch('getPayments')
   @Watch('columns')
@@ -111,19 +112,19 @@ export class PaymentsListCore {
   render() {
     return (
       <div>
-        <payments-list-filters 
-          params={this.params} 
+        <payments-list-filters
+          params={this.params}
           setParamsOnChange={this.setParamsOnChange}
           clearParams={this.clearParams}
         />
         <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
                 {this.paymentsTable.columnData.map((column) => column)}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class="table-body">
               <TableLoadingState
                 columnSpan={this.paymentsTable.columnData.length}
                 isLoading={this.loading}
@@ -141,7 +142,6 @@ export class PaymentsListCore {
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
-                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
                   {data}
                 </tr>
@@ -150,7 +150,7 @@ export class PaymentsListCore {
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.paymentsTable.columnData.length}>
+                  <td part={tableCell} colSpan={this.paymentsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,

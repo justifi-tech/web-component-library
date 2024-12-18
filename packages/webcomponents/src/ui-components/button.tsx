@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from '@stencil/core';
 import { ButtonSpinner } from './button-spinner';
+import { buttonLoading, buttonPrimary, buttonSecondary } from '../styles/parts';
 
 interface ButtonProps {
   variant: 'primary' | 'secondary';
@@ -11,25 +12,19 @@ type ButtonElementProps = ButtonProps & {
 };
 
 export const Button: FunctionalComponent<ButtonElementProps> = (props, children) => {
-  const classMap = {
-    primary: 'btn btn-primary',
-    secondary: 'btn btn-secondary',
+  const variantToButton = {
+    primary: buttonPrimary,
+    secondary: buttonSecondary,
   };
 
-  const exportPartMapping = {
-    primary: ['button', 'button-primary'],
-    secondary: ['button', 'button-secondary'],
-  };
 
   const getCSSParts = () => {
-    const baseCSSParts = exportPartMapping[props.variant];
-    if (props.isLoading) baseCSSParts.push('button-loading');
-    return baseCSSParts.join(' ');
+    return `${variantToButton[props.variant]} ${(props.isLoading) ? buttonLoading : ''}`;
   };
 
   return (
     <button
-      class={classMap[props.variant]}
+      class={`btn btn-${props.variant}`}
       onClick={props.clickHandler}
       part={getCSSParts()}
       {...props}

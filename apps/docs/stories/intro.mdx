@@ -1,7 +1,7 @@
 import { Canvas, Meta, Story, Source } from '@storybook/blocks';
 import { Markdown } from '@storybook/blocks';
 import dedent from 'ts-dedent';
-import { extractWebcomponentsVersion, SummaryElement, CSSVars } from './utils';
+import { extractWebcomponentsVersion, SummaryElement } from './utils';
 
 <Meta title="Introduction" />
 
@@ -19,9 +19,6 @@ Latest Version: <code>{extractWebcomponentsVersion()}</code>
 - [Default Styling](#default-styling)
 - [React](#react)
 - [Styling](#styling)
-  - [Styling iFramed components with variables](#styling-components-with-variables)
-    - [Loading Google Fonts](#loading-google-fonts)
-  - [Styling components with custom css](#styling-components-with-custom-css)
 - [Changelog](/docs/changelog--docs)
 
 # Usage
@@ -74,118 +71,106 @@ and import the component module using ES modules.
   `}
 />
 
-### Default styling
-
-In both cases, you most likely will also want to include the `CSS` file for the components to have their default styling (that you can override).
-
-It can be included from the CDN, which is easier to start with, but won't update as the version changes in the package installed in you `package.json`:
-
-<Source
-  language="html"
-  dark
-  format={false}
-  code={dedent`
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.css" />
-  `}
-/>
-
-If you want to include it from the `node_modules` you'll need to get this file to the static directory of your built app in your pipeline:
-
-<Source
-  language="html"
-  dark
-  format={false}
-  code={dedent`
-    <link rel="stylesheet" href="path/to/your/static/assets/webcomponents.css" />
-  `}
-/>
-
-Or import it in your `JS` file:
-
-<Source
-  language="javascript"
-  dark
-  format={false}
-  code={dedent`
-    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
-  `}
-/>
-
 # Styling
 
-## Styling components with variables
+## How Parts Stack for Efficient Global Styling
 
-The following components need to be styled by overriding `CSS variables`, since they are scoped within an iFrame
+Parts are designed hierarchically to let you apply global styles like `color` or `font-family` universally, while components inherit these settings without repetitive targeting.
 
-- [BankAccountForm](?path=/docs/payment-facilitation-payments-bank-account-form--docs)
-- [CardForm](?path=/docs/payment-facilitation-payments-card-form--docs)
-- [PaymentForm](?path=/docs/payment-facilitation-payments-payment-form--docs)
+---
 
-This is a complete list of variables as defined in this project's `root.scss`:
+## Core Parts and Inheritance
 
-<SummaryElement title="See full list of CSS variables available">
-  <CSSVars />
-</SummaryElement>
+1. **Base Parts**: `color`, `font-family`, and `background-color` define foundational styles.
 
-> **Note:** When customizing the `--jfi-form-control-box-shadow` variable, ensure that the `--jfi-layout-padding` is not set to `0`. This prevents the box-shadow of the last input from being inset into the iframe container, ensuring it remains visible. Additionally, to create enough room around the inputs and prevent them from getting cut off, the layout padding should be set to at least the size of the box shadow
+   - These propagate into higher-level parts like `text`, `button`, and `input`.
 
-## Loading Google fonts
+2. **Higher-Level Parts**:
+   - **`text`**: Combines `color` and `font-family` for typography.
+   - **`input`, `button`, `label`**: Inherit `text`, ensuring consistent styles across components.
 
-In order to load custom fonts in the iFramed components, there's a special CSS variable that can be used: `--jfi-load-google-font`.
-The value provided should be a string commpatible with what's described in the following [official documentation from Google](https://developers.google.com/fonts/docs/css2).
+---
 
-### Check out the [CardForm story for this to see it in action](?path=/docs/payment-facilitation-payments-card-form--example).
+## Global Styling in Action
 
-Usage examples:
+### Universal Font
 
-<Source
-  language="css"
-  dark
-  code={dedent`
-    :root {
-      /*
-        Note: The value provided to '--jfi-load-google-font' needs to be wrapped in quotes,
-        since it can contain characters incompatible with CSS that can't be used literally.
-
-        Also, as you'll see in the examples below, if more than one font-family
-        is to be loaded, any subsequent one except the first needs to be preceeded
-        by the '&family=' string, as described in the documentation linked above.
-      */
-
-      /* Load a single font (and it's default weight of 400) */
-      --jfi-load-google-font: 'Inter';
-
-      /* Load a font with multiple weights */
-      --jfi-load-google-font: 'Inter:wght@200;400;700;900';
-
-      /* Load multiple fonts */
-      --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima';
-
-      /* Load multiple fonts with multiple weights */
-      --jfi-load-google-font: 'Inter:wght@200;400;700;900&family=Agdasima:wght@200;400';
-
-      /* Then, any of these can be used with the following two variables */
-      --jfi-layout-font-family: Inter; /* Applies to all elements and is inherited */
-      --jfi-form-label-font-family: Agdasima; /* Applies exclusively to the form labels */
-    }
-
-`}
-/>
-
-## Styling components with custom css
-
-For every other component, you'll be able to see a list of `exportedparts` in their `Docs` page. These exported `parts` can be used in the following manner:
+Set the font for all components using `font-family`:
 
 <Source
   language="css"
   dark
+  format={false}
   code={dedent`
-    /* Given an exportedpart of "label" for example */
-    the-component-tag:part(label) {
-      /* Your custom css */
-    }
-  `}
+      ::part(font-family) {
+        font-family: 'Roboto', sans-serif;
+      }
+      `}
 />
+
+### Universal Text Color
+
+Set the text color once via `color`:
+
+<Source
+  language="css"
+  dark
+  format={false}
+  code={dedent`
+      ::part(color) {
+        color: #333;
+      }
+      `}
+/>
+
+These apply to all components that rely on `text`, including buttons, inputs, and headings.
+
+---
+
+## Component-Specific Overrides
+
+After defining global styles, customize specific components using their higher-level parts:
+
+### Buttons
+
+<Source
+  language="css"
+  dark
+  format={false}
+  code={dedent`
+      ::part(button-primary) {
+        background-color: #007bff;
+        color: #fff; /* Overrides \`color\` */
+      }
+      `}
+
+/>
+
+### Input States
+
+<Source
+  language="css"
+  dark
+  format={false}
+  code={dedent`
+    ::part(input-focused) {
+      border-color: #007bff;
+      background-color: #f0f8ff;
+    }
+    `}
+/>
+
+---
+
+To view the full list of available parts for styling, consult the source file [here](https://github.com/justifi-tech/web-component-library/blob/main/packages/webcomponents/src/styles/parts.ts).
+
+## Best Practices
+
+1.  **Style Base Parts First**: Focus on `color` and `font-family` for global consistency.
+2.  **Override as Needed**: Use component-specific parts (e.g., `button-primary`) sparingly for deviations.
+3.  **Inspect and Leverage Stacking**: Ensure you understand how parts like `text` layer to avoid redundant styles.
+
+This hierarchy ensures maintainable, reusable styles across all components with minimal effort.
 
 # Report Issues
 
@@ -193,3 +178,7 @@ For bugs and issues, please:
 
 1 - Go to our [GitHub Issues](https://github.com/justifi-tech/web-component-library/issues).
 2 - Click "New Issue" and describe the problem.
+
+```
+
+```

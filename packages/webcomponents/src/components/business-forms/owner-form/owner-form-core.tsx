@@ -5,6 +5,7 @@ import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/busin
 import { ComponentError } from '../../../api/ComponentError';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { Button } from '../../../ui-components';
+import { heading3 } from '../../../styles/parts';
 
 @Component({
   tag: 'owner-form-core'
@@ -189,7 +190,7 @@ export class BusinessOwnerFormCore {
     return (
       <form onSubmit={this.validateAndSubmit}>
         <fieldset>
-          <legend class="fw-semibold fs-5">{this.formTitle}</legend>
+          <legend class="fw-semibold fs-5" part={heading3}>{this.formTitle}</legend>
           <br />
           <div class="row gy-3">
             <owner-form-inputs

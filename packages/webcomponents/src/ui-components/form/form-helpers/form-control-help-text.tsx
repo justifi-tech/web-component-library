@@ -1,4 +1,5 @@
 import { h } from '@stencil/core';
+import { text } from '../../../styles/parts';
 
 export const FormControlHelpText = (props: { helpText: string, name: string }) => {
   const { helpText, name } = props;
@@ -8,7 +9,7 @@ export const FormControlHelpText = (props: { helpText: string, name: string }) =
   }
 
   return (
-    <small class='form-text text-muted' id={`form-help-text-${name}`} part="input-help-text">
+    <small class='form-text text-muted' id={`form-help-text-${name}`} part={text}>
       {helpText}
     </small>
   );

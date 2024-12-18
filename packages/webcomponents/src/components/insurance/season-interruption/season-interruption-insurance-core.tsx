@@ -1,14 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
 import { ComponentError } from "../../../api/ComponentError";
-import { formatCurrency } from "../../../utils/utils";
+import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
-import { StyledHost, RadioInput, Header2 } from "../../../ui-components";
+import { StyledHost, Header2 } from "../../../ui-components";
+import { text, textDanger } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
-  styleUrls: [
-    'season-interruption-insurance-core.css',
-  ],
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
@@ -28,7 +26,7 @@ export class SeasonInterruptionInsuranceCore {
 
   @State() quote: any;
   @State() isLoading: boolean = true;
-  @State() accepted: 'true' | 'false' | undefined;
+  @State() accepted: boolean | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -71,6 +69,14 @@ export class SeasonInterruptionInsuranceCore {
       },
       onSuccess: ({ quote }) => {
         this.quote = quote;
+        this.quote.product.description = processHTML(this.quote.product.description, [
+          (html) => removeAttribute(html, 'style'),
+          (html) => addAttribute(html, 'a', 'part', text)
+        ]);
+        this.quote.product.legal_disclaimer = processHTML(this.quote.product.legal_disclaimer, [
+          (html) => removeAttribute(html, 'style'),
+          (html) => addAttribute(html, 'a', 'part', text)
+        ]);
         insuranceValues[quote.policy_type] = quote.accepted;
         this.isLoading = false;
       },
@@ -85,8 +91,8 @@ export class SeasonInterruptionInsuranceCore {
     });
   };
 
-  onChangeHandler(event: any) {
-    this.accepted = event.target.value;
+  onChangeHandler(value: any) {
+    this.accepted = value;
     insuranceErrors[this.quote.policy_type] = false;
     this.toggleCoverage({
       quoteId: this.quote.id,
@@ -115,33 +121,29 @@ export class SeasonInterruptionInsuranceCore {
         {!this.isLoading && (
           <div>
             <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
-            <small innerHTML={this.quote?.product.description} part="text"></small>
-            <RadioInput
-              id="accept"
-              name="opt-in"
-              value="true"
+            <small innerHTML={this.quote?.product.description} part={text}></small>
+            <form-control-radio
               label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
-              checked={this.accepted}
-              error={this.error}
-              onChange={(event: any) => this.onChangeHandler(event)}
-            />
-            <RadioInput
-              id="decline"
               name="opt-in"
-              value="false"
-              label="Decline coverage"
-              className="mb-2"
+              value={true}
               checked={this.accepted}
-              error={this.error}
-              onChange={(event: any) => this.onChangeHandler(event)}
+              inputHandler={this.onChangeHandler.bind(this)}
+            />
+            <form-control-radio
+              label="Decline coverage"
+              name="opt-in"
+              value={false}
+              checked={!this.accepted}
+              inputHandler={this.onChangeHandler.bind(this)}
             />
             <div
               class="invalid-feedback"
               style={{ display: this.error ? 'block' : 'none' }}
+              part={textDanger}
             >
               Please select an option
             </div>
-            <small innerHTML={this.quote?.product.legal_disclaimer} part="text"></small>
+            <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
           </div >
         )}
       </StyledHost>

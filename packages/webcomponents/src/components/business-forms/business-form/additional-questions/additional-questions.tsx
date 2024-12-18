@@ -6,12 +6,8 @@ import {
   seasonalBusinessOptions
 } from '../../utils/business-form-options';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
+import { heading2 } from '../../../../styles/parts';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
- */
 @Component({
   tag: 'justifi-additional-questions',
 })
@@ -49,9 +45,9 @@ export class AdditionalQuestions {
       this.formController.getInitialValues().additional_questions;
 
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <fieldset>
-          <legend part="header-2">Additional Questions</legend>
+          <legend part={heading2}>Additional Questions</legend>
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <form-control-monetary

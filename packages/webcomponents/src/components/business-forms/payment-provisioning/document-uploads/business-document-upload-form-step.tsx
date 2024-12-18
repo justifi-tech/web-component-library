@@ -9,6 +9,7 @@ import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { Skeleton } from '../../../../ui-components';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -220,7 +221,7 @@ export class BusinessDocumentFormStep {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Document Uploads</legend>
+            <legend class="mb-0" part={heading2}>Document Uploads</legend>
             <form-control-tooltip helpText="Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category." />
           </div>
           <hr class="mt-2" />

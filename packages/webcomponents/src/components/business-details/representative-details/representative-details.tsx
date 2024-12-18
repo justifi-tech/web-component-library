@@ -3,17 +3,8 @@ import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/u
 import { formatMediumDate, isEmptyObject } from '../../../utils/utils';
 import { Identity } from '../../../api/Identity';
 
-/**
- *
- * @exportedPart detail-section
- * @exportedPart detail-section-title
- * @exportedPart detail-section-item-title
- * @exportedPart detail-section-item-data
- * @exportedPart detail-empty-state
- */
 @Component({
   tag: 'representative-details',
-  styleUrl: '../shared-business-details.css',
 })
 export class JustifiRepresentativeDetails {
   @Prop() representative: Identity;
@@ -24,7 +15,7 @@ export class JustifiRepresentativeDetails {
     return (
       <Host>
         <DetailSectionTitle sectionTitle="Representative Details" />
-        <div class="d-table gap-2 w-100 mt-3" part="detail-section-block">
+        <div class="d-table gap-2 w-100 mt-3">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem title="Name" value={this.representative?.name} />
