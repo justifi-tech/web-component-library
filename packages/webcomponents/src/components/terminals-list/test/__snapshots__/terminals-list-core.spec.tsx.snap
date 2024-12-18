@@ -40,7 +40,6 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
                             Unknown
                           </option>
                         </select>
-                        <form-control-error-text name="status"></form-control-error-text>
                       </div>
                     </form-control-select>
                   </div>
@@ -81,12 +80,12 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
             <td colspan="3" part="pagination-bar">
-              <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+              <pagination-menu>
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination">
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-button page-button-disabled">
-                        <span class="me-1" part="page-arrow">
+                  <ul class="m-0 pagination" part="pagination">
+                    <li class="disabled page-item" part="page-item">
+                      <a class="page-link" href="#" part="page-link page-link-disabled">
+                        <span class="me-1" part="page-link-arrow">
                           «
                         </span>
                         <span part="page-button-text">
@@ -95,11 +94,11 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
                       </a>
                     </li>
                     <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-button page-button-disabled">
-                        <span part="page-button-text">
+                      <a class="page-link" href="#" part="page-link page-link-disabled">
+                        <span part="page-link-text">
                           Next
                         </span>
-                        <span class="ms-1" part="page-arrow">
+                        <span class="ms-1" part="page-link-arrow">
                           »
                         </span>
                       </a>
@@ -156,7 +155,6 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
                             Unknown
                           </option>
                         </select>
-                        <form-control-error-text name="status"></form-control-error-text>
                       </div>
                     </form-control-select>
                   </div>
@@ -231,12 +229,12 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
         <tfoot class="sticky-bottom">
           <tr class="align-middle table-light">
             <td colspan="3" part="pagination-bar">
-              <pagination-menu exportparts="page-arrow,page-button,page-button-disabled,page-button-text">
+              <pagination-menu>
                 <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination">
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-button page-button-disabled">
-                        <span class="me-1" part="page-arrow">
+                  <ul class="m-0 pagination" part="pagination">
+                    <li class="disabled page-item" part="page-item">
+                      <a class="page-link" href="#" part="page-link page-link-disabled">
+                        <span class="me-1" part="page-link-arrow">
                           «
                         </span>
                         <span part="page-button-text">
@@ -245,11 +243,11 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
                       </a>
                     </li>
                     <li class="disabled page-item">
-                      <a class="page-link" href="#" part="page-button page-button-disabled">
-                        <span part="page-button-text">
+                      <a class="page-link" href="#" part="page-link page-link-disabled">
+                        <span part="page-link-text">
                           Next
                         </span>
-                        <span class="ms-1" part="page-arrow">
+                        <span class="ms-1" part="page-link-arrow">
                           »
                         </span>
                       </a>

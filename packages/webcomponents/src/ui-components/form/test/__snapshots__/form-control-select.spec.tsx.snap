@@ -31,11 +31,9 @@ exports[`form-control-select Renders with all props provided 1`] = `
         Delivery
       </option>
     </select>
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-delivery_method">
-        This field is required.
-      </small>
-    </form-control-error-text>
+    <small class="form-text text-danger" id="form-error-text-delivery_method" part="input-error-text">
+      This field is required.
+    </small>
   </div>
 </form-control-select>
 `;
@@ -50,7 +48,6 @@ exports[`form-control-select Renders with default props 1`] = `
       <form-control-tooltip></form-control-tooltip>
     </div>
     <select class="form-select" id="delivery_method" name="delivery_method" part="input "></select>
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-select>
 `;

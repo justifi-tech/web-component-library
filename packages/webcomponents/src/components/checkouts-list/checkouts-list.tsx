@@ -24,13 +24,10 @@ import { defaultColumnsKeys } from './checkouts-table';
   * @exportedPart loading-state-spinner: Spinner element for loading state
   * @exportedPart error-state: Row for Error state
   * @exportedPart empty-state: Row for Emtpy state
-  * @exportedPart pagination-bar: Pagination bar
-  * @exportedPart arrow: Both paging buttons
-  * @exportedPart arrow-left: Previous page button
-  * @exportedPart arrow-right: Next page button
-  * @exportedPart button-disabled: Disabled state for paging buttons
-  * @exportedPart previous-button-text: Text for Previous button
-  * @exportedPart next-button-text: Text for Next button
+  * @exportedPart pagination: Pagination bar
+  * @exportedPart page-item: Pagination button
+  * @exportedPart page-link: Pagination link
+  * @exportedPart page-link-disabled: Disabled pagination link
 */
 @Component({
   tag: 'justifi-checkouts-list',

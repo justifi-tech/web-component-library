@@ -24,11 +24,9 @@ exports[`form-control-file Renders with all props provided 1`] = `
       </form-control-tooltip>
     </div>
     <input class="form-control is-invalid" disabled="" name="resume" part="input input-invalid input-disabled" type="file">
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-resume">
-        Invalid file type
-      </small>
-    </form-control-error-text>
+    <small class="form-text text-danger" id="form-error-text-resume" part="input-error-text">
+      Invalid file type
+    </small>
   </div>
 </form-control-file>
 `;
@@ -43,7 +41,6 @@ exports[`form-control-file Renders with default props 1`] = `
       <form-control-tooltip></form-control-tooltip>
     </div>
     <input class="form-control" name="profilePicture" part="input " type="file">
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-file>
 `;

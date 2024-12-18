@@ -1,39 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`form-control-checkbox Renders with all props provided 1`] = `
-<form-control-checkbox exportparts="label,input,input-invalid">
+<form-control-checkbox exportparts="radio-input-label,input,input-invalid">
   <div class="d-flex flex-column form-group">
     <div class="form-check">
       <input class="form-check-input is-invalid" disabled="" id="accept" name="accept" part="input-checkbox input-checkbox-invalid" type="checkbox">
-      <label class="form-check-label" htmlfor="accept">
+      <label class="form-check-label" htmlfor="accept" part="radio-input-label">
         Accept Terms
       </label>
     </div>
-    <form-control-help-text>
-      <small class="form-text text-muted" id="form-help-text-accept">
-        Accept terms and conditions to continue
-      </small>
-    </form-control-help-text>
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-accept">
-        You must accept the terms and conditions to continue
-      </small>
-    </form-control-error-text>
+    <small class="form-text text-muted" id="form-help-text-accept" part="input-help-text">
+      Accept terms and conditions to continue
+    </small>
+    <small class="form-text text-danger" id="form-error-text-accept" part="input-error-text">
+      You must accept the terms and conditions to continue
+    </small>
   </div>
 </form-control-checkbox>
 `;
 
 exports[`form-control-checkbox Renders with default props 1`] = `
-<form-control-checkbox exportparts="label,input,input-invalid">
+<form-control-checkbox exportparts="radio-input-label,input,input-invalid">
   <div class="d-flex flex-column form-group">
     <div class="form-check">
       <input class="form-check-input" id="accept" name="accept" part="input-checkbox " type="checkbox">
-      <label class="form-check-label" htmlfor="accept">
+      <label class="form-check-label" htmlfor="accept" part="radio-input-label">
         Accept Terms
       </label>
     </div>
-    <form-control-help-text></form-control-help-text>
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-checkbox>
 `;

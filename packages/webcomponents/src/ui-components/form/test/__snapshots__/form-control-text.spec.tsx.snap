@@ -24,11 +24,9 @@ exports[`form-control-text Renders with all props provided 1`] = `
       </form-control-tooltip>
     </div>
     <input class="form-control is-invalid" disabled="" id="email" maxlength="50" name="email" part="input input-invalid  input-disabled" type="text" value="user@example.com">
-    <form-control-error-text>
-      <small class="form-text text-danger" id="form-error-text-email">
-        Invalid email
-      </small>
-    </form-control-error-text>
+    <small class="form-text text-danger" id="form-error-text-email" part="input-error-text">
+      Invalid email
+    </small>
   </div>
 </form-control-text>
 `;
@@ -43,7 +41,6 @@ exports[`form-control-text Renders with default props 1`] = `
       <form-control-tooltip></form-control-tooltip>
     </div>
     <input class="form-control" id="username" name="username" part="input " type="text" value="">
-    <form-control-error-text></form-control-error-text>
   </div>
 </form-control-text>
 `;

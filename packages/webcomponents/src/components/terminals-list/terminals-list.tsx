@@ -24,13 +24,10 @@ import { defaultColumnsKeys } from './terminals-table';
   * @exportedPart loading-state-spinner: Spinner element for loading state
   * @exportedPart error-state: Row for Error state
   * @exportedPart empty-state: Row for Emtpy state
-  * @exportedPart pagination-bar: Pagination bar
-  * @exportedPart arrow: Both paging buttons
-  * @exportedPart arrow-left: Previous page button
-  * @exportedPart arrow-right: Next page button
-  * @exportedPart button-disabled: Disabled state for paging buttons
-  * @exportedPart previous-button-text: Text for Previous button
-  * @exportedPart next-button-text: Text for Next button
+  * @exportedPart pagination: Pagination bar
+  * @exportedPart page-item: Pagination button
+  * @exportedPart page-link: Pagination link
+  * @exportedPart page-link-disabled: Disabled pagination link
 */
 @Component({
   tag: 'justifi-terminals-list',
@@ -41,7 +38,7 @@ export class TerminalsList {
   @State() getTerminals: Function;
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
-  
+
   @Prop() accountId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
@@ -109,7 +106,7 @@ export class TerminalsList {
   render() {
     return (
       <StyledHost exportparts={tableExportedParts}>
-        <terminals-list-core 
+        <terminals-list-core
           getTerminals={this.getTerminals}
           getSubAccounts={this.getSubAccounts}
           onError-event={this.handleErrorEvent}

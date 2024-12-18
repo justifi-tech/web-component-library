@@ -51,8 +51,7 @@ export class AdditionalQuestions {
     return (
       <Host exportparts="label,input,input-invalid">
         <fieldset>
-          <legend>Additional Questions</legend>
-          <hr />
+          <legend part="header-2">Additional Questions</legend>
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <form-control-monetary

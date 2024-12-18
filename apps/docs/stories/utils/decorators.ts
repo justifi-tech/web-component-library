@@ -63,13 +63,22 @@ export const customStoryDecorator = (
 ) => {
   const fragment = new DocumentFragment();
   const { props, styleArg } = getPropsAndStyles(storyContext);
+
   setUpMocks();
 
   const component = applyArgsToStoryComponent(storyComponent, props);
 
+  const theme = props.find((prop) => prop.name === 'Theme')?.value;
   if (styleArg) {
     const styleBlock = generateStyleBlock(styleArg);
     fragment.prepend(styleBlock);
+  }
+
+  if (theme) {
+    const themeStyles = themes[theme as ThemeNames];
+    const themeStyleBlock = document.createElement('style');
+    themeStyleBlock.innerHTML = themeStyles;
+    fragment.prepend(themeStyleBlock);
   }
 
   fragment.appendChild(component);
@@ -91,7 +100,6 @@ export const getAttributesString = (args: Args) => {
     })
     .join(' ');
 };
-
 
 export const themedStoryDecorator = (storyComponent: any, storyArgs: any) => {
   setUpMocks();

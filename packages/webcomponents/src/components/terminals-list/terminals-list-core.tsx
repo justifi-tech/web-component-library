@@ -31,7 +31,7 @@ export class TerminalsListCore {
   }
 
   @Event({
-    eventName: 'terminal-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Terminal>;
 
@@ -46,7 +46,7 @@ export class TerminalsListCore {
 
   fetchTerminals(): void {
     this.loading = true;
-    
+
     this.getTerminals({
       params: this.params,
       onSuccess: async ({ terminals, pagingInfo }) => {
@@ -60,7 +60,7 @@ export class TerminalsListCore {
         } else {
           this.loading = false;
         }
-        
+
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;

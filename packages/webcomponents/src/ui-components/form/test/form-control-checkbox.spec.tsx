@@ -1,8 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckboxInput } from '../form-control-checkbox';
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text/form-control-help-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
+import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-checkbox', () => {
   const components = [CheckboxInput, FormControlErrorText, FormControlHelpText];
@@ -127,11 +127,10 @@ describe('form-control-checkbox', () => {
         />
     });
 
-    const helpTextComponent = page.root.querySelector('form-control-help-text');
+    const helpTextComponent = page.root.querySelector('#form-help-text-accept');
     expect(helpTextComponent).not.toBeNull();
 
-    const helpText = helpTextComponent.querySelector('.text-muted');
-    expect(helpText.textContent).toBe('Accept terms and conditions to continue');
+    expect(helpTextComponent.textContent).toBe('Accept terms and conditions to continue');
   });
 
   it('Shows error and applies error styling when error prop is provided', async () => {
@@ -146,11 +145,10 @@ describe('form-control-checkbox', () => {
         />
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-accept');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('You must accept the terms and conditions to continue');
+    expect(errorTextComponent.textContent).toBe('You must accept the terms and conditions to continue');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

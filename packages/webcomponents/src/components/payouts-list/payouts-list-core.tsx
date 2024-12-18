@@ -32,7 +32,7 @@ export class PayoutsListCore {
   }
 
   @Event({
-    eventName: 'payout-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payout>;
 
@@ -170,8 +170,8 @@ export class PayoutsListCore {
           setParamsOnChange={this.setParamsOnChange}
           clearParams={this.clearParams}
         />
-        <div class="table-wrapper">
-          <table class="table table-hover">
+        <div class="table-wrapper" part="table-wrapper">
+          <table class="table table-hover" part="table">
             <thead class="table-head sticky-top" part="table-head">
               <tr class="table-light text-nowrap" part="table-head-row">
                 {this.payoutsTable.columnData.map((column) => column)}

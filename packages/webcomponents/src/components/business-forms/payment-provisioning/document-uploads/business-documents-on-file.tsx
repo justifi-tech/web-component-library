@@ -15,11 +15,11 @@ export class BusinessDocumentsOnFile {
 
     return (
       <div>
-        <div class='card'>
-          <div class='card-body'>
-            <h5 class='card-title'>Documents Already on File</h5>
+        <div class='card' part="card">
+          <div class='card-body' part="card-body">
+            <h5 class='card-title' part="card-title">Documents Already on File</h5>
             <div class='table-responsive'>
-              <table class='table table-sm table-borderless'>
+              <table class='table table-sm table-borderless' part="table">
                 <thead part="table-head">
                   <tr part='table-head-row'>
                     <th style={{ width: '25%' }} part="table-head-cell" scope='col'>File Name</th>

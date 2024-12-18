@@ -10,9 +10,9 @@
 .terms-conditions-card {
   height: 100%;
   overflow: hidden;
+}
 
-  .terms-card-body {
-    height: 100%;
-    overflow-y: scroll;
-  }
+.terms-card-body {
+  height: 100%;
+  overflow-y: scroll;
 }

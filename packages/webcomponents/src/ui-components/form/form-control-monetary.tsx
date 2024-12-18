@@ -9,6 +9,7 @@ import {
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
+import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-monetary'
@@ -91,8 +92,8 @@ export class MonetaryInput {
               disabled={this.disabled}
             />
           </div>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlHelpText helpText={this.helpText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );

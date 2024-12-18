@@ -3,110 +3,66 @@ import { withActions } from "@storybook/addon-actions/decorator";
 import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 
 import "@justifi/webcomponents/dist/module/justifi-payments-list";
+import { ThemeNames } from "../../themes";
 
-const themes = {
-  basic: {},
-  custom: {
-    "justifi-payments-list::part(label)": {
-      color: "#212529",
-      "font-family": "Calibri, sans-serif",
-      "font-weight": "700",
-      "font-size": ".8rem",
-      margin: "0 0 .5rem 0",
-    },
-    "justifi-payments-list::part(input)": {
-      "background-color": "#F4F4F6",
-      "border-color": "rgba(0, 0, 0, 0.42)",
-      "border-bottom-width": "1px",
-      "border-left-width": "0",
-      "border-right-width": "0",
-      "border-top-width": "0",
-      "border-radius": "4px 4px 0 0",
-      "border-style": "solid",
-      "box-shadow": "0 2px 4px rgba(0, 0, 0, 0.2)",
-      color: "#212529",
-      "font-size": ".8rem",
-      "font-weight": "400",
-      "line-height": "2",
-      margin: "0",
-      padding: ".5rem .875rem",
-    },
-    "justifi-payments-list::part(input):focus": {
-      color: "#212529",
-      "border-color": "#fccc32",
-      "box-shadow": "none",
-    },
-    "justifi-payments-list::part(input-invalid)": {
-      "border-color": "#C12727",
-      "box-shadow": "0 2px 4px rgba(0, 0, 0, 0.2)",
-    },
-    "justifi-payments-list::part(input-invalid):focus": {
-      "border-color": "#C12727",
-      "box-shadow": "none",
-    },
-    "justifi-payments-list::part(table-head)": {},
-    "justifi-payments-list::part(table-head-row)": {},
-    "justifi-payments-list::part(table-head-cell)": {
-      "background-color": "#fff",
-      "font-weight": "600",
-      "font-size": "0.8rem",
-      "text-transform": "uppercase",
-      "letter-spacing": "0.1em",
-    },
-    "justifi-payments-list::part(table-body)": {},
-    "justifi-payments-list::part(table-row)": {},
-    "justifi-payments-list::part(table-row):hover": {
-      cursor: "pointer",
-    },
-    "justifi-payments-list::part(table-row-even)": {},
-    "justifi-payments-list::part(table-row-odd)": {},
-    "justifi-payments-list::part(table-cell)": {
-      "background-color": "transparent",
-      "font-weight": "normal",
-      "font-size": "0.8rem",
-    },
-    "justifi-payments-list::part(loading-state-cell)": {},
-    "justifi-payments-list::part(loading-state-spinner)": {
-      color: "#ccc",
-    },
-    "justifi-payments-list::part(error-state)": {},
-    "justifi-payments-list::part(empty-state)": {},
-    "justifi-payments-list::part(pagination-bar)": {
-      "background-color": "#fff",
-      "border-bottom": "none",
-    },
-    "justifi-payments-list::part(page-button)": {
-      border: "none",
-      "background-color": "transparent",
-      "text-transform": "uppercase",
-      "font-weight": "normal",
-      "font-size": "0.8rem",
-    },
-    "justifi-payments-list::part(page-button-disabled)": {
-      opacity: "0.5",
-      cursor: "not-allowed",
-    },
-    "justifi-payments-list::part(page-arrow)": {
-      display: "none",
-    },
-    "justifi-payments-list::part(page-button-text)": {},
-  },
-};
+const examplePayload = {
+  "id": "py_xyz",
+  "account_id": "acc_xyz",
+  "amount": 10000,
+  "amount_disputed": 0,
+  "amount_refunded": 0,
+  "amount_refundable": 10000,
+  "balance": 99850,
+  "fee_amount": 150,
+  "financial_transaction_id": "ft_123xyz",
+  "captured": true,
+  "capture_strategy": "automatic",
+  "currency": "usd",
+  "description": "my_order_xyz",
+  "disputed": false,
+  "disputes": [ ],
+  "error_code": "credit_card_number_invalid",
+  "error_description": "Credit Card Number Invalid (Failed LUHN checksum)",
+  "is_test": true,
+  "metadata": { },
+  "payment_intent_id": "pi_123xyz",
+  "checkout_id": "cho_123",
+  "payment_method": {},
+  "application_fee": {},
+  "refunded": false,
+  "status": "pending",
+  "payment_mode": "ecom",
+  "created_at": "2021-01-01T12:00:00Z",
+  "updated_at": "2021-01-01T12:00:00Z"
+  };
 
-const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token", "theme"]);
+const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
 const meta: Meta = {
   title: "Merchant Tools/Payments List",
   component: "justifi-payments-list",
   args: {
     ...storyBaseArgs.args,
+    Theme: ThemeNames.Light
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    "payment-row-clicked": {
-      description: "`PaymentRowClicked`",
+    Theme: {
+      description:
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+      options: Object.values(ThemeNames),
+      control: {
+        type: "select",
+      },
+    },
+    "row-clicked": {
+      description: "`RowClicked`",
       table: {
         category: "events",
+        defaultValue: {
+          summary: "Emits chosen Payment object on row click",
+          detail: JSON.stringify(examplePayload)
+        }
       },
       action: true,
     },
@@ -133,12 +89,11 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["payment-row-clicked", "error-event"],
+      handles: ["row-clicked", "error-event"],
     },
     chromatic: {
       delay: 2000,
     },
-    themes,
   },
   decorators: [
     customStoryDecorator,

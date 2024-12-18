@@ -9,6 +9,7 @@ import {
   Element,
 } from '@stencil/core';
 import { EntityDocumentType, FileSelectEvent } from '../../api/Document';
+import { FormControlErrorText } from '../../ui-components';
 
 @Component({
   tag: 'form-control-file',
@@ -76,7 +77,7 @@ export class FileInput {
             onInput={this.handleFormControlInput}
             onBlur={() => this.formControlBlur.emit()}
           />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );
