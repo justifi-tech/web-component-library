@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
 
-export const RegExZip = /^\d{5}/;
+// Currency Formatting
 
 export function formatCurrency(
   amount: number,
@@ -22,6 +22,8 @@ export function formatCurrency(
   return withCurrencyName ? `${formattedAmount} USD` : formattedAmount;
 }
 
+// Number Formatting
+
 export function formatPercentage(amount: number): string {
   if (!amount) amount = 0;
 
@@ -33,13 +35,14 @@ export function formatPercentage(amount: number): string {
   return format(amount);
 }
 
+// Date Formatting and Conversion
+
 export function formatDate(dateString: string | Date): string {
   if (!dateString) return '';
   const date = new Date(dateString);
   return format(date, 'MMM d, yyyy');
 }
 
-// eg. Oct 9, 2023
 export function formatMediumDate(input: string | Date): string {
   // Check if input is a string and convert to Date object
   if (typeof input === 'string') {
@@ -83,55 +86,69 @@ export function formatTimeSeconds(dateString: string): string {
   return format(date, 'h:mm:ssaaa');
 }
 
-// Receives an Address as input and return a formatted string
-// eg. 123 Main St, Scranton, PA 11111
+interface UTCConversionOptions {
+  setEndOfDay?: boolean;
+  setExactTime?: boolean;
+}
+
+export const convertToUTC = (
+  dateString: string,
+  options: UTCConversionOptions
+): string => {
+  const { setEndOfDay, setExactTime } = options;
+  if (!dateString) return '';
+
+  const dateObj = new Date(dateString);
+
+  if (setEndOfDay) {
+    // Adjust the time to be at the very end of the day
+    dateObj.setUTCHours(23, 59, 59, 999);
+    return new Date(dateObj.toUTCString()).toISOString();
+  } else if (setExactTime) {
+    return new Date(dateObj.toUTCString()).toISOString();
+  }
+};
+
+interface localConversionOptions {
+  showDisplayDate?: boolean;
+  showInputDate?: boolean;
+  showTime?: boolean;
+  showInputDateTime?: boolean;
+}
+
+export const convertToLocal = (
+  dateString: string,
+  options: localConversionOptions
+): string => {
+  const { showDisplayDate, showInputDate, showTime, showInputDateTime } =
+    options;
+  if (!dateString) return '';
+
+  const dateObj = new Date(dateString);
+  const localDate = new Date(
+    dateObj.toLocaleString('en-US', {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    })
+  );
+
+  if (showDisplayDate) {
+    return format(localDate, 'MMM d, yyyy');
+  } else if (showInputDate) {
+    return format(localDate, 'yyyy-MM-dd');
+  } else if (showTime) {
+    return format(localDate, 'h:mmaaa');
+  } else if (showInputDateTime) {
+    return format(localDate, "yyyy-MM-dd'T'HH:mm");
+  }
+};
+
+// Address Formatting
+
 export function formatAddress(address: Address): string {
   return `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`;
 }
 
-export const MapPaymentStatusToBadge = (status: string) => {
-  switch (status) {
-    case 'succeeded':
-      return "<span class='badge bg-success' title='This payment was successfully captured'>Succeeded</span>";
-    case 'authorized':
-      return "<span class='badge bg-primary' title='This card payment was authorized, but not captured. It could still succeed or fail.'>Authorized</span>";
-    case 'pending':
-      return "<span class='badge bg-primary' title='This ACH payment was processed, but the funds haven't settled. It could still succeed or fail.'>Pending</span>";
-    case 'achFailed':
-      return "<span class='badge bg-danger' title='The funds couldn't be collected for this ACH payment (in addition to the original payment, an ACH return and fee will appear in a payout)'>Failed</span>";
-    case 'failed':
-      return "<span class='badge bg-danger' title='This card payment didn't go through (it won't appear in a payout)'>Failed</span>";
-    case 'canceled':
-      return "<span class='badge bg-danger' title='This payment was canceled'>Canceled</span>";
-    case 'disputed':
-      return "<span class='badge bg-secondary' title='The account holder disputed this payment. The amount has been returned and a fee assessed.'>Disputed</span>";
-    case 'fully_refunded':
-      return "<span class='badge bg-secondary' title='The full amount of this payment has been refunded'>Fully Refunded</span>";
-    case 'partially_refunded':
-      return "<span class='badge bg-secondary' title='A portion of this payment has been refunded'>Partially Refunded</span>";
-  }
-};
-
-export const MapPayoutStatusToBadge = (status: string) => {
-  switch (status) {
-    case 'canceled':
-      return "<span class='badge bg-danger' title='Transfer to your bank account failed'>Canceled</span>";
-    case 'failed':
-      return "<span class='badge bg-danger' title='Transfer to your bank account failed'>Failed</span>";
-    case 'forwarded':
-      return "<span class='badge bg-secondary' title='This payout initially failed; the funds have been forwarded to your next successful payout'>Forwarded</span>";
-    case 'in_transit':
-      return "<span class='badge bg-primary' title='Transfer to your bank account has been initiated'>In Transit</span>";
-    case 'paid':
-      return "<span class='badge bg-success' title='Successfully deposited into your bank account'>Paid</span>";
-    case 'pending':
-      return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Pending</span>";
-    case 'scheduled':
-      return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Scheduled</span>";
-    case 'withdrawn':
-      return "<span class='badge bg-success' title='Negative payout balance successfully withdrawn from your bank account'>Withdrawn</span>";
-  }
-};
+// String Manipulation
 
 export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
   if (!snakeCaseStr) return '';
@@ -141,10 +158,6 @@ export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
     .join(' ');
 }
 
-export function camelToKebab(str: string): string {
-  return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
-}
-
 export function snakeToCamel(str: string): string {
   if (!str) return '';
   return str.replace(/([-_][a-z])/g, (group) =>
@@ -152,32 +165,7 @@ export function snakeToCamel(str: string): string {
   );
 }
 
-export function flattenNestedObject(obj) {
-  const result = {};
-
-  for (const key in obj) {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      const nestedObj = flattenNestedObject(obj[key]);
-      for (const nestedKey in nestedObj) {
-        result[nestedKey] = nestedObj[nestedKey];
-      }
-    } else {
-      result[key] = obj[key];
-    }
-  }
-
-  return result;
-}
-export function composeQueryParams(values: string[]) {
-  const queryParams = values.map((value) => {
-    if (value === values[0]) {
-      return (value = `?${value}`);
-    } else {
-      return (value = `&${value}`);
-    }
-  });
-  return queryParams.join('');
-}
+// Object Utilities
 
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;

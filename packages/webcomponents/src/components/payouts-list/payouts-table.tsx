@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { formatDate, formatCurrency } from '../../utils/utils';
+import { convertToLocal, formatCurrency } from '../../utils/utils';
 import { MapPayoutStatusToBadge } from './payouts-status';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
 
@@ -54,7 +54,7 @@ export const payoutTableColumns = {
 export const payoutTableCells = (downloadCSV) => ({
   created_at: (value, index) => (
     <td part={getAlternateTableCellPart(index)}>
-      <div class="fw-bold">{formatDate(value)} </div>
+      <div class="fw-bold">{convertToLocal(value, { showDisplayDate: true })} </div>
     </td>
   ),
   sub_account_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),

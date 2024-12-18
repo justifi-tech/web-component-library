@@ -1,6 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { debounce } from 'lodash';
 import { PaymentsParams } from '../../api';
+import { convertToLocal, convertToUTC } from '../../utils/utils';
 
 @Component({
   tag: 'payments-list-filters'
@@ -15,6 +16,11 @@ export class PaymentsListFilters {
   componentWillLoad() {
     // debounced input handler for text input
     this.debouncedSetParamsOnChange = debounce(this.setParamsOnChange, 300);
+  }
+
+  handleDateInput = (name: string, value: string) => {
+    const utcDate = convertToUTC(value, { setExactTime: true });
+    this.setParamsOnChange(name, utcDate);
   }
 
   get paymentStatusOptions() {
@@ -61,21 +67,19 @@ export class PaymentsListFilters {
           <div class="p-2">
             <form-control-date
               name="created_after"
-              label="Start Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_after}
+              label="Created After"
+              inputHandler={this.handleDateInput}
+              defaultValue={convertToLocal(this.params.created_after, { showInputDateTime: true }) || ''}
               showTime
-              filterTimeZone
             />
           </div>
           <div class="p-2">
             <form-control-date
               name="created_before"
-              label="End Date"
-              inputHandler={this.setParamsOnChange}
-              defaultValue={this.params.created_before}
+              label="Created Before"
+              inputHandler={this.handleDateInput}
+              defaultValue={convertToLocal(this.params.created_before, { showInputDateTime: true }) || ''}
               showTime
-              filterTimeZone
             />
           </div>
         </div>
