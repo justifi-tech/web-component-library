@@ -78,7 +78,6 @@ export class ShippingDetails {
             />
           </div>
           <div class="col-12">
-            {/* TODO: Make this a text area later */}
             <form-control-textarea
               label="Shipping Address"
               name="shipping_address"
