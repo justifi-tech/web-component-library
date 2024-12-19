@@ -43,13 +43,6 @@ Type: `Promise<any>`
 
 
 
-## Shadow Parts
-
-| Part      | Description |
-| --------- | ----------- |
-| `"label"` |             |
-
-
 ## Dependencies
 
 ### Used by
