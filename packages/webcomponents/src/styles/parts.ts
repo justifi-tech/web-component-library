@@ -78,7 +78,7 @@ export const dropdownMenu = `dropdown-menu ${text}`;
 export const radioListItem = `radio-list-item ${text}`;
 
 // Skeleton
-export const skeleton = `skeleton ${backgroundColor}`;
+export const skeleton = `skeleton`;
 
 // Component specific
 // This allows the billing form to be hidden, for exemple

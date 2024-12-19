@@ -101,6 +101,11 @@ const dark = `
     background-color: #333;
     cursor: pointer;
   }
+
+  ::part(skeleton) {
+    background-color: #333;
+  }
+
 `;
 
 export default dark;
