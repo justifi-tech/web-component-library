@@ -1,6 +1,6 @@
 import { Component, Prop, Event, EventEmitter, h, Listen, State, Watch } from "@stencil/core";
 import { DisputeManagementClickEventNames } from "./dispute";
-import { Dispute } from "../../api/Dispute";
+import { Dispute, DisputeStatus } from "../../api/Dispute";
 import { ComponentError } from "../../api/ComponentError";
 
 @Component({
@@ -30,6 +30,7 @@ export class DisputeManagementCore {
 
   @Listen('submitted')
   disputeSubmittedHandler() {
+    console.log('Dispute submitted');
     this.fetchData();
   }
 
@@ -49,9 +50,9 @@ export class DisputeManagementCore {
 
     this.getDispute({
       onSuccess: ({ dispute }) => {
-        this.dispute = dispute;
+        this.dispute = { ...dispute };
         this.isLoading = false;
-        if (this.dispute.status == 'won' || this.dispute.status == 'lost') {
+        if (this.dispute.status !== DisputeStatus.needsResponse) {
           this.showDisputeResponseForm = false;
         }
       },

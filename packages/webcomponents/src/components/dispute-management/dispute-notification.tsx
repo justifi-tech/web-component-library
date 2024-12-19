@@ -1,11 +1,11 @@
 
-import { Component, h, Event, EventEmitter, Prop, State } from "@stencil/core";
+import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
 import { DisputeManagementClickEvents, DisputeManagementClickEventNames, DisputeResponseSubmittedEvent } from "./dispute";
-import { Dispute, IDispute } from "../../api/Dispute";
+import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { text } from "../../styles/parts";
 import { Skeleton, Button } from "../../ui-components";
-import { IApiResponse } from "../../api/Api";
+// import { IApiResponse } from "../../api/Api";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
 import { ComponentError } from "../../api/ComponentError";
@@ -21,16 +21,14 @@ export class DisputeNotification {
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<DisputeManagementClickEvents>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event() submitted: EventEmitter<DisputeResponseSubmittedEvent>;
-
-  @State() submitDisputeResponse: (args: {
-    payload: any,
-    onSuccess: (disputeResponse: any) => void,
-    onError: (disputeResponse: any) => void
-  }) => Promise<IApiResponse<IDispute>>;
+  @Event({ bubbles: true }) submitted: EventEmitter<DisputeResponseSubmittedEvent>;
 
   acceptDispute() {
-    this.submitDisputeResponse({
+    makeSubmitDisputeResponse({
+      disputeId: this.dispute.id,
+      authToken: this.authToken,
+      service: new DisputeService()
+    })({
       payload: { forfeit: true },
       onSuccess: (response) => {
         this.submitted.emit({ data: response });
@@ -43,16 +41,6 @@ export class DisputeNotification {
         })
       },
     });
-  }
-
-  componentWillLoad() {
-    if (this.dispute && this.authToken) {
-      this.submitDisputeResponse = makeSubmitDisputeResponse({
-        disputeId: this.dispute.id,
-        authToken: this.authToken,
-        service: new DisputeService()
-      });
-    }
   }
 
   initiateRespondToDispute() {

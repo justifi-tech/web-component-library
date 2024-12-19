@@ -35,7 +35,7 @@ export class DisputeResponseCore {
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<DisputeManagementClickEvents>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<DisputeResponseFormStepCompletedEvent>;
-  @Event() submitted: EventEmitter<DisputeResponseSubmittedEvent>;
+  @Event({ bubbles: true }) submitted: EventEmitter<DisputeResponseSubmittedEvent>;
 
   componentStepMapping = [
     () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
@@ -191,8 +191,8 @@ export class DisputeResponseCore {
 
   private onSubmit = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      const submitData = { ...formData, forfeit: false };
       this.clickEvent.emit({ name: DisputeManagementClickEventNames.submit });
+      const submitData = { ...formData, forfeit: false };
       await this.handleSubmit(submitData, documentList, formStep);
     });
   }
