@@ -95,12 +95,12 @@ export class FormController {
   }
 
   public async validateAndSubmit(
-    submitHandler: () => void,
+    submitHandler: (values: any) => void,
     context?: any,
   ): Promise<void> {
     const isValid = await this.validate(context || {});
     if (isValid) {
-      submitHandler();
+      submitHandler(this._values);
     }
   }
 

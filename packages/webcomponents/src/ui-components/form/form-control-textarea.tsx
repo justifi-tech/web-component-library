@@ -49,7 +49,7 @@ export class TextInput {
   }
 
   updateInput = (newValue: any) => {
-    const inputElement = this.el.querySelector('input');
+    const inputElement = this.el.querySelector('textarea');
     if (inputElement) {
       inputElement.value = newValue || '';
     }
