@@ -176,7 +176,7 @@ export class DisputeResponseCore {
 
   private onSubmit = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList) => {
-      let submitData = { ...formData, forfeit: false };
+      const submitData = { ...formData, forfeit: false };
       await this.handleSubmit(submitData, documentList);
       this.clickEvent.emit({ name: DisputeManagementClickEvents.submit });
     });
