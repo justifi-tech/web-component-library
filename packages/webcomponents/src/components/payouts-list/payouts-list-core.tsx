@@ -25,6 +25,7 @@ export class PayoutsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
+  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getPayouts')
   @Watch('getSubAccounts')
@@ -46,9 +47,7 @@ export class PayoutsListCore {
     }
  
     onQueryParamsChange('set', () => {
-      delete this.pagingParams.before_cursor;
-      delete this.pagingParams.after_cursor;
-      this.fetchData();
+      this.pagingParams = {};
     });
 
     onQueryParamsChange('reset', () => {

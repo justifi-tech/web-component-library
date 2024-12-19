@@ -27,9 +27,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"pagination-bar"` |             |
-| `"table"`          |             |
-| `"table-body"`     |             |
 | `"table-head"`     |             |
 | `"table-head-row"` |             |
 | `"table-wrapper"`  |             |

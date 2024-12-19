@@ -70,7 +70,7 @@ export class PaymentsListFilters {
             <div class="p-2">
               <form-control-date
                 name="created_after"
-                label="Start Date"
+                label="Created After"
                 inputHandler={this.handleDateInput}
                 defaultValue={convertToLocal(queryParams.created_after, { showInputDateTime: true }) || ''}
                 showTime
@@ -79,7 +79,7 @@ export class PaymentsListFilters {
             <div class="p-2">
               <form-control-date
                 name="created_before"
-                label="End Date"
+                label="Created Before"
                 inputHandler={this.handleDateInput}
                 defaultValue={convertToLocal(queryParams.created_before, { showInputDateTime: true }) || ''}
                 showTime

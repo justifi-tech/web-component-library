@@ -22,7 +22,8 @@ export class TerminalsListCore {
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
-
+  
+  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getTerminals')
   @Watch('getSubAccounts')
@@ -45,9 +46,7 @@ export class TerminalsListCore {
     }
 
     onQueryParamsChange('set', () => {
-      delete this.pagingParams.before_cursor;
-      delete this.pagingParams.after_cursor;
-      this.fetchData();
+      this.pagingParams = {};
     });
 
     onQueryParamsChange('reset', () => {

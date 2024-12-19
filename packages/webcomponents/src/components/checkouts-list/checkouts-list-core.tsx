@@ -24,6 +24,7 @@ export class CheckoutsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
+  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getCheckouts')
   @Watch('getSubAccounts')
@@ -46,9 +47,7 @@ export class CheckoutsListCore {
     }
 
     onQueryParamsChange('set', () => {
-      delete this.pagingParams.before_cursor;
-      delete this.pagingParams.after_cursor;
-      this.fetchData();
+      this.pagingParams = {};
     });
 
     onQueryParamsChange('reset', () => {
