@@ -7,6 +7,8 @@ export const codeExampleFull = `
 ${codeExampleHead('justifi-payments-list')}
 
 <body>
+  <!-- Optional: add the filters component -->
+  <justifi-payments-list-filters></justifi-payments-list-filters>
   <justifi-payments-list></justifi-payments-list>
 </body>
 
@@ -20,7 +22,7 @@ export const codeExampleEventHandling = `
   (function() {
     const paymentList = document.querySelector('justifi-payments-list');
     
-    paymentList.addEventListener('payment-row-clicked', (event) => {
+    paymentList.addEventListener('row-clicked', (event) => {
       // event.detail contains all the necessary information to call an endpoint to get more details on this entity
       const entityID = event.detail.id;
   

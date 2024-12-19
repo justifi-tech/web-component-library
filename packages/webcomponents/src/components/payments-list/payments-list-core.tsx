@@ -1,10 +1,11 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
+import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { onFilterChange } from '../../ui-components/filters/utils';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
+import { queryParams, onQueryParamsChange } from './payments-list-params-state';
+import { table, tableCell } from '../../styles/parts';
 
 @Component({
   tag: 'payments-list-core'
@@ -18,9 +19,10 @@ export class PaymentsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: PaymentsParams = {};
+  @State() pagingParams: any = {};
   
-  @Watch('params')
+  @Watch('queryParams')
+  @Watch('pagingParams')
   @Watch('getPayments')
   @Watch('columns')
   updateOnPropChange() {
@@ -28,7 +30,7 @@ export class PaymentsListCore {
   }
 
   @Event({
-    eventName: 'payment-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Payment>;
 
@@ -39,13 +41,22 @@ export class PaymentsListCore {
     if (this.getPayments) {
       this.fetchData();
     }
+
+    onQueryParamsChange('set', () => {
+      this.pagingParams = {};
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+      this.errorMessage = '';
+    });
   }
 
   fetchData(): void {
     this.loading = true;
-
+    
     this.getPayments({
-      params: this.params,
+      params: this.requestParams,
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
@@ -65,15 +76,11 @@ export class PaymentsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.after_cursor;
-    this.params = { ...newParams, before_cursor: beforeCursor };
+    this.pagingParams = { before_cursor: beforeCursor };
   };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.before_cursor;
-    this.params = { ...newParams, after_cursor: afterCursor };
+    this.pagingParams = { after_cursor: afterCursor };
   };
 
   rowClickHandler = (e) => {
@@ -81,16 +88,6 @@ export class PaymentsListCore {
     if (!clickedPaymentID) return;
     this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
   };
-
-  setParamsOnChange = (name: string, value: string) => {
-    let newParams = { [name]: value };
-    this.params = onFilterChange(newParams, this.params);
-  }
-
-  clearParams = () => {
-    this.errorMessage = '';
-    this.params = {};
-  }
 
   get entityId() {
     return this.payments.map((payment) => payment.id);
@@ -108,22 +105,22 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
+  get requestParams() {
+    const combinedParams = { ...queryParams, ...this.pagingParams };
+    return combinedParams;
+  }
+
   render() {
     return (
       <div>
-        <payments-list-filters 
-          params={this.params} 
-          setParamsOnChange={this.setParamsOnChange}
-          clearParams={this.clearParams}
-        />
         <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
                 {this.paymentsTable.columnData.map((column) => column)}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class="table-body">
               <TableLoadingState
                 columnSpan={this.paymentsTable.columnData.length}
                 isLoading={this.loading}
@@ -141,7 +138,6 @@ export class PaymentsListCore {
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
-                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
                   {data}
                 </tr>
@@ -150,14 +146,13 @@ export class PaymentsListCore {
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.paymentsTable.columnData.length}>
+                  <td part={tableCell} colSpan={this.paymentsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
                         handleClickPrevious: this.handleClickPrevious,
                         handleClickNext: this.handleClickNext,
                       }}
-                      params={this.params}
                     />
                   </td>
                 </tr>

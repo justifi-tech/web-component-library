@@ -1,4 +1,5 @@
 import { h } from '@stencil/core';
+import { tableEmpty } from '../styles/parts';
 
 interface TableRenderStateProps {
   columnSpan: number;
@@ -16,7 +17,7 @@ export const TableEmptyState = (props: TableRenderStateProps) => {
     <tr>
       <td
         class="empty-state"
-        part="empty-state"
+        part={tableEmpty}
         colSpan={columnSpan}
         style={{ textAlign: 'center' }}
       >

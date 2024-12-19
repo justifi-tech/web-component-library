@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
 import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-file', () => {
@@ -162,11 +162,10 @@ describe('form-control-file', () => {
         </form-control-file>
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-governmentId');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('This field is required.');
+    expect(errorTextComponent.textContent).toBe('This field is required.');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);

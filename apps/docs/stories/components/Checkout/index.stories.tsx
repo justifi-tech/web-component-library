@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs } from "../../utils";
-import themes, { ThemeNames } from "../../themes";
-import { setUpMocks } from "../../utils/mockAllServices";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-checkout";
 import "@justifi/webcomponents/dist/module/justifi-season-interruption-insurance";
@@ -21,7 +20,7 @@ const meta: Meta = {
     ...storyBaseArgs.argTypes,
     Theme: {
       description:
-        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling-components-with-variables)",
+        "Select a theme to preview the component in. [See example](https://storybook.justifi.ai/?path=/docs/introduction--docs#styling)",
       options: Object.values(ThemeNames),
       control: {
         type: "select",
@@ -125,75 +124,35 @@ const meta: Meta = {
       delay: 2000,
     },
   },
-  render: ({ label, ...args }) => {
-    let component = `<justifi-checkout 
-    auth-token="${args['auth-token']}" 
-    checkout-id="${args['checkout-id']}"`;
-
-    if (args['disable-credit-card']) {
-      component += ` disable-credit-card`;
-    }
-
-    if (args['disable-bank-account']) {
-      component += ` disable-bank-account`;
-    }
-
-    if (args['disable-bnpl']) {
-      component += ` disable-bnpl`;
-    }
-
-    if (args['disable-payment-method-group']) {
-      component += ` disable-payment-method-group`;
-    }
-
-    component += `>`;
-
-    if (args.withInsurance) {
-      console.log('inserting insurance slot')
-
-      component += `
-        <div slot="insurance">
-          <justifi-season-interruption-insurance
-            checkout-id="${args['checkout-id']}"
-            auth-token="${args['auth-token']}"
-          />
-        </div>
-      `;
-    }
-
-    component += `</justifi-checkout>`;
-    return component;
-  }
 };
 
 export const Example: StoryObj = {};
 Example.decorators = [
-  (story: any, storyArgs: any) => {
-    setUpMocks();
-
-    // Import the style here to not pollute other framework stories
-    const selectedTheme = storyArgs.args["Theme"] as ThemeNames;
-    const styleElement = document.createElement("style");
-    styleElement.textContent = themes[selectedTheme];
-
-    return `${styleElement.outerHTML}${story()}`;
-  },
+  customStoryDecorator,
   // @ts-ignore
   withActions,
 ];
 
-export const CheckoutInsurance: StoryObj = { args: { withInsurance: true } };
+export const CheckoutInsurance: StoryObj = {
+  args: {
+    withInsurance: true,
+    slot: (args: any) => {
+      const checkoutId = args.find((arg: any) => arg.name === 'checkout-id').value;
+      const authToken = args.find((arg: any) => arg.name === 'auth-token').value;
+      return `
+        <div slot="insurance">
+          <justifi-season-interruption-insurance
+            checkout-id="${checkoutId}"
+            auth-token="${authToken}"
+          />
+        </div>
+      `
+    }
+  }
+};
+
 CheckoutInsurance.decorators = [
-  (story: any, storyArgs: any) => {
-    setUpMocks();
-
-    // Import the style here to not pollute other framework stories
-    const selectedTheme = storyArgs.args['Theme'] as ThemeNames;
-    const styleElement = document.createElement('style');
-    styleElement.textContent = themes[selectedTheme];
-
-    return `${styleElement.outerHTML}${story()}`;
-  },
+  customStoryDecorator,
   // @ts-ignore
   withActions
 ];

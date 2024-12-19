@@ -2,6 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
+import { heading2 } from '../../../../styles/parts';
 
 @Component({
   tag: 'justifi-business-representative-form-inputs',
@@ -27,7 +28,7 @@ export class RepresentativeFormInputs {
       <form>
         <fieldset>
           <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0">Representative</legend>
+            <legend class="mb-0" part={heading2}>Representative</legend>
             <form-control-tooltip helpText="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form." />
           </div>
           <hr class="mt-2" />

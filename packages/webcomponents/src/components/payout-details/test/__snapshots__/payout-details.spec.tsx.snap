@@ -3,10 +3,10 @@
 exports[`payout-details renders error state when no payoutId or authToken 1`] = `
 <justifi-payout-details>
   <template shadowrootmode="open">
-    <main class="d-flex justify-content-center p-4 text-center" part="detail-empty-state" style="font-size: 1.2rem;">
-      <div>
+    <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+      <p part="text color font-family">
         Failed to load payout details. payoutId or authToken is not provided.
-      </div>
+      </p>
     </main>
   </template>
 </justifi-payout-details>

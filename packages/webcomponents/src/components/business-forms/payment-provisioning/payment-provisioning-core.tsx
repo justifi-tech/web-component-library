@@ -2,11 +2,11 @@ import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { checkProvisioningStatus } from '../utils/helpers';
-import { StyledHost } from '../../../ui-components';
+import { Header1, StyledHost } from '../../../ui-components';
+import { text } from '../../../styles/parts';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
-  shadow: true
 })
 export class PaymentProvisioningCore {
   @State() loading: boolean = false;
@@ -123,9 +123,9 @@ export class PaymentProvisioningCore {
 
   render() {
     return (
-      <StyledHost exportparts='label,input,input-invalid'>
+      <StyledHost>
         <div class='row gap-3'>
-          <h1>{this.formTitle}</h1>
+          <Header1 text={this.formTitle} />
           <justifi-payment-provisioning-form-steps
             businessId={this.businessId}
             authToken={this.authToken}
@@ -136,7 +136,7 @@ export class PaymentProvisioningCore {
             onFormCompleted={() => this.postProvisioningData()}
           />
           <div class='d-flex justify-content-between align-items-center'>
-            <div class='d-flex align-items-center'>
+            <div class='d-flex align-items-center' part={text}>
               {this.stepCounter}
             </div>
             <justifi-payment-provisioning-form-buttons

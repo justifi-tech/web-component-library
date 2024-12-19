@@ -1,10 +1,12 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payment } from '../../api';
 import { formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
-import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState, LoadingState } from '../../ui-components/details/utils';
+import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
 import { StyledHost } from '../../ui-components';
 import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
+import Spinner from '../../ui-components/spinner';
+import { badge } from '../../styles/parts';
 
 @Component({
   tag: 'payment-details-core',
@@ -54,14 +56,14 @@ export class PaymentDetailsCore {
   render() {
     return (
       <StyledHost>
-        {this.loading && LoadingState()}
+        {this.loading && <Spinner />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && !this.errorMessage &&
           this.payment && (
             <justifi-details error-message={this.errorMessage}>
               <EntityHeadInfo
                 slot="head-info"
-                badge={<span slot='badge' innerHTML={MapPaymentStatusToBadge(this.payment.status)} />}
+                badge={<span slot='badge' part={badge} innerHTML={MapPaymentStatusToBadge(this.payment.status)} />}
                 title={`${formatCurrency(this.payment.amount)} ${this.payment?.currency.toUpperCase()}`}
               >
                 <EntityHeadInfoItem

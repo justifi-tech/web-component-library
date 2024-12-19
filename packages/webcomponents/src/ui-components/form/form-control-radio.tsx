@@ -6,7 +6,16 @@ import {
   Event,
   EventEmitter,
   Watch,
+  State,
 } from '@stencil/core';
+import {
+  inputRadio,
+  inputRadioChecked,
+  inputRadioCheckedFocused,
+  inputRadioFocused,
+  inputRadioInvalid,
+  label
+} from '../../styles/parts';
 
 @Component({
   tag: 'form-control-radio'
@@ -14,13 +23,15 @@ import {
 export class RadioInput {
   radioElement!: HTMLInputElement;
 
+  @State() isFocused: boolean = false;
+
   @Prop() label: string;
   @Prop() name: any;
   @Prop() value: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultChecked?: boolean;
-  @Prop() inputHandler: (name: string, value: boolean) => void;
+  @Prop() checked: boolean;
+  @Prop() inputHandler: (value: boolean) => void;
   @Prop() disabled: boolean;
 
   @Watch('defaultChecked')
@@ -32,23 +43,39 @@ export class RadioInput {
   @Event() formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
-    this.updateInput(this.defaultChecked);
+    this.updateInput(this.checked);
   }
 
-  handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    this.inputHandler(name, target.checked);
-    this.formControlInput.emit({ name, value: target.value });
+  handleFormControlInput = () => {
+    this.inputHandler(this.value);
+    this.formControlInput.emit({ name: this.name, value: this.value });
   }
 
   updateInput = (checked: boolean) => {
-    this.radioElement.checked = checked;
+    if (this.radioElement) {
+      this.radioElement.checked = checked;
+    }
+  }
+
+  private get part() {
+    if (this.errorText) {
+      return inputRadioInvalid;
+    }
+    if (this.isFocused) {
+      if (this.checked) {
+        return inputRadioCheckedFocused;
+      }
+      return inputRadioFocused;
+    }
+    if (this.checked) {
+      return inputRadioChecked;
+    }
+    return inputRadio;
   }
 
   render() {
     return (
-      <Host exportparts="label,input,input-invalid">
+      <Host>
         <div class='form-group d-flex flex-column'>
           <div class="form-check">
             <input
@@ -56,14 +83,18 @@ export class RadioInput {
               type="radio"
               id={this.name}
               name={this.name}
-              onBlur={this.formControlBlur.emit}
+              onFocus={() => this.isFocused = true}
+              onBlur={() => {
+                this.isFocused = false;
+                this.formControlBlur.emit();
+              }}
               onInput={this.handleFormControlInput}
-              part={`input-radio ${this.errorText ? 'input-radio-invalid' : ''}`}
+              part={this.part}
               class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}
               value={this.value}
             />
-            <label class="form-check-label" htmlFor={this.name}>
+            <label class="form-check-label" htmlFor={this.name} part={label}>
               {this.label}
             </label>
           </div>

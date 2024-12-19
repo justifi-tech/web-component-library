@@ -1,10 +1,12 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Checkout, ICheckoutsParams, PagingInfo, SubAccount, pagingDefaults } from '../../api';
+import { Checkout, PagingInfo, SubAccount, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
-import { onFilterChange } from '../../ui-components/filters/utils';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
+import { queryParams, onQueryParamsChange } from './checkouts-list-params-state';
+
+import { table, tableCell } from '../../styles/parts';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -20,18 +22,19 @@ export class CheckoutsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: ICheckoutsParams = {};
+  @State() pagingParams: any = {};
 
-  @Watch('params')
+  @Watch('queryParams')
+  @Watch('pagingParams')
   @Watch('getCheckouts')
   @Watch('getSubAccounts')
   @Watch('columns')
   updateOnPropChange() {
-    this.fetchCheckouts();
+    this.fetchData();
   }
 
   @Event({
-    eventName: 'checkout-row-clicked',
+    eventName: 'row-clicked',
     bubbles: true,
   }) rowClicked: EventEmitter<Checkout>;
 
@@ -40,15 +43,24 @@ export class CheckoutsListCore {
   componentWillLoad() {
     this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
     if (this.getCheckouts && this.getSubAccounts) {
-      this.fetchCheckouts();
+      this.fetchData();
     }
+
+    onQueryParamsChange('set', () => {
+      this.pagingParams = {};
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+      this.errorMessage = '';
+    });
   }
 
-  fetchCheckouts(): void {
+  fetchData(): void {
     this.loading = true;
 
     this.getCheckouts({
-      params: this.params,
+      params: this.requestParams,
       onSuccess: async ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
@@ -98,15 +110,11 @@ export class CheckoutsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.after_cursor;
-    this.params = { ...newParams, before_cursor: beforeCursor };
+    this.pagingParams = { before_cursor: beforeCursor };
   };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.before_cursor;
-    this.params = { ...newParams, after_cursor: afterCursor };
+    this.pagingParams = { after_cursor: afterCursor };
   };
 
   rowClickHandler = (e) => {
@@ -115,14 +123,9 @@ export class CheckoutsListCore {
     this.rowClicked.emit(this.checkouts.find((checkout) => checkout.id === clickedCheckoutID));
   };
 
-  setParamsOnChange = (name: string, value: string) => {
-    let newParams = { [name]: value };
-    this.params = onFilterChange(newParams, this.params);
-  }
-
-  clearParams = () => {
-    this.errorMessage = '';
-    this.params = {};
+  get requestParams() {
+    const combinedParams = { ...queryParams, ...this.pagingParams };
+    return combinedParams;
   }
 
   get subAccountParams() {
@@ -151,19 +154,14 @@ export class CheckoutsListCore {
   render() {
     return (
       <div>
-        <checkouts-list-filters
-          params={this.params}
-          setParamsOnChange={this.setParamsOnChange}
-          clearParams={this.clearParams}
-        />
         <div class="table-wrapper">
-          <table class="table table-hover">
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
                 {this.checkoutsTable.columnData.map((column) => column)}
               </tr>
             </thead>
-            <tbody class="table-body" part="table-body">
+            <tbody class="table-body">
               <TableLoadingState
                 columnSpan={this.checkoutsTable.columnKeys.length}
                 isLoading={this.loading}
@@ -181,7 +179,6 @@ export class CheckoutsListCore {
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
-                  part={`table-row ${index % 2 ? "table-row-even" : "table-row-odd"}`}
                 >
                   {data}
                 </tr>
@@ -190,14 +187,13 @@ export class CheckoutsListCore {
             {this.paging && (
               <tfoot class="sticky-bottom">
                 <tr class="table-light align-middle">
-                  <td part="pagination-bar" colSpan={this.checkoutsTable.columnData.length}>
+                  <td part={tableCell} colSpan={this.checkoutsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
                         handleClickPrevious: this.handleClickPrevious,
                         handleClickNext: this.handleClickNext,
                       }}
-                      params={this.params}
                     />
                   </td>
                 </tr>

@@ -3,6 +3,7 @@ import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
+import { radioListItem } from '../../styles/parts';
 
 const sezzleLogo = (
   <img
@@ -97,29 +98,25 @@ export class SezzlePaymentMethod {
         </script>
 
         <div
-          class={`payment-method-header p-3`}
-          onClick={() => this.onPaymentMethodOptionClick()}>
-          <input
-            type="radio"
+          class="radio-list-item p-3"
+          onClick={() => this.onPaymentMethodOptionClick()}
+          part={radioListItem}
+        >
+          <form-control-radio
             name="paymentMethodType"
             id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
-            onClick={(event) => event.preventDefault()}
             checked={this.isSelected}
-            class="form-check-input me-2"
+            inputHandler={() => this.onPaymentMethodOptionClick()}
+            label={<div><div>Buy now, pay later with {sezzleLogo}</div>
+              {this.installmentPlan && (
+                <small>
+                  <span>{this.installmentPlan?.installments.length}</span>&nbsp;
+                  <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
+                  <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
+                </small>
+              )}</div>}
           />
-          <label
-            htmlFor={this.paymentMethodOption?.id}
-            class="form-check-label">
-            <div>Buy now, pay later with {sezzleLogo}</div>
-            {this.installmentPlan && (
-              <small>
-                <span>{this.installmentPlan?.installments.length}</span>&nbsp;
-                <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
-                <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
-              </small>
-            )}
-          </label>
         </div>
       </div>
     );

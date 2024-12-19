@@ -9,8 +9,10 @@ export class Table {
   }
 
   get rowData() {
-    return this.collection.map((dataEntry) => {
-      return this.columnKeys.map((key) => this.tableCells[key](dataEntry[key]));
+    return this.collection.map((dataEntry, index) => {
+      return this.columnKeys.map((key) =>
+        this.tableCells[key](dataEntry[key], index)
+      );
     });
   }
 
@@ -22,7 +24,7 @@ export class Table {
     collection: any[],
     columns: string,
     tableColumns: { [key: string]: Function },
-    tableCells: { [key: string]: Function },
+    tableCells: { [key: string]: Function }
   ) {
     this.columnKeys = columns.split(',');
     this.collection = collection;

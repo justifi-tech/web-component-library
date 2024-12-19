@@ -1,19 +1,11 @@
-import { Component, h, State, Prop, Method } from '@stencil/core';
+import { Component, h, State, Prop, Method, Host } from '@stencil/core';
 import BillingFormSchema, { BillingFormFields } from './billing-form-schema';
 import StateOptions from '../../utils/state-options';
 import { FormController } from '../../ui-components/form/form';
 import { numberOnlyHandler } from '../../ui-components/form/utils';
-import { StyledHost } from '../../ui-components';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputs
- */
 @Component({
   tag: 'justifi-billing-form',
-  styleUrl: 'billing-form.css',
-  shadow: true,
 })
 export class BillingForm {
   /**
@@ -65,7 +57,7 @@ export class BillingForm {
     const billingFormDefaultValue = this.formController.getInitialValues();
 
     return (
-      <StyledHost exportparts="label,input,input-invalid">
+      <Host>
         <form>
           <fieldset>
             {this.legend && <legend>{this.legend}</legend>}
@@ -130,7 +122,7 @@ export class BillingForm {
             </div>
           </fieldset>
         </form>
-      </StyledHost>
+      </Host>
     );
   }
 }

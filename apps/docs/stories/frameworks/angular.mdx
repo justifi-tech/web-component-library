@@ -1,9 +1,5 @@
 import { Meta, Source } from '@storybook/blocks';
-import {
-  SummaryElement,
-  extractWebcomponentsVersion,
-  CSSVars,
-} from './../utils';
+import { SummaryElement, extractWebcomponentsVersion } from './../utils';
 import dedent from 'ts-dedent';
 
 <Meta title="Frameworks/Angular" />
@@ -12,13 +8,10 @@ import dedent from 'ts-dedent';
 
 # Index
 
-* [Usage](#usage)
-* [Integration Steps](#integration-steps)
-* [Props and Event Handling](#props-and-event-handling)
-* [Calling methods](#calling-methods)
-* [Styling](#styling)
-  * [Components styled with variables](#components-styled-with-variables)
-  * [Styling exported parts](#styling-exported-parts)
+- [Usage](#usage)
+- [Integration Steps](#integration-steps)
+- [Props and Event Handling](#props-and-event-handling)
+- [Calling methods](#calling-methods)
 
 # Usage
 
@@ -33,8 +26,6 @@ To integrate Justifi web components into your Angular application, use the `@jus
   dark
   code={dedent(`
     <head>
-      <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.css" />
       <script type='module'
         src='https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${extractWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js'></script>
     </head>
@@ -58,7 +49,6 @@ for instance, to use the `justifi-card-form` web component:
   dark
   code={dedent(`
     import '@justifi/webcomponents/dist/module/justifi-card-form.js';
-    import '@justifi/webcomponents/dist/webcomponents/webcomponents.css';
   `)}
 />
 
@@ -91,7 +81,7 @@ for instance, to use the `justifi-card-form` web component:
 
 ## Props and Event Handling
 
-* **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. You may also use expressions for prop values as with any other Angular component:
+- **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. You may also use expressions for prop values as with any other Angular component:
 
 <Source
   language="html"
@@ -103,7 +93,7 @@ for instance, to use the `justifi-card-form` web component:
   `)}
 />
 
-* **Event Handling**: Listen to events using Angular's event binding syntax.
+- **Event Handling**: Listen to events using Angular's event binding syntax.
 
 <Source
   language="html"
@@ -169,44 +159,5 @@ In your component (`app.component.ts`):
 Remember that the web component's methods will be available on the nativeElement of the ElementRef.
 
 2. **Ensure Component is Loaded**: Make sure that the web component is fully loaded before calling its methods. The `ngAfterViewInit` lifecycle hook is a good place for such method calls, as it ensures that the view is fully initialized.
-
-## Styling
-
-### Components Styled with Variables
-
-* **CSS Variables**: Style components using CSS variables. These can be set globally or scoped to a component.
-
-<Source
-  language="css"
-  dark
-  code={dedent(`
-    <style>
-      :root {
-        --jfi-variable: 'override value';
-      }
-    </style>
-
-    <justifi-payment-form></justifi-payment-form>
-
-`)}
-/>
-
-<SummaryElement title="See full list of CSS variables available">
-  <CSSVars />
-</SummaryElement>
-
-### Styling Exported Parts
-
-* **Shadow Parts**: Style exported parts of components using the `part` attribute.
-
-<Source
-  language="css"
-  dark
-  code={dedent(`
-    the-component-tag::part(label) {
-      /* Custom CSS */
-    }
-`)}
-/>
 
 This documentation should help you get started with integrating Justifi's Angular web components. If you have more specific requirements or need further information, please let me know!

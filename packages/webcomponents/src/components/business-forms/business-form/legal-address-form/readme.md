@@ -29,10 +29,8 @@ graph TD;
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form --> form-control-select
   form-control-text --> form-control-tooltip
-  form-control-text --> form-control-error-text
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
-  form-control-select --> form-control-error-text
   justifi-business-form --> justifi-legal-address-form
   style justifi-legal-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

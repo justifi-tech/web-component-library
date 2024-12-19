@@ -3,17 +3,12 @@ import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 
-/**
- * @exportedPart label: Label for inputs
- * @exportedPart input: The input fields
- * @exportedPart input-invalid: Invalid state for inputfs
- */
 @Component({
   tag: 'justifi-business-owners-form-step'
 })
 export class BusinessOwnersFormStep {
   coreComponent: HTMLJustifiBusinessOwnersFormStepCoreElement;
-  
+
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
 
@@ -26,7 +21,7 @@ export class BusinessOwnersFormStep {
   propChanged() {
     this.initializeApi();
   }
-  
+
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   @Method()

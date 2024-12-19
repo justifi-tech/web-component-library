@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { DateInput } from "../form-control-date";
-import { FormControlErrorText } from '../form-helpers/form-control-error-text/form-control-error-text';
+import { FormControlErrorText } from '../form-helpers/form-control-error-text';
 import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-date', () => {
@@ -191,11 +191,10 @@ describe('form-control-date', () => {
         />
     });
 
-    const errorTextComponent = page.root.querySelector('form-control-error-text');
+    const errorTextComponent = page.root.querySelector('#form-error-text-date');
     expect(errorTextComponent).not.toBeNull();
 
-    const errorText = errorTextComponent.querySelector('.text-danger');
-    expect(errorText.textContent).toBe('Invalid date');
+    expect(errorTextComponent.textContent).toBe('Invalid date');
 
     const inputElement = page.root.querySelector('input');
     expect(inputElement.classList.contains('is-invalid')).toBe(true);
