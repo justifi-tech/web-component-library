@@ -211,18 +211,40 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-@keyframes pulseAnimation {
+@keyframes skeleton-wave {
   0% {
-    opacity: 0.6;
-  }
-
-  50% {
-    opacity: 0.4;
+    left: -150%;
   }
 
   100% {
-    opacity: 0.6;
+    left: 150%;
   }
+}
+
+.skeleton {
+  display: inline-block;
+  width: 100%;
+  /* Or a specific width if needed */
+  height: 20px;
+  /* Adjust height for the placeholder */
+  background-color: #959494;
+  /* Base background color */
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* Skeleton Wave Animation */
+.skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  /* Start off the screen */
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: skeleton-wave 1.5s infinite;
 }
 
 hr {

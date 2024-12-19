@@ -125,6 +125,10 @@ const light = `
     background-color: #f9f9f9;
     cursor: pointer;
   }
+
+  ::part(tooltip-inner) {
+    color: #fff;
+  }
 `;
 
 export default light;

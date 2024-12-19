@@ -2,8 +2,7 @@ import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentError } from '../../api/ComponentError';
-import { StyledHost } from '../../ui-components';
-import Spinner from '../../ui-components/spinner';
+import { Skeleton, StyledHost } from '../../ui-components';
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -52,7 +51,13 @@ export class BusinessDetailsCore {
 
   render() {
     if (this.renderState === RENDER_STATES.LOADING) {
-      return <StyledHost><Spinner /></StyledHost>;
+      return (
+        <StyledHost>
+          <Skeleton height="100px" />
+          <Skeleton height="100px" />
+          <Skeleton height="100px" />
+        </StyledHost>
+      );
     }
 
     if (this.renderState === RENDER_STATES.ERROR) {
