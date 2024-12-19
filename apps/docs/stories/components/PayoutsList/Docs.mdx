@@ -7,7 +7,7 @@ import {
   Source,
 } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
-import codeExample from './example';
+import { codeExampleFull, codeExampleEventHandling } from './example';
 import { Authorization } from '../../utils/documentation-components';
 import * as JustifiPayoutsList from './index.stories.tsx';
 
@@ -24,6 +24,7 @@ Component to render a formated list of payouts for the requested account.
 # Index
 
 - [Props, events and methods](#props-events-and-methods)
+  - [Events usage](#events-usage)
 - [Example usage](#example-usage)
 
 # Props, events and methods
@@ -38,8 +39,15 @@ Component to render a formated list of payouts for the requested account.
   identification="account_id"
 />
 
+## Events usage
+
+All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
+
+<Source dark language="html" code={codeExampleEventHandling} />
+
+
 # Example Usage
 
 ---
 
-<Source dark language="html" code={codeExample} />
+<Source dark language="html" code={codeExampleFull} />

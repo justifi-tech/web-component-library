@@ -295,12 +295,10 @@ export interface IApplicationFee {
   updated_at: string;
 }
 
-export interface PaymentsParams {
+export interface PaymentsQueryParams {
   payment_id?: string;
   terminal_id?: string;
   payment_status?: PaymentStatuses;
   created_after?: string;
   created_before?: string;
-  after_cursor?: string;
-  before_cursor?: string;
 }

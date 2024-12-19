@@ -1,9 +1,9 @@
-import type { Meta } from "@storybook/web-components";
-import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-payments-list";
-import { ThemeNames } from "../../themes";
+import "@justifi/webcomponents/dist/module/justifi-payments-list-filters";
 
 const examplePayload = {
   "id": "py_xyz",
@@ -20,11 +20,11 @@ const examplePayload = {
   "currency": "usd",
   "description": "my_order_xyz",
   "disputed": false,
-  "disputes": [ ],
+  "disputes": [],
   "error_code": "credit_card_number_invalid",
   "error_description": "Credit Card Number Invalid (Failed LUHN checksum)",
   "is_test": true,
-  "metadata": { },
+  "metadata": {},
   "payment_intent_id": "pi_123xyz",
   "checkout_id": "cho_123",
   "payment_method": {},
@@ -34,7 +34,9 @@ const examplePayload = {
   "payment_mode": "ecom",
   "created_at": "2021-01-01T12:00:00Z",
   "updated_at": "2021-01-01T12:00:00Z"
-  };
+};
+
+type Story = StoryObj;
 
 const storyBaseArgs = new StoryBaseArgs(["account-id", "auth-token"]);
 
@@ -43,7 +45,7 @@ const meta: Meta = {
   component: "justifi-payments-list",
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light
+    Theme: ThemeNames.Light,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -64,14 +66,12 @@ const meta: Meta = {
           detail: JSON.stringify(examplePayload)
         }
       },
-      action: true,
     },
     "error-event": {
       description: "`ComponentError`",
       table: {
         category: "events",
       },
-      action: true,
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
@@ -97,11 +97,22 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
-    // @ts-ignore - Ignore Storybook bug (reference to bug issue)
-    withActions, // https://github.com/storybookjs/storybook/issues/22384
-  ],
+  ]
 };
 
-export const Example = {};
+export const Example: Story = {};
+
+export const ExampleWithFilters: Story = {
+  args: {},
+  render: (args) => `
+    <div>
+      <justifi-payments-list-filters></justifi-payments-list-filters>
+      <justifi-payments-list
+        auth-token="${args["auth-token"]}"
+        account-id="${args["account-id"]}">
+      </justifi-payments-list>
+    </div>
+  `
+};
 
 export default meta;

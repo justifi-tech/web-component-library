@@ -19,6 +19,7 @@ const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCol
 const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters, SelectInput];
 
 describe('checkouts-list-core', () => {
+
   it('renders properly with fetched data', async () => {
     const mockCheckoutsService = {
       fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
@@ -79,7 +80,6 @@ describe('checkouts-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
-
     const page = await newSpecPage({
       components: components,
       template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
@@ -132,9 +132,9 @@ describe('checkouts-list-core', () => {
     expect(spyEvent).toHaveBeenCalled();
   });
 
-  it('shows table filter menu on filter button click', async () => {
+  it('emits error event on fetch error', async () => {
     const mockCheckoutsService = {
-      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
 
     const getCheckouts = makeGetCheckouts({
@@ -155,140 +155,28 @@ describe('checkouts-list-core', () => {
       apiOrigin: 'http://localhost:3000'
     });
 
+    const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters],
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+      components: components,
+      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
 
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    expect(filterButton).not.toBeNull();
-
-    filterButton.click();
-    await page.waitForChanges();
-
-    const filterMenu = page.root.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'fetch-error',
+          message: 'Fetch error',
+          severity: 'error',
+        }
+      })
+    );
   });
+});
 
-  it('updates params and refetches data on filter interaction', async () => {
-    const mockCheckoutsService = {
-      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
-    };
-
-    const getCheckouts = makeGetCheckouts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.querySelector('checkouts-list-filters') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-
-    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
-    expect(selectFilter).not.toBeNull();
-
-    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
-    expect(selectFilterInput).not.toBeNull();
-
-    selectFilterInput.click();
-
-    const selectOptions = selectFilterInput.querySelectorAll('option');
-    expect(selectOptions).not.toBeNull();
-
-    const succeededOption = selectOptions[3] as HTMLOptionElement;
-    succeededOption.click();
-    selectFilterInput.value = 'succeeded';
-    selectFilterInput.dispatchEvent(new Event('input'));
-
-    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({ "status": "succeeded" });
-  });
-
-  it('clears filters and refetches data on clear filters interaction', async () => {
-    const mockCheckoutsService = {
-      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
-    };
-
-    const getCheckouts = makeGetCheckouts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
-    });
-
-    const filterButton = page.root.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.querySelector('table-filters-menu') as HTMLElement;
-    expect(filterMenu).not.toBeNull();
-
-    const selectFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
-    expect(selectFilter).not.toBeNull();
-
-    const selectFilterInput = selectFilter.querySelector('select') as HTMLSelectElement;
-    expect(selectFilterInput).not.toBeNull();
-
-    selectFilterInput.click();
-
-    const selectOptions = selectFilterInput.querySelectorAll('option');
-    expect(selectOptions).not.toBeNull();
-
-    const succeededOption = selectOptions[3] as HTMLOptionElement;
-    succeededOption.click();
-    selectFilterInput.value = 'succeeded';
-    selectFilterInput.dispatchEvent(new Event('input'));
-
-    const clearButton = filterMenu.querySelector('[data-test-id="clear-filters-button"]') as HTMLElement;
-    expect(clearButton).not.toBeNull();
-
-    clearButton.click();
-
-    expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(3);
-    const updatedParams = page.rootInstance.params;
-    expect(updatedParams).toEqual({});
-  });
+describe('checkouts-list-core pagination', () => {
 
   it('updates params and refetches data on pagination interaction', async () => {
     const mockCheckoutsService = {
@@ -327,51 +215,7 @@ describe('checkouts-list-core', () => {
 
     // The mock function should be called 2 times: once for the initial load and later after the pagination interaction
     expect(mockCheckoutsService.fetchCheckouts).toHaveBeenCalledTimes(2);
-    const updatedParams = page.rootInstance.params;
+    const updatedParams = page.rootInstance.pagingParams;
     expect(updatedParams.after_cursor).toBe('nextCursor');
-  });
-
-  it('emits error event on fetch error', async () => {
-    const mockCheckoutsService = {
-      fetchCheckouts: jest.fn().mockRejectedValue(new Error('Fetch error'))
-    };
-
-    const getCheckouts = makeGetCheckouts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-    const mockSubAccountsService = {
-      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
-    };
-
-    const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
-      authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
-    });
-
-
-    const errorEvent = jest.fn();
-
-    const page = await newSpecPage({
-      components: components,
-      template: () => <checkouts-list-core getCheckouts={getCheckouts} getSubAccounts={getSubAccounts} onError-event={errorEvent} columns={defaultColumnsKeys} />,
-    });
-
-    await page.waitForChanges();
-
-    expect(errorEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        detail: {
-          errorCode: 'fetch-error',
-          message: 'Fetch error',
-          severity: 'error',
-        }
-      })
-    );
   });
 });
