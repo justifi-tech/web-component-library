@@ -3,11 +3,10 @@
 exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 <payouts-list-core>
   <div>
-    <payouts-list-filters></payouts-list-filters>
-    <div class="table-wrapper">
+    <div class="table-wrapper" part="table-wrapper">
       <table class="table table-hover" part="table text color font-family background-color">
-        <thead class="sticky-top table-head">
-          <tr class="table-light text-nowrap">
+        <thead class="sticky-top table-head" part="table-head">
+          <tr class="table-light text-nowrap" part="table-head-row">
             <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
               Created
             </th>
@@ -80,11 +79,10 @@ exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 exports[`payouts-list-core renders properly 1`] = `
 <payouts-list-core>
   <div>
-    <payouts-list-filters></payouts-list-filters>
-    <div class="table-wrapper">
+    <div class="table-wrapper" part="table-wrapper">
       <table class="table table-hover" part="table text color font-family background-color">
-        <thead class="sticky-top table-head">
-          <tr class="table-light text-nowrap">
+        <thead class="sticky-top table-head" part="table-head">
+          <tr class="table-light text-nowrap" part="table-head-row">
             <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
               Created
             </th>

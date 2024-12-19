@@ -1,14 +1,16 @@
-import { Component, h, Prop } from '@stencil/core';
-import { PayoutsTableFilterParams } from '../../api';
+import { Component, h } from '@stencil/core';
+import { queryParams, clearParams } from './payouts-list-params-state';
+import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-
 @Component({
-  tag: 'payouts-list-filters'
+  tag: 'justifi-payouts-list-filters',
+  shadow: true
 })
 export class PayoutsListFilters {
-  @Prop() params: PayoutsTableFilterParams;
-  @Prop() setParamsOnChange: (name: string, value: string) => void;
-  @Prop() clearParams: () => void;
+  
+  setParamsOnChange = (name: string, value: string) => {
+    queryParams[name] = value;
+  }
 
   handleDateInput = (name: string, value: string) => {
     const utcDate = convertToUTC(value, { setEndOfDay: true });
@@ -17,26 +19,30 @@ export class PayoutsListFilters {
 
   render() {
     return (
-      <table-filters-menu params={this.params} clearParams={this.clearParams}>
-        <div class="grid-cols-2 gap-3 p-1">
-          <div class="p-2">
-            <form-control-date
-              name="created_after"
-              label="Created After"
-              inputHandler={this.handleDateInput}
-              defaultValue={convertToLocal(this.params.created_after, { showInputDate: true })}
-            />
+      <StyledHost>
+        <table-filters-menu params={ {...queryParams} } clearParams={clearParams}>
+          <div class="grid-cols-2 gap-3 p-1">
+            <div class="p-2">
+              <form-control-date
+                name="created_after"
+                label="Start Date"
+                inputHandler={this.handleDateInput}
+                defaultValue={convertToLocal(queryParams.created_after, { showInputDate: true })}
+                showTime
+              />
+            </div>
+            <div class="p-2">
+              <form-control-date
+                name="created_before"
+                label="End Date"
+                inputHandler={this.handleDateInput}
+                defaultValue={convertToLocal(queryParams.created_before, { showInputDate: true })}
+                showTime
+              />
+            </div>
           </div>
-          <div class="p-2">
-            <form-control-date
-              name="created_before"
-              label="Created Before"
-              inputHandler={this.handleDateInput}
-              defaultValue={convertToLocal(this.params.created_before, { showInputDate: true })}
-            />
-          </div>
-        </div>
-      </table-filters-menu>
+        </table-filters-menu>
+      </StyledHost>
     );
   }
 }

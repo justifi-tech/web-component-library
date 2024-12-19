@@ -19,8 +19,9 @@
 
  - [justifi-checkouts-list-filters](../../components/checkouts-list)
  - [justifi-payments-list-filters](../../components/payments-list)
- - [justifi-terminals-list-filters](../../components/terminals-list)
- - [payouts-list-filters](../../components/payouts-list)
+ - [justifi-payouts-list-filters](../../components/payouts-list)
+ - [terminals-list-filters](../../components/terminals-list)
+
 
 ### Depends on
 
