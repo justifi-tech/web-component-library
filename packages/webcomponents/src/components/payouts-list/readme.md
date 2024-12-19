@@ -7,34 +7,47 @@
 
 ## Properties
 
-| Property            | Attribute | Description | Type                                    | Default     |
-| ------------------- | --------- | ----------- | --------------------------------------- | ----------- |
-| `clearParams`       | --        |             | `() => void`                            | `undefined` |
-| `params`            | --        |             | `PayoutsTableFilterParams`              | `undefined` |
-| `setParamsOnChange` | --        |             | `(name: string, value: string) => void` | `undefined` |
+| Property         | Attribute | Description | Type       | Default     |
+| ---------------- | --------- | ----------- | ---------- | ----------- |
+| `columns`        | `columns` |             | `string`   | `undefined` |
+| `getPayoutCSV`   | --        |             | `Function` | `undefined` |
+| `getPayouts`     | --        |             | `Function` | `undefined` |
+| `getSubAccounts` | --        |             | `Function` | `undefined` |
+
+
+## Events
+
+| Event         | Description | Type                          |
+| ------------- | ----------- | ----------------------------- |
+| `error-event` |             | `CustomEvent<ComponentError>` |
+| `row-clicked` |             | `CustomEvent<Payout>`         |
+
+
+## Shadow Parts
+
+| Part               | Description |
+| ------------------ | ----------- |
+| `"table-head"`     |             |
+| `"table-head-row"` |             |
+| `"table-wrapper"`  |             |
 
 
 ## Dependencies
 
 ### Used by
 
- - [payouts-list-core](.)
+ - [justifi-payouts-list](.)
 
 ### Depends on
 
-- [table-filters-menu](../../ui-components/filters)
-- [form-control-date](../../ui-components/form)
+- [pagination-menu](../pagination-menu)
 
 ### Graph
 ```mermaid
 graph TD;
-  payouts-list-filters --> table-filters-menu
-  payouts-list-filters --> form-control-date
-  table-filters-menu --> custom-popper
-  form-control-date --> form-control-tooltip
-  form-control-tooltip --> custom-popper
-  payouts-list-core --> payouts-list-filters
-  style payouts-list-filters fill:#f9f,stroke:#333,stroke-width:4px
+  payouts-list-core --> pagination-menu
+  justifi-payouts-list --> payouts-list-core
+  style payouts-list-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

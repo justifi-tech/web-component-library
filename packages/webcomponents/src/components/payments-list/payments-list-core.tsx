@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payment, PaymentsParams, pagingDefaults } from '../../api';
+import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { onFilterChange } from '../../ui-components/filters/utils';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
+import { queryParams, onQueryParamsChange } from './payments-list-params-state';
 import { table, tableCell } from '../../styles/parts';
 
 @Component({
@@ -19,9 +19,10 @@ export class PaymentsListCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
-  @State() params: PaymentsParams = {};
-
-  @Watch('params')
+  @State() pagingParams: any = {};
+  
+  @Watch('queryParams')
+  @Watch('pagingParams')
   @Watch('getPayments')
   @Watch('columns')
   updateOnPropChange() {
@@ -40,13 +41,22 @@ export class PaymentsListCore {
     if (this.getPayments) {
       this.fetchData();
     }
+
+    onQueryParamsChange('set', () => {
+      this.pagingParams = {};
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+      this.errorMessage = '';
+    });
   }
 
   fetchData(): void {
     this.loading = true;
-
+    
     this.getPayments({
-      params: this.params,
+      params: this.requestParams,
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
@@ -66,15 +76,11 @@ export class PaymentsListCore {
   }
 
   handleClickPrevious = (beforeCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.after_cursor;
-    this.params = { ...newParams, before_cursor: beforeCursor };
+    this.pagingParams = { before_cursor: beforeCursor };
   };
 
   handleClickNext = (afterCursor: string) => {
-    const newParams: any = { ...this.params };
-    delete newParams.before_cursor;
-    this.params = { ...newParams, after_cursor: afterCursor };
+    this.pagingParams = { after_cursor: afterCursor };
   };
 
   rowClickHandler = (e) => {
@@ -82,16 +88,6 @@ export class PaymentsListCore {
     if (!clickedPaymentID) return;
     this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
   };
-
-  setParamsOnChange = (name: string, value: string) => {
-    let newParams = { [name]: value };
-    this.params = onFilterChange(newParams, this.params);
-  }
-
-  clearParams = () => {
-    this.errorMessage = '';
-    this.params = {};
-  }
 
   get entityId() {
     return this.payments.map((payment) => payment.id);
@@ -109,14 +105,14 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
+  get requestParams() {
+    const combinedParams = { ...queryParams, ...this.pagingParams };
+    return combinedParams;
+  }
+
   render() {
     return (
       <div>
-        <payments-list-filters
-          params={this.params}
-          setParamsOnChange={this.setParamsOnChange}
-          clearParams={this.clearParams}
-        />
         <div class="table-wrapper">
           <table class="table table-hover" part={table}>
             <thead class="table-head sticky-top">
@@ -157,7 +153,6 @@ export class PaymentsListCore {
                         handleClickPrevious: this.handleClickPrevious,
                         handleClickNext: this.handleClickNext,
                       }}
-                      params={this.params}
                     />
                   </td>
                 </tr>
