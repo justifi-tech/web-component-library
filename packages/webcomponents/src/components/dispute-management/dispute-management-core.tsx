@@ -1,5 +1,5 @@
 import { Component, Prop, Event, EventEmitter, h, Listen, State, Watch } from "@stencil/core";
-import { DisputeManagementClickEvents } from "./dispute";
+import { DisputeManagementClickEventNames } from "./dispute";
 import { Dispute } from "../../api/Dispute";
 import { ComponentError } from "../../api/ComponentError";
 
@@ -18,14 +18,19 @@ export class DisputeManagementCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>
   @Event() submitted: EventEmitter;
 
-  @Listen('clickEvent')
+  @Listen('click-event')
   disputeResponseHandler(event: CustomEvent) {
-    if (event.detail.name === DisputeManagementClickEvents.respondToDispute) {
+    if (event.detail.name === DisputeManagementClickEventNames.respondToDispute) {
       this.showDisputeResponseForm = true;
     }
-    if (event.detail.name === DisputeManagementClickEvents.cancelDispute) {
+    if (event.detail.name === DisputeManagementClickEventNames.cancelDispute) {
       this.showDisputeResponseForm = false;
     }
+  }
+
+  @Listen('submitted')
+  disputeSubmittedHandler() {
+    this.fetchData();
   }
 
   componentWillLoad() {
@@ -73,6 +78,7 @@ export class DisputeManagementCore {
         ) : (
           <justifi-dispute-notification
             dispute={this.dispute}
+            authToken={this.authToken}
             isLoading={this.isLoading}
           />
         )}

@@ -2,6 +2,7 @@ import { Component, h, Method, State, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ProductOrServiceSchema from "./schemas/product-or-service-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeResponseFormStep } from "./dispute-response-form-types";
 
 @Component({
   tag: 'justifi-product-or-service',
@@ -13,8 +14,8 @@ export class ProductOrService {
   @State() documentList = [];
 
   @Method()
-  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.productOrService));
   };
 
   componentWillLoad() {

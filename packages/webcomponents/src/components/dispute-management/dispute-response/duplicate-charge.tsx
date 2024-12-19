@@ -2,6 +2,7 @@ import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import DuplicateChargeSchema from "./schemas/duplicate-charge-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeResponseFormStep } from "./dispute-response-form-types";
 
 @Component({
   tag: 'justifi-duplicate-charge',
@@ -13,8 +14,8 @@ export class DuplicateCharge {
   @State() documentList: DisputeEvidenceDocument[] = [];
 
   @Method()
-  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[]) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList));
+  async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
+    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.duplicateCharge));
   };
 
   componentWillLoad() {

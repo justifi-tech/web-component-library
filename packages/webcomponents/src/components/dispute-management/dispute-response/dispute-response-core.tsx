@@ -1,9 +1,10 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
-import { DisputeManagementClickEvents } from "../dispute";
+import { DisputeManagementClickEvents, DisputeManagementClickEventNames, DisputeResponseSubmittedEvent } from "../dispute";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
 import { ComponentError } from "../../../components";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
+import { DisputeResponseFormStep, DisputeResponseFormStepCompletedEvent } from "./dispute-response-form-types";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -31,8 +32,10 @@ export class DisputeResponseCore {
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;
 
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<DisputeManagementClickEvents>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event() clickEvent: EventEmitter;
+  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<DisputeResponseFormStepCompletedEvent>;
+  @Event() submitted: EventEmitter<DisputeResponseSubmittedEvent>;
 
   componentStepMapping = [
     () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
@@ -45,11 +48,20 @@ export class DisputeResponseCore {
     () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
   ];
 
-  saveData = async (formData: any): Promise<IApiResponse<IDispute>> => {
+  saveData = async (formData: any, formStep): Promise<IApiResponse<IDispute>> => {
+    const hasFormData = Object.keys(formData).length;
+    if (!hasFormData) {
+      this.stepCompleted.emit({ data: null, formStep: formStep });
+      return;
+    }
     if (this.isLastStep) {
       return this.submitDisputeResponse({
         payload: formData,
-        onSuccess: (response) => this.disputeResponse = { ...response.data },
+        onSuccess: (response) => {
+          this.disputeResponse = { ...response.data };
+          this.submitted.emit({ data: response });
+          this.stepCompleted.emit({ data: response, formStep: formStep });
+        },
         onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
             errorCode: code,
@@ -61,7 +73,10 @@ export class DisputeResponseCore {
     } else {
       return this.updateDisputeResponse({
         payload: formData,
-        onSuccess: (response) => this.disputeResponse = { ...response.data },
+        onSuccess: (response) => {
+          this.disputeResponse = { ...response.data };
+          this.stepCompleted.emit({ data: response, formStep: formStep });
+        },
         onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
             errorCode: code,
@@ -139,19 +154,19 @@ export class DisputeResponseCore {
   }
 
   private onCancel = () => {
-    this.clickEvent.emit({ name: DisputeManagementClickEvents.cancelDispute });
+    this.clickEvent.emit({ name: DisputeManagementClickEventNames.cancelDispute });
   }
 
-  private handleSubmit = async (formData, documentList) => {
+  private handleSubmit = async (formData, documentList, formStep: DisputeResponseFormStep) => {
     this.isLoading = true;
 
-    const hasFormData = Object.keys(formData).length;
-    if (hasFormData) await this.saveData(formData);
     if (documentList.length) {
       this.documentList = documentList;
       await this.initializeMakePresignedURLs();
       await this.initializeFileUploads();
     }
+    // this needs to happen last because it fires the 'submitted' and 'form-step-completed' event
+    await this.saveData(formData, formStep);
 
     this.isLoading = false;
   }
@@ -159,26 +174,26 @@ export class DisputeResponseCore {
   // after each of these steps where validateAndSubmit is called, reload the dispute
   // and set isLoading, and pass defaults into each step
   private onBack = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList) => {
-      await this.handleSubmit(formData, documentList);
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.previousStep });
+    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
+      this.clickEvent.emit({ name: DisputeManagementClickEventNames.previousStep });
+      await this.handleSubmit(formData, documentList, formStep);
       this.currentStep--;
     });
   }
 
   private onNext = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList) => {
-      await this.handleSubmit(formData, documentList);
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.nextStep });
+    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
+      this.clickEvent.emit({ name: DisputeManagementClickEventNames.nextStep });
+      await this.handleSubmit(formData, documentList, formStep);
       this.currentStep++;
     });
   }
 
   private onSubmit = async () => {
-    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList) => {
+    await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
       const submitData = { ...formData, forfeit: false };
-      await this.handleSubmit(submitData, documentList);
-      this.clickEvent.emit({ name: DisputeManagementClickEvents.submit });
+      this.clickEvent.emit({ name: DisputeManagementClickEventNames.submit });
+      await this.handleSubmit(submitData, documentList, formStep);
     });
   }
 

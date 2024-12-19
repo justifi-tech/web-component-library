@@ -1,10 +1,14 @@
 
-import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
-import { DisputeManagementClickEvents } from "./dispute";
-import { Dispute } from "../../api/Dispute";
+import { Component, h, Event, EventEmitter, Prop, State } from "@stencil/core";
+import { DisputeManagementClickEvents, DisputeManagementClickEventNames, DisputeResponseSubmittedEvent } from "./dispute";
+import { Dispute, IDispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { text } from "../../styles/parts";
 import { Skeleton, Button } from "../../ui-components";
+import { IApiResponse } from "../../api/Api";
+import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
+import { DisputeService } from "../../api/services/dispute.service";
+import { ComponentError } from "../../api/ComponentError";
 
 
 @Component({
@@ -12,18 +16,47 @@ import { Skeleton, Button } from "../../ui-components";
 })
 export class DisputeNotification {
   @Prop() dispute: Dispute;
+  @Prop() authToken: string;
   @Prop() isLoading: boolean;
 
-  @Event() submitted: EventEmitter;
-  @Event() clickEvent: EventEmitter;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<DisputeManagementClickEvents>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event() submitted: EventEmitter<DisputeResponseSubmittedEvent>;
+
+  @State() submitDisputeResponse: (args: {
+    payload: any,
+    onSuccess: (disputeResponse: any) => void,
+    onError: (disputeResponse: any) => void
+  }) => Promise<IApiResponse<IDispute>>;
 
   acceptDispute() {
-    // submit the dispute as forfeited, then emit submit event
-    this.submitted.emit();
+    this.submitDisputeResponse({
+      payload: { forfeit: true },
+      onSuccess: (response) => {
+        this.submitted.emit({ data: response });
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        })
+      },
+    });
+  }
+
+  componentWillLoad() {
+    if (this.dispute && this.authToken) {
+      this.submitDisputeResponse = makeSubmitDisputeResponse({
+        disputeId: this.dispute.id,
+        authToken: this.authToken,
+        service: new DisputeService()
+      });
+    }
   }
 
   initiateRespondToDispute() {
-    this.clickEvent.emit({ name: DisputeManagementClickEvents.respondToDispute });
+    this.clickEvent.emit({ name: DisputeManagementClickEventNames.respondToDispute });
   }
 
   render() {
