@@ -12,7 +12,7 @@ exports[`form-control-checkbox Renders with all props provided 1`] = `
     <small class="form-text text-muted" id="form-help-text-accept" part="text color font-family">
       Accept terms and conditions to continue
     </small>
-    <small class="form-text text-danger" id="form-error-text-accept" part="text-danger font-family">
+    <small class="form-text text-danger" id="form-error-text-accept" part="text-danger text color font-family">
       You must accept the terms and conditions to continue
     </small>
   </div>

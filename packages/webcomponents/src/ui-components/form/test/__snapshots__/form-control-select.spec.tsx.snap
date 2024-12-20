@@ -31,7 +31,7 @@ exports[`form-control-select Renders with all props provided 1`] = `
         Delivery
       </option>
     </select>
-    <small class="form-text text-danger" id="form-error-text-delivery_method" part="text-danger font-family">
+    <small class="form-text text-danger" id="form-error-text-delivery_method" part="text-danger text color font-family">
       This field is required.
     </small>
   </div>

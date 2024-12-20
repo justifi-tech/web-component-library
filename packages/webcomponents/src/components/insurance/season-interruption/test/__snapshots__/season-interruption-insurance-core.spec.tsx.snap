@@ -14,7 +14,7 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
     </small>
     <form-control-radio label="Accept coverage for $0.79" name="opt-in" value=""></form-control-radio>
     <form-control-radio checked="" label="Decline coverage" name="opt-in"></form-control-radio>
-    <div class="invalid-feedback" part="text-danger font-family" style="display: none;">
+    <div class="invalid-feedback" part="text-danger text color font-family" style="display: none;">
       Please select an option
     </div>
     <small part="text color font-family">
@@ -57,7 +57,7 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
     </small>
     <form-control-radio label="Accept coverage for $0.79" name="opt-in" value=""></form-control-radio>
     <form-control-radio checked="" label="Decline coverage" name="opt-in"></form-control-radio>
-    <div class="invalid-feedback" part="text-danger font-family" style="display: block;">
+    <div class="invalid-feedback" part="text-danger text color font-family" style="display: block;">
       Please select an option
     </div>
     <small part="text color font-family">

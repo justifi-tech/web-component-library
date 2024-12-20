@@ -5,12 +5,16 @@ export const backgroundColor = 'background-color';
 
 // Typography
 export const text = `text ${color} ${fontFamily}`;
-export const textDanger = `text-danger ${fontFamily}`;
+export const textPrimary = `text-primary ${text}`;
+export const textSecondary = `text-secondary ${text}`;
+export const textDanger = `text-danger ${text}`;
 export const heading = `heading ${text}`;
 export const paragraph = `paragraph ${text}`;
 export const heading1 = `heading-1 ${heading}`;
 export const heading2 = `heading-2 ${heading}`;
 export const heading3 = `heading-3 ${heading}`;
+export const heading4 = `heading-4 ${heading}`;
+export const heading5 = `heading-5 ${heading}`;
 
 // Button
 export const button = `button ${text}`;
