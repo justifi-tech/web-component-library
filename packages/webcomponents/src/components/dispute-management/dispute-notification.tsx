@@ -105,11 +105,17 @@ export class DisputeNotification {
         )}
 
         {this.dispute?.won && (
-          <div>Dispute won</div>
+          <div>
+            <h1 class="h4">This payment was disputed</h1>
+            <p>The cardholder disputed this payment and the card issuer has settled it in your favor.</p>
+          </div>
         )}
 
         {this.dispute?.lost && (
-          <div>Dispute lost</div>
+          <div>
+            <h1 class="h4">This payment was disputed</h1>
+            <p>The cardholder disputed this payment and the card issuer has settled it their favor.</p>
+          </div>
         )}
       </div>
     );
