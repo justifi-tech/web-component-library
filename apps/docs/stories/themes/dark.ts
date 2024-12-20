@@ -40,6 +40,19 @@ const dark = `
     border-color: lightblue;
   }
 
+  ::part(input-radio-invalid) {
+    border-color: red;
+  }
+
+  ::part(input-radio-checked) {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
+  }
+
+  ::part(input-radio-checked-focused) {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+  }
+
   ::part(button) {
     padding: 8px 16px;
   }

@@ -116,14 +116,15 @@ export class NewPaymentMethod {
       <Host class="payment-method">
         <div
           class="radio-list-item p-3"
-          onClick={() => this.onPaymentMethodOptionClick()}
           part={radioListItem}
         >
           <form-control-radio
+            id={this.paymentMethodOption?.id}
             name="paymentMethodType"
             value={this.paymentMethodOption?.id}
             checked={this.isSelected}
             label={PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
+            inputHandler={this.onPaymentMethodOptionClick}
           />
         </div>
 

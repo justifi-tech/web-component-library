@@ -27,12 +27,12 @@ export class SavedPaymentMethod {
   };
 
   render() {
+    console.log('SavedPaymentMethod render: ', this.paymentMethodOption);
     return (
       <Fragment>
         <div class="payment-method">
           <div
             class="radio-list-item p-3"
-            onClick={() => this.onPaymentMethodOptionClick()}
             part={radioListItem}
           >
             <form-control-radio
@@ -40,8 +40,8 @@ export class SavedPaymentMethod {
               id={this.paymentMethodOption?.id}
               value={this.paymentMethodOption?.id}
               checked={this.isSelected}
-              inputHandler={() => this.onPaymentMethodOptionClick()}
-              label={`${CardBrandLabels[this.paymentMethodOption?.brand]} *${this.paymentMethodOption?.acct_last_four}`}
+              inputHandler={this.onPaymentMethodOptionClick}
+              label={`${CardBrandLabels[this.paymentMethodOption?.brand] || ''} *${this.paymentMethodOption?.acct_last_four}`}
             />
           </div>
         </div>

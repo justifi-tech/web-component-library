@@ -34,7 +34,7 @@ export class RadioInput {
   @Prop() inputHandler: (value: boolean) => void;
   @Prop() disabled: boolean;
 
-  @Watch('defaultChecked')
+  @Watch('checked')
   handleDefaultValueChange(checked: boolean) {
     this.updateInput(checked);
   }
@@ -88,7 +88,7 @@ export class RadioInput {
                 this.isFocused = false;
                 this.formControlBlur.emit();
               }}
-              onInput={this.handleFormControlInput}
+              onChange={this.handleFormControlInput}
               part={this.part}
               class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}

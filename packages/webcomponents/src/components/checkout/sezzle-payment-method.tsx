@@ -99,7 +99,6 @@ export class SezzlePaymentMethod {
 
         <div
           class="radio-list-item p-3"
-          onClick={() => this.onPaymentMethodOptionClick()}
           part={radioListItem}
         >
           <form-control-radio
@@ -107,7 +106,7 @@ export class SezzlePaymentMethod {
             id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
             checked={this.isSelected}
-            inputHandler={() => this.onPaymentMethodOptionClick()}
+            inputHandler={this.onPaymentMethodOptionClick}
             label={<div><div>Buy now, pay later with {sezzleLogo}</div>
               {this.installmentPlan && (
                 <small>

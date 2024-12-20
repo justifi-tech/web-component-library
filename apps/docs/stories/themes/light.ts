@@ -61,6 +61,7 @@ const light = `
   }
 
   ::part(input-radio-checked) {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
     background-color: #000;
   }
 
@@ -71,8 +72,29 @@ const light = `
   }
 
   ::part(input-radio-checked-focused) {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
     background-color: #000;
     border-color: #333;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+  }
+
+  ::part(input-checkbox) {
+    border-color: #333;
+  }
+  
+  ::part(input-checkbox-checked) {
+    background-color: #000;
+    border-color: #333;
+  }
+
+  ::part(input-checkbox-checked-focused) {
+    background-color: #000;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+  }
+
+  ::part(input-checkbox-focused) {
+    background-color: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
   }
 
   ::part(button) {
