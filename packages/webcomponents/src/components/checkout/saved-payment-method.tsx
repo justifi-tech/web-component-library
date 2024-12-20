@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, Method, Host } from '@stencil/core';
 import { config } from '../../../config';
 import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -22,30 +22,27 @@ export class SavedPaymentMethod {
     return { token: this.paymentMethodOption?.id };
   };
 
-  onPaymentMethodOptionClick = () => {
+  onPaymentMethodOptionClick = (e) => {
+    e.preventDefault();
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
   };
 
   render() {
     return (
-      <Fragment>
-        <div class="payment-method">
-          <div
-            class="radio-list-item p-3"
-            onClick={() => this.onPaymentMethodOptionClick()}
-            part={radioListItem}
-          >
-            <form-control-radio
-              name="paymentMethodType"
-              id={this.paymentMethodOption?.id}
-              value={this.paymentMethodOption?.id}
-              checked={this.isSelected}
-              inputHandler={() => this.onPaymentMethodOptionClick()}
-              label={`${CardBrandLabels[this.paymentMethodOption?.brand]} *${this.paymentMethodOption?.acct_last_four}`}
-            />
-          </div>
+      <Host class="payment-method">
+        <div
+          class="radio-list-item p-3"
+          part={radioListItem}
+          onClick={this.onPaymentMethodOptionClick}
+        >
+          <form-control-radio
+            name="paymentMethodType"
+            value={this.paymentMethodOption?.id}
+            checked={this.isSelected}
+            label={`${CardBrandLabels[this.paymentMethodOption?.brand] || ''} *${this.paymentMethodOption?.acct_last_four}`}
+          />
         </div>
-      </Fragment>
+      </Host>
     );
   }
 }

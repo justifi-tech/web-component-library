@@ -34,17 +34,13 @@ export class RadioInput {
   @Prop() inputHandler: (value: boolean) => void;
   @Prop() disabled: boolean;
 
-  @Watch('defaultChecked')
+  @Watch('checked')
   handleDefaultValueChange(checked: boolean) {
     this.updateInput(checked);
   }
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
-
-  componentDidLoad() {
-    this.updateInput(this.checked);
-  }
 
   handleFormControlInput = () => {
     this.inputHandler(this.value);
@@ -61,46 +57,48 @@ export class RadioInput {
     if (this.errorText) {
       return inputRadioInvalid;
     }
-    if (this.isFocused) {
-      if (this.checked) {
-        return inputRadioCheckedFocused;
-      }
-      return inputRadioFocused;
+
+    if (this.isFocused && this.checked) {
+      return inputRadioCheckedFocused;
     }
+
     if (this.checked) {
       return inputRadioChecked;
+    }
+
+    if (this.isFocused) {
+      return inputRadioFocused;
+
     }
     return inputRadio;
   }
 
   render() {
     return (
-      <Host>
-        <div class='form-group d-flex flex-column'>
-          <div class="form-check">
-            <input
-              ref={el => (this.radioElement = el as HTMLInputElement)}
-              type="radio"
-              id={this.name}
-              name={this.name}
-              onFocus={() => this.isFocused = true}
-              onBlur={() => {
-                this.isFocused = false;
-                this.formControlBlur.emit();
-              }}
-              onInput={this.handleFormControlInput}
-              part={this.part}
-              class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
-              disabled={this.disabled}
-              value={this.value}
-            />
-            <label class="form-check-label" htmlFor={this.name} part={label}>
-              {this.label}
-            </label>
-          </div>
-          <form-control-help-text helpText={this.helpText} name={this.name} />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+      <Host class='form-group d-flex flex-column'>
+        <div class="form-check">
+          <input
+            ref={el => (this.radioElement = el as HTMLInputElement)}
+            type="radio"
+            id={`${this.name}+${this.value}`}
+            name={this.name}
+            onFocus={() => this.isFocused = true}
+            onBlur={() => {
+              this.isFocused = false;
+              this.formControlBlur.emit();
+            }}
+            onChange={this.handleFormControlInput}
+            part={this.part}
+            class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
+            disabled={this.disabled}
+            value={this.value}
+          />
+          <label class="form-check-label" htmlFor={`${this.name}+${this.value}`} part={label}>
+            {this.label}
+          </label>
         </div>
+        <form-control-help-text helpText={this.helpText} name={this.name} />
+        <form-control-error-text errorText={this.errorText} name={this.name} />
       </Host>
     );
   }
