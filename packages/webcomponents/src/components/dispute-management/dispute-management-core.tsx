@@ -30,7 +30,6 @@ export class DisputeManagementCore {
 
   @Listen('submitted')
   disputeSubmittedHandler() {
-    console.log('Dispute submitted');
     this.fetchData();
   }
 
@@ -50,7 +49,7 @@ export class DisputeManagementCore {
 
     this.getDispute({
       onSuccess: ({ dispute }) => {
-        this.dispute = { ...dispute };
+        this.dispute = new Dispute(dispute);
         this.isLoading = false;
         if (this.dispute.status !== DisputeStatus.needsResponse) {
           this.showDisputeResponseForm = false;
