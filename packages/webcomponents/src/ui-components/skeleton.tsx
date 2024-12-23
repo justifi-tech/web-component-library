@@ -5,7 +5,7 @@ interface SkeletonProps {
   component?: string;
   height?: string | number;
   width?: string | number;
-  componentClassName?: string;
+  className?: string;
   styles?: { [key: string]: any };
 }
 
@@ -13,7 +13,7 @@ export const Skeleton: FunctionalComponent<SkeletonProps> = ({
   component = 'div',
   height,
   width,
-  componentClassName,
+  className,
   styles = {},
 }) => {
 
@@ -27,7 +27,7 @@ export const Skeleton: FunctionalComponent<SkeletonProps> = ({
 
   return (
     <TagType
-      class={`${componentClassName} skeleton`}
+      class={`${className} skeleton`}
       style={combinedStyle}
       part={skeleton}
       aria-hidden="true"
