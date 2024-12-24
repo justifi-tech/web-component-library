@@ -125,14 +125,14 @@ export class SeasonInterruptionInsuranceCore {
             <form-control-radio
               label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
               name="opt-in"
-              value={true}
+              value={'true'}
               checked={this.accepted}
               inputHandler={this.onChangeHandler.bind(this)}
             />
             <form-control-radio
               label="Decline coverage"
               name="opt-in"
-              value={false}
+              value={'false'}
               checked={!this.accepted}
               inputHandler={this.onChangeHandler.bind(this)}
             />

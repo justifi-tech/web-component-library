@@ -12,8 +12,8 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
         Protect your registration and get your money back in the event of unforeseen circumstances that prevent participation, including sickness (including COVID-19), injury, inclement weather, transportation, job loss and other covered reasons.
       </p>
     </small>
-    <form-control-radio label="Accept coverage for $0.79" name="opt-in" value=""></form-control-radio>
-    <form-control-radio checked="" label="Decline coverage" name="opt-in"></form-control-radio>
+    <form-control-radio label="Accept coverage for $0.79" name="opt-in" value="true"></form-control-radio>
+    <form-control-radio checked="" label="Decline coverage" name="opt-in" value="false"></form-control-radio>
     <div class="invalid-feedback" part="text-danger font-family" style="display: none;">
       Please select an option
     </div>
@@ -55,8 +55,8 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
         Protect your registration and get your money back in the event of unforeseen circumstances that prevent participation, including sickness (including COVID-19), injury, inclement weather, transportation, job loss and other covered reasons.
       </p>
     </small>
-    <form-control-radio label="Accept coverage for $0.79" name="opt-in" value=""></form-control-radio>
-    <form-control-radio checked="" label="Decline coverage" name="opt-in"></form-control-radio>
+    <form-control-radio label="Accept coverage for $0.79" name="opt-in" value="true"></form-control-radio>
+    <form-control-radio checked="" label="Decline coverage" name="opt-in" value="false"></form-control-radio>
     <div class="invalid-feedback" part="text-danger font-family" style="display: block;">
       Please select an option
     </div>

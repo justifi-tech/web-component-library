@@ -1,7 +1,17 @@
-export enum DisputeManagementClickEvents {
+export interface DisputeManagementClickEvents {
+  data?: any;
+  name: DisputeManagementClickEventNames;
+}
+
+export enum DisputeManagementClickEventNames {
   nextStep = 'nextStep',
   previousStep = 'previousStep',
   cancelDispute = 'cancelDispute',
-  counterDispute = 'counterDispute',
+  respondToDispute = 'respondToDispute',
   submit = 'submit',
+}
+
+export interface DisputeResponseSubmittedEvent {
+  data?: any;
+  metadata?: any;
 }
