@@ -8,6 +8,7 @@ import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { BusinessFormLoading } from './business-form-loading';
 
 @Component({
   tag: 'justifi-business-form',
@@ -20,6 +21,7 @@ export class BusinessForm {
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
   @State() isLoading: boolean = false;
+  @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
   @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
   @Event({ eventName: 'click-event' }) clickEventNew: EventEmitter<BusinessFormClickEvent>;
@@ -55,7 +57,7 @@ export class BusinessForm {
   }
 
   get disabledState() {
-    return this.isLoading;
+    return this.isSaving;
   }
 
   get businessEndpoint() {
@@ -71,7 +73,7 @@ export class BusinessForm {
   }
 
   private sendData = async () => {
-    this.isLoading = true;
+    this.isSaving = true;
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
@@ -81,7 +83,7 @@ export class BusinessForm {
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     } finally {
-      this.isLoading = false;
+      this.isSaving = false;
     }
   }
 
@@ -111,6 +113,10 @@ export class BusinessForm {
   }
 
   render() {
+    if (this.isLoading) {
+      return <StyledHost><BusinessFormLoading /></StyledHost>;
+    }
+
     return (
       <StyledHost>
         <form onSubmit={this.validateAndSubmit}>
@@ -135,7 +141,7 @@ export class BusinessForm {
                 disabled={this.disabledState}
                 variant='primary'
                 onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}
-                isLoading={this.isLoading}
+                isLoading={this.isSaving}
               >
                 Submit
               </Button>
