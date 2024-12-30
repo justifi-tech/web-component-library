@@ -17,7 +17,9 @@ ${codeExampleHead('justifi-payment-form')}
     const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
 
     justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
-      console.log(event);
+      const token = event.detail.data;
+
+      console.log('Token from tokenize response:', token);
     });
 
     justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
