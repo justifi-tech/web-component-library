@@ -10,6 +10,7 @@ import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
 import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
 /**
  *
@@ -25,6 +26,7 @@ export class BusinessBankAccountFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: BankAccount;
+  @State() isLoading: boolean = false;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -50,6 +52,7 @@ export class BusinessBankAccountFormStep {
 
   private fetchData = async () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     try {
       const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
       if (response.data.bank_accounts.length > 0) {
@@ -67,6 +70,7 @@ export class BusinessBankAccountFormStep {
       })
     } finally {
       this.formLoading.emit(false);
+      this.isLoading = false;
     }
   }
 
@@ -139,6 +143,10 @@ export class BusinessBankAccountFormStep {
 
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
+
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
 
     return (
       <form>

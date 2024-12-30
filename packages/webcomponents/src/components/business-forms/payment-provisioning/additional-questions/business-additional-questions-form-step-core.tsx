@@ -7,6 +7,7 @@ import { ComponentError } from '../../../../components';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
 @Component({
   tag: 'justifi-additional-questions-form-step-core',
@@ -16,6 +17,7 @@ export class AdditionalQuestionsFormStepCore {
   @State() errors: any = {};
   @State() additional_questions: IAdditionalQuestions = {};
   @State() recurringPayments: boolean = false;
+  @State() isLoading: boolean = false;
 
   @Watch('additional_questions')
   recurringPaymentsWatcher(newValue: any) {
@@ -57,6 +59,7 @@ export class AdditionalQuestionsFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         this.additional_questions = new AdditionalQuestions(response.data.additional_questions || {});
@@ -69,7 +72,10 @@ export class AdditionalQuestionsFormStepCore {
           severity: severity
         });
       },
-      final: () => this.formLoading.emit(false)
+      final: () => {
+        this.formLoading.emit(false);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -107,6 +113,10 @@ export class AdditionalQuestionsFormStepCore {
 
   render() {
     const additionalQuestionsDefaultValue = this.formController.getInitialValues();
+
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
 
     return (
       <form>

@@ -3,6 +3,7 @@ import { ComponentError } from '../../../../api/ComponentError';
 import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { Button } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
 interface ownerPayloadItem { id: string; }
 
@@ -13,6 +14,7 @@ export class BusinessOwnersFormStepCore {
   @State() ownersPayload: ownerPayloadItem[] = [];
   @State() refs: any = [];
   @State() newFormOpen: boolean;
+  @State() isLoading: boolean = false;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -43,6 +45,7 @@ export class BusinessOwnersFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         if (response.data.owners.length) {
@@ -60,6 +63,7 @@ export class BusinessOwnersFormStepCore {
       },
       final: () => {
         this.formLoading.emit(false);
+        this.isLoading = false;
         this.manageRefs();
       }
     });
@@ -138,6 +142,10 @@ export class BusinessOwnersFormStepCore {
   }
 
   render() {
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
+
     return (
       <div>
         <div class="d-flex align-items-center gap-2">

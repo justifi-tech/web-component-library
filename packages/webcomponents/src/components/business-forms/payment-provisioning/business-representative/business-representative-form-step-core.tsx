@@ -4,6 +4,7 @@ import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { ComponentError } from '../../../../api/ComponentError';
 import { identitySchema } from '../../schemas/business-identity-schema';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
 @Component({
   tag: 'justifi-business-representative-form-step-core',
@@ -12,6 +13,7 @@ export class BusinessRepresentativeFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: Identity = {};
+  @State() isLoading: boolean = false;
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -44,6 +46,7 @@ export class BusinessRepresentativeFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         this.representative = new Representative(response.data.representative || {});
@@ -56,7 +59,10 @@ export class BusinessRepresentativeFormStepCore {
           severity: severity
         });
       },
-      final: () => this.formLoading.emit(false)
+      final: () => {
+        this.formLoading.emit(false);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -85,6 +91,12 @@ export class BusinessRepresentativeFormStepCore {
   }
 
   render() {
+    if (this.isLoading) {
+      return (
+        <PaymentProvisioningLoading />
+      );
+    }
+
     return (
       <justifi-business-representative-form-inputs
         representativeDefaultValue={this.formController.getInitialValues()}

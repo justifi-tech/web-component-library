@@ -7,6 +7,7 @@ import { ComponentError } from '../../../../api/ComponentError';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -15,6 +16,7 @@ export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
+  @State() isLoading: boolean = false;
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -47,6 +49,7 @@ export class LegalAddressFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         this.legal_address = new Address(response.data.legal_address || {});
@@ -59,7 +62,10 @@ export class LegalAddressFormStepCore {
           severity: severity
         });
       },
-      final: () => this.formLoading.emit(false)
+      final: () => {
+        this.formLoading.emit(false);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -96,6 +102,10 @@ export class LegalAddressFormStepCore {
 
   render() {
     const legalAddressDefaultValue = this.formController.getInitialValues();
+
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
 
     return (
       <form>

@@ -8,6 +8,7 @@ import { businessClassificationOptions } from '../../utils/business-form-options
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
 @Component({
   tag: 'justifi-business-core-info-form-step-core',
@@ -16,6 +17,7 @@ export class BusinessCoreInfoFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
+  @State() isLoading: boolean = false;
 
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
@@ -49,6 +51,7 @@ export class BusinessCoreInfoFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         this.coreInfo = new CoreBusinessInfo(response.data);
@@ -61,7 +64,10 @@ export class BusinessCoreInfoFormStepCore {
           severity: severity
         });
       },
-      final: () => this.formLoading.emit(false)
+      final: () => {
+        this.formLoading.emit(false);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -98,6 +104,10 @@ export class BusinessCoreInfoFormStepCore {
 
   render() {
     const coreInfoDefaultValue = this.formController.getInitialValues();
+
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
 
     return (
       <form>
