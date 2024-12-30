@@ -16,6 +16,7 @@ import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInterruptionInsurance.json';
 import mockTerminals from '../../../../mockData/mockTerminalsListSuccess.json';
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
+import mockDispute from '../../../../mockData/mockDisputeResponse.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -62,6 +63,7 @@ export const API_PATHS = {
   TERMINALS_LIST: 'terminals',
   SUB_ACCOUNTS_LIST: 'sub_accounts',
   PKG_VERSION: '/@justifi/webcomponents/latest',
+  DISPUTE: '/disputes/:id',
 };
 
 type MockAllServicesConfig = {
@@ -133,6 +135,9 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
       this.post(API_PATHS.CHECKOUT_COMPLETE, () => mockPostCheckout);
       this.get(API_PATHS.CHECKOUTS_LIST, () => mockCheckoutsList);
+
+      // Dispute
+      this.get(API_PATHS.DISPUTE, () => mockDispute);
 
       // SubAccounts
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
