@@ -3,8 +3,13 @@ import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
 import { ComponentError } from "../../../components";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
-import { DisputeResponseFormStep, DisputeResponseFormStepCompletedEvent } from "./dispute-response-form-types";
-import { ComponentClickEvent, ComponentSubmitEvent, DisputeManagementClickActions } from "../../../api/ComponentEvents";
+import { 
+  ComponentClickEvent, 
+  ComponentFormStepCompleteEvent, 
+  ComponentSubmitEvent, 
+  DisputeManagementClickActions, 
+  DisputeResponseFormStep
+ } from "../../../api/ComponentEvents";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -34,7 +39,7 @@ export class DisputeResponseCore {
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<DisputeResponseFormStepCompletedEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   componentStepMapping = [
@@ -51,7 +56,7 @@ export class DisputeResponseCore {
   saveData = async (formData: any, formStep): Promise<IApiResponse<IDispute>> => {
     const hasFormData = Object.keys(formData).length;
     if (!hasFormData) {
-      this.stepCompleted.emit({ data: null, formStep: formStep });
+      this.stepCompleteEvent.emit({ data: null, formStep: formStep });
       return;
     }
     if (this.isLastStep) {
@@ -60,7 +65,7 @@ export class DisputeResponseCore {
         onSuccess: (response) => {
           this.disputeResponse = { ...response.data };
           this.submitEvent.emit({ data: response });
-          this.stepCompleted.emit({ data: response, formStep: formStep });
+          this.stepCompleteEvent.emit({ data: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
@@ -75,7 +80,7 @@ export class DisputeResponseCore {
         payload: formData,
         onSuccess: (response) => {
           this.disputeResponse = { ...response.data };
-          this.stepCompleted.emit({ data: response, formStep: formStep });
+          this.stepCompleteEvent.emit({ data: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
@@ -165,7 +170,7 @@ export class DisputeResponseCore {
       await this.initializeMakePresignedURLs();
       await this.initializeFileUploads();
     }
-    // this needs to happen last because it fires the 'submitted' and 'form-step-completed' event
+    // this needs to happen last because it fires the 'submit-event' and 'complete-form-step-event' event
     await this.saveData(formData, formStep);
 
     this.isLoading = false;

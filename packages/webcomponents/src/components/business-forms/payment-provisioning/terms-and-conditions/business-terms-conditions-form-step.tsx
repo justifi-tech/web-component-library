@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
+import { BusinessFormStep, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
@@ -20,9 +20,12 @@ export class BusinessTermsConditionsFormStep {
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
-  @Event() formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  
+  // internal loading events
+  @Event() formLoading: EventEmitter<boolean>;
+  @Event({ bubbles: true }) formCompleted: EventEmitter<any>;
 
   private api: any;
 
@@ -100,13 +103,15 @@ export class BusinessTermsConditionsFormStep {
     } else {
       onSuccess();
     }
-    this.stepCompleted.emit({ data: response, formStep: BusinessFormStep.termsAndConditions });
+    this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.termsAndConditions });
+    this.formCompleted.emit();
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.acceptedTermsBefore) {
-      this.stepCompleted.emit({ data: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
+      this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
+      this.formCompleted.emit();
       onSuccess();
     } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));

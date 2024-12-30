@@ -39,7 +39,7 @@ export interface ComponentSubmitEvent {
 
 // complete-form-step-event
 
-export interface CompleteFormStepEvent {
+export interface ComponentFormStepCompleteEvent {
   formStep: BusinessFormStep | DisputeResponseFormStep; // The form step that was completed
   data: any; // The data that was submitted, if any, for the form step
   metadata?: any; // Optional additional info about the form step completion

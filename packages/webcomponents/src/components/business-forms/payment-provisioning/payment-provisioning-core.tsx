@@ -25,6 +25,11 @@ export class PaymentProvisioningCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
+  @Listen('formCompleted')
+  handleFormCompleted() {
+    this.postProvisioningData();
+  }
+
   componentWillLoad() {
     this.getBusiness && this.setBusinessProvisioned();
 
@@ -133,7 +138,6 @@ export class PaymentProvisioningCore {
             currentStep={this.currentStep}
             allowOptionalFields={this.allowOptionalFields}
             handleFormLoading={this.handleFormLoading}
-            onFormCompleted={() => this.postProvisioningData()}
           />
           <div class='d-flex justify-content-between align-items-center'>
             <div class='d-flex align-items-center' part={text}>

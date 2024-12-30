@@ -16,11 +16,11 @@
 
 ## Events
 
-| Event                 | Description | Type                                          |
-| --------------------- | ----------- | --------------------------------------------- |
-| `error-event`         |             | `CustomEvent<ComponentError>`                 |
-| `form-step-completed` |             | `CustomEvent<BusinessFormStepCompletedEvent>` |
-| `formLoading`         |             | `CustomEvent<boolean>`                        |
+| Event                      | Description | Type                                          |
+| -------------------------- | ----------- | --------------------------------------------- |
+| `complete-form-step-event` |             | `CustomEvent<ComponentFormStepCompleteEvent>` |
+| `error-event`              |             | `CustomEvent<ComponentError>`                 |
+| `formLoading`              |             | `CustomEvent<boolean>`                        |
 
 
 ## Methods
