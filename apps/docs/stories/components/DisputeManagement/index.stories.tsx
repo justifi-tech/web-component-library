@@ -41,7 +41,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["error-event"],
+      handles: ["submitted", "form-step-completed", "click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
