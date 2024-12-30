@@ -3,12 +3,12 @@ import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';
-import { BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
+import { BusinessFormServerErrors } from '../utils/business-form-types';
 import { Business, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
-import { BusinessFormClickActions, ClickEvent } from '../../../api/ComponentEvents';
+import { ComponentClickEvent, BusinessFormClickActions, ComponentSubmitEvent } from '../../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-business-form',
@@ -22,8 +22,9 @@ export class BusinessForm {
   @Prop() removeTitle?: boolean = false;
   @State() isLoading: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
-  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ClickEvent>;
+
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -100,7 +101,7 @@ export class BusinessForm {
     if (response.error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     }
-    this.submitted.emit({ data: response });
+    this.submitEvent.emit({ data: response });
     this.instantiateBusiness(response.data);
   }
 

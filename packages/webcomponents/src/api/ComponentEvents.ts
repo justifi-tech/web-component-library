@@ -1,7 +1,7 @@
 
 // click-event
 
-export interface ClickEvent {
+export interface ComponentClickEvent {
   name: BusinessFormClickActions | DisputeManagementClickActions | TableClickActions; // The action that was clicked
   data?: any; // Additional data pertinent to the click event, if any
 }
@@ -32,7 +32,7 @@ export enum TableClickActions {
 
 // submit-event
 
-export interface SubmitEvent {
+export interface ComponentSubmitEvent {
   data?: any;
   metadata?: any;
 }

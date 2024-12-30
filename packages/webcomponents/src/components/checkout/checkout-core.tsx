@@ -8,6 +8,7 @@ import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Button, StyledHost, Skeleton, Header2, Header3 } from '../../ui-components';
 import { text } from '../../styles/parts';
+import { ComponentSubmitEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -35,7 +36,7 @@ export class CheckoutCore {
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
 
-  @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event({ eventName: 'loaded' }) loaded: EventEmitter<ILoadedEventResponse>;
 
@@ -121,7 +122,7 @@ export class CheckoutCore {
   }
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
-    this.submitted.emit(data);
+    this.submitEvent.emit({ data: data });
     this.renderState = 'success';
   };
 

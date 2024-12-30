@@ -6,7 +6,7 @@ import { terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './terminals-list-params-state';
 import { table, tableCell } from '../../styles/parts';
-import { ClickEvent, TableClickActions } from '../../api/ComponentEvents';
+import { ComponentClickEvent, TableClickActions } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'terminals-list-core'
@@ -33,7 +33,7 @@ export class TerminalsListCore {
     this.fetchData();
   }
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ClickEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {

@@ -18,10 +18,10 @@
 
 ## Events
 
-| Event         | Description | Type                                   |
-| ------------- | ----------- | -------------------------------------- |
-| `click-event` |             | `CustomEvent<ClickEvent>`              |
-| `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
+| Event          | Description | Type                                |
+| -------------- | ----------- | ----------------------------------- |
+| `click-event`  |             | `CustomEvent<ComponentClickEvent>`  |
+| `submit-event` |             | `CustomEvent<ComponentSubmitEvent>` |
 
 
 ## Dependencies

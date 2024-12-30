@@ -1,6 +1,5 @@
 
 import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
-import { DisputeResponseSubmittedEvent } from "./dispute";
 import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { text } from "../../styles/parts";
@@ -9,8 +8,7 @@ import { Skeleton, Button } from "../../ui-components";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
 import { ComponentError } from "../../api/ComponentError";
-import { ClickEvent, DisputeManagementClickActions } from "../../api/ComponentEvents";
-
+import { ComponentClickEvent, ComponentSubmitEvent, DisputeManagementClickActions } from "../../api/ComponentEvents";
 
 @Component({
   tag: 'justifi-dispute-notification',
@@ -20,9 +18,9 @@ export class DisputeNotification {
   @Prop() authToken: string;
   @Prop() isLoading: boolean;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ClickEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event({ bubbles: true }) submitted: EventEmitter<DisputeResponseSubmittedEvent>;
+  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   acceptDispute() {
     makeSubmitDisputeResponse({
@@ -32,7 +30,7 @@ export class DisputeNotification {
     })({
       payload: { forfeit: true },
       onSuccess: (response) => {
-        this.submitted.emit({ data: response });
+        this.submitEvent.emit({ data: response });
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -101,7 +99,7 @@ export class DisputeNotification {
         {this.dispute?.underReview && (
           <div>
             <h1 class="h4">This payment is disputed and under review</h1>
-            <p>The cardholder is disputing this payment. A counter dispute has been submitted and is under review.</p>
+            <p>The cardholder is disputing this payment. A counter dispute has been submitEvent and is under review.</p>
           </div>
         )}
 

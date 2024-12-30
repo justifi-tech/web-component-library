@@ -74,7 +74,7 @@ const meta: Meta = {
         category: "props",
       },
     },
-    submitted: {
+    "submit-event": {
       description:
         "`BankAccountCreateResponse` `CardCreateResponse` `PaymentMethodErrorResponse`",
       table: {
@@ -99,7 +99,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted", "error-event"],
+      handles: ["submit-event", "error-event"],
     },
     chromatic: {
       delay: 2000,

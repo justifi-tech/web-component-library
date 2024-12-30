@@ -1,11 +1,10 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
-import { DisputeResponseSubmittedEvent } from "../dispute";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
 import { ComponentError } from "../../../components";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep, DisputeResponseFormStepCompletedEvent } from "./dispute-response-form-types";
-import { ClickEvent, DisputeManagementClickActions } from "../../../api/ComponentEvents";
+import { ComponentClickEvent, ComponentSubmitEvent, DisputeManagementClickActions } from "../../../api/ComponentEvents";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -33,10 +32,10 @@ export class DisputeResponseCore {
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ClickEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<DisputeResponseFormStepCompletedEvent>;
-  @Event({ bubbles: true }) submitted: EventEmitter<DisputeResponseSubmittedEvent>;
+  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   componentStepMapping = [
     () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
@@ -60,7 +59,7 @@ export class DisputeResponseCore {
         payload: formData,
         onSuccess: (response) => {
           this.disputeResponse = { ...response.data };
-          this.submitted.emit({ data: response });
+          this.submitEvent.emit({ data: response });
           this.stepCompleted.emit({ data: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {

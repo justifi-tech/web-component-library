@@ -16,7 +16,7 @@ ${codeExampleHead('justifi-payment-provisioning')}
   (function () {
     var paymentProvisioning = document.querySelector("justifi-payment-provisioning");
 
-    paymentProvisioning.addEventListener("submitted", (data) => {
+    paymentProvisioning.addEventListener("submit-event", (data) => {
       /* this event is raised when the server response is received */
       console.log("server response received", data);
     });

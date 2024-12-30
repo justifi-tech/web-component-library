@@ -16,7 +16,6 @@ export class DisputeManagementCore {
   @State() showDisputeResponseForm: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>
-  @Event() submitted: EventEmitter;
 
   @Listen('click-event')
   disputeResponseHandler(event: CustomEvent) {
@@ -28,7 +27,7 @@ export class DisputeManagementCore {
     }
   }
 
-  @Listen('submitted')
+  @Listen('submit-event')
   disputeSubmittedHandler() {
     this.fetchData();
   }

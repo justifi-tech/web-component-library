@@ -3,7 +3,7 @@ import { ComponentError } from '../../../../api/ComponentError';
 import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { Button } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
-import { BusinessFormClickActions, ClickEvent } from '../../../../api/ComponentEvents';
+import { BusinessFormClickActions, ComponentClickEvent } from '../../../../api/ComponentEvents';
 
 interface ownerPayloadItem { id: string; }
 
@@ -22,7 +22,7 @@ export class BusinessOwnersFormStepCore {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ClickEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 

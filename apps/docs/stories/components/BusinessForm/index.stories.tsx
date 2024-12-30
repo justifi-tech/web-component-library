@@ -63,7 +63,7 @@ const meta: Meta = {
         defaultValue: { summary: "false" },
       },
     },
-    submitted: {
+    "submit-event": {
       description:
         "Emitted when the server response is received.  Will not be raised if form vailidation fails.",
       table: {
@@ -87,7 +87,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted", "click-event", "clickEvent"],
+      handles: ["submit-event", "click-event", "clickEvent"],
     },
     chromatic: {
       delay: 2000,

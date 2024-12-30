@@ -86,7 +86,7 @@ const meta: Meta = {
         category: "methods",
       },
     },
-    submitted: {
+    "submit-event": {
       description:
         "Emitted when the server response is received after submitting.  Will not be raised if form vailidation fails.",
       table: {
@@ -118,7 +118,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submitted", 'loaded', 'error-event'],
+      handles: ["submit-event", 'loaded', 'error-event'],
     },
     chromatic: {
       delay: 2000,
