@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
-import { BusinessFormClickActions, BusinessFormClickEvent } from '../utils/business-form-types';
+import { BusinessFormClickActions, ClickEvent } from '../../../api/ComponentEvents';
 import { ComponentError } from '../../../api/ComponentError';
 import { identitySchema } from '../schemas/business-identity-schema';
 import { Button } from '../../../ui-components';
@@ -31,7 +31,7 @@ export class BusinessOwnerFormCore {
     this.formLoading.emit(this.isLoading);
   }
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ClickEvent>;
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
   @Event({ bubbles: true }) ownerSubmitted: EventEmitter<any>;

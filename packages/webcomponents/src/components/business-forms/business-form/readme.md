@@ -20,8 +20,7 @@
 
 | Event         | Description | Type                                   |
 | ------------- | ----------- | -------------------------------------- |
-| `click-event` |             | `CustomEvent<BusinessFormClickEvent>`  |
-| `clickEvent`  |             | `CustomEvent<BusinessFormClickEvent>`  |
+| `click-event` |             | `CustomEvent<ClickEvent>`              |
 | `submitted`   |             | `CustomEvent<BusinessFormSubmitEvent>` |
 
 

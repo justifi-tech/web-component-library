@@ -1,21 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { withActions } from "@storybook/addon-actions/decorator";
+import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-terminals-list";
 import "@justifi/webcomponents/dist/module/justifi-terminals-list-filters";
-
-const examplePayload = {
-  "id": "trm_abc123",
-  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-  "provider": "verifone",
-  "status": "disconnected",
-  "provider_id": "123-456-789",
-  "nickname": "My Favorite Terminal",
-  "verified_at": "2024-01-01T15:00:00Z",
-  "created_at": "2021-01-01T12:00:00Z",
-  "updated_at": "2021-01-01T12:00:00Z"
-};
 
 type Story = StoryObj;
 
@@ -38,23 +27,20 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "row-clicked": {
-      description: "`RowClicked`",
+    "click-event": {
+      description:
+        "Emitted when controls or table rows are clicked.  Control name is defined in `event.detail.name`.",
       table: {
         category: "events",
-        defaultValue: {
-          summary: "Emits chosen Terminal object on row click",
-          detail: JSON.stringify(examplePayload)
-        }
       },
-      action: true,
+      action: true
     },
     "error-event": {
-      description: "`ComponentError`",
+      description: '`ComponentError` - emitted when a network error occurs in the component.',
       table: {
-        category: "events",
+        category: 'events'
       },
-      action: true,
+      action: true
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
@@ -72,7 +58,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["row-clicked", "error-event"],
+      handles: ["click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
@@ -80,6 +66,7 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
+    withActions
   ]
 };
 

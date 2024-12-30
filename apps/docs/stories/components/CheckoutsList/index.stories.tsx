@@ -1,35 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { withActions } from "@storybook/addon-actions/decorator";
+import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-checkouts-list";
 import "@justifi/webcomponents/dist/module/justifi-checkouts-list-filters";
-
-const examplePayload = {
-  "id": "cho_xyz",
-  "account_id": "acc_xyz",
-  "platform_account_id": "acc_xyz",
-  "payment_amount": 10000,
-  "payment_currency": "usd",
-  "payment_description": "my_order_xyz",
-  "payment_methods": [],
-  "payment_method_group_id": "pmg_xyz",
-  "status": "created",
-  "mode": "test live",
-  "successful_payment_id": "py_xyz",
-  "statement_descriptor": "Big Business",
-  "application_fees": {
-    "card": {
-      "amount": 300
-    },
-    "bank_account": {
-      "amount": 150
-    }
-  },
-  "payment_settings": {},
-  "created_at": "2024-01-01T12:00:00Z",
-  "updated_at": "2024-01-01T12:00:00Z"
-};
 
 type Story = StoryObj;
 
@@ -52,23 +27,20 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "row-clicked": {
-      description: "`RowClicked`",
+    "click-event": {
+      description:
+        "Emitted when controls or table rows are clicked.  Control name is defined in `event.detail.name`.",
       table: {
         category: "events",
-        defaultValue: {
-          summary: "Emits chosen Checkout object on row click",
-          detail: JSON.stringify(examplePayload)
-        }
       },
-      action: true,
+      action: true
     },
     "error-event": {
-      description: "`ComponentError`",
+      description: '`ComponentError` - emitted when a network error occurs in the component.',
       table: {
-        category: "events",
+        category: 'events'
       },
-      action: true,
+      action: true
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
@@ -86,7 +58,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["row-clicked", "error-event"],
+      handles: ["click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
@@ -94,6 +66,7 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
+    withActions
   ]
 };
 

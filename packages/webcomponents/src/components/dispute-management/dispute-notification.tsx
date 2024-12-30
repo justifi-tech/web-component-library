@@ -1,6 +1,6 @@
 
 import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
-import { DisputeManagementClickEvents, DisputeManagementClickEventNames, DisputeResponseSubmittedEvent } from "./dispute";
+import { DisputeResponseSubmittedEvent } from "./dispute";
 import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { text } from "../../styles/parts";
@@ -9,6 +9,7 @@ import { Skeleton, Button } from "../../ui-components";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
 import { ComponentError } from "../../api/ComponentError";
+import { ClickEvent, DisputeManagementClickActions } from "../../api/ComponentEvents";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class DisputeNotification {
   @Prop() authToken: string;
   @Prop() isLoading: boolean;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<DisputeManagementClickEvents>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event({ bubbles: true }) submitted: EventEmitter<DisputeResponseSubmittedEvent>;
 
@@ -44,7 +45,7 @@ export class DisputeNotification {
   }
 
   initiateRespondToDispute() {
-    this.clickEvent.emit({ name: DisputeManagementClickEventNames.respondToDispute });
+    this.clickEvent.emit({ name: DisputeManagementClickActions.respondToDispute });
   }
 
   render() {

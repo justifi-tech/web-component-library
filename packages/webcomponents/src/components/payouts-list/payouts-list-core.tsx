@@ -6,6 +6,7 @@ import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './payouts-list-params-state';
 import { table, tableCell } from '../../styles/parts';
+import { ClickEvent, TableClickActions } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'payouts-list-core',
@@ -33,11 +34,7 @@ export class PayoutsListCore {
     this.fetchData();
   }
 
-  @Event({
-    eventName: 'row-clicked',
-    bubbles: true,
-  }) rowClicked: EventEmitter<Payout>;
-
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
@@ -123,16 +120,20 @@ export class PayoutsListCore {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
+    this.clickEvent.emit({ name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
+    this.clickEvent.emit({ name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
     const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPayoutID) return;
-    this.rowClicked.emit(this.payouts.find((payout) => payout.id === clickedPayoutID));
+
+    const payoutData = this.payouts.find((payout) => payout.id === clickedPayoutID);
+    this.clickEvent.emit({ name: TableClickActions.row, data: payoutData });
   }
 
   get requestParams() {

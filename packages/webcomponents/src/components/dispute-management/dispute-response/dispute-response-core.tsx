@@ -1,10 +1,11 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
-import { DisputeManagementClickEvents, DisputeManagementClickEventNames, DisputeResponseSubmittedEvent } from "../dispute";
+import { DisputeResponseSubmittedEvent } from "../dispute";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
 import { ComponentError } from "../../../components";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep, DisputeResponseFormStepCompletedEvent } from "./dispute-response-form-types";
+import { ClickEvent, DisputeManagementClickActions } from "../../../api/ComponentEvents";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -32,7 +33,7 @@ export class DisputeResponseCore {
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<DisputeManagementClickEvents>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
   @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<DisputeResponseFormStepCompletedEvent>;
   @Event({ bubbles: true }) submitted: EventEmitter<DisputeResponseSubmittedEvent>;
@@ -154,7 +155,7 @@ export class DisputeResponseCore {
   }
 
   private onCancel = () => {
-    this.clickEvent.emit({ name: DisputeManagementClickEventNames.cancelDispute });
+    this.clickEvent.emit({ name: DisputeManagementClickActions.cancelDispute });
   }
 
   private handleSubmit = async (formData, documentList, formStep: DisputeResponseFormStep) => {
@@ -175,7 +176,7 @@ export class DisputeResponseCore {
   // and set isLoading, and pass defaults into each step
   private onBack = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      this.clickEvent.emit({ name: DisputeManagementClickEventNames.previousStep });
+      this.clickEvent.emit({ name: DisputeManagementClickActions.previousStep });
       await this.handleSubmit(formData, documentList, formStep);
       this.currentStep--;
     });
@@ -183,7 +184,7 @@ export class DisputeResponseCore {
 
   private onNext = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      this.clickEvent.emit({ name: DisputeManagementClickEventNames.nextStep });
+      this.clickEvent.emit({ name: DisputeManagementClickActions.nextStep });
       await this.handleSubmit(formData, documentList, formStep);
       this.currentStep++;
     });
@@ -191,7 +192,7 @@ export class DisputeResponseCore {
 
   private onSubmit = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      this.clickEvent.emit({ name: DisputeManagementClickEventNames.submit });
+      this.clickEvent.emit({ name: DisputeManagementClickActions.submit });
       const submitData = { ...formData, forfeit: false };
       await this.handleSubmit(submitData, documentList, formStep);
     });

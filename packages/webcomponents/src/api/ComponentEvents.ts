@@ -2,8 +2,8 @@
 // click-event
 
 export interface ClickEvent {
-  name: BusinessFormClickActions | DisputeManagementClickActions | TableRowClickActions; // The action that was clicked
-  data?: any;
+  name: BusinessFormClickActions | DisputeManagementClickActions | TableClickActions; // The action that was clicked
+  data?: any; // Additional data pertinent to the click event, if any
 }
 
 export enum BusinessFormClickActions {
@@ -24,11 +24,10 @@ export enum DisputeManagementClickActions {
   submit = 'submit',
 }
 
-export enum TableRowClickActions {
-  payment = 'paymentTableRow',
-  payout = 'payoutTableRow',
-  checkout = 'checkoutTableRow',
-  terminal = 'terminalTableRow'
+export enum TableClickActions {
+  row = 'tableRow',
+  next = 'nextPage',
+  previous = 'previousPage'
 }
 
 // submit-event

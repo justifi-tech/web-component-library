@@ -19,8 +19,8 @@
 
 | Event         | Description | Type                          |
 | ------------- | ----------- | ----------------------------- |
+| `click-event` |             | `CustomEvent<ClickEvent>`     |
 | `error-event` |             | `CustomEvent<ComponentError>` |
-| `row-clicked` |             | `CustomEvent<Payout>`         |
 
 
 ## Shadow Parts

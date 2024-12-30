@@ -5,8 +5,8 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './checkouts-list-params-state';
-
 import { table, tableCell } from '../../styles/parts';
+import { ClickEvent, TableClickActions } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -33,11 +33,7 @@ export class CheckoutsListCore {
     this.fetchData();
   }
 
-  @Event({
-    eventName: 'row-clicked',
-    bubbles: true,
-  }) rowClicked: EventEmitter<Checkout>;
-
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
 
   componentWillLoad() {
@@ -111,16 +107,20 @@ export class CheckoutsListCore {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
+    this.clickEvent.emit({ name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
+    this.clickEvent.emit({ name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
     const clickedCheckoutID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedCheckoutID) return;
-    this.rowClicked.emit(this.checkouts.find((checkout) => checkout.id === clickedCheckoutID));
+
+    const checkoutData = this.checkouts.find((checkout) => checkout.id === clickedCheckoutID);
+    this.clickEvent.emit({ name: TableClickActions.row, data: checkoutData });
   };
 
   get requestParams() {

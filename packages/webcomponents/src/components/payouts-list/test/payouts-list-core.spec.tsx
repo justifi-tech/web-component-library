@@ -131,7 +131,7 @@ describe('payouts-list-core', () => {
     }));
   });
 
-  it('emits row-clicked event on row click', async () => {
+  it('emits click-event event on row click', async () => {
     const mockPayoutService = {
       fetchPayouts: jest.fn().mockResolvedValue(mockPayoutsResponse),
     };
@@ -165,7 +165,7 @@ describe('payouts-list-core', () => {
     expect(firstRow).not.toBeNull();
 
     const spyEvent = jest.fn();
-    page.win.addEventListener('row-clicked', spyEvent);
+    page.win.addEventListener('click-event', spyEvent);
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();

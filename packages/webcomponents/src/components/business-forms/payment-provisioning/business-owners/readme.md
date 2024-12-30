@@ -20,7 +20,7 @@
 
 | Event                 | Description | Type                                          |
 | --------------------- | ----------- | --------------------------------------------- |
-| `click-event`         |             | `CustomEvent<BusinessFormClickEvent>`         |
+| `click-event`         |             | `CustomEvent<ClickEvent>`                     |
 | `error-event`         |             | `CustomEvent<ComponentError>`                 |
 | `form-step-completed` |             | `CustomEvent<BusinessFormStepCompletedEvent>` |
 | `formLoading`         |             | `CustomEvent<boolean>`                        |
