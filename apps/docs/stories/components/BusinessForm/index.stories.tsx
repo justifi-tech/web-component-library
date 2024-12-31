@@ -77,17 +77,10 @@ const meta: Meta = {
         category: "events",
       },
     },
-    clickEvent: {
-      description:
-        "Emitted when controls are clicked.  Control name is defined in `data.detail.name`. This event will be deprecated in favor of the `click-event` event.",
-      table: {
-        category: "events",
-      },
-    },
   },
   parameters: {
     actions: {
-      handles: ["submit-event", "click-event", "clickEvent"],
+      handles: ["submit-event", "click-event"],
     },
     chromatic: {
       delay: 2000,
