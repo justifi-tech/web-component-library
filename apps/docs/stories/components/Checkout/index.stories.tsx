@@ -26,7 +26,7 @@ const meta: Meta = {
         type: "select",
       },
     },
-    'withInsurance': {
+    "withInsurance": {
       table: { disable: true }
     },
     "checkout-id": {
@@ -118,7 +118,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["submit-event", 'loaded', 'error-event'],
+      handles: ["submit-event", "loaded", "error-event"],
     },
     chromatic: {
       delay: 2000,

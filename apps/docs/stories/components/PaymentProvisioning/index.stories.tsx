@@ -29,7 +29,7 @@ const meta: Meta = {
     "form-title": {
       type: "string",
       description:
-        'This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.',
+        "This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.",
       control: {
         type: "text",
       },
@@ -60,7 +60,7 @@ const meta: Meta = {
     "complete-form-step-event": {
       description: "Emitted when a form step is completed after the user clicks 'Next'. Contains data from that form step's server response. The name of the completed form step is defined in `data.detail.formStep`.",
       table: {
-        category: 'events',
+        category: "events",
         defaultValue: {
           summary: "Example Payload",
           detail: `{ data: serverResponse, formStep: 'legal_address' }`
@@ -74,10 +74,10 @@ const meta: Meta = {
         category: "events",
       },
     },
-    'error-event': {
-      description: '`ComponentError` - emitted when a network error occurs in the component.',
+    "error-event": {
+      description: "`ComponentError` - emitted when a network error occurs in the component.",
       table: {
-        category: 'events'
+        category: "events"
       }
     }
   },

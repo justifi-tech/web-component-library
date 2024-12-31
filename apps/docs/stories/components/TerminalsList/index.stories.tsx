@@ -36,15 +36,15 @@ const meta: Meta = {
       action: true
     },
     "error-event": {
-      description: '`ComponentError` - emitted when a network error occurs in the component.',
+      description: "`ComponentError` - emitted when a network error occurs in the component.",
       table: {
-        category: 'events'
+        category: "events",
       },
       action: true
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
-      type: 'string',
+      type: "string",
       table: {
         category: "props",
         defaultValue: {
