@@ -106,7 +106,6 @@ export class SezzlePaymentMethod {
           <form-control-radio
             name="paymentMethodType"
             value={this.paymentMethodOption?.id}
-            defaultValue={this.paymentMethodOption?.id}
             checked={this.isSelected}
             label={<div><div>Buy now, pay later with {sezzleLogo}</div>
               {this.installmentPlan && (

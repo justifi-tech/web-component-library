@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  Watch,
   State,
 } from '@stencil/core';
 import {
@@ -29,35 +28,19 @@ export class RadioInput {
   @Prop() name: any;
   @Prop() value: string;
   @Prop() helpText?: string;
-  @Prop() defaultValue?: string;
   @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
   @Prop() errorText: string;
   @Prop() checked: boolean;
 
-  @Watch('defaultValue')
-  handleDefaultValueChange(value: string) {
-    this.updateInput(value);
-  }
-
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
-
-  componentDidLoad() {
-    this.updateInput(this.value);
-  }
 
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, this.value);
     this.formControlInput.emit({ name, value: this.value });
-  }
-
-  updateInput = (value: string) => {
-    if (this.defaultValue == value) {
-      this.radioElement.checked = true;
-    }
   }
 
   private get part() {
@@ -100,6 +83,7 @@ export class RadioInput {
             class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
             disabled={this.disabled}
             value={this.value}
+            checked={this.checked}
           />
           <label
             class="form-check-label"
