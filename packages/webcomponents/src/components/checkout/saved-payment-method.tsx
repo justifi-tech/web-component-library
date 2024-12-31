@@ -39,6 +39,7 @@ export class SavedPaymentMethod {
             name="paymentMethodType"
             value={this.paymentMethodOption?.id}
             checked={this.isSelected}
+            defaultValue={this.paymentMethodOption?.id}
             label={`${CardBrandLabels[this.paymentMethodOption?.brand] || ''} *${this.paymentMethodOption?.acct_last_four}`}
           />
         </div>

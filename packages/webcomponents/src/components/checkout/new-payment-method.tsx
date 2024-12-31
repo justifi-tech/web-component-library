@@ -124,6 +124,7 @@ export class NewPaymentMethod {
             name="paymentMethodType"
             value={this.paymentMethodOption?.id}
             checked={this.isSelected}
+            defaultValue={this.paymentMethodOption?.id}
             label={PaymentMethodTypeLabels[this.paymentMethodOption?.id]}
           />
         </div>

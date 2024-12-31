@@ -50,8 +50,8 @@ export class RadioInput {
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.inputHandler(name, target.value);
-    this.formControlInput.emit({ name, value: target.value });
+    this.inputHandler(name, this.value);
+    this.formControlInput.emit({ name, value: this.value });
   }
 
   updateInput = (value: string) => {
@@ -59,6 +59,7 @@ export class RadioInput {
       this.radioElement.checked = true;
     }
   }
+
   private get part() {
     if (this.errorText) {
       return inputRadioInvalid;
@@ -76,6 +77,7 @@ export class RadioInput {
       return inputRadioFocused;
 
     }
+
     return inputRadio;
   }
 
@@ -86,7 +88,7 @@ export class RadioInput {
           <input
             ref={el => (this.radioElement = el as HTMLInputElement)}
             type="radio"
-            id={`${this.name}+${this.value}`}
+            id={`${this.name}-${this.value}`}
             name={this.name}
             onFocus={() => this.isFocused = true}
             onBlur={() => {
@@ -99,7 +101,11 @@ export class RadioInput {
             disabled={this.disabled}
             value={this.value}
           />
-          <label class="form-check-label" htmlFor={`${this.name}+${this.value}`} part={label}>
+          <label
+            class="form-check-label"
+            htmlFor={`${this.name}-${this.value}`}
+            part={label}
+          >
             {this.label}
           </label>
         </div>
