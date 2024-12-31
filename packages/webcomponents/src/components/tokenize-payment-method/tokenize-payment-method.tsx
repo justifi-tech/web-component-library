@@ -1,10 +1,10 @@
 import { Component, h, Prop, Event, EventEmitter, Method } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
-import { BillingFormFields, ComponentError } from '../../components';
+import { BillingFormFields } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
-import { ComponentSubmitEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -19,7 +19,7 @@ export class TokenizePaymentMethod {
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;

@@ -2,10 +2,11 @@ import { Component, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayoutDetails } from './get-payout-details';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -20,7 +21,7 @@ export class PayoutDetails {
   @State() getPayoutCSV: Function;
   @State() errorMessage: string = null;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -61,7 +62,7 @@ export class PayoutDetails {
     }
   }
 
-  handleErrorEvent = (event: CustomEvent<ComponentError>) => {
+  handleErrorEvent = (event: CustomEvent<ComponentErrorEvent>) => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
   };

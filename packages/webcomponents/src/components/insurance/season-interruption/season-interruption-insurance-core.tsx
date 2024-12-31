@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
-import { ComponentError } from "../../../api/ComponentError";
+import { ComponentErrorEvent } from "../../../api/ComponentEvents";
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
 import { StyledHost, Header2 } from "../../../ui-components";
@@ -29,7 +29,7 @@ export class SeasonInterruptionInsuranceCore {
   @State() accepted: boolean | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {

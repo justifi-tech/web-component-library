@@ -20,7 +20,7 @@
 | Event                      | Description | Type                                          |
 | -------------------------- | ----------- | --------------------------------------------- |
 | `complete-form-step-event` |             | `CustomEvent<ComponentFormStepCompleteEvent>` |
-| `error-event`              |             | `CustomEvent<ComponentError>`                 |
+| `error-event`              |             | `CustomEvent<ComponentErrorEvent>`            |
 | `formLoading`              |             | `CustomEvent<boolean>`                        |
 
 

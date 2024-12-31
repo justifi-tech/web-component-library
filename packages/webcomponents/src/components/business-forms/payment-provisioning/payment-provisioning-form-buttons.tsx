@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { BusinessFormClickActions } from '../../../api/ComponentEvents';
+import { BusinessFormClickActions } from '../utils';
 import { Button } from '../../../ui-components';
 
 @Component({

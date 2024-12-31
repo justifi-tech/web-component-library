@@ -7,8 +7,8 @@ import { Skeleton, Button } from "../../ui-components";
 // import { IApiResponse } from "../../api/Api";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
-import { ComponentError } from "../../api/ComponentError";
-import { ComponentClickEvent, ComponentSubmitEvent, DisputeManagementClickActions } from "../../api/ComponentEvents";
+import { ComponentClickEvent, ComponentSubmitEvent, ComponentErrorEvent } from "../../api/ComponentEvents";
+import { DisputeManagementClickActions } from "./event-types";
 
 @Component({
   tag: 'justifi-dispute-notification',
@@ -19,7 +19,7 @@ export class DisputeNotification {
   @Prop() isLoading: boolean;
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   acceptDispute() {

@@ -1,9 +1,8 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Listen, Watch } from '@stencil/core';
-import { ComponentError } from '../../../../api/ComponentError';
-import { BusinessFormStep, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { Button } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
-import { BusinessFormClickActions, ComponentClickEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 
 interface ownerPayloadItem { id: string; }
 
@@ -24,7 +23,7 @@ export class BusinessOwnersFormStepCore {
   
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;

@@ -1,15 +1,14 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
-import { ComponentError } from "../../../components";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { 
   ComponentClickEvent, 
   ComponentFormStepCompleteEvent, 
   ComponentSubmitEvent, 
-  DisputeManagementClickActions, 
-  DisputeResponseFormStep
+  ComponentErrorEvent
  } from "../../../api/ComponentEvents";
+import { DisputeManagementClickActions, DisputeResponseFormStep } from "../event-types";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -38,7 +37,7 @@ export class DisputeResponseCore {
   @State() currentStepComponentRef: any;
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 

@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Payout } from '../../api';
 import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { ComponentError } from '../../api/ComponentError';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import Spinner from '../../ui-components/spinner';
@@ -20,7 +20,7 @@ export class PayoutDetailsCore {
   @State() loading: boolean = true;
   @State() errorMessage: string = null;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
     if (this.getPayout) {

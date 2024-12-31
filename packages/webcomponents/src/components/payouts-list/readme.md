@@ -20,7 +20,7 @@
 | Event         | Description | Type                               |
 | ------------- | ----------- | ---------------------------------- |
 | `click-event` |             | `CustomEvent<ComponentClickEvent>` |
-| `error-event` |             | `CustomEvent<ComponentError>`      |
+| `error-event` |             | `CustomEvent<ComponentErrorEvent>` |
 
 
 ## Shadow Parts

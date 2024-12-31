@@ -1,15 +1,16 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStep, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { Skeleton } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
+import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -28,7 +29,7 @@ export class BusinessDocumentFormStep {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;

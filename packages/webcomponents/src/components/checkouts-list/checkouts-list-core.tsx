@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Checkout, PagingInfo, SubAccount, pagingDefaults } from '../../api';
-import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './checkouts-list-params-state';
 import { table, tableCell } from '../../styles/parts';
-import { ComponentClickEvent, TableClickActions } from '../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
+import { TableClickActions } from '../../ui-components/table/event-types';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -34,7 +34,7 @@ export class CheckoutsListCore {
   }
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
     this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);

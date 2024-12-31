@@ -1,9 +1,10 @@
 import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { checkProvisioningStatus } from '../utils/helpers';
 import { Header1, StyledHost } from '../../../ui-components';
 import { text } from '../../../styles/parts';
-import { ComponentClickEvent, BusinessFormClickActions, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { BusinessFormClickActions } from '../utils/event-types';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
@@ -22,7 +23,7 @@ export class PaymentProvisioningCore {
   @Prop() postProvisioning: Function;
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   @Listen('formCompleted')

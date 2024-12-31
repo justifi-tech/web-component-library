@@ -3,7 +3,7 @@ import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, L
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentError } from '../../api/ComponentError';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import Spinner from '../../ui-components/spinner';
 
 Chart.register(
@@ -28,7 +28,7 @@ export class GrossPaymentChartCore {
   @State() grossVolumeReport: GrossVolumeReport;
   @State() loading: boolean = true;
   @State() errorMessage: string = '';
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentDidLoad() {
     if (this.getGrossPayment) {

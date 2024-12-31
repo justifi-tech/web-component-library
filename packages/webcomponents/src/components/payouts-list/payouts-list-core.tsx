@@ -1,12 +1,13 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payout, SubAccount, pagingDefaults } from '../../api';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './payouts-list-params-state';
 import { table, tableCell } from '../../styles/parts';
-import { ComponentClickEvent, TableClickActions } from '../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
+import { TableClickActions } from '../../ui-components/table/event-types';
 
 @Component({
   tag: 'payouts-list-core',
@@ -35,7 +36,7 @@ export class PayoutsListCore {
   }
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
     this.payoutsTable = new Table(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));

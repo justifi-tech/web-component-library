@@ -7,7 +7,8 @@ import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Busi
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
-import { ComponentClickEvent, BusinessFormClickActions, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { BusinessFormClickActions } from '../utils';
 
 @Component({
   tag: 'justifi-business-form',

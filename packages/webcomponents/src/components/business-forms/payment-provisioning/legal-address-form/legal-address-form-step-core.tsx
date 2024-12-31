@@ -2,11 +2,11 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
-import { BusinessFormStep, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { ComponentError } from '../../../../api/ComponentError';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import StateOptions from '../../../../utils/state-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
+import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -21,7 +21,7 @@ export class LegalAddressFormStepCore {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;

@@ -1,15 +1,15 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStep, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
-import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';
+import { bankAccountTypeOptions, BusinessFormStep } from '../../utils';
 
 /**
  *
@@ -31,7 +31,7 @@ export class BusinessBankAccountFormStep {
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
