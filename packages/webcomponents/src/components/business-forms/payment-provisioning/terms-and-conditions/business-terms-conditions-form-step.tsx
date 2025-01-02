@@ -15,6 +15,7 @@ export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;
+  @State() acceptedTerms: boolean;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -120,6 +121,7 @@ export class BusinessTermsConditionsFormStep {
   }
 
   inputHandler = (name: string, value: boolean) => {
+    this.acceptedTerms = value;
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,
@@ -143,6 +145,7 @@ export class BusinessTermsConditionsFormStep {
                 errorText={this.errors.accepted}
                 disabled={this.acceptedTermsBefore}
                 helpText={this.formHelperText}
+                checked={this.acceptedTerms}
               />
             </div>
           </div>
