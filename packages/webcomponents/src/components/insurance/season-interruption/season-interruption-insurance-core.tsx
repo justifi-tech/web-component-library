@@ -26,7 +26,7 @@ export class SeasonInterruptionInsuranceCore {
 
   @State() quote: any;
   @State() isLoading: boolean = true;
-  @State() accepted: boolean | undefined;
+  @State() accepted: string | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
@@ -91,7 +91,7 @@ export class SeasonInterruptionInsuranceCore {
     });
   };
 
-  onChangeHandler(value: any) {
+  onChangeHandler(_name: string, value: string) {
     this.accepted = value;
     insuranceErrors[this.quote.policy_type] = false;
     this.toggleCoverage({
@@ -126,14 +126,14 @@ export class SeasonInterruptionInsuranceCore {
               label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
               name="opt-in"
               value={'true'}
-              checked={this.accepted}
+              checked={this.accepted === 'true'}
               inputHandler={this.onChangeHandler.bind(this)}
             />
             <form-control-radio
               label="Decline coverage"
               name="opt-in"
               value={'false'}
-              checked={!this.accepted}
+              checked={this.accepted === 'false'}
               inputHandler={this.onChangeHandler.bind(this)}
             />
             <div

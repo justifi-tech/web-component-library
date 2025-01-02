@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  Watch,
   State,
 } from '@stencil/core';
 import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
@@ -23,23 +22,15 @@ export class CheckboxInput {
   @Prop() name: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue?: boolean;
+  @Prop() checked: boolean;
   @Prop() inputHandler: (name: string, value: boolean) => void;
   @Prop() disabled: boolean;
-
-  @Watch('defaultValue')
-  handleDefaultValueChange(newValue: boolean) {
-    this.updateInput(newValue);
-  }
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  componentDidLoad() {
-    this.updateInput(this.defaultValue);
-  }
-
   handleFormControlInput = (event: any) => {
+    event.preventDefault();
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.checked);
@@ -54,13 +45,13 @@ export class CheckboxInput {
     if (this.errorText) {
       return inputCheckboxInvalid;
     }
-    if (this.isFocused && this.checkboxElement?.checked) {
+    if (this.isFocused && this.checked) {
       return inputCheckboxCheckedFocused;
     }
     if (this.isFocused) {
       return inputCheckboxFocused;
     }
-    if (this.checkboxElement?.checked) {
+    if (this.checked) {
       return inputCheckboxChecked;
     }
     return inputCheckbox;
@@ -85,6 +76,7 @@ export class CheckboxInput {
               part={this.part}
               class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
               disabled={this.disabled}
+              checked={this.checked}
             />
             <label class="form-check-label" htmlFor={this.name} part={label}>
               {this.label}

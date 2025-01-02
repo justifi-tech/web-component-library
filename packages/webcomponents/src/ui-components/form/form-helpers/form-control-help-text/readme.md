@@ -17,11 +17,13 @@
 
 ### Used by
 
+ - [form-control-radio](../..)
  - [form-control-textarea](../..)
 
 ### Graph
 ```mermaid
 graph TD;
+  form-control-radio --> form-control-help-text
   form-control-textarea --> form-control-help-text
   style form-control-help-text fill:#f9f,stroke:#333,stroke-width:4px
 ```

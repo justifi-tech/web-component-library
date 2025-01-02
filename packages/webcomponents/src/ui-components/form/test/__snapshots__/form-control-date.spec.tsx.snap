@@ -24,7 +24,7 @@ exports[`form-control-date Renders with all props provided 1`] = `
       </form-control-tooltip>
     </div>
     <input class="form-control is-invalid" disabled="" id="birthday" max="2020-01-01" name="birthday" part="input-disabled input text color font-family background-color" type="date" value="1990-01-01">
-    <small class="form-text text-danger" id="form-error-text-birthday" part="text-danger font-family">
+    <small class="form-text text-danger" id="form-error-text-birthday" part="text-danger text color font-family">
       Invalid date
     </small>
   </div>
