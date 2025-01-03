@@ -18,7 +18,7 @@ export class SaveNewPaymentMethod {
         <form-control-checkbox
           label="Save new payment method"
           name="saveNewPaymentMethod"
-          defaultValue={this.isChecked}
+          checked={this.isChecked}
           inputHandler={this.handleCheckboxChange.bind(this)}
         />
       </div>

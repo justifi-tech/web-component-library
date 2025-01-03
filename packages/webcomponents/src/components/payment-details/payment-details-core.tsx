@@ -2,11 +2,11 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Payment } from '../../api';
 import { formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { ComponentError } from '../../api/ComponentError';
 import { StyledHost } from '../../ui-components';
 import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
 import Spinner from '../../ui-components/spinner';
 import { badge } from '../../styles/parts';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'payment-details-core',
@@ -19,7 +19,7 @@ export class PaymentDetailsCore {
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>
 
   componentWillLoad() {
     if (this.getPaymentDetails) {

@@ -3,6 +3,11 @@ import { IDocument } from './Document';
 import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 
+export enum BusinessFormServerErrors {
+  fetchData = 'Error retrieving business data',
+  patchData = 'Error updating business data'
+}
+
 export enum BusinessClassification {
   sole_proprietor = 'sole_proprietor',
   partnership = 'partnership',

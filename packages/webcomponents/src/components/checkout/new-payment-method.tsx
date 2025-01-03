@@ -86,7 +86,8 @@ export class NewPaymentMethod {
     }
   }
 
-  onPaymentMethodOptionClick = () => {
+  onPaymentMethodOptionClick = (e) => {
+    e.preventDefault();
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
   };
 
@@ -116,8 +117,8 @@ export class NewPaymentMethod {
       <Host class="payment-method">
         <div
           class="radio-list-item p-3"
-          onClick={() => this.onPaymentMethodOptionClick()}
           part={radioListItem}
+          onClick={this.onPaymentMethodOptionClick}
         >
           <form-control-radio
             name="paymentMethodType"

@@ -15,13 +15,6 @@
 | `refs`                | --                      |             | `any[]`                         | `undefined` |
 
 
-## Events
-
-| Event           | Description | Type               |
-| --------------- | ----------- | ------------------ |
-| `formCompleted` |             | `CustomEvent<any>` |
-
-
 ## Dependencies
 
 ### Used by

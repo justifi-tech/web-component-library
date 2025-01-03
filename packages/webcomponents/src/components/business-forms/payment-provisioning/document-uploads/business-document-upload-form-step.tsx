@@ -1,15 +1,16 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { Business, IBusiness } from '../../../../api/Business';
 import Api, { IApiResponse } from '../../../../api/Api';
 import { config } from '../../../../../config';
 import { businessDocumentSchema } from '../../schemas/business-document-upload-schema';
 import { FileSelectEvent } from '../../../../components';
 import { EntityDocument, EntityDocumentStorage } from '../../../../api/Document';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { Skeleton } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
+import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-business-document-upload-form-step',
@@ -27,9 +28,11 @@ export class BusinessDocumentFormStep {
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  
+  // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -140,7 +143,7 @@ export class BusinessDocumentFormStep {
       })
       return false;
     } else {
-      this.stepCompleted.emit({ data: response, formStep: BusinessFormStep.documentUpload });
+      this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.documentUpload });
       return true;
     }
   }
@@ -156,7 +159,7 @@ export class BusinessDocumentFormStep {
     try {
       const docArray = Object.values(this.documentData).flat();
       if (!docArray.length) {
-        this.stepCompleted.emit({ data: null, formStep: BusinessFormStep.documentUpload, metadata: 'no data submitted' });
+        this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.documentUpload, metadata: 'no data submitted' });
         return onSuccess();
       }
 
@@ -192,7 +195,7 @@ export class BusinessDocumentFormStep {
       return null;
     }
     if (this.isLoading) {
-      return <Skeleton variant='rounded' height={'50px'} />;
+      return <Skeleton height={'50px'} />;
     }
 
     return <justifi-business-documents-on-file documents={this.existingDocuments} />;
@@ -203,7 +206,7 @@ export class BusinessDocumentFormStep {
       return null;
     }
     if (this.isLoading) {
-      return <Skeleton variant='rounded' height={'350px'} />;
+      return <Skeleton height={'350px'} />;
     }
 
     return (

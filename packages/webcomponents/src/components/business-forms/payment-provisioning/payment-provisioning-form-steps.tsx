@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'justifi-payment-provisioning-form-steps'
@@ -10,8 +10,6 @@ export class PaymentProvisioningFormSteps {
   @Prop() currentStep: number;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() handleFormLoading: (e: CustomEvent) => void
-
-  @Event() formCompleted: EventEmitter<any>;
 
   get currentStepComponent() {
     return this.componentStepMapping[this.currentStep]();
@@ -68,7 +66,6 @@ export class PaymentProvisioningFormSteps {
       ref={(el) => this.refs[7] = el}
       onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
-      onForm-step-completed={() => this.formCompleted.emit()}
     />,
   };
 

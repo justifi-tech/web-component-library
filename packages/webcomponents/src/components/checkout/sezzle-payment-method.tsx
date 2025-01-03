@@ -1,4 +1,4 @@
-import { Component, h, Prop, Method, Event, EventEmitter, State } from '@stencil/core';
+import { Component, h, Prop, Method, Event, EventEmitter, State, Host } from '@stencil/core';
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { formatCurrency } from '../../utils/utils';
@@ -56,7 +56,8 @@ export class SezzlePaymentMethod {
     return this.sezzlePromise;
   }
 
-  onPaymentMethodOptionClick = () => {
+  onPaymentMethodOptionClick = (e) => {
+    e.preventDefault();
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
   };
 
@@ -90,7 +91,7 @@ export class SezzlePaymentMethod {
 
   render() {
     return (
-      <div class="payment-method">
+      <Host class="payment-method">
         <script
           src="https://checkout-sdk.sezzle.com/checkout.min.js"
           async={true}
@@ -99,15 +100,13 @@ export class SezzlePaymentMethod {
 
         <div
           class="radio-list-item p-3"
-          onClick={() => this.onPaymentMethodOptionClick()}
           part={radioListItem}
+          onClick={this.onPaymentMethodOptionClick}
         >
           <form-control-radio
             name="paymentMethodType"
-            id={this.paymentMethodOption?.id}
             value={this.paymentMethodOption?.id}
             checked={this.isSelected}
-            inputHandler={() => this.onPaymentMethodOptionClick()}
             label={<div><div>Buy now, pay later with {sezzleLogo}</div>
               {this.installmentPlan && (
                 <small>
@@ -118,7 +117,7 @@ export class SezzlePaymentMethod {
               )}</div>}
           />
         </div>
-      </div>
+      </Host>
     );
   }
 }

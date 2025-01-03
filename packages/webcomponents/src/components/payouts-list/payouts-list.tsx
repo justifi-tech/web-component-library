@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
@@ -10,6 +10,7 @@ import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { StyledHost, tableExportedParts } from '../../ui-components';
 import { defaultColumnsKeys } from './payouts-table';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payouts-list',
@@ -27,7 +28,7 @@ export class PayoutsList {
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
   @Prop() columns?: string = defaultColumnsKeys;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 

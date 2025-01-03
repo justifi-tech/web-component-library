@@ -1,5 +1,6 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 
@@ -22,7 +23,7 @@ export class AdditionalQuestionsFormStep {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {

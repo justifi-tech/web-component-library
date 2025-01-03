@@ -22,13 +22,15 @@ export const codeExampleEventHandling = `
   (function() {
     const payoutsList = document.querySelector('justifi-payouts-list');
     
-    payoutsList.addEventListener('row-clicked', (event) => {
-      // event.detail contains all the necessary information to call an endpoint to get more details on this entity
-      const entityID = event.detail.id;
-  
-      // Below is pseudocode just to show the flow of data
-      const getMoreEntityDetails = justifiAPI(entityID);
-      <entity-details-component data={getMoreEntityDetails} />
+    payoutsList.addEventListener('click-event', (event) => {
+      // 'click-event' is emitted when a user clicks on a table row, or clicks on the next or previous page buttons
+      // event.detail.name describes the action that was clicked - it could be 'nextPage', 'previousPage', or 'tableRow'
+      // event.detail.data will be included if the action was 'tableRow', and will contain the data for the row that was clicked
+      
+      if (event.detail.name === 'tableRow') {
+        // Here is where you would handle the click event
+        console.log('data from click-event', event.detail.data);
+      }
     })
   
     payoutsList.addEventListener('error-event', (event) => {

@@ -14,11 +14,68 @@ exports[`BusinessDetailsCore should display error state correctly 1`] = `
 exports[`BusinessDetailsCore should display loading state correclty 1`] = `
 <business-details-core class="body" style="display: block;">
   <style></style>
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border" part="loading-spinner" role="status">
-      <span class="visually-hidden">
-        Loading...
-      </span>
+  <div class="mt-5">
+    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 1.5rem;"></div>
+    <hr>
+    <div class="g-3 row">
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5">
+    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 1.5rem;"></div>
+    <hr>
+    <div class="g-3 row">
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5">
+    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 1.5rem;"></div>
+    <hr>
+    <div class="g-3 row">
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5">
+    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 1.5rem;"></div>
+    <hr>
+    <div class="g-3 row">
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+      </div>
     </div>
   </div>
 </business-details-core>

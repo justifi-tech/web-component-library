@@ -63,7 +63,7 @@ const meta: Meta = {
         defaultValue: { summary: "false" },
       },
     },
-    submitted: {
+    "submit-event": {
       description:
         "Emitted when the server response is received.  Will not be raised if form vailidation fails.",
       table: {
@@ -77,17 +77,10 @@ const meta: Meta = {
         category: "events",
       },
     },
-    clickEvent: {
-      description:
-        "Emitted when controls are clicked.  Control name is defined in `data.detail.name`. This event will be deprecated in favor of the `click-event` event.",
-      table: {
-        category: "events",
-      },
-    },
   },
   parameters: {
     actions: {
-      handles: ["submitted", "click-event", "clickEvent"],
+      handles: ["submit-event", "click-event"],
     },
     chromatic: {
       delay: 2000,

@@ -1,9 +1,10 @@
 import { Component, Event, EventEmitter, Method, Prop, State, h } from '@stencil/core';
 import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -28,7 +29,7 @@ export class SeasonInterruptionInsurance {
   @State() toggleCoverage: Function;
   @State() quote: any;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   private seasonInterruptionCoreRef?: HTMLJustifiSeasonInterruptionInsuranceCoreElement;
 

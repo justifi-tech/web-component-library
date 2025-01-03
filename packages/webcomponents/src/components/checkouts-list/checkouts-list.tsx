@@ -4,11 +4,12 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
 import { CheckoutService } from '../../api/services/checkout.service';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './checkouts-table';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-checkouts-list',
@@ -25,7 +26,7 @@ export class CheckoutsList {
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
   @Prop() columns?: string = defaultColumnsKeys;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 

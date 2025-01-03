@@ -1,12 +1,13 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';
+import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-business-terms-conditions-form-step'
@@ -15,14 +16,18 @@ export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;
+  @State() acceptedTerms: boolean;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  
+  // internal loading events
   @Event() formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ bubbles: true }) formCompleted: EventEmitter<any>;
 
   private api: any;
 
@@ -100,13 +105,15 @@ export class BusinessTermsConditionsFormStep {
     } else {
       onSuccess();
     }
-    this.stepCompleted.emit({ data: response, formStep: BusinessFormStep.termsAndConditions });
+    this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.termsAndConditions });
+    this.formCompleted.emit();
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.acceptedTermsBefore) {
-      this.stepCompleted.emit({ data: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
+      this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
+      this.formCompleted.emit();
       onSuccess();
     } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
@@ -120,6 +127,7 @@ export class BusinessTermsConditionsFormStep {
   }
 
   inputHandler = (name: string, value: boolean) => {
+    this.acceptedTerms = value;
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,
@@ -143,6 +151,7 @@ export class BusinessTermsConditionsFormStep {
                 errorText={this.errors.accepted}
                 disabled={this.acceptedTermsBefore}
                 helpText={this.formHelperText}
+                checked={this.acceptedTerms}
               />
             </div>
           </div>

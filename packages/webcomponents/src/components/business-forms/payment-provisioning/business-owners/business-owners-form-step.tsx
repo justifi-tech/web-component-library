@@ -1,7 +1,8 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
+import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-business-owners-form-step'
@@ -22,7 +23,7 @@ export class BusinessOwnersFormStep {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {

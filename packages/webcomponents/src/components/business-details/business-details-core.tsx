@@ -1,9 +1,9 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentError } from '../../api/ComponentError';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { StyledHost } from '../../ui-components';
-import Spinner from '../../ui-components/spinner';
+import { BusinessDetailsLoading } from './business-details-loading';
 
 enum RENDER_STATES {
   LOADING = 'loading',
@@ -21,7 +21,7 @@ export class BusinessDetailsCore {
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
   @State() errorMessage: string = 'An error ocurred.';
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   async componentWillLoad() {
     if (this.getBusiness) {
@@ -52,7 +52,11 @@ export class BusinessDetailsCore {
 
   render() {
     if (this.renderState === RENDER_STATES.LOADING) {
-      return <StyledHost><Spinner /></StyledHost>;
+      return (
+        <StyledHost>
+          <BusinessDetailsLoading />
+        </StyledHost>
+      );
     }
 
     if (this.renderState === RENDER_STATES.ERROR) {

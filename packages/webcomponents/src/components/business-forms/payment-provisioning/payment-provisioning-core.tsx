@@ -1,9 +1,10 @@
 import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormSubmitEvent } from '../utils/business-form-types';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { checkProvisioningStatus } from '../utils/helpers';
 import { Header1, StyledHost } from '../../../ui-components';
 import { text } from '../../../styles/parts';
+import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { BusinessFormClickActions } from '../utils/event-types';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
@@ -21,9 +22,14 @@ export class PaymentProvisioningCore {
   @Prop() getBusiness: Function;
   @Prop() postProvisioning: Function;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<BusinessFormClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
-  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+
+  @Listen('formCompleted')
+  handleFormCompleted() {
+    this.postProvisioningData();
+  }
 
   componentWillLoad() {
     this.getBusiness && this.setBusinessProvisioned();
@@ -56,10 +62,10 @@ export class PaymentProvisioningCore {
   postProvisioningData = () => {
     this.postProvisioning({
       onSuccess: (response) => {
-        this.submitted.emit({ data: { response } });
+        this.submitEvent.emit({ data: response });
       },
       onError: ({ error, code, severity }) => {
-        this.submitted.emit({ data: { error } });
+        this.submitEvent.emit({ data: { error } });
         this.errorEvent.emit({
           message: error,
           errorCode: code,
@@ -133,7 +139,6 @@ export class PaymentProvisioningCore {
             currentStep={this.currentStep}
             allowOptionalFields={this.allowOptionalFields}
             handleFormLoading={this.handleFormLoading}
-            onFormCompleted={() => this.postProvisioningData()}
           />
           <div class='d-flex justify-content-between align-items-center'>
             <div class='d-flex align-items-center' part={text}>

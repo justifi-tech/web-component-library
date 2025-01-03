@@ -3,11 +3,12 @@ import { formatCurrency } from '../../utils/utils';
 import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { Button, StyledHost, Skeleton, Header2, Header3 } from '../../ui-components';
 import { text } from '../../styles/parts';
+import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-checkout-core',
@@ -35,8 +36,8 @@ export class CheckoutCore {
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
 
-  @Event({ eventName: 'submitted' }) submitted: EventEmitter<ICheckoutCompleteResponse>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'loaded' }) loaded: EventEmitter<ILoadedEventResponse>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
@@ -121,7 +122,7 @@ export class CheckoutCore {
   }
 
   onSubmitted = (data: ICheckoutCompleteResponse) => {
-    this.submitted.emit(data);
+    this.submitEvent.emit({ data: data });
     this.renderState = 'success';
   };
 
@@ -149,7 +150,7 @@ export class CheckoutCore {
         {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
         {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
         <div class={!this.isLoading && 'visually-hidden'}>
-          <Skeleton variant="rounded" height="300px" />
+          <Skeleton height="300px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
           <justifi-payment-method-options

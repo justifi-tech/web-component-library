@@ -29,7 +29,7 @@ const meta: Meta = {
     "form-title": {
       type: "string",
       description:
-        'This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.',
+        "This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.",
       control: {
         type: "text",
       },
@@ -50,17 +50,17 @@ const meta: Meta = {
         defaultValue: { summary: "false" },
       },
     },
-    submitted: {
+    "submit-event": {
       description:
-        "Emitted when the server response is received.  Will not be raised if form vailidation fails. <br> **NOTE**: This event's behavior will be modified in the next major release to only emit at the final form step completion. Please use the `form-step-completed` event to manage completion of individual form steps.",
+        "Emitted when the server response is received, and contains server response.  Will not be raised if form vailidation fails.",
       table: {
         category: "events",
       },
     },
-    'form-step-completed': {
+    "complete-form-step-event": {
       description: "Emitted when a form step is completed after the user clicks 'Next'. Contains data from that form step's server response. The name of the completed form step is defined in `data.detail.formStep`.",
       table: {
-        category: 'events',
+        category: "events",
         defaultValue: {
           summary: "Example Payload",
           detail: `{ data: serverResponse, formStep: 'legal_address' }`
@@ -74,16 +74,16 @@ const meta: Meta = {
         category: "events",
       },
     },
-    'error-event': {
-      description: '`ComponentError` - emitted when a network error occurs in the component.',
+    "error-event": {
+      description: "`ComponentError` - emitted when a network error occurs in the component.",
       table: {
-        category: 'events'
+        category: "events"
       }
     }
   },
   parameters: {
     actions: {
-      handles: ["submitted", "form-step-completed", "click-event", "error-event"],
+      handles: ["submit-event", "complete-form-step-event", "click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
