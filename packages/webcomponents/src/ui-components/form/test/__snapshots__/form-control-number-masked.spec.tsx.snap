@@ -24,7 +24,7 @@ exports[`form-control-number-masked Renders with all props provided 1`] = `
       </form-control-tooltip>
     </div>
     <input class="form-control is-invalid" disabled="" id="age" name="age" part="input-invalid input text color font-family background-color" type="text" value="25">
-    <small class="form-text text-danger" id="form-error-text-age" part="text-danger font-family">
+    <small class="form-text text-danger" id="form-error-text-age" part="text-danger text color font-family">
       Invalid age
     </small>
   </div>

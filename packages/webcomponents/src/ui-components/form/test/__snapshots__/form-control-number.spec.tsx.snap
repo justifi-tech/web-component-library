@@ -10,7 +10,7 @@ exports[`form-control-number Renders with all props provided 1`] = `
     <small class="form-text text-muted" id="form-help-text-age" part="text color font-family">
       Enter your age
     </small>
-    <small class="form-text text-danger" id="form-error-text-age" part="text-danger font-family">
+    <small class="form-text text-danger" id="form-error-text-age" part="text-danger text color font-family">
       Invalid age
     </small>
   </div>

@@ -150,7 +150,7 @@ export class CheckoutCore {
         {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
         {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
         <div class={!this.isLoading && 'visually-hidden'}>
-          <Skeleton variant="rounded" height="300px" />
+          <Skeleton height="300px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
           <justifi-payment-method-options
