@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Checkout, PagingInfo, SubAccount, pagingDefaults } from '../../api';
-import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './checkouts-list-params-state';
-
 import { table, tableCell } from '../../styles/parts';
+import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
+import { TableClickActions } from '../../ui-components/table/event-types';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -33,12 +33,8 @@ export class CheckoutsListCore {
     this.fetchData();
   }
 
-  @Event({
-    eventName: 'row-clicked',
-    bubbles: true,
-  }) rowClicked: EventEmitter<Checkout>;
-
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
     this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
@@ -111,16 +107,20 @@ export class CheckoutsListCore {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
+    this.clickEvent.emit({ name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
+    this.clickEvent.emit({ name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
     const clickedCheckoutID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedCheckoutID) return;
-    this.rowClicked.emit(this.checkouts.find((checkout) => checkout.id === clickedCheckoutID));
+
+    const checkoutData = this.checkouts.find((checkout) => checkout.id === clickedCheckoutID);
+    this.clickEvent.emit({ name: TableClickActions.row, data: checkoutData });
   };
 
   get requestParams() {

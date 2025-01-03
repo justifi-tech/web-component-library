@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { Identity, Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
-import { ComponentError } from '../../../../api/ComponentError';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { identitySchema } from '../../schemas/business-identity-schema';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-business-representative-form-step-core',
@@ -19,9 +19,11 @@ export class BusinessRepresentativeFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
-  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+
+  // internal loading event
+  @Event() formLoading: EventEmitter<boolean>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -84,7 +86,7 @@ export class BusinessRepresentativeFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.representative });
+        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.representative });
         this.formLoading.emit(false)
       }
     });

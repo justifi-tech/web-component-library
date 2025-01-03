@@ -2,12 +2,11 @@ import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Business';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
-import { ComponentError } from '../../../../components';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
-import { businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils/business-form-options';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { BusinessFormStep, businessServiceReceivedOptions, recurringPaymentsOptions, seasonalBusinessOptions } from '../../utils';
 
 @Component({
   tag: 'justifi-additional-questions-form-step-core',
@@ -32,9 +31,11 @@ export class AdditionalQuestionsFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+
+  // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -97,7 +98,7 @@ export class AdditionalQuestionsFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.additionalQuestions });
+        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.additionalQuestions });
         this.formLoading.emit(false)
       }
     });

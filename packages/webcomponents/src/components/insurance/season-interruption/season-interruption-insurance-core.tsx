@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from "@stencil/core";
-import { ComponentError } from "../../../api/ComponentError";
+import { ComponentErrorEvent } from "../../../api/ComponentEvents";
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
 import { StyledHost, Header2 } from "../../../ui-components";
@@ -26,10 +26,10 @@ export class SeasonInterruptionInsuranceCore {
 
   @State() quote: any;
   @State() isLoading: boolean = true;
-  @State() accepted: boolean | undefined;
+  @State() accepted: string | undefined;
 
   @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
@@ -91,7 +91,7 @@ export class SeasonInterruptionInsuranceCore {
     });
   };
 
-  onChangeHandler(value: any) {
+  onChangeHandler(_name: string, value: string) {
     this.accepted = value;
     insuranceErrors[this.quote.policy_type] = false;
     this.toggleCoverage({
@@ -125,15 +125,15 @@ export class SeasonInterruptionInsuranceCore {
             <form-control-radio
               label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
               name="opt-in"
-              value={true}
-              checked={this.accepted}
+              value={'true'}
+              checked={this.accepted === 'true'}
               inputHandler={this.onChangeHandler.bind(this)}
             />
             <form-control-radio
               label="Decline coverage"
               name="opt-in"
-              value={false}
-              checked={!this.accepted}
+              value={'false'}
+              checked={this.accepted === 'false'}
               inputHandler={this.onChangeHandler.bind(this)}
             />
             <div

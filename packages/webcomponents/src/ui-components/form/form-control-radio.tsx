@@ -5,7 +5,6 @@ import {
   Prop,
   Event,
   EventEmitter,
-  Watch,
   State,
 } from '@stencil/core';
 import {
@@ -27,30 +26,21 @@ export class RadioInput {
 
   @Prop() label: string;
   @Prop() name: any;
-  @Prop() value: any;
+  @Prop() value: string;
   @Prop() helpText?: string;
-  @Prop() errorText?: string;
-  @Prop() checked: boolean;
-  @Prop() inputHandler: (value: boolean) => void;
+  @Prop() inputHandler: (name: string, value: string) => void;
   @Prop() disabled: boolean;
-
-  @Watch('checked')
-  handleDefaultValueChange(checked: boolean) {
-    this.updateInput(checked);
-  }
+  @Prop() errorText: string;
+  @Prop() checked: boolean;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
 
-  handleFormControlInput = () => {
-    this.inputHandler(this.value);
-    this.formControlInput.emit({ name: this.name, value: this.value });
-  }
-
-  updateInput = (checked: boolean) => {
-    if (this.radioElement) {
-      this.radioElement.checked = checked;
-    }
+  handleFormControlInput = (event: any) => {
+    const target = event.target;
+    const name = target.getAttribute('name');
+    this.inputHandler(name, this.value);
+    this.formControlInput.emit({ name, value: this.value });
   }
 
   private get part() {
@@ -80,7 +70,7 @@ export class RadioInput {
           <input
             ref={el => (this.radioElement = el as HTMLInputElement)}
             type="radio"
-            id={`${this.name}+${this.value}`}
+            id={`${this.name}-${this.value}`}
             name={this.name}
             onFocus={() => this.isFocused = true}
             onBlur={() => {
@@ -92,8 +82,13 @@ export class RadioInput {
             class={this.errorText ? 'form-check-input is-invalid' : 'form-check-input'}
             disabled={this.disabled}
             value={this.value}
+            checked={this.checked}
           />
-          <label class="form-check-label" htmlFor={`${this.name}+${this.value}`} part={label}>
+          <label
+            class="form-check-label"
+            htmlFor={`${this.name}-${this.value}`}
+            part={label}
+          >
             {this.label}
           </label>
         </div>

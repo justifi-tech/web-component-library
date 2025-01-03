@@ -1,10 +1,11 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import JustifiAnalytics from '../../../api/Analytics';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import { makeGetBusiness, makePostProvisioning } from './payment-provisioning-actions';
 import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payment-provisioning',
@@ -25,7 +26,7 @@ export class PaymentProvisioning {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 

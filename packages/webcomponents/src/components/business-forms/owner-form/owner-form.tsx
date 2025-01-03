@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
-import { ComponentError } from '../../../api/ComponentError';
+import { ComponentErrorEvent } from '../../../api/ComponentEvents';
 import { makeGetIdentity, makePatchIdentity, makePostIdentity } from '../payment-provisioning/payment-provisioning-actions';
 import { IdentityService } from '../../../api/services/business.service';
 
@@ -21,7 +21,7 @@ export class BusinessOwnerForm {
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Method()
   async validate(): Promise<boolean> {

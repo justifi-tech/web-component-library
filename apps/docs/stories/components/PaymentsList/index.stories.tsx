@@ -1,40 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { withActions } from "@storybook/addon-actions/decorator";
+import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-payments-list";
 import "@justifi/webcomponents/dist/module/justifi-payments-list-filters";
-
-const examplePayload = {
-  "id": "py_xyz",
-  "account_id": "acc_xyz",
-  "amount": 10000,
-  "amount_disputed": 0,
-  "amount_refunded": 0,
-  "amount_refundable": 10000,
-  "balance": 99850,
-  "fee_amount": 150,
-  "financial_transaction_id": "ft_123xyz",
-  "captured": true,
-  "capture_strategy": "automatic",
-  "currency": "usd",
-  "description": "my_order_xyz",
-  "disputed": false,
-  "disputes": [],
-  "error_code": "credit_card_number_invalid",
-  "error_description": "Credit Card Number Invalid (Failed LUHN checksum)",
-  "is_test": true,
-  "metadata": {},
-  "payment_intent_id": "pi_123xyz",
-  "checkout_id": "cho_123",
-  "payment_method": {},
-  "application_fee": {},
-  "refunded": false,
-  "status": "pending",
-  "payment_mode": "ecom",
-  "created_at": "2021-01-01T12:00:00Z",
-  "updated_at": "2021-01-01T12:00:00Z"
-};
 
 type Story = StoryObj;
 
@@ -57,25 +27,24 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "row-clicked": {
-      description: "`RowClicked`",
+    "click-event": {
+      description:
+        "Emitted when controls or table rows are clicked.  Control name is defined in `event.detail.name`.",
       table: {
         category: "events",
-        defaultValue: {
-          summary: "Emits chosen Payment object on row click",
-          detail: JSON.stringify(examplePayload)
-        }
       },
+      action: true
     },
     "error-event": {
-      description: "`ComponentError`",
+      description: "`ComponentError` - emitted when a network error occurs in the component.",
       table: {
-        category: "events",
+        category: "events"
       },
+      action: true
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
-      type: 'string',
+      type: "string",
       table: {
         category: "props",
         defaultValue: {
@@ -89,7 +58,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["row-clicked", "error-event"],
+      handles: ["click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
@@ -97,6 +66,7 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
+    withActions
   ]
 };
 

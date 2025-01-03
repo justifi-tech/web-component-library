@@ -2,9 +2,10 @@ import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/c
 import { ErrorState } from '../../ui-components/details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from './get-business';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-business-details',
@@ -21,7 +22,7 @@ export class BusinessDetails {
 
   @Event({
     eventName: 'error-event'
-  }) errorEvent: EventEmitter<ComponentError>;
+  }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
 
   componentWillLoad() {

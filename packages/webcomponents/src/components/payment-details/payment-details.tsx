@@ -2,9 +2,10 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from './get-payment-details';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payment-details',
@@ -18,7 +19,7 @@ export class PaymentDetails {
   @State() getPaymentDetails: Function;
   @State() errorMessage: string = null;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 

@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
@@ -9,6 +9,7 @@ import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './terminals-table';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-terminals-list',
@@ -25,7 +26,7 @@ export class TerminalsList {
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
   @Prop() columns?: string = defaultColumnsKeys;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 

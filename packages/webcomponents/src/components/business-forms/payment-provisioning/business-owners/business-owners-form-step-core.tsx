@@ -1,9 +1,9 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Listen, Watch } from '@stencil/core';
-import { ComponentError } from '../../../../api/ComponentError';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
 import { Button } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 
 interface ownerPayloadItem { id: string; }
 
@@ -22,10 +22,13 @@ export class BusinessOwnersFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<BusinessFormClickEvent>;
+
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+
+  // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
 
   get showAddOwnerButton() {
@@ -87,7 +90,7 @@ export class BusinessOwnersFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.owners });
+        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.owners });
         this.formLoading.emit(false)
       }
     });

@@ -1,11 +1,12 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payment, pagingDefaults } from '../../api';
-import { ComponentError } from '../../api/ComponentError';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
 import { queryParams, onQueryParamsChange } from './payments-list-params-state';
 import { table, tableCell } from '../../styles/parts';
+import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
+import { TableClickActions } from '../../ui-components/table/event-types';
 
 @Component({
   tag: 'payments-list-core'
@@ -29,12 +30,8 @@ export class PaymentsListCore {
     this.fetchData();
   }
 
-  @Event({
-    eventName: 'row-clicked',
-    bubbles: true,
-  }) rowClicked: EventEmitter<Payment>;
-
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
     this.paymentsTable = new Table(this.payments, this.columns, paymentTableColumns, paymentTableCells);
@@ -77,16 +74,20 @@ export class PaymentsListCore {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
+    this.clickEvent.emit({ name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
+    this.clickEvent.emit({ name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
     const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPaymentID) return;
-    this.rowClicked.emit(this.payments.find((payment) => payment.id === clickedPaymentID));
+    
+    const paymentData = this.payments.find((payment) => payment.id === clickedPaymentID);
+    this.clickEvent.emit({ name: TableClickActions.row, data: paymentData });
   };
 
   get entityId() {

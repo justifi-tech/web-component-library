@@ -1,12 +1,13 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPayments } from './get-payments';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './payments-table';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payments-list',
@@ -22,7 +23,7 @@ export class PaymentsList {
   @Prop() apiOrigin?: string = config.proxyApiOrigin;
   @Prop() columns?: string = defaultColumnsKeys;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 

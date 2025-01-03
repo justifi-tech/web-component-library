@@ -3,12 +3,13 @@ import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
 import { config } from '../../../../config';
-import { BusinessFormClickActions, BusinessFormClickEvent, BusinessFormServerErrors, BusinessFormSubmitEvent } from '../utils/business-form-types';
-import { Business, IBusiness } from '../../../api/Business';
+import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { BusinessFormLoading } from './business-form-loading';
+import { ComponentClickEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { BusinessFormClickActions } from '../utils';
 
 @Component({
   tag: 'justifi-business-form',
@@ -23,9 +24,9 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
-  @Event() submitted: EventEmitter<BusinessFormSubmitEvent>;
-  @Event({ eventName: 'click-event' }) clickEventNew: EventEmitter<BusinessFormClickEvent>;
-  @Event({ eventName: 'clickEvent' }) clickEventOld: EventEmitter<BusinessFormClickEvent>;
+
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -44,12 +45,6 @@ export class BusinessForm {
 
   disconnectedCallback() {
     this.analytics.cleanup();
-  }
-
-  fireClickEvents(event: BusinessFormClickEvent) {
-    console.warn('`clickEvent` is deprecated and will be removed in the next major release. Please use `click-event` instead.');
-    this.clickEventNew.emit(event);
-    this.clickEventOld.emit(event);
   }
 
   get title() {
@@ -108,7 +103,7 @@ export class BusinessForm {
     if (response.error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     }
-    this.submitted.emit({ data: response });
+    this.submitEvent.emit({ data: response });
     this.instantiateBusiness(response.data);
   }
 
@@ -140,7 +135,7 @@ export class BusinessForm {
                 type="submit"
                 disabled={this.disabledState}
                 variant='primary'
-                onClick={() => this.fireClickEvents({ name: BusinessFormClickActions.submit })}
+                onClick={() => this.clickEvent.emit({ name: BusinessFormClickActions.submit })}
                 isLoading={this.isSaving}
               >
                 Submit
