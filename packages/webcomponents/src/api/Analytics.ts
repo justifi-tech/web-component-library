@@ -60,7 +60,7 @@ class JustifiAnalytics {
   };
 
   private trackCustomEvents() {
-    this.eventEmitters = ['submitted', 'error-event'];
+    this.eventEmitters = ['submit-event', 'error-event'];
 
     // for each event, add an event listener
     this.eventEmitters.forEach((eventName) => {

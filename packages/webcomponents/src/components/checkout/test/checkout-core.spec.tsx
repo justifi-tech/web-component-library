@@ -141,7 +141,7 @@ describe('justifi-checkout-core', () => {
 
     const page = await newSpecPage({
       components: [CheckoutCore, PaymentMethodOptions],
-      template: () => <justifi-checkout-core getCheckout={getCheckout} complete={checkoutComplete} onSubmitted={submittedSpy} />,
+      template: () => <justifi-checkout-core getCheckout={getCheckout} complete={checkoutComplete} onSubmit-event={submittedSpy} />,
     });
 
     await page.waitForChanges();
@@ -158,7 +158,9 @@ describe('justifi-checkout-core', () => {
 
     expect(submittedSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        detail: mockPostCheckoutSuccess
+        detail: {
+          data: mockPostCheckoutSuccess,
+        }
       })
     );
   });

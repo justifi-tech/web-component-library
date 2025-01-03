@@ -14,9 +14,9 @@
 
 ## Events
 
-| Event         | Description | Type                          |
-| ------------- | ----------- | ----------------------------- |
-| `error-event` |             | `CustomEvent<ComponentError>` |
+| Event         | Description | Type                               |
+| ------------- | ----------- | ---------------------------------- |
+| `error-event` |             | `CustomEvent<ComponentErrorEvent>` |
 
 
 ## Dependencies

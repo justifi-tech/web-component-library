@@ -2,9 +2,10 @@ import { Component, Event, EventEmitter, Prop, State, Watch, h } from '@stencil/
 import { ReportsService } from '../../api/services/reports.service';
 import { makeGetGrossPaymentChartData } from './get-gross-payment-chart-data';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-gross-payment-chart',
@@ -17,7 +18,7 @@ export class GrossPaymentChart {
   @State() getGrossPayment: Function;
   @State() errorMessage: string = null;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -54,7 +55,7 @@ export class GrossPaymentChart {
     }
   }
 
-  handleErrorEvent = (event: CustomEvent<ComponentError>) => {
+  handleErrorEvent = (event: CustomEvent<ComponentErrorEvent>) => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
   };

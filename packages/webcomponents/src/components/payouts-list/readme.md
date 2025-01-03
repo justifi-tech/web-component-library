@@ -17,10 +17,10 @@
 
 ## Events
 
-| Event         | Description | Type                          |
-| ------------- | ----------- | ----------------------------- |
-| `error-event` |             | `CustomEvent<ComponentError>` |
-| `row-clicked` |             | `CustomEvent<Payout>`         |
+| Event         | Description | Type                               |
+| ------------- | ----------- | ---------------------------------- |
+| `click-event` |             | `CustomEvent<ComponentClickEvent>` |
+| `error-event` |             | `CustomEvent<ComponentErrorEvent>` |
 
 
 ## Shadow Parts

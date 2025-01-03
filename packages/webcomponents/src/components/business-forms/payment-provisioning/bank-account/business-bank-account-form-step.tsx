@@ -1,15 +1,15 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
-import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { Api, IApiResponse } from '../../../../api';
 import { config } from '../../../../../config';
 import { IBusiness } from '../../../../components';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { BankAccount } from '../../../../api/BankAccount';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';
+import { bankAccountTypeOptions, BusinessFormStep } from '../../utils';
 
 /**
  *
@@ -30,9 +30,11 @@ export class BusinessBankAccountFormStep {
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  
+  // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
 
   private api: any;
 
@@ -100,13 +102,13 @@ export class BusinessBankAccountFormStep {
     } else {
       onSuccess();
     }
-    this.stepCompleted.emit({ data: response, formStep: BusinessFormStep.bankAccount });
+    this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.bankAccount });
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.formDisabled) {
-      this.stepCompleted.emit({ data: null, formStep: BusinessFormStep.bankAccount, metadata: 'no data submitted' });
+      this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.bankAccount, metadata: 'no data submitted' });
       onSuccess();
     } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));

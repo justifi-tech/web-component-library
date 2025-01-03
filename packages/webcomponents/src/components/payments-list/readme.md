@@ -13,10 +13,10 @@
 
 ## Events
 
-| Event         | Description | Type                          |
-| ------------- | ----------- | ----------------------------- |
-| `error-event` |             | `CustomEvent<ComponentError>` |
-| `row-clicked` |             | `CustomEvent<Payment>`        |
+| Event         | Description | Type                               |
+| ------------- | ----------- | ---------------------------------- |
+| `click-event` |             | `CustomEvent<ComponentClickEvent>` |
+| `error-event` |             | `CustomEvent<ComponentErrorEvent>` |
 
 
 ## Dependencies

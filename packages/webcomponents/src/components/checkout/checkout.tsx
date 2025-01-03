@@ -1,11 +1,12 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
-import { ComponentError, ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../billing-form/billing-form-schema';
 import { ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-checkout',
@@ -23,7 +24,7 @@ export class Checkout {
   @State() complete: Function;
   @State() errorMessage: string = '';
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   // The original event is emitted from the core component, 
   // but we want to expose it here so it's documented in the storybook
   @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;

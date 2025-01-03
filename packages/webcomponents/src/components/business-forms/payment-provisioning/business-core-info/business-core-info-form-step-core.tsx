@@ -2,9 +2,8 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
-import { BusinessFormStepCompletedEvent, BusinessFormStep } from '../../utils/business-form-types';
-import { ComponentError } from '../../../../api/ComponentError';
-import { businessClassificationOptions } from '../../utils/business-form-options';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { BusinessFormStep, businessClassificationOptions } from '../../utils';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
@@ -22,9 +21,11 @@ export class BusinessCoreInfoFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'form-step-completed', bubbles: true }) stepCompleted: EventEmitter<BusinessFormStepCompletedEvent>;
-  @Event({ bubbles: true }) formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentError>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+
+  // internal loading event
+  @Event() formLoading: EventEmitter<boolean>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -83,7 +84,7 @@ export class BusinessCoreInfoFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleted.emit({ data: submittedData, formStep: BusinessFormStep.businessInfo });
+        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.businessInfo });
         this.formLoading.emit(false)
       }
     });

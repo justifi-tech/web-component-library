@@ -1,43 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { customStoryDecorator, StoryBaseArgs } from "../../utils";
+import { withActions } from "@storybook/addon-actions/decorator";
+import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-payouts-list";
 import "@justifi/webcomponents/dist/module/justifi-payouts-list-filters";
-
-const examplePayload = {
-  "id": "po_xyz",
-  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-  "amount": 100000,
-  "bank_account": {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "full_name": "string",
-    "bank_name": "string",
-    "account_number_last4": 1111,
-    "routing_number": "string",
-    "country": "US",
-    "currency": "usd",
-    "nickname": "string",
-    "account_type": "checking"
-    },
-  "currency": "usd",
-  "delivery_method": "standard",
-  "description": "string",
-  "deposits_at": "2021-01-01T12:00:00Z",
-  "fees_total": 5000,
-  "refunds_count": 5,
-  "refunds_total": 10000,
-  "payments_count": 50,
-  "payments_total": 110000,
-  "payout_type": "ach cc",
-  "other_total": 100,
-  "status": "paid",
-  "metadata": {
-    "customer_payout_id": "cp_12345"
-  },
-  "created_at": "2021-01-01T12:00:00Z",
-  "updated_at": "2021-01-01T12:00:00Z"
-  }
 
 type Story = StoryObj;
 
@@ -60,27 +27,24 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "row-clicked": {
-      description: "`RowClicked`",
+    "click-event": {
+      description:
+        "Emitted when controls or table rows are clicked.  Control name is defined in `event.detail.name`.",
       table: {
         category: "events",
-        defaultValue: {
-          summary: "Emits chosen Payout object on row click",
-          detail: JSON.stringify(examplePayload)
-        }
       },
-      action: true,
+      action: true
     },
     "error-event": {
-      description: "`ComponentError`",
+      description: "`ComponentError` - emitted when a network error occurs in the component.",
       table: {
-        category: "events",
+        category: "events"
       },
-      action: true,
+      action: true
     },
     "columns": {
       description: "Columns to display in the table <br> Pass a comma separated list of columns to display in the table.",
-      type: 'string',
+      type: "string",
       table: {
         category: "props",
         defaultValue: {
@@ -94,7 +58,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["row-clicked", "error-event"],
+      handles: ["click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
@@ -102,6 +66,7 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
+    withActions
   ]
 };
 

@@ -16,21 +16,21 @@ ${codeExampleHead('justifi-payment-provisioning')}
   (function () {
     var paymentProvisioning = document.querySelector("justifi-payment-provisioning");
 
-    paymentProvisioning.addEventListener("submitted", (data) => {
+    paymentProvisioning.addEventListener("submit-event", (data) => {
       /* this event is raised when the server response is received */
       console.log("server response received", data);
     });
 
-    paymentProvisioning.addEventListener("form-step-completed", (data) => {
+    paymentProvisioning.addEventListener("complete-form-step-event", (event) => {
       /* this event is raised when a form step is completed */
-      let serverResponse = data.detail.data;
-      let completedFormStep = data.detail.formStep;
+      let serverResponse = event.detail.data;
+      let completedFormStep = event.detail.formStep;
       console.log("data from server", serverResponse);
       console.log("completed form step", completedFormStep);
     }
 
-    paymentProvisioning.addEventListener("click-event", (data) => {
-      let name = data.detail.name;
+    paymentProvisioning.addEventListener("click-event", (event) => {
+      let name = event.detail.name;
 
       if (name == "nextStep") {
         console.log("This is a next step button click", data);
