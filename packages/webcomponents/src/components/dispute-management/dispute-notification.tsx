@@ -3,8 +3,7 @@ import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
 import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { heading4, text } from "../../styles/parts";
-import { Skeleton, Button } from "../../ui-components";
-// import { IApiResponse } from "../../api/Api";
+import { Skeleton, Button, StyledHost } from "../../ui-components";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
 import { ComponentClickEvent, ComponentSubmitEvent, ComponentErrorEvent } from "../../api/ComponentEvents";
@@ -12,6 +11,7 @@ import { DisputeManagementClickActions } from "./event-types";
 
 @Component({
   tag: 'justifi-dispute-notification',
+  shadow: true
 })
 export class DisputeNotification {
   @Prop() dispute: Dispute;
@@ -48,7 +48,7 @@ export class DisputeNotification {
 
   render() {
     return (
-      <div>
+      <StyledHost>
         {this.isLoading && (
           <div style={{ marginBottom: '8px' }}>
             <Skeleton height={'28px'} width={'70%'} styles={{ marginBottom: '16px' }} />
@@ -116,7 +116,7 @@ export class DisputeNotification {
             <p>The cardholder disputed this payment and the card issuer has settled it their favor.</p>
           </div>
         )}
-      </div>
+      </StyledHost>
     );
   }
 };
