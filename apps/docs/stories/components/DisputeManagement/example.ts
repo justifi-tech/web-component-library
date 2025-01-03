@@ -4,7 +4,7 @@ export const codeExampleFull = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead('justifi-dispute-management')}
+${codeExampleHead("justifi-dispute-management")}
 
 <body>
   <justifi-dispute-management disputeId="disputeId" authToken="authToken">
@@ -21,14 +21,14 @@ export const codeExampleEventHandling = `
 
 <script>
   (function() {
-    const disputeManagement = document.querySelector('justifi-dispute-management');
+    const disputeManagement = document.querySelector("justifi-dispute-management");
     
-    disputeManagement.addEventListener('submitted', (event) => {
+    disputeManagement.addEventListener("submit-event", (event) => {
       /* this event is raised when the server response is received at the end of the dispute response */
-      console.log('server response received', event.detail);
+      console.log("server response received", event.detail);
     });
 
-    disputeManagement.addEventListener("form-step-completed", (event) => {
+    disputeManagement.addEventListener("complete-form-step-event", (event) => {
       /* this event is raised when a form step is completed */
 
       let serverResponse = event.detail.data;
@@ -41,15 +41,15 @@ export const codeExampleEventHandling = `
     disputeManagement.addEventListener("click-event", (event) => {
       let name = event.detail.name;
       
-      console.log('Clicked item', event.detail);
-      console.log('Clicked item name', name);
+      console.log("Clicked item", event.detail);
+      console.log("Clicked item name", name);
       
       /* Possible values for name are: nextStep, previousStep, cancelDispute, respondToDispute, and submit */
     });
 
-    disputeManagement.addEventListener('error-event', (event) => {
+    disputeManagement.addEventListener("error-event", (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.log("error-event", event.detail);
     });
   })();
 `;

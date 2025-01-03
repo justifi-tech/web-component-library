@@ -64,6 +64,7 @@ export const API_PATHS = {
   SUB_ACCOUNTS_LIST: 'sub_accounts',
   PKG_VERSION: '/@justifi/webcomponents/latest',
   DISPUTE: '/disputes/:id',
+  DISPUTE_RESPONSE: '/disputes/:id/response',
 };
 
 type MockAllServicesConfig = {
@@ -138,6 +139,7 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       // Dispute
       this.get(API_PATHS.DISPUTE, () => mockDispute);
+      this.post(API_PATHS.DISPUTE_RESPONSE, () => mockDispute);
 
       // SubAccounts
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
