@@ -3,6 +3,7 @@ import { FormController } from "../../../ui-components/form/form";
 import CancellationPolicySchema from "./schemas/cancellation-policy-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
+import { heading5 } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-cancellation-policy',
@@ -49,7 +50,7 @@ export class CancellationPolicy {
       <div>
         <div class="row gy-3">
           <div class="col-12">
-            <h2 class="h5">Cancellation Policy</h2>
+            <h2 class="h5" part={heading5}>Cancellation Policy</h2>
           </div>
           <div class="col-12">
             <form-control-textarea

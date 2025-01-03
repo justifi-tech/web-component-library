@@ -2,13 +2,14 @@ import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
 import { IApiResponse } from "../../../api";
 import { IDispute } from "../../../api/Dispute";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
-import { 
-  ComponentClickEvent, 
-  ComponentFormStepCompleteEvent, 
-  ComponentSubmitEvent, 
+import {
+  ComponentClickEvent,
+  ComponentFormStepCompleteEvent,
+  ComponentSubmitEvent,
   ComponentErrorEvent
- } from "../../../api/ComponentEvents";
+} from "../../../api/ComponentEvents";
 import { DisputeManagementClickActions, DisputeResponseFormStep } from "../event-types";
+import { heading4 } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -205,7 +206,7 @@ export class DisputeResponseCore {
     return (
       <div class="row gy-3">
         <div class="col-12">
-          <h1 class="h4">Counter dispute</h1>
+          <h1 class="h4" part={heading4}>Counter dispute</h1>
         </div>
 
         <div class="col-12">

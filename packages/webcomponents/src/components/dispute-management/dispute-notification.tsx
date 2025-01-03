@@ -2,7 +2,7 @@
 import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
 import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
-import { text } from "../../styles/parts";
+import { heading4, text } from "../../styles/parts";
 import { Skeleton, Button } from "../../ui-components";
 // import { IApiResponse } from "../../api/Api";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
@@ -59,7 +59,7 @@ export class DisputeNotification {
 
         {this.dispute?.needsResponse && (
           <div part={text}>
-            <h1 class="h4">This payment is disputed</h1>
+            <h1 class="h4" part={heading4}>This payment is disputed</h1>
             <p>The cardholder is disputing this payment. You may accept this dispute, or proceed to provide evidence in a counter dispute.</p>
 
             <h2 class="h5">Dispute details</h2>

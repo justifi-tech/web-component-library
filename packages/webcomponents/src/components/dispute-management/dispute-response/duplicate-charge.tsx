@@ -3,6 +3,7 @@ import { FormController } from "../../../ui-components/form/form";
 import DuplicateChargeSchema from "./schemas/duplicate-charge-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
+import { heading5 } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-duplicate-charge',
@@ -50,7 +51,7 @@ export class DuplicateCharge {
       <div>
         <div class="row gy-3">
           <div class="col-12">
-            <h2 class="h5">Duplicate Charge</h2>
+            <h2 class="h5" part={heading5}>Duplicate Charge</h2>
           </div>
           <div class="col-12">
             <form-control-text

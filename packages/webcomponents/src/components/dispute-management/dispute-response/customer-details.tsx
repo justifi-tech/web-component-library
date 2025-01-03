@@ -3,6 +3,7 @@ import { FormController } from "../../../ui-components/form/form";
 import CustomerDetailsSchema from "./schemas/customer-details-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
+import { heading5 } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-customer-details',
@@ -49,7 +50,7 @@ export class CustomerDetails {
       <div>
         <div class="row gy-3">
           <div class="col-12">
-            <h2 class="h5">Customer Details</h2>
+            <h2 class="h5" part={heading5}>Customer Details</h2>
           </div>
           <div class="col-12">
             <form-control-text
