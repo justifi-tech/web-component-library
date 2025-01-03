@@ -10,6 +10,7 @@ import {
 } from "../../../api/ComponentEvents";
 import { DisputeManagementClickActions, DisputeResponseFormStep } from "../event-types";
 import { heading4 } from "../../../styles/parts";
+import { Button } from "../../../ui-components/button";
 
 @Component({
   tag: 'justifi-dispute-response-core',
@@ -216,23 +217,39 @@ export class DisputeResponseCore {
         <div class="col-12">
           <div class="d-flex gap-2 mt-4 justify-content-end">
             {this.isFirstStep ? (
-              <button class="btn btn-secondary" onClick={() => this.onCancel()} disabled={this.isLoading}>
+              <Button
+                variant="secondary"
+                onClick={() => this.onCancel()}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}>
                 Cancel
-              </button>
+              </Button>
             ) : (
-              <button class="btn btn-secondary" onClick={() => this.onBack()} disabled={this.isLoading}>
+              <Button
+                variant="secondary"
+                onClick={() => this.onBack()}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}>
                 Back
-              </button>
+              </Button>
             )}
 
             {this.isLastStep ? (
-              <button class="btn btn-primary" onClick={() => this.onSubmit()} disabled={this.isLoading}>
+              <Button
+                variant="primary"
+                onClick={() => this.onSubmit()}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}>
                 Submit Counter Dispute
-              </button>
+              </Button>
             ) : (
-              <button class="btn btn-primary" onClick={() => this.onNext()} disabled={this.isLoading}>
+              <Button
+                variant="primary"
+                onClick={() => this.onNext()}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}>
                 Next
-              </button>
+              </Button>
             )}
           </div>
         </div>
