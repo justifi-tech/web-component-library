@@ -12,3 +12,4 @@
   - `justifi-terminals-list` no longer emits `terminal-row-clicked` - use `click-event` to listen for table row clicks
   - List components will also now emit `click-event` on pagination interaction (IE - clicking on `Next` or `Previous` page)
  - Form components `justifi-payment-provisioning` and `justifi-dispute-management` now emit `complete-form-step-event` instead of `form-step-completed` on step completion.
+ - `justifi-business-form` no longer emits deprecated `clickEvent` - only emits `click-event` in line with other components.
