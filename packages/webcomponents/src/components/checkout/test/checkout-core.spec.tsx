@@ -120,7 +120,7 @@ describe('justifi-checkout-core', () => {
     );
   });
 
-  it.only('emits "submitted" event upon submit request completion', async () => {
+  it('emits "submitted" event upon submit request completion', async () => {
     const getCheckout = makeGetCheckout({
       authToken: '',
       checkoutId: '',

@@ -24,7 +24,7 @@ ${codeExampleHead("justifi-payment-provisioning")}
     paymentProvisioning.addEventListener("complete-form-step-event", (event) => {
       /* this event is raised when a form step is completed */
 
-      let serverResponse = event.detail.data;
+      let serverResponse = event.detail.response;
       let completedFormStep = event.detail.formStep;
       
       console.log("data from server", serverResponse);
@@ -35,9 +35,9 @@ ${codeExampleHead("justifi-payment-provisioning")}
       let name = event.detail.name;
 
       if (name == "nextStep") {
-        console.log("This is a next step button click", data);
+        console.log("This is a next step button click");
       } else if (name == "previousStep") {
-        console.log("This is a previous step button click", data);
+        console.log("This is a previous step button click");
       }
       /* this event is also raised when buttons are clicked in the Owner's section of the form */
     });

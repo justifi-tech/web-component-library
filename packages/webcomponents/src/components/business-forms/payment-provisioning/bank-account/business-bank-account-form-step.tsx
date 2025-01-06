@@ -102,13 +102,13 @@ export class BusinessBankAccountFormStep {
     } else {
       onSuccess();
     }
-    this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.bankAccount });
+    this.stepCompleteEvent.emit({ response: response, formStep: BusinessFormStep.bankAccount });
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.formDisabled) {
-      this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.bankAccount, metadata: 'no data submitted' });
+      this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.bankAccount, metadata: 'no data submitted' });
       onSuccess();
     } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));

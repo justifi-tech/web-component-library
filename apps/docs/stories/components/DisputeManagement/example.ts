@@ -31,7 +31,7 @@ export const codeExampleEventHandling = `
     disputeManagement.addEventListener("complete-form-step-event", (event) => {
       /* this event is raised when a form step is completed */
 
-      let serverResponse = event.detail.data;
+      let serverResponse = event.detail.response;
       let completedFormStep = event.detail.formStep;
 
       console.log("data from server", serverResponse);

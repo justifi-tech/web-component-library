@@ -80,7 +80,7 @@ export class BusinessRepresentativeFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.representative });
+        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.representative });
         this.formLoading.emit(false)
       }
     });
