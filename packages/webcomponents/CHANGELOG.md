@@ -15,8 +15,8 @@
   - Components that emitted `submitted` event now emit `submit-event`. This includes: `justifi-payment-provisioning`, `justifi-checkout`, `justifi-tokenize-payment-method`, `justifi-dispute-management` and `justifi-business-form`.
     - 41af0ca: - `submit-event` no longer returns response as `event.detail.data` and now returns server response as `event.detail.response`.
     - e6d0715: - Modified behavior of `submit-event` event emitted from `justifi-payment-provisioning`
-    - `submit-event` is no longer emitted after each form step completion of `justifi-payment-provisioning`. It is now emitted only once, at the end of the form flow, when a response is received from the provisioning API request.
-    - NOTE: In line with this change, the `submit-event` for `justifi-tokenize-payment-method` now returns the entire tokenize response istead of just the token. Going forward, users of this component will need to access the token value via `event.detail.response.token`.
+      - `submit-event` is no longer emitted after each form step completion of `justifi-payment-provisioning`. It is now emitted only once, at the end of the form flow, when a response is received from the provisioning API request.
+    - NOTE: In line with this change, the `submit-event` for `justifi-tokenize-payment-method` now returns the entire server response instead of just the token. Going forward, users of this component will be able to access the token via `event.detail.response.token`.
   - List components that emitted events for clicking on table rows will now emit `click-event` in line with other components that emit an event for user clicks actions.
   - `justifi-payments-list` no longer emits `payment-row-clicked` - use `click-event` to listen for table row clicks
   - `justifi-payouts-list` no longer emits `payout-row-clicked` - use `click-event` to listen for table row clicks
