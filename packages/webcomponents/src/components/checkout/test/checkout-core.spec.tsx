@@ -159,7 +159,7 @@ describe('justifi-checkout-core', () => {
     expect(submittedSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         detail: {
-          data: mockPostCheckoutSuccess,
+          response: mockPostCheckoutSuccess,
         }
       })
     );

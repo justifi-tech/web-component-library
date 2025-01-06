@@ -86,7 +86,7 @@ export class BusinessOwnersFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.owners });
+        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.owners });
         this.formLoading.emit(false)
       }
     });

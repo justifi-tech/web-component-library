@@ -13,7 +13,7 @@ export interface ComponentClickEvent {
 // submit-event
 
 export interface ComponentSubmitEvent {
-  data?: any;
+  response: any;
   metadata?: any;
 }
 
@@ -21,7 +21,7 @@ export interface ComponentSubmitEvent {
 
 export interface ComponentFormStepCompleteEvent {
   formStep: BusinessFormStep | DisputeResponseFormStep; // The form step that was completed
-  data: any; // The data that was submitted, if any, for the form step
+  response?: any; // The data that was submitted, if any, for the form step
   metadata?: any; // Optional additional info about the form step completion
 }
 

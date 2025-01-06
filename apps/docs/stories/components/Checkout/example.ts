@@ -16,7 +16,19 @@ ${codeExampleHead('justifi-checkout')}
 </body>
 
 <script>
+  (function () {
+    var checkoutForm = document.querySelector("justifi-checkout");
 
+    checkoutForm.addEventListener("submit-event", (event) => {
+      /* this event is raised when the server response is received */
+      console.log("server response received", event.detail.response);
+    });
+
+    checkoutForm.addEventListener("error-event", (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
 </script>
 
 </html>`;

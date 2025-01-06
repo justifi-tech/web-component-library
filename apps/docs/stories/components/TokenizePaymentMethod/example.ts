@@ -1,9 +1,9 @@
-import { codeExampleHead } from '../../utils';
+import { codeExampleHead } from "../../utils";
 
 export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead('justifi-payment-form')}
+${codeExampleHead("justifi-payment-form")}
 
   <body>
     <justifi-tokenize-payment-method
@@ -14,15 +14,15 @@ ${codeExampleHead('justifi-payment-form')}
   </body>
 
   <script>
-    const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
+    const justifiTokenizePaymentMethod = document.querySelector("justifi-tokenize-payment-method");
 
-    justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
-      const token = event.detail.data;
+    justifiTokenizePaymentMethod.addEventListener("submit-event", (event) => {
+      const token = event.detail.response.token;
 
-      console.log('Token from tokenize response:', token);
+      console.log("Token from tokenize response:", token);
     });
 
-    justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
+    justifiTokenizePaymentMethod.addEventListener("error-event", (event) => {
       console.log(event);
     });
   </script>
