@@ -30,7 +30,7 @@ export class DisputeNotification {
     })({
       payload: { forfeit: true },
       onSuccess: (response) => {
-        this.submitEvent.emit({ data: response });
+        this.submitEvent.emit({ response: response });
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({

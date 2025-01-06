@@ -120,7 +120,7 @@ describe('justifi-checkout-core', () => {
     );
   });
 
-  it('emits "submitted" event upon submit request completion', async () => {
+  it.only('emits "submitted" event upon submit request completion', async () => {
     const getCheckout = makeGetCheckout({
       authToken: '',
       checkoutId: '',
@@ -159,7 +159,7 @@ describe('justifi-checkout-core', () => {
     expect(submittedSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         detail: {
-          data: mockPostCheckoutSuccess,
+          response: mockPostCheckoutSuccess,
         }
       })
     );

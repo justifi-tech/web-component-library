@@ -62,10 +62,10 @@ export class PaymentProvisioningCore {
   postProvisioningData = () => {
     this.postProvisioning({
       onSuccess: (response) => {
-        this.submitEvent.emit({ data: response });
+        this.submitEvent.emit({ response: response });
       },
       onError: ({ error, code, severity }) => {
-        this.submitEvent.emit({ data: { error } });
+        this.submitEvent.emit({ response: { error } });
         this.errorEvent.emit({
           message: error,
           errorCode: code,

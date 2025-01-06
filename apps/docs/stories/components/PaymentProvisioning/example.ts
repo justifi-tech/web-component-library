@@ -18,7 +18,7 @@ ${codeExampleHead("justifi-payment-provisioning")}
 
     paymentProvisioning.addEventListener("submit-event", (event) => {
       /* this event is raised when the server response at the end of the form, when the provisioning request is completed */
-      console.log("server response received", event.detail);
+      console.log("server response received", event.detail.response);
     });
 
     paymentProvisioning.addEventListener("complete-form-step-event", (event) => {

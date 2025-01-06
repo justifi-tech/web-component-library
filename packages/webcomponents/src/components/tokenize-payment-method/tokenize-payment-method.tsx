@@ -43,7 +43,7 @@ export class TokenizePaymentMethod {
         severity: ComponentErrorSeverity.ERROR,
       });
     } else if (tokenizeResponse.token) {
-      this.submitEvent.emit({ data: tokenizeResponse.token });
+      this.submitEvent.emit({ response: tokenizeResponse });
     }
   }
 

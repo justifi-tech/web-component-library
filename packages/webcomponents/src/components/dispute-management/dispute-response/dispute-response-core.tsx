@@ -64,8 +64,7 @@ export class DisputeResponseCore {
       return this.submitDisputeResponse({
         payload: formData,
         onSuccess: (response) => {
-          this.disputeResponse = { ...response.data };
-          this.submitEvent.emit({ data: response });
+          this.submitEvent.emit({ response: response });
           this.stepCompleteEvent.emit({ data: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {

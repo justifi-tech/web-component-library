@@ -13,7 +13,7 @@ export interface ComponentClickEvent {
 // submit-event
 
 export interface ComponentSubmitEvent {
-  data?: any;
+  response: any;
   metadata?: any;
 }
 
