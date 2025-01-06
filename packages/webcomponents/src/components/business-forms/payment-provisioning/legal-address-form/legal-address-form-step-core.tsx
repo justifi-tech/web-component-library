@@ -83,7 +83,7 @@ export class LegalAddressFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.legalAddress });
+        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.legalAddress });
         this.formLoading.emit(false)
       }
     });

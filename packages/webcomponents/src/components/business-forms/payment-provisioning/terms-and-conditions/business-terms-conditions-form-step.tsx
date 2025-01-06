@@ -105,14 +105,14 @@ export class BusinessTermsConditionsFormStep {
     } else {
       onSuccess();
     }
-    this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.termsAndConditions });
+    this.stepCompleteEvent.emit({ response: response, formStep: BusinessFormStep.termsAndConditions });
     this.formCompleted.emit();
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.acceptedTermsBefore) {
-      this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
+      this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
       this.formCompleted.emit();
       onSuccess();
     } else {

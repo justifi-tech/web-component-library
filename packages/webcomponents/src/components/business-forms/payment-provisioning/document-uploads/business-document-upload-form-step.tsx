@@ -143,7 +143,7 @@ export class BusinessDocumentFormStep {
       })
       return false;
     } else {
-      this.stepCompleteEvent.emit({ data: response, formStep: BusinessFormStep.documentUpload });
+      this.stepCompleteEvent.emit({ response: response, formStep: BusinessFormStep.documentUpload });
       return true;
     }
   }
@@ -159,7 +159,7 @@ export class BusinessDocumentFormStep {
     try {
       const docArray = Object.values(this.documentData).flat();
       if (!docArray.length) {
-        this.stepCompleteEvent.emit({ data: null, formStep: BusinessFormStep.documentUpload, metadata: 'no data submitted' });
+        this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.documentUpload, metadata: 'no data submitted' });
         return onSuccess();
       }
 

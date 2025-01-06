@@ -121,8 +121,8 @@ export class CheckoutCore {
     });
   }
 
-  onSubmitted = (data: ICheckoutCompleteResponse) => {
-    this.submitEvent.emit({ data: data });
+  onSubmitted = (response: ICheckoutCompleteResponse) => {
+    this.submitEvent.emit({ response: response });
     this.renderState = 'success';
   };
 

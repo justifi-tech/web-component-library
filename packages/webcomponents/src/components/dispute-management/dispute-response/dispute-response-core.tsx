@@ -57,16 +57,15 @@ export class DisputeResponseCore {
   saveData = async (formData: any, formStep): Promise<IApiResponse<IDispute>> => {
     const hasFormData = Object.keys(formData).length;
     if (!hasFormData) {
-      this.stepCompleteEvent.emit({ data: null, formStep: formStep });
+      this.stepCompleteEvent.emit({ response: null, formStep: formStep });
       return;
     }
     if (this.isLastStep) {
       return this.submitDisputeResponse({
         payload: formData,
         onSuccess: (response) => {
-          this.disputeResponse = { ...response.data };
-          this.submitEvent.emit({ data: response });
-          this.stepCompleteEvent.emit({ data: response, formStep: formStep });
+          this.submitEvent.emit({ response: response });
+          this.stepCompleteEvent.emit({ response: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
@@ -81,7 +80,7 @@ export class DisputeResponseCore {
         payload: formData,
         onSuccess: (response) => {
           this.disputeResponse = { ...response.data };
-          this.stepCompleteEvent.emit({ data: response, formStep: formStep });
+          this.stepCompleteEvent.emit({ response: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
