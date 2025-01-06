@@ -13,7 +13,7 @@ const light = `
   }
 
   ::part(font-family) {
-    font-family: helvetica;   
+    font-family: georgia;   
   }
 
   ::part(color) {
