@@ -67,7 +67,7 @@ export const tableCellOdd = `table-cell-odd ${tableCell} ${text} ${backgroundCol
 export const getAlternateTableCellPart = (index) =>
   index % 2 ? tableCellEven : tableCellOdd;
 export const tableEmpty = `table-empty ${text}`;
-export const tableError = `table-error ${text}`;
+export const tableError = `table-error ${text} ${backgroundColor}`;
 
 // Loading spinner
 export const loadingSpinner = `loading-spinner`;
