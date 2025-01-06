@@ -4,9 +4,9 @@ import { formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { StyledHost } from '../../ui-components';
 import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
-import Spinner from '../../ui-components/spinner';
 import { badge } from '../../styles/parts';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import PaymentDetailsLoading from './payment-details-loading';
 
 @Component({
   tag: 'payment-details-core',
@@ -56,7 +56,7 @@ export class PaymentDetailsCore {
   render() {
     return (
       <StyledHost>
-        {this.loading && <Spinner />}
+        {this.loading && <PaymentDetailsLoading />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && !this.errorMessage &&
           this.payment && (
