@@ -13,11 +13,11 @@ const dark = `
   }
 
   ::part(font-family) {
-    font-family: cursive;   
+    font-family: sans-serif;   
   }
 
   ::part(color) {
-    color: lightblue;
+    color: #fdfdec;
   }
 
   ::part(background-color) {
@@ -37,7 +37,7 @@ const dark = `
 
   ::part(input-radio) {
     background-color: #191919;
-    border-color: lightblue;
+    border-color: #fdfdec;
   }
 
   ::part(input-radio-invalid) {
