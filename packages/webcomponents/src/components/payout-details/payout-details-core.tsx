@@ -112,7 +112,7 @@ export class PayoutDetailsCore {
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
-                <DetailItem title="Account Number" value={this.payout.bank_account.acct_last_four} />
+                <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
               </div>
               <DetailSectionTitle sectionTitle='Metadata' />
               <div class="d-table gap-2 w-100">

@@ -129,6 +129,14 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             110000000
           </span>
         </div>
+        <div class="d-table-row gap-2">
+          <span class="d-table-cell fw-bold px-2" part="text color font-family">
+            Account Number
+          </span>
+          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+            6789
+          </span>
+        </div>
       </div>
       <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
         Metadata
