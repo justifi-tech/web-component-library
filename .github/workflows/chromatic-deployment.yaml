@@ -1,9 +1,10 @@
 name: 'Chromatic Deployment'
 
 on:
-  pull_request:
-    paths:
-      - 'packages/webcomponents/**'
+  workflow_run:
+    workflows: ['Install and Build']
+    types:
+      - completed
 
 jobs:
   chromatic-deployment:
@@ -12,37 +13,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.7.5
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Create .env file from secrets
-        shell: bash
-        working-directory: ./apps/docs
-        run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
-
-      - name: Create .env file from secrets
-        shell: bash
-        working-directory: ./packages/webcomponents
-        run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
-
-      - name: Build webcomponents
-        run: pnpm build
 
       - name: Run Chromatic
         working-directory: ./apps/docs

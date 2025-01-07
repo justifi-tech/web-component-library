@@ -1,9 +1,10 @@
 name: Run Tests
 
 on:
-  pull_request:
-    paths:
-      - packages/webcomponents/**
+  workflow_run:
+    workflows: ['Install and Build']
+    types:
+      - completed
 
 jobs:
   test:
@@ -12,20 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.7.5
-
-      - name: NPM Install
-        run: pnpm install
 
       - name: Run unit tests
         run: pnpm test
