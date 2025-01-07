@@ -50,7 +50,6 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
-      onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
     />,
     6: () => <justifi-business-document-upload-form-step

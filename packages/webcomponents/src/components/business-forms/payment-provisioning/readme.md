@@ -80,9 +80,10 @@ graph TD;
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
   owner-form-inputs --> justifi-identity-address-form
-  justifi-business-bank-account-form-step --> form-control-tooltip
-  justifi-business-bank-account-form-step --> form-control-text
-  justifi-business-bank-account-form-step --> form-control-select
+  justifi-business-bank-account-form-step --> justifi-business-bank-account-form-step-core
+  justifi-business-bank-account-form-step-core --> form-control-tooltip
+  justifi-business-bank-account-form-step-core --> form-control-text
+  justifi-business-bank-account-form-step-core --> form-control-select
   justifi-business-document-upload-form-step --> justifi-business-documents-on-file
   justifi-business-document-upload-form-step --> justifi-business-document-upload-input-group
   justifi-business-document-upload-form-step --> form-control-tooltip

@@ -1,5 +1,6 @@
 import { config } from '../../../config';
 import Api, { IApiResponse } from '../Api';
+import { IBankAccount } from '../BankAccount';
 import { IBusiness } from '../Business';
 import { Identity } from '../Identity';
 
@@ -75,6 +76,23 @@ export class IdentityService implements IdentityService {
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity`;
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
+  }
+}
+
+export interface IBusinessBankAccountService {
+  postBankAccount(
+    authToken: string,
+    payload: Partial<IBankAccount>
+  ): Promise<IApiResponse<IBankAccount>>;
+}
+
+export class BusinessBankAccountService implements IBusinessBankAccountService {
+  async postBankAccount(
+    authToken: string,
+    payload: Partial<IBankAccount>
+  ): Promise<IApiResponse<IBankAccount>> {
+    const endpoint = `entities/bank_accounts`;
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }
