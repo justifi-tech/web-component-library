@@ -1,4 +1,3 @@
-# .github/workflows/install-build.yml
 name: Install and Build
 
 on:
@@ -30,13 +29,6 @@ jobs:
 
       - name: Create .env file from secrets
         shell: bash
-        working-directory: ./apps/docs
-        run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
-
-      - name: Create .env file from secrets
-        shell: bash
         working-directory: ./packages/webcomponents
         run: |
           echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
@@ -45,10 +37,11 @@ jobs:
       - name: Build webcomponents
         run: pnpm build
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules
+          name: build-artifacts
+          path: |
+            node_modules
+            packages/webcomponents/dist
+            packages/webcomponents/.env
