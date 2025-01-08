@@ -1,18 +1,24 @@
-name: 'Chromatic Deployment'
+name: Chromatic Deployment
 
 on:
-  workflow_run:
-    workflows: ['Install and Build']
-    types:
-      - completed
+  pull_request:
+    paths:
+      - 'packages/webcomponents/**'
 
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
 
       - name: Run Chromatic
         working-directory: ./apps/docs
