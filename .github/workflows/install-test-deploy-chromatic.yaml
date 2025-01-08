@@ -59,6 +59,11 @@ jobs:
         with:
           name: build-artifacts
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.5
+
       - name: Run unit tests
         run: pnpm test
 
@@ -76,6 +81,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.5
 
       - name: Run Chromatic
         working-directory: ./apps/docs
