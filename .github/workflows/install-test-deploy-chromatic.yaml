@@ -1,4 +1,4 @@
-name: Install and Build
+name: Install, Test, and Deploy
 
 on:
   pull_request:
@@ -6,9 +6,9 @@ on:
       - 'packages/webcomponents/**'
 
 jobs:
+  # 👷 Job 1: Install and Build
   install-build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -45,3 +45,40 @@ jobs:
             node_modules
             packages/webcomponents/dist
             packages/webcomponents/.env
+
+  # ✅ Job 2: Test (depends on install-build)
+  test:
+    runs-on: ubuntu-latest
+    needs: install-build
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      - name: Run unit tests
+        run: pnpm test
+
+  # 🚀 Job 3: Chromatic Deployment (depends on install-build)
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    needs: install-build
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      - name: Run Chromatic
+        working-directory: ./apps/docs
+        run: npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
