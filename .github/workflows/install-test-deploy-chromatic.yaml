@@ -1,4 +1,5 @@
-name: Install, Test, and Deploy
+# .github/workflows/ci.yml
+name: Install, Test, and Deploy Chromatic
 
 on:
   pull_request:
@@ -17,36 +18,29 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8.7.5
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Restore pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-      - name: Create .env file from secrets
-        shell: bash
-        working-directory: ./packages/webcomponents
-        run: |
-          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
-          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Build webcomponents
         run: pnpm build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: |
-            node_modules
-            packages/webcomponents/dist
-            packages/webcomponents/.env
-
-  # ✅ Job 2: Test (depends on install-build)
+  # 🧪 Job 2: Run Tests (depends on install-build)
   test:
     runs-on: ubuntu-latest
     needs: install-build
@@ -54,10 +48,15 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
+      - name: Restore pnpm cache
+        uses: actions/cache@v3
         with:
-          name: build-artifacts
+          path: |
+            node_modules
+            .pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -77,10 +76,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
+      - name: Restore pnpm cache
+        uses: actions/cache@v3
         with:
-          name: build-artifacts
+          path: |
+            node_modules
+            .pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
