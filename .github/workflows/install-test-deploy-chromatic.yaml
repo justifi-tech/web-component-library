@@ -22,7 +22,17 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.7.5
+          version: 8.9.0
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         run: npx pnpm install --frozen-lockfile --store-dir ~/.pnpm-store
@@ -44,7 +54,7 @@ jobs:
         run: echo "PATH=$(pwd)/node_modules/.bin:$PATH" >> $GITHUB_ENV
 
       - name: Build webcomponents
-        run: pnpm build
+        run: npx pnpm build
 
   # 🧪 Job 2: Run Tests (depends on install-build)
   test:
@@ -63,10 +73,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.7.5
+          version: 8.9.0
 
       - name: Run unit tests
-        run: pnpm test
+        run: npx pnpm test
 
   # 🚀 Job 3: Chromatic Deployment (depends on install-build)
   chromatic-deployment:
@@ -87,7 +97,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.7.5
+          version: 8.9.0
 
       - name: Run Chromatic
         working-directory: ./apps/docs
