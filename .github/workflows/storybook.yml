@@ -14,24 +14,17 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
         with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+          version: 6.32.9
+      - uses: actions/setup-node@v4
         with:
-          version: 8.7.5
-          run: pnpm install
+          node-version: '14'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: |
-          pnpm install && ls -a
+        run: pnpm install --frozen-lockfile
 
       - name: Create .env file from secrets
         shell: bash
