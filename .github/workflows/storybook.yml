@@ -41,7 +41,14 @@ jobs:
           echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
 
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: ./apps/docs/storybook-static
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
       - name: 'Build'
+        if: steps.cache.outputs.cache-hit != 'true'
         shell: bash
         run: |
           echo "::group::Build"
