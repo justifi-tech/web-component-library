@@ -34,6 +34,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
+      # 🔍 Debug Step: Check if node_modules was restored
+      - name: List node_modules
+        run: ls -la node_modules
+
+      # 🔍 Debug Step: Check if pnpm store was restored
+      - name: List pnpm store
+        run: ls -la .pnpm-store
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
