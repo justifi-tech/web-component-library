@@ -17,6 +17,7 @@ import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEv
 export class CheckoutCore {
   /**
  * URL for the rendered iFrame. End-users need not use this.
+ * Test the actions
  */
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
