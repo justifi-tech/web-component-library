@@ -25,7 +25,7 @@ jobs:
           version: 8.7.5
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --store-dir ~/.pnpm-store
+        run: npx pnpm install --frozen-lockfile --store-dir ~/.pnpm-store
 
       - name: Create .env file from secrets
         shell: bash
