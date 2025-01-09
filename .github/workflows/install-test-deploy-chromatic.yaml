@@ -6,17 +6,11 @@ on:
       - 'packages/webcomponents/**'
 
 jobs:
-  # 👷 Job 1: Install and Build
   install-build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.9.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -24,16 +18,8 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
 
-      - name: Restore pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
       - name: Install dependencies
-        run: npx pnpm install --frozen-lockfile --store-dir ~/.pnpm-store
+        run: npx pnpm install --frozen-lockfile
 
       - name: Create .env file from secrets
         shell: bash
@@ -41,6 +27,7 @@ jobs:
         run: |
           echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+
       - name: Create .env file from secrets
         shell: bash
         working-directory: ./packages/webcomponents
