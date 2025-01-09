@@ -1,4 +1,3 @@
-# .github/workflows/ci.yml
 name: Install, Test, and Deploy Chromatic
 
 on:
@@ -14,36 +13,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8.7.5
 
-      - name: Restore pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            node_modules
-            .pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      # 🔍 Debug Step: Check if node_modules was restored
-      - name: List node_modules
-        run: ls -la node_modules
-
-      # 🔍 Debug Step: Check if pnpm store was restored
-      - name: List pnpm store
-        run: ls -la .pnpm-store
-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --store-dir ~/.pnpm-store
 
       - name: Create .env file from secrets
         shell: bash
@@ -72,15 +54,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Restore pnpm cache
-        uses: actions/cache@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          path: |
-            node_modules
-            .pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -100,15 +78,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore pnpm cache
-        uses: actions/cache@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          path: |
-            node_modules
-            .pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
