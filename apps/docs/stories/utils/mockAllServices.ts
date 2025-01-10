@@ -83,9 +83,14 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       this.get(API_PATHS.EXISTING_BUSINESS_OWNER, () => mockBusinessOwner);
 
       this.patch(API_PATHS.EXISTING_BUSINESS_OWNER, (_schema, request) => {
-        const id = request.params.id;
-        const newOwner = JSON.parse(request.requestBody);
-        return { ...mockBusinessOwner, ...newOwner, id };
+        const newRequestData = JSON.parse(request.requestBody);
+        let mergedRequestData = { ...mockBusinessDetails.data.owners[0], ...newRequestData };
+        return {
+          id: 2,
+          type: "identity",
+          data: mergedRequestData,
+          page_info: "string"
+        };
       });
 
       this.post(API_PATHS.NEW_BUSINESS_OWNER, () => mockBusinessOwner);
@@ -94,9 +99,14 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
       this.patch(API_PATHS.BUSINESS_DETAILS, (_schema, request) => {
-        const id = request.params.id;
-        const newDetails = JSON.parse(request.requestBody);
-        return { ...mockBusinessDetails, ...newDetails, id };
+        const newRequestData = JSON.parse(request.requestBody);
+        let mergedRequestData = { ...mockBusinessDetails.data, ...newRequestData };
+        return {
+          id: 1,
+          type: "business",
+          data: mergedRequestData,
+          page_info: "string"
+        };
       });
 
       this.post(API_PATHS.BUSINESS_DOCUMENT_RECORD, () => mockDocumentUpload);
