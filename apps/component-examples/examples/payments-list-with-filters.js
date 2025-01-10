@@ -78,13 +78,13 @@ app.get('/', async (req, res) => {
           </div>
         </div>
         <script>
-          const justifiPayments = document.querySelector('justifi-payments-list');
+          const justifiPaymentsList = document.querySelector('justifi-payments-list');
 
-          justifiPayments.addEventListener('error-event', (event) => {
+          justifiPaymentsList.addEventListener('error-event', (event) => {
             console.log(event);
           });
 
-          justifiPayments.addEventListener('row-clicked', (event) => {
+          justifiPaymentsList.addEventListener('click-event', (event) => {
             console.log(event);
           });
         </script>

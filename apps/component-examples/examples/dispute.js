@@ -78,9 +78,13 @@ app.get('/', async (req, res) => {
 
         <script>
           const justifiDisputeManagement = document.querySelector('justifi-dispute-management');
+
           justifiDisputeManagement.addEventListener('submit-event', (event) => console.log(event));
+
           justifiDisputeManagement.addEventListener('complete-form-step-event', (event) => console.log(event));
+
           justifiDisputeManagement.addEventListener('click-event', (event) => console.log(event));
+          
           justifiDisputeManagement.addEventListener('error-event', (event) => console.log(event));
         </script>
       </body>

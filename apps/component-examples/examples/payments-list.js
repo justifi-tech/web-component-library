@@ -75,13 +75,13 @@ app.get('/', async (req, res) => {
           <justifi-payments-list auth-token="${webComponentToken}" account-id="${accountId}"></justifi-payments-list>
         </div>
         <script>
-          const justifiPayments = document.querySelector('justifi-payments-list');
+          const justifiPaymentsList = document.querySelector('justifi-payments-list');
 
-          justifiPayments.addEventListener('error-event', (event) => {
+          justifiPaymentsList.addEventListener('error-event', (event) => {
             console.log(event);
           });
 
-          justifiPayments.addEventListener('payment-row-clicked', (event) => {
+          justifiPaymentsList.addEventListener('click-event', (event) => {
             console.log(event);
           });
         </script>

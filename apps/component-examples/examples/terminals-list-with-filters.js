@@ -78,13 +78,13 @@ app.get('/', async (req, res) => {
           </div>
         </div>
         <script>
-          const justifiTerminals = document.querySelector('justifi-terminals-list');
+          const justifiTerminalsList = document.querySelector('justifi-terminals-list');
 
-          justifiTerminals.addEventListener('error-event', (event) => {
+          justifiTerminalsList.addEventListener('error-event', (event) => {
             console.log(event);
           });
 
-          justifiTerminals.addEventListener('row-clicked', (event) => {
+          justifiTerminalsList.addEventListener('click-event', (event) => {
             console.log(event);
           });
         </script>

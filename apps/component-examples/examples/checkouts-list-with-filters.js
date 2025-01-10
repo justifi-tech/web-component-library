@@ -78,13 +78,13 @@ app.get('/', async (req, res) => {
           </div>
         </div>
         <script>
-          const justifiCheckouts = document.querySelector('justifi-checkouts-list');
+          const justifiCheckoutsList = document.querySelector('justifi-checkouts-list');
 
-          justifiCheckouts.addEventListener('error-event', (event) => {
+          justifiCheckoutsList.addEventListener('error-event', (event) => {
             console.log(event);
           });
 
-          justifiCheckouts.addEventListener('row-clicked', (event) => {
+          justifiCheckoutsList.addEventListener('click-event', (event) => {
             console.log(event);
           });
         </script>
