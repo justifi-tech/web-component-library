@@ -90,7 +90,7 @@ export class BusinessCoreInfoFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.businessInfo });
+        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.businessInfo });
         this.formLoading.emit(false)
       }
     });

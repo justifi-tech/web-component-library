@@ -16,9 +16,9 @@ ${codeExampleHead('justifi-business-form')}
   (function () {
     var businessForm = document.querySelector("justifi-business-form");
 
-    businessForm.addEventListener("submit-event", (data) => {
+    businessForm.addEventListener("submit-event", (event) => {
       /* this event is raised when the server response is received */
-      console.log("server response received", data);
+      console.log("server response received", event.detail.response);
     });
 
     businessForm.addEventListener("click-event", (data) => {

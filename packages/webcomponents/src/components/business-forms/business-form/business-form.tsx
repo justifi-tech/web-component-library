@@ -103,7 +103,7 @@ export class BusinessForm {
     if (response.error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     }
-    this.submitEvent.emit({ data: response });
+    this.submitEvent.emit({ response: response });
     this.instantiateBusiness(response.data);
   }
 

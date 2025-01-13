@@ -1,19 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { withActions } from "@storybook/addon-actions/decorator";
-import { StoryBaseArgs, customStoryDecorator } from "../../utils";
+import { customStoryDecorator, StoryBaseArgs } from "../../utils";
 import { ThemeNames } from "../../themes";
 
-import "@justifi/webcomponents/dist/module/justifi-payment-provisioning";
+import "@justifi/webcomponents/dist/module/justifi-dispute-management";
+import { withActions } from "@storybook/addon-actions/decorator";
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(["auth-token", "business-id"]);
+const storyBaseArgs = new StoryBaseArgs(["auth-token"]);
 
 const meta: Meta = {
-  title: "Entities/Payment Provisioning",
-  component: "justifi-payment-provisioning",
+  title: "Payment Facilitation/Dispute Management",
+  component: "justifi-dispute-management",
   args: {
     ...storyBaseArgs.args,
+    "dispute-id": "123",
     Theme: ThemeNames.Light,
   },
   argTypes: {
@@ -26,33 +27,15 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "form-title": {
-      type: "string",
-      description:
-        "This prop updates the value of the title displayed at the top of the form. Pass an empty string to remove the title.",
-      control: {
-        type: "text",
-      },
+    "dispute-id": {
+      description: "Dispute ID `string`",
       table: {
         category: "props",
-        defaultValue: { summary: "Business Information" },
-      },
-    },
-    "allow-optional-fields": {
-      type: "boolean",
-      description:
-        "When set to `true`, this prop allows most fields in each form step to be nullable, allowing for quicker form completion. Note - the following fields are still required: `business.legal_name`, `representative.name`, `owner.name`.",
-      control: {
-        type: "boolean",
-      },
-      table: {
-        category: "props",
-        defaultValue: { summary: "false" },
       },
     },
     "submit-event": {
       description:
-        "Emitted when the server response is received, and contains server response.  Will not be raised if form vailidation fails.",
+        "Emits the full server response upon form completion.  Will not be raised if form vailidation fails.",
       table: {
         category: "events",
       },
@@ -63,7 +46,7 @@ const meta: Meta = {
         category: "events",
         defaultValue: {
           summary: "Example Payload",
-          detail: `{ response: serverResponse, formStep: 'legal_address' }`
+          detail: `{ response: serverResponse, formStep: 'customer_details' }`
         },
       },
     },
@@ -91,8 +74,8 @@ const meta: Meta = {
   },
   decorators: [
     customStoryDecorator,
-    withActions, // https://github.com/storybookjs/storybook/issues/22384
-  ],
+    withActions
+  ]
 };
 
 export const Example: Story = {};

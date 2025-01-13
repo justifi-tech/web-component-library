@@ -20,7 +20,7 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
         </thead>
         <tbody class="table-body">
           <tr>
-            <td class="error-state" colspan="3" data-test-id="table-error-state" part="table-error text color font-family" style="text-align: center;">
+            <td class="error-state" colspan="3" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
               An unexpected error occurred: Fetch error
             </td>
           </tr>

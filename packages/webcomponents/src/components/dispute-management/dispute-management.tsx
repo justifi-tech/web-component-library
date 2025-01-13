@@ -5,12 +5,10 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetDispute } from './dispute-actions';
 import { DisputeService } from '../../api/services/dispute.service';
 import { config } from '../../../config';
-import { StyledHost } from '../../ui-components';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-dispute-management',
-  shadow: true,
 })
 export class DisputeManagement {
   @Prop() disputeId: string;
@@ -65,14 +63,12 @@ export class DisputeManagement {
 
   render() {
     return (
-      <StyledHost>
-        <justifi-dispute-management-core
-          getDispute={this.getDispute}
-          disputeId={this.disputeId}
-          authToken={this.authToken}
-          onError-event={this.handleErrorEvent}
-        />
-      </StyledHost>
+      <justifi-dispute-management-core
+        getDispute={this.getDispute}
+        disputeId={this.disputeId}
+        authToken={this.authToken}
+        onError-event={this.handleErrorEvent}
+      />
     );
   }
 }

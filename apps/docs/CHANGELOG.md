@@ -1,5 +1,27 @@
 # @repo/docs
 
+## 0.2.0
+
+### Minor Changes
+
+- d86c3a4: Refactored the styling approach for web components by introducing CSS parts to enable more customizable and modular styling.
+
+  ```
+
+  ```
+
+### Patch Changes
+
+- Updated dependencies [2817414]
+- Updated dependencies [c980c4a]
+- Updated dependencies [a5fc8db]
+- Updated dependencies [0d5b0e6]
+- Updated dependencies [e6d0715]
+- Updated dependencies [a44d4f5]
+- Updated dependencies [c1839e9]
+- Updated dependencies [d86c3a4]
+  - @justifi/webcomponents@5.0.0
+
 ## 0.1.15
 
 ### Patch Changes

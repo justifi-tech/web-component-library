@@ -98,7 +98,7 @@ export class AdditionalQuestionsFormStepCore {
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ data: submittedData, formStep: BusinessFormStep.additionalQuestions });
+        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.additionalQuestions });
         this.formLoading.emit(false)
       }
     });

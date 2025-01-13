@@ -65,7 +65,7 @@ const meta: Meta = {
     },
     "submit-event": {
       description:
-        "Emitted when the server response is received.  Will not be raised if form vailidation fails.",
+        "Emits the full server response upon form completion.  Will not be raised if form vailidation fails.",
       table: {
         category: "events",
       },

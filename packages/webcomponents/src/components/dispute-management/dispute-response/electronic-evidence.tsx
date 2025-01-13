@@ -3,6 +3,7 @@ import { FormController } from "../../../ui-components/form/form";
 import ElectronicEvidenceSchema from "./schemas/electronic-evidence-schema";
 import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
+import { heading5 } from "../../../styles/parts";
 
 @Component({
   tag: 'justifi-electronic-evidence',
@@ -49,7 +50,7 @@ export class ElectronicEvidence {
       <div>
         <div class="row gy-3">
           <div class="col-12">
-            <h2 class="h5">Electronic Evidence</h2>
+            <h2 class="h5" part={heading5}>Electronic Evidence</h2>
           </div>
           <div class="col-12">
             <form-control-text
