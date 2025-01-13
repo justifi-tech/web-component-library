@@ -7,6 +7,8 @@ import {
   postalValidation,
   stateValidation
 } from '../business-forms/schemas/schema-validations';
+
+// BillingFormFields and BillingFormSchema are used for justifi-billing-form which renders the entire billing form.
 export interface BillingFormFields {
   name: string;
   address_line1: string;
@@ -16,7 +18,7 @@ export interface BillingFormFields {
   address_postal_code: string;
 }
 
-const BillingFormSchema = object({
+export const BillingFormSchema = object({
   name: identityNameValidation.required('Enter full name'),
   address_line1: lineOneValidation.required('Enter street address'),
   address_line2: lineTwoValidation.nullable(),
@@ -25,4 +27,11 @@ const BillingFormSchema = object({
   address_postal_code: postalValidation.required('Enter postal code'),
 });
 
-export default BillingFormSchema;
+// PostalFormFields and PostalFormSchema are used for justifi-postal-form which renders the postal code field only.
+export interface PostalFormFields {
+  address_postal_code: string;
+}
+
+export const PostalFormSchema = object({
+  address_postal_code: postalValidation.required('Enter postal code'),
+});
