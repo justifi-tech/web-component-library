@@ -14,15 +14,15 @@
 
 ## Methods
 
-### `fill(fields: BillingFormFields) => Promise<void>`
+### `fill(fields: PostalFormFields) => Promise<void>`
 
 
 
 #### Parameters
 
-| Name     | Type                | Description |
-| -------- | ------------------- | ----------- |
-| `fields` | `BillingFormFields` |             |
+| Name     | Type               | Description |
+| -------- | ------------------ | ----------- |
+| `fields` | `PostalFormFields` |             |
 
 #### Returns
 
@@ -30,13 +30,13 @@ Type: `Promise<void>`
 
 
 
-### `getValues() => Promise<BillingFormFields>`
+### `getValues() => Promise<PostalFormFields>`
 
 
 
 #### Returns
 
-Type: `Promise<BillingFormFields>`
+Type: `Promise<PostalFormFields>`
 
 
 
@@ -60,18 +60,15 @@ Type: `Promise<{ isValid: boolean; }>`
 ### Depends on
 
 - [form-control-text](../../ui-components/form)
-- [form-control-select](../../ui-components/form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-billing-form --> form-control-text
-  justifi-billing-form --> form-control-select
+  justifi-postal-form --> form-control-text
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
-  form-control-select --> form-control-tooltip
-  justifi-new-payment-method --> justifi-billing-form
-  style justifi-billing-form fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-new-payment-method --> justifi-postal-form
+  style justifi-postal-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

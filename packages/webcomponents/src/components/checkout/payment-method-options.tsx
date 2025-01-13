@@ -22,6 +22,7 @@ export class PaymentMethodOptions {
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() paymentAmount: number;
+  @Prop() hideCardBillingForm?: boolean;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
@@ -93,6 +94,7 @@ export class PaymentMethodOptions {
                 account-id={this.accountId}
                 is-selected={isSelected}
                 paymentMethodGroupId={this.paymentMethodGroupId}
+                hideCardBillingForm={this.hideCardBillingForm}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

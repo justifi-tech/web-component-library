@@ -19,6 +19,7 @@ export class Checkout {
   @Prop() disableBankAccount?: boolean;
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
+  @Prop() hideCardBillingForm?: boolean;
 
   @State() getCheckout: Function;
   @State() complete: Function;
@@ -85,6 +86,7 @@ export class Checkout {
         disableBankAccount={this.disableBankAccount}
         disableBnpl={this.disableBnpl}
         disablePaymentMethodGroup={this.disablePaymentMethodGroup}
+        hideCardBillingForm={this.hideCardBillingForm}
         ref={el => {
           if (el) {
             this.checkoutCoreRef = el;

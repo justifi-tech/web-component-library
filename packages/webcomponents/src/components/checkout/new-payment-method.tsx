@@ -15,7 +15,7 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  private billingFormRef?: HTMLJustifiBillingFormElement;
+  private billingFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiPostalFormElement;
   private paymentMethodFormRef?: HTMLCardFormElement;
 
   @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
@@ -24,6 +24,8 @@ export class NewPaymentMethod {
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
+  @Prop() hideCardBillingForm?: boolean;
+  
 
   @State() saveNewPaymentMethodChecked: boolean = false;
 
@@ -86,6 +88,19 @@ export class NewPaymentMethod {
     }
   }
 
+  get billingForm() {
+    if (this.hideCardBillingForm) {
+      return <justifi-postal-form ref={(el) => (this.billingFormRef = el)} />;
+    } else {
+      return (
+        <div>
+          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
+          <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+        </div>
+      );
+    }
+  }
+
   onPaymentMethodOptionClick = (e) => {
     e.preventDefault();
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
@@ -104,8 +119,7 @@ export class NewPaymentMethod {
 
         </div>
         <div part={billingForm}>
-          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
-          <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
+          {this.billingForm}
         </div>
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
