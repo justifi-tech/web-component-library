@@ -1,7 +1,7 @@
 import { Component, h, State, Prop, Method, Host } from '@stencil/core';
-import { PostalFormSchema, PostalFormFields } from './billing-form-schema';
-import { FormController } from '../../ui-components/form/form';
-import { numberOnlyHandler } from '../../ui-components/form/utils';
+import { PostalFormSchema, PostalFormFields } from '../billing-form-schema';
+import { FormController } from '../../../ui-components/form/form';
+import { numberOnlyHandler } from '../../../ui-components/form/utils';
 
 @Component({
   tag: 'justifi-postal-form',

@@ -4,7 +4,7 @@ import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
-import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { BillingFormFields } from '../billing-forms/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',

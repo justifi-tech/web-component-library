@@ -2,7 +2,7 @@ import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } 
 import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { BillingFormFields } from '../billing-forms/billing-form-schema';
 import { Header3 } from '../../ui-components';
 import { billingForm, radioListItem } from '../../styles/parts';
 

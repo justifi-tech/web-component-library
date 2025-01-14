@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { BillingForm } from '../billing-form';
+import { BillingForm } from '../../billing-form/billing-form';
 
 describe('justifi-billing-form', () => {
   it('fills the form', async () => {
