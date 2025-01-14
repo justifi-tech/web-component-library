@@ -35,3 +35,11 @@ export interface PostalFormFields {
 export const PostalFormSchema = object({
   address_postal_code: postalValidation.required('Enter postal code'),
 });
+
+export function isBillingFormFields(fields: any): fields is BillingFormFields {
+  return 'name' in fields && 'address_line1' in fields && 'address_city' in fields && 'address_state' in fields && 'address_postal_code' in fields;
+}
+
+export function isPostalFormFields(fields: any): fields is PostalFormFields {
+  return 'address_postal_code' in fields;
+}
