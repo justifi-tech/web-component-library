@@ -11,7 +11,7 @@
     "dev:dispute": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:dispute'",
     "dev:checkouts-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkouts-list'",
     "dev:checkouts-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkouts-list-with-filters'",
-    "dev:payment-provisioning": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payment-provisiong'",
+    "dev:payment-provisioning": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payment-provisioning'",
     "dev:tokenize-payment-method": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:tokenize-payment-method'",
     "dev:terminals-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:terminals-list'",
     "dev:terminals-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:terminals-list-with-filters'",
