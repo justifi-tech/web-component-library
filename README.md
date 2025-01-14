@@ -24,6 +24,7 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 This Turborepo includes the following packages and applications:
 
 - `apps/docs`: Component documentation site with Storybook
+- `apps/component-examples`: Simple component example files
 - `packages/webcomponents`: JustiFi component library
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
@@ -95,3 +96,11 @@ To generate your changelog, run `pnpm changeset` locally:
 1. Write a summary for the changes.
 1. Confirm the changeset looks as expected.
 1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
+
+### Running component example files
+
+This project offers the ability to render the components in simple example files that will help simulate real world usage. 
+
+1. Clone this project to your local machine
+2. Once installed, run `pnpm install && pnpm build` to build the component library's latest version. 
+3. Component example files can be loaded by using `pnpm dev` with a corresponding file name - such as `pnpm dev:checkout`
