@@ -5,7 +5,7 @@ import { FormController } from '../../../ui-components/form/form';
 import { numberOnlyHandler } from '../../../ui-components/form/utils';
 
 @Component({
-  tag: 'justifi-billing-form',
+  tag: 'billing-form',
 })
 export class BillingForm {
   /**

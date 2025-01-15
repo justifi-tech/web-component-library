@@ -9,7 +9,7 @@ describe('justifi-postal-form', () => {
   it('fills the form', async () => {
     const page = await newSpecPage({
       components: [PostalForm],
-      html: `<justifi-postal-form></justifi-postal-form>`,
+      html: `<postal-form></postal-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -24,7 +24,7 @@ describe('justifi-postal-form', () => {
   it('validates the form', async () => {
     const page = await newSpecPage({
       components: [PostalForm],
-      html: `<justifi-postal-form></justifi-postal-form>`,
+      html: `<postal-form></postal-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -38,7 +38,7 @@ describe('justifi-postal-form', () => {
   it('gets values of the form', async () => {
     const page = await newSpecPage({
       components: [PostalForm],
-      html: `<justifi-postal-form></justifi-postal-form>`,
+      html: `<postal-form></postal-form>`,
     });
 
     const instance: any = page.rootInstance;

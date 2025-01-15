@@ -4,7 +4,7 @@ import { FormController } from '../../../ui-components/form/form';
 import { numberOnlyHandler } from '../../../ui-components/form/utils';
 
 @Component({
-  tag: 'justifi-postal-form',
+  tag: 'postal-form',
 })
 export class PostalForm {
   /**
