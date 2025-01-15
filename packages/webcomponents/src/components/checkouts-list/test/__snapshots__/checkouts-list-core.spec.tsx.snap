@@ -113,7 +113,7 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               Card Present
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" part="badge text color font-family badge-success" title="The checkout has been completed">
+              <span class="badge bg-success" part="badge font-family badge-success" title="The checkout has been completed">
                 Completed
               </span>
             </td>
@@ -137,7 +137,7 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               Card Present
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-danger" part="badge text color font-family badge-danger" title="The checkout has expired">
+              <span class="badge bg-danger" part="badge font-family badge-danger" title="The checkout has expired">
                 Expired
               </span>
             </td>
@@ -161,7 +161,7 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               E-commerce
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" part="badge text color font-family badge-primary" title="The checkout has been created">
+              <span class="badge bg-primary" part="badge font-family badge-primary" title="The checkout has been created">
                 Created
               </span>
             </td>
@@ -185,7 +185,7 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               Buy Now Pay Later
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" part="badge text color font-family badge-primary" title="The checkout has been created">
+              <span class="badge bg-primary" part="badge font-family badge-primary" title="The checkout has been created">
                 Created
               </span>
             </td>
@@ -209,7 +209,7 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               E-commerce
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" part="badge text color font-family badge-secondary" title="The checkout has been attempted">
+              <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The checkout has been attempted">
                 Attempted
               </span>
             </td>
