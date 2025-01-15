@@ -95,7 +95,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Status
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              <span class="badge bg-success" title="This payment was successfully captured">
+              <span class="badge bg-success" part="badge text color font-family badge-success" title="This payment was successfully captured">
                 Succeeded
               </span>
             </span>
