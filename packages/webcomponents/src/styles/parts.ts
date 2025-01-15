@@ -74,6 +74,14 @@ export const loadingSpinner = `loading-spinner`;
 
 // Badge
 export const badge = `badge ${text}`;
+export const badgePrimary = `${badge} text-bg-primary`;
+export const badgeSecondary = `${badge} text-bg-secondary`;
+export const badgeSuccess = `${badge} text-bg-success`;
+export const badgeDanger = `${badge} text-bg-danger`;
+export const badgeWarning = `${badge} text-bg-warning`;
+export const badgeInfo = `${badge} text-bg-info`;
+export const badgeLight = `${badge} text-bg-light`;
+export const badgeDark = `${badge} text-bg-dark`;
 
 // Dropdown-menu
 export const dropdownMenu = `dropdown-menu ${text}`;

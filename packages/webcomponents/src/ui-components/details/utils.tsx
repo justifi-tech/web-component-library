@@ -33,9 +33,9 @@ export const DetailItem = ({
       </span>
       <span
         class="flex-1 d-table-cell px-2 text-wrap"
-        part={text}
-        innerHTML={value}
-      ></span>
+        part={text}>
+        {value}
+      </span>
     </div>
   ) : null;
 
@@ -55,9 +55,7 @@ export const EntityHeadInfoItem = ({
     >
       {title}
     </span>
-    <span class="pt-2 ps-2 pe-2" part={text}>
-      {value}
-    </span>
+    <span class="pt-2 ps-2 pe-2" part={text} innerHTML={value}></span>
   </div>
 );
 
