@@ -55,7 +55,9 @@ export const EntityHeadInfoItem = ({
     >
       {title}
     </span>
-    <span class="pt-2 ps-2 pe-2" part={text} innerHTML={value}></span>
+    <span class="pt-2 ps-2 pe-2" part={text}>
+      {value}
+    </span>
   </div>
 );
 
