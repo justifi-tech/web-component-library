@@ -241,22 +241,6 @@ export class Payment implements IPayment {
     this.updated_at = payment.updated_at;
   }
 
-  get payment_type(): PaymentTypes {
-    if (this.payment_method) {
-      return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
-    } else {
-      return PaymentTypes.unknown;
-    }
-  }
-
-  get payers_name(): string | null {
-    return this.payment_method.payersName;
-  }
-
-  get last_four_digits(): string | null {
-    return this.payment_method.lastFourDigits;
-  }
-
   get disputedStatus(): DisputeStatus | null {
     const lost = this.disputes.some(
       (dispute) => dispute.status === DisputeStatus.lost
@@ -272,6 +256,22 @@ export class Payment implements IPayment {
     } else {
       return 'open' as DisputeStatus;
     }
+  }
+
+  get payment_type(): PaymentTypes {
+    if (this.payment_method) {
+      return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
+    } else {
+      return PaymentTypes.unknown;
+    }
+  }
+
+  get payers_name(): string | null {
+    return this.payment_method.payersName;
+  }
+
+  get last_four_digits(): string | null {
+    return this.payment_method.lastFourDigits;
   }
 }
 
