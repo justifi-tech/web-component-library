@@ -31,5 +31,5 @@ export const terminalTableCells = {
   nickname: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
   provider_id: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
   sub_account_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapTerminalStatusToBadge(value)}></td>),
+  status: (value, index) => (<td part={getAlternateTableCellPart(index)}>{MapTerminalStatusToBadge(value)}</td>),
 }

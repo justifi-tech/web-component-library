@@ -6,7 +6,6 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import Spinner from '../../ui-components/spinner';
-import { badge } from '../../styles/parts';
 
 @Component({
   tag: 'payout-details-core',
@@ -77,7 +76,7 @@ export class PayoutDetailsCore {
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
-              badge={<span slot='badge' part={badge} innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
+              badge={MapPayoutStatusToBadge(this.payout?.status)}
               title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}
             >
               <EntityHeadInfoItem
