@@ -10,7 +10,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           $220.15 USD
         </h1>
         <span part="badge text color font-family" slot="badge">
-          <span class="badge bg-success" title="Successfully deposited into your bank account">
+          <span class="badge bg-success" part="badge text color font-family badge-success" title="Successfully deposited into your bank account">
             Paid
           </span>
         </span>

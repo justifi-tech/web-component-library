@@ -119,7 +119,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $123.45 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" title="This payment was successfully captured">
+              <span class="badge bg-success" title="This payment was successfully captured" part="badge text color font-family badge-success">
                 Succeeded
               </span>
             </td>
@@ -149,7 +149,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $234.56 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
+              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail." part="badge text color font-family badge-primary">
                 Pending
               </span>
             </td>
@@ -179,7 +179,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $345.67 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" title="This payment was successfully captured">
+              <span class="badge bg-success" title="This payment was successfully captured" part="badge text color font-family badge-success">
                 Succeeded
               </span>
             </td>
@@ -209,7 +209,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $123.45 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-danger" title="This card payment did not go through (it will not appear in a payout)">
+              <span class="badge bg-danger" title="This card payment did not go through (it will not appear in a payout)" part="badge text color font-family badge-danger">
                 Failed
               </span>
             </td>
@@ -239,7 +239,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $234.56 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
+              <span class="badge bg-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail." part="badge text color font-family badge-primary">
                 Pending
               </span>
             </td>
@@ -269,7 +269,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $345.67 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" title="The account holder disputed this payment. The amount has been returned and a fee assessed.">
+              <span class="badge bg-secondary" title="The account holder disputed this payment. The amount has been returned and a fee assessed." part="badge text color font-family badge-secondary">
                 Disputed
               </span>
             </td>
@@ -299,7 +299,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               $345.67 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" title="The full amount of this payment has been refunded">
+              <span class="badge bg-secondary" title="The full amount of this payment has been refunded" part="badge text color font-family badge-secondary">
                 Fully Refunded
               </span>
             </td>
