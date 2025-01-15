@@ -15,10 +15,15 @@ export class BillingFormWrapper {
    */
   @Prop({ mutable: true }) legend?: string;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() paymentMethodType?: string;
+
+  get hideFullBillingForm() {
+    return this.hideCardBillingForm && this.paymentMethodType === 'card';
+  }
 
   @Method()
   async fill(fields: BillingFormFields | PostalFormFields) {
-    if (this.hideCardBillingForm) {
+    if (this.hideFullBillingForm) {
       this.postalFormRef.fill(fields as PostalFormFields);
     } else {
       this.billingFormRef.fill(fields as BillingFormFields);
@@ -27,7 +32,7 @@ export class BillingFormWrapper {
 
   @Method()
   async getValues(): Promise<BillingFormFields | PostalFormFields> {
-    if (this.hideCardBillingForm) {
+    if (this.hideFullBillingForm) {
       return this.postalFormRef.getValues();
     } else {
       return this.billingFormRef.getValues();
@@ -36,7 +41,7 @@ export class BillingFormWrapper {
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    if (this.hideCardBillingForm) {
+    if (this.hideFullBillingForm) {
       return this.postalFormRef.validate();
     } else {
       return this.billingFormRef.validate();
@@ -44,7 +49,7 @@ export class BillingFormWrapper {
   }
 
   get renderedForm() {
-    if (this.hideCardBillingForm) {
+    if (this.hideFullBillingForm) {
       return (
         <postal-form ref={(el) => (this.postalFormRef = el)}></postal-form>
       );

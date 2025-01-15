@@ -92,11 +92,12 @@ export class NewPaymentMethod {
   };
 
   showNewPaymentMethodForm() {
+    const paymentMethodType = this.paymentMethodOption?.id;
     return (
       <div class="mt-4 pb-4 border-bottom">
         <hidden-input />
         <div class="mb-4">
-          {this.paymentMethodOption?.id === 'card' ? (
+          {paymentMethodType === 'card' ? (
             <card-form ref={(el) => this.paymentMethodFormRef = el} />
           ) : (
             <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
@@ -106,6 +107,7 @@ export class NewPaymentMethod {
         <justifi-billing-form-wrapper 
           ref={(el) => (this.billingFormWrapperRef = el)}
           hideCardBillingForm={this.hideCardBillingForm}
+          paymentMethodType={paymentMethodType}
         />
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>

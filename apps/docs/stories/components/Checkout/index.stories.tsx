@@ -79,6 +79,17 @@ const meta: Meta = {
         defaultValue: { summary: "undefined" },
       },
     },
+    "hide-card-billing-form": {
+      type: "boolean",
+      control: {
+        type: "boolean",
+      },
+      description: "For use with new credit card payment methods only, renders an alternate billing form with only the address_postal_code field present",
+      table: {
+        category: "props",
+        defaultValue: { summary: "false" },
+      },
+    },
     fillBillingForm: {
       description:
         "`fillBillingForm(fields: BillingFormFields) => Promise<void>`",
