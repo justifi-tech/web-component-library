@@ -25,24 +25,21 @@ export enum BadgeVariant {
 interface BadgeProps {
   variant: BadgeVariant;
   text: string;
+  title: string;
 }
 
-type BadgeElementProps = BadgeProps & {
-  [key: string]: any; // This allows any additional properties
-};
-
-export const Badge: FunctionalComponent<BadgeElementProps> = (props) => {
-  const { variant, text } = props;
+export const Badge: FunctionalComponent<BadgeProps> = (props) => {
+  const { variant, text, title } = props;
   const cssClasses = {
     default: 'badge',
-    primary: 'badge text-bg-primary',
-    secondary: 'badge text-bg-secondary',
-    success: 'badge text-bg-success',
-    danger: 'badge text-bg-danger',
-    warning: 'badge text-bg-warning',
-    info: 'badge text-bg-info',
-    light: 'badge text-bg-light',
-    dark: 'badge text-bg-dark',
+    primary: 'badge bg-primary',
+    secondary: 'badge bg-secondary',
+    success: 'badge bg-success',
+    danger: 'badge bg-danger',
+    warning: 'badge bg-warning',
+    info: 'badge bg-info',
+    light: 'badge bg-light',
+    dark: 'badge bg-dark',
   }
 
   const badgeVariant = {
@@ -61,7 +58,7 @@ export const Badge: FunctionalComponent<BadgeElementProps> = (props) => {
     <span
       class={cssClasses[variant] || cssClasses.default}
       part={badgeVariant[variant] || badgeVariant.default}
-      {...props}
+      title={title}
     >
       {text}
     </span>
