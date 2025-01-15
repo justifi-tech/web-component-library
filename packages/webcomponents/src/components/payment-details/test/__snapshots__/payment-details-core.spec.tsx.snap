@@ -22,10 +22,8 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
           <h1 class="m-0" part="heading-1 heading text color font-family">
             $234.56 USD
           </h1>
-          <span part="badge text color font-family" slot="badge">
-            <span class="badge bg-success" title="This payment was successfully captured">
-              Succeeded
-            </span>
+          <span class="badge bg-success" part="badge text color font-family badge-success" title="This payment was successfully captured">
+            Succeeded
           </span>
         </div>
         <div class="align-items-top d-flex flex-row" part="text color font-family">
