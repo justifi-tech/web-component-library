@@ -73,7 +73,7 @@ export const tableError = `table-error ${text} ${backgroundColor}`;
 export const loadingSpinner = `loading-spinner`;
 
 // Badge
-export const badge = `badge ${text}`;
+export const badge = `badge ${fontFamily}`;
 export const badgePrimary = `${badge} badge-primary`;
 export const badgeSecondary = `${badge} badge-secondary`;
 export const badgeSuccess = `${badge} badge-success`;
