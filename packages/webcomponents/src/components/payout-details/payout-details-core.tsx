@@ -5,8 +5,8 @@ import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadIn
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
-import Spinner from '../../ui-components/spinner';
 import { badge } from '../../styles/parts';
+import PayoutDetailsLoading from './payout-details-loading';
 
 @Component({
   tag: 'payout-details-core',
@@ -71,7 +71,7 @@ export class PayoutDetailsCore {
   render() {
     return (
       <StyledHost>
-        {this.loading && <Spinner />}
+        {this.loading && <PayoutDetailsLoading />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.payout && (
           <justifi-details error-message={this.errorMessage}>

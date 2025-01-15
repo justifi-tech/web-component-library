@@ -40,6 +40,26 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
 exports[`justifi-season-interruption-insurance-core should display loading state correctly 1`] = `
 <justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
   <style></style>
+  <div class="gap-3 row">
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%; height: 30px;"></div>
+    </div>
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 70%;"></div>
+    </div>
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
+    </div>
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
+    </div>
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+    </div>
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80%;"></div>
+    </div>
+  </div>
 </justifi-season-interruption-insurance-core>
 `;
 
