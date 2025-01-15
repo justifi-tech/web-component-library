@@ -1,6 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Listen, Watch } from '@stencil/core';
 import { Button } from '../../../../ui-components';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 
@@ -13,6 +14,7 @@ export class BusinessOwnersFormStepCore {
   @State() ownersPayload: ownerPayloadItem[] = [];
   @State() refs: any = [];
   @State() newFormOpen: boolean;
+  @State() isLoading: boolean = false;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -20,15 +22,15 @@ export class BusinessOwnersFormStepCore {
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
 
-  
+
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  
+
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
-  
-  
+
+
   get showAddOwnerButton() {
     return this.ownersPayload.length < 4 && !this.newFormOpen;
   }
@@ -46,6 +48,7 @@ export class BusinessOwnersFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         if (response.data.owners.length) {
@@ -63,6 +66,7 @@ export class BusinessOwnersFormStepCore {
       },
       final: () => {
         this.formLoading.emit(false);
+        this.isLoading = false;
         this.manageRefs();
       }
     });
@@ -141,6 +145,10 @@ export class BusinessOwnersFormStepCore {
   }
 
   render() {
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
+
     return (
       <div>
         <div class="d-flex align-items-center gap-2">

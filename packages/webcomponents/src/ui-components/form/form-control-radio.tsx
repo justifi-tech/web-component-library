@@ -60,7 +60,6 @@ export class RadioInput {
       return inputRadioFocused;
 
     }
-
     return inputRadio;
   }
 
