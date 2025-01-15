@@ -18,7 +18,7 @@
     "start:payments-list": "npx nodemon ./examples/payments-list.js",
     "start:payments-list-with-filters": "npx nodemon ./examples/payments-list-with-filters.js",
     "start:payouts-list": "npx nodemon ./examples/payouts-list.js",
-    "start:payouts-list-with-filters": "npx nodemon ./examples/payouts-list-with-filters.js",
+    "start:payouts-list-with-filters": "npx nodemon ./examples/payouts-list-with-filters.js"
   },
   "author": "",
   "license": "ISC",
