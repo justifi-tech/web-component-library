@@ -1,5 +1,4 @@
 import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } from '@stencil/core';
-import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
@@ -17,7 +16,6 @@ export class NewPaymentMethod {
   private billingFormWrapperRef?: HTMLJustifiBillingFormWrapperElement;
   private paymentMethodFormRef?: HTMLCardFormElement;
 
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
