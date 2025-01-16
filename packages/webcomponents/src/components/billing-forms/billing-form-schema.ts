@@ -41,5 +41,10 @@ export function isBillingFormFields(fields: any): fields is BillingFormFields {
 }
 
 export function isPostalFormFields(fields: any): fields is PostalFormFields {
-  return 'address_postal_code' in fields;
+  return (
+    typeof fields === 'object' &&
+    fields !== null &&
+    Object.keys(fields).length === 1 &&
+    'address_postal_code' in fields
+  );
 }
