@@ -58,6 +58,23 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 
+  const hideCardBillingForm = false;
+
+  const billingFormFields = {
+    name: 'John Doe',
+    address_line1: 'Main St',
+    address_line2: 'Apt 1',
+    address_city: 'Beverly Hills',
+    address_state: 'CA',
+    address_postal_code: '90210',
+  };
+
+  const postalFormFields = {
+    address_postal_code: '90210',
+  };
+
+  let fields = hideCardBillingForm ? postalFormFields : billingFormFields;
+
   res.send(`
     <!DOCTYPE html>
     <html>
@@ -67,20 +84,23 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
       </head>
-      <body>
-        <div>
+      <body class="two-column-layout">
+        <div class="column-preview">
           <justifi-tokenize-payment-method
             auth-token="${webComponentToken}"
             account-id="${process.env.SUB_ACCOUNT_ID}"
+            hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-tokenize-payment-method>
+          <button id="fill-billing-form-button">Test Fill Billing Form</button>
         </div>
-        <div id="output-pane">
+        <div class="column-output" id="output-pane">
           <em>Tokenization output will appear here...</em>
         </div>
       </body>
       <script>
         const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
+        const fillBillingFormButton = document.getElementById('fill-billing-form-button');
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
@@ -88,12 +108,17 @@ app.get('/', async (req, res) => {
 
         justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
           console.log(event);
+          console.log('token', event.detail.response.token);
           writeOutputToPage(event);
         });
 
         justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
           console.log(event);
           writeOutputToPage(event);
+        });
+
+        fillBillingFormButton.addEventListener('click', () => {
+          justifiTokenizePaymentMethod.fillBillingForm(${JSON.stringify(fields)});
         });
       </script>
     </html>

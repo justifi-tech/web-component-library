@@ -18,6 +18,7 @@ export class TokenizePaymentMethod {
   @Prop() submitButtonText: string;
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
+  @Prop() hideCardBillingForm?: boolean;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -66,6 +67,7 @@ export class TokenizePaymentMethod {
                   show-bnpl={false}
                   paymentMethodGroupId={this.paymentMethodGroupId}
                   show-saved-payment-methods={false} // implement payment method group loading to show these
+                  hideCardBillingForm={this.hideCardBillingForm}
                   authToken={this.authToken}
                   account-id={this.accountId}
                 />
