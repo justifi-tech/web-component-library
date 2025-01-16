@@ -51,7 +51,6 @@ export class Payout implements IPayout {
   public id: string;
   public account_id: string;
   public amount: number;
-  public raw_amount: number;
   public bank_account: IBankAccount;
   public currency: CurrencyTypes;
   public delivery_method: string;
