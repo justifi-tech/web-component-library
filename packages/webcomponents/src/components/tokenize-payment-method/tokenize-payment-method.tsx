@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
 import { BillingFormFields } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
@@ -14,11 +14,13 @@ export class TokenizePaymentMethod {
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodGroupId: string;
-  @Prop() isLoading: boolean = true;
   @Prop() submitButtonText: string;
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
+  @Prop() hideSubmitButton?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  
+  @State() isLoading: boolean = true;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -78,7 +80,8 @@ export class TokenizePaymentMethod {
                   type="submit"
                   onClick={event => this.tokenizePaymentMethod(event)}
                   isLoading={this.isLoading}
-                  data-testid="submit-button">
+                  data-testid="submit-button"
+                  hidden={this.hideSubmitButton}>
                   {this.submitButtonText || 'Submit'}
                 </Button>
               </div>
