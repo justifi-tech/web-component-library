@@ -17,7 +17,7 @@ export class CheckoutsListCore {
   @Prop() columns: string;
 
   @State() checkouts: Checkout[] = [];
-  @State() checkoutsTable: Table;
+  @State() checkoutsTable: Table<Checkout>;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -37,7 +37,7 @@ export class CheckoutsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
-    this.checkoutsTable = new Table(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
+    this.checkoutsTable = new Table<Checkout>(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
     if (this.getCheckouts && this.getSubAccounts) {
       this.fetchData();
     }

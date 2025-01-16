@@ -1,7 +1,8 @@
 import { h } from '@stencil/core';
-import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { formatDate, formatTime } from '../../utils/utils';
 import { MapCheckoutStatusToBadge } from './checkouts-status';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
+import { Checkout } from '../../api/Checkout';
 
 export const defaultColumnsKeys = 'created_at,payment_amount,payment_description,payment_mode,status';
 
@@ -39,15 +40,25 @@ export const checkoutTableColumns = {
 }
 
 export const checkoutTableCells = {
-  created_at: (value, index) => (
+  created_at: (checkout: Checkout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
-      <div class="fw-bold">{formatDate(value)} </div>
-      < div class="fw-bold">{formatTime(value)} </div>
+      <div class="fw-bold">{formatDate(checkout.created_at)}</div>
+      <div class="fw-bold">{formatTime(checkout.created_at)}</div>
     </td>
   ),
-  payment_amount: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value, true, true)} </td>),
-  payment_description: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  sub_account_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  payment_mode: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapCheckoutStatusToBadge(value)}></td>),
-}
+  payment_amount: (checkout: Checkout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{checkout.formatPaymentAmount(checkout.payment_amount, true)}</td>
+  ),
+  payment_description: (checkout: Checkout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{checkout.payment_description}</td>
+  ),
+  sub_account_name: (checkout: Checkout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{checkout.sub_account_name}</td>
+  ),
+  payment_mode: (checkout: Checkout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{checkout.payment_mode}</td>
+  ),
+  status: (checkout: Checkout, index: number) => (
+    <td part={getAlternateTableCellPart(index)} innerHTML={MapCheckoutStatusToBadge(checkout.status)}></td>
+  ),
+};

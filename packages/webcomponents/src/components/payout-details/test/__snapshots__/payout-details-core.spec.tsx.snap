@@ -81,7 +81,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             Amount
           </span>
           <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            $220.15
+            $220.15 USD
           </span>
         </div>
         <div class="d-table-row gap-2">
@@ -89,7 +89,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             Fee
           </span>
           <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            $14.85
+            $14.85 USD
           </span>
         </div>
       </div>

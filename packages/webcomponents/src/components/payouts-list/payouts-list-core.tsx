@@ -20,7 +20,7 @@ export class PayoutsListCore {
   @Prop() columns: string;
 
   @State() payouts: Payout[] = [];
-  @State() payoutsTable: Table;
+  @State() payoutsTable: Table<Payout>;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -39,7 +39,7 @@ export class PayoutsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
-    this.payoutsTable = new Table(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));
+    this.payoutsTable = new Table<Payout>(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));
     if (this.getPayouts && this.getSubAccounts) {
       this.fetchData();
     }

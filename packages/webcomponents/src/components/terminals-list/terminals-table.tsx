@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { MapTerminalStatusToBadge } from './terminals-status';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
+import { Terminal } from '../../api/Terminal';
 
 export const defaultColumnsKeys = 'nickname,provider_id,status';
 
@@ -28,8 +29,16 @@ export const terminalTableColumns = {
 }
 
 export const terminalTableCells = {
-  nickname: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  provider_id: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  sub_account_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapTerminalStatusToBadge(value)}></td>),
-}
+  nickname: (terminal: Terminal, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{terminal.nickname}</td>
+  ),
+  provider_id: (terminal: Terminal, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{terminal.provider_id}</td>
+  ),
+  sub_account_name: (terminal: Terminal, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{terminal.sub_account_name}</td>
+  ),
+  status: (terminal: Terminal, index: number) => (
+    <td part={getAlternateTableCellPart(index)} innerHTML={MapTerminalStatusToBadge(terminal.status)}></td>
+  ),
+};

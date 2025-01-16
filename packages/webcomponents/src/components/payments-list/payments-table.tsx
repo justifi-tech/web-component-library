@@ -1,7 +1,8 @@
 import { h } from '@stencil/core';
 import { MapPaymentStatusToBadge } from './payments-status';
-import { formatCurrency, convertToLocal } from '../../utils/utils';
+import { convertToLocal } from '../../utils/utils';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
+import { Payment } from '../../api/Payment';
 
 export const defaultColumnsKeys = 'created_at,amount,status,payment_type,description,payers_name,last_four_digits';
 
@@ -44,16 +45,28 @@ export const paymentTableColumns = {
 };
 
 export const paymentTableCells = {
-  created_at: (value, index) => (
+  created_at: (payment: Payment, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
-      <div class="fw-bold">{convertToLocal(value, { showDisplayDate: true })}</div>
-      <div class="fw-bold">{convertToLocal(value, { showTime: true })}</div>
+      <div class="fw-bold">{convertToLocal(payment.created_at, { showDisplayDate: true })}</div>
+      <div class="fw-bold">{convertToLocal(payment.created_at, { showTime: true })}</div>
     </td>
   ),
-  amount: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value, true, true)}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapPaymentStatusToBadge(value)}></td>),
-  payment_type: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  description: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  payers_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  last_four_digits: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>)
+  amount: (payment: Payment, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payment.formatPaymentAmount(payment.amount, true)}</td>
+  ),
+  status: (payment: Payment, index: number) => (
+    <td part={getAlternateTableCellPart(index)} innerHTML={MapPaymentStatusToBadge(payment.status)}></td>
+  ),
+  payment_type: (payment: Payment, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payment.payment_type}</td>
+  ),
+  description: (payment: Payment, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payment.description}</td>
+  ),
+  payers_name: (payment: Payment, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payment.payers_name}</td>
+  ),
+  last_four_digits: (payment: Payment, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payment.last_four_digits}</td>
+  ),
 };
