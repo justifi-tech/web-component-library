@@ -12,7 +12,7 @@ export class Table<T> {
     return this.collection.map((dataEntry, index) => {
       return this.columnKeys.map((key) =>
         this.tableCells[key](dataEntry, index)
-    );
+      );
     });
   }
 

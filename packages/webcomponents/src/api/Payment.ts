@@ -220,7 +220,6 @@ export class Payment implements IPayment {
   public refunds: IRefund[];
   public transaction_hold: null;
 
-  
   constructor(payment: IPayment) {
     this.id = payment.id;
     this.account_id = payment.account_id;
@@ -247,12 +246,12 @@ export class Payment implements IPayment {
     this.created_at = payment.created_at;
     this.updated_at = payment.updated_at;
   }
-  
+
   get disputedStatus(): DisputeStatus | null {
     const lost = this.disputes.some(
       (dispute) => dispute.status === DisputeStatus.lost
     );
-    
+
     // if a dispute is 'won', we don't show a dispute status, just general status
     // TODO: update this logic to work with new DisputeStatus enum
     // (cast 'open' as DisputeStatus in the meantime to keep existing functionality)
@@ -264,7 +263,7 @@ export class Payment implements IPayment {
       return 'open' as DisputeStatus;
     }
   }
-  
+
   get payment_type(): PaymentTypes {
     if (this.payment_method) {
       return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
@@ -272,15 +271,15 @@ export class Payment implements IPayment {
       return PaymentTypes.unknown;
     }
   }
-  
+
   get payers_name(): string | null {
     return this.payment_method.payersName;
   }
-  
+
   get last_four_digits(): string | null {
     return this.payment_method.lastFourDigits;
   }
-  
+
   formatPaymentAmount(amount: number, showCurrency?: boolean): string {
     if (!amount) amount = 0;
     const formattedCurrency = this.currency.toUpperCase();
