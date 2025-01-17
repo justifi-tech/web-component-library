@@ -9,6 +9,10 @@ import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 import mockGetCheckoutSuccess from './../../../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckoutSuccess from './../../../../../../mockData/mockPostCheckoutSuccess.json';
 import { PaymentMethodOptions } from '../payment-method-options';
+import { BillingFormWrapper } from '../../billing-forms/billing-form-wrapper';
+import { NewPaymentMethod } from '../new-payment-method';
+import { BillingForm } from '../../billing-forms/billing-form/billing-form';
+import { PostalForm } from '../../billing-forms/postal-form/postal-form';
 
 describe('justifi-checkout-core', () => {
   it('should display loading state correctly', async () => {
@@ -21,6 +25,7 @@ describe('justifi-checkout-core', () => {
 
     expect(page.root).toMatchSnapshot();
   });
+  
 
   it('should display error state correctly', async () => {
     const getCheckout = makeGetCheckout({
@@ -59,6 +64,28 @@ describe('justifi-checkout-core', () => {
 
     const expectedCheckout = new Checkout(mockGetCheckoutSuccess.data as unknown as ICheckout);
     expect(page.rootInstance.checkout).toEqual(expectedCheckout);
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should render the full billing form by default', async () => {
+    const page = await newSpecPage({
+      components: [CheckoutCore, PaymentMethodOptions, NewPaymentMethod, BillingFormWrapper, BillingForm],
+      template: () => <justifi-checkout-core />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should render the postal form if hideCardBillingForm prop is true', async () => {
+    const page = await newSpecPage({
+      components: [CheckoutCore, PaymentMethodOptions, NewPaymentMethod, BillingFormWrapper, PostalForm],
+      template: () => <justifi-checkout-core hideCardBillingForm={true} />,
+    });
+
+    await page.waitForChanges();
+
     expect(page.root).toMatchSnapshot();
   });
 

@@ -3,7 +3,7 @@ import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
 import { ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
@@ -19,6 +19,7 @@ export class Checkout {
   @Prop() disableBankAccount?: boolean;
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
+  @Prop() hideCardBillingForm?: boolean;
 
   @State() getCheckout: Function;
   @State() complete: Function;
@@ -71,7 +72,7 @@ export class Checkout {
   }
 
   @Method()
-  async fillBillingForm(fields: BillingFormFields) {
+  async fillBillingForm(fields: BillingFormFields | PostalFormFields) {
     this.checkoutCoreRef.fillBillingForm(fields);
   }
 
@@ -85,6 +86,7 @@ export class Checkout {
         disableBankAccount={this.disableBankAccount}
         disableBnpl={this.disableBnpl}
         disablePaymentMethodGroup={this.disablePaymentMethodGroup}
+        hideCardBillingForm={this.hideCardBillingForm}
         ref={el => {
           if (el) {
             this.checkoutCoreRef = el;

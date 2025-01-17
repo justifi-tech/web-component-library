@@ -5,7 +5,6 @@ import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadIn
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
-import { badge } from '../../styles/parts';
 import PayoutDetailsLoading from './payout-details-loading';
 
 @Component({
@@ -77,7 +76,7 @@ export class PayoutDetailsCore {
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
-              badge={<span slot='badge' part={badge} innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
+              badge={MapPayoutStatusToBadge(this.payout?.status)}
               title={this.payout.formatPaymentAmount(this.payout.amount, true)}
             >
               <EntityHeadInfoItem

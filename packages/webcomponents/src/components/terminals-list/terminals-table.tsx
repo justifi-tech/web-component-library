@@ -39,6 +39,6 @@ export const terminalTableCells = {
     <td part={getAlternateTableCellPart(index)}>{terminal.sub_account_name}</td>
   ),
   status: (terminal: Terminal, index: number) => (
-    <td part={getAlternateTableCellPart(index)} innerHTML={MapTerminalStatusToBadge(terminal.status)}></td>
+    <td part={getAlternateTableCellPart(index)}>{MapTerminalStatusToBadge(terminal.status)}</td>
   ),
 };

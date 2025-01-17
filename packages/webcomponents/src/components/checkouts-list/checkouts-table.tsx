@@ -59,6 +59,6 @@ export const checkoutTableCells = {
     <td part={getAlternateTableCellPart(index)}>{checkout.payment_mode}</td>
   ),
   status: (checkout: Checkout, index: number) => (
-    <td part={getAlternateTableCellPart(index)} innerHTML={MapCheckoutStatusToBadge(checkout.status)}></td>
+    <td part={getAlternateTableCellPart(index)}>{MapCheckoutStatusToBadge(checkout.status)}</td>
   ),
 };

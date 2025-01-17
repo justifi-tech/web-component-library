@@ -65,6 +65,17 @@ const meta: Meta = {
         category: "props",
       },
     },
+    "hide-card-billing-form": {
+      type: "boolean",
+      control: {
+        type: "boolean",
+      },
+      description: "For use with new credit card payment methods only, renders an alternate billing form with only the address_postal_code field present",
+      table: {
+        category: "props",
+        defaultValue: { summary: "false" },
+      },
+    },
     "submit-button-text": {
       type: "string",
       control: {

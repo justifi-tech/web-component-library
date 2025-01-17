@@ -77,7 +77,7 @@ export const payoutTableCells = (downloadCSV) => ({
     <td part={getAlternateTableCellPart(index)}>{payout.formatPaymentAmount(payout.amount, true)}</td>
   ),
   status: (payout: Payout, index: number) => (
-    <td part={getAlternateTableCellPart(index)} innerHTML={MapPayoutStatusToBadge(payout.status)}></td>
+    <td part={getAlternateTableCellPart(index)}>{MapPayoutStatusToBadge(payout.status)}</td>
   ),
   csv: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>

@@ -21,7 +21,7 @@ export class PaymentsListCore {
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
-  
+
   @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getPayments')
@@ -51,7 +51,7 @@ export class PaymentsListCore {
 
   fetchData(): void {
     this.loading = true;
-    
+
     this.getPayments({
       params: this.requestParams,
       onSuccess: ({ payments, pagingInfo }) => {
@@ -85,7 +85,7 @@ export class PaymentsListCore {
   rowClickHandler = (e) => {
     const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPaymentID) return;
-    
+
     const paymentData = this.payments.find((payment) => payment.id === clickedPaymentID);
     this.clickEvent.emit({ name: TableClickActions.row, data: paymentData });
   };

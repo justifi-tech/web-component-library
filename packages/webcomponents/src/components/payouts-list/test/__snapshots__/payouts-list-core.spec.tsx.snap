@@ -118,7 +118,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $226.02 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" title="Successfully deposited into your bank account">
+              <span class="badge bg-success" part="badge font-family badge-success" title="Successfully deposited into your bank account">
                 Paid
               </span>
             </td>
@@ -150,7 +150,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $226.02 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
+              <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
                 Forwarded
               </span>
             </td>
@@ -182,7 +182,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $226.02 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" title="Transfer to your bank account has been initiated">
+              <span class="badge bg-primary" part="badge font-family badge-primary" title="Transfer to your bank account has been initiated">
                 In Transit
               </span>
             </td>
@@ -214,7 +214,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $220.15 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" title="Batched and scheduled to be transferred">
+              <span class="badge bg-primary" part="badge font-family badge-primary" title="Batched and scheduled to be transferred">
                 Scheduled
               </span>
             </td>
@@ -246,7 +246,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $220.15 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-danger" title="Transfer to your bank account failed">
+              <span class="badge bg-danger" part="badge font-family badge-danger" title="Transfer to your bank account failed">
                 Canceled
               </span>
             </td>

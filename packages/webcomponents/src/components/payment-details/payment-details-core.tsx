@@ -1,11 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payment } from '../../api';
 import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { StyledHost } from '../../ui-components';
-import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
-import { badge } from '../../styles/parts';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import PaymentDetailsLoading from './payment-details-loading';
 
 @Component({
@@ -63,7 +62,7 @@ export class PaymentDetailsCore {
             <justifi-details error-message={this.errorMessage}>
               <EntityHeadInfo
                 slot="head-info"
-                badge={<span slot='badge' part={badge} innerHTML={MapPaymentStatusToBadge(this.payment.status)} />}
+                badge={MapPaymentStatusToBadge(this.payment.status)}
                 title={this.payment.formatPaymentAmount(this.payment.amount, true)}
               >
                 <EntityHeadInfoItem
