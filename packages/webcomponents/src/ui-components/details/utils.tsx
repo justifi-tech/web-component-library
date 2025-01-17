@@ -33,9 +33,9 @@ export const DetailItem = ({
       </span>
       <span
         class="flex-1 d-table-cell px-2 text-wrap"
-        part={text}
-        innerHTML={value}
-      ></span>
+        part={text}>
+        {value}
+      </span>
     </div>
   ) : null;
 

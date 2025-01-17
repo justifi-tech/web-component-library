@@ -63,7 +63,7 @@ export const payoutTableCells = (downloadCSV) => ({
   fees_total: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
   other_total: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
   amount: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapPayoutStatusToBadge(value)}></td>),
+  status: (value, index) => (<td part={getAlternateTableCellPart(index)}>{MapPayoutStatusToBadge(value)}</td>),
   csv: (value, index) => (
     <td part={getAlternateTableCellPart(index)}>
       <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(value); }}>

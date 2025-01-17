@@ -1,21 +1,51 @@
+import { h } from "@stencil/core";
+import { Badge, BadgeVariant } from "../../ui-components/badge/badge";
 
 export const MapPayoutStatusToBadge = (status: string) => {
-  switch (status) {
-    case 'canceled':
-      return "<span class='badge bg-danger' title='Transfer to your bank account failed'>Canceled</span>";
-    case 'failed':
-      return "<span class='badge bg-danger' title='Transfer to your bank account failed'>Failed</span>";
-    case 'forwarded':
-      return "<span class='badge bg-secondary' title='This payout initially failed; the funds have been forwarded to your next successful payout'>Forwarded</span>";
-    case 'in_transit':
-      return "<span class='badge bg-primary' title='Transfer to your bank account has been initiated'>In Transit</span>";
-    case 'paid':
-      return "<span class='badge bg-success' title='Successfully deposited into your bank account'>Paid</span>";
-    case 'pending':
-      return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Pending</span>";
-    case 'scheduled':
-      return "<span class='badge bg-primary' title='Batched and scheduled to be transferred'>Scheduled</span>";
-    case 'withdrawn':
-      return "<span class='badge bg-success' title='Negative payout balance successfully withdrawn from your bank account'>Withdrawn</span>";
+  const statusToBadgeProps = {
+    canceled: {
+      variant: BadgeVariant.DANGER,
+      title: 'Transfer to your bank account failed',
+      text: 'Canceled',
+    },
+    failed: {
+      variant: BadgeVariant.DANGER,
+      title: 'Transfer to your bank account failed',
+      text: 'Failed',
+    },
+    forwarded: {
+      variant: BadgeVariant.SECONDARY,
+      title: 'This payout initially failed; the funds have been forwarded to your next successful payout',
+      text: 'Forwarded',
+    },
+    in_transit: {
+      variant: BadgeVariant.PRIMARY,
+      title: 'Transfer to your bank account has been initiated',
+      text: 'In Transit',
+    },
+    paid: {
+      variant: BadgeVariant.SUCCESS,
+      title: 'Successfully deposited into your bank account',
+      text: 'Paid',
+    },
+    pending: {
+      variant: BadgeVariant.PRIMARY,
+      title: 'Batched and scheduled to be transferred',
+      text: 'Pending',
+    },
+    scheduled: {
+      variant: BadgeVariant.PRIMARY,
+      title: 'Batched and scheduled to be transferred',
+      text: 'Scheduled',
+    },
+    withdrawn: {
+      variant: BadgeVariant.SUCCESS,
+      title: 'Negative payout balance successfully withdrawn from your bank account',
+      text: 'Withdrawn',
+    },
   };
+
+  const badgeProps = statusToBadgeProps[status];
+
+  return <Badge {...badgeProps} />;
 };

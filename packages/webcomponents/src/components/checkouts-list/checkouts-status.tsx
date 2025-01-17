@@ -1,13 +1,31 @@
+import { h } from "@stencil/core";
+import { Badge, BadgeVariant } from "../../ui-components/badge/badge";
 
 export const MapCheckoutStatusToBadge = (status: string) => {
-  switch (status) {
-    case 'created':
-      return "<span class='badge bg-primary' title='The checkout has been created'>Created</span>";
-    case 'completed':
-      return "<span class='badge bg-success' title='The checkout has been completed'>Completed</span>";
-    case 'attempted':
-      return "<span class='badge bg-secondary' title='The checkout has been attempted'>Attempted</span>";
-    case 'expired':
-      return "<span class='badge bg-danger' title='The checkout has expired'>Expired</span>";
-  };
-};
+  const statusToBadgeProps = {
+    created: {
+      variant: BadgeVariant.PRIMARY,
+      title: 'The checkout has been created',
+      text: 'Created',
+    },
+    completed: {
+      variant: BadgeVariant.SUCCESS,
+      title: 'The checkout has been completed',
+      text: 'Completed',
+    },
+    attempted: {
+      variant: BadgeVariant.SECONDARY,
+      title: 'The checkout has been attempted',
+      text: 'Attempted',
+    },
+    expired: {
+      variant: BadgeVariant.DANGER,
+      title: 'The checkout has expired',
+      text: 'Expired',
+    },
+  }
+
+  const badgeProps = statusToBadgeProps[status];
+
+  return <Badge {...badgeProps} />;
+}

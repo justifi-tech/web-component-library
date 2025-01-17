@@ -51,7 +51,7 @@ export const paymentTableCells = {
     </td>
   ),
   amount: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value, true, true)}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapPaymentStatusToBadge(value)}></td>),
+  status: (value, index) => (<td part={getAlternateTableCellPart(index)}>{MapPaymentStatusToBadge(value)}</td>),
   payment_type: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
   description: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
   payers_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),

@@ -49,5 +49,5 @@ export const checkoutTableCells = {
   payment_description: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
   sub_account_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
   payment_mode: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)} innerHTML={MapCheckoutStatusToBadge(value)}></td>),
+  status: (value, index) => (<td part={getAlternateTableCellPart(index)}>{MapCheckoutStatusToBadge(value)}</td>),
 }
