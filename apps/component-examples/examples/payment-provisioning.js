@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const { generateRandomLegalName } = require('../utils/random-business-names'); // Correct import path
+const { generateRandomLegalName } = require('../utils/random-business-names');
 const app = express();
 const port = process.env.PORT || 3000;
 
