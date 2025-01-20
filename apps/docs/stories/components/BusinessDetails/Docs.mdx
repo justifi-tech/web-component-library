@@ -1,8 +1,14 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull } from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiBusinessDetails from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Entities/BusinessDetails"
@@ -34,6 +40,10 @@ the business-id required for this component.
 />
 
 # Example Usage
+
+<ComponentBox>
+  <justifi-business-details business-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 
