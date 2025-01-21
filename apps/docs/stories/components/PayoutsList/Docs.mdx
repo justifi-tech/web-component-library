@@ -8,8 +8,14 @@ import {
 } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull, codeExampleEventHandling } from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiPayoutsList from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Merchant Tools/Payouts List"
@@ -45,8 +51,11 @@ All table components emit an event when a row is clicked with the necessary info
 
 <Source dark language="html" code={codeExampleEventHandling} />
 
-
 # Example Usage
+
+<ComponentBox>
+  <justifi-payouts-list account-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 
