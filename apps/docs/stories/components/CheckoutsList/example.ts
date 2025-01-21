@@ -4,7 +4,22 @@ export const codeExampleFull = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead('justifi-checkouts-list')}
+${codeExampleHead(
+  'justifi-checkouts-list',
+  `<style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>`
+)}
 
 <body>
   <!-- Optional: add the filters component -->
