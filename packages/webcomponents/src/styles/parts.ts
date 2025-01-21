@@ -93,7 +93,7 @@ export const radioListItem = `radio-list-item ${text}`;
 export const skeleton = `skeleton`;
 
 // Component specific
-// This allows the billing form to be hidden, for example
+// This allows specific sections of a component to be hidden, for example
 // ::part(billing-form) { display: none; }
 export const billingForm = `billing-form`;
 export const checkoutSummary = `checkout-summary`;
