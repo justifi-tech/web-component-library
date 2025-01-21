@@ -222,7 +222,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $245.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              ($10.00) USD
+              -$10.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               $14.85 USD
@@ -254,7 +254,7 @@ exports[`payouts-list-core renders properly 1`] = `
               $245.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              ($10.00) USD
+              -$10.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               $14.85 USD

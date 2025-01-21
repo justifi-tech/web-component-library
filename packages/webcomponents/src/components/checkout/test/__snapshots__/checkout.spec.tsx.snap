@@ -22,7 +22,7 @@ exports[`justifi-checkout renders loading 1`] = `
                   Total
                 </span>
                 <span part="text color font-family">
-                  $0.00
+                  $0.00 USD
                 </span>
               </div>
             </div>
