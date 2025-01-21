@@ -1,8 +1,14 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull } from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiPaymentDetails from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Merchant Tools/Payment Details"
@@ -32,6 +38,10 @@ Component to display detailed information about a specific payment.
 />
 
 # Example Usage
+
+<ComponentBox>
+  <justifi-payment-details payment-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 
