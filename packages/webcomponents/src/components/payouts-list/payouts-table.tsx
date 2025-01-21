@@ -62,19 +62,19 @@ export const payoutTableCells = (downloadCSV) => ({
     <td part={getAlternateTableCellPart(index)}>{payout.sub_account_name}</td>
   ),
   payments_total: (payout: Payout, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{payout.formatPaymentAmount(payout.payments_total, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.payments_total)}</td>
   ),
   refunds_total: (payout: Payout, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{payout.formatPaymentAmount(payout.refunds_total, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.refunds_total)}</td>
   ),
   fees_total: (payout: Payout, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{payout.formatPaymentAmount(payout.fees_total, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.fees_total)}</td>
   ),
   other_total: (payout: Payout, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{payout.formatPaymentAmount(payout.other_total, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.other_total)}</td>
   ),
   amount: (payout: Payout, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{payout.formatPaymentAmount(payout.amount, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.amount)}</td>
   ),
   status: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{MapPayoutStatusToBadge(payout.status)}</td>

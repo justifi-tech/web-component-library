@@ -47,7 +47,7 @@ export const checkoutTableCells = {
     </td>
   ),
   payment_amount: (checkout: Checkout, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{checkout.formatPaymentAmount(checkout.payment_amount, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{checkout.formattedPaymentAmount(checkout.payment_amount)}</td>
   ),
   payment_description: (checkout: Checkout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{checkout.payment_description}</td>

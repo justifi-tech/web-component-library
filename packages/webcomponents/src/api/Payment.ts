@@ -1,4 +1,4 @@
-import Dinero from 'dinero.js';
+import { formatCurrency } from "../utils/utils";
 import { DisputeStatus } from "./Dispute";
 
 export enum CaptureStrategy {
@@ -280,17 +280,8 @@ export class Payment implements IPayment {
     return this.payment_method.lastFourDigits;
   }
 
-  formatPaymentAmount(amount: number, showCurrency?: boolean): string {
-    if (!amount) amount = 0;
-    const formattedCurrency = this.currency.toUpperCase();
-  
-    const format = (amount: number): string => {
-      const formattedString = '$0,0.00';
-      return Dinero({ amount: amount }).toFormat(formattedString);
-    };
-  
-    const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
-    return showCurrency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
+  formattedPaymentAmount(amount: number): string {
+    return formatCurrency(amount, this.currency);
   }
 }
 

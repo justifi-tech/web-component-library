@@ -63,7 +63,7 @@ export class PaymentDetailsCore {
               <EntityHeadInfo
                 slot="head-info"
                 badge={MapPaymentStatusToBadge(this.payment.status)}
-                title={this.payment.formatPaymentAmount(this.payment.amount, true)}
+                title={this.payment.formattedPaymentAmount(this.payment.amount)}
               >
                 <EntityHeadInfoItem
                   classes="border-1 border-end"
@@ -80,13 +80,13 @@ export class PaymentDetailsCore {
               <div slot='detail-sections'>
                 <DetailSectionTitle sectionTitle="Details" />
                 <div class="d-table gap-2 w-100">
-                  <DetailItem title="Amount" value={this.payment.formatPaymentAmount(this.payment.amount, true)} />
-                  <DetailItem title="Fees" value={this.payment.formatPaymentAmount(this.payment.fee_amount, true)} />
-                  <DetailItem title="Refunded" value={this.payment.formatPaymentAmount(this.payment.amount_refunded, true)} />
-                  <DetailItem title="Net" value={this.payment.formatPaymentAmount(this.payment.balance, true)} />
+                  <DetailItem title="Amount" value={this.payment.formattedPaymentAmount(this.payment.amount)} />
+                  <DetailItem title="Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
+                  <DetailItem title="Refunded" value={this.payment.formattedPaymentAmount(this.payment.amount_refunded)} />
+                  <DetailItem title="Net" value={this.payment.formattedPaymentAmount(this.payment.balance)} />
                   <DetailItem title="Status" value={MapPaymentStatusToBadge(this.payment.status)} />
                   <DetailItem title="Payment ID" value={this.payment.id} />
-                  <DetailItem title="Processing Fees" value={this.payment.formatPaymentAmount(this.payment.fee_amount, true)} />
+                  <DetailItem title="Processing Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
                   <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />
                   <DetailItem title="Description" value={this.payment.description} />
                 </div>

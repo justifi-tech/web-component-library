@@ -52,7 +52,7 @@ export const paymentTableCells = {
     </td>
   ),
   amount: (payment: Payment, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{payment.formatPaymentAmount(payment.amount, true)}</td>
+    <td part={getAlternateTableCellPart(index)}>{payment.formattedPaymentAmount(payment.amount)}</td>
   ),
   status: (payment: Payment, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{MapPaymentStatusToBadge(payment.status)}</td>

@@ -1,6 +1,6 @@
-import Dinero from 'dinero.js';
 import { IBankAccount } from './BankAccount';
 import { CurrencyTypes } from './Payment';
+import { formatCurrency } from '../utils/utils';
 
 export interface PayoutsQueryParams {
   created_after?: string;
@@ -95,16 +95,7 @@ export class Payout implements IPayout {
     return this.id;
   }
 
-  formatPaymentAmount(amount: number, showCurrency?: boolean): string {
-    if (!amount) amount = 0;
-    const formattedCurrency = this.currency.toUpperCase();
-  
-    const format = (amount: number): string => {
-      const formattedString = '$0,0.00';
-      return Dinero({ amount: amount }).toFormat(formattedString);
-    };
-  
-    const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
-    return showCurrency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
+  formattedPaymentAmount(amount: number): string {
+    return formatCurrency(amount, this.currency);
   }
 }

@@ -1,6 +1,6 @@
-import Dinero from 'dinero.js';
 import { IApiResponse } from './Api';
 import { CurrencyTypes } from './Payment';
+import { formatCurrency } from '../utils/utils';
 
 export interface IBnpl {
   provider: string;
@@ -193,18 +193,9 @@ export class Checkout implements ICheckout {
     return paymentMode;
   };
 
-  formatPaymentAmount(amount: number, showCurrency?: boolean): string {
-    if (!amount) amount = 0;
-    const formattedCurrency = this.payment_currency ? this.payment_currency.toUpperCase() : '';
-  
-    const format = (amount: number): string => {
-      const formattedString = '$0,0.00';
-      return Dinero({ amount: amount }).toFormat(formattedString);
-    };
-  
-    const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
-    return showCurrency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
-  }
+  formattedPaymentAmount(amount: number): string {
+    return formatCurrency(amount, this.payment_currency);
+  };
 }
 
 export enum ICheckoutPaymentMode {
