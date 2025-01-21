@@ -7,8 +7,14 @@ import {
   Source,
 } from '@storybook/blocks';
 import { codeExampleFull, codeExampleEventHandling } from './example';
-import { Authorization } from '../../utils/documentation-components';
-import * as JustifiDisputeManagement from './index.stories.tsx'
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
+import * as JustifiDisputeManagement from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Payment Facilitation/Dispute Management"
@@ -18,7 +24,7 @@ import * as JustifiDisputeManagement from './index.stories.tsx'
 
 <Title />
 
-Component to render notification of disputed payments and allow platform to respond to dispute via form submission. 
+Component to render notification of disputed payments and allow platform to respond to dispute via form submission.
 
 # Index
 
@@ -40,10 +46,13 @@ Component to render notification of disputed payments and allow platform to resp
 
 ## Events usage
 
-
 <Source dark language="html" code={codeExampleEventHandling} />
 
 # Example Usage
+
+<ComponentBox>
+  <justifi-dispute-management dispute-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 

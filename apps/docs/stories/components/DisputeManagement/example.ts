@@ -1,10 +1,50 @@
-import { codeExampleHead } from "../../utils";
+import { codeExampleHead } from '../../utils';
 
 export const codeExampleFull = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead("justifi-dispute-management")}
+${codeExampleHead(
+  'justifi-dispute-management',
+  `<style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+
+      ::part(button) {
+        padding: 0.375rem 0.75rem;
+        font-size: 16px;
+        box-shadow: none;
+        border-radius: 0px;
+        line-height: 1.5;
+        text-transform: none;
+      }
+
+      ::part(button-secondary) {
+        color: #333;
+        background-color: transparent;
+        border-color: #333;
+      }
+
+      ::part(button-secondary):hover {
+        background-color: rgba(0, 0, 0, .05);
+        border-color: #333;
+        color: #333;
+      }
+
+      ::part(button-disabled) {
+        opacity: 0.5;
+      }
+    </style>`
+)}
 
 <body>
   <justifi-dispute-management disputeId="disputeId" authToken="authToken">
