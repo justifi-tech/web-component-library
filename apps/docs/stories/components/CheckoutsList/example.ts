@@ -18,6 +18,19 @@ ${codeExampleHead(
       ::part(background-color) {
         background-color: transparent;
       }
+
+      ::part(button) {
+        padding: 0.375rem 0.75rem;
+        font-size: 16px;
+        box-shadow: none;
+        border-radius: 0px;
+        line-height: 1.5;
+        text-transform: none;
+      }
+
+      ::part(button-disabled) {
+        opacity: 0.5;
+      }
     </style>`
 )}
 
