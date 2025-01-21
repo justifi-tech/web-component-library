@@ -141,14 +141,12 @@ ${codeExampleHead(
     // fill billing form
     document.getElementById("fill-billing-form").addEventListener("click", () => {
       justifiTokenizePaymentMethod.fillBillingForm({
-        firstName: "John",
-        lastName: "Doe",
-        address: "123 Main St",
-        city: "San Francisco",
-        state: "CA",
-        postalCode: "94105",
-        country: "US",
-        email: "email@email.com"
+        name: "John",
+        address_line1: "123 Main St",
+        address_line2: "Apt 1",
+        address_city: "Anytown",
+        address_state: "NY",
+        address_postal_code: "12345",
       });
 }); 
 
