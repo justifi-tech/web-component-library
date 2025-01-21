@@ -43,14 +43,14 @@ or install it from NPM and import in your React application:
   `}
 />
 
-For instance, to use the `justifi-card-form` web component:
+For instance, to use the `justifi-checkout` web component:
 
 <Source
   language="javascript"
   dark
   format={false}
   code={dedent`
-    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/module/justifi-checkout.js';
   `}
 />
 
@@ -61,9 +61,9 @@ Then you can use the components as any other HTML element:
   dark
   format={false}
   code={dedent`
-    <justifi-card-form
-      single-line="true"
-      validation-mode="onSubmit"
+    <justifi-checkout
+      auth-token="token"
+      checkout-id="ch_123"
     />
 `}
 />
@@ -102,11 +102,11 @@ To integrate with TypeScript, declare the component in the JSX.IntrinsicElements
 
 ## Calling Methods
 
-In some scenarios, you might need to programmatically call methods on the justifi-payment-form web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
+In some scenarios, you might need to programmatically call methods on the justifi-checkout web component from your React components. This can be done using React refs. Here’s a step-by-step guide:
 
 ### Creating a Ref to the Component
 
-Create a ref in your React component that will be attached to the `justifi-payment-form` element. This ref will be used to access the web component and its methods.
+Create a ref in your React component that will be attached to the `justifi-checkout` element. This ref will be used to access the web component and its methods.
 
 <Source
   language="jsx"
@@ -115,32 +115,41 @@ Create a ref in your React component that will be attached to the `justifi-payme
   code={dedent`
     import React, { useRef } from 'react';
 
-    export default function CardFormComponent() {
+    export default function CheckoutComponent() {
       // create the ref
-      const formRef = useRef(null);
+      const checkoutFormRef = useRef(null);
 
-      const handleSubmit = () => {
-        const form = formRef.current;
+      const billingFormFields = {
+        name: 'John Doe',
+        address_line1: 'Main St',
+        address_line2: 'Apt 1',
+        address_city: 'Beverly Hills',
+        address_state: 'CA',
+        address_postal_code: '90210',
+      };
+
+      const fillBillingForm = () => {
+        const form = checkoutFormRef.current;
         if (form) {
-          form.tokenize();
+          form.fillBillingForm(billingFormFields);
         }
       };
 
       return (
-        <justifi-card-form
-          // attach the ref to the web component
-          ref={formRef}
-          validation-mode="onBlur"
+         <justifi-checkout
+          ref={checkoutFormRef}
+          auth-token="token"
+          checkout-id="ch_123"
+          // ... other props
         />
       );
     }
-
-`}
+  `}
 />
 
 ## Listening to events
 
-React allows attaching event listeners directly to JSX components. For custom events emitted by justifi-payment-form, use the addEventListener method within a useEffect hook or a ref callback.
+React allows attaching event listeners directly to JSX components. For custom events emitted by Justifi web components, use the addEventListener method within a useEffect hook or a ref callback.
 
 Example of handling a custom event:
 
@@ -151,11 +160,11 @@ Example of handling a custom event:
   code={dedent`
     import React, { useEffect, useRef } from 'react';
 
-    export default function PaymentFormComponent() {
-      const formRef = useRef(null);
+    export default function CheckoutComponent() {
+      const checkoutFormRef = useRef(null);
 
       useEffect(() => {
-        const form = formRef.current;
+        const form = checkoutFormRef.current;
         if (form) {
           const handleSubmit = (event) => {
             // Handle the submit event
@@ -168,14 +177,13 @@ Example of handling a custom event:
       }, []);
 
       return (
-        <justifi-payment-form
-          ref={formRef}
-          client-id="your-client-id"
-          email="customer@example.com"
+        <justifi-checkout
+          ref={checkoutFormRef}
+          auth-token="token"
+          checkout-id="ch_123"
           // ... other props
         />
       );
     }
-
-`}
+  `}
 />

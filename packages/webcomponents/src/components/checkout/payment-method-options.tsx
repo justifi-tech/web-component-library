@@ -1,5 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
-import { config } from '../../../config';
+import { Component, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -19,15 +18,12 @@ export class PaymentMethodOptions {
   @Prop() insuranceToggled: boolean;
   @Prop() authToken: string;
   @Prop() accountId: string;
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() paymentAmount: number;
   @Prop() hideCardBillingForm?: boolean;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
-
-  @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
 
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
