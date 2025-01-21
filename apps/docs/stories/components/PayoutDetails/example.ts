@@ -4,7 +4,22 @@ export const codeExampleFull = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead('justifi-payout-details')}
+${codeExampleHead(
+  'justifi-payout-details',
+  `<style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>`
+)}
 
 <body>
   <justifi-payout-details payout-id="123" auth-token="your-auth-token"></justifi-payout-details>
