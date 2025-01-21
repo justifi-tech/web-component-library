@@ -1,4 +1,6 @@
 import { IBankAccount } from './BankAccount';
+import { CurrencyTypes } from './Payment';
+import { formatCurrency } from '../utils/utils';
 
 export interface PayoutsQueryParams {
   created_after?: string;
@@ -28,7 +30,7 @@ export interface IPayout {
   account_id: string;
   amount: number;
   bank_account: IBankAccount;
-  currency: 'usd';
+  currency: CurrencyTypes;
   delivery_method: string;
   description: string;
   deposits_at: string;
@@ -50,7 +52,7 @@ export class Payout implements IPayout {
   public account_id: string;
   public amount: number;
   public bank_account: IBankAccount;
-  public currency: 'usd';
+  public currency: CurrencyTypes;
   public delivery_method: string;
   public description: string;
   public deposits_at: string;
@@ -70,9 +72,9 @@ export class Payout implements IPayout {
   constructor(payout: IPayout) {
     this.id = payout.id;
     this.account_id = payout.account_id;
+    this.currency = payout.currency;
     this.amount = payout.amount;
     this.bank_account = payout.bank_account;
-    this.currency = payout.currency;
     this.delivery_method = payout.delivery_method || 'standard';
     this.description = payout.description;
     this.deposits_at = payout.deposits_at;
@@ -93,4 +95,7 @@ export class Payout implements IPayout {
     return this.id;
   }
 
+  formattedPaymentAmount(amount: number): string {
+    return formatCurrency(amount, this.currency);
+  }
 }

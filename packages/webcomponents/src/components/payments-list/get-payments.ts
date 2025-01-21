@@ -13,7 +13,7 @@ export const makeGetPayments =
           ...response.page_info,
         };
 
-        const payments =
+        const payments: Payment[] =
           response.data?.map((dataItem) => new Payment(dataItem)) || [];
 
         onSuccess({ payments, pagingInfo });

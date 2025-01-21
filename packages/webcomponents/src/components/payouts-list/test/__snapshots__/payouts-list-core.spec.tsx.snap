@@ -115,7 +115,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </div>
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $226.02
+              $226.02 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-success" part="badge font-family badge-success" title="Successfully deposited into your bank account">
@@ -123,16 +123,16 @@ exports[`payouts-list-core renders properly 1`] = `
               </span>
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $234.56
+              $234.56 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $8.54
+              $8.54 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
@@ -147,7 +147,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </div>
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $226.02
+              $226.02 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
@@ -155,16 +155,16 @@ exports[`payouts-list-core renders properly 1`] = `
               </span>
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $234.56
+              $234.56 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $8.54
+              $8.54 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
@@ -179,7 +179,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </div>
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $226.02
+              $226.02 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-primary" part="badge font-family badge-primary" title="Transfer to your bank account has been initiated">
@@ -187,16 +187,16 @@ exports[`payouts-list-core renders properly 1`] = `
               </span>
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $234.56
+              $234.56 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $8.54
+              $8.54 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
@@ -211,7 +211,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </div>
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $220.15
+              $220.15 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-primary" part="badge font-family badge-primary" title="Batched and scheduled to be transferred">
@@ -219,16 +219,16 @@ exports[`payouts-list-core renders properly 1`] = `
               </span>
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $245.00
+              $245.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              ($10.00)
+              -$10.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $14.85
+              $14.85 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
@@ -243,7 +243,7 @@ exports[`payouts-list-core renders properly 1`] = `
               </div>
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $220.15
+              $220.15 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <span class="badge bg-danger" part="badge font-family badge-danger" title="Transfer to your bank account failed">
@@ -251,16 +251,16 @@ exports[`payouts-list-core renders properly 1`] = `
               </span>
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $245.00
+              $245.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              ($10.00)
+              -$10.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $14.85
+              $14.85 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00
+              $0.00 USD
             </td>
             <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
               <a href="#">
