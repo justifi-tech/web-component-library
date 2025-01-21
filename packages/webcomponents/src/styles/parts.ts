@@ -96,3 +96,4 @@ export const skeleton = `skeleton`;
 // This allows the billing form to be hidden, for example
 // ::part(billing-form) { display: none; }
 export const billingForm = `billing-form`;
+export const checkoutSummary = `checkout-summary`;

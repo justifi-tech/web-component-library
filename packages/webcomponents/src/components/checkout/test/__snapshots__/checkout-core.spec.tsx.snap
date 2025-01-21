@@ -7,7 +7,7 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
   <template shadowrootmode="open">
     <style></style>
     <div class="gy-3 jfi-checkout-core row">
-      <div class="col-12">
+      <div class="col-12" part="checkout-summary">
         <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
           Summary
         </h2>
@@ -70,7 +70,7 @@ exports[`justifi-checkout-core should render the full billing form by default 1`
   <template shadowrootmode="open">
     <style></style>
     <div class="gy-3 jfi-checkout-core row">
-      <div class="col-12">
+      <div class="col-12" part="checkout-summary">
         <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
           Summary
         </h2>
@@ -186,7 +186,7 @@ exports[`justifi-checkout-core should render the postal form if hideCardBillingF
   <template shadowrootmode="open">
     <style></style>
     <div class="gy-3 jfi-checkout-core row">
-      <div class="col-12">
+      <div class="col-12" part="checkout-summary">
         <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
           Summary
         </h2>
@@ -282,7 +282,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
   <template shadowrootmode="open">
     <style></style>
     <div class="gy-3 jfi-checkout-core row">
-      <div class="col-12">
+      <div class="col-12" part="checkout-summary">
         <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
           Summary
         </h2>

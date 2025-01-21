@@ -7,7 +7,7 @@ exports[`justifi-checkout renders loading 1`] = `
     <template shadowrootmode="open">
       <style></style>
       <div class="gy-3 jfi-checkout-core row">
-        <div class="col-12">
+        <div class="col-12" part="checkout-summary">
           <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
             Summary
           </h2>
