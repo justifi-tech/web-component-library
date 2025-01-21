@@ -19,8 +19,8 @@ export class TokenizePaymentMethod {
   @Prop() disableBankAccount?: boolean;
   @Prop() hideSubmitButton?: boolean;
   @Prop() hideCardBillingForm?: boolean;
-  
-  @State() isLoading: boolean = true;
+
+  @State() isLoading: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -31,23 +31,35 @@ export class TokenizePaymentMethod {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.isLoading = false;
   }
 
   @Method()
   async tokenizePaymentMethod(event?: CustomEvent) {
     event && event.preventDefault();
 
-    const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
-    if (tokenizeResponse.error) {
+    this.isLoading = true;
+
+    try {
+      const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
+      if (tokenizeResponse.error) {
+        this.errorEvent.emit({
+          errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
+          message: tokenizeResponse.error.message,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      } else if (tokenizeResponse.token) {
+        this.submitEvent.emit({ response: tokenizeResponse });
+      }
+    } catch (error) {
       this.errorEvent.emit({
-        errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
-        message: tokenizeResponse.error.message,
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        message: error.message,
         severity: ComponentErrorSeverity.ERROR,
       });
-    } else if (tokenizeResponse.token) {
-      this.submitEvent.emit({ response: tokenizeResponse });
+    } finally {
+      this.isLoading = false;
     }
+
   }
 
   @Method()
