@@ -8,8 +8,14 @@ import {
 } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import example from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiPaymentProvisioning from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Entities/Payment Provisioning"
@@ -41,6 +47,10 @@ to get the business-id required for this component.
 />
 
 # Example Usage
+
+<ComponentBox>
+  <justifi-payment-provisioning />
+</ComponentBox>
 
 ---
 
