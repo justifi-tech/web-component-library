@@ -5,17 +5,14 @@ import { CurrencyTypes } from '../api/Payment';
 
 // Currency Formatting
 
-export const formatCurrency = (
-  amount: number,
-  currency: CurrencyTypes = CurrencyTypes.usd
-): string => {
+export const formatCurrency = (amount: number, currency?: CurrencyTypes): string => {
   if (!amount) amount = 0;
 
   const formattedString = '$0,0.00';
-  const formattedCurrency = currency.toUpperCase();
+  const formattedCurrency = currency?.toUpperCase();
   const formattedAmount = Dinero({ amount: amount }).toFormat(formattedString);
 
-  return `${formattedAmount} ${formattedCurrency}`;
+  return currency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
 }
 
 // Number Formatting

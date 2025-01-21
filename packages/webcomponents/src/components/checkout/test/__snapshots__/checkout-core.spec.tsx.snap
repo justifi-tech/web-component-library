@@ -22,7 +22,7 @@ exports[`justifi-checkout-core should display loading state correctly 1`] = `
                 Total
               </span>
               <span part="text color font-family">
-                $0.00 USD
+                $0.00
               </span>
             </div>
           </div>
@@ -85,7 +85,7 @@ exports[`justifi-checkout-core should render the full billing form by default 1`
                 Total
               </span>
               <span part="text color font-family">
-                $0.00 USD
+                $0.00
               </span>
             </div>
           </div>
@@ -201,7 +201,7 @@ exports[`justifi-checkout-core should render the postal form if hideCardBillingF
                 Total
               </span>
               <span part="text color font-family">
-                $0.00 USD
+                $0.00
               </span>
             </div>
           </div>
@@ -299,7 +299,7 @@ exports[`justifi-checkout-core should set checkout correctly to state 1`] = `
                 Total
               </span>
               <span part="text color font-family">
-                $17.99 USD
+                $17.99
               </span>
             </div>
           </div>
