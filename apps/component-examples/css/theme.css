@@ -4,6 +4,7 @@ body {
 
 justifi-checkout,
 justifi-season-interruption-insurance,
+justifi-payment-provisioning,
 justifi-dispute-management {
   margin: 5% auto;
 }
@@ -19,6 +20,7 @@ justifi-tokenize-payment-method {
 }
 
 justifi-season-interruption-insurance,
+justifi-payment-provisioning,
 justifi-dispute-management {
   display: block;
   background-color: #fff;
