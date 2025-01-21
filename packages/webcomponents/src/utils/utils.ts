@@ -1,25 +1,18 @@
 import { format } from 'date-fns';
 import Dinero from 'dinero.js';
 import { Address } from '../api/Business';
+import { CurrencyTypes } from '../api/Payment';
 
 // Currency Formatting
 
-export function formatCurrency(
-  amount: number,
-  withSymbol = true,
-  withCurrencyName = false
-): string {
+export const formatCurrency = (amount: number, currency?: CurrencyTypes): string => {
   if (!amount) amount = 0;
 
-  function format(amount: number): string {
-    const formattedString = withSymbol ? '$0,0.00' : '0,0.00';
-    return Dinero({ amount: amount, currency: 'USD' }).toFormat(
-      formattedString
-    );
-  }
+  const formattedString = '$0,0.00';
+  const formattedCurrency = currency?.toUpperCase();
+  const formattedAmount = Dinero({ amount: amount }).toFormat(formattedString);
 
-  const formattedAmount = amount < 0 ? `(${format(-amount)})` : format(amount);
-  return withCurrencyName ? `${formattedAmount} USD` : formattedAmount;
+  return currency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
 }
 
 // Number Formatting

@@ -11,7 +11,6 @@ describe('justifi-checkout', () => {
           card="true"
           email="test@example.com"
           iframe-origin="https://iframe.example.com"
-          client-id="testId"
           account-id="accountId"
           submit-button-text="Pay Now"
         />

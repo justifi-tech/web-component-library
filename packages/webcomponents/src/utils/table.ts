@@ -1,6 +1,6 @@
-export class Table {
+export class Table<T> {
   public columnKeys: string[];
-  private collection: any[];
+  private collection: T[];
   private tableColumns: { [key: string]: Function };
   private tableCells: { [key: string]: Function };
 
@@ -11,17 +11,17 @@ export class Table {
   get rowData() {
     return this.collection.map((dataEntry, index) => {
       return this.columnKeys.map((key) =>
-        this.tableCells[key](dataEntry[key], index)
+        this.tableCells[key](dataEntry, index)
       );
     });
   }
 
-  set collectionData(collection: any[]) {
+  set collectionData(collection: T[]) {
     this.collection = collection;
   }
 
   constructor(
-    collection: any[],
+    collection: T[],
     columns: string,
     tableColumns: { [key: string]: Function },
     tableCells: { [key: string]: Function }

@@ -58,7 +58,8 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 
-  const hideCardBillingForm = false;
+  const hideCardBillingForm = true;
+  const hideSubmitButton = false;
 
   const billingFormFields = {
     name: 'John Doe',
@@ -90,9 +91,11 @@ app.get('/', async (req, res) => {
             auth-token="${webComponentToken}"
             account-id="${process.env.SUB_ACCOUNT_ID}"
             hide-card-billing-form="${hideCardBillingForm}"
+            hide-submit-button="${hideSubmitButton}"
           >
           </justifi-tokenize-payment-method>
           <button id="fill-billing-form-button">Test Fill Billing Form</button>
+          <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
         </div>
         <div class="column-output" id="output-pane">
           <em>Tokenization output will appear here...</em>
@@ -101,6 +104,7 @@ app.get('/', async (req, res) => {
       <script>
         const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
         const fillBillingFormButton = document.getElementById('fill-billing-form-button');
+        const testSubmitButton = document.getElementById('test-submit-button');
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
@@ -119,6 +123,10 @@ app.get('/', async (req, res) => {
 
         fillBillingFormButton.addEventListener('click', () => {
           justifiTokenizePaymentMethod.fillBillingForm(${JSON.stringify(fields)});
+        });
+
+        testSubmitButton.addEventListener('click', () => {
+          justifiTokenizePaymentMethod.tokenizePaymentMethod();
         });
       </script>
     </html>

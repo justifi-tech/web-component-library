@@ -16,7 +16,7 @@ export class PaymentsListCore {
   @Prop() columns: string;
 
   @State() payments: Payment[] = [];
-  @State() paymentsTable: Table;
+  @State() paymentsTable: Table<Payment>;
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
@@ -34,7 +34,7 @@ export class PaymentsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
-    this.paymentsTable = new Table(this.payments, this.columns, paymentTableColumns, paymentTableCells);
+    this.paymentsTable = new Table<Payment>(this.payments, this.columns, paymentTableColumns, paymentTableCells);
     if (this.getPayments) {
       this.fetchData();
     }

@@ -1,7 +1,8 @@
 import { h } from '@stencil/core';
-import { convertToLocal, formatCurrency } from '../../utils/utils';
+import { convertToLocal } from '../../utils/utils';
 import { MapPayoutStatusToBadge } from './payouts-status';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
+import { Payout } from '../../api/Payout';
 
 export const defaultColumnsKeys = 'created_at,amount,status,payments_total,refunds_total,fees_total,other_total,csv';
 
@@ -52,21 +53,35 @@ export const payoutTableColumns = {
 };
 
 export const payoutTableCells = (downloadCSV) => ({
-  created_at: (value, index) => (
+  created_at: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
-      <div class="fw-bold">{convertToLocal(value, { showDisplayDate: true })} </div>
+      <div class="fw-bold">{convertToLocal(payout.created_at, { showDisplayDate: true })}</div>
     </td>
   ),
-  sub_account_name: (value, index) => (<td part={getAlternateTableCellPart(index)}>{value}</td>),
-  payments_total: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
-  refunds_total: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
-  fees_total: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
-  other_total: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
-  amount: (value, index) => (<td part={getAlternateTableCellPart(index)}>{formatCurrency(value)}</td>),
-  status: (value, index) => (<td part={getAlternateTableCellPart(index)}>{MapPayoutStatusToBadge(value)}</td>),
-  csv: (value, index) => (
+  sub_account_name: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.sub_account_name}</td>
+  ),
+  payments_total: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.payments_total)}</td>
+  ),
+  refunds_total: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.refunds_total)}</td>
+  ),
+  fees_total: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.fees_total)}</td>
+  ),
+  other_total: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.other_total)}</td>
+  ),
+  amount: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.formattedPaymentAmount(payout.amount)}</td>
+  ),
+  status: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{MapPayoutStatusToBadge(payout.status)}</td>
+  ),
+  csv: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
-      <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(value); }}>
+      <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(payout); }}>
         CSV
       </a>
     </td>

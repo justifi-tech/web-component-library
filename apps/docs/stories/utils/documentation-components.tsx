@@ -97,43 +97,21 @@ interface AuthorizationProps {
 }
 
 export const Authorization = ({ actions, entity, identification }: AuthorizationProps) => {
-  const isTokenize = entity === 'tokenize';
+
   return (
     <>
       <h1>Authorization</h1>
       <hr />
-      {/* If isTokenize (CardForm, BankAccountForm, PaymentForm), show client-id section */}
-      {isTokenize ? (
-        <>
-          <p>Authorization can be performed by using a <code>client-id</code> or an <code>auth-token</code>. Each option has its benefits and drawbacks.
-          </p>
-          <p><strong>Note:</strong> While <code>client-id</code> is still supported, we now recommend using web component tokens (<code>auth-token</code>) for enhanced security and flexibility.
-          </p>
-          <ul>
-            <li>
-              <AuthTokenDescription />
-            </li>
-            <li>
-              <b>Client-ID:</b> Your <code>client-id</code> is derived when you create a keypair in your JustiFi dashboard.
-              Submitting the public <code>client-id</code> is a simpler integration for platforms because it does not require a secondary API request to generate a token.
-              Additionally, the keypair can be rotated and deactivated in the JustiFi console. Using the <code>client-id</code> is only successful when completing a request to tokenize a payment.
-            </li>
-          </ul>
-        </>
-      ) : (
-        <>
-          <p>Authorization is performed by passing a web component token as <code>auth-token</code></p>
-          <ul>
-            <li>
-              <WebComponentTokenDescription
-                actions={actions}
-                entity={entity}
-                identification={identification}
-              />
-            </li>
-          </ul>
-        </>
-      )}
+      <p>Authorization is performed by passing a web component token as <code>auth-token</code></p>
+      <ul>
+        <li>
+          <WebComponentTokenDescription
+            actions={actions}
+            entity={entity}
+            identification={identification}
+          />
+        </li>
+      </ul>
     </>
   );
 }

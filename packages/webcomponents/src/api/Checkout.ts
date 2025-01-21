@@ -1,4 +1,6 @@
 import { IApiResponse } from './Api';
+import { CurrencyTypes } from './Payment';
+import { formatCurrency } from '../utils/utils';
 
 export interface IBnpl {
   provider: string;
@@ -89,7 +91,7 @@ export interface ICheckout {
   total_amount: number;
   insurance_amount: number;
   status: ICheckoutStatus;
-  payment_currency?: string;
+  payment_currency?: CurrencyTypes;
   mode?: string | null;
   statement_descriptor?: string | null;
   application_fees?: any[] | null;
@@ -131,7 +133,7 @@ export class Checkout implements ICheckout {
   total_amount: number;
   insurance_amount: number;
   status: ICheckoutStatus;
-  payment_currency?: string;
+  payment_currency?: CurrencyTypes;
   mode?: string | null;
   statement_descriptor?: string | null;
   application_fees?: any[] | null;
@@ -189,6 +191,10 @@ export class Checkout implements ICheckout {
     } 
 
     return paymentMode;
+  };
+
+  formattedPaymentAmount(amount: number): string {
+    return formatCurrency(amount, this.payment_currency);
   };
 }
 

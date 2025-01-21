@@ -63,7 +63,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Amount
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $234.56
+              $234.56 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -71,7 +71,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Fees
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $2.00
+              $2.00 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -79,7 +79,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Refunded
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $0.00
+              $0.00 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -87,7 +87,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Net
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $232.56
+              $232.56 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -113,7 +113,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Processing Fees
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $2.00
+              $2.00 USD
             </span>
           </div>
           <div class="d-table-row gap-2">

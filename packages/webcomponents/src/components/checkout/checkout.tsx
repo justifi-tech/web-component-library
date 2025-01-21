@@ -12,7 +12,6 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   tag: 'justifi-checkout',
 })
 export class Checkout {
-  @Prop() iframeOrigin?: string;
   @Prop() authToken: string;
   @Prop() checkoutId: string;
   @Prop() disableCreditCard?: boolean;
