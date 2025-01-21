@@ -113,6 +113,7 @@ ${codeExampleHead(
     <justifi-tokenize-payment-method
       auth-token="your-auth-token"
       account-id="acc_5Et9iXrSSAZR2KSouQGAWi"
+      hide-submit-button
     >
     </justifi-tokenize-payment-method>
     <button id="tokenize-button">Tokenize</button>
@@ -132,7 +133,7 @@ ${codeExampleHead(
       console.log(event);
     });
 
-    // tokenize
+    // tokenize, if built-in submit button is hidden
     document.getElementById("tokenize-button").addEventListener("click", () => {
       justifiTokenizePaymentMethod.tokenizePaymentMethod();
     });
