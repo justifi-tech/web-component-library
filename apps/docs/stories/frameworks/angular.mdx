@@ -42,13 +42,13 @@ Or install it from NPM and import in your Angular application:
   `)}
 />
 
-for instance, to use the `justifi-card-form` web component:
+for instance, to use the `justifi-checkout` web component:
 
 <Source
   language="javascript"
   dark
   code={dedent(`
-    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/module/justifi-checkout.js';
   `)}
 />
 
@@ -81,15 +81,19 @@ for instance, to use the `justifi-card-form` web component:
 
 ## Props and Event Handling
 
-- **Props**: Use Angular template syntax for passing props to components. For example, `validationMode` accepts `onBlur`, `onChange` or `onSubmit`. You may also use expressions for prop values as with any other Angular component:
+- **Props**: Use Angular template syntax for passing props to components:
 
 <Source
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      [validationMode]="'onBlur'"
+    <justifi-checkout
+      [authToken]="'your-auth-token'"
+      [checkoutId]="'your-checkout-id'"
+      [disableBankAccount]="true"
+      [disableBnpl]="true"
     >
+    </justifi-checkout>
   `)}
 />
 
@@ -99,10 +103,11 @@ for instance, to use the `justifi-card-form` web component:
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      (cardFormReady)="onCardFormReady($event)"
-      (cardFormTokenize)="onTokenize($event)"
+    <justifi-checkout
+      (submit-event)="onSubmitEvent($event)"
+      (error-event)="onErrorEvent($event)"
     >
+    </justifi-checkout>
   `)}
 />
 
@@ -118,14 +123,15 @@ In your template (`app.component.html`):
   language="html"
   dark
   code={dedent(`
-    <justifi-card-form
-      #cardForm
-      [validationMode]="'onBlur'"
-      (cardFormReady)="onCardFormReady($event)"
-      (ready)="onReady($event)"
-      (cardFormTokenize)="onTokenize($event)"
+    <justifi-checkout
+      #checkoutForm
+      [authToken]="'your-auth-token'"
+      [checkoutId]="'your-checkout-id'"
+      (submit-event)="onSubmitEvent($event)"
+      (error-event)="onErrorEvent($event)"
     >
-    <button (click)="handleValidate()">Validate</button>
+    </justifi-checkout>
+    <button (click)="fillBillingForm()">Fill Billing Form</button>
 `)}
 />
 
@@ -143,21 +149,26 @@ In your component (`app.component.ts`):
       styleUrls: ['./app.component.css']
     })
     export class AppComponent implements AfterViewInit {
-      @ViewChild('cardForm') cardForm!: ElementRef;
+      @ViewChild('checkoutForm') checkoutForm!: ElementRef;
 
-      handleValidate() {
-        // get a ref to the component and call validate method
-        this.cardForm.nativeElement.validate();
+      fillBillingForm() {
 
-        console.log('onValidate', event);
+        const billingFormFields = {
+          name: 'John Doe',
+          address_line1: 'Main St',
+          address_line2: 'Apt 1',
+          address_city: 'Beverly Hills',
+          address_state: 'CA',
+          address_postal_code: '90210',
+        };
+
+        // get a ref to the component and call fillBillingForm method:
+        this.checkoutForm.nativeElement.fillBillingForm(billingFormFields);
       }
     }
-
-`)}
+  `)}
 />
 
 Remember that the web component's methods will be available on the nativeElement of the ElementRef.
 
 2. **Ensure Component is Loaded**: Make sure that the web component is fully loaded before calling its methods. The `ngAfterViewInit` lifecycle hook is a good place for such method calls, as it ensures that the view is fully initialized.
-
-This documentation should help you get started with integrating Justifi's Angular web components. If you have more specific requirements or need further information, please let me know!

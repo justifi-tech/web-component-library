@@ -3,6 +3,7 @@ import { Identity, Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { identitySchema } from '../../schemas/business-identity-schema';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep } from '../../utils';
 
 @Component({
@@ -12,6 +13,7 @@ export class BusinessRepresentativeFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() representative: Identity = {};
+  @State() isLoading: boolean = false;
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -19,7 +21,7 @@ export class BusinessRepresentativeFormStepCore {
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  
+
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
 
@@ -46,6 +48,7 @@ export class BusinessRepresentativeFormStepCore {
 
   private getData = () => {
     this.formLoading.emit(true);
+    this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         this.representative = new Representative(response.data.representative || {});
@@ -58,7 +61,10 @@ export class BusinessRepresentativeFormStepCore {
           severity: severity
         });
       },
-      final: () => this.formLoading.emit(false)
+      final: () => {
+        this.formLoading.emit(false);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -87,6 +93,12 @@ export class BusinessRepresentativeFormStepCore {
   }
 
   render() {
+    if (this.isLoading) {
+      return (
+        <PaymentProvisioningLoading />
+      );
+    }
+
     return (
       <justifi-business-representative-form-inputs
         representativeDefaultValue={this.formController.getInitialValues()}

@@ -1,10 +1,8 @@
 import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } from '@stencil/core';
-import { config } from '../../../config';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { BillingFormFields } from '../billing-form/billing-form-schema';
-import { Header3 } from '../../ui-components';
-import { billingForm, radioListItem } from '../../styles/parts';
+import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
+import { radioListItem } from '../../styles/parts';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -15,15 +13,15 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  private billingFormRef?: HTMLJustifiBillingFormElement;
+  private billingFormWrapperRef?: HTMLJustifiBillingFormWrapperElement;
   private paymentMethodFormRef?: HTMLCardFormElement;
 
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
+  @Prop() hideCardBillingForm?: boolean;
 
   @State() saveNewPaymentMethodChecked: boolean = false;
 
@@ -35,13 +33,13 @@ export class NewPaymentMethod {
   }
 
   @Method()
-  async fillBillingForm(fields: BillingFormFields) {
-    this.billingFormRef.fill(fields);
+  async fillBillingForm(fields: BillingFormFields | PostalFormFields) {
+    this.billingFormWrapperRef.fill(fields);
   }
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
+    if (!this.paymentMethodFormRef || !this.billingFormWrapperRef) return;
 
     try {
       const isValid = await this.validate();
@@ -64,14 +62,14 @@ export class NewPaymentMethod {
   }
 
   async validate(): Promise<boolean> {
-    const billingFormValidation = await this.billingFormRef.validate();
+    const billingFormValidation = await this.billingFormWrapperRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
     return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
 
   async tokenize() {
     try {
-      const billingFormFieldValues = await this.billingFormRef.getValues();
+      const billingFormFieldValues = await this.billingFormWrapperRef.getValues();
       let paymentMethodData;
       if (this.saveNewPaymentMethodChecked) {
         paymentMethodData = { ...billingFormFieldValues, payment_method_group_id: this.paymentMethodGroupId };
@@ -92,21 +90,23 @@ export class NewPaymentMethod {
   };
 
   showNewPaymentMethodForm() {
+    const paymentMethodType = this.paymentMethodOption?.id;
     return (
       <div class="mt-4 pb-4 border-bottom">
         <hidden-input />
         <div class="mb-4">
-          {this.paymentMethodOption?.id === 'card' ? (
+          {paymentMethodType === 'card' ? (
             <card-form ref={(el) => this.paymentMethodFormRef = el} />
           ) : (
             <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
           )}
 
         </div>
-        <div part={billingForm}>
-          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
-          <justifi-billing-form ref={(el) => (this.billingFormRef = el)} />
-        </div>
+        <justifi-billing-form-wrapper 
+          ref={(el) => (this.billingFormWrapperRef = el)}
+          hideCardBillingForm={this.hideCardBillingForm}
+          paymentMethodType={paymentMethodType}
+        />
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
       </div>
     );

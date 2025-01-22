@@ -45,7 +45,7 @@ Then, you can use the custom elements as normal `HTML` tags.
   dark
   format={false}
   code={dedent`
-    <justifi-payment-form attr="value" />
+    <justifi-checkout attr="value" />
   `}
 />
 
@@ -67,7 +67,7 @@ and import the component module using ES modules.
   dark
   format={false}
   code={dedent`
-      import '@justifi/webcomponents/dist/module/justifi-payment-form.js';
+      import '@justifi/webcomponents/dist/module/justifi-checkout.js';
   `}
 />
 
@@ -105,7 +105,7 @@ Set the font for all components using `font-family`:
       ::part(font-family) {
         font-family: 'Roboto', sans-serif;
       }
-      `}
+  `}
 />
 
 ### Universal Text Color
@@ -120,7 +120,7 @@ Set the text color once via `color`:
       ::part(color) {
         color: #333;
       }
-      `}
+  `}
 />
 
 These apply to all components that rely on `text`, including buttons, inputs, and headings.
@@ -142,7 +142,7 @@ After defining global styles, customize specific components using their higher-l
         background-color: #007bff;
         color: #fff; /* Overrides \`color\` */
       }
-      `}
+  `}
 
 />
 
@@ -157,7 +157,7 @@ After defining global styles, customize specific components using their higher-l
       border-color: #007bff;
       background-color: #f0f8ff;
     }
-    `}
+  `}
 />
 
 ---
@@ -178,7 +178,5 @@ For bugs and issues, please:
 
 1 - Go to our [GitHub Issues](https://github.com/justifi-tech/web-component-library/issues).
 2 - Click "New Issue" and describe the problem.
-
-```
 
 ```

@@ -16,12 +16,12 @@ export class PaymentsListCore {
   @Prop() columns: string;
 
   @State() payments: Payment[] = [];
-  @State() paymentsTable: Table;
+  @State() paymentsTable: Table<Payment>;
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
-  
+
   @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getPayments')
@@ -34,7 +34,7 @@ export class PaymentsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
-    this.paymentsTable = new Table(this.payments, this.columns, paymentTableColumns, paymentTableCells);
+    this.paymentsTable = new Table<Payment>(this.payments, this.columns, paymentTableColumns, paymentTableCells);
     if (this.getPayments) {
       this.fetchData();
     }
@@ -51,7 +51,7 @@ export class PaymentsListCore {
 
   fetchData(): void {
     this.loading = true;
-    
+
     this.getPayments({
       params: this.requestParams,
       onSuccess: ({ payments, pagingInfo }) => {
@@ -85,7 +85,7 @@ export class PaymentsListCore {
   rowClickHandler = (e) => {
     const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPaymentID) return;
-    
+
     const paymentData = this.payments.find((payment) => payment.id === clickedPaymentID);
     this.clickEvent.emit({ name: TableClickActions.row, data: paymentData });
   };

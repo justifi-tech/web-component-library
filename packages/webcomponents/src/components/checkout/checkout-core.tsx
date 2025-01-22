@@ -1,13 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
-import { config } from '../../../config';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
-import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
 import { Button, StyledHost, Skeleton, Header2, Header3 } from '../../ui-components';
-import { text } from '../../styles/parts';
+import { checkoutSummary, text } from '../../styles/parts';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 
 @Component({
@@ -15,10 +14,6 @@ import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEv
   shadow: true,
 })
 export class CheckoutCore {
-  /**
- * URL for the rendered iFrame. End-users need not use this.
- */
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() authToken: string;
   @Prop() getCheckout: Function;
   @Prop() complete: Function;
@@ -28,6 +23,7 @@ export class CheckoutCore {
   @Prop() disableBankAccount?: boolean;
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
+  @Prop() hideCardBillingForm?: boolean;
 
   @State() hasLoadedFonts: boolean = false;
   @State() checkout: ICheckout;
@@ -43,7 +39,7 @@ export class CheckoutCore {
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
 
   @Method()
-  async fillBillingForm(fields: BillingFormFields) {
+  async fillBillingForm(fields: BillingFormFields | PostalFormFields) {
     this.paymentMethodOptionsRef.fillBillingForm(fields);
   }
 
@@ -160,6 +156,7 @@ export class CheckoutCore {
             show-bnpl={!this.disableBnpl}
             paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
+            hideCardBillingForm={this.hideCardBillingForm}
             bnpl={this.checkout?.bnpl}
             authToken={this.authToken}
             account-id={this.checkout?.account_id}
@@ -193,7 +190,7 @@ export class CheckoutCore {
     return (
       <StyledHost>
         <div class="row gy-3 jfi-checkout-core">
-          <div class="col-12">
+          <div class="col-12" part={checkoutSummary}>
             <Header2 text="Summary" class="fs-5 fw-bold pb-3" />
             {this.summary}
           </div>

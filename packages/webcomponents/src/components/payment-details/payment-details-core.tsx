@@ -1,12 +1,11 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payment } from '../../api';
-import { formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
+import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
+import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { StyledHost } from '../../ui-components';
-import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
-import Spinner from '../../ui-components/spinner';
-import { badge } from '../../styles/parts';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import PaymentDetailsLoading from './payment-details-loading';
 
 @Component({
   tag: 'payment-details-core',
@@ -56,15 +55,15 @@ export class PaymentDetailsCore {
   render() {
     return (
       <StyledHost>
-        {this.loading && <Spinner />}
+        {this.loading && <PaymentDetailsLoading />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && !this.errorMessage &&
           this.payment && (
             <justifi-details error-message={this.errorMessage}>
               <EntityHeadInfo
                 slot="head-info"
-                badge={<span slot='badge' part={badge} innerHTML={MapPaymentStatusToBadge(this.payment.status)} />}
-                title={`${formatCurrency(this.payment.amount)} ${this.payment?.currency.toUpperCase()}`}
+                badge={MapPaymentStatusToBadge(this.payment.status)}
+                title={this.payment.formattedPaymentAmount(this.payment.amount)}
               >
                 <EntityHeadInfoItem
                   classes="border-1 border-end"
@@ -81,13 +80,13 @@ export class PaymentDetailsCore {
               <div slot='detail-sections'>
                 <DetailSectionTitle sectionTitle="Details" />
                 <div class="d-table gap-2 w-100">
-                  <DetailItem title="Amount" value={formatCurrency(this.payment.amount)} />
-                  <DetailItem title="Fees" value={formatCurrency(this.payment.fee_amount)} />
-                  <DetailItem title="Refunded" value={formatCurrency(this.payment.amount_refunded)} />
-                  <DetailItem title="Net" value={formatCurrency(this.payment.balance)} />
+                  <DetailItem title="Amount" value={this.payment.formattedPaymentAmount(this.payment.amount)} />
+                  <DetailItem title="Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
+                  <DetailItem title="Refunded" value={this.payment.formattedPaymentAmount(this.payment.amount_refunded)} />
+                  <DetailItem title="Net" value={this.payment.formattedPaymentAmount(this.payment.balance)} />
                   <DetailItem title="Status" value={MapPaymentStatusToBadge(this.payment.status)} />
                   <DetailItem title="Payment ID" value={this.payment.id} />
-                  <DetailItem title="Processing Fees" value={formatCurrency(this.payment.fee_amount)} />
+                  <DetailItem title="Processing Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
                   <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />
                   <DetailItem title="Description" value={this.payment.description} />
                 </div>
@@ -105,7 +104,7 @@ export class PaymentDetailsCore {
                   <DetailSectionTitle sectionTitle="Payment Method" />,
                   <div class="d-table gap-2 w-100">
                     <DetailItem title="ID" value={this.payment.payment_method.bank_account.id} />
-                    <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
+                    <DetailItem title="Last 4 Numbers" value={this.payment.last_four_digits} />
                     <DetailItem title="Bank Name" value={this.payment.payment_method.bank_account.brand} />
                     <DetailItem title="Account Owner" value={this.payment.payment_method.payersName} />
                   </div>

@@ -22,10 +22,8 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
           <h1 class="m-0" part="heading-1 heading text color font-family">
             $234.56 USD
           </h1>
-          <span part="badge text color font-family" slot="badge">
-            <span class="badge bg-success" title="This payment was successfully captured">
-              Succeeded
-            </span>
+          <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
+            Succeeded
           </span>
         </div>
         <div class="align-items-top d-flex flex-row" part="text color font-family">
@@ -65,7 +63,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Amount
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $234.56
+              $234.56 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -73,7 +71,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Fees
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $2.00
+              $2.00 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -81,7 +79,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Refunded
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $0.00
+              $0.00 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -89,7 +87,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Net
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $232.56
+              $232.56 USD
             </span>
           </div>
           <div class="d-table-row gap-2">
@@ -97,7 +95,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Status
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              <span class="badge bg-success" title="This payment was successfully captured">
+              <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
                 Succeeded
               </span>
             </span>
@@ -115,7 +113,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
               Processing Fees
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              $2.00
+              $2.00 USD
             </span>
           </div>
           <div class="d-table-row gap-2">

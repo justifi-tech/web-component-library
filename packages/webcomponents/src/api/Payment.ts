@@ -1,3 +1,4 @@
+import { formatCurrency } from "../utils/utils";
 import { DisputeStatus } from "./Dispute";
 
 export enum CaptureStrategy {
@@ -28,6 +29,11 @@ export enum PaymentStatuses {
   disputed = 'disputed',
   fully_refunded = 'fully_refunded',
   partially_refunded = 'partially_refunded',
+}
+
+export enum CurrencyTypes {
+  usd = 'usd',
+  cad = 'cad'
 }
 
 export interface IPaymentMethod {
@@ -138,7 +144,7 @@ export class Card implements ICard {
 export interface IPaymentDispute {
   amount_cents: number;
   created_at: string;
-  currency: string;
+  currency: CurrencyTypes;
   gateway_ref_id: string;
   id: string;
   payment_id: string;
@@ -158,7 +164,7 @@ export interface IPayment {
   balance: number;
   captured: boolean;
   capture_strategy: CaptureStrategy;
-  currency: 'usd';
+  currency: CurrencyTypes;
   description: string;
   disputed: boolean;
   disputes: IPaymentDispute[];
@@ -192,7 +198,7 @@ export class Payment implements IPayment {
   public balance: number;
   public captured: boolean;
   public capture_strategy: CaptureStrategy;
-  public currency: 'usd';
+  public currency: CurrencyTypes;
   public description: string;
   public disputed: boolean;
   public disputes: IPaymentDispute[];
@@ -217,14 +223,14 @@ export class Payment implements IPayment {
   constructor(payment: IPayment) {
     this.id = payment.id;
     this.account_id = payment.account_id;
-    this.amount = payment.amount;
+    this.currency = payment.currency;
+    this.amount = payment.amount
     this.amount_disputed = payment.amount_disputed;
     this.amount_refundable = payment.amount_refundable;
     this.amount_refunded = payment.amount_refunded;
     this.balance = payment.balance;
     this.captured = payment.captured;
     this.capture_strategy = payment.capture_strategy;
-    this.currency = payment.currency;
     this.description = payment.description;
     this.disputed = payment.disputed;
     this.disputes = payment.disputes;
@@ -273,6 +279,10 @@ export class Payment implements IPayment {
   get last_four_digits(): string | null {
     return this.payment_method.lastFourDigits;
   }
+
+  formattedPaymentAmount(amount: number): string {
+    return formatCurrency(amount, this.currency);
+  }
 }
 
 export interface IRefund {
@@ -290,7 +300,7 @@ export interface IRefund {
 export interface IApplicationFee {
   id: string;
   amount: number;
-  currency: string;
+  currency: CurrencyTypes;
   created_at: string;
   updated_at: string;
 }

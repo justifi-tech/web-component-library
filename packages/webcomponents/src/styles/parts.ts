@@ -73,7 +73,15 @@ export const tableError = `table-error ${text} ${backgroundColor}`;
 export const loadingSpinner = `loading-spinner`;
 
 // Badge
-export const badge = `badge ${text}`;
+export const badge = `badge ${fontFamily}`;
+export const badgePrimary = `${badge} badge-primary`;
+export const badgeSecondary = `${badge} badge-secondary`;
+export const badgeSuccess = `${badge} badge-success`;
+export const badgeDanger = `${badge} badge-danger`;
+export const badgeWarning = `${badge} badge-warning`;
+export const badgeInfo = `${badge} badge-info`;
+export const badgeLight = `${badge} badge-light`;
+export const badgeDark = `${badge} badge-dark`;
 
 // Dropdown-menu
 export const dropdownMenu = `dropdown-menu ${text}`;
@@ -85,6 +93,7 @@ export const radioListItem = `radio-list-item ${text}`;
 export const skeleton = `skeleton`;
 
 // Component specific
-// This allows the billing form to be hidden, for example
+// This allows specific sections of a component to be hidden, for example
 // ::part(billing-form) { display: none; }
 export const billingForm = `billing-form`;
+export const checkoutSummary = `checkout-summary`;

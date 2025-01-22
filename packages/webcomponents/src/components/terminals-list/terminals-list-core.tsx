@@ -17,7 +17,7 @@ export class TerminalsListCore {
   @Prop() columns: string;
 
   @State() terminals: Terminal[] = [];
-  @State() terminalsTable: Table;
+  @State() terminalsTable: Table<Terminal>;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -37,7 +37,7 @@ export class TerminalsListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
-    this.terminalsTable = new Table(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
+    this.terminalsTable = new Table<Terminal>(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
     if (this.getTerminals && this.getSubAccounts) {
       this.fetchData();
     }

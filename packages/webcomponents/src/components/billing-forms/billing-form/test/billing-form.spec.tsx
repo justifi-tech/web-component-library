@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { BillingForm } from '../billing-form';
+import { BillingForm } from '../../billing-form/billing-form';
 
-describe('justifi-billing-form', () => {
+describe('billing-form', () => {
   it('fills the form', async () => {
     const page = await newSpecPage({
       components: [BillingForm],
-      html: `<justifi-billing-form></justifi-billing-form>`,
+      html: `<billing-form></billing-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -28,7 +28,7 @@ describe('justifi-billing-form', () => {
   it('validates the form', async () => {
     const page = await newSpecPage({
       components: [BillingForm],
-      html: `<justifi-billing-form></justifi-billing-form>`,
+      html: `<billing-form></billing-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -51,7 +51,7 @@ describe('justifi-billing-form', () => {
   it('gets values of the form', async () => {
     const page = await newSpecPage({
       components: [BillingForm],
-      html: `<justifi-billing-form></justifi-billing-form>`,
+      html: `<billing-form></billing-form>`,
     });
 
     const instance: any = page.rootInstance;

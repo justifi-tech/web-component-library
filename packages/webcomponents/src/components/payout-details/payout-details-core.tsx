@@ -1,12 +1,11 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payout } from '../../api';
-import { formatCurrency, formatDate, formatTime } from '../../utils/utils';
+import { formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
-import Spinner from '../../ui-components/spinner';
-import { badge } from '../../styles/parts';
+import PayoutDetailsLoading from './payout-details-loading';
 
 @Component({
   tag: 'payout-details-core',
@@ -71,14 +70,14 @@ export class PayoutDetailsCore {
   render() {
     return (
       <StyledHost>
-        {this.loading && <Spinner />}
+        {this.loading && <PayoutDetailsLoading />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.payout && (
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
-              badge={<span slot='badge' part={badge} innerHTML={MapPayoutStatusToBadge(this.payout?.status)} />}
-              title={`${formatCurrency(this.payout.amount)} ${this.payout.currency.toUpperCase()}`}
+              badge={MapPayoutStatusToBadge(this.payout?.status)}
+              title={this.payout.formattedPaymentAmount(this.payout.amount)}
             >
               <EntityHeadInfoItem
                 classes="border-1 border-end"
@@ -103,8 +102,8 @@ export class PayoutDetailsCore {
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
                 <DetailItem title="Payout Method" value={this.payout.delivery_method} />
-                <DetailItem title="Amount" value={formatCurrency(this.payout.amount)} />
-                <DetailItem title="Fee" value={formatCurrency(this.payout.fees_total)} />
+                <DetailItem title="Amount" value={this.payout.formattedPaymentAmount(this.payout.amount)} />
+                <DetailItem title="Fee" value={this.payout.formattedPaymentAmount(this.payout.fees_total)} />
               </div>
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-table gap-2 w-100">

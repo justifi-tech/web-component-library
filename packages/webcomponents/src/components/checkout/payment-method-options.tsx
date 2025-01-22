@@ -1,10 +1,9 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
-import { config } from '../../../config';
+import { Component, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
-import { BillingFormFields } from '../billing-form/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -19,19 +18,17 @@ export class PaymentMethodOptions {
   @Prop() insuranceToggled: boolean;
   @Prop() authToken: string;
   @Prop() accountId: string;
-  @Prop({ mutable: true }) iframeOrigin?: string = config.iframeOrigin;
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() paymentAmount: number;
+  @Prop() hideCardBillingForm?: boolean;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
 
-  @Event({ bubbles: true }) toggleCreatingNewPaymentMethod: EventEmitter;
-
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
   @Method()
-  async fillBillingForm(fields: BillingFormFields) {
+  async fillBillingForm(fields: BillingFormFields | PostalFormFields) {
     const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
     if (newPaymentMethodElement.fillBillingForm) {
       newPaymentMethodElement.fillBillingForm(fields);
@@ -93,6 +90,7 @@ export class PaymentMethodOptions {
                 account-id={this.accountId}
                 is-selected={isSelected}
                 paymentMethodGroupId={this.paymentMethodGroupId}
+                hideCardBillingForm={this.hideCardBillingForm}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

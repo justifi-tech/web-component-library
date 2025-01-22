@@ -16,11 +16,11 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     Theme: ThemeNames.Light,
-    email: "test@test.com",
     "submit-button-text": "Tokenize Payment Method",
     "disable-credit-card": false,
     "disable-bank-account": false,
     "hide-submit-button": false,
+    "hide-card-billing-form": false,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -32,26 +32,50 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "disable-bank-account": {
-      type: "boolean",
-      description:
-        "Boolean indicating if the Payment Form should render Bank Account inputs `boolean`",
+    "submit-button-text": {
+      type: "string",
+      description: "Alternate text to display on the submit button",
       control: {
-        type: "boolean",
+        type: "text",
       },
       table: {
         category: "props",
+        defaultValue: { summary: "Tokenize Payment Method" },
+      },
+    },
+    "payment-method-group-id": {
+      type: "string",
+      description: "An existing payment method group ID may be used to save the tokenized payment method to an existing group",
+      control: {
+        type: "text",
+      },
+      table: {
+        category: "props",
+        "defaultValue": { summary: "undefined" },
       },
     },
     "disable-credit-card": {
       type: "boolean",
       description:
-        "Boolean indicating if the Payment Form should render Card inputs `boolean`",
+        "Boolean indicating if the Payment Form should render Card inputs",
       control: {
         type: "boolean",
       },
       table: {
         category: "props",
+        defaultValue: { summary: "false" },
+      },
+    },
+    "disable-bank-account": {
+      type: "boolean",
+      description:
+        "Boolean indicating if the Payment Form should render Bank Account inputs",
+      control: {
+        type: "boolean",
+      },
+      table: {
+        category: "props",
+        defaultValue: { summary: "false" },
       },
     },
     "hide-submit-button": {
@@ -63,37 +87,48 @@ const meta: Meta = {
       },
       table: {
         category: "props",
+        defaultValue: { summary: "false" },
       },
     },
-    "submit-button-text": {
-      type: "string",
+    "hide-card-billing-form": {
+      type: "boolean",
       control: {
-        type: "text",
+        type: "boolean",
       },
+      description: "For use with new credit card payment methods only, renders an alternate billing form with only the address_postal_code field present",
       table: {
         category: "props",
+        defaultValue: { summary: "false" },
       },
     },
     "submit-event": {
-      description:
-        "`BankAccountCreateResponse` `CardCreateResponse` `PaymentMethodErrorResponse`",
+      description: "Emitted upon successful tokenization of a payment method",
       table: {
         category: "events",
+        defaultValue: { summary: "Returns payment token as `event.detail.response.token`" },
       },
       action: true
     },
     "error-event": {
-      description: "`ComponentError`",
+      description: "Emitted upon an error during component intitializtion, or tokenization of a payment method",
       table: {
         category: "events",
+        defaultValue: { summary: "Returns full error as `event.detail` and error message as `event.detail.message`" },
       },
       action: true,
     },
     fillBillingForm: {
-      description:
-        "`fillBillingForm(fields: BillingFormFields) => Promise<void>`",
+      description:"Fill the billing form with the provided fields",
       table: {
         category: "methods",
+        defaultValue: { summary: "`fillBillingForm(fields: BillingFormFields) => Promise<void>`" }
+      },
+    },
+    tokenizePaymentMethod: {
+      description: "Can be used to call the tokenizePaymentMethod method directly",
+      table: {
+        category: "methods",
+        defaultValue: { summary: "`tokenizePaymentMethod() => Promise<void>`" }
       },
     },
   },

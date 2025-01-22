@@ -39,13 +39,13 @@ or install it from NPM and import the component module in your Vue application:
   `)}
 />
 
-For instance, to use the `justifi-card-form` web component, import it in your Vue component.
+For instance, to use the `justifi-checkout` web component, import it in your Vue component.
 
 <Source
   language="javascript"
   dark
   code={dedent(`
-    import '@justifi/webcomponents/dist/module/justifi-card-form.js';
+    import '@justifi/webcomponents/dist/module/justifi-checkout.js';
   `)}
 />
 
@@ -58,46 +58,43 @@ Once included, use the web component tags directly in your Vue templates.
   dark
   code={dedent(`
     <template>
-      <justifi-card-form
-        ref="cardForm"
-        :validation-mode="'onBlur'"
-        @cardFormReady="onCardFormReady"
-        @cardFormTokenize="onCardFormTokenize"
-        @cardFormValidate="onCardFormValidate"
-      ></justifi-card-form>
+      <justifi-checkout
+        ref="checkoutFormRef"
+        :auth-token="'your-auth-token'"
+        :checkout-id="'your-checkout-id'"
+        :disable-credit-card="true"
+      >
+      </justifi-checkout>
     </template>
 `)}
 />
 
 ## Event Handling
 
-- **Event Handling:** Events emitted by justifi-card-form can be listened to using the @eventName syntax..
+- **Event Handling:** Events emitted by justifi-checkout can be listened to using the @eventName syntax..
 
 <Source
   language="html"
   dark
   code={dedent(`
     <template>
-      <justifi-card-form
-        ref="cardForm"
-        :validation-mode="'onBlur'"
-        @cardFormReady="onCardFormReady"
-        @cardFormTokenize="onCardFormTokenize"
-        @cardFormValidate="onCardFormValidate"
-      ></justifi-card-form>
+      <justifi-checkout
+        ref="checkoutFormRef"
+        :auth-token="'your-auth-token'"
+        :checkout-id="'your-checkout-id'"
+        @submit-event="onSubmitEvent"
+        @error-event="onErrorEvent"
+      >
+      </justifi-checkout>
     </template>
     <script setup lang="ts">
       // Event handlers
-      const onCardFormReady = (event: any) => {
-        console.log('Card Form is ready:', event)
+      const onSubmitEvent(event) {
+        console.log('Submit event:', event.detail.response);
       }
 
-      const onCardFormTokenize = (event: any) => {
-        console.log('Card Form Tokenize event:', event)
-      }
-
-      const onCardFormValidate = (event: any) => {
-        console.log('Card Form Validate event:', event)
+      const onErrorEvent(event) {
+        console.log('Error event:', event.detail);
       }
     </script>
 
@@ -113,23 +110,40 @@ To call methods on a web component from a Vue component use a `ref` to get a ref
   dark
   code={dedent(`
     <template>
-      <justifi-card-form ref="cardForm"></justifi-card-form>
+      <justifi-checkout
+        ref="checkoutFormRef"
+        :auth-token="'your-auth-token'"
+        :checkout-id="'your-checkout-id'"
+        :disable-bank-account="true"
+        @submit-event="onSubmitEvent"
+        @error-event="onErrorEvent"
+      >
+      </justifi-checkout>
+      <button @click="fillBillingForm">Fill Billing Form</button>
     </template>
 
     <script setup>
       import { ref } from 'vue';
 
-      const cardForm = ref<any>(null)
+      const checkoutFormRef = ref<any>(null);
 
-      const validateForm = async () => {
-        if (cardForm.value) {
-          const response = await cardForm.value.validate()
-          console.log('Validation response:', response)
+      const fillBillingForm = async () => {
+        
+        if (checkoutFormRef.value) {
+          const billingFormFields = {
+          name: 'John Doe',
+          address_line1: 'Main St',
+          address_line2: 'Apt 1',
+          address_city: 'Beverly Hills',
+          address_state: 'CA',
+          address_postal_code: '90210',
+        };
+        
+        await checkoutFormRef.value.fillBillingForm(billingFormFields);
         }
-      }
+      };
     </script>
-
 `)}
 />
 
-In this example, `cardForm` is a reference to the `justifi-card-form` web component, and you can call its methods directly.
+In this example, `checkoutFormRef` is a reference to the `justifi-checkout` web component, and you can call its methods directly.

@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
 import { BillingFormFields } from '../../components';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
@@ -14,10 +14,13 @@ export class TokenizePaymentMethod {
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() paymentMethodGroupId: string;
-  @Prop() isLoading: boolean = true;
   @Prop() submitButtonText: string;
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
+  @Prop() hideSubmitButton?: boolean;
+  @Prop() hideCardBillingForm?: boolean;
+
+  @State() isLoading: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -28,23 +31,35 @@ export class TokenizePaymentMethod {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.isLoading = false;
   }
 
   @Method()
   async tokenizePaymentMethod(event?: CustomEvent) {
     event && event.preventDefault();
 
-    const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
-    if (tokenizeResponse.error) {
+    this.isLoading = true;
+
+    try {
+      const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
+      if (tokenizeResponse.error) {
+        this.errorEvent.emit({
+          errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
+          message: tokenizeResponse.error.message,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      } else if (tokenizeResponse.token) {
+        this.submitEvent.emit({ response: tokenizeResponse });
+      }
+    } catch (error) {
       this.errorEvent.emit({
-        errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
-        message: tokenizeResponse.error.message,
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        message: error.message,
         severity: ComponentErrorSeverity.ERROR,
       });
-    } else if (tokenizeResponse.token) {
-      this.submitEvent.emit({ response: tokenizeResponse });
+    } finally {
+      this.isLoading = false;
     }
+
   }
 
   @Method()
@@ -66,6 +81,7 @@ export class TokenizePaymentMethod {
                   show-bnpl={false}
                   paymentMethodGroupId={this.paymentMethodGroupId}
                   show-saved-payment-methods={false} // implement payment method group loading to show these
+                  hideCardBillingForm={this.hideCardBillingForm}
                   authToken={this.authToken}
                   account-id={this.accountId}
                 />
@@ -76,7 +92,8 @@ export class TokenizePaymentMethod {
                   type="submit"
                   onClick={event => this.tokenizePaymentMethod(event)}
                   isLoading={this.isLoading}
-                  data-testid="submit-button">
+                  data-testid="submit-button"
+                  hidden={this.hideSubmitButton}>
                   {this.submitButtonText || 'Submit'}
                 </Button>
               </div>
