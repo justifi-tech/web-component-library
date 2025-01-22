@@ -235,14 +235,12 @@ export const voidedCheckValidation = (documents: any[], allowOptionalFields: boo
   }
 }
 
-export const bankStatementValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
-  const vol = parseInt(volume);
-  const bankStatementRequiredAmount = 250000;
+export const bankStatementValidation = (documents: any[], allowOptionalFields: boolean) => {
   const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.bankStatement);
 
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
-  } else if (vol >= bankStatementRequiredAmount && !allowOptionalFields) {
+  } else {
     return documentUploadValidation.required('Please select one or more files');
   }
 };
