@@ -63,7 +63,8 @@ export class BusinessBankAccountFormStepCore {
         if (response.data.bank_accounts.length > 0) {
           this.bankAccount = new BankAccount(response.data.bank_accounts[0]);
         } else {
-          this.bankAccount = new BankAccount({}, this.businessId);
+          this.bankAccount = new BankAccount({});
+          this.bankAccount.business_id = this.businessId;
         }
         this.formController.setInitialValues({ ...this.bankAccount });
       },
@@ -79,7 +80,6 @@ export class BusinessBankAccountFormStepCore {
   }
 
   private sendData = (onSuccess: () => void) => {
-    console.log
     let submittedData;
     this.formLoading.emit(true);
     this.postBankAccount({

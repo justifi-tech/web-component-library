@@ -37,7 +37,7 @@ export class BankAccount implements IBankAccount {
   public created_at?: string;
   public updated_at?: string;
 
-  constructor(data: IBankAccount, businessId?: string) {
+  constructor(data: IBankAccount) {
     this.id = data.id;
     this.account_owner_name = data.account_owner_name;
     this.full_name = data.full_name;
@@ -51,7 +51,7 @@ export class BankAccount implements IBankAccount {
     this.currency = data.currency;
     this.nickname = data.nickname;
     this.metadata = data.metadata;
-    this.business_id = data.business_id || businessId;
+    this.business_id = data.business_id;
     this.platform_account_id = data.platform_account_id;
     this.created_at = data.created_at;
     this.updated_at = data.updated_at;
