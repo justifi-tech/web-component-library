@@ -6,6 +6,7 @@ import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../..
 import { BusinessFormStep, bankAccountTypeOptions } from '../../utils';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
+import { EntityDocument, EntityDocumentStorage, EntityDocumentType, FileSelectEvent } from '../../../../api/Document';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step-core',
@@ -14,6 +15,8 @@ export class BusinessBankAccountFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: IBankAccount = {};
+  @State() existingDocuments: any = [];
+  @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
 
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
@@ -47,7 +50,7 @@ export class BusinessBankAccountFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
+    this.formController = new FormController(businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields));
   }
 
   componentDidLoad() {
@@ -79,7 +82,6 @@ export class BusinessBankAccountFormStepCore {
   }
 
   private sendData = (onSuccess: () => void) => {
-    console.log
     let submittedData;
     this.formLoading.emit(true);
     this.postBankAccount({
@@ -108,6 +110,13 @@ export class BusinessBankAccountFormStepCore {
       ...this.formController.values.getValue(),
       [name]: value,
     });
+  }
+
+  storeFiles = (e: CustomEvent<FileSelectEvent>) => {
+    const fileList = Array.from(e.detail.fileList) as File[];
+    const docType = e.detail.document_type;
+    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
+    this.documentData[docType] = documentList;
   }
 
   render() {
@@ -187,6 +196,28 @@ export class BusinessBankAccountFormStepCore {
                 keyDownHandler={numberOnlyHandler}
                 disabled={this.formDisabled}
                 helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
+              />
+            </div>
+            <div class="col-12">
+              <form-control-file
+                name="voided_check"
+                label="Voided Check"
+                documentType={EntityDocumentType.voidedCheck}
+                inputHandler={this.inputHandler}
+                onFileSelected={this.storeFiles}
+                errorText={this.errors['voided_check']}
+                multiple={true}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-file
+                name="bank_statement"
+                label="Bank Statement"
+                documentType={EntityDocumentType.bankStatement}
+                inputHandler={this.inputHandler}
+                onFileSelected={this.storeFiles}
+                errorText={this.errors['bank_statement']}
+                multiple={true}
               />
             </div>
           </div>

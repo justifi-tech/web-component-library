@@ -1,7 +1,7 @@
 import { object } from 'yup';
 import {
   balanceSheetValidation,
-  bankStatementValidation,
+  // bankStatementValidation,
   governmentIdValidation,
   otherDocumentValidation,
   profitAndLossStatementValidation,
@@ -16,7 +16,7 @@ export const businessDocumentSchema = (volume: string, documents: any[], allowOp
     ss4: ss4Validation.nullable(),
     other: otherDocumentValidation.nullable(),
     balance_sheet: balanceSheetValidation(volume, documents, allowOptionalFields),
-    bank_statement: bankStatementValidation(volume, documents, allowOptionalFields),
+    // bank_statement: bankStatementValidation(volume, documents, allowOptionalFields),
     profit_and_loss_statement: profitAndLossStatementValidation(volume, documents, allowOptionalFields),
   });
 
@@ -26,7 +26,7 @@ export const businessDocumentSchema = (volume: string, documents: any[], allowOp
     ss4: ss4Validation.nullable(),
     other: otherDocumentValidation.nullable(),
     balance_sheet: balanceSheetValidation(volume, documents, allowOptionalFields),
-    bank_statement: bankStatementValidation(volume, documents, allowOptionalFields),
+    // bank_statement: bankStatementValidation(volume, documents, allowOptionalFields),
     profit_and_loss_statement: profitAndLossStatementValidation(volume, documents, allowOptionalFields)
   });
 
