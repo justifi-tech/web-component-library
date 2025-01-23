@@ -100,8 +100,6 @@ export const Authorization = ({ actions, entity, identification }: Authorization
 
   return (
     <>
-      <h1>Authorization</h1>
-      <hr />
       <p>Authorization is performed by passing a web component token as <code>auth-token</code></p>
       <ul>
         <li>
@@ -113,5 +111,20 @@ export const Authorization = ({ actions, entity, identification }: Authorization
         </li>
       </ul>
     </>
+  );
+}
+
+// A box where to render the component inside
+export const ComponentBox = ({ children }: { children: any }) => {
+  return (
+    <div style={{
+      border: '1px solid #E0E0E0',
+      borderRadius: '4px',
+      padding: '16px',
+      marginBottom: '16px',
+      marginTop: '20px'
+    }}>
+      {children}
+    </div>
   );
 }

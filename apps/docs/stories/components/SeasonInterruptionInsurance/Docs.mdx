@@ -6,28 +6,27 @@ import {
   ArgTypes,
   Source,
 } from '@storybook/blocks';
-import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull, codeExampleEventHandling } from './example';
 import {
   Authorization,
   ComponentBox,
 } from '../../utils/documentation-components';
-import * as JustifiCheckoutsList from './index.stories.tsx';
+import * as JustifiSeasonInterruptionInsurance from './index.stories.tsx';
 import { setUpMocks } from '../../utils/mockAllServices';
 
 {setUpMocks()}
 
 <Meta
-  title="Merchant Tools/Checkouts List"
-  Components="justifi-checkouts-list"
-  of={JustifiCheckoutsList}
+  title="Merchant Tools/Season Interruption Insurance"
+  Components="justifi-season-interruption-insurance"
+  of={JustifiSeasonInterruptionInsurance}
 />
 
 <Title />
 
 ---
 
-Component to render a formated list of checkouts for the requested account.
+Component to render a formated list of season interruption insurance for the requested account.
 
 # Index
 
@@ -58,8 +57,6 @@ Component to render a formated list of checkouts for the requested account.
 
 ---
 
-All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
-
 <Source dark language="html" code={codeExampleEventHandling} />
 
 # Example Usage
@@ -67,7 +64,10 @@ All table components emit an event when a row is clicked with the necessary info
 ---
 
 <ComponentBox>
-  <justifi-checkouts-list account-id="123" auth-token="123abc" />
+  <justifi-season-interruption-insurance
+    checkout-id="123"
+    auth-token="123abc"
+  />
 </ComponentBox>
 
 ---

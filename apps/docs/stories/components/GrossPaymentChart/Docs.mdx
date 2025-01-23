@@ -8,8 +8,14 @@ import {
 } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import example from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiGrossPaymentChart from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Merchant Tools/Gross Payments Chart"
@@ -19,11 +25,16 @@ import * as JustifiGrossPaymentChart from './index.stories.tsx';
 
 <Title />
 
+---
+
 Component to render chart displaying last 30 days of gross payment data.
 
 # Index
 
+---
+
 - [Props](#props)
+- [Authorization](#authorization)
 - [Example usage](#example-usage)
 
 # Props
@@ -32,6 +43,10 @@ Component to render chart displaying last 30 days of gross payment data.
 
 <ArgTypes exclude={['css-variables']} />
 
+# Authorization
+
+---
+
 <Authorization
   actions={['read']}
   entity="account"
@@ -39,6 +54,12 @@ Component to render chart displaying last 30 days of gross payment data.
 />
 
 # Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-gross-payment-chart account-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 

@@ -4,7 +4,39 @@ export const codeExampleFull = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-${codeExampleHead('justifi-payouts-list')}
+${codeExampleHead(
+  'justifi-payouts-list',
+  `<style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+
+      ::part(button) {
+        padding: 0.375rem 0.75rem;
+        font-size: 16px;
+        box-shadow: none;
+        border-radius: 0px;
+        line-height: 1.5;
+        text-transform: none;
+      }
+
+      ::part(button-disabled) {
+        opacity: 0.5;
+      }
+    </style>`
+)}
 
 <body>
   <!-- Optional: add the filters component -->
