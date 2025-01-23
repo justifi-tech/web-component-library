@@ -25,11 +25,16 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 <Title />
 
+---
+
 Component to render a formated list of terminals for the requested account.
 
 # Index
 
+---
+
 - [Props, events and methods](#props-events-and-methods)
+- [Authorization](#authorization)
 - [Events usage](#events-usage)
 - [Example usage](#example-usage)
 
@@ -47,11 +52,15 @@ Component to render a formated list of terminals for the requested account.
 
 # Events usage
 
+---
+
 All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
 
 <Source dark language="html" code={codeExampleEventHandling} />
 
 # Example Usage
+
+---
 
 <ComponentBox>
   <justifi-terminals-list account-id="123" auth-token="123abc" />

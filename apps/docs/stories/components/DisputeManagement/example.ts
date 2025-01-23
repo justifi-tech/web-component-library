@@ -92,4 +92,5 @@ export const codeExampleEventHandling = `
       console.log("error-event", event.detail);
     });
   })();
+  </script>
 `;
