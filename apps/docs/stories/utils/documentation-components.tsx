@@ -100,8 +100,6 @@ export const Authorization = ({ actions, entity, identification }: Authorization
 
   return (
     <>
-      <h1>Authorization</h1>
-      <hr />
       <p>Authorization is performed by passing a web component token as <code>auth-token</code></p>
       <ul>
         <li>

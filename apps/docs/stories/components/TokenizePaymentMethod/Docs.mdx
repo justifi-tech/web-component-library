@@ -26,12 +26,17 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 <Title />
 
+---
+
 Component to render an entire form including a switch to use a credit card or bank
 account, a submit button and all fields required for proper use.
 
 # Index
 
+---
+
 - [Props, events and methods](#props-events-and-methods)
+- [Authorization](#authorization)
 - [Security](#security)
 - [Example usage](#example-usage)
 
@@ -40,6 +45,10 @@ account, a submit button and all fields required for proper use.
 ---
 
 <ArgTypes exclude={['Theme']} />
+
+# Authorization
+
+---
 
 <Authorization
   actions={['write']}
@@ -61,6 +70,8 @@ These measures are in place to prevent abuse and ensure the security of the paym
 **Note:** While `client-id` is still supported, we now recommend using web component tokens (`auth-token`) for enhanced security and flexibility.
 
 # Example Usage
+
+---
 
 <ComponentBox>
   <justifi-tokenize-payment-method

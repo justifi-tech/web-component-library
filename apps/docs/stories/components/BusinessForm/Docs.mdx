@@ -25,13 +25,18 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 <Title />
 
+---
+
 Component to render a business onboarding form. You will need to first create a business
 via [Business API](https://docs.justifi.tech/api-spec#tag/Business) to get the business-id
 required for this component.
 
 # Index
 
+---
+
 - [Props, events and methods](#props-events-and-methods)
+- [Authorization](#authorization)
 - [Example usage](#example-usage)
 
 # Props, events and methods
@@ -40,6 +45,10 @@ required for this component.
 
 <ArgTypes exclude={['test-mode', 'Theme']} />
 
+# Authorization
+
+---
+
 <Authorization
   actions={['write']}
   entity="business"
@@ -47,6 +56,8 @@ required for this component.
 />
 
 # Example Usage
+
+---
 
 <ComponentBox>
   <justifi-business-form />
