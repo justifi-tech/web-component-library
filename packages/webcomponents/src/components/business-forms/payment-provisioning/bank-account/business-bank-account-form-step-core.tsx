@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { BankAccount, IBankAccount } from '../../../../api/BankAccount';
@@ -7,6 +7,9 @@ import { BusinessFormStep, bankAccountTypeOptions } from '../../utils';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
 import { EntityDocument, EntityDocumentStorage, EntityDocumentType, FileSelectEvent } from '../../../../api/Document';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { Skeleton } from '../../../../ui-components';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step-core',
@@ -17,10 +20,12 @@ export class BusinessBankAccountFormStepCore {
   @State() bankAccount: IBankAccount = {};
   @State() existingDocuments: any = [];
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
-
+  @State() isLoading: boolean = false;
+  
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() postBankAccount: Function;
+  @Prop() postDocumentRecord: Function;
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
@@ -28,6 +33,11 @@ export class BusinessBankAccountFormStepCore {
 
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
+
+  @Watch('isLoading')
+  watchHandler(newValue: boolean) {
+    this.formLoading.emit(newValue);
+  }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -38,15 +48,6 @@ export class BusinessBankAccountFormStepCore {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
     };
   };
-
-  get postPayload() {
-    let formValues = new BankAccount(this.formController.values.getValue()).payload;
-    return formValues;
-  }
-
-  get formDisabled() {
-    return !!this.bankAccount?.id;
-  }
 
   componentWillLoad() {
     this.getBusiness && this.getData();
@@ -59,50 +60,11 @@ export class BusinessBankAccountFormStepCore {
     });
   }
 
-  private getData = () => {
-    this.formLoading.emit(true);
-    this.getBusiness({
-      onSuccess: (response) => {
-        if (response.data.bank_accounts.length > 0) {
-          this.bankAccount = new BankAccount(response.data.bank_accounts[0]);
-        } else {
-          this.bankAccount = new BankAccount({});
-          this.bankAccount.business_id = this.businessId;
-        }
-        this.formController.setInitialValues({ ...this.bankAccount });
-      },
-      onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
-          message: error,
-          errorCode: code,
-          severity: severity
-        });
-      },
-      final: () => this.formLoading.emit(false)
-    });
-  }
-
-  private sendData = (onSuccess: () => void) => {
-    let submittedData;
-    this.formLoading.emit(true);
-    this.postBankAccount({
-      payload: this.postPayload,
-      onSuccess: (response) => {
-        submittedData = response;
-        onSuccess();
-      },
-      onError: ({ error, code, severity }) => {
-        submittedData = error;
-        this.errorEvent.emit({
-          message: error,
-          errorCode: code,
-          severity: severity
-        });
-      },
-      final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.bankAccount });
-        this.formLoading.emit(false)
-      }
+  initializeFormController = () => {
+    this.formController = new FormController(businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields));
+    this.formController.setInitialValues({ ...this.bankAccount });
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
     });
   }
 
@@ -120,8 +82,211 @@ export class BusinessBankAccountFormStepCore {
     this.documentData[docType] = documentList;
   }
 
+
+  get postPayload() {
+    let formValues = new BankAccount(this.formController.values.getValue()).payload;
+    return formValues;
+  }
+
+  get formDisabled() {
+    return !!this.bankAccount?.id;
+  }
+
+
+  private getData = () => {
+    this.isLoading = true;
+    this.getBusiness({
+      onSuccess: (response) => {
+        if (response.data.bank_accounts.length > 0) {
+          this.bankAccount = new BankAccount(response.data.bank_accounts[0]);
+        } else {
+          this.bankAccount = new BankAccount({});
+          this.bankAccount.business_id = this.businessId;
+        }
+        this.existingDocuments = response.data.documents;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      },
+      final: () => {
+        this.initializeFormController();
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private async sendData(onSuccess: () => void) {
+    try {
+      // 1) Post bank account data, wait for completion
+      const accountPosted = await this.postBankAccountData();
+      if (!accountPosted) {
+        return; // Bail out if posting account data fails
+      }
+  
+      // 2) Post documents only after bank account was successfully created
+      const documentsUploaded = await this.postBusinessDocuments();
+      if (!documentsUploaded) {
+        return; // Handle upload failure if needed
+      }
+  
+      // 3) If all goes well, call onSuccess
+      onSuccess();
+    } catch (error) {
+      this.errorEvent.emit({
+        message: error,
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        severity: ComponentErrorSeverity.ERROR
+      });
+    }
+  }
+
+  private async postBankAccountData(): Promise<boolean> {
+    let submittedData;
+    this.isLoading = true;
+    return new Promise((resolve) => {
+      let success = false;
+      this.postBankAccount({
+        payload: this.postPayload,
+        onSuccess: (response) => {
+          submittedData = response;
+          success = true;
+        },
+        onError: ({ error, code, severity }) => {
+          success = false;
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+        },
+        final: () => {
+          this.stepCompleteEvent.emit({ response: success, formStep: BusinessFormStep.bankAccount });
+          this.isLoading = false;
+          resolve(success);
+        }
+      });
+    });
+  }
+
+  private async postBusinessDocuments(): Promise<boolean> {
+    this.isLoading = true;
+    try {
+      const docArray = Object.values(this.documentData).flat();
+      if (!docArray.length) {
+        // No documents to upload
+        return true;
+      }
+  
+      // 1) Create document records
+      const recordsCreated = await Promise.all(
+        docArray.map((docData) => this.postDocumentRecordData(docData))
+      );
+  
+      // If any record creation failed
+      if (recordsCreated.includes(false)) {
+        return false;
+      }
+  
+      // 2) Upload documents
+      const uploadsCompleted = await Promise.all(
+        docArray.map((docData) => this.uploadDocument(docData))
+      );
+  
+      // If any upload failed
+      if (uploadsCompleted.includes(false)) {
+        return false;
+      }
+  
+      return true;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private postDocumentRecordData = async (docData: EntityDocument): Promise<boolean> => {
+    this.isLoading = true;
+    const payload = docData.record_data;
+    return new Promise((resolve) => {
+      this.postDocumentRecord({
+        payload,
+        onSuccess: (response) => {
+          resolve(this.handleDocRecordResponse(docData, response));
+        },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+          resolve(false);
+        },
+      });
+    });
+  }
+
+  handleDocRecordResponse = (docData: EntityDocument, response: any) => {
+    if (response.error) {
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
+      return false;
+    } else {
+      docData.setPresignedUrl(response.data.presigned_url);
+      return true;
+    }
+  }
+
+  uploadDocument = async (docData: EntityDocument) => {
+    if (!docData.presigned_url) {
+      throw new Error('Presigned URL is not set');
+    }
+
+    const response = await fetch(docData.presigned_url, {
+      method: 'PUT',
+      body: docData.fileString,
+    })
+
+    return this.handleUploadResponse(response);
+  }
+  
+  handleUploadResponse = (response: any) => {
+    if (response.error) {
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
+      return false;
+    } else {
+      this.stepCompleteEvent.emit({ response: response, formStep: BusinessFormStep.bankAccount });
+      return true;
+    }
+  }
+  
+
+  get documentsOnFile() {
+
+      if (this.isLoading) {
+        return <Skeleton height={"50px"} />;
+      }
+  
+      return <justifi-business-documents-on-file documents={this.existingDocuments} />;
+    }
+
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
+
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
 
     return (
       <form>
@@ -199,6 +364,10 @@ export class BusinessBankAccountFormStepCore {
                 helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
               />
             </div>
+          </div>
+          <hr class="mt-2" />
+          <div class="row gy-3">
+            {this.documentsOnFile}
             <div class="col-12">
               <form-control-file
                 name="voided_check"
@@ -206,7 +375,7 @@ export class BusinessBankAccountFormStepCore {
                 documentType={EntityDocumentType.voidedCheck}
                 inputHandler={this.inputHandler}
                 onFileSelected={this.storeFiles}
-                errorText={this.errors['voided_check']}
+                errorText={this.errors["voided_check"]}
                 multiple={true}
               />
             </div>
@@ -217,7 +386,7 @@ export class BusinessBankAccountFormStepCore {
                 documentType={EntityDocumentType.bankStatement}
                 inputHandler={this.inputHandler}
                 onFileSelected={this.storeFiles}
-                errorText={this.errors['bank_statement']}
+                errorText={this.errors["bank_statement"]}
                 multiple={true}
               />
             </div>

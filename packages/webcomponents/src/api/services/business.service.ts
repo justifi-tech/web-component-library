@@ -2,6 +2,7 @@ import { config } from '../../../config';
 import Api, { IApiResponse } from '../Api';
 import { IBankAccount } from '../BankAccount';
 import { IBusiness } from '../Business';
+import { DocumentRecordData } from '../Document';
 import { Identity } from '../Identity';
 
 export interface IBusinessService {
@@ -34,6 +35,8 @@ export class BusinessService implements IBusinessService {
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).patch(endpoint, payload);
   }
 }
+
+// Business Identity API Services for PaymentProvisioning Component
 
 export interface IdentityService {
   fetchIdentity(
@@ -80,6 +83,8 @@ export class IdentityService implements IdentityService {
   }
 }
 
+// Business Bank Account API Services for PaymentProvisioning Component
+
 export interface IBusinessBankAccountService {
   postBankAccount(
     authToken: string,
@@ -93,6 +98,25 @@ export class BusinessBankAccountService implements IBusinessBankAccountService {
     payload: Partial<IBankAccount>
   ): Promise<IApiResponse<IBankAccount>> {
     const endpoint = `entities/bank_accounts`;
+    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
+  }
+}
+
+// Business Document Uploading API Services for PaymentProvisioning Component
+
+export interface IDocumentRecordService {
+  postDocumentRecord(
+    authToken: string,
+    payload: DocumentRecordData
+  ): Promise<IApiResponse<any>>;
+}
+
+export class DocumentRecordService implements IDocumentRecordService {
+  async postDocumentRecord(
+    authToken: string,
+    payload: DocumentRecordData
+  ): Promise<IApiResponse<any>> {
+    const endpoint = `entities/document`;
     return Api({ authToken, apiOrigin: config.proxyApiOrigin }).post(endpoint, payload);
   }
 }

@@ -1,5 +1,7 @@
 export { default as Api } from './Api';
 export * from './Api';
+export * from './ComponentEvents';
+export * from './ComponentError';
 export * from './Checkout';
 export * from './Insurance';
 export * from './Pagination';
