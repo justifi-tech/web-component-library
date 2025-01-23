@@ -8,8 +8,14 @@ import {
 } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull, codeExampleEventHandling } from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiTerminalsList from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Merchant Tools/Terminals List"
@@ -19,19 +25,28 @@ import * as JustifiTerminalsList from './index.stories.tsx';
 
 <Title />
 
+---
+
 Component to render a formated list of terminals for the requested account.
 
 # Index
 
+---
+
 - [Props, events and methods](#props-events-and-methods)
-  - [Events usage](#events-usage)
+- [Authorization](#authorization)
+- [Events usage](#events-usage)
 - [Example usage](#example-usage)
 
 # Props, events and methods
 
 ---
 
-<ArgTypes exclude={['theme']} />
+<ArgTypes exclude={['Theme']} />
+
+# Authorization
+
+---
 
 <Authorization
   actions={['read', 'write']}
@@ -39,13 +54,21 @@ Component to render a formated list of terminals for the requested account.
   identification="account_id"
 />
 
-## Events usage
+# Events usage
+
+---
 
 All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
 
 <Source dark language="html" code={codeExampleEventHandling} />
 
 # Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-terminals-list account-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 

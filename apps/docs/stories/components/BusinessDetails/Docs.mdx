@@ -1,8 +1,14 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull } from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiBusinessDetails from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Entities/BusinessDetails"
@@ -12,20 +18,29 @@ import * as JustifiBusinessDetails from './index.stories.tsx';
 
 <Title />
 
+---
+
 Component to render detailed information about a business. You will need to first
 create a business via [Business API](https://docs.justifi.tech/api-spec#tag/Business) to get
 the business-id required for this component.
 
 # Index
 
+---
+
 - [Props and methods](#props-and-methods)
+- [Authorization](#authorization)
 - [Example usage](#example-usage)
 
 # Props and methods
 
 ---
 
-<ArgTypes exclude={['css-variables']} />
+<ArgTypes exclude={['Theme']} />
+
+# Authorization
+
+---
 
 <Authorization
   actions={['read']}
@@ -34,6 +49,12 @@ the business-id required for this component.
 />
 
 # Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-business-details business-id="123" auth-token="123abc" />
+</ComponentBox>
 
 ---
 

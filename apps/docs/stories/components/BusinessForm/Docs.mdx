@@ -8,8 +8,14 @@ import {
 } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import example from './example';
-import { Authorization } from '../../utils/documentation-components';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
 import * as JustifiBusinessForm from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
 
 <Meta
   title="Entities/BusinessForm"
@@ -19,20 +25,29 @@ import * as JustifiBusinessForm from './index.stories.tsx';
 
 <Title />
 
+---
+
 Component to render a business onboarding form. You will need to first create a business
 via [Business API](https://docs.justifi.tech/api-spec#tag/Business) to get the business-id
 required for this component.
 
 # Index
 
+---
+
 - [Props, events and methods](#props-events-and-methods)
+- [Authorization](#authorization)
 - [Example usage](#example-usage)
 
 # Props, events and methods
 
 ---
 
-<ArgTypes exclude={['css-variables']} />
+<ArgTypes exclude={['test-mode', 'Theme']} />
+
+# Authorization
+
+---
 
 <Authorization
   actions={['write']}
@@ -41,6 +56,12 @@ required for this component.
 />
 
 # Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-business-form />
+</ComponentBox>
 
 ---
 
