@@ -51,7 +51,7 @@ jobs:
           echo "::endgroup::"
 
       - name: 'upload'
-        uses: actions/upload-pages-artifact@v1.0.8
+        uses: actions/upload-artifact@v3
         with:
           path: ./apps/docs/storybook-static
 
