@@ -1,5 +1,20 @@
 ### Changelog
 
+## 5.1.0
+
+### Minor Changes
+
+- be401fb: - Added new prop `hideCardBillingForm` to `justifi-checkout` and `justifi-tokenize-payment-method` components. When this prop is passed to either component, new credit card payment methods will render with an alternate billing form that only renders the `address_postal_code` field.
+
+### Patch Changes
+
+- 607ce8f: - List and detail components that show monetary amounts will now always include the currency returned from the API response.
+- 0d956c0: Added loading skeletons for all components. The skeletons can be styled using the `skeleton` part
+- f172279: Update detail and list components to use new Badge ui component which helps to enforce consistent assignment of css parts to badges
+- 8a7ec70: Adds a `checkout-summary` part so the Summary section on the `justifi-checkout` can be hidden
+- ec52599: - Fixed broken prop on `justifi-tokenize-payment-method` - `hide-submit-button` will now correctly prevent the default submit button from rendering.
+- 5e852d6: - Improved stability of bank-account form step in `justifi-payment-provisioning` component.
+
 ## 5.0.0
 
 ### Major Changes
@@ -24,7 +39,7 @@
   - `justifi-terminals-list` no longer emits `terminal-row-clicked` - use `click-event` to listen for table row clicks
   - List components will also now emit `click-event` on pagination interaction (IE - clicking on `Next` or `Previous` page)
   - Form components `justifi-payment-provisioning` and `justifi-dispute-management` now emit `complete-form-step-event` instead of `form-step-completed` on step completion.
-    - If applicable, server responses will now be returned in this event as `response`. If needed, the response can be accessed via `event.detail.response`. 
+    - If applicable, server responses will now be returned in this event as `response`. If needed, the response can be accessed via `event.detail.response`.
   - `justifi-business-form` no longer emits deprecated `clickEvent` - only emits `click-event` in line with other components.
 
 ### Minor Changes
