@@ -24,7 +24,6 @@
  - [form-control-text](../..)
  - [justifi-additional-questions-form-step-core](../../../../components/business-forms/payment-provisioning/additional-questions)
  - [justifi-business-bank-account-form-step-core](../../../../components/business-forms/payment-provisioning/bank-account)
- - [justifi-business-document-upload-form-step](../../../../components/business-forms/payment-provisioning/document-uploads)
  - [justifi-business-owners-form-step-core](../../../../components/business-forms/payment-provisioning/business-owners)
  - [justifi-business-representative-form-inputs](../../../../components/business-forms/payment-provisioning/business-representative)
  - [justifi-legal-address-form-step-core](../../../../components/business-forms/payment-provisioning/legal-address-form)
@@ -45,7 +44,6 @@ graph TD;
   form-control-text --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-business-bank-account-form-step-core --> form-control-tooltip
-  justifi-business-document-upload-form-step --> form-control-tooltip
   justifi-business-owners-form-step-core --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-legal-address-form-step-core --> form-control-tooltip

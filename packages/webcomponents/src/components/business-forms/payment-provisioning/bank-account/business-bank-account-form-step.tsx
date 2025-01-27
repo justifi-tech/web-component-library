@@ -7,7 +7,7 @@ import { BusinessService, BusinessBankAccountService, DocumentRecordService } fr
   tag: 'justifi-business-bank-account-form-step'
 })
 export class BusinessBankAccountFormStep {
-  coreComponent: HTMLJustifiBusinessBankAccountFormStepCoreElement
+  coreComponent: HTMLJustifiBusinessBankAccountFormStepCoreElement;
   
   @State() getBusiness: Function;
   @State() postBankAccount: Function;
