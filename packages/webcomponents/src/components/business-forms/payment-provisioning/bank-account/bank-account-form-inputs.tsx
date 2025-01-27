@@ -1,9 +1,9 @@
-import { Component, h, Prop } from "@stencil/core";
+import { Component, h, Prop } from '@stencil/core';
 import { bankAccountTypeOptions } from '../../utils';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 
 @Component({
-  tag: "bank-account-form-inputs"
+  tag: 'bank-account-form-inputs'
 })
 export class BankAccountFormInputs {
   @Prop() defaultValue: any;

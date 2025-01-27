@@ -1,8 +1,8 @@
-import { Component, h, Prop } from "@stencil/core";
-import { EntityDocumentType, FileSelectEvent } from "../../../../api";
+import { Component, h, Prop } from '@stencil/core';
+import { EntityDocumentType, FileSelectEvent } from '../../../../api';
 
 @Component({
-  tag: "bank-account-document-form-inputs"
+  tag: 'bank-account-document-form-inputs'
 })
 export class BankAccountDocumentFormInputs {
   @Prop() inputHandler: (name: string, value: string) => void;
