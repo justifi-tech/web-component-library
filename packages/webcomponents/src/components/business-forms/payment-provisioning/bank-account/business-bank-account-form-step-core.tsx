@@ -1,15 +1,20 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
-import { BankAccount, IBankAccount } from '../../../../api/BankAccount';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { BusinessFormStep, bankAccountTypeOptions } from '../../utils';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { BusinessFormStep } from '../../utils';
 import { heading2 } from '../../../../styles/parts';
-import { EntityDocument, EntityDocumentStorage, EntityDocumentType, FileSelectEvent } from '../../../../api/Document';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { Skeleton } from '../../../../ui-components';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import {
+  BankAccount,
+  IBankAccount,
+  EntityDocument,
+  EntityDocumentStorage,
+  FileSelectEvent,
+  ComponentErrorEvent,
+  ComponentFormStepCompleteEvent,
+  ComponentErrorCodes,
+  ComponentErrorSeverity,
+} from '../../../../api';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step-core',
@@ -41,13 +46,14 @@ export class BusinessBankAccountFormStepCore {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    if (this.formDisabled) {
-      this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.bankAccount, metadata: 'no data submitted' });
-      onSuccess();
+    if (this.existingBankAccount) {
+      // If a bank account already exists, skip bank account posting; proceed directly to document upload
+      this.sendData(onSuccess);
     } else {
+      // If bank account is new, validate form inputs (bank account fields), then proceed
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
-    };
-  };
+    }
+  }
 
   componentWillLoad() {
     this.getBusiness && this.getData();
@@ -82,16 +88,14 @@ export class BusinessBankAccountFormStepCore {
     this.documentData[docType] = documentList;
   }
 
-
   get postPayload() {
     let formValues = new BankAccount(this.formController.values.getValue()).payload;
     return formValues;
   }
 
-  get formDisabled() {
+  get existingBankAccount() {
     return !!this.bankAccount?.id;
   }
-
 
   private getData = () => {
     this.isLoading = true;
@@ -121,19 +125,18 @@ export class BusinessBankAccountFormStepCore {
 
   private async sendData(onSuccess: () => void) {
     try {
-      // 1) Post bank account data, wait for completion
-      const accountPosted = await this.postBankAccountData();
-      if (!accountPosted) {
-        return; // Bail out if posting account data fails
+      //  Post bank account data if the form is not disabled
+      const bankAccountPosted = !this.existingBankAccount ? await this.postBankAccountData() : true;
+      if (!bankAccountPosted) {
+        return;
       }
   
-      // 2) Post documents only after bank account was successfully created
+      // Post documents only after bank account was successfully created
       const documentsUploaded = await this.postBusinessDocuments();
       if (!documentsUploaded) {
-        return; // Handle upload failure if needed
+        return;
       }
   
-      // 3) If all goes well, call onSuccess
       onSuccess();
     } catch (error) {
       this.errorEvent.emit({
@@ -164,7 +167,7 @@ export class BusinessBankAccountFormStepCore {
           });
         },
         final: () => {
-          this.stepCompleteEvent.emit({ response: success, formStep: BusinessFormStep.bankAccount });
+          this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.bankAccount });
           this.isLoading = false;
           resolve(success);
         }
@@ -177,29 +180,24 @@ export class BusinessBankAccountFormStepCore {
     try {
       const docArray = Object.values(this.documentData).flat();
       if (!docArray.length) {
-        // No documents to upload
         return true;
       }
   
-      // 1) Create document records
       const recordsCreated = await Promise.all(
         docArray.map((docData) => this.postDocumentRecordData(docData))
-      );
+      ); // Create document records
   
-      // If any record creation failed
       if (recordsCreated.includes(false)) {
         return false;
-      }
+      } // Exit if document record creation fails
   
-      // 2) Upload documents
       const uploadsCompleted = await Promise.all(
         docArray.map((docData) => this.uploadDocument(docData))
-      );
+      ); // Upload documents to AWS presigned URLs
   
-      // If any upload failed
       if (uploadsCompleted.includes(false)) {
         return false;
-      }
+      } // Exit if any upload fails
   
       return true;
     } finally {
@@ -266,20 +264,9 @@ export class BusinessBankAccountFormStepCore {
       })
       return false;
     } else {
-      this.stepCompleteEvent.emit({ response: response, formStep: BusinessFormStep.bankAccount });
       return true;
     }
   }
-  
-
-  get documentsOnFile() {
-
-      if (this.isLoading) {
-        return <Skeleton height={"50px"} />;
-      }
-  
-      return <justifi-business-documents-on-file documents={this.existingDocuments} />;
-    }
 
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
@@ -290,107 +277,31 @@ export class BusinessBankAccountFormStepCore {
 
     return (
       <form>
-        <fieldset>
+        <fieldset class="mb-4">
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Bank Account Info</legend>
-            <form-control-tooltip helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
+            <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
-          <div class="row gy-3">
-            <div class="col-12">
-              <form-control-text
-                name="bank_name"
-                label="Bank Name"
-                defaultValue={bankAccountDefaultValue.bank_name}
-                errorText={this.errors.bank_name}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="nickname"
-                label="Nickname"
-                defaultValue={bankAccountDefaultValue.nickname}
-                errorText={this.errors.nickname}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="account_owner_name"
-                label="Account Owner Name"
-                defaultValue={bankAccountDefaultValue.account_owner_name}
-                errorText={this.errors.account_owner_name}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="account_type"
-                label="Account Type"
-                options={bankAccountTypeOptions}
-                defaultValue={bankAccountDefaultValue.account_type}
-                errorText={this.errors.account_type}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="account_number"
-                label="Account Number"
-                defaultValue={bankAccountDefaultValue.account_number}
-                maxLength={17}
-                errorText={this.errors.account_number}
-                inputHandler={this.inputHandler}
-                keyDownHandler={numberOnlyHandler}
-                disabled={this.formDisabled}
-                helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="routing_number"
-                label="Routing Number"
-                defaultValue={bankAccountDefaultValue.routing_number}
-                maxLength={9}
-                errorText={this.errors.routing_number}
-                inputHandler={this.inputHandler}
-                keyDownHandler={numberOnlyHandler}
-                disabled={this.formDisabled}
-                helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
-              />
-            </div>
+          <bank-account-form-inputs
+            defaultValue={bankAccountDefaultValue}
+            errors={this.errors}
+            inputHandler={this.inputHandler}
+            formDisabled={this.existingBankAccount}
+          />
+        </fieldset>
+        <fieldset class="mt-4">
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0" part={heading2}>Document Uploads</legend>
+            <form-control-tooltip helpText="These documents are required for underwriting purposes. Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category." />
           </div>
           <hr class="mt-2" />
-          <div class="row gy-3">
-            {this.documentsOnFile}
-            <div class="col-12">
-              <form-control-file
-                name="voided_check"
-                label="Voided Check"
-                documentType={EntityDocumentType.voidedCheck}
-                inputHandler={this.inputHandler}
-                onFileSelected={this.storeFiles}
-                errorText={this.errors["voided_check"]}
-                multiple={true}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-file
-                name="bank_statement"
-                label="Bank Statement"
-                documentType={EntityDocumentType.bankStatement}
-                inputHandler={this.inputHandler}
-                onFileSelected={this.storeFiles}
-                errorText={this.errors["bank_statement"]}
-                multiple={true}
-              />
-            </div>
-          </div>
+          <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
+          <bank-account-document-form-inputs
+            inputHandler={this.inputHandler}
+            errors={this.errors}
+            storeFiles={this.storeFiles}
+          />
         </fieldset>
       </form>
     );
