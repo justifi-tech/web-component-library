@@ -89,7 +89,6 @@ graph TD;
   justifi-business-document-upload-form-step --> form-control-tooltip
   justifi-business-document-upload-input-group --> form-control-file
   form-control-file --> form-control-tooltip
-  justifi-business-terms-conditions-form-step --> justifi-business-terms-conditions-text
   justifi-business-terms-conditions-form-step --> form-control-checkbox
   justifi-payment-provisioning-core --> justifi-payment-provisioning-form-steps
   style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
