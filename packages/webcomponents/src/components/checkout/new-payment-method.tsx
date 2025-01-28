@@ -54,7 +54,10 @@ export class NewPaymentMethod {
         return { error: tokenizeResponse.error };
       } else {
         const tokenizeRessponseData = tokenizeResponse.data;
-        return { token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token };
+        return {
+          token: tokenizeRessponseData.card?.token || tokenizeRessponseData.bank_account?.token,
+          data: tokenizeRessponseData
+        };
       }
     } catch (error) {
       return { error };
@@ -102,7 +105,7 @@ export class NewPaymentMethod {
           )}
 
         </div>
-        <justifi-billing-form-wrapper 
+        <justifi-billing-form-wrapper
           ref={(el) => (this.billingFormWrapperRef = el)}
           hideCardBillingForm={this.hideCardBillingForm}
           paymentMethodType={paymentMethodType}
