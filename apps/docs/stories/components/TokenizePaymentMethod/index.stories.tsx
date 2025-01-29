@@ -105,7 +105,9 @@ const meta: Meta = {
       description: "Emitted upon successful tokenization of a payment method",
       table: {
         category: "events",
-        defaultValue: { summary: "Returns payment token as `event.detail.response.token`" },
+        defaultValue: {
+          summary: "Returns the payment token and the full `payment-method` response"
+        },
       },
       action: true
     },
@@ -118,7 +120,7 @@ const meta: Meta = {
       action: true,
     },
     fillBillingForm: {
-      description:"Fill the billing form with the provided fields",
+      description: "Fill the billing form with the provided fields",
       table: {
         category: "methods",
         defaultValue: { summary: "`fillBillingForm(fields: BillingFormFields) => Promise<void>`" }
