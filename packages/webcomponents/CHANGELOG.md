@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.2.0
+
+### Minor Changes
+
+- 73fa260: Increments the `justifi-tokenize-payment-method` `submit-event` payload to return also the full api's `payment-methods` payload response
+
 ## 5.1.0
 
 ### Minor Changes

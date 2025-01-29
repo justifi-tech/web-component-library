@@ -1,5 +1,16 @@
 # @repo/docs
 
+## 0.3.0
+
+### Minor Changes
+
+- 73fa260: Increments the `justifi-tokenize-payment-method` `submit-event` payload to return also the full api's `payment-methods` payload response
+
+### Patch Changes
+
+- Updated dependencies [73fa260]
+  - @justifi/webcomponents@5.2.0
+
 ## 0.2.1
 
 ### Patch Changes
