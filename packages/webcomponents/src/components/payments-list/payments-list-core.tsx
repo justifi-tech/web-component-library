@@ -3,7 +3,7 @@ import { PagingInfo, Payment, pagingDefaults } from '../../api';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
-import { queryParams, onQueryParamsChange } from './payments-list-params-state';
+import { getRequestParams, onQueryParamsChange } from './payments-list-params-state';
 import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
@@ -22,7 +22,6 @@ export class PaymentsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getPayments')
   @Watch('columns')
@@ -53,12 +52,11 @@ export class PaymentsListCore {
     this.loading = true;
 
     this.getPayments({
-      params: this.requestParams,
+      params: this.params,
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
         this.paymentsTable.collectionData = this.payments;
-        this.loading = false;
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -67,8 +65,10 @@ export class PaymentsListCore {
           message: error,
           severity,
         });
-        this.loading = false;
       },
+      final: () => {
+        this.loading = false;
+      }
     });
   }
 
@@ -106,9 +106,10 @@ export class PaymentsListCore {
     return !this.showEmptyState && !this.showErrorState && !this.loading;
   }
 
-  get requestParams() {
-    const combinedParams = { ...queryParams, ...this.pagingParams };
-    return combinedParams;
+  get params() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
   }
 
   render() {

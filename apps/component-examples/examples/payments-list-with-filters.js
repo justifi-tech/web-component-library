@@ -71,10 +71,15 @@ app.get('/', async (req, res) => {
       <body>
         <div style="padding:25px;">
           <div>
-            <justifi-payments-list-filters></justifi-payments-list-filters>
+            <justifi-payments-list-filters
+              payment-status=""
+            />
           </div>
           <div>
-            <justifi-payments-list auth-token="${webComponentToken}" account-id="${accountId}"></justifi-payments-list>
+            <justifi-payments-list 
+              auth-token="${webComponentToken}" 
+              account-id="${accountId}"
+            />
           </div>
         </div>
         <script>
