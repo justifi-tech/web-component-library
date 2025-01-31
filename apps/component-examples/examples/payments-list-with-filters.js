@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
         <style>
           :root {
-            ::part(payment-id-filter) {
+            ::part(payment-id-payments-list-filter-param) {
               display: none;
             }
           }
@@ -77,7 +77,7 @@ app.get('/', async (req, res) => {
         <div style="padding:25px;">
           <div>
             <justifi-payments-list-filters
-              payment-status="refunded"
+              payment-status=""
             />
           </div>
           <div>
