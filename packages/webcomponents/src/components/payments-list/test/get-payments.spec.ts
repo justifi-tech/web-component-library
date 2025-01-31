@@ -27,6 +27,7 @@ describe('makeGetPayments', () => {
   it('should call onSuccess with payments and pagingInfo on successful fetch', async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     // Mock fetchPayments to resolve with mockResponse
     mockServiceInstance.fetchPayments.mockResolvedValue(
@@ -39,7 +40,7 @@ describe('makeGetPayments', () => {
       service: mockServiceInstance,
       apiOrigin: mockApiOrigin
     });
-    await getPayments({ params: mockParams, onSuccess, onError });
+    await getPayments({ params: mockParams, onSuccess, onError, final });
 
     expect(onSuccess).toHaveBeenCalledWith({
       payments: expect.arrayContaining([
@@ -55,6 +56,7 @@ describe('makeGetPayments', () => {
     const mockError = new Error('Error fetching payments');
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     // Mock fetchPayments to reject with mockError
     mockServiceInstance.fetchPayments.mockRejectedValue(mockError);
@@ -65,7 +67,7 @@ describe('makeGetPayments', () => {
       service: mockServiceInstance,
       apiOrigin: mockApiOrigin
     });
-    await getPayments({ params: mockParams, onSuccess, onError });
+    await getPayments({ params: mockParams, onSuccess, onError, final });
 
     expect(onError).toHaveBeenCalledWith({
       code: 'fetch-error',
@@ -79,6 +81,7 @@ describe('makeGetPayments', () => {
     const mockError = new Error('Network error');
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     // Mock fetchPayments to reject with mockError
     mockServiceInstance.fetchPayments.mockRejectedValue(mockError);
@@ -89,7 +92,7 @@ describe('makeGetPayments', () => {
       service: mockServiceInstance,
       apiOrigin: mockApiOrigin
     });
-    await getPayments({ params: mockParams, onSuccess, onError });
+    await getPayments({ params: mockParams, onSuccess, onError, final });
 
     expect(onError).toHaveBeenCalledWith({
       code: 'fetch-error',

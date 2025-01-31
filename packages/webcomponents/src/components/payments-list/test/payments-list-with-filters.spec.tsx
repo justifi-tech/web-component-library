@@ -7,7 +7,7 @@ import { defaultColumnsKeys } from '../payments-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PaymentsListFilters } from '../payments-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { queryParams } from '../payments-list-params-state';
+import { filterParams } from '../payments-list-params-state';
 import { PaymentsListCore } from '../payments-list-core';
 
 const components = [PaymentsList, PaymentsListCore, TableFiltersMenu, PaymentsListFilters, SelectInput];
@@ -88,7 +88,7 @@ describe('justifi-payments-list filters', () => {
     selectFilterInput.dispatchEvent(new Event('input'));
 
     expect(fetchDataSpy).toHaveBeenCalled();
-    const updatedParams = queryParams;
+    const updatedParams = filterParams;
     expect(updatedParams).toEqual({"payment_status": "succeeded"});
   });
 
@@ -139,7 +139,7 @@ describe('justifi-payments-list filters', () => {
     clearButton.click();
 
     expect(fetchDataSpy).toHaveBeenCalled();
-    const updatedParams = queryParams;
+    const updatedParams = filterParams;
     expect(updatedParams).toEqual({});
   });
 });

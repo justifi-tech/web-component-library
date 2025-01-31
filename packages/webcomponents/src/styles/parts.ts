@@ -97,3 +97,13 @@ export const skeleton = `skeleton`;
 // ::part(billing-form) { display: none; }
 export const billingForm = `billing-form`;
 export const checkoutSummary = `checkout-summary`;
+
+// Filters
+export const filterMenu = `filter-menu`;
+export const paymentsListFilterMenu = `${filterMenu} payments-list-filter-menu`;
+export const paymentsListFilterParam = `payments-list-filter-param`;
+export const paymentIdPaymentsListFilterParam = `${paymentsListFilterParam} payment-id-payments-list-filter-param`;
+export const terminalIdPaymentsListFilterParam = `${paymentsListFilterParam} terminal-id-payments-list-filter-param`;
+export const paymentStatusPaymentsListFilterParam = `${paymentsListFilterParam} payment-status-payments-list-filter-param`;
+export const createdAfterPaymentsListFilterParam = `${paymentsListFilterParam} created-after-payments-list-filter-param`;
+export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} created-before-payments-list-filter-param`;
