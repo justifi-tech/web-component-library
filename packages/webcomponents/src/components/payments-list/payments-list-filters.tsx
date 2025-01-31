@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './payments-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
+import { createdAfterPaymentsListFilterParam, createdBeforePaymentsListFilterParam, filterMenu, paymentIdPaymentsListFilterParam, paymentStatusPaymentsListFilterParam, terminalIdPaymentsListFilterParam } from '../../styles/parts';
 
 @Component({
   tag: 'justifi-payments-list-filters',
@@ -14,7 +15,7 @@ export class PaymentsListFilters {
   @Prop() paymentStatus?: string;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
-  
+
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
 
   componentWillLoad() {
@@ -58,11 +59,11 @@ export class PaymentsListFilters {
   }
 
   render() {
-    const filterMenuParams = { ...filterParams}
+    const filterMenuParams = { ...filterParams }
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text
@@ -71,6 +72,7 @@ export class PaymentsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.paymentId || filterParams.payment_id}
                 disabled={!!this.paymentId}
+                part={paymentIdPaymentsListFilterParam}
               />
             </div>
             <div class="p-2">
@@ -80,6 +82,7 @@ export class PaymentsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.terminalId || filterParams.terminal_id}
                 disabled={!!this.terminalId}
+                part={terminalIdPaymentsListFilterParam}
               />
             </div>
             <div class="p-2">
@@ -90,6 +93,7 @@ export class PaymentsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.paymentStatus || filterParams.payment_status}
                 disabled={!!this.paymentStatus}
+                part={paymentStatusPaymentsListFilterParam}
               />
             </div>
             <div class="p-2">
@@ -97,12 +101,13 @@ export class PaymentsListFilters {
                 name="created_after"
                 label="Created After"
                 inputHandler={this.handleDateInput}
-                defaultValue={ 
+                defaultValue={
                   convertToLocal(this.createdAfter, { showInputDateTime: true }) ||
                   convertToLocal(filterParams.created_after, { showInputDateTime: true })
                 }
                 showTime
                 disabled={!!this.createdAfter}
+                part={createdAfterPaymentsListFilterParam}
               />
             </div>
             <div class="p-2">
@@ -116,6 +121,7 @@ export class PaymentsListFilters {
                 }
                 showTime
                 disabled={!!this.createdBefore}
+                part={createdBeforePaymentsListFilterParam}
               />
             </div>
           </div>
