@@ -1,8 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import { makeGetBusiness, makePostBankAccount } from '../payment-provisioning-actions';
-import { BusinessBankAccountService, BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api';
+import { makeGetBusiness, makePostBankAccount, makePostDocumentRecord } from '../payment-provisioning-actions';
+import { BusinessService, BusinessBankAccountService, DocumentRecordService } from '../../../../api/services/business.service';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step'
@@ -12,6 +11,8 @@ export class BusinessBankAccountFormStep {
   
   @State() getBusiness: Function;
   @State() postBankAccount: Function;
+  @State() postDocumentRecord: Function;
+  @State() postDocument: Function;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -45,6 +46,10 @@ export class BusinessBankAccountFormStep {
         authToken: this.authToken,
         service: new BusinessBankAccountService()
       });
+      this.postDocumentRecord = makePostDocumentRecord({
+        authToken: this.authToken,
+        service: new DocumentRecordService()
+      });
     } else {
       this.errorEvent.emit({
         message: 'Missing required props',
@@ -60,6 +65,7 @@ export class BusinessBankAccountFormStep {
         businessId={this.businessId}
         getBusiness={this.getBusiness}
         postBankAccount={this.postBankAccount}
+        postDocumentRecord={this.postDocumentRecord}
         allowOptionalFields={this.allowOptionalFields}
         ref={el => this.coreComponent = el}
       />

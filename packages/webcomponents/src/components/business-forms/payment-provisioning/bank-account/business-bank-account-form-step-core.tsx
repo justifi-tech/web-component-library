@@ -1,11 +1,20 @@
-import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
-import { BankAccount, IBankAccount } from '../../../../api/BankAccount';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { BusinessFormStep, bankAccountTypeOptions } from '../../utils';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { BusinessFormStep } from '../../utils';
 import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import {
+  BankAccount,
+  IBankAccount,
+  EntityDocument,
+  EntityDocumentStorage,
+  FileSelectEvent,
+  ComponentErrorEvent,
+  ComponentFormStepCompleteEvent,
+  ComponentErrorCodes,
+  ComponentErrorSeverity,
+} from '../../../../api';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step-core',
@@ -14,10 +23,14 @@ export class BusinessBankAccountFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: IBankAccount = {};
-
+  @State() existingDocuments: any = [];
+  @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
+  @State() isLoading: boolean = false;
+  
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() postBankAccount: Function;
+  @Prop() postDocumentRecord: Function;
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
@@ -26,28 +39,25 @@ export class BusinessBankAccountFormStepCore {
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
 
-  @Method()
-  async validateAndSubmit({ onSuccess }) {
-    if (this.formDisabled) {
-      this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.bankAccount, metadata: 'no data submitted' });
-      onSuccess();
-    } else {
-      this.formController.validateAndSubmit(() => this.sendData(onSuccess));
-    };
-  };
-
-  get postPayload() {
-    let formValues = new BankAccount(this.formController.values.getValue()).payload;
-    return formValues;
+  @Watch('isLoading')
+  watchHandler(newValue: boolean) {
+    this.formLoading.emit(newValue);
   }
 
-  get formDisabled() {
-    return !!this.bankAccount?.id;
+  @Method()
+  async validateAndSubmit({ onSuccess }) {
+    if (this.existingBankAccount) {
+      // If a bank account already exists, skip bank account posting; proceed directly to document upload
+      this.sendData(onSuccess);
+    } else {
+      // If bank account is new, validate form inputs (bank account fields), then proceed
+      this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+    }
   }
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(businessBankAccountSchema(this.allowOptionalFields));
+    this.formController = new FormController(businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields));
   }
 
   componentDidLoad() {
@@ -56,50 +66,11 @@ export class BusinessBankAccountFormStepCore {
     });
   }
 
-  private getData = () => {
-    this.formLoading.emit(true);
-    this.getBusiness({
-      onSuccess: (response) => {
-        if (response.data.bank_accounts.length > 0) {
-          this.bankAccount = new BankAccount(response.data.bank_accounts[0]);
-        } else {
-          this.bankAccount = new BankAccount({});
-          this.bankAccount.business_id = this.businessId;
-        }
-        this.formController.setInitialValues({ ...this.bankAccount });
-      },
-      onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
-          message: error,
-          errorCode: code,
-          severity: severity
-        });
-      },
-      final: () => this.formLoading.emit(false)
-    });
-  }
-
-  private sendData = (onSuccess: () => void) => {
-    let submittedData;
-    this.formLoading.emit(true);
-    this.postBankAccount({
-      payload: this.postPayload,
-      onSuccess: (response) => {
-        submittedData = response;
-        onSuccess();
-      },
-      onError: ({ error, code, severity }) => {
-        submittedData = error;
-        this.errorEvent.emit({
-          message: error,
-          errorCode: code,
-          severity: severity
-        });
-      },
-      final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.bankAccount });
-        this.formLoading.emit(false)
-      }
+  initializeFormController = () => {
+    this.formController = new FormController(businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields));
+    this.formController.setInitialValues({ ...this.bankAccount });
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
     });
   }
 
@@ -110,86 +81,227 @@ export class BusinessBankAccountFormStepCore {
     });
   }
 
+  storeFiles = (e: CustomEvent<FileSelectEvent>) => {
+    const fileList = Array.from(e.detail.fileList) as File[];
+    const docType = e.detail.document_type;
+    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
+    this.documentData[docType] = documentList;
+  }
+
+  get postPayload() {
+    let formValues = new BankAccount(this.formController.values.getValue()).payload;
+    return formValues;
+  }
+
+  get existingBankAccount() {
+    return !!this.bankAccount?.id;
+  }
+
+  private getData = () => {
+    this.isLoading = true;
+    this.getBusiness({
+      onSuccess: (response) => {
+        if (response.data.bank_accounts.length > 0) {
+          this.bankAccount = new BankAccount(response.data.bank_accounts[0]);
+        } else {
+          this.bankAccount = new BankAccount({});
+          this.bankAccount.business_id = this.businessId;
+        }
+        this.existingDocuments = response.data.documents;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      },
+      final: () => {
+        this.initializeFormController();
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private async sendData(onSuccess: () => void) {
+    try {
+      //  Post bank account data if the form is not disabled
+      const bankAccountPosted = !this.existingBankAccount ? await this.postBankAccountData() : true;
+      if (!bankAccountPosted) {
+        return;
+      }
+  
+      // Post documents only after bank account was successfully created
+      const documentsUploaded = await this.postBusinessDocuments();
+      if (!documentsUploaded) {
+        return;
+      }
+  
+      onSuccess();
+    } catch (error) {
+      this.errorEvent.emit({
+        message: error,
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        severity: ComponentErrorSeverity.ERROR
+      });
+    }
+  }
+
+  private async postBankAccountData(): Promise<boolean> {
+    let submittedData;
+    this.isLoading = true;
+    return new Promise((resolve) => {
+      let success = false;
+      this.postBankAccount({
+        payload: this.postPayload,
+        onSuccess: (response) => {
+          submittedData = response;
+          success = true;
+        },
+        onError: ({ error, code, severity }) => {
+          success = false;
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+        },
+        final: () => {
+          this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.bankAccount });
+          this.isLoading = false;
+          resolve(success);
+        }
+      });
+    });
+  }
+
+  private async postBusinessDocuments(): Promise<boolean> {
+    this.isLoading = true;
+    try {
+      const docArray = Object.values(this.documentData).flat();
+      if (!docArray.length) {
+        return true;
+      }
+  
+      const recordsCreated = await Promise.all(
+        docArray.map((docData) => this.postDocumentRecordData(docData))
+      ); // Create document records
+  
+      if (recordsCreated.includes(false)) {
+        return false;
+      } // Exit if document record creation fails
+  
+      const uploadsCompleted = await Promise.all(
+        docArray.map((docData) => this.uploadDocument(docData))
+      ); // Upload documents to AWS presigned URLs
+  
+      if (uploadsCompleted.includes(false)) {
+        return false;
+      } // Exit if any upload fails
+  
+      return true;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private postDocumentRecordData = async (docData: EntityDocument): Promise<boolean> => {
+    this.isLoading = true;
+    const payload = docData.record_data;
+    return new Promise((resolve) => {
+      this.postDocumentRecord({
+        payload,
+        onSuccess: (response) => {
+          resolve(this.handleDocRecordResponse(docData, response));
+        },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+          resolve(false);
+        },
+      });
+    });
+  }
+
+  handleDocRecordResponse = (docData: EntityDocument, response: any) => {
+    if (response.error) {
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
+      return false;
+    } else {
+      docData.setPresignedUrl(response.data.presigned_url);
+      return true;
+    }
+  }
+
+  uploadDocument = async (docData: EntityDocument) => {
+    if (!docData.presigned_url) {
+      throw new Error('Presigned URL is not set');
+    }
+
+    const response = await fetch(docData.presigned_url, {
+      method: 'PUT',
+      body: docData.fileString,
+    })
+
+    return this.handleUploadResponse(response);
+  }
+  
+  handleUploadResponse = (response: any) => {
+    if (response.error) {
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        message: response.error.message,
+        severity: ComponentErrorSeverity.ERROR,
+        data: response.error,
+      })
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
 
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
+
     return (
       <form>
-        <fieldset>
+        <fieldset class="mb-4">
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Bank Account Info</legend>
-            <form-control-tooltip helpText="The Direct Deposit Account is the business bank account where your funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
+            <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
-          <div class="row gy-3">
-            <div class="col-12">
-              <form-control-text
-                name="bank_name"
-                label="Bank Name"
-                defaultValue={bankAccountDefaultValue.bank_name}
-                errorText={this.errors.bank_name}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="nickname"
-                label="Nickname"
-                defaultValue={bankAccountDefaultValue.nickname}
-                errorText={this.errors.nickname}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="account_owner_name"
-                label="Account Owner Name"
-                defaultValue={bankAccountDefaultValue.account_owner_name}
-                errorText={this.errors.account_owner_name}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="account_type"
-                label="Account Type"
-                options={bankAccountTypeOptions}
-                defaultValue={bankAccountDefaultValue.account_type}
-                errorText={this.errors.account_type}
-                inputHandler={this.inputHandler}
-                disabled={this.formDisabled}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="account_number"
-                label="Account Number"
-                defaultValue={bankAccountDefaultValue.account_number}
-                maxLength={17}
-                errorText={this.errors.account_number}
-                inputHandler={this.inputHandler}
-                keyDownHandler={numberOnlyHandler}
-                disabled={this.formDisabled}
-                helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="routing_number"
-                label="Routing Number"
-                defaultValue={bankAccountDefaultValue.routing_number}
-                maxLength={9}
-                errorText={this.errors.routing_number}
-                inputHandler={this.inputHandler}
-                keyDownHandler={numberOnlyHandler}
-                disabled={this.formDisabled}
-                helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
-              />
-            </div>
+          <bank-account-form-inputs
+            defaultValue={bankAccountDefaultValue}
+            errors={this.errors}
+            inputHandler={this.inputHandler}
+            formDisabled={this.existingBankAccount}
+          />
+        </fieldset>
+        <fieldset class="mt-4">
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0" part={heading2}>Document Uploads</legend>
+            <form-control-tooltip helpText="These documents are required for underwriting purposes. Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category." />
           </div>
+          <hr class="mt-2" />
+          <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
+          <bank-account-document-form-inputs
+            inputHandler={this.inputHandler}
+            errors={this.errors}
+            storeFiles={this.storeFiles}
+          />
         </fieldset>
       </form>
     );

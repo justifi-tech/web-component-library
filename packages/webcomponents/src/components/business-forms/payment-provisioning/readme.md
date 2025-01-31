@@ -29,7 +29,6 @@
 - [justifi-business-representative-form-step](business-representative)
 - [justifi-business-owners-form-step](business-owners)
 - [justifi-business-bank-account-form-step](bank-account)
-- [justifi-business-document-upload-form-step](document-uploads)
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
@@ -41,7 +40,6 @@ graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
-  justifi-payment-provisioning-form-steps --> justifi-business-document-upload-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
   justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
   justifi-business-core-info-form-step-core --> form-control-text
@@ -82,12 +80,12 @@ graph TD;
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> justifi-business-bank-account-form-step-core
   justifi-business-bank-account-form-step-core --> form-control-tooltip
-  justifi-business-bank-account-form-step-core --> form-control-text
-  justifi-business-bank-account-form-step-core --> form-control-select
-  justifi-business-document-upload-form-step --> justifi-business-documents-on-file
-  justifi-business-document-upload-form-step --> justifi-business-document-upload-input-group
-  justifi-business-document-upload-form-step --> form-control-tooltip
-  justifi-business-document-upload-input-group --> form-control-file
+  justifi-business-bank-account-form-step-core --> bank-account-form-inputs
+  justifi-business-bank-account-form-step-core --> business-documents-on-file
+  justifi-business-bank-account-form-step-core --> bank-account-document-form-inputs
+  bank-account-form-inputs --> form-control-text
+  bank-account-form-inputs --> form-control-select
+  bank-account-document-form-inputs --> form-control-file
   form-control-file --> form-control-tooltip
   justifi-business-terms-conditions-form-step --> justifi-business-terms-conditions-text
   justifi-business-terms-conditions-form-step --> form-control-checkbox
