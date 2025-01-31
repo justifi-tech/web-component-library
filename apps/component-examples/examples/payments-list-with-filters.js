@@ -43,9 +43,7 @@ async function getWebComponentToken(token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `read:account:${process.env.SUB_ACCOUNT_ID}`,
-        ],
+        resources: [`read:account:${process.env.SUB_ACCOUNT_ID}`],
       }),
     }
   );
@@ -67,6 +65,13 @@ app.get('/', async (req, res) => {
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
+        <style>
+          :root {
+            ::part(payment-id-payments-list-filter-param) {
+              display: none;
+            }
+          }
+        </style>
       </head>
       <body>
         <div style="padding:25px;">
