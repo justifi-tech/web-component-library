@@ -134,13 +134,30 @@ export class BusinessTermsConditionsFormStep {
     });
   }
 
+  get merchantAgreementLink() {
+    return (
+      <a
+        href="https://justifi.tech/merchant-agreement/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        merchant agreement
+      </a>
+    )
+  }
+
+
   render() {
     return (
       <form>
         <fieldset>
           <legend part={heading2}>Terms and Conditions</legend>
           <hr />
-          <justifi-business-terms-conditions-text />
+          <div>
+            <p>
+              Please read and accept the {this.merchantAgreementLink} to submit your provisioning request.
+            </p>
+          </div>
           <br />
           <div class="row-gy-3">
             <div class="col-12">
