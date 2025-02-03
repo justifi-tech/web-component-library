@@ -105,7 +105,10 @@ export class NewPaymentMethod {
               iframeOrigin={this.iframeOrigin}
             />
           ) : (
-            <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
+            <bank-account-form 
+              ref={(el) => this.paymentMethodFormRef = el} 
+              iframeOrigin={this.iframeOrigin}
+            />
           )}
 
         </div>
