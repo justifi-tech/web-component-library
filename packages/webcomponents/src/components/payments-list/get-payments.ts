@@ -4,7 +4,7 @@ import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayments =
   ({ id, authToken, service, apiOrigin }) =>
-  async ({ params, onSuccess, onError }) => {
+  async ({ params, onSuccess, onError, final }) => {
     try {
       const response = await service.fetchPayments(id, authToken, params, apiOrigin);
 
@@ -33,5 +33,7 @@ export const makeGetPayments =
         code,
         severity: ComponentErrorSeverity.ERROR,
       });
+    } finally {
+      return final();
     }
   };
