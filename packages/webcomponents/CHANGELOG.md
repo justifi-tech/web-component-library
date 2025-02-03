@@ -1,5 +1,20 @@
 ### Changelog
 
+## 5.3.0
+
+### Minor Changes
+
+- e14badd: - Removed document upload form step from `justifi-payment-provisioning` component.
+  - Adds file upload inputs for `voided_check` and `bank_statement` to the bank account form step in `justifi-payment-provisioning`
+- dd9af3e: - Updated terms and conditions form step in `justifi-payment-provisioning` component. Removed terms / agreement text from the form and replaced with link to merchant agreement page on Justifi Website: `https://justifi.tech/merchant-agreement/` which contains the same text.
+
+### Patch Changes
+
+- 9a8c0eb: - Added new optional props to `justifi-payments-list-filters` allowing prescribed filter selections. The following props are now available: `payment-id`, `terminal-id`, `payment-status`, `created-after`, and `created-before`.
+  - Values passed via these props will be automatically applied to the `justifi-payments-list`'s API requests as query params.
+  - If a value is passed to these props, the corresponding input in the filter menu UI will be disabled.
+  - Add new CSS parts to `justifi-payments-list-filters` to allow for more customization. The following parts have been added: `filter-menu`, `payment-id-payments-list-filter-param`, `terminal-id-payments-list-filter-param`, `payment-status-payments-list-filter-param`, `created-after-payments-list-filter-param`, `created-before-payments-list-filter-param`
+
 ## 5.2.0
 
 ### Minor Changes
