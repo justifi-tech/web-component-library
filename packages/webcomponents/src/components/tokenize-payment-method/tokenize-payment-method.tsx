@@ -19,6 +19,7 @@ export class TokenizePaymentMethod {
   @Prop() disableBankAccount?: boolean;
   @Prop() hideSubmitButton?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() iframeOrigin?: string;
 
   @State() isLoading: boolean = false;
 
@@ -84,6 +85,7 @@ export class TokenizePaymentMethod {
                   hideCardBillingForm={this.hideCardBillingForm}
                   authToken={this.authToken}
                   account-id={this.accountId}
+                  iframeOrigin={this.iframeOrigin}
                 />
               </div>
               <div class="col-12">

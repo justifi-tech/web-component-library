@@ -22,6 +22,7 @@ export class NewPaymentMethod {
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() iframeOrigin?: string;
 
   @State() saveNewPaymentMethodChecked: boolean = false;
 
@@ -99,7 +100,10 @@ export class NewPaymentMethod {
         <hidden-input />
         <div class="mb-4">
           {paymentMethodType === 'card' ? (
-            <card-form ref={(el) => this.paymentMethodFormRef = el} />
+            <card-form 
+              ref={(el) => this.paymentMethodFormRef = el} 
+              iframeOrigin={this.iframeOrigin}
+            />
           ) : (
             <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
           )}

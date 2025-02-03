@@ -1,9 +1,11 @@
-import { Component, h, Host, Method } from "@stencil/core";
+import { Component, h, Host, Method, Prop } from "@stencil/core";
 
 @Component({
   tag: "bank-account-form",
 })
 export class BankAccountForm {
+  @Prop() iframeOrigin: string;
+  
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
 
@@ -36,7 +38,7 @@ export class BankAccountForm {
               inputId="accountNumber"
               ref={(el) => (this.accountNumberIframeElement = el as HTMLIframeInputElement)}
               label="Account Number"
-              iframeOrigin={`${IFRAME_ORIGIN}/accountNumber`}
+              iframeOrigin={`${this.iframeOrigin}/accountNumber`}
             />
           </div>
           <div class="row">
@@ -44,7 +46,7 @@ export class BankAccountForm {
               inputId="routingNumber"
               ref={(el) => (this.routingNumberIframeElement = el as HTMLIframeInputElement)}
               label="Routing Number"
-              iframeOrigin={`${IFRAME_ORIGIN}/routingNumber`}
+              iframeOrigin={`${this.iframeOrigin}/routingNumber`}
             />
           </div>
         </div>

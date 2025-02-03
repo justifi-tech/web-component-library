@@ -1,9 +1,11 @@
-import { Component, h, Host, Method } from "@stencil/core";
+import { Component, h, Host, Method, Prop } from "@stencil/core";
 
 @Component({
   tag: "card-form",
 })
 export class CardForm {
+  @Prop() iframeOrigin: string;
+
   private cardNumberIframeElement!: HTMLIframeInputElement;
   private expirationMonthIframeElement!: HTMLIframeInputElement;
   private expirationYearIframeElement!: HTMLIframeInputElement;
@@ -39,7 +41,7 @@ export class CardForm {
             inputId="cardNumber"
             ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
             label="Card Number"
-            iframeOrigin={`${IFRAME_ORIGIN}/cardNumber`}
+            iframeOrigin={`${this.iframeOrigin}/cardNumber`}
           />
         </div>
         <div class="row">
@@ -48,7 +50,7 @@ export class CardForm {
               inputId="expirationMonth"
               ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
               label="Expiration"
-              iframeOrigin={`${IFRAME_ORIGIN}/expirationMonth`}
+              iframeOrigin={`${this.iframeOrigin}/expirationMonth`}
             />
           </div>
           <div class="col-4 align-content-end">
@@ -56,7 +58,7 @@ export class CardForm {
               inputId="expirationYear"
               ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
               label=""
-              iframeOrigin={`${IFRAME_ORIGIN}/expirationYear`}
+              iframeOrigin={`${this.iframeOrigin}/expirationYear`}
             />
           </div>
           <div class="col-4 align-content-end">
@@ -64,7 +66,7 @@ export class CardForm {
               inputId="CVV"
               ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
               label="CVV"
-              iframeOrigin={`${IFRAME_ORIGIN}/CVV`}
+              iframeOrigin={`${this.iframeOrigin}/CVV`}
             />
           </div>
         </div>
