@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.3.1
+
+### Patch Changes
+
+- - Internal refactors and improvements to improve component stability.
+
 ## 5.3.0
 
 ### Minor Changes
