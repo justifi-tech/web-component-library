@@ -15,9 +15,6 @@ app.use(
 );
 app.use('/styles', express.static(__dirname + '/../css/'));
 
-console.log('authTokenEndpoint', authTokenEndpoint);
-console.log('webComponentTokenEndpoint', webComponentTokenEndpoint);
-
 async function getToken() {
   const requestBody = JSON.stringify({
     client_id: clientId,
@@ -38,7 +35,6 @@ async function getToken() {
   }
 
   const data = await response.json();
-  console.log('getToken response', data);
   return data.access_token;
 }
 
@@ -59,7 +55,6 @@ async function getWebComponentToken(token) {
     }
   );
   const { access_token } = await response.json();
-  console.log('getWebComponentToken response', access_token);
   return access_token;
 }
 
