@@ -24,7 +24,7 @@ async function getToken() {
 
   let response;
   try {
-    response = await fetch(`${authTokenEndpoint}/oauth/token`, {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ async function getToken() {
 
 async function getWebComponentToken(token, accountId) {
   const response = await fetch(
-    `${webComponentTokenEndpoint}/v1/web_component_tokens`,
+    webComponentTokenEndpoint,
     {
       method: 'POST',
       headers: {
