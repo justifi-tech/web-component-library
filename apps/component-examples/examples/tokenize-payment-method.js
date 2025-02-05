@@ -15,6 +15,9 @@ app.use(
 );
 app.use('/styles', express.static(__dirname + '/../css/'));
 
+console.log('authTokenEndpoint', authTokenEndpoint);
+console.log('webComponentTokenEndpoint', webComponentTokenEndpoint);
+
 async function getToken() {
   const requestBody = JSON.stringify({
     client_id: clientId,
@@ -35,6 +38,7 @@ async function getToken() {
   }
 
   const data = await response.json();
+  console.log('getToken response', data);
   return data.access_token;
 }
 
@@ -55,6 +59,7 @@ async function getWebComponentToken(token) {
     }
   );
   const { access_token } = await response.json();
+  console.log('getWebComponentToken response', access_token);
   return access_token;
 }
 
@@ -94,8 +99,9 @@ app.get('/', async (req, res) => {
           <justifi-tokenize-payment-method
             auth-token="${webComponentToken}"
             account-id="${subAccountId}"
-            hide-card-billing-form="${hideCardBillingForm}"
-            hide-submit-button="${hideSubmitButton}"
+
+
+            iframe-origin="https://components.justifi-staging.com/v2"
           />
           <button id="fill-billing-form-button">Test Fill Billing Form</button>
           <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
