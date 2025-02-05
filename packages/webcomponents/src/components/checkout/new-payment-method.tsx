@@ -22,7 +22,7 @@ export class NewPaymentMethod {
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
   @Prop() hideCardBillingForm?: boolean;
-  @Prop() iframeOrigin?: string;
+  @Prop() iframeOrigin: string;
 
   @State() saveNewPaymentMethodChecked: boolean = false;
 
@@ -96,7 +96,7 @@ export class NewPaymentMethod {
   showNewPaymentMethodForm() {
     const paymentMethodType = this.paymentMethodOption?.id;
     return (
-      <div class="mt-4 pb-4 border-bottom">
+      <div class="mt-4 pb-4">
         <hidden-input />
         <div class="mb-4">
           {paymentMethodType === 'card' ? (

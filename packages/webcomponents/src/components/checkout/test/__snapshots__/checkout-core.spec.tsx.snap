@@ -112,7 +112,7 @@ exports[`justifi-checkout-core should render the full billing form by default 1`
                   <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
                     <form-control-radio checked="" label="New credit or debit card" name="paymentMethodType" value="card"></form-control-radio>
                   </div>
-                  <div class="border-bottom mt-4 pb-4">
+                  <div class="mt-4 pb-4">
                     <hidden-input></hidden-input>
                     <div class="mb-4">
                       <card-form></card-form>
@@ -228,7 +228,7 @@ exports[`justifi-checkout-core should render the postal form if hideCardBillingF
                   <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
                     <form-control-radio checked="" label="New credit or debit card" name="paymentMethodType" value="card"></form-control-radio>
                   </div>
-                  <div class="border-bottom mt-4 pb-4">
+                  <div class="mt-4 pb-4">
                     <hidden-input></hidden-input>
                     <div class="mb-4">
                       <card-form></card-form>

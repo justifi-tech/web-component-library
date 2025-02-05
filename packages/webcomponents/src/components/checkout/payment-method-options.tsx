@@ -21,7 +21,7 @@ export class PaymentMethodOptions {
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() paymentAmount: number;
   @Prop() hideCardBillingForm?: boolean;
-  @Prop() iframeOrigin?: string;
+  @Prop() iframeOrigin: string;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
