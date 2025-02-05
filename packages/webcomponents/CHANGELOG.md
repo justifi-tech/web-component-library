@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- - Internal refactors and improvements to improve component stability.
+- Internal refactors and improvements to improve component stability.
 
 ## 5.3.0
 
