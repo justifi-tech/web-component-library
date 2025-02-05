@@ -3,6 +3,12 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const disputeId = process.env.DISPUTE_ID;
 
 app.use(
   '/scripts',
@@ -12,13 +18,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret,
   });
 
   let response;
   try {
-    response = await fetch(`${process.env.API_ORIGIN}/oauth/token`, {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +42,7 @@ async function getToken() {
 
 async function getWebComponentToken(token, accountId) {
   const response = await fetch(
-    `${process.env.API_ORIGIN}/v1/web_component_tokens`,
+    webComponentTokenEndpoint,
     {
       method: 'POST',
       headers: {
@@ -56,8 +62,7 @@ async function getWebComponentToken(token, accountId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const disputeId = process.env.DISPUTE_ID;
-  const webComponentToken = await getWebComponentToken(token, process.env.SUB_ACCOUNT_ID);
+  const webComponentToken = await getWebComponentToken(token, subAccountId);
 
   res.send(`
     <!DOCTYPE html>

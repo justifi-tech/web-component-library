@@ -3,6 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -12,13 +17,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret
   });
 
   let response;
   try {
-    response = await fetch('https://api.justifi.ai/oauth/token', {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,13 +35,12 @@ async function getToken() {
   }
 
   const data = await response.json();
-
   return data.access_token;
 }
 
 async function getWebComponentToken(token) {
   const response = await fetch(
-    'https://api.justifi.ai/v1/web_component_tokens',
+    webComponentTokenEndpoint,
     {
       method: 'POST',
       headers: {
@@ -45,7 +49,7 @@ async function getWebComponentToken(token) {
       },
       body: JSON.stringify({
         resources: [
-          `write:tokenize:${process.env.SUB_ACCOUNT_ID}`,
+          `write:tokenize:${subAccountId}`,
         ],
       }),
     }
@@ -89,11 +93,10 @@ app.get('/', async (req, res) => {
         <div class="column-preview">
           <justifi-tokenize-payment-method
             auth-token="${webComponentToken}"
-            account-id="${process.env.SUB_ACCOUNT_ID}"
+            account-id="${subAccountId}"
             hide-card-billing-form="${hideCardBillingForm}"
             hide-submit-button="${hideSubmitButton}"
-          >
-          </justifi-tokenize-payment-method>
+          />
           <button id="fill-billing-form-button">Test Fill Billing Form</button>
           <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
         </div>

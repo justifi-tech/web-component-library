@@ -5,6 +5,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/Component
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
+import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -19,6 +20,7 @@ export class TokenizePaymentMethod {
   @Prop() disableBankAccount?: boolean;
   @Prop() hideSubmitButton?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() iframeOrigin?: string = config.iFrameOrigin;
 
   @State() isLoading: boolean = false;
 
@@ -84,6 +86,7 @@ export class TokenizePaymentMethod {
                   hideCardBillingForm={this.hideCardBillingForm}
                   authToken={this.authToken}
                   account-id={this.accountId}
+                  iframeOrigin={this.iframeOrigin}
                 />
               </div>
               <div class="col-12">

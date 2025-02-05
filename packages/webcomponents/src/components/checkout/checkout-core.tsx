@@ -18,6 +18,7 @@ export class CheckoutCore {
   @Prop() getCheckout: Function;
   @Prop() complete: Function;
   @Prop() checkoutId: string;
+  @Prop() iframeOrigin: string;
 
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
@@ -163,6 +164,7 @@ export class CheckoutCore {
             savedPaymentMethods={this.checkout?.payment_methods || []}
             paymentAmount={this.checkout?.payment_amount}
             insuranceToggled={this.insuranceToggled}
+            iframeOrigin={this.iframeOrigin}
           />
         </div>
       </section>
