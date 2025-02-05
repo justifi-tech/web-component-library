@@ -3,6 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const checkoutEndpoint = process.env.CHECKOUT_ENDPOINT;
+const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -12,13 +19,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret,
   });
 
   let response;
   try {
-    response = await fetch('https://api.justifi.ai/oauth/token', {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,17 +41,17 @@ async function getToken() {
 }
 
 async function makeCheckout(token) {
-  const response = await fetch('https://api.justifi.ai/v1/checkouts', {
+  const response = await fetch(checkoutEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'Sub-Account': process.env.SUB_ACCOUNT_ID,
+      'Sub-Account': subAccountId,
     },
     body: JSON.stringify({
       amount: 1799,
       description: 'One Chocolate Donut',
-      payment_method_group_id: process.env.PAYMENT_METHOD_GROUP_ID,
+      payment_method_group_id: paymentMethodGroupId,
       origin_url: `http://localhost:${port}`,
     }),
   });
@@ -54,7 +61,7 @@ async function makeCheckout(token) {
 
 async function getWebComponentToken(token, checkoutId) {
   const response = await fetch(
-    'https://api.justifi.ai/v1/web_component_tokens',
+    webComponentTokenEndpoint,
     {
       method: 'POST',
       headers: {
@@ -64,7 +71,7 @@ async function getWebComponentToken(token, checkoutId) {
       body: JSON.stringify({
         resources: [
           `write:checkout:${checkoutId}`,
-          `write:tokenize:${process.env.SUB_ACCOUNT_ID}`,
+          `write:tokenize:${subAccountId}`,
         ],
       }),
     }
