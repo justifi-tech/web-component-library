@@ -99,9 +99,8 @@ app.get('/', async (req, res) => {
           <justifi-tokenize-payment-method
             auth-token="${webComponentToken}"
             account-id="${subAccountId}"
-
-
-            iframe-origin="https://components.justifi-staging.com/v2"
+            hide-card-billing-form="${hideCardBillingForm}"
+            hide-submit-button="${hideSubmitButton}"
           />
           <button id="fill-billing-form-button">Test Fill Billing Form</button>
           <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
