@@ -127,10 +127,13 @@ const meta: Meta = {
       },
     },
     tokenizePaymentMethod: {
-      description: "Can be used to call the tokenizePaymentMethod method directly",
+      description: "Can be used to call the tokenizePaymentMethod method programmatically with an external button. Ideally used in conjunction with the `hide-submit-button` prop. Returns a promise with the tokenized payment method",
       table: {
         category: "methods",
-        defaultValue: { summary: "`tokenizePaymentMethod() => Promise<void>`" }
+        defaultValue: { 
+          summary: "`tokenizePaymentMethod() => Promise<PaymentMethodPayload>`",
+          detail: "PaymentMethodPayload: { data?: CreatePaymentMethodResponse; token?: string; bnpl?: { order_uuid: string; status: string; session_uuid: string; }; error?: { code: string; message: string; decline_code: string; }; validationError?: boolean; }"
+         }
       },
     },
   },
