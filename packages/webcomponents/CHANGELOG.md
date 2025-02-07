@@ -1,5 +1,12 @@
 ### Changelog
 
+## 5.3.2
+
+### Patch Changes
+
+- eeca5f7: - Updated `justifi-tokenize-payment-method` so that calling `tokenizePaymentMethod()` method now returns the full response or error from the request, instead of `void`.
+- f5696d9: - Updated `justifi-payment-provisioning` bank account form step. The account number field's minimum character count has been reduced to 4 to allow for shorter bank account numbers to be entered.
+
 ## 5.3.1
 
 ### Patch Changes
