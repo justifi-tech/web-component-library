@@ -196,7 +196,7 @@ export const accountTypeValidation = string()
   .transform(transformEmptyString);
 
 export const accountNumberValidation = string()
-  .min(7, 'Account number must be at least 7 digits')
+  .min(4, 'Account number must be at least 4 digits')
   .max(17, 'Account number must be less than 17 digits')
   .matches(numbersOnlyRegex, 'Enter valid account number')
   .test('not-repeat', 'Enter valid account number', (value) => {
