@@ -8,7 +8,7 @@ import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-m
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../checkouts-table';
-import { queryParams } from '../checkouts-list-params-state';
+import { filterParams } from '../checkouts-list-params-state';
 
 const components = [CheckoutsList, CheckoutsListCore, TableFiltersMenu, CheckoutsListFilters, SelectInput];
 
@@ -88,7 +88,7 @@ describe('justifi-checkouts-list with filters', () => {
     selectFilterInput.dispatchEvent(new Event('input'));
 
     expect(fetchDataSpy).toHaveBeenCalled();
-    const updatedParams = queryParams;
+    const updatedParams = filterParams;
     expect(updatedParams).toEqual({"status": "succeeded"});
   });
 
