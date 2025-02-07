@@ -96,7 +96,8 @@ app.get('/', async (req, res) => {
             account-id="${subAccountId}"
             hide-card-billing-form="${hideCardBillingForm}"
             hide-submit-button="${hideSubmitButton}"
-          />
+          >
+          </justifi-tokenize-payment-method>
           <button id="fill-billing-form-button">Test Fill Billing Form</button>
           <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
         </div>
@@ -114,13 +115,20 @@ app.get('/', async (req, res) => {
         }
 
         justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
-          console.log(event);
-          console.log('token', event.detail.response.token);
+          console.log('submit-event', event);
+
+          if (event.detail.response.token) {
+            console.log('Token from submit-event', event.detail.response.token);
+          }
+
+          if (event.detail.response.error) {
+            console.log('Error from submit-event', event.detail.response.error);
+          }
           writeOutputToPage(event);
         });
 
         justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
-          console.log(event);
+          console.log('Error-event', event);
           writeOutputToPage(event);
         });
 
@@ -128,8 +136,15 @@ app.get('/', async (req, res) => {
           justifiTokenizePaymentMethod.fillBillingForm(${JSON.stringify(fields)});
         });
 
-        testSubmitButton.addEventListener('click', () => {
-          justifiTokenizePaymentMethod.tokenizePaymentMethod();
+        testSubmitButton.addEventListener('click', async () => {
+          const response = await justifiTokenizePaymentMethod.tokenizePaymentMethod();
+          if (response.token) {
+            console.log('Token from tokenize method', response.token);
+          }
+          
+          if (response.error) {
+            console.log('Error from tokenize method', response.error);
+          };
         });
       </script>
     </html>

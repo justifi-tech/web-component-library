@@ -1,11 +1,16 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
-import { BillingFormFields } from '../../components';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
-import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { config } from '../../../config';
+import { BillingFormFields } from '../billing-forms/billing-form-schema';
+import { PaymentMethodPayload } from '../checkout/payment-method-payload';
+import {
+  ComponentSubmitEvent,
+  ComponentErrorEvent,
+  ComponentErrorCodes,
+  ComponentErrorSeverity
+ } from '../../api';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -36,32 +41,32 @@ export class TokenizePaymentMethod {
   }
 
   @Method()
-  async tokenizePaymentMethod(event?: CustomEvent) {
+  async tokenizePaymentMethod(event?: CustomEvent): Promise<PaymentMethodPayload> {
     event && event.preventDefault();
-
     this.isLoading = true;
 
+    let tokenizeResponse: PaymentMethodPayload;
     try {
-      const tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
+      tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
       if (tokenizeResponse.error) {
         this.errorEvent.emit({
           errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
           message: tokenizeResponse.error.message,
           severity: ComponentErrorSeverity.ERROR,
         });
-      } else if (tokenizeResponse.token) {
-        this.submitEvent.emit({ response: tokenizeResponse });
       }
     } catch (error) {
-      this.errorEvent.emit({
+      const errorData = {
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         message: error.message,
         severity: ComponentErrorSeverity.ERROR,
-      });
+      };
+      this.errorEvent.emit(errorData);
     } finally {
+      this.submitEvent.emit({ response: tokenizeResponse });
       this.isLoading = false;
+      return tokenizeResponse;
     }
-
   }
 
   @Method()
