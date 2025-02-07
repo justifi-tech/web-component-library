@@ -1,2 +1,2 @@
-global.IFRAME_ORIGIN = 'https://js.justifi.ai/v2';
+global.IFRAME_ORIGIN = 'https://components.justifi.ai';
 global.PROXY_API_ORIGIN = 'https://wc-proxy.justifi.ai';
