@@ -41,7 +41,7 @@ export class CardForm {
             inputId="cardNumber"
             ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
             label="Card Number"
-            iframeOrigin={`${this.iframeOrigin}/cardNumber`}
+            iframeOrigin={`${this.iframeOrigin}/v2/cardNumber`}
           />
         </div>
         <div class="row">
@@ -50,7 +50,7 @@ export class CardForm {
               inputId="expirationMonth"
               ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
               label="Expiration"
-              iframeOrigin={`${this.iframeOrigin}/expirationMonth`}
+              iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth`}
             />
           </div>
           <div class="col-4 align-content-end">
@@ -58,7 +58,7 @@ export class CardForm {
               inputId="expirationYear"
               ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
               label=""
-              iframeOrigin={`${this.iframeOrigin}/expirationYear`}
+              iframeOrigin={`${this.iframeOrigin}/v2/expirationYear`}
             />
           </div>
           <div class="col-4 align-content-end">
@@ -66,7 +66,7 @@ export class CardForm {
               inputId="CVV"
               ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
               label="CVV"
-              iframeOrigin={`${this.iframeOrigin}/CVV`}
+              iframeOrigin={`${this.iframeOrigin}/v2/CVV`}
             />
           </div>
         </div>

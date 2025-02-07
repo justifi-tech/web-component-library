@@ -44,7 +44,7 @@ exports[`justifi-checkout renders loading 1`] = `
                 <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="height: 300px;"></div>
               </div>
               <div class="visually-hidden">
-                <justifi-payment-method-options iframeorigin="https://js.justifi.ai/v2" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+                <justifi-payment-method-options iframeorigin="https://components.justifi.ai" show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
               </div>
             </section>
           </div>
