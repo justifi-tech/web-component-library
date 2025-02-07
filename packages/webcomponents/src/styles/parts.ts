@@ -113,5 +113,5 @@ export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} 
 // Checkouts List Filters
 export const checkoutsListFilterMenu = `${filterMenu} checkouts-list-filter-menu`;
 export const checkoutsListFilterParam = `checkouts-list-filter-param`;
-export const statusCheckoutsListFilterParam = `${checkoutsListFilterParam} status-checkouts-list-filter-param`;
+export const statusCheckoutsListFilterParam = `${checkoutsListFilterParam} checkout-status-checkouts-list-filter-param`;
 export const paymentModeCheckoutsListFilterParam = `${checkoutsListFilterParam} payment-mode-checkouts-list-filter-param`;

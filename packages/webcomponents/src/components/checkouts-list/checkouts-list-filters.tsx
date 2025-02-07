@@ -9,12 +9,12 @@ import { checkoutsListFilterMenu, paymentModeCheckoutsListFilterParam, statusChe
   shadow: true
 })
 export class CheckoutsListFilters {
-  @Prop() status?: ICheckoutStatus;
+  @Prop() checkoutStatus?: ICheckoutStatus;
   @Prop() paymentMode?: string;
 
   componentWillLoad() {
     const propsToSet = {
-      status: this.status,
+      status: this.checkoutStatus,
       payment_mode: this.paymentMode,
     };
 
@@ -60,8 +60,8 @@ export class CheckoutsListFilters {
                 label="Status"
                 options={this.checkoutStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.status || filterParams.status}
-                disabled={!!this.status}
+                defaultValue={this.checkoutStatus || filterParams.status}
+                disabled={!!this.checkoutStatus}
                 part={statusCheckoutsListFilterParam}
               />
             </div>
