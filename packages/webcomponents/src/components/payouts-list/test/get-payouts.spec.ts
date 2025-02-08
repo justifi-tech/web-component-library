@@ -1,6 +1,6 @@
 import { IApiResponseCollection, IPayout, Payout } from '../../../api';
 import { PayoutService } from '../../../api/services/payout.service';
-import { makeGetPayouts } from '../get-payouts';
+import { makeGetPayouts } from '../../../actions/payout/get-payouts';
 import mockResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
 
 describe('makeGetPayouts', () => {
@@ -34,7 +34,7 @@ describe('makeGetPayouts', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getPayouts({ params: mockParams, onSuccess, onError });
 
@@ -57,7 +57,7 @@ describe('makeGetPayouts', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getPayouts({ params: mockParams, onSuccess, onError });
 
@@ -81,7 +81,7 @@ describe('makeGetPayouts', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getPayouts({ params: mockParams, onSuccess, onError });
 

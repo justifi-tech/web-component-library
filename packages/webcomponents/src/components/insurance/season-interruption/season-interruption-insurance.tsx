@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Method, Prop, State, h } from '@stencil/core';
 import { InsuranceService } from '../../../api/services/insurance.service';
-import { makeGetQuote, makeToggleCoverage } from '../insurance-actions';
+import { makeGetQuote, makeToggleCoverage } from '../../../actions/insurance/insurance-actions';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';

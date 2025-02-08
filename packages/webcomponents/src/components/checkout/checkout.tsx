@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
-import { makeGetCheckout, makeCheckoutComplete } from './checkout-actions';
+import { makeGetCheckout, makeCheckoutComplete } from '../../actions/checkout/checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';

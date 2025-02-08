@@ -4,13 +4,13 @@ import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import { PayoutService } from '../../api/services/payout.service';
-import { makeGetPayouts } from './get-payouts';
+import { makeGetPayouts } from '../../actions/payout/get-payouts';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
-import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { StyledHost, tableExportedParts } from '../../ui-components';
 import { defaultColumnsKeys } from './payouts-table';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
 
 @Component({
   tag: 'justifi-payouts-list',

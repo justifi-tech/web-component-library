@@ -7,12 +7,12 @@ import { PayoutsListCore } from '../payouts-list-core';
 import mockSuccessResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
 import { IApiResponseCollection, IPayout, ISubAccount } from '../../../api';
-import { makeGetPayouts } from '../get-payouts';
-import { makeGetSubAccounts } from '../../../api/get-subaccounts';
+import { makeGetPayouts } from '../../../actions/payout/get-payouts';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PayoutsListFilters } from '../payouts-list-filters';
 import { DateInput } from '../../../ui-components/form/form-control-date';
+import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 
 const mockPayoutsResponse = mockSuccessResponse as IApiResponseCollection<IPayout[]>;
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;

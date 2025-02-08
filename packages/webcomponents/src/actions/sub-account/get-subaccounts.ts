@@ -1,13 +1,16 @@
-import { SubAccount } from './SubAccount';
-import { ComponentErrorSeverity } from './ComponentError';
-import { getErrorCode, getErrorMessage } from './services/utils';
+import { ComponentErrorSeverity, SubAccount } from '../../api';
+import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetSubAccounts =
   ({ accountId, authToken, service, apiOrigin }) =>
   async ({ params, onSuccess, onError }) => {
-
     try {
-      const response = await service.fetchSubAccounts(accountId, authToken, params, apiOrigin);
+      const response = await service.fetchSubAccounts(
+        accountId,
+        authToken,
+        params,
+        apiOrigin
+      );
 
       if (!response.error) {
         const pagingInfo = {
@@ -36,4 +39,3 @@ export const makeGetSubAccounts =
       });
     }
   };
-  

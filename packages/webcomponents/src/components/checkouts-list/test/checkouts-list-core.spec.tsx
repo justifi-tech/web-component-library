@@ -7,11 +7,11 @@ import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockCheckoutsSuccess from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
 import { IApiResponseCollection, ICheckout, ISubAccount } from '../../../api';
-import { makeGetCheckouts } from '../get-checkouts';
+import { makeGetCheckouts } from '../../../actions/checkout/get-checkouts';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { makeGetSubAccounts } from '../../../api/get-subaccounts';
+import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 import { defaultColumnsKeys } from '../checkouts-table';
 
 const mockCheckoutsListResponse = mockCheckoutsSuccess as IApiResponseCollection<ICheckout[]>;

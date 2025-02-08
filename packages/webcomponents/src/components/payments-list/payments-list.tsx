@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
-import { makeGetPayments } from './get-payments';
+import { makeGetPayments } from '../../actions/payment/get-payments';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';

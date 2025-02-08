@@ -4,12 +4,12 @@ import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import { TerminalService } from '../../api/services/terminal.service';
-import { makeGetTerminals } from './get-terminals';
+import { makeGetTerminals } from '../../actions/terminal/get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
-import { makeGetSubAccounts } from '../../api/get-subaccounts';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './terminals-table';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
 
 @Component({
   tag: 'justifi-terminals-list',

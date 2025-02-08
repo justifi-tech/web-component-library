@@ -7,12 +7,12 @@ import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockTerminalSuccessResponse from '../../../../../../mockData/mockTerminalsListSuccess.json';
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
 import { IApiResponseCollection, ISubAccount, ITerminal } from '../../../api';
-import { makeGetTerminals } from '../get-terminals';
+import { makeGetTerminals } from '../../../actions/terminal/get-terminals';
 import { TerminalsListFilters } from '../terminals-list-filters';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { makeGetSubAccounts } from '../../../api/get-subaccounts';
 import { defaultColumnsKeys } from '../terminals-table';
+import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 
 const mockTerminalsResponse = mockTerminalSuccessResponse as IApiResponseCollection<ITerminal[]>;
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
@@ -31,7 +31,7 @@ describe('terminals-list-core', () => {
       service: mockTerminalsService,
       apiOrigin: 'http://localhost:3000'
     });
-    
+
     const mockSubAccountsService = {
       fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
     };
