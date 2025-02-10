@@ -3,6 +3,11 @@ import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './terminals-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { ITerminalStatus } from '../../api';
+import { 
+  terminalsListFilterMenu,
+  terminalIdTerminalsListFilterParam,
+  terminalStatusTerminalsListFilterParam
+} from '../../styles/parts';
 
 @Component({
   tag: 'justifi-terminals-list-filters',
@@ -48,7 +53,7 @@ export class TerminalsListFilters {
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={terminalsListFilterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text 
@@ -57,6 +62,7 @@ export class TerminalsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.terminalId || filterParams.terminal_id}
                 disabled={!!this.terminalId}
+                part={terminalIdTerminalsListFilterParam}
               />
             </div>
             <div class="p-2">
@@ -67,6 +73,7 @@ export class TerminalsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.terminalStatus || filterParams.status}
                 disabled={!!this.terminalStatus}
+                part={terminalStatusTerminalsListFilterParam}
               />
             </div>
           </div>

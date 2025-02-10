@@ -115,3 +115,9 @@ export const checkoutsListFilterMenu = `${filterMenu} checkouts-list-filter-menu
 export const checkoutsListFilterParam = `checkouts-list-filter-param`;
 export const statusCheckoutsListFilterParam = `${checkoutsListFilterParam} checkout-status-checkouts-list-filter-param`;
 export const paymentModeCheckoutsListFilterParam = `${checkoutsListFilterParam} payment-mode-checkouts-list-filter-param`;
+
+// Terminals List Filters
+export const terminalsListFilterMenu = `${filterMenu} terminals-list-filter-menu`;
+export const terminalsListFilterParam = `terminals-list-filter-param`;
+export const terminalIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-id-terminals-list-filter-param`;
+export const terminalStatusTerminalsListFilterParam = `${terminalsListFilterParam} terminal-status-terminals-list-filter-param`;
