@@ -72,7 +72,7 @@ app.get('/', async (req, res) => {
       <body>
         <div style="padding:25px;">
           <div>
-            <justifi-checkouts-list-filters status="completed" />
+            <justifi-checkouts-list-filters />
           </div>
           <div>
             <justifi-checkouts-list 
