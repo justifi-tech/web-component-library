@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
 import { Api, IApiResponse } from '../../../api';
-import { config } from '../../../../config';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
@@ -39,7 +38,7 @@ export class BusinessForm {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
     this.fetchData();
   }
 

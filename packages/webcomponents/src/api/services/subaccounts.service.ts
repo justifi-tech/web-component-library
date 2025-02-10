@@ -1,5 +1,4 @@
 import { Api, IApiResponseCollection, ISubAccount } from '..';
-import { config } from '../../../config';
 
 export interface ISubAccountService {
   fetchSubAccounts(
@@ -17,13 +16,12 @@ export class SubAccountService implements ISubAccountService {
     params: any,
     apiOrigin?: string
   ): Promise<IApiResponseCollection<ISubAccount[]>> {
-
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const headers = { Account: accountId };
-    
+
     const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'sub_accounts';
     return api.get(endpoint, params, null, headers);

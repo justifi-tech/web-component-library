@@ -1,5 +1,4 @@
 import { Api, IApiResponse, IApiResponseCollection, IPayout } from '..';
-import { config } from '../../../config';
 
 export interface IPayoutService {
   fetchPayouts(
@@ -23,9 +22,8 @@ export class PayoutService implements IPayoutService {
     params: any,
     apiOrigin?: string
   ): Promise<IApiResponseCollection<IPayout[]>> {
-
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const api = Api({ authToken, apiOrigin });
@@ -38,9 +36,8 @@ export class PayoutService implements IPayoutService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<IPayout>> {
-
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const api = Api({ authToken, apiOrigin });
@@ -53,9 +50,8 @@ export class PayoutService implements IPayoutService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<any>> {
-
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const api = Api({ authToken, apiOrigin });

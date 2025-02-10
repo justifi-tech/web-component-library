@@ -2,7 +2,6 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { config } from '../../../config';
 import { TerminalService } from '../../api/services/terminal.service';
 import { makeGetTerminals } from './get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
@@ -23,7 +22,7 @@ export class TerminalsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

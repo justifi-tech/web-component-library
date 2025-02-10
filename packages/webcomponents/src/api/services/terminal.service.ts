@@ -1,5 +1,4 @@
 import { Api, IApiResponse, IApiResponseCollection, ITerminal } from '..';
-import { config } from '../../../config';
 
 export interface ITerminalService {
   fetchTerminals(
@@ -22,9 +21,8 @@ export class TerminalService implements ITerminalService {
     params: any,
     apiOrigin?: string
   ): Promise<IApiResponseCollection<ITerminal[]>> {
-    
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const headers = { Account: accountId };
@@ -39,9 +37,8 @@ export class TerminalService implements ITerminalService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<ITerminal>> {
-
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const endpoint = `terminals/${terminalId}`;

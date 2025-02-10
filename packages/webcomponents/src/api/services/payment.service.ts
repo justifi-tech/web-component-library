@@ -1,5 +1,4 @@
 import { Api, IApiResponseCollection, IApiResponse, IPayment } from '..';
-import { config } from '../../../config';
 
 export interface IPaymentService {
   fetchPayments(
@@ -21,9 +20,8 @@ export class PaymentService implements IPaymentService {
     params: any,
     apiOrigin?: string
   ): Promise<IApiResponseCollection<IPayment[]>> {
-    
     if (!apiOrigin) {
-      apiOrigin = config.proxyApiOrigin;
+      apiOrigin = PROXY_API_ORIGIN;
     }
 
     const api = Api({ authToken, apiOrigin: apiOrigin });
@@ -36,6 +34,6 @@ export class PaymentService implements IPaymentService {
     authToken: string
   ): Promise<IApiResponse<IPayment>> {
     const endpoint = `payments/${paymentId}`;
-    return Api({ authToken, apiOrigin: config.proxyApiOrigin }).get(endpoint);
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
   }
 }

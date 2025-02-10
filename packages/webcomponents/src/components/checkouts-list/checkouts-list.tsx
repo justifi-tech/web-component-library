@@ -1,7 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { makeGetCheckouts } from './get-checkouts';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
@@ -23,7 +22,7 @@ export class CheckoutsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

@@ -4,7 +4,6 @@ import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetDispute } from './dispute-actions';
 import { DisputeService } from '../../api/services/dispute.service';
-import { config } from '../../../config';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 
 @Component({
@@ -13,7 +12,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 export class DisputeManagement {
   @Prop() disputeId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @State() getDispute: Function;
   @State() errorMessage: string = null;
