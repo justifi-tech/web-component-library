@@ -3,7 +3,7 @@ import { Checkout, PagingInfo, SubAccount, pagingDefaults } from '../../api';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
-import { queryParams, onQueryParamsChange } from './checkouts-list-params-state';
+import { getRequestParams, onQueryParamsChange } from './checkouts-list-params-state';
 import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
@@ -24,7 +24,6 @@ export class CheckoutsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getCheckouts')
   @Watch('getSubAccounts')
@@ -56,7 +55,7 @@ export class CheckoutsListCore {
     this.loading = true;
 
     this.getCheckouts({
-      params: this.requestParams,
+      params: this.checkoutParams,
       onSuccess: async ({ checkouts, pagingInfo }) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
@@ -123,9 +122,10 @@ export class CheckoutsListCore {
     this.clickEvent.emit({ name: TableClickActions.row, data: checkoutData });
   };
 
-  get requestParams() {
-    const combinedParams = { ...queryParams, ...this.pagingParams };
-    return combinedParams;
+  get checkoutParams() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
   }
 
   get subAccountParams() {

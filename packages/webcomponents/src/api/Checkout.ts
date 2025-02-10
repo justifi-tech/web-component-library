@@ -158,7 +158,7 @@ export class Checkout implements ICheckout {
     this.bnpl = data.bnpl;
     this.total_amount = data.total_amount;
     this.insurance_amount = data.insurance_amount;
-    this.status = data.status as ICheckoutStatus;
+    this.status = ICheckoutStatus[data.status];
     this.payment_currency = data.payment_currency;
     this.mode = data.mode;
     this.statement_descriptor = data.statement_descriptor;
@@ -207,12 +207,17 @@ export enum ICheckoutPaymentMode {
   unknown = ''
 }
 
+export enum ICheckoutStatus {
+  created = 'created',
+  completed = 'completed',
+  attempted = 'attempted',
+  expired = 'expired'
+}
+
 export enum CompletionStatuses {
   failed = 'failed',
   succeeded = 'succeeded'
 }
-
-export type ICheckoutStatus = 'created' | 'completed' | 'attempted' | 'expired';
 
 export type ICheckoutCompleteResponse = IApiResponse<{
   payment_mode: ICheckoutPaymentMode;

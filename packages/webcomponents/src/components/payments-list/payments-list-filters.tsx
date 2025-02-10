@@ -3,7 +3,14 @@ import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './payments-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-import { createdAfterPaymentsListFilterParam, createdBeforePaymentsListFilterParam, filterMenu, paymentIdPaymentsListFilterParam, paymentStatusPaymentsListFilterParam, terminalIdPaymentsListFilterParam } from '../../styles/parts';
+import {
+  paymentsListFilterMenu,
+  createdAfterPaymentsListFilterParam,
+  createdBeforePaymentsListFilterParam,
+  paymentIdPaymentsListFilterParam,
+  paymentStatusPaymentsListFilterParam,
+  terminalIdPaymentsListFilterParam
+} from '../../styles/parts';
 
 @Component({
   tag: 'justifi-payments-list-filters',
@@ -63,7 +70,7 @@ export class PaymentsListFilters {
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={paymentsListFilterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text
