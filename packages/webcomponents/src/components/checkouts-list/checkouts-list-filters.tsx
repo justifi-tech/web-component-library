@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ICheckoutStatus } from '../../api';
+import { ICheckoutPaymentMode, ICheckoutStatus } from '../../api';
 import { filterParams, propsParams, clearParams } from './checkouts-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { checkoutsListFilterMenu, paymentModeCheckoutsListFilterParam, statusCheckoutsListFilterParam } from '../../styles/parts';
@@ -10,7 +10,7 @@ import { checkoutsListFilterMenu, paymentModeCheckoutsListFilterParam, statusChe
 })
 export class CheckoutsListFilters {
   @Prop() checkoutStatus?: ICheckoutStatus;
-  @Prop() paymentMode?: string;
+  @Prop() paymentMode?: ICheckoutPaymentMode;
 
   componentWillLoad() {
     const propsToSet = {
@@ -32,18 +32,18 @@ export class CheckoutsListFilters {
   get checkoutStatusOptions(): { label: string, value: ICheckoutStatus | '' }[] {
     return [
       { label: 'All', value: '' },
-      { label: 'Created', value: 'created' },
-      { label: 'Completed', value: 'completed' },
-      { label: 'Attempted', value: 'attempted' },
-      { label: 'Expired', value: 'expired' },
+      { label: 'Created', value: ICheckoutStatus.created },
+      { label: 'Completed', value: ICheckoutStatus.completed },
+      { label: 'Attempted', value: ICheckoutStatus.attempted },
+      { label: 'Expired', value: ICheckoutStatus.expired },
     ]
   }
 
-  get checkoutPaymentModeOptions(): { label: string, value: string }[] {
+  get checkoutPaymentModeOptions(): { label: string, value: ICheckoutPaymentMode | '' }[] {
     return [
       { label: 'All', value: '' },
-      { label: 'E-commerce', value: 'ecom' },
-      { label: 'BNPL', value: 'bnpl' },
+      { label: 'E-commerce', value: ICheckoutPaymentMode.ecom },
+      { label: 'BNPL', value: ICheckoutPaymentMode.bnpl },
     ]
   }
 
