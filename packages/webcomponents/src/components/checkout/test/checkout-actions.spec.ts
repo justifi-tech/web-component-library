@@ -1,4 +1,7 @@
-import { makeGetCheckout, makeCheckoutComplete } from '../checkout-actions';
+import {
+  makeGetCheckout,
+  makeCheckoutComplete,
+} from '../../../actions/checkout/checkout-actions';
 import mockResponse from '../../../../../../mockData/mockGetCheckoutSuccess.json';
 import { Checkout, ICheckout } from '../../../api/Checkout';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';

@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Prop, State, Watch, h } from '@stencil/core';
 import { ReportsService } from '../../api/services/reports.service';
-import { makeGetGrossPaymentChartData } from './get-gross-payment-chart-data';
+import { makeGetGrossPaymentChartData } from '../../actions/gross-payment/get-gross-payment-chart-data';
 import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';

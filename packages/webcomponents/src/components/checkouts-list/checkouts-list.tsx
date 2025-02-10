@@ -1,12 +1,12 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { makeGetCheckouts } from './get-checkouts';
+import { makeGetCheckouts } from '../../actions/checkout/get-checkouts';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { config } from '../../../config';
 import JustifiAnalytics from '../../api/Analytics';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { SubAccountService } from '../../api/services/subaccounts.service';
-import { makeGetSubAccounts } from '../../api/get-subaccounts';
+import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './checkouts-table';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';

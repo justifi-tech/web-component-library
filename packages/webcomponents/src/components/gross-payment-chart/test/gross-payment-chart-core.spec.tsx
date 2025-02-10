@@ -4,7 +4,7 @@ import { GrossPaymentChartCore } from '../gross-payment-chart-core';
 import { GrossVolumeReport } from '../../../api/GrossVolume';
 import { IApiResponse } from '../../../api';
 import mockSuccessResponse from '../../../../../../mockData/mockGrossVolumeReportSuccess.json';
-import { makeGetGrossPaymentChartData } from '../get-gross-payment-chart-data';
+import { makeGetGrossPaymentChartData } from '../../../actions/gross-payment/get-gross-payment-chart-data';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 const mockDataResponse = mockSuccessResponse as IApiResponse<GrossVolumeReport>

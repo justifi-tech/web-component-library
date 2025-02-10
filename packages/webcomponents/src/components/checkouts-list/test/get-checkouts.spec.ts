@@ -1,5 +1,5 @@
 import { CheckoutService } from '../../../api/services/checkout.service';
-import { makeGetCheckouts } from '../get-checkouts';
+import { makeGetCheckouts } from '../../../actions/checkout/get-checkouts';
 import mockResponse from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
 import { IApiResponseCollection, ICheckout, Checkout } from '../../../api';
 
@@ -37,7 +37,7 @@ describe('makeGetCheckouts', () => {
       accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getCheckoutsList({ params: mockParams, onSuccess, onError });
 
@@ -63,7 +63,7 @@ describe('makeGetCheckouts', () => {
       accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getCheckoutsList({ params: mockParams, onSuccess, onError });
 
@@ -87,7 +87,7 @@ describe('makeGetCheckouts', () => {
       accountId: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getCheckoutsList({ params: mockParams, onSuccess, onError });
 

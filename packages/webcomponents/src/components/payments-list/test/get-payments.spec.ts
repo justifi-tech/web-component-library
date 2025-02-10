@@ -1,5 +1,5 @@
 import { PaymentService } from '../../../api/services/payment.service';
-import { makeGetPayments } from '../get-payments';
+import { makeGetPayments } from '../../../actions/payment/get-payments';
 import mockResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment, Payment } from '../../../api';
 
@@ -38,7 +38,7 @@ describe('makeGetPayments', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getPayments({ params: mockParams, onSuccess, onError, final });
 
@@ -65,7 +65,7 @@ describe('makeGetPayments', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getPayments({ params: mockParams, onSuccess, onError, final });
 
@@ -90,7 +90,7 @@ describe('makeGetPayments', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      apiOrigin: mockApiOrigin,
     });
     await getPayments({ params: mockParams, onSuccess, onError, final });
 

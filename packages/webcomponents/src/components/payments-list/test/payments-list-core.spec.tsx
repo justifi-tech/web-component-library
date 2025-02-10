@@ -6,7 +6,7 @@ import { PaymentsListCore } from '../payments-list-core';
 import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
 import { IApiResponseCollection, IPayment } from '../../../api';
-import { makeGetPayments } from '../get-payments';
+import { makeGetPayments } from '../../../actions/payment/get-payments';
 import { defaultColumnsKeys } from '../payments-table';
 
 const mockPaymentsResponse = mockSuccessResponse as IApiResponseCollection<IPayment[]>;
@@ -18,52 +18,52 @@ describe('payments-list-core render and events', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
-  
+
   it('renders properly with fetched data', async () => {
     const mockPaymentsService = {
       fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
     };
-    
+
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
       service: mockPaymentsService,
       apiOrigin: 'http://localhost:3000'
     });
-    
+
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
-    
+
     await page.waitForChanges();
-    
+
     expect(page.rootInstance.payments[0]).toEqual(expect.objectContaining({ account_id: mockPaymentsResponse.data[0].account_id }));
     const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(mockPaymentsResponse.data.length);
     expect(mockPaymentsService.fetchPayments).toHaveBeenCalled();
     expect(page.root).toMatchSnapshot();
   });
-  
+
   it('displays an error state on failed data fetch', async () => {
     const mockService = {
       fetchPayments: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
-    
+
     const getPayments = makeGetPayments({
       id: 'some-id',
       authToken: 'some-auth-token',
       service: mockService,
       apiOrigin: 'http://localhost:3000'
     });
-    
+
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
-    
+
     await page.waitForChanges();
-    
+
     expect(page.rootInstance.errorMessage).toBe('Fetch error');
     expect(page.root).toMatchSnapshot();
   });
@@ -72,52 +72,52 @@ describe('payments-list-core render and events', () => {
     const mockPaymentsService = {
       fetchPayments: jest.fn().mockResolvedValue(mockPaymentsResponse),
     };
-    
+
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
       service: mockPaymentsService,
       apiOrigin: 'http://localhost:3000'
     });
-    
+
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} />,
     });
-    
+
     await page.waitForChanges();
-    
+
     const firstRow = page.root.querySelector('[data-test-id="table-row"]') as HTMLElement;
     expect(firstRow).not.toBeNull();
-    
+
     const spyEvent = jest.fn();
     page.win.addEventListener('click-event', spyEvent);
 
     firstRow.click();
     expect(spyEvent).toHaveBeenCalled();
   });
-  
+
   it('emits error event on fetch error', async () => {
     const mockService = {
       fetchPayments: jest.fn().mockRejectedValue(new Error('Fetch error'))
     };
-    
+
     const getPayments = makeGetPayments({
       id: 'some-id',
       authToken: 'some-auth',
       service: mockService,
       apiOrigin: 'http://localhost:3000'
     });
-    
+
     const errorEvent = jest.fn();
-    
+
     const page = await newSpecPage({
       components: [PaymentsListCore, PaginationMenu],
       template: () => <payments-list-core getPayments={getPayments} columns={defaultColumnsKeys} onError-event={errorEvent} />,
     });
-    
+
     await page.waitForChanges();
-    
+
     expect(errorEvent).toHaveBeenCalledWith(
       expect.objectContaining({
         detail: {
