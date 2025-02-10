@@ -7,7 +7,7 @@ import { PaginationMenu } from '../../pagination-menu/pagination-menu';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PayoutsListFilters } from '../payouts-list-filters';
-import { queryParams } from '../payouts-list-params-state';
+import { filterParams } from '../payouts-list-params-state';
 import { PayoutsListCore } from '../payouts-list-core';
 import { DateInput } from '../../../ui-components/form/form-control-date';
 
@@ -82,7 +82,7 @@ describe('justifi-payouts-list filters', () => {
     dateFilterInput.dispatchEvent(new Event('input'));
 
     expect(fetchDataSpy).toHaveBeenCalled();
-    const updatedParams = queryParams;
+    const updatedParams = filterParams;
     expect(updatedParams).toEqual({"created_after": "2021-01-01T23:59:59.000Z"});
   });
 
@@ -128,7 +128,7 @@ describe('justifi-payouts-list filters', () => {
     clearButton.click();
 
     expect(fetchDataSpy).toHaveBeenCalled();
-    const updatedParams = queryParams;
+    const updatedParams = filterParams;
     expect(updatedParams).toEqual({});
   });
 });
