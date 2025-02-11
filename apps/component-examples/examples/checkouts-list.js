@@ -9,8 +9,6 @@ const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
-console.log('process.env:', JSON.stringify(process.env, null, 2));
-
 app.use(
   '/scripts',
   express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
