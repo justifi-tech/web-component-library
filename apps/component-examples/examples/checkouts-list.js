@@ -3,6 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -12,13 +17,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret
   });
 
   let response;
   try {
-    response = await fetch('https://api.justifi.ai/oauth/token', {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,8 +39,7 @@ async function getToken() {
 }
 
 async function getWebComponentToken(token) {
-  const response = await fetch(
-    'https://api.justifi.ai/v1/web_component_tokens',
+  const response = await fetch(webComponentTokenEndpoint,
     {
       method: 'POST',
       headers: {
@@ -43,9 +47,7 @@ async function getWebComponentToken(token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `read:account:${process.env.SUB_ACCOUNT_ID}`,
-        ],
+        resources: [`read:account:${subAccountId}`],
       }),
     }
   );
@@ -69,8 +71,11 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div style="margin:0 auto;max-width:700px;">
-          <justifi-checkouts-list auth-token="${webComponentToken}" account-id="${subAccountID}"></justifi-checkouts-list>
+        <div style="padding:25px;">
+          <justifi-checkouts-list 
+            account-id="${subAccountId}"
+            auth-token="${webComponentToken}"
+          />
         </div>
         <script>
           const justifiCheckoutsList = document.querySelector('justifi-checkouts-list');

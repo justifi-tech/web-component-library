@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 import { ErrorState } from '../../ui-components/details/utils';
 import { BusinessService } from '../../api/services/business.service';
-import { makeGetBusiness } from './get-business';
+import { makeGetBusiness } from '../../actions/business/get-business';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';

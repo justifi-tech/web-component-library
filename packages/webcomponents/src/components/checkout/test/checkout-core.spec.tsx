@@ -3,7 +3,7 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckoutCore } from '../checkout-core';
-import { makeCheckoutComplete, makeGetCheckout } from '../checkout-actions';
+import { makeCheckoutComplete, makeGetCheckout } from '../../../actions/checkout/checkout-actions';
 import { Checkout, ICheckout } from '../../../api/Checkout';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 import mockGetCheckoutSuccess from './../../../../../../mockData/mockGetCheckoutSuccess.json';
@@ -25,7 +25,7 @@ describe('justifi-checkout-core', () => {
 
     expect(page.root).toMatchSnapshot();
   });
-  
+
 
   it('should display error state correctly', async () => {
     const getCheckout = makeGetCheckout({

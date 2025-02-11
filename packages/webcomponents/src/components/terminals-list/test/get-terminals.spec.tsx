@@ -1,5 +1,5 @@
 import { TerminalService } from '../../../api/services/terminal.service';
-import { makeGetTerminals } from '../get-terminals';
+import { makeGetTerminals } from '../../../actions/terminal/get-terminals';
 import mockResponse from '../../../../../../mockData/mockTerminalsListSuccess.json';
 import { IApiResponseCollection, ITerminal, Terminal } from '../../../api';
 

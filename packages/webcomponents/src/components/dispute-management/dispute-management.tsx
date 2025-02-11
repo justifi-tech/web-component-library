@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { makeGetDispute } from './dispute-actions';
+import { makeGetDispute } from '../../actions/dispute/dispute-actions';
 import { DisputeService } from '../../api/services/dispute.service';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 

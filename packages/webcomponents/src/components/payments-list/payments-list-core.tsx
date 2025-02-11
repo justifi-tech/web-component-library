@@ -52,7 +52,7 @@ export class PaymentsListCore {
     this.loading = true;
 
     this.getPayments({
-      params: this.params,
+      params: this.paymentParams,
       onSuccess: ({ payments, pagingInfo }) => {
         this.payments = payments;
         this.paging = pagingInfo;
@@ -90,6 +90,12 @@ export class PaymentsListCore {
     this.clickEvent.emit({ name: TableClickActions.row, data: paymentData });
   };
 
+  get paymentParams() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
+  }
+
   get entityId() {
     return this.payments.map((payment) => payment.id);
   }
@@ -104,12 +110,6 @@ export class PaymentsListCore {
 
   get showRowData() {
     return !this.showEmptyState && !this.showErrorState && !this.loading;
-  }
-
-  get params() {
-    const requestParams = getRequestParams();
-    const params = { ...requestParams, ...this.pagingParams };
-    return params;
   }
 
   render() {

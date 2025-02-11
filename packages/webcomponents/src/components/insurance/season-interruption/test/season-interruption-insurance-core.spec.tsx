@@ -3,7 +3,7 @@ jest.mock('../../../../ui-components/styled-host/styled-host.css', () => '');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SeasonInterruptionInsuranceCore } from '../season-interruption-insurance-core';
-import { makeGetQuote } from '../../insurance-actions';
+import { makeGetQuote } from '../../../../actions/insurance/insurance-actions';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../../api/shared';
 import mockSeasonInterruptionInsurance from '../../../../../../../mockData/mockSeasonInterruptionInsurance.json';
 import { insuranceValuesStore, insuranceErrorsStore } from '../../insurance-state';
