@@ -30,6 +30,7 @@
     "@types/node": "20.10.8",
     "@vitejs/plugin-react": "^4.2.1",
     "chromatic": "^10.6.0",
+    "dotenv": "^16.4.7",
     "eslint": "^8.56.0",
     "miragejs": "^0.1.48",
     "serve": "^14.2.1",

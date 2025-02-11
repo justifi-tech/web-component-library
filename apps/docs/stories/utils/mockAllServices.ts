@@ -71,7 +71,7 @@ export const setUpMocks = () => {
   createServer({
     routes() {
       // Primary URL prefix for API requests
-      this.urlPrefix = `https://wc-proxy.justifi.ai`;
+      this.urlPrefix = process.env.PROXY_API_ORIGIN || '';
       this.namespace = '/v1';
 
       // BusinessOwner

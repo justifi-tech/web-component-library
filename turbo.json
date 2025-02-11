@@ -10,15 +10,6 @@
         "^build"
       ]
     },
-    "build:mocks": {
-      "outputs": [
-        "dist/**",
-        "storybook-static/**"
-      ],
-      "dependsOn": [
-        "^build"
-      ]
-    },
     "test": {
       "dependsOn": [
         "build"
