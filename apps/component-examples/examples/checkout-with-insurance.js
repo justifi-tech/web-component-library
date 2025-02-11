@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
@@ -12,22 +12,22 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 const insurance = {
   primary_identity: {
-    state: "MN",
-    email: "test@justifi.tech",
-    first_name: "John",
-    last_name: "Doe",
-    postal_code: "55401",
-    country: "US",
+    state: 'MN',
+    email: 'test@justifi.tech',
+    first_name: 'John',
+    last_name: 'Doe',
+    postal_code: '55401',
+    country: 'US',
   },
   policy_attributes: {
     insurable_amount: 1000,
-    start_date: "2024-12-01",
-    end_date: "2024-12-31",
+    start_date: '2024-12-01',
+    end_date: '2024-12-31',
     covered_identity: {
-      first_name: "John",
-      last_name: "Doe"
-    }
-  }
+      first_name: 'John',
+      last_name: 'Doe',
+    },
+  },
 };
 
 async function getToken() {

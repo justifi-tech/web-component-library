@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
@@ -9,6 +9,8 @@ const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
+console.log('process.env:', JSON.stringify(process.env, null, 2));
+
 app.use(
   '/scripts',
   express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
@@ -18,7 +20,7 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 async function getToken() {
   const requestBody = JSON.stringify({
     client_id: clientId,
-    client_secret: clientSecret
+    client_secret: clientSecret,
   });
 
   let response;
@@ -39,18 +41,16 @@ async function getToken() {
 }
 
 async function getWebComponentToken(token) {
-  const response = await fetch(webComponentTokenEndpoint,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [`read:account:${subAccountId}`],
-      }),
-    }
-  );
+  const response = await fetch(webComponentTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [`read:account:${subAccountId}`],
+    }),
+  });
 
   const { access_token } = await response.json();
   return access_token;
