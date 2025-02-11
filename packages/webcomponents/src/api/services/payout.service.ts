@@ -20,12 +20,8 @@ export class PayoutService implements IPayoutService {
     accountId: string,
     authToken: string,
     params: any,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponseCollection<IPayout[]>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const api = Api({ authToken, apiOrigin });
     const endpoint = `account/${accountId}/payouts`;
     return api.get(endpoint, params);
@@ -34,12 +30,8 @@ export class PayoutService implements IPayoutService {
   async fetchPayout(
     payoutId: string,
     authToken: string,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<IPayout>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const api = Api({ authToken, apiOrigin });
     const endpoint = `payouts/${payoutId}`;
     return api.get(endpoint);
@@ -48,12 +40,8 @@ export class PayoutService implements IPayoutService {
   async fetchCSV(
     payoutId: string,
     authToken: string,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<any>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const api = Api({ authToken, apiOrigin });
     const endpoint = `reports/payouts/${payoutId}`;
     return api.get(endpoint);

@@ -19,12 +19,8 @@ export class TerminalService implements ITerminalService {
     accountId: string,
     authToken: string,
     params: any,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponseCollection<ITerminal[]>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const headers = { Account: accountId };
 
     const api = Api({ authToken, apiOrigin });
@@ -35,12 +31,8 @@ export class TerminalService implements ITerminalService {
   async fetchTerminal(
     terminalId: string,
     authToken: string,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<ITerminal>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const endpoint = `terminals/${terminalId}`;
     return Api({ authToken, apiOrigin: apiOrigin }).get(endpoint);
   }

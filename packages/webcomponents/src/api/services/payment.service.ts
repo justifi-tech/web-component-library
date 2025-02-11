@@ -18,12 +18,8 @@ export class PaymentService implements IPaymentService {
     accountId: string,
     authToken: string,
     params: any,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponseCollection<IPayment[]>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = `account/${accountId}/payments`;
     return api.get(endpoint, params);

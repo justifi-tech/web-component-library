@@ -14,12 +14,8 @@ export class SubAccountService implements ISubAccountService {
     accountId: string,
     authToken: string,
     params: any,
-    apiOrigin?: string
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponseCollection<ISubAccount[]>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
     const headers = { Account: accountId };
 
     const api = Api({ authToken, apiOrigin: apiOrigin });
