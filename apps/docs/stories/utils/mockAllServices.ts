@@ -17,6 +17,7 @@ import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInte
 import mockTerminals from '../../../../mockData/mockTerminalsListSuccess.json';
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
+import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -184,6 +185,9 @@ export const setUpMocks = () => {
       // URL Prefix for NPM Package Check
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
       this.urlPrefix = 'https://registry.npmjs.org';
+
+      // PackageVersion
+      this.get(API_PATHS.PKG_VERSION, () => mockNPMVersion);
 
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
