@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "storybook dev -p 6006",
+    "dev": "cross-env VITE_STORYBOOK_CHROMATIC_BUILD=false storybook dev -p 6006",
     "build": "storybook build",
     "build:chromatic": "cross-env VITE_STORYBOOK_CHROMATIC_BUILD=true storybook build",
     "preview-storybook": "serve storybook-static",
