@@ -4,11 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "dev:mocks": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true storybook dev -p 6006",
+    "dev": "cross-env VITE_STORYBOOK_CHROMATIC_BUILD=false storybook dev -p 6006",
     "build": "storybook build",
-    "build:mocks": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true storybook build",
-    "build:chromatic": "cross-env VITE_STORYBOOK_MOCKS_ENABLED=true VITE_STORYBOOK_CHROMATIC_BUILD=true storybook build",
+    "build:chromatic": "cross-env VITE_STORYBOOK_CHROMATIC_BUILD=true storybook build",
     "preview-storybook": "serve storybook-static",
     "clean": "rm -rf .turbo && rm -rf node_modules",
     "lint": "eslint ./stories/*.stories.tsx --max-warnings 0"
@@ -32,7 +30,7 @@
     "@types/node": "20.10.8",
     "@vitejs/plugin-react": "^4.2.1",
     "chromatic": "^10.6.0",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.7",
     "eslint": "^8.56.0",
     "miragejs": "^0.1.48",
     "serve": "^14.2.1",

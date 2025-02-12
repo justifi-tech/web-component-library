@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { config } from '../../../config';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from '../../actions/payout/get-payouts';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
@@ -25,7 +24,7 @@ export class PayoutsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

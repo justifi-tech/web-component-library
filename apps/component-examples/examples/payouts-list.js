@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
@@ -43,9 +43,7 @@ async function getWebComponentToken(token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `read:account:${process.env.SUB_ACCOUNT_ID}`,
-        ],
+        resources: [`read:account:${process.env.SUB_ACCOUNT_ID}`],
       }),
     }
   );

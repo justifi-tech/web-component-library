@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil
 import { Button, StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
-import { config } from '../../../config';
 import { BillingFormFields } from '../billing-forms/billing-form-schema';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import {
@@ -10,7 +9,7 @@ import {
   ComponentErrorEvent,
   ComponentErrorCodes,
   ComponentErrorSeverity
- } from '../../api';
+} from '../../api';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -25,7 +24,7 @@ export class TokenizePaymentMethod {
   @Prop() disableBankAccount?: boolean;
   @Prop() hideSubmitButton?: boolean;
   @Prop() hideCardBillingForm?: boolean;
-  @Prop() iframeOrigin?: string = config.iFrameOrigin;
+  @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
 
   @State() isLoading: boolean = false;
 
