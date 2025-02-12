@@ -7,7 +7,7 @@ import { BusinessService } from "../../api/services/business.service";
 import { ErrorState } from "../../ui-components/details/utils";
 import { ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
-import { makeGetBusiness } from "../business-forms/payment-provisioning/payment-provisioning-actions";
+import { makeGetBusiness } from "../../actions/business/get-business";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -45,7 +45,7 @@ export class OrderTerminals {
     }
 
     const getBusiness = makeGetBusiness({
-      businessId: this.businessId,
+      id: this.businessId,
       authToken: this.authToken,
       service: new BusinessService(),
     });
