@@ -17,6 +17,7 @@
     "dev:payments-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payments-list-with-filters'",
     "dev:payouts-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payouts-list'",
     "dev:payouts-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payouts-list-with-filters'",
+    "dev:order-terminals": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:order-terminals'",
     "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
