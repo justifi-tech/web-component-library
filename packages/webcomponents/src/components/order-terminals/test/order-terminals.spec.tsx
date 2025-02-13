@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { OrderTerminals } from '../order-terminals';
 import JustifiAnalytics from '../../../api/Analytics';
+import { BusinessService } from '../../../api/services/business.service';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -54,7 +55,42 @@ describe('justifi-order-terminals', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  // it('should display an error message if getBusiness fails', async () => { });
+  it('should display an error message if getBusiness fails', async () => {
+    BusinessService.prototype.fetchBusiness = jest.fn().mockResolvedValue({
+      "error": {
+        "code": "resource_not_found",
+        "message": "Resource Not Found"
+      }
+    });
+
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should emit an error event if getBusiness fails', async () => {
+    BusinessService.prototype.fetchBusiness = jest.fn().mockResolvedValue({
+      "error": {
+        "code": "resource_not_found",
+        "message": "Resource Not Found"
+      }
+    });
+
+    const errorEvent = jest.fn();
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" onerror-event={errorEvent} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorEvent).toHaveBeenCalled();
+  });
 
   // it('should display the business details if getBusiness is successful', async () => { });
 });

@@ -72,7 +72,7 @@ app.get('/', async (req, res) => {
         <div style="margin:0 auto;max-width:700px;">
           <justifi-order-terminals
             auth-token="${webComponentToken}"
-            business-id="${businessId}"
+            business-id="${businessId}a"
           ></justifi-order-terminals>
         </div>
         <script>
