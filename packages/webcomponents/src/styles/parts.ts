@@ -110,6 +110,13 @@ export const paymentStatusPaymentsListFilterParam = `${paymentsListFilterParam} 
 export const createdAfterPaymentsListFilterParam = `${paymentsListFilterParam} created-after-payments-list-filter-param`;
 export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} created-before-payments-list-filter-param`;
 
+// Payouts List Filters
+
+export const payoutsListFilterMenu = `${filterMenu} payouts-list-filter-menu`;
+export const payoutsListFilterParam = `payouts-list-filter-param`;
+export const createdAfterPayoutsListFilterParam = `${payoutsListFilterParam} created-after-payouts-list-filter-param`;
+export const createdBeforePayoutsListFilterParam = `${payoutsListFilterParam} created-before-payouts-list-filter-param`;
+
 // Checkouts List Filters
 export const checkoutsListFilterMenu = `${filterMenu} checkouts-list-filter-menu`;
 export const checkoutsListFilterParam = `checkouts-list-filter-param`;
