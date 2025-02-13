@@ -2,7 +2,7 @@ import { Config } from '@stencil/core';
 import dotenv from 'dotenv';
 import replace from '@rollup/plugin-replace';
 
-dotenv.config();
+dotenv.config({ path: '../../.env' });
 
 export const config: Config = {
   namespace: 'webcomponents',

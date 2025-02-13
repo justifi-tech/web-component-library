@@ -1,7 +1,6 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { config } from '../../../../../config';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
@@ -24,7 +23,7 @@ export class BusinessTermsConditionsFormStep {
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  
+
   // internal loading events
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ bubbles: true }) formCompleted: EventEmitter<any>;
@@ -52,7 +51,7 @@ export class BusinessTermsConditionsFormStep {
   }
 
   async componentWillLoad() {
-    this.api = Api({ authToken: this.authToken, apiOrigin: config.proxyApiOrigin });
+    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
     this.formController = new FormController(businessTermsConditionsSchema(this.allowOptionalFields));
     if (this.businessId && this.authToken) {
       this.fetchData();

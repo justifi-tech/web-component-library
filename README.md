@@ -6,7 +6,6 @@
 
 - `pnpm build` - Build all packages, including the Storybook site
 - `pnpm dev` - Run all packages locally and preview with Storybook
-- `pnpm dev:mocks` - Run all packages locally with mock data
 - `pnpm test` - Run all tests
 - `pnpm test:watch` - Run all tests in watch mode
 - `pnpm lint` - Lint all packages
@@ -99,8 +98,8 @@ To generate your changelog, run `pnpm changeset` locally:
 
 ### Running component example files
 
-This project offers the ability to render the components in simple example files that will help simulate real world usage. 
+This project offers the ability to render the components in simple example files that will help simulate real world usage.
 
 1. Clone this project to your local machine
-2. Once installed, run `pnpm install && pnpm build` to build the component library's latest version. 
+2. Once installed, run `pnpm install && pnpm build` to build the component library's latest version.
 3. Component example files can be loaded by using `pnpm dev` with a corresponding file name - such as `pnpm dev:checkout`

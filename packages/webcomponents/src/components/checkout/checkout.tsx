@@ -7,7 +7,6 @@ import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-fo
 import { ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
-import { config } from '../../../config';
 
 @Component({
   tag: 'justifi-checkout',
@@ -20,7 +19,7 @@ export class Checkout {
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
   @Prop() hideCardBillingForm?: boolean;
-  @Prop() iframeOrigin?: string = config.iFrameOrigin;
+  @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
 
   @State() getCheckout: Function;
   @State() complete: Function;
