@@ -8,6 +8,7 @@ import { ErrorState } from "../../ui-components/details/utils";
 import { ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
+import { OrderTerminalsLoading } from "./order-terminals-loading";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -69,21 +70,16 @@ export class OrderTerminals {
   }
 
   render() {
-    if (this.errorMessage) {
-      return <StyledHost>{ErrorState(this.errorMessage)}</StyledHost>;
-    }
-
-    if (this.isLoading) {
-      return (
-        <StyledHost>
-          <p>Loading...</p>
-        </StyledHost>
-      );
-    }
-
     return (
       <StyledHost>
-        <p>Business Legal Name: {this.business.legal_name}</p>
+        {/* Show skeleton loader while loading */}
+        {this.isLoading && <OrderTerminalsLoading />}
+
+        {/* Show error message if businessId or authToken is missing */}
+        {!this.isLoading && this.errorMessage && ErrorState(this.errorMessage)}
+
+        {/* Show business details if getBusiness is successful */}
+        {!this.isLoading && !this.errorMessage && this.business && <p>Business Legal Name: {this.business.legal_name}</p>}
       </StyledHost>
     );
   }

@@ -44,4 +44,17 @@ describe('justifi-order-terminals', () => {
 
     expect(errorEvent).toHaveBeenCalled();
   });
+
+  it('should display an skeleton loader while loading', async () => {
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals />,
+    });
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  // it('should display an error message if getBusiness fails', async () => { });
+
+  // it('should display the business details if getBusiness is successful', async () => { });
 });
