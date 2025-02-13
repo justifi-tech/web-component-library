@@ -55,7 +55,6 @@ async function getWebComponentToken(token) {
 }
 
 app.get('/', async (req, res) => {
-  const subAccountID = process.env.SUB_ACCOUNT_ID;
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 

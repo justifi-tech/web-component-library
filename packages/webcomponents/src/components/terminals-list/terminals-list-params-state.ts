@@ -1,18 +1,30 @@
 import { createStore } from '@stencil/store';
 import { TerminalsQueryParams } from '../../api';
 
-const initialState = {};
+const filterParamsInitialState = {};
+const propsParamsInitialState = {};
 
-const terminalsListQueryParams = createStore<TerminalsQueryParams>(() => initialState);
-const { state: queryParams, on: onQueryParamsChange } = terminalsListQueryParams;
+const filterParamsStore = createStore<TerminalsQueryParams>(() => filterParamsInitialState);
+const { state: filterParams, on: onQueryParamsChange } = filterParamsStore;
+
+const propsParamsStore = createStore<TerminalsQueryParams>(() => propsParamsInitialState);
+const { state: propsParams } = propsParamsStore;
+
+const getRequestParams = (): TerminalsQueryParams => {
+  return {
+    ...filterParams,
+    ...propsParams
+  };
+};
 
 const clearParams = () => {
-  terminalsListQueryParams.reset();
+  filterParamsStore.reset();
 }
 
 export {
-  terminalsListQueryParams,
-  queryParams,
+  filterParams,
+  propsParams,
   onQueryParamsChange,
-  clearParams
+  clearParams,
+  getRequestParams
 };
