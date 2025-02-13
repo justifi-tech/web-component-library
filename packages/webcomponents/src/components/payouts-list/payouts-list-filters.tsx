@@ -2,7 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { filterParams, propsParams, clearParams } from './payouts-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-import { createdAfterPayoutsListFilterParam, payoutsListFilterMenu } from '../../styles/parts';
+import { createdAfterPayoutsListFilterParam, createdBeforePayoutsListFilterParam, payoutsListFilterMenu } from '../../styles/parts';
 @Component({
   tag: 'justifi-payouts-list-filters',
   shadow: true
@@ -23,7 +23,7 @@ export class PayoutsListFilters {
       }
     });
   }
-  
+
   setParamsOnChange = (name: string, value: string) => {
     filterParams[name] = value;
   }
@@ -63,7 +63,7 @@ export class PayoutsListFilters {
                   convertToLocal(filterParams.created_before, { showInputDate: true })
                 }
                 disabled={!!this.createdBefore}
-                part={createdAfterPayoutsListFilterParam}
+                part={createdBeforePayoutsListFilterParam}
               />
             </div>
           </div>
