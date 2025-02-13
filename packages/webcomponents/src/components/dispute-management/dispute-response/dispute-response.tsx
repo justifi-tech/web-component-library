@@ -1,6 +1,5 @@
 import { Component, h, Watch, State, Prop, Event, EventEmitter } from "@stencil/core";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
-import { config } from '../../../../config';
 import { StyledHost } from "../../../ui-components";
 import { makeCreateDisputeEvidence, makeUpdateDisputeResponse, makeSubmitDisputeResponse } from "./dispute-response-actions";
 import { IDispute } from "../../../components";
@@ -35,7 +34,7 @@ export class DisputeResponse {
   @Prop() authToken: string;
   @Prop() disputeId: string;
   @Prop() disputeResponse: DisputeResponse;
-  @Prop() apiOrigin?: string = config.proxyApiOrigin;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
