@@ -4,7 +4,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/Component
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
-import { queryParams, onQueryParamsChange } from './payouts-list-params-state';
+import { getRequestParams, onQueryParamsChange } from './payouts-list-params-state';
 import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
@@ -27,7 +27,6 @@ export class PayoutsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getPayouts')
   @Watch('getSubAccounts')
@@ -58,7 +57,7 @@ export class PayoutsListCore {
     this.loading = true;
 
     this.getPayouts({
-      params: this.requestParams,
+      params: this.payoutParams,
       onSuccess: ({ payouts, pagingInfo }) => {
         this.payouts = payouts;
         this.paging = pagingInfo;
@@ -137,9 +136,10 @@ export class PayoutsListCore {
     this.clickEvent.emit({ name: TableClickActions.row, data: payoutData });
   }
 
-  get requestParams() {
-    const combinedParams = { ...queryParams, ...this.pagingParams };
-    return combinedParams;
+  get payoutParams() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
   }
 
   get subAccountParams() {

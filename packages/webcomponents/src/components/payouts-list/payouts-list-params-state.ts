@@ -1,18 +1,30 @@
 import { createStore } from '@stencil/store';
 import { PayoutsQueryParams } from '../../api';
 
-const initialState = {};
+const filterParamsInitialState = {};
+const propsParamsInitialState = {};
 
-const payoutsListQueryParams = createStore<PayoutsQueryParams>(() => initialState);
-const { state: queryParams, on: onQueryParamsChange } = payoutsListQueryParams;
+const filterParamsStore = createStore<PayoutsQueryParams>(() => filterParamsInitialState);
+const { state: filterParams, on: onQueryParamsChange } = filterParamsStore;
+
+const propsParamsStore = createStore<PayoutsQueryParams>(() => propsParamsInitialState);
+const { state: propsParams } = propsParamsStore;
+
+const getRequestParams = (): PayoutsQueryParams => {
+  return {
+    ...filterParams,
+    ...propsParams
+  };
+};
 
 const clearParams = () => {
-  payoutsListQueryParams.reset();
+  filterParamsStore.reset();
 }
 
 export {
-  payoutsListQueryParams,
-  queryParams,
+  filterParams,
+  propsParams,
   onQueryParamsChange,
-  clearParams
+  clearParams,
+  getRequestParams
 };

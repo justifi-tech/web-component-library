@@ -123,7 +123,7 @@ export class PaymentsListFilters {
                 label="Created Before"
                 inputHandler={this.handleDateInput}
                 defaultValue={
-                  convertToLocal(this.createdAfter, { showInputDateTime: true }) ||
+                  convertToLocal(this.createdBefore, { showInputDateTime: true }) ||
                   convertToLocal(filterParams.created_before, { showInputDateTime: true })
                 }
                 showTime
