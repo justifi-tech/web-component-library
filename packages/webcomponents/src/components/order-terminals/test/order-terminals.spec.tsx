@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { OrderTerminals } from '../order-terminals';
 import JustifiAnalytics from '../../../api/Analytics';
 import { BusinessService } from '../../../api/services/business.service';
+import businessDetailsMock from '../../../../../../mockData/mockBusinessDetails.json';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -92,5 +93,16 @@ describe('justifi-order-terminals', () => {
     expect(errorEvent).toHaveBeenCalled();
   });
 
-  // it('should display the business details if getBusiness is successful', async () => { });
+  it('should display the business details if getBusiness is successful', async () => {
+    BusinessService.prototype.fetchBusiness = jest.fn().mockResolvedValue(businessDetailsMock);
+
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
 });
