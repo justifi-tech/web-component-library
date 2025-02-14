@@ -17,28 +17,18 @@ export class CardForm {
   private cvvIframeElement!: HTMLIframeInputElement;
 
   componentDidRender() {
-    const cardNumberIframeLoaded = new Promise<void>((resolve) => {
-      this.cardNumberIframeElement?.addEventListener('iframeLoaded', () => { resolve(); });
-    });
+    const elements = [
+      this.cardNumberIframeElement,
+      this.expirationMonthIframeElement,
+      this.expirationYearIframeElement,
+      this.cvvIframeElement,
+    ];
 
-    const expirationMonthIframeLoaded = new Promise<void>((resolve) => {
-      this.expirationMonthIframeElement?.addEventListener('iframeLoaded', () => { resolve(); });
-    });
-
-    const expirationYearIframeLoaded = new Promise<void>((resolve) => {
-      this.expirationYearIframeElement?.addEventListener('iframeLoaded', () => { resolve(); });
-    });
-
-    const cvvIframeLoaded = new Promise<void>((resolve) => {
-      this.cvvIframeElement?.addEventListener('iframeLoaded', () => { resolve(); });
-    });
-
-    Promise.all([
-      cardNumberIframeLoaded,
-      expirationMonthIframeLoaded,
-      expirationYearIframeLoaded,
-      cvvIframeLoaded,
-    ]).then(() => {
+    Promise.all(elements.map((element) => {
+      return new Promise<void>((resolve) => {
+        element.addEventListener('iframeLoaded', () => { resolve(); });
+      });
+    })).then(() => {
       this.isReady = true;
       this.eventReady.emit();
     });
