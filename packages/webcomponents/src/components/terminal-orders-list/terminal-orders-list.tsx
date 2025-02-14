@@ -1,6 +1,7 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { defaultColumnsKeys } from './terminal-orders-table';
 
 @Component({
   tag: 'justifi-terminal-orders-list',
@@ -14,7 +15,7 @@ export class TerminalOrdersList {
   @Prop() businessId: string;
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
-  @Prop() columns?: string;
+  @Prop() columns?: string = defaultColumnsKeys
   
   componentWillLoad() {
     checkPkgVersion();

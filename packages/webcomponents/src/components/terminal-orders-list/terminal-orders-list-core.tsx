@@ -3,6 +3,7 @@ import { Table } from '../../utils/table';
 import { table, tableCell } from '../../styles/parts';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { pagingDefaults, PagingInfo } from '../../api';
+import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 
 @Component({
   tag: 'terminal-orders-list-core',
@@ -29,6 +30,7 @@ export class TerminalOrdersListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<any>;
 
   componentWillLoad() {
+    this.terminalOrdersTable = new Table<any>(this.terminalOrders, this.columns, terminalOrdersTableColumns, terminalOrdersTableCells);
     if (this.getTerminalOrders) {
       this.fetchData();
     }
@@ -36,7 +38,8 @@ export class TerminalOrdersListCore {
 
   fetchData(): void {
     this.loading = true;
-    console.log('fetching data');
+    console.log('fetching terminal orders');
+    this.loading = false;
   }
 
   handleClickPrevious = (beforeCursor: string) => {
