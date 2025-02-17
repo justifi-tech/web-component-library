@@ -7,7 +7,7 @@ import Skeleton from "../../../ui-components/skeleton";
 export class BankAccountForm {
   @Prop() iframeOrigin: string;
 
-  @Event({ bubbles: true }) eventReady: EventEmitter<void>;
+  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
 
   @State() isReady: boolean = false;
 

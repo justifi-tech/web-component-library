@@ -7,7 +7,7 @@ import { Skeleton } from "../../../ui-components";
 export class CardForm {
   @Prop() iframeOrigin: string;
 
-  @Event({ bubbles: true }) eventReady: EventEmitter<void>;
+  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
 
   @State() isReady: boolean = false;
 
