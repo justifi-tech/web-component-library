@@ -10,6 +10,7 @@ import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
 import { heading4, listGroup, listGroupItem, text } from "../../styles/parts";
+import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -20,7 +21,8 @@ export class OrderTerminals {
   @Prop() authToken: string;
 
   @State() errorMessage: string;
-  @State() isLoading: boolean = true;
+  @State() businessIsLoading: boolean = true;
+  @State() terminalsIsLoading: boolean = true;
   @State() business: Business;
 
   analytics: JustifiAnalytics;
@@ -55,7 +57,7 @@ export class OrderTerminals {
     getBusiness({
       onSuccess: ({ business }) => {
         this.business = new Business(business);
-        this.isLoading = false;
+        this.businessIsLoading = false;
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -65,7 +67,7 @@ export class OrderTerminals {
           message: error,
           severity,
         });
-        this.isLoading = false;
+        this.businessIsLoading = false;
       }
     });
   }
@@ -73,12 +75,12 @@ export class OrderTerminals {
   render() {
     return (
       <StyledHost>
-        {this.isLoading && <OrderTerminalsLoading />}
+        {this.businessIsLoading && <OrderTerminalsLoading />}
 
-        {!this.isLoading && this.errorMessage && ErrorState(this.errorMessage)}
+        {!this.businessIsLoading && this.errorMessage && ErrorState(this.errorMessage)}
 
-        {!this.isLoading && !this.errorMessage && this.business && (
-          <div class="row gap-5 pt-5" part={text}>
+        {!this.businessIsLoading && !this.errorMessage && this.business && (
+          <div class="gap-5 pt-5" part={text}>
             <div class="row">
               <div class="col-12">
                 <h2 part={heading4}>Business Information:</h2>
@@ -107,6 +109,14 @@ export class OrderTerminals {
 
               </div>
             </div>
+          </div>
+        )}
+
+        {this.terminalsIsLoading && (
+          <div class="mt-5">
+            <TerminalSelectorLoading />
+            <TerminalSelectorLoading />
+            <TerminalSelectorLoading />
           </div>
         )}
       </StyledHost>

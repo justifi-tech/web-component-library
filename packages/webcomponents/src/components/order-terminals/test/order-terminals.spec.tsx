@@ -105,4 +105,28 @@ describe('justifi-order-terminals', () => {
 
     expect(page.root).toMatchSnapshot();
   });
+
+  it('should display a skeleton for each terminal while loading', async () => {
+    BusinessService.prototype.fetchBusiness = jest.fn().mockResolvedValue(businessDetailsMock);
+
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+
+  });
+
+  it('should call getTerminals on component load', async () => { });
+
+  it('should display an error message if getTerminals fails', async () => { });
+
+  it('should emit an error event if getTerminals fails', async () => { });
+
+  it('should display the terminals if getTerminals is successful', async () => { });
+
+  it('should update the selected terminals state when add a terminal is clicked', async () => { });
 });
