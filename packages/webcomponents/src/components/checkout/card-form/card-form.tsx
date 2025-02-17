@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
-import { Skeleton } from "../../../ui-components";
+import cardFormSkeleton from "./card-form-skeleton";
 
 @Component({
   tag: "card-form",
@@ -56,34 +56,10 @@ export class CardForm {
     );
   }
 
-  cardFormSkeleton = () => {
-    return (
-      <div class="container-fluid p-0">
-        <div class="mb-3">
-          <Skeleton height="18px" width="100px" />
-          <Skeleton height="36px" />
-        </div>
-        <div class="row">
-          <div class="col-4 align-content-end">
-            <Skeleton height="18px" width="80px" />
-            <Skeleton height="36px" />
-          </div>
-          <div class="col-4 align-content-end">
-            <Skeleton height="36px" />
-          </div>
-          <div class="col-4 align-content-end">
-            <Skeleton height="18px" width="30px" />
-            <Skeleton height="36px" />
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   render() {
     return (
       <Host>
-        {!this.isReady && this.cardFormSkeleton()}
+        {!this.isReady && cardFormSkeleton()}
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
           height: this.isReady ? 'auto' : '0',

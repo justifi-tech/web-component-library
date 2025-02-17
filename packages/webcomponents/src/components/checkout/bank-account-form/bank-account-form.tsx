@@ -1,5 +1,5 @@
 import { Component, h, Host, Method, Prop, Event, EventEmitter, State } from "@stencil/core";
-import Skeleton from "../../../ui-components/skeleton";
+import bankAccountFormSkeleton from "./bank-account-form-skeleton";
 
 @Component({
   tag: "bank-account-form",
@@ -50,29 +50,10 @@ export class BankAccountForm {
     });
   }
 
-  bankAccountFormSkeleton = () => {
-    return (
-      <div class="container-fluid p-0">
-        <div class="row mb-3">
-          <div class="col-12 align-content-end">
-            <Skeleton height="18px" width="120px" />
-            <Skeleton height="36px" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 align-content-end">
-            <Skeleton height="18px" width="110px" />
-            <Skeleton height="36px" />
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   render() {
     return (
       <Host>
-        {!this.isReady && this.bankAccountFormSkeleton()}
+        {!this.isReady && bankAccountFormSkeleton()}
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
           height: this.isReady ? 'auto' : '0',
