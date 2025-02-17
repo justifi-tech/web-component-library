@@ -12,6 +12,12 @@ export interface ITerminalService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<ITerminal>>;
+  fetchAvailableToOrderTerminals(
+    accountId: string,
+    authToken: string,
+    params: any,
+    apiOrigin?: string
+  ): Promise<IApiResponseCollection<ITerminal>>;
 }
 
 export class TerminalService implements ITerminalService {
@@ -35,5 +41,17 @@ export class TerminalService implements ITerminalService {
   ): Promise<IApiResponse<ITerminal>> {
     const endpoint = `terminals/${terminalId}`;
     return Api({ authToken, apiOrigin: apiOrigin }).get(endpoint);
+  }
+
+  async fetchAvailableToOrderTerminals(
+    accountId: string,
+    authToken: string,
+    apiOrigin: string = PROXY_API_ORIGIN
+  ): Promise<IApiResponseCollection<ITerminal>> {
+    const headers = { Account: accountId };
+
+    const api = Api({ authToken, apiOrigin });
+    const endpoint = 'terminals/available-to-order';
+    return api.get(endpoint, null, null, headers);
   }
 }

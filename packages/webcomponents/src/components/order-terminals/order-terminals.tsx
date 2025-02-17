@@ -5,12 +5,14 @@ import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { BusinessService } from "../../api/services/business.service";
 import { ErrorState } from "../../ui-components/details/utils";
-import { ComponentErrorEvent } from "../../api";
+import { ComponentErrorEvent, Terminal } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
 import { heading4, listGroup, listGroupItem, text } from "../../styles/parts";
 import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
+import { makeGetAvailableToOrderTerminals } from "../../actions/terminal/get-available-to-order-terminals";
+import { TerminalService } from "../../api/services/terminal.service";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -24,6 +26,7 @@ export class OrderTerminals {
   @State() businessIsLoading: boolean = true;
   @State() terminalsIsLoading: boolean = true;
   @State() business: Business;
+  @State() availableTerminals: Terminal[];
 
   analytics: JustifiAnalytics;
 
@@ -34,10 +37,10 @@ export class OrderTerminals {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetBusiness();
+    this.loadData();
   }
 
-  private initializeGetBusiness() {
+  private loadData() {
     if (!this.businessId || !this.authToken) {
       this.errorMessage = 'Invalid business id or auth token';
       this.errorEvent.emit({
@@ -48,6 +51,11 @@ export class OrderTerminals {
       return;
     }
 
+    this.initializeGetBusiness();
+    this.initializeGetAvailableToOrderTerminals();
+  }
+
+  private initializeGetBusiness() {
     const getBusiness = makeGetBusiness({
       id: this.businessId,
       authToken: this.authToken,
@@ -68,6 +76,31 @@ export class OrderTerminals {
           severity,
         });
         this.businessIsLoading = false;
+      }
+    });
+  }
+
+  private initializeGetAvailableToOrderTerminals() {
+    const getAvailableToOrderTerminals = makeGetAvailableToOrderTerminals({
+      id: this.businessId,
+      authToken: this.authToken,
+      service: new TerminalService(),
+    });
+
+    getAvailableToOrderTerminals({
+      onSuccess: ({ terminals }) => {
+        this.availableTerminals = terminals;
+        this.terminalsIsLoading = false;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+        this.terminalsIsLoading = false;
       }
     });
   }

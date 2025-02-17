@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { OrderTerminals } from '../order-terminals';
 import JustifiAnalytics from '../../../api/Analytics';
 import { BusinessService } from '../../../api/services/business.service';
+import { TerminalService } from '../../../api/services/terminal.service';
 import businessDetailsMock from '../../../../../../mockData/mockBusinessDetails.json';
 
 beforeEach(() => {
@@ -120,11 +121,55 @@ describe('justifi-order-terminals', () => {
 
   });
 
-  it('should call getTerminals on component load', async () => { });
+  it('should call TerminalsService.fetchAvailableToOrderTerminals on component load', async () => {
+    TerminalService.prototype.fetchAvailableToOrderTerminals = jest.fn().mockResolvedValue([]);
 
-  it('should display an error message if getTerminals fails', async () => { });
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId='123' authToken='123' />
+    });
 
-  it('should emit an error event if getTerminals fails', async () => { });
+    await page.rootInstance.componentWillLoad();
+
+    expect(TerminalService.prototype.fetchAvailableToOrderTerminals).toHaveBeenCalled();
+  });
+
+  it('should display an error message if getTerminals fails', async () => {
+    TerminalService.prototype.fetchAvailableToOrderTerminals = jest.fn().mockResolvedValue({
+      "error": {
+        "code": "resource_not_found",
+        "message": "Resource Not Found"
+      }
+    });
+
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should emit an error event if getTerminals fails', async () => {
+    TerminalService.prototype.fetchAvailableToOrderTerminals = jest.fn().mockResolvedValue({
+      "error": {
+        "code": "resource_not_found",
+        "message": "Resource Not Found"
+      }
+    });
+
+    const errorEvent = jest.fn();
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" onerror-event={errorEvent} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorEvent).toHaveBeenCalled();
+  });
 
   it('should display the terminals if getTerminals is successful', async () => { });
 
