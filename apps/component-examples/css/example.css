@@ -26,4 +26,10 @@
   width: 50%;
 }
 
+.list-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
 /* End: example purposes only */

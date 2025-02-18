@@ -71,7 +71,7 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div style="padding:25px;">
+        <div class="list-wrapper">
           <justifi-terminal-orders-list 
             business-id="${businessId}"
             auth-token="authToken123"
