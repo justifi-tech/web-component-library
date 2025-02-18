@@ -129,8 +129,14 @@ export class PayoutsListCore {
   };
 
   rowClickHandler = (e) => {
-    const clickedPayoutID = e.target.closest('tr').dataset.rowEntityId;
+    const clickedRow = e.target.closest('tr');
+    const clickedPayoutID = clickedRow.dataset.rowEntityId;
+    const clickedCSV = clickedRow.querySelector('a');
     if (!clickedPayoutID) return;
+    if (clickedCSV === e.target) {
+      this.clickEvent.emit({ name: TableClickActions.payoutCSV, data: clickedPayoutID });
+      return;
+    }
 
     const payoutData = this.payouts.find((payout) => payout.id === clickedPayoutID);
     this.clickEvent.emit({ name: TableClickActions.row, data: payoutData });

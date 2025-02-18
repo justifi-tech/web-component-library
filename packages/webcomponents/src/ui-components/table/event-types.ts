@@ -1,5 +1,6 @@
 export enum TableClickActions {
   row = 'tableRow',
   next = 'nextPage',
-  previous = 'previousPage'
+  previous = 'previousPage',
+  payoutCSV = 'payoutCSV',
 }
