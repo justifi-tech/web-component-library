@@ -1,5 +1,6 @@
 import { Component, h, Host, Method, Prop, Event, EventEmitter, State } from "@stencil/core";
-import bankAccountFormSkeleton from "./bank-account-form-skeleton";
+import BankAccountFormSkeleton from "./bank-account-form-skeleton";
+
 
 @Component({
   tag: "bank-account-form",
@@ -53,7 +54,7 @@ export class BankAccountForm {
   render() {
     return (
       <Host>
-        {!this.isReady && bankAccountFormSkeleton()}
+        <BankAccountFormSkeleton isReady={this.isReady} />
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
           height: this.isReady ? 'auto' : '0',

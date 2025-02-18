@@ -1,7 +1,16 @@
-import { h } from "@stencil/core";
+import { FunctionalComponent, h } from "@stencil/core";
 import { Skeleton } from "../../../ui-components/skeleton";
+interface CardFormSkeletonProps {
+  isReady: boolean;
+}
 
-const cardFormSkeleton = () => {
+const CardFormSkeleton: FunctionalComponent<CardFormSkeletonProps> = (props) => {
+  const { isReady } = props;
+
+  if (isReady) {
+    return null;
+  }
+  
   return (
     <div class="container-fluid p-0">
       <div class="mb-3">
@@ -25,4 +34,4 @@ const cardFormSkeleton = () => {
   );
 };
 
-export default cardFormSkeleton;
+export default CardFormSkeleton;
