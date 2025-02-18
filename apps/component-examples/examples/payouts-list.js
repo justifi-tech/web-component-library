@@ -71,7 +71,7 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div class="list-wrapper">
+        <div class="list-component-wrapper">
           <justifi-payouts-list
             account-id="${subAccountId}"
             auth-token="${webComponentToken}"
