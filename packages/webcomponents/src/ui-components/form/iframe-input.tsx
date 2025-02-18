@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Method, Prop, State } from "@stencil/core";
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
 import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
@@ -16,10 +16,11 @@ export class IframeInput {
 
   @Element() el: HTMLElement;
 
+  @Event() iframeLoaded: EventEmitter<void>;
+
   @State() isFocused: boolean = false;
   @State() isValid: boolean = true;
   @State() errorText: string;
-  @State() iframeLoaded: boolean = false;
 
   @Prop() inputId: string;
   @Prop() label: string;
@@ -152,7 +153,7 @@ export class IframeInput {
                 iFrameResize({
                   log: false,
                   onResized: () => {
-                    this.iframeLoaded = true;
+                    this.iframeLoaded.emit();
                   }
                 }, this.iframeElement);
               }}
