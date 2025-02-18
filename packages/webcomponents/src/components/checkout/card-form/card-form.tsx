@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
-
 import CardFormSkeleton from "./card-form-skeleton";
 
 @Component({

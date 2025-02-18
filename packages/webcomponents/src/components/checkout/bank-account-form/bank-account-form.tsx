@@ -1,7 +1,6 @@
 import { Component, h, Host, Method, Prop, Event, EventEmitter, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 
-
 @Component({
   tag: "bank-account-form",
 })
