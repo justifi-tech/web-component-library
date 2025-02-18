@@ -3,9 +3,7 @@
   "name": "web-component-library",
   "scripts": {
     "build": "turbo run build",
-    "build:mocks": "turbo run build:mocks",
     "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev'",
-    "dev:mocks": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev:mocks'",
     "dev:checkout": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout'",
     "dev:checkout-with-insurance": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout-with-insurance'",
     "dev:dispute": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:dispute'",
@@ -19,6 +17,8 @@
     "dev:payments-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payments-list-with-filters'",
     "dev:payouts-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payouts-list'",
     "dev:payouts-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payouts-list-with-filters'",
+    "dev:order-terminals": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:order-terminals'",
+    "dev:terminal-orders-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:terminal-orders-list'",
     "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",

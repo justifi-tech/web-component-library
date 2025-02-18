@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const { generateRandomLegalName } = require('../utils/random-business-names');
@@ -51,7 +51,7 @@ async function createBusiness(token) {
   const res = await response.json();
   console.log('response from createBusiness', res);
   return res.id;
-};
+}
 
 async function getWebComponentToken(token, businessId) {
   const response = await fetch(
@@ -63,9 +63,7 @@ async function getWebComponentToken(token, businessId) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `write:business:${businessId}`,
-        ],
+        resources: [`write:business:${businessId}`],
       }),
     }
   );

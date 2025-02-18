@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
@@ -60,22 +60,19 @@ async function makeCheckout(token) {
 }
 
 async function getWebComponentToken(token, checkoutId) {
-  const response = await fetch(
-    webComponentTokenEndpoint,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [
-          `write:checkout:${checkoutId}`,
-          `write:tokenize:${subAccountId}`,
-        ],
-      }),
-    }
-  );
+  const response = await fetch(webComponentTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [
+        `write:checkout:${checkoutId}`,
+        `write:tokenize:${subAccountId}`,
+      ],
+    }),
+  });
   const { access_token } = await response.json();
   return access_token;
 }

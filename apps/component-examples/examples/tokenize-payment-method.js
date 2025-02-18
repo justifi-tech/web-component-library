@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
@@ -18,7 +18,7 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 async function getToken() {
   const requestBody = JSON.stringify({
     client_id: clientId,
-    client_secret: clientSecret
+    client_secret: clientSecret,
   });
 
   let response;
@@ -39,21 +39,16 @@ async function getToken() {
 }
 
 async function getWebComponentToken(token) {
-  const response = await fetch(
-    webComponentTokenEndpoint,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [
-          `write:tokenize:${subAccountId}`,
-        ],
-      }),
-    }
-  );
+  const response = await fetch(webComponentTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [`write:tokenize:${subAccountId}`],
+    }),
+  });
   const { access_token } = await response.json();
   return access_token;
 }

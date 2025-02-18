@@ -4,16 +4,15 @@ export interface TerminalsQueryParams {
   status?: string;
 }
 
-export interface ITerminalStatus {
-  id?: string | null;
-  status: string
-  last_date_time_connected?: string | null;
-  last_date_time_active?: string | null;
+export enum ITerminalStatus {
+  connected = 'connected',
+  disconnected = 'disconnected',
+  unknown = 'unknown',
 }
 
 export interface ITerminal {
   id?: string | null;
-  status?: string | null;
+  status?: ITerminalStatus;
   account_id?: string | null;
   platform_account_id?: string | null;
   gateway_ref_id?: string | null;
@@ -25,19 +24,13 @@ export interface ITerminal {
   nickname?: string | null;
 }
 
-export enum TerminalStatuses {
-  connected = 'connected',
-  disconnected = 'disconnected',
-  unknown = 'unknown',
-}
-
 export enum TerminalProviders {
   verifone = 'verifone',
 }
 
 export class Terminal implements ITerminal {
   public id: string;
-  public status: TerminalStatuses;
+  public status: ITerminalStatus;
   public account_id: string;
   public platform_account_id: string;
   public provider: string;
@@ -50,7 +43,7 @@ export class Terminal implements ITerminal {
 
   constructor(data: ITerminal) {
     this.id = data.id || '';
-    this.status = data.status as TerminalStatuses;
+    this.status = data.status;
     this.account_id = data.account_id || '';
     this.platform_account_id = data.platform_account_id || '';
     this.provider = data.provider || '';

@@ -3,7 +3,7 @@ import { PagingInfo, SubAccount, Terminal, pagingDefaults } from '../../api';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
-import { queryParams, onQueryParamsChange } from './terminals-list-params-state';
+import { getRequestParams, onQueryParamsChange } from './terminals-list-params-state';
 import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
@@ -24,7 +24,6 @@ export class TerminalsListCore {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
   
-  @Watch('queryParams')
   @Watch('pagingParams')
   @Watch('getTerminals')
   @Watch('getSubAccounts')
@@ -56,7 +55,7 @@ export class TerminalsListCore {
     this.loading = true;
 
     this.getTerminals({
-      params: this.requestParams,
+      params: this.terminalParams,
       onSuccess: async ({ terminals, pagingInfo }) => {
         this.terminals = terminals;
         this.paging = pagingInfo;
@@ -123,9 +122,10 @@ export class TerminalsListCore {
     this.clickEvent.emit({ name: TableClickActions.row, data: terminalData });
   };
 
-  get requestParams() {
-    const combinedParams = { ...queryParams, ...this.pagingParams };
-    return combinedParams;
+  get terminalParams() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
   }
 
   get subAccountParams() {

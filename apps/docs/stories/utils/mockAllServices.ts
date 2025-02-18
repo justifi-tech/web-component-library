@@ -17,6 +17,7 @@ import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInte
 import mockTerminals from '../../../../mockData/mockTerminalsListSuccess.json';
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
+import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -67,16 +68,11 @@ export const API_PATHS = {
   DISPUTE_RESPONSE: '/disputes/:id/response',
 };
 
-type MockAllServicesConfig = {
-  bypass?: string[];
-};
-
-export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
-  const bypass = config.bypass || [];
+export const setUpMocks = () => {
   createServer({
     routes() {
       // Primary URL prefix for API requests
-      this.urlPrefix = __VITE_STORYBOOK_PROXY_API_ORIGIN__;
+      this.urlPrefix = process.env.PROXY_API_ORIGIN || '';
       this.namespace = '/v1';
 
       // BusinessOwner
@@ -84,12 +80,15 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       this.patch(API_PATHS.EXISTING_BUSINESS_OWNER, (_schema, request) => {
         const newRequestData = JSON.parse(request.requestBody);
-        let mergedRequestData = { ...mockBusinessDetails.data.owners[0], ...newRequestData };
+        let mergedRequestData = {
+          ...mockBusinessDetails.data.owners[0],
+          ...newRequestData,
+        };
         return {
           id: 2,
-          type: "identity",
+          type: 'identity',
           data: mergedRequestData,
-          page_info: "string"
+          page_info: 'string',
         };
       });
 
@@ -100,12 +99,15 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
 
       this.patch(API_PATHS.BUSINESS_DETAILS, (_schema, request) => {
         const newRequestData = JSON.parse(request.requestBody);
-        let mergedRequestData = { ...mockBusinessDetails.data, ...newRequestData };
+        let mergedRequestData = {
+          ...mockBusinessDetails.data,
+          ...newRequestData,
+        };
         return {
           id: 1,
-          type: "business",
+          type: 'business',
           data: mergedRequestData,
-          page_info: "string"
+          page_info: 'string',
         };
       });
 
@@ -154,9 +156,6 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       // SubAccounts
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
 
-      // Analytics
-      this.post(API_PATHS.ANALYTICS, () => null);
-
       // InsuranceQuotes
       this.post(
         API_PATHS.INSURANCE_QUOTES,
@@ -184,19 +183,11 @@ export const mockAllServices = (config: MockAllServicesConfig = {}): void => {
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
       this.urlPrefix = 'https://registry.npmjs.org';
 
-      // Ensure all other requests not handled by Mirage are sent to the real network
-      this.passthrough(...bypass);
+      // PackageVersion
+      this.get(API_PATHS.PKG_VERSION, () => mockNPMVersion);
 
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));
     },
   });
-};
-
-export const setUpMocks = () => {
-  const isMocksEnabled = __VITE_STORYBOOK_MOCKS_ENABLED__ === 'true';
-
-  if (isMocksEnabled) {
-    mockAllServices();
-  }
 };

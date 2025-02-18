@@ -7,7 +7,7 @@ import { defaultColumnsKeys } from '../terminals-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { TerminalsListFilters } from '../terminals-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { queryParams } from '../terminals-list-params-state';
+import { filterParams } from '../terminals-list-params-state';
 import { TerminalsListCore } from '../terminals-list-core';
 
 const components = [TerminalsList, TerminalsListCore, TableFiltersMenu, TerminalsListFilters, SelectInput];
@@ -88,7 +88,7 @@ describe('justifi-terminals-list with filters', () => {
     selectFilterInput.dispatchEvent(new Event('input'));
 
     expect(fetchDataSpy).toHaveBeenCalled();
-    const updatedParams = queryParams;
+    const updatedParams = filterParams;
     expect(updatedParams).toEqual({"status": "connected"});
   });
 

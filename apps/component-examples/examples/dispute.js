@@ -1,10 +1,10 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT
-const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -41,21 +41,16 @@ async function getToken() {
 }
 
 async function getWebComponentToken(token, accountId) {
-  const response = await fetch(
-    webComponentTokenEndpoint,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [
-          `write:account:${accountId}`,
-        ],
-      }),
-    }
-  );
+  const response = await fetch(webComponentTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [`write:account:${accountId}`],
+    }),
+  });
   const { access_token } = await response.json();
   return access_token;
 }

@@ -1,8 +1,13 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -12,13 +17,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret
   });
 
   let response;
   try {
-    response = await fetch('https://api.justifi.ai/oauth/token', {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,8 +39,7 @@ async function getToken() {
 }
 
 async function getWebComponentToken(token) {
-  const response = await fetch(
-    'https://api.justifi.ai/v1/web_component_tokens',
+  const response = await fetch(webComponentTokenEndpoint,
     {
       method: 'POST',
       headers: {
@@ -43,9 +47,7 @@ async function getWebComponentToken(token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `read:account:${process.env.SUB_ACCOUNT_ID}`,
-        ],
+        resources: [`read:account:${subAccountId}`],
       }),
     }
   );
@@ -55,7 +57,6 @@ async function getWebComponentToken(token) {
 }
 
 app.get('/', async (req, res) => {
-  const accountId = process.env.SUB_ACCOUNT_ID;
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 
@@ -69,12 +70,15 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div style="padding:25px;">
+        <div class="list-component-wrapper">
           <div>
-            <justifi-payouts-list-filters></justifi-payouts-list-filters>
+            <justifi-payouts-list-filters />
           </div>
           <div>
-            <justifi-payouts-list auth-token="${webComponentToken}" account-id="${accountId}"></justifi-payouts-list>
+            <justifi-payouts-list
+              account-id="${subAccountId}"
+              auth-token="${webComponentToken}"
+            />
           </div>
         </div>
         <script>
