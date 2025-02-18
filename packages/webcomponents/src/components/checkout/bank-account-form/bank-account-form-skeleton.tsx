@@ -1,7 +1,17 @@
-import { h } from "@stencil/core";
+import { FunctionalComponent, h } from "@stencil/core";
 import { Skeleton } from "../../../ui-components/skeleton";
 
-const bankAccountFormSkeleton = () => {
+interface BankAccountFormSkeletonProps {
+  isReady: boolean;
+}
+
+const BankAccountFormSkeleton: FunctionalComponent<BankAccountFormSkeletonProps> = (props) => {
+  const { isReady } = props;
+
+  if (isReady) {
+    return null;
+  }
+
   return (
     <div class="container-fluid p-0">
       <div class="row mb-3">
@@ -20,4 +30,4 @@ const bankAccountFormSkeleton = () => {
   );
 };
 
-export default bankAccountFormSkeleton;
+export default BankAccountFormSkeleton;

@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
-import cardFormSkeleton from "./card-form-skeleton";
+import CardFormSkeleton from "./card-form-skeleton";
 
 @Component({
   tag: "card-form",
@@ -59,7 +59,7 @@ export class CardForm {
   render() {
     return (
       <Host>
-        {!this.isReady && cardFormSkeleton()}
+        <CardFormSkeleton isReady={this.isReady} />
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
           height: this.isReady ? 'auto' : '0',
