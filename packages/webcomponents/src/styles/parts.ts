@@ -97,6 +97,9 @@ export const listGroupItem = `list-group-item ${text} ${backgroundColor}`;
 // Skeleton
 export const skeleton = `skeleton`;
 
+// Image
+export const image = `image`;
+
 // Component specific
 // This allows specific sections of a component to be hidden, for example
 // ::part(billing-form) { display: none; }
