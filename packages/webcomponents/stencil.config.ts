@@ -25,6 +25,7 @@ export const config: Config = {
     replace({
       PROXY_API_ORIGIN: JSON.stringify(process.env.PROXY_API_ORIGIN),
       IFRAME_ORIGIN: JSON.stringify(process.env.IFRAME_ORIGIN),
+      API_ORIGIN: JSON.stringify(process.env.API_ORIGIN),
     }),
   ],
   validatePrimaryPackageOutputTarget: true,

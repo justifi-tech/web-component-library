@@ -46,12 +46,12 @@ export class TerminalService implements ITerminalService {
   async fetchTerminalModels(
     accountId: string,
     authToken: string,
-    apiOrigin: string = PROXY_API_ORIGIN
+    apiOrigin: string = API_ORIGIN
   ): Promise<IApiResponseCollection<ITerminal>> {
     const headers = { Account: accountId };
 
     const api = Api({ authToken, apiOrigin });
-    const endpoint = 'terminals/available-to-order';
+    const endpoint = 'terminals/order_models';
     return api.get(endpoint, null, null, headers);
   }
 }
