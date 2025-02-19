@@ -25,7 +25,7 @@ export class TerminalQuantitySelector {
   }
 
   private addUnity = () => {
-    if (this.selectedQuantity < this.limit) {
+    if (this.limit > 0) {
       this.selectedQuantity++;
       this.selectedQuantityChange.emit({ terminalId: this.terminalId, quantity: this.selectedQuantity });
     }

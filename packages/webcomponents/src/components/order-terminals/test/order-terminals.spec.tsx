@@ -254,7 +254,7 @@ describe('justifi-order-terminals', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('should update totalQuantity state when add a terminal is clicked', async () => {
+  it('should update totalQuantity state when add a terminal is clicked 3 times', async () => {
     TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       data: {
         terminal_models: [
@@ -293,5 +293,46 @@ describe('justifi-order-terminals', () => {
     terminal2AddUnity.click();
 
     expect(page.rootInstance.order.totalQuantity).toBe(3);
+  });
+
+  it('should update totalQuantity state when add a terminal is clicked 4 times', async () => {
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
+      data: {
+        terminal_models: [
+          {
+            id: '1',
+            model_name: 'Model 1',
+            description: 'Description 1',
+            image_url: 'Image URL 1',
+            help_url: 'Help URL 1',
+          },
+          {
+            id: '2',
+            model_name: 'Model 2',
+            description: 'Description 2',
+            image_url: 'Image URL 2',
+            help_url: 'Help URL 2',
+          }
+        ],
+        order_limit: 5
+      }
+    });
+
+    const page = await newSpecPage({
+      components: [OrderTerminals, TerminalQuantitySelector],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    const terminals = page.root.shadowRoot.querySelectorAll('terminal-quantity-selector');
+    const terminal1AddUnity = (terminals[0].querySelector('.plus') as HTMLElement);
+
+    terminal1AddUnity.click();
+    terminal1AddUnity.click();
+    terminal1AddUnity.click();
+    terminal1AddUnity.click();
+
+    expect(page.rootInstance.order.totalQuantity).toBe(4);
   });
 });

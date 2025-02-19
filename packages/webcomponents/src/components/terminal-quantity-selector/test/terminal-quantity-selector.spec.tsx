@@ -80,7 +80,7 @@ describe('justifi-terminal-quantity-selector', () => {
     expect(page.rootInstance.selectedQuantity).toBe(0);
   });
 
-  it('should not add unitity when the selectedQuantity is equal to the limit', async () => {
+  it('should not add unitity when limit is 0', async () => {
     const page = await newSpecPage({
       components: [TerminalQuantitySelector],
       template: () => (
@@ -90,7 +90,7 @@ describe('justifi-terminal-quantity-selector', () => {
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
           description="super duper terminal"
-          limit={2}
+          limit={0}
         />
       )
     });
@@ -99,11 +99,9 @@ describe('justifi-terminal-quantity-selector', () => {
 
     const plusButton = (page.root.querySelector('.plus') as HTMLElement);
     plusButton.click();
-    plusButton.click();
-    plusButton.click();
 
     await page.waitForChanges();
 
-    expect(page.rootInstance.selectedQuantity).toBe(2);
+    expect(page.rootInstance.selectedQuantity).toBe(0);
   });
 });
