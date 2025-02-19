@@ -5,14 +5,15 @@ import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { BusinessService } from "../../api/services/business.service";
 import { ErrorState } from "../../ui-components/details/utils";
-import { ComponentErrorEvent, Terminal } from "../../api";
+import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
 import { heading4, listGroup, listGroupItem, text } from "../../styles/parts";
 import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
-import { makeGetAvailableToOrderTerminals } from "../../actions/terminal/get-available-to-order-terminals";
+import { makeGetTerminalModels } from "../../actions/terminal/get-terminal-models";
 import { TerminalService } from "../../api/services/terminal.service";
+import { TerminalOrder } from "../../api/TerminalOrder";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -26,7 +27,10 @@ export class OrderTerminals {
   @State() businessIsLoading: boolean = true;
   @State() terminalsIsLoading: boolean = true;
   @State() business: Business;
-  @State() availableTerminals: Terminal[];
+  @State() terminalModels: TerminalModel[];
+  @State() orderLimit: number;
+  @State() order: TerminalOrder = new TerminalOrder();
+  @State() totalQuantity: number = 0;
 
   analytics: JustifiAnalytics;
 
@@ -52,7 +56,7 @@ export class OrderTerminals {
     }
 
     this.initializeGetBusiness();
-    this.initializeGetAvailableToOrderTerminals();
+    this.initializeGetTerminalModels();
   }
 
   private initializeGetBusiness() {
@@ -80,16 +84,17 @@ export class OrderTerminals {
     });
   }
 
-  private initializeGetAvailableToOrderTerminals() {
-    const getAvailableToOrderTerminals = makeGetAvailableToOrderTerminals({
+  private initializeGetTerminalModels() {
+    const getTerminalModels = makeGetTerminalModels({
       id: this.businessId,
       authToken: this.authToken,
       service: new TerminalService(),
     });
 
-    getAvailableToOrderTerminals({
-      onSuccess: ({ terminals }) => {
-        this.availableTerminals = terminals;
+    getTerminalModels({
+      onSuccess: ({ terminals, orderLimit }) => {
+        this.terminalModels = terminals;
+        this.orderLimit = orderLimit;
         this.terminalsIsLoading = false;
       },
       onError: ({ error, code, severity }) => {
@@ -103,6 +108,11 @@ export class OrderTerminals {
         this.terminalsIsLoading = false;
       }
     });
+  }
+
+  private onSelectedQuantityChange(event) {
+    this.order.updateTerminal(event.detail.terminalId, event.detail.quantity);
+    this.totalQuantity = this.order.totalQuantity;
   }
 
   render() {
@@ -152,6 +162,18 @@ export class OrderTerminals {
             <TerminalSelectorLoading />
           </div>
         )}
+
+        {!this.terminalsIsLoading && this.terminalModels && this.terminalModels.map((terminal) => (
+          <terminal-quantity-selector
+            terminalId={terminal.id}
+            modelName={terminal.modelName}
+            description={terminal.description}
+            imageUrl={terminal.imageUrl}
+            helpUrl={terminal.helpUrl}
+            limit={this.orderLimit - this.order.totalQuantity}
+            onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
+          />
+        ))}
       </StyledHost>
     );
   }

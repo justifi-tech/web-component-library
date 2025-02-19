@@ -1,20 +1,21 @@
-import { ComponentErrorSeverity, Terminal } from '../../api';
+import { ComponentErrorSeverity, TerminalModel } from '../../api';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
-export const makeGetAvailableToOrderTerminals =
+export const makeGetTerminalModels =
   ({ id, authToken, service }) =>
   async ({ onSuccess, onError }) => {
     try {
-      const response = await service.fetchAvailableToOrderTerminals(
-        id,
-        authToken
-      );
+      const response = await service.fetchTerminalModels(id, authToken);
 
       if (!response.error) {
         const terminals =
-          response.data?.map((dataItem) => new Terminal(dataItem)) || [];
+          response.data?.terminal_models?.map(
+            (dataItem) => new TerminalModel(dataItem)
+          ) || [];
 
-        onSuccess({ terminals });
+        const orderLimit = response.data?.order_limit;
+
+        onSuccess({ terminals, orderLimit });
       } else {
         const responseError = getErrorMessage(response.error);
         const code = getErrorCode(response.error?.code);

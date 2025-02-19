@@ -12,7 +12,7 @@ export interface ITerminalService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<ITerminal>>;
-  fetchAvailableToOrderTerminals(
+  fetchTerminalModels(
     accountId: string,
     authToken: string,
     params: any,
@@ -43,7 +43,7 @@ export class TerminalService implements ITerminalService {
     return Api({ authToken, apiOrigin: apiOrigin }).get(endpoint);
   }
 
-  async fetchAvailableToOrderTerminals(
+  async fetchTerminalModels(
     accountId: string,
     authToken: string,
     apiOrigin: string = PROXY_API_ORIGIN

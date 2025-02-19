@@ -15,6 +15,7 @@ export const heading2 = `heading-2 ${heading}`;
 export const heading3 = `heading-3 ${heading}`;
 export const heading4 = `heading-4 ${heading}`;
 export const heading5 = `heading-5 ${heading}`;
+export const link = `link ${text}`;
 
 // Button
 export const button = `button ${text}`;

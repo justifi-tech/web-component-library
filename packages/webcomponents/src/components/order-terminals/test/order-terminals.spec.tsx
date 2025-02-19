@@ -5,6 +5,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 import { BusinessService } from '../../../api/services/business.service';
 import { TerminalService } from '../../../api/services/terminal.service';
 import businessDetailsMock from '../../../../../../mockData/mockBusinessDetails.json';
+import { TerminalQuantitySelector } from '../../terminal-quantity-selector/terminal-quantity-selector';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -121,8 +122,8 @@ describe('justifi-order-terminals', () => {
 
   });
 
-  it('should call TerminalsService.fetchAvailableToOrderTerminals on component load', async () => {
-    TerminalService.prototype.fetchAvailableToOrderTerminals = jest.fn().mockResolvedValue([]);
+  it('should call TerminalsService.fetchTerminalModels on component load', async () => {
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue([]);
 
     const page = await newSpecPage({
       components: [OrderTerminals],
@@ -131,11 +132,11 @@ describe('justifi-order-terminals', () => {
 
     await page.rootInstance.componentWillLoad();
 
-    expect(TerminalService.prototype.fetchAvailableToOrderTerminals).toHaveBeenCalled();
+    expect(TerminalService.prototype.fetchTerminalModels).toHaveBeenCalled();
   });
 
   it('should display an error message if getTerminals fails', async () => {
-    TerminalService.prototype.fetchAvailableToOrderTerminals = jest.fn().mockResolvedValue({
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       "error": {
         "code": "resource_not_found",
         "message": "Resource Not Found"
@@ -153,7 +154,7 @@ describe('justifi-order-terminals', () => {
   });
 
   it('should emit an error event if getTerminals fails', async () => {
-    TerminalService.prototype.fetchAvailableToOrderTerminals = jest.fn().mockResolvedValue({
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       "error": {
         "code": "resource_not_found",
         "message": "Resource Not Found"
@@ -171,7 +172,126 @@ describe('justifi-order-terminals', () => {
     expect(errorEvent).toHaveBeenCalled();
   });
 
-  it('should display the terminals if getTerminals is successful', async () => { });
+  it('should set terminalModels state with the correct data structure', async () => {
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
+      data: {
+        terminal_models: [
+          {
+            id: '1',
+            model_name: 'Model 1',
+            description: 'Description 1',
+            image_url: 'Image URL 1',
+            help_url: 'Help URL 1',
+          },
+          {
+            id: '2',
+            model_name: 'Model 2',
+            description: 'Description 2',
+            image_url: 'Image URL 2',
+            help_url: 'Help URL 2',
+          }
+        ],
+        order_limit: 5
+      }
+    });
 
-  it('should update the selected terminals state when add a terminal is clicked', async () => { });
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.rootInstance.componentWillLoad();
+    await page.waitForChanges();
+
+    expect(page.rootInstance.terminalModels).toEqual([
+      {
+        id: '1',
+        modelName: 'Model 1',
+        description: 'Description 1',
+        imageUrl: 'Image URL 1',
+        helpUrl: 'Help URL 1',
+      },
+      {
+        id: '2',
+        modelName: 'Model 2',
+        description: 'Description 2',
+        imageUrl: 'Image URL 2',
+        helpUrl: 'Help URL 2',
+      }
+    ]);
+  });
+
+  it('should display the terminals if getTerminals is successful', async () => {
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
+      data: {
+        terminal_models: [
+          {
+            id: '1',
+            model_name: 'Model 1',
+            description: 'Description 1',
+            image_url: 'Image URL 1',
+            help_url: 'Help URL 1',
+          },
+          {
+            id: '2',
+            model_name: 'Model 2',
+            description: 'Description 2',
+            image_url: 'Image URL 2',
+            help_url: 'Help URL 2',
+          }
+        ],
+        order_limit: 5
+      }
+    });
+
+    const page = await newSpecPage({
+      components: [OrderTerminals],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should update totalQuantity state when add a terminal is clicked', async () => {
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
+      data: {
+        terminal_models: [
+          {
+            id: '1',
+            model_name: 'Model 1',
+            description: 'Description 1',
+            image_url: 'Image URL 1',
+            help_url: 'Help URL 1',
+          },
+          {
+            id: '2',
+            model_name: 'Model 2',
+            description: 'Description 2',
+            image_url: 'Image URL 2',
+            help_url: 'Help URL 2',
+          }
+        ],
+        order_limit: 5
+      }
+    });
+
+    const page = await newSpecPage({
+      components: [OrderTerminals, TerminalQuantitySelector],
+      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    const terminals = page.root.shadowRoot.querySelectorAll('terminal-quantity-selector');
+    const terminal1AddUnity = (terminals[0].querySelector('.plus') as HTMLElement);
+    const terminal2AddUnity = (terminals[1].querySelector('.plus') as HTMLElement);
+
+    terminal1AddUnity.click();
+    terminal1AddUnity.click();
+    terminal2AddUnity.click();
+
+    expect(page.rootInstance.order.totalQuantity).toBe(3);
+  });
 });
