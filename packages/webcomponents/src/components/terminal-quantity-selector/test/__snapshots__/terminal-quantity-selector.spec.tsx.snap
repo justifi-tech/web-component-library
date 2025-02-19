@@ -5,7 +5,7 @@ exports[`justifi-terminal-quantity-selector should render with all props provide
   <div class="mt-4 rounded shadow-sm" part="text color font-family">
     <div class="d-flex gap-3">
       <div>
-        <img alt="DVC100" height="125" src="https://device-image.com" width="125">
+        <img alt="DVC100" height="125" part="image" src="https://device-image.com" width="125">
       </div>
       <div class="d-flex flex-column flex-grow-1 gap-3 p-4">
         <div class="d-flex flex-row row">
