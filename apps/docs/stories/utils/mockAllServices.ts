@@ -156,9 +156,6 @@ export const setUpMocks = () => {
       // SubAccounts
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
 
-      // Analytics
-      this.post(API_PATHS.ANALYTICS, () => null);
-
       // InsuranceQuotes
       this.post(
         API_PATHS.INSURANCE_QUOTES,

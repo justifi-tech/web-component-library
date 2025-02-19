@@ -25,6 +25,13 @@ class JustifiAnalytics {
   basicData: iBasicData;
 
   constructor(component: ComponentInterface) {
+    // dont track analytics in local or storybook
+    if (
+      window.location.origin.includes('localhost') ||
+      window.location.origin.includes('storybook')
+    ) {
+      return;
+    }
     this.service = new AnalyticsService();
     this.componentInstance = component;
     this.setUpBasicData();

@@ -12,6 +12,13 @@
 | `label`        | `label`         |             | `string` | `undefined` |
 
 
+## Events
+
+| Event          | Description | Type                |
+| -------------- | ----------- | ------------------- |
+| `iframeLoaded` |             | `CustomEvent<void>` |
+
+
 ## Methods
 
 ### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`

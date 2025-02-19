@@ -3,6 +3,13 @@ require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const proxyApiOrigin = process.env.PROXY_API_ORIGIN;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webcomponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const paymentMethodId = process.env.PAYMENT_METHOD_ID;
 
 app.use(
   '/scripts',
@@ -32,13 +39,13 @@ const insurance = {
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret,
   });
 
   let response;
   try {
-    response = await fetch('https://api.justifi.ai/oauth/token', {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,41 +61,40 @@ async function getToken() {
 }
 
 async function makeCheckout(token) {
-  const response = await fetch('https://api.justifi.ai/v1/checkouts', {
+  const response = await fetch(`${proxyApiOrigin}/v1/checkouts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'Sub-Account': process.env.SUB_ACCOUNT_ID,
+      'Sub-Account': subAccountId,
     },
     body: JSON.stringify({
       amount: 1799,
       description: 'One Chocolate Donut',
-      payment_method_group_id: process.env.PAYMENT_METHOD_GROUP_ID,
+      payment_method_group_id: paymentMethodId,
       origin_url: `http://localhost:${port}`,
     }),
   });
-  const { data } = await response.json();
+  const responseJson = await response.json();
+  console.log('responseJson:', responseJson);
+  const { data } = responseJson;
   return data;
 }
 
 async function getWebComponentToken(token, checkoutId) {
-  const response = await fetch(
-    'https://api.justifi.ai/v1/web_component_tokens',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [
-          `write:checkout:${checkoutId}`,
-          `write:tokenize:${process.env.SUB_ACCOUNT_ID}`,
-        ],
-      }),
-    }
-  );
+  const response = await fetch(webcomponentTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [
+        `write:checkout:${checkoutId}`,
+        `write:tokenize:${subAccountId}`,
+      ],
+    }),
+  });
   const { access_token } = await response.json();
   return access_token;
 }
@@ -137,6 +143,10 @@ app.get('/', async (req, res) => {
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
+
+        justifiCheckout.addEventListener('ready-event', (event) => {
+          console.log('ready-event', event);
+        });
 
         justifiCheckout.addEventListener('submit-event', (event) => {
           console.log(event);
