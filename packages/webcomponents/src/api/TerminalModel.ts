@@ -1,4 +1,4 @@
-export interface iTerminalModel {
+export interface ITerminalModel {
   id: string;
   modelName: string;
   description: string;
@@ -6,7 +6,7 @@ export interface iTerminalModel {
   helpUrl: string;
 }
 
-export interface iTerminalModelApiResponse {
+export interface ITerminalModelApiResponse {
   id: string;
   model_name: string;
   description: string;
@@ -15,18 +15,18 @@ export interface iTerminalModelApiResponse {
 }
 
 export interface iTerminalModelsApiResponse {
-  terminal_models: iTerminalModelApiResponse[];
+  terminal_models: ITerminalModelApiResponse[];
   order_limit: number;
 }
 
-export class TerminalModel implements iTerminalModel {
+export class TerminalModel implements ITerminalModel {
   public id: string;
   public modelName: string;
   public description: string;
   public imageUrl: string;
   public helpUrl: string;
 
-  constructor(data: iTerminalModelApiResponse) {
+  constructor(data: ITerminalModelApiResponse) {
     this.id = data.id;
     this.modelName = data.model_name;
     this.description = data.description;

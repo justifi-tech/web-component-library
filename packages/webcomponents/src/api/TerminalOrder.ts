@@ -3,10 +3,10 @@ export interface ITerminalOrder {
   accountId: string;
   provider: string;
   orderType: string;
-  orderItems: iTerminalItem[];
+  orderItems: ITerminalItem[];
 }
 
-export interface iTerminalItem {
+export interface ITerminalItem {
   modelName: string;
   quantity: number;
 }
@@ -16,7 +16,7 @@ export class TerminalOrder implements ITerminalOrder {
   public accountId: string;
   public provider: string = 'verifone';
   public orderType: string;
-  public orderItems: iTerminalItem[];
+  public orderItems: ITerminalItem[];
 
   constructor(terminalOrder?: ITerminalOrder) {
     this.businessId = terminalOrder?.businessId || '';
