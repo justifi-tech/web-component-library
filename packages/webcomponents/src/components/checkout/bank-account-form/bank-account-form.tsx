@@ -1,10 +1,15 @@
-import { Component, h, Host, Method, Prop } from "@stencil/core";
+import { Component, h, Host, Method, Prop, Event, EventEmitter, State } from "@stencil/core";
+import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 
 @Component({
   tag: "bank-account-form",
 })
 export class BankAccountForm {
   @Prop() iframeOrigin: string;
+
+  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
+
+  @State() isReady: boolean = false;
 
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
@@ -29,10 +34,30 @@ export class BankAccountForm {
     );
   }
 
+  componentDidRender() {
+    const elements = [
+      this.accountNumberIframeElement,
+      this.routingNumberIframeElement,
+    ];
+
+    Promise.all(elements.map((element) => {
+      return new Promise<void>((resolve) => {
+        element.addEventListener('iframeLoaded', () => { resolve(); });
+      });
+    })).then(() => {
+      this.isReady = true;
+      this.eventReady.emit();
+    });
+  }
+
   render() {
     return (
       <Host>
-        <div class="container-fluid p-0" >
+        <BankAccountFormSkeleton isReady={this.isReady} />
+        <div class="container-fluid p-0" style={{
+          opacity: this.isReady ? '1' : '0',
+          height: this.isReady ? 'auto' : '0',
+        }}>
           <div class="row mb-3">
             <iframe-input
               inputId="accountNumber"

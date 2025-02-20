@@ -20,7 +20,8 @@
     "start:payments-list-with-filters": "npx nodemon ./examples/payments-list-with-filters.js",
     "start:payouts-list": "npx nodemon ./examples/payouts-list.js",
     "start:payouts-list-with-filters": "npx nodemon ./examples/payouts-list-with-filters.js",
-    "start:order-terminals": "npx nodemon ./examples/order-terminals.js"
+    "start:order-terminals": "npx nodemon ./examples/order-terminals.js",
+    "start:terminal-orders-list": "npx nodemon ./examples/terminal-orders-list.js"
   },
   "author": "",
   "license": "ISC",
