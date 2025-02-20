@@ -1,6 +1,12 @@
+export enum TerminalModelName {
+  v400 = 'v400',
+  p400 = 'p400+',
+  e285 = 'e285'
+}
+
 export interface ITerminalModel {
   id: string;
-  model_name: string;
+  model_name: TerminalModelName;
   description: string;
   image_url: string;
   help_url: string;
@@ -8,7 +14,7 @@ export interface ITerminalModel {
 
 export interface ITerminalModelApiResponse {
   id: string;
-  model_name: string;
+  model_name: TerminalModelName;
   description: string;
   image_url: string;
   help_url: string;
@@ -21,7 +27,7 @@ export interface iTerminalModelsApiResponse {
 
 export class TerminalModel implements ITerminalModel {
   public id: string;
-  public model_name: string;
+  public model_name: TerminalModelName;
   public description: string;
   public image_url: string;
   public help_url: string;
