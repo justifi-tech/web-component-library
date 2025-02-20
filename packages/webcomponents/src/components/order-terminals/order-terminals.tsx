@@ -98,11 +98,11 @@ export class OrderTerminals {
               <div class="col-6">
                 <h2 part={heading4}>Shipping Address:</h2>
                 <ul class="list-group" part={listGroup}>
-                  <li class="list-group-item" part={listGroupItem}>Street: {this.business.legal_address?.line1 || ''}</li>
-                  <li class="list-group-item" part={listGroupItem}>{this.business.legal_address?.line2 || ''}</li>
-                  <li class="list-group-item" part={listGroupItem}>Postal Code: {this.business.legal_address?.postal_code || ''}</li>
-                  <li class="list-group-item" part={listGroupItem}>City: {this.business.legal_address?.city || ''}</li>
-                  <li class="list-group-item" part={listGroupItem}>State: {this.business.legal_address?.state || ''}</li>
+                  <li class="list-group-item" part={listGroupItem}>Street: {this.business.legal_address?.line1}</li>
+                  <li class="list-group-item" part={listGroupItem}>{this.business.legal_address?.line2}</li>
+                  <li class="list-group-item" part={listGroupItem}>Postal Code: {this.business.legal_address?.postal_code}</li>
+                  <li class="list-group-item" part={listGroupItem}>City: {this.business.legal_address?.city}</li>
+                  <li class="list-group-item" part={listGroupItem}>State: {this.business.legal_address?.state}</li>
                 </ul>
 
               </div>
