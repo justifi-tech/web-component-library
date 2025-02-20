@@ -4,6 +4,7 @@ import { table, tableCell } from '../../styles/parts';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { pagingDefaults, PagingInfo } from '../../api';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
+import { TerminalOrder } from '../../api';
 
 @Component({
   tag: 'terminal-orders-list-core',
@@ -13,8 +14,8 @@ export class TerminalOrdersListCore {
   @Prop() getTerminalOrders: Function;
   @Prop() columns: string;
 
-  @State() terminalOrders: any[] = [];
-  @State() terminalOrdersTable: Table<any>;
+  @State() terminalOrders: TerminalOrder[] = [];
+  @State() terminalOrdersTable: Table<TerminalOrder>;
   @State() loading: boolean = true;
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
@@ -30,7 +31,7 @@ export class TerminalOrdersListCore {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<any>;
 
   componentWillLoad() {
-    this.terminalOrdersTable = new Table<any>(this.terminalOrders, this.columns, terminalOrdersTableColumns, terminalOrdersTableCells);
+    this.terminalOrdersTable = new Table<TerminalOrder>(this.terminalOrders, this.columns, terminalOrdersTableColumns, terminalOrdersTableCells);
     if (this.getTerminalOrders) {
       this.fetchData();
     }

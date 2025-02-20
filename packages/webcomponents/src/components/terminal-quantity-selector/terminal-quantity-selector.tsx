@@ -1,12 +1,13 @@
 import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
 import { buttonLink, image, link, text } from "../../styles/parts";
+import { TerminalModelName } from "../../api";
 
 @Component({
   tag: 'terminal-quantity-selector',
   shadow: false,
 })
 export class TerminalQuantitySelector {
-  @Prop() modelName: string;
+  @Prop() modelName: TerminalModelName;
   @Prop() imageUrl: string;
   @Prop() description: string;
   @Prop() helpUrl: string;
@@ -14,7 +15,7 @@ export class TerminalQuantitySelector {
 
   @State() selectedQuantity: number = 0;
 
-  @Event() selectedQuantityChange: EventEmitter<{ modelName: string, quantity: number }>;
+  @Event() selectedQuantityChange: EventEmitter<{ modelName: TerminalModelName, quantity: number }>;
 
   private removeUnity = () => {
     if (this.selectedQuantity > 0) {

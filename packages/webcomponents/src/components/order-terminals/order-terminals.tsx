@@ -29,7 +29,7 @@ export class OrderTerminals {
   @State() business: Business;
   @State() terminalModels: TerminalModel[];
   @State() orderLimit: number;
-  @State() order: TerminalOrder = new TerminalOrder();
+  @State() order: TerminalOrder = new TerminalOrder({});
   @State() totalQuantity: number = 0;
 
   analytics: JustifiAnalytics;
