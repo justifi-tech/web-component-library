@@ -8,6 +8,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const businessId = process.env.BUSINESS_ID;
+const accountId = process.env.ACCOUNT_ID;
 
 app.use(
   '/scripts',
@@ -48,10 +49,11 @@ async function getWebComponentToken(token, businessId) {
         Authorization: `${token}`,
       },
       body: JSON.stringify({
-        resources: [`write:business:${businessId}`],
+        resources: [`read:business:${businessId}`, `read:account:${accountId}`],
       }),
     });
     const responseJson = await response.json();
+
     return responseJson.access_token;
   } catch (error) {
     console.log('ERROR getWebComponentToken:', error);
