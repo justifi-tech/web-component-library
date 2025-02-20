@@ -8,6 +8,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const businessId = process.env.BUSINESS_ID;
+const accountId = process.env.ACCOUNT_ID;
 
 app.use(
   '/scripts',
@@ -65,6 +66,8 @@ async function getWebComponentToken(token, businessId) {
 app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token, businessId);
+
+  console.log('webComponentToken:', webComponentToken);
 
   res.send(`
     <!DOCTYPE html>
