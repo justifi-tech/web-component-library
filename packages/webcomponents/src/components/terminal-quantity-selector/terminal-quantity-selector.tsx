@@ -17,14 +17,14 @@ export class TerminalQuantitySelector {
 
   @Event() selectedQuantityChange: EventEmitter<{ modelName: TerminalModelName, quantity: number }>;
 
-  private removeUnity = () => {
+  private removeUnit = () => {
     if (this.selectedQuantity > 0) {
       this.selectedQuantity--;
       this.selectedQuantityChange.emit({ modelName: this.modelName, quantity: this.selectedQuantity });
     }
   }
 
-  private addUnity = () => {
+  private addUnit = () => {
     if (this.limit > 0) {
       this.selectedQuantity++;
       this.selectedQuantityChange.emit({ modelName: this.modelName, quantity: this.selectedQuantity });
@@ -50,9 +50,9 @@ export class TerminalQuantitySelector {
             <div class="row">
               <div class="col-6">{this.description}</div>
               <div class="col-6 d-flex justify-content-end">
-                <button class="p-0 minus" onClick={this.removeUnity} part={buttonLink}>-</button>
+                <button class="p-0 minus" onClick={this.removeUnit} part={buttonLink}>-</button>
                 <div class="w-25 text-center">{this.selectedQuantity}</div>
-                <button class="p-0 plus" onClick={this.addUnity} part={buttonLink}>+</button>
+                <button class="p-0 plus" onClick={this.addUnit} part={buttonLink}>+</button>
               </div>
             </div>
           </div>

@@ -71,7 +71,7 @@ describe('justifi-terminal-quantity-selector', () => {
 
     await page.waitForChanges();
 
-    page.rootInstance.removeUnity();
+    page.rootInstance.removeUnit();
 
     await page.waitForChanges();
 
