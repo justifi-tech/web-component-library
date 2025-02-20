@@ -3,18 +3,18 @@ import { TerminalModelName } from './TerminalModel';
 
 enum TerminalOrderType {
   boardingOnly = 'boarding_only',
-  boardingShipping = 'boarding_shipping'
+  boardingShipping = 'boarding_shipping',
 }
 
 enum TerminalOrderStatus {
   submitted = 'submitted',
-  completed = 'completed'
+  completed = 'completed',
 }
 
 // This is the interface for the terminal item returned from the API response
 interface OrderedTerminal {
-  terminal_id: string,
-  terminal_did: string,
+  terminal_id: string;
+  terminal_did: string;
   model_name: TerminalModelName;
 }
 
@@ -53,6 +53,7 @@ export class TerminalOrder {
     this.business_id = data.business_id;
     this.account_id = data.account_id;
     this.provider = data.provider || TerminalProviders.verifone;
+    this.order_items = [];
     this.order_type = data.order_type;
     this.order_status = data.order_status;
     this.terminals = data.terminals;
