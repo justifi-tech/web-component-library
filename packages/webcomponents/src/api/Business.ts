@@ -5,7 +5,7 @@ import { getStateAbbreviation } from '../components/business-forms/utils/helpers
 
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',
-  patchData = 'Error updating business data'
+  patchData = 'Error updating business data',
 }
 
 export enum BusinessClassification {
@@ -185,14 +185,14 @@ export interface IBusiness {
   email: string;
   id: string;
   industry: string;
-  legal_address: IAddress | {};
+  legal_address?: IAddress | null;
   legal_name: string;
   metadata: any;
   owners: Identity[];
   phone: string;
   platform_account_id: string;
   product_categories: ProductCategories;
-  representative: Identity | {};
+  representative?: Identity | null;
   tax_id: string;
   terms_conditions_accepted: boolean;
   updated_at: string;
@@ -211,13 +211,13 @@ export class Business implements IBusiness {
   public email: string;
   public id: string;
   public industry: string;
-  public legal_address: Address | {};
+  public legal_address?: Address | null;
   public legal_name: string;
   public metadata: any;
   public owners: Identity[];
   public phone: string;
   public platform_account_id: string;
-  public representative: Identity | {};
+  public representative?: Identity | null;
   public tax_id: string;
   public terms_conditions_accepted: boolean;
   public updated_at: string;
@@ -238,14 +238,18 @@ export class Business implements IBusiness {
     this.email = business.email;
     this.id = business.id;
     this.industry = business.industry;
-    this.legal_address = new Address(business.legal_address || {});
+    this.legal_address = business?.legal_address
+      ? new Address(business.legal_address)
+      : null;
     this.legal_name = business.legal_name;
     this.metadata = business.metadata;
     this.owners = business.owners;
     this.phone = business.phone;
     this.platform_account_id = business.platform_account_id;
     this.product_categories = business.product_categories;
-    this.representative = new Representative(business.representative || {});
+    this.representative = business.representative
+      ? new Representative(business.representative)
+      : null;
     this.tax_id = business.tax_id;
     this.terms_conditions_accepted = business.terms_conditions_accepted;
     this.updated_at = business.updated_at;

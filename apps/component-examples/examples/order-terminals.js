@@ -3,6 +3,11 @@ require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const businessId = process.env.BUSINESS_ID;
 
 app.use(
   '/scripts',
@@ -12,13 +17,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret,
   });
 
   let response;
   try {
-    response = await fetch(process.env.AUTH_TOKEN_ENDPOINT, {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +41,7 @@ async function getToken() {
 
 async function getWebComponentToken(token, businessId) {
   try {
-    const response = await fetch(process.env.WEB_COMPONENT_TOKEN_ENDPOINT, {
+    const response = await fetch(webComponentTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +61,6 @@ async function getWebComponentToken(token, businessId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const businessId = process.env.BUSINESS_ID;
   const webComponentToken = await getWebComponentToken(token, businessId);
 
   res.send(`
@@ -76,8 +80,6 @@ app.get('/', async (req, res) => {
           ></justifi-order-terminals>
         </div>
         <script>
-          console.log('token', '${token}');
-          console.log('webComponentToken', '${webComponentToken}');
         </script>
       </body>
     </html>
