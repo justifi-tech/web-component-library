@@ -10,6 +10,8 @@ const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const businessId = process.env.BUSINESS_ID;
 const accountId = process.env.ACCOUNT_ID;
 
+console.log('accountId:', accountId);
+
 app.use(
   '/scripts',
   express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
@@ -49,13 +51,12 @@ async function getWebComponentToken(token, businessId) {
         Authorization: `${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `write:business:${businessId}`,
-          `write:account:${accountId}`,
-        ],
+        resources: [`read:business:${businessId}`, `read:account:${accountId}`],
       }),
     });
     const responseJson = await response.json();
+
+    console.log('responseJson:', responseJson);
     return responseJson.access_token;
   } catch (error) {
     console.log('ERROR getWebComponentToken:', error);
