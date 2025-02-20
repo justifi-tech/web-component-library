@@ -206,17 +206,17 @@ describe('justifi-order-terminals', () => {
     expect(page.rootInstance.terminalModels).toEqual([
       {
         id: '1',
-        modelName: 'Model 1',
+        model_name: 'Model 1',
         description: 'Description 1',
-        imageUrl: 'Image URL 1',
-        helpUrl: 'Help URL 1',
+        image_url: 'Image URL 1',
+        help_url: 'Help URL 1',
       },
       {
         id: '2',
-        modelName: 'Model 2',
+        model_name: 'Model 2',
         description: 'Description 2',
-        imageUrl: 'Image URL 2',
-        helpUrl: 'Help URL 2',
+        image_url: 'Image URL 2',
+        help_url: 'Help URL 2',
       }
     ]);
   });

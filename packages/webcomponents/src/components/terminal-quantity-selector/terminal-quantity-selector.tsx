@@ -6,7 +6,6 @@ import { buttonLink, image, link, text } from "../../styles/parts";
   shadow: false,
 })
 export class TerminalQuantitySelector {
-  @Prop() terminalId: string;
   @Prop() modelName: string;
   @Prop() imageUrl: string;
   @Prop() description: string;
@@ -15,19 +14,19 @@ export class TerminalQuantitySelector {
 
   @State() selectedQuantity: number = 0;
 
-  @Event() selectedQuantityChange: EventEmitter<{ terminalId: string, quantity: number }>;
+  @Event() selectedQuantityChange: EventEmitter<{ modelName: string, quantity: number }>;
 
   private removeUnity = () => {
     if (this.selectedQuantity > 0) {
       this.selectedQuantity--;
-      this.selectedQuantityChange.emit({ terminalId: this.terminalId, quantity: this.selectedQuantity });
+      this.selectedQuantityChange.emit({ modelName: this.modelName, quantity: this.selectedQuantity });
     }
   }
 
   private addUnity = () => {
     if (this.limit > 0) {
       this.selectedQuantity++;
-      this.selectedQuantityChange.emit({ terminalId: this.terminalId, quantity: this.selectedQuantity });
+      this.selectedQuantityChange.emit({ modelName: this.modelName, quantity: this.selectedQuantity });
     }
   }
 

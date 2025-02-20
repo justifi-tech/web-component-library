@@ -111,7 +111,7 @@ export class OrderTerminals {
   }
 
   private onSelectedQuantityChange(event) {
-    this.order.updateTerminal(event.detail.terminalId, event.detail.quantity);
+    this.order.updateTerminal(event.detail.modelName, event.detail.quantity);
     this.totalQuantity = this.order.totalQuantity;
   }
 
@@ -165,11 +165,10 @@ export class OrderTerminals {
 
         {!this.terminalsIsLoading && this.terminalModels && this.terminalModels.map((terminal) => (
           <terminal-quantity-selector
-            terminalId={terminal.id}
-            modelName={terminal.modelName}
+            modelName={terminal.model_name}
             description={terminal.description}
-            imageUrl={terminal.imageUrl}
-            helpUrl={terminal.helpUrl}
+            imageUrl={terminal.image_url}
+            helpUrl={terminal.help_url}
             limit={this.orderLimit - this.order.totalQuantity}
             onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
           />

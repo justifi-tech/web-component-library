@@ -8,7 +8,6 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          terminalId="tid_123"
           modelName="DVC100"
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
@@ -29,7 +28,6 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          terminalId="tid_123"
           modelName="DVC100"
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
@@ -49,7 +47,7 @@ describe('justifi-terminal-quantity-selector', () => {
 
     expect(onSelectedQuantityChange).toHaveBeenCalledWith(expect.objectContaining({
       detail: {
-        terminalId: 'tid_123',
+        modelName: 'DVC100',
         quantity: 1
       }
     }));
@@ -62,7 +60,6 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          terminalId="tid_123"
           modelName="DVC100"
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
@@ -85,7 +82,6 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          terminalId="tid_123"
           modelName="DVC100"
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"

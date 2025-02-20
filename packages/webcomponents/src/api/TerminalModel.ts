@@ -1,9 +1,9 @@
 export interface ITerminalModel {
   id: string;
-  modelName: string;
+  model_name: string;
   description: string;
-  imageUrl: string;
-  helpUrl: string;
+  image_url: string;
+  help_url: string;
 }
 
 export interface ITerminalModelApiResponse {
@@ -21,16 +21,16 @@ export interface iTerminalModelsApiResponse {
 
 export class TerminalModel implements ITerminalModel {
   public id: string;
-  public modelName: string;
+  public model_name: string;
   public description: string;
-  public imageUrl: string;
-  public helpUrl: string;
+  public image_url: string;
+  public help_url: string;
 
   constructor(data: ITerminalModelApiResponse) {
     this.id = data.id;
-    this.modelName = data.model_name;
+    this.model_name = data.model_name;
     this.description = data.description;
-    this.imageUrl = data.image_url;
-    this.helpUrl = data.help_url;
+    this.image_url = data.image_url;
+    this.help_url = data.help_url;
   }
 }

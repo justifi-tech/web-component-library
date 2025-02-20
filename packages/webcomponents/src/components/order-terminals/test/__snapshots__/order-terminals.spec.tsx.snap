@@ -85480,8 +85480,8 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
-    <terminal-quantity-selector description="Description 1" helpurl="Help URL 1" imageurl="Image URL 1" limit="5" modelname="Model 1" terminalid="1"></terminal-quantity-selector>
-    <terminal-quantity-selector description="Description 2" helpurl="Help URL 2" imageurl="Image URL 2" limit="5" modelname="Model 2" terminalid="2"></terminal-quantity-selector>
+    <terminal-quantity-selector description="Description 1" helpurl="Help URL 1" imageurl="Image URL 1" limit="5" modelname="Model 1"></terminal-quantity-selector>
+    <terminal-quantity-selector description="Description 2" helpurl="Help URL 2" imageurl="Image URL 2" limit="5" modelname="Model 2"></terminal-quantity-selector>
   </template>
 </justifi-order-terminals>
 `;
