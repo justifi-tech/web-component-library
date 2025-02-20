@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { TerminalQuantitySelector } from '../terminal-quantity-selector';
+import { TerminalModelName } from '../../../api';
 
 describe('justifi-terminal-quantity-selector', () => {
   it('should render with all props provided', async () => {
@@ -8,7 +9,7 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          modelName="DVC100"
+          modelName={TerminalModelName.v400}
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
           description="super duper terminal"
@@ -28,7 +29,7 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          modelName="DVC100"
+          modelName={TerminalModelName.v400}
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
           description="super duper terminal"
@@ -47,7 +48,7 @@ describe('justifi-terminal-quantity-selector', () => {
 
     expect(onSelectedQuantityChange).toHaveBeenCalledWith(expect.objectContaining({
       detail: {
-        modelName: 'DVC100',
+        modelName: 'v400',
         quantity: 1
       }
     }));
@@ -60,7 +61,7 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          modelName="DVC100"
+          modelName={TerminalModelName.v400}
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
           description="super duper terminal"
@@ -82,7 +83,7 @@ describe('justifi-terminal-quantity-selector', () => {
       components: [TerminalQuantitySelector],
       template: () => (
         <terminal-quantity-selector
-          modelName="DVC100"
+          modelName={TerminalModelName.v400}
           imageUrl="https://device-image.com"
           helpUrl="https://learnmore.com"
           description="super duper terminal"

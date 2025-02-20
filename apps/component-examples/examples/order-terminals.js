@@ -48,7 +48,10 @@ async function getWebComponentToken(token, businessId) {
         Authorization: `${token}`,
       },
       body: JSON.stringify({
-        resources: [`write:business:${businessId}`],
+        resources: [
+          `write:business:${businessId}`,
+          `write:account:${accountId}`,
+        ],
       }),
     });
     const responseJson = await response.json();
