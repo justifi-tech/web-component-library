@@ -109,10 +109,6 @@ app.get('/', async (req, res) => {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
-        justifiTokenizePaymentMethod.addEventListener('ready-event', (event) => {
-          console.log('ready-event', event);
-        });
-
         justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
           console.log('submit-event', event);
 

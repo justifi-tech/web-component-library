@@ -128,10 +128,6 @@ app.get('/', async (req, res) => {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
-        justifiCheckout.addEventListener('ready-event', (event) => {
-          console.log('ready-event', event);
-        });
-
         justifiCheckout.addEventListener('submit-event', (event) => {
           console.log(event);
           writeOutputToPage(event);
