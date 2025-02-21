@@ -7,8 +7,6 @@ import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 export class BankAccountForm {
   @Prop() iframeOrigin: string;
 
-  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
-
   @State() isReady: boolean = false;
 
   private accountNumberIframeElement!: HTMLIframeInputElement;
@@ -46,7 +44,6 @@ export class BankAccountForm {
       });
     })).then(() => {
       this.isReady = true;
-      this.eventReady.emit();
     });
   }
 

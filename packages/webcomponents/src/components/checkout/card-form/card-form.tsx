@@ -7,8 +7,6 @@ import CardFormSkeleton from "./card-form-skeleton";
 export class CardForm {
   @Prop() iframeOrigin: string;
 
-  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
-
   @State() isReady: boolean = false;
 
   private cardNumberIframeElement!: HTMLIframeInputElement;
@@ -30,7 +28,6 @@ export class CardForm {
       });
     })).then(() => {
       this.isReady = true;
-      this.eventReady.emit();
     });
   }
 
