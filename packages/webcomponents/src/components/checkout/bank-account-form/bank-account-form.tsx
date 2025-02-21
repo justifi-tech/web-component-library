@@ -1,4 +1,4 @@
-import { Component, h, Host, Method, Prop, Event, EventEmitter, State } from "@stencil/core";
+import { Component, h, Host, Method, Prop, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 
 @Component({
