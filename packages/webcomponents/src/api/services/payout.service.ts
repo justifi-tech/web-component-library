@@ -12,7 +12,11 @@ export interface IPayoutService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<IPayout>>;
-  fetchCSV(payoutId: string, authToken: string): Promise<IApiResponse<any>>;
+  fetchCSV(
+    payoutId: string, 
+    authToken: string,
+    apiOrigin?: string  
+  ): Promise<IApiResponse<any>>;
 }
 
 export class PayoutService implements IPayoutService {
