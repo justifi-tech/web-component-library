@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.3.4
+
+### Patch Changes
+
+- 2c1248e: - Internal improvements and minor refactors for component library.
+
 ## 5.3.3
 
 ### Patch Changes
