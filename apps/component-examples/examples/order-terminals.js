@@ -77,6 +77,7 @@ app.get('/', async (req, res) => {
       <body>
         <div style="margin:0 auto;max-width:700px;">
           <justifi-order-terminals
+            account-id="${accountId}"
             auth-token="${webComponentToken}"
             business-id="${businessId}"
           ></justifi-order-terminals>

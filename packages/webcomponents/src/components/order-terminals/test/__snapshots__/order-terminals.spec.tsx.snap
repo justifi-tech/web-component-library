@@ -14285,6 +14285,11 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+        Submit Order
+      </button>
+    </div>
   </template>
 </justifi-order-terminals>
 `;
@@ -28524,6 +28529,11 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+        Submit Order
+      </button>
+    </div>
   </template>
 </justifi-order-terminals>
 `;
@@ -42689,6 +42699,11 @@ fieldset:disabled .btn {
         Resource Not Found
       </p>
     </main>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+        Submit Order
+      </button>
+    </div>
   </template>
 </justifi-order-terminals>
 `;
@@ -56975,6 +56990,11 @@ fieldset:disabled .btn {
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+        Submit Order
+      </button>
     </div>
   </template>
 </justifi-order-terminals>
@@ -71265,6 +71285,11 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+        Submit Order
+      </button>
+    </div>
   </template>
 </justifi-order-terminals>
 `;
@@ -85482,6 +85507,11 @@ fieldset:disabled .btn {
     </div>
     <terminal-quantity-selector description="Description 1" helpurl="Help URL 1" imageurl="Image URL 1" limit="5" modelname="Model 1"></terminal-quantity-selector>
     <terminal-quantity-selector description="Description 2" helpurl="Help URL 2" imageurl="Image URL 2" limit="5" modelname="Model 2"></terminal-quantity-selector>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+        Submit Order
+      </button>
+    </div>
   </template>
 </justifi-order-terminals>
 `;

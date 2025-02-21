@@ -9,11 +9,12 @@ import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
-import { heading4, listGroup, listGroupItem, text } from "../../styles/parts";
+import { buttonPrimary, heading4, listGroup, listGroupItem, text } from "../../styles/parts";
 import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
 import { makeGetTerminalModels } from "../../actions/terminal/get-terminal-models";
 import { TerminalService } from "../../api/services/terminal.service";
 import { TerminalOrder } from "../../api/TerminalOrder";
+import { makeOrderTerminals } from "../../actions/terminal/order-terminals";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -22,6 +23,7 @@ import { TerminalOrder } from "../../api/TerminalOrder";
 export class OrderTerminals {
   @Prop() businessId: string;
   @Prop() authToken: string;
+  @Prop() accountId: string;
 
   @State() errorMessage: string;
   @State() businessIsLoading: boolean = true;
@@ -29,7 +31,7 @@ export class OrderTerminals {
   @State() business: Business;
   @State() terminalModels: TerminalModel[];
   @State() orderLimit: number;
-  @State() order: TerminalOrder = new TerminalOrder({});
+  @State() order: TerminalOrder;
   @State() totalQuantity: number = 0;
 
   analytics: JustifiAnalytics;
@@ -38,7 +40,10 @@ export class OrderTerminals {
     eventName: 'error-event'
   }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
+  @Event({ eventName: 'submit-event' }) submitted: EventEmitter<any>;
+
   componentWillLoad() {
+    this.order = new TerminalOrder({ business_id: this.businessId, account_id: this.accountId });
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.loadData();
@@ -110,6 +115,29 @@ export class OrderTerminals {
     });
   }
 
+  private submitOrder() {
+    const orderTerminals = makeOrderTerminals({
+      authToken: this.authToken,
+      service: new TerminalService(),
+    });
+
+    orderTerminals({
+      terminalOrder: this.order.payload,
+      onSuccess: ({ data }) => {
+        this.submitted.emit(data);
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+      }
+    });
+  }
+
   private onSelectedQuantityChange(event) {
     this.order.updateTerminal(event.detail.modelName, event.detail.quantity);
     this.totalQuantity = this.order.totalQuantity;
@@ -173,6 +201,17 @@ export class OrderTerminals {
             onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
           />
         ))}
+
+        <div class="d-flex justify-content-end mt-5">
+          <button
+            class="btn btn-primary submit-btn"
+            onClick={this.submitOrder.bind(this)}
+            disabled={this.order.totalQuantity === 0}
+            part={buttonPrimary}
+          >
+            Submit Order
+          </button>
+        </div>
       </StyledHost>
     );
   }

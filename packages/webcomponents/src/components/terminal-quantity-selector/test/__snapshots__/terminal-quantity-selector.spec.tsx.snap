@@ -23,13 +23,13 @@ exports[`justifi-terminal-quantity-selector should render with all props provide
             super duper terminal
           </div>
           <div class="col-6 d-flex justify-content-end">
-            <button class="minus p-0" part="button-link button text color font-family">
+            <button class="btn minus p-0" part="button-link button text color font-family">
               -
             </button>
             <div class="text-center w-25">
               0
             </div>
-            <button class="p-0 plus" part="button-link button text color font-family">
+            <button class="btn p-0 plus" part="button-link button text color font-family">
               +
             </button>
           </div>
