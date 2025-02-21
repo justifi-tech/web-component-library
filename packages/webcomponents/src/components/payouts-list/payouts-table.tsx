@@ -81,7 +81,7 @@ export const payoutTableCells = (downloadCSV) => ({
   ),
   csv: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
-      <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(payout); }}>
+      <a href="#" onClick={(event) => { event.preventDefault(); downloadCSV(payout.id); }}>
         CSV
       </a>
     </td>
