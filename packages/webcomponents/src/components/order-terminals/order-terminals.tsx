@@ -22,6 +22,7 @@ import { TerminalOrder } from "../../api/TerminalOrder";
 export class OrderTerminals {
   @Prop() businessId: string;
   @Prop() authToken: string;
+  @Prop() accountId: string;
 
   @State() errorMessage: string;
   @State() businessIsLoading: boolean = true;
@@ -86,7 +87,7 @@ export class OrderTerminals {
 
   private initializeGetTerminalModels() {
     const getTerminalModels = makeGetTerminalModels({
-      id: this.businessId,
+      id: this.accountId,
       authToken: this.authToken,
       service: new TerminalService(),
     });

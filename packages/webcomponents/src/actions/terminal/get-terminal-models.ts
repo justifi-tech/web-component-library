@@ -9,7 +9,7 @@ export const makeGetTerminalModels =
 
       if (!response.error) {
         const terminals =
-          response.data?.terminal_models?.map(
+          response.data?.terminal_order_models?.map(
             (dataItem) => new TerminalModel(dataItem)
           ) || [];
 
