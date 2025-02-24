@@ -91,7 +91,7 @@ export class OrderTerminals {
 
   private initializeGetTerminalModels() {
     const getTerminalModels = makeGetTerminalModels({
-      id: this.businessId,
+      id: this.accountId,
       authToken: this.authToken,
       service: new TerminalService(),
     });

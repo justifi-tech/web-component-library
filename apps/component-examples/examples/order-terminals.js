@@ -9,6 +9,7 @@ const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const businessId = process.env.BUSINESS_ID;
 const accountId = process.env.ACCOUNT_ID;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
 
 app.use(
   '/scripts',
@@ -46,10 +47,13 @@ async function getWebComponentToken(token, businessId) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [`read:business:${businessId}`, `read:account:${accountId}`],
+        resources: [
+          `read:business:${businessId}`,
+          `write:account:${accountId}`,
+        ],
       }),
     });
     const responseJson = await response.json();
@@ -80,6 +84,7 @@ app.get('/', async (req, res) => {
             account-id="${accountId}"
             auth-token="${webComponentToken}"
             business-id="${businessId}"
+            account-id="${accountId}"
           ></justifi-order-terminals>
         </div>
         <script>

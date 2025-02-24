@@ -53,7 +53,7 @@ export class TerminalService implements ITerminalService {
     authToken: string,
     apiOrigin: string = API_ORIGIN
   ): Promise<IApiResponseCollection<ITerminal>> {
-    const headers = { Account: accountId };
+    const headers = { 'sub-account': accountId };
 
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/order_models';

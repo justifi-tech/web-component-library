@@ -35,7 +35,7 @@ export class TerminalQuantitySelector {
     return (
       <div class="mt-4 rounded shadow-sm" part={text}>
         <div class="d-flex gap-3">
-          <div>
+          <div class="d-flex align-items-center">
             <img src={this.imageUrl} alt={this.modelName} height={125} width={125} part={image} />
           </div>
 
@@ -49,7 +49,7 @@ export class TerminalQuantitySelector {
 
             <div class="row">
               <div class="col-6">{this.description}</div>
-              <div class="col-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end align-items-center">
                 <button class="p-0 minus btn" onClick={this.removeUnit} part={buttonLink}>-</button>
                 <div class="w-25 text-center">{this.selectedQuantity}</div>
                 <button class="p-0 plus btn" onClick={this.addUnit} part={buttonLink}>+</button>

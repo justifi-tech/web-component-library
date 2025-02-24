@@ -175,7 +175,7 @@ describe('justifi-order-terminals', () => {
   it('should set terminalModels state with the correct data structure', async () => {
     TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       data: {
-        terminal_models: [
+        terminal_order_models: [
           {
             id: '1',
             model_name: 'Model 1',
@@ -224,7 +224,7 @@ describe('justifi-order-terminals', () => {
   it('should display the terminals if getTerminals is successful', async () => {
     TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       data: {
-        terminal_models: [
+        terminal_order_models: [
           {
             id: '1',
             model_name: 'Model 1',
@@ -257,7 +257,7 @@ describe('justifi-order-terminals', () => {
   it('should update totalQuantity state when add a terminal is clicked 3 times', async () => {
     TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       data: {
-        terminal_models: [
+        terminal_order_models: [
           {
             id: '1',
             model_name: 'Model 1',
@@ -298,7 +298,7 @@ describe('justifi-order-terminals', () => {
   it('should update totalQuantity state when add a terminal is clicked 4 times', async () => {
     TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
       data: {
-        terminal_models: [
+        terminal_order_models: [
           {
             id: '1',
             model_name: 'Model 1',
