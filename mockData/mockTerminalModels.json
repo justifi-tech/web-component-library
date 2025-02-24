@@ -1,0 +1,49 @@
+{
+  "data": {
+    "terminal_models": [
+      {
+        "id": "trm_43Y2lE9E2ULR8pvaKI6D5v",
+        "model_name": "Terminal 1",
+        "description": "super duper terminal",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzAiTKIgvCAC4U6w_0Ft1JwRjZDW1IZtWFNYE43dMYXmZJUdu2",
+        "help_url": "https://via.placeholder.com/150"
+      },
+      {
+        "id": "trm_6TFOXK5U0LZLyQ6y6t3sbj",
+        "model_name": "Terminal 2",
+        "description": "super duper terminal",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzAiTKIgvCAC4U6w_0Ft1JwRjZDW1IZtWFNYE43dMYXmZJUdu2",
+        "help_url": "https://via.placeholder.com/150"
+      },
+      {
+        "id": "trm_F8UyFyXcaTBwSDh1cMxjc",
+        "model_name": "Terminal 3",
+        "description": "super duper terminal",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzAiTKIgvCAC4U6w_0Ft1JwRjZDW1IZtWFNYE43dMYXmZJUdu2",
+        "help_url": "https://via.placeholder.com/150"
+      },
+      {
+        "id": "trm_43Y2lE9E2ULR8pvaKI6D5v",
+        "model_name": "Terminal 4",
+        "description": "super duper terminal",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzAiTKIgvCAC4U6w_0Ft1JwRjZDW1IZtWFNYE43dMYXmZJUdu2",
+        "help_url": "https://via.placeholder.com/150"
+      },
+      {
+        "id": "trm_6TFOXK5U0LZLyQ6y6t3sbj",
+        "model_name": "Terminal 5",
+        "description": "super duper terminal",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzAiTKIgvCAC4U6w_0Ft1JwRjZDW1IZtWFNYE43dMYXmZJUdu2",
+        "help_url": "https://via.placeholder.com/150"
+      },
+      {
+        "id": "trm_F8UyFyXcaTBwSDh1cMxjc",
+        "model_name": "Terminal 6",
+        "description": "super duper terminal",
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzAiTKIgvCAC4U6w_0Ft1JwRjZDW1IZtWFNYE43dMYXmZJUdu2",
+        "help_url": "https://via.placeholder.com/150"
+      }
+    ],
+    "order_limit": 5
+  }
+}

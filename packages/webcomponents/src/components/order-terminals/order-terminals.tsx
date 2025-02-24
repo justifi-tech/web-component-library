@@ -5,11 +5,15 @@ import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { BusinessService } from "../../api/services/business.service";
 import { ErrorState } from "../../ui-components/details/utils";
-import { ComponentErrorEvent } from "../../api";
+import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
 import { heading4, listGroup, listGroupItem, text } from "../../styles/parts";
+import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
+import { makeGetTerminalModels } from "../../actions/terminal/get-terminal-models";
+import { TerminalService } from "../../api/services/terminal.service";
+import { TerminalOrder } from "../../api/TerminalOrder";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -18,10 +22,16 @@ import { heading4, listGroup, listGroupItem, text } from "../../styles/parts";
 export class OrderTerminals {
   @Prop() businessId: string;
   @Prop() authToken: string;
+  @Prop() accountId: string;
 
   @State() errorMessage: string;
-  @State() isLoading: boolean = true;
+  @State() businessIsLoading: boolean = true;
+  @State() terminalsIsLoading: boolean = true;
   @State() business: Business;
+  @State() terminalModels: TerminalModel[];
+  @State() orderLimit: number;
+  @State() order: TerminalOrder = new TerminalOrder({});
+  @State() totalQuantity: number = 0;
 
   analytics: JustifiAnalytics;
 
@@ -32,10 +42,10 @@ export class OrderTerminals {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetBusiness();
+    this.loadData();
   }
 
-  private initializeGetBusiness() {
+  private loadData() {
     if (!this.businessId || !this.authToken) {
       this.errorMessage = 'Invalid business id or auth token';
       this.errorEvent.emit({
@@ -46,6 +56,11 @@ export class OrderTerminals {
       return;
     }
 
+    this.initializeGetBusiness();
+    this.initializeGetTerminalModels();
+  }
+
+  private initializeGetBusiness() {
     const getBusiness = makeGetBusiness({
       id: this.businessId,
       authToken: this.authToken,
@@ -55,7 +70,7 @@ export class OrderTerminals {
     getBusiness({
       onSuccess: ({ business }) => {
         this.business = new Business(business);
-        this.isLoading = false;
+        this.businessIsLoading = false;
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
@@ -65,20 +80,51 @@ export class OrderTerminals {
           message: error,
           severity,
         });
-        this.isLoading = false;
+        this.businessIsLoading = false;
       }
     });
+  }
+
+  private initializeGetTerminalModels() {
+    const getTerminalModels = makeGetTerminalModels({
+      id: this.accountId,
+      authToken: this.authToken,
+      service: new TerminalService(),
+    });
+
+    getTerminalModels({
+      onSuccess: ({ terminals, orderLimit }) => {
+        this.terminalModels = terminals;
+        this.orderLimit = orderLimit;
+        this.terminalsIsLoading = false;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+        this.terminalsIsLoading = false;
+      }
+    });
+  }
+
+  private onSelectedQuantityChange(event) {
+    this.order.updateTerminal(event.detail.modelName, event.detail.quantity);
+    this.totalQuantity = this.order.totalQuantity;
   }
 
   render() {
     return (
       <StyledHost>
-        {this.isLoading && <OrderTerminalsLoading />}
+        {this.businessIsLoading && <OrderTerminalsLoading />}
 
-        {!this.isLoading && this.errorMessage && ErrorState(this.errorMessage)}
+        {!this.businessIsLoading && this.errorMessage && ErrorState(this.errorMessage)}
 
-        {!this.isLoading && !this.errorMessage && this.business && (
-          <div class="row gap-5 pt-5" part={text}>
+        {!this.businessIsLoading && !this.errorMessage && this.business && (
+          <div class="gap-5 pt-5" part={text}>
             <div class="row">
               <div class="col-12">
                 <h2 part={heading4}>Business Information:</h2>
@@ -109,6 +155,25 @@ export class OrderTerminals {
             </div>
           </div>
         )}
+
+        {this.terminalsIsLoading && (
+          <div class="mt-5">
+            <TerminalSelectorLoading />
+            <TerminalSelectorLoading />
+            <TerminalSelectorLoading />
+          </div>
+        )}
+
+        {!this.terminalsIsLoading && this.terminalModels && this.terminalModels.map((terminal) => (
+          <terminal-quantity-selector
+            modelName={terminal.model_name}
+            description={terminal.description}
+            imageUrl={terminal.image_url}
+            helpUrl={terminal.help_url}
+            limit={this.orderLimit - this.order.totalQuantity}
+            onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
+          />
+        ))}
       </StyledHost>
     );
   }
