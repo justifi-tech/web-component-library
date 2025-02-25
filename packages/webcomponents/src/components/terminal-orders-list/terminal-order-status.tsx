@@ -1,6 +1,6 @@
-import { h } from "@stencil/core";
-import { Badge, BadgeVariant } from "../../ui-components/badge/badge";
-import { TerminalOrderStatus } from "../../api";
+import { h } from '@stencil/core';
+import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
+import { TerminalOrderStatus } from '../../api';
 
 export const MapTerminalOrderStatusToBadge = (status: TerminalOrderStatus) => {
   const statusToBadgeProps = {
