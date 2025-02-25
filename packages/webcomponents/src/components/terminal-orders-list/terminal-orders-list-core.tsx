@@ -5,7 +5,6 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { pagingDefaults, PagingInfo } from '../../api';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
-
 import mockTerminalOrders from '../../../../../mockData/mockTerminalOrdersListSuccess.json';
 
 @Component({

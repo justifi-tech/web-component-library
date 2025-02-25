@@ -91,10 +91,6 @@ export class Payout implements IPayout {
     this.updated_at = payout.updated_at;
   }
 
-  get csv(): string {
-    return this.id;
-  }
-
   formattedPaymentAmount(amount: number): string {
     return formatCurrency(amount, this.currency);
   }

@@ -4,7 +4,7 @@ exports[`justifi-terminal-quantity-selector should render with all props provide
 <terminal-quantity-selector>
   <div class="mt-4 rounded shadow-sm" part="text color font-family">
     <div class="d-flex gap-3">
-      <div>
+      <div class="align-items-center d-flex">
         <img alt="v400" height="125" part="image" src="https://device-image.com" width="125">
       </div>
       <div class="d-flex flex-column flex-grow-1 gap-3 p-4">
@@ -22,14 +22,14 @@ exports[`justifi-terminal-quantity-selector should render with all props provide
           <div class="col-6">
             super duper terminal
           </div>
-          <div class="col-6 d-flex justify-content-end">
-            <button class="minus p-0" part="button-link button text color font-family">
+          <div class="align-items-center col-6 d-flex justify-content-end">
+            <button class="btn minus p-0" part="button-link button text color font-family">
               -
             </button>
             <div class="text-center w-25">
               0
             </div>
-            <button class="p-0 plus" part="button-link button text color font-family">
+            <button class="btn p-0 plus" part="button-link button text color font-family">
               +
             </button>
           </div>
