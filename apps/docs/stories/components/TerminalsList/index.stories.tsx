@@ -48,7 +48,8 @@ const meta: Meta = {
       table: {
         category: "props",
         defaultValue: {
-          summary: "nickname,provider_id,status"
+          summary: "nickname,provider_serial_number,status",
+          detail: "The following values are available to pass to the columns prop as a comma separated string: `nickname`, `provider_serial_number`, `provider_id`, `status`"
         }
       },
       control: {
