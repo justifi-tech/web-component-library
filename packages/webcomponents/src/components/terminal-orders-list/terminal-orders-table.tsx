@@ -19,7 +19,7 @@ export const terminalOrdersTableColumns = {
   ),
   order_status: () => (
     <th part={tableHeadCell} scope="col" title="The current status of the order">
-      Status
+      Order Status
     </th>
   ),
   business_id: () => (
@@ -39,7 +39,7 @@ export const terminalOrdersTableColumns = {
   ),
   quantity: () => (
     <th part={tableHeadCell} scope="col" title="The number of terminals associated with the order">
-      Quantity
+      Order Quantity
     </th>
   ),
 };
