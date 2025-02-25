@@ -18,6 +18,7 @@ export interface ITerminal {
   gateway_ref_id?: string | null;
   provider?: string | null;
   provider_id?: string | null;
+  provider_serial_number?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
   verified_at?: string | null;
@@ -35,6 +36,7 @@ export class Terminal implements ITerminal {
   public platform_account_id: string;
   public provider: string;
   public provider_id: string;
+  public provider_serial_number: string;
   public created_at: string;
   public updated_at: string;
   public verified_at: string;
@@ -48,6 +50,7 @@ export class Terminal implements ITerminal {
     this.platform_account_id = data.platform_account_id || '';
     this.provider = data.provider || '';
     this.provider_id = data.provider_id || '';
+    this.provider_serial_number = data.provider_serial_number || '';
     this.created_at = data.created_at || '';
     this.updated_at = data.updated_at || '';
     this.verified_at = data.verified_at || '';
