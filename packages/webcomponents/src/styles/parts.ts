@@ -15,6 +15,7 @@ export const heading2 = `heading-2 ${heading}`;
 export const heading3 = `heading-3 ${heading}`;
 export const heading4 = `heading-4 ${heading}`;
 export const heading5 = `heading-5 ${heading}`;
+export const link = `link ${text}`;
 
 // Button
 export const button = `button ${text}`;
@@ -95,6 +96,9 @@ export const listGroupItem = `list-group-item ${text} ${backgroundColor}`;
 
 // Skeleton
 export const skeleton = `skeleton`;
+
+// Image
+export const image = `image`;
 
 // Component specific
 // This allows specific sections of a component to be hidden, for example
