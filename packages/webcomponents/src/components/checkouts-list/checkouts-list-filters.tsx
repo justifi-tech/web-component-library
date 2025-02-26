@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ICheckoutPaymentMode, ICheckoutStatus } from '../../api';
+import { ICheckoutPaymentModeParam, ICheckoutStatus } from '../../api';
 import { filterParams, propsParams, clearParams } from './checkouts-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { checkoutsListFilterMenu, paymentModeCheckoutsListFilterParam, statusCheckoutsListFilterParam } from '../../styles/parts';
@@ -10,7 +10,7 @@ import { checkoutsListFilterMenu, paymentModeCheckoutsListFilterParam, statusChe
 })
 export class CheckoutsListFilters {
   @Prop() checkoutStatus?: ICheckoutStatus;
-  @Prop() paymentMode?: ICheckoutPaymentMode;
+  @Prop() paymentMode?: ICheckoutPaymentModeParam;
 
   componentWillLoad() {
     const propsToSet = {
@@ -39,11 +39,11 @@ export class CheckoutsListFilters {
     ]
   }
 
-  get checkoutPaymentModeOptions(): { label: string, value: ICheckoutPaymentMode | '' }[] {
+  get checkoutPaymentModeOptions(): { label: string, value: ICheckoutPaymentModeParam | '' }[] {
     return [
       { label: 'All', value: '' },
-      { label: 'E-commerce', value: ICheckoutPaymentMode.ecom },
-      { label: 'BNPL', value: ICheckoutPaymentMode.bnpl },
+      { label: 'E-commerce', value: ICheckoutPaymentModeParam.ecom },
+      { label: 'BNPL', value: ICheckoutPaymentModeParam.bnpl },
     ]
   }
 
