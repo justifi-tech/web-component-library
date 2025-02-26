@@ -207,6 +207,11 @@ export enum ICheckoutPaymentMode {
   unknown = ''
 }
 
+export enum ICheckoutPaymentModeParam {
+  bnpl = 'bnpl',
+  ecom = 'ecom'
+}
+
 export enum ICheckoutStatus {
   created = 'created',
   completed = 'completed',
