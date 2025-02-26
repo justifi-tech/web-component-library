@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
+import { Component, h, Host, Method, Prop, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
 
 @Component({
@@ -6,8 +6,6 @@ import CardFormSkeleton from "./card-form-skeleton";
 })
 export class CardForm {
   @Prop() iframeOrigin: string;
-
-  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
 
   @State() isReady: boolean = false;
 
@@ -30,7 +28,6 @@ export class CardForm {
       });
     })).then(() => {
       this.isReady = true;
-      this.eventReady.emit();
     });
   }
 

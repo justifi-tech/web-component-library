@@ -1,5 +1,32 @@
 ### Changelog
 
+## 5.3.4
+
+### Patch Changes
+
+- 2c1248e: - Internal improvements and minor refactors for component library.
+
+## 5.3.3
+
+### Patch Changes
+
+- 6ef218e: - Added new optional props to `justifi-terminals-list-filters` allowing prescribed filter selections. The following props are now available: `terminal-status` and `terminal-id`.
+  - Values passed via these props will be automatically applied to the `justifi-terminals-list`'s API requests as query params.
+  - If a value is passed to these props, the corresponding input in the filter menu UI will be disabled.
+  - Add new CSS parts to `justifi-terminals-list-filters` to allow for more customization. The following parts have been added: `terminals-list-filter-menu`, `terminals-status-terminals-list-filter-param`, and `terminal-id-terminals-list-filter-param`.
+- c39e6a2: - Added new optional props to `justifi-checkouts-list-filters` allowing prescribed filter selections. The following props are now available: `checkout-status` and `payment-mode`.
+  - Values passed via these props will be automatically applied to the `justifi-checkouts-list`'s API requests as query params.
+  - If a value is passed to these props, the corresponding input in the filter menu UI will be disabled.
+  - Add new CSS parts to `justifi-checkouts-list-filters` to allow for more customization. The following parts have been added: `checkouts-list-filter-menu`, `checkout-status-checkouts-list-filter-param`, and `payment-mode-checkouts-list-filter-param`.
+- 685bd08: - Added new optional props to `justifi-payouts-list-filters` allowing prescribed filter selections. The following props are now available: `created-before` and `created-after`.
+  - Values passed via these props will be automatically applied to the `justifi-payouts-list`'s API requests as query params.
+  - If a value is passed to these props, the corresponding input in the filter menu UI will be disabled.
+  - Add new CSS parts to `justifi-payouts-list-filters` to allow for more customization. The following parts have been added: `payouts-list-filter-menu`, `created-after-payouts-list-filter-param`, and `created-before-payouts-list-filter-param`.
+  - Resolved bug in `justifi-payments-list-filters` where values passed as `created-before` prop were not correctly applied to component API requests.
+- aa808c7: - Updated data column header in `justifi-terminals-list` from `Provider ID` to `Serial Number`
+- 8fba7cc: - Fixed bug in `justifi-payouts-list` where downloading the payout CSV could return an error from a bad request.
+  - Updated behavior of `click-event` in `justifi-payouts-list` to not emit when clicking on the CSV download link.
+
 ## 5.3.2
 
 ### Patch Changes

@@ -10,8 +10,8 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
             <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The nickname associated with the terminal">
               Nickname
             </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The provider ID of the terminal">
-              Provider ID
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The serial number / provider ID of the terminal">
+              Serial Number
             </th>
             <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each terminal">
               Status
@@ -73,8 +73,8 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The nickname associated with the terminal">
               Nickname
             </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The provider ID of the terminal">
-              Provider ID
+            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The serial number / provider ID of the terminal">
+              Serial Number
             </th>
             <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each terminal">
               Status

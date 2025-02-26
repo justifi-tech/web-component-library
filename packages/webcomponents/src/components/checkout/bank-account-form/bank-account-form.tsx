@@ -1,4 +1,4 @@
-import { Component, h, Host, Method, Prop, Event, EventEmitter, State } from "@stencil/core";
+import { Component, h, Host, Method, Prop, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 
 @Component({
@@ -6,8 +6,6 @@ import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 })
 export class BankAccountForm {
   @Prop() iframeOrigin: string;
-
-  @Event({ eventName: 'ready-event' }) eventReady: EventEmitter<void>;
 
   @State() isReady: boolean = false;
 
@@ -46,7 +44,6 @@ export class BankAccountForm {
       });
     })).then(() => {
       this.isReady = true;
-      this.eventReady.emit();
     });
   }
 

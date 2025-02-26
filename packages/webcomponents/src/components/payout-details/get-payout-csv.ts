@@ -2,10 +2,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayoutCSV =
-  ({ authToken, service }) =>
+  ({ authToken, service, apiOrigin }) =>
   async ({ payoutId, onError }) => {
     try {
-      const { data } = await service.fetchCSV(payoutId, authToken);
+      const { data } = await service.fetchCSV(payoutId, authToken, apiOrigin);
       const a = document.createElement('a');
       a.href = data.csv_url;
       a.click();

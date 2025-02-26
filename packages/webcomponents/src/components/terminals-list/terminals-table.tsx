@@ -12,8 +12,8 @@ export const terminalTableColumns = {
     </th>
   ),
   provider_id: () => (
-    <th part={tableHeadCell} scope="col" title="The provider ID of the terminal">
-      Provider ID
+    <th part={tableHeadCell} scope="col" title="The serial number / provider ID of the terminal">
+      Serial Number
     </th>
   ),
   sub_account_name: () => (
