@@ -9,7 +9,6 @@ const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const businessId = process.env.BUSINESS_ID;
 const accountId = process.env.ACCOUNT_ID;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
 
 app.use(
   '/scripts',
@@ -85,6 +84,7 @@ app.get('/', async (req, res) => {
             auth-token="${webComponentToken}"
             business-id="${businessId}"
             account-id="${accountId}"
+            shipping="true"
           ></justifi-order-terminals>
         </div>
         <script>

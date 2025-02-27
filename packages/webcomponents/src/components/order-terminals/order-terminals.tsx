@@ -9,8 +9,8 @@ import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
-import { buttonPrimary, heading4, inputCheckbox, listGroup, listGroupItem, text } from "../../styles/parts";
-import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
+import { buttonPrimary, heading4, heading5, text } from "../../styles/parts";
+import { TerminalSelectorLoading } from "./terminal-quantity-selector/terminal-quantity-selector-loading";
 import { makeGetTerminalModels } from "../../actions/terminal/get-terminal-models";
 import { TerminalService } from "../../api/services/terminal.service";
 import { TerminalOrder, TerminalOrderType } from "../../api/TerminalOrder";
@@ -24,6 +24,7 @@ export class OrderTerminals {
   @Prop() businessId: string;
   @Prop() authToken: string;
   @Prop() accountId: string;
+  @Prop() shipping: boolean = false;
 
   @State() errorMessage: string;
   @State() businessIsLoading: boolean = true;
@@ -44,7 +45,11 @@ export class OrderTerminals {
   @Event({ eventName: 'submit-event' }) submitted: EventEmitter<any>;
 
   componentWillLoad() {
-    this.order = new TerminalOrder({ business_id: this.businessId, account_id: this.accountId });
+    this.order = new TerminalOrder({
+      business_id: this.businessId,
+      account_id: this.accountId,
+      order_type: this.shipping ? TerminalOrderType.boardingShipping : TerminalOrderType.boardingOnly,
+    });
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.loadData();
@@ -147,85 +152,78 @@ export class OrderTerminals {
   render() {
     return (
       <StyledHost>
-        {this.businessIsLoading && <OrderTerminalsLoading />}
+        <div part={text}>
+          {this.businessIsLoading && <OrderTerminalsLoading />}
 
-        {!this.businessIsLoading && this.errorMessage && ErrorState(this.errorMessage)}
+          {!this.businessIsLoading && this.errorMessage && ErrorState(this.errorMessage)}
 
-        {!this.businessIsLoading && !this.errorMessage && this.business && (
-          <div class="gap-5 pt-5" part={text}>
-            <div class="row">
-              <div class="col-12">
-                <h2 part={heading4}>Business Information:</h2>
-                <p>Business Name: {this.business.legal_name}</p>
+          {!this.businessIsLoading && !this.errorMessage && this.business && (
+            <div class="gap-5 pt-5 mb-5">
+              <div class="row">
+                <div class="col-12">
+                  <h2 part={heading4}>{this.business.legal_name}</h2>
+                </div>
+              </div>
+              <div class="row">
+                <h5 part={heading5}>Representative:</h5>
+                <div>
+                  <div>{this.business?.representative?.name}</div>
+                  <div>{this.business?.representative?.title}</div>
+                  <div>{this.business?.representative?.email}</div>
+                  <div>{this.business?.representative?.phone}</div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-6">
-                <h2 part={heading4}>Representative:</h2>
-                <ul class="list-group" part={listGroup}>
-                  <li class="list-group-item" part={listGroupItem}>Name: {this.business?.representative?.name}</li>
-                  <li class="list-group-item" part={listGroupItem}>Title: {this.business?.representative?.title}</li>
-                  <li class="list-group-item" part={listGroupItem}>Email: {this.business?.representative?.email}</li>
-                  <li class="list-group-item" part={listGroupItem}>Phone: {this.business?.representative?.phone}</li>
-                </ul>
-              </div>
-              <div class="col-6">
-                <h2 part={heading4}>Shipping Address:</h2>
-                <ul class="list-group" part={listGroup}>
-                  <li class="list-group-item" part={listGroupItem}>Street: {this.business.legal_address?.line1}</li>
-                  <li class="list-group-item" part={listGroupItem}>{this.business.legal_address?.line2}</li>
-                  <li class="list-group-item" part={listGroupItem}>Postal Code: {this.business.legal_address?.postal_code}</li>
-                  <li class="list-group-item" part={listGroupItem}>City: {this.business.legal_address?.city}</li>
-                  <li class="list-group-item" part={listGroupItem}>State: {this.business.legal_address?.state}</li>
-                </ul>
+          )}
 
+          {this.terminalsIsLoading && (
+            <div class="mt-5">
+              <TerminalSelectorLoading />
+              <TerminalSelectorLoading />
+              <TerminalSelectorLoading />
+            </div>
+          )}
+
+          {!this.terminalsIsLoading && this.terminalModels && (
+            <div class="d-flex flex-column gap-2 mt-5">
+              {this.terminalModels.map((terminal) => (
+                <terminal-quantity-selector
+                  modelName={terminal.model_name}
+                  description={terminal.description}
+                  imageUrl={terminal.image_url}
+                  helpUrl={terminal.help_url}
+                  limit={this.orderLimit - this.order.totalQuantity}
+                  onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
+                />
+              ))}
+            </div>
+          )}
+
+          <div class="mt-3 text-end">Order limit: {this.orderLimit}</div>
+
+          {!this.businessIsLoading && this.business && this.shipping && (
+            <div class="row mt-3">
+              <h5 part={heading5}>Shipping Address:</h5>
+              <div>
+                <div>{this.business.legal_address?.line1}</div>
+                <div>{this.business.legal_address?.line2}</div>
+                <div>{this.business.legal_address?.postal_code}</div>
+                <div>{this.business.legal_address?.city}</div>
+                <div>{this.business.legal_address?.state}</div>
               </div>
             </div>
+          )}
+
+          <div class="d-flex justify-content-end mt-3">
+            <button
+              class="btn btn-primary submit-btn"
+              onClick={this.submitOrder.bind(this)}
+              disabled={this.order.totalQuantity === 0}
+              part={buttonPrimary}
+            >
+              Submit Order
+            </button>
           </div>
-        )}
-
-        {this.terminalsIsLoading && (
-          <div class="mt-5">
-            <TerminalSelectorLoading />
-            <TerminalSelectorLoading />
-            <TerminalSelectorLoading />
-          </div>
-        )}
-
-        {!this.terminalsIsLoading && this.terminalModels && this.terminalModels.map((terminal) => (
-          <terminal-quantity-selector
-            modelName={terminal.model_name}
-            description={terminal.description}
-            imageUrl={terminal.image_url}
-            helpUrl={terminal.help_url}
-            limit={this.orderLimit - this.order.totalQuantity}
-            onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
-          />
-        ))}
-
-        <div class="form-check d-flex justify-content-end mt-5">
-          <form-control-checkbox
-            label="Include Shipping"
-            name="includeShipping"
-            checked={this.order.order_type === TerminalOrderType.boardingShipping}
-            inputHandler={(_name, value) => {
-              console.log('I WAS CLICKED', value);
-              this.wasClicked = value;
-              this.order.order_type = value ? TerminalOrderType.boardingShipping : TerminalOrderType.boardingOnly;
-            }}
-            part={inputCheckbox}
-          />
-        </div>
-
-        <div class="d-flex justify-content-end mt-3">
-          <button
-            class="btn btn-primary submit-btn"
-            onClick={this.submitOrder.bind(this)}
-            disabled={this.order.totalQuantity === 0}
-            part={buttonPrimary}
-          >
-            Order Terminals
-          </button>
         </div>
       </StyledHost>
     );
