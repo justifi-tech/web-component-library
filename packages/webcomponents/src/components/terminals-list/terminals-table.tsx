@@ -3,7 +3,7 @@ import { MapTerminalStatusToBadge } from './terminals-status';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
 import { Terminal } from '../../api/Terminal';
 
-export const defaultColumnsKeys = 'nickname,provider_id,status';
+export const defaultColumnsKeys = 'nickname,provider_serial_number,status';
 
 export const terminalTableColumns = {
   nickname: () => (
@@ -11,9 +11,14 @@ export const terminalTableColumns = {
       Nickname
     </th>
   ),
-  provider_id: () => (
-    <th part={tableHeadCell} scope="col" title="The serial number / provider ID of the terminal">
+  provider_serial_number: () => (
+    <th part={tableHeadCell} scope="col" title="The serial number of the terminal">
       Serial Number
+    </th>
+  ),
+  provider_id: () => (
+    <th part={tableHeadCell} scope="col" title="The provider ID of the terminal">
+      Provider ID
     </th>
   ),
   sub_account_name: () => (
@@ -31,6 +36,9 @@ export const terminalTableColumns = {
 export const terminalTableCells = {
   nickname: (terminal: Terminal, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminal.nickname}</td>
+  ),
+  provider_serial_number: (terminal: Terminal, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{terminal.provider_serial_number}</td>
   ),
   provider_id: (terminal: Terminal, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminal.provider_id}</td>
