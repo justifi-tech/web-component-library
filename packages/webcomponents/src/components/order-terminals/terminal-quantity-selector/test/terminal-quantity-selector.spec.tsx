@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { TerminalQuantitySelector } from '../terminal-quantity-selector';
-import { TerminalModelName } from '../../../api';
+import { TerminalModelName } from '../../../../api';
 
 describe('justifi-terminal-quantity-selector', () => {
   it('should render with all props provided', async () => {

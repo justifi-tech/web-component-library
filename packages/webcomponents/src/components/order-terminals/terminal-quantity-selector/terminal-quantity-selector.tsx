@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
-import { buttonLink, image, text } from "../../styles/parts";
-import { TerminalModelName } from "../../api";
+import { buttonLink, image, text } from "../../../styles/parts";
+import { TerminalModelName } from "../../../api";
 
 @Component({
   tag: 'terminal-quantity-selector',
@@ -33,10 +33,10 @@ export class TerminalQuantitySelector {
 
   render() {
     return (
-      <div class="rounded shadow-sm" part={text}>
+      <div class="rounded shadow-sm card p-2" part={text}>
         <div class="d-flex gap-3">
           <div class="d-flex align-items-center">
-            <img src={this.imageUrl} alt={this.modelName} height={125} width={125} part={image} />
+            <img src={this.imageUrl} alt={this.modelName} height={75} width={75} part={image} />
           </div>
 
           <div class="d-flex flex-column flex-grow-1 gap-3 p-4 justify-content-center">

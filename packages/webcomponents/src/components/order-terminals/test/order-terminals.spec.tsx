@@ -5,7 +5,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 import { BusinessService } from '../../../api/services/business.service';
 import { TerminalService } from '../../../api/services/terminal.service';
 import businessDetailsMock from '../../../../../../mockData/mockBusinessDetails.json';
-import { TerminalQuantitySelector } from '../../terminal-quantity-selector/terminal-quantity-selector';
+import { TerminalQuantitySelector } from '../terminal-quantity-selector/terminal-quantity-selector';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
