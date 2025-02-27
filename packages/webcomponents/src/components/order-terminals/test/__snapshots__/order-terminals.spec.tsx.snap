@@ -14290,7 +14290,7 @@ fieldset:disabled .btn {
     </div>
     <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
-        Submit Order
+        Order Terminals
       </button>
     </div>
   </template>
@@ -28537,7 +28537,7 @@ fieldset:disabled .btn {
     </div>
     <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
-        Submit Order
+        Order Terminals
       </button>
     </div>
   </template>
@@ -42710,7 +42710,7 @@ fieldset:disabled .btn {
     </div>
     <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
-        Submit Order
+        Order Terminals
       </button>
     </div>
   </template>
@@ -57005,7 +57005,7 @@ fieldset:disabled .btn {
     </div>
     <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
-        Submit Order
+        Order Terminals
       </button>
     </div>
   </template>
@@ -71302,7 +71302,7 @@ fieldset:disabled .btn {
     </div>
     <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
-        Submit Order
+        Order Terminals
       </button>
     </div>
   </template>
@@ -85527,7 +85527,7 @@ fieldset:disabled .btn {
     </div>
     <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
-        Submit Order
+        Order Terminals
       </button>
     </div>
   </template>
