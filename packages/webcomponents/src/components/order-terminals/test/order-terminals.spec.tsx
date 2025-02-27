@@ -6,6 +6,7 @@ import { BusinessService } from '../../../api/services/business.service';
 import { TerminalService } from '../../../api/services/terminal.service';
 import businessDetailsMock from '../../../../../../mockData/mockBusinessDetails.json';
 import { TerminalQuantitySelector } from '../../terminal-quantity-selector/terminal-quantity-selector';
+import { CheckboxInput } from '../../../ui-components/form/form-control-checkbox';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -378,5 +379,52 @@ describe('justifi-order-terminals', () => {
     await page.waitForChanges();
 
     expect(TerminalService.prototype.orderTerminals).toHaveBeenCalledWith("123", { "account_id": "123", "business_id": "123", "order_items": [{ "model_name": "Model 1", "quantity": 1 }], "order_type": undefined, "provider": "verifone" });
+  });
+
+  it('should set order_type correctly if includeShipping is checked', async () => {
+    TerminalService.prototype.orderTerminals = jest.fn().mockResolvedValue({});
+    TerminalService.prototype.fetchTerminalModels = jest.fn().mockResolvedValue({
+      data: {
+        terminal_models: [
+          {
+            id: '1',
+            model_name: 'Model 1',
+            description: 'Description 1',
+            image_url: 'Image URL 1',
+            help_url: 'Help URL 1',
+          },
+          {
+            id: '2',
+            model_name: 'Model 2',
+            description: 'Description 2',
+            image_url: 'Image URL 2',
+            help_url: 'Help URL 2',
+          }
+        ],
+        order_limit: 5
+      }
+    });
+
+    const page = await newSpecPage({
+      components: [OrderTerminals, TerminalQuantitySelector, CheckboxInput],
+      template: () => <justifi-order-terminals accountId="123" businessId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    const includeShippingCheckbox = page.root.shadowRoot.querySelector('form-control-checkbox') as HTMLElement;
+
+    includeShippingCheckbox.click();
+
+    await page.waitForChanges();
+
+    console.log('page.rootInstance.wasClicked: ', page.rootInstance.wasClicked);
+
+    const submitButton = page.root.shadowRoot.querySelector('.submit-btn') as HTMLElement;
+    submitButton.click();
+
+    await page.waitForChanges();
+
+    expect(TerminalService.prototype.orderTerminals).toHaveBeenCalledWith("123", { "account_id": "123", "business_id": "123", "order_items": [], "order_type": "boarding_shipping", "provider": "verifone" });
   });
 });

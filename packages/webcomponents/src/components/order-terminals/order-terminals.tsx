@@ -9,11 +9,11 @@ import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
 import { OrderTerminalsLoading } from "./order-terminals-loading";
-import { buttonPrimary, heading4, listGroup, listGroupItem, text } from "../../styles/parts";
+import { buttonPrimary, heading4, inputCheckbox, listGroup, listGroupItem, text } from "../../styles/parts";
 import { TerminalSelectorLoading } from "../terminal-quantity-selector/terminal-quantity-selector-loading";
 import { makeGetTerminalModels } from "../../actions/terminal/get-terminal-models";
 import { TerminalService } from "../../api/services/terminal.service";
-import { TerminalOrder } from "../../api/TerminalOrder";
+import { TerminalOrder, TerminalOrderType } from "../../api/TerminalOrder";
 import { makeOrderTerminals } from "../../actions/terminal/order-terminals";
 
 @Component({
@@ -33,6 +33,7 @@ export class OrderTerminals {
   @State() orderLimit: number;
   @State() order: TerminalOrder;
   @State() totalQuantity: number = 0;
+  @State() wasClicked: string | boolean = 'no';
 
   analytics: JustifiAnalytics;
 
@@ -202,14 +203,28 @@ export class OrderTerminals {
           />
         ))}
 
-        <div class="d-flex justify-content-end mt-5">
+        <div class="form-check d-flex justify-content-end mt-5">
+          <form-control-checkbox
+            label="Include Shipping"
+            name="includeShipping"
+            checked={this.order.order_type === TerminalOrderType.boardingShipping}
+            inputHandler={(_name, value) => {
+              console.log('I WAS CLICKED', value);
+              this.wasClicked = value;
+              this.order.order_type = value ? TerminalOrderType.boardingShipping : TerminalOrderType.boardingOnly;
+            }}
+            part={inputCheckbox}
+          />
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
           <button
             class="btn btn-primary submit-btn"
             onClick={this.submitOrder.bind(this)}
             disabled={this.order.totalQuantity === 0}
             part={buttonPrimary}
           >
-            Submit Order
+            Order Terminals
           </button>
         </div>
       </StyledHost>

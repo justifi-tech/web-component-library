@@ -1,7 +1,7 @@
 import { TerminalProviders } from './Terminal';
 import { TerminalModelName } from './TerminalModel';
 
-enum TerminalOrderType {
+export enum TerminalOrderType {
   boardingOnly = 'boarding_only',
   boardingShipping = 'boarding_shipping',
 }

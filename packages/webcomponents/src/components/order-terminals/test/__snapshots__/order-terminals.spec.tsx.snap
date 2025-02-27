@@ -14285,7 +14285,10 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-end mt-5">
+    <div class="d-flex form-check justify-content-end mt-5">
+      <form-control-checkbox label="Include Shipping" name="includeShipping" part="input-checkbox background-color"></form-control-checkbox>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
         Submit Order
       </button>
@@ -28529,7 +28532,10 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-end mt-5">
+    <div class="d-flex form-check justify-content-end mt-5">
+      <form-control-checkbox label="Include Shipping" name="includeShipping" part="input-checkbox background-color"></form-control-checkbox>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
         Submit Order
       </button>
@@ -42699,7 +42705,10 @@ fieldset:disabled .btn {
         Resource Not Found
       </p>
     </main>
-    <div class="d-flex justify-content-end mt-5">
+    <div class="d-flex form-check justify-content-end mt-5">
+      <form-control-checkbox label="Include Shipping" name="includeShipping" part="input-checkbox background-color"></form-control-checkbox>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
         Submit Order
       </button>
@@ -56991,7 +57000,10 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-end mt-5">
+    <div class="d-flex form-check justify-content-end mt-5">
+      <form-control-checkbox label="Include Shipping" name="includeShipping" part="input-checkbox background-color"></form-control-checkbox>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
         Submit Order
       </button>
@@ -71285,7 +71297,10 @@ fieldset:disabled .btn {
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-end mt-5">
+    <div class="d-flex form-check justify-content-end mt-5">
+      <form-control-checkbox label="Include Shipping" name="includeShipping" part="input-checkbox background-color"></form-control-checkbox>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
         Submit Order
       </button>
@@ -85507,7 +85522,10 @@ fieldset:disabled .btn {
     </div>
     <terminal-quantity-selector description="Description 1" helpurl="Help URL 1" imageurl="Image URL 1" limit="5" modelname="Model 1"></terminal-quantity-selector>
     <terminal-quantity-selector description="Description 2" helpurl="Help URL 2" imageurl="Image URL 2" limit="5" modelname="Model 2"></terminal-quantity-selector>
-    <div class="d-flex justify-content-end mt-5">
+    <div class="d-flex form-check justify-content-end mt-5">
+      <form-control-checkbox label="Include Shipping" name="includeShipping" part="input-checkbox background-color"></form-control-checkbox>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
       <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
         Submit Order
       </button>
