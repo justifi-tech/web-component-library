@@ -16,6 +16,7 @@
         "account_id": "subaccount_1",
         "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
         "provider_id": "453-760-515",
+        "provider_serial_number": "453-760-515",
         "verified_at": null,
         "created_at": "2024-08-05T20:48:29.158Z",
         "updated_at": "2024-09-25T15:52:31.298Z"
@@ -28,6 +29,7 @@
         "account_id": "subaccount_2",
         "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
         "provider_id": "807-075-625",
+        "provider_serial_number": "807-075-625",
         "verified_at": null,
         "created_at": "2024-08-05T20:15:21.765Z",
         "updated_at": "2024-10-31T19:21:51.886Z"
@@ -40,6 +42,7 @@
         "account_id": "subaccount_3",
         "platform_account_id": "acc_1vhq44La3BeJGXRsjZbXwM",
         "provider_id": "450-060-752",
+        "provider_serial_number": "450-060-752",
         "verified_at": null,
         "created_at": "2023-11-21T21:34:35.521Z",
         "updated_at": "2023-11-29T21:36:29.026Z"

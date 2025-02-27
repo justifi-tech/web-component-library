@@ -6,7 +6,7 @@ export enum TerminalOrderType {
   boardingShipping = 'boarding_shipping',
 }
 
-enum TerminalOrderStatus {
+export enum TerminalOrderStatus {
   submitted = 'submitted',
   completed = 'completed',
 }
