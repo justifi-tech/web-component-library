@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
-import { buttonLink, image, link, text } from "../../styles/parts";
+import { buttonLink, image, text } from "../../styles/parts";
 import { TerminalModelName } from "../../api";
 
 @Component({
@@ -33,22 +33,18 @@ export class TerminalQuantitySelector {
 
   render() {
     return (
-      <div class="mt-4 rounded shadow-sm" part={text}>
+      <div class="rounded shadow-sm" part={text}>
         <div class="d-flex gap-3">
           <div class="d-flex align-items-center">
             <img src={this.imageUrl} alt={this.modelName} height={125} width={125} part={image} />
           </div>
 
-          <div class="d-flex flex-column flex-grow-1 gap-3 p-4">
-            <div class="d-flex row flex-row">
-              <div class="col-6">{this.modelName}</div>
-              <div class="col-6 d-flex justify-content-end">
-                <a part={link} href={this.helpUrl}>Learn more</a>
-              </div>
-            </div>
-
+          <div class="d-flex flex-column flex-grow-1 gap-3 p-4 justify-content-center">
             <div class="row">
-              <div class="col-6">{this.description}</div>
+              <div class="col-6 d-flex gap-2">
+                {this.modelName}
+                <form-control-tooltip helpText={this.description} />
+              </div>
               <div class="col-6 d-flex justify-content-end align-items-center">
                 <button class="p-0 minus btn" onClick={this.removeUnit} part={buttonLink}>-</button>
                 <div class="w-25 text-center">{this.selectedQuantity}</div>
