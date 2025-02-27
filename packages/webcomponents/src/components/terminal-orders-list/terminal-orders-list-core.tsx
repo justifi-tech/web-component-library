@@ -5,6 +5,7 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { pagingDefaults, PagingInfo } from '../../api';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
+import mockTerminalOrders from '../../../../../mockData/mockTerminalOrdersListSuccess.json';
 
 @Component({
   tag: 'terminal-orders-list-core',
@@ -14,7 +15,7 @@ export class TerminalOrdersListCore {
   @Prop() getTerminalOrders: Function;
   @Prop() columns: string;
 
-  @State() terminalOrders: TerminalOrder[] = [];
+  @State() terminalOrders: TerminalOrder[] = mockTerminalOrders.data as TerminalOrder[];
   @State() terminalOrdersTable: Table<TerminalOrder>;
   @State() loading: boolean = true;
   @State() errorMessage: string;
