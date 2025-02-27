@@ -4,6 +4,11 @@ const express = require('express');
 const { generateRandomLegalName } = require('../utils/random-business-names');
 const app = express();
 const port = process.env.PORT || 3000;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const businessEndpoint = process.env.BUSINESS_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -13,13 +18,13 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
   const requestBody = JSON.stringify({
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    client_id: clientId,
+    client_secret: clientSecret,
   });
 
   let response;
   try {
-    response = await fetch('https://api.justifi.ai/oauth/token', {
+    response = await fetch(authTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +43,7 @@ async function getToken() {
 
 async function createBusiness(token) {
   const randomLegalName = generateRandomLegalName();
-  const response = await fetch('https://api.justifi.ai/v1/entities/business', {
+  const response = await fetch(businessEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -54,9 +59,7 @@ async function createBusiness(token) {
 }
 
 async function getWebComponentToken(token, businessId) {
-  const response = await fetch(
-    'https://api.justifi.ai/v1/web_component_tokens',
-    {
+  const response = await fetch(webComponentTokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
