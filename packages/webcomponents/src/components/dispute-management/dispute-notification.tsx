@@ -99,7 +99,7 @@ export class DisputeNotification {
         {this.dispute?.underReview && (
           <div>
             <h1 class="h4">This payment is disputed and under review</h1>
-            <p>The cardholder is disputing this payment. A counter dispute has been submitEvent and is under review.</p>
+            <p>The cardholder is disputing this payment. A counter dispute has been submitted and is under review.</p>
           </div>
         )}
 
@@ -113,7 +113,7 @@ export class DisputeNotification {
         {this.dispute?.lost && (
           <div>
             <h1 class="h4">This payment was disputed</h1>
-            <p>The cardholder disputed this payment and the card issuer has settled it their favor.</p>
+            <p>The cardholder disputed this payment and the card issuer has settled it in their favor.</p>
           </div>
         )}
       </StyledHost>
