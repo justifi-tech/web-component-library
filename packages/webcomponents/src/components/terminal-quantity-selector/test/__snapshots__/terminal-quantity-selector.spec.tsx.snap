@@ -2,25 +2,16 @@
 
 exports[`justifi-terminal-quantity-selector should render with all props provided 1`] = `
 <terminal-quantity-selector>
-  <div class="mt-4 rounded shadow-sm" part="text color font-family">
+  <div class="rounded shadow-sm" part="text color font-family">
     <div class="d-flex gap-3">
       <div class="align-items-center d-flex">
         <img alt="v400" height="125" part="image" src="https://device-image.com" width="125">
       </div>
-      <div class="d-flex flex-column flex-grow-1 gap-3 p-4">
-        <div class="d-flex flex-row row">
-          <div class="col-6">
-            v400
-          </div>
-          <div class="col-6 d-flex justify-content-end">
-            <a href="https://learnmore.com" part="link text color font-family">
-              Learn more
-            </a>
-          </div>
-        </div>
+      <div class="d-flex flex-column flex-grow-1 gap-3 justify-content-center p-4">
         <div class="row">
-          <div class="col-6">
-            super duper terminal
+          <div class="col-6 d-flex gap-2">
+            v400
+            <form-control-tooltip helptext="super duper terminal"></form-control-tooltip>
           </div>
           <div class="align-items-center col-6 d-flex justify-content-end">
             <button class="btn minus p-0" part="button-link button text color font-family">
