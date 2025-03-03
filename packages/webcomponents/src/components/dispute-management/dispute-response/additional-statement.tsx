@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class AdditionalStatement {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
@@ -70,6 +71,7 @@ export class AdditionalStatement {
               multiple={true}
               helpText="Upload any additional pieces of evidence that have not already been provided."
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.uncategorized_file}
             />
           </div>
         </div>

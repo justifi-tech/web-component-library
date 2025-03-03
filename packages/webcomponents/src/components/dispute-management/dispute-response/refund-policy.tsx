@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class RefundPolicy {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
@@ -74,6 +75,7 @@ export class RefundPolicy {
               label="Upload Refund Policy"
               name="refund_policy"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.refund_policy}
             />
           </div>
           <div class="col-12">
@@ -81,6 +83,7 @@ export class RefundPolicy {
               label="Upload Receipt"
               name="receipt"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.receipt}
             />
           </div>
         </div>

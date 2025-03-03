@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class CancellationPolicy {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
@@ -75,6 +76,7 @@ export class CancellationPolicy {
               label="Upload Cancellation Policy"
               name="cancellation_policy_file"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.cancellation_policy_file}
             />
           </div>
         </div>

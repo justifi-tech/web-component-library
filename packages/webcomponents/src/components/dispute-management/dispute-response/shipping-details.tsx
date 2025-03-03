@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class ShippingDetails {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
@@ -93,6 +94,7 @@ export class ShippingDetails {
               label="Shipping Documentation"
               name="shipping_documentation"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.shipping_documentation}
             />
           </div>
         </div>

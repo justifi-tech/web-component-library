@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class ElectronicEvidence {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList = [];
@@ -68,7 +69,7 @@ export class ElectronicEvidence {
               name="activity_log"
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
               onChange={this.handleFileSelection}
-              errorText={this.errors.activity_log}
+              errorText={this.documentServerErrors?.activity_log}
             />
           </div>
         </div>

@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class DuplicateCharge {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
@@ -76,6 +77,7 @@ export class DuplicateCharge {
               label="Duplicate Charge Documentation"
               name="duplicate_charge_documentation"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.duplicate_charge_documentation}
             />
           </div>
         </div>

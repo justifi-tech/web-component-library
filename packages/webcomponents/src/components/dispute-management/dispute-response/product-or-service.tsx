@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class ProductOrService {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList = [];
@@ -62,7 +63,7 @@ export class ProductOrService {
             />
           </div>
           <div class="col-12">
-            <form-control-text
+            <form-control-date
               label="Service Date"
               name="service_date"
               defaultValue={this.disputeResponse?.service_date}
@@ -75,7 +76,7 @@ export class ProductOrService {
               label="Service Documentation"
               name="service_documentation"
               onChange={this.handleFileSelection}
-              errorText={this.errors.service_documentation}
+              errorText={this.documentServerErrors?.service_documentation}
             />
           </div>
         </div>

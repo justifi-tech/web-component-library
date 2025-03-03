@@ -10,6 +10,7 @@ import { heading5 } from "../../../styles/parts";
 })
 export class CustomerDetails {
   @Prop() disputeResponse: any;
+  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList = [];
@@ -85,6 +86,7 @@ export class CustomerDetails {
               label="Customer Signature"
               name="customer_signature"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.customer_signature}
             />
           </div>
           <div class="col-12">
@@ -92,6 +94,7 @@ export class CustomerDetails {
               label="Customer Communication"
               name="customer_communication"
               onChange={this.handleFileSelection}
+              errorText={this.documentServerErrors?.customer_communication}
             />
           </div>
         </div>

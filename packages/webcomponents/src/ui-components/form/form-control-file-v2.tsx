@@ -8,6 +8,7 @@ import {
   State,
   Element,
 } from '@stencil/core';
+import { FormControlErrorText } from './form-helpers/form-control-error-text';
 
 @Component({
   tag: 'form-control-file-v2',
@@ -47,7 +48,7 @@ export class FileInput {
             disabled={this.disabled}
             onBlur={() => this.formControlBlur.emit()}
           />
-          <form-control-error-text errorText={this.errorText} name={this.name} />
+          <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>
       </Host>
     );
