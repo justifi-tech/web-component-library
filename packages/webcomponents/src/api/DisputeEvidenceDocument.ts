@@ -15,7 +15,6 @@ export class DisputeEvidenceDocument {
   public file_name: string;
   public file_type: string;
   public dispute_evidence_type: DisputeEvidenceDocumentType;
-  public error: string;
 
   private _file: File;
   private _presignedUrl: string;
