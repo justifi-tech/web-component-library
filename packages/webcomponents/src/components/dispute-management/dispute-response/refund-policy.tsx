@@ -1,29 +1,29 @@
 import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import RefundPolicySchema from "./schemas/refund-policy-schema";
-import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
 import { heading5 } from "../../../styles/parts";
+import fileInputHandler from "./file-input-handler";
 
 @Component({
   tag: 'justifi-refund-policy',
 })
 export class RefundPolicy {
   @Prop() disputeResponse: any;
+  @Prop() documentErrors: any = {};
+
   @State() form: FormController;
   @State() errors: any = {};
-  @State() documentList: DisputeEvidenceDocument[] = [];
-  @State() documentErrors: any = {};
+  @State() documents: {
+    refund_policy: DisputeEvidenceDocument[],
+    receipt: DisputeEvidenceDocument[],
+  } = { refund_policy: [], receipt: [] };
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.refundPolicy));
-  };
-
-  @Method()
-  resetDocumentListWithErrors(errors: any) {
-    this.documentErrors = errors;
-    this.documentList = [];
+    const documentList = Object.values(this.documents).flat();
+    this.form.validateAndSubmit((formData) => onSuccess(formData, documentList, DisputeResponseFormStep.refundPolicy));
   };
 
   componentWillLoad() {
@@ -41,16 +41,6 @@ export class RefundPolicy {
       ...this.form.values.getValue(),
       [name]: value
     });
-  }
-
-
-  private handleFileSelection = (e: InputEvent) => {
-    const target = e.target as HTMLInputElement;
-    const name = target.name as DisputeEvidenceDocumentType;
-    const files = target.files as unknown as File[];
-    for (const file of files) {
-      this.documentList.push(new DisputeEvidenceDocument(file, name));
-    }
   }
 
   render() {
@@ -80,7 +70,7 @@ export class RefundPolicy {
             <form-control-file-v2
               label="Upload Refund Policy"
               name="refund_policy"
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
               errorText={this.documentErrors?.refund_policy}
             />
           </div>
@@ -88,7 +78,7 @@ export class RefundPolicy {
             <form-control-file-v2
               label="Upload Receipt"
               name="receipt"
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
               errorText={this.documentErrors?.receipt}
             />
           </div>

@@ -1,29 +1,26 @@
 import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import CancellationPolicySchema from "./schemas/cancellation-policy-schema";
-import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
 import { heading5 } from "../../../styles/parts";
+import fileInputHandler from "./file-input-handler";
 
 @Component({
   tag: 'justifi-cancellation-policy',
 })
 export class CancellationPolicy {
   @Prop() disputeResponse: any;
+  @Prop() documentErrors: any = {};
+
   @State() form: FormController;
   @State() errors: any = {};
-  @State() documentList: DisputeEvidenceDocument[] = [];
-  @State() documentErrors: any = {};
+  @State() documents: { cancellation_policy_file: DisputeEvidenceDocument[] } = { cancellation_policy_file: [] };
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.cancellationPolicy));
-  };
-
-  @Method()
-  resetDocumentListWithErrors(errors: any) {
-    this.documentErrors = errors;
-    this.documentList = [];
+    const documentList = Object.values(this.documents).flat();
+    this.form.validateAndSubmit((formData) => onSuccess(formData, documentList, DisputeResponseFormStep.cancellationPolicy));
   };
 
   componentWillLoad() {
@@ -41,15 +38,6 @@ export class CancellationPolicy {
       ...this.form.values.getValue(),
       [name]: value
     });
-  }
-
-  private handleFileSelection = (e: InputEvent) => {
-    const target = e.target as HTMLInputElement;
-    const name = target.name as DisputeEvidenceDocumentType;
-    const files = target.files as unknown as File[];
-    for (const file of files) {
-      this.documentList.push(new DisputeEvidenceDocument(file, name));
-    }
   }
 
   render() {
@@ -81,7 +69,7 @@ export class CancellationPolicy {
             <form-control-file-v2
               label="Upload Cancellation Policy"
               name="cancellation_policy_file"
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
               errorText={this.documentErrors?.cancellation_policy_file}
             />
           </div>

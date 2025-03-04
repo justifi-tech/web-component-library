@@ -1,29 +1,26 @@
 import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import ElectronicEvidenceSchema from "./schemas/electronic-evidence-schema";
-import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
 import { heading5 } from "../../../styles/parts";
+import fileInputHandler from "./file-input-handler";
 
 @Component({
   tag: 'justifi-electronic-evidence',
 })
 export class ElectronicEvidence {
   @Prop() disputeResponse: any;
+  @Prop() documentErrors: any = {};
+
   @State() form: FormController;
   @State() errors: any = {};
-  @State() documentList = [];
-  @State() documentErrors: any = {};
+  @State() documents: { activity_log: DisputeEvidenceDocument[] } = { activity_log: [] };
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.electronicEvidence));
-  };
-
-  @Method()
-  resetDocumentListWithErrors(errors: any) {
-    this.documentErrors = errors;
-    this.documentList = [];
+    const documentList = Object.values(this.documents).flat();
+    this.form.validateAndSubmit((formData) => onSuccess(formData, documentList, DisputeResponseFormStep.electronicEvidence));
   };
 
   componentWillLoad() {
@@ -34,15 +31,6 @@ export class ElectronicEvidence {
     this.form.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
-  }
-
-  private handleFileSelection = (e: InputEvent) => {
-    const target = e.target as HTMLInputElement;
-    const name = target.name as DisputeEvidenceDocumentType;
-    const files = target.files as unknown as File[];
-    for (const file of files) {
-      this.documentList.push(new DisputeEvidenceDocument(file, name));
-    }
   }
 
   private inputHandler = (name: string, value: string) => {
@@ -74,7 +62,7 @@ export class ElectronicEvidence {
               label="Activity Logs"
               name="activity_log"
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
               errorText={this.documentErrors?.activity_log}
             />
           </div>
