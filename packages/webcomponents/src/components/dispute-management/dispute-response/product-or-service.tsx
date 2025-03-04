@@ -10,14 +10,20 @@ import { heading5 } from "../../../styles/parts";
 })
 export class ProductOrService {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList = [];
+  @State() documentErrors: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.productOrService));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -76,7 +82,7 @@ export class ProductOrService {
               label="Service Documentation"
               name="service_documentation"
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.service_documentation}
+              errorText={this.documentErrors?.service_documentation}
             />
           </div>
         </div>

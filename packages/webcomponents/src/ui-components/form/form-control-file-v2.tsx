@@ -47,6 +47,7 @@ export class FileInput {
             multiple={this.multiple}
             disabled={this.disabled}
             onBlur={() => this.formControlBlur.emit()}
+            onChange={() => this.errorText = ""}
           />
           <FormControlErrorText errorText={this.errorText} name={this.name} />
         </div>

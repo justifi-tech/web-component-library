@@ -10,16 +10,22 @@ import { heading5 } from "../../../styles/parts";
 })
 export class AdditionalStatement {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
+  @State() documentErrors: any = {};
   @State() acceptedTerms: boolean = false;
   @State() acceptedTermsErrorText: string;
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.additionalStatement));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -71,7 +77,7 @@ export class AdditionalStatement {
               multiple={true}
               helpText="Upload any additional pieces of evidence that have not already been provided."
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.uncategorized_file}
+              errorText={this.documentErrors?.uncategorized_file}
             />
           </div>
         </div>

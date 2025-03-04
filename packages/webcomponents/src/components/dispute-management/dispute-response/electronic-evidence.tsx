@@ -10,14 +10,20 @@ import { heading5 } from "../../../styles/parts";
 })
 export class ElectronicEvidence {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList = [];
+  @State() documentErrors: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.electronicEvidence));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -69,7 +75,7 @@ export class ElectronicEvidence {
               name="activity_log"
               helpText="Any server or activity logs that provide evidence of the customer's access to or download of the purchased digital product. This information should encompass IP addresses, relevant timestamps, and any detailed records of activity."
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.activity_log}
+              errorText={this.documentErrors?.activity_log}
             />
           </div>
         </div>

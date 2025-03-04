@@ -10,14 +10,20 @@ import { heading5 } from "../../../styles/parts";
 })
 export class DuplicateCharge {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
+  @State() documentErrors: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.duplicateCharge));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -77,7 +83,7 @@ export class DuplicateCharge {
               label="Duplicate Charge Documentation"
               name="duplicate_charge_documentation"
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.duplicate_charge_documentation}
+              errorText={this.documentErrors?.duplicate_charge_documentation}
             />
           </div>
         </div>

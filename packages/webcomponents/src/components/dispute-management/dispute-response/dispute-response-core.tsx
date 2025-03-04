@@ -45,14 +45,14 @@ export class DisputeResponseCore {
   @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   componentStepMapping = [
-    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
-    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentServerErrors={this.documentServerErrors} />,
+    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
   ];
 
   get currentStepComponent() {
@@ -131,7 +131,6 @@ export class DisputeResponseCore {
       },
       onSuccess: (response) => {
         document.presignedUrl = response.data.presigned_url;
-        this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
         const errors = { [document.dispute_evidence_type]: error };
@@ -141,7 +140,6 @@ export class DisputeResponseCore {
           message: error,
           severity,
         })
-        this.isLoading = false;
       },
     })
   }
@@ -165,8 +163,18 @@ export class DisputeResponseCore {
     this.isLoading = true;
 
     if (documentList.length) {
+      this.documentServerErrors = {};
       this.documentList = documentList;
+
       await this.initializeMakePresignedURLs();
+      const hasPresigningErrors = Object.keys(this.documentServerErrors).length;
+
+      if (hasPresigningErrors) {
+        this.currentStepComponentRef.resetDocumentListWithErrors(this.documentServerErrors);
+        this.isLoading = false;
+        throw new Error('Could not presign all documents');
+      }
+
       await this.initializeFileUploads();
     }
     // this needs to happen last because it fires the 'submit-event' and 'complete-form-step-event' event

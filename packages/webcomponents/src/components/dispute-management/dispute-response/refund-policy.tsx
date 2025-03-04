@@ -10,14 +10,20 @@ import { heading5 } from "../../../styles/parts";
 })
 export class RefundPolicy {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
+  @State() documentErrors: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.refundPolicy));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -75,7 +81,7 @@ export class RefundPolicy {
               label="Upload Refund Policy"
               name="refund_policy"
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.refund_policy}
+              errorText={this.documentErrors?.refund_policy}
             />
           </div>
           <div class="col-12">
@@ -83,7 +89,7 @@ export class RefundPolicy {
               label="Upload Receipt"
               name="receipt"
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.receipt}
+              errorText={this.documentErrors?.receipt}
             />
           </div>
         </div>

@@ -10,14 +10,20 @@ import { heading5 } from "../../../styles/parts";
 })
 export class CancellationPolicy {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
+  @State() documentErrors: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.cancellationPolicy));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -76,7 +82,7 @@ export class CancellationPolicy {
               label="Upload Cancellation Policy"
               name="cancellation_policy_file"
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.cancellation_policy_file}
+              errorText={this.documentErrors?.cancellation_policy_file}
             />
           </div>
         </div>

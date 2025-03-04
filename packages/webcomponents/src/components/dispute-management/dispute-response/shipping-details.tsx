@@ -10,14 +10,20 @@ import { heading5 } from "../../../styles/parts";
 })
 export class ShippingDetails {
   @Prop() disputeResponse: any;
-  @Prop() documentServerErrors: any;
   @State() form: FormController;
   @State() errors: any = {};
   @State() documentList: DisputeEvidenceDocument[] = [];
+  @State() documentErrors: any = {};
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
     this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.shippingDetails));
+  };
+
+  @Method()
+  resetDocumentListWithErrors(errors: any) {
+    this.documentErrors = errors;
+    this.documentList = [];
   };
 
   componentWillLoad() {
@@ -94,7 +100,7 @@ export class ShippingDetails {
               label="Shipping Documentation"
               name="shipping_documentation"
               onChange={this.handleFileSelection}
-              errorText={this.documentServerErrors?.shipping_documentation}
+              errorText={this.documentErrors?.shipping_documentation}
             />
           </div>
         </div>
