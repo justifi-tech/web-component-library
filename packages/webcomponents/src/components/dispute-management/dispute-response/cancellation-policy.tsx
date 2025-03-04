@@ -15,7 +15,7 @@ export class CancellationPolicy {
 
   @State() form: FormController;
   @State() errors: any = {};
-  @State() documents: { cancellation_policy_file: DisputeEvidenceDocument[] } = { cancellation_policy_file: [] };
+  @State() documents: { cancellation_policy: DisputeEvidenceDocument[] } = { cancellation_policy: [] };
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
@@ -68,9 +68,9 @@ export class CancellationPolicy {
           <div class="col-12">
             <form-control-file-v2
               label="Upload Cancellation Policy"
-              name="cancellation_policy_file"
+              name="cancellation_policy"
               onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
-              errorText={this.documentErrors?.cancellation_policy_file}
+              errorText={this.documentErrors?.cancellation_policy}
             />
           </div>
         </div>
