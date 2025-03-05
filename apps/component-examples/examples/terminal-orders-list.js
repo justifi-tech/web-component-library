@@ -3,12 +3,11 @@ require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-// const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
-// const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
-// const subAccountId = process.env.SUB_ACCOUNT_ID;
-const businessId = process.env.BUSINESS_ID;
-// const clientId = process.env.CLIENT_ID;
-// const clientSecret = process.env.CLIENT_SECRET;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -16,50 +15,52 @@ app.use(
 );
 app.use('/styles', express.static(__dirname + '/../css/'));
 
-// async function getToken() {
-//   const requestBody = JSON.stringify({
-//     client_id: clientId,
-//     client_secret: clientSecret
-//   });
+async function getToken() {
+  const requestBody = JSON.stringify({
+    client_id: clientId,
+    client_secret: clientSecret
+  });
 
-//   let response;
-//   try {
-//     response = await fetch(authTokenEndpoint, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: requestBody,
-//     });
-//   } catch (error) {
-//     console.log('ERROR:', error);
-//   }
+  let response;
+  try {
+    response = await fetch(authTokenEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: requestBody,
+    });
+  } catch (error) {
+    console.log('ERROR:', error);
+  }
 
-//   const { access_token } = await response.json();
-//   return access_token;
-// }
+  const { access_token } = await response.json();
+  console.log('Token:', access_token);
+  return access_token;
+}
 
-// async function getWebComponentToken(token) {
-//   const response = await fetch(webComponentTokenEndpoint,
-//     {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify({
-//         resources: [`read:account:${subAccountId}`],
-//       }),
-//     }
-//   );
+async function getWebComponentToken(token) {
+  const response = await fetch(webComponentTokenEndpoint,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        resources: [`write:account:${subAccountId}`],
+      }),
+    }
+  );
 
-//   const { access_token } = await response.json();
-//   return access_token;
-// }
+  const { access_token } = await response.json();
+  console.log('Web Component Token:', access_token);
+  return access_token;
+}
 
 app.get('/', async (req, res) => {
-  // const token = await getToken();
-  // const webComponentToken = await getWebComponentToken(token);
+  const token = await getToken();
+  const webComponentToken = await getWebComponentToken(token);
 
   res.send(`
     <!DOCTYPE html>
@@ -73,8 +74,8 @@ app.get('/', async (req, res) => {
       <body>
         <div class="list-component-wrapper">
           <justifi-terminal-orders-list 
-            business-id="${businessId}"
-            auth-token="authToken123"
+            account-id="${subAccountId}"
+            auth-token="${webComponentToken}"
           />
         </div>
         <script>
