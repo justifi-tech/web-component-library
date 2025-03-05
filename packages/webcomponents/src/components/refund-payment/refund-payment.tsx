@@ -18,8 +18,16 @@ const refundReasonOptions: { label: string, value: string }[] = [
     value: '',
   },
   {
-    label: 'No',
-    value: 'No',
+    label: 'Customer requested a refund',
+    value: 'customer_request',
+  },
+  {
+    label: 'Customer was double-charged',
+    value: 'duplicate',
+  },
+  {
+    label: 'Payment was reported as fraud',
+    value: 'fraudulent',
   }
 ];
 
