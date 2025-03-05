@@ -1,24 +1,28 @@
 import { Component, h, State, Method, Prop } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import AdditionalStatementSchema from "./schemas/additional-statement-schema";
-import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
 import { heading5 } from "../../../styles/parts";
+import fileInputHandler from "./file-input-handler";
 
 @Component({
   tag: 'justifi-additional-statement',
 })
 export class AdditionalStatement {
   @Prop() disputeResponse: any;
+  @Prop() documentErrors: any = {};
+
   @State() form: FormController;
   @State() errors: any = {};
-  @State() documentList: DisputeEvidenceDocument[] = [];
   @State() acceptedTerms: boolean = false;
   @State() acceptedTermsErrorText: string;
+  @State() documents: { uncategorized_file: DisputeEvidenceDocument[] } = { uncategorized_file: [] };
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.additionalStatement));
+    const documentList = Object.values(this.documents).flat();
+    this.form.validateAndSubmit((formData) => onSuccess(formData, documentList, DisputeResponseFormStep.additionalStatement));
   };
 
   componentWillLoad() {
@@ -36,15 +40,6 @@ export class AdditionalStatement {
       ...this.form.values.getValue(),
       [name]: value
     });
-  }
-
-  private handleFileSelection = (e: InputEvent) => {
-    const target = e.target as HTMLInputElement;
-    const name = target.name as DisputeEvidenceDocumentType;
-    const files = target.files as unknown as File[];
-    for (const file of files) {
-      this.documentList.push(new DisputeEvidenceDocument(file, name));
-    }
   }
 
   render() {
@@ -69,7 +64,8 @@ export class AdditionalStatement {
               name="uncategorized_file"
               multiple={true}
               helpText="Upload any additional pieces of evidence that have not already been provided."
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
+              errorText={this.documentErrors?.uncategorized_file}
             />
           </div>
         </div>
