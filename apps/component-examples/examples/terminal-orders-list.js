@@ -35,7 +35,6 @@ async function getToken() {
   }
 
   const { access_token } = await response.json();
-  console.log('Token:', access_token);
   return access_token;
 }
 
@@ -54,7 +53,6 @@ async function getWebComponentToken(token) {
   );
 
   const { access_token } = await response.json();
-  console.log('Web Component Token:', access_token);
   return access_token;
 }
 
