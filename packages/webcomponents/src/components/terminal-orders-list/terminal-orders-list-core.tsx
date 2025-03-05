@@ -40,8 +40,20 @@ export class TerminalOrdersListCore {
 
   fetchData(): void {
     this.loading = true;
-    console.log('fetching terminal orders');
-    this.loading = false;
+    
+    this.getTerminalOrders({
+      params: {},
+      onSuccess: async ({ terminalOrders, pagingInfo }) => {
+        this.terminalOrders = terminalOrders;
+        this.paging = pagingInfo;
+        this.terminalOrdersTable.collectionData = this.terminalOrders;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({ error, code, severity });
+      },
+      final: () => { this.loading = false },
+    });
   }
 
   handleClickPrevious = (beforeCursor: string) => {
