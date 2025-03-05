@@ -39,9 +39,7 @@ ${codeExampleHead(
 )}
 
 <body>
-  <!-- Optional: add the filters component -->
-  <justifi-terminals-list-filters></justifi-terminals-list-filters>
-  <justifi-terminals-list></justifi-terminals-list>
+  <justifi-terminal-orders-list></justifi-terminal-orders-list>
 </body>
 
 </html>
