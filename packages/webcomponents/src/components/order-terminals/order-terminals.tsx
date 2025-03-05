@@ -34,7 +34,6 @@ export class OrderTerminals {
   @State() orderLimit: number;
   @State() order: TerminalOrder;
   @State() totalQuantity: number = 0;
-  @State() wasClicked: string | boolean = 'no';
 
   analytics: JustifiAnalytics;
 
