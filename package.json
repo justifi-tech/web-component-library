@@ -18,6 +18,7 @@
     "dev:payouts-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payouts-list'",
     "dev:payouts-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payouts-list-with-filters'",
     "dev:order-terminals": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:order-terminals'",
+    "dev:refund-payment": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:refund-payment'",
     "dev:terminal-orders-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:terminal-orders-list'",
     "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",

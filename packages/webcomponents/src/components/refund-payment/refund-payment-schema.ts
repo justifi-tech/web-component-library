@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 
-export interface RefundFormFields {
+export interface RefundPaymentFields {
   amount: number | null; // Allowing null for initial state or cleared inputs
-  message: string;
+  description: string;
 }
 
-const RefundFormSchema = yup.object().shape({
+const RefundPaymentSchema = yup.object().shape({
   amount: yup
     .number()
     .required('Amount is required')
@@ -21,4 +21,4 @@ const RefundFormSchema = yup.object().shape({
     .nullable(),
 });
 
-export default RefundFormSchema;
+export default RefundPaymentSchema;
