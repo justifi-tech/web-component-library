@@ -25,7 +25,6 @@ export class TerminalOrdersList {
 
   analytics: JustifiAnalytics;
 
-  
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
@@ -58,7 +57,7 @@ export class TerminalOrdersList {
   render() {
     return (
       <StyledHost>
-        <terminal-orders-list-core 
+        <terminal-orders-list-core
           getTerminalOrders={this.getTerminalOrders}
           onError-event={this.handleErrorEvent}
           columns={this.columns}
