@@ -13,7 +13,12 @@ export const MapTerminalOrderStatusToBadge = (status: TerminalOrderStatus) => {
       variant: BadgeVariant.SUCCESS,
       title: 'This order has been completed',
       text: 'Completed',
-    }
+    },
+    created: {
+      variant: BadgeVariant.SECONDARY,
+      title: 'This order is created',
+      text: 'Created',
+    },
   };
 
   const badgeProps = statusToBadgeProps[status];
