@@ -1,22 +1,29 @@
 import { Component, h, Method, Prop, State } from "@stencil/core";
 import { FormController } from "../../../ui-components/form/form";
 import CustomerDetailsSchema from "./schemas/customer-details-schema";
-import { DisputeEvidenceDocument, DisputeEvidenceDocumentType } from "../../../api/DisputeEvidenceDocument";
+import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import { DisputeResponseFormStep } from "./dispute-response-form-types";
 import { heading5 } from "../../../styles/parts";
+import fileInputHandler from "./file-input-handler";
 
 @Component({
   tag: 'justifi-customer-details',
 })
 export class CustomerDetails {
   @Prop() disputeResponse: any;
+  @Prop() documentErrors: any = {};
+
   @State() form: FormController;
   @State() errors: any = {};
-  @State() documentList = [];
+  @State() documents: {
+    customer_signature: DisputeEvidenceDocument[],
+    customer_communication: DisputeEvidenceDocument[]
+  } = { customer_signature: [], customer_communication: [] };
 
   @Method()
   async validateAndSubmit(onSuccess: (formData: any, documentList: DisputeEvidenceDocument[], formStep: DisputeResponseFormStep) => void) {
-    this.form.validateAndSubmit((formData) => onSuccess(formData, this.documentList, DisputeResponseFormStep.customerDetails));
+    const documentList = Object.values(this.documents).flat();
+    this.form.validateAndSubmit((formData) => onSuccess(formData, documentList, DisputeResponseFormStep.customerDetails));
   };
 
   componentWillLoad() {
@@ -34,15 +41,6 @@ export class CustomerDetails {
       ...this.form.values.getValue(),
       [name]: value
     });
-  }
-
-  private handleFileSelection = (e: InputEvent) => {
-    const target = e.target as HTMLInputElement;
-    const name = target.name as DisputeEvidenceDocumentType;
-    const files = target.files as unknown as File[];
-    for (const file of files) {
-      this.documentList.push(new DisputeEvidenceDocument(file, name));
-    }
   }
 
   render() {
@@ -84,14 +82,16 @@ export class CustomerDetails {
             <form-control-file-v2
               label="Customer Signature"
               name="customer_signature"
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
+              errorText={this.documentErrors?.customer_signature}
             />
           </div>
           <div class="col-12">
             <form-control-file-v2
               label="Customer Communication"
               name="customer_communication"
-              onChange={this.handleFileSelection}
+              onChange={(e) => fileInputHandler(e as InputEvent, this.documents)}
+              errorText={this.documentErrors?.customer_communication}
             />
           </div>
         </div>

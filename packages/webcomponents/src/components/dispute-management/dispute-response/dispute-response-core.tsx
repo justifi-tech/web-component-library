@@ -35,6 +35,7 @@ export class DisputeResponseCore {
 
   @State() isLoading: boolean = false;
   @State() documentList = [];
+  @State() documentErrors = {};
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;
 
@@ -44,15 +45,27 @@ export class DisputeResponseCore {
   @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   componentStepMapping = [
-    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
-    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} />,
+    () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-customer-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-cancellation-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-refund-policy ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-duplicate-charge ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-electronic-evidence ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-shipping-details ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
+    () => <justifi-additional-statement ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,
   ];
+
+  get currentStepComponent() {
+    return this.componentStepMapping[this.currentStep]();
+  }
+
+  get isLastStep() {
+    return this.currentStep === this.componentStepMapping.length - 1;
+  }
+
+  get isFirstStep() {
+    return this.currentStep === 0;
+  }
 
   saveData = async (formData: any, formStep): Promise<IApiResponse<IDispute>> => {
     const hasFormData = Object.keys(formData).length;
@@ -118,15 +131,15 @@ export class DisputeResponseCore {
       },
       onSuccess: (response) => {
         document.presignedUrl = response.data.presigned_url;
-        this.isLoading = false;
       },
       onError: ({ error, code, severity }) => {
+        const errors = { [document.dispute_evidence_type]: error };
+        this.documentErrors = { ...this.documentErrors, ...errors };
         this.errorEvent.emit({
           errorCode: code,
           message: error,
           severity,
         })
-        this.isLoading = false;
       },
     })
   }
@@ -146,34 +159,31 @@ export class DisputeResponseCore {
     return response;
   }
 
-  get currentStepComponent() {
-    return this.componentStepMapping[this.currentStep]();
-  }
-
-  get isLastStep() {
-    return this.currentStep === this.componentStepMapping.length - 1;
-  }
-
-  get isFirstStep() {
-    return this.currentStep === 0;
-  }
-
-  private onCancel = () => {
-    this.clickEvent.emit({ name: DisputeManagementClickActions.cancelDispute });
-  }
-
   private handleSubmit = async (formData, documentList, formStep: DisputeResponseFormStep) => {
     this.isLoading = true;
 
     if (documentList.length) {
+      this.documentErrors = {};
       this.documentList = documentList;
+
       await this.initializeMakePresignedURLs();
+      const hasPresigningErrors = Object.keys(this.documentErrors).length;
+
+      if (hasPresigningErrors) {
+        this.isLoading = false;
+        throw new Error('Could not presign all documents');
+      }
+
       await this.initializeFileUploads();
     }
     // this needs to happen last because it fires the 'submit-event' and 'complete-form-step-event' event
     await this.saveData(formData, formStep);
 
     this.isLoading = false;
+  }
+
+  private onCancel = () => {
+    this.clickEvent.emit({ name: DisputeManagementClickActions.cancelDispute });
   }
 
   // after each of these steps where validateAndSubmit is called, reload the dispute

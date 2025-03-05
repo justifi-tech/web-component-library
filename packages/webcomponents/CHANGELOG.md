@@ -1,5 +1,21 @@
 ### Changelog
 
+## 5.3.5
+
+### Patch Changes
+
+- 6a62246: - Reverted change introduced in 5.3.3 to `justifi-terminals-list` - aa808c7
+  - The table column that displays the `provider_id` value has had its column header restored to it's original value: `Provider ID`.
+  - Added new table column to display `provider_serial_number` property from terminal response.
+  - `provider_serial_number` column is now loaded by default in the table, replacing `provider_id` column.
+    - `provider_id` column is no longer shown by default on the component, but is still available to use when using the `columns` prop to configure the columns shown in the table.
+- b603433: - Fixes issue in `justifi-checkouts-list-filters` where the Payment Mode filter sends incorrect value and returns an API error. Payment Mode filter now correctly sends `ecom` or `bnpl` when input selection is made.
+- e61f36a: - Surface `justifi-dispute-response` file pre-signing errors in the UI
+  - Fix typos in `justifi-dispute-notification` messages
+  - Fix `justifi-dispute-response` evidence type name: `cancellation_policy_file` -> `cancellation_policy`
+  - Update `justifi-dispute-response` "Service Date" to use a date selector
+  - Clear/replace file selections in `justifi-dispute-response` when file selection changes. Change handler for file inputs has been abstracted for consistency.
+
 ## 5.3.4
 
 ### Patch Changes
