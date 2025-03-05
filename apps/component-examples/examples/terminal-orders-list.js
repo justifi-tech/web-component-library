@@ -77,6 +77,15 @@ app.get('/', async (req, res) => {
           />
         </div>
         <script>
+          const justifiTerminalOrdersList = document.querySelector('justifi-terminal-orders-list');
+
+          justifiTerminalOrdersList.addEventListener('error-event', (event) => {
+            console.log(event);
+          });
+
+          justifiTerminalOrdersList.addEventListener('click-event', (event) => {
+            console.log(event);
+          });
         </script>
       </body>
     </html>
