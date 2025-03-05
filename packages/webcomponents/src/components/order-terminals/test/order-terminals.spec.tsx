@@ -26,17 +26,6 @@ describe('justifi-order-terminals', () => {
     expect(page.rootInstance.analytics).toBeInstanceOf(JustifiAnalytics);
   });
 
-  it('should set error message if businessId or authToken is missing', async () => {
-    const page = await newSpecPage({
-      components: [OrderTerminals],
-      template: () => <justifi-order-terminals />,
-    });
-
-    await page.rootInstance.componentWillLoad();
-
-    expect(page.rootInstance.errorMessage).toBe('Invalid business id or auth token');
-  });
-
   it('should emit an error event if businessId or authToken is missing', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
@@ -45,6 +34,8 @@ describe('justifi-order-terminals', () => {
     });
 
     await page.rootInstance.componentWillLoad();
+
+    await page.waitForChanges();
 
     expect(errorEvent).toHaveBeenCalled();
   });

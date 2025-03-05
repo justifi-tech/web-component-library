@@ -88,6 +88,14 @@ app.get('/', async (req, res) => {
           ></justifi-order-terminals>
         </div>
         <script>
+
+          document.addEventListener('submit-event', (event) => {
+            const message = document.createElement('div');
+            console.log('submit-event', event.detail);
+            message.textContent = 'Order ID: ' + event.detail.id;
+            document.body.appendChild(message);
+          });
+
         </script>
       </body>
     </html>
