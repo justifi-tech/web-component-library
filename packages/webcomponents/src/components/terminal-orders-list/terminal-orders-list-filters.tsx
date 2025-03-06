@@ -13,8 +13,8 @@ export class TerminalOrdersListFilters {
 
   componentWillLoad() {
     const propsToSet = {
-      status: this.orderStatus,
-      type: this.orderType,
+      order_status: this.orderStatus,
+      order_type: this.orderType,
     };
 
     Object.entries(propsToSet).forEach(([key, value]) => {
@@ -54,8 +54,8 @@ export class TerminalOrdersListFilters {
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-select
-                name="status"
-                label="Status"
+                name="order_status"
+                label="Order Status"
                 options={this.terminalOrderStatusOptions}
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.orderStatus || filterParams.order_status}
@@ -65,8 +65,8 @@ export class TerminalOrdersListFilters {
             </div>
             <div class="p-2">
               <form-control-select
-                name="type"
-                label="Type"
+                name="order_type"
+                label="Order Type"
                 options={this.terminalOrderTypeOptions}
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.orderType || filterParams.order_type}
