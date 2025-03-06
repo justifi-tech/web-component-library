@@ -27,8 +27,6 @@ export const OrderTerminalsLoading = () => {
         <Skeleton width="40%" height="40px" />
       </div>
       <FormBlock />
-      <FormBlock />
-      <FormBlock />
     </div>
   );
 }

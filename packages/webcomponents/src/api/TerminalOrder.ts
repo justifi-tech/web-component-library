@@ -1,7 +1,7 @@
 import { TerminalProviders } from './Terminal';
 import { TerminalModelName } from './TerminalModel';
 
-enum TerminalOrderType {
+export enum TerminalOrderType {
   boardingOnly = 'boarding_only',
   boardingShipping = 'boarding_shipping',
 }
@@ -65,7 +65,6 @@ export class TerminalOrder {
     return {
       business_id: this.business_id,
       account_id: this.account_id,
-      provider: this.provider,
       order_type: this.order_type,
       order_items: this.order_items,
     };
