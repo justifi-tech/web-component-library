@@ -1,0 +1,82 @@
+import { Component, h, Prop } from '@stencil/core';
+import { filterParams, propsParams, clearParams } from './terminal-orders-list-params-state';
+import { StyledHost } from '../../ui-components';
+import { TerminalOrderStatus, TerminalOrderType } from '../../api';
+
+@Component({
+  tag: 'justifi-terminal-orders-list-filters',
+  shadow: true
+})
+export class TerminalOrdersListFilters {
+  @Prop() orderStatus?: TerminalOrderStatus;
+  @Prop() orderType?: TerminalOrderType;
+
+  componentWillLoad() {
+    const propsToSet = {
+      status: this.orderStatus,
+      type: this.orderType,
+    };
+
+    Object.entries(propsToSet).forEach(([key, value]) => {
+      if (value) {
+        propsParams[key] = value;
+      }
+    });
+  }
+
+  setParamsOnChange = (name: string, value: string) => {
+    filterParams[name] = value;
+  };
+
+  get terminalOrderStatusOptions(): { label: string, value: TerminalOrderStatus | '' }[] {
+    return [
+      { label: 'All', value: '' },
+      { label: 'Created', value: TerminalOrderStatus.created },
+      { label: 'Completed', value: TerminalOrderStatus.completed },
+      { label: 'Submitted', value: TerminalOrderStatus.submitted },
+    ]
+  }
+
+  get terminalOrderTypeOptions(): { label: string, value: TerminalOrderType | '' }[] {
+    return [
+      { label: 'All', value: '' },
+      { label: 'Boarding Only', value: TerminalOrderType.boardingOnly },
+      { label: 'Boarding Shipping', value: TerminalOrderType.boardingShipping },
+    ]
+  }
+
+  render() {
+    const filterMenuParams = { ...filterParams }
+
+    return (
+      <StyledHost>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams}>
+          <div class="grid-cols-2 gap-3 p-1">
+            <div class="p-2">
+              <form-control-select
+                name="status"
+                label="Status"
+                options={this.terminalOrderStatusOptions}
+                inputHandler={this.setParamsOnChange}
+                defaultValue={this.orderStatus || filterParams.order_status}
+                disabled={!!this.orderStatus}
+
+              />
+            </div>
+            <div class="p-2">
+              <form-control-select
+                name="type"
+                label="Type"
+                options={this.terminalOrderTypeOptions}
+                inputHandler={this.setParamsOnChange}
+                defaultValue={this.orderType || filterParams.order_type}
+                disabled={!!this.orderType}
+
+              />
+            </div>
+          </div>
+        </table-filters-menu>
+      </StyledHost>
+    );
+  }
+}
