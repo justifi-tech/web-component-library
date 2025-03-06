@@ -7,6 +7,7 @@ export enum TerminalOrderType {
 }
 
 export enum TerminalOrderStatus {
+  created = 'created',
   submitted = 'submitted',
   completed = 'completed',
 }
