@@ -2,6 +2,11 @@ import { Component, h, Prop } from '@stencil/core';
 import { filterParams, propsParams, clearParams } from './terminal-orders-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { TerminalOrderStatus, TerminalOrderType } from '../../api';
+import {
+  terminalOrdersListFilterMenu,
+  orderStatusTerminalOrdersListFilterParam,
+  orderTypeTerminalOrdersListFilterParam
+} from '../../styles/parts';
 
 @Component({
   tag: 'justifi-terminal-orders-list-filters',
@@ -50,7 +55,7 @@ export class TerminalOrdersListFilters {
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={terminalOrdersListFilterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-select
@@ -60,7 +65,7 @@ export class TerminalOrdersListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.orderStatus || filterParams.order_status}
                 disabled={!!this.orderStatus}
-
+                part={orderStatusTerminalOrdersListFilterParam}
               />
             </div>
             <div class="p-2">
@@ -71,7 +76,7 @@ export class TerminalOrdersListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.orderType || filterParams.order_type}
                 disabled={!!this.orderType}
-
+                part={orderTypeTerminalOrdersListFilterParam}
               />
             </div>
           </div>
