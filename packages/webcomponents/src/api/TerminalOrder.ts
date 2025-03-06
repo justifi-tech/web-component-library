@@ -4,6 +4,8 @@ import { TerminalModelName } from './TerminalModel';
 export interface TerminalOrderQueryParams {
   order_status?: TerminalOrderStatus;
   order_type?: TerminalOrderType;
+  created_after?: string;
+  created_before?: string;
 }
 
 export enum TerminalOrderType {

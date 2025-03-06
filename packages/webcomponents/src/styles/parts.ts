@@ -142,3 +142,5 @@ export const terminalOrdersListFilterMenu = `${filterMenu} terminal-orders-list-
 export const terminalOrdersListFilterParam = `terminal-orders-list-filter-param`;
 export const orderStatusTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} order-status-terminal-orders-list-filter-param`;
 export const orderTypeTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} order-type-terminal-orders-list-filter-param`;
+export const createdAfterTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} created-after-terminal-orders-list-filter-param`;
+export const createdBeforeTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} created-before-terminal-orders-list-filter-param`;
