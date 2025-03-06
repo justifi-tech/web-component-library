@@ -14156,132 +14156,119 @@ fieldset:disabled .btn {
 
 /*# sourceMappingURL=bootstrap.css.map */
     </style>
-    <div class="gap-5 pt-5" part="text color font-family">
-      <div class="row">
-        <div class="col-12">
-          <h2 part="heading-4 heading text color font-family">
-            Business Information:
-          </h2>
-          <p>
-            Business Name: Business Name
-          </p>
+    <div part="text color font-family">
+      <div>
+        <div class="mt-5">
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 125px; border-radius: 8px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-6">
-          <h2 part="heading-4 heading text color font-family">
+      <div class="gap-5 mb-5 pt-5">
+        <div class="row">
+          <div class="col-12">
+            <h2 part="heading-4 heading text color font-family">
+              Business Name
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <h5 part="heading-5 heading text color font-family">
             Representative:
-          </h2>
-          <ul class="list-group" part="list-group text color font-family background-color">
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Name: Person Name
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Title: President
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Email: person.name@justifi.ai
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Phone: 6124011111
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h2 part="heading-4 heading text color font-family">
-            Shipping Address:
-          </h2>
-          <ul class="list-group" part="list-group text color font-family background-color">
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Street: 123 Example St
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Suite 101
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Postal Code: 55555
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              City: Minneapolis
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              State: MN
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="mt-5">
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
+          </h5>
+          <div>
+            <div>
+              Person Name
             </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
+            <div>
+              President
+            </div>
+            <div>
+              person.name@justifi.ai
+            </div>
+            <div>
+              6124011111
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+      <div class="mt-3">
+        <div class="text-end">
+          Order limit:
         </div>
-      </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+            Submit Order
+          </button>
         </div>
       </div>
     </div>
@@ -28445,82 +28432,96 @@ fieldset:disabled .btn {
 
 /*# sourceMappingURL=bootstrap.css.map */
     </style>
-    <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
-      <p part="text color font-family">
-        Resource Not Found
-      </p>
-    </main>
-    <div class="mt-5">
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+    <div part="text color font-family">
+      <div>
+        <div class="mt-5">
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 125px; border-radius: 8px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+      <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+        <p part="text color font-family">
+          Resource Not Found
+        </p>
+      </main>
+      <div class="mt-3">
+        <div class="text-end">
+          Order limit:
         </div>
-      </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+            Submit Order
+          </button>
         </div>
       </div>
     </div>
@@ -42684,11 +42685,52 @@ fieldset:disabled .btn {
 
 /*# sourceMappingURL=bootstrap.css.map */
     </style>
-    <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
-      <p part="text color font-family">
-        Resource Not Found
-      </p>
-    </main>
+    <div part="text color font-family">
+      <div></div>
+      <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
+        <p part="text color font-family">
+          Resource Not Found
+        </p>
+      </main>
+      <div class="gap-5 mb-5 pt-5">
+        <div class="row">
+          <div class="col-12">
+            <h2 part="heading-4 heading text color font-family">
+              Business Name
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <h5 part="heading-5 heading text color font-family">
+            Representative:
+          </h5>
+          <div>
+            <div>
+              Person Name
+            </div>
+            <div>
+              President
+            </div>
+            <div>
+              person.name@justifi.ai
+            </div>
+            <div>
+              6124011111
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3">
+        <div class="text-end">
+          Order limit:
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+            Submit Order
+          </button>
+        </div>
+      </div>
+    </div>
   </template>
 </justifi-order-terminals>
 `;
@@ -56849,130 +56891,112 @@ fieldset:disabled .btn {
 
 /*# sourceMappingURL=bootstrap.css.map */
     </style>
-    <div class="gap-5 row">
-      <div class="col-12">
-        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
-      </div>
-      <div class="gap-3 row">
-        <div class="col-12">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+    <div part="text color font-family">
+      <div>
+        <div class="gap-5 row">
+          <div class="col-12">
+            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
+          </div>
+          <div class="gap-3 row">
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+            </div>
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+            </div>
+            <div class="col-12 d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+            </div>
+            <div class="col-12 d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+            </div>
+          </div>
         </div>
-        <div class="col-12">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
-        </div>
-        <div class="col-12 d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
-        </div>
-        <div class="col-12 d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
-        </div>
-      </div>
-      <div class="gap-3 row">
-        <div class="col-12">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
-        </div>
-        <div class="col-12">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
-        </div>
-        <div class="col-12 d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
-        </div>
-        <div class="col-12 d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
-        </div>
-      </div>
-      <div class="gap-3 row">
-        <div class="col-12">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
-        </div>
-        <div class="col-12">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
-        </div>
-        <div class="col-12 d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
-        </div>
-        <div class="col-12 d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
-        </div>
-      </div>
-    </div>
-    <div class="mt-5">
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+        <div class="mt-5">
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+      <div class="mt-3">
+        <div class="text-end">
+          Order limit:
         </div>
-      </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+            Submit Order
+          </button>
         </div>
       </div>
     </div>
@@ -71136,132 +71160,119 @@ fieldset:disabled .btn {
 
 /*# sourceMappingURL=bootstrap.css.map */
     </style>
-    <div class="gap-5 pt-5" part="text color font-family">
-      <div class="row">
-        <div class="col-12">
-          <h2 part="heading-4 heading text color font-family">
-            Business Information:
-          </h2>
-          <p>
-            Business Name: Business Name
-          </p>
+    <div part="text color font-family">
+      <div>
+        <div class="mt-5">
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 125px; border-radius: 8px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
+            <div class="align-items-center d-flex gap-3">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
+              <div class="flex-grow-1">
+                <div class="d-flex flex-row row">
+                  <div class="col-6 flex-column">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
+                  </div>
+                  <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="d-flex flex-column gap-2">
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                    <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-6">
-          <h2 part="heading-4 heading text color font-family">
+      <div class="gap-5 mb-5 pt-5">
+        <div class="row">
+          <div class="col-12">
+            <h2 part="heading-4 heading text color font-family">
+              Business Name
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <h5 part="heading-5 heading text color font-family">
             Representative:
-          </h2>
-          <ul class="list-group" part="list-group text color font-family background-color">
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Name: Person Name
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Title: President
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Email: person.name@justifi.ai
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Phone: 6124011111
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h2 part="heading-4 heading text color font-family">
-            Shipping Address:
-          </h2>
-          <ul class="list-group" part="list-group text color font-family background-color">
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Street: 123 Example St
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Suite 101
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Postal Code: 55555
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              City: Minneapolis
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              State: MN
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="mt-5">
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
+          </h5>
+          <div>
+            <div>
+              Person Name
             </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
+            <div>
+              President
+            </div>
+            <div>
+              person.name@justifi.ai
+            </div>
+            <div>
+              6124011111
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+      <div class="mt-3">
+        <div class="text-end">
+          Order limit:
         </div>
-      </div>
-      <div class="mt-4 rounded shadow-sm terminal-selector-skeleton">
-        <div class="align-items-center d-flex gap-3">
-          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 8px; width: 125px; height: 125px;"></div>
-          <div class="flex-grow-1">
-            <div class="d-flex flex-row row">
-              <div class="col-6 flex-column">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 60%;"></div>
-              </div>
-              <div class="align-items-center col-6 d-flex gap-2 justify-content-end">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80px; height: 32px;"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="border-radius: 50%; width: 32px; height: 32px;"></div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex flex-column gap-2">
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-                <div aria-hidden="true" class="skeleton undefined" part="skeleton"></div>
-              </div>
-            </div>
-          </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+            Submit Order
+          </button>
         </div>
       </div>
     </div>
@@ -85425,63 +85436,51 @@ fieldset:disabled .btn {
 
 /*# sourceMappingURL=bootstrap.css.map */
     </style>
-    <div class="gap-5 pt-5" part="text color font-family">
-      <div class="row">
-        <div class="col-12">
-          <h2 part="heading-4 heading text color font-family">
-            Business Information:
-          </h2>
-          <p>
-            Business Name: Business Name
-          </p>
+    <div part="text color font-family">
+      <div></div>
+      <div class="gap-5 mb-5 pt-5">
+        <div class="row">
+          <div class="col-12">
+            <h2 part="heading-4 heading text color font-family">
+              Business Name
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <h5 part="heading-5 heading text color font-family">
+            Representative:
+          </h5>
+          <div>
+            <div>
+              Person Name
+            </div>
+            <div>
+              President
+            </div>
+            <div>
+              person.name@justifi.ai
+            </div>
+            <div>
+              6124011111
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-6">
-          <h2 part="heading-4 heading text color font-family">
-            Representative:
-          </h2>
-          <ul class="list-group" part="list-group text color font-family background-color">
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Name: Person Name
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Title: President
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Email: person.name@justifi.ai
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Phone: 6124011111
-            </li>
-          </ul>
+      <div class="d-flex flex-column gap-2 mt-5">
+        <terminal-quantity-selector description="Description 1" helpurl="Help URL 1" imageurl="Image URL 1" limit="5" modelname="Model 1"></terminal-quantity-selector>
+        <terminal-quantity-selector description="Description 2" helpurl="Help URL 2" imageurl="Image URL 2" limit="5" modelname="Model 2"></terminal-quantity-selector>
+      </div>
+      <div class="mt-3">
+        <div class="text-end">
+          Order limit: 5
         </div>
-        <div class="col-6">
-          <h2 part="heading-4 heading text color font-family">
-            Shipping Address:
-          </h2>
-          <ul class="list-group" part="list-group text color font-family background-color">
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Street: 123 Example St
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Suite 101
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              Postal Code: 55555
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              City: Minneapolis
-            </li>
-            <li class="list-group-item" part="list-group-item text color font-family background-color">
-              State: MN
-            </li>
-          </ul>
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-primary submit-btn" disabled="" part="button-primary button text color font-family">
+            Submit Order
+          </button>
         </div>
       </div>
     </div>
-    <terminal-quantity-selector description="Description 1" helpurl="Help URL 1" imageurl="Image URL 1" limit="5" modelname="Model 1"></terminal-quantity-selector>
-    <terminal-quantity-selector description="Description 2" helpurl="Help URL 2" imageurl="Image URL 2" limit="5" modelname="Model 2"></terminal-quantity-selector>
   </template>
 </justifi-order-terminals>
 `;
