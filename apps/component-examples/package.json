@@ -21,7 +21,8 @@
     "start:payouts-list": "npx nodemon ./examples/payouts-list.js",
     "start:payouts-list-with-filters": "npx nodemon ./examples/payouts-list-with-filters.js",
     "start:order-terminals": "npx nodemon ./examples/order-terminals.js",
-    "start:terminal-orders-list": "npx nodemon ./examples/terminal-orders-list.js"
+    "start:terminal-orders-list": "npx nodemon ./examples/terminal-orders-list.js",
+    "start:terminal-orders-list-with-filters": "npx nodemon ./examples/terminal-orders-list-with-filters.js"
   },
   "author": "",
   "license": "ISC",
