@@ -1,5 +1,12 @@
 ### Changelog
 
+## 5.3.6
+
+### Patch Changes
+
+- 9f3e33b: - Fixed submit error that sometimes occured in `justifi-payment-provisioning` component's final form step.
+- a2217b4: Fix bug with the justifi-checkout, card-form and bank-account not loading due to malformed iframe-origin URL
+
 ## 5.3.5
 
 ### Patch Changes
