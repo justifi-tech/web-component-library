@@ -18,6 +18,11 @@ export interface ITerminalService {
     params: any,
     apiOrigin?: string
   ): Promise<IApiResponseCollection<ITerminal>>;
+  orderTerminals(
+    authToken: string,
+    terminalOrder: any,
+    apiOrigin?: string
+  ): Promise<IApiResponse<ITerminal>>;
 }
 
 export class TerminalService implements ITerminalService {
@@ -53,5 +58,16 @@ export class TerminalService implements ITerminalService {
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/order_models';
     return api.get(endpoint, null, null, headers);
+  }
+
+  async orderTerminals(
+    authToken: string,
+    terminalOrder: any,
+    apiOrigin: string = API_ORIGIN
+  ): Promise<IApiResponse<ITerminal>> {
+    const headers = { 'sub-account': terminalOrder.sub_account_id };
+    const api = Api({ authToken, apiOrigin });
+    const endpoint = 'terminals/orders';
+    return api.post(endpoint, terminalOrder, null, null, headers);
   }
 }

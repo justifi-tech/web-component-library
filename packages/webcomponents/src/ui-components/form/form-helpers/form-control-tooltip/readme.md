@@ -27,7 +27,7 @@
  - [justifi-business-owners-form-step-core](../../../../components/business-forms/payment-provisioning/business-owners)
  - [justifi-business-representative-form-inputs](../../../../components/business-forms/payment-provisioning/business-representative)
  - [justifi-legal-address-form-step-core](../../../../components/business-forms/payment-provisioning/legal-address-form)
- - [terminal-quantity-selector](../../../../components/terminal-quantity-selector)
+ - [terminal-quantity-selector](../../../../components/order-terminals/terminal-quantity-selector)
 
 ### Depends on
 

@@ -3,12 +3,11 @@ require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
-const businessId = process.env.BUSINESS_ID;
-const accountId = process.env.ACCOUNT_ID;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
@@ -19,7 +18,7 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 async function getToken() {
   const requestBody = JSON.stringify({
     client_id: clientId,
-    client_secret: clientSecret,
+    client_secret: clientSecret
   });
 
   let response;
@@ -35,67 +34,63 @@ async function getToken() {
     console.log('ERROR:', error);
   }
 
-  const data = await response.json();
-
-  return data.access_token;
+  const { access_token } = await response.json();
+  return access_token;
 }
 
-async function getWebComponentToken(token, businessId) {
-  try {
-    const response = await fetch(webComponentTokenEndpoint, {
+async function getWebComponentToken(token) {
+  const response = await fetch(webComponentTokenEndpoint,
+    {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [
-          `read:business:${businessId}`,
-          `write:account:${accountId}`,
-        ],
+        resources: [`write:account:${subAccountId}`],
       }),
-    });
-    const responseJson = await response.json();
+    }
+  );
 
-    return responseJson.access_token;
-  } catch (error) {
-    console.log('ERROR getWebComponentToken:', error);
-    return { error };
-  }
+  const { access_token } = await response.json();
+  return access_token;
 }
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const webComponentToken = await getWebComponentToken(token, businessId);
+  const webComponentToken = await getWebComponentToken(token);
 
   res.send(`
     <!DOCTYPE html>
     <html>
       <head>
-        <title>Order Terminals Example</title>
+        <title>JustiFi Terminal Orders List Component</title>
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div id="component-wrapper" style="margin:0 auto;max-width:700px;">
-          <justifi-order-terminals
-            account-id="${accountId}"
+        <div class="list-component-wrapper">
+        <div>
+          <justifi-terminal-orders-list-filters />
+        </div>
+        <div>
+          <justifi-terminal-orders-list 
+            account-id="${subAccountId}"
             auth-token="${webComponentToken}"
-            business-id="${businessId}"
-            account-id="${accountId}"
-            shipping="true"
-          ></justifi-order-terminals>
+          />
+        </div>
         </div>
         <script>
+          const justifiTerminalOrdersList = document.querySelector('justifi-terminal-orders-list');
 
-          document.addEventListener('submit-event', (event) => {
-            const message = document.createElement('div');
-            console.log('submit-event', event.detail);
-            message.textContent = 'Order ID: ' + event.detail.id;
-            document.body.appendChild(message);
+          justifiTerminalOrdersList.addEventListener('error-event', (event) => {
+            console.log(event);
           });
 
+          justifiTerminalOrdersList.addEventListener('click-event', (event) => {
+            console.log(event);
+          });
         </script>
       </body>
     </html>
@@ -103,5 +98,5 @@ app.get('/', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Example app listening on port ${port}`);
 });
