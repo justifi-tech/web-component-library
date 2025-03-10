@@ -58,7 +58,30 @@ Component to render a formated list of terminal device orders for the requested 
 
 ---
 
-All table components emit an event when a row is clicked with the necessary information to call the appropriate `Details` component for that entity.
+All table components emit an event when a row is clicked. Below is an example event payload showing the contents of `event.detail`, and a brief code example showing usage in your own implementation. 
+
+```
+{
+  "name": "tableRow",
+  "data": {
+    "id": "tord_ABCD1234",
+    "business_id": "biz_0987",
+    "sub_account_id": "acc_5678",
+    "provider": "verifone",
+    "order_type": "boarding_only",
+    "order_status": "submitted",
+    "terminals": [
+        {
+          "terminal_id": "tmn_QWER",
+          "terminal_did": "11112222",
+          "model_name": "v400"
+        }
+    ],
+    "created_at": "2025-01-02T10:30:00Z",
+    "updated_at": "2025-01-02T10:45:00Z"
+  }
+}
+```
 
 <Source dark language="html" code={codeExampleEventHandling} />
 
