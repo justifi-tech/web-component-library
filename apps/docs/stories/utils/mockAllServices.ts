@@ -15,6 +15,7 @@ import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
 import mockSeasonInterruptionInsurance from '../../../../mockData/mockSeasonInterruptionInsurance.json';
 import mockTerminals from '../../../../mockData/mockTerminalsListSuccess.json';
+import mockTerminalOrders from '../../../../mockData/mockTerminalOrdersListSuccess.json';
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
 import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
@@ -62,6 +63,7 @@ export const API_PATHS = {
   PAYOUTS_LIST: '/account/:id/payouts',
   INSURANCE_QUOTES: '/insurance/quotes',
   TERMINALS_LIST: 'terminals',
+  TERMINAL_ORDERS_LIST: 'terminals/orders',
   SUB_ACCOUNTS_LIST: 'sub_accounts',
   PKG_VERSION: '/@justifi/webcomponents/latest',
   DISPUTE: '/disputes/:id',
@@ -140,6 +142,9 @@ export const setUpMocks = () => {
 
       // TerminalsList
       this.get(API_PATHS.TERMINALS_LIST, () => mockTerminals);
+
+      // TerminalOrdersList
+      this.get(API_PATHS.TERMINAL_ORDERS_LIST, () => mockTerminalOrders);
 
       // SubAccountsList
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);

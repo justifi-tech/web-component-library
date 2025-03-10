@@ -36,7 +36,7 @@ describe('terminal-orders-list-core', () => {
 
     await page.waitForChanges();
 
-    expect(page.rootInstance.terminalOrders[0]).toEqual(expect.objectContaining({ account_id: mockOrdersResponse.data[0].account_id }));
+    expect(page.rootInstance.terminalOrders[0]).toEqual(expect.objectContaining({ sub_account_id: mockOrdersResponse.data[0].sub_account_id }));
     const rows = page.root.querySelectorAll('[data-test-id="table-row"]');
     expect(rows.length).toBe(mockOrdersResponse.data.length);
     expect(mockTerminalsService.fetchTerminalOrders).toHaveBeenCalled();
