@@ -35,7 +35,7 @@ interface TerminalOrderItem {
 export interface ITerminalOrder {
   id?: string;
   business_id?: string;
-  account_id?: string;
+  sub_account_id?: string;
   provider?: TerminalProviders;
   order_type?: TerminalOrderType;
   order_status?: TerminalOrderStatus;
@@ -47,7 +47,7 @@ export interface ITerminalOrder {
 export class TerminalOrder {
   public id: string;
   public business_id: string;
-  public account_id: string;
+  public sub_account_id: string;
   public provider: TerminalProviders;
   public order_type: TerminalOrderType;
   public order_status: TerminalOrderStatus;
@@ -59,7 +59,7 @@ export class TerminalOrder {
   constructor(data: ITerminalOrder) {
     this.id = data.id;
     this.business_id = data.business_id;
-    this.account_id = data.account_id;
+    this.sub_account_id = data.sub_account_id;
     this.provider = data.provider || TerminalProviders.verifone;
     this.order_items = [];
     this.order_type = data.order_type;
@@ -72,7 +72,7 @@ export class TerminalOrder {
   public get payload() {
     return {
       business_id: this.business_id,
-      account_id: this.account_id,
+      sub_account_id: this.sub_account_id,
       order_type: this.order_type,
       order_items: this.order_items,
     };
