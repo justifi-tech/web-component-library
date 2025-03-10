@@ -25,10 +25,11 @@ class JustifiAnalytics {
   basicData: iBasicData;
 
   constructor(component: ComponentInterface) {
-    // dont track analytics in local or storybook
+    // dont track analytics in local, storybook or staging
     if (
       window.location.origin.includes('localhost') ||
-      window.location.origin.includes('storybook')
+      window.location.origin.includes('storybook') ||
+      window.location.origin.includes('staging')
     ) {
       return;
     }
