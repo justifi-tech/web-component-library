@@ -6,6 +6,7 @@ import { ComponentClickEvent, ComponentErrorEvent, pagingDefaults, PagingInfo } 
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
 import { TableClickActions } from '../../ui-components/table/event-types';
+import { getRequestParams, onQueryParamsChange } from './terminal-orders-list-params-state';
 
 @Component({
   tag: 'terminal-orders-list-core',
@@ -37,13 +38,22 @@ export class TerminalOrdersListCore {
     if (this.getTerminalOrders) {
       this.fetchData();
     }
+
+    onQueryParamsChange('set', () => {
+      this.pagingParams = {};
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+      this.errorMessage = '';
+    });
   }
 
   fetchData(): void {
     this.loading = true;
     
     this.getTerminalOrders({
-      params: {},
+      params: this.terminalOrderParams,
       onSuccess: async ({ terminalOrders, pagingInfo }) => {
         this.terminalOrders = terminalOrders;
         this.paging = pagingInfo;
@@ -78,6 +88,12 @@ export class TerminalOrdersListCore {
     const orderData = this.terminalOrders.find((order) => order.id === clickedOrderId);
     this.clickEvent.emit({ name: TableClickActions.row, data: orderData });
   };
+
+  get terminalOrderParams() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
+  }
 
   get entityId() {
     return this.terminalOrders.map((terminalOrder) => terminalOrder.id);

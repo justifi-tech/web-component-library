@@ -136,3 +136,11 @@ export const terminalsListFilterMenu = `${filterMenu} terminals-list-filter-menu
 export const terminalsListFilterParam = `terminals-list-filter-param`;
 export const terminalIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-id-terminals-list-filter-param`;
 export const terminalStatusTerminalsListFilterParam = `${terminalsListFilterParam} terminal-status-terminals-list-filter-param`;
+
+// Terminal Orders List Filters
+export const terminalOrdersListFilterMenu = `${filterMenu} terminal-orders-list-filter-menu`;
+export const terminalOrdersListFilterParam = `terminal-orders-list-filter-param`;
+export const orderStatusTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} order-status-terminal-orders-list-filter-param`;
+export const orderTypeTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} order-type-terminal-orders-list-filter-param`;
+export const createdAfterTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} created-after-terminal-orders-list-filter-param`;
+export const createdBeforeTerminalOrdersListFilterParam = `${terminalOrdersListFilterParam} created-before-terminal-orders-list-filter-param`;
