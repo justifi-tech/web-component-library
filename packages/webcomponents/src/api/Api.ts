@@ -77,9 +77,17 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     endpoint: string,
     body?: any,
     params?: any,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    headers?: HeadersInit
   ) {
-    return makeRequest(endpoint, 'POST', params, JSON.stringify(body), signal);
+    return makeRequest(
+      endpoint,
+      'POST',
+      params,
+      JSON.stringify(body),
+      signal,
+      headers
+    );
   }
 
   async function put(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {

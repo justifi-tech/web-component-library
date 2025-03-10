@@ -65,8 +65,9 @@ export class TerminalService implements ITerminalService {
     terminalOrder: any,
     apiOrigin: string = API_ORIGIN
   ): Promise<IApiResponse<ITerminal>> {
+    const headers = { 'sub-account': terminalOrder.sub_account_id };
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/orders';
-    return api.post(endpoint, terminalOrder);
+    return api.post(endpoint, terminalOrder, null, null, headers);
   }
 }

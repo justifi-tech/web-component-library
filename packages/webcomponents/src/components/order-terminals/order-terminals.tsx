@@ -49,7 +49,7 @@ export class OrderTerminals {
   componentWillLoad() {
     this.order = new TerminalOrder({
       business_id: this.businessId,
-      account_id: this.accountId,
+      sub_account_id: this.accountId,
       order_type: this.shipping ? TerminalOrderType.boardingShipping : TerminalOrderType.boardingOnly,
     });
     checkPkgVersion();
