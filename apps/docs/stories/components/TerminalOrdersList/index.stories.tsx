@@ -4,6 +4,7 @@ import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 import { ThemeNames } from "../../themes";
 
 import "@justifi/webcomponents/dist/module/justifi-terminal-orders-list";
+import "@justifi/webcomponents/dist/module/justifi-terminal-orders-list-filters";
 
 type Story = StoryObj;
 
@@ -71,5 +72,18 @@ const meta: Meta = {
 };
 
 export const Example: Story = {};
+
+export const ExampleWithFilters: Story = {
+  args: {},
+  render: (args) => `
+  <div>
+    <justifi-terminal-orders-list-filters></justifi-terminal-orders-list-filters>
+    <justifi-terminal-orders-list
+      account-id="${args["account-id"]}"
+      auth-token="${args["auth-token"]}"
+    ></justifi-terminal-orders-list>
+  </div>
+  `
+};
 
 export default meta;
