@@ -48,7 +48,7 @@ export class RefundPayment {
   @Prop() paymentId: string;
 
   /**
-   * The amount of the payment to be refunded.
+   * The amount of the payment to be refunded. This should be equal to the Payment `amount_refundable` property.
    */
   @Prop() paymentAmountRefundable?: number = 0;
 
