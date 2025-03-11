@@ -73,6 +73,7 @@ app.get('/', async (req, res) => {
             account-id="${subAccountId}"
             auth-token="${webComponentToken}"
             with-button="true"
+            payment-amount-refundable=1000
           />
         </div>
         <script>

@@ -11,6 +11,7 @@ import { Api } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { CURRENCY_MASK } from '../../utils/form-input-masks';
 import { Header1, StyledHost } from '../../ui-components';
+import { formatCurrency } from '../../utils/utils';
 
 const refundReasonOptions: { label: string, value: string }[] = [
   {
@@ -49,12 +50,7 @@ export class RefundPayment {
   /**
    * The amount of the payment to be refunded.
    */
-  @Prop() amount?: number = 0;
-
-  /**
-   * Custom text for the submit button. Defaults to 'Submit'.
-   */
-  @Prop() submitButtonText?: string = 'Submit';
+  @Prop() paymentAmountRefundable?: number = 0;
 
   /**
    * Flag to control the visibility of the submit button.
@@ -76,7 +72,7 @@ export class RefundPayment {
   componentWillLoad() {
     this.formController = new FormController(RefundPaymentSchema);
     this.formController.setInitialValues({
-      amount: this.amount,
+      amount: this.paymentAmountRefundable.toString() || '0',
       description: '',
     });
     this.initializeApi();
@@ -95,21 +91,18 @@ export class RefundPayment {
   async handleSubmit(event: Event) {
     event.preventDefault();
 
-    this.formController.validateAndSubmit(this.submitRefund.bind(this), {
-      amount: this.amount,
-    });
+    this.formController.validateAndSubmit(this.submitRefund);
   }
 
   /**
    * Submits the refund request to the API.
    */
-  private async submitRefund() {
+  private async submitRefund(values) {
     this.isSubmitting = true;
-    const refundFields = this.formController.values.getValue();
 
     try {
-      await this.api.post(`payments/${this.paymentId}/refunds`, refundFields);
-      this.submitted.emit(refundFields);
+      const response = await this.api.post(`payments/${this.paymentId}/refunds`, values);
+      this.submitted.emit(response);
     } catch (error) {
       console.error('Error submitting refund:', error);
       this.submitted.emit(error);
@@ -148,7 +141,6 @@ export class RefundPayment {
             <form-control-monetary
               name="amount"
               label="Refund Amount"
-              defaultValue={this.amount?.toString() || ''}
               maskOptions={CURRENCY_MASK.DECIMAL}
               inputHandler={(name: keyof RefundPaymentFields, value: any) =>
                 this.handleInput(name, value)
@@ -182,7 +174,7 @@ export class RefundPayment {
                 disabled={!!this.isSubmitting}
                 class="btn btn-primary ml-auto"
               >
-                {this.submitButtonText}
+                {`Refund ${formatCurrency(this.amount)}`}
               </button>
             </div>
           )}
