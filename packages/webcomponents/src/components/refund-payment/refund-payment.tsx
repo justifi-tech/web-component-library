@@ -71,10 +71,6 @@ export class RefundPayment {
 
   componentWillLoad() {
     this.formController = new FormController(RefundPaymentSchema);
-    this.formController.setInitialValues({
-      amount: this.paymentAmountRefundable.toString() || '0',
-      description: '',
-    });
     this.initializeApi();
   }
 
@@ -146,6 +142,7 @@ export class RefundPayment {
                 this.handleInput(name, value)
               }
               errorText={this.errors.amount}
+              defaultValue={this.paymentAmountRefundable.toString()}
             ></form-control-monetary>
           </div>
           <div class="form-group">
@@ -174,7 +171,7 @@ export class RefundPayment {
                 disabled={!!this.isSubmitting}
                 class="btn btn-primary ml-auto"
               >
-                {`Refund ${formatCurrency(this.amount)}`}
+                {`Refund ${formatCurrency(this.paymentAmountRefundable)}`}
               </button>
             </div>
           )}
