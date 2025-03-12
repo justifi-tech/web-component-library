@@ -57,7 +57,7 @@ graph TD;
   justifi-legal-address-form-step-core --> form-control-select
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   justifi-additional-questions-form-step-core --> form-control-tooltip
-  justifi-additional-questions-form-step-core --> form-control-monetary
+  justifi-additional-questions-form-step-core --> form-control-monetary-provisioning
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
   justifi-business-representative-form-step --> justifi-business-representative-form-step-core

@@ -20,14 +20,14 @@
 
 ### Depends on
 
-- [form-control-monetary](../../../../ui-components/form)
+- [form-control-monetary-provisioning](../../payment-provisioning)
 - [form-control-select](../../../../ui-components/form)
 - [form-control-text](../../../../ui-components/form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-monetary
+  justifi-additional-questions --> form-control-monetary-provisioning
   justifi-additional-questions --> form-control-select
   justifi-additional-questions --> form-control-text
   form-control-select --> form-control-tooltip
