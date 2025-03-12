@@ -9,14 +9,14 @@ import {
   State,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
-import { CURRENCY_MASK } from '../../utils/form-input-masks';
-import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
-import { inputDisabled, inputFocused, inputGroup, inputInvalid, label, text } from '../../styles/parts';
+import { CURRENCY_MASK } from '../../../utils/form-input-masks';
+import { FormControlErrorText, FormControlHelpText } from '../../../ui-components';
+import { inputDisabled, inputFocused, inputGroup, inputInvalid, label, text } from '../../../styles/parts';
 
 @Component({
-  tag: 'form-control-monetary'
+  tag: 'form-control-monetary-provisioning'
 })
-export class MonetaryInput {
+export class MonetaryInputProvisioning {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
 

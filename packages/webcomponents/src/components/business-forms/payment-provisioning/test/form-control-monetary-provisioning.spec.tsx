@@ -1,19 +1,19 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
-import { CURRENCY_MASK } from "../../../utils/form-input-masks";
-import { MonetaryInput } from "../form-control-monetary";
-import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { FormControlHelpText } from '../form-helpers/form-control-help-text';
+import { CURRENCY_MASK } from "../../../../utils/form-input-masks";
+import { MonetaryInputProvisioning } from "../form-control-monetary-provisioning";
+import { FormControlErrorText } from '../../../../ui-components/form/form-helpers/form-control-error-text';
+import { FormControlHelpText } from '../../../../ui-components/form/form-helpers/form-control-help-text';
 
-describe('form-control-monetary', () => {
-  const components = [MonetaryInput, FormControlErrorText, FormControlHelpText];
+describe('form-control-monetary-provisioning', () => {
+  const components = [MonetaryInputProvisioning, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
   it('renders correctly with default props', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           maskOptions={CURRENCY_MASK.WHOLE}
@@ -26,7 +26,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           helpText='Enter payment amount'
@@ -45,7 +45,7 @@ describe('form-control-monetary', () => {
     let page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           defaultValue={defaultValue}
@@ -62,7 +62,7 @@ describe('form-control-monetary', () => {
     page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           defaultValue={defaultValue}
@@ -78,7 +78,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}
@@ -99,7 +99,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}
@@ -120,7 +120,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}
@@ -148,7 +148,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}
@@ -170,7 +170,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}
@@ -187,7 +187,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}
@@ -206,7 +206,7 @@ describe('form-control-monetary', () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
-        <form-control-monetary
+        <form-control-monetary-provisioning
           label='Amount'
           name='amount'
           inputHandler={mockInputHandler}

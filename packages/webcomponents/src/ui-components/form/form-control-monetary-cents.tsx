@@ -13,9 +13,9 @@ import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../s
 import { formatCurrencyNoSymbols } from '../../utils/utils';
 
 @Component({
-  tag: 'form-control-monetary-cents'
+  tag: 'form-control-monetary'
 })
-export class MonetaryInputCents {
+export class MonetaryInput {
   formControl!: HTMLInputElement;
 
   @State() isFocused: boolean = false;

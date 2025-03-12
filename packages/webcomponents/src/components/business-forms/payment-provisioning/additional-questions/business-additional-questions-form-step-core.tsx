@@ -129,7 +129,7 @@ export class AdditionalQuestionsFormStepCore {
           <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12 col-md-6">
-              <form-control-monetary
+              <form-control-monetary-provisioning
                 name="business_revenue"
                 label="What is your business’ estimated annual revenue from its primary business activities?"
                 inputHandler={this.inputHandler}
@@ -139,7 +139,7 @@ export class AdditionalQuestionsFormStepCore {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-monetary
+              <form-control-monetary-provisioning
                 name="business_payment_volume"
                 label="What is your business' annual credit card & ACH volume anticipated to process?"
                 inputHandler={this.inputHandler}

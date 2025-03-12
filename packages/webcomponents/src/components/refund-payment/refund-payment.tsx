@@ -137,7 +137,7 @@ export class RefundPayment {
         <Header1 text="Refund Payment" class="fs-5 fw-bold pb-3" />
         <form onSubmit={e => this.handleSubmit(e)} class="d-grid gap-4">
           <div class="form-group">
-            <form-control-monetary-cents
+            <form-control-monetary
               name="amount"
               label="Refund Amount"
               inputHandler={(name: keyof RefundPaymentFields, value: any) =>
@@ -145,7 +145,7 @@ export class RefundPayment {
               }
               errorText={this.errors.amount}
               defaultValue={this.paymentAmountRefundable.toString()}
-            ></form-control-monetary-cents>
+            ></form-control-monetary>
           </div>
           <div class="form-group">
             <form-control-select
