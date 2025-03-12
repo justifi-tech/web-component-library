@@ -11,25 +11,7 @@ import { Api } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { Header1, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
-
-const refundReasonOptions: { label: string, value: string }[] = [
-  {
-    label: 'Select a reason',
-    value: '',
-  },
-  {
-    label: 'Customer requested a refund',
-    value: 'customer_request',
-  },
-  {
-    label: 'Customer was double-charged',
-    value: 'duplicate',
-  },
-  {
-    label: 'Payment was reported as fraud',
-    value: 'fraudulent',
-  }
-];
+import refundReasonOptions from './refund-reason-options';
 
 @Component({
   tag: 'justifi-refund-payment',
