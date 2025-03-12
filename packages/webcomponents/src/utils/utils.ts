@@ -5,19 +5,14 @@ import { CurrencyTypes } from '../api/Payment';
 
 // Currency Formatting
 
-export const formatCurrencyNoSymbols = (amount: number): string => {
-  const formattedString = '0,0.00';
-  const formattedAmount = Dinero({ amount: amount }).toFormat(formattedString);
-  return formattedAmount;
-}
-
-export const formatCurrency = (amount: number, currency?: CurrencyTypes): string => {
+export const formatCurrency = (amount: number, currency?: CurrencyTypes, omitSymbols = false): string => {
   if (!amount) amount = 0;
 
+  const formattedString = (omitSymbols) ? '0,0.00' : '$0,0.00';
   const formattedCurrency = currency?.toUpperCase();
-  const formattedAmount = formatCurrencyNoSymbols(amount);
+  const formattedAmount = Dinero({ amount: amount }).toFormat(formattedString);
 
-  return currency ? `$${formattedAmount} ${formattedCurrency}` : `$${formattedAmount}`;
+  return currency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
 }
 
 // Number Formatting

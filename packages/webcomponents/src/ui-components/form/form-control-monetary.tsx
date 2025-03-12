@@ -10,7 +10,7 @@ import {
 } from '@stencil/core';
 import { FormControlErrorText } from '..';
 import { input, inputDisabled, inputFocused, inputInvalid, label, text } from '../../styles/parts';
-import { formatCurrencyNoSymbols } from '../../utils/utils';
+import { formatCurrency } from '../../utils/utils';
 
 @Component({
   tag: 'form-control-monetary'
@@ -50,7 +50,7 @@ export class MonetaryInput {
   }
 
   formatDisplayValue = (value: string) => {
-    return formatCurrencyNoSymbols(+value);
+    return formatCurrency(+value, undefined, true);
   }
 
   updateInput = (newValue: any) => {
