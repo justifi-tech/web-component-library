@@ -10,6 +10,7 @@ import {
 } from '@stencil/core';
 import { FormControlErrorText } from '..';
 import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../styles/parts';
+import { formatCurrencyNoSymbols } from '../../utils/utils';
 
 @Component({
   tag: 'form-control-monetary-cents'
@@ -42,19 +43,20 @@ export class MonetaryInputCents {
   }
 
   formatRawValue = (value: string) => {
-    const formattedValue = value.split('.').join('');
+    // Remove everything from that is not a number.
+    // This will parse out our display formatting as well as prevent users from entering non-numeric characters.
+    const formattedValue = value.replace(/\D/g, '');
     return formattedValue;
   }
 
   formatDisplayValue = (value: string) => {
-    const number = +value / 100;
-    return number.toFixed(2).toString();
+    return formatCurrencyNoSymbols(+value);
   }
 
   updateInput = (newValue: any) => {
     const name = this.formControl.name;
-    const formatRawValue = this.formatRawValue(newValue); // "1,000.00"
-    this.formControl.value = this.formatDisplayValue(formatRawValue); // "100000"
+    const formatRawValue = this.formatRawValue(newValue); // "100000"
+    this.formControl.value = this.formatDisplayValue(formatRawValue); // "1,000.00"
 
     this.inputHandler(name, formatRawValue);
     this.formControlInput.emit({ name: name, value: formatRawValue });
