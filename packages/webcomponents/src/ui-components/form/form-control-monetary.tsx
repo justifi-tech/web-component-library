@@ -8,7 +8,7 @@ import {
   Watch,
   State,
 } from '@stencil/core';
-import { FormControlErrorText } from '..';
+import { FormControlErrorText, FormControlHelpText } from '..';
 import { input, inputDisabled, inputFocused, inputInvalid, label, text } from '../../styles/parts';
 import { formatCurrency } from '../../utils/utils';
 
@@ -23,7 +23,7 @@ export class MonetaryInput {
   @Prop() name: any;
   @Prop() label: string;
   @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() defaultValue?: string;
+  @Prop() defaultValue?: string = '0';
   @Prop() helpText?: string;
   @Prop() errorText?: string;
   @Prop() maxLength?: number;
@@ -82,7 +82,7 @@ export class MonetaryInput {
           <label part={label} class="form-label" htmlFor={this.name}>
             {this.label}
           </label>
-          <form-control-tooltip helpText={this.helpText} />
+          <FormControlHelpText name={this.name} helpText={this.helpText} />
           <div class="input-group">
             <span class="input-group-text" part={text}>$</span>
             <input
