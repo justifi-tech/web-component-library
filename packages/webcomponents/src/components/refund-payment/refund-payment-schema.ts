@@ -1,19 +1,19 @@
 import * as yup from 'yup';
+import { formatCurrency } from '../../utils/utils';
 
 export interface RefundPaymentFields {
-  amount: number | null; // Allowing null for initial state or cleared inputs
+  amount: string;
   description: string;
 }
 
-const RefundPaymentSchema = yup.object().shape({
+const RefundPaymentSchema = (maxRefundAmount: string) => yup.object().shape({
   amount: yup
-    .number()
+    .string()
     .required('Amount is required')
     .typeError('Amount must be a number')
-    .positive('Amount must be positive')
     .test(
       'amount',
-      'Refund amount cannot be more than the original payment amount',
+      `Refund amount cannot be more than ${formatCurrency(+maxRefundAmount)}`,
       function (value) {
         return value <= this.options.context.amount;
       },

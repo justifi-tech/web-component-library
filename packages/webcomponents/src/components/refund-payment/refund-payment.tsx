@@ -9,7 +9,6 @@ import {
 import RefundPaymentSchema, { RefundPaymentFields } from './refund-payment-schema';
 import { Api } from '../../api';
 import { FormController } from '../../ui-components/form/form';
-import { CURRENCY_MASK } from '../../utils/form-input-masks';
 import { Header1, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
 
@@ -58,6 +57,7 @@ export class RefundPayment {
   @Prop() withButton?: boolean;
 
   @State() errors: any = {};
+  @State() values: any = {};
   @State() isSubmitting: boolean = false;
 
   /**
@@ -70,13 +70,16 @@ export class RefundPayment {
   private api: any;
 
   componentWillLoad() {
-    this.formController = new FormController(RefundPaymentSchema);
+    this.formController = new FormController(RefundPaymentSchema(this.paymentAmountRefundable.toString()));
     this.initializeApi();
   }
 
   componentDidLoad() {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
+    });
+    this.formController.values.subscribe(values => {
+      this.values = { ...values };
     });
   }
 
@@ -134,16 +137,15 @@ export class RefundPayment {
         <Header1 text="Refund Payment" class="fs-5 fw-bold pb-3" />
         <form onSubmit={e => this.handleSubmit(e)} class="d-grid gap-4">
           <div class="form-group">
-            <form-control-monetary
+            <form-control-monetary-cents
               name="amount"
               label="Refund Amount"
-              maskOptions={CURRENCY_MASK.DECIMAL}
               inputHandler={(name: keyof RefundPaymentFields, value: any) =>
                 this.handleInput(name, value)
               }
               errorText={this.errors.amount}
               defaultValue={this.paymentAmountRefundable.toString()}
-            ></form-control-monetary>
+            ></form-control-monetary-cents>
           </div>
           <div class="form-group">
             <form-control-select
@@ -171,7 +173,7 @@ export class RefundPayment {
                 disabled={!!this.isSubmitting}
                 class="btn btn-primary ml-auto"
               >
-                {`Refund ${formatCurrency(this.paymentAmountRefundable)}`}
+                {`Refund ${formatCurrency(+this.values.amount)}`}
               </button>
             </div>
           )}
