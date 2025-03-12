@@ -71,10 +71,15 @@ app.get('/', async (req, res) => {
       </head>
       <body>
         <div class="list-component-wrapper">
+        <div>
+          <justifi-terminal-orders-list-filters />
+        </div>
+        <div>
           <justifi-terminal-orders-list 
             account-id="${subAccountId}"
             auth-token="${webComponentToken}"
           />
+        </div>
         </div>
         <script>
           const justifiTerminalOrdersList = document.querySelector('justifi-terminal-orders-list');

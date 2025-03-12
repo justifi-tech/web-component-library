@@ -9,7 +9,6 @@ const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const businessId = process.env.BUSINESS_ID;
 const accountId = process.env.ACCOUNT_ID;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
 
 app.use(
   '/scripts',
@@ -79,14 +78,24 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div style="margin:0 auto;max-width:700px;">
+        <div id="component-wrapper" style="margin:0 auto;max-width:700px;">
           <justifi-order-terminals
+            account-id="${accountId}"
             auth-token="${webComponentToken}"
             business-id="${businessId}"
             account-id="${accountId}"
+            shipping="true"
           ></justifi-order-terminals>
         </div>
         <script>
+
+          document.addEventListener('submit-event', (event) => {
+            const message = document.createElement('div');
+            console.log('submit-event', event.detail);
+            message.textContent = 'Order ID: ' + event.detail.id;
+            document.body.appendChild(message);
+          });
+
         </script>
       </body>
     </html>

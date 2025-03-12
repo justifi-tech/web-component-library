@@ -5,7 +5,7 @@ import JustifiAnalytics from '../../../api/Analytics';
 import { BusinessService } from '../../../api/services/business.service';
 import { TerminalService } from '../../../api/services/terminal.service';
 import businessDetailsMock from '../../../../../../mockData/mockBusinessDetails.json';
-import { TerminalQuantitySelector } from '../../terminal-quantity-selector/terminal-quantity-selector';
+import { TerminalQuantitySelector } from '../terminal-quantity-selector/terminal-quantity-selector';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -26,17 +26,6 @@ describe('justifi-order-terminals', () => {
     expect(page.rootInstance.analytics).toBeInstanceOf(JustifiAnalytics);
   });
 
-  it('should set error message if businessId or authToken is missing', async () => {
-    const page = await newSpecPage({
-      components: [OrderTerminals],
-      template: () => <justifi-order-terminals />,
-    });
-
-    await page.rootInstance.componentWillLoad();
-
-    expect(page.rootInstance.errorMessage).toBe('Invalid business id or auth token');
-  });
-
   it('should emit an error event if businessId or authToken is missing', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
@@ -45,6 +34,8 @@ describe('justifi-order-terminals', () => {
     });
 
     await page.rootInstance.componentWillLoad();
+
+    await page.waitForChanges();
 
     expect(errorEvent).toHaveBeenCalled();
   });

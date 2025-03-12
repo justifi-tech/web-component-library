@@ -2,10 +2,11 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Table } from '../../utils/table';
 import { table, tableCell } from '../../styles/parts';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { pagingDefaults, PagingInfo } from '../../api';
+import { ComponentClickEvent, ComponentErrorEvent, pagingDefaults, PagingInfo } from '../../api';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
-import mockTerminalOrders from '../../../../../mockData/mockTerminalOrdersListSuccess.json';
+import { TableClickActions } from '../../ui-components/table/event-types';
+import { getRequestParams, onQueryParamsChange } from './terminal-orders-list-params-state';
 
 @Component({
   tag: 'terminal-orders-list-core',
@@ -15,7 +16,7 @@ export class TerminalOrdersListCore {
   @Prop() getTerminalOrders: Function;
   @Prop() columns: string;
 
-  @State() terminalOrders: TerminalOrder[] = mockTerminalOrders.data as TerminalOrder[];
+  @State() terminalOrders: TerminalOrder[] = [];
   @State() terminalOrdersTable: Table<TerminalOrder>;
   @State() loading: boolean = true;
   @State() errorMessage: string;
@@ -29,34 +30,70 @@ export class TerminalOrdersListCore {
     this.fetchData();
   }
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<any>;
-
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  
   componentWillLoad() {
     this.terminalOrdersTable = new Table<TerminalOrder>(this.terminalOrders, this.columns, terminalOrdersTableColumns, terminalOrdersTableCells);
     if (this.getTerminalOrders) {
       this.fetchData();
     }
+
+    onQueryParamsChange('set', () => {
+      this.pagingParams = {};
+    });
+
+    onQueryParamsChange('reset', () => {
+      this.pagingParams = {};
+      this.errorMessage = '';
+    });
   }
 
   fetchData(): void {
     this.loading = true;
-    console.log('fetching terminal orders');
-    this.loading = false;
+    
+    this.getTerminalOrders({
+      params: this.terminalOrderParams,
+      onSuccess: async ({ terminalOrders, pagingInfo }) => {
+        this.terminalOrders = terminalOrders;
+        this.paging = pagingInfo;
+        this.terminalOrdersTable.collectionData = this.terminalOrders;
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error;
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+      },
+      final: () => { this.loading = false },
+    });
   }
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
+    this.clickEvent.emit({ name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
+    this.clickEvent.emit({ name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
     const clickedOrderId = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedOrderId) return;
-    console.log('clickedOrderId', clickedOrderId);
+
+    const orderData = this.terminalOrders.find((order) => order.id === clickedOrderId);
+    this.clickEvent.emit({ name: TableClickActions.row, data: orderData });
   };
+
+  get terminalOrderParams() {
+    const requestParams = getRequestParams();
+    const params = { ...requestParams, ...this.pagingParams };
+    return params;
+  }
 
   get entityId() {
     return this.terminalOrders.map((terminalOrder) => terminalOrder.id);
