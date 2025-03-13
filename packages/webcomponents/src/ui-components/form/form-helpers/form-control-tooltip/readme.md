@@ -19,7 +19,6 @@
  - [form-control-date](../..)
  - [form-control-file](../..)
  - [form-control-file-v2](../..)
- - [form-control-monetary](../..)
  - [form-control-number-masked](../..)
  - [form-control-select](../..)
  - [form-control-text](../..)
@@ -41,7 +40,6 @@ graph TD;
   form-control-date --> form-control-tooltip
   form-control-file --> form-control-tooltip
   form-control-file-v2 --> form-control-tooltip
-  form-control-monetary --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
   form-control-select --> form-control-tooltip
   form-control-text --> form-control-tooltip
