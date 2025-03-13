@@ -3,7 +3,7 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PayoutsList } from '../payouts-list';
-import { PaginationMenu } from '../../pagination-menu/pagination-menu';
+import { PaginationMenu } from '../../../ui-components/pagination-menu/pagination-menu';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
 import { PayoutsListFilters } from '../payouts-list-filters';
@@ -28,15 +28,15 @@ describe('justifi-payouts-list filters', () => {
       components: components,
       autoApplyChanges: true,
       flushQueue: true,
-      template: () => 
-      <div>
-        <justifi-payouts-list-filters />
-        <justifi-payouts-list 
-          account-id="abc"
-          auth-token="abc" 
-          columns={defaultColumnsKeys} 
-        />,
-      </div>
+      template: () =>
+        <div>
+          <justifi-payouts-list-filters />
+          <justifi-payouts-list
+            account-id="abc"
+            auth-token="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
     });
 
     const filterButton = page.root.shadowRoot.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -53,15 +53,15 @@ describe('justifi-payouts-list filters', () => {
     page = await newSpecPage({
       components: components,
       autoApplyChanges: true,
-      template: () => 
-      <div>
-        <justifi-payouts-list-filters />
-        <justifi-payouts-list 
-          account-id="abc"
-          auth-token="abc" 
-          columns={defaultColumnsKeys}
-        />,
-      </div>
+      template: () =>
+        <div>
+          <justifi-payouts-list-filters />
+          <justifi-payouts-list
+            account-id="abc"
+            auth-token="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
     });
 
     expect(fetchDataSpy).toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('justifi-payouts-list filters', () => {
 
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
-    expect(updatedParams).toEqual({"created_after": "2021-01-01T23:59:59.000Z"});
+    expect(updatedParams).toEqual({ "created_after": "2021-01-01T23:59:59.000Z" });
   });
 
   it('clears filters and refetches data on clear filters interaction', async () => {
@@ -92,15 +92,15 @@ describe('justifi-payouts-list filters', () => {
       components: components,
       autoApplyChanges: true,
       flushQueue: true,
-      template: () => 
-      <div>
-        <justifi-payouts-list-filters />
-        <justifi-payouts-list 
-          account-id="abc"
-          auth-token="abc" 
-          columns={defaultColumnsKeys} 
-        />,
-      </div>
+      template: () =>
+        <div>
+          <justifi-payouts-list-filters />
+          <justifi-payouts-list
+            account-id="abc"
+            auth-token="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
     });
 
     expect(fetchDataSpy).toHaveBeenCalled();

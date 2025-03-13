@@ -40,7 +40,7 @@
 
 ### Depends on
 
-- [pagination-menu](../pagination-menu)
+- [pagination-menu](../../ui-components/pagination-menu)
 
 ### Graph
 ```mermaid

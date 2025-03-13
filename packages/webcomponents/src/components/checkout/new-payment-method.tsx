@@ -1,7 +1,7 @@
 import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } from '@stencil/core';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from './billing-forms/billing-form-schema';
 import { radioListItem } from '../../styles/parts';
 
 const PaymentMethodTypeLabels = {
@@ -100,13 +100,13 @@ export class NewPaymentMethod {
         <hidden-input />
         <div class="mb-4">
           {paymentMethodType === 'card' ? (
-            <card-form 
-              ref={(el) => this.paymentMethodFormRef = el} 
+            <card-form
+              ref={(el) => this.paymentMethodFormRef = el}
               iframeOrigin={this.iframeOrigin}
             />
           ) : (
-            <bank-account-form 
-              ref={(el) => this.paymentMethodFormRef = el} 
+            <bank-account-form
+              ref={(el) => this.paymentMethodFormRef = el}
               iframeOrigin={this.iframeOrigin}
             />
           )}

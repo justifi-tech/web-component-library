@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil
 import { Button, StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
-import { BillingFormFields } from '../billing-forms/billing-form-schema';
+import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import {
   ComponentSubmitEvent,

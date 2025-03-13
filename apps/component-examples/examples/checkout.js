@@ -7,7 +7,8 @@ const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const checkoutEndpoint = process.env.CHECKOUT_ENDPOINT;
 const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
+// const subAccountId = process.env.SUB_ACCOUNT_ID;
+const subAccountId = 'acc_75j5yGxQUf69B9vT2hDUn9';
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -79,8 +80,11 @@ async function getWebComponentToken(token, checkoutId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const checkout = await makeCheckout(token);
-  const webComponentToken = await getWebComponentToken(token, checkout.id);
+  // const checkout = await makeCheckout(token);
+  const webComponentToken = await getWebComponentToken(
+    token,
+    'cho_1dinB262ykBA7ADNLwv88c'
+  );
   const hideCardBillingForm = false;
 
   const billingFormFields = {
@@ -111,7 +115,7 @@ app.get('/', async (req, res) => {
         <div class="column-preview">
           <justifi-checkout 
             auth-token="${webComponentToken}" 
-            checkout-id="${checkout.id}"
+            checkout-id="cho_1dinB262ykBA7ADNLwv88c"
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>

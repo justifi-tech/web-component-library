@@ -9,10 +9,10 @@ import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 import mockGetCheckoutSuccess from './../../../../../../mockData/mockGetCheckoutSuccess.json';
 import mockPostCheckoutSuccess from './../../../../../../mockData/mockPostCheckoutSuccess.json';
 import { PaymentMethodOptions } from '../payment-method-options';
-import { BillingFormWrapper } from '../../billing-forms/billing-form-wrapper';
+import { BillingFormWrapper } from '../billing-forms/billing-form-wrapper';
 import { NewPaymentMethod } from '../new-payment-method';
-import { BillingForm } from '../../billing-forms/billing-form/billing-form';
-import { PostalForm } from '../../billing-forms/postal-form/postal-form';
+import { BillingForm } from '../billing-forms/billing-form/billing-form';
+import { PostalForm } from '../billing-forms/postal-form/postal-form';
 
 describe('justifi-checkout-core', () => {
   it('should display loading state correctly', async () => {

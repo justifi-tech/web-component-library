@@ -1,12 +1,12 @@
 import { object } from 'yup';
-import { 
+import {
   cityValidation,
-  identityNameValidation, 
-  lineOneValidation, 
+  identityNameValidation,
+  lineOneValidation,
   lineTwoValidation,
   postalValidation,
-  stateValidation
-} from '../business-forms/schemas/schema-validations';
+  stateValidation,
+} from '../../business-forms/schemas/schema-validations';
 
 // BillingFormFields and BillingFormSchema are used for justifi-billing-form which renders the entire billing form.
 export interface BillingFormFields {
@@ -37,7 +37,13 @@ export const PostalFormSchema = object({
 });
 
 export function isBillingFormFields(fields: any): fields is BillingFormFields {
-  return 'name' in fields && 'address_line1' in fields && 'address_city' in fields && 'address_state' in fields && 'address_postal_code' in fields;
+  return (
+    'name' in fields &&
+    'address_line1' in fields &&
+    'address_city' in fields &&
+    'address_state' in fields &&
+    'address_postal_code' in fields
+  );
 }
 
 export function isPostalFormFields(fields: any): fields is PostalFormFields {
