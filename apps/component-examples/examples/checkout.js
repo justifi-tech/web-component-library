@@ -7,8 +7,7 @@ const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const checkoutEndpoint = process.env.CHECKOUT_ENDPOINT;
 const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
-// const subAccountId = process.env.SUB_ACCOUNT_ID;
-const subAccountId = 'acc_75j5yGxQUf69B9vT2hDUn9';
+const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
