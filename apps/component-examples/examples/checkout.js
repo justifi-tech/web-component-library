@@ -79,11 +79,8 @@ async function getWebComponentToken(token, checkoutId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  // const checkout = await makeCheckout(token);
-  const webComponentToken = await getWebComponentToken(
-    token,
-    'cho_1dinB262ykBA7ADNLwv88c'
-  );
+  const checkout = await makeCheckout(token);
+  const webComponentToken = await getWebComponentToken(token, checkout.id);
   const hideCardBillingForm = false;
 
   const billingFormFields = {
@@ -114,7 +111,7 @@ app.get('/', async (req, res) => {
         <div class="column-preview">
           <justifi-checkout 
             auth-token="${webComponentToken}" 
-            checkout-id="cho_1dinB262ykBA7ADNLwv88c"
+            checkout-id="${checkout.id}"
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>
