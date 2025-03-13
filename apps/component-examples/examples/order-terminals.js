@@ -83,7 +83,6 @@ app.get('/', async (req, res) => {
             account-id="${accountId}"
             auth-token="${webComponentToken}"
             business-id="${businessId}"
-            account-id="${accountId}"
             shipping="true"
           ></justifi-order-terminals>
         </div>
