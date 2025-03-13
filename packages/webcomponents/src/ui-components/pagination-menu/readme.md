@@ -17,11 +17,11 @@
 
 ### Used by
 
- - [checkouts-list-core](../checkouts-list)
- - [payments-list-core](../payments-list)
- - [payouts-list-core](../payouts-list)
- - [terminal-orders-list-core](../terminal-orders-list)
- - [terminals-list-core](../terminals-list)
+ - [checkouts-list-core](../../components/checkouts-list)
+ - [payments-list-core](../../components/payments-list)
+ - [payouts-list-core](../../components/payouts-list)
+ - [terminal-orders-list-core](../../components/terminal-orders-list)
+ - [terminals-list-core](../../components/terminals-list)
 
 ### Graph
 ```mermaid

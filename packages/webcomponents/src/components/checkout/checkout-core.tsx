@@ -4,7 +4,7 @@ import { PaymentMethodPayload } from './payment-method-payload';
 import { Checkout, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api/Checkout';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
-import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from './billing-forms/billing-form-schema';
 import { Button, StyledHost, Skeleton, Header2, Header3 } from '../../ui-components';
 import { checkoutSummary, text } from '../../styles/parts';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';

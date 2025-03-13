@@ -2,7 +2,7 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { PaginationMenu } from '../../pagination-menu/pagination-menu';
+import { PaginationMenu } from '../../../ui-components/pagination-menu/pagination-menu';
 import { PayoutsListCore } from '../payouts-list-core';
 import mockSuccessResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';

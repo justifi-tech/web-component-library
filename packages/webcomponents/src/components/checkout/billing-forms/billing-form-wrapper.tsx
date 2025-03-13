@@ -1,7 +1,7 @@
 import { Component, h, Prop, Method, Host } from '@stencil/core';
 import { BillingFormFields, PostalFormFields } from './billing-form-schema';
-import { billingForm } from '../../styles/parts';
-import { Header3 } from '../../ui-components';
+import { billingForm } from '../../../styles/parts';
+import { Header3 } from '../../../ui-components';
 
 @Component({
   tag: 'justifi-billing-form-wrapper',

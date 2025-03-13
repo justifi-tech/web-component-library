@@ -3,7 +3,7 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { TerminalOrdersListCore } from '../terminal-orders-list-core';
-import { PaginationMenu } from '../../pagination-menu/pagination-menu';
+import { PaginationMenu } from '../../../ui-components/pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockTerminalOrdersListSuccess.json';
 import { IApiResponseCollection, ITerminalOrder } from '../../../api';
 import { makeGetTerminalOrders } from '../../../actions/terminal/get-terminal-orders';

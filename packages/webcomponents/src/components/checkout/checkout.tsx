@@ -3,7 +3,7 @@ import { makeGetCheckout, makeCheckoutComplete } from '../../actions/checkout/ch
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from './billing-forms/billing-form-schema';
 import { ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';

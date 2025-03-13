@@ -3,7 +3,7 @@ import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
-import { BillingFormFields, PostalFormFields } from '../billing-forms/billing-form-schema';
+import { BillingFormFields, PostalFormFields } from './billing-forms/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -25,6 +25,7 @@ export class PaymentMethodOptions {
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
+
 
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
