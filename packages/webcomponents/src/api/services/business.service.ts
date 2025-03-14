@@ -19,10 +19,11 @@ export interface IBusinessService {
 export class BusinessService implements IBusinessService {
   async fetchBusiness(
     businessId: string,
-    authToken: string
+    authToken: string,
+    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<IBusiness>> {
     const endpoint = `entities/business/${businessId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
+    return Api({ authToken, apiOrigin }).get(endpoint);
   }
 
   async patchBusiness(
