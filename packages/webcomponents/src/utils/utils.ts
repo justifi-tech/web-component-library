@@ -143,6 +143,11 @@ export function formatAddress(address: Address): string {
 
 // String Manipulation
 
+export function capitalFirstLetter(str: string): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
   if (!snakeCaseStr) return '';
   return snakeCaseStr

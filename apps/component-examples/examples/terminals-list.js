@@ -74,6 +74,7 @@ app.get('/', async (req, res) => {
           <justifi-terminals-list 
             account-id="${subAccountId}"
             auth-token="${webComponentToken}"
+            columns="nickname,provider,provider_serial_number,model_name,id,status"
           />
         </div>
         <script>
