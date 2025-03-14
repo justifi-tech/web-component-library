@@ -51,7 +51,7 @@ Type: `Promise<void>`
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
-- [form-control-monetary](../../../../ui-components/form)
+- [form-control-monetary-provisioning](..)
 - [form-control-select](../../../../ui-components/form)
 - [form-control-text](../../../../ui-components/form)
 
@@ -59,7 +59,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   justifi-additional-questions-form-step-core --> form-control-tooltip
-  justifi-additional-questions-form-step-core --> form-control-monetary
+  justifi-additional-questions-form-step-core --> form-control-monetary-provisioning
   justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
   form-control-tooltip --> custom-popper

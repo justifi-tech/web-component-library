@@ -6,18 +6,18 @@ import {
   EventEmitter,
   Prop,
 } from '@stencil/core';
-import RefundFormSchema, { RefundFormFields } from './refund-form-schema';
+import RefundPaymentSchema, { RefundPaymentFields } from './refund-payment-schema';
 import { Api } from '../../api';
 import { FormController } from '../../ui-components/form/form';
-import { CURRENCY_MASK } from '../../utils/form-input-masks';
-import { StyledHost } from '../../ui-components';
-
+import { Header1, StyledHost } from '../../ui-components';
+import { formatCurrency } from '../../utils/utils';
+import refundReasonOptions from './refund-reason-options';
 
 @Component({
-  tag: 'justifi-refund-form',
+  tag: 'justifi-refund-payment',
   shadow: true,
 })
-export class RefundForm {
+export class RefundPayment {
   /**
    * Authentication token required to authorize the refund transaction.
    */
@@ -29,49 +29,39 @@ export class RefundForm {
   @Prop() paymentId: string;
 
   /**
-   * The amount of the payment to be refunded.
+   * The amount of the payment to be refunded. This should be equal to the Payment `amount_refundable` property.
    */
-  @Prop() amount?: number = 0;
-
-  /**
-   * Custom text for the submit button. Defaults to 'Submit'.
-   */
-  @Prop() submitButtonText?: string = 'Submit';
+  @Prop() paymentAmountRefundable?: number = 0;
 
   /**
    * Flag to control the visibility of the submit button.
    */
   @Prop() withButton?: boolean;
 
-  /**
-   * Optional information text displayed above the form.
-   */
-  @Prop() refundInfoText?: string;
-
   @State() errors: any = {};
+  @State() values: any = {};
   @State() isSubmitting: boolean = false;
 
   /**
    * Event emitted when the refund form is successfully submitted.
    * The submitted refund fields are passed as the event detail.
    */
-  @Event() submitted: EventEmitter<RefundFormFields>;
+  @Event() submitted: EventEmitter<RefundPaymentFields>;
 
   private formController: FormController;
   private api: any;
 
   componentWillLoad() {
-    this.formController = new FormController(RefundFormSchema);
-    this.formController.setInitialValues({
-      amount: this.amount,
-      message: '',
-    });
+    this.formController = new FormController(RefundPaymentSchema(this.paymentAmountRefundable.toString()));
     this.initializeApi();
   }
 
   componentDidLoad() {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
+    });
+    this.formController.values.subscribe(values => {
+      this.values = { ...values };
     });
   }
 
@@ -82,21 +72,18 @@ export class RefundForm {
   async handleSubmit(event: Event) {
     event.preventDefault();
 
-    this.formController.validateAndSubmit(this.submitRefund.bind(this), {
-      amount: this.amount,
-    });
+    this.formController.validateAndSubmit(this.submitRefund);
   }
 
   /**
    * Submits the refund request to the API.
    */
-  private async submitRefund() {
+  private async submitRefund(values) {
     this.isSubmitting = true;
-    const refundFields = this.formController.values.getValue();
 
     try {
-      await this.api.post(`payments/${this.paymentId}/refunds`, refundFields);
-      this.submitted.emit(refundFields);
+      const response = await this.api.post(`payments/${this.paymentId}/refunds`, values);
+      this.submitted.emit(response);
     } catch (error) {
       console.error('Error submitting refund:', error);
       this.submitted.emit(error);
@@ -108,7 +95,7 @@ export class RefundForm {
   /**
    * Handles input changes, updating the refundFields state.
    */
-  private handleInput(field: keyof RefundFormFields, value: any) {
+  private handleInput(field: keyof RefundPaymentFields, value: any) {
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [field]: value,
@@ -129,46 +116,37 @@ export class RefundForm {
   render() {
     return (
       <StyledHost>
-        <h1>Refund</h1>
-
-        {this.refundInfoText && (
-          <div
-            class="d-flex align-items-center flex-row gap-4 border-top border-bottom my-4 p-3"
-            role="alert"
-          >
-            <img
-              src="/info-icon.svg"
-              alt="Information"
-              height="30"
-              width="30"
-            />
-
-            <p class="m-0" innerHTML={this.refundInfoText} />
-          </div>
-        )}
-
+        <Header1 text="Refund Payment" class="fs-5 fw-bold pb-3" />
         <form onSubmit={e => this.handleSubmit(e)} class="d-grid gap-4">
           <div class="form-group">
             <form-control-monetary
               name="amount"
               label="Refund Amount"
-              defaultValue={this.amount?.toString() || ''}
-              maskOptions={CURRENCY_MASK.DECIMAL}
-              inputHandler={(name: keyof RefundFormFields, value: any) =>
+              inputHandler={(name: keyof RefundPaymentFields, value: any) =>
                 this.handleInput(name, value)
               }
               errorText={this.errors.amount}
+              defaultValue={this.paymentAmountRefundable.toString()}
             ></form-control-monetary>
           </div>
           <div class="form-group">
-            <form-control-text
-              name="notes"
-              label="Additional Notes"
-              inputHandler={(name: keyof RefundFormFields, value: any) =>
+            <form-control-select
+              label="Reason for refund (optional)"
+              options={refundReasonOptions}
+              name="reason"
+              defaultValue={''}>
+            </form-control-select>
+          </div>
+          <div class="form-group">
+            <form-control-textarea
+              name="description"
+              label="Note (optional)"
+              inputHandler={(name: keyof RefundPaymentFields, value: any) =>
                 this.handleInput(name, value)
               }
-              errorText={this.errors.notes}
-            ></form-control-text>
+              errorText={this.errors.description}
+              maxLength={250}
+            ></form-control-textarea>
           </div>
           {this.withButton && (
             <div class="form-group d-flex flex-row-reverse">
@@ -177,7 +155,7 @@ export class RefundForm {
                 disabled={!!this.isSubmitting}
                 class="btn btn-primary ml-auto"
               >
-                {this.submitButtonText}
+                {`Refund ${formatCurrency(+this.values.amount)}`}
               </button>
             </div>
           )}

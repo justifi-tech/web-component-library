@@ -53,7 +53,7 @@ graph TD;
   form-control-number-masked --> form-control-tooltip
   justifi-legal-address-form --> form-control-text
   justifi-legal-address-form --> form-control-select
-  justifi-additional-questions --> form-control-monetary
+  justifi-additional-questions --> form-control-monetary-provisioning
   justifi-additional-questions --> form-control-select
   justifi-additional-questions --> form-control-text
   justifi-business-representative --> form-control-text

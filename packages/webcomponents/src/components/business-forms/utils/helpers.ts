@@ -18,7 +18,7 @@ export function constructDate(year: string, month: string, day: string): string 
   if (!year || !month || !day) {
     return;
   }
-  
+
   return `${year}-${filterNumber(month)}-${filterNumber(day)}`;
 }
 
