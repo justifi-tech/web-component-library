@@ -135,6 +135,7 @@ export const paymentModeCheckoutsListFilterParam = `${checkoutsListFilterParam} 
 export const terminalsListFilterMenu = `${filterMenu} terminals-list-filter-menu`;
 export const terminalsListFilterParam = `terminals-list-filter-param`;
 export const terminalIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-id-terminals-list-filter-param`;
+export const terminalOrderIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-order-id-terminals-list-filter-param`;
 export const terminalStatusTerminalsListFilterParam = `${terminalsListFilterParam} terminal-status-terminals-list-filter-param`;
 
 // Terminal Orders List Filters

@@ -6,6 +6,7 @@ import { ITerminalStatus } from '../../api';
 import { 
   terminalsListFilterMenu,
   terminalIdTerminalsListFilterParam,
+  terminalOrderIdTerminalsListFilterParam,
   terminalStatusTerminalsListFilterParam
 } from '../../styles/parts';
 
@@ -15,6 +16,7 @@ import {
 })
 export class TerminalsListFilters {
   @Prop() terminalId?: string;
+  @Prop() terminalOrderId?: string;
   @Prop() terminalStatus?: ITerminalStatus;
 
   private debouncedSetParamsOnChange: (name: string, value: string) => void;
@@ -26,6 +28,7 @@ export class TerminalsListFilters {
     const propsToSet = {
       terminal_id: this.terminalId,
       status: this.terminalStatus,
+      terminal_order_id: this.terminalOrderId
     };
 
     Object.entries(propsToSet).forEach(([key, value]) => {
@@ -45,6 +48,7 @@ export class TerminalsListFilters {
       { label: 'Connected', value: ITerminalStatus.connected },
       { label: 'Disconnected', value: ITerminalStatus.disconnected },
       { label: 'Unknown', value: ITerminalStatus.unknown },
+      { label: 'Pending Configuration', value: ITerminalStatus.pending_configuration }
     ]
   }
 
@@ -63,6 +67,16 @@ export class TerminalsListFilters {
                 defaultValue={this.terminalId || filterParams.terminal_id}
                 disabled={!!this.terminalId}
                 part={terminalIdTerminalsListFilterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text 
+                name="terminal_order_id"
+                label="Terminal Order ID"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.terminalOrderId || filterParams.terminal_order_id}
+                disabled={!!this.terminalOrderId}
+                part={terminalOrderIdTerminalsListFilterParam}
               />
             </div>
             <div class="p-2">

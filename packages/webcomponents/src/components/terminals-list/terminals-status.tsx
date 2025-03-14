@@ -1,7 +1,8 @@
 import { h } from "@stencil/core";
 import { Badge, BadgeVariant } from "../../ui-components/badge/badge";
+import { ITerminalStatus } from "../../api";
 
-export const MapTerminalStatusToBadge = (status: string) => {
+export const MapTerminalStatusToBadge = (status: ITerminalStatus) => {
   const statusToBadgeProps = {
     connected: {
       variant: BadgeVariant.SUCCESS,
@@ -17,6 +18,11 @@ export const MapTerminalStatusToBadge = (status: string) => {
       variant: BadgeVariant.SECONDARY,
       title: 'The status of this terminal is unknown',
       text: 'Unknown',
+    },
+    pending_configuration: {
+      variant: BadgeVariant.WARNING,
+      title: 'This terminal is pending configuration',
+      text: 'Pending configuration',
     },
   }
 
