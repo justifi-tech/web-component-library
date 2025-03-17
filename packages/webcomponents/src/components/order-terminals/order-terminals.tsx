@@ -4,7 +4,6 @@ import { checkPkgVersion } from "../../utils/check-pkg-version";
 import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { BusinessService } from "../../api/services/business.service";
-import { ErrorState } from "../../ui-components/details/utils";
 import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
 import { makeGetBusiness } from "../../actions/business/get-business";
@@ -42,7 +41,7 @@ export class OrderTerminals {
   analytics: JustifiAnalytics;
 
   @Event({
-    eventName: 'error-event'
+    eventName: 'error-event',
   }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Event({ eventName: 'submit-event' }) submitted: EventEmitter<any>;
@@ -152,12 +151,6 @@ export class OrderTerminals {
     );
   }
 
-  private renderError() {
-    if (!this.loading.business && this.error) {
-      return ErrorState(this.error.message);
-    }
-  }
-
   private renderBusinessDetails() {
     if (!this.loading.business && this.business) {
       return (
@@ -224,7 +217,6 @@ export class OrderTerminals {
       <StyledHost>
         <div part={text}>
           {this.renderLoading()}
-          {this.renderError()}
           {this.renderBusinessDetails()}
           {this.renderTerminals()}
           {this.renderOrderSection()}

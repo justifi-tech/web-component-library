@@ -28509,11 +28509,6 @@ fieldset:disabled .btn {
           </div>
         </div>
       </div>
-      <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
-        <p part="text color font-family">
-          Resource Not Found
-        </p>
-      </main>
       <div class="mt-3">
         <div class="text-end">
           Order limit:
@@ -42687,11 +42682,6 @@ fieldset:disabled .btn {
     </style>
     <div part="text color font-family">
       <div></div>
-      <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
-        <p part="text color font-family">
-          Resource Not Found
-        </p>
-      </main>
       <div class="gap-5 mb-5 pt-5">
         <div class="row">
           <div class="col-12">
