@@ -95,6 +95,13 @@ app.get('/', async (req, res) => {
             document.body.appendChild(message);
           });
 
+          document.addEventListener('error-event', (event) => {
+            const message = document.createElement('div');
+            console.log('error-event', event.detail);
+            message.textContent = 'Error: ' + event.detail.message;
+            document.body.appendChild(message);
+          });
+
         </script>
       </body>
     </html>
