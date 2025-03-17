@@ -1,5 +1,14 @@
 ### Changelog
 
+## 5.4.1
+
+### Patch Changes
+
+- 2e88842: - Add new filter input to `justifi-terminals-list-filters`, allowing users to filter terminals in the list according to a given terminal order ID.
+  - Add new option to `status` filter input in `justifi-terminals-list-filters`: `pending_configuration`.
+- 21a47db: Update the `justifi-order-terminals` component to not show an error state, but only emit the `error-event`.
+- 40394dd: - Added new optional columns to render in `justifi-terminals-list`: `id`, `model_name`, and `provider`.
+
 ## 5.4.0
 
 ### Minor Changes
