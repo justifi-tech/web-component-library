@@ -2,10 +2,14 @@ import { ComponentErrorSeverity } from '../../api';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeOrderTerminals =
-  ({ authToken, service }) =>
+  ({ authToken, service, apiOrigin = PROXY_API_ORIGIN }) =>
   async ({ terminalOrder, onSuccess, onError }) => {
     try {
-      const response = await service.orderTerminals(authToken, terminalOrder);
+      const response = await service.orderTerminals(
+        authToken,
+        terminalOrder,
+        apiOrigin
+      );
 
       if (!response.error) {
         const { data } = response;

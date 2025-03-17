@@ -25,6 +25,7 @@ export class OrderTerminals {
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() shipping: boolean = false;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @State() loading = {
     business: true,
@@ -77,6 +78,7 @@ export class OrderTerminals {
       id: this.businessId,
       authToken: this.authToken,
       service: new BusinessService(),
+      apiOrigin: this.apiOrigin,
     })({
       onSuccess: ({ business }) => {
         this.business = new Business(business);
@@ -94,6 +96,7 @@ export class OrderTerminals {
       id: this.accountId,
       authToken: this.authToken,
       service: new TerminalService(),
+      apiOrigin: this.apiOrigin,
     })({
       onSuccess: ({ terminals, orderLimit }) => {
         this.terminalModels = terminals;
@@ -111,6 +114,7 @@ export class OrderTerminals {
     const orderTerminals = makeOrderTerminals({
       authToken: this.authToken,
       service: new TerminalService(),
+      apiOrigin: this.apiOrigin,
     });
 
     this.submitting = true;

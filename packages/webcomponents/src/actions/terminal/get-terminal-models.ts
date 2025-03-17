@@ -2,10 +2,14 @@ import { ComponentErrorSeverity, TerminalModel } from '../../api';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetTerminalModels =
-  ({ id, authToken, service }) =>
+  ({ id, authToken, service, apiOrigin }) =>
   async ({ onSuccess, onError }) => {
     try {
-      const response = await service.fetchTerminalModels(id, authToken);
+      const response = await service.fetchTerminalModels(
+        id,
+        authToken,
+        apiOrigin
+      );
 
       if (!response.error) {
         const terminals =
