@@ -2,6 +2,7 @@ import { TerminalModelName } from "./TerminalModel";
 
 export interface TerminalsQueryParams {
   terminal_id?: string;
+  terminal_order_id?: string;
   status?: string;
 }
 
@@ -9,6 +10,7 @@ export enum ITerminalStatus {
   connected = 'connected',
   disconnected = 'disconnected',
   unknown = 'unknown',
+  pending_configuration = 'pending_configuration'
 }
 
 export interface ITerminal {
