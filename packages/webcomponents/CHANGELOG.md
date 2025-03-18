@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.4.2
+
+### Patch Changes
+
+- 1e592bd: Added the shipping address information to the justifi-order-terminals component and format phone number.
+
 ## 5.4.1
 
 ### Patch Changes
