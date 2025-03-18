@@ -175,11 +175,10 @@ export class OrderTerminals {
               <div class="col-6">
                 <h5 part={heading5}>Shipping Address:</h5>
                 <div>
-                  <div>Street: {this.business.legal_address?.line1}</div>
-                  <div>{this.business.legal_address?.line2}</div>
-                  <div>Postal Code: {this.business.legal_address?.postal_code}</div>
-                  <div>City: {this.business.legal_address?.city}</div>
-                  <div>State: {this.business.legal_address?.state}</div>
+                  {this.business.legal_address.line1}
+                  {this.business.legal_address.line2 ? `, ${this.business.legal_address.line2}` : ""}
+                  <br />
+                  {this.business.legal_address.city}, {this.business.legal_address.state} {this.business.legal_address.postal_code}
                 </div>
               </div>
             )}
