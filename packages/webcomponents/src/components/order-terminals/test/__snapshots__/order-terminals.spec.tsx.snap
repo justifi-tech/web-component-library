@@ -14233,7 +14233,7 @@ fieldset:disabled .btn {
           </div>
         </div>
       </div>
-      <div class="gap-5 mb-5 pt-5">
+      <div class="d-flex flex-column gap-4 mb-5 pt-5">
         <div class="row">
           <div class="col-12">
             <h2 part="heading-4 heading text color font-family">
@@ -14242,21 +14242,23 @@ fieldset:disabled .btn {
           </div>
         </div>
         <div class="row">
-          <h5 part="heading-5 heading text color font-family">
-            Representative:
-          </h5>
-          <div>
+          <div class="col-6">
+            <h5 part="heading-5 heading text color font-family">
+              Representative:
+            </h5>
             <div>
-              Person Name
-            </div>
-            <div>
-              President
-            </div>
-            <div>
-              person.name@justifi.ai
-            </div>
-            <div>
-              6124011111
+              <div>
+                Person Name
+              </div>
+              <div>
+                President
+              </div>
+              <div>
+                person.name@justifi.ai
+              </div>
+              <div>
+                (612) 401-1111
+              </div>
             </div>
           </div>
         </div>
@@ -42682,7 +42684,7 @@ fieldset:disabled .btn {
     </style>
     <div part="text color font-family">
       <div></div>
-      <div class="gap-5 mb-5 pt-5">
+      <div class="d-flex flex-column gap-4 mb-5 pt-5">
         <div class="row">
           <div class="col-12">
             <h2 part="heading-4 heading text color font-family">
@@ -42691,21 +42693,23 @@ fieldset:disabled .btn {
           </div>
         </div>
         <div class="row">
-          <h5 part="heading-5 heading text color font-family">
-            Representative:
-          </h5>
-          <div>
+          <div class="col-6">
+            <h5 part="heading-5 heading text color font-family">
+              Representative:
+            </h5>
             <div>
-              Person Name
-            </div>
-            <div>
-              President
-            </div>
-            <div>
-              person.name@justifi.ai
-            </div>
-            <div>
-              6124011111
+              <div>
+                Person Name
+              </div>
+              <div>
+                President
+              </div>
+              <div>
+                person.name@justifi.ai
+              </div>
+              <div>
+                (612) 401-1111
+              </div>
             </div>
           </div>
         </div>
@@ -71227,7 +71231,7 @@ fieldset:disabled .btn {
           </div>
         </div>
       </div>
-      <div class="gap-5 mb-5 pt-5">
+      <div class="d-flex flex-column gap-4 mb-5 pt-5">
         <div class="row">
           <div class="col-12">
             <h2 part="heading-4 heading text color font-family">
@@ -71236,21 +71240,23 @@ fieldset:disabled .btn {
           </div>
         </div>
         <div class="row">
-          <h5 part="heading-5 heading text color font-family">
-            Representative:
-          </h5>
-          <div>
+          <div class="col-6">
+            <h5 part="heading-5 heading text color font-family">
+              Representative:
+            </h5>
             <div>
-              Person Name
-            </div>
-            <div>
-              President
-            </div>
-            <div>
-              person.name@justifi.ai
-            </div>
-            <div>
-              6124011111
+              <div>
+                Person Name
+              </div>
+              <div>
+                President
+              </div>
+              <div>
+                person.name@justifi.ai
+              </div>
+              <div>
+                (612) 401-1111
+              </div>
             </div>
           </div>
         </div>
@@ -85428,7 +85434,7 @@ fieldset:disabled .btn {
     </style>
     <div part="text color font-family">
       <div></div>
-      <div class="gap-5 mb-5 pt-5">
+      <div class="d-flex flex-column gap-4 mb-5 pt-5">
         <div class="row">
           <div class="col-12">
             <h2 part="heading-4 heading text color font-family">
@@ -85437,21 +85443,23 @@ fieldset:disabled .btn {
           </div>
         </div>
         <div class="row">
-          <h5 part="heading-5 heading text color font-family">
-            Representative:
-          </h5>
-          <div>
+          <div class="col-6">
+            <h5 part="heading-5 heading text color font-family">
+              Representative:
+            </h5>
             <div>
-              Person Name
-            </div>
-            <div>
-              President
-            </div>
-            <div>
-              person.name@justifi.ai
-            </div>
-            <div>
-              6124011111
+              <div>
+                Person Name
+              </div>
+              <div>
+                President
+              </div>
+              <div>
+                person.name@justifi.ai
+              </div>
+              <div>
+                (612) 401-1111
+              </div>
             </div>
           </div>
         </div>

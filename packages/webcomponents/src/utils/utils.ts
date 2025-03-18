@@ -5,15 +5,19 @@ import { CurrencyTypes } from '../api/Payment';
 
 // Currency Formatting
 
-export const formatCurrency = (amount: number, currency?: CurrencyTypes, omitSymbols = false): string => {
+export const formatCurrency = (
+  amount: number,
+  currency?: CurrencyTypes,
+  omitSymbols = false
+): string => {
   if (!amount) amount = 0;
 
-  const formattedString = (omitSymbols) ? '0,0.00' : '$0,0.00';
+  const formattedString = omitSymbols ? '0,0.00' : '$0,0.00';
   const formattedCurrency = currency?.toUpperCase();
   const formattedAmount = Dinero({ amount: amount }).toFormat(formattedString);
 
   return currency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
-}
+};
 
 // Number Formatting
 
@@ -146,7 +150,7 @@ export function formatAddress(address: Address): string {
 export function capitalFirstLetter(str: string): string {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
-};
+}
 
 export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
   if (!snakeCaseStr) return '';
@@ -198,4 +202,19 @@ export function processHTML(htmlString, functions) {
     processedHTML = func(processedHTML);
   });
   return processedHTML;
+}
+
+export function formatPhoneNumber(number) {
+  // Remove all non-numeric characters
+  let cleaned = ('' + number).replace(/\D/g, '');
+
+  // Check if the number has the correct length
+  if (cleaned.length !== 10) {
+    return 'Invalid number';
+  }
+
+  // Format the number (XXX) XXX-XXXX
+  let formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+
+  return formatted;
 }

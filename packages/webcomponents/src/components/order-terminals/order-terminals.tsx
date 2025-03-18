@@ -14,6 +14,7 @@ import { makeGetTerminalModels } from "../../actions/terminal/get-terminal-model
 import { TerminalService } from "../../api/services/terminal.service";
 import { TerminalOrder, TerminalOrderType } from "../../api/TerminalOrder";
 import { makeOrderTerminals } from "../../actions/terminal/order-terminals";
+import { formatPhoneNumber } from "../../utils/utils";
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -154,22 +155,36 @@ export class OrderTerminals {
   private renderBusinessDetails() {
     if (!this.loading.business && this.business) {
       return (
-        <div class="gap-5 pt-5 mb-5">
+        <div class="d-flex flex-column gap-4 mb-5 pt-5">
           <div class="row">
             <div class="col-12">
               <h2 part={heading4}>{this.business.legal_name}</h2>
             </div>
           </div>
           <div class="row">
-            <h5 part={heading5}>Representative:</h5>
-            <div>
-              <div>{this.business?.representative?.name}</div>
-              <div>{this.business?.representative?.title}</div>
-              <div>{this.business?.representative?.email}</div>
-              <div>{this.business?.representative?.phone}</div>
+            <div class="col-6">
+              <h5 part={heading5}>Representative:</h5>
+              <div>
+                <div>{this.business?.representative?.name}</div>
+                <div>{this.business?.representative?.title}</div>
+                <div>{this.business?.representative?.email}</div>
+                <div>{formatPhoneNumber(this.business?.representative?.phone)}</div>
+              </div>
             </div>
+            {this.shipping && (
+              <div class="col-6">
+                <h5 part={heading5}>Shipping Address:</h5>
+                <div>
+                  <div>Street: {this.business.legal_address?.line1}</div>
+                  <div>{this.business.legal_address?.line2}</div>
+                  <div>Postal Code: {this.business.legal_address?.postal_code}</div>
+                  <div>City: {this.business.legal_address?.city}</div>
+                  <div>State: {this.business.legal_address?.state}</div>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
+        </div >
       );
     }
   }
