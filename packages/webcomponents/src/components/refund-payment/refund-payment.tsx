@@ -5,11 +5,12 @@ import {
   Event,
   EventEmitter,
   Prop,
+  Method,
 } from '@stencil/core';
 import RefundPaymentSchema, { RefundPaymentFields } from './refund-payment-schema';
-import { Api } from '../../api';
+import { Api, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent } from '../../api';
 import { FormController } from '../../ui-components/form/form';
-import { Header1, StyledHost } from '../../ui-components';
+import { Button, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
 import refundReasonOptions from './refund-reason-options';
 
@@ -18,35 +19,19 @@ import refundReasonOptions from './refund-reason-options';
   shadow: true,
 })
 export class RefundPayment {
-  /**
-   * Authentication token required to authorize the refund transaction.
-   */
   @Prop() authToken: string;
-
-  /**
-   * The unique identifier for the payment to be refunded.
-   */
   @Prop() paymentId: string;
+  @Prop() hideSubmitButton?: boolean = false;
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
-  /**
-   * The amount of the payment to be refunded. This should be equal to the Payment `amount_refundable` property.
-   */
-  @Prop() paymentAmountRefundable?: number = 0;
-
-  /**
-   * Flag to control the visibility of the submit button.
-   */
-  @Prop() withButton?: boolean;
-
+  @State() paymentAmountRefundable: number = 0;
+  @State() errorMessage: string = null;
   @State() errors: any = {};
   @State() values: any = {};
-  @State() isSubmitting: boolean = false;
+  @State() isLoading: boolean = false;
 
-  /**
-   * Event emitted when the refund form is successfully submitted.
-   * The submitted refund fields are passed as the event detail.
-   */
-  @Event() submitted: EventEmitter<RefundPaymentFields>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   private formController: FormController;
   private api: any;
@@ -65,36 +50,29 @@ export class RefundPayment {
     });
   }
 
-  /**
-   * Handles the form submission.
-   * Prevents the default form action, validates the form, and emits the 'submitted' event.
-   */
+
   async handleSubmit(event: Event) {
     event.preventDefault();
 
     this.formController.validateAndSubmit(this.submitRefund);
   }
 
-  /**
-   * Submits the refund request to the API.
-   */
-  private async submitRefund(values) {
-    this.isSubmitting = true;
+  @Method()
+  async submitRefund(values) {
+    this.isLoading = true;
+    let refundResponse: any;
 
     try {
-      const response = await this.api.post(`payments/${this.paymentId}/refunds`, values);
-      this.submitted.emit(response);
+      refundResponse = await this.api.post(`payments/${this.paymentId}/refunds`, values);
     } catch (error) {
       console.error('Error submitting refund:', error);
-      this.submitted.emit(error);
+      this.errorEvent.emit(error);
     } finally {
-      this.isSubmitting = false;
+      this.submitEvent.emit({ response: refundResponse });
+      this.isLoading = false;
     }
   }
 
-  /**
-   * Handles input changes, updating the refundFields state.
-   */
   private handleInput(field: keyof RefundPaymentFields, value: any) {
     this.formController.setValues({
       ...this.formController.values.getValue(),
@@ -102,63 +80,66 @@ export class RefundPayment {
     });
   }
 
-  /**
-   * Initializes the API with the given authentication token.
-   * Logs a warning if the auth token is missing.
-   */
   private initializeApi() {
-    if (!this.authToken) {
-      console.warn('Warning: Missing auth-token.');
+    if (this.paymentId && this.authToken) {
+      this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    } else {
+      this.errorMessage = 'Payment ID and Auth Token are required';
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        message: this.errorMessage,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
   }
 
   render() {
     return (
       <StyledHost>
-        <Header1 text="Refund Payment" class="fs-5 fw-bold pb-3" />
-        <form onSubmit={e => this.handleSubmit(e)} class="d-grid gap-4">
-          <div class="form-group">
-            <form-control-monetary
-              name="amount"
-              label="Refund Amount"
-              inputHandler={(name: keyof RefundPaymentFields, value: any) =>
-                this.handleInput(name, value)
-              }
-              errorText={this.errors.amount}
-              defaultValue={this.paymentAmountRefundable.toString()}
-            ></form-control-monetary>
-          </div>
-          <div class="form-group">
-            <form-control-select
-              label="Reason for refund (optional)"
-              options={refundReasonOptions}
-              name="reason"
-              defaultValue={''}>
-            </form-control-select>
-          </div>
-          <div class="form-group">
-            <form-control-textarea
-              name="description"
-              label="Note (optional)"
-              inputHandler={(name: keyof RefundPaymentFields, value: any) =>
-                this.handleInput(name, value)
-              }
-              errorText={this.errors.description}
-              maxLength={250}
-            ></form-control-textarea>
-          </div>
-          {this.withButton && (
+        <form>
+          <div class="row gy-3">
+            <div class="form-group">
+              <form-control-monetary
+                name="amount"
+                label="Refund Amount"
+                inputHandler={(name: keyof RefundPaymentFields, value: any) =>
+                  this.handleInput(name, value)
+                }
+                errorText={this.errors.amount}
+                defaultValue={this.paymentAmountRefundable.toString()}
+              />
+            </div>
+            <div class="form-group">
+              <form-control-select
+                label="Reason for refund (optional)"
+                options={refundReasonOptions}
+                name="reason"
+                defaultValue={''}
+              />
+            </div>
+            <div class="form-group">
+              <form-control-textarea
+                name="description"
+                label="Note (optional)"
+                inputHandler={(name: keyof RefundPaymentFields, value: any) =>
+                  this.handleInput(name, value)
+                }
+                errorText={this.errors.description}
+                maxLength={250}
+              />
+            </div>
             <div class="form-group d-flex flex-row-reverse">
-              <button
+              <Button
+                variant="primary"
                 type="submit"
-                disabled={!!this.isSubmitting}
-                class="btn btn-primary ml-auto"
+                onClick={e => this.handleSubmit(e)}
+                isLoading={this.isLoading}
+                hidden={this.hideSubmitButton}
               >
                 {`Refund ${formatCurrency(+this.values.amount)}`}
-              </button>
+              </Button>
             </div>
-          )}
+          </div>
         </form>
       </StyledHost>
     );
