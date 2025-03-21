@@ -48,7 +48,7 @@ async function getWebComponentToken(token, accountId) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      resources: [`write:account:${accountId}`],
+      resources: [`write:dispute:${accountId}`],
     }),
   });
   const { access_token } = await response.json();
