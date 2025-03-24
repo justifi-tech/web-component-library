@@ -47,7 +47,7 @@ async function getWebComponentToken(token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        resources: [`read:account:${subAccountId}`],
+        resources: [`read:payments:${subAccountId}`],
       }),
     }
   );

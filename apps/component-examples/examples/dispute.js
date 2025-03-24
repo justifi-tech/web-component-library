@@ -40,7 +40,7 @@ async function getToken() {
   return data.access_token;
 }
 
-async function getWebComponentToken(token, accountId) {
+async function getWebComponentToken(token) {
   const response = await fetch(webComponentTokenEndpoint, {
     method: 'POST',
     headers: {
@@ -48,7 +48,7 @@ async function getWebComponentToken(token, accountId) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      resources: [`write:account:${accountId}`],
+      resources: [`write:dispute:${disputeId}`],
     }),
   });
   const { access_token } = await response.json();
