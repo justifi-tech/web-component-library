@@ -4,7 +4,7 @@ import { convertToLocal } from '../../utils/utils';
 import { TerminalOrder } from '../../api';
 import { MapTerminalOrderStatusToBadge } from './terminal-order-status';
 
-export const defaultColumnsKeys = 'created_at,updated_at,order_status,quantity';
+export const defaultColumnsKeys = 'company_name,created_at,updated_at,order_status,quantity';
 
 export const terminalOrdersTableColumns = {
   created_at: () => (
@@ -25,6 +25,11 @@ export const terminalOrdersTableColumns = {
   business_id: () => (
     <th part={tableHeadCell} scope="col" title="The business ID associated with the order">
       Business ID
+    </th>
+  ),
+  company_name: () => (
+    <th part={tableHeadCell} scope="col" title="The business name associated with the order">
+      Business Name
     </th>
   ),
   provider: () => (
@@ -62,6 +67,9 @@ export const terminalOrdersTableCells = {
   ),
   business_id: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.business_id}</td>
+  ),
+  company_name: (terminalOrder: TerminalOrder, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{terminalOrder.company_name}</td>
   ),
   provider: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.provider}</td>
