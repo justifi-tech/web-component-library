@@ -13,6 +13,8 @@ import { FormController } from '../../ui-components/form/form';
 import { Button, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
 import refundReasonOptions from './refund-reason-options';
+import { PaymentService } from '../../api/services/payment.service';
+import { makeGetPaymentDetails } from '../../actions/payment/get-payment-details';
 
 @Component({
   tag: 'justifi-refund-payment',
@@ -24,6 +26,8 @@ export class RefundPayment {
   @Prop() hideSubmitButton?: boolean = false;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
+  @State() getPayment: Function;
+  @State() postRefund: Function;
   @State() paymentAmountRefundable: number = 0;
   @State() errorMessage: string = null;
   @State() errors: any = {};
@@ -92,6 +96,25 @@ export class RefundPayment {
       });
     }
   }
+
+  private initializeGetPaymentDetails() {
+      if (this.paymentId && this.authToken) {
+        this.getPayment = makeGetPaymentDetails({
+          id: this.paymentId,
+          authToken: this.authToken,
+          service: new PaymentService(),
+        });
+      } else {
+        this.errorMessage = 'Payment ID and Auth Token are required';
+        this.errorEvent.emit({
+          message: this.errorMessage,
+          errorCode: ComponentErrorCodes.MISSING_PROPS,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      }
+    }
+  
+    paymentService = new PaymentService();
 
   render() {
     return (
