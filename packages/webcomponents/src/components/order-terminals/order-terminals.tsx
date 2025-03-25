@@ -26,6 +26,7 @@ export class OrderTerminals {
   @Prop() accountId: string;
   @Prop() shipping: boolean = false;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
+  @Prop() submitButtonText: string = 'Submit Order';
 
   @State() loading = {
     business: true,
@@ -38,6 +39,8 @@ export class OrderTerminals {
   @State() orderLimit: number;
   @State() order: TerminalOrder;
   @State() totalQuantity: number = 0;
+
+  addressHeader = this.shipping ? "Shipping Address:" : "Business Address:";
 
   analytics: JustifiAnalytics;
 
@@ -171,17 +174,15 @@ export class OrderTerminals {
                 <div>{formatPhoneNumber(this.business?.representative?.phone)}</div>
               </div>
             </div>
-            {this.shipping && (
-              <div class="col-6">
-                <h5 part={heading5}>Shipping Address:</h5>
-                <div>
-                  {this.business.legal_address.line1}
-                  {this.business.legal_address.line2 ? `, ${this.business.legal_address.line2}` : ""}
-                  <br />
-                  {this.business.legal_address.city}, {this.business.legal_address.state} {this.business.legal_address.postal_code}
-                </div>
+            <div class="col-6">
+              <h5 part={heading5}>{this.addressHeader}</h5>
+              <div>
+                {this.business.legal_address.line1}
+                {this.business.legal_address.line2 ? `, ${this.business.legal_address.line2}` : ""}
+                <br />
+                {this.business.legal_address.city}, {this.business.legal_address.state} {this.business.legal_address.postal_code}
               </div>
-            )}
+            </div>
           </div>
         </div >
       );
@@ -219,7 +220,7 @@ export class OrderTerminals {
             disabled={this.order.totalQuantity === 0 || this.submitting}
             part={buttonPrimary}
           >
-            {this.submitting ? 'Submitting...' : 'Submit Order'}
+            {this.submitting ? 'Submitting...' : this.submitButtonText}
           </button>
         </div>
       </div>
