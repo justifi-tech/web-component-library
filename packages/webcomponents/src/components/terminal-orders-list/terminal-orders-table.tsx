@@ -4,7 +4,7 @@ import { convertToLocal } from '../../utils/utils';
 import { TerminalOrder } from '../../api';
 import { MapTerminalOrderStatusToBadge } from './terminal-order-status';
 
-export const defaultColumnsKeys = 'company_name,created_at,updated_at,order_status,quantity';
+export const defaultColumnsKeys = 'created_at,updated_at,order_status,quantity';
 
 export const terminalOrdersTableColumns = {
   created_at: () => (
