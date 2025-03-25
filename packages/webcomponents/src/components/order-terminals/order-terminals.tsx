@@ -40,7 +40,7 @@ export class OrderTerminals {
   @State() order: TerminalOrder;
   @State() totalQuantity: number = 0;
 
-  addressHeader = this.shipping ? 'Shipping Address: ' : "Business Address: ";
+  addressHeader = this.shipping ? "Shipping Address:" : "Business Address:";
 
   analytics: JustifiAnalytics;
 
