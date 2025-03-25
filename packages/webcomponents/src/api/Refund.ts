@@ -9,6 +9,13 @@ export enum RefundReasons {
   fraudulent = 'fraudulent'
 }
 
+export interface RefundPayload {
+  amount: number;
+  reason: RefundReasons;
+  description?: string;
+  metadata?: any;
+}
+
 export interface IRefund {
   amount: number;
   created_at: string;
@@ -44,11 +51,11 @@ export class Refund implements IRefund {
     this.updated_at = refund.updated_at;
   }
 
-  public get payload() {
+  public get payload(): RefundPayload {
     return {
       amount: this.amount,
-      description: this.description,
       reason: this.reason,
+      description: this.description,
       metadata: this.metadata,
     };
   }
