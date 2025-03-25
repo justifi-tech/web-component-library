@@ -27,6 +27,11 @@ export const terminalOrdersTableColumns = {
       Business ID
     </th>
   ),
+  company_name: () => (
+    <th part={tableHeadCell} scope="col" title="The business name associated with the order">
+      Business Name
+    </th>
+  ),
   provider: () => (
     <th part={tableHeadCell} scope="col" title="The provider associated with the order">
       Provider
@@ -62,6 +67,9 @@ export const terminalOrdersTableCells = {
   ),
   business_id: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.business_id}</td>
+  ),
+  company_name: (terminalOrder: TerminalOrder, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{terminalOrder.company_name}</td>
   ),
   provider: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.provider}</td>
