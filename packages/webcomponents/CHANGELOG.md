@@ -1,5 +1,12 @@
 ### Changelog
 
+## 5.4.3
+
+### Patch Changes
+
+- 8b36dc5: Add new optional column to `justifi-terminal-orders-list`: `company_name` - which will show the name of the business associated with a given terminal order.
+- bd84820: Add the `submitButtonText` prop to `justifi-order-terminals` component and change the Address header text when `shipping` is set to false.
+
 ## 5.4.2
 
 ### Patch Changes
