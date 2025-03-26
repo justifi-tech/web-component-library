@@ -9,5 +9,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  // other configurations...
+
+  // Add this line to make nanoid (ESM) work with Jest
+  transformIgnorePatterns: ['node_modules/(?!nanoid)'],
 };
