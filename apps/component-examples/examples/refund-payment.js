@@ -70,7 +70,7 @@ app.get('/', async (req, res) => {
       <body>
         <div class="list-component-wrapper">
           <justifi-refund-payment
-            account-id="${subAccountId}"
+            payment-id="py_6h3XBU7ZcbThtc88u0JKUV"
             auth-token="${webComponentToken}"
             with-button="true"
             payment-amount-refundable=1000

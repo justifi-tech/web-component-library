@@ -6,15 +6,20 @@ import {
   EventEmitter,
   Prop,
   Method,
+  Watch
 } from '@stencil/core';
 import RefundPaymentSchema, { RefundPaymentFields } from './refund-payment-schema';
-import { Api, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent } from '../../api';
+import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { Button, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
 import refundReasonOptions from './refund-reason-options';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from '../../actions/payment/get-payment-details';
+import JustifiAnalytics from '../../api/Analytics';
+import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { makePostRefund } from '../../actions/refund/refund-actions';
+import { RefundService } from '../../api/services/refund.service';
 
 @Component({
   tag: 'justifi-refund-payment',
@@ -26,22 +31,21 @@ export class RefundPayment {
   @Prop() hideSubmitButton?: boolean = false;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
-  @State() getPayment: Function;
-  @State() postRefund: Function;
   @State() paymentAmountRefundable: number = 0;
-  @State() errorMessage: string = null;
   @State() errors: any = {};
   @State() values: any = {};
-  @State() isLoading: boolean = false;
+  @State() isLoading: boolean = true;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   private formController: FormController;
-  private api: any;
+  analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    this.formController = new FormController(RefundPaymentSchema(this.paymentAmountRefundable.toString()));
+    checkPkgVersion();
+    this.analytics = new JustifiAnalytics(this);
+    this.initializeFormController();
     this.initializeApi();
   }
 
@@ -54,27 +58,39 @@ export class RefundPayment {
     });
   }
 
-
   async handleSubmit(event: Event) {
+    console.log('authToken:', this.authToken);
+    console.log('paymentId:', this.paymentId);
     event.preventDefault();
-
     this.formController.validateAndSubmit(this.submitRefund);
+  }
+
+  private handleError(code: ComponentErrorCodes, errorMessage: string, severity: ComponentErrorSeverity) {
+    this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });
   }
 
   @Method()
   async submitRefund(values) {
+    const postRefund = makePostRefund({
+      authToken: this.authToken,
+      paymentId: this.paymentId,
+      service: new RefundService(),
+    });
     this.isLoading = true;
-    let refundResponse: any;
 
-    try {
-      refundResponse = await this.api.post(`payments/${this.paymentId}/refunds`, values);
-    } catch (error) {
-      console.error('Error submitting refund:', error);
-      this.errorEvent.emit(error);
-    } finally {
-      this.submitEvent.emit({ response: refundResponse });
-      this.isLoading = false;
-    }
+    console.log('Refund values:', values);
+    postRefund({
+      refundBody: values,
+      onSuccess: (response) => {
+        this.submitEvent.emit({ response: response });
+      },
+      onError: ({ error, code, severity }) => {
+        this.handleError(error, code, severity);
+      },
+      final: () => {
+        this.isLoading = false;
+      }
+    })
   }
 
   private handleInput(field: keyof RefundPaymentFields, value: any) {
@@ -84,38 +100,40 @@ export class RefundPayment {
     });
   }
 
-  private initializeApi() {
-    if (this.paymentId && this.authToken) {
-      this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
-    } else {
-      this.errorMessage = 'Payment ID and Auth Token are required';
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        message: this.errorMessage,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
+  private initializeFormController() {
+    this.formController = new FormController(RefundPaymentSchema(this.paymentAmountRefundable.toString()));
   }
 
-  private initializeGetPaymentDetails() {
-      if (this.paymentId && this.authToken) {
-        this.getPayment = makeGetPaymentDetails({
-          id: this.paymentId,
-          authToken: this.authToken,
-          service: new PaymentService(),
-        });
-      } else {
-        this.errorMessage = 'Payment ID and Auth Token are required';
-        this.errorEvent.emit({
-          message: this.errorMessage,
-          errorCode: ComponentErrorCodes.MISSING_PROPS,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-      }
-    }
-  
-    paymentService = new PaymentService();
+  @Watch('paymentAmountRefundable')
+  propChanged() {
+    this.initializeFormController();
+  }
 
+  private initializeApi() {
+    if (this.paymentId && this.authToken) {
+      const getPayment = makeGetPaymentDetails({
+        id: this.paymentId,
+        authToken: this.authToken,
+        service: new PaymentService(),
+      });
+      
+      getPayment({
+        onSuccess: ({ payment }) => {
+          this.paymentAmountRefundable = payment.amount_refundable;
+          this.isLoading = false;
+        },
+        onError: ({ error, code, severity }) => {
+          this.handleError(code, error, severity);
+          this.isLoading = false;
+        },
+      })
+
+    } else {
+      const errorMessage = 'Payment ID and Auth Token are required';
+      this.handleError(ComponentErrorCodes.MISSING_PROPS, errorMessage, ComponentErrorSeverity.ERROR);
+    }
+  }
+  
   render() {
     return (
       <StyledHost>
