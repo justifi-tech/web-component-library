@@ -22,7 +22,7 @@ export class PaymentService implements IPaymentService {
   ): Promise<IApiResponseCollection<IPayment[]>> {
     const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = `account/${accountId}/payments`;
-    return api.get(endpoint, params);
+    return api.get({ endpoint, params });
   }
 
   async fetchPayment(
@@ -30,6 +30,6 @@ export class PaymentService implements IPaymentService {
     authToken: string
   ): Promise<IApiResponse<IPayment>> {
     const endpoint = `payments/${paymentId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get({ endpoint });
   }
 }

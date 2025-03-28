@@ -13,9 +13,9 @@ export interface IPayoutService {
     apiOrigin?: string
   ): Promise<IApiResponse<IPayout>>;
   fetchCSV(
-    payoutId: string, 
+    payoutId: string,
     authToken: string,
-    apiOrigin?: string  
+    apiOrigin?: string
   ): Promise<IApiResponse<any>>;
 }
 
@@ -28,7 +28,7 @@ export class PayoutService implements IPayoutService {
   ): Promise<IApiResponseCollection<IPayout[]>> {
     const api = Api({ authToken, apiOrigin });
     const endpoint = `account/${accountId}/payouts`;
-    return api.get(endpoint, params);
+    return api.get({ endpoint, params });
   }
 
   async fetchPayout(
@@ -38,7 +38,7 @@ export class PayoutService implements IPayoutService {
   ): Promise<IApiResponse<IPayout>> {
     const api = Api({ authToken, apiOrigin });
     const endpoint = `payouts/${payoutId}`;
-    return api.get(endpoint);
+    return api.get({ endpoint });
   }
 
   async fetchCSV(
@@ -48,6 +48,6 @@ export class PayoutService implements IPayoutService {
   ): Promise<IApiResponse<any>> {
     const api = Api({ authToken, apiOrigin });
     const endpoint = `reports/payouts/${payoutId}`;
-    return api.get(endpoint);
+    return api.get({ endpoint });
   }
 }
