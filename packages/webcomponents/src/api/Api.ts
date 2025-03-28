@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { generateId } from '../utils/utils';
 import { PagingInfo } from './Pagination';
 
 export interface IApiResponse<T> {
@@ -37,7 +37,7 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
 
     return {
       Authorization: `Bearer ${authToken}`,
-      'Idempotency-Key': uuidv4(),
+      'Idempotency-Key': generateId(),
       'Content-Type': 'application/json',
     };
   }
