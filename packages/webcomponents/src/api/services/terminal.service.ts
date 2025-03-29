@@ -36,7 +36,7 @@ export class TerminalService implements ITerminalService {
 
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals';
-    return api.get(endpoint, params, null, headers);
+    return api.get({ endpoint, params, headers });
   }
 
   async fetchTerminal(
@@ -45,7 +45,7 @@ export class TerminalService implements ITerminalService {
     apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<ITerminal>> {
     const endpoint = `terminals/${terminalId}`;
-    return Api({ authToken, apiOrigin: apiOrigin }).get(endpoint);
+    return Api({ authToken, apiOrigin: apiOrigin }).get({ endpoint });
   }
 
   async fetchTerminalModels(
@@ -57,7 +57,7 @@ export class TerminalService implements ITerminalService {
 
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/order_models';
-    return api.get(endpoint, null, null, headers);
+    return api.get({ endpoint, headers });
   }
 
   async orderTerminals(
@@ -68,6 +68,6 @@ export class TerminalService implements ITerminalService {
     const headers = { 'sub-account': terminalOrder.sub_account_id };
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/orders';
-    return api.post(endpoint, terminalOrder, null, null, headers);
+    return api.post({ endpoint, body: terminalOrder, headers });
   }
 }

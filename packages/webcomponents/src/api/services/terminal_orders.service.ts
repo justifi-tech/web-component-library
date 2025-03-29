@@ -20,6 +20,10 @@ export class TerminalOrderService implements ITerminalOrderService {
 
     const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/orders';
-    return api.get(endpoint, params, null, headers);
+    return api.get({
+      endpoint,
+      params,
+      headers,
+    });
   }
 }

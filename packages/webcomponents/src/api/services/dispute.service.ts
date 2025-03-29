@@ -32,7 +32,7 @@ export class DisputeService implements IDisputeService {
     authToken: string
   ): Promise<IApiResponse<IDispute>> {
     const endpoint = `disputes/${disputeId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get({ endpoint });
   }
 
   async updateDisputeResponse(
@@ -41,10 +41,10 @@ export class DisputeService implements IDisputeService {
     payload: any
   ): Promise<IApiResponse<IDispute>> {
     const endpoint = `disputes/${disputeId}/response`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).patch(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).patch({
       endpoint,
-      payload
-    );
+      body: payload,
+    });
   }
 
   async submitDisputeResponse(
@@ -53,10 +53,10 @@ export class DisputeService implements IDisputeService {
     payload: any
   ): Promise<IApiResponse<IDispute>> {
     const endpoint = `disputes/${disputeId}/response`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
       endpoint,
-      payload
-    );
+      body: payload,
+    });
   }
 
   async createDisputeEvidence(
@@ -65,9 +65,9 @@ export class DisputeService implements IDisputeService {
     payload: any
   ): Promise<IApiResponse<any>> {
     const endpoint = `disputes/${disputeId}/evidence`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).put(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).put({
       endpoint,
-      payload
-    );
+      body: payload,
+    });
   }
 }

@@ -32,7 +32,7 @@ export class CheckoutService implements ICheckoutService {
     checkoutId: string
   ): Promise<IApiResponse<ICheckout>> {
     const endpoint = `checkouts/${checkoutId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get(endpoint);
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get({ endpoint });
   }
 
   async fetchCheckouts(
@@ -49,7 +49,7 @@ export class CheckoutService implements ICheckoutService {
 
     const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'checkouts';
-    return api.get(endpoint, params, null, headers);
+    return api.get({ endpoint, params, headers });
   }
 
   async complete(
@@ -64,9 +64,9 @@ export class CheckoutService implements ICheckoutService {
     if (payment.payment_token) {
       payload.payment_token = payment.payment_token;
     }
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
       endpoint,
-      payload
-    );
+      body: payload,
+    });
   }
 }

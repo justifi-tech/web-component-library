@@ -19,9 +19,9 @@ export class ProvisionService implements IProvisionService {
       business_id: businessId,
       product_category: product,
     };
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post(
+    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
       endpoint,
-      payload
-    );
+      body: payload,
+    });
   }
 }
