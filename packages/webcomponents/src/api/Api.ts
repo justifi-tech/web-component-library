@@ -42,14 +42,21 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     };
   }
 
-  async function makeRequest(
-    endpoint: string,
-    method: string,
-    params?: any,
-    body?: any,
-    signal?: AbortSignal,
-    headers?: HeadersInit
-  ) {
+  async function makeRequest({
+    endpoint,
+    method,
+    params,
+    body,
+    signal,
+    headers,
+  }: {
+    endpoint: string;
+    method: string;
+    params?: any;
+    body?: any;
+    signal?: AbortSignal;
+    headers?: HeadersInit;
+  }) {
     const url = `${apiOrigin}/v1/${endpoint}`;
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
 
@@ -69,37 +76,93 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     handleError(requestUrl);
   }
 
-  async function get(endpoint: string, params?: any, signal?: AbortSignal, headers?: HeadersInit) {
-    return makeRequest(endpoint, 'GET', params, null, signal, headers);
+  async function get({
+    endpoint,
+    params,
+    signal,
+    headers,
+  }: {
+    endpoint: string;
+    params?: any;
+    signal?: AbortSignal;
+    headers?: HeadersInit;
+  }) {
+    return makeRequest({ endpoint, method: 'GET', params, signal, headers });
   }
 
-  async function post(
-    endpoint: string,
-    body?: any,
-    params?: any,
-    signal?: AbortSignal,
-    headers?: HeadersInit
-  ) {
-    return makeRequest(
+  async function post({
+    endpoint,
+    body,
+    params,
+    signal,
+    headers,
+  }: {
+    endpoint: string;
+    body?: any;
+    params?: any;
+    signal?: AbortSignal;
+    headers?: HeadersInit;
+  }) {
+    return makeRequest({
       endpoint,
-      'POST',
+      method: 'POST',
       params,
-      JSON.stringify(body),
+      body: JSON.stringify(body),
       signal,
-      headers
-    );
+      headers,
+    });
   }
 
-  async function put(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
-    return makeRequest(endpoint, 'PUT', params, JSON.stringify(body), signal);
+  async function put({
+    endpoint,
+    body,
+    params,
+    signal,
+  }: {
+    endpoint: string;
+    body?: any;
+    params?: any;
+    signal?: AbortSignal;
+  }) {
+    return makeRequest({
+      endpoint,
+      method: 'PUT',
+      params,
+      body: JSON.stringify(body),
+      signal,
+    });
   }
 
-  async function patch(endpoint: string, body?: any, params?: any, signal?: AbortSignal) {
-    return makeRequest(endpoint, 'PATCH', params, JSON.stringify(body), signal);
+  async function patch({
+    endpoint,
+    body,
+    params,
+    signal,
+  }: {
+    endpoint: string;
+    body?: any;
+    params?: any;
+    signal?: AbortSignal;
+  }) {
+    return makeRequest({
+      endpoint,
+      method: 'PATCH',
+      params,
+      body: JSON.stringify(body),
+      signal,
+    });
   }
 
-  async function destroy(endpoint: string, params?: any, signal?: AbortSignal) {
-    return makeRequest(endpoint, 'DELETE', params, null, signal);
+  async function destroy({
+    endpoint,
+    params,
+    signal,
+  }: {
+    endpoint: string;
+    params?: any;
+    signal?: AbortSignal;
+  }) {
+    return makeRequest({ endpoint, method: 'DELETE', params, signal });
   }
 
   return { get, post, put, patch, destroy };

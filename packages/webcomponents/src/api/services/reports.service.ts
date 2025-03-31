@@ -8,6 +8,6 @@ export class ReportsService {
   ): Promise<IApiResponse<GrossVolumeReport>> {
     const api = Api({ authToken: authToken, apiOrigin: PROXY_API_ORIGIN });
     const endpoint = `account/${accountId}/reports/gross_volume`;
-    return api.get(endpoint);
+    return api.get({ endpoint });
   }
 }
