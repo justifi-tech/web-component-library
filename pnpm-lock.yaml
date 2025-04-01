@@ -137,8 +137,8 @@ importers:
         specifier: ^1.9.1
         version: 1.9.1
       iframe-resizer:
-        specifier: ^5.4.2
-        version: 5.4.2
+        specifier: 4.4.5
+        version: 4.4.5
       imask:
         specifier: ^7.6.1
         version: 7.6.1
@@ -1104,18 +1104,6 @@ packages:
     resolution: {integrity: sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==}
     engines: {node: '>=18.18'}
 
-  '@iframe-resizer/child@5.4.2':
-    resolution: {integrity: sha512-rAzK+LhTA/I+dXf7z7E64zXackU/p6Oo51pJYkAWo161nrrsRczNfMA6+6rK+TOE/Y01HR7nrJ/DN8ypn9H7gA==}
-
-  '@iframe-resizer/core@5.4.2':
-    resolution: {integrity: sha512-0sMkaTnL96ggS7bv2gtphp2Miaz8z0uIqts265GIyAao0Kav1VEYp0jArzYFmDv4uOzzZIucvkiJ7RASbbTYSA==}
-
-  '@iframe-resizer/jquery@5.4.2':
-    resolution: {integrity: sha512-OJiRhnne516OMiXRKxVfZ6T2zAvP/bUSxTmgDpw4sO4hUalrgUgN07RRk0OaKqxiP45Tu4RAuV0oS6+3GjGJKA==}
-
-  '@iframe-resizer/parent@5.4.2':
-    resolution: {integrity: sha512-92Z0CbiTGIl4unL1sDWLJZ0phZXJHStpX/ijKNnEvhLgXjn7xId0D5ZBrwjQYasgvir15xMQ+Veqf+yStUKquA==}
-
   '@istanbuljs/load-nyc-config@1.1.0':
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
     engines: {node: '>=8'}
@@ -1725,9 +1713,6 @@ packages:
 
   async@3.2.6:
     resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
-
-  auto-console-group@1.2.0:
-    resolution: {integrity: sha512-VhzgH1PDXGQP2kBkd/qBTQbKhdCbJcVNGxGiWXkWCnNpQ7RUsCtsWpNZXq9EGPHF9E/cK/qfC4qhg68ySDhexw==}
 
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
@@ -2434,8 +2419,9 @@ packages:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
 
-  iframe-resizer@5.4.2:
-    resolution: {integrity: sha512-wvbV9CsKhgo27A4+hl7R5LkV9sodgRacpDPa2ezBhMh1Vkx5O0XIkjmSHcytWAHvbOlK/YOy6glBIrhatzA/fQ==}
+  iframe-resizer@4.4.5:
+    resolution: {integrity: sha512-U8bCywf/Gh07O69RXo6dXAzTtODQrxaHGHRI7Nt4ipXsuq6EMxVsOP/jjaP43YtXz/ibESS0uSVDN3sOGCzSmw==}
+    engines: {node: '>=0.8.0'}
 
   ignore-by-default@1.0.1:
     resolution: {integrity: sha512-Ius2VYcGNk7T90CppJqcIkS5ooHUZyIQK+ClZfMfMNFEF9VSE73Fq+906u/CWu92x4gzZMWOwfFYckPObzdEbA==}
@@ -5011,23 +4997,6 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.2': {}
 
-  '@iframe-resizer/child@5.4.2':
-    dependencies:
-      auto-console-group: 1.2.0
-
-  '@iframe-resizer/core@5.4.2':
-    dependencies:
-      auto-console-group: 1.2.0
-
-  '@iframe-resizer/jquery@5.4.2':
-    dependencies:
-      '@iframe-resizer/core': 5.4.2
-
-  '@iframe-resizer/parent@5.4.2':
-    dependencies:
-      '@iframe-resizer/core': 5.4.2
-      auto-console-group: 1.2.0
-
   '@istanbuljs/load-nyc-config@1.1.0':
     dependencies:
       camelcase: 5.3.1
@@ -5728,8 +5697,6 @@ snapshots:
       tslib: 2.8.1
 
   async@3.2.6: {}
-
-  auto-console-group@1.2.0: {}
 
   available-typed-arrays@1.0.7:
     dependencies:
@@ -6530,11 +6497,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  iframe-resizer@5.4.2:
-    dependencies:
-      '@iframe-resizer/child': 5.4.2
-      '@iframe-resizer/jquery': 5.4.2
-      '@iframe-resizer/parent': 5.4.2
+  iframe-resizer@4.4.5: {}
 
   ignore-by-default@1.0.1: {}
 
