@@ -3,7 +3,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'pnpm'
+  - package-ecosystem: 'npm'
     directory: '/packages/webcomponents'
     schedule:
       interval: 'weekly'
@@ -20,7 +20,7 @@ updates:
     commit-message:
       prefix: '[dependabot] '
 
-  - package-ecosystem: 'pnpm'
+  - package-ecosystem: 'npm'
     directory: '/apps/docs'
     schedule:
       interval: 'weekly'
