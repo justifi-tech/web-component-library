@@ -23,7 +23,9 @@
     "start:order-terminals": "npx nodemon ./examples/order-terminals.js",
     "start:refund-payment": "npx nodemon ./examples/refund-payment.js",
     "start:terminal-orders-list": "npx nodemon ./examples/terminal-orders-list.js",
-    "start:terminal-orders-list-with-filters": "npx nodemon ./examples/terminal-orders-list-with-filters.js"
+    "start:terminal-orders-list-with-filters": "npx nodemon ./examples/terminal-orders-list-with-filters.js",
+    "start:payment-details": "npx nodemon ./examples/payment-details.js",
+    "start:payout-details": "npx nodemon ./examples/payout-details.js"
   },
   "author": "",
   "license": "ISC",
