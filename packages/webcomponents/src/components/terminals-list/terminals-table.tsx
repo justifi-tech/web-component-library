@@ -32,9 +32,9 @@ export const terminalTableColumns = {
       Serial Number
     </th>
   ),
-  provider_id: () => (
-    <th part={tableHeadCell} scope="col" title="The provider ID of the terminal">
-      Provider ID
+  device_id: () => (
+    <th part={tableHeadCell} scope="col" title="The device/provider ID of the terminal">
+      Device ID
     </th>
   ),
   sub_account_name: () => (
@@ -65,7 +65,7 @@ export const terminalTableCells = {
   provider_serial_number: (terminal: Terminal, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminal.provider_serial_number}</td>
   ),
-  provider_id: (terminal: Terminal, index: number) => (
+  device_id: (terminal: Terminal, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminal.provider_id}</td>
   ),
   sub_account_name: (terminal: Terminal, index: number) => (

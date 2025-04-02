@@ -20,6 +20,6 @@ export class SubAccountService implements ISubAccountService {
 
     const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'sub_accounts';
-    return api.get(endpoint, params, null, headers);
+    return api.get({ endpoint, params, headers });
   }
 }

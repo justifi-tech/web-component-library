@@ -61,7 +61,7 @@ export class BusinessTermsConditionsFormStep {
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
-      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
+      const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint });
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
     } catch (error) {
       this.errorEvent.emit({
@@ -79,7 +79,7 @@ export class BusinessTermsConditionsFormStep {
     this.formLoading.emit(true);
     try {
       const payload = this.termsPayload;
-      const response = await this.api.post(this.termsConditionsEndpoint, payload);
+      const response = await this.api.post({ endpoint: this.termsConditionsEndpoint, body: payload });
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.errorEvent.emit({

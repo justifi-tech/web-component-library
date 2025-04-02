@@ -40,8 +40,6 @@ export class OrderTerminals {
   @State() order: TerminalOrder;
   @State() totalQuantity: number = 0;
 
-  addressHeader = this.shipping ? "Shipping Address:" : "Business Address:";
-
   analytics: JustifiAnalytics;
 
   @Event({
@@ -175,7 +173,7 @@ export class OrderTerminals {
               </div>
             </div>
             <div class="col-6">
-              <h5 part={heading5}>{this.addressHeader}</h5>
+              <h5 part={heading5}>{this.shipping ? "Shipping Address:" : "Business Address:"}</h5>
               <div>
                 {this.business.legal_address.line1}
                 {this.business.legal_address.line2 ? `, ${this.business.legal_address.line2}` : ""}
