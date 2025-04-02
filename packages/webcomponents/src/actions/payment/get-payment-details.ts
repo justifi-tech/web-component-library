@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPaymentDetails =
-  ({ id, authToken, service }) =>
+  ({ id, authToken, service, apiOrigin }) =>
   async ({ onSuccess, onError, final }) => {
     try {
-      const response = await service.fetchPayment(id, authToken);
+      const response = await service.fetchPayment(id, authToken, apiOrigin);
       if (!response.error) {
         onSuccess({ payment: new Payment(response.data) });
       } else {

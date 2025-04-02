@@ -36,6 +36,7 @@ describe('getPaymentDetails', () => {
       id: paymentId,
       authToken: authToken,
       service: mockServiceInstance,
+      apiOrigin: PROXY_API_ORIGIN
     });
     await getPaymentDetails({ onSuccess, onError, final });
 
@@ -58,6 +59,7 @@ describe('getPaymentDetails', () => {
       id: paymentId,
       authToken: authToken,
       service: mockServiceInstance,
+      apiOrigin: PROXY_API_ORIGIN
     });
     await getPaymentDetails({ onSuccess, onError, final });
 
@@ -82,6 +84,7 @@ describe('getPaymentDetails', () => {
       id: paymentId,
       authToken: authToken,
       service: mockServiceInstance,
+      apiOrigin: PROXY_API_ORIGIN
     });
     await getPaymentDetails({ onSuccess, onError, final });
 
