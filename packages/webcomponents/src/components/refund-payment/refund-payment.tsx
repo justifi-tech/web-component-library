@@ -5,10 +5,9 @@ import {
   Event,
   EventEmitter,
   Prop,
-  Method,
-  Watch
+  // Method
 } from '@stencil/core';
-import RefundPaymentSchema, { RefundPaymentFields } from './refund-payment-schema';
+import RefundPaymentSchema from './refund-payment-schema';
 import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { Button, StyledHost } from '../../ui-components';
@@ -26,20 +25,21 @@ import { RefundService } from '../../api/services/refund.service';
   shadow: true,
 })
 export class RefundPayment {
+  @State() formController: FormController;
+  @State() displayAmount: string = '';
+  @State() errors: any = {};
+  @State() isLoading: boolean = true;
+  @State() submitDisabled: boolean;
+  
   @Prop() authToken: string;
+  @Prop() accountId: string;
   @Prop() paymentId: string;
   @Prop() hideSubmitButton?: boolean = false;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
-  @State() paymentAmountRefundable: number = 0;
-  @State() errors: any = {};
-  @State() values: any = {};
-  @State() isLoading: boolean = true;
-
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
-  private formController: FormController;
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
@@ -50,38 +50,90 @@ export class RefundPayment {
   }
 
   componentDidLoad() {
+    console.log('RefundPayment component loaded');
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
-    this.formController.values.subscribe(values => {
-      this.values = { ...values };
-    });
-  }
-
-  async handleSubmit(event: Event) {
-    console.log('authToken:', this.authToken);
-    console.log('paymentId:', this.paymentId);
-    event.preventDefault();
-    this.formController.validateAndSubmit(this.submitRefund);
   }
 
   private handleError(code: ComponentErrorCodes, errorMessage: string, severity: ComponentErrorSeverity) {
     this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });
   }
 
-  @Method()
+  private checkAmount(amount: number) {
+    return amount > 0;
+  }
+
+  private initializeFormController(amount?: number) {
+    const amountRefundable = amount ? amount.toString() : '0';
+    this.formController = new FormController(RefundPaymentSchema(amountRefundable));
+    this.formController.setInitialValues({
+      amount: amountRefundable
+    });
+  }
+
+  inputHandler = (name: string, value: string) => {
+    if (name === 'amount') {
+      this.displayAmount = value;
+    }
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      [name]: value,
+    });
+  }
+
+  private initializeApi() {
+    if (this.paymentId && this.authToken) {
+      const getPayment = makeGetPaymentDetails({
+        id: this.paymentId,
+        authToken: this.authToken,
+        service: new PaymentService(),
+      });
+
+      let amount;
+      
+      getPayment({
+        onSuccess: ({ payment }) => {
+          amount = payment.amount_refundable;
+        },
+        onError: ({ error, code, severity }) => {
+          this.handleError(code, error, severity);
+        },
+        final: () => {
+          const validAmount = this.checkAmount(amount);
+          if (!validAmount) {
+            this.submitDisabled = true;
+            const errorMessage = 'Refund amount must be greater than 0';
+            this.handleError(ComponentErrorCodes.INVALID_REFUND_AMOUNT, errorMessage, ComponentErrorSeverity.ERROR);
+          } else {
+            this.initializeFormController(amount);
+          }
+          this.isLoading = false;
+        }
+      })
+    } else {
+      const errorMessage = 'Payment ID and Auth Token are required';
+      this.handleError(ComponentErrorCodes.MISSING_PROPS, errorMessage, ComponentErrorSeverity.ERROR);
+    }
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    this.formController.validateAndSubmit((values) => this.submitRefund(values));
+  }
+
   async submitRefund(values) {
     const postRefund = makePostRefund({
       authToken: this.authToken,
+      accountId: this.accountId,
       paymentId: this.paymentId,
       service: new RefundService(),
     });
     this.isLoading = true;
 
-    console.log('Refund values:', values);
     postRefund({
       refundBody: values,
-      onSuccess: (response) => {
+      onSuccess: ({ response }) => {
         this.submitEvent.emit({ response: response });
       },
       onError: ({ error, code, severity }) => {
@@ -92,92 +144,53 @@ export class RefundPayment {
       }
     })
   }
-
-  private handleInput(field: keyof RefundPaymentFields, value: any) {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      [field]: value,
-    });
-  }
-
-  private initializeFormController() {
-    this.formController = new FormController(RefundPaymentSchema(this.paymentAmountRefundable.toString()));
-  }
-
-  @Watch('paymentAmountRefundable')
-  propChanged() {
-    this.initializeFormController();
-  }
-
-  private initializeApi() {
-    if (this.paymentId && this.authToken) {
-      const getPayment = makeGetPaymentDetails({
-        id: this.paymentId,
-        authToken: this.authToken,
-        service: new PaymentService(),
-      });
-      
-      getPayment({
-        onSuccess: ({ payment }) => {
-          this.paymentAmountRefundable = payment.amount_refundable;
-          this.isLoading = false;
-        },
-        onError: ({ error, code, severity }) => {
-          this.handleError(code, error, severity);
-          this.isLoading = false;
-        },
-      })
-
-    } else {
-      const errorMessage = 'Payment ID and Auth Token are required';
-      this.handleError(ComponentErrorCodes.MISSING_PROPS, errorMessage, ComponentErrorSeverity.ERROR);
-    }
-  }
   
   render() {
+    const defaultValues = this.formController.getInitialValues();
+
     return (
       <StyledHost>
         <form>
           <div class="row gy-3">
-            <div class="form-group">
+            <div class="col-12">
               <form-control-monetary
                 name="amount"
                 label="Refund Amount"
-                inputHandler={(name: keyof RefundPaymentFields, value: any) =>
-                  this.handleInput(name, value)
-                }
+                defaultValue={defaultValues.amount}
+                inputHandler={this.inputHandler}
                 errorText={this.errors.amount}
-                defaultValue={this.paymentAmountRefundable.toString()}
               />
             </div>
-            <div class="form-group">
+            <div class="col-12">
               <form-control-select
-                label="Reason for refund (optional)"
-                options={refundReasonOptions}
                 name="reason"
-                defaultValue={''}
+                label="Reason for refund (optional)"
+                defaultValue={defaultValues.reason}
+                inputHandler={this.inputHandler}
+                options={refundReasonOptions}
+                errorText={this.errors.reason}
               />
             </div>
-            <div class="form-group">
+            <div class="col-12">
               <form-control-textarea
                 name="description"
                 label="Note (optional)"
-                inputHandler={(name: keyof RefundPaymentFields, value: any) =>
-                  this.handleInput(name, value)
-                }
-                errorText={this.errors.description}
+                defaultValue={defaultValues.description}
+                inputHandler={this.inputHandler}
                 maxLength={250}
+                errorText={this.errors.description}
               />
             </div>
             <div class="form-group d-flex flex-row-reverse">
               <Button
                 variant="primary"
                 type="submit"
-                onClick={e => this.handleSubmit(e)}
+                onClick={this.handleSubmit.bind(this)}
                 isLoading={this.isLoading}
                 hidden={this.hideSubmitButton}
+                disabled={this.submitDisabled}
               >
-                {`Refund ${formatCurrency(+this.values.amount)}`}
+                {`Refund ${formatCurrency(+this.displayAmount)}`}
               </Button>
             </div>
           </div>

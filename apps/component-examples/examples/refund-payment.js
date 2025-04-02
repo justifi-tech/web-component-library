@@ -46,7 +46,7 @@ async function getWebComponentToken(token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      resources: [`read:account:${subAccountId}`],
+      resources: [`write:account:${subAccountId}`],
     }),
   });
 
@@ -70,10 +70,8 @@ app.get('/', async (req, res) => {
       <body>
         <div class="list-component-wrapper">
           <justifi-refund-payment
-            payment-id="py_6h3XBU7ZcbThtc88u0JKUV"
+            payment-id="py_Rs6MuPvhBK7XDiB1mOF9g"
             auth-token="${webComponentToken}"
-            with-button="true"
-            payment-amount-refundable=1000
           />
         </div>
         <script>

@@ -2,14 +2,15 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makePostRefund =
-  ({ authToken, paymentId, service }) =>
-  async ({ refundBody, onSuccess, onError, final }) => {
+  ({ authToken, accountId, paymentId, service }) =>
+    async ({ refundBody, onSuccess, onError, final }) => {
+    console.log('makePostRefund called');
     try {
-      console.log('paymentId:', paymentId);
-      const response = await service.postRefund(paymentId, authToken, refundBody);
+      const response = await service.postRefund(paymentId, accountId, authToken, refundBody);
 
       if (!response.error) {
-        onSuccess(response);
+        const { data } = response;
+        onSuccess({ data });
       } else {
         const responseError = getErrorMessage(response.error);
         const code = getErrorCode(response.error?.code);
