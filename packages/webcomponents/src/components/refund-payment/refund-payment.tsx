@@ -5,10 +5,10 @@ import {
   Event,
   EventEmitter,
   Prop,
-  // Method
+  Method
 } from '@stencil/core';
 import RefundPaymentSchema from './refund-payment-schema';
-import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent } from '../../api';
+import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent, IRefundPayload, RefundPayload } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { Button, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
@@ -19,6 +19,7 @@ import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makePostRefund } from '../../actions/refund/refund-actions';
 import { RefundService } from '../../api/services/refund.service';
+import { RefundLoading } from './refund-loading';
 
 @Component({
   tag: 'justifi-refund-payment',
@@ -26,9 +27,11 @@ import { RefundService } from '../../api/services/refund.service';
 })
 export class RefundPayment {
   @State() formController: FormController;
+  @State() refundPayload: IRefundPayload = {};
   @State() displayAmount: string = '';
   @State() errors: any = {};
-  @State() isLoading: boolean = true;
+  @State() paymentLoading: boolean = true;
+  @State() refundLoading: boolean = false;
   @State() submitDisabled: boolean;
   
   @Prop() authToken: string;
@@ -45,15 +48,8 @@ export class RefundPayment {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeFormController();
     this.initializeApi();
-  }
-
-  componentDidLoad() {
-    console.log('RefundPayment component loaded');
-    this.formController.errors.subscribe(errors => {
-      this.errors = { ...errors };
-    });
+    this.formController = new FormController(RefundPaymentSchema());
   }
 
   private handleError(code: ComponentErrorCodes, errorMessage: string, severity: ComponentErrorSeverity) {
@@ -64,18 +60,29 @@ export class RefundPayment {
     return amount > 0;
   }
 
-  private initializeFormController(amount?: number) {
+  private initializeFormController() {
+    const amount = this.refundPayload.amount;
     const amountRefundable = amount ? amount.toString() : '0';
     this.formController = new FormController(RefundPaymentSchema(amountRefundable));
+    
     this.formController.setInitialValues({
       amount: amountRefundable
+    });
+
+    this.formController.values.subscribe(values => {
+      this.refundPayload = new RefundPayload({
+        ...this.refundPayload,
+        ...values
+      });
+    });
+
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
     });
   }
 
   inputHandler = (name: string, value: string) => {
-    if (name === 'amount') {
-      this.displayAmount = value;
-    }
+
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,
@@ -88,27 +95,27 @@ export class RefundPayment {
         id: this.paymentId,
         authToken: this.authToken,
         service: new PaymentService(),
+        apiOrigin: this.apiOrigin
       });
-
-      let amount;
       
       getPayment({
         onSuccess: ({ payment }) => {
-          amount = payment.amount_refundable;
+          this.refundPayload = new RefundPayload({amount: payment.amount_refundable});
         },
         onError: ({ error, code, severity }) => {
           this.handleError(code, error, severity);
         },
         final: () => {
+          const amount = this.refundPayload.amount;
           const validAmount = this.checkAmount(amount);
           if (!validAmount) {
             this.submitDisabled = true;
             const errorMessage = 'Refund amount must be greater than 0';
             this.handleError(ComponentErrorCodes.INVALID_REFUND_AMOUNT, errorMessage, ComponentErrorSeverity.ERROR);
           } else {
-            this.initializeFormController(amount);
+            this.initializeFormController();
           }
-          this.isLoading = false;
+          this.paymentLoading = false;
         }
       })
     } else {
@@ -117,83 +124,94 @@ export class RefundPayment {
     }
   }
 
+  @Method()
   async handleSubmit(event) {
     event.preventDefault();
-    this.formController.validateAndSubmit((values) => this.submitRefund(values));
+    this.formController.validateAndSubmit(() => this.submitRefund());
   }
 
-  async submitRefund(values) {
+  async submitRefund() {
     const postRefund = makePostRefund({
       authToken: this.authToken,
       accountId: this.accountId,
       paymentId: this.paymentId,
       service: new RefundService(),
+      apiOrigin: this.apiOrigin
     });
-    this.isLoading = true;
+    const values = this.formController.values.getValue();
+    this.refundLoading = true;
 
     postRefund({
       refundBody: values,
-      onSuccess: ({ response }) => {
+      onSuccess: (response) => {
         this.submitEvent.emit({ response: response });
+        this.submitDisabled = true;
       },
       onError: ({ error, code, severity }) => {
         this.handleError(error, code, severity);
       },
       final: () => {
-        this.isLoading = false;
+        this.refundLoading = false;
       }
     })
   }
   
   render() {
+    if (this.paymentLoading) {
+      return <RefundLoading />
+    }
+
     const defaultValues = this.formController.getInitialValues();
+    const currentRefundAmount = this.refundPayload.amount;
 
     return (
       <StyledHost>
         <form>
-          <div class="row gy-3">
-            <div class="col-12">
-              <form-control-monetary
-                name="amount"
-                label="Refund Amount"
-                defaultValue={defaultValues.amount}
-                inputHandler={this.inputHandler}
-                errorText={this.errors.amount}
-              />
+          <fieldset>
+            <div class="row gy-3">
+              <div class="col-12">
+                <form-control-monetary
+                  name="amount"
+                  label="Refund Amount"
+                  defaultValue={defaultValues.amount}
+                  inputHandler={this.inputHandler}
+                  errorText={this.errors.amount}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-select
+                  name="reason"
+                  label="Reason for refund (optional)"
+                  defaultValue={defaultValues.reason}
+                  inputHandler={this.inputHandler}
+                  options={refundReasonOptions}
+                  errorText={this.errors.reason}
+                />
+              </div>
+              <div class="col-12">
+                <form-control-textarea
+                  name="description"
+                  label="Note (optional)"
+                  defaultValue={defaultValues.description}
+                  inputHandler={this.inputHandler}
+                  maxLength={250}
+                  errorText={this.errors.description}
+                />
+              </div>
+              <div class="form-group d-flex flex-row-reverse">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={this.handleSubmit.bind(this)}
+                  isLoading={this.paymentLoading || this.refundLoading}
+                  hidden={this.hideSubmitButton}
+                  disabled={this.submitDisabled}
+                >
+                  {`Refund ${formatCurrency(+currentRefundAmount)}`}
+                </Button>
+              </div>
             </div>
-            <div class="col-12">
-              <form-control-select
-                name="reason"
-                label="Reason for refund (optional)"
-                defaultValue={defaultValues.reason}
-                inputHandler={this.inputHandler}
-                options={refundReasonOptions}
-                errorText={this.errors.reason}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-textarea
-                name="description"
-                label="Note (optional)"
-                defaultValue={defaultValues.description}
-                inputHandler={this.inputHandler}
-                maxLength={250}
-                errorText={this.errors.description}
-              />
-            </div>
-            <div class="form-group d-flex flex-row-reverse">
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={this.handleSubmit.bind(this)}
-                isLoading={this.isLoading}
-                hidden={this.hideSubmitButton}
-                disabled={this.submitDisabled}
-              >
-                {`Refund ${formatCurrency(+this.displayAmount)}`}
-              </Button>
-            </div>
-          </div>
+          </fieldset>
         </form>
       </StyledHost>
     );

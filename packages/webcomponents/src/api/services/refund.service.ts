@@ -21,6 +21,6 @@ export class RefundService implements IRefundService {
     const api = Api({ authToken, apiOrigin });
     const endpoint = `payments/${paymentId}/refunds`;
     const headers = { 'Sub-Account': accountId };
-    return api.post(endpoint, refundBody);
+    return api.post({ endpoint, headers, body: refundBody });
   }
 }

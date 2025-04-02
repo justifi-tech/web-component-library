@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
+const paymentId = process.env.PAYMENT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -70,7 +71,8 @@ app.get('/', async (req, res) => {
       <body>
         <div class="list-component-wrapper">
           <justifi-refund-payment
-            payment-id="py_Rs6MuPvhBK7XDiB1mOF9g"
+            payment-id="${paymentId}"
+            account-id="${subAccountId}"
             auth-token="${webComponentToken}"
           />
         </div>
@@ -81,7 +83,7 @@ app.get('/', async (req, res) => {
             console.log(event);
           });
 
-          justifiRefundPayment.addEventListener('click-event', (event) => {
+          justifiRefundPayment.addEventListener('submit-event', (event) => {
             console.log(event);
           });
         </script>
