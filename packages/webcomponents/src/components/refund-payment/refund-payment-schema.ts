@@ -1,27 +1,30 @@
-import * as yup from 'yup';
+import { object, string } from 'yup';
 import { formatCurrency } from '../../utils/utils';
+import { RefundReasons } from '../../api';
 
-export interface RefundPaymentFields {
-  amount: string;
-  description: string;
+const amountValidation = (maxAmount: string) => {
+  const max = +maxAmount;
+  return (
+    string()
+    .required('Amount is required')
+    .test('max-amount', `Refund amount cannot be more than payment amount: ${formatCurrency(max)}`, function (value) {
+      return +value <= +max;
+    })
+  )
 }
 
 const RefundPaymentSchema = (maxRefundAmount: string) => {
-  const maxAmount = +maxRefundAmount;
-  return yup.object().shape({
-    amount: yup
-      .string()
-      .required('Amount is required')
-      .typeError('Amount must be a number')
-      .test(
-        'amount',
-        `Refund amount cannot be more than ${formatCurrency(maxAmount)}`,
-        function (value) {
-          return +value <= maxAmount;
-        },
-      )
-      .nullable(),
+  const schema = object({
+    amount: amountValidation(maxRefundAmount),
+    description: string().optional(),
+    reason: string().optional()
+      .oneOf([
+        RefundReasons.customerRequest,
+        RefundReasons.duplicate,
+        RefundReasons.fraudulent,
+      ], 'Select a reason')
   })
-};
+  return schema;
+}
 
 export default RefundPaymentSchema;
