@@ -37,7 +37,6 @@ export class PaymentDetailsCore {
     this.getPaymentDetails({
       onSuccess: ({ payment }) => {
         this.payment = payment;
-        this.loading = false;
         this.errorMessage = null;
       },
       onError: ({ error, code, severity }) => {
@@ -47,6 +46,8 @@ export class PaymentDetailsCore {
           message: error,
           severity,
         })
+      },
+      final: () => {
         this.loading = false;
       },
     });

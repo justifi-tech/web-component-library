@@ -25,6 +25,7 @@ describe('getPaymentDetails', () => {
   it('should call onSuccess with payment on successful fetch', async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     // Mock fetchPayment to resolve with mockResponse
     mockServiceInstance.fetchPayment.mockResolvedValue(
@@ -36,7 +37,7 @@ describe('getPaymentDetails', () => {
       authToken: authToken,
       service: mockServiceInstance,
     });
-    await getPaymentDetails({ onSuccess, onError });
+    await getPaymentDetails({ onSuccess, onError, final });
 
     expect(onSuccess).toHaveBeenCalledWith({
       payment: expect.any(Payment),
@@ -48,6 +49,7 @@ describe('getPaymentDetails', () => {
     const mockError = new Error('Error fetching payment');
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     // Mock fetchPayment to reject with mockError
     mockServiceInstance.fetchPayment.mockRejectedValue(mockError);
@@ -57,7 +59,7 @@ describe('getPaymentDetails', () => {
       authToken: authToken,
       service: mockServiceInstance,
     });
-    await getPaymentDetails({ onSuccess, onError });
+    await getPaymentDetails({ onSuccess, onError, final });
 
     expect(onSuccess).not.toHaveBeenCalled();
     expect(onError).toHaveBeenCalledWith({
@@ -71,6 +73,7 @@ describe('getPaymentDetails', () => {
     const mockError = new Error('Error fetching payment');
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     // Mock fetchPayment to reject with mockError
     mockServiceInstance.fetchPayment.mockRejectedValue(mockError);
@@ -80,7 +83,7 @@ describe('getPaymentDetails', () => {
       authToken: authToken,
       service: mockServiceInstance,
     });
-    await getPaymentDetails({ onSuccess, onError });
+    await getPaymentDetails({ onSuccess, onError, final });
 
     expect(onSuccess).not.toHaveBeenCalled();
     expect(onError).toHaveBeenCalledWith({
