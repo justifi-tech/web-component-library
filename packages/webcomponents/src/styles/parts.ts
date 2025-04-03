@@ -41,7 +41,7 @@ export const inputRadioChecked = `input-radio-checked ${inputRadio}`;
 export const inputRadioCheckedFocused = `input-radio-checked-focused ${inputRadio}`;
 export const inputRadioInvalid = `input-radio-invalid ${inputRadio}`;
 
-export const inputCheckbox = `input-checkbox ${backgroundColor}`;
+export const inputCheckbox = `input-checkbox`;
 export const inputCheckboxInvalid = `input-checkbox-invalid ${inputCheckbox}`;
 export const inputCheckboxFocused = `input-checkbox-focused ${inputCheckbox}`;
 export const inputCheckboxChecked = `input-checkbox-checked ${inputCheckbox}`;

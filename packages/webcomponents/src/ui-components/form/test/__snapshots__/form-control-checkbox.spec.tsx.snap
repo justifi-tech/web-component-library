@@ -4,7 +4,7 @@ exports[`form-control-checkbox Renders with all props provided 1`] = `
 <form-control-checkbox>
   <div class="d-flex flex-column form-group">
     <div class="form-check">
-      <input class="form-check-input is-invalid" disabled="" id="accept" name="accept" part="input-checkbox-invalid input-checkbox background-color" type="checkbox">
+      <input class="form-check-input is-invalid" disabled="" id="accept" name="accept" part="input-checkbox-invalid input-checkbox" type="checkbox">
       <label class="form-check-label" htmlfor="accept" part="label text color font-family">
         Accept Terms
       </label>
@@ -23,7 +23,7 @@ exports[`form-control-checkbox Renders with default props 1`] = `
 <form-control-checkbox>
   <div class="d-flex flex-column form-group">
     <div class="form-check">
-      <input class="form-check-input" id="accept" name="accept" part="input-checkbox background-color" type="checkbox">
+      <input class="form-check-input" id="accept" name="accept" part="input-checkbox" type="checkbox">
       <label class="form-check-label" htmlfor="accept" part="label text color font-family">
         Accept Terms
       </label>
