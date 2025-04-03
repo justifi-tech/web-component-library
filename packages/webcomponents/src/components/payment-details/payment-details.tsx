@@ -15,7 +15,8 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 export class PaymentDetails {
   @Prop() paymentId: string;
   @Prop() authToken: string;
-
+  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
+  
   @State() getPaymentDetails: Function;
   @State() errorMessage: string = null;
 
@@ -45,6 +46,7 @@ export class PaymentDetails {
         id: this.paymentId,
         authToken: this.authToken,
         service: new PaymentService(),
+        apiOrigin: this.apiOrigin
       });
     } else {
       this.errorMessage = 'Payment ID and Auth Token are required';

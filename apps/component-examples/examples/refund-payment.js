@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
+const paymentId = process.env.PAYMENT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -46,7 +47,7 @@ async function getWebComponentToken(token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      resources: [`read:account:${subAccountId}`],
+      resources: [`write:account:${subAccountId}`],
     }),
   });
 
@@ -70,10 +71,9 @@ app.get('/', async (req, res) => {
       <body>
         <div class="list-component-wrapper">
           <justifi-refund-payment
+            payment-id="${paymentId}"
             account-id="${subAccountId}"
             auth-token="${webComponentToken}"
-            with-button="true"
-            payment-amount-refundable=1000
           />
         </div>
         <script>
@@ -83,7 +83,7 @@ app.get('/', async (req, res) => {
             console.log(event);
           });
 
-          justifiRefundPayment.addEventListener('click-event', (event) => {
+          justifiRefundPayment.addEventListener('submit-event', (event) => {
             console.log(event);
           });
         </script>

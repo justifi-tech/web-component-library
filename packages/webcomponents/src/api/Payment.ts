@@ -1,5 +1,6 @@
 import { formatCurrency } from "../utils/utils";
 import { DisputeStatus } from "./Dispute";
+import { IRefund } from ".";
 
 export enum CaptureStrategy {
   automatic = 'automatic',
@@ -284,19 +285,6 @@ export class Payment implements IPayment {
     return formatCurrency(amount, this.currency);
   }
 }
-
-export interface IRefund {
-  id: string;
-  payment_id: string;
-  amount: number;
-  description: string | null;
-  reason: string | null;
-  status: string;
-  metadata: null;
-  created_at: string;
-  updated_at: string;
-}
-
 export interface IApplicationFee {
   id: string;
   amount: number;
