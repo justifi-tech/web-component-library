@@ -137,16 +137,20 @@ export class RefundPayment {
     const values = this.formController.values.getValue();
     this.refundLoading = true;
 
+    let refundResponse;
+
     postRefund({
       refundBody: values,
       onSuccess: (response) => {
-        this.submitEvent.emit({ response: response });
-        this.submitDisabled = true;
+        refundResponse = response;
       },
       onError: ({ error, code, severity }) => {
+        refundResponse = error;
         this.handleError(error, code, severity);
       },
       final: () => {
+        this.submitEvent.emit({ response: refundResponse });
+        this.submitDisabled = true;
         this.refundLoading = false;
       }
     })
