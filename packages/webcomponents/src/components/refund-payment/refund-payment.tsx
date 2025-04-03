@@ -60,6 +60,12 @@ export class RefundPayment {
     return amount > 0;
   }
 
+  private handleInvalidAmount() {
+    this.submitDisabled = true;
+    const errorMessage = 'Refund amount must be greater than 0';
+    this.handleError(ComponentErrorCodes.INVALID_REFUND_AMOUNT, errorMessage, ComponentErrorSeverity.ERROR);
+  }
+
   private initializeFormController() {
     const amount = this.refundPayload.amount;
     const amountRefundable = amount ? amount.toString() : '0';
@@ -70,10 +76,7 @@ export class RefundPayment {
     });
 
     this.formController.values.subscribe(values => {
-      this.refundPayload = new RefundPayload({
-        ...this.refundPayload,
-        ...values
-      });
+      this.refundPayload = { ...values };
     });
 
     this.formController.errors.subscribe(errors => {
@@ -82,7 +85,6 @@ export class RefundPayment {
   }
 
   inputHandler = (name: string, value: string) => {
-
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,
@@ -108,13 +110,7 @@ export class RefundPayment {
         final: () => {
           const amount = this.refundPayload.amount;
           const validAmount = this.checkAmount(amount);
-          if (!validAmount) {
-            this.submitDisabled = true;
-            const errorMessage = 'Refund amount must be greater than 0';
-            this.handleError(ComponentErrorCodes.INVALID_REFUND_AMOUNT, errorMessage, ComponentErrorSeverity.ERROR);
-          } else {
-            this.initializeFormController();
-          }
+          !validAmount ? this.handleInvalidAmount() : this.initializeFormController();
           this.paymentLoading = false;
         }
       })
