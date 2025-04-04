@@ -24,7 +24,7 @@ export class PaymentProvisioningCore {
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent<any>>;
 
   @Listen('formCompleted')
   handleFormCompleted() {

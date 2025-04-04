@@ -30,7 +30,7 @@ export class DisputeResponseCore {
     payload: any,
     onSuccess: (disputeResponse: any) => void,
     onError: (disputeResponse: any) => void
-  }) => Promise<IApiResponse<any>>;
+  }) => Promise<IApiResponse<IDispute>>;
   @Prop() disputeResponse: any = {};
 
   @State() isLoading: boolean = false;
@@ -42,7 +42,7 @@ export class DisputeResponseCore {
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent<IDispute>>;
 
   componentStepMapping = [
     () => <justifi-product-or-service ref={(el) => this.currentStepComponentRef = el} disputeResponse={this.disputeResponse} documentErrors={this.documentErrors} />,

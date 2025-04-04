@@ -18,10 +18,10 @@
 
 ## Events
 
-| Event          | Description | Type                                |
-| -------------- | ----------- | ----------------------------------- |
-| `click-event`  |             | `CustomEvent<ComponentClickEvent>`  |
-| `submit-event` |             | `CustomEvent<ComponentSubmitEvent>` |
+| Event          | Description | Type                                                         |
+| -------------- | ----------- | ------------------------------------------------------------ |
+| `click-event`  |             | `CustomEvent<ComponentClickEvent>`                           |
+| `submit-event` |             | `CustomEvent<ComponentSubmitEvent<IApiResponse<IBusiness>>>` |
 
 
 ## Dependencies

@@ -33,7 +33,7 @@ export class CheckoutCore {
   @State() creatingNewPaymentMethod: boolean = false;
   @State() insuranceToggled: boolean = false;
 
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent<ICheckoutCompleteResponse>>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'loaded' }) loaded: EventEmitter<ILoadedEventResponse>;
 

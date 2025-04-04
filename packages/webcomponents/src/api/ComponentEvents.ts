@@ -2,6 +2,7 @@ import { BusinessFormClickActions, BusinessFormStep } from "../components/busine
 import { DisputeManagementClickActions, DisputeResponseFormStep } from "../components/dispute-management/event-types";
 import { TableClickActions } from "../ui-components/table/event-types";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "./ComponentError";
+import { IApiResponse } from "./Api";
 
 // click-event
 
@@ -12,9 +13,9 @@ export interface ComponentClickEvent {
 
 // submit-event
 
-export interface ComponentSubmitEvent {
-  response: any;
-  metadata?: any;
+export interface ComponentSubmitEvent<T = any> {
+  response: IApiResponse<T>;
+  metadata?: any; // Optional additional metadata
 }
 
 // complete-form-step-event

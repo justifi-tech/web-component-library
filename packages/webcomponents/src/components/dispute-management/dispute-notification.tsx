@@ -1,6 +1,6 @@
 
 import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
-import { Dispute } from "../../api/Dispute";
+import { Dispute, IDispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { heading4, text } from "../../styles/parts";
 import { Skeleton, Button, StyledHost } from "../../ui-components";
@@ -20,7 +20,7 @@ export class DisputeNotification {
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent<IDispute>>;
 
   acceptDispute() {
     makeSubmitDisputeResponse({

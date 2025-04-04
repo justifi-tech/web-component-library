@@ -24,7 +24,7 @@ export class BusinessForm {
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
 
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent<IBusiness>>;
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
 
   analytics: JustifiAnalytics;
