@@ -1,0 +1,31 @@
+{
+  "id": null,
+  "type": "order_models",
+  "page_info": null,
+  "data": {
+    "order_limit": 358,
+    "terminal_order_models": [
+      {
+        "id": "tordm_5zYZs8GRlwSHMeDr3mB6cR",
+        "model_name": "V400m",
+        "description": "A high-end, touchscreen countertop solution. Includes power supply and paper roll in the box",
+        "help_url": null,
+        "image_url": "https://s3.us-east-2.amazonaws.com/checkout.justifi.ai/terminal-order-models/V400.png"
+      },
+      {
+        "id": "tordm_7HXXf5IU3Y6k7ahIznADFY",
+        "model_name": "P400",
+        "description": "Advanced, high performance pin pad with rich multimedia and commerce capabilities. Includes power supply and R232/Ethd Dongle 2m",
+        "help_url": null,
+        "image_url": "https://s3.us-east-2.amazonaws.com/checkout.justifi.ai/terminal-order-models/P400.png"
+      },
+      {
+        "id": "tordm_4OKIaKpm480pokHzvXjPOK",
+        "model_name": "E285",
+        "description": "Standalone mobile point of sale device with WiFi, Bluetooth?, and 3G communication options, allowing secure payment acceptance anywhere without dependence on a smart device. The solution features a color touch screen capable of signature capture and is built on the Verifone Engage platform, enabling rich customer interaction at the point of sale",
+        "help_url": null,
+        "image_url": "https://s3.us-east-2.amazonaws.com/checkout.justifi.ai/terminal-order-models/E285.png"
+      }
+    ]
+  }
+}
