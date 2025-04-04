@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
-import { convertToLocal } from '../../utils/utils';
+import { convertToLocal, snakeCaseToHumanReadable } from '../../utils/utils';
 import { TerminalOrder } from '../../api';
 import { MapTerminalOrderStatusToBadge } from './terminal-order-status';
 
@@ -75,7 +75,7 @@ export const terminalOrdersTableCells = {
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.provider}</td>
   ),
   order_type: (terminalOrder: TerminalOrder, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{terminalOrder.order_type}</td>
+    <td part={getAlternateTableCellPart(index)}>{snakeCaseToHumanReadable(terminalOrder.order_type)}</td>
   ),
   quantity: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.terminals.length}</td>
