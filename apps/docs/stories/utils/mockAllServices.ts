@@ -19,6 +19,7 @@ import mockTerminalOrders from '../../../../mockData/mockTerminalOrdersListSucce
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
 import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
+import mockOrderModels from '../../../../mockData/mockOrderModelsSuccess.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -68,6 +69,7 @@ export const API_PATHS = {
   PKG_VERSION: '/@justifi/webcomponents/latest',
   DISPUTE: '/disputes/:id',
   DISPUTE_RESPONSE: '/disputes/:id/response',
+  ORDER_MODELS: '/terminals/order_models',
 };
 
 export const setUpMocks = () => {
@@ -145,6 +147,8 @@ export const setUpMocks = () => {
 
       // TerminalOrdersList
       this.get(API_PATHS.TERMINAL_ORDERS_LIST, () => mockTerminalOrders);
+
+      this.get(API_PATHS.ORDER_MODELS, () => mockOrderModels);
 
       // SubAccountsList
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);

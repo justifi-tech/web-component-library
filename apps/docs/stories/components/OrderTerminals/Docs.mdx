@@ -1,0 +1,63 @@
+import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../utils';
+import { codeExampleFull } from './example';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
+import * as JustifiOrderTerminals from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Merchant Tools/Order Terminals"
+  Components="justifi-order-terminals"
+  of={JustifiOrderTerminals}
+/>
+
+<Title />
+
+---
+
+Component to render a form to create a new order requesting terminals.
+
+# Index
+
+---
+
+- [Props and methods](#props-and-methods)
+- [Authorization](#authorization)
+- [Example usage](#example-usage)
+
+# Props and methods
+
+---
+
+<ArgTypes exclude={['Theme']} />
+
+# Authorization
+
+---
+
+<Authorization
+  resources={[`read:business:business_id`, `write:account:account_id`]}
+/>
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-order-terminals
+    business-id="biz_123"
+    account-id="acc_123"
+    auth-token="123abc"
+    shipping={true}
+    submit-button-text="Order Terminals"
+  />
+</ComponentBox>
+
+---
+
+<Source dark language="html" code={codeExampleFull} />
