@@ -10,7 +10,7 @@ exports[`form-control-monetary Renders with all props provided 1`] = `
       Enter payment amount
     </small>
     <div class="input-group">
-      <span class="input-group-text" part="text color font-family">
+      <span class="input-group-text" part="input-group-text">
         $
       </span>
       <input class="form-control is-invalid" id="amount" name="amount" part="input-invalid input text color font-family background-color" type="text" value="15.00">
@@ -29,7 +29,7 @@ exports[`form-control-monetary renders correctly with default props 1`] = `
       Amount
     </label>
     <div class="input-group">
-      <span class="input-group-text" part="text color font-family">
+      <span class="input-group-text" part="input-group-text">
         $
       </span>
       <input class="form-control" id="amount" name="amount" part="input text color font-family background-color" type="text" value="0.00">

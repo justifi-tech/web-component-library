@@ -97,6 +97,12 @@ const light = `
     box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
   }
 
+  ::part(input-group-text) {
+    background-color: #fff;
+    border-color: #333;
+    border-radius: 0px;
+  }
+
   ::part(button) {
     padding: 0.375rem 0.75rem;
     font-size: 16px;

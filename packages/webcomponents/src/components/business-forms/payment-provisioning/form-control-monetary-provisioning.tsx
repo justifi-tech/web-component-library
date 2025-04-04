@@ -11,7 +11,7 @@ import {
 import IMask, { InputMask } from 'imask';
 import { CURRENCY_MASK } from '../../../utils/form-input-masks';
 import { FormControlErrorText, FormControlHelpText } from '../../../ui-components';
-import { inputDisabled, inputFocused, inputGroup, inputInvalid, label, text } from '../../../styles/parts';
+import { inputAdornment, inputDisabled, inputFocused, inputGroup, inputInvalid, label } from '../../../styles/parts';
 
 @Component({
   tag: 'form-control-monetary-provisioning'
@@ -75,7 +75,7 @@ export class MonetaryInputProvisioning {
     }
   }
 
-  private get part() {
+  private get inputPart() {
     let part = inputGroup;
     if (this.errorText) {
       part = inputInvalid;
@@ -97,7 +97,7 @@ export class MonetaryInputProvisioning {
             {this.label}
           </label>
           <div class="input-group">
-            <span class="input-group-text" part={text}>$</span>
+            <span class="input-group-text" part={inputAdornment}>$</span>
             <input
               ref={el => (this.textInput = el as HTMLInputElement)}
               id={this.name}
@@ -108,7 +108,7 @@ export class MonetaryInputProvisioning {
                 this.formControlBlur.emit();
               }}
               onInput={this.handleFormControlInput}
-              part={this.part}
+              part={this.inputPart}
               class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
               type="text"
               disabled={this.disabled}
