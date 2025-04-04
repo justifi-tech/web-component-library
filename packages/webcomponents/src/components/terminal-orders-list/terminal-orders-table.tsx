@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
-import { convertToLocal, snakeCaseToHumanReadable } from '../../utils/utils';
-import { TerminalOrder } from '../../api';
+import { convertToLocal } from '../../utils/utils';
+import { TerminalOrder, TerminalOrderType } from '../../api';
 import { MapTerminalOrderStatusToBadge } from './terminal-order-status';
 
 export const defaultColumnsKeys = 'created_at,updated_at,order_status,quantity';
@@ -74,9 +74,18 @@ export const terminalOrdersTableCells = {
   provider: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.provider}</td>
   ),
-  order_type: (terminalOrder: TerminalOrder, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{snakeCaseToHumanReadable(terminalOrder.order_type)}</td>
-  ),
+  order_type: (terminalOrder: TerminalOrder, index: number) => {
+    let orderType;
+    if (terminalOrder.order_type === TerminalOrderType.boardingOnly) {
+      orderType = 'Boarding Only';
+    } else if (terminalOrder.order_type === TerminalOrderType.boardingShipping) {
+      orderType = 'Boarding & Shipping';
+    }
+    return (
+      <td part={getAlternateTableCellPart(index)}>{orderType}</td>
+    )
+  }
+  ,
   quantity: (terminalOrder: TerminalOrder, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{terminalOrder.terminals.length}</td>
   ),
