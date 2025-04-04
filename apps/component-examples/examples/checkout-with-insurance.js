@@ -3,7 +3,7 @@ require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const proxyApiOrigin = process.env.PROXY_API_ORIGIN;
+const checkoutEndpoint = process.env.CHECKOUT_ENDPOINT;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
 const webcomponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const clientId = process.env.CLIENT_ID;
@@ -61,7 +61,7 @@ async function getToken() {
 }
 
 async function makeCheckout(token) {
-  const response = await fetch(`${proxyApiOrigin}/v1/checkouts`, {
+  const response = await fetch(checkoutEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -72,11 +72,10 @@ async function makeCheckout(token) {
       amount: 1799,
       description: 'One Chocolate Donut',
       payment_method_group_id: paymentMethodId,
-      origin_url: `http://localhost:${port}`,
+      origin_url: `localhost:${port}`,
     }),
   });
   const responseJson = await response.json();
-  console.log('responseJson:', responseJson);
   const { data } = responseJson;
   return data;
 }
