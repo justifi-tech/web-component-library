@@ -35,6 +35,12 @@ export const inputDisabled = `input-disabled ${input}`;
 export const inputFocused = `input-focused ${input}`;
 export const inputInvalidAndFocused = `input-invalid-and-focused ${input}`;
 
+export const inputAdornment = `input-group-text ${text}`;
+export const inputAdornmentInvalid = `input-invalid ${inputAdornment}`;
+export const inputAdornmentDisabled = `input-disabled ${inputAdornment}`;
+export const inputAdornmentFocused = `input-focused ${inputAdornment}`;
+export const inputAdornmentInvalidAndFocused = `input-invalid-and-focused ${inputAdornment}`;
+
 export const inputRadio = `input-radio`;
 export const inputRadioFocused = `input-radio-focused ${inputRadio}`;
 export const inputRadioChecked = `input-radio-checked ${inputRadio}`;

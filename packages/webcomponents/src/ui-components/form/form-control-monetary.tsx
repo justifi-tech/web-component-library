@@ -9,7 +9,7 @@ import {
   State,
 } from '@stencil/core';
 import { FormControlErrorText, FormControlHelpText } from '..';
-import { input, inputDisabled, inputFocused, inputInvalid, label, text } from '../../styles/parts';
+import { input, inputDisabled, inputFocused, inputInvalid, label, inputAdornment, inputAdornmentInvalid, inputAdornmentDisabled, inputAdornmentFocused } from '../../styles/parts';
 import { formatCurrency } from '../../utils/utils';
 
 @Component({
@@ -62,7 +62,7 @@ export class MonetaryInput {
     this.formControlInput.emit({ name: name, value: formatRawValue });
   }
 
-  private get part() {
+  private get inputPart() {
     if (this.errorText) {
       return inputInvalid;
     }
@@ -75,6 +75,19 @@ export class MonetaryInput {
     return input;
   }
 
+  private get inputAdornmentPart() {
+    if (this.errorText) {
+      return inputAdornmentInvalid;
+    }
+    if (this.disabled) {
+      return inputAdornmentDisabled
+    }
+    if (this.isFocused) {
+      return inputAdornmentFocused;
+    }
+    return inputAdornment;
+  }
+
   render() {
     return (
       <Host>
@@ -84,7 +97,7 @@ export class MonetaryInput {
           </label>
           <FormControlHelpText name={this.name} helpText={this.helpText} />
           <div class="input-group">
-            <span class="input-group-text" part={text}>$</span>
+            <span class="input-group-text" part={this.inputAdornmentPart}>$</span>
             <input
               ref={el => this.formControl = el}
               id={this.name}
@@ -98,7 +111,7 @@ export class MonetaryInput {
               onKeyDown={this.keyDownHandler}
               onPaste={this.keyDownHandler}
               maxLength={this.maxLength}
-              part={this.part}
+              part={this.inputPart}
               class={this.errorText ? "form-control is-invalid" : "form-control"}
               type="text"
               disabled={this.disabled}
