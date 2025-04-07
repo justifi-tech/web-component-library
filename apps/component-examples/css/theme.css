@@ -59,6 +59,12 @@ body {
   border-color: #333;
 }
 
+::part(input-adornment) {
+  background-color: #fff;
+  border-color: #333;
+  border-radius: 0px;
+}
+
 ::part(input-radio-checked) {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
   background-color: #000;
