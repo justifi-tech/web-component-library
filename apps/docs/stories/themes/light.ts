@@ -97,7 +97,7 @@ const light = `
     box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
   }
 
-  ::part(input-group-text) {
+  ::part(input-adornment) {
     background-color: #fff;
     border-color: #333;
     border-radius: 0px;

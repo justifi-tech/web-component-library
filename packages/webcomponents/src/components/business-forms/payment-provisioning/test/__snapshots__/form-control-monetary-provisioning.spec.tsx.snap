@@ -7,7 +7,7 @@ exports[`form-control-monetary-provisioning Renders with all props provided 1`] 
       Amount
     </label>
     <div class="input-group">
-      <span class="input-group-text" part="input-group-text">
+      <span class="input-group-text" part="input-adornment text color font-family">
         $
       </span>
       <input class="form-control is-invalid monetary" id="amount" name="amount" part="input-invalid input text color font-family background-color" type="text" value="1,500">
@@ -29,7 +29,7 @@ exports[`form-control-monetary-provisioning renders correctly with default props
       Amount
     </label>
     <div class="input-group">
-      <span class="input-group-text" part="input-group-text">
+      <span class="input-group-text" part="input-adornment text color font-family">
         $
       </span>
       <input class="form-control monetary" id="amount" name="amount" part="input-group input text color font-family background-color" type="text">

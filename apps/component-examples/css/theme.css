@@ -59,7 +59,7 @@ body {
   border-color: #333;
 }
 
-::part(input-group-text) {
+::part(input-adornment) {
   background-color: #fff;
   border-color: #333;
   border-radius: 0px;

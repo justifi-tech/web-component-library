@@ -47,7 +47,7 @@ export const inputCheckboxFocused = `input-checkbox-focused ${inputCheckbox}`;
 export const inputCheckboxChecked = `input-checkbox-checked ${inputCheckbox}`;
 export const inputCheckboxCheckedFocused = `input-checkbox-checked-focused ${inputCheckbox}`;
 
-export const inputAdornment = `input-group-text`;
+export const inputAdornment = `input-adornment ${text}`;
 
 // Alert
 export const alert = `alert ${text}`;

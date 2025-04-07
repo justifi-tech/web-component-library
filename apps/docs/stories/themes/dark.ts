@@ -35,11 +35,11 @@ const dark = `
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
   }
 
-  ::part(input-group-text) {
+  ::part(input-adornment) {
     background: transparent;
     color: #fdfdec;
     border-color: #fdfdec;
-    border-radius: 0px;
+    border-radius: 4px;
   }
 
   ::part(input-radio) {
