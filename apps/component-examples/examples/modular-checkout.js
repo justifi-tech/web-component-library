@@ -52,7 +52,7 @@ async function makeCheckout(token) {
       amount: 1799,
       description: 'One Chocolate Donut',
       payment_method_group_id: paymentMethodGroupId,
-      origin_url: `http://localhost:${port}`,
+      origin_url: `localhost:${port}`,
     }),
   });
   const { data } = await response.json();
