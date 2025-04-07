@@ -13,7 +13,7 @@ const dark = `
   }
 
   ::part(font-family) {
-    font-family: sans-serif;   
+    font-family: sans-serif;
   }
 
   ::part(color) {
@@ -33,6 +33,13 @@ const dark = `
     appearance: none;
     -webkit-appearance: none;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.4);
+  }
+
+  ::part(input-adornment) {
+    background: transparent;
+    color: #fdfdec;
+    border-color: #fdfdec;
+    border-radius: 4px;
   }
 
   ::part(input-radio) {
