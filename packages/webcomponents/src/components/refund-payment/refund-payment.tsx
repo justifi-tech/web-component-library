@@ -121,7 +121,7 @@ export class RefundPayment {
   }
 
   @Method()
-  async handleSubmit(event) {
+  async refundPayment(event) {
     event.preventDefault();
     this.formController.validateAndSubmit(() => this.submitRefund());
   }
@@ -152,6 +152,7 @@ export class RefundPayment {
         this.submitEvent.emit({ response: refundResponse });
         this.submitDisabled = true;
         this.refundLoading = false;
+        return refundResponse;
       }
     })
   }
@@ -202,7 +203,7 @@ export class RefundPayment {
                 <Button
                   variant="primary"
                   type="submit"
-                  onClick={this.handleSubmit.bind(this)}
+                  onClick={this.refundPayment.bind(this)}
                   isLoading={this.paymentLoading || this.refundLoading}
                   hidden={this.hideSubmitButton}
                   disabled={this.submitDisabled}
