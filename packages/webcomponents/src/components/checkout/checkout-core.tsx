@@ -8,10 +8,7 @@ import { BillingFormFields, PostalFormFields } from './billing-forms/billing-for
 import { Button, StyledHost, Skeleton, Header2, Header3 } from '../../ui-components';
 import { checkoutSummary, text } from '../../styles/parts';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
-
-export type CheckoutSubmitEvent = {
-  response: ICheckoutCompleteResponse;
-}
+import { CheckoutSubmitEvent } from './checkout-events';
 
 @Component({
   tag: 'justifi-checkout-core',
