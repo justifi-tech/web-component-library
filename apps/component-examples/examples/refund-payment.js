@@ -108,49 +108,44 @@ app.get('/', async (req, res) => {
             account-id="${subAccountId}"
             auth-token="${webComponentToken}"
             hide-submit-button="${hideSubmitButton}"
-          />
-          <button part="button" id="test-refund-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Refund</button>
+          >
+          </justifi-refund-payment>
+          <button id="test-refund-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Refund</button>
         </div>
         <div class="column-output" id="output-pane">
           <em>Refund output will appear here...</em>
         </div>
-        <script>
-          const justifiRefundPayment = document.querySelector('justifi-refund-payment');
-          const testSubmitButton = document.getElementById('test-refund-button');
-
-          function writeOutputToPage(event) {
-            document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
-          };
-
-          justifiRefundPayment.addEventListener('error-event', (event) => {
-            console.log('Error-event', event);
-            writeOutputToPage(event);
-          });
-
-          justifiRefundPayment.addEventListener('submit-event', (event) => {
-            if (event.detail.response.data) {
-              console.log('Response data from submit-event', event.detail.response.data);
-            }
-
-            if (event.detail.response.error) {
-              console.log('Error from submit-event', event.detail.response.error);
-            }
-
-            writeOutputToPage(event);
-          });
-
-          testSubmitButton.addEventListener('click', async () => {
-          const response = await justifiRefundPayment.refundPayment();
-            if (response.data) {
-              console.log('Response data from refund method', response.data);
-            }
-            
-            if (response.error) {
-              console.log('Error from refund method', response.error);
-            };
-          });
-        </script>
       </body>
+      <script>
+        const justifiRefundPayment = document.querySelector('justifi-refund-payment');
+        const testSubmitButton = document.getElementById('test-refund-button');
+
+        function writeOutputToPage(event) {
+          document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
+        };
+
+        justifiRefundPayment.addEventListener('error-event', (event) => {
+          console.log('Error-event', event);
+          writeOutputToPage(event);
+        });
+
+        justifiRefundPayment.addEventListener('submit-event', (event) => {
+          if (event.detail.response.data) {
+            console.log('Response data from submit-event', event.detail.response.data);
+          }
+
+          if (event.detail.response.error) {
+            console.log('Error from submit-event', event.detail.response.error);
+          }
+
+          writeOutputToPage(event);
+        });
+
+        testSubmitButton.addEventListener('click', async () => {
+          const refundData = await justifiRefundPayment.refundPayment();
+          console.log('Refund data', refundData);
+        });
+      </script>
     </html>
   `);
 });

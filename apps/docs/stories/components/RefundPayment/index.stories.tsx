@@ -64,7 +64,7 @@ const meta: Meta = {
         category: "methods",
         defaultValue: { 
           summary: "`refundPayment() => Promise<RefundPaymentResponse>`",
-          detail: "RefundPaymentResponse: { data: { amount: number, created_at: string, updated_at: string, description: string | null, reason: string | null, metadata: any, id: string, payment_id: string, status: Enum: 'pending' 'succeeded' 'failed'}}"
+          detail: "RefundPaymentResponse: { amount: number, created_at: string, updated_at: string, description: string | null, reason: string | null, metadata: any, id: string, payment_id: string, status: Enum: 'pending' 'succeeded' 'failed'}"
          }
       },
     },
