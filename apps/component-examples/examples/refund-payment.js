@@ -2,11 +2,12 @@ require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
 const app = express();
+const { v4: uuidv4 } = require('uuid');
 const port = process.env.PORT || 3000;
 const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const paymentsEndpoint = process.env.PAYMENTS_ENDPOINT;
 const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
-const paymentId = process.env.PAYMENT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -36,6 +37,38 @@ async function getToken() {
   return access_token;
 }
 
+async function createPayment(token) {
+  const requestBody = JSON.stringify({
+    amount: 1000,
+    currency: 'usd',
+    capture_strategy: 'automatic',
+    description: 'Test payment for refund example file',
+    payment_method: {
+      card: {
+      name: "Sylvia Fowles",
+      number: "4242424242424242",
+      verification: "123",
+      month: "3",
+      year: "2040",
+      address_postal_code: "55555"
+      }
+    }
+  })
+
+  const response = await fetch(paymentsEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'sub-account': subAccountId,
+      'Idempotency-Key': uuidv4(),
+    },
+    body: requestBody
+  });
+  const { id } = await response.json();
+  return id;
+}
+
 async function getWebComponentToken(token) {
   const response = await fetch(webComponentTokenEndpoint, {
     method: 'POST',
@@ -54,6 +87,7 @@ async function getWebComponentToken(token) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
+  const paymentId = await createPayment(token);
   const webComponentToken = await getWebComponentToken(token);
 
   const hideSubmitButton = false;
