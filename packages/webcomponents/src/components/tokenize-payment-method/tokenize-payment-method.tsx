@@ -9,10 +9,7 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity
 } from '../../api';
-
-export type TokenizePaymentMethodSubmitEvent = {
-  response: PaymentMethodPayload;
-}
+import { TokenizePaymentMethodSubmitEvent } from './tokenize-payment-method-events';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
