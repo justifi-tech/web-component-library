@@ -17,7 +17,7 @@ const light = `
   }
 
   ::part(color) {
-    color: darkslategray;
+    color: white;
   }
 
   ::part(background-color) {
