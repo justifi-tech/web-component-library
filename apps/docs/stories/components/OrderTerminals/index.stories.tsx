@@ -21,7 +21,7 @@ const meta: Meta = {
   argTypes: {
     ...storyBaseArgs.argTypes,
     shipping: {
-      description: "Whether should set `order_type` to `boarding_shipping` or `boarding_only`.",
+      description: "Defines the `order_type`; can be set to `boarding_shipping` or `boarding_only`",
       table: {
         category: "props",
         defaultValue: {
