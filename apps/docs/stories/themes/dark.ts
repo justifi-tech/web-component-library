@@ -17,7 +17,7 @@ const dark = `
   }
 
   ::part(color) {
-    color: #fdfdec;
+    color: white;
   }
 
   ::part(background-color) {
