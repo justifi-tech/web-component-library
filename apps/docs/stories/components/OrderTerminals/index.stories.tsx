@@ -37,7 +37,7 @@ const meta: Meta = {
       table: {
         category: "props",
         defaultValue: {
-          summary: "Order Terminals",
+          summary: "Submit Order",
         }
       },
       control: {
