@@ -5,11 +5,14 @@ import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import {
-  ComponentSubmitEvent,
   ComponentErrorEvent,
   ComponentErrorCodes,
   ComponentErrorSeverity
 } from '../../api';
+
+export type TokenizePaymentMethodSubmitEvent = {
+  response: PaymentMethodPayload;
+}
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
@@ -29,7 +32,7 @@ export class TokenizePaymentMethod {
   @State() isLoading: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<TokenizePaymentMethodSubmitEvent>;
 
   private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
   analytics: JustifiAnalytics;
@@ -44,13 +47,13 @@ export class TokenizePaymentMethod {
     event && event.preventDefault();
     this.isLoading = true;
 
-    let tokenizeResponse: PaymentMethodPayload;
+    let resolvedPaymentMethod: PaymentMethodPayload;
     try {
-      tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
-      if (tokenizeResponse.error) {
+      resolvedPaymentMethod = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
+      if (resolvedPaymentMethod.error) {
         this.errorEvent.emit({
-          errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
-          message: tokenizeResponse.error.message,
+          errorCode: (resolvedPaymentMethod.error.code as ComponentErrorCodes),
+          message: resolvedPaymentMethod.error.message,
           severity: ComponentErrorSeverity.ERROR,
         });
       }
@@ -62,9 +65,9 @@ export class TokenizePaymentMethod {
       };
       this.errorEvent.emit(errorData);
     } finally {
-      this.submitEvent.emit({ response: tokenizeResponse });
+      this.submitEvent.emit({ response: resolvedPaymentMethod });
       this.isLoading = false;
-      return tokenizeResponse;
+      return resolvedPaymentMethod;
     }
   }
 

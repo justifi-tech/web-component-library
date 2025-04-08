@@ -1,7 +1,7 @@
 import { CreatePaymentMethodResponse } from './payment-method-responses';
 
 export interface PaymentMethodPayload {
-  data?: CreatePaymentMethodResponse;
+  data?: { data: CreatePaymentMethodResponse['data'] };
   token?: string;
   bnpl?: {
     order_uuid: string;
