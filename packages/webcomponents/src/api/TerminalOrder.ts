@@ -17,6 +17,9 @@ export enum TerminalOrderStatus {
   created = 'created',
   submitted = 'submitted',
   completed = 'completed',
+  in_progress = 'in_progress',
+  on_hold = 'on_hold',
+  cancelled = 'cancelled'
 }
 
 // This is the interface for the terminal item returned from the API response
