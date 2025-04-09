@@ -85,7 +85,7 @@ ${codeExampleHead(
   />
 
   <!-- Optional external button - this is only needed if the built in button is hidden via the hide-submit-button prop
-   and refund is submitted via provided refundPayment() method - see below. -->
+   and the refund is submitted via provided refundPayment() method - see below. -->
   <button id="submit-refund-button">Submit Refund</button>
 </body>
 
