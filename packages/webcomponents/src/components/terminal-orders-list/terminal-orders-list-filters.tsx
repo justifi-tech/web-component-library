@@ -45,12 +45,15 @@ export class TerminalOrdersListFilters {
     this.setParamsOnChange(name, utcDate);
   }
 
-  get terminalOrderStatusOptions(): { label: string, value: TerminalOrderStatus | '' }[] {
+  get terminalOrderStatusOptions(): { label: string, value: any | '' }[] {
     return [
       { label: 'All', value: '' },
       { label: 'Created', value: TerminalOrderStatus.created },
       { label: 'Completed', value: TerminalOrderStatus.completed },
       { label: 'Submitted', value: TerminalOrderStatus.submitted },
+      { label: 'In Progress', value: TerminalOrderStatus.in_progress },
+      { label: 'On Hold', value: TerminalOrderStatus.on_hold },
+      { label: 'Canceled', value: TerminalOrderStatus.canceled }
     ]
   }
 
