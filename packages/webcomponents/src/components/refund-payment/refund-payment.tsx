@@ -8,7 +8,7 @@ import {
   Method
 } from '@stencil/core';
 import RefundPaymentSchema from './refund-payment-schema';
-import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent, IRefundPayload, RefundPayload } from '../../api';
+import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent, IApiResponse, IRefund, IRefundPayload, RefundPayload } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { Button, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
@@ -120,13 +120,14 @@ export class RefundPayment {
     }
   }
 
+  
   @Method()
-  async handleSubmit(event) {
-    event.preventDefault();
-    this.formController.validateAndSubmit(() => this.submitRefund());
-  }
+  async refundPayment(event?: CustomEvent): Promise<IRefund> {
+    event && event.preventDefault();
 
-  async submitRefund() {
+    const valid = await this.formController.validate();
+    if (!valid) return;
+
     const postRefund = makePostRefund({
       authToken: this.authToken,
       accountId: this.accountId,
@@ -137,23 +138,24 @@ export class RefundPayment {
     const values = this.formController.values.getValue();
     this.refundLoading = true;
 
-    let refundResponse;
-
-    postRefund({
-      refundBody: values,
-      onSuccess: (response) => {
-        refundResponse = response;
-      },
-      onError: ({ error, code, severity }) => {
-        refundResponse = error;
-        this.handleError(error, code, severity);
-      },
-      final: () => {
-        this.submitEvent.emit({ response: refundResponse });
-        this.submitDisabled = true;
-        this.refundLoading = false;
-      }
-    })
+    return new Promise((resolve) => {
+      let refundResponse: IApiResponse<IRefund>;
+  
+      postRefund({
+        refundBody: values,
+        onSuccess: (response) => { refundResponse = response; },
+        onError: ({ error, code, severity }) => {
+          refundResponse = error;
+          this.handleError(error, code, severity);
+        },
+        final: () => {
+          this.submitEvent.emit({ response: refundResponse });
+          this.submitDisabled = true;
+          this.refundLoading = false;
+          resolve(refundResponse.data);
+        },
+      });
+    });
   }
   
   render() {
@@ -202,7 +204,7 @@ export class RefundPayment {
                 <Button
                   variant="primary"
                   type="submit"
-                  onClick={this.handleSubmit.bind(this)}
+                  onClick={this.refundPayment.bind(this)}
                   isLoading={this.paymentLoading || this.refundLoading}
                   hidden={this.hideSubmitButton}
                   disabled={this.submitDisabled}

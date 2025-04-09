@@ -1,0 +1,72 @@
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Description,
+  ArgTypes,
+  Source,
+} from '@storybook/blocks';
+import dedent from 'ts-dedent';
+import { filterDocsByTag } from '../../utils';
+import example from './example';
+import {
+  Authorization,
+  ComponentBox,
+} from '../../utils/documentation-components';
+import * as JustifiRefundPayment from './index.stories.tsx';
+import { setUpMocks } from '../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Payment Facilitation/Refund Payment"
+  Components="justifi-refund-payment"
+  of={JustifiRefundPayment}
+/>
+
+<Title />
+
+---
+
+Component to render a form for partially or fully refunding a payment based on a provided payment ID.
+
+# Index
+
+---
+
+- [Props, events and methods](#props-events-and-methods)
+- [Authorization](#authorization)
+- [Example usage](#example-usage)
+
+# Props, events and methods
+
+---
+
+<ArgTypes exclude={['Theme']} />
+
+# Authorization
+
+---
+
+<Authorization
+  actions={['write']}
+  entity="account"
+  identification="account_id"
+/>
+
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-refund-payment
+    payment-id="payment_123"
+    account-id="acc_123"
+    auth-token="web-component-token"
+  />
+</ComponentBox>
+
+---
+
+<Source dark language="html" code={example} />
