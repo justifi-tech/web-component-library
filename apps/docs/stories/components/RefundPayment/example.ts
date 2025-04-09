@@ -83,6 +83,9 @@ ${codeExampleHead(
     auth-token="web-component-token"
     hide-submit-button="true"
   />
+
+  <!-- Optional external button - this is only needed if the built in button is hidden via the hide-submit-button prop
+   and refund is submitted via provided refundPayment() method - see below. -->
   <button id="submit-refund-button">Submit Refund</button>
 </body>
 
@@ -96,13 +99,15 @@ ${codeExampleHead(
     });
 
     refundForm.addEventListener("error-event", (event) => {
-      // here is where you would handle the error
+      /* here is where you would handle the error */
       console.error('error-event', event.detail);
     });
 
-    // manually call Refund with provided method, if built-in submit button is hidden
+    /* manually call Refund with provided method, if built-in submit button is hidden */
     document.getElementById("submit-refund-button").addEventListener("click", () => {
-      refundForm.refundPayment();
+      const refundData = await justifiRefundPayment.refundPayment();
+        console.log('Refund data', refundData);
+      });
     });
   })();
 </script>

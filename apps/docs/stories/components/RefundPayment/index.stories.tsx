@@ -51,7 +51,7 @@ const meta: Meta = {
       action: true
     },
     "error-event": {
-      description: "Emitted upon an error during component intitializtion, or refund of a payment",
+      description: "Emitted during component initialization or refund processing errors",
       table: {
         category: "events",
         defaultValue: { summary: "Returns full error as `event.detail` and error message as `event.detail.message`" },
