@@ -70,7 +70,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["error-event"],
+      handles: ["error-event", "submit-event"],
     },
     chromatic: {
       delay: 2000,
