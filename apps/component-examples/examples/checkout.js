@@ -36,26 +36,34 @@ async function getToken() {
     console.log('ERROR:', error);
   }
 
-  const { access_token } = await response.json();
+  const responseJson = await response.json();
+  const { access_token } = responseJson;
   return access_token;
 }
 
 async function makeCheckout(token) {
-  const response = await fetch(checkoutEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-      'Sub-Account': subAccountId,
-    },
-    body: JSON.stringify({
-      amount: 1799,
-      description: 'One Chocolate Donut',
-      payment_method_group_id: paymentMethodGroupId,
-      origin_url: `http://localhost:${port}`,
-    }),
-  });
-  const { data } = await response.json();
+  let response;
+  try {
+    response = await fetch(checkoutEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Sub-Account': subAccountId,
+      },
+      body: JSON.stringify({
+        amount: 1799,
+        description: 'One Chocolate Donut',
+        payment_method_group_id: paymentMethodGroupId,
+        origin_url: `localhost:${port}`,
+      }),
+    });
+  } catch (error) {
+    console.log('ERROR:', error);
+  }
+
+  const responseJson = await response.json();
+  const { data } = responseJson;
   return data;
 }
 
@@ -73,7 +81,9 @@ async function getWebComponentToken(token, checkoutId) {
       ],
     }),
   });
-  const { access_token } = await response.json();
+
+  const responseJson = await response.json();
+  const { access_token } = responseJson;
   return access_token;
 }
 
