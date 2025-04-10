@@ -48,9 +48,17 @@ Component to render a form for terminal order requests.
     API](https://docs.justifi.tech/api-spec#tag/Web-Component-Tokens/operation/CreateWebComponentToken).
     Each token can be scoped to perform a set number of actions and is active
     for 60 minutes. When creating a web component token for this specific
-    component you'll need to use the roles: `read:business:business_id` and
-    `write:account:account_id`. Make sure the values for `business_id` or
-    `account_id` match the props you also pass separately.
+    component you'll need to use the roles:
+    <ul>
+      <li>
+        `read:business:business_id` - use the `business_id` you pass to the
+        component's props
+      </li>
+      <li>
+        `write:account:account_id` - use the `account_id` you pass to the
+        component's props
+      </li>
+    </ul>
   </li>
 </ul>
 
