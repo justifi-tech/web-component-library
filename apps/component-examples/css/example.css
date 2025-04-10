@@ -17,6 +17,7 @@
   flex-grow: 1;
   overflow-y: auto;
   width: 50vw;
+  padding: 20px;
 }
 
 .two-column-layout>.column-output {

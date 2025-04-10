@@ -10,6 +10,7 @@ import mockCheckoutsList from '../../../../mockData/mockGetCheckoutsListSuccess.
 import mockGrossPaymentChart from '../../../../mockData/mockGrossVolumeReportSuccess.json';
 import mockPayment from '../../../../mockData/mockPaymentDetailSuccess.json';
 import mockPayments from '../../../../mockData/mockPaymentsSuccess.json';
+import mockRefundResponse from '../../../../mockData/mockPostRefundSuccess.json';
 import mockPostPaymentMethods from '../../../../mockData/mockPostPaymentMethodsSuccess.json';
 import mockPayout from '../../../../mockData/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../../../../mockData/mockPayoutsSuccess.json';
@@ -59,6 +60,7 @@ export const API_PATHS = {
   PAYMENT_DETAILS: '/payments/:id',
   PAYMENTS_LIST: '/account/:id/payments',
   PAYMENT_METHODS: '/payment_methods',
+  REFUND: '/payments/:id/refunds',
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
   INSURANCE_QUOTES: '/insurance/quotes',
@@ -133,6 +135,9 @@ export const setUpMocks = () => {
 
       // PaymentsList
       this.get(API_PATHS.PAYMENTS_LIST, () => mockPayments);
+
+      // Post Refund
+      this.post(API_PATHS.REFUND, () => mockRefundResponse);
 
       // PayoutDetails
       this.get(API_PATHS.PAYOUT_DETAILS, () => mockPayout);
