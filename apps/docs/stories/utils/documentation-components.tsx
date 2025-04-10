@@ -156,7 +156,7 @@ export const Authorization = (props: AuthorizationProps) => {
             if (i === arr.length - 1) return <>{prev}{pluralActions ? ' or ' : ' and '}{curr}</>;
             return <>{prev}, {curr}</>;
           })}.
-          Make sure the value{pluralIds ? 's' : ''} for {formatIdList(uniqueIds)} match{pluralIds ? 'es' : ''} the prop
+          Make sure the value{pluralIds ? 's' : ''} for {formatIdList(uniqueIds)} match{pluralIds ? '' : 'es'} the prop
           {uniqueIds.length > 1 ? 's' : ''} you also pass separately.
         </li>
       </ul>
