@@ -20,6 +20,7 @@ import mockTerminalOrders from '../../../../mockData/mockTerminalOrdersListSucce
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
 import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
+import mockOrderModels from '../../../../mockData/mockOrderModelsSuccess.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -70,6 +71,8 @@ export const API_PATHS = {
   PKG_VERSION: '/@justifi/webcomponents/latest',
   DISPUTE: '/disputes/:id',
   DISPUTE_RESPONSE: '/disputes/:id/response',
+  ORDER_MODELS: '/terminals/order_models',
+  ORDER_TERMINALS: '/terminals/orders',
 };
 
 export const setUpMocks = () => {
@@ -150,6 +153,56 @@ export const setUpMocks = () => {
 
       // TerminalOrdersList
       this.get(API_PATHS.TERMINAL_ORDERS_LIST, () => mockTerminalOrders);
+
+      // OrderTerminals
+      this.get(API_PATHS.ORDER_MODELS, () => mockOrderModels);
+      this.post(API_PATHS.ORDER_TERMINALS, (_schema, resquest) => {
+        const response = JSON.parse(resquest.requestBody);
+
+        return {
+          id: 'tord_4DbrOOMTbsO2ZPG0MsvS3i',
+          type: 'terminal_order',
+          page_info: null,
+          data: {
+            id: 'tord_4DbrOOMTbsO2ZPG0MsvS3i',
+            business_id: response.business_id,
+            account_id: response.account_id,
+            order_type: response.order_type,
+            order_status: 'created',
+            shipping_tracking_reference: null,
+            company_name: 'Apricot Tavern 163',
+            mcc: '7998',
+            receiver_name: 'Jake Jake',
+            contact_first_name: 'Jake',
+            contact_last_name: 'Jake',
+            contact_email: 'jakemerringer@gmail.com',
+            contact_phone_number: '6124005000',
+            line1: '730 Happiness Ln',
+            line2: '100',
+            city: 'Minneapolis',
+            state: 'MN',
+            postal_code: '55555',
+            time_zone: 'US/Central',
+            country: 'USA',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            // For each order item, generate `quantity` number of terminal objects,
+            // each with a random `terminal_id` and `terminal_did`, while keeping the same `model_name`.
+            // The result is a flattened array of all generated terminal objects, to mimic the API response.
+            terminals: response.order_items
+              .map((item: any) => {
+                return Array.from({ length: item.quantity }, () => {
+                  return {
+                    terminal_id: `trm_${Math.random().toString(36).substring(2, 15)}`,
+                    terminal_did: `${Math.floor(Math.random() * 100000000)}`,
+                    model_name: item.model_name,
+                  };
+                });
+              })
+              .flat(),
+          },
+        };
+      });
 
       // SubAccountsList
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
