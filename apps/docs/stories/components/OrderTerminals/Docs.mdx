@@ -2,22 +2,22 @@ import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExampleFull } from './example';
 import { ComponentBox } from '../../utils/documentation-components';
-import * as JustifiPayoutDetails from './index.stories.tsx';
+import * as JustifiOrderTerminals from './index.stories.tsx';
 import { setUpMocks } from '../../utils/mockAllServices';
 
 {setUpMocks()}
 
 <Meta
-  title="Merchant Tools/Payout Details"
-  Components="justifi-payout-details"
-  of={JustifiPayoutDetails}
+  title="Merchant Tools/Order Terminals"
+  Components="justifi-order-terminals"
+  of={JustifiOrderTerminals}
 />
 
 <Title />
 
 ---
 
-Component to display detailed information about a specific payout.
+Component to render a form for terminal order requests.
 
 # Index
 
@@ -48,9 +48,17 @@ Component to display detailed information about a specific payout.
     API](https://docs.justifi.tech/api-spec#tag/Web-Component-Tokens/operation/CreateWebComponentToken).
     Each token can be scoped to perform a set number of actions and is active
     for 60 minutes. When creating a web component token for this specific
-    component you'll need to use the role: `read:payments:account_id` or
-    `write:payments:account_id`. Make sure the value for `account_id` matches
-    the prop you also pass separately.
+    component you'll need to use the roles:
+    <ul>
+      <li>
+        `read:business:business_id` - use the `business_id` you pass to the
+        component's props
+      </li>
+      <li>
+        `write:account:account_id` - use the `account_id` you pass to the
+        component's props
+      </li>
+    </ul>
   </li>
 </ul>
 
@@ -59,7 +67,13 @@ Component to display detailed information about a specific payout.
 ---
 
 <ComponentBox>
-  <justifi-payout-details payout-id="123" auth-token="123abc" />
+  <justifi-order-terminals
+    business-id="biz_123"
+    account-id="acc_123"
+    auth-token="123abc"
+    shipping={true}
+    submit-button-text="Order Terminals"
+  />
 </ComponentBox>
 
 ---
