@@ -21,6 +21,7 @@ const meta: Meta = {
     "disable-bank-account": false,
     "hide-submit-button": false,
     "hide-card-billing-form": false,
+    "hide-bank-account-billing-form": false,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -96,6 +97,17 @@ const meta: Meta = {
         type: "boolean",
       },
       description: "For use with new credit card payment methods only, renders an alternate billing form with only the address_postal_code field present",
+      table: {
+        category: "props",
+        defaultValue: { summary: "false" },
+      },
+    },
+    "hide-bank-account-billing-form": {
+      type: "boolean",
+      control: {
+        type: "boolean",
+      },
+      description: "For use with new bank account payment methods only, prevents the billing form from rendering. Note: the billing form may be hidden, but a billing address is still required for ACH payments. This prop is ideally used in conjunction with the `fillBillingForm` method",
       table: {
         category: "props",
         defaultValue: { summary: "false" },
