@@ -1,7 +1,7 @@
 import { Component, h, Prop, Method, Event, EventEmitter, Listen, State, Host } from '@stencil/core';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { BillingFormFields, PostalFormFields } from './billing-forms/billing-form-schema';
+import { BillingFormFields } from './billing-form/billing-form-schema';
 import { radioListItem } from '../../styles/parts';
 
 const PaymentMethodTypeLabels = {
@@ -13,7 +13,7 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  private billingFormWrapperRef?: HTMLJustifiBillingFormWrapperElement;
+  private billingFormRef?: any;
   private paymentMethodFormRef?: HTMLCardFormElement;
 
   @Prop() authToken: string;
@@ -22,6 +22,7 @@ export class NewPaymentMethod {
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() iframeOrigin: string;
 
   @State() saveNewPaymentMethodChecked: boolean = false;
@@ -34,13 +35,13 @@ export class NewPaymentMethod {
   }
 
   @Method()
-  async fillBillingForm(fields: BillingFormFields | PostalFormFields) {
-    this.billingFormWrapperRef.fill(fields);
+  async fillBillingForm(fields: BillingFormFields) {
+    this.billingFormRef.fill(fields);
   }
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!this.paymentMethodFormRef || !this.billingFormWrapperRef) return;
+    if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     try {
       const isValid = await this.validate();
@@ -66,14 +67,14 @@ export class NewPaymentMethod {
   }
 
   async validate(): Promise<boolean> {
-    const billingFormValidation = await this.billingFormWrapperRef.validate();
+    const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
     return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
   }
 
   async tokenize() {
     try {
-      const billingFormFieldValues = await this.billingFormWrapperRef.getValues();
+      const billingFormFieldValues = await this.billingFormRef.getValues();
       let paymentMethodData;
       if (this.saveNewPaymentMethodChecked) {
         paymentMethodData = { ...billingFormFieldValues, payment_method_group_id: this.paymentMethodGroupId };
@@ -112,9 +113,10 @@ export class NewPaymentMethod {
           )}
 
         </div>
-        <justifi-billing-form-wrapper
-          ref={(el) => (this.billingFormWrapperRef = el)}
+        <justifi-billing-form
+          ref={(el) => (this.billingFormRef = el)}
           hideCardBillingForm={this.hideCardBillingForm}
+          hideBankAccountBillingForm={this.hideBankAccountBillingForm}
           paymentMethodType={paymentMethodType}
         />
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
