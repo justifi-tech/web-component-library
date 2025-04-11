@@ -10,14 +10,15 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity
 } from '../../api';
+import checkoutStore from '../../store/checkout.store';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
   shadow: true,
 })
 export class TokenizePaymentMethod {
-  @Prop() authToken: string;
-  @Prop() accountId: string;
+  @Prop() authToken?: string;
+  @Prop() accountId?: string;
   @Prop() paymentMethodGroupId: string;
   @Prop() submitButtonText: string;
   @Prop() disableCreditCard?: boolean;
@@ -37,6 +38,14 @@ export class TokenizePaymentMethod {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
+
+    if (!this.authToken) {
+      this.authToken = checkoutStore.authToken;
+    }
+
+    if (!this.accountId) {
+      this.accountId = checkoutStore.accountId;
+    }
   }
 
   @Method()
