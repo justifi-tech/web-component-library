@@ -29,7 +29,7 @@ export const MapTerminalOrderStatusToBadge = (status: TerminalOrderStatus) => {
       title: 'This order is on hold',
       text: 'On Hold',
     },
-    cancelled: {
+    canceled: {
       variant: BadgeVariant.DANGER,
       title: 'This order is canceled',
       text: 'Canceled',

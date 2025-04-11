@@ -118,7 +118,7 @@
       "sub_account_id": "acc_3333",
       "provider": "verifone",
       "order_type": "boarding_shipping",
-      "order_status": "cancelled",
+      "order_status": "canceled",
       "terminals": [
         {
           "terminal_id": "tmn_ZZAA",
