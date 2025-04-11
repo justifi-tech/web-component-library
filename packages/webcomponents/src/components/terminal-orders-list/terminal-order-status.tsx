@@ -19,6 +19,21 @@ export const MapTerminalOrderStatusToBadge = (status: TerminalOrderStatus) => {
       title: 'This order is created',
       text: 'Created',
     },
+    in_progress: {
+      variant: BadgeVariant.INFO,
+      title: 'This order is in progress',
+      text: 'In Progress',
+    },
+    on_hold: {
+      variant: BadgeVariant.WARNING,
+      title: 'This order is on hold',
+      text: 'On Hold',
+    },
+    canceled: {
+      variant: BadgeVariant.DANGER,
+      title: 'This order is canceled',
+      text: 'Canceled',
+    }
   };
 
   const badgeProps = statusToBadgeProps[status];
