@@ -58,7 +58,7 @@ app.get('/', async (req, res) => {
   const webComponentToken = await getWebComponentToken(token);
 
   const hideCardBillingForm = false;
-  const hideBankAccountBillingForm = true;
+  const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
 
   const billingFormFields = {
