@@ -20,7 +20,7 @@ export const MapTerminalOrderStatusToBadge = (status: TerminalOrderStatus) => {
       text: 'Created',
     },
     in_progress: {
-      variant: BadgeVariant.INFO,
+      variant: BadgeVariant.PRIMARY,
       title: 'This order is in progress',
       text: 'In Progress',
     },

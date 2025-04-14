@@ -236,7 +236,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               </div>
             </td>
             <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-info" part="badge font-family badge-info" title="This order is in progress">
+              <span class="badge bg-primary" part="badge font-family badge-primary" title="This order is in progress">
                 In Progress
               </span>
             </td>
