@@ -24,6 +24,7 @@ export class TokenizePaymentMethod {
   @Prop() disableBankAccount?: boolean;
   @Prop() hideSubmitButton?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
 
   @State() isLoading: boolean = false;
@@ -88,6 +89,7 @@ export class TokenizePaymentMethod {
                   paymentMethodGroupId={this.paymentMethodGroupId}
                   show-saved-payment-methods={false} // implement payment method group loading to show these
                   hideCardBillingForm={this.hideCardBillingForm}
+                  hideBankAccountBillingForm={this.hideBankAccountBillingForm}
                   authToken={this.authToken}
                   account-id={this.accountId}
                   iframeOrigin={this.iframeOrigin}
