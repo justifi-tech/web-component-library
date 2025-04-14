@@ -57,7 +57,8 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 
-  const hideCardBillingForm = true;
+  const hideCardBillingForm = false;
+  const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
 
   const billingFormFields = {
@@ -68,12 +69,6 @@ app.get('/', async (req, res) => {
     address_state: 'CA',
     address_postal_code: '90210',
   };
-
-  const postalFormFields = {
-    address_postal_code: '90210',
-  };
-
-  let fields = hideCardBillingForm ? postalFormFields : billingFormFields;
 
   res.send(`
     <!DOCTYPE html>
@@ -90,6 +85,7 @@ app.get('/', async (req, res) => {
             auth-token="${webComponentToken}"
             account-id="${subAccountId}"
             hide-card-billing-form="${hideCardBillingForm}"
+            hide-bank-account-billing-form="${hideBankAccountBillingForm}"
             hide-submit-button="${hideSubmitButton}"
           >
           </justifi-tokenize-payment-method>
@@ -128,7 +124,7 @@ app.get('/', async (req, res) => {
         });
 
         fillBillingFormButton.addEventListener('click', () => {
-          justifiTokenizePaymentMethod.fillBillingForm(${JSON.stringify(fields)});
+          justifiTokenizePaymentMethod.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
 
         testSubmitButton.addEventListener('click', async () => {
