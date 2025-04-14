@@ -74,6 +74,12 @@ export class TokenizePaymentMethod {
     this.paymentMethodOptionsRef.fillBillingForm(fields);
   }
 
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const { isValid } = await this.paymentMethodOptionsRef.validate();
+    return { isValid };
+  }
+
   render() {
     return (
       <StyledHost>

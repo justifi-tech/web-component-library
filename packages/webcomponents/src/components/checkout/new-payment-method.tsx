@@ -68,6 +68,7 @@ export class NewPaymentMethod {
     }
   }
 
+  @Method()
   async validate(): Promise<boolean> {
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
