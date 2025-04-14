@@ -138,6 +138,13 @@ const meta: Meta = {
         defaultValue: { summary: "`fillBillingForm(fields: BillingFormFields) => Promise<void>`" }
       },
     },
+    validate: {
+      description: "Validate the billing form fields",
+      table: {
+        category: "methods",
+        defaultValue: { summary: "`validate() => Promise<{ isValid: boolean; }>`" }
+      },
+    },
     tokenizePaymentMethod: {
       description: "Can be used to call the tokenizePaymentMethod method programmatically with an external button. Ideally used in conjunction with the `hide-submit-button` prop. Returns a promise with the tokenized payment method",
       table: {
