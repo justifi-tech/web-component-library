@@ -92,6 +92,8 @@ export class PaymentMethodOptions {
                 authToken={this.authToken}
                 account-id={this.accountId}
                 is-selected={isSelected}
+                show-card={this.showCard}
+                show-ach={this.showAch}
                 paymentMethodGroupId={this.paymentMethodGroupId}
                 hideCardBillingForm={this.hideCardBillingForm}
                 hideBankAccountBillingForm={this.hideBankAccountBillingForm}

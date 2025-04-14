@@ -55,7 +55,6 @@ export class BillingForm {
 
   @Method()
   async fill(fields: BillingFormFields) {
-    console.log('Filling billing form with fields:', fields);
     this.formController.setInitialValues(fields);
   }
 

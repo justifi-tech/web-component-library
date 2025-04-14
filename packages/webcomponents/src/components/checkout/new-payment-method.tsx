@@ -21,6 +21,8 @@ export class NewPaymentMethod {
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
+  @Prop() showCard?: boolean;
+  @Prop() showAch?: boolean;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() iframeOrigin: string;
@@ -124,6 +126,10 @@ export class NewPaymentMethod {
     );
   }
 
+  private get hiddenRadioInput() {
+    return !this.showAch || !this.showCard;
+  }
+
   render() {
     return (
       <Host class="payment-method">
@@ -131,6 +137,7 @@ export class NewPaymentMethod {
           class="radio-list-item p-3"
           part={radioListItem}
           onClick={this.onPaymentMethodOptionClick}
+          hidden={this.hiddenRadioInput}
         >
           <form-control-radio
             name="paymentMethodType"
