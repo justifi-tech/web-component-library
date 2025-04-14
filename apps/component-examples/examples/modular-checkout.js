@@ -100,10 +100,10 @@ app.get('/', async (req, res) => {
             account-id="${subAccountId}"
             checkout-id="${checkout.id}"
           >
-            <justifi-tokenize-payment-method ]
-              hide-card-billing-form="true"
-            />
-            <button id="submit-button" class="button">Submit</button>
+            <justifi-card-form></justifi-card-form>
+            <div style="margin-top: 20px;">
+              <button id="submit-button" class="button">Submit</button>
+            </div>
           </justifi-checkout-wrapper>
         </div>
       </body>
@@ -112,7 +112,8 @@ app.get('/', async (req, res) => {
         const checkoutWrapper = document.querySelector('justifi-checkout-wrapper');
 
         submitButton.addEventListener('click', async () => {
-          const { token } = await checkoutWrapper.submit();
+          const addressPostalCode = '12345';
+          const { token } = await checkoutWrapper.tokenizePaymentMethod({ addressPostalCode });
           console.log(token);
         });
       </script>
