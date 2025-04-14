@@ -101,8 +101,14 @@ app.get('/', async (req, res) => {
             checkout-id="${checkout.id}"
           >
             <justifi-card-form></justifi-card-form>
-            <div style="margin-top: 20px;">
-              <button id="submit-button" class="button">Submit</button>
+            <div style="margin-top: 20px">
+              <button
+               id="submit-button" 
+               class="button"
+               style="padding:10px"
+              >
+                Submit Checkout
+              </button>
             </div>
           </justifi-checkout-wrapper>
         </div>
@@ -113,8 +119,8 @@ app.get('/', async (req, res) => {
 
         submitButton.addEventListener('click', async () => {
           const addressPostalCode = '12345';
-          const { token } = await checkoutWrapper.tokenizePaymentMethod({ addressPostalCode });
-          console.log(token);
+          const { id } = await checkoutWrapper.submitCheckout({ addressPostalCode });
+          console.log('token: ', id);
         });
       </script>
     </html>

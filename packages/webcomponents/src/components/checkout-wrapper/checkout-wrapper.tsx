@@ -26,10 +26,6 @@ export class CheckoutWrapper {
 
   componentDidLoad() {
     this.cardFormRef = this.hostEl.querySelector('justifi-card-form');
-
-    if (this.cardFormRef) {
-      console.log('Card form loaded!', this.cardFormRef);
-    }
   }
 
   @Method()
@@ -59,6 +55,12 @@ export class CheckoutWrapper {
     } else {
       throw new Error('CardForm component not found');
     }
+  }
+
+  @Method()
+  async submitCheckout({ addressPostalCode }: { addressPostalCode?: number }): Promise<any> {
+    const tokenizeResponse = await this.tokenizePaymentMethod({ addressPostalCode });
+    return tokenizeResponse;
   }
 
   render() {
