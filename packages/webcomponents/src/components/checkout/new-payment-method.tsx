@@ -102,7 +102,7 @@ export class NewPaymentMethod {
     return (
       <div class="mt-4 pb-4">
         <hidden-input />
-        <div class="mb-4">
+        <div class={this.hideBankAccountBillingForm ? '' : 'mb-4'}>
           {paymentMethodType === 'card' ? (
             <card-form
               ref={(el) => this.paymentMethodFormRef = el}

@@ -57,6 +57,8 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 
+  const disableBankAccount = false;
+  const disableCreditCard = false;
   const hideCardBillingForm = false;
   const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
@@ -84,10 +86,10 @@ app.get('/', async (req, res) => {
           <justifi-tokenize-payment-method
             auth-token="${webComponentToken}"
             account-id="${subAccountId}"
-            disable-bank-account="false"
-            disable-credit-card="true"
-            hide-card-billing-form="${hideCardBillingForm}"
+            disable-bank-account="${disableBankAccount}"
+            disable-credit-card="${disableCreditCard}"
             hide-bank-account-billing-form="${hideBankAccountBillingForm}"
+            hide-card-billing-form="${hideCardBillingForm}"
             hide-submit-button="${hideSubmitButton}"
           >
           </justifi-tokenize-payment-method>

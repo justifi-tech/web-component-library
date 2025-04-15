@@ -41,7 +41,7 @@ const meta: Meta = {
       },
       table: {
         category: "props",
-        defaultValue: { summary: "Tokenize Payment Method" },
+        defaultValue: { summary: "Submit" },
       },
     },
     "payment-method-group-id": {
