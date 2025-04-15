@@ -93,9 +93,9 @@ app.get('/', async (req, res) => {
             hide-submit-button="${hideSubmitButton}"
           >
           </justifi-tokenize-payment-method>
-          <button id="fill-billing-form-button">Test Fill Billing Form</button>
-          <button id="test-validate-button">Test Validate</button>
-          <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
+          <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
+          <button id="test-validate-button" hidden>Test Validate</button>
+          <button id="test-submit-button" hidden="${hideSubmitButton}"}>Test Submit</button>
         </div>
         <div class="column-output" id="output-pane">
           <em>Tokenization output will appear here...</em>

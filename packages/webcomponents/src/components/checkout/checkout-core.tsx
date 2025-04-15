@@ -44,6 +44,18 @@ export class CheckoutCore {
   async fillBillingForm(fields: BillingFormFields) {
     this.paymentMethodOptionsRef.fillBillingForm(fields);
   }
+  
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const insuranceValidation = validateInsuranceValues();
+    const { isValid } = await this.paymentMethodOptionsRef.validate();
+
+    if (!insuranceValidation.isValid || !isValid) {
+      return { isValid: false };
+    } else {
+      return { isValid: true };
+    }
+  }
 
   componentWillLoad() {
     if (this.getCheckout) {

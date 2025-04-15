@@ -126,14 +126,15 @@ app.get('/', async (req, res) => {
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>
-          <button id="fill-billing-form-button">Test Fill Billing Form</button>
+          <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
+          <button id="test-validate-button" hidden>Test Validate</button>
         </div>
         <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
         const fillBillingFormButton = document.getElementById('fill-billing-form-button');
-
+        const testValidateButton = document.getElementById('test-validate-button');
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
@@ -151,6 +152,11 @@ app.get('/', async (req, res) => {
         
         fillBillingFormButton.addEventListener('click', () => {
           justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
+        });
+
+        testValidateButton.addEventListener('click', async () => {
+          const response = await justifiCheckout.validate();
+          console.log('Validate response', response);
         });
       </script>
     </html>

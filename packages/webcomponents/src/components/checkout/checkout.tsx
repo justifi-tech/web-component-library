@@ -77,6 +77,12 @@ export class Checkout {
     this.checkoutCoreRef.fillBillingForm(fields);
   }
 
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const { isValid } = await this.checkoutCoreRef.validate();
+    return { isValid };
+  }
+
   render() {
     return (
       <justifi-checkout-core
