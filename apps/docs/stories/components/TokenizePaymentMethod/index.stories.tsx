@@ -139,7 +139,7 @@ const meta: Meta = {
       },
     },
     validate: {
-      description: "Validate the billing form fields",
+      description: "Validate the payment method and billing form fields",
       table: {
         category: "methods",
         defaultValue: { summary: "`validate() => Promise<{ isValid: boolean; }>`" }
