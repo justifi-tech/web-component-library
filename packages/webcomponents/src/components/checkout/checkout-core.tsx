@@ -25,6 +25,7 @@ export class CheckoutCore {
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
 
   @State() hasLoadedFonts: boolean = false;
   @State() checkout: ICheckout;
@@ -158,6 +159,7 @@ export class CheckoutCore {
             paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             hideCardBillingForm={this.hideCardBillingForm}
+            hideBankAccountBillingForm={this.hideBankAccountBillingForm}
             bnpl={this.checkout?.bnpl}
             authToken={this.authToken}
             account-id={this.checkout?.account_id}

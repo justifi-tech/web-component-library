@@ -91,7 +91,11 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const checkout = await makeCheckout(token);
   const webComponentToken = await getWebComponentToken(token, checkout.id);
-  const hideCardBillingForm = false;
+  
+  const disableBankAccount = true;
+  const disableCreditCard = false;
+  const hideCardBillingForm = true;
+  const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
     name: 'John Doe',
@@ -101,12 +105,6 @@ app.get('/', async (req, res) => {
     address_state: 'CA',
     address_postal_code: '90210',
   };
-
-  const postalFormFields = {
-    address_postal_code: '90210',
-  };
-
-  let fields = hideCardBillingForm ? postalFormFields : billingFormFields;
 
   res.send(`
     <!DOCTYPE html>
@@ -122,6 +120,9 @@ app.get('/', async (req, res) => {
           <justifi-checkout 
             auth-token="${webComponentToken}" 
             checkout-id="${checkout.id}"
+            disable-bank-account="${disableBankAccount}"
+            disable-credit-card="${disableCreditCard}"
+            hide-bank-account-billing-form="${hideBankAccountBillingForm}"
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>
@@ -149,7 +150,7 @@ app.get('/', async (req, res) => {
         });
         
         fillBillingFormButton.addEventListener('click', () => {
-          justifiCheckout.fillBillingForm(${JSON.stringify(fields)});
+          justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
       </script>
     </html>
