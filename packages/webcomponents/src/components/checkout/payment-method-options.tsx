@@ -3,7 +3,7 @@ import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { IBnpl } from '../../api';
-import { BillingFormFields, PostalFormFields } from './billing-forms/billing-form-schema';
+import { BillingFormFields } from './billing-form/billing-form-schema';
 
 @Component({
   tag: 'justifi-payment-method-options',
@@ -21,6 +21,7 @@ export class PaymentMethodOptions {
   @Prop() savedPaymentMethods: any[] = [];
   @Prop() paymentAmount: number;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() iframeOrigin: string;
 
   @State() selectedPaymentMethodId: string;
@@ -30,7 +31,7 @@ export class PaymentMethodOptions {
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
   @Method()
-  async fillBillingForm(fields: BillingFormFields | PostalFormFields) {
+  async fillBillingForm(fields: BillingFormFields) {
     const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
     if (newPaymentMethodElement.fillBillingForm) {
       newPaymentMethodElement.fillBillingForm(fields);
@@ -93,6 +94,7 @@ export class PaymentMethodOptions {
                 is-selected={isSelected}
                 paymentMethodGroupId={this.paymentMethodGroupId}
                 hideCardBillingForm={this.hideCardBillingForm}
+                hideBankAccountBillingForm={this.hideBankAccountBillingForm}
                 iframeOrigin={this.iframeOrigin}
                 ref={(el) => {
                   if (isSelected) {
