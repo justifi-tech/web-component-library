@@ -56,6 +56,7 @@ Type: `Promise<any>`
 
  - [bank-account-form](../../components/checkout/bank-account-form)
  - [card-form](../../components/checkout/card-form)
+ - [justifi-bank-account-form](../../components/modular-checkout-parts)
  - [justifi-card-form](../../components/modular-checkout-parts)
 
 ### Graph
@@ -63,6 +64,7 @@ Type: `Promise<any>`
 graph TD;
   bank-account-form --> iframe-input
   card-form --> iframe-input
+  justifi-bank-account-form --> iframe-input
   justifi-card-form --> iframe-input
   style iframe-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
