@@ -13,7 +13,7 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  private billingFormRef?: any;
+  private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLCardFormElement;
 
   @Prop() authToken: string;
@@ -102,7 +102,6 @@ export class NewPaymentMethod {
     return (
       <div class="mt-4 pb-4">
         <hidden-input />
-        <div class={this.hideBankAccountBillingForm ? '' : 'mb-4'}>
           {paymentMethodType === 'card' ? (
             <card-form
               ref={(el) => this.paymentMethodFormRef = el}
@@ -114,8 +113,6 @@ export class NewPaymentMethod {
               iframeOrigin={this.iframeOrigin}
             />
           )}
-
-        </div>
         <justifi-billing-form
           ref={(el) => (this.billingFormRef = el)}
           hideCardBillingForm={this.hideCardBillingForm}
