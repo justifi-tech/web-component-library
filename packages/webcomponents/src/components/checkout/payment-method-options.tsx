@@ -77,6 +77,13 @@ export class PaymentMethodOptions {
     return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
   }
 
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    const isValid = await newPaymentMethodElement.validate();
+    return { isValid: isValid };
+  }
+
   render() {
     return (
       <Host>
@@ -92,6 +99,8 @@ export class PaymentMethodOptions {
                 authToken={this.authToken}
                 account-id={this.accountId}
                 is-selected={isSelected}
+                show-card={this.showCard}
+                show-ach={this.showAch}
                 paymentMethodGroupId={this.paymentMethodGroupId}
                 hideCardBillingForm={this.hideCardBillingForm}
                 hideBankAccountBillingForm={this.hideBankAccountBillingForm}

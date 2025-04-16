@@ -108,17 +108,15 @@ exports[`justifi-checkout-core should render the full billing form by default 1`
             </div>
             <div class="visually-hidden">
               <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods="">
-                <justifi-new-payment-method class="payment-method" is-selected="">
+                <justifi-new-payment-method class="payment-method" is-selected="" show-ach="" show-card="">
                   <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
                     <form-control-radio checked="" label="New credit or debit card" name="paymentMethodType" value="card"></form-control-radio>
                   </div>
                   <div class="mt-4 pb-4">
                     <hidden-input></hidden-input>
-                    <div class="mb-4">
-                      <card-form></card-form>
-                    </div>
+                    <card-form></card-form>
                     <justifi-billing-form>
-                      <div part="billing-form">
+                      <div class="mt-4" part="billing-form">
                         <h3 class="fs-6 fw-bold header-3 lh-lg mb-4" part="heading-3 heading text color font-family">
                           Billing address
                         </h3>
@@ -151,7 +149,7 @@ exports[`justifi-checkout-core should render the full billing form by default 1`
                     <justifi-save-new-payment-method hidden=""></justifi-save-new-payment-method>
                   </div>
                 </justifi-new-payment-method>
-                <justifi-new-payment-method class="payment-method">
+                <justifi-new-payment-method class="payment-method" show-ach="" show-card="">
                   <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
                     <form-control-radio label="New bank account" name="paymentMethodType" value="bankAccount"></form-control-radio>
                   </div>
@@ -220,22 +218,20 @@ exports[`justifi-checkout-core should render the postal form if hideCardBillingF
             </div>
             <div class="visually-hidden">
               <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods="">
-                <justifi-new-payment-method class="payment-method" is-selected="">
+                <justifi-new-payment-method class="payment-method" is-selected="" show-ach="" show-card="">
                   <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
                     <form-control-radio checked="" label="New credit or debit card" name="paymentMethodType" value="card"></form-control-radio>
                   </div>
                   <div class="mt-4 pb-4">
                     <hidden-input></hidden-input>
-                    <div class="mb-4">
-                      <card-form></card-form>
-                    </div>
+                    <card-form></card-form>
                     <justifi-billing-form>
-                      <div part="billing-form">
+                      <div class="mt-4" part="billing-form">
                         <form>
                           <fieldset>
                             <div class="gy-3 row">
                               <div class="col-12" hidden="">
-                                <form-control-text hidden="" label="Full Name" name="name"></form-control-text>
+                                <form-control-text label="Full Name" name="name"></form-control-text>
                               </div>
                               <div class="col-12" hidden="">
                                 <form-control-text label="Street Address" name="address_line1"></form-control-text>
@@ -244,10 +240,10 @@ exports[`justifi-checkout-core should render the postal form if hideCardBillingF
                                 <form-control-text label="Apartment, Suite, etc. (optional)" name="address_line2"></form-control-text>
                               </div>
                               <div class="col-12" hidden="">
-                                <form-control-text hidden="" label="City" name="address_city"></form-control-text>
+                                <form-control-text label="City" name="address_city"></form-control-text>
                               </div>
                               <div class="col-12" hidden="">
-                                <form-control-select hidden="" label="State" name="address_state"></form-control-select>
+                                <form-control-select label="State" name="address_state"></form-control-select>
                               </div>
                               <div class="col-12">
                                 <form-control-text label="ZIP" maxlength="5" name="address_postal_code"></form-control-text>
@@ -260,7 +256,7 @@ exports[`justifi-checkout-core should render the postal form if hideCardBillingF
                     <justifi-save-new-payment-method hidden=""></justifi-save-new-payment-method>
                   </div>
                 </justifi-new-payment-method>
-                <justifi-new-payment-method class="payment-method">
+                <justifi-new-payment-method class="payment-method" show-ach="" show-card="">
                   <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
                     <form-control-radio label="New bank account" name="paymentMethodType" value="bankAccount"></form-control-radio>
                   </div>

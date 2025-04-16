@@ -25,6 +25,7 @@ export class CheckoutCore {
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
 
   @State() hasLoadedFonts: boolean = false;
   @State() checkout: ICheckout;
@@ -42,6 +43,18 @@ export class CheckoutCore {
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     this.paymentMethodOptionsRef.fillBillingForm(fields);
+  }
+  
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const insuranceValidation = validateInsuranceValues();
+    const { isValid } = await this.paymentMethodOptionsRef.validate();
+
+    if (!insuranceValidation.isValid || !isValid) {
+      return { isValid: false };
+    } else {
+      return { isValid: true };
+    }
   }
 
   componentWillLoad() {
@@ -158,6 +171,7 @@ export class CheckoutCore {
             paymentMethodGroupId={this.checkout?.payment_method_group_id}
             show-saved-payment-methods={!this.disablePaymentMethodGroup}
             hideCardBillingForm={this.hideCardBillingForm}
+            hideBankAccountBillingForm={this.hideBankAccountBillingForm}
             bnpl={this.checkout?.bnpl}
             authToken={this.authToken}
             account-id={this.checkout?.account_id}

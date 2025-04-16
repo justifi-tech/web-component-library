@@ -19,6 +19,7 @@ export class Checkout {
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
   @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
 
   @State() getCheckout: Function;
@@ -76,6 +77,12 @@ export class Checkout {
     this.checkoutCoreRef.fillBillingForm(fields);
   }
 
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const { isValid } = await this.checkoutCoreRef.validate();
+    return { isValid };
+  }
+
   render() {
     return (
       <justifi-checkout-core
@@ -87,6 +94,7 @@ export class Checkout {
         disableBnpl={this.disableBnpl}
         disablePaymentMethodGroup={this.disablePaymentMethodGroup}
         hideCardBillingForm={this.hideCardBillingForm}
+        hideBankAccountBillingForm={this.hideBankAccountBillingForm}
         iframeOrigin={this.iframeOrigin}
         ref={el => {
           if (el) {

@@ -91,7 +91,11 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const checkout = await makeCheckout(token);
   const webComponentToken = await getWebComponentToken(token, checkout.id);
-  const hideCardBillingForm = false;
+  
+  const disableBankAccount = true;
+  const disableCreditCard = false;
+  const hideCardBillingForm = true;
+  const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
     name: 'John Doe',
@@ -101,12 +105,6 @@ app.get('/', async (req, res) => {
     address_state: 'CA',
     address_postal_code: '90210',
   };
-
-  const postalFormFields = {
-    address_postal_code: '90210',
-  };
-
-  let fields = hideCardBillingForm ? postalFormFields : billingFormFields;
 
   res.send(`
     <!DOCTYPE html>
@@ -122,17 +120,21 @@ app.get('/', async (req, res) => {
           <justifi-checkout 
             auth-token="${webComponentToken}" 
             checkout-id="${checkout.id}"
+            disable-bank-account="${disableBankAccount}"
+            disable-credit-card="${disableCreditCard}"
+            hide-bank-account-billing-form="${hideBankAccountBillingForm}"
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>
-          <button id="fill-billing-form-button">Test Fill Billing Form</button>
+          <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
+          <button id="test-validate-button" hidden>Test Validate</button>
         </div>
         <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
         const fillBillingFormButton = document.getElementById('fill-billing-form-button');
-
+        const testValidateButton = document.getElementById('test-validate-button');
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
@@ -149,7 +151,12 @@ app.get('/', async (req, res) => {
         });
         
         fillBillingFormButton.addEventListener('click', () => {
-          justifiCheckout.fillBillingForm(${JSON.stringify(fields)});
+          justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
+        });
+
+        testValidateButton.addEventListener('click', async () => {
+          const response = await justifiCheckout.validate();
+          console.log('Validate response', response);
         });
       </script>
     </html>
