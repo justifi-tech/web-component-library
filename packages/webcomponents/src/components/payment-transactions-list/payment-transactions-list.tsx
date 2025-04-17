@@ -63,7 +63,7 @@ export class PaymentTransactionsList {
       });
 
       getPaymentTransactions({
-        params: this.transactionParams,
+        params: this.pagingParams,
         onSuccess: ({ balanceTransactions, pagingInfo }) => {
           this.balanceTransactions = balanceTransactions;
           this.paging = pagingInfo;
@@ -100,12 +100,6 @@ export class PaymentTransactionsList {
     const transactionData = this.balanceTransactions.find((payment) => payment.id === clickedPaymentID);
     this.clickEvent.emit({ name: TableClickActions.row, data: transactionData });
   };
-
-  get transactionParams() {
-    // const requestParams = getRequestParams();
-    const params = { ...this.pagingParams };
-    return params;
-  }
 
   get entityId() {
     return this.balanceTransactions.map((transaction) => transaction.id);
