@@ -57,6 +57,8 @@ app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
 
+  const disableBankAccount = false;
+  const disableCreditCard = false;
   const hideCardBillingForm = false;
   const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
@@ -84,13 +86,16 @@ app.get('/', async (req, res) => {
           <justifi-tokenize-payment-method
             auth-token="${webComponentToken}"
             account-id="${subAccountId}"
-            hide-card-billing-form="${hideCardBillingForm}"
+            disable-bank-account="${disableBankAccount}"
+            disable-credit-card="${disableCreditCard}"
             hide-bank-account-billing-form="${hideBankAccountBillingForm}"
+            hide-card-billing-form="${hideCardBillingForm}"
             hide-submit-button="${hideSubmitButton}"
           >
           </justifi-tokenize-payment-method>
-          <button id="fill-billing-form-button">Test Fill Billing Form</button>
-          <button id="test-submit-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Test Submit</button>
+          <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
+          <button id="test-validate-button" hidden>Test Validate</button>
+          <button id="test-submit-button" hidden="${hideSubmitButton}"}>Test Submit</button>
         </div>
         <div class="column-output" id="output-pane">
           <em>Tokenization output will appear here...</em>
@@ -99,6 +104,7 @@ app.get('/', async (req, res) => {
       <script>
         const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
         const fillBillingFormButton = document.getElementById('fill-billing-form-button');
+        const testValidateButton = document.getElementById('test-validate-button');
         const testSubmitButton = document.getElementById('test-submit-button');
 
         function writeOutputToPage(event) {
@@ -136,6 +142,11 @@ app.get('/', async (req, res) => {
           if (response.error) {
             console.log('Error from tokenize method', response.error);
           };
+        });
+      
+        testValidateButton.addEventListener('click', async () => {
+          const response = await justifiTokenizePaymentMethod.validate();
+          console.log('Validate response', response);
         });
       </script>
     </html>

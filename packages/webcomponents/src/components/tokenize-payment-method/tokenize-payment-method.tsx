@@ -20,7 +20,7 @@ export class TokenizePaymentMethod {
   @Prop() authToken?: string;
   @Prop() accountId?: string;
   @Prop() paymentMethodGroupId: string;
-  @Prop() submitButtonText: string;
+  @Prop() submitButtonText: string = 'Submit';
   @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
   @Prop() hideSubmitButton?: boolean;
@@ -83,6 +83,12 @@ export class TokenizePaymentMethod {
     this.paymentMethodOptionsRef.fillBillingForm(fields);
   }
 
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const { isValid } = await this.paymentMethodOptionsRef.validate();
+    return { isValid };
+  }
+
   render() {
     return (
       <StyledHost>
@@ -112,7 +118,7 @@ export class TokenizePaymentMethod {
                   isLoading={this.isLoading}
                   data-testid="submit-button"
                   hidden={this.hideSubmitButton}>
-                  {this.submitButtonText || 'Submit'}
+                  {this.submitButtonText}
                 </Button>
               </div>
             </div>

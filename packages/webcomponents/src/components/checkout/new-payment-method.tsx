@@ -13,7 +13,7 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-new-payment-method',
 })
 export class NewPaymentMethod {
-  private billingFormRef?: any;
+  private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLCardFormElement;
 
   @Prop() authToken: string;
@@ -21,6 +21,8 @@ export class NewPaymentMethod {
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() paymentMethodGroupId?: string;
   @Prop() isSelected: boolean;
+  @Prop() showCard?: boolean;
+  @Prop() showAch?: boolean;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() iframeOrigin: string;
@@ -66,6 +68,7 @@ export class NewPaymentMethod {
     }
   }
 
+  @Method()
   async validate(): Promise<boolean> {
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
@@ -99,7 +102,6 @@ export class NewPaymentMethod {
     return (
       <div class="mt-4 pb-4">
         <hidden-input />
-        <div class="mb-4">
           {paymentMethodType === 'card' ? (
             <card-form
               ref={(el) => this.paymentMethodFormRef = el}
@@ -111,8 +113,6 @@ export class NewPaymentMethod {
               iframeOrigin={this.iframeOrigin}
             />
           )}
-
-        </div>
         <justifi-billing-form
           ref={(el) => (this.billingFormRef = el)}
           hideCardBillingForm={this.hideCardBillingForm}
@@ -124,6 +124,10 @@ export class NewPaymentMethod {
     );
   }
 
+  private get hiddenRadioInput() {
+    return !this.showAch || !this.showCard;
+  }
+
   render() {
     return (
       <Host class="payment-method">
@@ -131,6 +135,7 @@ export class NewPaymentMethod {
           class="radio-list-item p-3"
           part={radioListItem}
           onClick={this.onPaymentMethodOptionClick}
+          hidden={this.hiddenRadioInput}
         >
           <form-control-radio
             name="paymentMethodType"
