@@ -41,7 +41,7 @@ const meta: Meta = {
       },
       table: {
         category: "props",
-        defaultValue: { summary: "Tokenize Payment Method" },
+        defaultValue: { summary: "Submit" },
       },
     },
     "payment-method-group-id": {
@@ -136,6 +136,13 @@ const meta: Meta = {
       table: {
         category: "methods",
         defaultValue: { summary: "`fillBillingForm(fields: BillingFormFields) => Promise<void>`" }
+      },
+    },
+    validate: {
+      description: "Validate the payment method and billing form fields",
+      table: {
+        category: "methods",
+        defaultValue: { summary: "`validate() => Promise<{ isValid: boolean; }>`" }
       },
     },
     tokenizePaymentMethod: {
