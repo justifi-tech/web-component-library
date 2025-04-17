@@ -4,8 +4,6 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev'",
-    "dev:checkout": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout'",
-    "dev:checkout-with-insurance": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout-with-insurance'",
     "dev:dispute": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:dispute'",
     "dev:checkouts-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkouts-list'",
     "dev:checkouts-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkouts-list-with-filters'",
