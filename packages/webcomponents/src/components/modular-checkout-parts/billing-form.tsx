@@ -1,19 +1,20 @@
 import { Component, h, State, Prop, Method, Host } from '@stencil/core';
 import { BillingFormFields, billingFormSchema } from './billing-form-schema';
-import { billingForm } from '../../../styles/parts';
-import { Header3 } from '../../../ui-components';
-import { numberOnlyHandler } from '../../../ui-components/form/utils';
-import StateOptions from '../../../utils/state-options';
-import { FormController } from '../../../ui-components/form/form';
+import { billingForm } from '../../styles/parts';
+import { Header3 } from '../../ui-components';
+import { numberOnlyHandler } from '../../ui-components/form/utils';
+import StateOptions from '../../utils/state-options';
+import { FormController } from '../../ui-components/form/form';
 
 @Component({
   tag: 'justifi-billing-form',
+  shadow: true
 })
 export class BillingForm {
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
-  
+
   @Prop({ mutable: true }) legend?: string;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
@@ -71,22 +72,23 @@ export class BillingForm {
 
     return (
       <Host>
-        <div part={billingForm} class="mt-4" hidden={this.hideAllBillingFields}>
+        <div part={billingForm}>
           {showHeader && <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />}
           <form>
             <fieldset>
               {this.legend && <legend>{this.legend}</legend>}
               <div class="row gy-3">
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
+                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
                   <form-control-text
                     name='name'
                     label='Full Name'
                     defaultValue={billingFormDefaultValue.name}
                     errorText={this.errors.name}
                     inputHandler={this.inputHandler}
+                    hidden={this.isPostalOnlyMode || this.hideAllBillingFields}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
+                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
                   <form-control-text
                     name='address_line1'
                     label='Street Address'
@@ -95,7 +97,7 @@ export class BillingForm {
                     inputHandler={this.inputHandler}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
+                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
                   <form-control-text
                     name='address_line2'
                     label="Apartment, Suite, etc. (optional)"
@@ -104,16 +106,17 @@ export class BillingForm {
                     inputHandler={this.inputHandler}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
+                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
                   <form-control-text
                     name='address_city'
                     label="City"
                     defaultValue={billingFormDefaultValue.address_city}
                     errorText={this.errors.address_city}
                     inputHandler={this.inputHandler}
+                    hidden={this.isPostalOnlyMode || this.hideAllBillingFields}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
+                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
                   <form-control-select
                     name='address_state'
                     label='State'
@@ -121,6 +124,7 @@ export class BillingForm {
                     defaultValue={billingFormDefaultValue.address_state}
                     errorText={this.errors.address_state}
                     inputHandler={this.inputHandler}
+                    hidden={this.isPostalOnlyMode || this.hideAllBillingFields}
                   />
                 </div>
                 <div class="col-12" hidden={this.hideAllBillingFields}>

@@ -6,7 +6,7 @@ import {
   lineTwoValidation,
   postalValidation,
   stateValidation,
-} from '../../business-forms/schemas/schema-validations';
+} from '../business-forms/schemas/schema-validations';
 
 export interface BillingFormFields {
   name: string;
@@ -24,7 +24,7 @@ export const billingFormSchema = (postalOnly?: boolean) => {
     address_line2: lineTwoValidation.nullable(),
     address_city: cityValidation.required('Enter city'),
     address_state: stateValidation.required('Select state'),
-    address_postal_code: postalValidation.required('Enter postal code')
+    address_postal_code: postalValidation.required('Enter postal code'),
   });
 
   const postalForm = object({
@@ -33,7 +33,7 @@ export const billingFormSchema = (postalOnly?: boolean) => {
     address_line2: lineTwoValidation.nullable(),
     address_city: cityValidation.nullable(),
     address_state: stateValidation.nullable(),
-    address_postal_code: postalValidation.required('Enter postal code')
+    address_postal_code: postalValidation.required('Enter postal code'),
   });
 
   return postalOnly ? postalForm : fullBillingForm;
