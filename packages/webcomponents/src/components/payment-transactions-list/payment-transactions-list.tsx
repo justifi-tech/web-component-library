@@ -78,7 +78,7 @@ export class PaymentTransactionsList {
         }
       });
     } else {
-      this.errorMessage = 'Payment ID and Auth Token are required';
+      this.errorMessage = 'payment-id and auth-token props are required';
       this.handleError(ComponentErrorCodes.MISSING_PROPS, this.errorMessage, ComponentErrorSeverity.ERROR);
     }
   }
