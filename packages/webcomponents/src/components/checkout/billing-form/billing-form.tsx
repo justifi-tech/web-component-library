@@ -71,23 +71,22 @@ export class BillingForm {
 
     return (
       <Host>
-        <div part={billingForm}>
+        <div part={billingForm} class="mt-4" hidden={this.hideAllBillingFields}>
           {showHeader && <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />}
           <form>
             <fieldset>
               {this.legend && <legend>{this.legend}</legend>}
               <div class="row gy-3">
-                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
+                <div class="col-12" hidden={this.isPostalOnlyMode}>
                   <form-control-text
                     name='name'
                     label='Full Name'
                     defaultValue={billingFormDefaultValue.name}
                     errorText={this.errors.name}
                     inputHandler={this.inputHandler}
-                    hidden={this.isPostalOnlyMode || this.hideAllBillingFields}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
+                <div class="col-12" hidden={this.isPostalOnlyMode}>
                   <form-control-text
                     name='address_line1'
                     label='Street Address'
@@ -96,7 +95,7 @@ export class BillingForm {
                     inputHandler={this.inputHandler}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
+                <div class="col-12" hidden={this.isPostalOnlyMode}>
                   <form-control-text
                     name='address_line2'
                     label="Apartment, Suite, etc. (optional)"
@@ -105,17 +104,16 @@ export class BillingForm {
                     inputHandler={this.inputHandler}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
+                <div class="col-12" hidden={this.isPostalOnlyMode}>
                   <form-control-text
                     name='address_city'
                     label="City"
                     defaultValue={billingFormDefaultValue.address_city}
                     errorText={this.errors.address_city}
                     inputHandler={this.inputHandler}
-                    hidden={this.isPostalOnlyMode || this.hideAllBillingFields}
                   />
                 </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode || this.hideAllBillingFields}>
+                <div class="col-12" hidden={this.isPostalOnlyMode}>
                   <form-control-select
                     name='address_state'
                     label='State'
@@ -123,7 +121,6 @@ export class BillingForm {
                     defaultValue={billingFormDefaultValue.address_state}
                     errorText={this.errors.address_state}
                     inputHandler={this.inputHandler}
-                    hidden={this.isPostalOnlyMode || this.hideAllBillingFields}
                   />
                 </div>
                 <div class="col-12" hidden={this.hideAllBillingFields}>

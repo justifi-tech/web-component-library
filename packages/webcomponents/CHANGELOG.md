@@ -1,5 +1,22 @@
 ### Changelog
 
+## 5.5.0
+
+### Minor Changes
+
+- a661718: Add new component: `justifi-refund-payment`. Can be used to render a form for partially or fully refunding a payment based on a provided payment ID.
+
+### Patch Changes
+
+- 97a2514: Use a more correct CSS part in the terminal-quantity-selector card compoonent on the Order Terminals to fix background issue
+- 0c00f63: Add new CSS part `input-adornment` used to target and style input adornment shown on inputs related to monetary amounts.
+- 79cb8d7: If showing `order_type` column on `justifi-terminal-orders-list`, display value will now be converted from snake_case to a more readable format. `boarding_only` will now display as `Boarding Only`, and `boarding_shipping` will now display as `Boarding & Shipping`
+- cbd1981: `justifi-tokenize-payment-method` and `justifi-checkout`: Add new boolean prop `hide-bank-account-billing-form` which can be used to hide the billing form entirely when entering new bank account payment methods. While this prop will hide the inputs, account holder address information may still be required to successfully tokenize a new bank account payment method. Developers choosing to implement this new prop will need to programmatically call the `fillBillingForm` method on the component to successfully supply address information to the tokenize request payload.
+- 1d298b0: `justifi-terminal-orders-list` shows new terminal order statuses returned from API response: `in_progress`, `on_hold`, `canceled`. The matching filter component `justifi-terminal-orders-list-filters` now also shows these options when filtering by order status.
+- a06cac1: - `justifi-tokenize-payment-method` and `justifi-checkout`: If using `disable-credit-card` or `disable-bank-account` props then the payment method radio button input will be hidden.
+  - `justifi-tokenize-payment-method` and `justifi-checkout`: added `validate()` method which can be programatically called on the component to trigger form validation on new card and bank account payments.
+- 24b6637: Fix background issue by removing background part from inputCheckbox part
+
 ## 5.4.4
 
 ### Patch Changes

@@ -13,8 +13,13 @@ const meta: Meta = {
   component: "justifi-checkout",
   args: {
     ...storyBaseArgs.args,
-    "checkout-id": "123",
     Theme: ThemeNames.Light,
+    "checkout-id": "123",
+    "disable-credit-card": false,
+    "disable-bank-account": false,
+    "hide-submit-button": false,
+    "hide-card-billing-form": false,
+    "hide-bank-account-billing-form": false,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -90,11 +95,29 @@ const meta: Meta = {
         defaultValue: { summary: "false" },
       },
     },
+    "hide-bank-account-billing-form": {
+      type: "boolean",
+      control: {
+        type: "boolean",
+      },
+      description: "For use with new bank account payment methods only, prevents the billing form from rendering. Note: the billing form may be hidden, but a billing address is still required for ACH payments. This prop is ideally used in conjunction with the `fillBillingForm` method",
+      table: {
+        category: "props",
+        defaultValue: { summary: "false" },
+      },
+    },
     fillBillingForm: {
       description:
         "`fillBillingForm(fields: BillingFormFields) => Promise<void>`",
       table: {
         category: "methods",
+      },
+    },
+    validate: {
+      description: "Validate the payment method and billing form fields",
+      table: {
+        category: "methods",
+        defaultValue: { summary: "`validate() => Promise<{ isValid: boolean; }>`" }
       },
     },
     "submit-event": {
