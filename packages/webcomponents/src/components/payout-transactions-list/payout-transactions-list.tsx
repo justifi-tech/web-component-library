@@ -97,7 +97,7 @@ export class PayoutTransactionsList {
     const clickedPayoutId = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedPayoutId) return;
 
-    const transactionData = this.balanceTransactions.find((payment) => payment.id === clickedPayoutId);
+    const transactionData = this.balanceTransactions.find((payout) => payout.id === clickedPayoutId);
     this.clickEvent.emit({ name: TableClickActions.row, data: transactionData });
   };
 
