@@ -22,12 +22,20 @@ export const paymentTransactionTableColumns = {
     </th>
   ),
   amount: () => (
-    <th part={tableHeadCell} scope="col" title="The dollar amount of each transaction">
+    <th
+      part={tableHeadCell}
+      scope="col"
+      title="The dollar amount of each transaction"
+      class="text-end">
       Amount
     </th>
   ),
   balance: () => (
-    <th part={tableHeadCell} scope="col" title="The running total amount of this payment that belongs to you">
+    <th
+      part={tableHeadCell}
+      scope="col"
+      title="The running total amount of this payment that belongs to you"
+      class="text-end">
       Balance
     </th>
   ),
@@ -77,10 +85,14 @@ export const paymentTransactionTableCells = {
     <td part={getAlternateTableCellPart(index)}>{balanceTransaction.id}</td>
   ),
   amount: (balanceTransaction: PaymentBalanceTransaction, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{balanceTransaction.formattedPaymentAmount(balanceTransaction.amount)}</td>
+    <td part={getAlternateTableCellPart(index)} class="text-end">
+      {balanceTransaction.formattedPaymentAmount(balanceTransaction.amount)}
+    </td>
   ),
   balance: (balanceTransaction: PaymentBalanceTransaction, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{balanceTransaction.formattedPaymentAmount(balanceTransaction.balance)}</td>
+    <td part={getAlternateTableCellPart(index)} class="text-end">
+      {balanceTransaction.formattedPaymentAmount(balanceTransaction.balance)}
+    </td>
   ),
   currency: (balanceTransaction: PaymentBalanceTransaction, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{balanceTransaction.currency}</td>
