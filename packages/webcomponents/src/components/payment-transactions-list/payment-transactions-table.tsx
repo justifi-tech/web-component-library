@@ -71,6 +71,22 @@ export const paymentTransactionTableColumns = {
   ),
 };
 
+export const paymentTransactionTypes = {
+  ach_return: "ACH Return",
+  ach_return_fee: "ACH Return Fee",
+  dispute: "Dispute",
+  dispute_fee: "Dispute Fee",
+  dispute_fee_refund: "Dispute Fee Refund",
+  dispute_refund: "Dispute Refund",
+  payment: "Payment",
+  payment_fee: "Fee",
+  refund: "Refund",
+  fee_refund: "Fee Refund",
+  application_fee_returned: "Application Fee Returned",
+  refund_failure: "Refund Failure",
+  void: "Void",
+};
+
 export const paymentTransactionTableCells = {
   created_at: (balanceTransaction: PaymentBalanceTransaction, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
@@ -79,7 +95,9 @@ export const paymentTransactionTableCells = {
     </td>
   ),
   type: (balanceTransaction: PaymentBalanceTransaction, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>{balanceTransaction.payment_balance_txn_type}</td>
+    <td part={getAlternateTableCellPart(index)}>
+      {paymentTransactionTypes[balanceTransaction.payment_balance_txn_type]}
+    </td>
   ),
   id: (balanceTransaction: PaymentBalanceTransaction, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{balanceTransaction.id}</td>
