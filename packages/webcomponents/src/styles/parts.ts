@@ -76,6 +76,7 @@ export const tableLoadingSpinner = `table-loading-spinner`;
 
 // Pagination
 export const paginationItem = `pagination-item ${text} ${backgroundColor}`;
+export const paginationItemText = `pagination-item-text ${text}`;
 export const paginationItemNext = `pagination-item-next ${paginationItem}`;
 export const paginationItemPrevious = `pagination-item-previous ${paginationItem}`;
 export const paginationItemIcon = `pagination-item-icon ${text}`;
