@@ -51,6 +51,7 @@ export class PayoutTransactionsList {
   }
 
   private handleError(code: ComponentErrorCodes, errorMessage: string, severity: ComponentErrorSeverity) {
+    this.isLoading = false;
     this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });
   }
 
