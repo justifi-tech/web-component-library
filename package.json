@@ -24,6 +24,7 @@
     "dev:payment-details": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payment-details'",
     "dev:payout-details": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payout-details'",
     "dev:payout-transactions-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payout-transactions-list'",
+    "dev:payment-transactions-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payment-transactions-list'",
     "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
