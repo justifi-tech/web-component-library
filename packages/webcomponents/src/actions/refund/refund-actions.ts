@@ -59,7 +59,7 @@ export const makePostRefund = (requestProps: requestProps) => {
           severity: ComponentErrorSeverity.ERROR,
         });
     } finally {
-        final(response);
+        return final(response);
     }
   };
 };
