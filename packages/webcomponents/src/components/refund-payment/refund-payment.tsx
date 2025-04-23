@@ -145,7 +145,7 @@ export class RefundPayment {
         onError: ({ error, code, severity }) => {
           this.handleError(error, code, severity);
         },
-        final: (response) => {
+        onComplete: (response) => {
           this.submitEvent.emit({ response: response });
           this.submitDisabled = true;
           this.refundLoading = false;

@@ -14,7 +14,7 @@ interface requestProps {
 interface usageProps {
   body: IRefundPayload;
   onError: (error: any) => void;
-  final: (response: IApiResponse<IRefund>) => void;
+  onComplete: (response: IApiResponse<IRefund>) => void;
 }
 
 export const makePostRefund = (requestProps: requestProps) => {
@@ -23,7 +23,7 @@ export const makePostRefund = (requestProps: requestProps) => {
   
   return async (usageProps: usageProps) => {
     
-    const { body, onError, final } = usageProps;
+    const { body, onError, onComplete } = usageProps;
     
     let response: IApiResponse<IRefund>;
   
@@ -59,7 +59,7 @@ export const makePostRefund = (requestProps: requestProps) => {
           severity: ComponentErrorSeverity.ERROR,
         });
     } finally {
-        return final(response);
+        return onComplete(response);
     }
   };
 };
