@@ -122,7 +122,7 @@ export class RefundPayment {
 
   
   @Method()
-  async refundPayment(event?: CustomEvent): Promise<IRefund> {
+  async refundPayment(event?: CustomEvent): Promise<IApiResponse<IRefund>> {
     event && event.preventDefault();
 
     const valid = await this.formController.validate();
@@ -135,24 +135,21 @@ export class RefundPayment {
       service: new RefundService(),
       apiOrigin: this.apiOrigin
     });
-    const values = this.formController.values.getValue();
+
     this.refundLoading = true;
 
     return new Promise((resolve) => {
-      let refundResponse: IApiResponse<IRefund>;
   
       postRefund({
-        refundBody: values,
-        onSuccess: (response) => { refundResponse = response; },
+        body: this.refundPayload,
         onError: ({ error, code, severity }) => {
-          refundResponse = error;
           this.handleError(error, code, severity);
         },
-        final: () => {
-          this.submitEvent.emit({ response: refundResponse });
+        final: (response) => {
+          this.submitEvent.emit({ response: response });
           this.submitDisabled = true;
           this.refundLoading = false;
-          resolve(refundResponse.data);
+          resolve(response);
         },
       });
     });
