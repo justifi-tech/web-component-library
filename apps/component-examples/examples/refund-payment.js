@@ -87,8 +87,7 @@ async function getWebComponentToken(token) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  // const paymentId = await createPayment(token);
-  const paymentId = 'py_7Ejx6JVs0IQVZ6wcUfXq3A';
+  const paymentId = await createPayment(token);
   const webComponentToken = await getWebComponentToken(token);
 
   const hideSubmitButton = false;
@@ -131,7 +130,19 @@ app.get('/', async (req, res) => {
         });
 
         justifiRefundPayment.addEventListener('submit-event', (event) => {
-          console.log('Submit-event', event);
+
+          // The submit-event will always return a response object
+          
+          // The response object will contain a data object if the request was successful
+          if (event.detail.response.data) {
+            console.log('Response data from submit-event', event);
+          }
+
+          // The response object will contain an error object if the request was not successful
+          if (event.detail.response.error) {
+            console.log('Error from submit-event', event);
+          }
+
           writeOutputToPage(event);
         });
 

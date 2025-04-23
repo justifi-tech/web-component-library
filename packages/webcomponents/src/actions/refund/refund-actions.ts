@@ -1,4 +1,4 @@
-import { IApiResponse, IRefund, IRefundPayload } from '../../api';
+import { IApiResponse, IRefund, IRefundPayload, isErrorObject } from '../../api';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { RefundService } from '../../api/services/refund.service';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
@@ -31,13 +31,14 @@ export const makePostRefund = (props: requestProps) => {
         const err = response.error;
         let errorMessage: string;
         let code: string;
+        const errorObject = isErrorObject(err);
 
-        if (typeof err === 'string') {
-          errorMessage = err;
-          code = ComponentErrorCodes.POST_ERROR;
-        } else {
+        if (errorObject) {
           errorMessage = getErrorMessage(err);
           code = getErrorCode(err.code);
+        } else {
+          errorMessage = err;
+          code = ComponentErrorCodes.POST_ERROR;
         }
         return onError({
           error: errorMessage,
