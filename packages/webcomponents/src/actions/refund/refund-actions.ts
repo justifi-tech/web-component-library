@@ -17,10 +17,10 @@ interface usageProps {
   final: (response: IApiResponse<IRefund>) => void;
 }
 
-export const makePostRefund = (props: requestProps) => {
-  const { authToken, accountId, paymentId, service, apiOrigin } = props;
-    return async (props: usageProps) => {
-    const { body, onError, final } = props;
+export const makePostRefund = (requestProps: requestProps) => {
+  const { authToken, accountId, paymentId, service, apiOrigin } = requestProps;
+    return async (usageProps: usageProps) => {
+    const { body, onError, final } = usageProps;
     
       let response: IApiResponse<IRefund>;
     
@@ -40,6 +40,7 @@ export const makePostRefund = (props: requestProps) => {
           errorMessage = err;
           code = ComponentErrorCodes.POST_ERROR;
         }
+
         return onError({
           error: errorMessage,
           code,
@@ -47,14 +48,15 @@ export const makePostRefund = (props: requestProps) => {
         });
       }
     } catch (error) {
-      const code = getErrorCode(error?.code);
-      return onError({
-        error: error.message || error,
-        code,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+        const code = getErrorCode(error?.code);
+
+        return onError({
+          error: error.message || error,
+          code,
+          severity: ComponentErrorSeverity.ERROR,
+        });
     } finally {
-      final(response);
+        final(response);
     }
   };
 };
