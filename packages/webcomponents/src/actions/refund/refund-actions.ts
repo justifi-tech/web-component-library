@@ -18,14 +18,17 @@ interface usageProps {
 }
 
 export const makePostRefund = (requestProps: requestProps) => {
+  
   const { authToken, accountId, paymentId, service, apiOrigin } = requestProps;
-    return async (usageProps: usageProps) => {
+  
+  return async (usageProps: usageProps) => {
+    
     const { body, onError, final } = usageProps;
     
-      let response: IApiResponse<IRefund>;
-    
-      try {
-        response = await service.postRefund(paymentId, accountId, authToken, body, apiOrigin);
+    let response: IApiResponse<IRefund>;
+  
+    try {
+      response = await service.postRefund(paymentId, accountId, authToken, body, apiOrigin);
 
       if (response.error) {
         const err = response.error;
