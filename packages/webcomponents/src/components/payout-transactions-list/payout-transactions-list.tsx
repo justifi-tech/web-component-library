@@ -128,54 +128,52 @@ export class PayoutTransactionsList {
   render() {
     return (
       <StyledHost>
-        <div>
-          <div class="table-wrapper">
-            <table class="table table-hover" part={table}>
-              <thead class="table-head sticky-top">
-                <tr class="table-light text-nowrap">
-                  {this.transactionsTable.columnData.map((column) => column)}
+        <div class="table-wrapper">
+          <table class="table table-hover" part={table}>
+            <thead class="table-head sticky-top">
+              <tr class="table-light text-nowrap">
+                {this.transactionsTable.columnData.map((column) => column)}
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              <TableLoadingState
+                columnSpan={this.transactionsTable.columnData.length}
+                isLoading={this.isLoading}
+              />
+              <TableEmptyState
+                isEmpty={this.showEmptyState}
+                columnSpan={this.transactionsTable.columnData.length}
+              />
+              <TableErrorState
+                columnSpan={this.transactionsTable.columnData.length}
+                errorMessage={this.errorMessage}
+              />
+              {this.showRowData && this.transactionsTable.rowData.map((data, index) => (
+                <tr
+                  data-test-id="table-row"
+                  data-row-entity-id={this.entityId[index]}
+                  onClick={this.rowClickHandler}
+                >
+                  {data}
                 </tr>
-              </thead>
-              <tbody class="table-body">
-                <TableLoadingState
-                  columnSpan={this.transactionsTable.columnData.length}
-                  isLoading={this.isLoading}
-                />
-                <TableEmptyState
-                  isEmpty={this.showEmptyState}
-                  columnSpan={this.transactionsTable.columnData.length}
-                />
-                <TableErrorState
-                  columnSpan={this.transactionsTable.columnData.length}
-                  errorMessage={this.errorMessage}
-                />
-                {this.showRowData && this.transactionsTable.rowData.map((data, index) => (
-                  <tr
-                    data-test-id="table-row"
-                    data-row-entity-id={this.entityId[index]}
-                    onClick={this.rowClickHandler}
-                  >
-                    {data}
-                  </tr>
-                ))}
-              </tbody>
-              {this.paging && (
-                <tfoot class="sticky-bottom">
-                  <tr class="table-light align-middle">
-                    <td part={tableCell} colSpan={this.transactionsTable.columnData.length}>
-                      <pagination-menu
-                        paging={{
-                          ...this.paging,
-                          handleClickPrevious: this.handleClickPrevious,
-                          handleClickNext: this.handleClickNext,
-                        }}
-                      />
-                    </td>
-                  </tr>
-                </tfoot>
-              )}
-            </table>
-          </div>
+              ))}
+            </tbody>
+            {this.paging && (
+              <tfoot class="sticky-bottom">
+                <tr class="table-light align-middle">
+                  <td part={tableCell} colSpan={this.transactionsTable.columnData.length}>
+                    <pagination-menu
+                      paging={{
+                        ...this.paging,
+                        handleClickPrevious: this.handleClickPrevious,
+                        handleClickNext: this.handleClickNext,
+                      }}
+                    />
+                  </td>
+                </tr>
+              </tfoot>
+            )}
+          </table>
         </div>
       </StyledHost>
     );

@@ -172,54 +172,52 @@ export class PayoutsListCore {
 
   render() {
     return (
-      <div>
-        <div class="table-wrapper" part="table-wrapper">
-          <table class="table table-hover" part={table}>
-            <thead class="table-head sticky-top" part="table-head">
-              <tr class="table-light text-nowrap" part="table-head-row">
-                {this.payoutsTable.columnData.map((column) => column)}
+      <div class="table-wrapper" part="table-wrapper">
+        <table class="table table-hover" part={table}>
+          <thead class="table-head sticky-top" part="table-head">
+            <tr class="table-light text-nowrap" part="table-head-row">
+              {this.payoutsTable.columnData.map((column) => column)}
+            </tr>
+          </thead>
+          <tbody class="table-body">
+            <TableLoadingState
+              columnSpan={this.payoutsTable.columnKeys.length}
+              isLoading={this.loading}
+            />
+            <TableEmptyState
+              isEmpty={this.showEmptyState}
+              columnSpan={this.payoutsTable.columnKeys.length}
+            />
+            <TableErrorState
+              columnSpan={this.payoutsTable.columnKeys.length}
+              errorMessage={this.errorMessage}
+            />
+            {this.showRowData && this.payoutsTable.rowData.map((data, index) => (
+              <tr
+                data-test-id="table-row"
+                data-row-entity-id={this.entityId[index]}
+                onClick={this.rowClickHandler}
+              >
+                {data}
               </tr>
-            </thead>
-            <tbody class="table-body">
-              <TableLoadingState
-                columnSpan={this.payoutsTable.columnKeys.length}
-                isLoading={this.loading}
-              />
-              <TableEmptyState
-                isEmpty={this.showEmptyState}
-                columnSpan={this.payoutsTable.columnKeys.length}
-              />
-              <TableErrorState
-                columnSpan={this.payoutsTable.columnKeys.length}
-                errorMessage={this.errorMessage}
-              />
-              {this.showRowData && this.payoutsTable.rowData.map((data, index) => (
-                <tr
-                  data-test-id="table-row"
-                  data-row-entity-id={this.entityId[index]}
-                  onClick={this.rowClickHandler}
-                >
-                  {data}
-                </tr>
-              ))}
-            </tbody>
-            {this.paging && (
-              <tfoot class="sticky-bottom">
-                <tr class="table-light align-middle">
-                  <td part={tableCell} colSpan={this.payoutsTable.columnData.length}>
-                    <pagination-menu
-                      paging={{
-                        ...this.paging,
-                        handleClickPrevious: this.handleClickPrevious,
-                        handleClickNext: this.handleClickNext,
-                      }}
-                    />
-                  </td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        </div>
+            ))}
+          </tbody>
+          {this.paging && (
+            <tfoot class="sticky-bottom">
+              <tr class="table-light align-middle">
+                <td part={tableCell} colSpan={this.payoutsTable.columnData.length}>
+                  <pagination-menu
+                    paging={{
+                      ...this.paging,
+                      handleClickPrevious: this.handleClickPrevious,
+                      handleClickNext: this.handleClickNext,
+                    }}
+                  />
+                </td>
+              </tr>
+            </tfoot>
+          )}
+        </table>
       </div>
     );
   }
