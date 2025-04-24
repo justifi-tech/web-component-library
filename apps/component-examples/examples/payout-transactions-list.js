@@ -73,7 +73,6 @@ app.get('/', async (req, res) => {
           <justifi-payout-transactions-list
             payout-id="${payoutId}"
             auth-token="${webComponentToken}"
-            api-origin=
           />
         </div>
         <script>
