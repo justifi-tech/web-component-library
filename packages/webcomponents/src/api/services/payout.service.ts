@@ -1,4 +1,4 @@
-import { Api, IApiResponse, IApiResponseCollection, IPayout } from '..';
+import { Api, IApiResponse, IApiResponseCollection, IPayout, IPayoutBalanceTransaction } from '..';
 
 export interface IPayoutService {
   fetchPayouts(
@@ -17,6 +17,11 @@ export interface IPayoutService {
     authToken: string,
     apiOrigin?: string
   ): Promise<IApiResponse<any>>;
+  fetchPayoutTransactions(
+    authToken: string,
+    params: any,
+    apiOrigin?: string
+  ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>>;
 }
 
 export class PayoutService implements IPayoutService {
@@ -49,5 +54,15 @@ export class PayoutService implements IPayoutService {
     const api = Api({ authToken, apiOrigin });
     const endpoint = `reports/payouts/${payoutId}`;
     return api.get({ endpoint });
+  }
+
+  async fetchPayoutTransactions(
+    authToken: string,
+    params: any,
+    apiOrigin: string = PROXY_API_ORIGIN
+  ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>> {
+    const api = Api({ authToken, apiOrigin });
+    const endpoint = `balance_transactions`;
+    return api.get({ endpoint, params });
   }
 }
