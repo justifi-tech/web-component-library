@@ -44,6 +44,7 @@ export class PayoutTransactionsList {
     this.analytics.cleanup();
   }
 
+  @Watch('pagingParams')
   @Watch('payoutId')
   @Watch('authToken')
   propChanged() {
@@ -121,6 +122,7 @@ export class PayoutTransactionsList {
   get requestParams() {
     return {
       payout_id: this.payoutId,
+      limit: '15',
       ...this.pagingParams
     };
   }

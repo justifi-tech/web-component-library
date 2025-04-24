@@ -5,12 +5,12 @@ export enum PayoutBalanceTransactionType {
   fee = 'fee',
   payment = 'payment',
   payout = 'payout',
-  refund = 'seller_payment_refund',
-  dispute = 'dispute_amount_collected',
-  disputeFee = 'dispute_fee_collected',
+  sellerPaymentRefund = 'seller_payment_refund',
+  disputeAmountCollected = 'dispute_amount_collected',
+  disputeFeeCollected = 'dispute_fee_collected',
   sellerPayment = 'seller_payment',
   transfer = 'transfer',
-  fromPayment = 'partner_platform_proceeds_credit'
+  partnerPlatformProceedsCredit = 'partner_platform_proceeds_credit'
 }
 
 export interface IPayoutBalanceTransaction {

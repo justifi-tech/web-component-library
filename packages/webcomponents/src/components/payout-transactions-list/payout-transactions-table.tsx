@@ -78,6 +78,18 @@ export const payoutTransactionTableColumns = {
   ),
 };
 
+export const payoutTransactionTypes = {
+  fee: "Fee",
+  payment: "Payment",
+  payout: "Payout",
+  seller_payment_refund: "Seller Payment Refund",
+  dispute_amount_collected: "Dispute Amount Collected",
+  dispute_fee_collected: "Dispute Fee Collected",
+  seller_payment: "Seller Payment",
+  transfer: "Transfer",
+  partner_platform_proceeds_credit: "Partner Platform Proceeds Credit"
+}
+
 export const payoutTransactionTableCells = {
   id: (transaction: PayoutBalanceTransaction) => (
     <td part={getAlternateTableCellPart(transaction.id)}>
@@ -131,7 +143,7 @@ export const payoutTransactionTableCells = {
   ),
   txn_type: (transaction: PayoutBalanceTransaction) => (
     <td part={getAlternateTableCellPart(transaction.txn_type)}>
-      {transaction.txn_type}
+      {payoutTransactionTypes[transaction.txn_type]}
     </td>
   ),
   created_at: (transaction: PayoutBalanceTransaction) => (
