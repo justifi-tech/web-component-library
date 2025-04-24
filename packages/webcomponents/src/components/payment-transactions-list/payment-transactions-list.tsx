@@ -42,7 +42,8 @@ export class PaymentTransactionsList {
   disconnectedCallback() {
     this.analytics.cleanup();
   }
-
+  
+  @Watch('pagingParams')
   @Watch('paymentId')
   @Watch('authToken')
   propChanged() {
