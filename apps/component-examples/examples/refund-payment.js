@@ -130,12 +130,17 @@ app.get('/', async (req, res) => {
         });
 
         justifiRefundPayment.addEventListener('submit-event', (event) => {
+
+          // The submit-event will always return a response object
+          
+          // The response object will contain a data object if the request was successful
           if (event.detail.response.data) {
-            console.log('Response data from submit-event', event.detail.response.data);
+            console.log('Response data from submit-event', event);
           }
 
+          // The response object will contain an error object if the request was not successful
           if (event.detail.response.error) {
-            console.log('Error from submit-event', event.detail.response.error);
+            console.log('Error from submit-event', event);
           }
 
           writeOutputToPage(event);
