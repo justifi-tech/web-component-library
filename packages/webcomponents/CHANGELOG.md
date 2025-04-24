@@ -1,5 +1,12 @@
 ### Changelog
 
+## 5.6.0
+
+### Minor Changes
+
+- 5b16225: Added new web component: `justifi-payment-transactions-list` allows users to list transactions associated with a given payment.
+- 811eefa: Added new web component: `justifi-payout-transactions-list` allows users to list transactions associated with a given payout.
+
 ## 5.5.0
 
 ### Minor Changes
