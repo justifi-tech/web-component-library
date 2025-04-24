@@ -2,307 +2,303 @@
 
 exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 <payouts-list-core>
-  <div>
-    <div class="table-wrapper" part="table-wrapper">
-      <table class="table table-hover" part="table text color font-family background-color">
-        <thead class="sticky-top table-head" part="table-head">
-          <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
-              Created
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total amount of the payout">
-              Amount
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The real-time status of each payout">
-              Status
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total payments amount associated with the payout">
-              Payments
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total refunds amount associated with the payout">
-              Refunds
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total fees amount associated with the payout">
-              Fees
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total other amount">
-              Other
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="Export CSV"></th>
-          </tr>
-        </thead>
-        <tbody class="table-body">
-          <tr>
-            <td class="error-state" colspan="8" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
-              An unexpected error occurred: Fetch error
-            </td>
-          </tr>
-        </tbody>
-        <tfoot class="sticky-bottom">
-          <tr class="align-middle table-light">
-            <td colspan="8" part="table-cell text color font-family background-color">
-              <pagination-menu>
-                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination">
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span class="me-1">
-                          «
-                        </span>
-                        <span>
-                          Previous
-                        </span>
-                      </a>
-                    </li>
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span>
-                          Next
-                        </span>
-                        <span class="ms-1">
-                          »
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </pagination-menu>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+  <div class="table-wrapper" part="table-wrapper">
+    <table class="table table-hover" part="table text color font-family background-color">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row">
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
+            Created
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total amount of the payout">
+            Amount
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The real-time status of each payout">
+            Status
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total payments amount associated with the payout">
+            Payments
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total refunds amount associated with the payout">
+            Refunds
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total fees amount associated with the payout">
+            Fees
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total other amount">
+            Other
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="Export CSV"></th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr>
+          <td class="error-state" colspan="8" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
+            An unexpected error occurred: Fetch error
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="8" part="table-cell text color font-family background-color">
+            <pagination-menu>
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span class="me-1">
+                        «
+                      </span>
+                      <span>
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span>
+                        Next
+                      </span>
+                      <span class="ms-1">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </payouts-list-core>
 `;
 
 exports[`payouts-list-core renders properly 1`] = `
 <payouts-list-core>
-  <div>
-    <div class="table-wrapper" part="table-wrapper">
-      <table class="table table-hover" part="table text color font-family background-color">
-        <thead class="sticky-top table-head" part="table-head">
-          <tr class="table-light text-nowrap" part="table-head-row">
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
-              Created
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total amount of the payout">
-              Amount
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The real-time status of each payout">
-              Status
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total payments amount associated with the payout">
-              Payments
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total refunds amount associated with the payout">
-              Refunds
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total fees amount associated with the payout">
-              Fees
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total other amount">
-              Other
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="Export CSV"></th>
-          </tr>
-        </thead>
-        <tbody class="table-body">
-          <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jan 18, 2024
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $226.02 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" part="badge font-family badge-success" title="Successfully deposited into your bank account">
-                Paid
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $234.56 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $8.54 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <a href="#">
-                CSV
-              </a>
-            </td>
-          </tr>
-          <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row">
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jan 17, 2024
-              </div>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $226.02 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
-                Forwarded
-              </span>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $234.56 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $8.54 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <a href="#">
-                CSV
-              </a>
-            </td>
-          </tr>
-          <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jan 10, 2024
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $226.02 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" part="badge font-family badge-primary" title="Transfer to your bank account has been initiated">
-                In Transit
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $234.56 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $8.54 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <a href="#">
-                CSV
-              </a>
-            </td>
-          </tr>
-          <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row">
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Dec 28, 2023
-              </div>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $220.15 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" part="badge font-family badge-primary" title="Batched and scheduled to be transferred">
-                Scheduled
-              </span>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $245.00 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              -$10.00 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $14.85 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <a href="#">
-                CSV
-              </a>
-            </td>
-          </tr>
-          <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Dec 28, 2023
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $220.15 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-danger" part="badge font-family badge-danger" title="Transfer to your bank account failed">
-                Canceled
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $245.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              -$10.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $14.85 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $0.00 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <a href="#">
-                CSV
-              </a>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot class="sticky-bottom">
-          <tr class="align-middle table-light">
-            <td colspan="8" part="table-cell text color font-family background-color">
-              <pagination-menu>
-                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination">
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span class="me-1">
-                          «
-                        </span>
-                        <span>
-                          Previous
-                        </span>
-                      </a>
-                    </li>
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span>
-                          Next
-                        </span>
-                        <span class="ms-1">
-                          »
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </pagination-menu>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+  <div class="table-wrapper" part="table-wrapper">
+    <table class="table table-hover" part="table text color font-family background-color">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row">
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date the payout was deposited">
+            Created
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total amount of the payout">
+            Amount
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The real-time status of each payout">
+            Status
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total payments amount associated with the payout">
+            Payments
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total refunds amount associated with the payout">
+            Refunds
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total fees amount associated with the payout">
+            Fees
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The total other amount">
+            Other
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="Export CSV"></th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jan 18, 2024
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $226.02 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-success" part="badge font-family badge-success" title="Successfully deposited into your bank account">
+              Paid
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $234.56 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $8.54 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <a href="#">
+              CSV
+            </a>
+          </td>
+        </tr>
+        <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row">
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jan 17, 2024
+            </div>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $226.02 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This payout initially failed; the funds have been forwarded to your next successful payout">
+              Forwarded
+            </span>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $234.56 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $8.54 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <a href="#">
+              CSV
+            </a>
+          </td>
+        </tr>
+        <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jan 10, 2024
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $226.02 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-primary" part="badge font-family badge-primary" title="Transfer to your bank account has been initiated">
+              In Transit
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $234.56 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $8.54 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <a href="#">
+              CSV
+            </a>
+          </td>
+        </tr>
+        <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row">
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Dec 28, 2023
+            </div>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $220.15 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-primary" part="badge font-family badge-primary" title="Batched and scheduled to be transferred">
+              Scheduled
+            </span>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $245.00 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            -$10.00 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $14.85 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <a href="#">
+              CSV
+            </a>
+          </td>
+        </tr>
+        <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Dec 28, 2023
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $220.15 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-danger" part="badge font-family badge-danger" title="Transfer to your bank account failed">
+              Canceled
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $245.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            -$10.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $14.85 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $0.00 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <a href="#">
+              CSV
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="8" part="table-cell text color font-family background-color">
+            <pagination-menu>
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span class="me-1">
+                        «
+                      </span>
+                      <span>
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span>
+                        Next
+                      </span>
+                      <span class="ms-1">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </payouts-list-core>
 `;
