@@ -2,355 +2,351 @@
 
 exports[`payments-list-core render and events displays an error state on failed data fetch 1`] = `
 <payments-list-core>
-  <div>
-    <div class="table-wrapper">
-      <table class="table table-hover" part="table text color font-family background-color">
-        <thead class="sticky-top table-head">
-          <tr class="table-light text-nowrap">
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time each payment was made">
-              Date
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The dollar amount of each payment">
-              Amount
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each payment">
-              Status
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The type of each payment">
-              Type
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The payment description, if you provided one">
-              Description
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The name associated with the payment method">
-              Account Holder
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The brand and last 4 digits of the payment method">
-              Payment Method
-            </th>
-          </tr>
-        </thead>
-        <tbody class="table-body">
-          <tr>
-            <td class="error-state" colspan="7" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
-              An unexpected error occurred: Fetch error
-            </td>
-          </tr>
-        </tbody>
-        <tfoot class="sticky-bottom">
-          <tr class="align-middle table-light">
-            <td colspan="7" part="table-cell text color font-family background-color">
-              <pagination-menu>
-                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination">
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span class="me-1">
-                          «
-                        </span>
-                        <span>
-                          Previous
-                        </span>
-                      </a>
-                    </li>
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span>
-                          Next
-                        </span>
-                        <span class="ms-1">
-                          »
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </pagination-menu>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+  <div class="table-wrapper">
+    <table class="table table-hover" part="table text color font-family background-color">
+      <thead class="sticky-top table-head">
+        <tr class="table-light text-nowrap">
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time each payment was made">
+            Date
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The dollar amount of each payment">
+            Amount
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each payment">
+            Status
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The type of each payment">
+            Type
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The payment description, if you provided one">
+            Description
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The name associated with the payment method">
+            Account Holder
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The brand and last 4 digits of the payment method">
+            Payment Method
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr>
+          <td class="error-state" colspan="7" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
+            An unexpected error occurred: Fetch error
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="7" part="table-cell text color font-family background-color">
+            <pagination-menu>
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span class="me-1">
+                        «
+                      </span>
+                      <span>
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span>
+                        Next
+                      </span>
+                      <span class="ms-1">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </payments-list-core>
 `;
 
 exports[`payments-list-core render and events renders properly with fetched data 1`] = `
 <payments-list-core>
-  <div>
-    <div class="table-wrapper">
-      <table class="table table-hover" part="table text color font-family background-color">
-        <thead class="sticky-top table-head">
-          <tr class="table-light text-nowrap">
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time each payment was made">
-              Date
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The dollar amount of each payment">
-              Amount
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each payment">
-              Status
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The type of each payment">
-              Type
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The payment description, if you provided one">
-              Description
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The name associated with the payment method">
-              Account Holder
-            </th>
-            <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The brand and last 4 digits of the payment method">
-              Payment Method
-            </th>
-          </tr>
-        </thead>
-        <tbody class="table-body">
-          <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                May 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $123.45 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
-                Succeeded
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              Card
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              one-time payment
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              test card
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              **** 1234
-            </td>
-          </tr>
-          <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row">
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jun 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $234.56 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" part="badge font-family badge-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
-                Pending
-              </span>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              ACH
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              subscription payment
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              test bank account
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              **** 5678
-            </td>
-          </tr>
-          <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jul 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $345.67 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
-                Succeeded
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              Card
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              manual payment
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              test card
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              **** 9101
-            </td>
-          </tr>
-          <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row">
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                May 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $123.45 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-danger" part="badge font-family badge-danger" title="This card payment did not go through (it will not appear in a payout)">
-                Failed
-              </span>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              Card
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              one-time payment
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              test card
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              **** 1234
-            </td>
-          </tr>
-          <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jun 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $234.56 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-primary" part="badge font-family badge-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
-                Pending
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              ACH
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              subscription payment
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              test bank account
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              **** 5678
-            </td>
-          </tr>
-          <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row">
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Jul 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              $345.67 USD
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The account holder disputed this payment. The amount has been returned and a fee assessed.">
-                Disputed
-              </span>
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              Card
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              manual payment
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              test card
-            </td>
-            <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
-              **** 9101
-            </td>
-          </tr>
-          <tr data-row-entity-id="py_4D5E6F7G8H9I0J1K2L3M" data-test-id="table-row">
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <div class="fw-bold">
-                Aug 1, 2024
-              </div>
-              <div class="fw-bold">
-                8:45am
-              </div>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              $345.67 USD
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The full amount of this payment has been refunded">
-                Fully Refunded
-              </span>
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              Card
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              refund payment
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              test card
-            </td>
-            <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
-              **** 1122
-            </td>
-          </tr>
-        </tbody>
-        <tfoot class="sticky-bottom">
-          <tr class="align-middle table-light">
-            <td colspan="7" part="table-cell text color font-family background-color">
-              <pagination-menu>
-                <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
-                  <ul class="m-0 pagination">
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span class="me-1">
-                          «
-                        </span>
-                        <span>
-                          Previous
-                        </span>
-                      </a>
-                    </li>
-                    <li class="disabled page-item">
-                      <a class="page-link" href="#" part="button-disabled button text color font-family">
-                        <span>
-                          Next
-                        </span>
-                        <span class="ms-1">
-                          »
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </pagination-menu>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+  <div class="table-wrapper">
+    <table class="table table-hover" part="table text color font-family background-color">
+      <thead class="sticky-top table-head">
+        <tr class="table-light text-nowrap">
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time each payment was made">
+            Date
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The dollar amount of each payment">
+            Amount
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each payment">
+            Status
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The type of each payment">
+            Type
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The payment description, if you provided one">
+            Description
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The name associated with the payment method">
+            Account Holder
+          </th>
+          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The brand and last 4 digits of the payment method">
+            Payment Method
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              May 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $123.45 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
+              Succeeded
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            Card
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            one-time payment
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            test card
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            **** 1234
+          </td>
+        </tr>
+        <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row">
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jun 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $234.56 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-primary" part="badge font-family badge-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
+              Pending
+            </span>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            ACH
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            subscription payment
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            test bank account
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            **** 5678
+          </td>
+        </tr>
+        <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jul 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $345.67 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
+              Succeeded
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            Card
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            manual payment
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            test card
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            **** 9101
+          </td>
+        </tr>
+        <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row">
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              May 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $123.45 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-danger" part="badge font-family badge-danger" title="This card payment did not go through (it will not appear in a payout)">
+              Failed
+            </span>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            Card
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            one-time payment
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            test card
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            **** 1234
+          </td>
+        </tr>
+        <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jun 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $234.56 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-primary" part="badge font-family badge-primary" title="This ACH payment was processed, but the funds have not settled. It could still succeed or fail.">
+              Pending
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            ACH
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            subscription payment
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            test bank account
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            **** 5678
+          </td>
+        </tr>
+        <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row">
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Jul 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            $345.67 USD
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The account holder disputed this payment. The amount has been returned and a fee assessed.">
+              Disputed
+            </span>
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            Card
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            manual payment
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            test card
+          </td>
+          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+            **** 9101
+          </td>
+        </tr>
+        <tr data-row-entity-id="py_4D5E6F7G8H9I0J1K2L3M" data-test-id="table-row">
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <div class="fw-bold">
+              Aug 1, 2024
+            </div>
+            <div class="fw-bold">
+              8:45am
+            </div>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            $345.67 USD
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The full amount of this payment has been refunded">
+              Fully Refunded
+            </span>
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            Card
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            refund payment
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            test card
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+            **** 1122
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="sticky-bottom">
+        <tr class="align-middle table-light">
+          <td colspan="7" part="table-cell text color font-family background-color">
+            <pagination-menu>
+              <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
+                <ul class="m-0 pagination">
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span class="me-1">
+                        «
+                      </span>
+                      <span>
+                        Previous
+                      </span>
+                    </a>
+                  </li>
+                  <li class="disabled page-item">
+                    <a class="page-link" href="#" part="button-disabled button text color font-family">
+                      <span>
+                        Next
+                      </span>
+                      <span class="ms-1">
+                        »
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </pagination-menu>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </payments-list-core>
 `;

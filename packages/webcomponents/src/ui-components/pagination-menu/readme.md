@@ -18,6 +18,8 @@
 ### Used by
 
  - [checkouts-list-core](../../components/checkouts-list)
+ - [justifi-payment-transactions-list](../../components/payment-transactions-list)
+ - [justifi-payout-transactions-list](../../components/payout-transactions-list)
  - [payments-list-core](../../components/payments-list)
  - [payouts-list-core](../../components/payouts-list)
  - [terminal-orders-list-core](../../components/terminal-orders-list)
@@ -27,6 +29,8 @@
 ```mermaid
 graph TD;
   checkouts-list-core --> pagination-menu
+  justifi-payment-transactions-list --> pagination-menu
+  justifi-payout-transactions-list --> pagination-menu
   payments-list-core --> pagination-menu
   payouts-list-core --> pagination-menu
   terminal-orders-list-core --> pagination-menu

@@ -1,6 +1,6 @@
 {
   "name": "@repo/component-examples",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "description": "",
   "main": "index.js",
   "private": true,
@@ -24,7 +24,9 @@
     "start:terminal-orders-list": "npx nodemon ./examples/terminal-orders-list.js",
     "start:terminal-orders-list-with-filters": "npx nodemon ./examples/terminal-orders-list-with-filters.js",
     "start:payment-details": "npx nodemon ./examples/payment-details.js",
-    "start:payout-details": "npx nodemon ./examples/payout-details.js"
+    "start:payout-details": "npx nodemon ./examples/payout-details.js",
+    "start:payout-transactions-list": "npx nodemon ./examples/payout-transactions-list.js",
+    "start:payment-transactions-list": "npx nodemon ./examples/payment-transactions-list.js"
   },
   "author": "",
   "license": "ISC",
