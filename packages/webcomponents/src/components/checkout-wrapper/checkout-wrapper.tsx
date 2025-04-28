@@ -77,7 +77,7 @@ export class CheckoutWrapper {
       });
     } else {
       this.errorEvent.emit({
-        message: 'CardForm component not found',
+        message: "Component not found: 'justifi-card-form' or 'justifi-bank-account-form' is required for tokenization.",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
       });
