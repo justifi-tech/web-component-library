@@ -43,7 +43,7 @@ export class JustifiCardForm {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
+    this.analytics?.cleanup();
   }
 
   @Method()
