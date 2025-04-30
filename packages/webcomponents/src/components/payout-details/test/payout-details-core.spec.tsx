@@ -37,6 +37,7 @@ describe('payout-details-core', () => {
       id: 'some-id',
       authToken: 'some-auth-token',
       service: mockService,
+      apiOrigin: PROXY_API_ORIGIN
     });
 
     const page = await newSpecPage({
@@ -64,7 +65,8 @@ describe('payout-details-core', () => {
     const getPayout = makeGetPayoutDetails({
       id: 'some-id', // Use appropriate id
       authToken: 'some-auth-token', // Use appropriate auth token
-      service: mockService // Injecting the mocked service
+      service: mockService, // Injecting the mocked service
+      apiOrigin: PROXY_API_ORIGIN
     });
 
     const page = await newSpecPage({
@@ -87,7 +89,8 @@ describe('payout-details-core', () => {
     const getPayout = makeGetPayoutDetails({
       id: 'some-id',
       authToken: 'some-auth',
-      service: mockService
+      service: mockService,
+      apiOrigin: PROXY_API_ORIGIN
     });
 
     const onErrorEvent = jest.fn();
@@ -116,7 +119,8 @@ describe('payout-details-core', () => {
     const getPayout = makeGetPayoutDetails({
       id: 'some-id',
       authToken: 'some-auth',
-      service: mockService
+      service: mockService,
+      apiOrigin: PROXY_API_ORIGIN
     });
 
     const onErrorEvent = jest.fn();
