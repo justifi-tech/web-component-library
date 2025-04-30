@@ -53,8 +53,6 @@ export class PostalCodeForm {
 
     const billingFormDefaultValue = this.formController.getInitialValues();
 
-    console.log("PostalCodeForm default values", billingFormDefaultValue);
-
     return (
       <StyledHost>
         <form>

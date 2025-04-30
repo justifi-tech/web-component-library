@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Method, Prop } from "@stencil/core";
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
 import checkoutStore from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
@@ -13,7 +13,7 @@ export class CheckoutWrapper {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
-  private billingInfomationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
+  private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
 
   @Prop() authToken: string;
   @Prop() accountId: string;
@@ -49,60 +49,47 @@ export class CheckoutWrapper {
   }
 
   private queryFormRefs() {
-    this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form') || this.hostEl.querySelector('justifi-bank-account-form');
-    this.billingInfomationFormRef = this.hostEl.querySelector('justifi-billing-information-form') || this.hostEl.querySelector('justifi-postal-code-form');
+    this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
+    this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
   }
 
   @Method()
   async validate(): Promise<boolean> {
-    if (this.paymentMethodFormRef) {
-      let billingValidation = { isValid: true };
-      if (this.billingInfomationFormRef) {
-        console.log('billingInfomationFormRef', this.billingInfomationFormRef);
-        billingValidation = { isValid: false };
-        billingValidation = await this.billingInfomationFormRef.validate();
-      }
-      const paymentMethodValidation = await this.paymentMethodFormRef.validate();
-      return !!billingValidation?.isValid && !!paymentMethodValidation?.isValid;
-    } else {
-      this.errorEvent.emit({
-        message: "Component not found: 'justifi-card-form' or 'justifi-bank-account-form' is required for validation.",
-        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
+    const validationResults = await Promise.all([
+      this.paymentMethodFormRef?.validate(),
+      this.billingInformationFormRef?.validate()
+    ]);
+
+    return validationResults.every(result => result?.isValid !== false);
   }
 
   @Method()
   async tokenizePaymentMethod(billingInfo: BillingInfo): Promise<any> {
-    if (this.paymentMethodFormRef) {
-      const isValid = await this.validate();
-
-      if (!isValid) {
-        console.error('Form is not valid');
-        throw new Error('Form is not valid');
-      }
-
-      if (this.billingInfomationFormRef) {
-        const billingInfoValues = await this.billingInfomationFormRef.getValues();
-        billingInfo = { ...billingInfo, ...billingInfoValues } as BillingInfo;
-      }
-
-      return this.paymentMethodFormRef.tokenize({
-        clientId: this.authToken,
-        paymentMethodMetadata: {
-          accountId: this.accountId,
-          ...billingInfo
-        },
-        account: this.accountId,
-      });
-    } else {
-      this.errorEvent.emit({
-        message: "Component not found: 'justifi-card-form' or 'justifi-bank-account-form' is required for tokenization.",
+    if (!this.paymentMethodFormRef) {
+      return this.errorEvent.emit({
+        message: 'Payment method form not found',
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
       });
     }
+
+    const isValid = await this.validate();
+    if (!isValid) throw new Error('Form is not valid');
+
+    const billingInfoValues = this.billingInformationFormRef
+      ? await this.billingInformationFormRef.getValues()
+      : {};
+
+    const combinedBillingInfo = { ...billingInfo, ...billingInfoValues };
+
+    return this.paymentMethodFormRef.tokenize({
+      clientId: this.authToken,
+      paymentMethodMetadata: {
+        accountId: this.accountId,
+        ...combinedBillingInfo
+      },
+      account: this.accountId,
+    });
   }
 
   @Method()
@@ -128,7 +115,7 @@ export class CheckoutWrapper {
 
   render() {
     return (
-      <slot></slot>
+      <Host></Host>
     );
   }
 }
