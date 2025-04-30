@@ -12,8 +12,8 @@ import { BillingInfo } from "../../api/BillingInformation";
 export class CheckoutWrapper {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
-  private cardFormRef?: HTMLJustifiCardFormElement;
-  private bankAccountFormRef?: HTMLJustifiBankAccountFormElement;
+  private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
+  private billingInfomationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
 
   @Prop() authToken: string;
   @Prop() accountId: string;
@@ -44,30 +44,51 @@ export class CheckoutWrapper {
     this.queryFormRefs();
   }
 
+  disconnectedCallback() {
+    this.observer?.disconnect();
+  }
+
   private queryFormRefs() {
-    this.cardFormRef = this.hostEl.querySelector('justifi-card-form');
-    this.bankAccountFormRef = this.hostEl.querySelector('justifi-bank-account-form');
+    this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form') || this.hostEl.querySelector('justifi-bank-account-form');
+    this.billingInfomationFormRef = this.hostEl.querySelector('justifi-billing-information-form') || this.hostEl.querySelector('justifi-postal-code-form');
   }
 
   @Method()
   async validate(): Promise<boolean> {
-    if (this.cardFormRef || this.bankAccountFormRef) {
-      const formToValidate = this.cardFormRef || this.bankAccountFormRef;
-      return formToValidate.validate();
+    if (this.paymentMethodFormRef) {
+      let billingValidation = { isValid: true };
+      if (this.billingInfomationFormRef) {
+        console.log('billingInfomationFormRef', this.billingInfomationFormRef);
+        billingValidation = { isValid: false };
+        billingValidation = await this.billingInfomationFormRef.validate();
+      }
+      const paymentMethodValidation = await this.paymentMethodFormRef.validate();
+      return !!billingValidation?.isValid && !!paymentMethodValidation?.isValid;
     } else {
-      throw new Error('CardForm component not found');
+      this.errorEvent.emit({
+        message: "Component not found: 'justifi-card-form' or 'justifi-bank-account-form' is required for validation.",
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
   }
 
   @Method()
   async tokenizePaymentMethod(billingInfo: BillingInfo): Promise<any> {
-    if (this.cardFormRef || this.bankAccountFormRef) {
-      const formToTokenize = this.cardFormRef || this.bankAccountFormRef;
-      const isValid = await formToTokenize.validate();
+    if (this.paymentMethodFormRef) {
+      const isValid = await this.validate();
+
       if (!isValid) {
-        throw new Error('Card form is not valid');
+        console.error('Form is not valid');
+        throw new Error('Form is not valid');
       }
-      return formToTokenize.tokenize({
+
+      if (this.billingInfomationFormRef) {
+        const billingInfoValues = await this.billingInfomationFormRef.getValues();
+        billingInfo = { ...billingInfo, ...billingInfoValues } as BillingInfo;
+      }
+
+      return this.paymentMethodFormRef.tokenize({
         clientId: this.authToken,
         paymentMethodMetadata: {
           accountId: this.accountId,
