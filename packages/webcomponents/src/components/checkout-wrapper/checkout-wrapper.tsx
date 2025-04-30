@@ -74,11 +74,9 @@ export class CheckoutWrapper {
     }
 
     const isValid = await this.validate();
-    if (!isValid) throw new Error('Form is not valid');
+    if (!isValid) return;
 
-    const billingInfoValues = this.billingInformationFormRef
-      ? await this.billingInformationFormRef.getValues()
-      : {};
+    const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
 
     const combinedBillingInfo = { ...billingInfo, ...billingInfoValues };
 
