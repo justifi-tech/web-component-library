@@ -27,6 +27,7 @@ export class PayoutTransactionsList {
   @Prop() authToken: string;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
+  @Prop() accountId?: string = '';
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -60,6 +61,7 @@ export class PayoutTransactionsList {
     if (this.payoutId && this.authToken) {
       const getPayoutTransactions = makeGetPayoutTransactions({
         authToken: this.authToken,
+        accountId: this.accountId,
         service: new PayoutService(),
         apiOrigin: this.apiOrigin
       });

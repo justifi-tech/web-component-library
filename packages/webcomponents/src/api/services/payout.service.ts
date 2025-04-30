@@ -58,11 +58,13 @@ export class PayoutService implements IPayoutService {
 
   async fetchPayoutTransactions(
     authToken: string,
+    accountId: string,
     params: any,
     apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>> {
     const api = Api({ authToken, apiOrigin });
     const endpoint = `balance_transactions`;
-    return api.get({ endpoint, params });
+    const headers = { 'sub-account': accountId };
+    return api.get({ endpoint, params, headers });
   }
 }
