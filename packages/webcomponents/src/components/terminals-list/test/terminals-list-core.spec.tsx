@@ -39,8 +39,7 @@ describe('terminals-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: '123',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({
@@ -76,8 +75,7 @@ describe('terminals-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: '123',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({
@@ -110,8 +108,7 @@ describe('terminals-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: '123',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({
@@ -150,8 +147,7 @@ describe('terminals-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: '123',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const errorEvent = jest.fn();
@@ -196,8 +192,7 @@ describe('terminals-list-core pagination', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: '123',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({

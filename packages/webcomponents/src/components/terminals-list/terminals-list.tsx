@@ -73,8 +73,7 @@ export class TerminalsList {
       this.getSubAccounts = makeGetSubAccounts({
         accountId: this.accountId,
         authToken: this.authToken,
-        service: new SubAccountService(),
-        apiOrigin: this.apiOrigin
+        service: new SubAccountService()
       });
     }
   }
