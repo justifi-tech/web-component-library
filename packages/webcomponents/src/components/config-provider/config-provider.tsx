@@ -8,7 +8,7 @@ import { setConfigState } from './config-state';
 export class ConfigProvider {
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() iFrameOrigin?: string = IFRAME_ORIGIN;
-  @Prop() accountId?: string = undefined;
+  @Prop() accountId?: string = '';
 
   componentWillLoad() {
     setConfigState({
