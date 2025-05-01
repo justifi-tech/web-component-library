@@ -37,11 +37,11 @@
     "release": "turbo run build --filter=@repo/docs^... && changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.29.2",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
-    "prettier": "^3.1.1",
-    "turbo": "^2.0.6"
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.2"
   },
   "workspaces": [
     "apps/*",
