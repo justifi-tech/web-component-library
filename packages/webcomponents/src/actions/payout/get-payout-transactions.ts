@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayoutTransactions =
-  ({  authToken, service, apiOrigin }) =>
+  ({  accountId, authToken, service }) =>
   async ({ params, onSuccess, onError, final }) => {
     try {
-      const response = await service.fetchPayoutTransactions(authToken, params, apiOrigin);
+      const response = await service.fetchPayoutTransactions(accountId, authToken, params);
       if (!response.error) {
         const balanceTransactions = response.data.map(
           (dataItem) => new PayoutBalanceTransaction(dataItem)
