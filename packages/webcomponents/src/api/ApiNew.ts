@@ -23,7 +23,8 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: PagingInfo;
 }
 
-interface RequestProps {
+interface MakeRequestProps {
+  authToken: string;
   endpoint: string;
   method: string;
   params?: any;
@@ -32,11 +33,51 @@ interface RequestProps {
   headers?: HeadersInit;
 }
 
-const Api = (authToken: string) => {
+interface GetProps {
+  authToken: string;
+  endpoint: string;
+  params?: any;
+  signal?: AbortSignal;
+  headers?: HeadersInit;
+}
+
+interface PostProps {
+  authToken: string;
+  endpoint: string;
+  body?: any;
+  params?: any;
+  signal?: AbortSignal;
+  headers?: HeadersInit;
+}
+
+interface PutProps {
+  authToken: string;
+  endpoint: string;
+  body?: any;
+  params?: any;
+  signal?: AbortSignal;
+}
+
+interface PatchProps {
+  authToken: string;
+  endpoint: string;
+  body?: any;
+  params?: any;
+  signal?: AbortSignal;
+}
+
+interface DestroyProps {
+  authToken: string;
+  endpoint: string;
+  params?: any;
+  signal?: AbortSignal;
+}
+
+const Api = () => {
   
   const apiOrigin = configState.apiOrigin;
   
-  async function getAuthorizationHeader() {
+  async function getAuthorizationHeader(authToken: string) {
     if (!authToken) {
       return {
         'Content-Type': 'application/json',
@@ -50,13 +91,13 @@ const Api = (authToken: string) => {
     };
   }
 
-  async function makeRequest(props: RequestProps) {
-    const { endpoint, method, params, body, signal, headers } = props;
+  async function makeRequest(props: MakeRequestProps) {
+    const { authToken, endpoint, method, params, body, signal, headers } = props;
 
     const url = `${apiOrigin}/v1/${endpoint}`;
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
 
-    const defaultHeaders = await getAuthorizationHeader();
+    const defaultHeaders = await getAuthorizationHeader(authToken);
     const mergedHeaders = { ...defaultHeaders, ...headers };
 
     const response = await fetch(requestUrl, {
@@ -72,34 +113,15 @@ const Api = (authToken: string) => {
     handleError(requestUrl);
   }
 
-  async function get({
-    endpoint,
-    params,
-    signal,
-    headers,
-  }: {
-    endpoint: string;
-    params?: any;
-    signal?: AbortSignal;
-    headers?: HeadersInit;
-  }) {
-    return makeRequest({ endpoint, method: 'GET', params, signal, headers });
+  async function get(props: GetProps) {
+    const { authToken, endpoint, params, signal, headers } = props;
+    return makeRequest({ authToken, endpoint, method: 'GET', params, signal, headers });
   }
 
-  async function post({
-    endpoint,
-    body,
-    params,
-    signal,
-    headers,
-  }: {
-    endpoint: string;
-    body?: any;
-    params?: any;
-    signal?: AbortSignal;
-    headers?: HeadersInit;
-  }) {
+  async function post(props: PostProps) {
+    const { authToken, endpoint, body, params, signal, headers } = props;
     return makeRequest({
+      authToken,
       endpoint,
       method: 'POST',
       params,
@@ -109,18 +131,10 @@ const Api = (authToken: string) => {
     });
   }
 
-  async function put({
-    endpoint,
-    body,
-    params,
-    signal,
-  }: {
-    endpoint: string;
-    body?: any;
-    params?: any;
-    signal?: AbortSignal;
-  }) {
+  async function put(props: PutProps) {
+    const { authToken, endpoint, body, params, signal } = props;
     return makeRequest({
+      authToken,
       endpoint,
       method: 'PUT',
       params,
@@ -129,18 +143,10 @@ const Api = (authToken: string) => {
     });
   }
 
-  async function patch({
-    endpoint,
-    body,
-    params,
-    signal,
-  }: {
-    endpoint: string;
-    body?: any;
-    params?: any;
-    signal?: AbortSignal;
-  }) {
+  async function patch(props: PatchProps) {
+    const { authToken, endpoint, body, params, signal } = props;
     return makeRequest({
+      authToken,
       endpoint,
       method: 'PATCH',
       params,
@@ -149,16 +155,9 @@ const Api = (authToken: string) => {
     });
   }
 
-  async function destroy({
-    endpoint,
-    params,
-    signal,
-  }: {
-    endpoint: string;
-    params?: any;
-    signal?: AbortSignal;
-  }) {
-    return makeRequest({ endpoint, method: 'DELETE', params, signal });
+  async function destroy(props: DestroyProps) {
+    const { authToken, endpoint, params, signal } = props;
+    return makeRequest({ authToken, endpoint, method: 'DELETE', params, signal });
   }
 
   return { get, post, put, patch, destroy };

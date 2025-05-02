@@ -28,27 +28,27 @@ export class PayoutService implements IPayoutService {
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<IPayout[]>> {
-    const api = Api(authToken);
+    const api = Api();
     const endpoint = `account/${accountId}/payouts`;
-    return api.get({ endpoint, params });
+    return api.get({ authToken, endpoint, params });
   }
 
   async fetchPayout(
     payoutId: string,
     authToken: string,
   ): Promise<IApiResponse<IPayout>> {
-    const api = Api(authToken);
+    const api = Api();
     const endpoint = `payouts/${payoutId}`;
-    return api.get({ endpoint });
+    return api.get({ authToken, endpoint });
   }
 
   async fetchCSV(
     payoutId: string,
     authToken: string,
   ): Promise<IApiResponse<any>> {
-    const api = Api(authToken);
+    const api = Api();
     const endpoint = `reports/payouts/${payoutId}`;
-    return api.get({ endpoint });
+    return api.get({ authToken, endpoint });
   }
 
   async fetchPayoutTransactions(
@@ -56,9 +56,9 @@ export class PayoutService implements IPayoutService {
     authToken: string,
     params: any,
   ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>> {
-    const api = Api(authToken);
+    const api = Api();
     const endpoint = `balance_transactions`;
     const headers = { 'sub-account': accountId };
-    return api.get({ endpoint, params, headers });
+    return api.get({ authToken, endpoint, params, headers });
   }
 }

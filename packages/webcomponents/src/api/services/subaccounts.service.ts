@@ -18,8 +18,8 @@ export class SubAccountService implements ISubAccountService {
   ): Promise<IApiResponseCollection<ISubAccount[]>> {
     const headers = { Account: accountId };
 
-    const api = Api(authToken);
+    const api = Api();
     const endpoint = 'sub_accounts';
-    return api.get({ endpoint, params, headers });
+    return api.get({ authToken, endpoint, params, headers });
   }
 }
