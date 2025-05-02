@@ -1,6 +1,5 @@
 import { IPayout, IPayoutBalanceTransaction } from '..';
 import Api, { IApiResponse, IApiResponseCollection } from '../ApiNew';
-
 export interface IPayoutService {
   fetchPayouts(
     accountId: string,
@@ -22,13 +21,14 @@ export interface IPayoutService {
   ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>>;
 }
 
+const api = Api();
+
 export class PayoutService implements IPayoutService {
   async fetchPayouts(
     accountId: string,
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<IPayout[]>> {
-    const api = Api();
     const endpoint = `account/${accountId}/payouts`;
     return api.get({ authToken, endpoint, params });
   }
@@ -37,7 +37,6 @@ export class PayoutService implements IPayoutService {
     payoutId: string,
     authToken: string,
   ): Promise<IApiResponse<IPayout>> {
-    const api = Api();
     const endpoint = `payouts/${payoutId}`;
     return api.get({ authToken, endpoint });
   }
@@ -46,7 +45,6 @@ export class PayoutService implements IPayoutService {
     payoutId: string,
     authToken: string,
   ): Promise<IApiResponse<any>> {
-    const api = Api();
     const endpoint = `reports/payouts/${payoutId}`;
     return api.get({ authToken, endpoint });
   }
@@ -56,7 +54,6 @@ export class PayoutService implements IPayoutService {
     authToken: string,
     params: any,
   ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>> {
-    const api = Api();
     const endpoint = `balance_transactions`;
     const headers = { 'sub-account': accountId };
     return api.get({ authToken, endpoint, params, headers });
