@@ -26,6 +26,7 @@ describe('getPayout', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
+      apiOrigin: PROXY_API_ORIGIN
     });
     await getPayout({ onSuccess, onError });
 
@@ -45,6 +46,7 @@ describe('getPayout', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
+      apiOrigin: PROXY_API_ORIGIN
     });
     await getPayout({ onSuccess, onError });
 
@@ -68,6 +70,7 @@ describe('getPayout', () => {
       id: mockId,
       authToken: mockAuthToken,
       service: mockServiceInstance,
+      apiOrigin: PROXY_API_ORIGIN
     });
     await getPayout({ onSuccess, onError });
 

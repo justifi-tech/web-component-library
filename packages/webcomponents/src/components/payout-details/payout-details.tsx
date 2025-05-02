@@ -47,7 +47,8 @@ export class PayoutDetails {
       this.getPayout = makeGetPayoutDetails({
         id: this.payoutId,
         authToken: this.authToken,
-        service: new PayoutService()
+        service: new PayoutService(),
+        apiOrigin: this.apiOrigin
       });
       this.getPayoutCSV = makeGetPayoutCSV({
         authToken: this.authToken,
