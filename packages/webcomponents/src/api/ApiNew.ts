@@ -1,4 +1,4 @@
-import { configState } from '../components/config-provider/config-state';
+import { waitForConfig, configState } from '../components/config-provider/config-state';
 import { generateId } from '../utils/utils';
 import { PagingInfo } from './Pagination';
 
@@ -74,9 +74,6 @@ interface DestroyProps {
 }
 
 const Api = () => {
-  
-  const apiOrigin = configState.apiOrigin;
-  
   async function getAuthorizationHeader(authToken: string) {
     if (!authToken) {
       return {
@@ -93,6 +90,9 @@ const Api = () => {
 
   async function makeRequest(props: MakeRequestProps) {
     const { authToken, endpoint, method, params, body, signal, headers } = props;
+
+    await waitForConfig();
+    const apiOrigin = configState.apiOrigin;
 
     const url = `${apiOrigin}/v1/${endpoint}`;
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;

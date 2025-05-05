@@ -9,21 +9,47 @@ interface ConfigState {
 const initialState: ConfigState = {
   apiOrigin: PROXY_API_ORIGIN,
   iFrameOrigin: IFRAME_ORIGIN,
-  accountId: ''
+  accountId: '',
 };
 
 const configStore = createStore<ConfigState>(() => initialState);
 const { state: configState, on: onConfigChange } = configStore;
 
+// resolver for the “ready” promise
+let resolveConfigReady: () => void;
+
+// initial “handshake” promise
+const configReady = new Promise<void>(r => {
+  resolveConfigReady = r;
+});
+
+// called by <justifi-config-provider>
 const setConfigState = (vals: Partial<ConfigState>) => {
   Object.assign(configState, vals);
+  resolveConfigReady();
 };
 
-const getConfigState = (): ConfigState => configState;
+/**
+ * Wait for configProvider to run, but safe guard against never mounting.
+ * @param timeoutMs max time to wait before resolving with default values
+ */
+const waitForConfig = (timeoutMs = 500): Promise<void> => {
+  return new Promise<void>(resolve => {
+    const timer = setTimeout(() => {
+      // timeout expired, proceed with default config state values
+      resolve();
+    }, timeoutMs);
+
+    configReady.then(() => {
+      clearTimeout(timer);
+      resolve();
+    });
+  });
+};
 
 export {
   configState,
   onConfigChange,
-  getConfigState,
   setConfigState,
+  waitForConfig
 };
