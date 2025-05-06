@@ -33,7 +33,7 @@ const setConfigState = (vals: Partial<ConfigState>) => {
  * Wait for configProvider to run, but safe guard against never mounting.
  * @param timeoutMs max time to wait before resolving with default values
  */
-const waitForConfig = (timeoutMs = 500): Promise<void> => {
+const waitForConfig = (timeoutMs = 200): Promise<void> => {
   return new Promise<void>(resolve => {
     const timer = setTimeout(() => {
       // timeout expired, proceed with default config state values
