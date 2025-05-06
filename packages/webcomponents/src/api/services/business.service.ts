@@ -1,4 +1,5 @@
 import Api, { IApiResponse } from '../Api';
+import NewApi from '../ApiNew';
 import { IBankAccount } from '../BankAccount';
 import { IBusiness } from '../Business';
 import { DocumentRecordData } from '../Document';
@@ -19,11 +20,11 @@ export interface IBusinessService {
 export class BusinessService implements IBusinessService {
   async fetchBusiness(
     businessId: string,
-    authToken: string,
-    apiOrigin: string = PROXY_API_ORIGIN
+    authToken: string
   ): Promise<IApiResponse<IBusiness>> {
+    const api = NewApi();
     const endpoint = `entities/business/${businessId}`;
-    return Api({ authToken, apiOrigin }).get({ endpoint });
+    return api.get({ endpoint, authToken });
   }
 
   async patchBusiness(

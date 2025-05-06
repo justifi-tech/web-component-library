@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetTerminalOrders = 
-  ({ id, authToken, service, apiOrigin }) =>
+  ({ id, authToken, service }) =>
   async ({ params, onSuccess, onError, final }) => {
     try {
-      const response = await service.fetchTerminalOrders(id, authToken, params, apiOrigin);
+      const response = await service.fetchTerminalOrders(id, authToken, params);
 
       if (!response.error) {
         const pagingInfo = {

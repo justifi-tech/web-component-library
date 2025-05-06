@@ -25,8 +25,7 @@ describe('terminal-orders-list-core', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: '123',
       authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockTerminalsService
     });
 
     const page = await newSpecPage({
@@ -51,8 +50,7 @@ describe('terminal-orders-list-core', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockService
     });
 
     const page = await newSpecPage({
@@ -74,8 +72,7 @@ describe('terminal-orders-list-core', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: '123',
       authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockTerminalsService
     });
 
     const page = await newSpecPage({
@@ -103,8 +100,7 @@ describe('terminal-orders-list-core', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: 'some-id',
       authToken: 'some-auth',
-      service: mockService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockService
     });
 
     const errorEvent = jest.fn();
@@ -138,8 +134,7 @@ describe('terminal-orders-list-core pagination', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: '123',
       authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockTerminalsService
     });
 
     const page = await newSpecPage({
