@@ -10,6 +10,7 @@ import { TableClickActions } from '../../ui-components/table/event-types';
 import { table, tableCell } from '../../styles/parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, payoutTransactionTableCells, payoutTransactionTableColumns } from './payout-transactions-table';
+import { configState } from '../config-provider/config-state';
 
 @Component({
   tag: 'justifi-payout-transactions-list',
@@ -25,7 +26,6 @@ export class PayoutTransactionsList {
 
   @Prop() payoutId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
@@ -59,9 +59,9 @@ export class PayoutTransactionsList {
   private initializeApi() {
     if (this.payoutId && this.authToken) {
       const getPayoutTransactions = makeGetPayoutTransactions({
+        accountId: configState.accountId,
         authToken: this.authToken,
-        service: new PayoutService(),
-        apiOrigin: this.apiOrigin
+        service: new PayoutService()
       });
 
       getPayoutTransactions({

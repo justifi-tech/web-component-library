@@ -24,7 +24,6 @@ export class PayoutsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -57,8 +56,7 @@ export class PayoutsList {
       const serviceParams = {
         id: this.accountId,
         authToken: this.authToken,
-        service: new PayoutService(),
-        apiOrigin: this.apiOrigin
+        service: new PayoutService()
       };
       this.getPayouts = makeGetPayouts(serviceParams);
       this.getPayoutCSV = makeGetPayoutCSV(serviceParams);
@@ -77,8 +75,7 @@ export class PayoutsList {
       this.getSubAccounts = makeGetSubAccounts({
         accountId: this.accountId,
         authToken: this.authToken,
-        service: new SubAccountService(),
-        apiOrigin: this.apiOrigin
+        service: new SubAccountService()
       });
     }
   }

@@ -25,8 +25,7 @@ describe('getPayout', () => {
     const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockServiceInstance
     });
     await getPayout({ onSuccess, onError });
 
@@ -45,8 +44,7 @@ describe('getPayout', () => {
     const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockServiceInstance
     });
     await getPayout({ onSuccess, onError });
 
@@ -69,8 +67,7 @@ describe('getPayout', () => {
     const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockServiceInstance
     });
     await getPayout({ onSuccess, onError });
 
