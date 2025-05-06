@@ -18,8 +18,7 @@ describe('payment-details-core', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: '123',
       authToken: '123',
-      service: mockPaymentService,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockPaymentService
     });
 
     const page = await newSpecPage({
@@ -42,8 +41,7 @@ describe('payment-details-core', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockService
     });
 
     const page = await newSpecPage({
@@ -64,8 +62,7 @@ describe('payment-details-core', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockService
     });
 
     const errorSpy = jest.fn();
@@ -94,8 +91,7 @@ describe('payment-details-core', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockService
     });
 
     const errorSpy = jest.fn();
