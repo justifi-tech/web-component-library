@@ -1,5 +1,8 @@
 import { IPayout, IPayoutBalanceTransaction } from '..';
 import Api, { IApiResponse, IApiResponseCollection } from '../ApiNew';
+
+const api = Api();
+
 export interface IPayoutService {
   fetchPayouts(
     accountId: string,
@@ -20,8 +23,6 @@ export interface IPayoutService {
     params: any,
   ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>>;
 }
-
-const api = Api();
 
 export class PayoutService implements IPayoutService {
   async fetchPayouts(
