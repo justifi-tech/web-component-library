@@ -1,7 +1,8 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
-import { Api, IApiResponse } from '../../../api';
+import { IApiResponse } from '../../../api';
+import Api from '../../../api/ApiNew';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
@@ -38,7 +39,7 @@ export class BusinessForm {
     if (!this.businessId) console.error(missingBusinessIdMessage);
 
     this.formController = new FormController(businessFormSchema);
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    this.api = Api();
     this.fetchData();
   }
 
@@ -71,8 +72,8 @@ export class BusinessForm {
     try {
       const values = this.formController.values.getValue();
       const initialValues = this.formController.getInitialValues();
-      const payload = new Business({ ...initialValues, ...values }).payload;
-      const response = await this.api.patch(this.businessEndpoint, payload);
+      const body = new Business({ ...initialValues, ...values }).payload;
+      const response = await this.api.patch({ endpoint: this.businessEndpoint, body, authToken: this.authToken });
       this.handleReponse(response);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
@@ -84,7 +85,7 @@ export class BusinessForm {
   private fetchData = async () => {
     this.isLoading = true;
     try {
-      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
+      const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint, authToken: this.authToken });
       this.instantiateBusiness(response.data);
     } catch (error) {
       this.errorMessage = BusinessFormServerErrors.fetchData;
