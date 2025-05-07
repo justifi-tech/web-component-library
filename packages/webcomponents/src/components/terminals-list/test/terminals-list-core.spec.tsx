@@ -28,8 +28,7 @@ describe('terminals-list-core', () => {
     const getTerminals = makeGetTerminals({
       id: '123',
       authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockTerminalsService
     });
 
     const mockSubAccountsService = {
@@ -64,8 +63,7 @@ describe('terminals-list-core', () => {
     const getTerminals = makeGetTerminals({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockService
     });
 
     const mockSubAccountsService = {
@@ -97,8 +95,7 @@ describe('terminals-list-core', () => {
     const getTerminals = makeGetTerminals({
       id: '123',
       authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockTerminalsService
     });
 
     const mockSubAccountsService = {
@@ -136,8 +133,7 @@ describe('terminals-list-core', () => {
     const getTerminals = makeGetTerminals({
       id: 'some-id',
       authToken: 'some-auth',
-      service: mockService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockService
     });
 
     const mockSubAccountsService = {
@@ -181,8 +177,7 @@ describe('terminals-list-core pagination', () => {
     const getTerminals = makeGetTerminals({
       id: '123',
       authToken: '123',
-      service: mockTerminalsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockTerminalsService
     });
 
     const mockSubAccountsService = {

@@ -22,7 +22,6 @@ export class TerminalsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -55,8 +54,7 @@ export class TerminalsList {
       this.getTerminals = makeGetTerminals({
         id: this.accountId,
         authToken: this.authToken,
-        service: new TerminalService(),
-        apiOrigin: this.apiOrigin
+        service: new TerminalService()
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';

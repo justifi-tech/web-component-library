@@ -10,7 +10,6 @@ describe('makeGetTerminalOrders', () => {
   const mockId = '123';
   const mockAuthToken = 'fake_token_789';
   const mockParams = { limit: 10, page: 1 };
-  const mockApiOrigin = 'http://localhost:3000';
 
   const onSuccess = jest.fn();
   const onError = jest.fn();
@@ -38,8 +37,7 @@ describe('makeGetTerminalOrders', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      service: mockServiceInstance
     });
     await getTerminalOrders({ params: mockParams, onSuccess, onError, final });
 
@@ -64,8 +62,7 @@ describe('makeGetTerminalOrders', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      service: mockServiceInstance
     });
     await getTerminalOrders({ params: mockParams, onSuccess, onError, final });
 
@@ -88,8 +85,7 @@ describe('makeGetTerminalOrders', () => {
     const getTerminalOrders = makeGetTerminalOrders({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      service: mockServiceInstance
     });
     await getTerminalOrders({ params: mockParams, onSuccess, onError, final });
 
