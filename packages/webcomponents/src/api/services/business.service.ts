@@ -1,9 +1,11 @@
-import Api, { IApiResponse } from '../Api';
-import NewApi from '../ApiNew';
+import { IApiResponse } from '../Api';
+import Api from '../ApiNew';
 import { IBankAccount } from '../BankAccount';
 import { IBusiness } from '../Business';
 import { DocumentRecordData } from '../Document';
 import { Identity } from '../Identity';
+
+const api = Api();
 
 export interface IBusinessService {
   fetchBusiness(
@@ -22,7 +24,6 @@ export class BusinessService implements IBusinessService {
     businessId: string,
     authToken: string
   ): Promise<IApiResponse<IBusiness>> {
-    const api = NewApi();
     const endpoint = `entities/business/${businessId}`;
     return api.get({ endpoint, authToken });
   }
@@ -33,10 +34,8 @@ export class BusinessService implements IBusinessService {
     payload: Partial<IBusiness>
   ): Promise<IApiResponse<IBusiness>> {
     const endpoint = `entities/business/${businessId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).patch({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+    return api.patch({ endpoint, body, authToken });
   }
 }
 
@@ -66,7 +65,7 @@ export class IdentityService implements IdentityService {
     authToken: string
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity/${identityId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get({ endpoint });
+    return api.get({ endpoint, authToken });
   }
 
   async patchIdentity(
@@ -75,10 +74,8 @@ export class IdentityService implements IdentityService {
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity/${identityId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).patch({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+    return api.patch({ endpoint, body, authToken });
   }
 
   async postIdentity(
@@ -86,10 +83,8 @@ export class IdentityService implements IdentityService {
     payload: Partial<Identity>
   ): Promise<IApiResponse<Identity>> {
     const endpoint = `entities/identity`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+    return api.post({ endpoint, body, authToken });
   }
 }
 
@@ -108,10 +103,8 @@ export class BusinessBankAccountService implements IBusinessBankAccountService {
     payload: Partial<IBankAccount>
   ): Promise<IApiResponse<IBankAccount>> {
     const endpoint = `entities/bank_accounts`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+    return api.post({ endpoint, body, authToken });
   }
 }
 
@@ -130,9 +123,7 @@ export class DocumentRecordService implements IDocumentRecordService {
     payload: DocumentRecordData
   ): Promise<IApiResponse<any>> {
     const endpoint = `entities/document`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+    return api.post({ endpoint, body, authToken });
   }
 }
