@@ -6,16 +6,16 @@ exports[`terminal-orders-list-core displays an error state on failed data fetch 
     <table class="table table-hover" part="table text color font-family background-color">
       <thead class="sticky-top table-head">
         <tr class="table-light text-nowrap">
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time the order was created">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was created">
             Created At
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time the order was last updated">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was last updated">
             Updated At
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of the order">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The current status of the order">
             Order Status
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The number of terminals associated with the order">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The number of terminals associated with the order">
             Order Quantity
           </th>
         </tr>
@@ -34,24 +34,24 @@ exports[`terminal-orders-list-core displays an error state on failed data fetch 
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span class="me-1">
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
                         «
                       </span>
-                      <span>
+                      <span part="pagination-item-text text color font-family">
                         Previous
                       </span>
-                    </a>
+                    </button>
                   </li>
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span>
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span part="pagination-item-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1">
+                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
                         »
                       </span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </nav>
@@ -70,23 +70,23 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
     <table class="table table-hover" part="table text color font-family background-color">
       <thead class="sticky-top table-head">
         <tr class="table-light text-nowrap">
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time the order was created">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was created">
             Created At
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date and time the order was last updated">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was last updated">
             Updated At
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of the order">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The current status of the order">
             Order Status
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The number of terminals associated with the order">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The number of terminals associated with the order">
             Order Quantity
           </th>
         </tr>
       </thead>
       <tbody class="table-body">
         <tr data-row-entity-id="tord_ABCD1234" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Jan 2, 2025
             </div>
@@ -94,7 +94,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               10:30am
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Jan 2, 2025
             </div>
@@ -102,17 +102,17 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               10:45am
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-primary" part="badge font-family badge-primary" title="This order is submitted">
               Submitted
             </span>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             1
           </td>
         </tr>
         <tr data-row-entity-id="tord_WXYZ5678" data-test-id="table-row">
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Feb 10, 2025
             </div>
@@ -120,7 +120,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               9:20am
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Feb 10, 2025
             </div>
@@ -128,17 +128,17 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               9:25am
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-success" part="badge font-family badge-success" title="This order has been completed">
               Completed
             </span>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             4
           </td>
         </tr>
         <tr data-row-entity-id="tord_DEF55468789" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Mar 11, 2025
             </div>
@@ -146,7 +146,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               5:00pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Mar 11, 2025
             </div>
@@ -154,17 +154,17 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               5:05pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This order is created">
               Created
             </span>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             2
           </td>
         </tr>
         <tr data-row-entity-id="tord_GHI22168225" data-test-id="table-row">
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Apr 5, 2025
             </div>
@@ -172,7 +172,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               11:50am
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Apr 5, 2025
             </div>
@@ -180,17 +180,17 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               12:10pm
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-success" part="badge font-family badge-success" title="This order has been completed">
               Completed
             </span>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             4
           </td>
         </tr>
         <tr data-row-entity-id="tord_JKL12345678" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               May 15, 2025
             </div>
@@ -198,7 +198,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               2:00pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               May 15, 2025
             </div>
@@ -206,17 +206,17 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               2:20pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-danger" part="badge font-family badge-danger" title="This order is canceled">
               Canceled
             </span>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             2
           </td>
         </tr>
         <tr data-row-entity-id="tord_PQR12345678" data-test-id="table-row">
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Jun 1, 2025
             </div>
@@ -224,7 +224,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               8:00am
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Jun 1, 2025
             </div>
@@ -232,17 +232,17 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               8:15am
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-primary" part="badge font-family badge-primary" title="This order is in progress">
               In Progress
             </span>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             1
           </td>
         </tr>
         <tr data-row-entity-id="tord_MNO98765432" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Jun 20, 2025
             </div>
@@ -250,7 +250,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               8:30am
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Jun 20, 2025
             </div>
@@ -258,12 +258,12 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               8:45am
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-warning" part="badge font-family badge-warning" title="This order is on hold">
               On Hold
             </span>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             2
           </td>
         </tr>
@@ -275,24 +275,24 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span class="me-1">
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
                         «
                       </span>
-                      <span>
+                      <span part="pagination-item-text text color font-family">
                         Previous
                       </span>
-                    </a>
+                    </button>
                   </li>
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span>
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span part="pagination-item-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1">
+                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
                         »
                       </span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </nav>
