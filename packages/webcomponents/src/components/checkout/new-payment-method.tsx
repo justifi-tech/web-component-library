@@ -25,7 +25,6 @@ export class NewPaymentMethod {
   @Prop() showAch?: boolean;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
-  @Prop() iframeOrigin: string;
 
   @State() saveNewPaymentMethodChecked: boolean = false;
 
@@ -103,15 +102,9 @@ export class NewPaymentMethod {
       <div class="mt-4 pb-4">
         <hidden-input />
           {paymentMethodType === 'card' ? (
-            <card-form
-              ref={(el) => this.paymentMethodFormRef = el}
-              iframeOrigin={this.iframeOrigin}
-            />
+            <card-form ref={(el) => this.paymentMethodFormRef = el} />
           ) : (
-            <bank-account-form
-              ref={(el) => this.paymentMethodFormRef = el}
-              iframeOrigin={this.iframeOrigin}
-            />
+            <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
           )}
         <justifi-billing-form
           ref={(el) => (this.billingFormRef = el)}

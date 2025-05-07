@@ -1,4 +1,6 @@
-import Api from '../Api';
+import Api from "../ApiNew";
+
+const api = Api();
 
 interface iAnayticsBody {
   event_type: string;
@@ -15,6 +17,6 @@ interface iAnayticsBody {
 export class AnalyticsService {
   async record(body: iAnayticsBody): Promise<void> {
     const endpoint = 'analytics';
-    return Api({ apiOrigin: PROXY_API_ORIGIN }).post({ endpoint, body });
+    return api.post({ endpoint, body });
   }
 }

@@ -22,11 +22,9 @@ export class PaymentMethodOptions {
   @Prop() paymentAmount: number;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
-  @Prop() iframeOrigin: string;
 
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
-
 
   private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
@@ -104,7 +102,6 @@ export class PaymentMethodOptions {
                 paymentMethodGroupId={this.paymentMethodGroupId}
                 hideCardBillingForm={this.hideCardBillingForm}
                 hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-                iframeOrigin={this.iframeOrigin}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

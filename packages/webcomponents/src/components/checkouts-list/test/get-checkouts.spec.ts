@@ -10,7 +10,6 @@ describe('makeGetCheckouts', () => {
   const mockId = 'mock_id';
   const mockAuthToken = 'mock_token';
   const mockParams = { limit: 10, page: 1 };
-  const mockApiOrigin = 'http://localhost:3000';
 
   let mockServiceInstance: jest.Mocked<CheckoutService>;
 
@@ -36,8 +35,7 @@ describe('makeGetCheckouts', () => {
     const getCheckoutsList = makeGetCheckouts({
       accountId: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin,
+      service: mockServiceInstance
     });
     await getCheckoutsList({ params: mockParams, onSuccess, onError });
 
@@ -62,8 +60,7 @@ describe('makeGetCheckouts', () => {
     const getCheckoutsList = makeGetCheckouts({
       accountId: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin,
+      service: mockServiceInstance
     });
     await getCheckoutsList({ params: mockParams, onSuccess, onError });
 
@@ -86,8 +83,7 @@ describe('makeGetCheckouts', () => {
     const getCheckoutsList = makeGetCheckouts({
       accountId: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin,
+      service: mockServiceInstance
     });
     await getCheckoutsList({ params: mockParams, onSuccess, onError });
 

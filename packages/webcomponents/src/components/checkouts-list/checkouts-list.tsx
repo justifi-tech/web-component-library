@@ -22,7 +22,6 @@ export class CheckoutsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -55,8 +54,7 @@ export class CheckoutsList {
       this.getCheckouts = makeGetCheckouts({
         accountId: this.accountId,
         authToken: this.authToken,
-        service: new CheckoutService(),
-        apiOrigin: this.apiOrigin,
+        service: new CheckoutService()
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';

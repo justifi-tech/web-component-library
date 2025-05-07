@@ -1,10 +1,12 @@
 import {
-  Api,
   IApiResponse,
   IApiResponseCollection,
   ICheckout,
   ICheckoutCompleteResponse,
 } from '..';
+import Api from '../ApiNew';
+
+const api = Api();
 
 export interface ICheckoutService {
   fetchCheckout(
@@ -15,8 +17,7 @@ export interface ICheckoutService {
   fetchCheckouts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ICheckout[]>>;
 
   complete(
@@ -32,24 +33,17 @@ export class CheckoutService implements ICheckoutService {
     checkoutId: string
   ): Promise<IApiResponse<ICheckout>> {
     const endpoint = `checkouts/${checkoutId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get({ endpoint });
+    return api.get({ endpoint, authToken });
   }
 
   async fetchCheckouts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ICheckout[]>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
-    const headers = { Account: accountId };
-
-    const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'checkouts';
-    return api.get({ endpoint, params, headers });
+    const headers = { Account: accountId };
+    return api.get({ endpoint, params, headers, authToken });
   }
 
   async complete(
@@ -58,15 +52,12 @@ export class CheckoutService implements ICheckoutService {
     payment: { payment_mode: string; payment_token?: string }
   ): Promise<IApiResponse<ICheckoutCompleteResponse>> {
     const endpoint = `checkouts/${checkoutId}/complete`;
-    const payload: { payment_mode: string; payment_token?: string } = {
+    const body: { payment_mode: string; payment_token?: string } = {
       payment_mode: payment.payment_mode,
     };
     if (payment.payment_token) {
-      payload.payment_token = payment.payment_token;
+      body.payment_token = payment.payment_token;
     }
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    return api.post({ endpoint, body, authToken });
   }
 }

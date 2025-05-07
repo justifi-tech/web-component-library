@@ -20,7 +20,6 @@ export class Checkout {
   @Prop() disablePaymentMethodGroup?: boolean;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
-  @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
 
   @State() getCheckout: Function;
   @State() complete: Function;
@@ -95,7 +94,6 @@ export class Checkout {
         disablePaymentMethodGroup={this.disablePaymentMethodGroup}
         hideCardBillingForm={this.hideCardBillingForm}
         hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-        iframeOrigin={this.iframeOrigin}
         ref={el => {
           if (el) {
             this.checkoutCoreRef = el;

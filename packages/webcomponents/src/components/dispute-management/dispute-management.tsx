@@ -12,7 +12,6 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 export class DisputeManagement {
   @Prop() disputeId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @State() getDispute: Function;
   @State() errorMessage: string = null;
@@ -42,8 +41,7 @@ export class DisputeManagement {
       this.getDispute = makeGetDispute({
         id: this.disputeId,
         authToken: this.authToken,
-        service: new DisputeService(),
-        apiOrigin: this.apiOrigin,
+        service: new DisputeService()
       });
     } else {
       this.errorMessage = 'Dispute ID and Auth Token are required';

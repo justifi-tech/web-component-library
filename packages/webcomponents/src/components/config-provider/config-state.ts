@@ -2,13 +2,13 @@ import { createStore } from '@stencil/store';
 
 interface ConfigState {
   apiOrigin?: string;
-  iFrameOrigin?: string;
+  iframeOrigin?: string;
   accountId?: string;
 }
 
 const initialState: ConfigState = {
   apiOrigin: PROXY_API_ORIGIN,
-  iFrameOrigin: IFRAME_ORIGIN,
+  iframeOrigin: IFRAME_ORIGIN,
   accountId: '',
 };
 
