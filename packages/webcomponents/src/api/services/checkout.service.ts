@@ -1,12 +1,12 @@
 import {
-  Api,
   IApiResponse,
   IApiResponseCollection,
   ICheckout,
   ICheckoutCompleteResponse,
 } from '..';
-import NewApi from '../ApiNew';
+import Api from '../ApiNew';
 
+const api = Api();
 
 export interface ICheckoutService {
   fetchCheckout(
@@ -33,7 +33,7 @@ export class CheckoutService implements ICheckoutService {
     checkoutId: string
   ): Promise<IApiResponse<ICheckout>> {
     const endpoint = `checkouts/${checkoutId}`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).get({ endpoint });
+    return api.get({ endpoint, authToken });
   }
 
   async fetchCheckouts(
@@ -41,9 +41,8 @@ export class CheckoutService implements ICheckoutService {
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<ICheckout[]>> {
-    const api = NewApi();
-    const headers = { Account: accountId };
     const endpoint = 'checkouts';
+    const headers = { Account: accountId };
     return api.get({ endpoint, params, headers, authToken });
   }
 
@@ -53,15 +52,12 @@ export class CheckoutService implements ICheckoutService {
     payment: { payment_mode: string; payment_token?: string }
   ): Promise<IApiResponse<ICheckoutCompleteResponse>> {
     const endpoint = `checkouts/${checkoutId}/complete`;
-    const payload: { payment_mode: string; payment_token?: string } = {
+    const body: { payment_mode: string; payment_token?: string } = {
       payment_mode: payment.payment_mode,
     };
     if (payment.payment_token) {
-      payload.payment_token = payment.payment_token;
+      body.payment_token = payment.payment_token;
     }
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    return api.post({ endpoint, body, authToken });
   }
 }

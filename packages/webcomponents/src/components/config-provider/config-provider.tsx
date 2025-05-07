@@ -7,13 +7,13 @@ import { setConfigState } from './config-state';
 })
 export class ConfigProvider {
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
-  @Prop() iFrameOrigin?: string = IFRAME_ORIGIN;
+  @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
   @Prop() accountId?: string = '';
 
   componentWillLoad() {
     setConfigState({
       apiOrigin: this.apiOrigin,
-      iFrameOrigin: this.iFrameOrigin,
+      iframeOrigin: this.iframeOrigin,
       accountId: this.accountId
     });
   }
