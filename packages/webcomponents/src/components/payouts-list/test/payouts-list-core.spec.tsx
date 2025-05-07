@@ -26,8 +26,7 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: '123',
       authToken: '123',
-      service: mockPayoutService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPayoutService
     });
 
     const mockSubAccountsService = {
@@ -37,8 +36,7 @@ describe('payouts-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     // components.pop();
@@ -63,8 +61,7 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockPayoutService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPayoutService
     });
 
     const mockSubAccountsService = {
@@ -74,8 +71,7 @@ describe('payouts-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({
@@ -98,8 +94,7 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockPayoutService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPayoutService
     });
 
     const mockSubAccountsService = {
@@ -109,8 +104,7 @@ describe('payouts-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const errorSpy = jest.fn();
@@ -139,8 +133,7 @@ describe('payouts-list-core', () => {
     const getPayouts = makeGetPayouts({
       id: '123',
       authToken: '123',
-      service: mockPayoutService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPayoutService
     });
 
     const mockSubAccountsService = {
@@ -150,8 +143,7 @@ describe('payouts-list-core', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({
@@ -182,8 +174,7 @@ describe('payouts-list-core pagination', () => {
     const getPayouts = makeGetPayouts({
       id: '123',
       authToken: '123',
-      service: mockPayoutService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPayoutService
     });
 
     const mockSubAccountsService = {
@@ -193,8 +184,7 @@ describe('payouts-list-core pagination', () => {
     const getSubAccounts = makeGetSubAccounts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockSubAccountsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockSubAccountsService
     });
 
     const page = await newSpecPage({

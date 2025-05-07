@@ -8,6 +8,7 @@ export * from './Pagination';
 export * from './Payment';
 export * from './PaymentBalanceTransaction';
 export * from './Payout';
+export * from './PayoutBalanceTransaction';
 export * from './Terminal';
 export * from './TerminalOrder';
 export * from './TerminalModel';

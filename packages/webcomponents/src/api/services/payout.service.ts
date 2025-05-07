@@ -1,53 +1,62 @@
-import { Api, IApiResponse, IApiResponseCollection, IPayout } from '..';
+import { IPayout, IPayoutBalanceTransaction } from '..';
+import Api, { IApiResponse, IApiResponseCollection } from '../ApiNew';
+
+const api = Api();
 
 export interface IPayoutService {
   fetchPayouts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<IPayout[]>>;
   fetchPayout(
     payoutId: string,
-    authToken: string,
-    apiOrigin?: string
+    authToken: string
   ): Promise<IApiResponse<IPayout>>;
   fetchCSV(
     payoutId: string,
-    authToken: string,
-    apiOrigin?: string
+    authToken: string
   ): Promise<IApiResponse<any>>;
+  fetchPayoutTransactions(
+    accountId: string,
+    authToken: string,
+    params: any,
+  ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>>;
 }
 
 export class PayoutService implements IPayoutService {
   async fetchPayouts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin: string = PROXY_API_ORIGIN
+    params: any
   ): Promise<IApiResponseCollection<IPayout[]>> {
-    const api = Api({ authToken, apiOrigin });
     const endpoint = `account/${accountId}/payouts`;
-    return api.get({ endpoint, params });
+    return api.get({ authToken, endpoint, params });
   }
 
   async fetchPayout(
     payoutId: string,
     authToken: string,
-    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<IPayout>> {
-    const api = Api({ authToken, apiOrigin });
     const endpoint = `payouts/${payoutId}`;
-    return api.get({ endpoint });
+    return api.get({ authToken, endpoint });
   }
 
   async fetchCSV(
     payoutId: string,
     authToken: string,
-    apiOrigin: string = PROXY_API_ORIGIN
   ): Promise<IApiResponse<any>> {
-    const api = Api({ authToken, apiOrigin });
     const endpoint = `reports/payouts/${payoutId}`;
-    return api.get({ endpoint });
+    return api.get({ authToken, endpoint });
+  }
+
+  async fetchPayoutTransactions(
+    accountId: string,
+    authToken: string,
+    params: any,
+  ): Promise<IApiResponseCollection<IPayoutBalanceTransaction[]>> {
+    const endpoint = `balance_transactions`;
+    const headers = { 'sub-account': accountId };
+    return api.get({ authToken, endpoint, params, headers });
   }
 }

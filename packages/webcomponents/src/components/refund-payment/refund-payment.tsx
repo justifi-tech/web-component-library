@@ -38,7 +38,6 @@ export class RefundPayment {
   @Prop() accountId: string;
   @Prop() paymentId: string;
   @Prop() hideSubmitButton?: boolean = false;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -96,8 +95,7 @@ export class RefundPayment {
       const getPayment = makeGetPaymentDetails({
         id: this.paymentId,
         authToken: this.authToken,
-        service: new PaymentService(),
-        apiOrigin: this.apiOrigin
+        service: new PaymentService()
       });
       
       getPayment({
@@ -132,8 +130,7 @@ export class RefundPayment {
       authToken: this.authToken,
       accountId: this.accountId,
       paymentId: this.paymentId,
-      service: new RefundService(),
-      apiOrigin: this.apiOrigin
+      service: new RefundService()
     });
     const values = this.formController.values.getValue();
     this.refundLoading = true;

@@ -1,12 +1,14 @@
-import { Api, IApiResponse, IRefund, RefundPayload } from '..';
+import { IApiResponse, IRefund, RefundPayload } from '..';
+import Api from '../ApiNew';
+
+const api = Api();
 
 export interface IRefundService {
   postRefund(
     paymentId: string,
     accountId: string,
     authToken: string,
-    refundBody: RefundPayload,
-    apiOrigin?: string
+    refundBody: RefundPayload
   ): Promise<IApiResponse<IRefund>>;
 };
 
@@ -15,12 +17,11 @@ export class RefundService implements IRefundService {
     paymentId: string,
     accountId: string,
     authToken: string,
-    refundBody: RefundPayload,
-    apiOrigin: string = PROXY_API_ORIGIN
+    refundBody: RefundPayload
   ): Promise<IApiResponse<IRefund>> {
-    const api = Api({ authToken, apiOrigin });
     const endpoint = `payments/${paymentId}/refunds`;
     const headers = { 'Sub-Account': accountId };
-    return api.post({ endpoint, headers, body: refundBody });
+    const body = refundBody;
+    return api.post({ endpoint, headers, body, authToken });
   }
 }

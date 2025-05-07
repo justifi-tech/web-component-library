@@ -25,7 +25,7 @@ describe('getPayout', () => {
     const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
+      service: mockServiceInstance
     });
     await getPayout({ onSuccess, onError });
 
@@ -44,7 +44,7 @@ describe('getPayout', () => {
     const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
+      service: mockServiceInstance
     });
     await getPayout({ onSuccess, onError });
 
@@ -67,7 +67,7 @@ describe('getPayout', () => {
     const getPayout = makeGetPayoutDetails({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
+      service: mockServiceInstance
     });
     await getPayout({ onSuccess, onError });
 

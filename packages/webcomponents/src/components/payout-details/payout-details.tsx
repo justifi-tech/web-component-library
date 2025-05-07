@@ -16,7 +16,6 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 export class PayoutDetails {
   @Prop() payoutId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @State() getPayout: Function;
   @State() getPayoutCSV: Function;
@@ -51,8 +50,7 @@ export class PayoutDetails {
       });
       this.getPayoutCSV = makeGetPayoutCSV({
         authToken: this.authToken,
-        service: new PayoutService(),
-        apiOrigin: this.apiOrigin
+        service: new PayoutService()
       });
     } else {
       this.errorMessage = 'Failed to load payout details. payoutId or authToken is not provided.';

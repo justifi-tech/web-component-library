@@ -1,28 +1,30 @@
+
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { ComponentClickEvent, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, pagingDefaults, PagingInfo, PaymentBalanceTransaction } from '../../api';
+import { ComponentClickEvent, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, pagingDefaults, PagingInfo, PayoutBalanceTransaction } from '../../api';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { makeGetPaymentTransactions } from '../../actions/payment/get-payment-transactions';
-import { PaymentService } from '../../api/services/payment.service';
+import { makeGetPayoutTransactions } from '../../actions/payout/get-payout-transactions';
+import { PayoutService } from '../../api/services/payout.service';
 import { Table } from '../../utils/table';
 import { TableClickActions } from '../../ui-components/table/event-types';
 import { table, tableCell } from '../../styles/parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { defaultColumnsKeys, paymentTransactionTableCells, paymentTransactionTableColumns } from './payment-transactions-table';
+import { defaultColumnsKeys, payoutTransactionTableCells, payoutTransactionTableColumns } from './payout-transactions-table';
+import { configState } from '../config-provider/config-state';
 
 @Component({
-  tag: 'justifi-payment-transactions-list',
+  tag: 'justifi-payout-transactions-list',
   shadow: true
 })
-export class PaymentTransactionsList {
-  @State() balanceTransactions: PaymentBalanceTransaction[] = [];
-  @State() transactionsTable: Table<PaymentBalanceTransaction>;
+export class PayoutTransactionsList {
+  @State() balanceTransactions: PayoutBalanceTransaction[] = [];
+  @State() transactionsTable: Table<PayoutBalanceTransaction>;
   @State() isLoading: boolean = true;
   @State() errorMessage: string = null;
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @Prop() paymentId: string;
+  @Prop() payoutId: string;
   @Prop() authToken: string;
   @Prop() columns?: string = defaultColumnsKeys;
 
@@ -32,7 +34,7 @@ export class PaymentTransactionsList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    this.transactionsTable = new Table<PaymentBalanceTransaction>(this.balanceTransactions, this.columns, paymentTransactionTableColumns, paymentTransactionTableCells);
+    this.transactionsTable = new Table<PayoutBalanceTransaction>(this.balanceTransactions, this.columns, payoutTransactionTableColumns, payoutTransactionTableCells);
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeApi();
@@ -41,9 +43,9 @@ export class PaymentTransactionsList {
   disconnectedCallback() {
     this.analytics.cleanup();
   }
-  
+
   @Watch('pagingParams')
-  @Watch('paymentId')
+  @Watch('payoutId')
   @Watch('authToken')
   propChanged() {
     this.initializeApi();
@@ -55,15 +57,15 @@ export class PaymentTransactionsList {
   }
 
   private initializeApi() {
-    if (this.paymentId && this.authToken) {
-      const getPaymentTransactions = makeGetPaymentTransactions({
-        id: this.paymentId,
+    if (this.payoutId && this.authToken) {
+      const getPayoutTransactions = makeGetPayoutTransactions({
+        accountId: configState.accountId,
         authToken: this.authToken,
-        service: new PaymentService()
+        service: new PayoutService()
       });
 
-      getPaymentTransactions({
-        params: this.pagingParams,
+      getPayoutTransactions({
+        params: this.requestParams,
         onSuccess: ({ balanceTransactions, pagingInfo }) => {
           this.balanceTransactions = balanceTransactions;
           this.paging = pagingInfo;
@@ -78,7 +80,7 @@ export class PaymentTransactionsList {
         }
       });
     } else {
-      this.errorMessage = 'payment-id and auth-token props are required';
+      this.errorMessage = 'payout-id and auth-token props are required';
       this.handleError(ComponentErrorCodes.MISSING_PROPS, this.errorMessage, ComponentErrorSeverity.ERROR);
     }
   }
@@ -94,10 +96,10 @@ export class PaymentTransactionsList {
   };
 
   rowClickHandler = (e) => {
-    const clickedPaymentID = e.target.closest('tr').dataset.rowEntityId;
-    if (!clickedPaymentID) return;
+    const clickedPayoutId = e.target.closest('tr').dataset.rowEntityId;
+    if (!clickedPayoutId) return;
 
-    const transactionData = this.balanceTransactions.find((payment) => payment.id === clickedPaymentID);
+    const transactionData = this.balanceTransactions.find((payout) => payout.id === clickedPayoutId);
     this.clickEvent.emit({ name: TableClickActions.row, data: transactionData });
   };
 
@@ -115,6 +117,14 @@ export class PaymentTransactionsList {
 
   get showRowData() {
     return !this.showEmptyState && !this.showErrorState && !this.isLoading;
+  }
+
+  get requestParams() {
+    return {
+      payout_id: this.payoutId,
+      limit: '15',
+      ...this.pagingParams
+    };
   }
 
   render() {

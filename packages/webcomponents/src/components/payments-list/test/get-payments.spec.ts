@@ -10,7 +10,6 @@ describe('makeGetPayments', () => {
   const mockId = '123';
   const mockAuthToken = 'token';
   const mockParams = { limit: 10, page: 1 };
-  const mockApiOrigin = 'http://localhost:3000';
 
   let mockServiceInstance: jest.Mocked<PaymentService>;
 
@@ -37,8 +36,7 @@ describe('makeGetPayments', () => {
     const getPayments = makeGetPayments({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin,
+      service: mockServiceInstance
     });
     await getPayments({ params: mockParams, onSuccess, onError, final });
 
@@ -64,8 +62,7 @@ describe('makeGetPayments', () => {
     const getPayments = makeGetPayments({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin,
+      service: mockServiceInstance
     });
     await getPayments({ params: mockParams, onSuccess, onError, final });
 
@@ -89,8 +86,7 @@ describe('makeGetPayments', () => {
     const getPayments = makeGetPayments({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin,
+      service: mockServiceInstance
     });
     await getPayments({ params: mockParams, onSuccess, onError, final });
 

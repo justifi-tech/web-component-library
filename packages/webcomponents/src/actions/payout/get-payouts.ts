@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetPayouts =
-  ({ id, authToken, service, apiOrigin }) =>
+  ({ id, authToken, service }) =>
   async ({ params, onSuccess, onError }) => {
     try {
-      const response = await service.fetchPayouts(id, authToken, params, apiOrigin);
+      const response = await service.fetchPayouts(id, authToken, params);
 
       if (!response.error) {
         const pagingInfo = {

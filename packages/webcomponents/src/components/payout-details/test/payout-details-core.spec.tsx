@@ -36,7 +36,7 @@ describe('payout-details-core', () => {
     const getPayout = makeGetPayoutDetails({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
+      service: mockService
     });
 
     const page = await newSpecPage({
@@ -64,7 +64,7 @@ describe('payout-details-core', () => {
     const getPayout = makeGetPayoutDetails({
       id: 'some-id', // Use appropriate id
       authToken: 'some-auth-token', // Use appropriate auth token
-      service: mockService // Injecting the mocked service
+      service: mockService, // Injecting the mocked servic
     });
 
     const page = await newSpecPage({

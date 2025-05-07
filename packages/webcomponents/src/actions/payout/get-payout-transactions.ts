@@ -1,15 +1,15 @@
-import { PaymentBalanceTransaction } from '../../api';
+import { PayoutBalanceTransaction } from '../../api';
 import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
-export const makeGetPaymentTransactions =
-  ({ id, authToken, service }) =>
+export const makeGetPayoutTransactions =
+  ({  accountId, authToken, service }) =>
   async ({ params, onSuccess, onError, final }) => {
     try {
-      const response = await service.fetchPaymentTransactions(id, authToken, params);
+      const response = await service.fetchPayoutTransactions(accountId, authToken, params);
       if (!response.error) {
         const balanceTransactions = response.data.map(
-          (dataItem) => new PaymentBalanceTransaction(dataItem)
+          (dataItem) => new PayoutBalanceTransaction(dataItem)
         );
 
         const pagingInfo = { ...response.page_info };
