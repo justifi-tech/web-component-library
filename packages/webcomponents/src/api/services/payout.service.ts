@@ -1,5 +1,4 @@
-import { IPayout, IPayoutBalanceTransaction } from '..';
-import Api, { IApiResponse, IApiResponseCollection } from '../Api';
+import { Api, IApiResponse, IApiResponseCollection, IPayout, IPayoutBalanceTransaction } from '..';
 
 const api = Api();
 
