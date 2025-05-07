@@ -176,7 +176,7 @@ export class BusinessCoreInfoFormStepCore {
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 maxLength={9}
-                helpText="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes or spaces."
+                helpText="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes."
               />
             </div>
             <div class="col-12">
