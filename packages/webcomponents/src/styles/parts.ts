@@ -65,14 +65,13 @@ export const card = `card ${text} ${backgroundColor}`;
 export const table = `table ${text} ${backgroundColor}`;
 export const tableRow = `table-row ${text} ${backgroundColor}`;
 export const tableCell = `table-cell ${text} ${backgroundColor}`;
-export const tableHeadCell = `table-head-cell ${tableCell} ${text} ${backgroundColor}`;
-export const tableCellEven = `table-cell-even ${tableCell} ${text} ${backgroundColor}`;
-export const tableCellOdd = `table-cell-odd ${tableCell} ${text} ${backgroundColor}`;
+export const tableHeadCell = `table-head-cell ${tableCell}`;
+export const tableCellEven = `table-cell-even ${tableCell}`;
+export const tableCellOdd = `table-cell-odd ${tableCell}`;
 export const getAlternateTableCellPart = (index) =>
   index % 2 ? tableCellEven : tableCellOdd;
 export const tableEmpty = `table-empty ${text} ${backgroundColor}`;
 export const tableError = `table-error ${text} ${backgroundColor}`;
-export const tableLoadingSpinner = `table-loading-spinner`;
 
 // Pagination
 export const paginationItem = `pagination-item ${text} ${backgroundColor}`;
