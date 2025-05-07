@@ -20,7 +20,7 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     doing_business_as: doingBusinessAsValidation.nullable(),
     classification: businessClassificationValidation.required('Select business classification'),
     industry: industryValidation.required('Enter a business industry'),
-    tax_id: taxIdValidation.required('Enter tax id, SSN, or EIN'),
+    tax_id: taxIdValidation.required('Enter valid tax id (SSN or EIN) without dashes'),
     date_of_incorporation: dateOfIncorporationValidation.required('Enter date of incorporation'),
   });
 
