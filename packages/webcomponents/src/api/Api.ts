@@ -1,3 +1,4 @@
+import { waitForConfig, configState } from '../components/config-provider/config-state';
 import { generateId } from '../utils/utils';
 import { PagingInfo } from './Pagination';
 
@@ -22,13 +23,58 @@ export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: PagingInfo;
 }
 
-interface IApiProps {
-  authToken?: string;
-  apiOrigin: string;
+interface MakeRequestProps {
+  authToken: string;
+  endpoint: string;
+  method: string;
+  params?: any;
+  body?: any;
+  signal?: AbortSignal;
+  headers?: HeadersInit;
 }
 
-const Api = ({ authToken, apiOrigin }: IApiProps) => {
-  async function getAuthorizationHeader() {
+interface GetProps {
+  authToken: string;
+  endpoint: string;
+  params?: any;
+  signal?: AbortSignal;
+  headers?: HeadersInit;
+}
+
+interface PostProps {
+  authToken?: string;
+  endpoint: string;
+  body?: any;
+  params?: any;
+  signal?: AbortSignal;
+  headers?: HeadersInit;
+}
+
+interface PutProps {
+  authToken: string;
+  endpoint: string;
+  body?: any;
+  params?: any;
+  signal?: AbortSignal;
+}
+
+interface PatchProps {
+  authToken: string;
+  endpoint: string;
+  body?: any;
+  params?: any;
+  signal?: AbortSignal;
+}
+
+interface DestroyProps {
+  authToken: string;
+  endpoint: string;
+  params?: any;
+  signal?: AbortSignal;
+}
+
+export const Api = () => {
+  async function getAuthorizationHeader(authToken: string) {
     if (!authToken) {
       return {
         'Content-Type': 'application/json',
@@ -42,25 +88,16 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     };
   }
 
-  async function makeRequest({
-    endpoint,
-    method,
-    params,
-    body,
-    signal,
-    headers,
-  }: {
-    endpoint: string;
-    method: string;
-    params?: any;
-    body?: any;
-    signal?: AbortSignal;
-    headers?: HeadersInit;
-  }) {
+  async function makeRequest(props: MakeRequestProps) {
+    const { authToken, endpoint, method, params, body, signal, headers } = props;
+
+    await waitForConfig();
+    const apiOrigin = configState.apiOrigin;
+
     const url = `${apiOrigin}/v1/${endpoint}`;
     const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
 
-    const defaultHeaders = await getAuthorizationHeader();
+    const defaultHeaders = await getAuthorizationHeader(authToken);
     const mergedHeaders = { ...defaultHeaders, ...headers };
 
     const response = await fetch(requestUrl, {
@@ -76,34 +113,15 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     handleError(requestUrl);
   }
 
-  async function get({
-    endpoint,
-    params,
-    signal,
-    headers,
-  }: {
-    endpoint: string;
-    params?: any;
-    signal?: AbortSignal;
-    headers?: HeadersInit;
-  }) {
-    return makeRequest({ endpoint, method: 'GET', params, signal, headers });
+  async function get(props: GetProps) {
+    const { authToken, endpoint, params, signal, headers } = props;
+    return makeRequest({ authToken, endpoint, method: 'GET', params, signal, headers });
   }
 
-  async function post({
-    endpoint,
-    body,
-    params,
-    signal,
-    headers,
-  }: {
-    endpoint: string;
-    body?: any;
-    params?: any;
-    signal?: AbortSignal;
-    headers?: HeadersInit;
-  }) {
+  async function post(props: PostProps) {
+    const { authToken, endpoint, body, params, signal, headers } = props;
     return makeRequest({
+      authToken,
       endpoint,
       method: 'POST',
       params,
@@ -113,18 +131,10 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     });
   }
 
-  async function put({
-    endpoint,
-    body,
-    params,
-    signal,
-  }: {
-    endpoint: string;
-    body?: any;
-    params?: any;
-    signal?: AbortSignal;
-  }) {
+  async function put(props: PutProps) {
+    const { authToken, endpoint, body, params, signal } = props;
     return makeRequest({
+      authToken,
       endpoint,
       method: 'PUT',
       params,
@@ -133,18 +143,10 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     });
   }
 
-  async function patch({
-    endpoint,
-    body,
-    params,
-    signal,
-  }: {
-    endpoint: string;
-    body?: any;
-    params?: any;
-    signal?: AbortSignal;
-  }) {
+  async function patch(props: PatchProps) {
+    const { authToken, endpoint, body, params, signal } = props;
     return makeRequest({
+      authToken,
       endpoint,
       method: 'PATCH',
       params,
@@ -153,16 +155,9 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
     });
   }
 
-  async function destroy({
-    endpoint,
-    params,
-    signal,
-  }: {
-    endpoint: string;
-    params?: any;
-    signal?: AbortSignal;
-  }) {
-    return makeRequest({ endpoint, method: 'DELETE', params, signal });
+  async function destroy(props: DestroyProps) {
+    const { authToken, endpoint, params, signal } = props;
+    return makeRequest({ authToken, endpoint, method: 'DELETE', params, signal });
   }
 
   return { get, post, put, patch, destroy };
@@ -171,5 +166,3 @@ const Api = ({ authToken, apiOrigin }: IApiProps) => {
 function handleError(requestUrl: string): void {
   console.error(`Error fetching from ${requestUrl}`);
 }
-
-export default Api;

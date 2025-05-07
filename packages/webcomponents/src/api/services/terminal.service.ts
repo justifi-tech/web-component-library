@@ -1,5 +1,4 @@
-import { IApiResponse, IApiResponseCollection, ITerminal } from '..';
-import Api from '../ApiNew';
+import { Api, IApiResponse, IApiResponseCollection, ITerminal } from '..';
 
 const api = Api();
 

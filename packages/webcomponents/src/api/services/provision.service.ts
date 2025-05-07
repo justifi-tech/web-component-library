@@ -1,4 +1,6 @@
-import Api, { IApiResponse } from '../Api';
+import { Api, IApiResponse } from '..';
+
+const api = Api();
 
 export interface IProvisionService {
   postProvisioning(
@@ -15,13 +17,10 @@ export class ProvisionService implements IProvisionService {
     product: string
   ): Promise<IApiResponse<any>> {
     const endpoint = `entities/provisioning`;
-    const payload = {
+    const body = {
       business_id: businessId,
       product_category: product,
     };
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    return api.post({ endpoint, body, authToken });
   }
 }

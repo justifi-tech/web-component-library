@@ -1,4 +1,3 @@
-export { default as Api } from './Api';
 export * from './Api';
 export * from './ComponentEvents';
 export * from './ComponentError';
@@ -15,5 +14,10 @@ export * from './TerminalModel';
 export * from './SubAccount';
 export * from './Document';
 export * from './Refund';
+export * from './Dispute';
+export * from './GrossVolume';
+export * from './Business';
+export * from './Identity';
+export * from './Document';
 // In a future PR I would like to update the naming of the BankAccount Payment Method class in Payment.ts so this import can be updated to be written the same as the others in this file.
 export { BankAccount, IBankAccount } from './BankAccount';
