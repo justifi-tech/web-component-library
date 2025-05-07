@@ -2,8 +2,7 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { FormController } from '../../../../ui-components/form/form';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
-import { IApiResponse } from '../../../../api';
-import Api from '../../../../api/ApiNew';
+import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';

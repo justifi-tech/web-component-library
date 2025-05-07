@@ -1,8 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
-import { IApiResponse } from '../../../api';
-import Api from '../../../api/ApiNew';
+import { Api, IApiResponse } from '../../../api';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';

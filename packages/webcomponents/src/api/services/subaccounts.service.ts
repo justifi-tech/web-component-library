@@ -1,5 +1,4 @@
-import { ISubAccount } from '..';
-import Api, { IApiResponseCollection } from '../ApiNew';
+import { Api, IApiResponseCollection, ISubAccount } from '..';
 
 export interface ISubAccountService {
   fetchSubAccounts(

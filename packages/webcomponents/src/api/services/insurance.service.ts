@@ -1,5 +1,4 @@
-import { IApiResponse, IQuote } from '..';
-import Api from '../ApiNew';
+import { Api, IApiResponse, IQuote } from '..';
 
 const api = Api();
 
