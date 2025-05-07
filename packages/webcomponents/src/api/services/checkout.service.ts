@@ -5,6 +5,8 @@ import {
   ICheckout,
   ICheckoutCompleteResponse,
 } from '..';
+import NewApi from '../ApiNew';
+
 
 export interface ICheckoutService {
   fetchCheckout(
@@ -15,8 +17,7 @@ export interface ICheckoutService {
   fetchCheckouts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ICheckout[]>>;
 
   complete(
@@ -38,18 +39,12 @@ export class CheckoutService implements ICheckoutService {
   async fetchCheckouts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ICheckout[]>> {
-    if (!apiOrigin) {
-      apiOrigin = PROXY_API_ORIGIN;
-    }
-
+    const api = NewApi();
     const headers = { Account: accountId };
-
-    const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'checkouts';
-    return api.get({ endpoint, params, headers });
+    return api.get({ endpoint, params, headers, authToken });
   }
 
   async complete(
