@@ -4,7 +4,7 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payments-list-params-state';
-import { table, tableCell } from '../../styles/parts';
+import { table, tableCell, tableRow } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
 
@@ -140,6 +140,7 @@ export class PaymentsListCore {
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
+                  part={tableRow}
                 >
                   {data}
                 </tr>
