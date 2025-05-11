@@ -76,8 +76,6 @@ export const tableError = `table-error ${text} ${backgroundColor}`;
 // Pagination
 export const paginationItem = `pagination-item ${text} ${backgroundColor}`;
 export const paginationItemText = `pagination-item-text ${text}`;
-export const paginationItemNext = `pagination-item-next ${paginationItem}`;
-export const paginationItemPrevious = `pagination-item-previous ${paginationItem}`;
 export const paginationItemIcon = `pagination-item-icon ${text}`;
 export const paginationItemIconNext = `pagination-item-icon-next ${paginationItemIcon}`;
 export const paginationItemIconPrevious = `pagination-item-icon-previous ${paginationItemIcon}`;
