@@ -4,6 +4,8 @@ import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "../../api";
 import { BillingInfo } from "../../api/BillingInformation";
+import { makeGetCheckout } from "../../actions/checkout/checkout-actions";
+import { CheckoutService } from "../../api/services/checkout.service";
 
 @Component({
   tag: 'justifi-checkout-wrapper',
@@ -14,9 +16,11 @@ export class CheckoutWrapper {
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
   private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
+  private getCheckout: Function;
 
   @Prop() authToken: string;
   @Prop() accountId: string;
+  @Prop() checkoutId: string;
 
   @Element() hostEl: HTMLElement;
 
@@ -27,6 +31,7 @@ export class CheckoutWrapper {
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
     checkoutStore.accountId = this.accountId;
+    this.fetchCheckout();
   }
 
   connectedCallback() {
@@ -38,6 +43,12 @@ export class CheckoutWrapper {
       childList: true,
       subtree: true
     });
+
+    this.getCheckout = makeGetCheckout({
+      authToken: this.authToken,
+      checkoutId: this.checkoutId,
+      service: new CheckoutService()
+    });
   }
 
   componentDidLoad() {
@@ -46,6 +57,26 @@ export class CheckoutWrapper {
 
   disconnectedCallback() {
     this.observer?.disconnect();
+  }
+
+  private fetchCheckout() {
+    if (this.getCheckout) {
+      this.getCheckout({
+        onSuccess: ({ checkout }) => {
+          checkoutStore.paymentMethods = checkout.payment_methods;
+          checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
+          checkoutStore.paymentDescription = checkout.payment_description;
+          checkoutStore.totalAmount = checkout.total_amount;
+        },
+        onError: (error) => {
+          this.errorEvent.emit({
+            message: error.message,
+            errorCode: ComponentErrorCodes.FETCH_ERROR,
+            severity: ComponentErrorSeverity.ERROR,
+          });
+        }
+      });
+    }
   }
 
   private queryFormRefs() {
