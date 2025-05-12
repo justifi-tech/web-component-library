@@ -27,7 +27,7 @@
     "@storybook/theming": "^8.6.12",
     "@storybook/web-components": "^8.6.12",
     "@storybook/web-components-vite": "^8.6.12",
-    "@types/node": "22.15.3",
+    "@types/node": "22.15.17",
     "@vitejs/plugin-react": "^4.4.1",
     "chromatic": "^11.28.2",
     "dotenv": "^16.5.0",
