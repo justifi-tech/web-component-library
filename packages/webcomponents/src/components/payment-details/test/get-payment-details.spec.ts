@@ -35,8 +35,7 @@ describe('getPaymentDetails', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: paymentId,
       authToken: authToken,
-      service: mockServiceInstance,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockServiceInstance
     });
     await getPaymentDetails({ onSuccess, onError, final });
 
@@ -58,8 +57,7 @@ describe('getPaymentDetails', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: paymentId,
       authToken: authToken,
-      service: mockServiceInstance,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockServiceInstance
     });
     await getPaymentDetails({ onSuccess, onError, final });
 
@@ -83,8 +81,7 @@ describe('getPaymentDetails', () => {
     const getPaymentDetails = makeGetPaymentDetails({
       id: paymentId,
       authToken: authToken,
-      service: mockServiceInstance,
-      apiOrigin: PROXY_API_ORIGIN
+      service: mockServiceInstance
     });
     await getPaymentDetails({ onSuccess, onError, final });
 

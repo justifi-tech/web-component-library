@@ -10,7 +10,6 @@ describe('makeGetTerminals', () => {
   const mockId = '123';
   const mockAuthToken = 'fake_token_789';
   const mockParams = { limit: 10, page: 1 };
-  const mockApiOrigin = 'http://localhost:3000';
 
   let mockServiceInstance: jest.Mocked<TerminalService>;
 
@@ -36,8 +35,7 @@ describe('makeGetTerminals', () => {
     const getTerminals = makeGetTerminals({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      service: mockServiceInstance
     });
     await getTerminals({ params: mockParams, onSuccess, onError });
 
@@ -62,8 +60,7 @@ describe('makeGetTerminals', () => {
     const getTerminals = makeGetTerminals({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      service: mockServiceInstance
     });
     await getTerminals({ params: mockParams, onSuccess, onError });
 
@@ -86,8 +83,7 @@ describe('makeGetTerminals', () => {
     const getTerminals = makeGetTerminals({
       id: mockId,
       authToken: mockAuthToken,
-      service: mockServiceInstance,
-      apiOrigin: mockApiOrigin
+      service: mockServiceInstance
     });
     await getTerminals({ params: mockParams, onSuccess, onError });
 

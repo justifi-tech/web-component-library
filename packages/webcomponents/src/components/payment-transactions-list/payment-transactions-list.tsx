@@ -24,7 +24,6 @@ export class PaymentTransactionsList {
 
   @Prop() paymentId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
@@ -60,8 +59,7 @@ export class PaymentTransactionsList {
       const getPaymentTransactions = makeGetPaymentTransactions({
         id: this.paymentId,
         authToken: this.authToken,
-        service: new PaymentService(),
-        apiOrigin: this.apiOrigin
+        service: new PaymentService()
       });
 
       getPaymentTransactions({

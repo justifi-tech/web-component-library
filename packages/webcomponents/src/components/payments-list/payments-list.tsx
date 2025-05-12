@@ -19,7 +19,6 @@ export class PaymentsList {
 
   @Prop() accountId: string;
   @Prop() authToken: string;
-  @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -47,8 +46,7 @@ export class PaymentsList {
       this.getPayments = makeGetPayments({
         id: this.accountId,
         authToken: this.authToken,
-        service: new PaymentService(),
-        apiOrigin: this.apiOrigin,
+        service: new PaymentService()
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
