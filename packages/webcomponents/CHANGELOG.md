@@ -1,5 +1,12 @@
 ### Changelog
 
+## 5.6.1
+
+### Patch Changes
+
+- 700fb4d: Update tooltip and error text for `tax_id` (SSN / EIN) field in the first form step of the `justifi-payment-provisioning` component. Tooltip and error text has been updated to clarify that tax ID value must be entered without dashes or hyphens.
+- e23dcf8: Add new CSS parts for list components to allow more control and customization when styling components: `table-row`, `pagination-item`, `pagination-item-text`, `pagination-item-icon`, `pagination-item-icon-next`, and `pagination-item-icon-previous`.
+
 ## 5.6.0
 
 ### Minor Changes
