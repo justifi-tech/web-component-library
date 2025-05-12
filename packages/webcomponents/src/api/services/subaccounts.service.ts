@@ -1,25 +1,24 @@
-import { Api, IApiResponseCollection, ISubAccount } from '..';
+import { ISubAccount } from '..';
+import Api, { IApiResponseCollection } from '../ApiNew';
 
 export interface ISubAccountService {
   fetchSubAccounts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ISubAccount[]>>;
 }
+
+const api = Api();
 
 export class SubAccountService implements ISubAccountService {
   async fetchSubAccounts(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin: string = PROXY_API_ORIGIN
+    params: any
   ): Promise<IApiResponseCollection<ISubAccount[]>> {
-    const headers = { Account: accountId };
-
-    const api = Api({ authToken, apiOrigin: apiOrigin });
     const endpoint = 'sub_accounts';
-    return api.get({ endpoint, params, headers });
+    const headers = { Account: accountId };
+    return api.get({ authToken, endpoint, params, headers });
   }
 }

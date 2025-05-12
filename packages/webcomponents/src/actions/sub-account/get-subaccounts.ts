@@ -2,14 +2,13 @@ import { ComponentErrorSeverity, SubAccount } from '../../api';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetSubAccounts =
-  ({ accountId, authToken, service, apiOrigin }) =>
+  ({ accountId, authToken, service }) =>
   async ({ params, onSuccess, onError }) => {
     try {
       const response = await service.fetchSubAccounts(
         accountId,
         authToken,
-        params,
-        apiOrigin
+        params
       );
 
       if (!response.error) {

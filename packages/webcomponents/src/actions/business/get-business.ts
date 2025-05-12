@@ -3,10 +3,10 @@ import { ComponentErrorSeverity } from '../../api/ComponentError';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetBusiness =
-  ({ id, authToken, service, apiOrigin = PROXY_API_ORIGIN }) =>
+  ({ id, authToken, service }) =>
   async ({ onSuccess, onError }) => {
     try {
-      const response = await service.fetchBusiness(id, authToken, apiOrigin);
+      const response = await service.fetchBusiness(id, authToken);
 
       if (!response.error) {
         onSuccess({ business: new Business(response.data) });

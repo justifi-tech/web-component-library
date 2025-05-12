@@ -1,27 +1,26 @@
-import { Api, IApiResponse, IApiResponseCollection, ITerminal } from '..';
+import { IApiResponse, IApiResponseCollection, ITerminal } from '..';
+import Api from '../ApiNew';
+
+const api = Api();
 
 export interface ITerminalService {
   fetchTerminals(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ITerminal[]>>;
   fetchTerminal(
     terminalId: string,
-    authToken: string,
-    apiOrigin?: string
+    authToken: string
   ): Promise<IApiResponse<ITerminal>>;
   fetchTerminalModels(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin?: string
+    params: any
   ): Promise<IApiResponseCollection<ITerminal>>;
   orderTerminals(
     authToken: string,
-    terminalOrder: any,
-    apiOrigin?: string
+    terminalOrder: any
   ): Promise<IApiResponse<ITerminal>>;
 }
 
@@ -29,45 +28,37 @@ export class TerminalService implements ITerminalService {
   async fetchTerminals(
     accountId: string,
     authToken: string,
-    params: any,
-    apiOrigin: string = PROXY_API_ORIGIN
+    params: any
   ): Promise<IApiResponseCollection<ITerminal[]>> {
-    const headers = { Account: accountId };
-
-    const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals';
-    return api.get({ endpoint, params, headers });
+    const headers = { Account: accountId };
+    return api.get({ endpoint, params, headers, authToken });
   }
 
   async fetchTerminal(
     terminalId: string,
-    authToken: string,
-    apiOrigin: string = PROXY_API_ORIGIN
+    authToken: string
   ): Promise<IApiResponse<ITerminal>> {
     const endpoint = `terminals/${terminalId}`;
-    return Api({ authToken, apiOrigin: apiOrigin }).get({ endpoint });
+    return api.get({ endpoint, authToken });
   }
 
   async fetchTerminalModels(
     accountId: string,
-    authToken: string,
-    apiOrigin: string = API_ORIGIN
+    authToken: string
   ): Promise<IApiResponseCollection<ITerminal>> {
-    const headers = { 'sub-account': accountId };
-
-    const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/order_models';
-    return api.get({ endpoint, headers });
+    const headers = { 'sub-account': accountId };
+    return api.get({ endpoint, headers, authToken });
   }
 
   async orderTerminals(
     authToken: string,
-    terminalOrder: any,
-    apiOrigin: string = API_ORIGIN
+    terminalOrder: any
   ): Promise<IApiResponse<ITerminal>> {
-    const headers = { 'sub-account': terminalOrder.sub_account_id };
-    const api = Api({ authToken, apiOrigin });
     const endpoint = 'terminals/orders';
-    return api.post({ endpoint, body: terminalOrder, headers });
+    const body = terminalOrder;
+    const headers = { 'sub-account': terminalOrder.sub_account_id };
+    return api.post({ endpoint, body, headers, authToken });
   }
 }

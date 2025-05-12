@@ -27,8 +27,7 @@ describe('payments-list-core render and events', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPaymentsService
     });
 
     const page = await newSpecPage({
@@ -53,8 +52,7 @@ describe('payments-list-core render and events', () => {
     const getPayments = makeGetPayments({
       id: 'some-id',
       authToken: 'some-auth-token',
-      service: mockService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockService
     });
 
     const page = await newSpecPage({
@@ -76,8 +74,7 @@ describe('payments-list-core render and events', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPaymentsService
     });
 
     const page = await newSpecPage({
@@ -105,8 +102,7 @@ describe('payments-list-core render and events', () => {
     const getPayments = makeGetPayments({
       id: 'some-id',
       authToken: 'some-auth',
-      service: mockService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockService
     });
 
     const errorEvent = jest.fn();
@@ -144,8 +140,7 @@ describe('payments-list-core pagination', () => {
     const getPayments = makeGetPayments({
       id: '123',
       authToken: '123',
-      service: mockPaymentsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockPaymentsService
     });
 
     const page = await newSpecPage({
