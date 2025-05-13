@@ -82,7 +82,7 @@ ${codeExampleHead(
 
 <body>
   <justifi-business-form
-    business-id="businessId"
+    business-id="biz_123"
     auth-token="authToken"
   />
 </body>
