@@ -23,7 +23,7 @@ ${codeExampleHead(
 
 <body>
   <justifi-payout-details 
-    payout-id="po123" 
+    payout-id="po_123" 
     auth-token="authToken"
   />
 </body>

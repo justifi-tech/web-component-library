@@ -38,7 +38,7 @@ ${codeExampleHead(
   <!-- Optional: add the filters component -->
   <justifi-checkouts-list-filters />
   <justifi-checkouts-list
-    account-id="accountId"
+    account-id="acc_123"
     auth-token="authToken"
   />
 </body>

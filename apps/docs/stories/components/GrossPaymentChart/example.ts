@@ -7,7 +7,7 @@ ${codeExampleHead('justifi-gross-payment-chart')}
 
 <body>
   <justifi-gross-payment-chart
-    account-id="accountId"
+    account-id="acc_123"
     auth-token="authToken"
   />
 </body>

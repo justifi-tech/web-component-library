@@ -111,8 +111,8 @@ ${codeExampleHead(
 
   <body>
     <justifi-tokenize-payment-method
+      account-id="acc_123"
       auth-token="authToken"
-      account-id="acc_5Et9iXrSSAZR2KSouQGAWi"
     />
   </body>
 

@@ -42,7 +42,7 @@ ${codeExampleHead(
   <!-- Optional: add the filters component -->
   <justifi-payments-list-filters></justifi-payments-list-filters>
   <justifi-payments-list 
-    account-id="accountId"
+    account-id="acc_123"
     auth-token="authToken"
   />
 </body>

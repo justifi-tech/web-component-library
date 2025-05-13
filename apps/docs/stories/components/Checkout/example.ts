@@ -111,7 +111,7 @@ ${codeExampleHead(
 
 <body>
   <justifi-checkout 
-    checkout-id="abc123"
+    checkout-id="cho_123"
     auth-token="authToken"
   >
     <!-- Optional: add the insurance slot and component -->

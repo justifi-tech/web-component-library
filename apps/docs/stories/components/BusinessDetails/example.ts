@@ -23,10 +23,9 @@ ${codeExampleHead(
 
 <body>
   <justifi-business-details
-    business-id="123" 
-    auth-token="your-auth-token"
-  >
-  </justifi-business-details>
+    business-id="biz_123"
+    auth-token="authToken"
+  />
 </body>
 
 <script>

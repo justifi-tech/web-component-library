@@ -48,7 +48,7 @@ ${codeExampleHead(
 
 <body>
   <justifi-dispute-management 
-    dispute-id="disputeId" 
+    dispute-id="dp_123" 
     auth-token="authToken"
   />
 </body>

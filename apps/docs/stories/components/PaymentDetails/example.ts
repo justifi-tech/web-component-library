@@ -23,8 +23,8 @@ ${codeExampleHead(
 
 <body>
   <justifi-payment-details 
-    payment-id="123" 
-    auth-token="your-auth-token"
+    payment-id="py_123" 
+    auth-token="authToken"
   />
 </body>
 
