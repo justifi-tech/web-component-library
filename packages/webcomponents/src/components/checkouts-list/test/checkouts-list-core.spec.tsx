@@ -28,8 +28,7 @@ describe('checkouts-list-core', () => {
     const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockCheckoutsService
     });
 
     const mockSubAccountsService = {
@@ -64,8 +63,7 @@ describe('checkouts-list-core', () => {
     const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockCheckoutsService
     });
 
     const mockSubAccountsService = {
@@ -97,8 +95,7 @@ describe('checkouts-list-core', () => {
     const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockCheckoutsService
     });
 
     const mockSubAccountsService = {
@@ -137,8 +134,7 @@ describe('checkouts-list-core', () => {
     const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockCheckoutsService
     });
 
     const mockSubAccountsService = {
@@ -182,8 +178,7 @@ describe('checkouts-list-core pagination', () => {
     const getCheckouts = makeGetCheckouts({
       accountId: 'mock_id',
       authToken: '123',
-      service: mockCheckoutsService,
-      apiOrigin: 'http://localhost:3000'
+      service: mockCheckoutsService
     });
 
     const mockSubAccountsService = {

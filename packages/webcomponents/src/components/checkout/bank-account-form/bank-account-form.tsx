@@ -1,16 +1,36 @@
-import { Component, h, Host, Method, Prop, State } from "@stencil/core";
+import { Component, h, Host, Method, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
+import { configState, waitForConfig } from "../../config-provider/config-state";
 
 @Component({
   tag: "bank-account-form",
 })
 export class BankAccountForm {
-  @Prop() iframeOrigin: string;
-
   @State() isReady: boolean = false;
+  @State() iframeOrigin: string;
 
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
+
+  async componentWillLoad() {
+    await waitForConfig();
+    this.iframeOrigin = configState.iframeOrigin;
+  }
+  
+  componentDidRender() {
+    const elements = [
+      this.accountNumberIframeElement,
+      this.routingNumberIframeElement,
+    ];
+
+    Promise.all(elements.map((element) => {
+      return new Promise<void>((resolve) => {
+        element.addEventListener('iframeLoaded', () => { resolve(); });
+      });
+    })).then(() => {
+      this.isReady = true;
+    });
+  }
 
   @Method()
   async validate(): Promise<any> {
@@ -32,20 +52,6 @@ export class BankAccountForm {
     );
   }
 
-  componentDidRender() {
-    const elements = [
-      this.accountNumberIframeElement,
-      this.routingNumberIframeElement,
-    ];
-
-    Promise.all(elements.map((element) => {
-      return new Promise<void>((resolve) => {
-        element.addEventListener('iframeLoaded', () => { resolve(); });
-      });
-    })).then(() => {
-      this.isReady = true;
-    });
-  }
 
   render() {
     return (
