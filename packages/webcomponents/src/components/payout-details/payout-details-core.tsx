@@ -113,10 +113,12 @@ export class PayoutDetailsCore {
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
                 <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
               </div>
-              <DetailSectionTitle sectionTitle='Metadata' />
-              <div class="d-table gap-2 w-100">
-                <CodeBlock metadata={this.payout.metadata} />
-              </div>
+              {this.payout.metadata && [
+                <DetailSectionTitle sectionTitle='Metadata' />,
+                <div class="d-table gap-2 w-100">
+                  <CodeBlock metadata={this.payout.metadata} />
+                </div>
+              ]}
             </div>
           </justifi-details>
         )}
