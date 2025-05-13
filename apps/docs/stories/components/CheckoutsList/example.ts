@@ -36,8 +36,11 @@ ${codeExampleHead(
 
 <body>
   <!-- Optional: add the filters component -->
-  <justifi-checkouts-list-filters></justifi-checkouts-list-filters>
-  <justifi-checkouts-list></justifi-checkouts-list>
+  <justifi-checkouts-list-filters />
+  <justifi-checkouts-list
+    account-id="accountId"
+    auth-token="authToken"
+  />
 </body>
 
 </html>

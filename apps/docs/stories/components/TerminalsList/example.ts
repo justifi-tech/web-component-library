@@ -41,7 +41,10 @@ ${codeExampleHead(
 <body>
   <!-- Optional: add the filters component -->
   <justifi-terminals-list-filters></justifi-terminals-list-filters>
-  <justifi-terminals-list></justifi-terminals-list>
+  <justifi-terminals-list 
+    account-id="accountId"
+    auth-token="authToken"
+  />
 </body>
 
 </html>

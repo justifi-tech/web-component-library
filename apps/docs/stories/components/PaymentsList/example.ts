@@ -41,7 +41,10 @@ ${codeExampleHead(
 <body>
   <!-- Optional: add the filters component -->
   <justifi-payments-list-filters></justifi-payments-list-filters>
-  <justifi-payments-list></justifi-payments-list>
+  <justifi-payments-list 
+    account-id="accountId"
+    auth-token="authToken"
+  />
 </body>
 
 </html>

@@ -110,7 +110,10 @@ ${codeExampleHead(
 )}
 
 <body>
-  <justifi-checkout auth-token="token" checkout-id="abc123">
+  <justifi-checkout 
+    checkout-id="abc123"
+    auth-token="authToken"
+  >
     <!-- Optional: add the insurance slot and component -->
     <div slot="insurance">
       <!-- see the insurance component docs for the full list of props -->

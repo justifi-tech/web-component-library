@@ -6,7 +6,10 @@ export default `<DOCTYPE html>
 ${codeExampleHead('justifi-gross-payment-chart')}
 
 <body>
-  <justifi-gross-payment-chart></justifi-gross-payment-chart>
+  <justifi-gross-payment-chart
+    account-id="accountId"
+    auth-token="authToken"
+  />
 </body>
 
 <script>

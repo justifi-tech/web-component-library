@@ -22,7 +22,10 @@ ${codeExampleHead(
 )}
 
 <body>
-  <justifi-payment-details payment-id="123" auth-token="your-auth-token"></justifi-payment-details>
+  <justifi-payment-details 
+    payment-id="123" 
+    auth-token="your-auth-token"
+  />
 </body>
 
 <script>

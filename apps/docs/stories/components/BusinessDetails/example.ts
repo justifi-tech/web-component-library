@@ -23,8 +23,10 @@ ${codeExampleHead(
 
 <body>
   <justifi-business-details
-    business-id="123" auth-token="your-auth-token"
-  ></justifi-business-details>
+    business-id="123" 
+    auth-token="your-auth-token"
+  >
+  </justifi-business-details>
 </body>
 
 <script>

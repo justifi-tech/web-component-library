@@ -111,13 +111,9 @@ ${codeExampleHead(
 
   <body>
     <justifi-tokenize-payment-method
-      auth-token="your-auth-token"
+      auth-token="authToken"
       account-id="acc_5Et9iXrSSAZR2KSouQGAWi"
-      hide-submit-button
-    >
-    </justifi-tokenize-payment-method>
-    <button id="tokenize-button">Tokenize</button>
-    <button id="fill-billing-form">Fill Billing Form</button>
+    />
   </body>
 
   <script>
@@ -148,7 +144,7 @@ ${codeExampleHead(
         address_state: "NY",
         address_postal_code: "12345",
       });
-}); 
+    }); 
 
   </script>
 
