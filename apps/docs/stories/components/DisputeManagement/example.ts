@@ -47,7 +47,7 @@ ${codeExampleHead(
 )}
 
 <body>
-  <justifi-dispute-management disputeId="disputeId" authToken="authToken">
+  <justifi-dispute-management dispute-id="disputeId" auth-token="authToken">
   </justifi-dispute-management>
 </body>
 
