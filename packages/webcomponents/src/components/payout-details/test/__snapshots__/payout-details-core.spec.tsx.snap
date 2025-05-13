@@ -136,10 +136,6 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </span>
         </div>
       </div>
-      <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
-        Metadata
-      </h2>
-      <div class="d-table gap-2 w-100"></div>
     </div>
   </justifi-details>
 </payout-details-core>
