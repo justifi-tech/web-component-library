@@ -4,9 +4,19 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './checkouts-list-params-state';
-import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
+import {
+  TableWrapper,
+  TableComponent,
+  TableHead,
+  TableHeadRow,
+  TableBody,
+  TableRow,
+  TableFoot,
+  TableFootRow,
+  TableFootCell
+} from '../../ui-components/table/table';
 
 @Component({
   tag: 'checkouts-list-core'
@@ -153,14 +163,14 @@ export class CheckoutsListCore {
 
   render() {
     return (
-      <div class="table-wrapper">
-        <table class="table table-hover" part={table}>
-          <thead class="table-head sticky-top">
-            <tr class="table-light text-nowrap">
+      <TableWrapper>
+        <TableComponent>
+          <TableHead>
+            <TableHeadRow>
               {this.checkoutsTable.columnData.map((column) => column)}
-            </tr>
-          </thead>
-          <tbody class="table-body">
+            </TableHeadRow>
+          </TableHead>
+          <TableBody>
             <TableLoadingState
               columnSpan={this.checkoutsTable.columnKeys.length}
               isLoading={this.loading}
@@ -174,19 +184,19 @@ export class CheckoutsListCore {
               errorMessage={this.errorMessage}
             />
             {this.showRowData && this.checkoutsTable.rowData.map((data, index) => (
-              <tr
+              <TableRow
                 data-test-id="table-row"
                 data-row-entity-id={this.entityId[index]}
                 onClick={this.rowClickHandler}
               >
                 {data}
-              </tr>
+              </TableRow>
             ))}
-          </tbody>
+          </TableBody>
           {this.paging && (
-            <tfoot class="sticky-bottom">
-              <tr class="table-light align-middle">
-                <td part={tableCell} colSpan={this.checkoutsTable.columnData.length}>
+            <TableFoot>
+              <TableFootRow>
+                <TableFootCell colSpan={this.checkoutsTable.columnData.length}>
                   <pagination-menu
                     paging={{
                       ...this.paging,
@@ -194,12 +204,12 @@ export class CheckoutsListCore {
                       handleClickNext: this.handleClickNext,
                     }}
                   />
-                </td>
-              </tr>
-            </tfoot>
+                </TableFootCell>
+              </TableFootRow>
+            </TableFoot>
           )}
-        </table>
-      </div>
+        </TableComponent>
+      </TableWrapper>
     );
   }
 }
