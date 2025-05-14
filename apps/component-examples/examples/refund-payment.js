@@ -1,17 +1,21 @@
 require('dotenv').config({ path: '../../.env' });
-
 const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+
 const app = express();
 const { v4: uuidv4 } = require('uuid');
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
-const paymentsEndpoint = process.env.PAYMENTS_ENDPOINT;
-const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
+const paymentsEndpoint = `${process.env.API_ORIGIN}${API_PATHS.PAYMENTS}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
-app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
+app.use(
+  '/scripts',
+  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
+);
 app.use('/styles', express.static(__dirname + '/../css/'));
 
 async function getToken() {
@@ -45,15 +49,15 @@ async function createPayment(token) {
     description: 'Test payment for refund example file',
     payment_method: {
       card: {
-      name: "Sylvia Fowles",
-      number: "4242424242424242",
-      verification: "123",
-      month: "3",
-      year: "2040",
-      address_postal_code: "55555"
-      }
-    }
-  })
+        name: 'Sylvia Fowles',
+        number: '4242424242424242',
+        verification: '123',
+        month: '3',
+        year: '2040',
+        address_postal_code: '55555',
+      },
+    },
+  });
 
   const response = await fetch(paymentsEndpoint, {
     method: 'POST',
@@ -63,7 +67,7 @@ async function createPayment(token) {
       'sub-account': subAccountId,
       'Idempotency-Key': uuidv4(),
     },
-    body: requestBody
+    body: requestBody,
   });
   const { id } = await response.json();
   return id;

@@ -1,12 +1,13 @@
 require('dotenv').config({ path: '../../.env' });
-
 const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+
 const { generateRandomLegalName } = require('../utils/random-business-names');
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
-const businessEndpoint = process.env.BUSINESS_ENDPOINT;
-const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
+const businessEndpoint = `${process.env.API_ORIGIN}${API_PATHS.BUSINESS}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -60,16 +61,15 @@ async function createBusiness(token) {
 
 async function getWebComponentToken(token, businessId) {
   const response = await fetch(webComponentTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [`write:business:${businessId}`],
-      }),
-    }
-  );
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [`write:business:${businessId}`],
+    }),
+  });
 
   const res = await response.json();
   console.log('response from getWebComponentToken', res);
