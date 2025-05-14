@@ -82,9 +82,9 @@ ${codeExampleHead(
 
 <body>
   <justifi-payment-provisioning
-    business-id="<BUSINESS_ID>"
-    auth-token="<WEBCOMPONENT_AUTH_TOKEN>">
-  </justifi-payment-provisioning>
+    business-id="biz_123"
+    auth-token="authToken"
+  />
 </body>
 
 <script>
