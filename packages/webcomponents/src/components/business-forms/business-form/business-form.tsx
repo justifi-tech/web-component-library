@@ -78,6 +78,20 @@ export class BusinessForm {
         businessId: this.businessId,
         service: new BusinessService()
       });
+
+      this.getBusiness({
+        onSuccess: (response) => {
+          this.instantiateBusiness(response.data);
+        },
+        onError: ({ error, code, severity }) => {
+          this.errorMessage = error.message;
+          this.errorEvent.emit({ errorCode: code, message: error.message, severity });
+        },
+        final: () => {
+          this.isLoading = false;
+        }
+      });
+
     } else {
       this.errorEvent.emit({
         message: 'auth-token and business-id are required',
@@ -85,19 +99,6 @@ export class BusinessForm {
         severity: ComponentErrorSeverity.ERROR,
       });
     }
-
-    this.getBusiness({
-      onSuccess: (response) => {
-        this.instantiateBusiness(response.data);
-      },
-      onError: ({ error, code, severity }) => {
-        this.errorMessage = error.message;
-        this.errorEvent.emit({ errorCode: code, message: error.message, severity });
-      },
-      final: () => {
-        this.isLoading = false;
-      }
-    });
   }
 
   private sendData = async () => {
