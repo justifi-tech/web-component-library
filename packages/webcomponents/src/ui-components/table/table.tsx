@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { table, tableRow, tableHeaderRow, tableCell } from '../../styles/parts';
+import { table, tableRow, tableHeaderRow, tableCell, tableFootCell } from '../../styles/parts';
 
 export const TableWrapper = (props, children) => {
   return (
@@ -67,6 +67,6 @@ export const TableFootRow = (props, children) => {
 
 export const TableFootCell = (props, children) => {
   return (
-    <td part={tableCell} {...props}>{children}</td>
+    <td part={tableFootCell} {...props}>{children}</td>
   );
 }

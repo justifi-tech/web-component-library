@@ -67,6 +67,7 @@ export const tableRow = `table-row ${text} ${backgroundColor}`;
 export const tableHeaderRow = `table-header-row ${text} ${backgroundColor}`;
 export const tableCell = `table-cell ${text} ${backgroundColor}`;
 export const tableHeadCell = `table-head-cell ${tableCell}`;
+export const tableFootCell = `table-foot-cell ${tableCell}`;
 export const tableCellEven = `table-cell-even ${tableCell}`;
 export const tableCellOdd = `table-cell-odd ${tableCell}`;
 export const getAlternateTableCellPart = (index) =>
