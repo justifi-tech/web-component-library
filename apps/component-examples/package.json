@@ -12,6 +12,7 @@
     "start:dispute": "npx nodemon ./examples/dispute.js",
     "start:checkouts-list": "npx nodemon ./examples/checkouts-list.js",
     "start:checkouts-list-with-filters": "npx nodemon ./examples/checkouts-list-with-filters.js",
+    "start:business-form": "npx nodemon ./examples/business-form.js",
     "start:payment-provisioning": "npx nodemon ./examples/payment-provisioning.js",
     "start:business-details": "npx nodemon ./examples/business-details.js",
     "start:tokenize-payment-method": "npx nodemon ./examples/tokenize-payment-method.js",
