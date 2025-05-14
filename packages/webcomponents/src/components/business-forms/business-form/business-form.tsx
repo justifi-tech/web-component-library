@@ -1,45 +1,46 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
-import { Api, IApiResponse } from '../../../api';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { BusinessFormLoading } from './business-form-loading';
-import { ComponentClickEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
 import { BusinessFormClickActions } from '../utils';
+import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning/payment-provisioning-actions';
+import { BusinessService } from '../../../api/services/business.service';
 
 @Component({
   tag: 'justifi-business-form',
   shadow: true
 })
 export class BusinessForm {
+  @State() isLoading: boolean = false;
+  @State() isSaving: boolean = false;
+  @State() errorMessage: BusinessFormServerErrors;
+  
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
-  @State() isLoading: boolean = false;
-  @State() isSaving: boolean = false;
-  @State() errorMessage: BusinessFormServerErrors;
 
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  
+  private getBusiness: Function;
+  private patchBusiness: Function;
 
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    const missingAuthTokenMessage = 'Warning: Missing auth-token. The form will not be functional without it.';
-    const missingBusinessIdMessage = 'Warning: Missing business-id. The form requires an existing business-id to function.';
-    if (!this.authToken) console.error(missingAuthTokenMessage);
-    if (!this.businessId) console.error(missingBusinessIdMessage);
-
     this.formController = new FormController(businessFormSchema);
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
-    this.fetchData();
+    this.initializeApi();
   }
 
   disconnectedCallback() {
@@ -59,38 +60,64 @@ export class BusinessForm {
   }
 
   private formController: FormController;
-  private api: any;
 
   instantiateBusiness = (data: IBusiness) => {
     const business = new Business(data);
     this.formController.setInitialValues({ ...business });
   }
 
-  private sendData = async () => {
-    this.isSaving = true;
-    try {
-      const values = this.formController.values.getValue();
-      const initialValues = this.formController.getInitialValues();
-      const payload = new Business({ ...initialValues, ...values }).payload;
-      const response = await this.api.patch(this.businessEndpoint, payload);
-      this.handleReponse(response);
-    } catch (error) {
-      this.errorMessage = BusinessFormServerErrors.patchData;
-    } finally {
-      this.isSaving = false;
+  private initializeApi() {
+    if (this.authToken && this.businessId) {
+      this.getBusiness = makeGetBusiness({
+        authToken: this.authToken,
+        businessId: this.businessId,
+        service: new BusinessService()
+      });
+      this.patchBusiness = makePatchBusiness({
+        authToken: this.authToken,
+        businessId: this.businessId,
+        service: new BusinessService()
+      });
+    } else {
+      this.errorEvent.emit({
+        message: 'auth-token and business-id are required',
+        errorCode: ComponentErrorCodes.MISSING_PROPS,
+        severity: ComponentErrorSeverity.ERROR,
+      });
     }
+
+    this.getBusiness({
+      onSuccess: (response) => {
+        this.instantiateBusiness(response.data);
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error.message;
+        this.errorEvent.emit({ errorCode: code, message: error.message, severity });
+      },
+      final: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
-  private fetchData = async () => {
-    this.isLoading = true;
-    try {
-      const response: IApiResponse<IBusiness> = await this.api.get(this.businessEndpoint);
-      this.instantiateBusiness(response.data);
-    } catch (error) {
-      this.errorMessage = BusinessFormServerErrors.fetchData;
-    } finally {
-      this.isLoading = false;
-    }
+  private sendData = async () => {
+    this.isSaving = true;
+    const values = this.formController.values.getValue();
+    const initialValues = this.formController.getInitialValues();
+    const payload = new Business({ ...initialValues, ...values }).payload;
+    this.patchBusiness({
+      payload,
+      onSuccess: (response) => {
+        this.handleReponse(response);
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorMessage = error.message;
+        this.errorEvent.emit({ errorCode: code, message: error.message, severity });
+      },
+      final: () => {
+        this.isSaving = false;
+      }
+    });
   }
 
   private validateAndSubmit = (event: any) => {
@@ -102,7 +129,7 @@ export class BusinessForm {
     if (response.error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     }
-    this.submitEvent.emit({ response: response });
+    this.submitEvent.emit({ response });
     this.instantiateBusiness(response.data);
   }
 
