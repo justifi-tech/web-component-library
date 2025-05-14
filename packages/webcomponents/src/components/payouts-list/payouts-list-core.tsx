@@ -5,10 +5,19 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payouts-list-params-state';
-import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
-import { TableRow } from '../../ui-components/table/table-row';
+import {
+  TableBody,
+  TableComponent,
+  TableFoot,
+  TableFootCell,
+  TableFootRow,
+  TableHead,
+  TableHeadRow,
+  TableRow,
+  TableWrapper
+} from '../../ui-components/table/table';
 
 @Component({
   tag: 'payouts-list-core',
@@ -173,14 +182,14 @@ export class PayoutsListCore {
 
   render() {
     return (
-      <div class="table-wrapper" part="table-wrapper">
-        <table class="table table-hover" part={table}>
-          <thead class="table-head sticky-top" part="table-head">
-            <tr class="table-light text-nowrap" part="table-head-row">
+      <TableWrapper>
+        <TableComponent>
+          <TableHead>
+            <TableHeadRow>
               {this.payoutsTable.columnData.map((column) => column)}
-            </tr>
-          </thead>
-          <tbody class="table-body">
+            </TableHeadRow>
+          </TableHead>
+          <TableBody>
             <TableLoadingState
               columnSpan={this.payoutsTable.columnKeys.length}
               isLoading={this.loading}
@@ -202,11 +211,11 @@ export class PayoutsListCore {
                 {data}
               </TableRow>
             ))}
-          </tbody>
+          </TableBody>
           {this.paging && (
-            <tfoot class="sticky-bottom">
-              <tr class="table-light align-middle">
-                <td part={tableCell} colSpan={this.payoutsTable.columnData.length}>
+            <TableFoot>
+              <TableFootRow>
+                <TableFootCell colSpan={this.payoutsTable.columnData.length}>
                   <pagination-menu
                     paging={{
                       ...this.paging,
@@ -214,12 +223,12 @@ export class PayoutsListCore {
                       handleClickNext: this.handleClickNext,
                     }}
                   />
-                </td>
-              </tr>
-            </tfoot>
+                </TableFootCell>
+              </TableFootRow>
+            </TableFoot>
           )}
-        </table>
-      </div>
+        </TableComponent>
+      </TableWrapper>
     );
   }
 }

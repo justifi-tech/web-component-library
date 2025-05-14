@@ -64,6 +64,7 @@ export const card = `card ${text} ${backgroundColor}`;
 // Table
 export const table = `table ${text} ${backgroundColor}`;
 export const tableRow = `table-row ${text} ${backgroundColor}`;
+export const tableHeaderRow = `table-header-row ${text} ${backgroundColor}`;
 export const tableCell = `table-cell ${text} ${backgroundColor}`;
 export const tableHeadCell = `table-head-cell ${tableCell}`;
 export const tableCellEven = `table-cell-even ${tableCell}`;
