@@ -4,7 +4,7 @@ export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 ${codeExampleHead(
-  'justifi-payment-form',
+  'justifi-checkout',
   `<style>
     ::part(font-family) {
       font-family: georgia;
@@ -109,34 +109,42 @@ ${codeExampleHead(
     </style>`
 )}
 
-  <body>
-    <justifi-tokenize-payment-method
-      account-id="acc_123"
-      auth-token="authToken"
-    />
-  </body>
+<body>
+  <justifi-checkout 
+    checkout-id="cho_123"
+    auth-token="authToken"
+  >
+    <!-- Optional: add the insurance slot and component -->
+    <div slot="insurance">
+      <!-- see the insurance component docs for the full list of props -->
+      <justifi-season-interruption-insurance checkout-id="abc123"></justifi-season-interruption-insurance>
+    </div>
+  </justifi-checkout>
+  <button id="fill-billing-form-button">Fill Billing Form</button>
+</body>
 
-  <script>
-    const justifiTokenizePaymentMethod = document.querySelector("justifi-tokenize-payment-method");
+<script>
+  (function () {
+    var checkoutForm = document.querySelector("justifi-checkout");
 
-    justifiTokenizePaymentMethod.addEventListener("submit-event", (event) => {
-      const token = event.detail.response.token;
-
-      console.log("Token from tokenize response:", token);
+    checkoutForm.addEventListener("submit-event", (event) => {
+      /* this event is raised when the server response is received */
+      console.log("server response received", event.detail.response);
     });
 
-    justifiTokenizePaymentMethod.addEventListener("error-event", (event) => {
-      console.log(event);
+    checkoutForm.addEventListener("error-event", (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
     });
 
-    // tokenize, if built-in submit button is hidden
-    document.getElementById("tokenize-button").addEventListener("click", () => {
-      justifiTokenizePaymentMethod.tokenizePaymentMethod();
+    // loaded event is raised when the form is fully loaded
+    checkoutForm.addEventListener("loaded", () => {
+      console.log("checkout form loaded");
     });
 
-    // fill billing form
-    document.getElementById("fill-billing-form").addEventListener("click", () => {
-      justifiTokenizePaymentMethod.fillBillingForm({
+    // fill billing form button click event
+    document.getElementById("fill-billing-form-button").addEventListener("click", () => {
+      checkoutForm.fillBillingForm({
         name: "John",
         address_line1: "123 Main St",
         address_line2: "Apt 1",
@@ -144,8 +152,6 @@ ${codeExampleHead(
         address_state: "NY",
         address_postal_code: "12345",
       });
-    }); 
-
-  </script>
-
+  })();
+</script>
 </html>`;

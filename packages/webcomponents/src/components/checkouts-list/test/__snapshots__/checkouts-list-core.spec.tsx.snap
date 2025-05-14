@@ -6,19 +6,19 @@ exports[`checkouts-list-core displays an error state on failed data fetch 1`] = 
     <table class="table table-hover" part="table text color font-family background-color">
       <thead class="sticky-top table-head">
         <tr class="table-light text-nowrap">
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date each checkout occurred">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date each checkout occurred">
             Processed On
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The dollar amount of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The dollar amount of each checkout">
             Payment Amount
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The description of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The description of each checkout">
             Payment Description
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The payment mode of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The payment mode of each checkout">
             Payment Mode
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The current status of each checkout">
             Status
           </th>
         </tr>
@@ -37,24 +37,24 @@ exports[`checkouts-list-core displays an error state on failed data fetch 1`] = 
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span class="me-1">
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
                         «
                       </span>
-                      <span>
+                      <span part="pagination-item-text text color font-family">
                         Previous
                       </span>
-                    </a>
+                    </button>
                   </li>
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span>
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span part="pagination-item-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1">
+                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
                         »
                       </span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </nav>
@@ -73,26 +73,26 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
     <table class="table table-hover" part="table text color font-family background-color">
       <thead class="sticky-top table-head">
         <tr class="table-light text-nowrap">
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The date each checkout occurred">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date each checkout occurred">
             Processed On
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The dollar amount of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The dollar amount of each checkout">
             Payment Amount
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The description of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The description of each checkout">
             Payment Description
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The payment mode of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The payment mode of each checkout">
             Payment Mode
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color text color font-family background-color" scope="col" title="The current status of each checkout">
+          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The current status of each checkout">
             Status
           </th>
         </tr>
       </thead>
       <tbody class="table-body">
         <tr data-row-entity-id="cho_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Aug 8, 2024
             </div>
@@ -100,23 +100,23 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               3:47pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             $3.99 USD
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             One Chocolate Donut
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             Card Present
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-success" part="badge font-family badge-success" title="The checkout has been completed">
               Completed
             </span>
           </td>
         </tr>
         <tr data-row-entity-id="cho_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row">
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Aug 8, 2024
             </div>
@@ -124,23 +124,23 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               4:32pm
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             $10.99 USD
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             1 Dozen Chocolate Donuts
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             Card Present
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-danger" part="badge font-family badge-danger" title="The checkout has expired">
               Expired
             </span>
           </td>
         </tr>
         <tr data-row-entity-id="cho_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Aug 8, 2024
             </div>
@@ -148,23 +148,23 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               4:32pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             $19.99 USD
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             2 Dozen Chocolate Donuts - Website To Go Order
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             E-commerce
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-primary" part="badge font-family badge-primary" title="The checkout has been created">
               Created
             </span>
           </td>
         </tr>
         <tr data-row-entity-id="cho_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row">
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Aug 8, 2024
             </div>
@@ -172,23 +172,23 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               4:32pm
             </div>
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             $89.99 USD
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             Weekly Donut Box Subscription
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             Buy Now Pay Later
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-primary" part="badge font-family badge-primary" title="The checkout has been created">
               Created
             </span>
           </td>
         </tr>
         <tr data-row-entity-id="cho_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row">
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Aug 8, 2024
             </div>
@@ -196,16 +196,16 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               4:32pm
             </div>
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             $24.99 USD
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             Donut Shop Size M T Shirt - Website Order
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             E-commerce
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The checkout has been attempted">
               Attempted
             </span>
@@ -219,24 +219,24 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span class="me-1">
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
                         «
                       </span>
-                      <span>
+                      <span part="pagination-item-text text color font-family">
                         Previous
                       </span>
-                    </a>
+                    </button>
                   </li>
                   <li class="disabled page-item">
-                    <a class="page-link" href="#" part="button-disabled button text color font-family">
-                      <span>
+                    <button class="page-link" part="button-disabled button text color font-family">
+                      <span part="pagination-item-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1">
+                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
                         »
                       </span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </nav>

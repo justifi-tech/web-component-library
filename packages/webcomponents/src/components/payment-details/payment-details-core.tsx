@@ -110,10 +110,12 @@ export class PaymentDetailsCore {
                     <DetailItem title="Account Owner" value={this.payment.payment_method.payersName} />
                   </div>
                 ]}
-                <DetailSectionTitle sectionTitle='Metadata' />
-                <div class="d-table gap-2 w-100">
-                  <CodeBlock metadata={this.payment.metadata} />
-                </div>
+                {this.payment.metadata && [
+                  <DetailSectionTitle sectionTitle='Metadata' />,
+                  <div class="d-table gap-2 w-100">
+                    <CodeBlock metadata={this.payment.metadata} />
+                  </div>
+                ]}
               </div>
             </justifi-details>
           )}

@@ -42,7 +42,7 @@ interface GetProps {
 }
 
 interface PostProps {
-  authToken: string;
+  authToken?: string;
   endpoint: string;
   body?: any;
   params?: any;

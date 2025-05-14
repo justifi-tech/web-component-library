@@ -162,10 +162,6 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             </span>
           </div>
         </div>
-        <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
-          Metadata
-        </h2>
-        <div class="d-table gap-2 w-100"></div>
       </div>
     </main>
   </justifi-details>

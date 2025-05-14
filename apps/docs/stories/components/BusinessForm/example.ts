@@ -82,9 +82,9 @@ ${codeExampleHead(
 
 <body>
   <justifi-business-form
-    business-id="<BUSINESS_ID>"
-    auth-token="<WEBCOMPONENT_AUTH_TOKEN>">
-  </justifi-business-form>
+    business-id="biz_123"
+    auth-token="authToken"
+  />
 </body>
 
 <script>

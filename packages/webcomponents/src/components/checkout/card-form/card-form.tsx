@@ -1,18 +1,23 @@
-import { Component, h, Host, Method, Prop, State } from "@stencil/core";
+import { Component, h, Host, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
+import { configState, waitForConfig } from "../../config-provider/config-state";
 
 @Component({
   tag: "card-form",
 })
 export class CardForm {
-  @Prop() iframeOrigin: string;
-
   @State() isReady: boolean = false;
+  @State() iframeOrigin: string;
 
   private cardNumberIframeElement!: HTMLIframeInputElement;
   private expirationMonthIframeElement!: HTMLIframeInputElement;
   private expirationYearIframeElement!: HTMLIframeInputElement;
   private cvvIframeElement!: HTMLIframeInputElement;
+
+  async componentWillLoad() {
+    await waitForConfig();
+    this.iframeOrigin = configState.iframeOrigin;
+  }
 
   componentDidRender() {
     const elements = [
