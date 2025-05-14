@@ -8,6 +8,7 @@ import { getRequestParams, onQueryParamsChange } from './payouts-list-params-sta
 import { table, tableCell } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
 import { TableClickActions } from '../../ui-components/table/event-types';
+import { TableRow } from '../../ui-components/table/table-row';
 
 @Component({
   tag: 'payouts-list-core',
@@ -193,13 +194,13 @@ export class PayoutsListCore {
               errorMessage={this.errorMessage}
             />
             {this.showRowData && this.payoutsTable.rowData.map((data, index) => (
-              <tr
+              <TableRow
                 data-test-id="table-row"
                 data-row-entity-id={this.entityId[index]}
                 onClick={this.rowClickHandler}
               >
                 {data}
-              </tr>
+              </TableRow>
             ))}
           </tbody>
           {this.paging && (
