@@ -1,5 +1,5 @@
 import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
-import { Button } from '../button';
+import { Button } from '../../ui-components/button';
 import { hasFilters } from './utils';
 import { dropdownMenu } from '../../styles/parts';
 
