@@ -31,7 +31,7 @@ const insurance = {
   policy_attributes: {
     insurable_amount: 1000,
     start_date: '2025-05-15',
-    end_date: '2024-12-31',
+    end_date: '2026-05-15',
     covered_identity: {
       first_name: 'John',
       last_name: 'Doe',
