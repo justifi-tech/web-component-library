@@ -64,10 +64,16 @@ export const card = `card ${text} ${backgroundColor}`;
 // Table
 export const table = `table ${text} ${backgroundColor}`;
 export const tableRow = `table-row ${text} ${backgroundColor}`;
-export const tableHeaderRow = `table-header-row ${text} ${backgroundColor}`;
 export const tableCell = `table-cell ${text} ${backgroundColor}`;
+
+export const tableHead = `table-head`;
+export const tableHeadRow = `table-head-row ${text} ${backgroundColor}`;
 export const tableHeadCell = `table-head-cell ${tableCell}`;
+
+export const tableFoot = `table-foot`;
+export const tableFootRow = `table-foot-row ${text} ${backgroundColor}`;
 export const tableFootCell = `table-foot-cell ${tableCell}`;
+
 export const tableCellEven = `table-cell-even ${tableCell}`;
 export const tableCellOdd = `table-cell-odd ${tableCell}`;
 export const getAlternateTableCellPart = (index) =>
