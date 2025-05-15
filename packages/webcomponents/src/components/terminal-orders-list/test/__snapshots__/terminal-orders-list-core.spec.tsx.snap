@@ -2,10 +2,10 @@
 
 exports[`terminal-orders-list-core displays an error state on failed data fetch 1`] = `
 <terminal-orders-list-core>
-  <div class="table-wrapper">
+  <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head">
-        <tr class="table-light text-nowrap">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was created">
             Created At
           </th>
@@ -27,28 +27,28 @@ exports[`terminal-orders-list-core displays an error state on failed data fetch 
           </td>
         </tr>
       </tbody>
-      <tfoot class="sticky-bottom">
-        <tr class="align-middle table-light">
-          <td colspan="4" part="table-cell text color font-family background-color">
+      <tfoot class="sticky-bottom" part="table-foot">
+        <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
+          <td colspan="4" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-button-icon-previous pagination-button-icon text color font-family">
                         «
                       </span>
-                      <span part="pagination-item-text text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Previous
                       </span>
                     </button>
                   </li>
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span part="pagination-item-text text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
+                      <span class="ms-1" part="pagination-button-icon-next pagination-button-icon text color font-family">
                         »
                       </span>
                     </button>
@@ -66,10 +66,10 @@ exports[`terminal-orders-list-core displays an error state on failed data fetch 
 
 exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
 <terminal-orders-list-core>
-  <div class="table-wrapper">
+  <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head">
-        <tr class="table-light text-nowrap">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was created">
             Created At
           </th>
@@ -85,7 +85,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr data-row-entity-id="tord_ABCD1234" data-test-id="table-row">
+        <tr data-row-entity-id="tord_ABCD1234" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Jan 2, 2025
@@ -111,7 +111,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
             1
           </td>
         </tr>
-        <tr data-row-entity-id="tord_WXYZ5678" data-test-id="table-row">
+        <tr data-row-entity-id="tord_WXYZ5678" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Feb 10, 2025
@@ -137,7 +137,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
             4
           </td>
         </tr>
-        <tr data-row-entity-id="tord_DEF55468789" data-test-id="table-row">
+        <tr data-row-entity-id="tord_DEF55468789" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Mar 11, 2025
@@ -163,7 +163,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
             2
           </td>
         </tr>
-        <tr data-row-entity-id="tord_GHI22168225" data-test-id="table-row">
+        <tr data-row-entity-id="tord_GHI22168225" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Apr 5, 2025
@@ -189,7 +189,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
             4
           </td>
         </tr>
-        <tr data-row-entity-id="tord_JKL12345678" data-test-id="table-row">
+        <tr data-row-entity-id="tord_JKL12345678" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               May 15, 2025
@@ -215,7 +215,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
             2
           </td>
         </tr>
-        <tr data-row-entity-id="tord_PQR12345678" data-test-id="table-row">
+        <tr data-row-entity-id="tord_PQR12345678" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
               Jun 1, 2025
@@ -241,7 +241,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
             1
           </td>
         </tr>
-        <tr data-row-entity-id="tord_MNO98765432" data-test-id="table-row">
+        <tr data-row-entity-id="tord_MNO98765432" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
               Jun 20, 2025
@@ -268,28 +268,28 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
           </td>
         </tr>
       </tbody>
-      <tfoot class="sticky-bottom">
-        <tr class="align-middle table-light">
-          <td colspan="4" part="table-cell text color font-family background-color">
+      <tfoot class="sticky-bottom" part="table-foot">
+        <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
+          <td colspan="4" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-button-icon-previous pagination-button-icon text color font-family">
                         «
                       </span>
-                      <span part="pagination-item-text text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Previous
                       </span>
                     </button>
                   </li>
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span part="pagination-item-text text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
+                      <span class="ms-1" part="pagination-button-icon-next pagination-button-icon text color font-family">
                         »
                       </span>
                     </button>

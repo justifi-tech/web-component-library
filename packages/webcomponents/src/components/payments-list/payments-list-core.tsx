@@ -4,9 +4,19 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payments-list-params-state';
-import { table, tableCell, tableRow } from '../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
-import { TableClickActions } from '../../ui-components/table/event-types';
+import {
+  TableWrapper,
+  TableComponent,
+  TableHead,
+  TableHeadRow,
+  TableBody,
+  TableRow,
+  TableFoot,
+  TableFootRow,
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'payments-list-core'
@@ -114,14 +124,14 @@ export class PaymentsListCore {
 
   render() {
     return (
-      <div class="table-wrapper">
-        <table class="table table-hover" part={table}>
-          <thead class="table-head sticky-top">
-            <tr class="table-light text-nowrap">
+      <TableWrapper>
+        <TableComponent>
+          <TableHead>
+            <TableHeadRow>
               {this.paymentsTable.columnData.map((column) => column)}
-            </tr>
-          </thead>
-          <tbody class="table-body">
+            </TableHeadRow>
+          </TableHead>
+          <TableBody>
             <TableLoadingState
               columnSpan={this.paymentsTable.columnData.length}
               isLoading={this.loading}
@@ -135,19 +145,19 @@ export class PaymentsListCore {
               errorMessage={this.errorMessage}
             />
             {this.showRowData && this.paymentsTable.rowData.map((data, index) => (
-              <tr
+              <TableRow
                 data-test-id="table-row"
                 data-row-entity-id={this.entityId[index]}
                 onClick={this.rowClickHandler}
-                part={tableRow}>
+              >
                 {data}
-              </tr>
+              </TableRow>
             ))}
-          </tbody>
+          </TableBody>
           {this.paging && (
-            <tfoot class="sticky-bottom">
-              <tr class="table-light align-middle">
-                <td part={tableCell} colSpan={this.paymentsTable.columnData.length}>
+            <TableFoot>
+              <TableFootRow>
+                <TableFootCell colSpan={this.paymentsTable.columnData.length}>
                   <pagination-menu
                     paging={{
                       ...this.paging,
@@ -155,12 +165,12 @@ export class PaymentsListCore {
                       handleClickNext: this.handleClickNext,
                     }}
                   />
-                </td>
-              </tr>
-            </tfoot>
+                </TableFootCell>
+              </TableFootRow>
+            </TableFoot>
           )}
-        </table>
-      </div>
+        </TableComponent>
+      </TableWrapper>
     );
   }
 }

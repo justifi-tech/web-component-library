@@ -8,7 +8,7 @@ import mockSuccessResponse from '../../../../../../mockData/mockTerminalOrdersLi
 import { IApiResponseCollection, ITerminalOrder } from '../../../api';
 import { makeGetTerminalOrders } from '../../../actions/terminal/get-terminal-orders';
 import { TerminalOrdersListFilters } from '../terminal-orders-list-filters';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../terminal-orders-table';
 

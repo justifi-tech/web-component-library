@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { tableError } from '../styles/parts';
+import { tableError } from '../../styles/parts';
 
 interface TableRenderStateProps {
   columnSpan: number;

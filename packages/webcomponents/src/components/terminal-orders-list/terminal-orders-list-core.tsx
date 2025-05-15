@@ -1,12 +1,22 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Table } from '../../utils/table';
-import { table, tableCell } from '../../styles/parts';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { ComponentClickEvent, ComponentErrorEvent, pagingDefaults, PagingInfo } from '../../api';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
-import { TableClickActions } from '../../ui-components/table/event-types';
 import { getRequestParams, onQueryParamsChange } from './terminal-orders-list-params-state';
+import {
+  TableWrapper,
+  TableComponent,
+  TableHead,
+  TableHeadRow,
+  TableBody,
+  TableRow,
+  TableFoot,
+  TableFootRow,
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'terminal-orders-list-core',
@@ -113,14 +123,14 @@ export class TerminalOrdersListCore {
 
   render() {
     return (
-      <div class="table-wrapper">
-        <table class="table table-hover" part={table}>
-          <thead class="table-head sticky-top">
-            <tr class="table-light text-nowrap">
+      <TableWrapper>
+        <TableComponent>
+          <TableHead>
+            <TableHeadRow>
               {this.terminalOrdersTable.columnData.map((column) => column)}
-            </tr>
-          </thead>
-          <tbody class="table-body">
+            </TableHeadRow>
+          </TableHead>
+          <TableBody>
             <TableLoadingState
               columnSpan={this.terminalOrdersTable.columnKeys.length}
               isLoading={this.loading}
@@ -134,19 +144,19 @@ export class TerminalOrdersListCore {
               errorMessage={this.errorMessage}
             />
             {this.showRowData && this.terminalOrdersTable.rowData.map((data, index) => (
-              <tr
+              <TableRow
                 data-test-id="table-row"
                 data-row-entity-id={this.entityId[index]}
                 onClick={this.rowClickHandler}
               >
                 {data}
-              </tr>
+              </TableRow>
             ))}
-          </tbody>
+          </TableBody>
           {this.paging && (
-            <tfoot class="sticky-bottom">
-              <tr class="table-light align-middle">
-                <td part={tableCell} colSpan={this.terminalOrdersTable.columnData.length}>
+            <TableFoot>
+              <TableFootRow>
+                <TableFootCell colSpan={this.terminalOrdersTable.columnData.length}>
                   <pagination-menu
                     paging={{
                       ...this.paging,
@@ -154,12 +164,12 @@ export class TerminalOrdersListCore {
                       handleClickNext: this.handleClickNext,
                     }}
                   />
-                </td>
-              </tr>
-            </tfoot>
+                </TableFootCell>
+              </TableFootRow>
+            </TableFoot>
           )}
-        </table>
-      </div>
+        </TableComponent>
+      </TableWrapper>
     );
   }
 }

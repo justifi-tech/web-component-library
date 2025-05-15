@@ -23,15 +23,6 @@
 | `error-event` |             | `CustomEvent<ComponentErrorEvent>` |
 
 
-## Shadow Parts
-
-| Part               | Description |
-| ------------------ | ----------- |
-| `"table-head"`     |             |
-| `"table-head-row"` |             |
-| `"table-wrapper"`  |             |
-
-
 ## Dependencies
 
 ### Used by

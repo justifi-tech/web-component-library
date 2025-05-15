@@ -2,10 +2,10 @@
 
 exports[`payments-list-core render and events displays an error state on failed data fetch 1`] = `
 <payments-list-core>
-  <div class="table-wrapper">
+  <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head">
-        <tr class="table-light text-nowrap">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time each payment was made">
             Date
           </th>
@@ -36,28 +36,28 @@ exports[`payments-list-core render and events displays an error state on failed 
           </td>
         </tr>
       </tbody>
-      <tfoot class="sticky-bottom">
-        <tr class="align-middle table-light">
-          <td colspan="7" part="table-cell text color font-family background-color">
+      <tfoot class="sticky-bottom" part="table-foot">
+        <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
+          <td colspan="7" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-button-icon-previous pagination-button-icon text color font-family">
                         «
                       </span>
-                      <span part="pagination-item-text text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Previous
                       </span>
                     </button>
                   </li>
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span part="pagination-item-text text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
+                      <span class="ms-1" part="pagination-button-icon-next pagination-button-icon text color font-family">
                         »
                       </span>
                     </button>
@@ -75,10 +75,10 @@ exports[`payments-list-core render and events displays an error state on failed 
 
 exports[`payments-list-core render and events renders properly with fetched data 1`] = `
 <payments-list-core>
-  <div class="table-wrapper">
+  <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head">
-        <tr class="table-light text-nowrap">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time each payment was made">
             Date
           </th>
@@ -314,28 +314,28 @@ exports[`payments-list-core render and events renders properly with fetched data
           </td>
         </tr>
       </tbody>
-      <tfoot class="sticky-bottom">
-        <tr class="align-middle table-light">
-          <td colspan="7" part="table-cell text color font-family background-color">
+      <tfoot class="sticky-bottom" part="table-foot">
+        <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
+          <td colspan="7" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-button-icon-previous pagination-button-icon text color font-family">
                         «
                       </span>
-                      <span part="pagination-item-text text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Previous
                       </span>
                     </button>
                   </li>
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span part="pagination-item-text text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
+                      <span class="ms-1" part="pagination-button-icon-next pagination-button-icon text color font-family">
                         »
                       </span>
                     </button>

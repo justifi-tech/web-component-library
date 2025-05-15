@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import Spinner from './spinner';
-import { tableCell } from '../styles/parts';
+import Spinner from '../spinner';
+import { tableCell } from '../../styles/parts';
 
 interface TableRenderStateProps {
   columnSpan: number;
