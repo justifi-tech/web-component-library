@@ -1,11 +1,13 @@
 require('dotenv').config({ path: '../../.env' });
 
 const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+
 const app = express();
 const port = process.env.PORT || 3000;
-const checkoutEndpoint = process.env.CHECKOUT_ENDPOINT;
-const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
-const webcomponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const checkoutEndpoint = `${process.env.API_ORIGIN}${API_PATHS.CHECKOUT}`;
+const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
+const webcomponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
@@ -28,8 +30,8 @@ const insurance = {
   },
   policy_attributes: {
     insurable_amount: 1000,
-    start_date: '2024-12-01',
-    end_date: '2024-12-31',
+    start_date: '2025-05-15',
+    end_date: '2026-05-15',
     covered_identity: {
       first_name: 'John',
       last_name: 'Doe',
