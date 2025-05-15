@@ -21,6 +21,7 @@
 | Event          | Description | Type                                |
 | -------------- | ----------- | ----------------------------------- |
 | `click-event`  |             | `CustomEvent<ComponentClickEvent>`  |
+| `error-event`  |             | `CustomEvent<ComponentErrorEvent>`  |
 | `submit-event` |             | `CustomEvent<ComponentSubmitEvent>` |
 
 
