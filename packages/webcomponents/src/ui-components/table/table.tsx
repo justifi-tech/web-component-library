@@ -1,5 +1,13 @@
 import { h } from '@stencil/core';
-import { table, tableRow, tableHeaderRow, tableFootCell } from '../../styles/parts';
+import {
+  table,
+  tableRow,
+  tableFoot,
+  tableFootRow,
+  tableFootCell,
+  tableHead,
+  tableHeadRow
+} from '../../styles/parts';
 
 export const TableWrapper = (props, children) => {
   return (
@@ -35,7 +43,7 @@ export const TableRow = (props, children) => {
 
 export const TableHead = (props, children) => {
   return (
-    <thead class="table-head sticky-top" part="table-head" {...props}>
+    <thead class="table-head sticky-top" part={tableHead} {...props}>
       {children}
     </thead>
   );
@@ -43,7 +51,7 @@ export const TableHead = (props, children) => {
 
 export const TableHeadRow = (props, children) => {
   return (
-    <tr class="table-light text-nowrap" part={tableHeaderRow} {...props}>
+    <tr class="table-light text-nowrap" part={tableHeadRow} {...props}>
       {children}
     </tr>
   );
@@ -51,7 +59,7 @@ export const TableHeadRow = (props, children) => {
 
 export const TableFoot = (props, children) => {
   return (
-    <tfoot class="sticky-bottom" {...props}>
+    <tfoot class="sticky-bottom" part={tableFoot} {...props}>
       {children}
     </tfoot>
   );
@@ -59,7 +67,7 @@ export const TableFoot = (props, children) => {
 
 export const TableFootRow = (props, children) => {
   return (
-    <tr class="table-light align-middle" {...props}>
+    <tr class="table-light align-middle" part={tableFootRow} {...props}>
       {children}
     </tr>
   );
