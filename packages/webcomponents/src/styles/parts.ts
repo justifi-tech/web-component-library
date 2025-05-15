@@ -98,6 +98,7 @@ export const badgeDark = `${badge} badge-dark`;
 
 // Dropdown-menu
 export const dropdownMenu = `dropdown-menu ${text}`;
+export const dropdownMenuButton = `dropdown-menu-button ${buttonPrimary}`;
 
 // Radio List Item
 export const radioListItem = `radio-list-item ${text}`;
