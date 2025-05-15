@@ -5,7 +5,6 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetPaymentTransactions } from '../../actions/payment/get-payment-transactions';
 import { PaymentService } from '../../api/services/payment.service';
 import { Table } from '../../utils/table';
-import { TableClickActions } from '../../ui-components/table/event-types';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, paymentTransactionTableCells, paymentTransactionTableColumns } from './payment-transactions-table';
 import {
@@ -17,8 +16,9 @@ import {
   TableRow,
   TableFoot,
   TableFootRow,
-  TableFootCell
-} from '../../ui-components/table/table';
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'justifi-payment-transactions-list',

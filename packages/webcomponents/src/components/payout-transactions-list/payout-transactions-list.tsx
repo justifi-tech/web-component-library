@@ -5,7 +5,6 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetPayoutTransactions } from '../../actions/payout/get-payout-transactions';
 import { PayoutService } from '../../api/services/payout.service';
 import { Table } from '../../utils/table';
-import { TableClickActions } from '../../ui-components/table/event-types';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, payoutTransactionTableCells, payoutTransactionTableColumns } from './payout-transactions-table';
 import { configState } from '../config-provider/config-state';
@@ -18,8 +17,9 @@ import {
   TableRow,
   TableFoot,
   TableFootRow,
-  TableFootCell
-} from '../../ui-components/table/table';
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'justifi-payout-transactions-list',

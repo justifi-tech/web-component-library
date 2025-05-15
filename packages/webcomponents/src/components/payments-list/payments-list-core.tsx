@@ -5,7 +5,6 @@ import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payments-list-params-state';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
-import { TableClickActions } from '../../ui-components/table/event-types';
 import {
   TableWrapper,
   TableComponent,
@@ -15,8 +14,9 @@ import {
   TableRow,
   TableFoot,
   TableFootRow,
-  TableFootCell
-} from '../../ui-components/table/table';
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'payments-list-core'

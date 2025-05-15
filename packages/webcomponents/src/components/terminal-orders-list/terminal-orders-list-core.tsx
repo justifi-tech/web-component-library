@@ -4,7 +4,6 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { ComponentClickEvent, ComponentErrorEvent, pagingDefaults, PagingInfo } from '../../api';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
-import { TableClickActions } from '../../ui-components/table/event-types';
 import { getRequestParams, onQueryParamsChange } from './terminal-orders-list-params-state';
 import {
   TableWrapper,
@@ -15,8 +14,9 @@ import {
   TableRow,
   TableFoot,
   TableFootRow,
-  TableFootCell
-} from '../../ui-components/table/table';
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'terminal-orders-list-core',

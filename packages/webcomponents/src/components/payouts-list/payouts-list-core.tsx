@@ -6,18 +6,18 @@ import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payouts-list-params-state';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
-import { TableClickActions } from '../../ui-components/table/event-types';
 import {
-  TableBody,
+  TableWrapper,
   TableComponent,
-  TableFoot,
-  TableFootCell,
-  TableFootRow,
   TableHead,
   TableHeadRow,
+  TableBody,
   TableRow,
-  TableWrapper
-} from '../../ui-components/table/table';
+  TableFoot,
+  TableFootRow,
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'payouts-list-core',
