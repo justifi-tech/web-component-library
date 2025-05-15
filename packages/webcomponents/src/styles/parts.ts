@@ -76,11 +76,12 @@ export const tableEmpty = `table-empty ${text} ${backgroundColor}`;
 export const tableError = `table-error ${text} ${backgroundColor}`;
 
 // Pagination
-export const paginationItem = `pagination-item ${text} ${backgroundColor}`;
-export const paginationItemText = `pagination-item-text ${text}`;
-export const paginationItemIcon = `pagination-item-icon ${text}`;
-export const paginationItemIconNext = `pagination-item-icon-next ${paginationItemIcon}`;
-export const paginationItemIconPrevious = `pagination-item-icon-previous ${paginationItemIcon}`;
+export const paginationButton = `pagination-button ${button}`;
+export const paginationButtonDisabled = `pagination-button-disabled ${buttonDisabled}`;
+export const paginationButtonText = `pagination-button-text ${text}`;
+export const paginationButtonIcon = `pagination-button-icon ${text}`;
+export const paginationButtonIconNext = `pagination-button-icon-next ${paginationButtonIcon}`;
+export const paginationButtonIconPrevious = `pagination-button-icon-previous ${paginationButtonIcon}`;
 
 // Loading spinner
 export const loadingSpinner = `loading-spinner`;
