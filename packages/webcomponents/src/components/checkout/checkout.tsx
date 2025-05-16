@@ -7,6 +7,7 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import checkoutStore from '../../store/checkout.store';
 
 @Component({
   tag: 'justifi-checkout',
@@ -68,6 +69,8 @@ export class Checkout {
   @Watch('authToken')
   @Watch('checkoutId')
   propChanged() {
+    checkoutStore.authToken = this.authToken;
+    checkoutStore.checkoutId = this.checkoutId;
     this.initializeGetCheckout();
   }
 
