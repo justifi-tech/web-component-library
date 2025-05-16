@@ -1,7 +1,7 @@
 import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
-import { Button } from '../button';
+import { Button } from '../../ui-components/button';
 import { hasFilters } from './utils';
-import { dropdownMenu } from '../../styles/parts';
+import { dropdownMenu, dropdownMenuButton } from '../../styles/parts';
 
 @Component({
   tag: 'table-filters-menu'
@@ -37,16 +37,16 @@ export class TableFiltersMenu {
     return (
       <div class="d-flex gap-2">
         <div class="dropdown pb-3">
-          <Button
-            variant="primary"
+          <button
             type="button dropdown-toggle"
             ref={(el) => (this.anchorButton = el)}
             class="btn btn-primary dropdown-toggle"
+            part={dropdownMenuButton}
             data-test-id="open-filters-button"
             data-bs-toggle="dropdown"
           >
             {"Filters"}
-          </Button>
+          </button>
           <custom-popper
             offset={[20, 10]}
             strategy="fixed"

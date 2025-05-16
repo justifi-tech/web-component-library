@@ -1,10 +1,11 @@
 require('dotenv').config({ path: '../../.env' });
-
 const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
-const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -18,7 +19,7 @@ app.use('/styles', express.static(__dirname + '/../css/'));
 async function getToken() {
   const requestBody = JSON.stringify({
     client_id: clientId,
-    client_secret: clientSecret
+    client_secret: clientSecret,
   });
 
   let response;
@@ -39,26 +40,24 @@ async function getToken() {
 }
 
 async function getWebComponentToken(token) {
-  const response = await fetch(webComponentTokenEndpoint,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [`read:account:${subAccountId}`],
-      }),
-    }
-  );
+  const response = await fetch(webComponentTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      resources: [`read:account:${subAccountId}`],
+    }),
+  });
 
   const { access_token } = await response.json();
   return access_token;
 }
 
 app.get('/', async (req, res) => {
-    const token = await getToken();
-    const webComponentToken = await getWebComponentToken(token);  
+  const token = await getToken();
+  const webComponentToken = await getWebComponentToken(token);
 
   res.send(`
     <!DOCTYPE html>

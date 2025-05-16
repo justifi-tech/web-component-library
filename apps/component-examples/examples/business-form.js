@@ -1,13 +1,12 @@
 require('dotenv').config({ path: '../../.env' });
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
 
+const express = require('express');
 const { generateRandomLegalName } = require('../utils/random-business-names');
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
-const businessEndpoint = `${process.env.API_ORIGIN}${API_PATHS.BUSINESS}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const businessEndpoint = process.env.BUSINESS_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -61,15 +60,16 @@ async function createBusiness(token) {
 
 async function getWebComponentToken(token, businessId) {
   const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      resources: [`write:business:${businessId}`],
-    }),
-  });
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        resources: [`write:business:${businessId}`],
+      }),
+    }
+  );
 
   const res = await response.json();
   console.log('response from getWebComponentToken', res);
@@ -86,29 +86,28 @@ app.get('/', async (req, res) => {
     <!DOCTYPE html>
     <html>
       <head>
-        <title>JustiFi Payment Provisioning Component</title>
+        <title>JustiFi Business Form Component</title>
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
         <div style="margin:0 auto;max-width:700px;">
-          <justifi-payment-provisioning
+          <justifi-business-form
             business-id="${businessId}"
-            auth-token="${webComponentToken}">
-          </justifi-payment-provisioning>
+            auth-token="${webComponentToken}"
+          >
+          </justifi-business-form>
         </div>
 
         <script>
-          const justifiPaymentProvisioning = document.querySelector('justifi-payment-provisioning');
+          const justifiBusinessForm = document.querySelector('justifi-business-form');
 
-          justifiPaymentProvisioning.addEventListener('submit-event', (event) => console.log(event));
+          justifiBusinessForm.addEventListener('submit-event', (event) => console.log(event));
 
-          justifiPaymentProvisioning.addEventListener('complete-form-step-event', (event) => console.log(event));
-
-          justifiPaymentProvisioning.addEventListener('click-event', (event) => console.log(event));
+          justifiBusinessForm.addEventListener('click-event', (event) => console.log(event));
           
-          justifiPaymentProvisioning.addEventListener('error-event', (event) => console.log(event));
+          justifiBusinessForm.addEventListener('error-event', (event) => console.log(event));
         </script>
       </body>
     </html>

@@ -1,3 +1,4 @@
+import { h } from "@stencil/core";
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessForm } from '../business-form';
 import JustifiAnalytics from '../../../../api/Analytics';
@@ -22,23 +23,23 @@ describe('justifi-business-form', () => {
     consoleSpy.mockRestore();
   });
 
-  it('should log a warning if no authToken is provided', async () => {
-    await newSpecPage({
-      components: [BusinessForm],
-      html: `<justifi-business-form></justifi-business-form>`,
+  it('emit an error event when accountId and authToken are not provided', async () => {
+      const errorEvent = jest.fn();
+      const page = await newSpecPage({
+        components: [BusinessForm],
+        template: () => <justifi-business-form onError-event={errorEvent} />,
+      });
+      await page.waitForChanges();
+      expect(errorEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            errorCode: 'missing-props',
+            message: 'auth-token and business-id are required',
+            severity: 'error',
+          },
+        })
+      );
     });
-
-    expect(consoleSpy).toHaveBeenCalledWith('Warning: Missing auth-token. The form will not be functional without it.');
-  });
-
-  it('should log a warning if no businessId is provided', async () => {
-    await newSpecPage({
-      components: [BusinessForm],
-      html: `<justifi-business-form></justifi-business-form>`,
-    });
-
-    expect(consoleSpy).toHaveBeenCalledWith('Warning: Missing business-id. The form requires an existing business-id to function.');
-  });
 
   it('should not log a warning if an authToken is provided', async () => {
     await newSpecPage({

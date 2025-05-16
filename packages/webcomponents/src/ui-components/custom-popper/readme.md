@@ -29,7 +29,7 @@
 ### Used by
 
  - [form-control-tooltip](../form/form-helpers/form-control-tooltip)
- - [table-filters-menu](../filters)
+ - [table-filters-menu](../../components/filters)
 
 ### Graph
 ```mermaid

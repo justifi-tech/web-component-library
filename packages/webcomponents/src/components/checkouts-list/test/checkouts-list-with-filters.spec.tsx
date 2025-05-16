@@ -4,7 +4,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { CheckoutsList } from '../checkouts-list';
 import { CheckoutsListCore } from '../checkouts-list-core';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../checkouts-table';
