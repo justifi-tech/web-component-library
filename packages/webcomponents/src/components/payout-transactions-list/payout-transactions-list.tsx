@@ -1,4 +1,3 @@
-
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { ComponentClickEvent, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, pagingDefaults, PagingInfo, PayoutBalanceTransaction } from '../../api';
 import JustifiAnalytics from '../../api/Analytics';
@@ -6,11 +5,21 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetPayoutTransactions } from '../../actions/payout/get-payout-transactions';
 import { PayoutService } from '../../api/services/payout.service';
 import { Table } from '../../utils/table';
-import { TableClickActions } from '../../ui-components/table/event-types';
-import { table, tableCell } from '../../styles/parts';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, payoutTransactionTableCells, payoutTransactionTableColumns } from './payout-transactions-table';
 import { configState } from '../config-provider/config-state';
+import {
+  TableWrapper,
+  TableComponent,
+  TableHead,
+  TableHeadRow,
+  TableBody,
+  TableRow,
+  TableFoot,
+  TableFootRow,
+  TableFootCell,
+  TableClickActions
+} from '../../ui-components';
 
 @Component({
   tag: 'justifi-payout-transactions-list',
@@ -130,40 +139,40 @@ export class PayoutTransactionsList {
   render() {
     return (
       <StyledHost>
-        <div class="table-wrapper">
-          <table class="table table-hover" part={table}>
-            <thead class="table-head sticky-top">
-              <tr class="table-light text-nowrap">
+        <TableWrapper>
+          <TableComponent>
+            <TableHead>
+              <TableHeadRow>
                 {this.transactionsTable.columnData.map((column) => column)}
-              </tr>
-            </thead>
-            <tbody class="table-body">
+              </TableHeadRow>
+            </TableHead>
+            <TableBody>
               <TableLoadingState
-                columnSpan={this.transactionsTable.columnData.length}
+                columnSpan={this.transactionsTable.columnKeys.length}
                 isLoading={this.isLoading}
               />
               <TableEmptyState
                 isEmpty={this.showEmptyState}
-                columnSpan={this.transactionsTable.columnData.length}
+                columnSpan={this.transactionsTable.columnKeys.length}
               />
               <TableErrorState
-                columnSpan={this.transactionsTable.columnData.length}
+                columnSpan={this.transactionsTable.columnKeys.length}
                 errorMessage={this.errorMessage}
               />
               {this.showRowData && this.transactionsTable.rowData.map((data, index) => (
-                <tr
+                <TableRow
                   data-test-id="table-row"
                   data-row-entity-id={this.entityId[index]}
                   onClick={this.rowClickHandler}
                 >
                   {data}
-                </tr>
+                </TableRow>
               ))}
-            </tbody>
+            </TableBody>
             {this.paging && (
-              <tfoot class="sticky-bottom">
-                <tr class="table-light align-middle">
-                  <td part={tableCell} colSpan={this.transactionsTable.columnData.length}>
+              <TableFoot>
+                <TableFootRow>
+                  <TableFootCell colSpan={this.transactionsTable.columnData.length}>
                     <pagination-menu
                       paging={{
                         ...this.paging,
@@ -171,12 +180,12 @@ export class PayoutTransactionsList {
                         handleClickNext: this.handleClickNext,
                       }}
                     />
-                  </td>
-                </tr>
-              </tfoot>
+                  </TableFootCell>
+                </TableFootRow>
+              </TableFoot>
             )}
-          </table>
-        </div>
+          </TableComponent>
+        </TableWrapper>
       </StyledHost>
     );
   }

@@ -1,14 +1,12 @@
 require('dotenv').config({ path: '../../.env' });
 const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
-
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
+const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
+const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
+const businessId = process.env.BUSINESS_ID;
 
 app.use(
   '/scripts',
@@ -47,11 +45,13 @@ async function getWebComponentToken(token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      resources: [`write:account:${subAccountId}`],
+      resources: [`read:business:${businessId}`],
     }),
   });
 
-  const { access_token } = await response.json();
+  const responseJson = await response.json();
+
+  const { access_token } = responseJson;
   return access_token;
 }
 
@@ -63,31 +63,22 @@ app.get('/', async (req, res) => {
     <!DOCTYPE html>
     <html>
       <head>
-        <title>JustiFi Terminal Orders List Component</title>
+        <title>JustiFi Business Details Component</title>
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
         <div class="list-component-wrapper">
-        <div>
-          <justifi-terminal-orders-list-filters />
-        </div>
-        <div>
-          <justifi-terminal-orders-list 
-            account-id="${subAccountId}"
+          <justifi-business-details
             auth-token="${webComponentToken}"
+            business-id="${businessId}"
           />
         </div>
-        </div>
         <script>
-          const justifiTerminalOrdersList = document.querySelector('justifi-terminal-orders-list');
+          const justifiBusinessDetails = document.querySelector('justifi-business-details');
 
-          justifiTerminalOrdersList.addEventListener('error-event', (event) => {
-            console.log(event);
-          });
-
-          justifiTerminalOrdersList.addEventListener('click-event', (event) => {
+          justifiBusinessDetails.addEventListener('error-event', (event) => {
             console.log(event);
           });
         </script>
@@ -97,5 +88,5 @@ app.get('/', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening at http://localhost:${port}`);
 });

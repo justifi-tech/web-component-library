@@ -1,6 +1,6 @@
 {
   "name": "@repo/component-examples",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "",
   "main": "index.js",
   "private": true,
@@ -11,7 +11,9 @@
     "start:dispute": "npx nodemon ./examples/dispute.js",
     "start:checkouts-list": "npx nodemon ./examples/checkouts-list.js",
     "start:checkouts-list-with-filters": "npx nodemon ./examples/checkouts-list-with-filters.js",
+    "start:business-form": "npx nodemon ./examples/business-form.js",
     "start:payment-provisioning": "npx nodemon ./examples/payment-provisioning.js",
+    "start:business-details": "npx nodemon ./examples/business-details.js",
     "start:tokenize-payment-method": "npx nodemon ./examples/tokenize-payment-method.js",
     "start:terminals-list": "npx nodemon ./examples/terminals-list.js",
     "start:terminals-list-with-filters": "npx nodemon ./examples/terminals-list-with-filters.js",

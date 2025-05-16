@@ -5,7 +5,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PayoutsList } from '../payouts-list';
 import { PaginationMenu } from '../../../ui-components/pagination-menu/pagination-menu';
 import { defaultColumnsKeys } from '../payouts-table';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { PayoutsListFilters } from '../payouts-list-filters';
 import { filterParams } from '../payouts-list-params-state';
 import { PayoutsListCore } from '../payouts-list-core';

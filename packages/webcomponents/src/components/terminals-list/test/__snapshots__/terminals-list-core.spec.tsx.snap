@@ -2,10 +2,10 @@
 
 exports[`terminals-list-core displays an error state on failed data fetch 1`] = `
 <terminals-list-core>
-  <div class="table-wrapper">
+  <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head">
-        <tr class="table-light text-nowrap">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The nickname associated with the terminal">
             Nickname
           </th>
@@ -24,28 +24,28 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
           </td>
         </tr>
       </tbody>
-      <tfoot class="sticky-bottom">
-        <tr class="align-middle table-light">
-          <td colspan="3" part="table-cell text color font-family background-color">
+      <tfoot class="sticky-bottom" part="table-foot">
+        <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
+          <td colspan="3" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-button-icon-previous pagination-button-icon text color font-family">
                         «
                       </span>
-                      <span part="pagination-item-text text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Previous
                       </span>
                     </button>
                   </li>
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span part="pagination-item-text text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
+                      <span class="ms-1" part="pagination-button-icon-next pagination-button-icon text color font-family">
                         »
                       </span>
                     </button>
@@ -63,10 +63,10 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
 
 exports[`terminals-list-core renders properly with fetched data 1`] = `
 <terminals-list-core>
-  <div class="table-wrapper">
+  <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head">
-        <tr class="table-light text-nowrap">
+      <thead class="sticky-top table-head" part="table-head">
+        <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The nickname associated with the terminal">
             Nickname
           </th>
@@ -79,7 +79,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row">
+        <tr data-row-entity-id="trm_43Y2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             Terminal 1
           </td>
@@ -92,7 +92,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </span>
           </td>
         </tr>
-        <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row">
+        <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             Terminal 2
           </td>
@@ -105,7 +105,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </span>
           </td>
         </tr>
-        <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row">
+        <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             Terminal 3
           </td>
@@ -118,7 +118,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </span>
           </td>
         </tr>
-        <tr data-row-entity-id="trm_2Z2lE9E2ULR8pvaKI6D5v" data-test-id="table-row">
+        <tr data-row-entity-id="trm_2Z2lE9E2ULR8pvaKI6D5v" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             Terminal 4
           </td>
@@ -131,7 +131,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </span>
           </td>
         </tr>
-        <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row">
+        <tr data-row-entity-id="trm_6TFOXK5U0LZLyQ6y6t3sbj" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             Terminal 5
           </td>
@@ -144,7 +144,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </span>
           </td>
         </tr>
-        <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row">
+        <tr data-row-entity-id="trm_F8UyFyXcaTBwSDh1cMxjc" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             Terminal 6
           </td>
@@ -158,28 +158,28 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           </td>
         </tr>
       </tbody>
-      <tfoot class="sticky-bottom">
-        <tr class="align-middle table-light">
-          <td colspan="3" part="table-cell text color font-family background-color">
+      <tfoot class="sticky-bottom" part="table-foot">
+        <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
+          <td colspan="3" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span class="me-1" part="pagination-item-icon-previous pagination-item-icon text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span class="me-1" part="pagination-button-icon-previous pagination-button-icon text color font-family">
                         «
                       </span>
-                      <span part="pagination-item-text text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Previous
                       </span>
                     </button>
                   </li>
                   <li class="disabled page-item">
-                    <button class="page-link" part="button-disabled button text color font-family">
-                      <span part="pagination-item-text text color font-family">
+                    <button class="page-link" part="pagination-button-disabled button-disabled button text color font-family">
+                      <span part="pagination-button-text text color font-family">
                         Next
                       </span>
-                      <span class="ms-1" part="pagination-item-icon-next pagination-item-icon text color font-family">
+                      <span class="ms-1" part="pagination-button-icon-next pagination-button-icon text color font-family">
                         »
                       </span>
                     </button>

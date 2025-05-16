@@ -4,7 +4,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsList } from '../payments-list';
 import { defaultColumnsKeys } from '../payments-table';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { PaymentsListFilters } from '../payments-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../payments-list-params-state';

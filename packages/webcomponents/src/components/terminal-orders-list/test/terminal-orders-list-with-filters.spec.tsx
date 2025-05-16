@@ -4,7 +4,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { TerminalOrdersList } from '../terminal-orders-list';
 import { defaultColumnsKeys } from '../terminal-orders-table';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { TerminalOrdersListFilters } from '../terminal-orders-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../terminal-orders-list-params-state';

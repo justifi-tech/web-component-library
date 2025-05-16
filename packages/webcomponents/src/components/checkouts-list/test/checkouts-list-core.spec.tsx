@@ -8,7 +8,7 @@ import mockCheckoutsSuccess from '../../../../../../mockData/mockGetCheckoutsLis
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
 import { IApiResponseCollection, ICheckout, ISubAccount } from '../../../api';
 import { makeGetCheckouts } from '../../../actions/checkout/get-checkouts';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { CheckoutsListFilters } from '../checkouts-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';

@@ -1,5 +1,17 @@
 ### Changelog
 
+## 5.7.0
+
+### Minor Changes
+
+- 1019007: - Add `tableHead`, `tableHeadRow`, `tableFoot`, `tableFootRow`, `tableFootCell`, `paginationButtonDisabled`, and `dropdownMenuButton` css parts
+  - Rename `paginationItem*` css parts to `paginationButton*`
+  - Refactor tables to use table UI components internally, for consistent assignment of css parts and classes
+
+### Patch Changes
+
+- 7b4b871: `justifi-payment-details` and `justifi-payout-details` will now only show `Metadata` section if payment or payout contains `metadata`.
+
 ## 5.6.1
 
 ### Patch Changes

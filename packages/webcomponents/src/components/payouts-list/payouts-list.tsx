@@ -6,7 +6,7 @@ import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from '../../actions/payout/get-payouts';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
 import { SubAccountService } from '../../api/services/subaccounts.service';
-import { StyledHost, tableExportedParts } from '../../ui-components';
+import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './payouts-table';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
@@ -87,7 +87,7 @@ export class PayoutsList {
 
   render() {
     return (
-      <StyledHost exportedparts={tableExportedParts}>
+      <StyledHost>
         <payouts-list-core
           getPayouts={this.getPayouts}
           getPayoutCSV={this.getPayoutCSV}

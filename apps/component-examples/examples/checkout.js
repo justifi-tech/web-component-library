@@ -6,6 +6,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
 const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
+const checkoutEndpoint = `${process.env.API_ORIGIN}${API_PATHS.CHECKOUT}`;
+const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -35,11 +37,38 @@ async function getToken() {
     console.log('ERROR:', error);
   }
 
-  const data = await response.json();
-  return data.access_token;
+  const responseJson = await response.json();
+  const { access_token } = responseJson;
+  return access_token;
 }
 
-async function getWebComponentToken(token) {
+async function makeCheckout(token) {
+  let response;
+  try {
+    response = await fetch(checkoutEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Sub-Account': subAccountId,
+      },
+      body: JSON.stringify({
+        amount: 1799,
+        description: 'One Chocolate Donut',
+        payment_method_group_id: paymentMethodGroupId,
+        origin_url: `localhost:${port}`,
+      }),
+    });
+  } catch (error) {
+    console.log('ERROR:', error);
+  }
+
+  const responseJson = await response.json();
+  const { data } = responseJson;
+  return data;
+}
+
+async function getWebComponentToken(token, checkoutId) {
   const response = await fetch(webComponentTokenEndpoint, {
     method: 'POST',
     headers: {
@@ -47,22 +76,27 @@ async function getWebComponentToken(token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      resources: [`write:tokenize:${subAccountId}`],
+      resources: [
+        `write:checkout:${checkoutId}`,
+        `write:tokenize:${subAccountId}`,
+      ],
     }),
   });
-  const { access_token } = await response.json();
+
+  const responseJson = await response.json();
+  const { access_token } = responseJson;
   return access_token;
 }
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const webComponentToken = await getWebComponentToken(token);
+  const checkout = await makeCheckout(token);
+  const webComponentToken = await getWebComponentToken(token, checkout.id);
 
-  const disableBankAccount = false;
+  const disableBankAccount = true;
   const disableCreditCard = false;
-  const hideCardBillingForm = false;
+  const hideCardBillingForm = true;
   const hideBankAccountBillingForm = false;
-  const hideSubmitButton = false;
 
   const billingFormFields = {
     name: 'John Doe',
@@ -77,76 +111,52 @@ app.get('/', async (req, res) => {
     <!DOCTYPE html>
     <html>
       <head>
-        <title>JustiFi TokenizePaymentMethod</title>
+        <title>JustiFi Checkout</title>
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-tokenize-payment-method
-            auth-token="${webComponentToken}"
-            account-id="${subAccountId}"
+          <justifi-checkout 
+            auth-token="${webComponentToken}" 
+            checkout-id="${checkout.id}"
             disable-bank-account="${disableBankAccount}"
             disable-credit-card="${disableCreditCard}"
             hide-bank-account-billing-form="${hideBankAccountBillingForm}"
             hide-card-billing-form="${hideCardBillingForm}"
-            hide-submit-button="${hideSubmitButton}"
           >
-          </justifi-tokenize-payment-method>
+          </justifi-checkout>
           <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
           <button id="test-validate-button" hidden>Test Validate</button>
-          <button id="test-submit-button" hidden="${hideSubmitButton}"}>Test Submit</button>
         </div>
-        <div class="column-output" id="output-pane">
-          <em>Tokenization output will appear here...</em>
-        </div>
+        <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
       <script>
-        const justifiTokenizePaymentMethod = document.querySelector('justifi-tokenize-payment-method');
+        const justifiCheckout = document.querySelector('justifi-checkout');
         const fillBillingFormButton = document.getElementById('fill-billing-form-button');
         const testValidateButton = document.getElementById('test-validate-button');
-        const testSubmitButton = document.getElementById('test-submit-button');
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
-        justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
-          console.log('submit-event', event);
-
-          if (event.detail.response.token) {
-            console.log('Token from submit-event', event.detail.response.token);
-          }
-
-          if (event.detail.response.error) {
-            console.log('Error from submit-event', event.detail.response.error);
-          }
+        justifiCheckout.addEventListener('submit-event', (event) => {
+          console.log(event);
           writeOutputToPage(event);
         });
 
-        justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
-          console.log('Error-event', event);
+        justifiCheckout.addEventListener('error-event', (event) => {
+          console.log(event);
           writeOutputToPage(event);
         });
-
+        
         fillBillingFormButton.addEventListener('click', () => {
-          justifiTokenizePaymentMethod.fillBillingForm(${JSON.stringify(billingFormFields)});
+          justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
 
-        testSubmitButton.addEventListener('click', async () => {
-          const response = await justifiTokenizePaymentMethod.tokenizePaymentMethod();
-          if (response.token) {
-            console.log('Token from tokenize method', response.token);
-          }
-          
-          if (response.error) {
-            console.log('Error from tokenize method', response.error);
-          };
-        });
-      
         testValidateButton.addEventListener('click', async () => {
-          const response = await justifiTokenizePaymentMethod.validate();
+          const response = await justifiCheckout.validate();
           console.log('Validate response', response);
         });
       </script>

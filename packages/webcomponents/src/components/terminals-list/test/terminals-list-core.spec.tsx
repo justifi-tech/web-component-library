@@ -9,7 +9,7 @@ import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAcc
 import { IApiResponseCollection, ISubAccount, ITerminal } from '../../../api';
 import { makeGetTerminals } from '../../../actions/terminal/get-terminals';
 import { TerminalsListFilters } from '../terminals-list-filters';
-import { TableFiltersMenu } from '../../../ui-components/filters/table-filters-menu';
+import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../terminals-table';
 import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';

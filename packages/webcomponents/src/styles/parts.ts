@@ -65,7 +65,15 @@ export const card = `card ${text} ${backgroundColor}`;
 export const table = `table ${text} ${backgroundColor}`;
 export const tableRow = `table-row ${text} ${backgroundColor}`;
 export const tableCell = `table-cell ${text} ${backgroundColor}`;
+
+export const tableHead = `table-head`;
+export const tableHeadRow = `table-head-row ${text} ${backgroundColor}`;
 export const tableHeadCell = `table-head-cell ${tableCell}`;
+
+export const tableFoot = `table-foot`;
+export const tableFootRow = `table-foot-row ${text} ${backgroundColor}`;
+export const tableFootCell = `table-foot-cell ${tableCell}`;
+
 export const tableCellEven = `table-cell-even ${tableCell}`;
 export const tableCellOdd = `table-cell-odd ${tableCell}`;
 export const getAlternateTableCellPart = (index) =>
@@ -74,11 +82,12 @@ export const tableEmpty = `table-empty ${text} ${backgroundColor}`;
 export const tableError = `table-error ${text} ${backgroundColor}`;
 
 // Pagination
-export const paginationItem = `pagination-item ${text} ${backgroundColor}`;
-export const paginationItemText = `pagination-item-text ${text}`;
-export const paginationItemIcon = `pagination-item-icon ${text}`;
-export const paginationItemIconNext = `pagination-item-icon-next ${paginationItemIcon}`;
-export const paginationItemIconPrevious = `pagination-item-icon-previous ${paginationItemIcon}`;
+export const paginationButton = `pagination-button ${button}`;
+export const paginationButtonDisabled = `pagination-button-disabled ${buttonDisabled}`;
+export const paginationButtonText = `pagination-button-text ${text}`;
+export const paginationButtonIcon = `pagination-button-icon ${text}`;
+export const paginationButtonIconNext = `pagination-button-icon-next ${paginationButtonIcon}`;
+export const paginationButtonIconPrevious = `pagination-button-icon-previous ${paginationButtonIcon}`;
 
 // Loading spinner
 export const loadingSpinner = `loading-spinner`;
@@ -96,6 +105,7 @@ export const badgeDark = `${badge} badge-dark`;
 
 // Dropdown-menu
 export const dropdownMenu = `dropdown-menu ${text}`;
+export const dropdownMenuButton = `dropdown-menu-button ${buttonPrimary}`;
 
 // Radio List Item
 export const radioListItem = `radio-list-item ${text}`;
