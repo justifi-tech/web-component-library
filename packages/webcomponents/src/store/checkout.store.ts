@@ -8,6 +8,7 @@ const { state, onChange } = createStore({
   paymentDescription: '',
   totalAmount: 0,
   selectedPaymentMethod: '',
+  checkoutId: '',
 });
 
 onChange('authToken', (newValue) => {
@@ -36,6 +37,10 @@ onChange('paymentMethodGroupId', (newValue) => {
 
 onChange('selectedPaymentMethod', (newValue) => {
   state.selectedPaymentMethod = newValue;
+});
+
+onChange('checkoutId', (newValue) => {
+  state.checkoutId = newValue;
 });
 
 export default state;

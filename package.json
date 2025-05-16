@@ -7,6 +7,8 @@
     "dev:dispute": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:dispute'",
     "dev:checkouts-list": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkouts-list'",
     "dev:checkouts-list-with-filters": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkouts-list-with-filters'",
+    "dev:checkout": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout'",
+    "dev:checkout-with-insurance": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout-with-insurance'",
     "dev:modular-checkout": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:modular-checkout'",
     "dev:business-form": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:business-form'",
     "dev:payment-provisioning": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:payment-provisioning'",

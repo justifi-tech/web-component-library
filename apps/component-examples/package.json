@@ -7,6 +7,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "start": "npx nodemon ./examples/checkout.js",
+    "start:checkout": "npx nodemon ./examples/checkout.js",
+    "start:checkout-with-insurance": "npx nodemon ./examples/checkout-with-insurance.js",
     "start:modular-checkout": "npx nodemon ./examples/modular-checkout.js",
     "start:dispute": "npx nodemon ./examples/dispute.js",
     "start:checkouts-list": "npx nodemon ./examples/checkouts-list.js",
