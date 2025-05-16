@@ -39,17 +39,16 @@ export class CheckoutWrapper {
       subtree: true
     });
 
-    this.getCheckout = makeGetCheckout({
-      authToken: this.authToken,
-      checkoutId: this.checkoutId,
-      service: new CheckoutService()
-    });
+    checkoutStore.checkoutId = this.checkoutId;
 
-    this.completeCheckout = makeCheckoutComplete({
+    const config = {
       authToken: this.authToken,
       checkoutId: this.checkoutId,
       service: new CheckoutService()
-    });
+    }
+
+    this.getCheckout = makeGetCheckout(config);
+    this.completeCheckout = makeCheckoutComplete(config);
   }
 
   componentWillLoad() {

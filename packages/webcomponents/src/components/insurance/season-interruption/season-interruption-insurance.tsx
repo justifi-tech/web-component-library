@@ -5,14 +5,15 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/Compon
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
+import checkoutStore from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
   shadow: true,
 })
 export class SeasonInterruptionInsurance {
-  @Prop() authToken: string;
-  @Prop() checkoutId: string;
+  @Prop() authToken?: string;
+  @Prop() checkoutId?: string;
   @Prop() primaryIdentityFirstName: string;
   @Prop() primaryIdentityLastName: string;
   @Prop() primaryIdentityState: string;
@@ -53,7 +54,8 @@ export class SeasonInterruptionInsurance {
   }
 
   private initializeServiceMethods() {
-    if (!this.authToken) {
+    const authToken = this.authToken || checkoutStore.authToken;
+    if (!authToken) {
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: 'Missing authToken',
@@ -62,22 +64,17 @@ export class SeasonInterruptionInsurance {
       return;
     }
 
-    this.getQuote = makeGetQuote({
-      authToken: this.authToken,
-      service: new InsuranceService(),
-    });
-
-    this.toggleCoverage = makeToggleCoverage({
-      authToken: this.authToken,
-      service: new InsuranceService(),
-    });
+    const service = new InsuranceService();
+    const config = { authToken, service };
+    this.getQuote = makeGetQuote(config);
+    this.toggleCoverage = makeToggleCoverage(config);
   }
 
   render() {
     return (
       <justifi-season-interruption-insurance-core
         ref={(el) => (this.seasonInterruptionCoreRef = el)}
-        checkout-id={this.checkoutId}
+        checkout-id={this.checkoutId || checkoutStore.checkoutId}
         getQuote={this.getQuote}
         toggleCoverage={this.toggleCoverage}
         primary-identity-first-name={this.primaryIdentityFirstName}
