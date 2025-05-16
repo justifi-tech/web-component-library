@@ -1,9 +1,7 @@
-import { IApiResponse, IApiResponseCollection, ITerminal } from '..';
-import Api from '../ApiNew';
+import { Api, IApiResponse, IApiResponseCollection, ITerminal } from '..';
 
 const api = Api();
-
-export interface ITerminalService {
+ export interface ITerminalService {
   fetchTerminals(
     accountId: string,
     authToken: string,

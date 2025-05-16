@@ -1,9 +1,4 @@
-import { IApiResponse } from '../Api';
-import Api from '../ApiNew';
-import { IBankAccount } from '../BankAccount';
-import { IBusiness } from '../Business';
-import { DocumentRecordData } from '../Document';
-import { Identity } from '../Identity';
+import { Api, DocumentRecordData, IApiResponse, IBankAccount, IBusiness, Identity } from '..';
 
 const api = Api();
 

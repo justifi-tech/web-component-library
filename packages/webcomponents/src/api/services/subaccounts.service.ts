@@ -1,5 +1,6 @@
-import { ISubAccount } from '..';
-import Api, { IApiResponseCollection } from '../ApiNew';
+import { Api, IApiResponseCollection, ISubAccount } from '..';
+
+const api = Api();
 
 export interface ISubAccountService {
   fetchSubAccounts(
@@ -8,8 +9,6 @@ export interface ISubAccountService {
     params: any
   ): Promise<IApiResponseCollection<ISubAccount[]>>;
 }
-
-const api = Api();
 
 export class SubAccountService implements ISubAccountService {
   async fetchSubAccounts(

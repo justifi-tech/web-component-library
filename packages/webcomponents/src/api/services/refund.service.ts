@@ -1,5 +1,4 @@
-import { IApiResponse, IRefund, RefundPayload } from '..';
-import Api from '../ApiNew';
+import { Api, IApiResponse, IRefund, RefundPayload } from '..';
 
 const api = Api();
 
