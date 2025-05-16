@@ -3,9 +3,9 @@ import checkoutStore from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "../../api";
-import { BillingInfo } from "../../api/BillingInformation";
-import { makeGetCheckout } from "../../actions/checkout/checkout-actions";
+import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
+import { ISubmitCheckout } from "../../api/PaymentMethod";
 
 @Component({
   tag: 'justifi-checkout-wrapper',
@@ -17,22 +17,17 @@ export class CheckoutWrapper {
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
   private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
   private getCheckout: Function;
+  private completeCheckout: Function;
 
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() checkoutId: string;
+  @Prop() savePaymentMethod?: boolean = false;
 
   @Element() hostEl: HTMLElement;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
-
-  componentWillLoad() {
-    this.analytics = new JustifiAnalytics(this);
-    checkPkgVersion();
-    checkoutStore.authToken = this.authToken;
-    checkoutStore.accountId = this.accountId;
-    this.fetchCheckout();
-  }
+  @Event({ eventName: 'checkout-complete-event' }) checkoutComplete: EventEmitter;
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -49,6 +44,20 @@ export class CheckoutWrapper {
       checkoutId: this.checkoutId,
       service: new CheckoutService()
     });
+
+    this.completeCheckout = makeCheckoutComplete({
+      authToken: this.authToken,
+      checkoutId: this.checkoutId,
+      service: new CheckoutService()
+    });
+  }
+
+  componentWillLoad() {
+    this.analytics = new JustifiAnalytics(this);
+    checkPkgVersion();
+    checkoutStore.authToken = this.authToken;
+    checkoutStore.accountId = this.accountId;
+    this.fetchCheckout();
   }
 
   componentDidLoad() {
@@ -84,6 +93,25 @@ export class CheckoutWrapper {
     this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
   }
 
+  private async getPaymentMethod(submitCheckoutArgs: ISubmitCheckout): Promise<string | undefined> {
+    if (!this.paymentMethodFormRef) {
+      return checkoutStore.selectedPaymentMethod;
+    }
+
+    const { error, id: token } = await this.tokenizePaymentMethod(submitCheckoutArgs);
+
+    if (error) {
+      this.errorEvent.emit({
+        errorCode: error.code as ComponentErrorCodes,
+        message: error.message,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return undefined;
+    }
+
+    return token;
+  }
+
   @Method()
   async validate(): Promise<boolean> {
     const validationResults = await Promise.all([
@@ -95,56 +123,61 @@ export class CheckoutWrapper {
   }
 
   @Method()
-  async tokenizePaymentMethod(billingInfo: BillingInfo): Promise<any> {
-    if (!this.paymentMethodFormRef) {
-      return this.errorEvent.emit({
-        message: 'Payment method form not found',
-        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
-
+  async tokenizePaymentMethod(tokenizeArgs: ISubmitCheckout): Promise<any> {
     const isValid = await this.validate();
     if (!isValid) return;
 
     const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
 
-    const combinedBillingInfo = { ...billingInfo, ...billingInfoValues };
+    const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
+
+    const paymentMethodMetadata = {
+      accountId: this.accountId,
+      ...combinedBillingInfo
+    };
+
+    if (this.savePaymentMethod) {
+      paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
+    }
 
     return this.paymentMethodFormRef.tokenize({
       clientId: this.authToken,
-      paymentMethodMetadata: {
-        accountId: this.accountId,
-        ...combinedBillingInfo
-      },
+      paymentMethodMetadata,
       account: this.accountId,
     });
   }
 
   @Method()
-  async submitCheckout(billingInfo: BillingInfo): Promise<any> {
-    try {
-      const tokenizeResponse = await this.tokenizePaymentMethod(billingInfo);
-      if (tokenizeResponse.error) {
+  async submitCheckout(submitCheckoutArgs: ISubmitCheckout): Promise<void> {
+    const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
+
+    if (!paymentMethod) return;
+
+    this.completeCheckout({
+      payment: {
+        payment_mode: 'ecom',
+        payment_token: paymentMethod,
+      },
+      onSuccess: ({ checkout }) => {
+        this.checkoutComplete.emit({
+          checkout,
+          message: 'Checkout completed successfully',
+        });
+      },
+      onError: (error) => {
         this.errorEvent.emit({
-          errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
-          message: tokenizeResponse.error.message,
+          message: error.message,
+          errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
           severity: ComponentErrorSeverity.ERROR,
         });
-      }
-      return tokenizeResponse;
-    } catch (error) {
-      this.errorEvent.emit({
-        message: error.message,
-        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
+      },
+    });
   }
 
   render() {
     return (
-      <Host></Host>
+      <Host>
+      </Host>
     );
   }
 }
