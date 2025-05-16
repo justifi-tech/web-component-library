@@ -70,6 +70,7 @@ export class SeasonInterruptionInsurance {
     this.toggleCoverage = makeToggleCoverage(config);
   }
 
+
   render() {
     return (
       <justifi-season-interruption-insurance-core

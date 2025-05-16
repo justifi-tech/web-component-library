@@ -35,6 +35,13 @@ export class Checkout {
 
   analytics: JustifiAnalytics;
 
+  connectedCallback() {
+    if (this.authToken && this.checkoutId) {
+      checkoutStore.checkoutId = this.checkoutId;
+      checkoutStore.authToken = this.authToken;
+    }
+  }
+
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
