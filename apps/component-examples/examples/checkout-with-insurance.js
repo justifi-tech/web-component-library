@@ -19,6 +19,13 @@ app.use(
 );
 app.use('/styles', express.static(__dirname + '/../css/'));
 
+const startDate = new Date();
+const startDateString = startDate.toISOString().split('T')[0];
+
+const endDate = new Date();
+endDate.setFullYear(endDate.getFullYear() + 1);
+const endDateString = endDate.toISOString().split('T')[0];
+
 const insurance = {
   primary_identity: {
     state: 'MN',
@@ -30,8 +37,8 @@ const insurance = {
   },
   policy_attributes: {
     insurable_amount: 1000,
-    start_date: '2025-05-15',
-    end_date: '2026-05-15',
+    start_date: startDateString,
+    end_date: endDateString,
     covered_identity: {
       first_name: 'John',
       last_name: 'Doe',
