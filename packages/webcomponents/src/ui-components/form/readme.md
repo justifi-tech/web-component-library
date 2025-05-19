@@ -21,17 +21,17 @@
 
 ## Methods
 
-### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+### `tokenize(clientId: string, paymentMethodMetadata: IPaymentMethodMetadata, account?: string) => Promise<any>`
 
 
 
 #### Parameters
 
-| Name                    | Type     | Description |
-| ----------------------- | -------- | ----------- |
-| `clientId`              | `string` |             |
-| `paymentMethodMetadata` | `any`    |             |
-| `account`               | `string` |             |
+| Name                    | Type                                                                      | Description |
+| ----------------------- | ------------------------------------------------------------------------- | ----------- |
+| `clientId`              | `string`                                                                  |             |
+| `paymentMethodMetadata` | `ISavedPaymentMethod & (IPaymentMethodCard \| IPaymentMethodBankAccount)` |             |
+| `account`               | `string`                                                                  |             |
 
 #### Returns
 

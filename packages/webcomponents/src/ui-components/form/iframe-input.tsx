@@ -6,6 +6,7 @@ import packageJson from '../../../package.json';
 import { iframeInputStyles } from "./iframe-input-styles-state";
 import { MessageEventType } from "../../components/checkout/message-event-types";
 import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from "../../styles/parts";
+import { IPaymentMethodMetadata } from "../../api/PaymentMethod";
 
 @Component({
   tag: "iframe-input",
@@ -45,7 +46,7 @@ export class IframeInput {
   @Method()
   async tokenize(
     clientId: string,
-    paymentMethodMetadata: any,
+    paymentMethodMetadata: IPaymentMethodMetadata,
     account?: string,
   ) {
     return this.frameService.postMessageWithResponseListener(MessageEventType.tokenize, {
