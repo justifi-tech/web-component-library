@@ -19,6 +19,10 @@ body {
   color: darkslategray;
 }
 
+::part(text-danger) {
+  color: #8a2a35;
+}
+
 ::part(background-color) {
   background-color: transparent;
 }
@@ -74,6 +78,12 @@ body {
   background-color: #333;
   border-color: #333;
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+}
+
+::part(input-radio-invalid) {
+  background-color: #fff;
+  border-color: #8a2a35;
+  box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25);
 }
 
 ::part(input-radio-checked-focused) {

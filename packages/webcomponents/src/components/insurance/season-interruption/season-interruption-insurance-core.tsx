@@ -8,6 +8,7 @@ import SeasonInterruptionInsuranceLoading from "./season-interruption-insurance-
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
+  shadow: true,
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
@@ -134,6 +135,8 @@ export class SeasonInterruptionInsuranceCore {
             value={'true'}
             checked={this.accepted === 'true'}
             inputHandler={this.onChangeHandler.bind(this)}
+            // don't wanna show error message, but need to show the red border
+            errorText={this.error ? ' ' : undefined}
           />
           <form-control-radio
             label="Decline coverage"
@@ -141,6 +144,7 @@ export class SeasonInterruptionInsuranceCore {
             value={'false'}
             checked={this.accepted === 'false'}
             inputHandler={this.onChangeHandler.bind(this)}
+            errorText={this.error ? ' ' : undefined}
           />
           <div
             class="invalid-feedback"
