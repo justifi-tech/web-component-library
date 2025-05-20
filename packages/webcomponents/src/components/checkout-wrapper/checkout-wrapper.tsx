@@ -16,6 +16,7 @@ export class CheckoutWrapper {
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
   private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
+  private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private getCheckout: Function;
   private completeCheckout: Function;
 
@@ -39,17 +40,16 @@ export class CheckoutWrapper {
       subtree: true
     });
 
-    this.getCheckout = makeGetCheckout({
-      authToken: this.authToken,
-      checkoutId: this.checkoutId,
-      service: new CheckoutService()
-    });
+    checkoutStore.checkoutId = this.checkoutId;
 
-    this.completeCheckout = makeCheckoutComplete({
+    const config = {
       authToken: this.authToken,
       checkoutId: this.checkoutId,
       service: new CheckoutService()
-    });
+    }
+
+    this.getCheckout = makeGetCheckout(config);
+    this.completeCheckout = makeCheckoutComplete(config);
   }
 
   componentWillLoad() {
@@ -91,6 +91,7 @@ export class CheckoutWrapper {
   private queryFormRefs() {
     this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
     this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
+    this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
   }
 
   private async getPaymentMethod(submitCheckoutArgs: ISubmitCheckout): Promise<string | undefined> {
@@ -114,19 +115,22 @@ export class CheckoutWrapper {
 
   @Method()
   async validate(): Promise<boolean> {
-    const validationResults = await Promise.all([
+    const promises = [
       this.paymentMethodFormRef?.validate(),
       this.billingInformationFormRef?.validate()
-    ]);
+    ];
+
+    if (this.insuranceFormRef) {
+      promises.push(this.insuranceFormRef.validate());
+    }
+
+    const validationResults = await Promise.all(promises);
 
     return validationResults.every(result => result?.isValid !== false);
   }
 
   @Method()
   async tokenizePaymentMethod(tokenizeArgs: ISubmitCheckout): Promise<any> {
-    const isValid = await this.validate();
-    if (!isValid) return;
-
     const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
 
     const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
@@ -149,9 +153,26 @@ export class CheckoutWrapper {
 
   @Method()
   async submitCheckout(submitCheckoutArgs: ISubmitCheckout): Promise<void> {
+    const isValid = await this.validate();
+    if (!isValid) {
+      this.errorEvent.emit({
+        message: 'Please fill in all required fields.',
+        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
     const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
 
-    if (!paymentMethod) return;
+    if (!paymentMethod) {
+      this.errorEvent.emit({
+        message: 'Payment method tokenization failed.',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    };
 
     this.completeCheckout({
       payment: {
