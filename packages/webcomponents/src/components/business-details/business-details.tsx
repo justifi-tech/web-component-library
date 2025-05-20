@@ -32,8 +32,8 @@ export class BusinessDetails {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
-  }
+    this.analytics && this.analytics.cleanup();
+  };
 
   private initializeGetBusiness() {
     if (!this.businessId || !this.authToken) {

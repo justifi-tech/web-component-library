@@ -49,8 +49,8 @@ export class PaymentTransactionsList {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
-  }
+    this.analytics && this.analytics.cleanup();
+  };
   
   @Watch('pagingParams')
   @Watch('paymentId')

@@ -58,6 +58,10 @@ export class OrderTerminals {
     this.loadData();
   }
 
+  disconnectedCallback() {
+    this.analytics && this.analytics.cleanup();
+  };
+
   private handleError(errorMessage: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity) {
     this.error = { message: errorMessage, code, severity };
     this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });

@@ -30,6 +30,10 @@ export class TerminalOrdersList {
     this.initializeGetData();
   }
 
+  disconnectedCallback() {
+    this.analytics && this.analytics.cleanup();
+  };
+
   private initializeGetData() {
     if (this.accountId && this.authToken) {
       this.getTerminalOrders = makeGetTerminalOrders({

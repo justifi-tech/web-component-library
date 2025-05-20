@@ -32,8 +32,8 @@ export class PayoutDetails {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
-  }
+    this.analytics && this.analytics.cleanup();
+  };
 
   @Watch('payoutId')
   @Watch('authToken')

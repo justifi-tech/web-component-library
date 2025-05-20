@@ -39,6 +39,10 @@ export class TokenizePaymentMethod {
     this.analytics = new JustifiAnalytics(this);
   }
 
+  disconnectedCallback() {
+    this.analytics && this.analytics.cleanup();
+  };
+
   @Method()
   async tokenizePaymentMethod(event?: CustomEvent): Promise<PaymentMethodPayload> {
     event && event.preventDefault();

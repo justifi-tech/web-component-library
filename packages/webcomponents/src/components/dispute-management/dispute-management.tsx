@@ -27,7 +27,7 @@ export class DisputeManagement {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
+    this.analytics && this.analytics.cleanup();
   };
 
   @Watch('disputeId')

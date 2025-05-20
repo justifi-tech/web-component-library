@@ -32,8 +32,8 @@ export class PaymentsList {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
-  }
+    this.analytics && this.analytics.cleanup();
+  };
 
   @Watch('accountId')
   @Watch('authToken')
