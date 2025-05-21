@@ -4,9 +4,9 @@ const { API_PATHS } = require('../utils/api-paths');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const checkoutEndpoint = `${process.env.API_ORIGIN}${API_PATHS.CHECKOUT}`;
+const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
+const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
