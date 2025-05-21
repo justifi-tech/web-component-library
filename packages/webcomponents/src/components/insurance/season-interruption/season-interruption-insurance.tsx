@@ -48,9 +48,7 @@ export class SeasonInterruptionInsurance {
   }
 
   disconnectedCallback() {
-    if (this.analytics) {
-      this.analytics.cleanup();
-    }
+    this.analytics?.cleanup();
   }
 
   private initializeServiceMethods() {

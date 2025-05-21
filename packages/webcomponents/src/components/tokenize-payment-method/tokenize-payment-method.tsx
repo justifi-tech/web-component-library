@@ -48,6 +48,10 @@ export class TokenizePaymentMethod {
     }
   }
 
+  disconnectedCallback() {
+    this.analytics?.cleanup();
+  };
+
   @Method()
   async tokenizePaymentMethod(event?: CustomEvent): Promise<PaymentMethodPayload> {
     event && event.preventDefault();

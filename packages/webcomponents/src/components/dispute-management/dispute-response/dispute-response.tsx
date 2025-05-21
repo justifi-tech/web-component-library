@@ -47,8 +47,8 @@ export class DisputeResponse {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
-  }
+    this.analytics?.cleanup();
+  };
 
   @Watch('accountId')
   @Watch('authToken')
