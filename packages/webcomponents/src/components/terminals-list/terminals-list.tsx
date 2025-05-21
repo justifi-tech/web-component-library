@@ -35,8 +35,8 @@ export class TerminalsList {
   }
 
   disconnectedCallback() {
-    this.analytics.cleanup();
-  }
+    this.analytics?.cleanup();
+  };
 
   @Watch('accountId')
   @Watch('authToken')

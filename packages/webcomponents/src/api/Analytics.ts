@@ -97,6 +97,10 @@ class JustifiAnalytics {
 
   cleanup() {
     // Remove event listeners
+    if (!this.eventEmitters) {
+      return;
+    }
+    
     this.eventEmitters.forEach((event) => {
       this.componentInstance.removeEventListener(event, this.handleCustomEvent);
     });
