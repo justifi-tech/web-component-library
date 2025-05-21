@@ -68,6 +68,7 @@ export class Payout implements IPayout {
   public created_at: string;
   public updated_at: string;
   public sub_account_name?: string;
+  public settlement_priority: 'standard' | 'expedited';
 
   constructor(payout: IPayout) {
     this.id = payout.id;
