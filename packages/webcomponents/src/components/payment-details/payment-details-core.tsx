@@ -6,6 +6,7 @@ import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { StyledHost } from '../../ui-components';
 import PaymentDetailsLoading from './payment-details-loading';
+import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 
 @Component({
   tag: 'payment-details-core',
@@ -63,7 +64,18 @@ export class PaymentDetailsCore {
             <justifi-details error-message={this.errorMessage}>
               <EntityHeadInfo
                 slot="head-info"
-                badge={MapPaymentStatusToBadge(this.payment.status)}
+                badge={(
+                  <div class="d-flex gap-1">
+                  {MapPaymentStatusToBadge(this.payment.status)}
+                  {this.payment.expedited ? (
+                    <Badge
+                      variant={BadgeVariant.WARNING}
+                      title="Expedited"
+                      text="Expedited"
+                    />
+                  ) : null}
+                  </div>
+                )}
                 title={this.payment.formattedPaymentAmount(this.payment.amount)}
               >
                 <EntityHeadInfoItem
@@ -90,6 +102,7 @@ export class PaymentDetailsCore {
                   <DetailItem title="Processing Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
                   <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />
                   <DetailItem title="Description" value={this.payment.description} />
+                  <DetailItem title="Expedited" value={this.payment.expedited ? 'Yes' : 'No'} />
                 </div>
                 {this.payment.payment_method.card && [
                   <DetailSectionTitle sectionTitle="Payment Method" />,

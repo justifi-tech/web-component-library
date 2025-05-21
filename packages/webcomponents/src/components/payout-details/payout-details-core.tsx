@@ -6,6 +6,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';
+import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 
 @Component({
   tag: 'payout-details-core',
@@ -76,7 +77,24 @@ export class PayoutDetailsCore {
           <justifi-details error-message={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
-              badge={MapPayoutStatusToBadge(this.payout?.status)}
+              badge={(
+                <div class="d-flex gap-1">
+                  {MapPayoutStatusToBadge(this.payout?.status)}
+                  {this.payout.settlement_priority === 'expedited' ? (
+                    <Badge
+                      variant={BadgeVariant.WARNING}
+                      title="Expedited"
+                      text="Expedited"
+                    />
+                  ) : (
+                    <Badge
+                      variant={BadgeVariant.SECONDARY}
+                      title="Standard"
+                      text="Standard"
+                    />
+                  )}
+                </div>
+              )}
               title={this.payout.formattedPaymentAmount(this.payout.amount)}
             >
               <EntityHeadInfoItem
