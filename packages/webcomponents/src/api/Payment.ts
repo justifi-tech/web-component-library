@@ -205,6 +205,7 @@ export class Payment implements IPayment {
   public disputes: IPaymentDispute[];
   public error_code: string | null;
   public error_description: string | null;
+  public expedited: boolean;
   public fee_amount: number;
   public is_test: boolean;
   public metadata: Object | null;
