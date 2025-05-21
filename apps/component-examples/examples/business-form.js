@@ -5,9 +5,9 @@ const { API_PATHS } = require('../utils/api-paths');
 const app = express();
 const { generateRandomLegalName } = require('../utils/random-business-names');
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const businessEndpoint = `${process.env.API_ORIGIN}${API_PATHS.BUSINESS}`;
+const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
+const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
