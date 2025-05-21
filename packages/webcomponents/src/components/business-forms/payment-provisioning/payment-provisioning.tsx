@@ -37,7 +37,7 @@ export class PaymentProvisioning {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   private initializeApi() {

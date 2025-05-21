@@ -32,7 +32,7 @@ export class BusinessDetails {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   private initializeGetBusiness() {

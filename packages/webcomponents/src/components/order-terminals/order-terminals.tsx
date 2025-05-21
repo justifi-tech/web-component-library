@@ -59,7 +59,7 @@ export class OrderTerminals {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   private handleError(errorMessage: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity) {

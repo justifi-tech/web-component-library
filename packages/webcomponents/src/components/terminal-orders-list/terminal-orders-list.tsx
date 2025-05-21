@@ -31,7 +31,7 @@ export class TerminalOrdersList {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   private initializeGetData() {

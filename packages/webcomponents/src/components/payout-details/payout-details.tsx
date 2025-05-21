@@ -32,7 +32,7 @@ export class PayoutDetails {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   @Watch('payoutId')

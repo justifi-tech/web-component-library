@@ -35,7 +35,7 @@ export class CheckoutsList {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   @Watch('accountId')

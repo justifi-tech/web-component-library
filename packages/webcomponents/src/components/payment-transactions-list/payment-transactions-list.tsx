@@ -49,7 +49,7 @@ export class PaymentTransactionsList {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
   
   @Watch('pagingParams')

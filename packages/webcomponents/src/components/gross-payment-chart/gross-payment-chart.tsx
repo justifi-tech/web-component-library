@@ -29,7 +29,7 @@ export class GrossPaymentChart {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   @Watch('accountId')

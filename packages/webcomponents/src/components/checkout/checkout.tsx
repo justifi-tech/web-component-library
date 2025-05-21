@@ -41,7 +41,7 @@ export class Checkout {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   private initializeGetCheckout() {

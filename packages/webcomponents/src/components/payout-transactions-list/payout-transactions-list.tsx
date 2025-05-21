@@ -50,7 +50,7 @@ export class PayoutTransactionsList {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   @Watch('pagingParams')

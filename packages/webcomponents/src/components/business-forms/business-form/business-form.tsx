@@ -44,7 +44,7 @@ export class BusinessForm {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup(); 
   };
 
   get title() {

@@ -40,7 +40,7 @@ export class TokenizePaymentMethod {
   }
 
   disconnectedCallback() {
-    this.analytics && this.analytics.cleanup();
+    this.analytics?.cleanup();
   };
 
   @Method()
