@@ -45,6 +45,7 @@ export interface IPayout {
   metadata: Object | null;
   created_at: string;
   updated_at: string;
+  settlement_priority?: 'standard' | 'expedited';
 }
 
 export class Payout implements IPayout {
@@ -90,6 +91,7 @@ export class Payout implements IPayout {
     this.metadata = payout.metadata;
     this.created_at = payout.created_at;
     this.updated_at = payout.updated_at;
+    this.settlement_priority = payout.settlement_priority || 'standard';
   }
 
   formattedPaymentAmount(amount: number): string {
