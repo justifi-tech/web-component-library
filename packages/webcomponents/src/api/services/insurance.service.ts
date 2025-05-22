@@ -1,5 +1,7 @@
 import { Api, IApiResponse, IQuote } from '..';
 
+const api = Api();
+
 export interface IInsuranceService {
   fetchQuote(authToken: string, payload: any): Promise<IApiResponse<IQuote>>;
   toggleCoverage(
@@ -15,10 +17,8 @@ export class InsuranceService implements IInsuranceService {
     payload: any
   ): Promise<IApiResponse<IQuote>> {
     const endpoint = 'insurance/quotes';
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+    return api.post({ endpoint, body, authToken });
   }
   async toggleCoverage(
     authToken: string,
@@ -26,9 +26,8 @@ export class InsuranceService implements IInsuranceService {
     payload: { accepted: boolean }
   ): Promise<IApiResponse<IQuote>> {
     const endpoint = `insurance/quotes/${quoteId}/toggle`;
-    return Api({ authToken, apiOrigin: PROXY_API_ORIGIN }).post({
-      endpoint,
-      body: payload,
-    });
+    const body = payload;
+
+    return api.post({ endpoint, body, authToken });
   }
 }

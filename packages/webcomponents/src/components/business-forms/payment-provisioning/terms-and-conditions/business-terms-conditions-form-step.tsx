@@ -51,7 +51,7 @@ export class BusinessTermsConditionsFormStep {
   }
 
   async componentWillLoad() {
-    this.api = Api({ authToken: this.authToken, apiOrigin: PROXY_API_ORIGIN });
+    this.api = Api();
     this.formController = new FormController(businessTermsConditionsSchema(this.allowOptionalFields));
     if (this.businessId && this.authToken) {
       this.fetchData();
@@ -61,7 +61,7 @@ export class BusinessTermsConditionsFormStep {
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
-      const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint });
+      const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint,  authToken: this.authToken });
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
     } catch (error) {
       this.errorEvent.emit({

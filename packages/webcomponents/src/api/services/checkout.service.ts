@@ -1,10 +1,10 @@
 import {
+  Api,
   IApiResponse,
   IApiResponseCollection,
   ICheckout,
   ICheckoutCompleteResponse,
 } from '..';
-import Api from '../ApiNew';
 
 const api = Api();
 

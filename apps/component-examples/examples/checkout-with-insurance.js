@@ -5,9 +5,9 @@ const { API_PATHS } = require('../utils/api-paths');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const checkoutEndpoint = `${process.env.API_ORIGIN}${API_PATHS.CHECKOUT}`;
-const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
-const webcomponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
+const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
+const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
@@ -90,7 +90,7 @@ async function makeCheckout(token) {
 }
 
 async function getWebComponentToken(token, checkoutId) {
-  const response = await fetch(webcomponentTokenEndpoint, {
+  const response = await fetch(webComponentTokenEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

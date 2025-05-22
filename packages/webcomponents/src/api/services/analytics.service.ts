@@ -1,4 +1,4 @@
-import Api from "../ApiNew";
+import { Api } from '..';
 
 const api = Api();
 
