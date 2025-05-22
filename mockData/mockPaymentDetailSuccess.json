@@ -21,6 +21,7 @@
     "disputed": false,
     "error_code": null,
     "error_description": null,
+    "expedited": true,
     "fee_amount": 200,
     "financial_transaction_id": "ft_1czgEJzmHBw7AHMTAeJtEk",
     "is_test": true,

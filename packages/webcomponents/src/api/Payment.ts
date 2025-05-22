@@ -171,6 +171,7 @@ export interface IPayment {
   disputes: IPaymentDispute[];
   error_code: string | null;
   error_description: string | null;
+  expedited?: boolean;
   fee_amount: number;
   is_test: boolean;
   metadata: Object | null;
@@ -205,6 +206,7 @@ export class Payment implements IPayment {
   public disputes: IPaymentDispute[];
   public error_code: string | null;
   public error_description: string | null;
+  public expedited: boolean;
   public fee_amount: number;
   public is_test: boolean;
   public metadata: Object | null;
@@ -237,6 +239,7 @@ export class Payment implements IPayment {
     this.disputes = payment.disputes;
     this.error_code = payment.error_code;
     this.error_description = payment.error_description;
+    this.expedited = payment.expedited;
     this.fee_amount = payment.fee_amount;
     this.is_test = payment.is_test;
     this.metadata = payment.metadata;
