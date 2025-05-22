@@ -1,5 +1,14 @@
 ### Changelog
 
+## 5.7.1
+
+### Patch Changes
+
+- d3f1f73: - Show `expedited` value in `justfi-payment-details` web component
+  - Show `settlement_priority` value in `justifi-payout-details` web component
+- 1b1f2a3: Improved stability and efficiency initiating API requests across web component library.
+- c74544f: Fixed bug where component cleanup triggered console error relating to component analytics.
+
 ## 5.7.0
 
 ### Minor Changes
