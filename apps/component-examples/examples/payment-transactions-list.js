@@ -5,9 +5,9 @@ const { API_PATHS } = require('../utils/api-paths');
 const app = express();
 const { v4: uuidv4 } = require('uuid');
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.AUTH_TOKEN}`;
-const paymentsEndpoint = `${process.env.API_ORIGIN}${API_PATHS.PAYMENTS}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}${API_PATHS.WEB_COMPONENT_TOKEN}`;
+const createPaymentEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}`;
+const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -59,7 +59,7 @@ async function createPayment(token) {
     },
   });
 
-  const response = await fetch(paymentsEndpoint, {
+  const response = await fetch(createPaymentEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

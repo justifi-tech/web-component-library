@@ -1,9 +1,11 @@
 require('dotenv').config({ path: '../../.env' });
 const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+
 const app = express();
 const port = process.env.PORT || 3000;
-const authTokenEndpoint = process.env.AUTH_TOKEN_ENDPOINT;
-const webComponentTokenEndpoint = process.env.WEB_COMPONENT_TOKEN_ENDPOINT;
+const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
+const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const businessId = process.env.BUSINESS_ID;

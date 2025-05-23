@@ -22,9 +22,14 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
           <h1 class="m-0" part="heading-1 heading text color font-family">
             $234.56 USD
           </h1>
-          <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
-            Succeeded
-          </span>
+          <div class="d-flex gap-1">
+            <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
+              Succeeded
+            </span>
+            <span class="badge bg-warning" part="badge font-family badge-warning" title="Expedited">
+              Expedited
+            </span>
+          </div>
         </div>
         <div class="align-items-top d-flex flex-row" part="text color font-family">
           <div class="border-1 border-end d-flex flex-column">
@@ -122,6 +127,14 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
               payment
+            </span>
+          </div>
+          <div class="d-table-row gap-2">
+            <span class="d-table-cell fw-bold px-2" part="text color font-family">
+              Expedited
+            </span>
+            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
+              Yes
             </span>
           </div>
         </div>

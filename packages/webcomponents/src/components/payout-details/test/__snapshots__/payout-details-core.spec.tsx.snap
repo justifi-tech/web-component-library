@@ -9,9 +9,14 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
         <h1 class="m-0" part="heading-1 heading text color font-family">
           $220.15 USD
         </h1>
-        <span class="badge bg-success" part="badge font-family badge-success" title="Successfully deposited into your bank account">
-          Paid
-        </span>
+        <div class="d-flex gap-1">
+          <span class="badge bg-success" part="badge font-family badge-success" title="Successfully deposited into your bank account">
+            Paid
+          </span>
+          <span class="badge bg-warning" part="badge font-family badge-warning" title="Expedited">
+            Expedited
+          </span>
+        </div>
       </div>
       <div class="align-items-top d-flex flex-row" part="text color font-family">
         <div class="border-1 border-end d-flex flex-column">

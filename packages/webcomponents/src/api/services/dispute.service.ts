@@ -1,6 +1,4 @@
-import { IApiResponse } from '..';
-import Api from '../ApiNew';
-import { IDispute } from '../Dispute';
+import { Api, IApiResponse, IDispute } from '..';
 
 const api = Api();
 
