@@ -79,7 +79,7 @@ export class CardForm {
               <iframe-input
                 inputId="expirationMonth"
                 ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
-                label="Expiration"
+                label="Exp. Month"
                 iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth`}
               />
             </div>
@@ -87,7 +87,7 @@ export class CardForm {
               <iframe-input
                 inputId="expirationYear"
                 ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
-                label=""
+                label="Exp. Year"
                 iframeOrigin={`${this.iframeOrigin}/v2/expirationYear`}
               />
             </div>
