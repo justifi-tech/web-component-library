@@ -110,19 +110,7 @@ export class Checkout implements ICheckout {
   payment_amount: number;
   payment_client_id: string;
   payment_description: string;
-  payment_methods: {
-    id: string;
-    status: string;
-    invalid_reason: null;
-    name: string;
-    brand: string;
-    acct_last_four: string;
-    month: string;
-    year: string;
-    address_line1_check: string;
-    address_postal_code_check: string;
-    bin_details: null;
-  }[];
+  payment_methods: ICheckoutPaymentMethod[];
   payment_method_group_id: string;
   payment_settings: {
     ach_payments: boolean;
@@ -166,36 +154,42 @@ export class Checkout implements ICheckout {
     this.successful_payment_id = data.successful_payment_id;
     this.created_at = data.created_at;
     this.updated_at = data.updated_at;
-    this.completions = data.completions?.map((completion) => new Completion(completion));
+    this.completions = data.completions?.map(
+      (completion) => new Completion(completion)
+    );
   }
 
   get payment_mode(): ICheckoutPaymentMode {
     let paymentMode: ICheckoutPaymentMode;
-    
+
     if (!this.completions || this.completions.length === 0) {
       return ICheckoutPaymentMode.unknown;
     }
-    
+
     const sortedCompletions = this.completions.sort((a, b) => {
-      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+      return (
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      );
     });
-    
+
     const lastCompletion = sortedCompletions[0];
 
     if (lastCompletion.payment_mode) {
       paymentMode = lastCompletion.payment_mode;
     } else if (lastCompletion.payment_response?.data?.payment_method?.card) {
       paymentMode = ICheckoutPaymentMode.card;
-    } else if (lastCompletion.payment_response?.data?.payment_method?.bank_account) {
+    } else if (
+      lastCompletion.payment_response?.data?.payment_method?.bank_account
+    ) {
       paymentMode = ICheckoutPaymentMode.bank_account;
-    } 
+    }
 
     return paymentMode;
-  };
+  }
 
   formattedPaymentAmount(amount: number): string {
     return formatCurrency(amount, this.payment_currency);
-  };
+  }
 }
 
 export enum ICheckoutPaymentMode {
@@ -204,24 +198,24 @@ export enum ICheckoutPaymentMode {
   card = 'Card',
   bank_account = 'Bank Account',
   card_present = 'Card Present',
-  unknown = ''
+  unknown = '',
 }
 
 export enum ICheckoutPaymentModeParam {
   bnpl = 'bnpl',
-  ecom = 'ecom'
+  ecom = 'ecom',
 }
 
 export enum ICheckoutStatus {
   created = 'created',
   completed = 'completed',
   attempted = 'attempted',
-  expired = 'expired'
+  expired = 'expired',
 }
 
 export enum CompletionStatuses {
   failed = 'failed',
-  succeeded = 'succeeded'
+  succeeded = 'succeeded',
 }
 
 export type ICheckoutCompleteResponse = IApiResponse<{
@@ -241,4 +235,18 @@ export type ILoadedEventResponse = {
 export interface CheckoutsQueryParams {
   status?: ICheckoutStatus;
   payment_mode?: ICheckoutPaymentMode;
+}
+
+export interface ICheckoutPaymentMethod {
+  id: string;
+  status: string;
+  invalid_reason: null;
+  name: string;
+  brand: string;
+  acct_last_four: string;
+  month: string;
+  year: string;
+  address_line1_check: string;
+  address_postal_code_check: string;
+  bin_details: null;
 }

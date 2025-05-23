@@ -17,6 +17,7 @@ export class CheckoutWrapper {
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
   private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
+  private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
   private getCheckout: Function;
   private completeCheckout: Function;
 
@@ -76,6 +77,12 @@ export class CheckoutWrapper {
           checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
           checkoutStore.paymentDescription = checkout.payment_description;
           checkoutStore.totalAmount = checkout.total_amount;
+          checkoutStore.paymentAmount = checkout.payment_amount;
+          checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
+          checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
+          checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
+          checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
+          checkoutStore.bnplProviderCheckoutUrl = checkout?.bnpl?.provider_checkout_url;
         },
         onError: (error) => {
           this.errorEvent.emit({
@@ -92,6 +99,7 @@ export class CheckoutWrapper {
     this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
     this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
+    this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
   }
 
   private async getPaymentMethod(submitCheckoutArgs: ISubmitCheckout): Promise<string | undefined> {
@@ -163,22 +171,50 @@ export class CheckoutWrapper {
       return;
     }
 
-    const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
+    let payment: { payment_mode: string; payment_token: string | undefined };
 
-    if (!paymentMethod) {
-      this.errorEvent.emit({
-        message: 'Payment method tokenization failed.',
-        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    };
-
-    this.completeCheckout({
-      payment: {
+    if (checkoutStore.selectedPaymentMethod === 'sezzle') {
+      const insuranceValidation = this.insuranceFormRef ? await this.insuranceFormRef.validate() : { isValid: true };
+      const sezzleResult = await this.sezzlePaymentMethodRef.resolvePaymentMethod(insuranceValidation);
+      if (sezzleResult.validationError) {
+        this.errorEvent.emit({
+          message: 'Sezzle payment method validation failed.',
+          errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      } else if (sezzleResult.error) {
+        this.errorEvent.emit({
+          message: sezzleResult.error.message,
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      } else if (sezzleResult.bnpl?.status === 'success') {
+        payment = {
+          payment_mode: 'bnpl',
+          payment_token: undefined,
+        };
+      }
+    } else {
+      const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
+      if (!paymentMethod) {
+        this.errorEvent.emit({
+          message: 'Payment method tokenization failed.',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      };
+      payment = {
         payment_mode: 'ecom',
         payment_token: paymentMethod,
-      },
+      };
+    }
+
+
+    this.completeCheckout({
+      payment,
       onSuccess: ({ checkout }) => {
         this.checkoutComplete.emit({
           checkout,
