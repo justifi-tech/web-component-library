@@ -1,46 +1,47 @@
 import { createStore } from '@stencil/store';
+import { ICheckoutPaymentMethod } from '../api';
 
-const { state, onChange } = createStore({
+interface IInitialState {
+  authToken: string;
+  accountId: string;
+  paymentMethods: ICheckoutPaymentMethod[];
+  paymentMethodGroupId: string;
+  paymentDescription: string;
+  totalAmount: number;
+  paymentAmount: number;
+  selectedPaymentMethod: string;
+  checkoutId: string;
+  bnplEnabled: boolean;
+  bnplProviderClientId: string;
+  bnplProviderMode: string;
+  bnplProviderApiVersion: string;
+  bnplProviderCheckoutUrl: string;
+}
+
+const initialState: IInitialState = {
   authToken: '',
   accountId: '',
   paymentMethods: [],
   paymentMethodGroupId: '',
   paymentDescription: '',
   totalAmount: 0,
+  paymentAmount: 0,
   selectedPaymentMethod: '',
   checkoutId: '',
-});
+  bnplEnabled: false,
+  bnplProviderClientId: '',
+  bnplProviderMode: '',
+  bnplProviderApiVersion: '',
+  bnplProviderCheckoutUrl: '',
+};
 
-onChange('authToken', (newValue) => {
-  state.authToken = newValue;
-});
+const { state, onChange } = createStore(initialState);
 
-onChange('accountId', (newValue) => {
-  state.accountId = newValue;
-});
-
-onChange('paymentDescription', (newValue) => {
-  state.paymentDescription = newValue;
-});
-
-onChange('totalAmount', (newValue) => {
-  state.totalAmount = newValue;
-});
-
-onChange('paymentMethods', (newValue) => {
-  state.paymentMethods = newValue;
-});
-
-onChange('paymentMethodGroupId', (newValue) => {
-  state.paymentMethodGroupId = newValue;
-});
-
-onChange('selectedPaymentMethod', (newValue) => {
-  state.selectedPaymentMethod = newValue;
-});
-
-onChange('checkoutId', (newValue) => {
-  state.checkoutId = newValue;
+Object.keys(initialState).forEach((key) => {
+  // @ts-ignore
+  onChange(key, (newValue) => {
+    state[key] = newValue;
+  });
 });
 
 export default state;

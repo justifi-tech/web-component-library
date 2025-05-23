@@ -1,8 +1,9 @@
-import { Component, h, Prop, Method, Event, EventEmitter, State, Host } from '@stencil/core';
-import { PaymentMethodOption } from './payment-method-option-utils';
+import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core';
 import { formatCurrency } from '../../utils/utils';
 import { PaymentMethodPayload } from './payment-method-payload';
 import { radioListItem } from '../../styles/parts';
+import checkoutStore from '../../store/checkout.store';
+import { StyledHost } from '../../ui-components';
 
 const sezzleLogo = (
   <img
@@ -20,25 +21,22 @@ const sezzleLogo = (
 
 @Component({
   tag: 'justifi-sezzle-payment-method',
+  shadow: true
 })
 export class SezzlePaymentMethod {
-  @Prop() bnpl: any; // type this
-  @Prop() clientId: string;
-  @Prop() accountId: string;
-  @Prop() paymentMethodOption: PaymentMethodOption;
-  @Prop() isSelected: boolean;
-  @Prop() paymentAmount: number;
-
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;
   @State() sezzlePromise: Promise<PaymentMethodPayload>;
 
   private scriptRef: HTMLScriptElement;
   private sezzleButtonRef: HTMLButtonElement;
+  private paymentMethodOptionId = 'sezzle';
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
   componentDidRender() {
+    if (!this.scriptRef) return;
+
     this.scriptRef.onload = () => {
       this.sezzleButtonRef = document.createElement('button');
       this.initializeSezzleCheckout();
@@ -56,27 +54,27 @@ export class SezzlePaymentMethod {
 
   onPaymentMethodOptionClick = (e) => {
     e.preventDefault();
-    this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
+    checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
   };
 
   initializeSezzleCheckout = () => {
     let resolveSezzlePromise;
     this.sezzlePromise = new Promise((resolve) => { resolveSezzlePromise = resolve; });
-    const bnpl = this.bnpl;
-    const amount = +this.paymentAmount; // convert to number
+    const amount = Number(checkoutStore.paymentAmount);
     const Checkout = (window as any).Checkout;
     const checkout = new Checkout({
       mode: 'popup',
-      publicKey: bnpl.provider_client_id,
-      apiMode: bnpl.provider_mode,
-      apiVersion: bnpl.provider_api_version,
+      publicKey: checkoutStore.bnplProviderClientId,
+      apiMode: checkoutStore.bnplProviderMode,
+      apiVersion: checkoutStore.bnplProviderApiVersion,
     });
     checkout.sezzleButtonElement = this.sezzleButtonRef;
     checkout.init({
       onClick: function (event) {
         event.preventDefault();
         checkout.startCheckout({
-          checkout_url: bnpl.provider_checkout_url
+          checkout_url: checkoutStore.bnplProviderCheckoutUrl,
         });
       },
       onComplete: (event) => resolveSezzlePromise({ bnpl: event.data }),
@@ -88,8 +86,13 @@ export class SezzlePaymentMethod {
   };
 
   render() {
+    if (!checkoutStore.bnplEnabled) {
+      console.warn('justifi-sezzle-payment-method: BNPL is not enabled for this account.');
+      return null;
+    }
+
     return (
-      <Host class="payment-method">
+      <StyledHost class="payment-method">
         <script
           src="https://checkout-sdk.sezzle.com/checkout.min.js"
           async={true}
@@ -103,8 +106,8 @@ export class SezzlePaymentMethod {
         >
           <form-control-radio
             name="paymentMethodType"
-            value={this.paymentMethodOption?.id}
-            checked={this.isSelected}
+            value={this.paymentMethodOptionId}
+            checked={checkoutStore.selectedPaymentMethod === this.paymentMethodOptionId}
             label={<div><div>Buy now, pay later with {sezzleLogo}</div>
               {this.installmentPlan && (
                 <small>
@@ -115,7 +118,7 @@ export class SezzlePaymentMethod {
               )}</div>}
           />
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }
