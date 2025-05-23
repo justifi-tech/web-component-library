@@ -74,8 +74,8 @@ export class CardForm {
               iframeOrigin={`${this.iframeOrigin}/v2/cardNumber`}
             />
           </div>
-          <div class="row">
-            <div class="col-4 align-content-end">
+          <div class="d-flex align-items-start">
+            <div class="flex-fill me-3">
               <iframe-input
                 inputId="expirationMonth"
                 ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
@@ -83,7 +83,7 @@ export class CardForm {
                 iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth`}
               />
             </div>
-            <div class="col-4 align-content-end">
+            <div class="flex-fill me-3">
               <iframe-input
                 inputId="expirationYear"
                 ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
@@ -91,7 +91,7 @@ export class CardForm {
                 iframeOrigin={`${this.iframeOrigin}/v2/expirationYear`}
               />
             </div>
-            <div class="col-4 align-content-end">
+            <div class="flex-fill">
               <iframe-input
                 inputId="CVV"
                 ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
