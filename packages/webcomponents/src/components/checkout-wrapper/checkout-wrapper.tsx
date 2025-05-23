@@ -176,14 +176,7 @@ export class CheckoutWrapper {
     if (checkoutStore.selectedPaymentMethod === 'sezzle') {
       const insuranceValidation = this.insuranceFormRef ? await this.insuranceFormRef.validate() : { isValid: true };
       const sezzleResult = await this.sezzlePaymentMethodRef.resolvePaymentMethod(insuranceValidation);
-      if (sezzleResult.validationError) {
-        this.errorEvent.emit({
-          message: 'Sezzle payment method validation failed.',
-          errorCode: ComponentErrorCodes.VALIDATION_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      } else if (sezzleResult.error) {
+      if (sezzleResult.error) {
         this.errorEvent.emit({
           message: sezzleResult.error.message,
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
