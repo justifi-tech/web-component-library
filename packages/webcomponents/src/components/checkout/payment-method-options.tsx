@@ -76,10 +76,9 @@ export class PaymentMethodOptions {
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }> {
+  async validate(): Promise<{ isValid: boolean, errors?: any }> {
     const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    const isValid = await newPaymentMethodElement.validate();
-    return { isValid: isValid };
+    return newPaymentMethodElement.validate();
   }
 
   render() {

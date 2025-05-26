@@ -141,7 +141,7 @@ ${codeExampleHead(
         address_line1: "123 Main St",
         address_line2: "Apt 1",
         address_city: "Anytown",
-        address_state: "NY",
+        address_state: "NY", // Use 2-letter state code
         address_postal_code: "12345",
       });
     }); 

@@ -139,7 +139,10 @@ export const cityValidation = string()
   .transform(transformEmptyString);
 
 export const stateValidation = string()
-  .oneOf(StateOptions.map((option) => option.value), 'Select state')
+  .oneOf(
+    StateOptions.map((option) => option.value),
+    'Use 2-letter state code, like "CA".'
+  )
   .transform(transformEmptyString);
 
 export const postalValidation = string()
