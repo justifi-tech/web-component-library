@@ -5,7 +5,7 @@ import {
   recurringPaymentsOptions,
   seasonalBusinessOptions,
   bankAccountTypeOptions,
-  businessClassificationOptions
+  businessClassificationOptions,
 } from '../utils/business-form-options';
 import {
   numbersOnlyRegex,
@@ -14,7 +14,7 @@ import {
   ssnRegex,
   transformEmptyString,
   urlRegex,
-  validateRoutingNumber
+  validateRoutingNumber,
 } from './schema-helpers';
 import { EntityDocumentType } from '../../../api/Document';
 
@@ -45,7 +45,10 @@ export const websiteUrlValidation = string()
   .transform(transformEmptyString);
 
 export const businessClassificationValidation = string()
-  .oneOf(businessClassificationOptions.map((option) => option.value), 'Select business classification')
+  .oneOf(
+    businessClassificationOptions.map((option) => option.value),
+    'Select business classification'
+  )
   .transform(transformEmptyString);
 
 export const industryValidation = string()
@@ -64,11 +67,15 @@ export const taxIdValidation = string()
   .transform(transformEmptyString);
 
 export const dateOfIncorporationValidation = string()
-  .test('not-future', 'Date of incorporation cannot be in the future', (value) => {
-    const inputDate = new Date(value);
-    const today = new Date();
-    return inputDate <= today;
-  })
+  .test(
+    'not-future',
+    'Date of incorporation cannot be in the future',
+    (value) => {
+      const inputDate = new Date(value);
+      const today = new Date();
+      return inputDate <= today;
+    }
+  )
   .transform(transformEmptyString);
 
 // Identity Validations
@@ -84,8 +91,7 @@ export const identityTitleValidation = string()
   .transform(transformEmptyString);
 
 export const dobValidation = (role: string) => {
-  return (
-    string()
+  return string()
     .test('min', 'Enter a valid date', (value) => {
       const date = new Date(value);
       const minDate = new Date('1902-01-01');
@@ -97,8 +103,7 @@ export const dobValidation = (role: string) => {
       minAgeDate.setFullYear(minAgeDate.getFullYear() - 18);
       return date <= minAgeDate;
     })
-    .transform(transformEmptyString)
-  )
+    .transform(transformEmptyString);
 };
 
 export const ssnValidation = string()
@@ -141,7 +146,7 @@ export const cityValidation = string()
 export const stateValidation = string()
   .oneOf(
     StateOptions.map((option) => option.value),
-    'Use 2-letter state code, like "CA".'
+    'Enter a 2-letter state abbreviation, such as CA'
   )
   .transform(transformEmptyString);
 
@@ -160,11 +165,17 @@ export const paymentVolumeValidation = string()
   .transform(transformEmptyString);
 
 export const whenServiceReceivedValidation = string()
-  .oneOf(businessServiceReceivedOptions.map((option) => option.value), 'Select when service is received')
+  .oneOf(
+    businessServiceReceivedOptions.map((option) => option.value),
+    'Select when service is received'
+  )
   .transform(transformEmptyString);
 
 export const recurringPaymentsValidation = string()
-  .oneOf(recurringPaymentsOptions.map((option) => option.value), 'Select recurring payments')
+  .oneOf(
+    recurringPaymentsOptions.map((option) => option.value),
+    'Select recurring payments'
+  )
   .transform(transformEmptyString);
 
 export const recurringPaymentsPercentageValidation = string()
@@ -176,11 +187,14 @@ export const recurringPaymentsPercentageValidation = string()
   .transform(transformEmptyString);
 
 export const seasonalBusinessValidation = string()
-  .oneOf(seasonalBusinessOptions.map((option) => option.value), 'Select seasonal business')
+  .oneOf(
+    seasonalBusinessOptions.map((option) => option.value),
+    'Select seasonal business'
+  )
   .transform(transformEmptyString);
 
-export const otherPaymentDetailsValidation = string()
-  .transform(transformEmptyString);
+export const otherPaymentDetailsValidation =
+  string().transform(transformEmptyString);
 
 // Bank Account Validations
 
@@ -195,7 +209,10 @@ export const nicknameValidation = string()
   .transform(transformEmptyString);
 
 export const accountTypeValidation = string()
-  .oneOf(bankAccountTypeOptions.map((option) => option.value), 'Select account type')
+  .oneOf(
+    bankAccountTypeOptions.map((option) => option.value),
+    'Select account type'
+  )
   .transform(transformEmptyString);
 
 export const accountNumberValidation = string()
@@ -218,7 +235,7 @@ export const routingNumberValidation = string()
   })
   .transform(transformEmptyString);
 
-  // Document Upload Validations
+// Document Upload Validations
 
 const documentUploadValidation = mixed();
 
@@ -228,18 +245,13 @@ export const governmentIdValidation = documentUploadValidation;
 
 export const otherDocumentValidation = documentUploadValidation;
 
-export const voidedCheckValidation = (documents: any[], allowOptionalFields: boolean) => {
-  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.voidedCheck);
-
-  if (existingDoc || allowOptionalFields) {
-    return documentUploadValidation.nullable();
-  } else {
-    return documentUploadValidation.required('Please select one or more files');
-  }
-}
-
-export const bankStatementValidation = (documents: any[], allowOptionalFields: boolean) => {
-  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.bankStatement);
+export const voidedCheckValidation = (
+  documents: any[],
+  allowOptionalFields: boolean
+) => {
+  const existingDoc = documents.some(
+    (doc) => doc.document_type === EntityDocumentType.voidedCheck
+  );
 
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
@@ -248,10 +260,31 @@ export const bankStatementValidation = (documents: any[], allowOptionalFields: b
   }
 };
 
-export const balanceSheetValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
+export const bankStatementValidation = (
+  documents: any[],
+  allowOptionalFields: boolean
+) => {
+  const existingDoc = documents.some(
+    (doc) => doc.document_type === EntityDocumentType.bankStatement
+  );
+
+  if (existingDoc || allowOptionalFields) {
+    return documentUploadValidation.nullable();
+  } else {
+    return documentUploadValidation.required('Please select one or more files');
+  }
+};
+
+export const balanceSheetValidation = (
+  volume: string,
+  documents: any[],
+  allowOptionalFields: boolean
+) => {
   const vol = parseInt(volume);
   const balanceSheetRequiredAmount = 1000000;
-  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.balanceSheet);
+  const existingDoc = documents.some(
+    (doc) => doc.document_type === EntityDocumentType.balanceSheet
+  );
 
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
@@ -260,11 +293,17 @@ export const balanceSheetValidation = (volume: string, documents: any[], allowOp
   }
 };
 
-export const profitAndLossStatementValidation = (volume: string, documents: any[], allowOptionalFields: boolean) => {
+export const profitAndLossStatementValidation = (
+  volume: string,
+  documents: any[],
+  allowOptionalFields: boolean
+) => {
   const vol = parseInt(volume);
   const profitLossRequiredAmount = 1000000;
-  const existingDoc = documents.some((doc) => doc.document_type === EntityDocumentType.profitAndLossStatement);
-  
+  const existingDoc = documents.some(
+    (doc) => doc.document_type === EntityDocumentType.profitAndLossStatement
+  );
+
   if (existingDoc || allowOptionalFields) {
     return documentUploadValidation.nullable();
   } else if (vol >= profitLossRequiredAmount && !allowOptionalFields) {
