@@ -5,7 +5,7 @@ import { checkPkgVersion } from "../../utils/check-pkg-version";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "../../api";
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
-import { ISubmitCheckout } from "../../api/PaymentMethod";
+import { IBillingInfo } from "../../api/BillingInformation";
 
 @Component({
   tag: 'justifi-checkout-wrapper',
@@ -102,7 +102,29 @@ export class CheckoutWrapper {
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
   }
 
-  private async getPaymentMethod(submitCheckoutArgs: ISubmitCheckout): Promise<string | undefined> {
+  private async tokenizePaymentMethod(tokenizeArgs: IBillingInfo): Promise<any> {
+    const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
+
+    const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
+
+    const paymentMethodMetadata = {
+      accountId: this.accountId,
+      payment_method_group_id: undefined,
+      ...combinedBillingInfo
+    };
+
+    if (this.savePaymentMethod) {
+      paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
+    }
+
+    return this.paymentMethodFormRef.tokenize({
+      clientId: this.authToken,
+      paymentMethodMetadata,
+      account: this.accountId,
+    });
+  }
+
+  private async getPaymentMethod(submitCheckoutArgs: IBillingInfo): Promise<string | undefined> {
     if (!this.paymentMethodFormRef) {
       return checkoutStore.selectedPaymentMethod;
     }
@@ -138,29 +160,7 @@ export class CheckoutWrapper {
   }
 
   @Method()
-  async tokenizePaymentMethod(tokenizeArgs: ISubmitCheckout): Promise<any> {
-    const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
-
-    const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
-
-    const paymentMethodMetadata = {
-      accountId: this.accountId,
-      ...combinedBillingInfo
-    };
-
-    if (this.savePaymentMethod) {
-      paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
-    }
-
-    return this.paymentMethodFormRef.tokenize({
-      clientId: this.authToken,
-      paymentMethodMetadata,
-      account: this.accountId,
-    });
-  }
-
-  @Method()
-  async submitCheckout(submitCheckoutArgs: ISubmitCheckout): Promise<void> {
+  async submitCheckout(submitCheckoutArgs: IBillingInfo): Promise<void> {
     const isValid = await this.validate();
     if (!isValid) {
       this.errorEvent.emit({
@@ -231,4 +231,3 @@ export class CheckoutWrapper {
     );
   }
 }
-
