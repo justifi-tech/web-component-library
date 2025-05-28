@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.7.2
+
+### Patch Changes
+
+- 56b7253: Return the validation error message on the error-event from the justifi-tokenize-payment-method component
+
 ## 5.7.1
 
 ### Patch Changes
