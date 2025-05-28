@@ -79,7 +79,7 @@ export class BusinessTermsConditionsFormStep {
     this.formLoading.emit(true);
     try {
       const payload = this.termsPayload;
-      const response = await this.api.post({ endpoint: this.termsConditionsEndpoint, body: payload });
+      const response = await this.api.post({ endpoint: this.termsConditionsEndpoint, body: payload, authToken: this.authToken });
       this.handleResponse(response, onSuccess);
     } catch (error) {
       this.errorEvent.emit({
