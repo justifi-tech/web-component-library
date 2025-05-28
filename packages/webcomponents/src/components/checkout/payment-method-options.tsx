@@ -11,7 +11,6 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 export class PaymentMethodOptions {
   @Prop() showCard: boolean;
   @Prop() showAch: boolean;
-  @Prop() showBnpl: boolean;
   @Prop() showSavedPaymentMethods: boolean;
   @Prop() paymentMethodGroupId?: string;
   @Prop() bnpl: IBnpl;
@@ -51,9 +50,6 @@ export class PaymentMethodOptions {
           (this.showAch || paymentMethod.type !== PaymentMethodTypes.bankAccount)
         );
       });
-    if (this.showBnpl && this.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
-    }
     if (this.showCard) {
       this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
     }
@@ -89,7 +85,6 @@ export class PaymentMethodOptions {
           const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
           const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
           const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
-          const sezzle = paymentMethodOption.id === PaymentMethodTypes.sezzle;
           if (newCard || newBankAccount) {
             return (
               <justifi-new-payment-method
@@ -109,19 +104,6 @@ export class PaymentMethodOptions {
                 }}
               />
             );
-          } else if (sezzle) {
-            return (
-              <justifi-sezzle-payment-method
-                paymentMethodOption={paymentMethodOption}
-                is-selected={isSelected}
-                paymentAmount={this.paymentAmount}
-                bnpl={this.bnpl}
-                ref={(el) => {
-                  if (isSelected) {
-                    this.selectedPaymentMethodOptionRef = el;
-                  }
-                }}>
-              </justifi-sezzle-payment-method>);
           }
           else if (this.showSavedPaymentMethods) {
             return (
