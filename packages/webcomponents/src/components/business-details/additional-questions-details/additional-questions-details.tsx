@@ -20,7 +20,7 @@ export class AdditionalQuestionsDetails {
             <div class="col-12 col-md-6">
               <DetailItem
                 title="Business Revenue"
-                value={(this.additionalQuestions.business_revenue)}
+                value={this.additionalQuestions.business_revenue}
               />
               <DetailItem
                 title="Business Payment Volume"
