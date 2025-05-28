@@ -45,10 +45,21 @@ export class NewPaymentMethod {
     if (!this.paymentMethodFormRef || !this.billingFormRef) return;
 
     try {
-      const isValid = await this.validate();
+      const { isValid, errors } = await this.validate();
 
       if (!isValid || !insuranceValidation.isValid) {
-        return { validationError: true };
+
+        // get propety value from first property in errors object
+        const message = `${Object.values(errors)[0] || 'Validation error'}`
+
+        return {
+          validationError: true,
+          error: {
+            code: 'validation_error',
+            message,
+            decline_code: undefined
+          }
+        };
       }
 
       const tokenizeResponse = await this.tokenize();
@@ -68,10 +79,16 @@ export class NewPaymentMethod {
   }
 
   @Method()
-  async validate(): Promise<boolean> {
+  async validate(): Promise<{ isValid: boolean, errors: any }> {
     const billingFormValidation = await this.billingFormRef.validate();
     const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
-    return billingFormValidation.isValid && paymentMethodFormValidation.isValid;
+
+    const isValid = billingFormValidation.isValid && paymentMethodFormValidation.isValid;
+    const errors = {
+      ...billingFormValidation.errors,
+      ...paymentMethodFormValidation.errors,
+    }
+    return { isValid, errors };
   }
 
   async tokenize() {
