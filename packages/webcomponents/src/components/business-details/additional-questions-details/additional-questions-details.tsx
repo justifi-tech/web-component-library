@@ -20,11 +20,11 @@ export class AdditionalQuestionsDetails {
             <div class="col-12 col-md-6">
               <DetailItem
                 title="Business Revenue"
-                value={this.additionalQuestions.business_revenue?.toString()}
+                value={(this.additionalQuestions.business_revenue)}
               />
               <DetailItem
                 title="Business Payment Volume"
-                value={this.additionalQuestions.business_payment_volume?.toString()}
+                value={this.additionalQuestions.business_payment_volume}
               />
             </div>
             {/* <div class="col-12 col-md-6">
