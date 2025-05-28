@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { ErrorState } from '../../ui-components/details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from '../../actions/business/get-business';
@@ -15,7 +15,7 @@ export class BusinessDetails {
   @Prop() businessId: string;
   @Prop() authToken: string;
 
-  @State() errorMessage: string;
+  @State() errorMessage: string = null;
   @State() getBusiness: Function;
 
   analytics: JustifiAnalytics;
@@ -34,6 +34,11 @@ export class BusinessDetails {
   disconnectedCallback() {
     this.analytics?.cleanup();
   };
+
+   handleErrorEvent = event => {
+    this.errorMessage = event.detail.message;
+    this.errorEvent.emit(event.detail);
+  }
 
   private initializeGetBusiness() {
     if (!this.businessId || !this.authToken) {
@@ -55,12 +60,13 @@ export class BusinessDetails {
 
   render() {
     if (this.errorMessage) {
-      return <Host>{ErrorState(this.errorMessage)}</Host>;
+      return ErrorState(this.errorMessage);
     }
     return (
-      <Host>
-        <business-details-core getBusiness={this.getBusiness} />
-      </Host>
+      <business-details-core 
+        getBusiness={this.getBusiness} 
+        onError-event={this.handleErrorEvent}
+      />
     );
   }
 }
