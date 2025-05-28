@@ -21,7 +21,7 @@ describe('justifi-business-details', () => {
     page.waitForChanges();
 
     expect(page.rootInstance.getBusiness).toBeDefined();
-    expect(page.rootInstance.errorMessage).toBeUndefined();
+    expect(page.rootInstance.errorMessage).toBeNull();
   });
 
   it('sets an error message with invalid props', async () => {

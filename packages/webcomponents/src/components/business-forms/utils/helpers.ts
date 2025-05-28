@@ -1,4 +1,4 @@
-import { IBusiness } from "../../../components";
+import { IBusiness } from "../../../api/Business";
 import StateOptions from "../../../utils/state-options";
 
 export function getStateAbbreviation(stateName: string): string | undefined {

@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { ErrorState } from './utils';
 
 @Component({
@@ -10,7 +10,7 @@ export class Details {
 
   render() {
     return (
-      <Host>
+      <div>
         {
           this.errorMessage ?
             ErrorState(this.errorMessage)
@@ -20,7 +20,7 @@ export class Details {
               <slot name='detail-sections' />
             </main>
         }
-      </Host>
+      </div>
     )
   }
 }

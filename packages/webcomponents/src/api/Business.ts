@@ -226,9 +226,9 @@ export class Business implements IBusiness {
   public product_categories: ProductCategories;
 
   constructor(business: IBusiness) {
-    this.additional_questions = new AdditionalQuestions(
-      business.additional_questions || {}
-    );
+    this.additional_questions = business.additional_questions
+      ? new AdditionalQuestions(business.additional_questions)
+      : null;
     this.associated_accounts = business.associated_accounts;
     this.classification = business.classification;
     this.bank_accounts = business.bank_accounts;

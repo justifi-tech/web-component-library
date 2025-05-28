@@ -1,99 +1,83 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RepresentativeDetails should render 1`] = `
-<representative-details>
+exports[`CoreInfoDetails should render 1`] = `
+<core-info-details>
   <div>
     <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
-      Representative Details
+      Business Core Info Details
     </h2>
     <div class="d-table gap-2 mt-3 w-100">
       <div class="gy-3 row">
         <div class="col-12 col-md-6">
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Name
+              Legal Name
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Person Name
+              Business Name
             </span>
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              ID
+              Doing Business As (DBA)
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              idty_xyz
+              Best Business
             </span>
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Address
+              Business Classification
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              123 Example St
+              Corporation
             </span>
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Created At
+              Industry
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Jan 1, 2021
+              Big Business
             </span>
           </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Title
+              Tax ID
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              President
+              895249796
             </span>
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Is Owner?
+              Website URL
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              true
+              https://justifi.ai
             </span>
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Date Of Birth
+              Email Address
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Jan 1, 1980
+              business@justifi.ai
             </span>
           </div>
           <div class="d-table-row gap-2">
             <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Email
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              person.name@justifi.ai
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Phone
+              Phone Number
             </span>
             <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
               6124011111
-            </span>
-          </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Updated At
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Jan 1, 2021
             </span>
           </div>
         </div>
       </div>
     </div>
   </div>
-</representative-details>
+</core-info-details>
 `;

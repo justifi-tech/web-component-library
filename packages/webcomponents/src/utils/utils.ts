@@ -169,7 +169,10 @@ export function snakeToCamel(str: string): string {
 
 // Object Utilities
 
-export function isEmptyObject(obj) {
+export function isEmptyObject(obj: {} | null): boolean {
+  if (obj === null) {
+    return true;
+  }
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
