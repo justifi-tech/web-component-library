@@ -84,10 +84,14 @@ exports[`BusinessDetailsCore should display loading state correclty 1`] = `
 exports[`BusinessDetailsCore should set business details correctly to state 1`] = `
 <business-details-core class="body" style="display: block;">
   <style></style>
-  <generic-info-details></generic-info-details>
-  <legal-address-details></legal-address-details>
-  <representative-details></representative-details>
-  <owner-details></owner-details>
-  <additional-questions-details></additional-questions-details>
+  <justifi-details>
+    <div slot="detail-sections">
+      <core-info-details></core-info-details>
+      <legal-address-details></legal-address-details>
+      <representative-details></representative-details>
+      <owner-details></owner-details>
+      <additional-questions-details></additional-questions-details>
+    </div>
+  </justifi-details>
 </business-details-core>
 `;
