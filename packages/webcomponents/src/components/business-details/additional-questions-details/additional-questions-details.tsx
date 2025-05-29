@@ -1,4 +1,4 @@
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/utils';
 import { IAdditionalQuestions } from '../../../api/Business';
 import { isEmptyObject } from '../../../utils/utils';
@@ -10,21 +10,21 @@ export class AdditionalQuestionsDetails {
   @Prop() additionalQuestions: IAdditionalQuestions
 
   render() {
-    if (isEmptyObject(this.additionalQuestions)) return null;
+    if (!this.additionalQuestions || isEmptyObject(this.additionalQuestions)) return null;
 
     return (
-      <Host>
+      <div>
         <DetailSectionTitle sectionTitle="Additional Questions" />
         <div class="d-table gap-2 w-100 mt-3">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem
                 title="Business Revenue"
-                value={this.additionalQuestions.business_revenue?.toString()}
+                value={this.additionalQuestions.business_revenue}
               />
               <DetailItem
                 title="Business Payment Volume"
-                value={this.additionalQuestions.business_payment_volume?.toString()}
+                value={this.additionalQuestions.business_payment_volume}
               />
             </div>
             {/* <div class="col-12 col-md-6">
@@ -39,7 +39,7 @@ export class AdditionalQuestionsDetails {
             </div> */}
           </div>
         </div>
-      </Host>
+      </div>
     );
   }
 }
