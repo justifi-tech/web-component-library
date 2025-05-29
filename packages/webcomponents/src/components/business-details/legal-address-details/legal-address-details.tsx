@@ -1,4 +1,4 @@
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/utils';
 import { IAddress } from '../../../api/Business';
 import { isEmptyObject } from '../../../utils/utils';
@@ -10,10 +10,10 @@ export class LegalAddressDetails {
   @Prop() legalAddress: IAddress;
 
   render() {
-    if (isEmptyObject(this.legalAddress)) return null;
+    if (!this.legalAddress || isEmptyObject(this.legalAddress)) return null;
 
     return (
-      <Host>
+      <div>
         <DetailSectionTitle sectionTitle="Business Legal Address Details" />
         <div class="d-table gap-2 w-100 mt-3">
           <div class="row gy-3">
@@ -38,7 +38,7 @@ export class LegalAddressDetails {
             </div>
           </div>
         </div>
-      </Host>
+      </div>
     );
   }
 }
