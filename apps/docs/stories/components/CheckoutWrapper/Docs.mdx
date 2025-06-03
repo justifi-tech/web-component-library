@@ -24,10 +24,9 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 ---
 
-Component to be used as a container for the checkout sub components. It handles tokenization of payment methods, billing information, insurance and submission of the checkout form.
-It also provides a way to save the payment method for future use.
+The `checkout-wrapper` component serves as a container for checkout-related subcomponents. It manages the tokenization of payment methods, billing details, insurance, and overall form submission. It also supports saving a payment method for future use.
 
-These sub components can be added to the checkout wrapper:
+### Suported subcomponents
 
 Required for checkout completion (add at least one):
 
@@ -42,6 +41,71 @@ Optional:
 - [justifi-insurance-form](/docs/modular-checkout-summary--docs)
 - [justifi-billing-form](/docs/modular-checkout-billing-form--docs)
 - [justifi-postal-code-form](/docs/modular-checkout-postal-code-form--docs)
+
+> **Note:** In addition to the supported sub components, you can also include any custom HTML elements or markup inside the `checkout-wrapper`. This allows you to add headings, descriptions, disclaimers, or other layout elements as needed.
+
+## Providing Billing Information
+
+**For `justifi-card-form`:**
+
+Billing information **is required** for checkout completion and can be provided in one of the following ways:
+
+- Using the `<justifi-billing-form />` component
+
+- Using the `<justifi-postal-form />` component
+
+- Passing a `billingInformation` object directly to the `submitCheckout` method
+
+The billingInformation object can take one of two forms:
+
+**Full billing address:**
+
+```javascript
+{
+  name: string;
+  address_line1: string;
+  address_line2?: string;
+  address_city: string;
+  address_state: string;
+  address_postal_code: string;
+}
+```
+
+**Only postal code:**
+
+```javascript
+{
+  address_postal_code: string;
+}
+```
+
+**For `<justifi-bank-account-form />`:**
+
+Billing information **must be provided** through either:
+
+- The `<justifi-billing-information-form />` component
+
+- The full `billingInformation` object passed directly
+
+## Completing Checkout
+
+To finalize the checkout process, include a submit button that calls the `submitCheckout` method on the wrapper. This method.
+
+- Handles validation, form submission and payment method tokenization.
+
+- Optionally accepts a `billingInformation` object (useful when not using a billing component)
+
+- Emits a `checkout-complete-event` when the submission is successful
+
+- This method **does not** return a promise
+
+> If you are using a new payment method and want to save it for future use, set the `savePaymentMethod` prop to `true` on the wrapper. This will automatically save the payment method after successful checkout.
+
+## Validation
+
+When `submitCheckout` is called, the wrapper automatically validates all included subcomponents. If any required fields are missing or invalid, submission is blocked and validation errors will appear inline.
+
+You can also trigger validation manually by calling the `validate` method. This returns a promise that resolves to a `boolean` indicating whether the form is valid.
 
 # Index
 
@@ -109,3 +173,4 @@ Optional:
 ---
 
 <Source dark language="html" code={codeExample} />
+```
