@@ -15,7 +15,7 @@ const meta: Meta = {
   component: "justifi-payments-list",
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

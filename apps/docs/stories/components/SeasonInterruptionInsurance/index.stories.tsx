@@ -14,7 +14,7 @@ const meta: Meta = {
   component: 'justifi-season-interruption-insurance',
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
     primaryIdentityFirstName: 'John',
     primaryIdentityLastName: 'Doe',
     primaryIdentityState: 'CA',

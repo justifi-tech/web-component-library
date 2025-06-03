@@ -15,7 +15,7 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     "test-mode": true,
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

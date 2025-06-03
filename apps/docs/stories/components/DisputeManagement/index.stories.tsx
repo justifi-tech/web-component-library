@@ -15,7 +15,7 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     "dispute-id": "123",
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

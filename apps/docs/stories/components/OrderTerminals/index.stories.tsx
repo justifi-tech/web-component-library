@@ -16,7 +16,7 @@ const meta: Meta = {
     ...storyBaseArgs.args,
     shipping: false,
     "submit-button-text": "Order Terminals",
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

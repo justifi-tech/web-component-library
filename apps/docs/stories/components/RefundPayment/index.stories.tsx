@@ -16,7 +16,7 @@ const meta: Meta = {
   component: "justifi-refund-payment",
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

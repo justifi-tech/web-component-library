@@ -13,7 +13,7 @@ const meta: Meta = {
   component: "justifi-checkout",
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
     "checkout-id": "123",
     "disable-credit-card": false,
     "disable-bank-account": false,

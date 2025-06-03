@@ -15,7 +15,7 @@ const meta: Meta = {
   component: "justifi-tokenize-payment-method",
   args: {
     ...storyBaseArgs.args,
-    Theme: ThemeNames.Light,
+    Theme: ThemeNames.None,
     "submit-button-text": "Tokenize Payment Method",
     "disable-credit-card": false,
     "disable-bank-account": false,
