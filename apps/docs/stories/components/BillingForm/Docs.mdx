@@ -21,6 +21,30 @@ Renders a form for collecting billing details as part of a checkout flow.
 
 This component is **designed to be used within** the `justifi-checkout-wrapper` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
 
+> **Note:** You can also use the `billingInformation` object directly in the `submitCheckout` method called on the wrapper instead of using this component.
+
+```javascript
+wrapperRef.submitCheckout({
+  billingInformation: {
+    name: 'John Doe',;
+    address_line1: '123 Main St',
+    address_line2: 'Apt 4B', // Optional
+    address_city:  'Springfield',
+    address_state:  'IL', // Two-letter state code
+    address_postal_code: '62701',
+  },
+});
+```
+
+This component can be used in conjunction with the following subcomponents:
+
+- [justifi-card-form](/docs/modular-checkout-card-form--docs)
+- [justifi-bank-account-form](/docs/modular-checkout-bank-account-form--docs)
+- [justifi-saved-payment-methods](/docs/modular-checkout-saved-payment-methods--docs)
+- [justifi-sezzle-payment-method](/docs/modular-checkout-sezzle-payment-method--docs)
+
+### Authorization
+
 **Authorization** and business context are also handled by `justifi-checkout-wrapper`, which manages authentication tokens and related configuration.
 
 This component exposes **no public methods or properties** and is not intended for standalone use.

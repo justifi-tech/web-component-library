@@ -19,7 +19,9 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 Renders a form for collecting bank account details as part of a checkout flow.
 
-This component is **designed to be used within** the `justifi-checkout-wrapper` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This subcomponent is **designed to be used within** the `justifi-checkout-wrapper` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+
+> **Note:** If you are using the bank account payment method, you also need to provide billing information. This can be done by using the `justifi-billing-information-form` component or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper.
 
 **Authorization** and business context are also handled by `justifi-checkout-wrapper`, which manages authentication tokens and related configuration.
 
