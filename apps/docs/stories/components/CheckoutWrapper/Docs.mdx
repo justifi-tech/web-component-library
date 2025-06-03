@@ -24,9 +24,19 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 ---
 
-The `checkout-wrapper` component serves as a container for checkout-related subcomponents. It manages the tokenization of payment methods, billing details, insurance, and overall form submission. It also supports saving a payment method for future use.
+The `justifi-checkout-wrapper` component serves as a container for checkout-related subcomponents. It manages the tokenization of payment methods, billing details, insurance, and overall form submission. It also supports saving a payment method for future use.
 
-### Suported subcomponents
+## Index
+
+- [Supported subcomponents](#supported-subcomponents)
+- [Providing Billing Information](#providing-billing-information)
+- [Completing Checkout](#completing-checkout)
+- [Validation](#validation)
+- [Props, events and methods](#props-events-and-methods)
+- [Authorization](#authorization)
+- [Example Usage](#example-usage)
+
+## Supported subcomponents
 
 Required for checkout completion (add at least one):
 
@@ -85,7 +95,7 @@ Billing information **must be provided** through either:
 
 - The `<justifi-billing-information-form />` component
 
-- The full `billingInformation` object passed directly
+- Passing the full `billingInformation` object directly to the `submitCheckout` method
 
 ## Completing Checkout
 
@@ -99,22 +109,13 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 - This method **does not** return a promise
 
-> If you are using a new payment method and want to save it for future use, set the `savePaymentMethod` prop to `true` on the wrapper. This will automatically save the payment method after successful checkout.
+> If you passed a `payment_method_group_id` to the create checkout API and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-checkout-wrapper`. This will automatically save the payment method to that payment method group after successful checkout.
 
 ## Validation
 
 When `submitCheckout` is called, the wrapper automatically validates all included subcomponents. If any required fields are missing or invalid, submission is blocked and validation errors will appear inline.
 
 You can also trigger validation manually by calling the `validate` method. This returns a promise that resolves to a `boolean` indicating whether the form is valid.
-
-# Index
-
----
-
-- [Props, events and methods](#props-events-and-methods)
-- [Authorization](#authorization)
-- [Events usage](#events-usage)
-- [Example usage](#example-usage)
 
 # Props, events and methods
 
