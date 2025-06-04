@@ -1,0 +1,173 @@
+import { Meta, Source } from '@storybook/blocks';
+import dedent from 'ts-dedent';
+import { extractWebcomponentsVersion, SummaryElement } from '../../utils';
+
+<Meta title="Modular Checkout/Introduction" />
+
+# Justifi Modular Checkout
+
+The Modular Checkout system provides a flexible, composable approach to building checkout experiences. Instead of a monolithic checkout component, you can combine individual components to create custom payment flows that match your specific requirements.
+
+## Architecture Overview
+
+The Modular Checkout system is built around a wrapper component (`justifi-modular-checkout`) that orchestrates validation, tokenization, and checkout completion across multiple child components. This architecture allows you to:
+
+- **Mix and match payment methods**: Include card forms, bank account forms, or saved payment methods as needed
+- **Customize billing collection**: Use full billing forms or simplified postal code collection
+- **Add specialized functionality**: Include components for BNPL (Sezzle), insurance, or other features
+- **Control the user experience**: Arrange components in any layout that suits your design
+
+## Core Components
+
+### Wrapper Component
+
+- **`justifi-modular-checkout`**: The orchestrator that manages validation, tokenization, and checkout completion
+
+### Payment Method Components
+
+- **`justifi-card-form`**: Secure card payment form with tokenized inputs
+- **`justifi-bank-account-form`**: Bank account payment collection
+- **`justifi-saved-payment-methods`**: Display and select from previously saved payment methods
+- **`justifi-sezzle-payment-method`**: Buy Now, Pay Later integration with Sezzle
+
+### Information Collection Components
+
+- **`justifi-billing-information-form`**: Complete billing address collection
+- **`justifi-postal-code-form`**: Simplified postal code-only billing
+- **`justifi-checkout-summary`**: Display checkout totals and descriptions
+
+### Specialized Components
+
+- **`justifi-season-interruption-insurance`**: Insurance options integration
+
+## How It Works
+
+### 1. Setup and Configuration
+
+The wrapper component requires basic configuration:
+
+- `auth-token`: Your JustiFi authentication token
+- `account-id`: The account identifier
+- `checkout-id`: The specific checkout session identifier
+- `save-payment-method`: Optional flag to enable payment method saving
+
+### 2. Component Discovery
+
+The wrapper automatically discovers child components within its DOM tree using a `MutationObserver`. This allows you to dynamically add or remove components without manual registration.
+
+### 3. Validation Orchestration
+
+When validation is triggered, the wrapper:
+
+- Validates all payment method forms (card, bank account)
+- Validates billing information forms
+- Validates specialized components (insurance, etc.)
+- Returns a combined validation result
+
+### 4. Tokenization Process
+
+For checkout submission, the wrapper:
+
+- Collects data from billing forms
+- Combines billing data with payment method data
+- Tokenizes payment methods securely
+- Handles different payment flows (cards, bank accounts, BNPL)
+
+### 5. Checkout Completion
+
+The final step involves:
+
+- Submitting the tokenized payment data
+- Handling success/error responses
+- Emitting completion events
+
+## Key Benefits
+
+### Flexibility
+
+Build exactly the checkout experience you need by combining only the components you require.
+
+### Security
+
+Payment-sensitive data is handled through secure tokenization, with card details processed in isolated iframes.
+
+### Maintainability
+
+Each component has a single responsibility, making the system easier to understand and maintain.
+
+### Extensibility
+
+New payment methods or features can be added as individual components without modifying existing code.
+
+## Common Usage Patterns
+
+### Basic Card Checkout
+
+```html
+<justifi-modular-checkout
+  auth-token="123xyz"
+  account-id="acc_1234567890"
+  checkout-id="cho_1234567890"
+>
+  <justifi-checkout-summary />
+  <justifi-card-form />
+  <justifi-billing-information-form />
+</justifi-modular-checkout>
+```
+
+### Saved Payment Methods with New Card Option
+
+```html
+<justifi-modular-checkout
+  auth-token="123xyz"
+  account-id="acc_1234567890"
+  checkout-id="cho_1234567890"
+>
+  <justifi-checkout-summary />
+  <justifi-saved-payment-methods />
+  <justifi-card-form />
+  <justifi-postal-code-form />
+</justifi-modular-checkout>
+```
+
+### Multi-Payment Method Checkout
+
+```html
+<justifi-modular-checkout
+  auth-token="123xyz"
+  account-id="acc_1234567890"
+  checkout-id="cho_1234567890"
+>
+  <justifi-checkout-summary />
+  <justifi-saved-payment-methods />
+  <justifi-card-form />
+  <justifi-bank-account-form />
+  <justifi-sezzle-payment-method />
+  <justifi-billing-information-form />
+  <justifi-season-interruption-insurance />
+</justifi-modular-checkout>
+```
+
+## Events and Methods
+
+### Events
+
+- **`error-event`**: Emitted when validation fails or errors occur during processing
+- **`checkout-complete-event`**: Emitted when checkout is successfully completed
+
+### Methods
+
+- **`validate()`**: Validates all child components and returns a boolean result
+- **`submitCheckout(billingInfo?)`**: Submits the checkout with optional billing information override
+
+## Getting Started
+
+To begin using the Modular Checkout system:
+
+1. Review the individual component documentation in the sections below
+2. Choose the components that match your requirements
+3. Configure the wrapper component with your authentication details
+4. Arrange the child components in your desired layout
+5. Handle the checkout completion and error events in your application
+
+Each component in the Modular Checkout menu demonstrates specific functionality and usage patterns. Explore them to understand how to build your ideal checkout experience.

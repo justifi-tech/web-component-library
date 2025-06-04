@@ -9,14 +9,14 @@ import {
 import { filterDocsByTag, ExportedParts } from '../../utils';
 import { codeExample } from './example';
 import { ComponentBox } from '../../utils/documentation-components';
-import * as JustifiCheckoutWrapper from './index.stories.tsx';
+import * as JustifiCheckoutWrapper from './index.stories';
 import { setUpMocks } from '../../utils/mockAllServices';
 
 {setUpMocks()}
 
 <Meta
-  title="Modular Checkout/Checkout Wrapper"
-  Components="justifi-checkout-wrapper"
+  title="Modular Checkout/Modular Checkout"
+  Components="justifi-modular-checkout"
   of={JustifiCheckoutWrapper}
 />
 
@@ -24,7 +24,7 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 ---
 
-The `justifi-checkout-wrapper` component serves as a container for checkout-related subcomponents. It manages the tokenization of payment methods, billing details, insurance, and overall form submission. It also supports saving a payment method for future use.
+The `justifi-modular-checkout` component serves as a container for checkout-related subcomponents. It manages the tokenization of payment methods, billing details, insurance, and overall form submission. It also supports saving a payment method for future use.
 
 ## Index
 
@@ -109,7 +109,7 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 - This method **does not** return a promise
 
-> If you passed a `payment_method_group_id` to the create checkout API and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-checkout-wrapper`. This will automatically save the payment method to that payment method group after successful checkout.
+> If you passed a `payment_method_group_id` to the create checkout API and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.
 
 ## Validation
 
@@ -149,7 +149,7 @@ You can also trigger validation manually by calling the `validate` method. This 
 ---
 
 <ComponentBox>
-  <justifi-checkout-wrapper
+  <justifi-modular-checkout
     account-id="acc_123"
     auth-token="123abc"
     checkout-id="cho_123"
@@ -168,7 +168,7 @@ You can also trigger validation manually by calling the `validate` method. This 
     >
       Submit Checkout
     </button>
-  </justifi-checkout-wrapper>
+  </justifi-modular-checkout>
 </ComponentBox>
 
 ---

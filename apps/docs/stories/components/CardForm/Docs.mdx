@@ -19,7 +19,7 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 Renders a form for collecting credit and debit card details as part of a checkout flow.
 
-This component is **designed to be used within** the `justifi-checkout-wrapper` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
 
 > **Note:** If you are using the card payment method, you also need to provide billing information. This can be done by using either the `justifi-billing-information-form` component or the `justifi-postal-code-form` component, or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper. The `billingInfo` object can contain all the fields or just the `address_postal_code` field.
 
@@ -40,7 +40,7 @@ checkoutWrapper.submitCheckout({
 });
 ```
 
-**Authorization** and business context are also handled by `justifi-checkout-wrapper`, which manages authentication tokens and related configuration.
+**Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
 This component exposes **no public methods or properties** and is not intended for standalone use.
 
@@ -49,13 +49,13 @@ This component exposes **no public methods or properties** and is not intended f
 ---
 
 <ComponentBox>
-  <justifi-checkout-wrapper
+  <justifi-modular-checkout
     account-id="acc_123"
     auth-token="123abc"
     checkout-id="cho_123"
   >
     <justifi-card-form />
-  </justifi-checkout-wrapper>
+  </justifi-modular-checkout>
 </ComponentBox>
 
 ---

@@ -95,7 +95,7 @@ app.get('/', async (req, res) => {
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-checkout-wrapper 
+          <justifi-modular-checkout 
             auth-token="${webComponentToken}" 
             account-id="${subAccountId}"
             checkout-id="${checkout.id}"
@@ -110,12 +110,12 @@ app.get('/', async (req, res) => {
                 Submit Checkout
               </button>
             </div>
-          </justifi-checkout-wrapper>
+          </justifi-modular-checkout>
         </div>
       </body>
       <script>
         const submitButton = document.getElementById('submit-button');
-        const checkoutWrapper = document.querySelector('justifi-checkout-wrapper');
+        const checkoutWrapper = document.querySelector('justifi-modular-checkout');
 
         submitButton.addEventListener('click', async () => {
           const addressPostalCode = '12345';
