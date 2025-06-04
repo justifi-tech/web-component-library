@@ -30,6 +30,8 @@ The `justifi-modular-checkout` component serves as a container for checkout-rela
 
 - [Supported subcomponents](#supported-subcomponents)
 - [Providing Billing Information](#providing-billing-information)
+  - [Card Form Billing](#card-form-billing)
+  - [Bank Account Form Billing](#bank-account-form-billing)
 - [Completing Checkout](#completing-checkout)
 - [Validation](#validation)
 - [Props, events and methods](#props-events-and-methods)
@@ -56,17 +58,15 @@ Optional:
 
 ## Providing Billing Information
 
-**For `justifi-card-form`:**
-
 Billing information **is required** for checkout completion and can be provided in one of the following ways:
 
-- Using the `<justifi-billing-form />` component
+- Using the `<justifi-billing-information-form />` component
 
-- Using the `<justifi-postal-form />` component
+- Using the `<justifi-postal-code-form />` component
 
 - Passing a `billingInformation` object directly to the `submitCheckout` method
 
-The billingInformation object can take one of two forms:
+The `billingInformation` object can take one of two forms:
 
 **Full billing address:**
 
@@ -89,11 +89,23 @@ The billingInformation object can take one of two forms:
 }
 ```
 
-**For `<justifi-bank-account-form />`:**
+### Card Form Billing
 
-Billing information **must be provided** through either:
+When using `<justifi-card-form />`, billing information **must be provided** through either:
 
-- The `<justifi-billing-information-form />` component
+- `<justifi-billing-information-form />`
+
+- `<justifi-postal-code-form />`
+
+- Passing the full `billingInformation` object directly to the `submitCheckout` method
+
+- Passing the `billingFormInformation` object with only `address_postal_code` to the `submitCheckout` method
+
+### Bank Account Form Billing:
+
+When using `<justifi-bank-account-form />`, billing information **must be provided** through either:
+
+- `<justifi-billing-information-form />`
 
 - Passing the full `billingInformation` object directly to the `submitCheckout` method
 
