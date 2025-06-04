@@ -122,7 +122,7 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div>
+        <div id="component-wrapper" class="container" style="max-width: 800px; margin: auto; padding: 20px;">
           <justifi-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
             <div slot="insurance">
               <justifi-season-interruption-insurance
@@ -140,8 +140,8 @@ app.get('/', async (req, res) => {
               </justifi-season-interruption-insurance>
             </div>
           </justifi-checkout>
+          <div id="output-pane" style="padding: 20px"><em>Checkout output will appear here...</em></div>
         </div>
-        <div id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');

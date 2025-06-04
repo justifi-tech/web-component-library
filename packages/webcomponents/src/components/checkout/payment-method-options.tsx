@@ -1,3 +1,4 @@
+
 import { Component, h, Prop, State, Watch, Listen, Method, Host } from '@stencil/core';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
@@ -106,15 +107,7 @@ export class PaymentMethodOptions {
           }
           else if (this.showSavedPaymentMethods) {
             return (
-              <justifi-saved-payment-method
-                paymentMethodOption={paymentMethodOption}
-                is-selected={isSelected}
-                ref={(el) => {
-                  if (isSelected) {
-                    this.selectedPaymentMethodOptionRef = el;
-                  }
-                }}
-              />
+              <justifi-saved-payment-methods />
             );
           }
         })}

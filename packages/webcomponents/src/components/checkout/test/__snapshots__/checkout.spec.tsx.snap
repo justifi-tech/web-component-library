@@ -1,11 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-checkout renders loading 1`] = `
-<justifi-checkout>
-  <!---->
-  <justifi-checkout-core class="body" style="display: block;">
-    <template shadowrootmode="open">
-      <style></style>
+<justifi-checkout class="body" style="display: block;">
+  <template shadowrootmode="open">
+    <style></style>
+    <justifi-checkout-wrapper>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12" part="checkout-summary">
           <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
@@ -15,21 +14,13 @@ exports[`justifi-checkout renders loading 1`] = `
             <div>
               <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="height: 24px;"></div>
             </div>
-            <div class="visually-hidden">
-              <div part="text color font-family"></div>
-              <div>
-                <span part="text color font-family">
-                  Total
-                </span>
-                <span part="text color font-family">
-                  $0.00
-                </span>
-              </div>
-            </div>
+            <justifi-checkout-summary></justifi-checkout-summary>
           </section>
         </div>
         <div class="col-12">
-          <slot name="insurance"></slot>
+          <div slot="insurance">
+            <slot name="insurance"></slot>
+          </div>
         </div>
         <div class="col-12 mt-4">
           <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
@@ -61,8 +52,7 @@ exports[`justifi-checkout renders loading 1`] = `
           </div>
         </div>
       </div>
-    </template>
-    <div slot="insurance"></div>
-  </justifi-checkout-core>
+    </justifi-checkout-wrapper>
+  </template>
 </justifi-checkout>
 `;
