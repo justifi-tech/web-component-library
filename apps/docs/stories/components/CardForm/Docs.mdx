@@ -23,6 +23,23 @@ This component is **designed to be used within** the `justifi-checkout-wrapper` 
 
 > **Note:** If you are using the card payment method, you also need to provide billing information. This can be done by using either the `justifi-billing-information-form` component or the `justifi-postal-code-form` component, or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper. The `billingInfo` object can contain all the fields or just the `address_postal_code` field.
 
+```javascript
+checkoutWrapper.submitCheckout({
+  name: 'John Doe',;
+  address_line1: '123 Main St',
+  address_line2: 'Apt 4B', // Optional
+  address_city:  'Springfield',
+  address_state:  'IL', // Two-letter state code
+  address_postal_code: '62701',
+});
+
+// or
+
+checkoutWrapper.submitCheckout({
+  address_postal_code: '62701',
+});
+```
+
 **Authorization** and business context are also handled by `justifi-checkout-wrapper`, which manages authentication tokens and related configuration.
 
 This component exposes **no public methods or properties** and is not intended for standalone use.

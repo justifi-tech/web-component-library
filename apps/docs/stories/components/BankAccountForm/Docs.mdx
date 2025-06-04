@@ -23,6 +23,19 @@ This subcomponent is **designed to be used within** the `justifi-checkout-wrappe
 
 > **Note:** If you are using the bank account payment method, you also need to provide billing information. This can be done by using the `justifi-billing-information-form` component or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper.
 
+```javascript
+const billingInfo = {
+  name: 'John Doe',;
+  address_line1: '123 Main St',
+  address_line2: 'Apt 4B', // Optional
+  address_city:  'Springfield',
+  address_state:  'IL', // Two-letter state code
+  address_postal_code: '62701',
+};
+
+checkoutWrapper.submitCheckout(billingInfo);
+```
+
 **Authorization** and business context are also handled by `justifi-checkout-wrapper`, which manages authentication tokens and related configuration.
 
 This component exposes **no public methods or properties** and is not intended for standalone use.
