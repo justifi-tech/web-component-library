@@ -51,7 +51,6 @@ export class ApplePay {
   @Event() applePayStarted: EventEmitter<void>;
   @Event() applePayCompleted: EventEmitter<{
     success: boolean;
-    transactionId?: string;
     error?: any;
   }>;
   @Event() applePayCancelled: EventEmitter<void>;
