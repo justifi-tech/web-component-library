@@ -6,45 +6,45 @@ import { extractWebcomponentsVersion, SummaryElement } from '../../utils';
 
 # Justifi Modular Checkout
 
-The Modular Checkout system provides a flexible, composable approach to building checkout experiences. Instead of a monolithic checkout component, you can combine individual components to create custom payment flows that match your specific requirements.
+The Modular Checkout system provides a flexible, composable approach to building checkout experiences. Instead of a monolithic checkout component, you can combine and arrange individual sub components as needed. In addition you are able to add custom HTML inside the `justifi-modular-checkout` wrapper component to create custom payment flows that match your specific requirements.
 
 ## Architecture Overview
 
-The Modular Checkout system is built around a wrapper component (`justifi-modular-checkout`) that orchestrates validation, tokenization, and checkout completion across multiple child components. This architecture allows you to:
+The Modular Checkout system is built around the `justifi-modular-checkout` wrapper component that orchestrates validation, tokenization, and checkout completion across multiple sub components. This architecture allows you to:
 
-- **Mix and match payment methods**: Include card forms, bank account forms, or saved payment methods as needed
-- **Customize billing collection**: Use full billing forms or simplified postal code collection
-- **Add specialized functionality**: Include components for BNPL (Sezzle), insurance, or other features
+- **Mix and match new and existing payment methods**: Include the card form, the bank account form, or saved payment methods as needed
+- **Customize billing information collection**: Use full billing form or the simplified postal code form
+- **Add specialized functionality**: Include components for BNPL (Buy Now Pay Later via Sezzle), insurance, or other features
 - **Control the user experience**: Arrange components in any layout that suits your design
 
 ## Core Components
 
 ### Wrapper Component
 
-- **[`justifi-modular-checkout`](/docs/modular-checkout-modular-checkout--docs)**: The orchestrator that manages validation, tokenization, and checkout completion
+- **[`justifi-modular-checkout`](/docs/modular-checkout-modular-checkout--docs)**: The wrapper component that orchestrates validation, tokenization, and checkout completion
 
 ### Payment Method Components
 
-- **[`justifi-card-form`](/docs/modular-checkout-card-form--docs)**: Secure card payment form with tokenized inputs
-- **[`justifi-bank-account-form`](/docs/modular-checkout-bank-account-form--docs)**: Bank account payment collection
+- **[`justifi-card-form`](/docs/modular-checkout-card-form--docs)**: Secure card payment method form with tokenized inputs
+- **[`justifi-bank-account-form`](/docs/modular-checkout-bank-account-form--docs)**: Bank account payment method collection for ACH payments
 - **[`justifi-saved-payment-methods`](/docs/modular-checkout-saved-payment-methods--docs)**: Display and select from previously saved payment methods
-- **[`justifi-sezzle-payment-method`](/docs/modular-checkout-sezzle-payment-method--docs)**: Buy Now, Pay Later integration with Sezzle
+- **[`justifi-sezzle-payment-method`](/docs/modular-checkout-sezzle-payment-method--docs)**: BNPL (Buy Now, Pay Later) integration with Sezzle
 
 ### Information Collection Components
 
 - **[`justifi-billing-information-form`](/docs/modular-checkout-billing-information-form--docs)**: Complete billing address collection
-- **[`justifi-postal-code-form`](/docs/modular-checkout-postal-code-form--docs)**: Simplified postal code-only billing
-- **[`justifi-checkout-summary`](/docs/modular-checkout-checkout-summary--docs)**: Display checkout totals and descriptions
+- **[`justifi-postal-code-form`](/docs/modular-checkout-postal-code-form--docs)**: Simplified postal code only billing form
+- **[`justifi-checkout-summary`](/docs/modular-checkout-checkout-summary--docs)**: Display checkout amount and description as passed with the [create checkout](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) API request
 
 ### Specialized Components
 
-- **[`justifi-season-interruption-insurance`](/docs/modular-checkout-season-interruption-insurance--docs)**: Insurance options integration
+- **[`justifi-season-interruption-insurance`](/docs/modular-checkout-season-interruption-insurance--docs)**: Insurance options integration that allows the user to sign up and pay for a specified insurance policy as part of the checkout
 
 ## How It Works
 
 ### 1. Setup and Configuration
 
-The wrapper component requires basic configuration:
+The `justifi-modular-checkout` wrapper component requires basic configuration:
 
 - `auth-token`: Your JustiFi authentication token
 - `account-id`: The account identifier
@@ -53,11 +53,11 @@ The wrapper component requires basic configuration:
 
 ### 2. Component Discovery
 
-The wrapper automatically discovers child components within its DOM tree using a `MutationObserver`. This allows you to dynamically add or remove components without manual registration.
+The `justifi-modular-checkout` wrapper component automatically discovers sub components within its DOM tree using a `MutationObserver`. This allows you to dynamically add or remove sub components without manual registration.
 
 ### 3. Validation Orchestration
 
-When validation is triggered, the wrapper:
+When validation is triggered, the `justifi-modular-checkout` wrapper component:
 
 - Validates all payment method forms (card, bank account)
 - Validates billing information forms
@@ -66,18 +66,18 @@ When validation is triggered, the wrapper:
 
 ### 4. Tokenization Process
 
-For checkout submission, the wrapper:
+For checkout submission, the `justifi-modular-checkout` wrapper component:
 
 - Collects data from billing forms
 - Combines billing data with payment method data
-- Tokenizes payment methods securely
+- Tokenizes the payment method securely
 - Handles different payment flows (cards, bank accounts, BNPL)
 
 ### 5. Checkout Completion
 
 The final step involves:
 
-- Submitting the tokenized payment data
+- Submitting the tokenized payment method data
 - Handling success/error responses
 - Emitting completion events
 
@@ -85,7 +85,7 @@ The final step involves:
 
 ### Flexibility
 
-Build exactly the checkout experience you need by combining only the components you require.
+Build exactly the checkout experience you need by combining only the components you require with optional custom HTML.
 
 ### Security
 
@@ -157,8 +157,8 @@ New payment methods or features can be added as individual components without mo
 
 ### Methods
 
-- **`validate()`**: Validates all child components and returns a boolean result
-- **`submitCheckout(billingInfo?)`**: Submits the checkout with optional billing information override
+- **`validate()`**: Validates all sub components and returns a boolean result
+- **`submitCheckout(billingInformation?)`**: Submits the checkout with optional billing information override
 
 ## Getting Started
 
@@ -166,8 +166,10 @@ To begin using the Modular Checkout system:
 
 1. Review the individual component documentation in the sections below
 2. Choose the components that match your requirements
-3. Configure the wrapper component with your authentication details
-4. Arrange the child components in your desired layout
-5. Handle the checkout completion and error events in your application
+3. Create a checkout via [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout)
+4. [Create a web component token](https://docs.justifi.tech/api-spec#tag/Web-Component-Tokens/operation/CreateWebComponentToken).
+5. Configure the `justifi-modular-checkout` wrapper component with your [authentication](/docs/modular-checkout-modular-checkout--docs#authorization) details
+6. Arrange the sub components in your desired layout
+7. Handle the checkout completion and error events in your application
 
 Each component in the Modular Checkout menu demonstrates specific functionality and usage patterns. Explore them to understand how to build your ideal checkout experience.

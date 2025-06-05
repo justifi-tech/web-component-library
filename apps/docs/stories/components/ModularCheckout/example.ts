@@ -16,14 +16,14 @@ export const codeExample = `
 
 <script>
   (function() {
-    const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
     const submitButton = document.querySelector('#submit-button');
 
     submitButton.addEventListener('click', () => {
-      checkoutWrapper.submitCheckout();
+      modularCheckout.submitCheckout();
     });
 
-    checkoutWrapper.addEventListener('error-event', (event) => {
+    modularCheckout.addEventListener('error-event', (event) => {
       console.error(event.detail);
     });
 
