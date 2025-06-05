@@ -19,12 +19,12 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 Renders a form for collecting bank account details as part of a checkout flow.
 
-This subcomponent is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This subcomponent is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
 
-> **Note:** If you are using the bank account payment method, you also need to provide billing information. This can be done by using the `justifi-billing-information-form` component or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper.
+> **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-information-form` sub component or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justify-modular-checkout`. See the [modular checkout docs](/docs/modular-checkout-modular-checkout--docs) for more information..
 
 ```javascript
-const billingInfo = {
+const billingInformation = {
   name: 'John Doe',;
   address_line1: '123 Main St',
   address_line2: 'Apt 4B', // Optional
@@ -33,7 +33,7 @@ const billingInfo = {
   address_postal_code: '62701',
 };
 
-checkoutWrapper.submitCheckout(billingInfo);
+modularCheckout.submitCheckout(billingInformation);
 ```
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
