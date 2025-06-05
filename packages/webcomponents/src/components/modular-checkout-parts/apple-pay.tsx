@@ -19,6 +19,7 @@ import {
 } from "../../api/ApplePay";
 import { StyledHost } from "../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
+import { ApplePayButton } from "../../ui-components/apple-pay-button";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -39,6 +40,7 @@ export class ApplePay {
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;
   @Prop() showSkeleton: boolean = true;
+  @Prop() billingContact: string;
 
   @State() isLoading: boolean = true;
   @State() isProcessing: boolean = false;
@@ -132,6 +134,16 @@ export class ApplePay {
       return;
     }
 
+    let billingContactData = null;
+    if (this.billingContact) {
+      try {
+        billingContactData = JSON.parse(this.billingContact);
+        console.log("Using billing contact for Apple Pay:", billingContactData);
+      } catch (error) {
+        console.error("Failed to parse billing contact:", error);
+      }
+    }
+
     try {
       this.isProcessing = true;
       this.error = null;
@@ -148,6 +160,7 @@ export class ApplePay {
           ApplePayContactField.EMAIL,
           ApplePayContactField.NAME,
         ],
+        billingContact: billingContactData,
       };
 
       const result =
@@ -201,16 +214,6 @@ export class ApplePay {
     this.applePayCancelled.emit();
   }
 
-  private getButtonClasses(): string {
-    let classes = "apple-pay-button";
-
-    if (this.disabled || this.isProcessing || !this.isAvailable) {
-      classes += " disabled";
-    }
-
-    return classes;
-  }
-
   render() {
     const isReady =
       !this.isLoading &&
@@ -247,24 +250,14 @@ export class ApplePay {
             !this.error &&
             this.isAvailable &&
             this.canMakePayments && (
-              <button
-                class={this.getButtonClasses()}
-                onClick={this.handleApplePayClick}
-                disabled={
-                  this.disabled || this.isProcessing || !this.isAvailable
-                }
-                aria-label='Pay with Apple Pay'
-                type='button'
-              >
-                {this.isProcessing ? (
-                  <div class='processing'>
-                    <div class='spinner'></div>
-                    <span>Processing...</span>
-                  </div>
-                ) : (
-                  "Pay with Apple Pay"
-                )}
-              </button>
+              <ApplePayButton
+                buttonType={this.buttonType}
+                buttonStyle={this.buttonStyle}
+                disabled={this.disabled}
+                isProcessing={this.isProcessing}
+                isAvailable={this.isAvailable}
+                clickHandler={this.handleApplePayClick}
+              />
             )}
         </div>
 
@@ -272,49 +265,6 @@ export class ApplePay {
           {`
             .apple-pay-container {
               width: 100%;
-            }
-
-            .apple-pay-button {
-              width: 200px;
-              height: 48px;
-              background-color: #000;
-              color: #fff;
-              border: none;
-              border-radius: 8px;
-              font-size: 16px;
-              font-weight: 500;
-              cursor: pointer;
-              transition: opacity 0.2s ease;
-            }
-
-            .apple-pay-button:hover:not(.disabled) {
-              opacity: 0.9;
-            }
-
-            .apple-pay-button.disabled {
-              opacity: 0.5;
-              cursor: not-allowed;
-            }
-
-            .processing {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-            }
-
-            .spinner {
-              width: 16px;
-              height: 16px;
-              border: 2px solid rgba(255, 255, 255, 0.3);
-              border-top: 2px solid #fff;
-              border-radius: 50%;
-              animation: spin 1s linear infinite;
-            }
-
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
             }
 
             .apple-pay-error {
