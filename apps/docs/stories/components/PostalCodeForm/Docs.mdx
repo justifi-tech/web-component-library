@@ -19,9 +19,9 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 Renders a form for collecting the postal code as part of a checkout flow.
 
-This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
 
-> **Note:** This component is specifically designed to be used in conjunction with the `justifi-card-form` component. Alternatively, you can provide the postal code by passing a `billingInfo` object with an `address_postal_code` field as an argument to the `submitCheckout` method called on the wrapper.
+> **Note:** This component is specifically designed to be used in conjunction with the `justifi-card-form` component. Alternatively, you can provide the postal code by passing a `billingInformation` object with an `address_postal_code` field as an argument to the `submitCheckout` method called on the `justifi-modular-checkout` component. See the [Modular Checkout docs](/docs/modular-checkout-modular-checkout--docs) for more information.
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 

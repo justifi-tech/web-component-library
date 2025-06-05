@@ -17,9 +17,9 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 ---
 
-Renders a summary of checkout details as part of a checkout flow.
+Renders a summary of checkout details consisting of the checkout description and amount passed in the [create checkout API request](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) as part of a checkout flow.
 
-This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 

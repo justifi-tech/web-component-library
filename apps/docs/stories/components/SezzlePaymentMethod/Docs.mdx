@@ -17,9 +17,9 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 ---
 
-Renders a radio input for selecting the Sezzle payment method, if BNPL is enabled for the account.
+Renders a radio input for selecting the Sezzle payment method, if BNPL (Buy Now Pay Later) is enabled for the sub account.
 
-This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 

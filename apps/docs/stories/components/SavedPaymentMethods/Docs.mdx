@@ -19,6 +19,8 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 Renders a radio input list of saved payment methods as part of a checkout flow.
 
+> Note: This sub component will only display saved payment methods if a `payment_method_group_id` with associated payment methods was passed to the [create checkout](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) API request.
+
 This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
