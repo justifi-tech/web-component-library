@@ -8,7 +8,7 @@ import { ThemeNames } from "../../themes";
 type Story = StoryObj;
 
 const meta: Meta = {
-  title: "Modular Checkout/Checkout summary",
+  title: "Modular Checkout/Checkout Summary",
   component: "justifi-checkout-summary",
   args: {
     Theme: ThemeNames.Light,

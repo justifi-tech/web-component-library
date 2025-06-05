@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/web-components";
 import { customStoryDecorator, StoryBaseArgs } from "../../utils";
 import { withActions } from "@storybook/addon-actions/decorator";
 
-import "@justifi/webcomponents/dist/module/justifi-checkout-wrapper";
+import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
 
 type Story = StoryObj;
@@ -10,8 +10,8 @@ type Story = StoryObj;
 const storyBaseArgs = new StoryBaseArgs(["auth-token", "account-id", "checkout-id"]);
 
 const meta: Meta = {
-  title: "Modular Checkout/Checkout Wrapper",
-  component: "justifi-checkout-wrapper",
+  title: "Modular Checkout/Modular Checkout",
+  component: "justifi-modular-checkout",
   args: {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
@@ -20,7 +20,7 @@ const meta: Meta = {
   argTypes: {
     ...storyBaseArgs.argTypes,
     "save-payment-method": {
-      description: "Enables the save payment method option.",
+      description: "Enables the save payment method option, if there is a `payment_method_group_id` associated with the checkout.",
       table: {
         category: "props",
         defaultValue: {

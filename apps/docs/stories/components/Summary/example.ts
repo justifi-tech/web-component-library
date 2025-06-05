@@ -15,14 +15,14 @@ ${codeExampleHead(
 )}
 
 <body>
-  <justifi-checkout-wrapper
+  <justifi-modular-checkout
     auth-token="authToken"
     account-id="acc_123"
     checkout-id="ch_123"  
     save-payment-method="true"
   >
     <justifi-checkout-summary />
-  </justifi-checkout-wrapper>
+  </justifi-modular-checkout>
 </body>
 </html>
 `;

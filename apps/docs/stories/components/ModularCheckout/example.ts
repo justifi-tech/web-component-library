@@ -2,7 +2,7 @@ export const codeExample = `
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
-<justifi-checkout-wrapper
+<justifi-modular-checkout
   auth-token="authToken"
   account-id="acc_123"
   checkout-id="ch_123"  
@@ -12,18 +12,18 @@ export const codeExample = `
   <button id="submit-button">
     Submit Checkout
   </button>
-</justifi-checkout-wrapper>
+</justifi-modular-checkout>
 
 <script>
   (function() {
-    const checkoutWrapper = document.querySelector('justifi-checkout-wrapper');
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
     const submitButton = document.querySelector('#submit-button');
 
     submitButton.addEventListener('click', () => {
-      checkoutWrapper.submitCheckout();
+      modularCheckout.submitCheckout();
     });
 
-    checkoutWrapper.addEventListener('error-event', (event) => {
+    modularCheckout.addEventListener('error-event', (event) => {
       console.error(event.detail);
     });
 

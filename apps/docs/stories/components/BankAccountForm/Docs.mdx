@@ -19,9 +19,24 @@ import { setUpMocks } from '../../utils/mockAllServices';
 
 Renders a form for collecting bank account details as part of a checkout flow.
 
-This component is **designed to be used within** the `justifi-checkout-wrapper` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+This subcomponent is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
 
-**Authorization** and business context are also handled by `justifi-checkout-wrapper`, which manages authentication tokens and related configuration.
+> **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-information-form` sub component or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justify-modular-checkout`. See the [modular checkout docs](/docs/modular-checkout-modular-checkout--docs) for more information..
+
+```javascript
+const billingInformation = {
+  name: 'John Doe',;
+  address_line1: '123 Main St',
+  address_line2: 'Apt 4B', // Optional
+  address_city:  'Springfield',
+  address_state:  'IL', // Two-letter state code
+  address_postal_code: '62701',
+};
+
+modularCheckout.submitCheckout(billingInformation);
+```
+
+**Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
 This component exposes **no public methods or properties** and is not intended for standalone use.
 
@@ -30,13 +45,13 @@ This component exposes **no public methods or properties** and is not intended f
 ---
 
 <ComponentBox>
-  <justifi-checkout-wrapper
+  <justifi-modular-checkout
     account-id="acc_123"
     auth-token="123abc"
     checkout-id="cho_123"
   >
     <justifi-bank-account-form />
-  </justifi-checkout-wrapper>
+  </justifi-modular-checkout>
 </ComponentBox>
 
 ---

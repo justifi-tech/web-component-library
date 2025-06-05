@@ -43,26 +43,25 @@ ${codeExampleHead(
 )}
 
 <body>
-  <justifi-checkout-wrapper
+  <justifi-modular-checkout
     auth-token="authToken"
     account-id="acc_123"
     checkout-id="ch_123"  
-    save-payment-method="true"
   >
     <justifi-sezzle-payment-method />
-  </justifi-checkout-wrapper>
+  </justifi-modular-checkout>
 </body>
 
 <script>
   (function() {
-    const checkoutWrapper = document.querySelector('justifi-checkout-wrapper');
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
     const submitButton = document.querySelector('#submit-button');
 
     submitButton.addEventListener('click', () => {
-      checkoutWrapper.submitCheckout();
+      modularCheckout.submitCheckout();
     });
 
-    checkoutWrapper.addEventListener('error-event', (event) => {
+    modularCheckout.addEventListener('error-event', (event) => {
       console.error(event.detail);
     });
 

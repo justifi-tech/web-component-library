@@ -8,7 +8,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { IBillingInfo } from "../../api/BillingInformation";
 
 @Component({
-  tag: 'justifi-checkout-wrapper',
+  tag: 'justifi-modular-checkout',
   shadow: false
 })
 export class CheckoutWrapper {
