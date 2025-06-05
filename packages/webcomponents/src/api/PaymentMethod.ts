@@ -20,9 +20,8 @@ export interface IPaymentMethodBankAccount {
   currency: string;
 }
 
-export type IPaymentMethodMetadata = ISavedPaymentMethod &
-  (IPaymentMethodCard | IPaymentMethodBankAccount);
+export type ISubmitCheckoutArgs =
+  | IPaymentMethodCard
+  | IPaymentMethodBankAccount;
 
-export type ISubmitCheckout = {
-  savePaymentMethod?: boolean;
-} & IPaymentMethodMetadata;
+export type IPaymentMethodMetadata = ISavedPaymentMethod & ISubmitCheckoutArgs;

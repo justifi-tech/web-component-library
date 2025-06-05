@@ -1,4 +1,4 @@
-type BankAccountBillingInfo = {
+type IBankAccountBillingInfo = {
   name: string;
   address_line1: string;
   address_line2: string;
@@ -7,8 +7,8 @@ type BankAccountBillingInfo = {
   address_postal_code: string;
 };
 
-type postalCode = {
+type IPostalCode = {
   address_postal_code: number;
 };
 
-export type BillingInfo = postalCode | BankAccountBillingInfo;
+export type IBillingInfo = IPostalCode | IBankAccountBillingInfo;

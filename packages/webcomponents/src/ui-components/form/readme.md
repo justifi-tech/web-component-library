@@ -27,11 +27,11 @@
 
 #### Parameters
 
-| Name                    | Type                                                                      | Description |
-| ----------------------- | ------------------------------------------------------------------------- | ----------- |
-| `clientId`              | `string`                                                                  |             |
-| `paymentMethodMetadata` | `ISavedPaymentMethod & (IPaymentMethodCard \| IPaymentMethodBankAccount)` |             |
-| `account`               | `string`                                                                  |             |
+| Name                    | Type                                        | Description |
+| ----------------------- | ------------------------------------------- | ----------- |
+| `clientId`              | `string`                                    |             |
+| `paymentMethodMetadata` | `ISavedPaymentMethod & ISubmitCheckoutArgs` |             |
+| `account`               | `string`                                    |             |
 
 #### Returns
 
