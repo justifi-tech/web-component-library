@@ -85,35 +85,19 @@ export class ApplePay {
         return;
       }
 
-      // Check if we're running locally for testing
-      const isLocalhost =
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1" ||
-        window.location.hostname.includes("localhost");
+      this.isAvailable = ApplePayHelpers.isApplePaySupported();
+      this.canMakePayments = ApplePayHelpers.canMakePayments();
 
-      if (isLocalhost) {
-        // For local testing, bypass Apple Pay checks
-        console.log(
-          " Local testing mode: bypassing Apple Pay availability checks"
-        );
-        this.isAvailable = true;
-        this.canMakePayments = true;
-      } else {
-        // Production: Check Apple Pay availability
-        this.isAvailable = ApplePayHelpers.isApplePaySupported();
-        this.canMakePayments = ApplePayHelpers.canMakePayments();
+      if (!this.isAvailable) {
+        this.error = "Apple Pay is not supported on this device";
+        this.isLoading = false;
+        return;
+      }
 
-        if (!this.isAvailable) {
-          this.error = "Apple Pay is not supported on this device";
-          this.isLoading = false;
-          return;
-        }
-
-        if (!this.canMakePayments) {
-          this.error = "Apple Pay is not available";
-          this.isLoading = false;
-          return;
-        }
+      if (!this.canMakePayments) {
+        this.error = "Apple Pay is not available";
+        this.isLoading = false;
+        return;
       }
 
       const applePayConfig: IApplePayConfig = {
@@ -127,15 +111,10 @@ export class ApplePay {
 
       this.applePayService.initialize(applePayConfig);
 
-      // Only check for active card if we can make payments (and not in local testing)
-      if (this.canMakePayments && !isLocalhost) {
-        const hasActiveCard =
-          await this.applePayService.canMakePaymentsWithActiveCard();
-        if (!hasActiveCard) {
-          console.warn("No Apple Pay cards available, but continuing...");
-        }
-      } else if (isLocalhost) {
-        console.log("Skipping active card check in local testing mode");
+      const hasActiveCard =
+        await this.applePayService.canMakePaymentsWithActiveCard();
+      if (!hasActiveCard) {
+        console.warn("No Apple Pay cards available, but continuing...");
       }
     } catch (error) {
       console.error("Apple Pay initialization error:", error);
@@ -177,7 +156,6 @@ export class ApplePay {
       if (result.success) {
         this.applePayCompleted.emit({
           success: true,
-          transactionId: result.transactionId,
         });
       } else {
         this.applePayCompleted.emit({
@@ -205,17 +183,6 @@ export class ApplePay {
 
   @Method()
   async isSupported(): Promise<boolean> {
-    // Check if we're running locally for testing
-    const isLocalhost =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname.includes("localhost");
-
-    if (isLocalhost) {
-      console.log("🧪 Local testing mode: reporting Apple Pay as supported");
-      return true;
-    }
-
     return this.isAvailable && this.canMakePayments;
   }
 
