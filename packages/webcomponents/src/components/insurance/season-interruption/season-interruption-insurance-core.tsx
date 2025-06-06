@@ -8,6 +8,7 @@ import SeasonInterruptionInsuranceLoading from "./season-interruption-insurance-
 
 @Component({
   tag: 'justifi-season-interruption-insurance-core',
+  shadow: true,
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
@@ -124,7 +125,7 @@ export class SeasonInterruptionInsuranceCore {
     );
 
     return (
-      <div>
+      <StyledHost>
         <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
         <small innerHTML={this.quote?.product.description} part={text}></small>
         <form-control-radio
@@ -152,7 +153,7 @@ export class SeasonInterruptionInsuranceCore {
           Please select an option
         </div>
         <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
-      </div >
+      </StyledHost>
     );
   }
 };

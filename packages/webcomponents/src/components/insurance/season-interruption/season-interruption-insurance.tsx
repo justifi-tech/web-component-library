@@ -9,7 +9,6 @@ import checkoutStore from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
-  shadow: true,
 })
 export class SeasonInterruptionInsurance {
   @Prop() authToken?: string;

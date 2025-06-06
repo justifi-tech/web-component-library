@@ -2,8 +2,8 @@
 
 exports[`justifi-season-interruption-insurance renders loading 1`] = `
 <justifi-season-interruption-insurance auth-token="123">
-  <template shadowrootmode="open">
-    <justifi-season-interruption-insurance-core checkout-id="" class="body" style="display: block;">
+  <justifi-season-interruption-insurance-core checkout-id="" class="body" style="display: block;">
+    <template shadowrootmode="open">
       <style></style>
       <div class="gap-3 row">
         <div class="col-12">
@@ -25,7 +25,7 @@ exports[`justifi-season-interruption-insurance renders loading 1`] = `
           <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80%;"></div>
         </div>
       </div>
-    </justifi-season-interruption-insurance-core>
-  </template>
+    </template>
+  </justifi-season-interruption-insurance-core>
 </justifi-season-interruption-insurance>
 `;

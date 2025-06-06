@@ -4,7 +4,7 @@ exports[`justifi-checkout renders loading 1`] = `
 <justifi-checkout class="body" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
-    <justifi-checkout-wrapper>
+    <justifi-modular-checkout>
       <div class="gy-3 jfi-checkout-core row">
         <div class="col-12" part="checkout-summary">
           <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
@@ -18,9 +18,7 @@ exports[`justifi-checkout renders loading 1`] = `
           </section>
         </div>
         <div class="col-12">
-          <div slot="insurance">
-            <slot name="insurance"></slot>
-          </div>
+          <slot name="insurance"></slot>
         </div>
         <div class="col-12 mt-4">
           <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
@@ -52,7 +50,7 @@ exports[`justifi-checkout renders loading 1`] = `
           </div>
         </div>
       </div>
-    </justifi-checkout-wrapper>
+    </justifi-modular-checkout>
   </template>
 </justifi-checkout>
 `;

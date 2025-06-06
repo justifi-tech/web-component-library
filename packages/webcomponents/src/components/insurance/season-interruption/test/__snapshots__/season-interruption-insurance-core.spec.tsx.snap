@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-season-interruption-insurance-core loads and sets the quote to state correctly 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123">
-  <div>
+<justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
+  <template shadowrootmode="open">
+    <style></style>
     <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
       Add Registration Protection
     </h2>
@@ -32,39 +33,42 @@ exports[`justifi-season-interruption-insurance-core loads and sets the quote to 
         battleface Travel Insurance plans are underwritten by Everspan Insurance Company (an AZ Corporation, NAIC# 24961), with administrative office at One World Trade Center, 41st Floor, New York, NY 10007. Plans are offered and administered by battleface Insurance Services LLC, 45 East Lincoln Street, Columbus, OH 43215, National Producer Number 18731960 (FL License number L107363/CA License number 0M75381).
       </p>
     </small>
-  </div>
+  </template>
 </justifi-season-interruption-insurance-core>
 `;
 
 exports[`justifi-season-interruption-insurance-core should display loading state correctly 1`] = `
 <justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
-  <style></style>
-  <div class="gap-3 row">
-    <div class="col-12">
-      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%; height: 30px;"></div>
+  <template shadowrootmode="open">
+    <style></style>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%; height: 30px;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 70%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80%;"></div>
+      </div>
     </div>
-    <div class="col-12">
-      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 70%;"></div>
-    </div>
-    <div class="col-12">
-      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
-    </div>
-    <div class="col-12">
-      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
-    </div>
-    <div class="col-12">
-      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
-    </div>
-    <div class="col-12">
-      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80%;"></div>
-    </div>
-  </div>
+  </template>
 </justifi-season-interruption-insurance-core>
 `;
 
 exports[`justifi-season-interruption-insurance-core validates that a selection was made 1`] = `
-<justifi-season-interruption-insurance-core auth-token="123">
-  <div>
+<justifi-season-interruption-insurance-core auth-token="123" class="body" style="display: block;">
+  <template shadowrootmode="open">
+    <style></style>
     <h2 class="fs-5 fw-bold header-2 pb-3" part="heading-2 heading text color font-family">
       Add Registration Protection
     </h2>
@@ -94,6 +98,6 @@ exports[`justifi-season-interruption-insurance-core validates that a selection w
         battleface Travel Insurance plans are underwritten by Everspan Insurance Company (an AZ Corporation, NAIC# 24961), with administrative office at One World Trade Center, 41st Floor, New York, NY 10007. Plans are offered and administered by battleface Insurance Services LLC, 45 East Lincoln Street, Columbus, OH 43215, National Producer Number 18731960 (FL License number L107363/CA License number 0M75381).
       </p>
     </small>
-  </div>
+  </template>
 </justifi-season-interruption-insurance-core>
 `;

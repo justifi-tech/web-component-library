@@ -160,7 +160,7 @@ export class CheckoutWrapper {
   }
 
   @Method()
-  async submitCheckout(submitCheckoutArgs: IBillingInfo): Promise<void> {
+  async submitCheckout(submitCheckoutArgs?: IBillingInfo): Promise<void> {
     const isValid = await this.validate();
     if (!isValid) {
       this.errorEvent.emit({

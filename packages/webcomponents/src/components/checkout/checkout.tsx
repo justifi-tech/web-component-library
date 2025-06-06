@@ -1,24 +1,24 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
-import { makeGetCheckout, makeCheckoutComplete } from '../../actions/checkout/checkout-actions';
+import { makeGetCheckout } from '../../actions/checkout/checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
-import { Checkout as CheckoutConstructor, ICheckout, ICheckoutCompleteResponse, ILoadedEventResponse } from '../../api';
+import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import checkoutStore from '../../store/checkout.store';
 import { Button, Header2, Header3, Skeleton, StyledHost } from '../../ui-components';
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
-import { PaymentMethodPayload } from './payment-method-payload';
 
 @Component({
   tag: 'justifi-checkout',
   shadow: true,
 })
 export class Checkout {
+  modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
   paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
+
   analytics: JustifiAnalytics;
 
   @State() checkout: ICheckout;
@@ -105,60 +105,10 @@ export class Checkout {
     });
   };
 
-  private async submit(event) {
-    event.preventDefault();
-    this.renderState = 'loading';
-
-    const insuranceValidation = validateInsuranceValues();
-    const payload: PaymentMethodPayload = await this.paymentMethodOptionsRef.resolvePaymentMethod(insuranceValidation);
-
-    if (payload.validationError) {
-      this.renderState = 'error';
-    } else if (payload.error) {
-      this.renderState = 'error';
-      this.serverError = payload.error.message;
-      this.onError({
-        code: (payload.error.code as ComponentErrorCodes),
-        error: payload.error.message,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    } else if (payload.token) {
-      this.completeCheckout({ payment_mode: 'ecom', payment_token: payload.token });
-    } else if (payload.bnpl?.status === 'success') {
-      this.completeCheckout({ payment_mode: 'bnpl' });
-    } else {
-      this.renderState = 'error';
-    }
+  private async submit(_event) {
+    // calls the submitCheckout method on the checkout wrapper
+    this.modularCheckoutRef.submitCheckout();
   }
-
-  private completeCheckout = async (payment: { payment_mode: string, payment_token?: string }) => {
-    const complete = makeCheckoutComplete({
-      authToken: this.authToken,
-      checkoutId: this.checkoutId,
-      service: new CheckoutService()
-    });
-
-    complete({
-      payment,
-      onSuccess: this.onSubmitted,
-      onError: this.onError,
-    });
-  }
-
-  private onSubmitted = (response: ICheckoutCompleteResponse) => {
-    this.submitEvent.emit({ response: response });
-    this.renderState = 'success';
-  };
-
-  private onError = ({ error, code, severity }: { error: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity }) => {
-    this.serverError = error;
-    this.errorEvent.emit({
-      errorCode: code,
-      message: error,
-      severity,
-    });
-    this.renderState = 'error';
-  };
 
   get isLoading() {
     return this.renderState === 'loading';
@@ -172,6 +122,16 @@ export class Checkout {
         </div>
         <justifi-checkout-summary />
       </section>
+    );
+  }
+
+  get paymentTypeHeader() {
+    const showPaymentTypeHeader = !this.disableCreditCard && !this.disableBankAccount;
+
+    if (!showPaymentTypeHeader) return null;
+
+    return (
+      <Header3 text="Select payment type" class="fs-6 fw-bold lh-lg" />
     );
   }
 
@@ -225,7 +185,8 @@ export class Checkout {
   render() {
     return (
       <StyledHost>
-        <justifi-checkout-wrapper
+        <justifi-modular-checkout
+          ref={(el) => (this.modularCheckoutRef = el)}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
         >
@@ -235,13 +196,11 @@ export class Checkout {
               {this.summary}
             </div>
             <div class="col-12">
-              <div slot="insurance">
-                <slot name="insurance"></slot>
-              </div>
+              <slot name="insurance"></slot>
             </div>
             <div class="col-12 mt-4">
               <Header2 text="Payment" class="fs-5 fw-bold pb-3" />
-              <Header3 text="Select payment type" class="fs-6 fw-bold lh-lg" />
+              {this.paymentTypeHeader}
               <div class="d-flex flex-column">
                 {this.paymentType}
               </div>
@@ -261,7 +220,7 @@ export class Checkout {
               </div>
             </div>
           </div>
-        </justifi-checkout-wrapper>
+        </justifi-modular-checkout>
       </StyledHost>
     );
   }
