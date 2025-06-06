@@ -11,7 +11,7 @@ const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COM
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
-const paymentMethodId = process.env.PAYMENT_METHOD_ID;
+const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
 
 app.use(
   '/scripts',
@@ -80,7 +80,7 @@ async function makeCheckout(token) {
     body: JSON.stringify({
       amount: 1799,
       description: 'One Chocolate Donut',
-      payment_method_group_id: paymentMethodId,
+      payment_method_group_id: paymentMethodGroupId,
       origin_url: `localhost:${port}`,
     }),
   });
