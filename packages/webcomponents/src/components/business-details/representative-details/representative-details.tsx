@@ -1,4 +1,4 @@
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/utils';
 import { formatMediumDate, isEmptyObject } from '../../../utils/utils';
 import { Identity } from '../../../api/Identity';
@@ -10,10 +10,10 @@ export class JustifiRepresentativeDetails {
   @Prop() representative: Identity;
 
   render() {
-    if (isEmptyObject(this.representative)) return null;
+    if (!this.representative || isEmptyObject(this.representative)) return null;
 
     return (
-      <Host>
+      <div>
         <DetailSectionTitle sectionTitle="Representative Details" />
         <div class="d-table gap-2 w-100 mt-3">
           <div class="row gy-3">
@@ -54,7 +54,7 @@ export class JustifiRepresentativeDetails {
             </div>
           </div>
         </div>
-      </Host>
+      </div>
     );
   }
 }

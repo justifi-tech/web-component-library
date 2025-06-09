@@ -78,9 +78,8 @@ export class TokenizePaymentMethod {
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }> {
-    const { isValid } = await this.paymentMethodOptionsRef.validate();
-    return { isValid };
+  async validate(): Promise<{ isValid: boolean, errors?: any }> {
+    return this.paymentMethodOptionsRef.validate();
   }
 
   render() {

@@ -1,5 +1,19 @@
 ### Changelog
 
+## 5.7.3
+
+### Patch Changes
+
+- fddf91e: Update the document upload requirements in `justifi-payment-provisioning`. Users now only need to upload either a `voided_check` or a `bank_statement` document to complete the form. Users are no longer required to upload both documents to proceed.
+
+## 5.7.2
+
+### Patch Changes
+
+- c767321: - `justifi-payment-provisioning`: fixed issue causing network error when posting terms and conditions in the final form step
+  - `justifi-business-details`: refactored component to stop sections from rendering when there is no appropriate data to render, improved general stability of component
+- 56b7253: Return the validation error message on the error-event from the justifi-tokenize-payment-method component
+
 ## 5.7.1
 
 ### Patch Changes

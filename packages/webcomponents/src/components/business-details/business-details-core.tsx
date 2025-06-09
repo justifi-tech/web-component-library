@@ -19,7 +19,7 @@ export class BusinessDetailsCore {
 
   @State() business: Business;
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
-  @State() errorMessage: string = 'An error ocurred.';
+  @State() errorMessage: string;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
@@ -65,13 +65,17 @@ export class BusinessDetailsCore {
 
     return (
       <StyledHost>
-        <generic-info-details business={this.business} />
-        <legal-address-details legalAddress={this.business.legal_address} />
-        <representative-details representative={this.business.representative} />
-        <owner-details owners={this.business.owners} />
-        <additional-questions-details
-          additionalQuestions={this.business.additional_questions}
-        />
+        <justifi-details error-message={this.errorMessage}>
+          <div slot='detail-sections'>
+            <core-info-details business={this.business} />
+            <legal-address-details legalAddress={this.business.legal_address} />
+            <representative-details representative={this.business.representative} />
+            <owner-details owners={this.business.owners} />
+            <additional-questions-details
+              additionalQuestions={this.business.additional_questions}
+            />
+          </div>
+        </justifi-details>
       </StyledHost>
     );
   }

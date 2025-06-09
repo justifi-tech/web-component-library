@@ -30,7 +30,8 @@
 ```mermaid
 graph TD;
   justifi-business-details --> business-details-core
-  business-details-core --> generic-info-details
+  business-details-core --> justifi-details
+  business-details-core --> core-info-details
   business-details-core --> legal-address-details
   business-details-core --> representative-details
   business-details-core --> owner-details
