@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                   | Default     |
-| -------- | --------- | ----------- | ---------------------- | ----------- |
-| `class`  | `class`   |             | `string`               | `undefined` |
-| `level`  | `level`   |             | `"h1" \| "h2" \| "h3"` | `'h1'`      |
-| `text`   | `text`    |             | `string`               | `undefined` |
+| Property      | Attribute   | Description | Type                      | Default     |
+| ------------- | ----------- | ----------- | ------------------------- | ----------- |
+| `class`       | `class`     |             | `string`                  | `undefined` |
+| `component`   | `component` |             | `string`                  | `undefined` |
+| `customStyle` | --          |             | `{ [key: string]: any; }` | `undefined` |
+| `height`      | `height`    |             | `number \| string`        | `undefined` |
+| `width`       | `width`     |             | `number \| string`        | `undefined` |
 
 
 ## Dependencies
@@ -23,8 +25,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-checkout --> justifi-header
-  style justifi-header fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-checkout --> justifi-skeleton
+  style justifi-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

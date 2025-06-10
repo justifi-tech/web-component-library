@@ -8,10 +8,7 @@ exports[`justifi-checkout renders loading 1`] = `
       <div class="col-12 mb-4" part="checkout-summary">
         <justifi-header class="fs-5 fw-bold pb-3" level="h2" text="Summary"></justifi-header>
         <section class="mb-4">
-          <div>
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="height: 24px;"></div>
-          </div>
-          <justifi-checkout-summary></justifi-checkout-summary>
+          <justifi-skeleton height="24px"></justifi-skeleton>
         </section>
       </div>
       <div class="col-12 mt-4"></div>
@@ -20,17 +17,7 @@ exports[`justifi-checkout renders loading 1`] = `
         <justifi-header class="fs-6 fw-bold lh-lg" level="h3" text="Select payment type"></justifi-header>
         <div class="d-flex flex-column">
           <section>
-            <div>
-              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="height: 300px;"></div>
-            </div>
-            <div class="visually-hidden">
-              <div>
-                <justifi-saved-payment-methods></justifi-saved-payment-methods>
-                <justifi-sezzle-payment-method></justifi-sezzle-payment-method>
-                <payment-method-option label="New credit or debit card" paymentmethodoptionid="card"></payment-method-option>
-                <payment-method-option label="New bank account" paymentmethodoptionid="bankAccount"></payment-method-option>
-              </div>
-            </div>
+            <justifi-skeleton height="300px"></justifi-skeleton>
           </section>
         </div>
       </div>

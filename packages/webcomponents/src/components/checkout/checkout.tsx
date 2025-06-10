@@ -7,7 +7,7 @@ import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import checkoutStore from '../../store/checkout.store';
-import { Skeleton } from '../../ui-components';
+
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
@@ -147,76 +147,17 @@ export class Checkout {
     checkoutStore.selectedPaymentMethod = event.detail.id;
   }
 
-  private get hiddenRadioInput() {
-    return this.disableBankAccount || this.disableCreditCard;
-  }
-
   private async submit(_event) {
     // calls the submitCheckout method on the checkout wrapper
     this.modularCheckoutRef.submitCheckout();
   }
 
+  private get hiddenRadioInput() {
+    return this.disableBankAccount || this.disableCreditCard;
+  }
+
   get isLoading() {
     return this.renderState === 'loading';
-  }
-
-  get summary() {
-    return (
-      <section class="mb-4">
-        <div class={!this.isLoading && 'visually-hidden'}>
-          <Skeleton height="24px" />
-        </div>
-        <justifi-checkout-summary />
-      </section>
-    );
-  }
-
-  get paymentTypeHeader() {
-    const showPaymentTypeHeader = !this.disableCreditCard && !this.disableBankAccount;
-
-    if (!showPaymentTypeHeader) return null;
-
-    return (
-      <justifi-header text="Select payment type" level="h3" class="fs-6 fw-bold lh-lg" />
-    );
-  }
-
-  get paymentMethodOptionsRender() {
-    return (
-      <div>
-        <justifi-saved-payment-methods />
-        <justifi-sezzle-payment-method />
-        <payment-method-option
-          paymentMethodOptionId={PaymentMethodTypes.card}
-          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
-          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
-          radioButtonHidden={this.hiddenRadioInput}
-          label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
-        />
-        <payment-method-option
-          paymentMethodOptionId={PaymentMethodTypes.bankAccount}
-          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
-          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
-          radioButtonHidden={this.hiddenRadioInput}
-          label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
-        />
-      </div>
-    );
-  }
-
-  get paymentType() {
-    return (
-      <section>
-        {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
-        {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
-        <div class={!this.isLoading && 'visually-hidden'}>
-          <Skeleton height="300px" />
-        </div>
-        <div class={this.isLoading && 'visually-hidden'}>
-          {this.paymentMethodOptionsRender}
-        </div>
-      </section>
-    );
   }
 
   @Method()
@@ -246,6 +187,8 @@ export class Checkout {
   }
 
   render() {
+    const showPaymentTypeHeader = !this.disableCreditCard && !this.disableBankAccount;
+
     return (
       <justifi-modular-checkout
         ref={(el) => (this.modularCheckoutRef = el)}
@@ -255,16 +198,49 @@ export class Checkout {
         <div class="row gy-3 jfi-checkout-core">
           <div class="col-12 mb-4" part={checkoutSummary}>
             <justifi-header text="Summary" level="h2" class="fs-5 fw-bold pb-3" />
-            {this.summary}
+            <section class="mb-4">
+              {this.isLoading && (
+                <justifi-skeleton height="24px" />
+              )}
+              {!this.isLoading && <justifi-checkout-summary />}
+            </section>
           </div>
           <div class="col-12 mt-4">
             <slot name="insurance"></slot>
           </div>
           <div class="col-12 mt-4">
             <justifi-header text="Payment" level="h2" class="fs-5 fw-bold pb-3" />
-            {this.paymentTypeHeader}
+            {showPaymentTypeHeader && (
+              <justifi-header text="Select payment type" level="h3" class="fs-6 fw-bold lh-lg" />
+            )}
             <div class="d-flex flex-column">
-              {this.paymentType}
+              <section>
+                {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
+                {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
+                {this.isLoading && (
+                  <justifi-skeleton height="300px" />
+                )}
+                {!this.isLoading && (
+                  <div>
+                    <justifi-saved-payment-methods />
+                    <justifi-sezzle-payment-method />
+                    <payment-method-option
+                      paymentMethodOptionId={PaymentMethodTypes.card}
+                      isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
+                      clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
+                      radioButtonHidden={this.hiddenRadioInput}
+                      label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
+                    />
+                    <payment-method-option
+                      paymentMethodOptionId={PaymentMethodTypes.bankAccount}
+                      isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
+                      clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
+                      radioButtonHidden={this.hiddenRadioInput}
+                      label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
+                    />
+                  </div>
+                )}
+              </section>
             </div>
           </div>
           <div class="col-12">
