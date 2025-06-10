@@ -13,7 +13,6 @@ import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
-import { radioListItem } from '../../styles/parts';
 
 const PaymentMethodTypeLabels = {
   bankAccount: 'New bank account',
@@ -187,32 +186,20 @@ export class Checkout {
       <div>
         <justifi-saved-payment-methods />
         <justifi-sezzle-payment-method />
-        <div
-          class="radio-list-item p-3"
-          part={radioListItem}
-          onClick={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
-          hidden={this.hiddenRadioInput}
-        >
-          <form-control-radio
-            name="paymentMethodType"
-            value={PaymentMethodTypes.card}
-            checked={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
-            label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
-          />
-        </div>
-        <div
-          class="radio-list-item p-3"
-          part={radioListItem}
-          onClick={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
-          hidden={this.hiddenRadioInput}
-        >
-          <form-control-radio
-            name="paymentMethodType"
-            value={PaymentMethodTypes.bankAccount}
-            checked={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
-            label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
-          />
-        </div>
+        <payment-method-option
+          paymentMethodOptionId={PaymentMethodTypes.card}
+          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
+          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
+          radioButtonHidden={this.hiddenRadioInput}
+          label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
+        />
+        <payment-method-option
+          paymentMethodOptionId={PaymentMethodTypes.bankAccount}
+          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
+          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
+          radioButtonHidden={this.hiddenRadioInput}
+          label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
+        />
       </div>
     );
   }
