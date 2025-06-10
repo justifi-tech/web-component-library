@@ -1,4 +1,3 @@
-// import { IApiResponse } from '..';
 import { 
   IApplePayConfig,
   IApplePayPaymentRequest,
@@ -74,8 +73,6 @@ export class ApplePayService implements IApplePayService {
   ): Promise<IMerchantSession> {
     const endpoint = `${this.apiBaseUrl}/apple_pay/validate_merchant_session`;
     const body = payload;
-
-    console.log('Making request to backend for merchant validation...');
   
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -85,9 +82,6 @@ export class ApplePayService implements IApplePayService {
       },
       body: JSON.stringify(body)
     });
-
-    console.log("Backend response status:", response.status);
-    console.log("Backend response ok:", response.ok);
 
     if (!response.ok) {
       const errorData = await response.text();
@@ -104,8 +98,6 @@ export class ApplePayService implements IApplePayService {
     }
     
     const merchantSession: IMerchantSession = await response.json();
-    console.log('=== MERCHANT SESSION RECEIVED ===');
-    console.log("Merchant session data:", merchantSession);
     
     return merchantSession;
   }
@@ -118,8 +110,6 @@ export class ApplePayService implements IApplePayService {
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }> {
     const endpoint = `${this.apiBaseUrl}/apple_pay/process_token`;
     const body = payload;
-
-    console.log('PSP request body:', body);
     
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -130,11 +120,7 @@ export class ApplePayService implements IApplePayService {
       body: JSON.stringify(body)
     });
 
-    console.log('PSP response status:', response.status);
-    console.log('PSP response ok:', response.ok);
-
     const result: IApplePayPaymentResponse = await response.json();
-    console.log('PSP result:', result);
 
     return {
       success: response.ok && result.status === 'success',
@@ -224,9 +210,6 @@ export class ApplePayService implements IApplePayService {
     }
 
     this.currentSession.onvalidatemerchant = async (event: IApplePayValidateEvent) => {
-      console.log('=== MERCHANT VALIDATION STARTED ===');
-      console.log("Merchant: onvalidatemerchant event:", event);
-      console.log("Validation URL:", event.validationURL);
       
       try {
         const validationPayload: IApplePayMerchantValidationRequest = {
@@ -236,14 +219,10 @@ export class ApplePayService implements IApplePayService {
         const merchantSession = await this.validateMerchant(validationPayload);
         
         if (merchantSession && isValidMerchantSession(merchantSession)) {
-          console.log('Merchant session validation passed, calling completeMerchantValidation...');
-          console.log('Session object before completion:', this.currentSession);
-          
           try {
             this.currentSession!.completeMerchantValidation(merchantSession);
-            console.log('✅ completeMerchantValidation called successfully');
           } catch (completionError) {
-            console.error('❌ Error calling completeMerchantValidation:', completionError);
+            console.error('Error calling completeMerchantValidation:', completionError);
             throw completionError;
           }
         } else {
@@ -272,11 +251,6 @@ export class ApplePayService implements IApplePayService {
     };
 
     this.currentSession.onpaymentauthorized = async (event: any) => {
-      console.log('=== PAYMENT AUTHORIZATION STARTED ===');
-      console.log("Payment authorized event:", event);
-      console.log("Payment token:", event.payment.token);
-      console.log("Billing contact:", event.payment.billingContact);
-
       try {
         const payment = event.payment;
         
@@ -298,11 +272,9 @@ export class ApplePayService implements IApplePayService {
           }
         };
 
-        console.log('Sending payment token to PSP...');
         const paymentResult = await this.processPayment(paymentPayload);
         
         if (paymentResult.success) {
-          console.log('✅ Payment successful via PSP:', paymentResult.data);
           this.currentSession!.completePayment({
             status: ApplePaySessionStatus.STATUS_SUCCESS
           });
@@ -310,7 +282,7 @@ export class ApplePayService implements IApplePayService {
             success: true,
           });
         } else {
-          console.error('❌ PSP reported payment failure:', paymentResult.data);
+          console.error('PSP reported payment failure:', paymentResult.data);
           this.currentSession!.completePayment({
             status: ApplePaySessionStatus.STATUS_FAILURE
           });
@@ -343,22 +315,15 @@ export class ApplePayService implements IApplePayService {
     };
 
     this.currentSession.onpaymentmethodselected = (event: IApplePayMethodSelectedEvent) => {
-      console.log('=== PAYMENT METHOD SELECTED ===');
-      console.log("Payment method selected event:", event);
-      console.log("Payment method:", event.paymentMethod);
-      
       const paymentUpdate = {
         newTotal: this.currentPaymentRequest!.total,
         newLineItems: this.currentPaymentRequest!.lineItems || []
       };
-      
-      console.log('Completing payment method selection with:', paymentUpdate);
-      
+            
       try {
         this.currentSession!.completePaymentMethodSelection(paymentUpdate);
-        console.log('✅ Payment method selection completed successfully');
       } catch (error) {
-        console.error('❌ Error completing payment method selection:', error);
+        console.error('Error completing payment method selection:', error);
         this.currentSession!.abort();
       }
     };
@@ -381,34 +346,25 @@ export class ApplePayService implements IApplePayService {
     };
 
     this.currentSession.oncancel = (event: IApplePayCancelEvent) => {
-      console.log('=== APPLE PAY SESSION CANCELLED ===');
-      console.log("Payment cancelled event:", event);
-      console.log("Session error:", event.sessionError);
-      
       if (event.sessionError) {
-        console.log("Error code:", event.sessionError.code);
-        console.log("Error info:", event.sessionError.info);
-        
         switch(event.sessionError.code) {
           case 'unknown':
-            console.error('❌ Unknown error - likely merchant validation issue');
+            console.error('Unknown error - likely merchant validation issue');
             console.error('This usually means:');
             console.error('1. Merchant certificate is invalid or expired');
             console.error('2. Merchant identifier mismatch');
             console.error('3. Backend validation endpoint issues');
             break;
           case 'invalidMerchantSession':
-            console.error('❌ Invalid merchant session provided');
+            console.error('Invalid merchant session provided');
             console.error('Check that the merchant session from backend is valid');
             break;
           case 'userCancel':
-            console.log('ℹ️ User cancelled the payment');
+            console.error('User cancelled the payment');
             break;
           default:
-            console.error('❌ Other error code:', event.sessionError.code);
+            console.error('Other error code:', event.sessionError.code);
         }
-      } else {
-        console.log('ℹ️ Payment cancelled without specific error');
       }
 
       this.currentSession = undefined;
