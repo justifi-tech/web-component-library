@@ -26,14 +26,6 @@ export enum ApplePayMerchantCapability {
   SUPPORTS_DEBIT = 'supportsDebit'
 }
 
-export enum ApplePayContactField {
-  POSTAL_ADDRESS = 'postalAddress',
-  PHONE = 'phone',
-  EMAIL = 'email',
-  NAME = 'name',
-  PHONE_PHONETIC_NAME = 'phoneticName'
-}
-
 export interface IApplePayLineItem {
   label: string;
   amount: string;
@@ -47,21 +39,6 @@ export interface IApplePayShippingMethod {
   detail?: string;
 }
 
-export interface IApplePayPaymentContact {
-  phoneNumber?: string;
-  emailAddress?: string;
-  givenName?: string;
-  familyName?: string;
-  phoneticGivenName?: string;
-  phoneticFamilyName?: string;
-  addressLines?: string[];
-  locality?: string;
-  administrativeArea?: string;
-  postalCode?: string;
-  country?: string;
-  countryCode?: string;
-}
-
 export interface IApplePayPaymentRequest {
   countryCode: string;
   currencyCode: string;
@@ -70,10 +47,6 @@ export interface IApplePayPaymentRequest {
   total: IApplePayLineItem;
   lineItems?: IApplePayLineItem[];
   shippingMethods?: IApplePayShippingMethod[];
-  requiredBillingContactFields?: ApplePayContactField[];
-  requiredShippingContactFields?: ApplePayContactField[];
-  billingContact?: IApplePayPaymentContact;
-  shippingContact?: IApplePayPaymentContact;
   applicationData?: string;
   supportedCountries?: string[];
 }
@@ -86,14 +59,12 @@ export interface IApplePaySession {
   abort(): void;
   completeMerchantValidation(merchantSession: IMerchantSession): void;
   completePayment(result: { status: ApplePaySessionStatus }): void;
-  completeShippingContactSelection(update: any): void;
   completeShippingMethodSelection(update: any): void;
   completePaymentMethodSelection(update: any): void;
   
   // Event handlers
   onvalidatemerchant?: (event: IApplePayValidateEvent) => void;
   onpaymentmethodselected?: (event: IApplePayMethodSelectedEvent) => void;
-  onshippingcontactselected?: () => void;
   onshippingmethodselected?: () => void;
   onpaymentauthorized?: (event: any) => void;
   oncancel?: (event: IApplePayCancelEvent) => void;
@@ -112,7 +83,6 @@ export interface IApplePayConfig {
 export interface IApplePayError {
   code: string;
   message: string;
-  contactField?: ApplePayContactField;
 }
 
 export interface IMerchantSession {
@@ -175,24 +145,6 @@ export interface IApplePayPaymentProcessRequest {
   paymentData: IApplePayTokenData;
   paymentMethod: IApplePayTokenPaymentMethod;
   transactionIdentifier: string;
-  billing_contact?: {
-    given_name?: string;
-    family_name?: string;
-    address_lines?: string[];
-    locality?: string;
-    administrative_area?: string;
-    postal_code?: string;
-    country_code?: string;
-  } | null;
-  shipping_contact?: {
-    given_name?: string;
-    family_name?: string;
-    address_lines?: string[];
-    locality?: string;
-    administrative_area?: string;
-    postal_code?: string;
-    country_code?: string;
-  } | null;
   product_details?: {
     name: string;
     price: number;
@@ -255,10 +207,6 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
   public total: IApplePayLineItem;
   public lineItems?: IApplePayLineItem[];
   public shippingMethods?: IApplePayShippingMethod[];
-  public requiredBillingContactFields?: ApplePayContactField[];
-  public requiredShippingContactFields?: ApplePayContactField[];
-  public billingContact?: IApplePayPaymentContact;
-  public shippingContact?: IApplePayPaymentContact;
   public applicationData?: string;
   public supportedCountries?: string[];
 
@@ -270,10 +218,6 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
     this.total = data.total;
     this.lineItems = data.lineItems;
     this.shippingMethods = data.shippingMethods;
-    this.requiredBillingContactFields = data.requiredBillingContactFields;
-    this.requiredShippingContactFields = data.requiredShippingContactFields;
-    this.billingContact = data.billingContact;
-    this.shippingContact = data.shippingContact;
     this.applicationData = data.applicationData;
     this.supportedCountries = data.supportedCountries;
   }

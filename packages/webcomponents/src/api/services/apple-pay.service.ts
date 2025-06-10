@@ -13,8 +13,8 @@ import {
   IApplePayPaymentProcessRequest,
   IApplePayPaymentResponse,
   IApplePayValidateEvent,
-  IApplePayMethodSelectedEvent,
-  IApplePayCancelEvent
+  IApplePayCancelEvent,
+  IApplePayToken
 } from '../ApplePay';
 
 
@@ -151,7 +151,7 @@ export class ApplePayService implements IApplePayService {
    */
   public async startPaymentSession(
     paymentRequest: IApplePayPaymentRequest
-  ): Promise<{ success: boolean; error?: IApplePayError }> {
+  ): Promise<{ success: boolean; token?: IApplePayToken; error?: IApplePayError }> {
     if (!this.applePayConfig) {
       throw new Error('Apple Pay not initialized. Call initialize() first.');
     }
@@ -202,7 +202,7 @@ export class ApplePayService implements IApplePayService {
    * Setup Apple Pay session event handlers
    */
   private setupSessionEventHandlers(
-    resolve: (value: { success: boolean; transactionId?: string; error?: IApplePayError }) => void,
+    resolve: (value: { success: boolean; token?: IApplePayToken; error?: IApplePayError }) => void,
     reject: (reason: { success: boolean; error: IApplePayError }) => void
   ): void {
     if (!this.currentSession || !this.applePayConfig || !this.currentPaymentRequest) {
@@ -256,15 +256,6 @@ export class ApplePayService implements IApplePayService {
         
         const paymentPayload: IApplePayPaymentProcessRequest = {
           ...payment.token,
-          billing_contact: payment.billingContact ? {
-            given_name: payment.billingContact.givenName,
-            family_name: payment.billingContact.familyName,
-            address_lines: payment.billingContact.addressLines,
-            locality: payment.billingContact.locality,
-            administrative_area: payment.billingContact.administrativeArea,
-            postal_code: payment.billingContact.postalCode,
-            country_code: payment.billingContact.countryCode
-          } : null,
           product_details: {
             name: this.currentPaymentRequest!.total.label,
             price: ApplePayHelpers.parseAmount(this.currentPaymentRequest!.total.amount),
@@ -273,13 +264,13 @@ export class ApplePayService implements IApplePayService {
         };
 
         const paymentResult = await this.processPayment(paymentPayload);
-        
         if (paymentResult.success) {
           this.currentSession!.completePayment({
-            status: ApplePaySessionStatus.STATUS_SUCCESS
+            status: ApplePaySessionStatus.STATUS_SUCCESS,
           });
           resolve({
             success: true,
+            token: payment.token,
           });
         } else {
           console.error('PSP reported payment failure:', paymentResult.data);
@@ -314,7 +305,7 @@ export class ApplePayService implements IApplePayService {
       }
     };
 
-    this.currentSession.onpaymentmethodselected = (event: IApplePayMethodSelectedEvent) => {
+    this.currentSession.onpaymentmethodselected = () => {
       const paymentUpdate = {
         newTotal: this.currentPaymentRequest!.total,
         newLineItems: this.currentPaymentRequest!.lineItems || []
@@ -328,14 +319,6 @@ export class ApplePayService implements IApplePayService {
       }
     };
 
-    this.currentSession.onshippingcontactselected = () => {
-      this.currentSession!.completeShippingContactSelection({
-        status: ApplePaySessionStatus.STATUS_SUCCESS,
-        newShippingMethods: this.currentPaymentRequest!.shippingMethods || [],
-        newTotal: this.currentPaymentRequest!.total,
-        newLineItems: this.currentPaymentRequest!.lineItems || []
-      });
-    };
 
     this.currentSession.onshippingmethodselected = () => {
       this.currentSession!.completeShippingMethodSelection({

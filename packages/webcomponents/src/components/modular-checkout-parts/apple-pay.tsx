@@ -15,7 +15,7 @@ import {
   ApplePayButtonType,
   ApplePayButtonStyle,
   ApplePayHelpers,
-  ApplePayContactField,
+  IApplePayToken,
 } from "../../api/ApplePay";
 import { StyledHost } from "../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
@@ -37,7 +37,6 @@ export class ApplePay {
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;
   @Prop() showSkeleton: boolean = true;
-  @Prop() billingContact: string;
 
   @State() isLoading: boolean = true;
   @State() isProcessing: boolean = false;
@@ -48,6 +47,7 @@ export class ApplePay {
   @Event() applePayStarted: EventEmitter<void>;
   @Event() applePayCompleted: EventEmitter<{
     success: boolean;
+    token?: IApplePayToken;
     error?: any;
   }>;
   @Event() applePayCancelled: EventEmitter<void>;
@@ -58,7 +58,6 @@ export class ApplePay {
     this.applePayService.setApiBaseUrl(this.apiBaseUrl);
     this.initializeApplePay();
   }
-
   @Watch("merchantIdentifier")
   @Watch("apiBaseUrl")
   @Watch("buttonType")
@@ -129,16 +128,6 @@ export class ApplePay {
       return;
     }
 
-    let billingContactData = null;
-    if (this.billingContact) {
-      try {
-        billingContactData = JSON.parse(this.billingContact);
-        console.log("Using billing contact for Apple Pay:", billingContactData);
-      } catch (error) {
-        console.error("Failed to parse billing contact:", error);
-      }
-    }
-
     try {
       this.isProcessing = true;
       this.error = null;
@@ -153,12 +142,6 @@ export class ApplePay {
           checkoutStore.paymentDescription,
           checkoutStore.paymentAmount
         ),
-        requiredBillingContactFields: [
-          ApplePayContactField.POSTAL_ADDRESS,
-          ApplePayContactField.EMAIL,
-          ApplePayContactField.NAME,
-        ],
-        billingContact: billingContactData,
       };
 
       const result =
@@ -167,6 +150,7 @@ export class ApplePay {
       if (result.success) {
         this.applePayCompleted.emit({
           success: true,
+          token: result.token,
         });
       } else {
         this.applePayCompleted.emit({
@@ -218,11 +202,6 @@ export class ApplePay {
       this.isAvailable &&
       this.canMakePayments &&
       !this.error;
-
-    console.log("is loading?", this.isLoading);
-    console.log("is error?", this.error);
-    console.log("is available?", this.isAvailable);
-    console.log("can make payments?", this.canMakePayments);
 
     return (
       <StyledHost>
