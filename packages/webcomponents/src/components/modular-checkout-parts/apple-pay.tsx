@@ -20,6 +20,7 @@ import {
 import { StyledHost } from "../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../ui-components/apple-pay-button";
+import checkoutStore from "../../store/checkout.store";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -27,11 +28,7 @@ import { ApplePayButton } from "../../ui-components/apple-pay-button";
 })
 export class ApplePay {
   private applePayService: ApplePayService;
-
-  @Prop() amount!: number;
-  @Prop() currency: string = "USD";
   @Prop() countryCode: string = "US";
-  @Prop() label: string = "Payment";
   @Prop() merchantIdentifier: string = "merchant.com.justifi.checkout";
   @Prop() merchantDisplayName: string = "JustiFi Checkout";
   @Prop() initiativeContext: string = "checkout.justifi.tech";
@@ -62,7 +59,6 @@ export class ApplePay {
     this.initializeApplePay();
   }
 
-  @Watch("amount")
   @Watch("merchantIdentifier")
   @Watch("apiBaseUrl")
   @Watch("buttonType")
@@ -80,7 +76,7 @@ export class ApplePay {
       this.isLoading = true;
       this.error = null;
 
-      if (!this.amount) {
+      if (!checkoutStore.paymentAmount) {
         this.error = "Missing required Apple Pay configuration";
         this.isLoading = false;
         return;
@@ -150,10 +146,13 @@ export class ApplePay {
 
       const paymentRequest: IApplePayPaymentRequest = {
         countryCode: this.countryCode,
-        currencyCode: this.currency,
+        currencyCode: checkoutStore.paymentCurrency,
         merchantCapabilities: ApplePayHelpers.getDefaultMerchantCapabilities(),
         supportedNetworks: ApplePayHelpers.getDefaultSupportedNetworks(),
-        total: ApplePayHelpers.createLineItem(this.label, this.amount),
+        total: ApplePayHelpers.createLineItem(
+          checkoutStore.paymentDescription,
+          checkoutStore.paymentAmount
+        ),
         requiredBillingContactFields: [
           ApplePayContactField.POSTAL_ADDRESS,
           ApplePayContactField.EMAIL,
