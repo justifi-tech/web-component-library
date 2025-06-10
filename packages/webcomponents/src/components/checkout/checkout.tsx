@@ -7,7 +7,7 @@ import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import checkoutStore from '../../store/checkout.store';
-import { Button, Header2, Header3, Skeleton } from '../../ui-components';
+import { Skeleton } from '../../ui-components';
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
@@ -162,7 +162,7 @@ export class Checkout {
 
   get summary() {
     return (
-      <section>
+      <section class="mb-4">
         <div class={!this.isLoading && 'visually-hidden'}>
           <Skeleton height="24px" />
         </div>
@@ -177,7 +177,7 @@ export class Checkout {
     if (!showPaymentTypeHeader) return null;
 
     return (
-      <Header3 text="Select payment type" class="fs-6 fw-bold lh-lg" />
+      <justifi-header text="Select payment type" level="h3" class="fs-6 fw-bold lh-lg" />
     );
   }
 
@@ -253,15 +253,15 @@ export class Checkout {
         checkoutId={this.checkoutId}
       >
         <div class="row gy-3 jfi-checkout-core">
-          <div class="col-12" part={checkoutSummary}>
-            <Header2 text="Summary" class="fs-5 fw-bold pb-3" />
+          <div class="col-12 mb-4" part={checkoutSummary}>
+            <justifi-header text="Summary" level="h2" class="fs-5 fw-bold pb-3" />
             {this.summary}
           </div>
-          <div class="col-12">
+          <div class="col-12 mt-4">
             <slot name="insurance"></slot>
           </div>
           <div class="col-12 mt-4">
-            <Header2 text="Payment" class="fs-5 fw-bold pb-3" />
+            <justifi-header text="Payment" level="h2" class="fs-5 fw-bold pb-3" />
             {this.paymentTypeHeader}
             <div class="d-flex flex-column">
               {this.paymentType}
@@ -269,16 +269,15 @@ export class Checkout {
           </div>
           <div class="col-12">
             <div class="d-flex justify-content-end">
-              <Button
+              <justifi-button
+                text="Pay"
                 type="submit"
                 variant="primary"
-                onClick={(e) => this.submit(e)}
+                clickHandler={(e) => this.submit(e)}
                 disabled={this.isLoading}
                 isLoading={this.isLoading}
-                style={{ width: '100%' }}
-              >
-                Pay
-              </Button>
+                customStyle={{ width: '100%', textAlign: "center" }}
+              />
             </div>
           </div>
         </div>
