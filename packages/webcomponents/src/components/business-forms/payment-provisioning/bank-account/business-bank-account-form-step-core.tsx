@@ -293,7 +293,7 @@ export class BusinessBankAccountFormStepCore {
         <fieldset class="mt-4">
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Document Uploads</legend>
-            <form-control-tooltip helpText="These documents are required for underwriting purposes. Various file formats such as PDF, DOC, DOCX, JPEG, and others are accepted. Multiple files can be uploaded for each document category." />
+            <form-control-tooltip helpText="One document (voided check or bank statement) is required for underwriting purposes. It needs to visibly show the name tied to the account and the account number. Various file formats such as PDF, DOC, DOCX, JPEG are accepted. Multiple files can be uploaded for each document category." />
           </div>
           <hr class="mt-2" />
           <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
