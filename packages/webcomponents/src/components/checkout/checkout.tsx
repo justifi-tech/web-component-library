@@ -7,13 +7,12 @@ import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import checkoutStore from '../../store/checkout.store';
-import { Button, Header2, Header3, Skeleton, StyledHost } from '../../ui-components';
+import { Button, Header2, Header3, Skeleton } from '../../ui-components';
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 
 @Component({
   tag: 'justifi-checkout',
-  shadow: true,
 })
 export class Checkout {
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
@@ -184,44 +183,42 @@ export class Checkout {
 
   render() {
     return (
-      <StyledHost>
-        <justifi-modular-checkout
-          ref={(el) => (this.modularCheckoutRef = el)}
-          authToken={this.authToken}
-          checkoutId={this.checkoutId}
-        >
-          <div class="row gy-3 jfi-checkout-core">
-            <div class="col-12" part={checkoutSummary}>
-              <Header2 text="Summary" class="fs-5 fw-bold pb-3" />
-              {this.summary}
-            </div>
-            <div class="col-12">
-              <slot name="insurance"></slot>
-            </div>
-            <div class="col-12 mt-4">
-              <Header2 text="Payment" class="fs-5 fw-bold pb-3" />
-              {this.paymentTypeHeader}
-              <div class="d-flex flex-column">
-                {this.paymentType}
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="d-flex justify-content-end">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  onClick={(e) => this.submit(e)}
-                  disabled={this.isLoading}
-                  isLoading={this.isLoading}
-                  style={{ width: '100%' }}
-                >
-                  Pay
-                </Button>
-              </div>
+      <justifi-modular-checkout
+        ref={(el) => (this.modularCheckoutRef = el)}
+        authToken={this.authToken}
+        checkoutId={this.checkoutId}
+      >
+        <div class="row gy-3 jfi-checkout-core">
+          <div class="col-12" part={checkoutSummary}>
+            <Header2 text="Summary" class="fs-5 fw-bold pb-3" />
+            {this.summary}
+          </div>
+          <div class="col-12">
+            <slot name="insurance"></slot>
+          </div>
+          <div class="col-12 mt-4">
+            <Header2 text="Payment" class="fs-5 fw-bold pb-3" />
+            {this.paymentTypeHeader}
+            <div class="d-flex flex-column">
+              {this.paymentType}
             </div>
           </div>
-        </justifi-modular-checkout>
-      </StyledHost>
+          <div class="col-12">
+            <div class="d-flex justify-content-end">
+              <Button
+                type="submit"
+                variant="primary"
+                onClick={(e) => this.submit(e)}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}
+                style={{ width: '100%' }}
+              >
+                Pay
+              </Button>
+            </div>
+          </div>
+        </div>
+      </justifi-modular-checkout>
     );
   }
 }

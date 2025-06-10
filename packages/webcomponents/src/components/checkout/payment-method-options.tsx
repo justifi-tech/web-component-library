@@ -96,6 +96,8 @@ export class PaymentMethodOptions {
   render() {
     return (
       <div>
+        <justifi-saved-payment-methods />
+        <justifi-sezzle-payment-method />
         <div
           class="radio-list-item p-3"
           part={radioListItem}
@@ -122,8 +124,6 @@ export class PaymentMethodOptions {
             label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
           />
         </div>
-        <justifi-sezzle-payment-method />
-        <justifi-saved-payment-methods exportparts={radioListItem.split(' ').join(',')} />
       </div>
     );
   }
