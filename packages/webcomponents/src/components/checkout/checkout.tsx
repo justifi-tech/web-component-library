@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen } from '@stencil/core';
 import { makeGetCheckout } from '../../actions/checkout/checkout-actions';
 import { CheckoutService } from '../../api/services/checkout.service';
 import JustifiAnalytics from '../../api/Analytics';
@@ -10,13 +10,22 @@ import checkoutStore from '../../store/checkout.store';
 import { Button, Header2, Header3, Skeleton } from '../../ui-components';
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+import { PaymentMethodTypes } from '../../api/Payment';
+import { PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
+import { radioListItem } from '../../styles/parts';
+
+const PaymentMethodTypeLabels = {
+  bankAccount: 'New bank account',
+  card: 'New credit or debit card',
+};
 
 @Component({
   tag: 'justifi-checkout',
 })
 export class Checkout {
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
+  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
   analytics: JustifiAnalytics;
 
@@ -26,6 +35,7 @@ export class Checkout {
   @State() insuranceToggled: boolean = false;
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() serverError: string;
+  @State() paymentMethodOptions: PaymentMethodOption[] = [];
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -53,6 +63,7 @@ export class Checkout {
       checkoutStore.checkoutId = this.checkoutId;
       checkoutStore.authToken = this.authToken;
     }
+    this.paymentMethodsChanged();
   }
 
   componentWillLoad() {
@@ -91,6 +102,7 @@ export class Checkout {
         const { status } = this.checkout;
         this.loadedEvent.emit({ checkout_status: status });
         this.renderState = 'success';
+        this.paymentMethodsChanged();
       },
       onError: ({ error, code, severity }) => {
         this.serverError = error;
@@ -103,6 +115,42 @@ export class Checkout {
       }
     });
   };
+
+  paymentMethodsChanged() {
+    if (!this.checkout?.payment_methods) return;
+
+    this.paymentMethodOptions = this.checkout.payment_methods
+      .map((paymentMethod) => new PaymentMethodOption(paymentMethod))
+      .filter((paymentMethod) => {
+        // Don't save card or bank account if they are disabled
+        return (
+          (!this.disableCreditCard || paymentMethod.type !== PaymentMethodTypes.card) &&
+          (!this.disableBankAccount || paymentMethod.type !== PaymentMethodTypes.bankAccount)
+        );
+      });
+
+    if (!this.disableBnpl && this.checkout?.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
+    }
+    if (!this.disableCreditCard) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
+    }
+    if (!this.disableBankAccount) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
+    }
+    if (!checkoutStore.selectedPaymentMethod) {
+      checkoutStore.selectedPaymentMethod = this.paymentMethodOptions[0]?.id;
+    }
+  }
+
+  @Listen('paymentMethodOptionSelected')
+  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
+    checkoutStore.selectedPaymentMethod = event.detail.id;
+  }
+
+  private get hiddenRadioInput() {
+    return this.disableBankAccount || this.disableCreditCard;
+  }
 
   private async submit(_event) {
     // calls the submitCheckout method on the checkout wrapper
@@ -134,6 +182,41 @@ export class Checkout {
     );
   }
 
+  get paymentMethodOptionsRender() {
+    return (
+      <div>
+        <justifi-saved-payment-methods />
+        <justifi-sezzle-payment-method />
+        <div
+          class="radio-list-item p-3"
+          part={radioListItem}
+          onClick={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
+          hidden={this.hiddenRadioInput}
+        >
+          <form-control-radio
+            name="paymentMethodType"
+            value={PaymentMethodTypes.card}
+            checked={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
+            label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
+          />
+        </div>
+        <div
+          class="radio-list-item p-3"
+          part={radioListItem}
+          onClick={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
+          hidden={this.hiddenRadioInput}
+        >
+          <form-control-radio
+            name="paymentMethodType"
+            value={PaymentMethodTypes.bankAccount}
+            checked={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
+            label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
+          />
+        </div>
+      </div>
+    );
+  }
+
   get paymentType() {
     return (
       <section>
@@ -143,22 +226,7 @@ export class Checkout {
           <Skeleton height="300px" />
         </div>
         <div class={this.isLoading && 'visually-hidden'}>
-          <justifi-payment-method-options
-            ref={(el) => (this.paymentMethodOptionsRef = el)}
-            show-card={!this.disableCreditCard}
-            show-ach={!this.disableBankAccount}
-            show-bnpl={!this.disableBnpl}
-            paymentMethodGroupId={this.checkout?.payment_method_group_id}
-            show-saved-payment-methods={!this.disablePaymentMethodGroup}
-            hideCardBillingForm={this.hideCardBillingForm}
-            hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-            bnpl={this.checkout?.bnpl}
-            authToken={this.authToken}
-            account-id={this.checkout?.account_id}
-            savedPaymentMethods={this.checkout?.payment_methods || []}
-            paymentAmount={this.checkout?.payment_amount}
-            insuranceToggled={this.insuranceToggled}
-          />
+          {this.paymentMethodOptionsRender}
         </div>
       </section>
     );
@@ -166,15 +234,24 @@ export class Checkout {
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    this.paymentMethodOptionsRef.fillBillingForm(fields);
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    if (newPaymentMethodElement?.fillBillingForm) {
+      newPaymentMethodElement.fillBillingForm(fields);
+    }
+  }
+
+  @Method()
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
     const insuranceValidation = validateInsuranceValues();
-    const { isValid } = await this.paymentMethodOptionsRef.validate();
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    const paymentMethodValidation = newPaymentMethodElement ? await newPaymentMethodElement.validate() : { isValid: true };
 
-    if (!insuranceValidation.isValid || !isValid) {
+    if (!insuranceValidation.isValid || !paymentMethodValidation.isValid) {
       return { isValid: false };
     } else {
       return { isValid: true };

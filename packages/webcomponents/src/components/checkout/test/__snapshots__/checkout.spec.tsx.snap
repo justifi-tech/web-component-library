@@ -30,7 +30,16 @@ exports[`justifi-checkout renders loading 1`] = `
               <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="height: 300px;"></div>
             </div>
             <div class="visually-hidden">
-              <justifi-payment-method-options show-ach="" show-bnpl="" show-card="" show-saved-payment-methods=""></justifi-payment-method-options>
+              <div>
+                <justifi-saved-payment-methods></justifi-saved-payment-methods>
+                <justifi-sezzle-payment-method></justifi-sezzle-payment-method>
+                <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
+                  <form-control-radio label="New credit or debit card" name="paymentMethodType" value="card"></form-control-radio>
+                </div>
+                <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
+                  <form-control-radio label="New bank account" name="paymentMethodType" value="bankAccount"></form-control-radio>
+                </div>
+              </div>
             </div>
           </section>
         </div>
