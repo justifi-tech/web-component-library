@@ -7,7 +7,6 @@ import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import checkoutStore from '../../store/checkout.store';
-
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
@@ -34,8 +33,10 @@ export class Checkout {
   @State() errorMessage: string = '';
   @State() insuranceToggled: boolean = false;
   @State() renderState: 'loading' | 'error' | 'success' = 'loading';
+  @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() serverError: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
+  @State() savePaymentMethod: boolean = false;
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -148,8 +149,27 @@ export class Checkout {
     checkoutStore.selectedPaymentMethod = event.detail.id;
   }
 
+  @Listen('checkboxChanged')
+  savePaymentMethodChanged(event: CustomEvent<boolean>) {
+    this.savePaymentMethod = event.detail;
+  }
+
+  @Listen('checkout-complete-event')
+  checkoutComplete(event: CustomEvent<any>) {
+    this.isSubmitting = false;
+    this.submitEvent.emit({
+      response: event.detail,
+    });
+  }
+
+  @Listen('error-event')
+  checkoutError(event: CustomEvent<any>) {
+    this.isSubmitting = false;
+    console.error('checkout error', event.detail);
+  }
+
   private async submit(_event) {
-    // calls the submitCheckout method on the checkout wrapper
+    this.isSubmitting = true;
     this.modularCheckoutRef.submitCheckout();
   }
 
@@ -172,6 +192,14 @@ export class Checkout {
 
   private get showBillingFormSection() {
     return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
+  }
+
+  private get canSavePaymentMethod() {
+    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
+  }
+
+  private get showPaymentTypeHeader() {
+    return !this.disableCreditCard && !this.disableBankAccount;
   }
 
   @Method()
@@ -201,19 +229,18 @@ export class Checkout {
   }
 
   render() {
-    const showPaymentTypeHeader = !this.disableCreditCard && !this.disableBankAccount;
-
     return (
       <StyledHost>
         <justifi-modular-checkout
           ref={(el) => (this.modularCheckoutRef = el)}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
+          savePaymentMethod={this.canSavePaymentMethod && this.savePaymentMethod}
         >
           <div class="row gy-3 jfi-checkout-core">
-            <div class="col-12 mb-4" part={checkoutSummary}>
+            <div class="col-12" part={checkoutSummary}>
               <justifi-header text="Summary" level="h2" class="fs-5 fw-bold pb-3" />
-              <section class="mb-4">
+              <section>
                 {this.isLoading && (
                   <justifi-skeleton height="24px" />
                 )}
@@ -225,7 +252,7 @@ export class Checkout {
             </div>
             <div class="col-12 mt-4">
               <justifi-header text="Payment" level="h2" class="fs-5 fw-bold pb-3" />
-              {showPaymentTypeHeader && (
+              {this.showPaymentTypeHeader && (
                 <justifi-header text="Select payment type" level="h3" class="fs-6 fw-bold lh-lg" />
               )}
               <div class="d-flex flex-column">
@@ -281,21 +308,21 @@ export class Checkout {
                 )}
               </div>
             )}
-            <div class="col-12 mt-4">
-              <justifi-checkbox-button text="Save payment method" />
-            </div>
             <div class="col-12">
-              <div class="d-flex justify-content-end">
-                <justifi-button
-                  text="Pay"
-                  type="submit"
-                  variant="primary"
-                  clickHandler={(e) => this.submit(e)}
-                  disabled={this.isLoading}
-                  isLoading={this.isLoading}
-                  customStyle={{ width: '100%', textAlign: "center" }}
-                />
-              </div>
+              {this.canSavePaymentMethod && (
+                <justifi-save-new-payment-method />
+              )}
+            </div>
+            <div class="mt-4">
+              <justifi-button
+                text="Pay"
+                type="submit"
+                variant="primary"
+                clickHandler={(e) => this.submit(e)}
+                disabled={this.isLoading || this.isSubmitting}
+                isLoading={this.isLoading || this.isSubmitting}
+                customStyle={{ width: '100%', textAlign: "center" }}
+              />
             </div>
           </div>
         </justifi-modular-checkout>

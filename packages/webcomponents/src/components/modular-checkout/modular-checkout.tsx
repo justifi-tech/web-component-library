@@ -22,7 +22,6 @@ export class CheckoutWrapper {
   private completeCheckout: Function;
 
   @Prop() authToken: string;
-  @Prop() accountId: string;
   @Prop() checkoutId: string;
   @Prop() savePaymentMethod?: boolean = false;
 
@@ -57,7 +56,6 @@ export class CheckoutWrapper {
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
-    checkoutStore.accountId = this.accountId;
     this.fetchCheckout();
   }
 
@@ -73,6 +71,7 @@ export class CheckoutWrapper {
     if (this.getCheckout) {
       this.getCheckout({
         onSuccess: ({ checkout }) => {
+          checkoutStore.accountId = checkout.account_id;
           checkoutStore.paymentMethods = checkout.payment_methods;
           checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
           checkoutStore.paymentDescription = checkout.payment_description;
@@ -108,7 +107,7 @@ export class CheckoutWrapper {
     const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
 
     const paymentMethodMetadata = {
-      accountId: this.accountId,
+      accountId: checkoutStore.accountId,
       payment_method_group_id: undefined,
       ...combinedBillingInfo
     };
@@ -120,7 +119,7 @@ export class CheckoutWrapper {
     return this.paymentMethodFormRef.tokenize({
       clientId: this.authToken,
       paymentMethodMetadata,
-      account: this.accountId,
+      account: checkoutStore.accountId,
     });
   }
 
