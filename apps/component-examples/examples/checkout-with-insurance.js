@@ -123,7 +123,10 @@ app.get('/', async (req, res) => {
       </head>
       <body>
         <div id="component-wrapper" class="container" style="max-width: 800px; margin: auto; padding: 20px;">
-          <justifi-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
+          <justifi-checkout
+            auth-token="${webComponentToken}"
+            checkout-id="${checkout.id}"
+          >
             <div slot="insurance">
               <justifi-season-interruption-insurance
                 primary-identity-first-name="${insurance.primary_identity.first_name}"

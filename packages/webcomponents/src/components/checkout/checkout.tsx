@@ -43,8 +43,8 @@ export class Checkout {
   @Prop() disableBankAccount?: boolean;
   @Prop() disableBnpl?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
-  @Prop() hideCardBillingForm?: boolean;
-  @Prop() hideBankAccountBillingForm?: boolean;
+  @Prop() hideCardBillingForm?: boolean = false;
+  @Prop() hideBankAccountBillingForm?: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -157,8 +157,21 @@ export class Checkout {
     return this.disableBankAccount || this.disableCreditCard;
   }
 
-  get isLoading() {
+  private get isLoading() {
     return this.renderState === 'loading';
+  }
+
+  private get showPostalCodeForm() {
+    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && this.hideCardBillingForm;
+  }
+
+  private get showBillingForm() {
+    return (checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && !this.hideCardBillingForm)
+      || (checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && !this.hideBankAccountBillingForm);
+  }
+
+  private get showBillingFormSection() {
+    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
   }
 
   @Method()
@@ -233,6 +246,11 @@ export class Checkout {
                         radioButtonHidden={this.hiddenRadioInput}
                         label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
                       />
+                      {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
+                        <div class="mt-4 mb-4">
+                          <justifi-card-form />
+                        </div>
+                      )}
                       <payment-method-option
                         paymentMethodOptionId={PaymentMethodTypes.bankAccount}
                         isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
@@ -240,10 +258,31 @@ export class Checkout {
                         radioButtonHidden={this.hiddenRadioInput}
                         label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
                       />
+                      {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
+                        <div class="mt-4 mb-4">
+                          <justifi-bank-account-form />
+                        </div>
+                      )}
                     </div>
                   )}
                 </section>
               </div>
+            </div>
+            {this.showBillingFormSection && (
+              <div class="col-12 mt-4">
+                {this.showBillingForm && (
+                  <justifi-header text="Billing Address" level="h2" class="fs-5 fw-bold pb-3" />
+                )}
+                {this.showPostalCodeForm && (
+                  <justifi-postal-code-form />
+                )}
+                {this.showBillingForm && (
+                  <justifi-billing-information-form />
+                )}
+              </div>
+            )}
+            <div class="col-12 mt-4">
+              <justifi-checkbox-button text="Save payment method" />
             </div>
             <div class="col-12">
               <div class="d-flex justify-content-end">

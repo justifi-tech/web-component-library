@@ -22,6 +22,9 @@ exports[`justifi-checkout renders loading 1`] = `
           </section>
         </div>
       </div>
+      <div class="col-12 mt-4">
+        <justifi-checkbox-button text="Save payment method"></justifi-checkbox-button>
+      </div>
       <div class="col-12">
         <div class="d-flex justify-content-end">
           <justifi-button disabled="" isloading="" text="Pay" type="submit" variant="primary"></justifi-button>
