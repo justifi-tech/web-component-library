@@ -23,33 +23,28 @@ const PaymentMethodTypeLabels = {
   tag: 'justifi-checkout',
 })
 export class Checkout {
-  modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
-
   analytics: JustifiAnalytics;
+  modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
+  selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
   @State() checkout: ICheckout;
   @State() complete: Function;
   @State() errorMessage: string = '';
   @State() insuranceToggled: boolean = false;
-  @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
-  @State() serverError: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
+  @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() savePaymentMethod: boolean = false;
+  @State() serverError: string;
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
-  @Prop() disableCreditCard?: boolean;
   @Prop() disableBankAccount?: boolean;
   @Prop() disableBnpl?: boolean;
+  @Prop() disableCreditCard?: boolean;
   @Prop() disablePaymentMethodGroup?: boolean;
-  @Prop() hideCardBillingForm?: boolean = false;
   @Prop() hideBankAccountBillingForm?: boolean = false;
-
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
-  @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
+  @Prop() hideCardBillingForm?: boolean = false;
 
   @Watch('authToken')
   @Watch('checkoutId')
@@ -58,6 +53,10 @@ export class Checkout {
     checkoutStore.checkoutId = this.checkoutId;
     this.fetchData();
   }
+
+  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   connectedCallback() {
     if (this.authToken && this.checkoutId) {
@@ -85,7 +84,57 @@ export class Checkout {
 
   disconnectedCallback() {
     this.analytics?.cleanup();
-  };
+  }
+
+  @Listen('checkboxChanged')
+  savePaymentMethodChanged(event: CustomEvent<boolean>) {
+    this.savePaymentMethod = event.detail;
+  }
+
+  @Listen('checkout-complete-event')
+  checkoutComplete(event: CustomEvent<any>) {
+    this.isSubmitting = false;
+    this.submitEvent.emit({
+      response: event.detail,
+    });
+  }
+
+  @Listen('error-event')
+  checkoutError(event: CustomEvent<any>) {
+    this.isSubmitting = false;
+    console.error('checkout error', event.detail);
+  }
+
+  @Listen('paymentMethodOptionSelected')
+  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
+    checkoutStore.selectedPaymentMethod = event.detail.id;
+  }
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    if (newPaymentMethodElement?.fillBillingForm) {
+      newPaymentMethodElement.fillBillingForm(fields);
+    }
+  }
+
+  @Method()
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
+  }
+
+  @Method()
+  async validate(): Promise<{ isValid: boolean }> {
+    const insuranceValidation = validateInsuranceValues();
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    const paymentMethodValidation = newPaymentMethodElement ? await newPaymentMethodElement.validate() : { isValid: true };
+
+    if (!insuranceValidation.isValid || !paymentMethodValidation.isValid) {
+      return { isValid: false };
+    } else {
+      return { isValid: true };
+    }
+  }
 
   private fetchData = (): void => {
     this.renderState = 'loading';
@@ -117,60 +166,70 @@ export class Checkout {
     });
   };
 
-  paymentMethodsChanged() {
-    if (!this.checkout?.payment_methods) return;
+  private getNewPaymentMethodOptions(): PaymentMethodOption[] {
+    const options: PaymentMethodOption[] = [];
 
-    this.paymentMethodOptions = this.checkout.payment_methods
-      .map((paymentMethod) => new PaymentMethodOption(paymentMethod))
-      .filter((paymentMethod) => {
-        // Don't save card or bank account if they are disabled
-        return (
-          (!this.disableCreditCard || paymentMethod.type !== PaymentMethodTypes.card) &&
-          (!this.disableBankAccount || paymentMethod.type !== PaymentMethodTypes.bankAccount)
-        );
-      });
-
-    if (!this.disableBnpl && this.checkout?.bnpl?.provider === 'sezzle' && !this.insuranceToggled) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
+    if (this.shouldShowSezzle()) {
+      options.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
     }
     if (!this.disableCreditCard) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
+      options.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
     }
     if (!this.disableBankAccount) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
+      options.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
     }
+
+    return options;
+  }
+
+  private getSavedPaymentMethods(): PaymentMethodOption[] {
+    return this.checkout.payment_methods
+      .map((paymentMethod) => new PaymentMethodOption(paymentMethod))
+      .filter((paymentMethod) => this.isPaymentMethodAllowed(paymentMethod.type));
+  }
+
+  private isPaymentMethodAllowed(type: string): boolean {
+    if (type === PaymentMethodTypes.card && this.disableCreditCard) {
+      return false;
+    }
+
+    if (type === PaymentMethodTypes.bankAccount && this.disableBankAccount) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private paymentMethodsChanged() {
+    if (!this.checkout?.payment_methods) return;
+
+    this.paymentMethodOptions = [
+      ...this.getSavedPaymentMethods(),
+      ...this.getNewPaymentMethodOptions()
+    ];
+
+    this.setDefaultPaymentMethod();
+  }
+
+  private setDefaultPaymentMethod(): void {
     if (!checkoutStore.selectedPaymentMethod) {
       checkoutStore.selectedPaymentMethod = this.paymentMethodOptions[0]?.id;
     }
   }
 
-  @Listen('paymentMethodOptionSelected')
-  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
-    checkoutStore.selectedPaymentMethod = event.detail.id;
-  }
-
-  @Listen('checkboxChanged')
-  savePaymentMethodChanged(event: CustomEvent<boolean>) {
-    this.savePaymentMethod = event.detail;
-  }
-
-  @Listen('checkout-complete-event')
-  checkoutComplete(event: CustomEvent<any>) {
-    this.isSubmitting = false;
-    this.submitEvent.emit({
-      response: event.detail,
-    });
-  }
-
-  @Listen('error-event')
-  checkoutError(event: CustomEvent<any>) {
-    this.isSubmitting = false;
-    console.error('checkout error', event.detail);
+  private shouldShowSezzle(): boolean {
+    return !this.disableBnpl &&
+      this.checkout?.bnpl?.provider === 'sezzle' &&
+      !this.insuranceToggled;
   }
 
   private async submit(_event) {
     this.isSubmitting = true;
     this.modularCheckoutRef.submitCheckout();
+  }
+
+  private get canSavePaymentMethod() {
+    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
   }
 
   private get hiddenRadioInput() {
@@ -179,10 +238,6 @@ export class Checkout {
 
   private get isLoading() {
     return this.renderState === 'loading';
-  }
-
-  private get showPostalCodeForm() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && this.hideCardBillingForm;
   }
 
   private get showBillingForm() {
@@ -194,38 +249,12 @@ export class Checkout {
     return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
   }
 
-  private get canSavePaymentMethod() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
-  }
-
   private get showPaymentTypeHeader() {
     return !this.disableCreditCard && !this.disableBankAccount;
   }
 
-  @Method()
-  async fillBillingForm(fields: BillingFormFields) {
-    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    if (newPaymentMethodElement?.fillBillingForm) {
-      newPaymentMethodElement.fillBillingForm(fields);
-    }
-  }
-
-  @Method()
-  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
-  }
-
-  @Method()
-  async validate(): Promise<{ isValid: boolean }> {
-    const insuranceValidation = validateInsuranceValues();
-    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    const paymentMethodValidation = newPaymentMethodElement ? await newPaymentMethodElement.validate() : { isValid: true };
-
-    if (!insuranceValidation.isValid || !paymentMethodValidation.isValid) {
-      return { isValid: false };
-    } else {
-      return { isValid: true };
-    }
+  private get showPostalCodeForm() {
+    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && this.hideCardBillingForm;
   }
 
   render() {
