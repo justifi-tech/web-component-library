@@ -39,10 +39,10 @@ export class Checkout {
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
-  @Prop() disableBankAccount?: boolean;
-  @Prop() disableBnpl?: boolean;
-  @Prop() disableCreditCard?: boolean;
-  @Prop() disablePaymentMethodGroup?: boolean;
+  @Prop() disableBankAccount?: boolean = false;
+  @Prop() disableBnpl?: boolean = false;
+  @Prop() disableCreditCard?: boolean = false;
+  @Prop() disablePaymentMethodGroup?: boolean = false;
   @Prop() hideBankAccountBillingForm?: boolean = false;
   @Prop() hideCardBillingForm?: boolean = false;
 
@@ -63,7 +63,6 @@ export class Checkout {
       checkoutStore.checkoutId = this.checkoutId;
       checkoutStore.authToken = this.authToken;
     }
-    this.paymentMethodsChanged();
   }
 
   componentWillLoad() {
@@ -152,7 +151,6 @@ export class Checkout {
         const { status } = this.checkout;
         this.loadedEvent.emit({ checkout_status: status });
         this.renderState = 'success';
-        this.paymentMethodsChanged();
       },
       onError: ({ error, code, severity }) => {
         this.serverError = error;
@@ -166,63 +164,6 @@ export class Checkout {
     });
   };
 
-  private getNewPaymentMethodOptions(): PaymentMethodOption[] {
-    const options: PaymentMethodOption[] = [];
-
-    if (this.shouldShowSezzle()) {
-      options.push(new PaymentMethodOption({ id: PaymentMethodTypes.sezzle }));
-    }
-    if (!this.disableCreditCard) {
-      options.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
-    }
-    if (!this.disableBankAccount) {
-      options.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
-    }
-
-    return options;
-  }
-
-  private getSavedPaymentMethods(): PaymentMethodOption[] {
-    return this.checkout.payment_methods
-      .map((paymentMethod) => new PaymentMethodOption(paymentMethod))
-      .filter((paymentMethod) => this.isPaymentMethodAllowed(paymentMethod.type));
-  }
-
-  private isPaymentMethodAllowed(type: string): boolean {
-    if (type === PaymentMethodTypes.card && this.disableCreditCard) {
-      return false;
-    }
-
-    if (type === PaymentMethodTypes.bankAccount && this.disableBankAccount) {
-      return false;
-    }
-
-    return true;
-  }
-
-  private paymentMethodsChanged() {
-    if (!this.checkout?.payment_methods) return;
-
-    this.paymentMethodOptions = [
-      ...this.getSavedPaymentMethods(),
-      ...this.getNewPaymentMethodOptions()
-    ];
-
-    this.setDefaultPaymentMethod();
-  }
-
-  private setDefaultPaymentMethod(): void {
-    if (!checkoutStore.selectedPaymentMethod) {
-      checkoutStore.selectedPaymentMethod = this.paymentMethodOptions[0]?.id;
-    }
-  }
-
-  private shouldShowSezzle(): boolean {
-    return !this.disableBnpl &&
-      this.checkout?.bnpl?.provider === 'sezzle' &&
-      !this.insuranceToggled;
-  }
-
   private async submit(_event) {
     this.isSubmitting = true;
     this.modularCheckoutRef.submitCheckout();
@@ -230,10 +171,6 @@ export class Checkout {
 
   private get canSavePaymentMethod() {
     return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
-  }
-
-  private get hiddenRadioInput() {
-    return this.disableBankAccount || this.disableCreditCard;
   }
 
   private get isLoading() {
@@ -295,28 +232,36 @@ export class Checkout {
                     <div>
                       <justifi-saved-payment-methods />
                       <justifi-sezzle-payment-method />
-                      <payment-method-option
-                        paymentMethodOptionId={PaymentMethodTypes.card}
-                        isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
-                        clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
-                        radioButtonHidden={this.hiddenRadioInput}
-                        label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
-                      />
-                      {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
-                        <div class="mt-4 mb-4">
-                          <justifi-card-form />
+                      {!this.disableCreditCard && (
+                        <div>
+                          <payment-method-option
+                            paymentMethodOptionId={PaymentMethodTypes.card}
+                            isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
+                            clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
+                            radioButtonHidden={this.disableCreditCard}
+                            label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
+                          />
+                          {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
+                            <div class="mt-4 mb-4">
+                              <justifi-card-form />
+                            </div>
+                          )}
                         </div>
                       )}
-                      <payment-method-option
-                        paymentMethodOptionId={PaymentMethodTypes.bankAccount}
-                        isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
-                        clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
-                        radioButtonHidden={this.hiddenRadioInput}
-                        label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
-                      />
-                      {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
-                        <div class="mt-4 mb-4">
-                          <justifi-bank-account-form />
+                      {!this.disableBankAccount && (
+                        <div>
+                          <payment-method-option
+                            paymentMethodOptionId={PaymentMethodTypes.bankAccount}
+                            isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
+                            clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
+                            radioButtonHidden={this.disableBankAccount}
+                            label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
+                          />
+                          {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
+                            <div class="mt-4 mb-4">
+                              <justifi-bank-account-form />
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
