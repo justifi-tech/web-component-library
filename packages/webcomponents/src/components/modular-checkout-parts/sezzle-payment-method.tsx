@@ -86,7 +86,7 @@ export class SezzlePaymentMethod {
   };
 
   render() {
-    if (!checkoutStore.bnplEnabled) {
+    if (!checkoutStore.bnplEnabled || checkoutStore.disableBnpl) {
       console.warn('justifi-sezzle-payment-method: BNPL is not enabled for this account.');
       return null;
     }

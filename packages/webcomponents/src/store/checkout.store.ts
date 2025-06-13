@@ -18,6 +18,7 @@ interface IInitialState {
   bnplProviderCheckoutUrl: string;
   disableCreditCard: boolean;
   disableBankAccount: boolean;
+  disableBnpl: boolean;
 }
 
 const initialState: IInitialState = {
@@ -37,6 +38,7 @@ const initialState: IInitialState = {
   bnplProviderCheckoutUrl: '',
   disableCreditCard: false,
   disableBankAccount: false,
+  disableBnpl: false,
 };
 
 const { state, onChange } = createStore(initialState);

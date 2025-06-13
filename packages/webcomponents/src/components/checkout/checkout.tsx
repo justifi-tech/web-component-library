@@ -50,11 +50,13 @@ export class Checkout {
   @Watch('checkoutId')
   @Watch('disableCreditCard')
   @Watch('disableBankAccount')
+  @Watch('disableBnpl')
   propChanged() {
     checkoutStore.authToken = this.authToken;
     checkoutStore.checkoutId = this.checkoutId;
     checkoutStore.disableCreditCard = this.disableCreditCard;
     checkoutStore.disableBankAccount = this.disableBankAccount;
+    checkoutStore.disableBnpl = this.disableBnpl;
     this.fetchData();
   }
 
@@ -68,6 +70,7 @@ export class Checkout {
       checkoutStore.authToken = this.authToken;
       checkoutStore.disableCreditCard = this.disableCreditCard;
       checkoutStore.disableBankAccount = this.disableBankAccount;
+      checkoutStore.disableBnpl = this.disableBnpl;
     }
   }
 
