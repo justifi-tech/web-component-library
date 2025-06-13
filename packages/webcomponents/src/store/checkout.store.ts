@@ -19,6 +19,7 @@ interface IInitialState {
   disableCreditCard: boolean;
   disableBankAccount: boolean;
   disableBnpl: boolean;
+  disablePaymentMethodGroup: boolean;
 }
 
 const initialState: IInitialState = {
@@ -39,6 +40,7 @@ const initialState: IInitialState = {
   disableCreditCard: false,
   disableBankAccount: false,
   disableBnpl: false,
+  disablePaymentMethodGroup: false,
 };
 
 const { state, onChange } = createStore(initialState);

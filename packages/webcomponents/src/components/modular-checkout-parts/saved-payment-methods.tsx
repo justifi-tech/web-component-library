@@ -14,6 +14,10 @@ export class SavedPaymentMethods {
     if (!checkoutStore.paymentMethods.length) {
       console.warn('No saved payment methods available.');
     }
+
+    if (checkoutStore.disablePaymentMethodGroup) {
+      console.warn('Payment method group is disabled.');
+    }
   }
 
   onPaymentMethodOptionClick = (paymentMethodId: string) => (e: Event) => {
@@ -30,6 +34,10 @@ export class SavedPaymentMethods {
   };
 
   render() {
+    if (checkoutStore.disablePaymentMethodGroup) {
+      return null;
+    }
+
     return (
       <StyledHost>
         <div class="saved-payment-methods">

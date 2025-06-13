@@ -51,12 +51,14 @@ export class Checkout {
   @Watch('disableCreditCard')
   @Watch('disableBankAccount')
   @Watch('disableBnpl')
+  @Watch('disablePaymentMethodGroup')
   propChanged() {
     checkoutStore.authToken = this.authToken;
     checkoutStore.checkoutId = this.checkoutId;
     checkoutStore.disableCreditCard = this.disableCreditCard;
     checkoutStore.disableBankAccount = this.disableBankAccount;
     checkoutStore.disableBnpl = this.disableBnpl;
+    checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
     this.fetchData();
   }
 
@@ -71,6 +73,7 @@ export class Checkout {
       checkoutStore.disableCreditCard = this.disableCreditCard;
       checkoutStore.disableBankAccount = this.disableBankAccount;
       checkoutStore.disableBnpl = this.disableBnpl;
+      checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
     }
   }
 
