@@ -3,7 +3,7 @@ import { StyledHost } from "../../ui-components";
 import checkoutStore from "../../store/checkout.store";
 import { radioListItem } from "../../styles/parts";
 import { CardBrandLabels } from "../checkout/payment-method-option-utils";
-import { ICheckoutPaymentMethod, PaymentMethodTypes } from "../../api";
+import { ICheckoutPaymentMethod } from "../../api";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -25,13 +25,17 @@ export class SavedPaymentMethods {
     checkoutStore.selectedPaymentMethod = paymentMethodId;
   };
 
-  isCardAllowed = (paymentMethod: ICheckoutPaymentMethod) => {
-    return paymentMethod.type === PaymentMethodTypes.card && !checkoutStore.disableCreditCard;
-  };
+  isAllowedPaymentMethod = (paymentMethod: ICheckoutPaymentMethod) => {
+    if (paymentMethod.type === 'card' && checkoutStore.disableCreditCard) {
+      return false;
+    }
 
-  isBankAccountAllowed = (paymentMethod: ICheckoutPaymentMethod) => {
-    return paymentMethod.type === PaymentMethodTypes.bankAccount && !checkoutStore.disableBankAccount;
-  };
+    if (paymentMethod.type === 'bank_account' && checkoutStore.disableBankAccount) {
+      return false;
+    }
+
+    return true;
+  }
 
   render() {
     if (checkoutStore.disablePaymentMethodGroup) {
@@ -42,8 +46,7 @@ export class SavedPaymentMethods {
       <StyledHost>
         <div class="saved-payment-methods">
           {checkoutStore.paymentMethods.length ? checkoutStore.paymentMethods
-            .filter(this.isCardAllowed)
-            .filter(this.isBankAccountAllowed)
+            .filter(this.isAllowedPaymentMethod)
             .map((paymentMethod) => (
               <div
                 class="radio-list-item p-3"
