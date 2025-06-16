@@ -132,8 +132,8 @@ export class Checkout {
   }
 
   @Method()
-  async validate(): Promise<boolean> {
-    return await this.modularCheckoutRef?.validate();
+  async validate(): Promise<{ isValid: boolean }> {
+    return { isValid: await this.modularCheckoutRef?.validate() };
   }
 
   private fetchData = (): void => {
