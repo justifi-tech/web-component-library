@@ -143,11 +143,23 @@ app.get('/', async (req, res) => {
               </justifi-season-interruption-insurance>
             </div>
           </justifi-checkout>
+          <button id="fill-billing-form">Fill Billing Form</button>
           <div id="output-pane" style="padding: 20px"><em>Checkout output will appear here...</em></div>
         </div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
+        const fillBillingFormButton = document.getElementById('fill-billing-form');
+
+        fillBillingFormButton.addEventListener('click', () => {
+          justifiCheckout.fillBillingForm({
+            name: 'John Doe',
+            address_line1: '123 Main St',
+            address_city: 'Anytown',
+            address_state: 'CA',
+            address_postal_code: '12345',
+          });
+        });
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';

@@ -6,7 +6,7 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
-import checkoutStore from '../../store/checkout.store';
+import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
@@ -123,10 +123,7 @@ export class Checkout {
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    if (newPaymentMethodElement?.fillBillingForm) {
-      newPaymentMethodElement.fillBillingForm(fields);
-    }
+    checkoutStore.billingFormFields = fields;
   }
 
   @Method()
@@ -178,7 +175,7 @@ export class Checkout {
 
   private async submit(_event) {
     this.isSubmitting = true;
-    this.modularCheckoutRef.submitCheckout();
+    this.modularCheckoutRef.submitCheckout(checkoutStore.billingFormFields);
   }
 
   private get canSavePaymentMethod() {

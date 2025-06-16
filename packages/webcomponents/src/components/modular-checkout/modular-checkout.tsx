@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
-import checkoutStore from "../../store/checkout.store";
+import { checkoutStore } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "../../api";
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
-import { IBillingInfo } from "../../api/BillingInformation";
+import { BillingFormFields } from "../../components";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -101,7 +101,7 @@ export class CheckoutWrapper {
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
   }
 
-  private async tokenizePaymentMethod(tokenizeArgs: IBillingInfo): Promise<any> {
+  private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
     const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
 
     const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
@@ -123,7 +123,7 @@ export class CheckoutWrapper {
     });
   }
 
-  private async getPaymentMethod(submitCheckoutArgs: IBillingInfo): Promise<string | undefined> {
+  private async getPaymentMethod(submitCheckoutArgs: BillingFormFields): Promise<string | undefined> {
     if (!this.paymentMethodFormRef) {
       return checkoutStore.selectedPaymentMethod;
     }
@@ -159,7 +159,7 @@ export class CheckoutWrapper {
   }
 
   @Method()
-  async submitCheckout(submitCheckoutArgs?: IBillingInfo): Promise<void> {
+  async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
     const isValid = await this.validate();
     if (!isValid) {
       this.errorEvent.emit({
