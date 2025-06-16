@@ -218,8 +218,6 @@ export class Checkout {
               )}
               <div class="d-flex flex-column">
                 <section>
-                  {/* For now, just return nothing to avoid breaking, but we can decide to show an error message here */}
-                  {/* <div style={{ color: 'red' }}>Error: {this.serverError}</div>; */}
                   {this.isLoading && (
                     <justifi-skeleton height="300px" />
                   )}
