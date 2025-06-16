@@ -8,7 +8,7 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
-import { insuranceValues, insuranceValuesOn, validateInsuranceValues } from '../insurance/insurance-state';
+import { insuranceValues, insuranceValuesOn } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { PaymentMethodPayload } from './payment-method-payload';
@@ -132,16 +132,8 @@ export class Checkout {
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }> {
-    const insuranceValidation = validateInsuranceValues();
-    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    const paymentMethodValidation = newPaymentMethodElement ? await newPaymentMethodElement.validate() : { isValid: true };
-
-    if (!insuranceValidation.isValid || !paymentMethodValidation.isValid) {
-      return { isValid: false };
-    } else {
-      return { isValid: true };
-    }
+  async validate(): Promise<boolean> {
+    return await this.modularCheckoutRef?.validate();
   }
 
   private fetchData = (): void => {

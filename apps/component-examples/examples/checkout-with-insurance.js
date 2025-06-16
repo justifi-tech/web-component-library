@@ -120,6 +120,11 @@ app.get('/', async (req, res) => {
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
+        <style>
+          body {
+            font-family: sans-serif;
+          }
+        </style>
       </head>
       <body>
         <div id="component-wrapper" class="container" style="max-width: 800px; margin: auto; padding: 20px;">
@@ -143,13 +148,17 @@ app.get('/', async (req, res) => {
               </justifi-season-interruption-insurance>
             </div>
           </justifi-checkout>
-          <button id="fill-billing-form">Fill Billing Form</button>
+          <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-secondary" id="fill-billing-form">Fill Billing Form</button>
+            <button class="btn btn-secondary" id="validate-button">Validate</button>
+          </div>
           <div id="output-pane" style="padding: 20px"><em>Checkout output will appear here...</em></div>
         </div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
         const fillBillingFormButton = document.getElementById('fill-billing-form');
+        const validateButton = document.getElementById('validate-button');
 
         fillBillingFormButton.addEventListener('click', () => {
           justifiCheckout.fillBillingForm({
@@ -159,6 +168,11 @@ app.get('/', async (req, res) => {
             address_state: 'CA',
             address_postal_code: '12345',
           });
+        });
+
+        validateButton.addEventListener('click', async () => {
+          const isValid = await justifiCheckout.validate();
+          console.log('isValid', isValid);
         });
 
         function writeOutputToPage(event) {
