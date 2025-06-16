@@ -11,7 +11,6 @@ import { checkoutSummary } from '../../styles/parts';
 import { insuranceValues, insuranceValuesOn } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
-import { PaymentMethodPayload } from './payment-method-payload';
 import { StyledHost } from '../../ui-components';
 
 const PaymentMethodTypeLabels = {
@@ -124,11 +123,6 @@ export class Checkout {
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;
-  }
-
-  @Method()
-  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    return await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod(insuranceValidation);
   }
 
   @Method()
