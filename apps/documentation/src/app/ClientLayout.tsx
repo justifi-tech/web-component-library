@@ -83,7 +83,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <Navbar bg="dark" variant="dark" expand="lg" className="border-bottom border-secondary navbar">
         <Container fluid>
           <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
-            <Image src="/next.svg" alt="JustiFi Logo" width={32} height={32} />
+            <Image src="/justifi-logo-light.png" alt="JustiFi Logo" width={74.5} height={32} />
             <span>JustiFi Web Components</span>
           </Navbar.Brand>
           <div className="ms-auto d-flex align-items-center">
