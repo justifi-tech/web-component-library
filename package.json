@@ -3,7 +3,7 @@
   "name": "web-component-library",
   "scripts": {
     "build": "turbo run build",
-    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev'",
+    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/documentation dev'",
     "dev:checkout": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout'",
     "dev:checkout-with-insurance": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:checkout-with-insurance'",
     "dev:dispute": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:dispute'",
@@ -36,7 +36,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=@repo/docs^... && changeset publish"
+    "release": "turbo run build --filter=@repo/documentation^... && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

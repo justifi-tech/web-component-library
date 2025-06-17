@@ -4,7 +4,8 @@
     "build": {
       "outputs": [
         "dist/**",
-        "storybook-static/**"
+        "storybook-static/**",
+        ".next/**"
       ],
       "dependsOn": [
         "^build"
