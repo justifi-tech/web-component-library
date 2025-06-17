@@ -7,6 +7,7 @@ interface IInitialState {
   paymentMethods: ICheckoutPaymentMethod[];
   paymentMethodGroupId: string;
   paymentDescription: string;
+  paymentCurrency: string;
   totalAmount: number;
   paymentAmount: number;
   selectedPaymentMethod: string;
@@ -24,6 +25,7 @@ const initialState: IInitialState = {
   paymentMethods: [],
   paymentMethodGroupId: '',
   paymentDescription: '',
+  paymentCurrency: 'USD',
   totalAmount: 0,
   paymentAmount: 0,
   selectedPaymentMethod: '',
