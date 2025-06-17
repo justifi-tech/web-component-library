@@ -6,6 +6,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from "../../api";
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
 import { IBillingInfo } from "../../api/BillingInformation";
+import { IApplePayToken } from "../../api/ApplePay";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -18,8 +19,10 @@ export class CheckoutWrapper {
   private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
+  private applePayRef?: HTMLJustifiApplePayElement;
   private getCheckout: Function;
   private completeCheckout: Function;
+  private applePayToken?: IApplePayToken;
 
   @Prop() authToken: string;
   @Prop() accountId: string;
@@ -34,6 +37,7 @@ export class CheckoutWrapper {
   connectedCallback() {
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
+      this.setupApplePayListeners(); // set up again listeners when DOM changes
     });
 
     this.observer.observe(this.hostEl, {
@@ -63,10 +67,12 @@ export class CheckoutWrapper {
 
   componentDidLoad() {
     this.queryFormRefs();
+    this.setupApplePayListeners();
   }
 
   disconnectedCallback() {
     this.observer?.disconnect();
+    this.removeApplePayListeners();
   }
 
   private fetchCheckout() {
@@ -78,6 +84,7 @@ export class CheckoutWrapper {
           checkoutStore.paymentDescription = checkout.payment_description;
           checkoutStore.totalAmount = checkout.total_amount;
           checkoutStore.paymentAmount = checkout.payment_amount;
+          checkoutStore.paymentCurrency = checkout.currency || 'USD';
           checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
           checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
           checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
@@ -100,6 +107,89 @@ export class CheckoutWrapper {
     this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
+    this.applePayRef = this.hostEl.querySelector('justifi-apple-pay');
+  }
+
+  private setupApplePayListeners() {
+    if (this.applePayRef) {
+      this.applePayRef.addEventListener('applePayCompleted', this.handleApplePayCompleted);
+      this.applePayRef.addEventListener('applePayError', this.handleApplePayError);
+      this.applePayRef.addEventListener('applePayCancelled', this.handleApplePayCancelled);
+    }
+  }
+
+  private removeApplePayListeners() {
+    if (this.applePayRef) {
+      this.applePayRef.removeEventListener('applePayCompleted', this.handleApplePayCompleted);
+      this.applePayRef.removeEventListener('applePayError', this.handleApplePayError);
+      this.applePayRef.removeEventListener('applePayCancelled', this.handleApplePayCancelled);
+    }
+  }
+
+  private handleApplePayCompleted = (event: CustomEvent) => {
+    const { success, token, error } = event.detail;
+    
+    if (success && token) {
+      this.applePayToken = token;
+      // Complete the checkout with Apple Pay token
+      this.submitCheckoutWithApplePay();
+    } else {
+      console.error('Apple Pay completed but failed:', error);
+      this.errorEvent.emit({
+        message: error?.message || 'Apple Pay payment failed',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  };
+
+  private handleApplePayError = (event: CustomEvent) => {
+    const { error } = event.detail;
+    console.error('Apple Pay error:', error);
+    this.errorEvent.emit({
+      message: error || 'Apple Pay error occurred',
+      errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+      severity: ComponentErrorSeverity.ERROR,
+    });
+  };
+
+  private handleApplePayCancelled = () => {
+    console.log('Apple Pay cancelled by user');
+    // Reset the token if cancelled
+    this.applePayToken = undefined;
+  };
+
+  private async submitCheckoutWithApplePay(): Promise<void> {
+    if (!this.applePayToken) {
+      this.errorEvent.emit({
+        message: 'No Apple Pay token available',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
+    const payment = {
+      payment_mode: 'apple_pay',
+      payment_token: this.applePayToken,
+    };
+
+    this.completeCheckout({
+      payment,
+      onSuccess: ({ checkout }) => {
+        this.checkoutComplete.emit({
+          checkout,
+          message: 'Apple Pay checkout completed successfully',
+        });
+      },
+      onError: (error) => {
+        this.errorEvent.emit({
+          message: error.message,
+          errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      },
+    });
   }
 
   private async tokenizePaymentMethod(tokenizeArgs: IBillingInfo): Promise<any> {
@@ -125,6 +215,11 @@ export class CheckoutWrapper {
   }
 
   private async getPaymentMethod(submitCheckoutArgs: IBillingInfo): Promise<string | undefined> {
+    // If Apple Pay token is available, return a placeholder since we handle it differently
+    if (this.applePayToken) {
+      return 'apple_pay_token';
+    }
+
     if (!this.paymentMethodFormRef) {
       return checkoutStore.selectedPaymentMethod;
     }
@@ -145,6 +240,11 @@ export class CheckoutWrapper {
 
   @Method()
   async validate(): Promise<boolean> {
+    // If Apple Pay token is available, validation is already complete
+    if (this.applePayToken) {
+      return true;
+    }
+
     const promises = [
       this.paymentMethodFormRef?.validate(),
       this.billingInformationFormRef?.validate()
@@ -161,6 +261,12 @@ export class CheckoutWrapper {
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: IBillingInfo): Promise<void> {
+    // If Apple Pay token is available, use Apple Pay flow
+    if (this.applePayToken) {
+      await this.submitCheckoutWithApplePay();
+      return;
+    }
+
     const isValid = await this.validate();
     if (!isValid) {
       this.errorEvent.emit({
