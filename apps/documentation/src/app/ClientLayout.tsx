@@ -1,10 +1,13 @@
 "use client";
+import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "next/image";
+import { Sun, Moon } from "react-bootstrap-icons";
+import { ThemeContext } from "./ThemeProvider";
 
 const navSections = [
   {
@@ -46,26 +49,57 @@ const navSections = [
   },
 ];
 
+function ThemeToggle() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  console.log("ThemeToggle context:", theme, setTheme);
+  return (
+    <button
+      aria-label="Toggle theme"
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      style={{
+        background: "none",
+        border: "none",
+        color: "var(--navbar-text)",
+        fontSize: 22,
+        cursor: "pointer",
+        marginLeft: 16,
+        lineHeight: 1,
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      {theme === "light" ? (
+        <Moon title="Switch to dark mode" />
+      ) : (
+        <Sun title="Switch to light mode" />
+      )}
+    </button>
+  );
+}
+
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Navbar bg="dark" variant="dark" expand="lg" className="border-bottom border-secondary">
+      <Navbar bg="dark" variant="dark" expand="lg" className="border-bottom border-secondary navbar">
         <Container fluid>
           <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
             <Image src="/next.svg" alt="JustiFi Logo" width={32} height={32} />
             <span>JustiFi Web Components</span>
           </Navbar.Brand>
+          <div className="ms-auto d-flex align-items-center">
+            <ThemeToggle />
+          </div>
         </Container>
       </Navbar>
       <Container fluid>
         <Row>
-          <Col xs={12} md={3} lg={2} className="bg-dark border-end border-secondary min-vh-100 p-0">
+          <Col xs={12} md={3} lg={2} className="sidebar border-end p-0">
             <Nav className="flex-column p-3" variant="pills">
               {navSections.map((section) => (
                 <div key={section.label} className="mb-4">
                   <div className="fw-bold text-uppercase small mb-2 text-secondary">{section.label}</div>
                   {section.links.map((link) => (
-                    <Nav.Link key={link.href} href={link.href} className="text-light ps-3 py-1">
+                    <Nav.Link key={link.href} href={link.href} className="ps-3 py-1">
                       {link.label}
                     </Nav.Link>
                   ))}

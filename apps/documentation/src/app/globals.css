@@ -1,29 +1,53 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --sidebar-bg: #fff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-text: #222;
+  --sidebar-link-active-bg: #f3f4f6;
+  --sidebar-link-hover-bg: #f9fafb;
+  --main-bg: #f7f8fa;
+  --main-text: #222;
+  --navbar-bg: #fff;
+  --navbar-border: #e5e7eb;
+  --navbar-text: #222;
+  --card-bg: #fff;
+  --card-border: #e5e7eb;
+  --button-bg: #0052cc;
+  --button-text: #fff;
+  --button-hover-bg: #003d99;
+  --border-radius: 8px;
+  --transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="dark"] {
+  --sidebar-bg: #181a1b;
+  --sidebar-border: #23272a;
+  --sidebar-text: #ededed;
+  --sidebar-link-active-bg: #23272a;
+  --sidebar-link-hover-bg: #23272a;
+  --main-bg: #23272a;
+  --main-text: #ededed;
+  --navbar-bg: #181a1b;
+  --navbar-border: #23272a;
+  --navbar-text: #ededed;
+  --card-bg: #23272a;
+  --card-border: #23272a;
+  --button-bg: #0052cc;
+  --button-text: #fff;
+  --button-hover-bg: #003d99;
 }
 
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
+  background: var(--main-bg);
+  color: var(--main-text);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: var(--transition);
 }
 
 * {
@@ -35,6 +59,54 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.navbar {
+  background: var(--navbar-bg) !important;
+  border-bottom: 1px solid var(--navbar-border) !important;
+  color: var(--navbar-text) !important;
+  transition: var(--transition);
+}
+
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  min-height: 100vh;
+  transition: var(--transition);
+}
+
+.sidebar .nav-link {
+  color: var(--sidebar-text) !important;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.sidebar .nav-link.active, .sidebar .nav-link:active {
+  background: var(--sidebar-link-active-bg) !important;
+}
+
+.sidebar .nav-link:hover {
+  background: var(--sidebar-link-hover-bg) !important;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  border-radius: var(--border-radius);
+  border: none;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  background: var(--button-hover-bg) !important;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -8,7 +8,7 @@ export default function Home() {
     <div>
       <h1 className="mb-3">JustiFi Web Components - Overview</h1>
       <p className="lead">
-        JustiFi Web Components is a React component library for payment facilitation and fintech experiences. Use these components to quickly build robust, compliant, and beautiful payment flows.
+        JustiFi Web Components is a component library for payment facilitation and fintech experiences. Use these components to quickly build robust, compliant, and beautiful payment flows.
       </p>
       <Card className="mb-4 bg-secondary bg-opacity-10 border-0">
         <Card.Body>
