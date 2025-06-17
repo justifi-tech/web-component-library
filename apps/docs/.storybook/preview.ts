@@ -10,7 +10,25 @@ export const parameters = {
   options: {
     storySort: {
       method: 'alphabetical',
-      order: ['Introduction', 'Changelog', 'Frameworks', '*'],
+      order: [
+        'Introduction',
+        'Changelog',
+        'Frameworks',
+        'Modular Checkout',
+        [
+          'Introduction',
+          'Modular Checkout',
+          'Checkout Summary',
+          'Season Interruption Insurance',
+          'Card Form',
+          'Bank Account Form',
+          'Saved Payment Methods',
+          'Sezzle Payment Method',
+          'Billing Information Form',
+          'Postal Code Form',
+        ],
+        '*',
+      ],
     },
   },
 };

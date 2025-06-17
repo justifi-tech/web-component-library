@@ -11,7 +11,7 @@ const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COM
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
-const paymentMethodId = process.env.PAYMENT_METHOD_ID;
+const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
 
 app.use(
   '/scripts',
@@ -80,7 +80,7 @@ async function makeCheckout(token) {
     body: JSON.stringify({
       amount: 1799,
       description: 'One Chocolate Donut',
-      payment_method_group_id: paymentMethodId,
+      payment_method_group_id: paymentMethodGroupId,
       origin_url: `localhost:${port}`,
     }),
   });
@@ -122,7 +122,7 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/example.css">
       </head>
       <body>
-        <div>
+        <div id="component-wrapper" class="container" style="max-width: 800px; margin: auto; padding: 20px;">
           <justifi-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
             <div slot="insurance">
               <justifi-season-interruption-insurance
@@ -140,8 +140,8 @@ app.get('/', async (req, res) => {
               </justifi-season-interruption-insurance>
             </div>
           </justifi-checkout>
+          <div id="output-pane" style="padding: 20px"><em>Checkout output will appear here...</em></div>
         </div>
-        <div id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
