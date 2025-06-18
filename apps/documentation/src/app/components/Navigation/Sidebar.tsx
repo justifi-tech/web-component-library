@@ -9,7 +9,9 @@ const navSections = [
   {
     label: "Getting Started",
     links: [
-      { label: "Overview", href: "/" },
+      { label: "Introduction", href: "/" },
+      { label: "Installation", href: "/installation" },
+      { label: "Styling", href: "/styling" },
     ],
   },
   {
@@ -33,16 +35,7 @@ const navSections = [
       { label: "Gross Payment Chart", href: "/components/gross-payment-chart" },
       { label: "Business Details", href: "/components/business-details" },
     ],
-  },
-  {
-    label: "Component API",
-    links: [
-      { label: "Checkout API", href: "/component-api/checkout" },
-      { label: "Tokenize Payment Method API", href: "/component-api/tokenize-payment-method" },
-      { label: "Business Form API", href: "/component-api/business-form" },
-      // ...add more as needed
-    ],
-  },
+  }
 ];
 
 export default function SidebarComponent() {
