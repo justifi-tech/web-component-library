@@ -56,8 +56,8 @@ Type: `Promise<any>`
 
  - [bank-account-form](../../components/checkout/bank-account-form)
  - [card-form](../../components/checkout/card-form)
- - [justifi-bank-account-form](../../components/modular-checkout-parts)
- - [justifi-card-form](../../components/modular-checkout-parts)
+ - [justifi-bank-account-form](../../components/modular-checkout/sub-components)
+ - [justifi-card-form](../../components/modular-checkout/sub-components)
 
 ### Graph
 ```mermaid

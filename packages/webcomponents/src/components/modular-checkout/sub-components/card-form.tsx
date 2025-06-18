@@ -1,9 +1,9 @@
 import { Component, h, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
-import { StyledHost } from "../../ui-components";
-import JustifiAnalytics from "../../api/Analytics";
-import { checkPkgVersion } from "../../utils/check-pkg-version";
-import { configState, waitForConfig } from "../config-provider/config-state";
+import { StyledHost } from "../../../ui-components";
+import JustifiAnalytics from "../../../api/Analytics";
+import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { configState, waitForConfig } from "../../config-provider/config-state";
 
 @Component({
   tag: "justifi-card-form",

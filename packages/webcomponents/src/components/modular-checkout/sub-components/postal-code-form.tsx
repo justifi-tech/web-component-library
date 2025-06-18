@@ -1,9 +1,9 @@
 import { Component, h, Method, State } from "@stencil/core";
-import { StyledHost } from "../../ui-components";
-import { numberOnlyHandler } from "../../ui-components/form/utils";
-import { FormController } from "../../ui-components/form/form";
+import { StyledHost } from "../../../ui-components";
+import { numberOnlyHandler } from "../../../ui-components/form/utils";
+import { FormController } from "../../../ui-components/form/form";
 import { BillingFormFields, billingFormSchema } from "./billing-form-schema";
-import { onChange } from "../../store/checkout.store";
+import { onChange } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-postal-code-form",
