@@ -76,11 +76,8 @@ export class Checkout {
   }
 
   @Listen('submit-event')
-  checkoutComplete(event: CustomEvent<any>) {
+  checkoutComplete(_event: CustomEvent<any>) {
     this.isSubmitting = false;
-    this.submitEvent.emit({
-      response: event.detail,
-    });
   }
 
   @Listen('error-event')
