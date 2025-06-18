@@ -101,7 +101,7 @@ export class Checkout {
     this.savePaymentMethod = event.detail;
   }
 
-  @Listen('checkout-complete-event')
+  @Listen('submit-event')
   checkoutComplete(event: CustomEvent<any>) {
     this.isSubmitting = false;
     this.submitEvent.emit({

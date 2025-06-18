@@ -28,7 +28,7 @@ export class CheckoutWrapper {
   @Element() hostEl: HTMLElement;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
-  @Event({ eventName: 'checkout-complete-event' }) checkoutComplete: EventEmitter;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter;
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -208,7 +208,7 @@ export class CheckoutWrapper {
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
-        this.checkoutComplete.emit({
+        this.submitEvent.emit({
           checkout,
           message: 'Checkout completed successfully',
         });
