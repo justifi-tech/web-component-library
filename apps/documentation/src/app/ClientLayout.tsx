@@ -2,8 +2,8 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import NavbarComponent from "./components/Navigation/Navbar";
-import SidebarComponent from "./components/Navigation/Sidebar";
+import NavbarComponent from "./Navigation/Navbar";
+import SidebarComponent from "./Navigation/Sidebar";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   return (

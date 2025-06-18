@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "next/image";
 import { Sun, Moon } from "react-bootstrap-icons";
-import { ThemeContext } from "../../ThemeProvider";
+import { ThemeContext } from "../ThemeProvider";
 
 function ThemeToggle() {
   const { theme, setTheme } = useContext(ThemeContext);
