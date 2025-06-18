@@ -1,9 +1,9 @@
 import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core';
-import { formatCurrency } from '../../utils/utils';
-import { PaymentMethodPayload } from '../checkout/payment-method-payload';
-import { radioListItem } from '../../styles/parts';
-import checkoutStore from '../../store/checkout.store';
-import { StyledHost } from '../../ui-components';
+import { formatCurrency } from '../../../utils/utils';
+import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
+import { radioListItem } from '../../../styles/parts';
+import checkoutStore from '../../../store/checkout.store';
+import { StyledHost } from '../../../ui-components';
 
 const sezzleLogo = (
   <img
