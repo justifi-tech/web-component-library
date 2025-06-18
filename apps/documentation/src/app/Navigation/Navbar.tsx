@@ -8,7 +8,6 @@ import { ThemeContext } from "../ThemeProvider";
 
 function ThemeToggle() {
   const { theme, setTheme } = useContext(ThemeContext);
-  console.log("ThemeToggle context:", theme, setTheme);
   return (
     <button
       aria-label="Toggle theme"
