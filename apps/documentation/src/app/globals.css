@@ -44,7 +44,6 @@ body {
   overflow-x: hidden;
   background: var(--main-bg);
   color: var(--main-text);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: var(--transition);
