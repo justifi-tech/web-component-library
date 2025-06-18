@@ -1,9 +1,9 @@
 import { Component, h } from "@stencil/core";
-import { StyledHost } from "../../ui-components";
-import { checkoutStore } from "../../store/checkout.store";
-import { radioListItem } from "../../styles/parts";
-import { CardBrandLabels } from "../checkout/payment-method-option-utils";
-import { ICheckoutPaymentMethod } from "../../api";
+import { StyledHost } from '../../../ui-components';
+import { checkoutStore } from '../../../store/checkout.store';
+import { radioListItem } from '../../../styles/parts';
+import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
+import { ICheckoutPaymentMethod } from '../../../api';
 
 @Component({
   tag: 'justifi-saved-payment-methods',
