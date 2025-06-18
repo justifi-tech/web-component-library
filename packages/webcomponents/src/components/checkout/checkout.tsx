@@ -1,14 +1,11 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen } from '@stencil/core';
-import { makeGetCheckout } from '../../actions/checkout/checkout-actions';
-import { CheckoutService } from '../../api/services/checkout.service';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
-import { Checkout as CheckoutConstructor, ICheckout, ILoadedEventResponse } from '../../api';
+import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
-import { insuranceValues, insuranceValuesOn } from '../insurance/insurance-state';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from './payment-method-option-utils';
 import { StyledHost } from '../../ui-components';
@@ -32,7 +29,6 @@ export class Checkout {
   @State() insuranceToggled: boolean = false;
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
-  @State() renderState: 'loading' | 'error' | 'success' = 'loading';
   @State() savePaymentMethod: boolean = false;
   @State() serverError: string;
 
@@ -52,13 +48,7 @@ export class Checkout {
   @Watch('disableBnpl')
   @Watch('disablePaymentMethodGroup')
   propChanged() {
-    checkoutStore.authToken = this.authToken;
-    checkoutStore.checkoutId = this.checkoutId;
-    checkoutStore.disableCreditCard = this.disableCreditCard;
-    checkoutStore.disableBankAccount = this.disableBankAccount;
-    checkoutStore.disableBnpl = this.disableBnpl;
-    checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
-    this.fetchData();
+    this.updateStore();
   }
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -67,29 +57,13 @@ export class Checkout {
 
   connectedCallback() {
     if (this.authToken && this.checkoutId) {
-      checkoutStore.checkoutId = this.checkoutId;
-      checkoutStore.authToken = this.authToken;
-      checkoutStore.disableCreditCard = this.disableCreditCard;
-      checkoutStore.disableBankAccount = this.disableBankAccount;
-      checkoutStore.disableBnpl = this.disableBnpl;
-      checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
+      this.updateStore();
     }
   }
 
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-
-    this.fetchData();
-
-    // Refresh the checkout data when insurance is added or removed
-    insuranceValuesOn('set', (key) => {
-      const value = insuranceValues[key];
-      if (value !== undefined) {
-        this.insuranceToggled = value;
-        this.fetchData();
-      }
-    });
   }
 
   disconnectedCallback() {
@@ -130,34 +104,14 @@ export class Checkout {
     return { isValid: await this.modularCheckoutRef?.validate() };
   }
 
-  private fetchData = (): void => {
-    this.renderState = 'loading';
-
-    const actionsConfig = {
-      authToken: this.authToken,
-      checkoutId: this.checkoutId,
-      service: new CheckoutService()
-    };
-    const getCheckout = makeGetCheckout(actionsConfig);
-
-    getCheckout({
-      onSuccess: ({ checkout }) => {
-        this.checkout = new CheckoutConstructor(checkout);
-        const { status } = this.checkout;
-        this.loadedEvent.emit({ checkout_status: status });
-        this.renderState = 'success';
-      },
-      onError: ({ error, code, severity }) => {
-        this.serverError = error;
-        this.renderState = 'error';
-        this.errorEvent.emit({
-          errorCode: code,
-          message: error,
-          severity,
-        });
-      }
-    });
-  };
+  private updateStore() {
+    checkoutStore.checkoutId = this.checkoutId;
+    checkoutStore.authToken = this.authToken;
+    checkoutStore.disableCreditCard = this.disableCreditCard;
+    checkoutStore.disableBankAccount = this.disableBankAccount;
+    checkoutStore.disableBnpl = this.disableBnpl;
+    checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
+  }
 
   private async submit(_event) {
     this.isSubmitting = true;
@@ -166,10 +120,6 @@ export class Checkout {
 
   private get canSavePaymentMethod() {
     return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
-  }
-
-  private get isLoading() {
-    return this.renderState === 'loading';
   }
 
   private get showBillingForm() {
@@ -202,10 +152,7 @@ export class Checkout {
             <div class="col-12" part={checkoutSummary}>
               <justifi-header text="Summary" level="h2" class="fs-5 fw-bold pb-3" />
               <section>
-                {this.isLoading && (
-                  <justifi-skeleton height="24px" />
-                )}
-                {!this.isLoading && <justifi-checkout-summary />}
+                <justifi-checkout-summary />
               </section>
             </div>
             <div class="col-12 mt-4">
@@ -218,47 +165,42 @@ export class Checkout {
               )}
               <div class="d-flex flex-column">
                 <section>
-                  {this.isLoading && (
-                    <justifi-skeleton height="300px" />
-                  )}
-                  {!this.isLoading && (
-                    <div>
-                      <justifi-saved-payment-methods />
-                      <justifi-sezzle-payment-method />
-                      {!this.disableCreditCard && (
-                        <div>
-                          <payment-method-option
-                            paymentMethodOptionId={PaymentMethodTypes.card}
-                            isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
-                            clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
-                            radioButtonHidden={this.disableCreditCard}
-                            label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
-                          />
-                          {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
-                            <div class="mt-4 mb-4">
-                              <justifi-card-form />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {!this.disableBankAccount && (
-                        <div>
-                          <payment-method-option
-                            paymentMethodOptionId={PaymentMethodTypes.bankAccount}
-                            isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
-                            clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
-                            radioButtonHidden={this.disableBankAccount}
-                            label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
-                          />
-                          {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
-                            <div class="mt-4 mb-4">
-                              <justifi-bank-account-form />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  <div>
+                    <justifi-saved-payment-methods />
+                    <justifi-sezzle-payment-method />
+                    {!this.disableCreditCard && (
+                      <div>
+                        <payment-method-option
+                          paymentMethodOptionId={PaymentMethodTypes.card}
+                          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
+                          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
+                          radioButtonHidden={this.disableCreditCard}
+                          label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
+                        />
+                        {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
+                          <div class="mt-4 mb-4">
+                            <justifi-card-form />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {!this.disableBankAccount && (
+                      <div>
+                        <payment-method-option
+                          paymentMethodOptionId={PaymentMethodTypes.bankAccount}
+                          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
+                          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
+                          radioButtonHidden={this.disableBankAccount}
+                          label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
+                        />
+                        {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
+                          <div class="mt-4 mb-4">
+                            <justifi-bank-account-form />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </section>
               </div>
             </div>
@@ -286,8 +228,8 @@ export class Checkout {
                 type="submit"
                 variant="primary"
                 clickHandler={(e) => this.submit(e)}
-                disabled={this.isLoading || this.isSubmitting}
-                isLoading={this.isLoading || this.isSubmitting}
+                disabled={this.isSubmitting}
+                isLoading={this.isSubmitting}
                 customStyle={{ width: '100%', textAlign: "center" }}
               />
             </div>
