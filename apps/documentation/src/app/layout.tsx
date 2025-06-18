@@ -10,8 +10,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider>
-      <ClientLayout>{children}</ClientLayout>
-    </ThemeProvider>
+    <html lang="en">
+      <body>
+        <ThemeProvider>
+          <ClientLayout>{children}</ClientLayout>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
