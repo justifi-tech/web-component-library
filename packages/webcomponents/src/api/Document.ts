@@ -1,4 +1,3 @@
-
 export interface IDocument {
   business_id: string;
   created_at: string;
@@ -71,14 +70,13 @@ export interface EntityFileData {
 
 export class EntityDocument {
   public file: File;
-  public fileString: string;
+  public fileData: ArrayBuffer | null = null;
   public document_type: EntityDocumentType;
   public presigned_url: string | null;
   public record_data: DocumentRecordData | null;
 
   constructor(fileData: EntityFileData, business_id: string) {
     this.file = fileData.file;
-    this.fileString = this.getFileString();
     this.document_type = fileData.document_type;
     this.presigned_url = null;
     this.record_data = {
@@ -89,13 +87,24 @@ export class EntityDocument {
     };
   }
 
-  public getFileString() {
-    let reader = new FileReader();
-    reader.onload = (e) => {
-     this.fileString = e.target.result as string;
-    };
-    reader.readAsDataURL(this.file);
-    return this.fileString;
+  public async getFileData(): Promise<ArrayBuffer> {
+    if (this.fileData) {
+      return this.fileData;
+    }
+
+    const fileDataPromise = new Promise<ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.fileData = e.target.result as ArrayBuffer;
+        resolve(this.fileData);
+      };
+      reader.onerror = () => {
+        reject(new Error('Error reading file'));
+      };
+      reader.readAsArrayBuffer(this.file);
+    });
+    
+    return await fileDataPromise;
   }
 
   public setPresignedUrl(url: string) {
