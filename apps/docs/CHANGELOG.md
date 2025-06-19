@@ -1,5 +1,12 @@
 # @repo/docs
 
+## 0.3.21
+
+### Patch Changes
+
+- Updated dependencies [ad59f97]
+  - @justifi/webcomponents@5.7.5
+
 ## 0.3.20
 
 ### Patch Changes
