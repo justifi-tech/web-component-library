@@ -37,7 +37,7 @@ const meta: Meta = {
         category: "events",
       },
     },
-    "checkout-complete-event": {
+    "submit-event": {
       description: "`CheckoutCompleteEvent`",
       table: {
         category: "events",
@@ -62,7 +62,7 @@ const meta: Meta = {
     actions: {
       handles: [
         "error-event",
-        "checkout-complete-event",
+        "submit-event",
       ]
     }
   },

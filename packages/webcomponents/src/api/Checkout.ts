@@ -239,6 +239,7 @@ export interface CheckoutsQueryParams {
 
 export interface ICheckoutPaymentMethod {
   id: string;
+  type?: string;
   status: string;
   invalid_reason: null;
   name: string;

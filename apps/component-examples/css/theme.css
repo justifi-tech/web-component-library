@@ -12,7 +12,7 @@ body {
 }
 
 ::part(font-family) {
-  font-family: georgia;
+  font-family: sans-serif;
 }
 
 ::part(color) {

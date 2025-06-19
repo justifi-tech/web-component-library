@@ -54,7 +54,7 @@ ${codeExampleHead(
       console.error(event.detail);
     });
 
-    document.addEventListener('checkout-complete-event', (event) => {
+    document.addEventListener('submit-event', (event) => {
       console.log('Checkout completed successfully!', event.detail);
     });
   })();

@@ -3,15 +3,27 @@ import { StyledHost } from "../../../ui-components";
 import { numberOnlyHandler } from "../../../ui-components/form/utils";
 import { FormController } from "../../../ui-components/form/form";
 import { BillingFormFields, billingFormSchema } from "./billing-form-schema";
+import { onChange } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-postal-code-form",
   shadow: true,
 })
 export class PostalCodeForm {
+  unsubscribe: () => void;
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
+
+  connectedCallback() {
+    this.unsubscribe = onChange('billingFormFields', (newValue: BillingFormFields) => {
+      this.formController.setInitialValues(newValue);
+    });
+  }
+
+  disconnectedCallback() {
+    this.unsubscribe?.();
+  }
 
   componentWillLoad() {
     this.formController = new FormController(billingFormSchema(true));

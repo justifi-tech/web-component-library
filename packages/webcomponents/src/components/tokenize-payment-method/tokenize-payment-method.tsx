@@ -10,7 +10,7 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity
 } from '../../api';
-import checkoutStore from '../../store/checkout.store';
+import { checkoutStore } from '../../store/checkout.store';
 
 @Component({
   tag: 'justifi-tokenize-payment-method',

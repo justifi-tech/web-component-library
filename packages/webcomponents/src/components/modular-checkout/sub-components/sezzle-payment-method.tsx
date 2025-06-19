@@ -2,7 +2,7 @@ import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core'
 import { formatCurrency } from '../../../utils/utils';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { radioListItem } from '../../../styles/parts';
-import checkoutStore from '../../../store/checkout.store';
+import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 
 const sezzleLogo = (
@@ -86,7 +86,7 @@ export class SezzlePaymentMethod {
   };
 
   render() {
-    if (!checkoutStore.bnplEnabled) {
+    if (!checkoutStore.bnplEnabled || checkoutStore.disableBnpl) {
       console.warn('justifi-sezzle-payment-method: BNPL is not enabled for this account.');
       return null;
     }

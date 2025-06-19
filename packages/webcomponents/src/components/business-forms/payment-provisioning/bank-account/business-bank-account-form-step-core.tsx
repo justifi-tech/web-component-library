@@ -246,9 +246,10 @@ export class BusinessBankAccountFormStepCore {
       throw new Error('Presigned URL is not set');
     }
 
+    const fileData = await docData.getFileData();
     const response = await fetch(docData.presigned_url, {
-      method: 'PUT',
-      body: docData.fileString,
+      method: 'PUT', 
+      body: fileData
     })
 
     return this.handleUploadResponse(response);

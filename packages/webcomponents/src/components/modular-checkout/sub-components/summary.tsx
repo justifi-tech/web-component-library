@@ -1,7 +1,7 @@
 import { Component, h } from "@stencil/core";
 import { text } from "../../../styles/parts";
 import { formatCurrency } from "../../../utils/utils";
-import checkoutStore from "../../../store/checkout.store";
+import { checkoutStore } from "../../../store/checkout.store";
 import { StyledHost } from "../../../ui-components";
 
 @Component({
