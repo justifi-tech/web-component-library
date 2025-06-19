@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Sun, Moon, CircleHalf } from "react-bootstrap-icons";
 import { ThemeContext } from "../ThemeProvider";
 import Dropdown from "react-bootstrap/Dropdown";
+import SearchBar from "../components/SearchBar";
 
 function ThemeToggle() {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -64,6 +65,9 @@ export default function NavbarComponent() {
           <Image src="/justifi-logo-light.png" alt="JustiFi Logo" width={74.5} height={32} />
           <span>JustiFi Web Components</span>
         </Navbar.Brand>
+        <div className="mx-auto">
+          <SearchBar />
+        </div>
         <div className="ms-auto d-flex align-items-center">
           <ThemeToggle />
         </div>
