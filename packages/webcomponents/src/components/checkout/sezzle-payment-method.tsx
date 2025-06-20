@@ -28,6 +28,7 @@ export class SezzlePaymentMethod {
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
   @Prop() paymentAmount: number;
+  @Prop() totalPaymentMethodOptions?: number;
 
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;
@@ -87,6 +88,11 @@ export class SezzlePaymentMethod {
     this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
   };
 
+  private get hiddenRadioInput() {
+    // Only hide the radio button if there's exactly one payment method option available
+    return this.totalPaymentMethodOptions === 1;
+  }
+
   render() {
     return (
       <Host class="payment-method">
@@ -100,6 +106,7 @@ export class SezzlePaymentMethod {
           class="radio-list-item p-3"
           part={radioListItem}
           onClick={this.onPaymentMethodOptionClick}
+          hidden={this.hiddenRadioInput}
         >
           <form-control-radio
             name="paymentMethodType"

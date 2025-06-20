@@ -9,6 +9,7 @@ import { radioListItem } from '../../styles/parts';
 export class SavedPaymentMethod {
   @Prop() paymentMethodOption: PaymentMethodOption;
   @Prop() isSelected: boolean;
+  @Prop() totalPaymentMethodOptions?: number;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
@@ -25,6 +26,11 @@ export class SavedPaymentMethod {
     this.paymentMethodOptionSelected.emit(this.paymentMethodOption);
   };
 
+  private get hiddenRadioInput() {
+    // Only hide the radio button if there's exactly one payment method option available
+    return this.totalPaymentMethodOptions === 1;
+  }
+
   render() {
     return (
       <Host class="payment-method">
@@ -32,6 +38,7 @@ export class SavedPaymentMethod {
           class="radio-list-item p-3"
           part={radioListItem}
           onClick={this.onPaymentMethodOptionClick}
+          hidden={this.hiddenRadioInput}
         >
           <form-control-radio
             name="paymentMethodType"

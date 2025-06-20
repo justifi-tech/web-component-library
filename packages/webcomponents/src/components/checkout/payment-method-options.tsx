@@ -98,6 +98,7 @@ export class PaymentMethodOptions {
                 is-selected={isSelected}
                 show-card={this.showCard}
                 show-ach={this.showAch}
+                total-payment-method-options={this.paymentMethodOptions.length}
                 paymentMethodGroupId={this.paymentMethodGroupId}
                 hideCardBillingForm={this.hideCardBillingForm}
                 hideBankAccountBillingForm={this.hideBankAccountBillingForm}
@@ -114,6 +115,7 @@ export class PaymentMethodOptions {
                 paymentMethodOption={paymentMethodOption}
                 is-selected={isSelected}
                 paymentAmount={this.paymentAmount}
+                total-payment-method-options={this.paymentMethodOptions.length}
                 bnpl={this.bnpl}
                 ref={(el) => {
                   if (isSelected) {
@@ -127,6 +129,7 @@ export class PaymentMethodOptions {
               <justifi-saved-payment-method
                 paymentMethodOption={paymentMethodOption}
                 is-selected={isSelected}
+                total-payment-method-options={this.paymentMethodOptions.length}
                 ref={(el) => {
                   if (isSelected) {
                     this.selectedPaymentMethodOptionRef = el;

@@ -23,6 +23,7 @@ export class NewPaymentMethod {
   @Prop() isSelected: boolean;
   @Prop() showCard?: boolean;
   @Prop() showAch?: boolean;
+  @Prop() totalPaymentMethodOptions?: number;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
 
@@ -135,7 +136,8 @@ export class NewPaymentMethod {
   }
 
   private get hiddenRadioInput() {
-    return !this.showAch || !this.showCard;
+    // Only hide the radio button if there's exactly one payment method option available
+    return this.totalPaymentMethodOptions === 1;
   }
 
   render() {
