@@ -1,9 +1,11 @@
-import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
 import { Button, StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
+import { PaymentMethodTypes } from '../../api/Payment';
+import { PaymentMethodOption } from '../checkout/payment-method-option-utils';
 import {
   ComponentSubmitEvent,
   ComponentErrorEvent,
@@ -17,10 +19,11 @@ import { checkoutStore } from '../../store/checkout.store';
   shadow: true,
 })
 export class TokenizePaymentMethod {
-  private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
   analytics: JustifiAnalytics;
 
   @State() isLoading: boolean = false;
+  @State() selectedPaymentMethodId: string;
+  @State() paymentMethodOptions: PaymentMethodOption[] = [];
 
   @Prop() accountId?: string;
   @Prop() authToken?: string;
@@ -31,6 +34,8 @@ export class TokenizePaymentMethod {
   @Prop() hideSubmitButton?: boolean;
   @Prop() paymentMethodGroupId: string;
   @Prop() submitButtonText: string = 'Submit';
+
+  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -48,13 +53,48 @@ export class TokenizePaymentMethod {
     }
   }
 
+  connectedCallback() {
+    this.paymentMethodsChanged();
+  }
+
+  @Watch('disableCreditCard')
+  @Watch('disableBankAccount')
+  paymentMethodsChanged() {
+    const showCard = !this.disableCreditCard;
+    const showAch = !this.disableBankAccount;
+
+    // Reset payment method options
+    this.paymentMethodOptions = [];
+
+    // Add new payment method options based on what's enabled
+    if (showCard) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
+    }
+    if (showAch) {
+      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
+    }
+
+    // Set the first available option as selected
+    if (!this.selectedPaymentMethodId && this.paymentMethodOptions.length > 0) {
+      this.selectedPaymentMethodId = this.paymentMethodOptions[0]?.id;
+    }
+  }
+
+  @Listen('paymentMethodOptionSelected')
+  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
+    this.selectedPaymentMethodId = event.detail.id;
+  }
+
   disconnectedCallback() {
     this.analytics?.cleanup();
   }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    this.paymentMethodOptionsRef.fillBillingForm(fields);
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    if (newPaymentMethodElement.fillBillingForm) {
+      newPaymentMethodElement.fillBillingForm(fields);
+    }
   }
 
   @Method()
@@ -64,7 +104,7 @@ export class TokenizePaymentMethod {
 
     let tokenizeResponse: PaymentMethodPayload;
     try {
-      tokenizeResponse = await this.paymentMethodOptionsRef.resolvePaymentMethod({ isValid: true });
+      tokenizeResponse = await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod({ isValid: true });
       if (tokenizeResponse.error) {
         this.errorEvent.emit({
           errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
@@ -88,28 +128,47 @@ export class TokenizePaymentMethod {
 
   @Method()
   async validate(): Promise<{ isValid: boolean, errors?: any }> {
-    return this.paymentMethodOptionsRef.validate();
+    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
+    return newPaymentMethodElement.validate();
   }
 
   render() {
+    const showCard = !this.disableCreditCard;
+    const showAch = !this.disableBankAccount;
+
     return (
       <StyledHost>
         <form>
           <fieldset>
             <div class="row gy-3">
               <div class="col-12">
-                <justifi-payment-method-options
-                  ref={(el) => (this.paymentMethodOptionsRef = el)}
-                  show-card={!this.disableCreditCard}
-                  show-ach={!this.disableBankAccount}
-                  show-bnpl={false}
-                  paymentMethodGroupId={this.paymentMethodGroupId}
-                  show-saved-payment-methods={false} // implement payment method group loading to show these
-                  hideCardBillingForm={this.hideCardBillingForm}
-                  hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-                  authToken={this.authToken}
-                  account-id={this.accountId}
-                />
+                {this.paymentMethodOptions?.map((paymentMethodOption) => {
+                  const newCard = paymentMethodOption.id === PaymentMethodTypes.card;
+                  const newBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
+                  const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
+
+                  if (newCard || newBankAccount) {
+                    return (
+                      <justifi-new-payment-method
+                        // @ts-ignore
+                        paymentMethodOption={paymentMethodOption}
+                        authToken={this.authToken}
+                        account-id={this.accountId}
+                        is-selected={isSelected}
+                        show-card={showCard}
+                        show-ach={showAch}
+                        paymentMethodGroupId={this.paymentMethodGroupId}
+                        hideCardBillingForm={this.hideCardBillingForm}
+                        hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+                        ref={(el) => {
+                          if (isSelected) {
+                            this.selectedPaymentMethodOptionRef = el;
+                          }
+                        }}
+                      />
+                    );
+                  }
+                })}
               </div>
               <div class="col-12">
                 <Button
