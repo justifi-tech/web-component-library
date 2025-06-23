@@ -222,29 +222,6 @@ export class TokenizePaymentMethod {
     }
   }
 
-
-
-  showNewPaymentMethodForm() {
-    const paymentMethodType = this.selectedPaymentMethodId;
-    return (
-      <div class="mt-4 pb-4">
-        <hidden-input />
-        {paymentMethodType === 'card' ? (
-          <justifi-card-form ref={(el) => this.paymentMethodFormRef = el} />
-        ) : (
-          <justifi-bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
-        )}
-        <justifi-billing-form
-          ref={(el) => (this.billingFormRef = el)}
-          hideCardBillingForm={this.hideCardBillingForm}
-          hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-          paymentMethodType={paymentMethodType}
-        />
-        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
-      </div>
-    );
-  }
-
   private get hiddenRadioInput() {
     const showCard = !this.disableCreditCard;
     const showAch = !this.disableBankAccount;
@@ -273,7 +250,22 @@ export class TokenizePaymentMethod {
                           label={PaymentMethodTypeLabels[paymentMethodOption.id]}
                           hidden={this.hiddenRadioInput}
                         />
-                        {isSelected ? this.showNewPaymentMethodForm() : null}
+                        {isSelected ? (
+                          <div class="mt-4 pb-4">
+                            {this.selectedPaymentMethodId === 'card' ? (
+                              <justifi-card-form ref={(el) => this.paymentMethodFormRef = el} />
+                            ) : (
+                              <justifi-bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
+                            )}
+                            <justifi-billing-form
+                              ref={(el) => (this.billingFormRef = el)}
+                              hideCardBillingForm={this.hideCardBillingForm}
+                              hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+                              paymentMethodType={this.selectedPaymentMethodId}
+                            />
+                            <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
+                          </div>
+                        ) : null}
                       </div>
                     );
                   }
