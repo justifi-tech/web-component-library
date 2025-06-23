@@ -51,10 +51,26 @@ export class TokenizePaymentMethod {
 
     if (!this.authToken) {
       this.authToken = checkoutStore.authToken;
+
+      if (!checkoutStore.authToken) {
+        this.errorEvent.emit({
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          message: 'Auth token is required when using the tokenize-payment-method component not slotted in justifi-modular-checkout',
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      }
     }
 
     if (!this.accountId) {
       this.accountId = checkoutStore.accountId;
+
+      if (!checkoutStore.accountId) {
+        this.errorEvent.emit({
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          message: 'Account ID is required when using the tokenize-payment-method component not slotted in justifi-modular-checkout',
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      }
     }
   }
 
