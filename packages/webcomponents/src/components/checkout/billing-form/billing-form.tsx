@@ -1,7 +1,6 @@
 import { Component, h, State, Prop, Method } from '@stencil/core';
 import { BillingFormFields, billingFormSchema } from './billing-form-schema';
 import { billingForm } from '../../../styles/parts';
-import { Header3 } from '../../../ui-components';
 import { FormController } from '../../../ui-components/form/form';
 
 @Component({
@@ -68,7 +67,7 @@ export class BillingForm {
 
     return (
       <div part={billingForm} class="mt-4" hidden={this.hideAllBillingFields}>
-        {showHeader && <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />}
+        {showHeader && <justifi-header text="Billing address" level="h3" class="fs-6 fw-bold lh-lg mb-4" />}
         {this.legend && <legend>{this.legend}</legend>}
         {this.isPostalOnlyMode ? (
           <justifi-postal-code-form />

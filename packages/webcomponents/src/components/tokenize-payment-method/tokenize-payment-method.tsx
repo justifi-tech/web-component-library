@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
-import { Button, StyledHost } from '../../ui-components';
+import { StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../../components';
@@ -280,15 +280,15 @@ export class TokenizePaymentMethod {
                 })}
               </div>
               <div class="col-12">
-                <Button
+                <justifi-button
+                  text={this.submitButtonText}
                   variant="primary"
                   type="submit"
-                  onClick={event => this.tokenizePaymentMethod(event)}
+                  clickHandler={_event => this.tokenizePaymentMethod()}
                   isLoading={this.isLoading}
                   data-testid="submit-button"
                   hidden={this.hideSubmitButton}>
-                  {this.submitButtonText}
-                </Button>
+                </justifi-button>
               </div>
             </div>
           </fieldset>
