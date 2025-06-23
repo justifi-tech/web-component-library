@@ -22,7 +22,6 @@ const PaymentMethodTypeLabels = {
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
-  shadow: true,
 })
 export class TokenizePaymentMethod {
   analytics: JustifiAnalytics;
