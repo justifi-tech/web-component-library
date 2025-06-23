@@ -119,11 +119,12 @@ export class NewPaymentMethod {
       <div class="mt-4 pb-4">
         <hidden-input />
         {paymentMethodType === 'card' ? (
-          <justifi-card-form />
+          <card-form ref={(el) => this.paymentMethodFormRef = el} />
         ) : (
-          <justifi-bank-account-form />
+          <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
         )}
         <justifi-billing-form
+          ref={(el) => (this.billingFormRef = el)}
           hideCardBillingForm={this.hideCardBillingForm}
           hideBankAccountBillingForm={this.hideBankAccountBillingForm}
           paymentMethodType={paymentMethodType}
