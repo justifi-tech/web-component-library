@@ -6,6 +6,8 @@ export enum ComponentErrorCodes {
   UNKNOWN_ERROR = 'unknown-error',
   TOKENIZE_ERROR = 'tokenize-error',
   COMPLETE_CHECKOUT_ERROR = 'complete-checkout-error',
+  CHECKOUT_ALREADY_COMPLETED = 'checkout-already-completed',
+  CHECKOUT_EXPIRED = 'checkout-expired',
   NOT_AUTHENTICATED = 'not-authenticated',
   INVALID_PARAMETER = 'invalid-parameter',
   PROVISIONING_REQUESTED = 'provisioning-already-requested',
@@ -17,4 +19,9 @@ export enum ComponentErrorSeverity {
   INFO = 'info',
   WARNING = 'warning',
   ERROR = 'error',
+}
+
+export enum ComponentErrorMessages {
+  CHECKOUT_ALREADY_COMPLETED = 'Checkout already completed. Please create a new checkout.',
+  CHECKOUT_EXPIRED = 'Checkout expired. Please create a new checkout.',
 }
