@@ -82,14 +82,9 @@ async function getWebComponentToken(token, checkoutId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  // const checkout = await makeCheckout(token);
+  const checkout = await makeCheckout(token);
 
-  // const webComponentToken = await getWebComponentToken(token, checkout.id);
-
-  const checkoutId = 'cho_6OK63ufCvS2RpKG7Vx0XuA'
-  const webComponentToken = await getWebComponentToken(token, checkoutId);
-
-  // console.log(`http://localhost:3003/checkout/1-column?checkout_id=${checkout.id}&account_id=${checkout.account_id}&auth_token=${webComponentToken}`)
+  const webComponentToken = await getWebComponentToken(token, checkout.id);
 
   res.send(`
     <!DOCTYPE html>
@@ -105,10 +100,9 @@ app.get('/', async (req, res) => {
           <justifi-modular-checkout 
             auth-token="${webComponentToken}" 
             account-id="${subAccountId}"
-            checkout-id="${checkoutId}"
+            checkout-id="${checkout.id}"
           >
             <justifi-card-form></justifi-card-form>
-            <justifi-postal-code-form></justifi-postal-code-form>
             <div style="margin-top: 20px">
               <button
                id="submit-button" 
@@ -125,13 +119,14 @@ app.get('/', async (req, res) => {
         const submitButton = document.getElementById('submit-button');
         const checkoutWrapper = document.querySelector('justifi-modular-checkout');
 
-        checkoutWrapper.addEventListener('error-event', (e) => {
-          console.log('error-event: ', e);
+        submitButton.addEventListener('click', async () => {
+          const addressPostalCode = '12345';
+          const { id } = await checkoutWrapper.submitCheckout({ addressPostalCode });
+          console.log('token: ', id);
         });
 
-        submitButton.addEventListener('click', async () => {
-          const { id } = await checkoutWrapper.submitCheckout();
-          console.log('token: ', id);
+        checkoutWrapper.addEventListener('error-event', (e) => {
+          console.log('error-event: ', e);
         });
       </script>
     </html>
