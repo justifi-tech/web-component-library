@@ -6,7 +6,6 @@ import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from '../checkout/payment-method-option-utils';
-import { radioListItem } from '../../styles/parts';
 import {
   ComponentSubmitEvent,
   ComponentErrorEvent,
@@ -89,6 +88,11 @@ export class TokenizePaymentMethod {
   @Listen('paymentMethodOptionSelected')
   paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
     this.selectedPaymentMethodId = event.detail.id;
+  }
+
+  @Listen('radio-click')
+  handleRadioClick(event: CustomEvent<string>) {
+    this.selectedPaymentMethodId = event.detail;
   }
 
   @Listen('checkboxChanged')
@@ -218,9 +222,7 @@ export class TokenizePaymentMethod {
     }
   }
 
-  onPaymentMethodOptionClick = (paymentMethodOption: PaymentMethodOption) => {
-    this.selectedPaymentMethodId = paymentMethodOption.id;
-  };
+
 
   showNewPaymentMethodForm() {
     const paymentMethodType = this.selectedPaymentMethodId;
@@ -264,19 +266,13 @@ export class TokenizePaymentMethod {
                   if (newCard || newBankAccount) {
                     return (
                       <div class="payment-method">
-                        <div
-                          class="radio-list-item p-3"
-                          part={radioListItem}
-                          onClick={() => this.onPaymentMethodOptionClick(paymentMethodOption)}
+                        <justifi-radio-list-item
+                          name="paymentMethodType"
+                          value={paymentMethodOption.id}
+                          checked={isSelected}
+                          label={PaymentMethodTypeLabels[paymentMethodOption.id]}
                           hidden={this.hiddenRadioInput}
-                        >
-                          <form-control-radio
-                            name="paymentMethodType"
-                            value={paymentMethodOption.id}
-                            checked={isSelected}
-                            label={PaymentMethodTypeLabels[paymentMethodOption.id]}
-                          />
-                        </div>
+                        />
                         {isSelected ? this.showNewPaymentMethodForm() : null}
                       </div>
                     );
