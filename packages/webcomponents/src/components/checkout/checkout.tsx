@@ -24,7 +24,7 @@ const PaymentMethodTypeLabels = {
 export class Checkout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
+  selectedPaymentMethodOptionRef?: HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
 
   @State() checkout: ICheckout;
   @State() complete: Function;

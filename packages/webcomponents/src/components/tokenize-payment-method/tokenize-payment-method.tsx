@@ -6,6 +6,7 @@ import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import { PaymentMethodTypes } from '../../api/Payment';
 import { PaymentMethodOption } from '../checkout/payment-method-option-utils';
+import { radioListItem } from '../../styles/parts';
 import {
   ComponentSubmitEvent,
   ComponentErrorEvent,
@@ -14,16 +15,24 @@ import {
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
 
+const PaymentMethodTypeLabels = {
+  bankAccount: 'New bank account',
+  card: 'New credit or debit card',
+};
+
 @Component({
   tag: 'justifi-tokenize-payment-method',
   shadow: true,
 })
 export class TokenizePaymentMethod {
   analytics: JustifiAnalytics;
+  private billingFormRef?: HTMLJustifiBillingFormElement;
+  private paymentMethodFormRef?: HTMLCardFormElement;
 
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodId: string;
   @State() paymentMethodOptions: PaymentMethodOption[] = [];
+  @State() saveNewPaymentMethodChecked: boolean = false;
 
   @Prop() accountId?: string;
   @Prop() authToken?: string;
@@ -34,8 +43,6 @@ export class TokenizePaymentMethod {
   @Prop() hideSubmitButton?: boolean;
   @Prop() paymentMethodGroupId: string;
   @Prop() submitButtonText: string = 'Submit';
-
-  private selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -85,15 +92,19 @@ export class TokenizePaymentMethod {
     this.selectedPaymentMethodId = event.detail.id;
   }
 
+  @Listen('checkboxChanged')
+  handleCheckboxChanged(event: CustomEvent<boolean>) {
+    this.saveNewPaymentMethodChecked = event.detail;
+  }
+
   disconnectedCallback() {
     this.analytics?.cleanup();
   }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    if (newPaymentMethodElement.fillBillingForm) {
-      newPaymentMethodElement.fillBillingForm(fields);
+    if (this.billingFormRef) {
+      this.billingFormRef.fill(fields);
     }
   }
 
@@ -104,7 +115,7 @@ export class TokenizePaymentMethod {
 
     let tokenizeResponse: PaymentMethodPayload;
     try {
-      tokenizeResponse = await this.selectedPaymentMethodOptionRef?.resolvePaymentMethod({ isValid: true });
+      tokenizeResponse = await this.resolvePaymentMethod({ isValid: true });
       if (tokenizeResponse.error) {
         this.errorEvent.emit({
           errorCode: (tokenizeResponse.error.code as ComponentErrorCodes),
@@ -128,14 +139,114 @@ export class TokenizePaymentMethod {
 
   @Method()
   async validate(): Promise<{ isValid: boolean, errors?: any }> {
-    const newPaymentMethodElement = (this.selectedPaymentMethodOptionRef as HTMLJustifiNewPaymentMethodElement);
-    return newPaymentMethodElement.validate();
+    if (!this.billingFormRef || !this.paymentMethodFormRef) {
+      return { isValid: false, errors: { general: 'Form not ready' } };
+    }
+
+    const billingFormValidation = await this.billingFormRef.validate();
+    const paymentMethodFormValidation = await this.paymentMethodFormRef.validate();
+
+    const isValid = billingFormValidation.isValid && paymentMethodFormValidation.isValid;
+    const errors = {
+      ...billingFormValidation.errors,
+      ...paymentMethodFormValidation.errors,
+    };
+    return { isValid, errors };
+  }
+
+  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
+    if (!this.paymentMethodFormRef || !this.billingFormRef) {
+      return {
+        error: {
+          code: 'form_not_ready',
+          message: 'Payment form not ready',
+          decline_code: undefined
+        }
+      };
+    }
+
+    try {
+      const { isValid, errors } = await this.validate();
+
+      if (!isValid || !insuranceValidation.isValid) {
+        // get property value from first property in errors object
+        const message = `${Object.values(errors)[0] || 'Validation error'}`;
+
+        return {
+          validationError: true,
+          error: {
+            code: 'validation_error',
+            message,
+            decline_code: undefined
+          }
+        };
+      }
+
+      const tokenizeResponse = await this.tokenize();
+
+      if (tokenizeResponse.error) {
+        return { error: tokenizeResponse.error };
+      } else {
+        const tokenizeResponseData = tokenizeResponse.data;
+        return {
+          token: tokenizeResponseData.card?.token || tokenizeResponseData.bank_account?.token,
+          data: tokenizeResponseData
+        };
+      }
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async tokenize() {
+    try {
+      const billingFormFieldValues = await this.billingFormRef.getValues();
+      let paymentMethodData;
+      if (this.saveNewPaymentMethodChecked) {
+        paymentMethodData = { ...billingFormFieldValues, payment_method_group_id: this.paymentMethodGroupId };
+      } else {
+        paymentMethodData = { ...billingFormFieldValues };
+      }
+      const clientId = this.authToken;
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
+      return tokenizeResponse;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  onPaymentMethodOptionClick = (paymentMethodOption: PaymentMethodOption) => {
+    this.selectedPaymentMethodId = paymentMethodOption.id;
+  };
+
+  showNewPaymentMethodForm() {
+    const paymentMethodType = this.selectedPaymentMethodId;
+    return (
+      <div class="mt-4 pb-4">
+        <hidden-input />
+        {paymentMethodType === 'card' ? (
+          <card-form ref={(el) => this.paymentMethodFormRef = el} />
+        ) : (
+          <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
+        )}
+        <justifi-billing-form
+          ref={(el) => (this.billingFormRef = el)}
+          hideCardBillingForm={this.hideCardBillingForm}
+          hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+          paymentMethodType={paymentMethodType}
+        />
+        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
+      </div>
+    );
+  }
+
+  private get hiddenRadioInput() {
+    const showCard = !this.disableCreditCard;
+    const showAch = !this.disableBankAccount;
+    return !showAch || !showCard;
   }
 
   render() {
-    const showCard = !this.disableCreditCard;
-    const showAch = !this.disableBankAccount;
-
     return (
       <StyledHost>
         <form>
@@ -149,23 +260,22 @@ export class TokenizePaymentMethod {
 
                   if (newCard || newBankAccount) {
                     return (
-                      <justifi-new-payment-method
-                        // @ts-ignore
-                        paymentMethodOption={paymentMethodOption}
-                        authToken={this.authToken}
-                        account-id={this.accountId}
-                        is-selected={isSelected}
-                        show-card={showCard}
-                        show-ach={showAch}
-                        paymentMethodGroupId={this.paymentMethodGroupId}
-                        hideCardBillingForm={this.hideCardBillingForm}
-                        hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-                        ref={(el) => {
-                          if (isSelected) {
-                            this.selectedPaymentMethodOptionRef = el;
-                          }
-                        }}
-                      />
+                      <div class="payment-method">
+                        <div
+                          class="radio-list-item p-3"
+                          part={radioListItem}
+                          onClick={() => this.onPaymentMethodOptionClick(paymentMethodOption)}
+                          hidden={this.hiddenRadioInput}
+                        >
+                          <form-control-radio
+                            name="paymentMethodType"
+                            value={paymentMethodOption.id}
+                            checked={isSelected}
+                            label={PaymentMethodTypeLabels[paymentMethodOption.id]}
+                          />
+                        </div>
+                        {isSelected ? this.showNewPaymentMethodForm() : null}
+                      </div>
                     );
                   }
                 })}
