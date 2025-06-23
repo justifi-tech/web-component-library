@@ -54,6 +54,14 @@ export class CheckoutWrapper {
   }
 
   componentWillLoad() {
+    if (!this.authToken || !this.checkoutId) {
+      this.errorEvent.emit({
+        message: ComponentErrorMessages.NOT_AUTHENTICATED,
+        errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
