@@ -17,23 +17,23 @@ import { checkoutStore } from '../../store/checkout.store';
   shadow: true,
 })
 export class TokenizePaymentMethod {
-  @Prop() authToken?: string;
-  @Prop() accountId?: string;
-  @Prop() paymentMethodGroupId: string;
-  @Prop() submitButtonText: string = 'Submit';
-  @Prop() disableCreditCard?: boolean;
-  @Prop() disableBankAccount?: boolean;
-  @Prop() hideSubmitButton?: boolean;
-  @Prop() hideCardBillingForm?: boolean;
-  @Prop() hideBankAccountBillingForm?: boolean;
+  private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
+  analytics: JustifiAnalytics;
 
   @State() isLoading: boolean = false;
 
+  @Prop() accountId?: string;
+  @Prop() authToken?: string;
+  @Prop() disableBankAccount?: boolean;
+  @Prop() disableCreditCard?: boolean;
+  @Prop() hideBankAccountBillingForm?: boolean;
+  @Prop() hideCardBillingForm?: boolean;
+  @Prop() hideSubmitButton?: boolean;
+  @Prop() paymentMethodGroupId: string;
+  @Prop() submitButtonText: string = 'Submit';
+
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
-
-  private paymentMethodOptionsRef?: HTMLJustifiPaymentMethodOptionsElement;
-  analytics: JustifiAnalytics;
 
   componentWillLoad() {
     checkPkgVersion();
@@ -50,7 +50,12 @@ export class TokenizePaymentMethod {
 
   disconnectedCallback() {
     this.analytics?.cleanup();
-  };
+  }
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields) {
+    this.paymentMethodOptionsRef.fillBillingForm(fields);
+  }
 
   @Method()
   async tokenizePaymentMethod(event?: CustomEvent): Promise<PaymentMethodPayload> {
@@ -79,11 +84,6 @@ export class TokenizePaymentMethod {
       this.isLoading = false;
       return tokenizeResponse;
     }
-  }
-
-  @Method()
-  async fillBillingForm(fields: BillingFormFields) {
-    this.paymentMethodOptionsRef.fillBillingForm(fields);
   }
 
   @Method()
