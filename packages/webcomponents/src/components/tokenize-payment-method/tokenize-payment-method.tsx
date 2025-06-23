@@ -5,7 +5,6 @@ import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import { PaymentMethodTypes } from '../../api/Payment';
-import { PaymentMethodOption } from '../checkout/payment-method-option-utils';
 import {
   ComponentSubmitEvent,
   ComponentErrorEvent,
@@ -49,7 +48,6 @@ export class TokenizePaymentMethod {
 
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodId: string;
-  @State() paymentMethodOptions: PaymentMethodOption[] = [];
   @State() saveNewPaymentMethodChecked: boolean = false;
 
   @Prop() accountId?: string;
@@ -72,7 +70,7 @@ export class TokenizePaymentMethod {
   }
 
   connectedCallback() {
-    this.paymentMethodsChanged();
+    this.setDefaultSelectedPaymentMethod();
   }
 
   disconnectedCallback() {
@@ -82,14 +80,10 @@ export class TokenizePaymentMethod {
   @Watch('disableCreditCard')
   @Watch('disableBankAccount')
   paymentMethodsChanged() {
-    this.updatePaymentMethodOptions();
     this.setDefaultSelectedPaymentMethod();
   }
 
-  @Listen('paymentMethodOptionSelected')
-  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
-    this.selectedPaymentMethodId = event.detail.id;
-  }
+
 
   @Listen('radio-click')
   handleRadioClick(event: CustomEvent<string>) {
@@ -177,22 +171,25 @@ export class TokenizePaymentMethod {
     }
   }
 
-  private updatePaymentMethodOptions() {
-    this.paymentMethodOptions = [];
-
-    if (!this.disableCreditCard) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.card }));
-    }
-
-    if (!this.disableBankAccount) {
-      this.paymentMethodOptions.push(new PaymentMethodOption({ id: PaymentMethodTypes.bankAccount }));
+  private setDefaultSelectedPaymentMethod() {
+    if (!this.selectedPaymentMethodId) {
+      if (!this.disableCreditCard) {
+        this.selectedPaymentMethodId = PaymentMethodTypes.card;
+      } else if (!this.disableBankAccount) {
+        this.selectedPaymentMethodId = PaymentMethodTypes.bankAccount;
+      }
     }
   }
 
-  private setDefaultSelectedPaymentMethod() {
-    if (!this.selectedPaymentMethodId && this.paymentMethodOptions.length > 0) {
-      this.selectedPaymentMethodId = this.paymentMethodOptions[0]?.id;
+  private get availablePaymentMethods(): PaymentMethodTypes[] {
+    const methods: PaymentMethodTypes[] = [];
+    if (!this.disableCreditCard) {
+      methods.push(PaymentMethodTypes.card);
     }
+    if (!this.disableBankAccount) {
+      methods.push(PaymentMethodTypes.bankAccount);
+    }
+    return methods;
   }
 
   private areFormsReady(): boolean {
@@ -283,25 +280,19 @@ export class TokenizePaymentMethod {
     return !showAch || !showCard;
   }
 
-  private renderPaymentMethodOption(paymentMethodOption: PaymentMethodOption) {
-    const isCard = paymentMethodOption.id === PaymentMethodTypes.card;
-    const isBankAccount = paymentMethodOption.id === PaymentMethodTypes.bankAccount;
-    const isSelected = this.selectedPaymentMethodId === paymentMethodOption.id;
-
-    if (!isCard && !isBankAccount) {
-      return null;
-    }
+  private renderPaymentMethodOption(paymentMethodType: PaymentMethodTypes) {
+    const isSelected = this.selectedPaymentMethodId === paymentMethodType;
 
     return (
       <div class="payment-method">
         <justifi-radio-list-item
           name="paymentMethodType"
-          value={paymentMethodOption.id}
+          value={paymentMethodType}
           checked={isSelected}
-          label={PAYMENT_METHOD_TYPE_LABELS[paymentMethodOption.id]}
+          label={PAYMENT_METHOD_TYPE_LABELS[paymentMethodType]}
           hidden={this.shouldHideRadioInput}
         />
-        {isSelected && this.renderSelectedPaymentMethodForm(paymentMethodOption.id)}
+        {isSelected && this.renderSelectedPaymentMethodForm(paymentMethodType)}
       </div>
     );
   }
@@ -336,7 +327,7 @@ export class TokenizePaymentMethod {
           <fieldset>
             <div class="row gy-3">
               <div class="col-12">
-                {this.paymentMethodOptions?.map((option) => this.renderPaymentMethodOption(option))}
+                {this.availablePaymentMethods.map((method) => this.renderPaymentMethodOption(method))}
               </div>
               <div class="col-12">
                 <justifi-button
