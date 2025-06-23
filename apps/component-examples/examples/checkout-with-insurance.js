@@ -152,7 +152,11 @@ app.get('/', async (req, res) => {
             <button class="btn btn-secondary" id="fill-billing-form">Fill Billing Form</button>
             <button class="btn btn-secondary" id="validate-button">Validate</button>
           </div>
-          <div id="output-pane" style="padding: 20px"><em>Checkout output will appear here...</em></div>
+          <div id="output-pane" style="padding: 20px; border: 1px solid #ccc; margin-bottom: 20px;"><em>Checkout output will appear here...</em></div>
+          <div id="event-messages" style="padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;">
+            <h3 style="margin-top: 0;">Event Messages</h3>
+            <div id="event-log" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: white;"><em>Event messages will appear here...</em></div>
+          </div>
         </div>
       </body>
       <script>
@@ -179,14 +183,40 @@ app.get('/', async (req, res) => {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
+        function logEventMessage(eventType, eventData) {
+          const timestamp = new Date().toLocaleTimeString();
+          const eventLog = document.getElementById('event-log');
+          const eventMessage = document.createElement('div');
+          eventMessage.style.cssText = 'margin-bottom: 10px; padding: 8px; border-left: 3px solid #007bff; background-color: #f8f9fa;';
+          eventMessage.innerHTML = 
+            '<strong>[' + timestamp + '] ' + eventType + ':</strong><br>' +
+            '<code style="font-size: 12px;">' + JSON.stringify(eventData, null, 2) + '</code>';
+          
+          // Clear the initial message if it's still there
+          if (eventLog.innerHTML.includes('Event messages will appear here...')) {
+            eventLog.innerHTML = '';
+          }
+          
+          eventLog.appendChild(eventMessage);
+          eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to bottom
+        }
+
         justifiCheckout.addEventListener('submit-event', (event) => {
           console.log(event);
           writeOutputToPage(event);
+          logEventMessage('submit-event', event.detail);
         });
 
         justifiCheckout.addEventListener('error-event', (event) => {
           console.log(event);
           writeOutputToPage(event);
+          logEventMessage('error-event', event.detail);
+        });
+
+        justifiCheckout.addEventListener('payment-method-changed', (event) => {
+          console.log(event);
+          writeOutputToPage(event);
+          logEventMessage('payment-method-changed', event.detail);
         });
       </script>
     </html>

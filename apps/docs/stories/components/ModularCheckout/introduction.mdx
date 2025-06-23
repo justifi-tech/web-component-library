@@ -154,11 +154,13 @@ New payment methods or features can be added as individual components without mo
 
 - **`error-event`**: Emitted when validation fails or errors occur during processing
 - **`submit-event`**: Emitted when checkout is successfully completed
+- **`payment-method-changed`**: Emitted when the selected payment method changes, containing the payment method ID
 
 ### Methods
 
 - **`validate()`**: Validates all sub components and returns a boolean result
 - **`submitCheckout(billingInformation?)`**: Submits the checkout with optional billing information override
+- **`setSelectedPaymentMethod(paymentMethodId)`**: Programmatically sets the selected payment method by ID
 
 ## Getting Started
 

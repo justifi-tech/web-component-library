@@ -34,6 +34,8 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
   - [Bank Account Form Billing](#bank-account-form-billing)
 - [Completing Checkout](#completing-checkout)
 - [Validation](#validation)
+- [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
+- [Payment Method Change Events](#payment-method-change-events)
 - [Props, events and methods](#props-events-and-methods)
 - [Authorization](#authorization)
 - [Example Usage](#example-usage)
@@ -129,6 +131,36 @@ When `submitCheckout` is called, the `justifi-modular-checkout` wrapper componen
 
 You can also trigger validation manually by calling the `validate` method on the `justifi-modular-checkout` wrapper component. This returns a promise that resolves to a `boolean` indicating whether the form is valid.
 
+## Setting Payment Method Programmatically
+
+You can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method takes a payment method ID as a string parameter.
+
+```javascript
+const modularCheckout = document.querySelector('justifi-modular-checkout');
+
+// Set to new card payment method
+modularCheckout.setSelectedPaymentMethod('card');
+
+// Set to new bank account payment method
+modularCheckout.setSelectedPaymentMethod('bankAccount');
+
+// Set to Sezzle BNPL payment method
+modularCheckout.setSelectedPaymentMethod('sezzle');
+
+// Set to a specific saved payment method by ID
+modularCheckout.setSelectedPaymentMethod('pm_1234567890');
+```
+
+## Payment Method Change Events
+
+The `justifi-modular-checkout` wrapper component emits a `payment-method-changed` event whenever the selected payment method changes, either through user interaction or programmatic updates. The event payload contains the selected payment method ID as a string.
+
+```javascript
+modularCheckout.addEventListener('payment-method-changed', (event) => {
+  console.log('Selected payment method changed to:', event.detail);
+});
+```
+
 # Props, events and methods
 
 ---
@@ -187,4 +219,3 @@ You can also trigger validation manually by calling the `validate` method on the
 ---
 
 <Source dark language="html" code={codeExample} />
-```
