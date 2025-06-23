@@ -27,9 +27,19 @@ export const codeExample = `
       console.error(event.detail);
     });
 
-    document.addEventListener('checkout-complete-event', (event) => {
+    modularCheckout.addEventListener('submit-event', (event) => {
       console.log('Checkout completed successfully!', event.detail);
     });
+
+    modularCheckout.addEventListener('payment-method-changed', (event) => {
+      console.log('Selected payment method changed to:', event.detail);
+    });
+
+    // Examples of programmatically setting payment method
+    // modularCheckout.setSelectedPaymentMethod('card');        // New card
+    // modularCheckout.setSelectedPaymentMethod('bankAccount'); // New bank account
+    // modularCheckout.setSelectedPaymentMethod('sezzle');      // Sezzle BNPL
+    // modularCheckout.setSelectedPaymentMethod('pm_12345');    // Saved payment method
   })();
 </script>
 `;

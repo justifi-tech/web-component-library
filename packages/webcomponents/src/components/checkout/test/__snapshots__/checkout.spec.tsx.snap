@@ -9,7 +9,7 @@ exports[`justifi-checkout renders loading 1`] = `
       <div class="col-12" part="checkout-summary">
         <justifi-header class="fs-5 fw-bold pb-3" level="h2" text="Summary"></justifi-header>
         <section>
-          <justifi-skeleton height="24px"></justifi-skeleton>
+          <justifi-checkout-summary></justifi-checkout-summary>
         </section>
       </div>
       <div class="col-12 mt-4"></div>
@@ -18,13 +18,22 @@ exports[`justifi-checkout renders loading 1`] = `
         <justifi-header class="fs-6 fw-bold lh-lg" level="h3" text="Select payment type"></justifi-header>
         <div class="d-flex flex-column">
           <section>
-            <justifi-skeleton height="300px"></justifi-skeleton>
+            <div>
+              <justifi-saved-payment-methods></justifi-saved-payment-methods>
+              <justifi-sezzle-payment-method></justifi-sezzle-payment-method>
+              <div>
+                <payment-method-option label="New credit or debit card" paymentmethodoptionid="card"></payment-method-option>
+              </div>
+              <div>
+                <payment-method-option label="New bank account" paymentmethodoptionid="bankAccount"></payment-method-option>
+              </div>
+            </div>
           </section>
         </div>
       </div>
       <div class="col-12"></div>
       <div class="mt-4">
-        <justifi-button disabled="" isloading="" text="Pay" type="submit" variant="primary"></justifi-button>
+        <justifi-button text="Pay" type="submit" variant="primary"></justifi-button>
       </div>
     </div>
   </justifi-modular-checkout>

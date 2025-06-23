@@ -16,19 +16,6 @@
 | `width`       | `width`     |             | `number \| string`        | `undefined` |
 
 
-## Dependencies
-
-### Used by
-
- - [justifi-checkout](../../components/checkout)
-
-### Graph
-```mermaid
-graph TD;
-  justifi-checkout --> justifi-skeleton
-  style justifi-skeleton fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

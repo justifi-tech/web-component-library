@@ -37,8 +37,14 @@ const meta: Meta = {
         category: "events",
       },
     },
-    "checkout-complete-event": {
+    "submit-event": {
       description: "`CheckoutCompleteEvent`",
+      table: {
+        category: "events",
+      },
+    },
+    "payment-method-changed": {
+      description: "Emitted when the selected payment method changes. Returns the selected payment method ID as a string.",
       table: {
         category: "events",
       },
@@ -56,13 +62,21 @@ const meta: Meta = {
         category: "methods",
         defaultValue: { summary: "submitCheckout(billingInfo?: IBillingInfo) => Promise<void>" }
       },
+    },
+    setSelectedPaymentMethod: {
+      description: "Programmatically set the selected payment method by ID",
+      table: {
+        category: "methods",
+        defaultValue: { summary: "setSelectedPaymentMethod(paymentMethodId: string) => Promise<void>" }
+      },
     }
   },
   parameters: {
     actions: {
       handles: [
         "error-event",
-        "checkout-complete-event",
+        "submit-event",
+        "payment-method-changed",
       ]
     }
   },
