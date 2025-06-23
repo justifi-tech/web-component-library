@@ -26,7 +26,7 @@ const PaymentMethodTypeLabels = {
 export class TokenizePaymentMethod {
   analytics: JustifiAnalytics;
   private billingFormRef?: HTMLJustifiBillingFormElement;
-  private paymentMethodFormRef?: HTMLCardFormElement;
+  private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
 
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodId: string;
@@ -207,7 +207,11 @@ export class TokenizePaymentMethod {
         paymentMethodData = { ...billingFormFieldValues };
       }
       const clientId = this.authToken;
-      const tokenizeResponse = await this.paymentMethodFormRef.tokenize(clientId, paymentMethodData, this.accountId);
+      const tokenizeResponse = await this.paymentMethodFormRef.tokenize({
+        clientId,
+        paymentMethodMetadata: paymentMethodData,
+        account: this.accountId
+      });
       return tokenizeResponse;
     } catch (error) {
       return error;
@@ -224,9 +228,9 @@ export class TokenizePaymentMethod {
       <div class="mt-4 pb-4">
         <hidden-input />
         {paymentMethodType === 'card' ? (
-          <card-form ref={(el) => this.paymentMethodFormRef = el} />
+          <justifi-card-form ref={(el) => this.paymentMethodFormRef = el} />
         ) : (
-          <bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
+          <justifi-bank-account-form ref={(el) => this.paymentMethodFormRef = el} />
         )}
         <justifi-billing-form
           ref={(el) => (this.billingFormRef = el)}
