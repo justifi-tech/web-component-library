@@ -16,6 +16,7 @@ export class CheckoutWrapper {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
+  private tokenizeComponentRef?: HTMLJustifiTokenizePaymentMethodElement;
   private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
@@ -114,6 +115,7 @@ export class CheckoutWrapper {
 
   private queryFormRefs() {
     this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
+    this.tokenizeComponentRef = this.hostEl.querySelector('justifi-tokenize-payment-method');
     this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
@@ -132,6 +134,13 @@ export class CheckoutWrapper {
 
     if (this.savePaymentMethod) {
       paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
+    }
+
+    if (this.tokenizeComponentRef) {
+      const tokenizeResult = await this.tokenizeComponentRef.tokenizePaymentMethod();
+      if (tokenizeResult.error) {
+        return tokenizeResult;
+      }
     }
 
     return this.paymentMethodFormRef.tokenize({

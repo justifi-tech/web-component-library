@@ -81,6 +81,18 @@ app.get('/', async (req, res) => {
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
+        <style>
+          .column-output {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+          }
+          
+          .column-output > div {
+            flex: 1;
+            min-height: 50%;
+          }
+        </style>
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
@@ -98,8 +110,14 @@ app.get('/', async (req, res) => {
           <button id="test-validate-button" hidden>Test Validate</button>
           <button id="test-submit-button" hidden="${hideSubmitButton}"}>Test Submit</button>
         </div>
-        <div class="column-output" id="output-pane">
-          <em>Tokenization output will appear here...</em>
+        <div class="column-output">
+          <div id="output-pane">
+            <em>Tokenization output will appear here...</em>
+          </div>
+          <div id="event-messages" style="padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;">
+            <h3 style="margin-top: 0;">Event Messages</h3>
+            <div id="event-log" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: white;"><em>Event messages will appear here...</em></div>
+          </div>
         </div>
       </body>
       <script>
@@ -110,6 +128,24 @@ app.get('/', async (req, res) => {
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
+        }
+
+        function logEventMessage(eventType, eventData) {
+          const timestamp = new Date().toLocaleTimeString();
+          const eventLog = document.getElementById('event-log');
+          const eventMessage = document.createElement('div');
+          eventMessage.style.cssText = 'margin-bottom: 10px; padding: 8px; border-left: 3px solid #007bff; background-color: #f8f9fa;';
+          eventMessage.innerHTML = 
+            '<strong>[' + timestamp + '] ' + eventType + ':</strong><br>' +
+            '<code style="font-size: 12px;">' + JSON.stringify(eventData, null, 2) + '</code>';
+          
+          // Clear the initial message if it's still there
+          if (eventLog.innerHTML.includes('Event messages will appear here...')) {
+            eventLog.innerHTML = '';
+          }
+          
+          eventLog.appendChild(eventMessage);
+          eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to bottom
         }
 
         justifiTokenizePaymentMethod.addEventListener('submit-event', (event) => {
@@ -123,11 +159,13 @@ app.get('/', async (req, res) => {
             console.log('Error from submit-event', event.detail.response.error);
           }
           writeOutputToPage(event);
+          logEventMessage('submit-event', event.detail);
         });
 
         justifiTokenizePaymentMethod.addEventListener('error-event', (event) => {
           console.log('Error-event', event);
           writeOutputToPage(event);
+          logEventMessage('error-event', event.detail);
         });
 
         fillBillingFormButton.addEventListener('click', () => {

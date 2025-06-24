@@ -101,11 +101,22 @@ export class TokenizePaymentMethod {
   }
 
   @Method()
-  async tokenizePaymentMethod(event?: CustomEvent): Promise<PaymentMethodPayload> {
+  async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
     event?.preventDefault();
     this.isLoading = true;
 
     try {
+      const validation = await this.validate();
+      if (!validation.isValid) {
+        this.errorEvent.emit({
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          message: ERROR_MESSAGES.VALIDATION_ERROR,
+        });
+
+        this.isLoading = false;
+        return;
+      }
+
       const tokenizeResponse = await this.resolvePaymentMethod({ isValid: true });
 
       if (tokenizeResponse.error) {
@@ -148,26 +159,18 @@ export class TokenizePaymentMethod {
   }
 
   private validateRequiredProps() {
-    if (!this.authToken) {
-      if (!checkoutStore.authToken) {
-        this.emitError({
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          message: ERROR_MESSAGES.AUTH_TOKEN_REQUIRED,
-        });
-      } else {
-        this.authToken = checkoutStore.authToken;
-      }
+    if (!this.authToken && !checkoutStore.authToken) {
+      this.emitError({
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        message: ERROR_MESSAGES.AUTH_TOKEN_REQUIRED,
+      });
     }
 
-    if (!this.accountId) {
-      if (!checkoutStore.accountId) {
-        this.emitError({
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          message: ERROR_MESSAGES.ACCOUNT_ID_REQUIRED,
-        });
-      } else {
-        this.accountId = checkoutStore.accountId;
-      }
+    if (!this.accountId && !checkoutStore.accountId) {
+      this.emitError({
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        message: ERROR_MESSAGES.ACCOUNT_ID_REQUIRED,
+      });
     }
   }
 
@@ -257,9 +260,9 @@ export class TokenizePaymentMethod {
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();
       const config: TokenizeConfig = {
-        clientId: this.authToken,
+        clientId: this.authToken || checkoutStore.authToken,
+        account: this.accountId || checkoutStore.accountId,
         paymentMethodMetadata: this.buildPaymentMethodMetadata(billingFormFieldValues),
-        account: this.accountId,
       };
 
       return await this.paymentMethodFormRef.tokenize(config);
@@ -334,7 +337,7 @@ export class TokenizePaymentMethod {
                   text={this.submitButtonText}
                   variant="primary"
                   type="submit"
-                  clickHandler={() => this.tokenizePaymentMethod()}
+                  clickHandler={(e) => this.tokenizePaymentMethod(e)}
                   isLoading={this.isLoading}
                   data-testid="submit-button"
                   hidden={this.hideSubmitButton}
