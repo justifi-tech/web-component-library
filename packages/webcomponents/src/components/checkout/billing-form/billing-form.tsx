@@ -23,17 +23,17 @@ export class BillingForm {
 
   @Method()
   async getValues(): Promise<BillingFormFields> {
-    return this.formRef.getValues();
+    return this.formRef?.getValues() ?? {};
   }
 
   @Method()
   async fill(fields: BillingFormFields) {
-    return this.formRef.fill(fields);
+    return this.formRef?.fill(fields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean, errors: any }> {
-    const { isValid, errors } = await this.formRef.validate();
+    const { isValid, errors } = await this.formRef?.validate() ?? { isValid: false, errors: {} };
     return { isValid, errors };
   }
 
