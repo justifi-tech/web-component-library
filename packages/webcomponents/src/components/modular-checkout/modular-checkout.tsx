@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "
 import { checkoutStore, onChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
-import { ComponentErrorCodes, ComponentErrorSeverity, ICheckout } from "../../api";
+import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity, ICheckout, ICheckoutStatus } from "../../api";
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
@@ -59,6 +59,14 @@ export class CheckoutWrapper {
   }
 
   componentWillLoad() {
+    if (!this.authToken || !this.checkoutId) {
+      this.errorEvent.emit({
+        message: ComponentErrorMessages.NOT_AUTHENTICATED,
+        errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
@@ -85,6 +93,22 @@ export class CheckoutWrapper {
     if (this.getCheckout) {
       this.getCheckout({
         onSuccess: ({ checkout }) => {
+          if (checkout.status === ICheckoutStatus.completed) {
+            this.errorEvent.emit({
+              message: ComponentErrorMessages.CHECKOUT_ALREADY_COMPLETED,
+              errorCode: ComponentErrorCodes.CHECKOUT_ALREADY_COMPLETED,
+              severity: ComponentErrorSeverity.ERROR,
+            });
+            return;
+          } else if (checkout.status === ICheckoutStatus.expired) {
+            this.errorEvent.emit({
+              message: ComponentErrorMessages.CHECKOUT_EXPIRED,
+              errorCode: ComponentErrorCodes.CHECKOUT_EXPIRED,
+              severity: ComponentErrorSeverity.ERROR,
+            });
+            return;
+          }
+
           this.updateStore(checkout);
         },
         onError: (error) => {
