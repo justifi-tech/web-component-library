@@ -12,7 +12,7 @@ import { insuranceValues, insuranceValuesOn } from "../insurance/insurance-state
   tag: 'justifi-modular-checkout',
   shadow: false
 })
-export class CheckoutWrapper {
+export class ModularCheckout {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
