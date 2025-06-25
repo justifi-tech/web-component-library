@@ -21,17 +21,17 @@
 
 ## Methods
 
-### `tokenize(clientId: string, paymentMethodMetadata: any, account?: string) => Promise<any>`
+### `tokenize(clientId: string, paymentMethodMetadata: IPaymentMethodMetadata, account?: string) => Promise<any>`
 
 
 
 #### Parameters
 
-| Name                    | Type     | Description |
-| ----------------------- | -------- | ----------- |
-| `clientId`              | `string` |             |
-| `paymentMethodMetadata` | `any`    |             |
-| `account`               | `string` |             |
+| Name                    | Type                                        | Description |
+| ----------------------- | ------------------------------------------- | ----------- |
+| `clientId`              | `string`                                    |             |
+| `paymentMethodMetadata` | `ISavedPaymentMethod & ISubmitCheckoutArgs` |             |
+| `account`               | `string`                                    |             |
 
 #### Returns
 
@@ -56,12 +56,16 @@ Type: `Promise<any>`
 
  - [bank-account-form](../../components/checkout/bank-account-form)
  - [card-form](../../components/checkout/card-form)
+ - [justifi-bank-account-form](../../components/modular-checkout/sub-components)
+ - [justifi-card-form](../../components/modular-checkout/sub-components)
 
 ### Graph
 ```mermaid
 graph TD;
   bank-account-form --> iframe-input
   card-form --> iframe-input
+  justifi-bank-account-form --> iframe-input
+  justifi-card-form --> iframe-input
   style iframe-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
