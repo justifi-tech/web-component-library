@@ -43,6 +43,12 @@ const meta: Meta = {
         category: "events",
       },
     },
+    "payment-method-changed": {
+      description: "Emitted when the selected payment method changes. Returns the selected payment method ID as a string.",
+      table: {
+        category: "events",
+      },
+    },
     validate: {
       description: "Validate the payment method and billing form fields",
       table: {
@@ -56,6 +62,13 @@ const meta: Meta = {
         category: "methods",
         defaultValue: { summary: "submitCheckout(billingInfo?: IBillingInfo) => Promise<void>" }
       },
+    },
+    setSelectedPaymentMethod: {
+      description: "Programmatically set the selected payment method by ID",
+      table: {
+        category: "methods",
+        defaultValue: { summary: "setSelectedPaymentMethod(paymentMethodId: string) => Promise<void>" }
+      },
     }
   },
   parameters: {
@@ -63,6 +76,7 @@ const meta: Meta = {
       handles: [
         "error-event",
         "submit-event",
+        "payment-method-changed",
       ]
     }
   },

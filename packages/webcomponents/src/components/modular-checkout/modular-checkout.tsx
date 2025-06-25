@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
-import { checkoutStore } from "../../store/checkout.store";
+import { checkoutStore, onChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity, ICheckout, ICheckoutStatus } from "../../api";
@@ -30,6 +30,7 @@ export class CheckoutWrapper {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter;
+  @Event({ eventName: 'payment-method-changed' }) paymentMethodChangedEvent: EventEmitter<string>;
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -51,6 +52,10 @@ export class CheckoutWrapper {
 
     this.getCheckout = makeGetCheckout(config);
     this.completeCheckout = makeCheckoutComplete(config);
+
+    onChange('selectedPaymentMethod', (newValue: string) => {
+      this.paymentMethodChangedEvent.emit(newValue);
+    });
   }
 
   componentWillLoad() {
@@ -258,6 +263,11 @@ export class CheckoutWrapper {
         });
       },
     });
+  }
+
+  @Method()
+  async setSelectedPaymentMethod(paymentMethodId: string): Promise<void> {
+    checkoutStore.selectedPaymentMethod = paymentMethodId;
   }
 
   render() {
