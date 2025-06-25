@@ -18,6 +18,10 @@ export interface IErrorObject {
   param?: string;
 }
 
+export const isErrorObject = (e: any): e is IErrorObject => {
+  return typeof e === 'object' && 'message' in e && 'code' in e;
+}
+
 export interface IApiResponseCollection<T> extends IApiResponse<T> {
   page_info: PagingInfo;
 }
