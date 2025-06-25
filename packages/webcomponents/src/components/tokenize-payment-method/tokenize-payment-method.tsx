@@ -57,8 +57,8 @@ export class TokenizePaymentMethod {
   @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideSubmitButton?: boolean;
-  @Prop() paymentMethodGroupId: string;
-  @Prop() submitButtonText: string = 'Submit';
+  @Prop() paymentMethodGroupId?: string;
+  @Prop() submitButtonText?: string = 'Submit';
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
@@ -82,8 +82,6 @@ export class TokenizePaymentMethod {
   paymentMethodsChanged() {
     this.setDefaultSelectedPaymentMethod();
   }
-
-
 
   @Listen('radio-click')
   handleRadioClick(event: CustomEvent<string>) {
