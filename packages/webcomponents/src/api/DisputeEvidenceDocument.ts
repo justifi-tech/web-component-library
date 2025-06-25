@@ -28,20 +28,17 @@ export class DisputeEvidenceDocument {
   }
 
   async getFileString() {
-    let fileString = '';
-    const fileStringPromise = new Promise((resolve, reject) => {
+    const fileDataPromise = new Promise<ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        fileString = e.target.result as string
-        resolve(fileString);
+        resolve(e.target.result as ArrayBuffer);
       };
       reader.onerror = () => {
         reject(new Error('Error reading file'));
       };
-      reader.readAsDataURL(this._file);
+      reader.readAsArrayBuffer(this._file);
     });
-    await fileStringPromise;
-    return fileString;
+    return await fileDataPromise;
   };
 
   constructor(file: File, dispute_evidence_type: DisputeEvidenceDocumentType) {

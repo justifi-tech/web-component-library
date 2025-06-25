@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.7.5
+
+### Patch Changes
+
+- ad59f97: Fix: improve document uploading from `justifi-payment-provisioning` and `justifi-dispute-management` components. Ensures correct encoding when uploading files.
+
 ## 5.7.4
 
 ### Patch Changes

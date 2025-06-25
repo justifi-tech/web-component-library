@@ -11,7 +11,7 @@ const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COM
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
-const paymentMethodId = process.env.PAYMENT_METHOD_ID;
+const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
 
 app.use(
   '/scripts',
@@ -80,7 +80,7 @@ async function makeCheckout(token) {
     body: JSON.stringify({
       amount: 1799,
       description: 'One Chocolate Donut',
-      payment_method_group_id: paymentMethodId,
+      payment_method_group_id: paymentMethodGroupId,
       origin_url: `localhost:${port}`,
     }),
   });
@@ -120,10 +120,18 @@ app.get('/', async (req, res) => {
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
+        <style>
+          body {
+            font-family: sans-serif;
+          }
+        </style>
       </head>
       <body>
-        <div>
-          <justifi-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
+        <div id="component-wrapper" class="container" style="max-width: 800px; margin: auto; padding: 20px;">
+          <justifi-checkout
+            auth-token="${webComponentToken}"
+            checkout-id="${checkout.id}"
+          >
             <div slot="insurance">
               <justifi-season-interruption-insurance
                 primary-identity-first-name="${insurance.primary_identity.first_name}"
@@ -140,24 +148,75 @@ app.get('/', async (req, res) => {
               </justifi-season-interruption-insurance>
             </div>
           </justifi-checkout>
+          <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-secondary" id="fill-billing-form">Fill Billing Form</button>
+            <button class="btn btn-secondary" id="validate-button">Validate</button>
+          </div>
+          <div id="output-pane" style="padding: 20px; border: 1px solid #ccc; margin-bottom: 20px;"><em>Checkout output will appear here...</em></div>
+          <div id="event-messages" style="padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;">
+            <h3 style="margin-top: 0;">Event Messages</h3>
+            <div id="event-log" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: white;"><em>Event messages will appear here...</em></div>
+          </div>
         </div>
-        <div id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
+        const fillBillingFormButton = document.getElementById('fill-billing-form');
+        const validateButton = document.getElementById('validate-button');
+
+        fillBillingFormButton.addEventListener('click', () => {
+          justifiCheckout.fillBillingForm({
+            name: 'John Doe',
+            address_line1: '123 Main St',
+            address_city: 'Anytown',
+            address_state: 'CA',
+            address_postal_code: '12345',
+          });
+        });
+
+        validateButton.addEventListener('click', async () => {
+          const isValid = await justifiCheckout.validate();
+          console.log('isValid', isValid);
+        });
 
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
+        function logEventMessage(eventType, eventData) {
+          const timestamp = new Date().toLocaleTimeString();
+          const eventLog = document.getElementById('event-log');
+          const eventMessage = document.createElement('div');
+          eventMessage.style.cssText = 'margin-bottom: 10px; padding: 8px; border-left: 3px solid #007bff; background-color: #f8f9fa;';
+          eventMessage.innerHTML = 
+            '<strong>[' + timestamp + '] ' + eventType + ':</strong><br>' +
+            '<code style="font-size: 12px;">' + JSON.stringify(eventData, null, 2) + '</code>';
+          
+          // Clear the initial message if it's still there
+          if (eventLog.innerHTML.includes('Event messages will appear here...')) {
+            eventLog.innerHTML = '';
+          }
+          
+          eventLog.appendChild(eventMessage);
+          eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to bottom
+        }
+
         justifiCheckout.addEventListener('submit-event', (event) => {
           console.log(event);
           writeOutputToPage(event);
+          logEventMessage('submit-event', event.detail);
         });
 
         justifiCheckout.addEventListener('error-event', (event) => {
           console.log(event);
           writeOutputToPage(event);
+          logEventMessage('error-event', event.detail);
+        });
+
+        justifiCheckout.addEventListener('payment-method-changed', (event) => {
+          console.log(event);
+          writeOutputToPage(event);
+          logEventMessage('payment-method-changed', event.detail);
         });
       </script>
     </html>

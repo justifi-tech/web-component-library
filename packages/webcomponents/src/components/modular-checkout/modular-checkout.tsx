@@ -1,11 +1,12 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
-import checkoutStore from "../../store/checkout.store";
+import { checkoutStore, onChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
-import { ComponentErrorCodes, ComponentErrorSeverity } from "../../api";
+import { ComponentErrorCodes, ComponentErrorSeverity, ICheckout } from "../../api";
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
-import { IBillingInfo } from "../../api/BillingInformation";
+import { BillingFormFields } from "../../components";
+import { insuranceValues, insuranceValuesOn } from "../insurance/insurance-state";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -22,14 +23,14 @@ export class CheckoutWrapper {
   private completeCheckout: Function;
 
   @Prop() authToken: string;
-  @Prop() accountId: string;
   @Prop() checkoutId: string;
   @Prop() savePaymentMethod?: boolean = false;
 
   @Element() hostEl: HTMLElement;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
-  @Event({ eventName: 'checkout-complete-event' }) checkoutComplete: EventEmitter;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter;
+  @Event({ eventName: 'payment-method-changed' }) paymentMethodChangedEvent: EventEmitter<string>;
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -51,14 +52,25 @@ export class CheckoutWrapper {
 
     this.getCheckout = makeGetCheckout(config);
     this.completeCheckout = makeCheckoutComplete(config);
+
+    onChange('selectedPaymentMethod', (newValue: string) => {
+      this.paymentMethodChangedEvent.emit(newValue);
+    });
   }
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
-    checkoutStore.accountId = this.accountId;
     this.fetchCheckout();
+
+    // Refresh the checkout data when insurance is added or removed
+    insuranceValuesOn('set', (key) => {
+      const value = insuranceValues[key];
+      if (value !== undefined) {
+        this.fetchCheckout();
+      }
+    });
   }
 
   componentDidLoad() {
@@ -73,16 +85,7 @@ export class CheckoutWrapper {
     if (this.getCheckout) {
       this.getCheckout({
         onSuccess: ({ checkout }) => {
-          checkoutStore.paymentMethods = checkout.payment_methods;
-          checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
-          checkoutStore.paymentDescription = checkout.payment_description;
-          checkoutStore.totalAmount = checkout.total_amount;
-          checkoutStore.paymentAmount = checkout.payment_amount;
-          checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
-          checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
-          checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
-          checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
-          checkoutStore.bnplProviderCheckoutUrl = checkout?.bnpl?.provider_checkout_url;
+          this.updateStore(checkout);
         },
         onError: (error) => {
           this.errorEvent.emit({
@@ -95,6 +98,20 @@ export class CheckoutWrapper {
     }
   }
 
+  private updateStore(checkout: ICheckout) {
+    checkoutStore.accountId = checkout.account_id;
+    checkoutStore.paymentMethods = checkout.payment_methods;
+    checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
+    checkoutStore.paymentDescription = checkout.payment_description;
+    checkoutStore.totalAmount = checkout.total_amount;
+    checkoutStore.paymentAmount = checkout.payment_amount;
+    checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
+    checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
+    checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
+    checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
+    checkoutStore.bnplProviderCheckoutUrl = checkout?.bnpl?.provider_checkout_url;
+  }
+
   private queryFormRefs() {
     this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
     this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
@@ -102,13 +119,13 @@ export class CheckoutWrapper {
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
   }
 
-  private async tokenizePaymentMethod(tokenizeArgs: IBillingInfo): Promise<any> {
+  private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
     const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
 
     const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
 
     const paymentMethodMetadata = {
-      accountId: this.accountId,
+      accountId: checkoutStore.accountId,
       payment_method_group_id: undefined,
       ...combinedBillingInfo
     };
@@ -120,11 +137,11 @@ export class CheckoutWrapper {
     return this.paymentMethodFormRef.tokenize({
       clientId: this.authToken,
       paymentMethodMetadata,
-      account: this.accountId,
+      account: checkoutStore.accountId,
     });
   }
 
-  private async getPaymentMethod(submitCheckoutArgs: IBillingInfo): Promise<string | undefined> {
+  private async getPaymentMethod(submitCheckoutArgs: BillingFormFields): Promise<string | undefined> {
     if (!this.paymentMethodFormRef) {
       return checkoutStore.selectedPaymentMethod;
     }
@@ -160,7 +177,7 @@ export class CheckoutWrapper {
   }
 
   @Method()
-  async submitCheckout(submitCheckoutArgs: IBillingInfo): Promise<void> {
+  async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
     const isValid = await this.validate();
     if (!isValid) {
       this.errorEvent.emit({
@@ -209,7 +226,7 @@ export class CheckoutWrapper {
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
-        this.checkoutComplete.emit({
+        this.submitEvent.emit({
           checkout,
           message: 'Checkout completed successfully',
         });
@@ -222,6 +239,11 @@ export class CheckoutWrapper {
         });
       },
     });
+  }
+
+  @Method()
+  async setSelectedPaymentMethod(paymentMethodId: string): Promise<void> {
+    checkoutStore.selectedPaymentMethod = paymentMethodId;
   }
 
   render() {
