@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen, Element } from '@stencil/core';
 import { StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
@@ -46,9 +46,12 @@ export class TokenizePaymentMethod {
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
 
+  @Element() host: HTMLElement;
+
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodId: string;
   @State() saveNewPaymentMethodChecked: boolean = false;
+  @State() computedHideSubmitButton: boolean = false;
 
   @Prop() accountId?: string;
   @Prop() authToken?: string;
@@ -71,6 +74,7 @@ export class TokenizePaymentMethod {
 
   connectedCallback() {
     this.setDefaultSelectedPaymentMethod();
+    this.setComputedHideSubmitButton();
   }
 
   disconnectedCallback() {
@@ -100,6 +104,7 @@ export class TokenizePaymentMethod {
 
   @Method()
   async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
+    console.log('tokenizePaymentMethod');
     event?.preventDefault();
     this.isLoading = true;
 
@@ -180,6 +185,31 @@ export class TokenizePaymentMethod {
         this.selectedPaymentMethodId = PaymentMethodTypes.bankAccount;
       }
     }
+  }
+
+  private setComputedHideSubmitButton() {
+    // If hideSubmitButton prop is explicitly set, use that value
+    if (this.hideSubmitButton !== undefined) {
+      this.computedHideSubmitButton = this.hideSubmitButton;
+      return;
+    }
+
+    // Otherwise, auto-detect if component is slotted within modular-checkout
+    const isWithinModularCheckout = this.isSlottedWithinModularCheckout();
+    this.computedHideSubmitButton = isWithinModularCheckout;
+  }
+
+  private isSlottedWithinModularCheckout(): boolean {
+    let parent: Element | null = this.host?.parentElement;
+
+    while (parent) {
+      if (parent.tagName === 'JUSTIFI-MODULAR-CHECKOUT') {
+        return true;
+      }
+      parent = parent.parentElement;
+    }
+
+    return false;
   }
 
   private get availablePaymentMethods(): PaymentMethodTypes[] {
@@ -338,7 +368,7 @@ export class TokenizePaymentMethod {
                   clickHandler={(e) => this.tokenizePaymentMethod(e)}
                   isLoading={this.isLoading}
                   data-testid="submit-button"
-                  hidden={this.hideSubmitButton}
+                  hidden={this.computedHideSubmitButton}
                 />
               </div>
             </div>
