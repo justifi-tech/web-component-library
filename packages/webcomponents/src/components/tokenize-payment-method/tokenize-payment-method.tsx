@@ -104,7 +104,6 @@ export class TokenizePaymentMethod {
 
   @Method()
   async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
-    console.log('tokenizePaymentMethod');
     event?.preventDefault();
     this.isLoading = true;
 

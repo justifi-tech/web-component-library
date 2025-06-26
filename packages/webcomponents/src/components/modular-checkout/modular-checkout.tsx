@@ -6,7 +6,7 @@ import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity, IC
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
-import { insuranceValues, insuranceValuesOn } from "../insurance/insurance-state";
+import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -73,10 +73,10 @@ export class ModularCheckout {
     checkoutStore.authToken = this.authToken;
     this.fetchCheckout();
 
-    // Refresh the checkout data when insurance is added or removed
-    insuranceValuesOn('set', (key) => {
+    // Refresh the checkout data when insurance values actually change (not on initial load)
+    insuranceValuesOn('set', (key: string) => {
       const value = insuranceValues[key];
-      if (value !== undefined) {
+      if (value !== undefined && hasInsuranceValueChanged(key, value)) {
         this.fetchCheckout();
       }
     });
