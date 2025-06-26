@@ -56,9 +56,11 @@ export class PostalCodeForm {
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }> {
+  async validate(): Promise<{ isValid: boolean, errors: any }> {
     let isValid: boolean = await this.formController.validate();
-    return { isValid: isValid };
+    const errors = this.formController.errors.getValue();
+
+    return { isValid, errors };
   }
 
   render() {
