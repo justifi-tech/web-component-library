@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from "@stencil/core";
 import { checkoutStore, onChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
@@ -31,6 +31,11 @@ export class ModularCheckout {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter;
   @Event({ eventName: 'payment-method-changed' }) paymentMethodChangedEvent: EventEmitter<string>;
+
+  @Watch('savePaymentMethod')
+  savePaymentMethodChanged(newValue: boolean) {
+    checkoutStore.savePaymentMethod = newValue;
+  }
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -70,6 +75,7 @@ export class ModularCheckout {
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
+    checkoutStore.savePaymentMethod = this.savePaymentMethod;
     this.fetchCheckout();
 
     // Refresh the checkout data when insurance values actually change (not on initial load)
@@ -154,7 +160,7 @@ export class ModularCheckout {
       ...combinedBillingInfo
     };
 
-    if (this.savePaymentMethod) {
+    if (checkoutStore.savePaymentMethod) {
       paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
     }
 

@@ -50,7 +50,6 @@ export class TokenizePaymentMethod {
 
   @State() isLoading: boolean = false;
   @State() selectedPaymentMethodId: string;
-  @State() saveNewPaymentMethodChecked: boolean = false;
   @State() computedHideSubmitButton: boolean = false;
 
   @Prop() accountId?: string;
@@ -92,10 +91,6 @@ export class TokenizePaymentMethod {
     this.selectedPaymentMethodId = event.detail;
   }
 
-  @Listen('checkboxChanged')
-  handleCheckboxChanged(event: CustomEvent<boolean>) {
-    this.saveNewPaymentMethodChecked = event.detail;
-  }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
@@ -299,9 +294,17 @@ export class TokenizePaymentMethod {
   }
 
   private buildPaymentMethodMetadata(billingFormFieldValues: any) {
-    return this.saveNewPaymentMethodChecked
-      ? { ...billingFormFieldValues, payment_method_group_id: this.paymentMethodGroupId }
+    return this.shouldSavePaymentMethod
+      ? { ...billingFormFieldValues, payment_method_group_id: this.paymentMethodGroupID }
       : { ...billingFormFieldValues };
+  }
+
+  private get paymentMethodGroupID(): string | undefined {
+    return this.paymentMethodGroupId || checkoutStore.paymentMethodGroupId;
+  }
+
+  private get shouldSavePaymentMethod(): boolean {
+    return !!(this.paymentMethodGroupId || checkoutStore.savePaymentMethod);
   }
 
   private get shouldHideRadioInput(): boolean {
@@ -337,7 +340,7 @@ export class TokenizePaymentMethod {
           hideBankAccountBillingForm={this.hideBankAccountBillingForm}
           paymentMethodType={paymentMethodId}
         />
-        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupId} />
+        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
       </div>
     );
   }
