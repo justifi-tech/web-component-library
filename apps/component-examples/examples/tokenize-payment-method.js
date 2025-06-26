@@ -63,6 +63,7 @@ app.get('/', async (req, res) => {
   const hideCardBillingForm = false;
   const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
+  const paymentMethodGroupId = undefined;
 
   const billingFormFields = {
     name: 'John Doe',
@@ -82,6 +83,16 @@ app.get('/', async (req, res) => {
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
         <style>
+          .component-wrapper {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          }
+
+          .monospace {
+            font-family: monospace;
+          }
+
           .column-output {
             display: flex;
             flex-direction: column;
@@ -96,19 +107,33 @@ app.get('/', async (req, res) => {
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-tokenize-payment-method
-            auth-token="${webComponentToken}"
-            account-id="${subAccountId}"
-            disable-bank-account="${disableBankAccount}"
-            disable-credit-card="${disableCreditCard}"
-            hide-bank-account-billing-form="${hideBankAccountBillingForm}"
-            hide-card-billing-form="${hideCardBillingForm}"
-            hide-submit-button="${hideSubmitButton}"
-          >
-          </justifi-tokenize-payment-method>
-          <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
-          <button id="test-validate-button" hidden>Test Validate</button>
-          <button id="test-submit-button" hidden="${hideSubmitButton}"}>Test Submit</button>
+          <div class="component-wrapper">
+            <justifi-tokenize-payment-method
+              auth-token="${webComponentToken}"
+              account-id="${subAccountId}"
+              disable-bank-account="${disableBankAccount}"
+              disable-credit-card="${disableCreditCard}"
+              hide-bank-account-billing-form="${hideBankAccountBillingForm}"
+              hide-card-billing-form="${hideCardBillingForm}"
+              hide-submit-button="${hideSubmitButton}"
+              ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ''}
+            >
+            </justifi-tokenize-payment-method>
+          </div>
+          <div class="component-wrapper flex-column">
+            <h5 class="mb-3">Test Methods</h5>
+            <div class="d-flex flex-column gap-2">
+              <button class="btn btn-secondary" id="fill-billing-form-button">
+                <span class="monospace">fillBillingForm()</span>
+              </button>
+              <button class="btn btn-secondary" id="test-validate-button">
+                <span class="monospace">validate()</span>
+              </button>
+              <button class="btn btn-secondary" id="test-submit-button" ${!hideSubmitButton ? 'hidden' : ''}>
+                <span class="monospace">tokenizePaymentMethod()</span>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="column-output">
           <div id="output-pane">
