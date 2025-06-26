@@ -34,6 +34,7 @@ export class JustifiRadioListItem {
             value={this.value}
             checked={this.checked}
             label={this.label}
+            inputHandler={() => null}
           />
         </div>
       </StyledHost>
