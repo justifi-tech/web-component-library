@@ -36,6 +36,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 - [Validation](#validation)
 - [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
 - [Payment Method Change Events](#payment-method-change-events)
+- [Insurance Integration](#insurance-integration)
 - [Props, events and methods](#props-events-and-methods)
 - [Authorization](#authorization)
 - [Example Usage](#example-usage)
@@ -159,6 +160,25 @@ The `justifi-modular-checkout` wrapper component emits a `payment-method-changed
 modularCheckout.addEventListener('payment-method-changed', (event) => {
   console.log('Selected payment method changed to:', event.detail);
 });
+```
+
+## Insurance Integration
+
+The `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.
+
+- **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated
+
+```html
+<justifi-modular-checkout
+  auth-token="123xyz"
+  account-id="acc_1234567890"
+  checkout-id="cho_1234567890"
+>
+  <justifi-checkout-summary />
+  <justifi-card-form />
+  <justifi-billing-information-form />
+  <justifi-season-interruption-insurance />
+</justifi-modular-checkout>
 ```
 
 # Props, events and methods

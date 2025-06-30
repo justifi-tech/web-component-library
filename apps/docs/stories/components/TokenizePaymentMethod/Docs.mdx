@@ -26,7 +26,7 @@ import { setUpMocks } from '../../utils/mockAllServices';
 ---
 
 Component to render an entire form including a switch to use a credit card or bank
-account, a submit button and all fields required for proper use.
+account, a submit button and all fields required for proper use. This component can be used standalone or as part of the modular checkout system.
 
 # Index
 
@@ -35,6 +35,8 @@ account, a submit button and all fields required for proper use.
 - [Props, events and methods](#props-events-and-methods)
 - [Authorization](#authorization)
 - [Security](#security)
+- [Usage Patterns](#usage-patterns)
+- [Integration with Modular Checkout](#integration-with-modular-checkout)
 - [Example usage](#example-usage)
 
 # Props, events and methods
@@ -75,6 +77,83 @@ The api endpoint associated with this component has the following security measu
 These measures are in place to prevent abuse and ensure the security of the payment processing system.
 
 **Note:** While `client-id` is still supported, we now recommend using web component tokens (`auth-token`) for enhanced security and flexibility.
+
+# Usage Patterns
+
+---
+
+## Standalone Usage
+
+When used standalone, the component provides its own submit button and handles all tokenization internally:
+
+```html
+<justifi-tokenize-payment-method
+  account-id="acc_123"
+  auth-token="authToken"
+  payment-method-group-id="pmg_123"
+/>
+```
+
+## External Control
+
+Hide the built-in submit button and control tokenization externally:
+
+```html
+<justifi-tokenize-payment-method
+  account-id="acc_123"
+  auth-token="authToken"
+  hide-submit-button="true"
+/>
+
+<button id="external-submit">Submit Payment</button>
+
+<script>
+  const tokenizer = document.querySelector('justifi-tokenize-payment-method');
+  const submitBtn = document.getElementById('external-submit');
+
+  submitBtn.addEventListener('click', async () => {
+    await tokenizer.tokenizePaymentMethod();
+  });
+</script>
+```
+
+## Pre-filling Billing Information
+
+You can programmatically fill the billing form:
+
+```javascript
+const tokenizer = document.querySelector('justifi-tokenize-payment-method');
+
+tokenizer.fillBillingForm({
+  name: 'John Doe',
+  address_line1: '123 Main St',
+  address_city: 'Anytown',
+  address_state: 'NY',
+  address_postal_code: '12345',
+});
+```
+
+# Integration with Modular Checkout
+
+---
+
+When used within the `justifi-modular-checkout` wrapper component, this component automatically adapts its behavior:
+
+- **Auto-detection**: The component automatically detects if it's slotted within a modular checkout
+- **Submit button hiding**: The submit button is automatically hidden when inside modular checkout
+- **Shared authentication**: Uses authentication tokens from the parent modular checkout component
+- **Coordinated validation**: Validation is coordinated by the modular checkout wrapper
+
+```html
+<justifi-modular-checkout
+  auth-token="authToken"
+  account-id="acc_123"
+  checkout-id="cho_123"
+>
+  <justifi-tokenize-payment-method />
+  <!-- Other modular checkout components -->
+</justifi-modular-checkout>
+```
 
 # Example Usage
 

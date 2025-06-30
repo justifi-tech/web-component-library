@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from "@stencil/core";
 import { checkoutStore, onChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
@@ -6,7 +6,7 @@ import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity, IC
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
-import { insuranceValues, insuranceValuesOn } from "../insurance/insurance-state";
+import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -31,6 +31,11 @@ export class ModularCheckout {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter;
   @Event({ eventName: 'payment-method-changed' }) paymentMethodChangedEvent: EventEmitter<string>;
+
+  @Watch('savePaymentMethod')
+  savePaymentMethodChanged(newValue: boolean) {
+    checkoutStore.savePaymentMethod = newValue;
+  }
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -70,12 +75,13 @@ export class ModularCheckout {
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
+    checkoutStore.savePaymentMethod = this.savePaymentMethod;
     this.fetchCheckout();
 
-    // Refresh the checkout data when insurance is added or removed
-    insuranceValuesOn('set', (key) => {
+    // Refresh the checkout data when insurance values actually change (not on initial load)
+    insuranceValuesOn('set', (key: string) => {
       const value = insuranceValues[key];
-      if (value !== undefined) {
+      if (value !== undefined && hasInsuranceValueChanged(key, value)) {
         this.fetchCheckout();
       }
     });
@@ -154,11 +160,11 @@ export class ModularCheckout {
       ...combinedBillingInfo
     };
 
-    if (this.savePaymentMethod) {
+    if (checkoutStore.savePaymentMethod) {
       paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
     }
 
-    return this.paymentMethodFormRef.tokenize({
+    return this.paymentMethodFormRef?.tokenize({
       clientId: this.authToken,
       paymentMethodMetadata,
       account: checkoutStore.accountId,

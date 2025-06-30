@@ -4,7 +4,7 @@ export default `<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 ${codeExampleHead(
-  'justifi-payment-form',
+  'justifi-tokenize-payment-method',
   `<style>
     ::part(font-family) {
       font-family: georgia;
@@ -113,38 +113,67 @@ ${codeExampleHead(
     <justifi-tokenize-payment-method
       account-id="acc_123"
       auth-token="authToken"
+      payment-method-group-id="pmg_123"
+      submit-button-text="Tokenize Payment Method"
     />
   </body>
 
   <script>
     const justifiTokenizePaymentMethod = document.querySelector("justifi-tokenize-payment-method");
 
+    // Handle successful tokenization
     justifiTokenizePaymentMethod.addEventListener("submit-event", (event) => {
-      const token = event.detail.response.token;
-
-      console.log("Token from tokenize response:", token);
+      const response = event.detail.response;
+      console.log("Tokenization successful:", response);
+      
+      if (response.token) {
+        console.log("Payment method token:", response.token);
+      }
+      
+      if (response.data) {
+        console.log("Full payment method data:", response.data);
+      }
     });
 
+    // Handle errors
     justifiTokenizePaymentMethod.addEventListener("error-event", (event) => {
-      console.log(event);
+      console.error("Tokenization error:", event.detail);
     });
 
-    // tokenize, if built-in submit button is hidden
-    document.getElementById("tokenize-button").addEventListener("click", () => {
-      justifiTokenizePaymentMethod.tokenizePaymentMethod();
+    // External tokenize button (when built-in submit button is hidden)
+    document.getElementById("tokenize-button").addEventListener("click", async () => {
+      try {
+        const result = await justifiTokenizePaymentMethod.tokenizePaymentMethod();
+        console.log("External tokenization result:", result);
+      } catch (error) {
+        console.error("External tokenization failed:", error);
+      }
     });
 
-    // fill billing form
-    document.getElementById("fill-billing-form").addEventListener("click", () => {
-      justifiTokenizePaymentMethod.fillBillingForm({
-        name: "John",
+    // Fill billing form programmatically
+    document.getElementById("fill-billing-form").addEventListener("click", async () => {
+      await justifiTokenizePaymentMethod.fillBillingForm({
+        name: "John Doe",
         address_line1: "123 Main St",
         address_line2: "Apt 1",
         address_city: "Anytown",
         address_state: "NY", // Use 2-letter state code
         address_postal_code: "12345",
       });
+      console.log("Billing form filled");
     }); 
+
+    // Validate form
+    document.getElementById("validate-form").addEventListener("click", async () => {
+      const validation = await justifiTokenizePaymentMethod.validate();
+      console.log("Validation result:", validation);
+      
+      if (validation.isValid) {
+        console.log("Form is valid!");
+      } else {
+        console.log("Form has errors:", validation.errors);
+      }
+    });
 
   </script>
 

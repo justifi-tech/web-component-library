@@ -49,14 +49,22 @@ export class BillingInformationForm {
   }
 
   @Method()
+  async fill(values: BillingFormFields) {
+    this.formController.setInitialValues(values);
+    return this.formController.values.getValue();
+  }
+
+  @Method()
   async getValues(): Promise<BillingFormFields> {
     return this.formController.values.getValue();
   }
 
   @Method()
-  async validate(): Promise<{ isValid: boolean }> {
-    let isValid: boolean = await this.formController.validate();
-    return { isValid: isValid };
+  async validate(): Promise<{ isValid: boolean, errors: any }> {
+    const isValid: boolean = await this.formController.validate();
+    const errors = this.formController.errors.getValue();
+
+    return { isValid, errors };
   }
 
   render() {
