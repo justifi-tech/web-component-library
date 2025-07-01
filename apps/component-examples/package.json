@@ -6,6 +6,9 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start": "npx nodemon ./examples/checkout.js",
     "start:checkout": "npx nodemon ./examples/checkout.js",
     "start:checkout-with-insurance": "npx nodemon ./examples/checkout-with-insurance.js",
@@ -39,6 +42,11 @@
     "@justifi/webcomponents": "workspace:*"
   },
   "devDependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/express": "^4.17.17",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   }
 }
