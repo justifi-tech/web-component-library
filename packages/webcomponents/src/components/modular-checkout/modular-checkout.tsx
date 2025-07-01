@@ -230,7 +230,7 @@ export class ModularCheckout {
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
-        this.checkoutComplete.emit({
+        this.submitEvent.emit({
           checkout,
           message: 'Apple Pay checkout completed successfully',
         });
