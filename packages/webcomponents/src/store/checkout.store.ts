@@ -1,49 +1,62 @@
 import { createStore } from '@stencil/store';
 import { ICheckoutPaymentMethod } from '../api';
+import { BillingFormFields } from '../components';
 
 interface IInitialState {
-  authToken: string;
   accountId: string;
-  paymentMethods: ICheckoutPaymentMethod[];
-  paymentMethodGroupId: string;
-  paymentDescription: string;
-  paymentCurrency: string;
-  totalAmount: number;
-  paymentAmount: number;
-  selectedPaymentMethod: string;
-  checkoutId: string;
+  authToken: string;
+  billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
-  bnplProviderClientId: string;
-  bnplProviderMode: string;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
+  bnplProviderClientId: string;
+  bnplProviderMode: string;
+  checkoutId: string;
+  disableBankAccount: boolean;
+  disableBnpl: boolean;
+  disableCreditCard: boolean;
+  disablePaymentMethodGroup: boolean;
+  paymentAmount: number;
+  paymentCurrency: string;
+  paymentDescription: string;
+  paymentMethodGroupId: string;
+  paymentMethods: ICheckoutPaymentMethod[];
+  selectedPaymentMethod: string;
+  totalAmount: number;
 }
 
 const initialState: IInitialState = {
-  authToken: '',
   accountId: '',
-  paymentMethods: [],
-  paymentMethodGroupId: '',
-  paymentDescription: '',
-  paymentCurrency: 'USD',
-  totalAmount: 0,
-  paymentAmount: 0,
-  selectedPaymentMethod: '',
-  checkoutId: '',
+  authToken: '',
+  billingFormFields: {
+    address_postal_code: '',
+  },
   bnplEnabled: false,
-  bnplProviderClientId: '',
-  bnplProviderMode: '',
   bnplProviderApiVersion: '',
   bnplProviderCheckoutUrl: '',
+  bnplProviderClientId: '',
+  bnplProviderMode: '',
+  checkoutId: '',
+  disableBankAccount: false,
+  disableBnpl: false,
+  disableCreditCard: false,
+  disablePaymentMethodGroup: false,
+  paymentAmount: 0,
+  paymentCurrency: 'USD',
+  paymentDescription: '',
+  paymentMethodGroupId: '',
+  paymentMethods: [],
+  selectedPaymentMethod: '',
+  totalAmount: 0,
 };
 
-const { state, onChange } = createStore(initialState);
+const { state: checkoutStore, onChange } = createStore(initialState);
 
 Object.keys(initialState).forEach((key) => {
   // @ts-ignore
   onChange(key, (newValue) => {
-    state[key] = newValue;
+    checkoutStore[key] = newValue;
   });
 });
 
-export default state;
+export { checkoutStore, onChange };

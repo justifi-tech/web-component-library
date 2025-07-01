@@ -1,17 +1,17 @@
-import { Component, h, Method, Prop, State } from "@stencil/core";
+import { Component, h, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
-import { StyledHost } from "../../ui-components";
-import JustifiAnalytics from "../../api/Analytics";
-import { checkPkgVersion } from "../../utils/check-pkg-version";
+import { StyledHost } from "../../../ui-components";
+import JustifiAnalytics from "../../../api/Analytics";
+import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { configState, waitForConfig } from "../../config-provider/config-state";
 
 @Component({
   tag: "justifi-card-form",
   shadow: true,
 })
 export class JustifiCardForm {
-  @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
-
   @State() isReady: boolean = false;
+  @State() iframeOrigin: string;
 
   private cardNumberIframeElement!: HTMLIframeInputElement;
   private expirationMonthIframeElement!: HTMLIframeInputElement;
@@ -20,7 +20,10 @@ export class JustifiCardForm {
 
   analytics: JustifiAnalytics;
 
-  componentWillLoad() {
+  async componentWillLoad() {
+    await waitForConfig();
+    this.iframeOrigin = configState.iframeOrigin;
+
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
   }

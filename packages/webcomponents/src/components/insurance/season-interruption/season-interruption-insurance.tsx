@@ -5,7 +5,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/Compon
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
-import checkoutStore from '../../../store/checkout.store';
+import { checkoutStore } from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',

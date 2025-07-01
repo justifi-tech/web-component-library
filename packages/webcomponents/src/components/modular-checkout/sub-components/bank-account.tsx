@@ -1,23 +1,27 @@
-import { Component, h, Method, Prop, State } from "@stencil/core";
-import { StyledHost } from "../../ui-components";
+import { Component, h, Method, State } from "@stencil/core";
+import { StyledHost } from "../../../ui-components";
 import BankAccountFormSkeleton from "./bank-account-skeleton";
-import { checkPkgVersion } from "../../utils/check-pkg-version";
-import JustifiAnalytics from "../../api/Analytics";
+import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import JustifiAnalytics from "../../../api/Analytics";
+import { configState, waitForConfig } from "../../config-provider/config-state";
 
 @Component({
   tag: "justifi-bank-account-form",
   shadow: true,
 })
 export class BankAccountForm {
+  @State() iframeOrigin: string;
+  @State() isReady: boolean = false;
+
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
 
   analytics: JustifiAnalytics;
 
-  @Prop() iframeOrigin: string = IFRAME_ORIGIN;
-  @State() isReady: boolean = false;
+  async componentWillLoad() {
+    await waitForConfig();
+    this.iframeOrigin = configState.iframeOrigin;
 
-  componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
   }

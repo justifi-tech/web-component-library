@@ -8,7 +8,7 @@ import {
   Method,
   Watch,
 } from "@stencil/core";
-import { ApplePayService } from "../../api/services/apple-pay.service";
+import { ApplePayService } from "../../../api/services/apple-pay.service";
 import {
   IApplePayConfig,
   IApplePayPaymentRequest,
@@ -16,11 +16,11 @@ import {
   ApplePayButtonStyle,
   ApplePayHelpers,
   IApplePayToken,
-} from "../../api/ApplePay";
-import { StyledHost } from "../../ui-components";
+} from "../../../api/ApplePay";
+import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
-import { ApplePayButton } from "../../ui-components/apple-pay-button";
-import checkoutStore from "../../store/checkout.store";
+import { ApplePayButton } from "../../../ui-components/apple-pay-button";
+import { checkoutStore } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-apple-pay",

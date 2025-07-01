@@ -1,19 +1,32 @@
 import { Component, h, State, Method } from '@stencil/core';
 import { BillingFormFields, billingFormSchema } from './billing-form-schema';
-import { billingForm } from '../../styles/parts';
-import { numberOnlyHandler } from '../../ui-components/form/utils';
-import StateOptions from '../../utils/state-options';
-import { FormController } from '../../ui-components/form/form';
-import { StyledHost } from '../../ui-components';
+import { billingForm } from '../../../styles/parts';
+import { numberOnlyHandler } from '../../../ui-components/form/utils';
+import StateOptions from '../../../utils/state-options';
+import { FormController } from '../../../ui-components/form/form';
+import { StyledHost } from '../../../ui-components';
+import { onChange } from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-billing-information-form',
   shadow: true
 })
 export class BillingInformationForm {
+  unsubscribe: () => void;
+
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
+
+  connectedCallback() {
+    this.unsubscribe = onChange('billingFormFields', (newValue: BillingFormFields) => {
+      this.formController.setInitialValues(newValue);
+    });
+  }
+
+  disconnectedCallback() {
+    this.unsubscribe?.();
+  }
 
   componentWillLoad() {
     this.formController = new FormController(billingFormSchema());
@@ -38,11 +51,6 @@ export class BillingInformationForm {
   @Method()
   async getValues(): Promise<BillingFormFields> {
     return this.formController.values.getValue();
-  }
-
-  @Method()
-  async fill(fields: BillingFormFields) {
-    this.formController.setInitialValues(fields);
   }
 
   @Method()

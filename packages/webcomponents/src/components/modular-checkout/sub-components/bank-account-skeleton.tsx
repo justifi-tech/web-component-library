@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "@stencil/core";
-import { Skeleton } from "../../ui-components";
+import { Skeleton } from "../../../ui-components";
 
 interface BankAccountFormSkeletonProps {
   isReady: boolean;

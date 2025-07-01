@@ -6,7 +6,7 @@ import {
   lineTwoValidation,
   postalValidation,
   stateValidation,
-} from '../business-forms/schemas/schema-validations';
+} from '../../business-forms/schemas/schema-validations';
 
 export interface BillingFormFields {
   name: string;
