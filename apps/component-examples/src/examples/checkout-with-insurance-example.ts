@@ -4,21 +4,18 @@ import { createExampleServer } from '../server/express-server';
 import { BaseTemplate } from '../templates/base-template';
 import { API_PATHS } from '../utils/api-paths';
 import {
-  CheckoutComponent,
-  CheckoutData,
-} from '../components/CheckoutComponent';
+  CheckoutWithInsuranceComponent,
+  CheckoutWithInsuranceData,
+  InsuranceData,
+} from '../components/CheckoutWithInsuranceComponent';
 
 // Load environment variables
 require('dotenv').config({ path: '../../.env' });
 
-// Create the JavaScript for the checkout component
-function createCheckoutScript(data: CheckoutData): string {
-  const { billingFormFields } = data;
-
+// Create the JavaScript for the checkout with insurance component
+function createCheckoutWithInsuranceScript(): string {
   return `
     const justifiCheckout = document.querySelector('justifi-checkout');
-    const fillBillingFormButton = document.getElementById('fill-billing-form-button');
-    const testValidateButton = document.getElementById('test-validate-button');
 
     function writeOutputToPage(event) {
       document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
@@ -33,20 +30,14 @@ function createCheckoutScript(data: CheckoutData): string {
       console.log(event);
       writeOutputToPage(event);
     });
-    
-    fillBillingFormButton.addEventListener('click', () => {
-      justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
-    });
-
-    testValidateButton.addEventListener('click', async () => {
-      const response = await justifiCheckout.validate();
-      console.log('Validate response', response);
-    });
   `;
 }
 
-// Main checkout example handler
-async function handleCheckoutExample(req: any, res: any): Promise<void> {
+// Main checkout with insurance example handler
+async function handleCheckoutWithInsuranceExample(
+  req: any,
+  res: any
+): Promise<void> {
   try {
     const server = req.app.locals['server'];
     const authService = server.getAuthService();
@@ -56,8 +47,14 @@ async function handleCheckoutExample(req: any, res: any): Promise<void> {
 
     // Create checkout
     const checkoutEndpoint = `${authService.getApiOrigin()}/${API_PATHS.CHECKOUT}`;
-    const paymentMethodGroupId = process.env['PAYMENT_METHOD_GROUP_ID'];
+    const paymentMethodGroupId = process.env[
+      'PAYMENT_METHOD_GROUP_ID'
+    ] as string;
     const subAccountId = authService.getSubAccountId();
+
+    if (!paymentMethodGroupId) {
+      throw new Error('PAYMENT_METHOD_ID environment variable is required');
+    }
 
     const checkoutResponse = await fetch(checkoutEndpoint, {
       method: 'POST',
@@ -81,36 +78,59 @@ async function handleCheckoutExample(req: any, res: any): Promise<void> {
     const checkoutData = await checkoutResponse.json();
     const checkout = checkoutData.data;
 
+    if (!checkout?.id) {
+      throw new Error('Checkout creation failed: no checkout ID returned');
+    }
+
     // Get web component token
     const webComponentToken = await authService.getWebComponentToken(token, [
       `write:checkout:${checkout.id}`,
       `write:tokenize:${subAccountId}`,
     ]);
 
-    // Prepare component data
-    const componentData: CheckoutData = {
-      checkoutId: checkout.id,
-      webComponentToken,
-      disableBankAccount: true,
-      disableCreditCard: false,
-      hideCardBillingForm: true,
-      hideBankAccountBillingForm: false,
-      billingFormFields: {
-        name: 'John Doe',
-        address_line1: 'Main St',
-        address_line2: 'Apt 1',
-        address_city: 'Beverly Hills',
-        address_state: 'CA',
-        address_postal_code: '90210',
+    // Prepare insurance data
+    const startDate = new Date();
+    const startDateString = startDate.toISOString().split('T')[0];
+
+    const endDate = new Date();
+    endDate.setFullYear(endDate.getFullYear() + 1);
+    const endDateString = endDate.toISOString().split('T')[0];
+
+    const insurance: InsuranceData = {
+      primary_identity: {
+        state: 'MN',
+        email: 'test@justifi.tech',
+        first_name: 'John',
+        last_name: 'Doe',
+        postal_code: '55401',
+        country: 'US',
+      },
+      policy_attributes: {
+        insurable_amount: 1000,
+        start_date: startDateString,
+        end_date: endDateString,
+        covered_identity: {
+          first_name: 'John',
+          last_name: 'Doe',
+        },
       },
     };
 
+    // Prepare component data
+    const componentData: CheckoutWithInsuranceData = {
+      checkoutId: checkout.id,
+      webComponentToken,
+      insurance,
+    };
+
     // Render the template using JSX and convert to HTML string
-    const bodyContent = renderToString(CheckoutComponent(componentData));
-    const script = createCheckoutScript(componentData);
+    const bodyContent = renderToString(
+      CheckoutWithInsuranceComponent(componentData)
+    );
+    const script = createCheckoutWithInsuranceScript();
 
     const html = BaseTemplate({
-      title: 'JustiFi Checkout',
+      title: 'JustiFi Checkout with Insurance',
       webComponentToken,
       bodyContent,
       scripts: [script],
@@ -118,7 +138,7 @@ async function handleCheckoutExample(req: any, res: any): Promise<void> {
 
     res.send(html);
   } catch (error) {
-    console.error('Error in checkout example:', error);
+    console.error('Error in checkout with insurance example:', error);
     res.status(500).send('Internal Server Error');
   }
 }
@@ -129,10 +149,10 @@ const server = createExampleServer();
 // Store server instance for route handlers to access
 server.getApp().locals['server'] = server;
 
-// Add the checkout route
+// Add the checkout with insurance route
 server.addRoute({
   path: '/',
-  handler: handleCheckoutExample,
+  handler: handleCheckoutWithInsuranceExample,
 });
 
 // Start the server
