@@ -55,7 +55,7 @@ async function handleCheckoutExample(req: any, res: any): Promise<void> {
     const token = await authService.getAuthToken();
 
     // Create checkout
-    const checkoutEndpoint = `${process.env['API_ORIGIN']}/${API_PATHS.CHECKOUT}`;
+    const checkoutEndpoint = `${authService.getApiOrigin()}/${API_PATHS.CHECKOUT}`;
     const paymentMethodGroupId = process.env['PAYMENT_METHOD_GROUP_ID'];
     const subAccountId = authService.getSubAccountId();
 
