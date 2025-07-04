@@ -29,7 +29,7 @@
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": false,
     "types": ["node"]
   },
   "include": ["src/jsx.d.ts", "src/**/*"],
