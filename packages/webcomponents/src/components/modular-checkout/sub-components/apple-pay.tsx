@@ -20,7 +20,7 @@ import {
 import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
-import { checkoutStore } from "../../../store/checkout.store";
+import { checkoutStore, onChange } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -58,6 +58,13 @@ export class ApplePay {
     this.applePayService.setApiBaseUrl(this.apiBaseUrl);
     this.initializeApplePay();
   }
+
+  componentDidLoad() {
+    onChange('paymentAmount', () => {
+      this.initializeApplePay();
+    });
+  }
+
   @Watch("merchantIdentifier")
   @Watch("apiBaseUrl")
   @Watch("buttonType")
@@ -74,7 +81,6 @@ export class ApplePay {
     try {
       this.isLoading = true;
       this.error = null;
-
       if (!checkoutStore.paymentAmount) {
         this.error = "Missing required Apple Pay configuration";
         this.isLoading = false;
