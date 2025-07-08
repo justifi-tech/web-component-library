@@ -53,7 +53,7 @@ const meta: Meta = {
       description: "Validate the payment method and billing form fields",
       table: {
         category: "methods",
-        defaultValue: { summary: "validate() => Promise<{ isValid: boolean; errors: { [key: string]: any } }>" }
+        defaultValue: { summary: "validate() => Promise<boolean>" }
       },
     },
     submitCheckout: {
