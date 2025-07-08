@@ -18,8 +18,9 @@ interface IInitialState {
   disablePaymentMethodGroup: boolean;
   paymentAmount: number;
   paymentDescription: string;
-  paymentMethodGroupId: string;
+  paymentMethodGroupId: string | undefined;
   paymentMethods: ICheckoutPaymentMethod[];
+  savePaymentMethod: boolean;
   selectedPaymentMethod: string;
   totalAmount: number;
 }
@@ -42,8 +43,9 @@ const initialState: IInitialState = {
   disablePaymentMethodGroup: false,
   paymentAmount: 0,
   paymentDescription: '',
-  paymentMethodGroupId: '',
+  paymentMethodGroupId: undefined,
   paymentMethods: [],
+  savePaymentMethod: false,
   selectedPaymentMethod: '',
   totalAmount: 0,
 };
