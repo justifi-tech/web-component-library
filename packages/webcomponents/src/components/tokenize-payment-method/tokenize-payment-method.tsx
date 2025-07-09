@@ -310,9 +310,7 @@ export class TokenizePaymentMethod {
   }
 
   private get shouldHideRadioInput(): boolean {
-    const showCard = !this.disableCreditCard;
-    const showAch = !this.disableBankAccount;
-    return !showAch || !showCard;
+    return this.disableCreditCard || this.disableBankAccount;
   }
 
   private renderPaymentMethodOption(paymentMethodType: PaymentMethodTypes) {
