@@ -1,5 +1,6 @@
 body {
   background: #efefef;
+  font-family: sans-serif;
 }
 
 #component-wrapper>* {
