@@ -172,12 +172,14 @@ export class TokenizePaymentMethod {
   }
 
   private setDefaultSelectedPaymentMethod() {
-    if (!this.selectedPaymentMethodId) {
-      if (!this.disableCreditCard) {
-        this.selectedPaymentMethodId = PaymentMethodTypes.card;
-      } else if (!this.disableBankAccount) {
-        this.selectedPaymentMethodId = PaymentMethodTypes.bankAccount;
-      }
+    if (this.selectedPaymentMethodId) {
+      return;
+    }
+
+    if (!this.disableCreditCard) {
+      this.selectedPaymentMethodId = PaymentMethodTypes.card;
+    } else if (!this.disableBankAccount) {
+      this.selectedPaymentMethodId = PaymentMethodTypes.bankAccount;
     }
   }
 
