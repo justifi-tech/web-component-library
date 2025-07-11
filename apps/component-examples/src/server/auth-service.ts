@@ -94,4 +94,8 @@ export class AuthService {
   getSubAccountId(): string {
     return this.config.subAccountId;
   }
+
+  getApiOrigin(): string {
+    return this.config.apiOrigin;
+  }
 }
