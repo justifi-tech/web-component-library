@@ -9,6 +9,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:examples": "ts-node-dev --respawn --transpile-only src/examples-server.ts",
     "start": "npx nodemon ./examples/checkout.js",
     "start:checkout": "npx nodemon ./examples/checkout.js",
     "start:checkout-with-insurance": "npx nodemon ./examples/checkout-with-insurance.js",

@@ -1,82 +1,152 @@
-# Component Examples
+# Enhanced Component Examples
 
-This directory contains examples for the JustiFi web components.
+This directory contains enhanced component examples with a modern three-panel layout featuring live props editing and real-time event logging.
 
-## Setup
-
-The project uses TypeScript with JSX support for better maintainability and type safety.
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm
+1. Make sure you have the required environment variables set in your `.env` file:
 
-### Installation
+   ```bash
+   API_ORIGIN=https://api.justifi.com
+   CLIENT_ID=your_client_id
+   CLIENT_SECRET=your_client_secret
+   SUB_ACCOUNT_ID=your_sub_account_id
+   PAYMENT_METHOD_GROUP_ID=your_payment_method_group_id
+   PORT=3000
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+### Running the Enhanced Examples
+
+To run the enhanced checkout example with the new JSX template system:
 
 ```bash
-pnpm install
+pnpm dev:enhanced
 ```
 
-### Development
+This will start the server at `http://localhost:3000` with the following features:
 
-```bash
-# Start development server with hot reload
-pnpm dev
+- **Landing Page**: `http://localhost:3000/` - Overview of available examples
+- **Checkout Example**: `http://localhost:3000/checkout` - Enhanced checkout with three-panel layout
 
-# Build TypeScript files
-pnpm build
+## 🎨 Features
 
-# Build in watch mode
-pnpm build:watch
-```
+### Three-Panel Layout
 
-### TypeScript Configuration
+- **Component Preview**: Live display of the web component
+- **Props Editor**: Real-time editing of component properties
+- **Event Logger**: Comprehensive event tracking and display
 
-- **Target**: ES2020
-- **JSX**: Custom JSX renderer (no React dependency)
-- **Module**: CommonJS
-- **Strict**: Enabled for better type safety
+### Live Props Editing
+
+- Dynamic form generation based on component props
+- Real-time updates as you change values
+- Support for different input types (string, number, boolean, select, object)
+- Copy to clipboard functionality
+
+### Event Logging
+
+- Real-time event capture from web components
+- Color-coded event levels (info, warning, error, success)
+- Event filtering by type
+- Export functionality for debugging
+
+### Navigation
+
+- Categorized example navigation
+- Responsive design
+- Easy switching between examples
+
+## 🛠️ Development
 
 ### Project Structure
 
 ```
 src/
-├── index.ts              # Main entry point
-├── utils/
-│   └── api-paths.ts      # API path constants and types
-├── components/           # JSX components (to be added)
-├── server/              # Express server abstraction (to be added)
-├── templates/           # JSX templates (to be added)
-└── types/               # TypeScript type definitions (to be added)
+├── components/           # JSX template components
+│   ├── ExampleLayout.tsx
+│   ├── ComponentPreview.tsx
+│   ├── PropsEditor.tsx
+│   ├── EventLogger.tsx
+│   └── NavigationMenu.tsx
+├── templates/           # JSX templates
+│   ├── base-template.tsx
+│   └── example-template.tsx
+├── server/             # Server infrastructure
+│   ├── express-server.ts
+│   ├── auth-service.ts
+│   └── jsx-renderer.ts
+├── examples/           # Example implementations
+│   └── checkout-example.ts
+└── utils/              # Utilities
+    └── simple-jsx.ts   # Custom JSX renderer
 ```
 
-### Build Output
+### Adding New Examples
 
-Compiled JavaScript files are output to the `dist/` directory with:
+1. Create a new example file in `src/examples/`
+2. Use the `ExampleTemplate` and configure props, events, and navigation
+3. Add a route in `src/server/enhanced-server.ts`
+4. Update the landing page with the new example
 
-- Source maps for debugging
-- TypeScript declaration files
-- Preserved directory structure
+### Available Scripts
 
-## Custom JSX Renderer
+- `pnpm dev:enhanced` - Run the enhanced examples server
+- `pnpm build` - Build TypeScript files
+- `pnpm build:watch` - Watch mode for TypeScript compilation
 
-The project uses a custom JSX renderer (`src/utils/simple-jsx.ts`) that converts JSX to HTML strings without React dependency. This provides:
+## 🔧 Technical Details
 
-- **Lightweight**: No React runtime overhead
-- **Simple**: Direct HTML generation
-- **Web Component Friendly**: No conflicts with web component lifecycle
-- **Type Safe**: Full TypeScript support
+### JSX Templates (No React)
 
-### Usage
+- Custom JSX renderer using `simple-jsx.ts`
+- TypeScript support with proper type safety
+- Server-side rendering for optimal performance
 
-```typescript
-import { h, renderToString } from './utils/simple-jsx';
+### Architecture
 
-const element = (
-  <div className="container">
-    <h1>Hello World</h1>
-  </div>
-);
+- Express.js server with TypeScript
+- Modular component system
+- Event-driven architecture
+- Responsive CSS Grid layout
 
-const html = renderToString(element);
+### Browser Support
+
+- Modern browsers with ES6+ support
+- Responsive design for mobile and tablet
+- Progressive enhancement approach
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Environment Variables**: Make sure all required environment variables are set
+2. **Port Conflicts**: Change the PORT in your .env file if 3000 is in use
+3. **API Errors**: Check your API credentials and network connectivity
+4. **TypeScript Errors**: Run `pnpm build` to check for compilation errors
+
+### Debug Mode
+
+To run with additional logging:
+
+```bash
+DEBUG=* pnpm dev:enhanced
 ```
+
+## 📝 Next Steps
+
+This enhanced system is part of a larger plan to modernize all component examples. Future phases will include:
+
+- More examples with the enhanced template system
+- Advanced props management
+- State persistence and sharing
+- Code examples panel
+- Enhanced documentation
+
+For more details, see the `PLAN.md` file.

@@ -1,139 +1,170 @@
 /// <reference path="../jsx.d.ts" />
-import { renderToString } from '../utils/simple-jsx';
-import { createExampleServer } from '../server/express-server';
-import { BaseTemplate } from '../templates/base-template';
-import { API_PATHS } from '../utils/api-paths';
-import {
-  CheckoutComponent,
-  CheckoutData,
-} from '../components/CheckoutComponent';
+import { JSXRendererService } from '../server/jsx-renderer';
+import { ExampleTemplate } from '../templates/example-template';
+import { CheckoutComponent } from '../components/CheckoutComponent';
 
-// Load environment variables
-require('dotenv').config({ path: '../../.env' });
+export async function createCheckoutExample(
+  webComponentToken: string,
+  checkoutId: string
+) {
+  const jsxRenderer = new JSXRendererService();
 
-// Create the JavaScript for the checkout component
-function createCheckoutScript(data: CheckoutData): string {
-  const { billingFormFields } = data;
+  // Create the component HTML using the existing CheckoutComponent
+  const checkoutElement = CheckoutComponent({
+    checkoutId,
+    webComponentToken,
+    disableBankAccount: false,
+    disableCreditCard: false,
+    hideCardBillingForm: false,
+    hideBankAccountBillingForm: false,
+    billingFormFields: {},
+  });
 
-  return `
-    const justifiCheckout = document.querySelector('justifi-checkout');
-    const fillBillingFormButton = document.getElementById('fill-billing-form-button');
-    const testValidateButton = document.getElementById('test-validate-button');
-
-    function writeOutputToPage(event) {
-      document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
-    }
-
-    justifiCheckout.addEventListener('submit-event', (event) => {
-      console.log(event);
-      writeOutputToPage(event);
-    });
-
-    justifiCheckout.addEventListener('error-event', (event) => {
-      console.log(event);
-      writeOutputToPage(event);
-    });
-    
-    fillBillingFormButton.addEventListener('click', () => {
-      justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
-    });
-
-    testValidateButton.addEventListener('click', async () => {
-      const response = await justifiCheckout.validate();
-      console.log('Validate response', response);
-    });
-  `;
-}
-
-// Main checkout example handler
-async function handleCheckoutExample(req: any, res: any): Promise<void> {
-  try {
-    const server = req.app.locals['server'];
-    const authService = server.getAuthService();
-
-    // Get tokens
-    const token = await authService.getAuthToken();
-
-    // Create checkout
-    const checkoutEndpoint = `${process.env['API_ORIGIN']}/${API_PATHS.CHECKOUT}`;
-    const paymentMethodGroupId = process.env['PAYMENT_METHOD_GROUP_ID'];
-    const subAccountId = authService.getSubAccountId();
-
-    const checkoutResponse = await fetch(checkoutEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'Sub-Account': subAccountId,
+  // Define props configuration for live editing
+  const propsConfig = {
+    props: [
+      {
+        name: 'checkoutId',
+        type: 'string' as const,
+        label: 'Checkout ID',
+        value: checkoutId,
+        description: 'The unique identifier for this checkout session',
       },
-      body: JSON.stringify({
-        amount: 1799,
-        description: 'One Chocolate Donut',
-        payment_method_group_id: paymentMethodGroupId,
-        origin_url: `localhost:${process.env['PORT'] || 3000}`,
-      }),
-    });
-
-    if (!checkoutResponse.ok) {
-      throw new Error(`Checkout creation failed: ${checkoutResponse.status}`);
-    }
-
-    const checkoutData = await checkoutResponse.json();
-    const checkout = checkoutData.data;
-
-    // Get web component token
-    const webComponentToken = await authService.getWebComponentToken(token, [
-      `write:checkout:${checkout.id}`,
-      `write:tokenize:${subAccountId}`,
-    ]);
-
-    // Prepare component data
-    const componentData: CheckoutData = {
-      checkoutId: checkout.id,
-      webComponentToken,
-      disableBankAccount: true,
-      disableCreditCard: false,
-      hideCardBillingForm: true,
-      hideBankAccountBillingForm: false,
-      billingFormFields: {
-        name: 'John Doe',
-        address_line1: 'Main St',
-        address_line2: 'Apt 1',
-        address_city: 'Beverly Hills',
-        address_state: 'CA',
-        address_postal_code: '90210',
+      {
+        name: 'disableBankAccount',
+        type: 'boolean' as const,
+        label: 'Disable Bank Account',
+        value: false,
+        description: 'Hide bank account payment option',
       },
-    };
+      {
+        name: 'disableCreditCard',
+        type: 'boolean' as const,
+        label: 'Disable Credit Card',
+        value: false,
+        description: 'Hide credit card payment option',
+      },
+      {
+        name: 'hideCardBillingForm',
+        type: 'boolean' as const,
+        label: 'Hide Card Billing Form',
+        value: false,
+        description: 'Hide billing form for credit card payments',
+      },
+      {
+        name: 'hideBankAccountBillingForm',
+        type: 'boolean' as const,
+        label: 'Hide Bank Account Billing Form',
+        value: false,
+        description: 'Hide billing form for bank account payments',
+      },
+    ],
+  };
 
-    // Render the template using JSX and convert to HTML string
-    const bodyContent = renderToString(CheckoutComponent(componentData));
-    const script = createCheckoutScript(componentData);
+  // Define events configuration
+  const eventsConfig = {
+    eventTypes: [
+      'submit-event',
+      'error-event',
+      'validation-event',
+      'payment-method-selected',
+      'billing-form-updated',
+    ],
+    maxEvents: 50,
+  };
 
-    const html = BaseTemplate({
-      title: 'JustiFi Checkout',
-      webComponentToken,
-      bodyContent,
-      scripts: [script],
-    });
+  // Define navigation configuration
+  const navigationConfig = {
+    items: [
+      {
+        id: 'checkout',
+        title: 'Checkout',
+        description: 'Basic checkout component',
+        category: 'Payment',
+        url: '/checkout',
+        isActive: true,
+      },
+      {
+        id: 'checkout-with-insurance',
+        title: 'Checkout with Insurance',
+        description: 'Checkout with season interruption insurance',
+        category: 'Payment',
+        url: '/checkout-with-insurance',
+        isActive: false,
+      },
+      {
+        id: 'business-details',
+        title: 'Business Details',
+        description: 'Business information display',
+        category: 'Business',
+        url: '/business-details',
+        isActive: false,
+      },
+    ],
+  };
 
-    res.send(html);
-  } catch (error) {
-    console.error('Error in checkout example:', error);
-    res.status(500).send('Internal Server Error');
-  }
+  // Define test buttons
+  const testButtons = [
+    {
+      id: 'fill-billing-form-button',
+      text: 'Test Fill Billing Form',
+      hidden: true,
+    },
+    {
+      id: 'test-validate-button',
+      text: 'Test Validate',
+      hidden: true,
+    },
+  ];
+
+  // Define example-specific scripts
+  const exampleScripts = [
+    `
+      // Example-specific event handlers
+      document.addEventListener('DOMContentLoaded', function() {
+        const checkout = document.querySelector('justifi-checkout');
+        
+        if (checkout) {
+          checkout.addEventListener('submit-event', function(event) {
+            logEvent('submit-event', 'justifi-checkout', event.detail, 'success');
+            writeOutputToPage(event);
+          });
+          
+          checkout.addEventListener('error-event', function(event) {
+            logEvent('error-event', 'justifi-checkout', event.detail, 'error');
+            writeOutputToPage(event);
+          });
+          
+          checkout.addEventListener('validation-event', function(event) {
+            logEvent('validation-event', 'justifi-checkout', event.detail, 'info');
+          });
+        }
+      });
+      
+      function writeOutputToPage(event) {
+        const outputPane = document.getElementById('output-pane');
+        if (outputPane) {
+          outputPane.innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
+        }
+      }
+    `,
+  ];
+
+  // Create the example template data
+  const templateData = {
+    title: 'JustiFi Checkout Example',
+    webComponentToken,
+    exampleTitle: 'Checkout Component',
+    exampleDescription:
+      'A complete checkout experience with payment method selection and billing information collection.',
+    componentElement: checkoutElement,
+    propsConfig,
+    eventsConfig,
+    navigationConfig,
+    testButtons,
+    exampleScripts,
+  };
+
+  // Render the template
+  return jsxRenderer.renderTemplate(ExampleTemplate, templateData);
 }
-
-// Create and configure the server
-const server = createExampleServer();
-
-// Store server instance for route handlers to access
-server.getApp().locals['server'] = server;
-
-// Add the checkout route
-server.addRoute({
-  path: '/',
-  handler: handleCheckoutExample,
-});
-
-// Start the server
-server.start();
