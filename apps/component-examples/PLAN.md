@@ -60,7 +60,6 @@ Transform the component examples system to be more flexible and developer-friend
 - Create `src/components/EventLogger.tsx` - Event logging display
 - Create `src/components/NavigationMenu.tsx` - Navigation component
 - Create `src/templates/example-template.tsx` - Main example template
-- Create `src/utils/jsx-renderer.ts` - Custom JSX to HTML renderer
 
 ### Subtask 2.2: Create Live Props System
 
