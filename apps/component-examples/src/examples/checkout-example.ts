@@ -2,7 +2,6 @@
 import { JSXRendererService } from '../server/jsx-renderer';
 import { ExampleTemplate } from '../templates/example-template';
 import { CheckoutComponent } from '../components/CheckoutComponent';
-import { BaseTemplate } from '../templates/base-template';
 
 export async function createCheckoutExample(
   webComponentToken: string,
@@ -14,19 +13,6 @@ export async function createCheckoutExample(
   const checkoutElement = CheckoutComponent({
     checkoutId,
     webComponentToken,
-    disableBankAccount: false,
-    disableCreditCard: false,
-    hideCardBillingForm: false,
-    hideBankAccountBillingForm: false,
-    billingFormFields: {},
-  });
-
-  console.log('checkoutElement', checkoutElement);
-
-  const componentHtml = jsxRenderer.renderTemplate(CheckoutComponent, {
-    title: 'Checkout Component',
-    webComponentToken,
-    checkoutId,
     disableBankAccount: false,
     disableCreditCard: false,
     hideCardBillingForm: false,
@@ -171,7 +157,7 @@ export async function createCheckoutExample(
     exampleTitle: 'Checkout Component',
     exampleDescription:
       'A complete checkout experience with payment method selection and billing information collection.',
-    componentHtml,
+    componentElement: checkoutElement,
     propsConfig,
     eventsConfig,
     navigationConfig,

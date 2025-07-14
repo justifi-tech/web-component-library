@@ -12,7 +12,7 @@ const server = createExampleServer();
 // Landing page route
 server.addRoute({
   path: '/',
-  handler: async (req, res) => {
+  handler: async (_req, res) => {
     try {
       const html = `
         <!DOCTYPE html>
@@ -74,7 +74,7 @@ server.addRoute({
 // Enhanced checkout example route
 server.addRoute({
   path: '/checkout',
-  handler: async (req, res) => {
+  handler: async (_req, res) => {
     try {
       const authService = server.getAuthService();
 
@@ -266,7 +266,7 @@ server.addRoute({
 // Placeholder routes for other examples
 server.addRoute({
   path: '/business-details',
-  handler: async (req, res) => {
+  handler: async (_req, res) => {
     res.send(`
       <html>
         <head><title>Business Details - Coming Soon</title></head>
@@ -282,7 +282,7 @@ server.addRoute({
 
 server.addRoute({
   path: '/payment-details',
-  handler: async (req, res) => {
+  handler: async (_req, res) => {
     res.send(`
       <html>
         <head><title>Payment Details - Coming Soon</title></head>

@@ -1,8 +1,8 @@
 /// <reference path="../jsx.d.ts" />
-import { h } from '../utils/simple-jsx';
+import { h, SimpleElement } from '../utils/simple-jsx';
 
 export interface ComponentPreviewData {
-  componentHtml: string;
+  componentElement: SimpleElement;
   showOutput?: boolean;
   outputId?: string;
   testButtons?: Array<{
@@ -14,7 +14,7 @@ export interface ComponentPreviewData {
 
 export function ComponentPreview(data: ComponentPreviewData) {
   const {
-    componentHtml,
+    componentElement,
     showOutput = true,
     outputId = 'output-pane',
     testButtons = []
@@ -24,7 +24,9 @@ export function ComponentPreview(data: ComponentPreviewData) {
     <div class="component-preview">
       {/* Component Display Area */}
       <div class="component-display">
-        <div class="component-container" innerHTML={componentHtml}></div>
+        <div class="component-container">
+          {componentElement}
+        </div>
 
         {/* Test Buttons */}
         {testButtons.length > 0 && (

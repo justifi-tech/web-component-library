@@ -12,7 +12,7 @@ export interface ExampleTemplateData extends BaseTemplateData {
   // Example-specific data
   exampleTitle: string;
   exampleDescription?: string;
-  componentHtml: string;
+  componentElement: any; // JSX element
 
   // Props configuration
   propsConfig?: {
@@ -61,7 +61,7 @@ export function ExampleTemplate(data: ExampleTemplateData) {
     title,
     exampleTitle,
     exampleDescription,
-    componentHtml,
+    componentElement,
     propsConfig,
     eventsConfig,
     navigationConfig,
@@ -72,7 +72,7 @@ export function ExampleTemplate(data: ExampleTemplateData) {
 
   // Build the component preview content
   const componentPreviewElement = ComponentPreview({
-    componentHtml,
+    componentElement,
     showOutput: true,
     outputId: 'output-pane',
     testButtons
