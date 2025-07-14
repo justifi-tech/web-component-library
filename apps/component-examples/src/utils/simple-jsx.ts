@@ -23,9 +23,15 @@ export function renderToString(element: SimpleElement | string): string {
   }
 
   const { type, props, children } = element;
+  const safeProps = props || {};
+  const childrenArray = Array.isArray(children)
+    ? children
+    : children
+      ? [children]
+      : [];
 
   // Build attributes string
-  const attributes = Object.entries(props)
+  const attributes = Object.entries(safeProps)
     .filter(([key]) => key !== 'children')
     .map(([key, value]) => {
       if (typeof value === 'boolean') {
@@ -37,7 +43,9 @@ export function renderToString(element: SimpleElement | string): string {
     .join(' ');
 
   // Render children
-  const childrenHtml = children.map((child) => renderToString(child)).join('');
+  const childrenHtml = childrenArray
+    .map((child) => renderToString(child))
+    .join('');
 
   // Self-closing tags
   const selfClosingTags = ['img', 'input', 'br', 'hr', 'meta', 'link'];
