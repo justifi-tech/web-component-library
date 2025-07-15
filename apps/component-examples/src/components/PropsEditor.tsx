@@ -1,26 +1,26 @@
 /// <reference path="../jsx.d.ts" />
 import { h } from '../utils/simple-jsx';
-
-export interface PropField {
-  name: string;
-  type: 'string' | 'number' | 'boolean' | 'select' | 'object';
-  label: string;
-  value: any;
-  options?: Array<{ value: string; label: string }>;
-  placeholder?: string;
-  description?: string;
-}
+import { PropSchema, propsManager } from '../utils/props-manager';
+import { getSchema } from '../utils/prop-schemas';
 
 export interface PropsEditorData {
-  props: PropField[];
+  componentName: string;
   onPropsChange?: string; // JavaScript function name to call when props change
 }
 
 export function PropsEditor(data: PropsEditorData) {
-  const { props, onPropsChange: _onPropsChange } = data;
+  const { componentName, onPropsChange: _onPropsChange } = data;
 
-  const renderField = (field: PropField) => {
+  // Get schema and current props for this component
+  const schema = getSchema(componentName);
+  const currentProps = propsManager.getProps(componentName);
+
+  // Register schema if not already registered
+  propsManager.registerSchema(componentName, schema);
+
+  const renderField = (field: PropSchema) => {
     const fieldId = `prop-${field.name}`;
+    const currentValue = currentProps[field.name] ?? field.defaultValue;
 
     switch (field.type) {
       case 'boolean':
@@ -31,8 +31,8 @@ export function PropsEditor(data: PropsEditorData) {
                 type="checkbox"
                 id={fieldId}
                 name={field.name}
-                checked={field.value}
-                onchange={`updateProp('${field.name}', this.checked, 'boolean')`}
+                checked={currentValue}
+                onchange={`updateProp('${componentName}', '${field.name}', this.checked, 'boolean')`}
               />
               {field.label}
             </label>
@@ -47,10 +47,10 @@ export function PropsEditor(data: PropsEditorData) {
             <select
               id={fieldId}
               name={field.name}
-              value={field.value}
-              onchange={`updateProp('${field.name}', this.value, 'string')`}
+              value={currentValue}
+              onchange={`updateProp('${componentName}', '${field.name}', this.value, 'string')`}
             >
-              {field.options?.map(option => (
+              {field.options?.map((option: { value: string; label: string }) => (
                 <option value={option.value}>{option.label}</option>
               ))}
             </select>
@@ -66,9 +66,9 @@ export function PropsEditor(data: PropsEditorData) {
               type="number"
               id={fieldId}
               name={field.name}
-              value={field.value}
+              value={currentValue}
               placeholder={field.placeholder}
-              onchange={`updateProp('${field.name}', this.value, 'number')`}
+              onchange={`updateProp('${componentName}', '${field.name}', this.value, 'number')`}
             />
             {field.description && <p class="prop-description">{field.description}</p>}
           </div>
@@ -82,8 +82,8 @@ export function PropsEditor(data: PropsEditorData) {
               id={fieldId}
               name={field.name}
               placeholder={field.placeholder || 'Enter JSON object...'}
-              onchange={`updateProp('${field.name}', this.value, 'object')`}
-            >{typeof field.value === 'string' ? field.value : JSON.stringify(field.value, null, 2)}</textarea>
+              onchange={`updateProp('${componentName}', '${field.name}', this.value, 'object')`}
+            >{typeof currentValue === 'string' ? currentValue : JSON.stringify(currentValue, null, 2)}</textarea>
             {field.description && <p class="prop-description">{field.description}</p>}
           </div>
         );
@@ -96,9 +96,9 @@ export function PropsEditor(data: PropsEditorData) {
               type="text"
               id={fieldId}
               name={field.name}
-              value={field.value}
+              value={currentValue}
               placeholder={field.placeholder}
-              onchange={`updateProp('${field.name}', this.value, 'string')`}
+              onchange={`updateProp('${componentName}', '${field.name}', this.value, 'string')`}
             />
             {field.description && <p class="prop-description">{field.description}</p>}
           </div>
@@ -110,16 +110,16 @@ export function PropsEditor(data: PropsEditorData) {
     <div class="props-editor">
       <div class="props-header">
         <h3>Component Properties</h3>
-        <button class="reset-props-btn" onclick="resetProps()">Reset</button>
+        <button class="reset-props-btn" onclick={`resetProps('${componentName}')`}>Reset</button>
       </div>
 
       <div class="props-form">
-        {props.map(renderField)}
+        {schema.map(renderField)}
       </div>
 
       <div class="props-actions">
-        <button class="apply-props-btn" onclick="applyProps()">Apply Changes</button>
-        <button class="copy-props-btn" onclick="copyPropsToClipboard()">Copy Props</button>
+        <button class="apply-props-btn" onclick={`applyProps('${componentName}')`}>Apply Changes</button>
+        <button class="copy-props-btn" onclick={`copyPropsToClipboard('${componentName}')`}>Copy Props</button>
       </div>
     </div>
   );
