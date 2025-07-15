@@ -447,7 +447,7 @@ server.addRoute({
               
               // Register schema and prefill with actual values
               window.propsManager.registerSchema('checkout', checkoutSchema);
-                              window.propsManager.prefillProps('checkout', {
+              window.propsManager.prefillProps('checkout', {
                   authToken: '${webComponentToken}',
                   checkoutId: '${checkout.id}'
                 });

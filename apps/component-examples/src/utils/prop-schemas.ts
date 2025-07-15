@@ -12,7 +12,7 @@ const VALIDATION_PATTERNS = {
   PAYMENT_ID: '^pay_[a-zA-Z0-9]+$',
   DISPUTE_ID: '^dsp_[a-zA-Z0-9]+$',
   PAYOUT_ID: '^pyt_[a-zA-Z0-9]+$',
-  CHECKOUT_ID: '^chk_[a-zA-Z0-9]+$',
+  CHECKOUT_ID: '^cho_[a-zA-Z0-9]+$',
   ACCOUNT_ID: '^acc_[a-zA-Z0-9]+$',
 };
 

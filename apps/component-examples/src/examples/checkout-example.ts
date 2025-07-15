@@ -26,7 +26,6 @@ export async function createCheckoutExample(
   const initialProps = propsManager.getProps(componentName);
 
   // Verify the prefilled values are set
-  console.log('Prefilled props for checkout:', initialProps);
   const checkoutProps = {
     webComponentToken: webComponentToken, // Keep the original prop name for CheckoutComponent
     checkoutId: checkoutId,
