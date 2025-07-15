@@ -99,19 +99,6 @@ export class ModularCheckout {
     if (this.getCheckout) {
       this.getCheckout({
         onSuccess: ({ checkout }) => {
-
-          checkoutStore.paymentMethods = checkout.payment_methods;
-          checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
-          checkoutStore.paymentDescription = checkout.payment_description;
-          checkoutStore.totalAmount = checkout.total_amount;
-          checkoutStore.paymentAmount = checkout.payment_amount;
-          checkoutStore.paymentCurrency = checkout.currency || 'USD';
-          checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
-          checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
-          checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
-          checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
-          checkoutStore.bnplProviderCheckoutUrl = checkout?.bnpl?.provider_checkout_url;
-
           if (checkout.status === ICheckoutStatus.completed) {
             this.errorEvent.emit({
               message: ComponentErrorMessages.CHECKOUT_ALREADY_COMPLETED,
