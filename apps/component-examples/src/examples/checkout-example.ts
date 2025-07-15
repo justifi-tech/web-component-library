@@ -2,63 +2,48 @@
 import { JSXRendererService } from '../server/jsx-renderer';
 import { ExampleTemplate } from '../templates/example-template';
 import { CheckoutComponent } from '../components/CheckoutComponent';
+import { propsManager } from '../utils/props-manager';
+import { getSchema } from '../utils/prop-schemas';
 
 export async function createCheckoutExample(
   webComponentToken: string,
   checkoutId: string
 ) {
   const jsxRenderer = new JSXRendererService();
+  const componentName = 'checkout';
 
-  // Create the component HTML using the existing CheckoutComponent
-  const checkoutElement = CheckoutComponent({
-    checkoutId,
-    webComponentToken,
+  // Register the component schema
+  const schema = getSchema(componentName);
+  propsManager.registerSchema(componentName, schema);
+
+  // Prefill props with actual server-generated values
+  propsManager.prefillProps(componentName, {
+    authToken: webComponentToken,
+    checkoutId: checkoutId,
+  });
+
+  // Get the prefilled props
+  const initialProps = propsManager.getProps(componentName);
+
+  // Verify the prefilled values are set
+  console.log('Prefilled props for checkout:', initialProps);
+  const checkoutProps = {
+    webComponentToken: webComponentToken, // Keep the original prop name for CheckoutComponent
+    checkoutId: checkoutId,
     disableBankAccount: false,
     disableCreditCard: false,
     hideCardBillingForm: false,
     hideBankAccountBillingForm: false,
     billingFormFields: {},
-  });
+    ...initialProps, // Include any other props from the schema
+  };
 
-  // Define props configuration for live editing
+  // Create the component HTML using the existing CheckoutComponent
+  const checkoutElement = CheckoutComponent(checkoutProps);
+
+  // Define props configuration for live editing using the new schema system
   const propsConfig = {
-    props: [
-      {
-        name: 'checkoutId',
-        type: 'string' as const,
-        label: 'Checkout ID',
-        value: checkoutId,
-        description: 'The unique identifier for this checkout session',
-      },
-      {
-        name: 'disableBankAccount',
-        type: 'boolean' as const,
-        label: 'Disable Bank Account',
-        value: false,
-        description: 'Hide bank account payment option',
-      },
-      {
-        name: 'disableCreditCard',
-        type: 'boolean' as const,
-        label: 'Disable Credit Card',
-        value: false,
-        description: 'Hide credit card payment option',
-      },
-      {
-        name: 'hideCardBillingForm',
-        type: 'boolean' as const,
-        label: 'Hide Card Billing Form',
-        value: false,
-        description: 'Hide billing form for credit card payments',
-      },
-      {
-        name: 'hideBankAccountBillingForm',
-        type: 'boolean' as const,
-        label: 'Hide Bank Account Billing Form',
-        value: false,
-        description: 'Hide billing form for bank account payments',
-      },
-    ],
+    componentName: componentName,
   };
 
   // Define events configuration
@@ -117,7 +102,7 @@ export async function createCheckoutExample(
     },
   ];
 
-  // Define example-specific scripts
+  // Define example-specific scripts with live props support
   const exampleScripts = [
     `
       // Example-specific event handlers
@@ -139,6 +124,14 @@ export async function createCheckoutExample(
             logEvent('validation-event', 'justifi-checkout', event.detail, 'info');
           });
         }
+        
+        // Register the component for live updates
+        const componentContainer = document.getElementById('output-pane');
+        if (componentContainer) {
+          registerLiveComponent('${componentName}', componentContainer, function(newProps) {
+            updateCheckoutComponent(newProps);
+          });
+        }
       });
       
       function writeOutputToPage(event) {
@@ -147,6 +140,47 @@ export async function createCheckoutExample(
           outputPane.innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
       }
+      
+      // Function to update the checkout component with new props
+      function updateCheckoutComponent(props) {
+        const container = document.getElementById('output-pane');
+        if (!container) return;
+        
+        // Clear the container
+        container.innerHTML = '';
+        
+        // Create new component with updated props
+        const newComponent = createCheckoutComponent(props);
+        container.appendChild(newComponent);
+        
+        // Add visual feedback
+        container.style.transition = 'box-shadow 0.3s ease';
+        container.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.5)';
+        setTimeout(() => {
+          container.style.boxShadow = '';
+        }, 300);
+      }
+      
+      // Function to create checkout component (simplified for demo)
+      function createCheckoutComponent(props) {
+        const div = document.createElement('div');
+        div.className = 'checkout-component';
+        div.innerHTML = \`
+          <div class="checkout-container" style="padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+            <h3>Checkout Component</h3>
+            <div class="checkout-details">
+              <p><strong>Amount:</strong> $\${props.amount || 100}</p>
+              <p><strong>Currency:</strong> \${props.currency || 'USD'}</p>
+              <p><strong>Description:</strong> \${props.description || 'Sample payment'}</p>
+              <p><strong>Show Insurance:</strong> \${props.showInsurance ? 'Yes' : 'No'}</p>
+              <p><strong>Theme:</strong> \${props.theme || 'light'}</p>
+            </div>
+            \${props.showInsurance ? '<div class="insurance-section" style="margin-top: 15px; padding: 10px; background: #f8f9fa;"><p>Insurance options would appear here</p></div>' : ''}
+            <button style="margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Process Payment</button>
+          </div>
+        \`;
+        return div;
+      }
     `,
   ];
 
@@ -154,9 +188,10 @@ export async function createCheckoutExample(
   const templateData = {
     title: 'JustiFi Checkout Example',
     webComponentToken,
-    exampleTitle: 'Checkout Component',
+    bodyContent: '', // This will be filled by the template
+    exampleTitle: 'Checkout Component with Live Props',
     exampleDescription:
-      'A complete checkout experience with payment method selection and billing information collection.',
+      'A complete checkout experience with payment method selection and billing information collection. Features live props editing - change properties in the right panel to see real-time updates.',
     componentElement: checkoutElement,
     propsConfig,
     eventsConfig,

@@ -36,6 +36,11 @@ export function BaseTemplate(data: BaseTemplateData) {
         <link rel="stylesheet" href="/styles/example.css" />
         ${stylesHtml}
         ${headContent}
+        <script>
+          // Initialize props manager and live props client
+          window.propsManager = window.propsManager || {};
+          window.registerLiveComponent = window.registerLiveComponent || function() {};
+        </script>
       </head>
       <body class="${bodyClass}">
         ${bodyContent}

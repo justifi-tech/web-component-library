@@ -16,15 +16,7 @@ export interface ExampleTemplateData extends BaseTemplateData {
 
   // Props configuration
   propsConfig?: {
-    props: Array<{
-      name: string;
-      type: 'string' | 'number' | 'boolean' | 'select' | 'object';
-      label: string;
-      value: any;
-      options?: Array<{ value: string; label: string }>;
-      placeholder?: string;
-      description?: string;
-    }>;
+    componentName: string;
   };
 
   // Events configuration
@@ -82,7 +74,7 @@ export function ExampleTemplate(data: ExampleTemplateData) {
   // Build the props editor content (if props are configured)
   const propsContent = propsConfig
     ? renderToString(PropsEditor({
-      props: propsConfig.props,
+      componentName: propsConfig.componentName || 'default',
       onPropsChange: 'updateComponentProps'
     }))
     : '';

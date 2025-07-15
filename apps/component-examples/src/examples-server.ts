@@ -129,6 +129,133 @@ server.addRoute({
         styles: ['/styles/layout.css'],
         scripts: [
           `
+            // PropsManager for client-side props management
+            class PropsManager {
+              constructor() {
+                this.props = {};
+                this.schemas = new Map();
+                this.listeners = new Map();
+              }
+
+              registerSchema(componentName, schema) {
+                this.schemas.set(componentName, schema);
+                if (!this.props[componentName]) {
+                  this.props[componentName] = this.getDefaultProps(schema);
+                }
+              }
+
+              getDefaultProps(schema) {
+                const defaults = {};
+                schema.forEach(prop => {
+                  defaults[prop.name] = prop.defaultValue;
+                });
+                return defaults;
+              }
+
+              getProps(componentName) {
+                return this.props[componentName] || {};
+              }
+
+              updateProp(componentName, propName, value, type) {
+                if (!this.props[componentName]) {
+                  this.props[componentName] = {};
+                }
+
+                let convertedValue = value;
+                switch (type) {
+                  case 'number':
+                    convertedValue = Number(value);
+                    if (isNaN(convertedValue)) return;
+                    break;
+                  case 'boolean':
+                    convertedValue = Boolean(value);
+                    break;
+                  case 'object':
+                    try {
+                      convertedValue = typeof value === 'string' ? JSON.parse(value) : value;
+                    } catch (e) {
+                      console.warn('Invalid JSON for object prop:', value);
+                      return;
+                    }
+                    break;
+                }
+
+                this.props[componentName][propName] = convertedValue;
+                this.notifyListeners(componentName);
+              }
+
+              prefillProps(componentName, props) {
+                if (!this.props[componentName]) {
+                  this.props[componentName] = {};
+                }
+
+                Object.entries(props).forEach(([propName, value]) => {
+                  const schema = this.schemas.get(componentName);
+                  const propSchema = schema?.find(p => p.name === propName);
+                  
+                  if (propSchema) {
+                    let convertedValue = value;
+                    switch (propSchema.type) {
+                      case 'number':
+                        convertedValue = Number(value);
+                        if (isNaN(convertedValue)) return;
+                        break;
+                      case 'boolean':
+                        convertedValue = Boolean(value);
+                        break;
+                      case 'object':
+                        try {
+                          convertedValue = typeof value === 'string' ? JSON.parse(value) : value;
+                        } catch (e) {
+                          console.warn('Invalid JSON for object prop:', value);
+                          return;
+                        }
+                        break;
+                    }
+
+                    this.props[componentName][propName] = convertedValue;
+                  }
+                });
+
+                this.notifyListeners(componentName);
+              }
+
+              resetProps(componentName) {
+                const schema = this.schemas.get(componentName);
+                if (schema) {
+                  this.props[componentName] = this.getDefaultProps(schema);
+                  this.notifyListeners(componentName);
+                }
+              }
+
+              subscribe(componentName, callback) {
+                if (!this.listeners.has(componentName)) {
+                  this.listeners.set(componentName, []);
+                }
+                this.listeners.get(componentName).push(callback);
+                return () => {
+                  const listeners = this.listeners.get(componentName);
+                  if (listeners) {
+                    const index = listeners.indexOf(callback);
+                    if (index > -1) {
+                      listeners.splice(index, 1);
+                    }
+                  }
+                };
+              }
+
+              notifyListeners(componentName) {
+                const listeners = this.listeners.get(componentName);
+                if (listeners) {
+                  const props = this.getProps(componentName);
+                  listeners.forEach(callback => callback(props));
+                }
+              }
+            }
+
+            // Initialize PropsManager globally
+            window.propsManager = new PropsManager();
+
             // Event logging functionality
             window.eventLog = [];
             window.maxEvents = 50;
@@ -174,51 +301,58 @@ server.addRoute({
               link.click();
             }
             
-            // Props management functionality
-            window.componentProps = {};
+            // Props management functionality using PropsManager
+            function updateProp(componentName, propName, value, type) {
+              const propsManager = window.propsManager;
+              if (propsManager) {
+                propsManager.updateProp(componentName, propName, value, type);
+                console.log(\`Updated \${componentName}.\${propName} = \${value}\`);
+              }
+            }
             
-            function updateProp(name, value, type) {
-              if (type === 'number') {
-                value = parseFloat(value);
-              } else if (type === 'boolean') {
-                value = Boolean(value);
-              } else if (type === 'object') {
-                try {
-                  value = JSON.parse(value);
-                } catch (e) {
-                  console.error('Invalid JSON:', e);
-                  return;
+            function resetProps(componentName) {
+              const propsManager = window.propsManager;
+              if (propsManager) {
+                propsManager.resetProps(componentName);
+                console.log(\`Reset props for \${componentName}\`);
+                
+                // Update form fields to reflect reset values
+                const props = propsManager.getProps(componentName);
+                Object.entries(props).forEach(([propName, value]) => {
+                  const field = document.getElementById(\`prop-\${propName}\`);
+                  if (field) {
+                    if (field.type === 'checkbox') {
+                      field.checked = Boolean(value);
+                    } else {
+                      field.value = value;
+                    }
+                  }
+                });
+              }
+            }
+            
+            function applyProps(componentName) {
+              const propsManager = window.propsManager;
+              if (propsManager) {
+                const props = propsManager.getProps(componentName);
+                console.log(\`Applying props for \${componentName}:\`, props);
+                
+                // Trigger live update if component is registered
+                if (window.registerLiveComponent && window.livePropsClient) {
+                  window.livePropsClient.triggerLiveUpdate(componentName);
                 }
               }
-              
-              window.componentProps[name] = value;
-              updateComponentDisplay();
             }
             
-            function updateComponentDisplay() {
-              // This would be implemented to update the component
-              // with the new props in real-time
-              console.log('Props updated:', window.componentProps);
-            }
-            
-            function resetProps() {
-              window.componentProps = {};
-              // Reset form fields to default values
-              const form = document.querySelector('.props-form');
-              if (form) {
-                form.reset();
+            function copyPropsToClipboard(componentName) {
+              const propsManager = window.propsManager;
+              if (propsManager) {
+                const props = propsManager.getProps(componentName);
+                const propsStr = JSON.stringify(props, null, 2);
+                navigator.clipboard.writeText(propsStr).then(() => {
+                  console.log(\`Props for \${componentName} copied to clipboard\`);
+                });
               }
-            }
-            
-            function applyProps() {
-              updateComponentDisplay();
-            }
-            
-            function copyPropsToClipboard() {
-              const propsStr = JSON.stringify(window.componentProps, null, 2);
-              navigator.clipboard.writeText(propsStr).then(() => {
-                console.log('Props copied to clipboard');
-              });
             }
             
             // Output management
@@ -240,6 +374,85 @@ server.addRoute({
             // Initialize when DOM is loaded
             document.addEventListener('DOMContentLoaded', function() {
               console.log('Example template initialized');
+              
+              // Register checkout component schema and prefill with actual values
+              const checkoutSchema = [
+                {
+                  name: 'authToken',
+                  type: 'string',
+                  label: 'Auth Token',
+                  defaultValue: '',
+                  placeholder: 'Enter auth token',
+                  description: 'Authentication token for API access (generated by server)',
+                  required: true,
+                  validation: {
+                    pattern: '^[a-zA-Z0-9._-]+$'
+                  }
+                },
+                {
+                  name: 'checkoutId',
+                  type: 'string',
+                  label: 'Checkout ID',
+                  defaultValue: '',
+                  placeholder: 'Enter checkout ID',
+                  description: 'Unique checkout session identifier (generated by server)',
+                  required: true,
+                  validation: {
+                    pattern: '^chk_[a-zA-Z0-9]+$'
+                  }
+                },
+                {
+                  name: 'disableCreditCard',
+                  type: 'boolean',
+                  label: 'Disable Credit Card',
+                  defaultValue: false,
+                  description: 'Hide credit card payment option'
+                },
+                {
+                  name: 'disableBankAccount',
+                  type: 'boolean',
+                  label: 'Disable Bank Account',
+                  defaultValue: false,
+                  description: 'Hide bank account payment option'
+                },
+                {
+                  name: 'disableBnpl',
+                  type: 'boolean',
+                  label: 'Disable BNPL',
+                  defaultValue: false,
+                  description: 'Hide Buy Now Pay Later option'
+                },
+                {
+                  name: 'disablePaymentMethodGroup',
+                  type: 'boolean',
+                  label: 'Disable Payment Method Group',
+                  defaultValue: false,
+                  description: 'Hide payment method group selection'
+                },
+                {
+                  name: 'hideCardBillingForm',
+                  type: 'boolean',
+                  label: 'Hide Card Billing Form',
+                  defaultValue: false,
+                  description: 'Hide billing form for credit card payments'
+                },
+                {
+                  name: 'hideBankAccountBillingForm',
+                  type: 'boolean',
+                  label: 'Hide Bank Account Billing Form',
+                  defaultValue: false,
+                  description: 'Hide billing form for bank account payments'
+                }
+              ];
+              
+              // Register schema and prefill with actual values
+              window.propsManager.registerSchema('checkout', checkoutSchema);
+                              window.propsManager.prefillProps('checkout', {
+                  authToken: '${webComponentToken}',
+                  checkoutId: '${checkout.id}'
+                });
+              
+              console.log('Checkout component schema registered and prefilled with actual values');
             });
           `,
         ],
