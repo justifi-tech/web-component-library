@@ -19,5 +19,7 @@ export * from './Identity';
 export * from './Document';
 export * from './Dispute';
 export * from './GrossVolume';
+export * from './ApplePay';
+export * from './GooglePay';
 // In a future PR I would like to update the naming of the BankAccount Payment Method class in Payment.ts so this import can be updated to be written the same as the others in this file.
 export { BankAccount, IBankAccount } from './BankAccount';
