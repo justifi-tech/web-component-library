@@ -21,20 +21,7 @@ server.addRoute({
             <title>JustiFi Component Examples</title>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="stylesheet" href="/styles/enhanced-layout.css" />
-            <style>
-              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 2rem; background: #f8f9fa; }
-              .container { max-width: 1200px; margin: 0 auto; }
-              .header { text-align: center; margin-bottom: 3rem; }
-              .header h1 { color: #333; margin-bottom: 1rem; }
-              .header p { color: #666; font-size: 1.1rem; }
-              .examples-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-              .example-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-              .example-card h3 { margin: 0 0 1rem 0; color: #333; }
-              .example-card p { color: #666; margin-bottom: 1.5rem; line-height: 1.5; }
-              .example-card a { display: inline-block; padding: 0.75rem 1.5rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
-              .example-card a:hover { background: #0056b3; }
-            </style>
+            <link rel="stylesheet" href="/styles/example-app.css" />
           </head>
           <body>
             <div class="container">
@@ -126,7 +113,7 @@ server.addRoute({
         title: 'JustiFi Checkout Example',
         webComponentToken,
         bodyContent: exampleContent,
-        styles: ['/styles/layout.css'],
+        styles: ['/styles/example-app.css'],
         scripts: [
           `
             // Event logging functionality
