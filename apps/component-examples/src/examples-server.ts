@@ -2,6 +2,8 @@ import { createExampleServer } from './server/express-server';
 import { API_PATHS } from './utils/api-paths';
 import { createCheckoutExample } from './examples/checkout-example';
 import { BaseTemplate } from './templates/base-template';
+import { NavigationMenu } from './components/NavigationMenu';
+import { renderToString } from './utils/simple-jsx';
 
 // Load environment variables
 require('dotenv').config({ path: '../../.env' });
@@ -14,6 +16,44 @@ server.addRoute({
   path: '/',
   handler: async (_req, res) => {
     try {
+      // Define navigation items for available examples
+      const navigationData = {
+        items: [
+          {
+            id: 'checkout',
+            title: 'Checkout Component',
+            description:
+              'Complete checkout experience with payment method selection and billing information collection. Features live props editing and real-time event logging.',
+            category: 'Payment',
+            url: '/checkout',
+            isActive: false,
+          },
+          {
+            id: 'business-details',
+            title: 'Business Details',
+            description:
+              'Display business information with interactive editing capabilities and comprehensive event tracking.',
+            category: 'Business',
+            url: '/business-details',
+            isActive: false,
+          },
+          {
+            id: 'payment-details',
+            title: 'Payment Details',
+            description:
+              'Payment information display with real-time updates and detailed event logging.',
+            category: 'Payment',
+            url: '/payment-details',
+            isActive: false,
+          },
+        ],
+        currentPath: '/',
+        showCategories: true,
+      };
+
+      // Render the NavigationMenu component
+      const navigationContent = renderToString(NavigationMenu(navigationData));
+
       const html = `
         <!DOCTYPE html>
         <html>
@@ -29,23 +69,7 @@ server.addRoute({
                 <h1>JustiFi Component Examples</h1>
                 <p>Enhanced component examples with live props editing and event logging</p>
               </div>
-              <div class="examples-grid">
-                <div class="example-card">
-                  <h3>Checkout Component</h3>
-                  <p>Complete checkout experience with payment method selection and billing information collection. Features live props editing and real-time event logging.</p>
-                  <a href="/checkout">View Example</a>
-                </div>
-                <div class="example-card">
-                  <h3>Business Details</h3>
-                  <p>Display business information with interactive editing capabilities and comprehensive event tracking.</p>
-                  <a href="/business-details">View Example</a>
-                </div>
-                <div class="example-card">
-                  <h3>Payment Details</h3>
-                  <p>Payment information display with real-time updates and detailed event logging.</p>
-                  <a href="/payment-details">View Example</a>
-                </div>
-              </div>
+              ${navigationContent}
             </div>
           </body>
         </html>
