@@ -116,11 +116,6 @@ export function PropsEditor(data: PropsEditorData) {
       <div class="props-form">
         {schema.map(renderField)}
       </div>
-
-      <div class="props-actions">
-        <button class="apply-props-btn" onclick={`applyProps('${componentName}')`}>Apply Changes</button>
-        <button class="copy-props-btn" onclick={`copyPropsToClipboard('${componentName}')`}>Copy Props</button>
-      </div>
     </div>
   );
 } 

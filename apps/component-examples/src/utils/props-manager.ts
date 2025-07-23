@@ -292,26 +292,4 @@ if (typeof window !== 'undefined') {
   (window as any).resetProps = (componentName: string) => {
     propsManager.resetProps(componentName);
   };
-
-  (window as any).applyProps = (componentName: string) => {
-    // This will be called when the Apply button is clicked
-    // The actual component update logic will be handled by the component itself
-    console.log(
-      'Props applied for:',
-      componentName,
-      propsManager.getProps(componentName)
-    );
-  };
-
-  (window as any).copyPropsToClipboard = (componentName: string) => {
-    const propsJson = propsManager.getPropsAsJson(componentName);
-    navigator.clipboard
-      .writeText(propsJson)
-      .then(() => {
-        console.log('Props copied to clipboard');
-      })
-      .catch((err) => {
-        console.error('Failed to copy props:', err);
-      });
-  };
 }

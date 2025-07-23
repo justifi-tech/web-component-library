@@ -318,6 +318,13 @@ server.addRoute({
               if (propsManager) {
                 propsManager.updateProp(componentName, propName, value, type);
                 console.log(\`Updated \${componentName}.\${propName} = \${value}\`);
+                
+                // Trigger live update immediately when prop changes
+                const props = propsManager.getProps(componentName);
+                const event = new CustomEvent('props-updated', { 
+                  detail: { componentName, props } 
+                });
+                document.dispatchEvent(event);
               }
             }
             
@@ -339,32 +346,16 @@ server.addRoute({
                     }
                   }
                 });
-              }
-            }
-            
-            function applyProps(componentName) {
-              const propsManager = window.propsManager;
-              if (propsManager) {
-                const props = propsManager.getProps(componentName);
-                console.log(\`Applying props for \${componentName}:\`, props);
                 
-                // Trigger live update if component is registered
-                if (window.registerLiveComponent && window.livePropsClient) {
-                  window.livePropsClient.triggerLiveUpdate(componentName);
-                }
+                // Trigger live update after reset
+                const event = new CustomEvent('props-updated', { 
+                  detail: { componentName, props } 
+                });
+                document.dispatchEvent(event);
               }
             }
             
-            function copyPropsToClipboard(componentName) {
-              const propsManager = window.propsManager;
-              if (propsManager) {
-                const props = propsManager.getProps(componentName);
-                const propsStr = JSON.stringify(props, null, 2);
-                navigator.clipboard.writeText(propsStr).then(() => {
-                  console.log(\`Props for \${componentName} copied to clipboard\`);
-                });
-              }
-            }
+
             
             // Output management
             function clearOutput() {

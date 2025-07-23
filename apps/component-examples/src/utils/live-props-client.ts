@@ -75,27 +75,6 @@ export class LivePropsClient {
         // Trigger live update
         this.triggerLiveUpdate(componentName);
       };
-
-      // Override the global applyProps function
-      const originalApplyProps = (window as any).applyProps;
-      (window as any).applyProps = (componentName: string) => {
-        // Call the original function
-        if (originalApplyProps) {
-          originalApplyProps(componentName);
-        }
-
-        // Trigger live update
-        this.triggerLiveUpdate(componentName);
-      };
-
-      // Override the global copyPropsToClipboard function
-      const originalCopyPropsToClipboard = (window as any).copyPropsToClipboard;
-      (window as any).copyPropsToClipboard = (componentName: string) => {
-        // Call the original function
-        if (originalCopyPropsToClipboard) {
-          originalCopyPropsToClipboard(componentName);
-        }
-      };
     }
   }
 

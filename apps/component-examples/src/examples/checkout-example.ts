@@ -125,7 +125,7 @@ export async function createCheckoutExample(
         }
         
         // Register the component for live updates
-        const componentContainer = document.getElementById('output-pane');
+        const componentContainer = document.querySelector('.column-preview');
         if (componentContainer) {
           registerLiveComponent('${componentName}', componentContainer, function(newProps) {
             updateCheckoutComponent(newProps);
@@ -142,15 +142,22 @@ export async function createCheckoutExample(
       
       // Function to update the checkout component with new props
       function updateCheckoutComponent(props) {
-        const container = document.getElementById('output-pane');
+        const container = document.querySelector('.column-preview');
         if (!container) return;
         
-        // Clear the container
-        container.innerHTML = '';
-        
-        // Create new component with updated props
-        const newComponent = createCheckoutComponent(props);
-        container.appendChild(newComponent);
+        // Find the existing checkout component
+        const existingCheckout = container.querySelector('justifi-checkout');
+        if (existingCheckout) {
+          // Update the existing component's attributes
+          existingCheckout.setAttribute('web-component-token', props.authToken || '');
+          existingCheckout.setAttribute('checkout-id', props.checkoutId || '');
+          existingCheckout.setAttribute('disable-credit-card', props.disableCreditCard ? 'true' : 'false');
+          existingCheckout.setAttribute('disable-bank-account', props.disableBankAccount ? 'true' : 'false');
+          existingCheckout.setAttribute('disable-bnpl', props.disableBnpl ? 'true' : 'false');
+          existingCheckout.setAttribute('disable-payment-method-group', props.disablePaymentMethodGroup ? 'true' : 'false');
+          existingCheckout.setAttribute('hide-card-billing-form', props.hideCardBillingForm ? 'true' : 'false');
+          existingCheckout.setAttribute('hide-bank-account-billing-form', props.hideBankAccountBillingForm ? 'true' : 'false');
+        }
         
         // Add visual feedback
         container.style.transition = 'box-shadow 0.3s ease';
@@ -160,26 +167,12 @@ export async function createCheckoutExample(
         }, 300);
       }
       
-      // Function to create checkout component (simplified for demo)
-      function createCheckoutComponent(props) {
-        const div = document.createElement('div');
-        div.className = 'checkout-component';
-        div.innerHTML = \`
-          <div class="checkout-container" style="padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <h3>Checkout Component</h3>
-            <div class="checkout-details">
-              <p><strong>Amount:</strong> $\${props.amount || 100}</p>
-              <p><strong>Currency:</strong> \${props.currency || 'USD'}</p>
-              <p><strong>Description:</strong> \${props.description || 'Sample payment'}</p>
-              <p><strong>Show Insurance:</strong> \${props.showInsurance ? 'Yes' : 'No'}</p>
-              <p><strong>Theme:</strong> \${props.theme || 'light'}</p>
-            </div>
-            \${props.showInsurance ? '<div class="insurance-section" style="margin-top: 15px; padding: 10px; background: #f8f9fa;"><p>Insurance options would appear here</p></div>' : ''}
-            <button style="margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Process Payment</button>
-          </div>
-        \`;
-        return div;
-      }
+      // Listen for props-updated events
+      document.addEventListener('props-updated', function(event) {
+        if (event.detail.componentName === '${componentName}') {
+          updateCheckoutComponent(event.detail.props);
+        }
+      });
     `,
   ];
 
