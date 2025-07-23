@@ -27,43 +27,7 @@ body {
   font-size: 1.1rem;
 }
 
-.examples-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
 
-.example-card {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.example-card h3 {
-  margin: 0 0 1rem 0;
-  color: #333;
-}
-
-.example-card p {
-  color: #666;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.example-card a {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.example-card a:hover {
-  background: #0056b3;
-}
 
 /* Main Layout */
 .example-layout {
