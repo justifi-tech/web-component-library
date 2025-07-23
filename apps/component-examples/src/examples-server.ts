@@ -2,6 +2,8 @@ import { createExampleServer } from './server/express-server';
 import { API_PATHS } from './utils/api-paths';
 import { createCheckoutExample } from './examples/checkout-example';
 import { BaseTemplate } from './templates/base-template';
+import { NavigationMenu } from './components/NavigationMenu';
+import { renderToString } from './utils/simple-jsx';
 
 // Load environment variables
 require('dotenv').config({ path: '../../.env' });
@@ -14,6 +16,44 @@ server.addRoute({
   path: '/',
   handler: async (_req, res) => {
     try {
+      // Define navigation items for available examples
+      const navigationData = {
+        items: [
+          {
+            id: 'checkout',
+            title: 'Checkout Component',
+            description:
+              'Complete checkout experience with payment method selection and billing information collection. Features live props editing and real-time event logging.',
+            category: 'Payment',
+            url: '/checkout',
+            isActive: false,
+          },
+          {
+            id: 'business-details',
+            title: 'Business Details',
+            description:
+              'Display business information with interactive editing capabilities and comprehensive event tracking.',
+            category: 'Business',
+            url: '/business-details',
+            isActive: false,
+          },
+          {
+            id: 'payment-details',
+            title: 'Payment Details',
+            description:
+              'Payment information display with real-time updates and detailed event logging.',
+            category: 'Payment',
+            url: '/payment-details',
+            isActive: false,
+          },
+        ],
+        currentPath: '/',
+        showCategories: true,
+      };
+
+      // Render the NavigationMenu component
+      const navigationContent = renderToString(NavigationMenu(navigationData));
+
       const html = `
         <!DOCTYPE html>
         <html>
@@ -21,20 +61,7 @@ server.addRoute({
             <title>JustiFi Component Examples</title>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="stylesheet" href="/styles/enhanced-layout.css" />
-            <style>
-              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 2rem; background: #f8f9fa; }
-              .container { max-width: 1200px; margin: 0 auto; }
-              .header { text-align: center; margin-bottom: 3rem; }
-              .header h1 { color: #333; margin-bottom: 1rem; }
-              .header p { color: #666; font-size: 1.1rem; }
-              .examples-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-              .example-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-              .example-card h3 { margin: 0 0 1rem 0; color: #333; }
-              .example-card p { color: #666; margin-bottom: 1.5rem; line-height: 1.5; }
-              .example-card a { display: inline-block; padding: 0.75rem 1.5rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
-              .example-card a:hover { background: #0056b3; }
-            </style>
+            <link rel="stylesheet" href="/styles/example-app.css" />
           </head>
           <body>
             <div class="container">
@@ -42,23 +69,7 @@ server.addRoute({
                 <h1>JustiFi Component Examples</h1>
                 <p>Enhanced component examples with live props editing and event logging</p>
               </div>
-              <div class="examples-grid">
-                <div class="example-card">
-                  <h3>Checkout Component</h3>
-                  <p>Complete checkout experience with payment method selection and billing information collection. Features live props editing and real-time event logging.</p>
-                  <a href="/checkout">View Example</a>
-                </div>
-                <div class="example-card">
-                  <h3>Business Details</h3>
-                  <p>Display business information with interactive editing capabilities and comprehensive event tracking.</p>
-                  <a href="/business-details">View Example</a>
-                </div>
-                <div class="example-card">
-                  <h3>Payment Details</h3>
-                  <p>Payment information display with real-time updates and detailed event logging.</p>
-                  <a href="/payment-details">View Example</a>
-                </div>
-              </div>
+              ${navigationContent}
             </div>
           </body>
         </html>
@@ -126,7 +137,7 @@ server.addRoute({
         title: 'JustiFi Checkout Example',
         webComponentToken,
         bodyContent: exampleContent,
-        styles: ['/styles/layout.css'],
+        styles: ['/styles/example-app.css'],
         scripts: [
           `
             // PropsManager for client-side props management
