@@ -148,15 +148,37 @@ export async function createCheckoutExample(
         // Find the existing checkout component
         const existingCheckout = container.querySelector('justifi-checkout');
         if (existingCheckout) {
-          // Update the existing component's attributes
-          existingCheckout.setAttribute('web-component-token', props.authToken || '');
-          existingCheckout.setAttribute('checkout-id', props.checkoutId || '');
-          existingCheckout.setAttribute('disable-credit-card', props.disableCreditCard ? 'true' : 'false');
-          existingCheckout.setAttribute('disable-bank-account', props.disableBankAccount ? 'true' : 'false');
-          existingCheckout.setAttribute('disable-bnpl', props.disableBnpl ? 'true' : 'false');
-          existingCheckout.setAttribute('disable-payment-method-group', props.disablePaymentMethodGroup ? 'true' : 'false');
-          existingCheckout.setAttribute('hide-card-billing-form', props.hideCardBillingForm ? 'true' : 'false');
-          existingCheckout.setAttribute('hide-bank-account-billing-form', props.hideBankAccountBillingForm ? 'true' : 'false');
+          // Remove the existing component
+          existingCheckout.remove();
+          
+          // Create a new component with updated props
+          const newCheckout = document.createElement('justifi-checkout');
+          newCheckout.authToken = props.authToken || '';
+          newCheckout.checkoutId = props.checkoutId || '';
+          newCheckout.disableCreditCard = props.disableCreditCard || false;
+          newCheckout.disableBankAccount = props.disableBankAccount || false;
+          newCheckout.disableBnpl = props.disableBnpl || false;
+          newCheckout.disablePaymentMethodGroup = props.disablePaymentMethodGroup || false;
+          newCheckout.hideCardBillingForm = props.hideCardBillingForm || false;
+          newCheckout.hideBankAccountBillingForm = props.hideBankAccountBillingForm || false;
+          
+          // Add event listeners to the new component
+          newCheckout.addEventListener('submit-event', function(event) {
+            logEvent('submit-event', 'justifi-checkout', event.detail, 'success');
+            writeOutputToPage(event);
+          });
+          
+          newCheckout.addEventListener('error-event', function(event) {
+            logEvent('error-event', 'justifi-checkout', event.detail, 'error');
+            writeOutputToPage(event);
+          });
+          
+          newCheckout.addEventListener('validation-event', function(event) {
+            logEvent('validation-event', 'justifi-checkout', event.detail, 'info');
+          });
+          
+          // Add the new component to the container
+          container.appendChild(newCheckout);
         }
         
         // Add visual feedback
