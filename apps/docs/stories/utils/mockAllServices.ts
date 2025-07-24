@@ -183,7 +183,7 @@ export const setUpMocks = () => {
             state: 'MN',
             postal_code: '55555',
             time_zone: 'US/Central',
-            country: 'USA',
+            country: 'US',
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
             // For each order item, generate `quantity` number of terminal objects,

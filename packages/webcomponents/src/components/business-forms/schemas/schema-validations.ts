@@ -1,5 +1,6 @@
 import { string } from 'yup';
 import StateOptions from '../../../utils/state-options';
+import CanadianProvinceOptions from '../../../utils/canadian-province-options';
 import {
   businessServiceReceivedOptions,
   recurringPaymentsOptions,
@@ -152,6 +153,57 @@ export const stateValidation = string()
 export const postalValidation = string()
   .matches(/^[0-9]{5}$/, 'Enter valid postal code')
   .transform(transformEmptyString);
+
+// Country-aware validations for legal address form
+export const countryAwareStateValidation = (country?: string) => {
+  const isCanada = country === 'CA';
+  const isUS = country === 'US' || !country; // Default to US if no country
+  
+  if (isCanada) {
+    return string()
+      .oneOf(
+        CanadianProvinceOptions.map((option) => option.value),
+        'Enter a 2-letter province/territory abbreviation, such as ON'
+      )
+      .transform(transformEmptyString);
+  } else if (isUS) {
+    return string()
+      .oneOf(
+        StateOptions.map((option) => option.value),
+        'Enter a 2-letter state abbreviation, such as CA'
+      )
+      .transform(transformEmptyString);
+  }
+  
+  // Fallback for other countries - just require a string
+  return string()
+    .min(2, 'State/Province must be at least 2 characters')
+    .max(50, 'State/Province must be less than 50 characters')
+    .transform(transformEmptyString);
+};
+
+export const countryAwarePostalValidation = (country?: string) => {
+  const isCanada = country === 'CA';
+  const isUS = country === 'US' || !country; // Default to US if no country
+  
+  if (isCanada) {
+    // Canadian postal code format: A1A 1A1
+    return string()
+      .matches(/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/, 'Enter valid Canadian postal code (e.g., A1A 1A1)')
+      .transform(transformEmptyString);
+  } else if (isUS) {
+    // US ZIP code format: 12345 or 12345-6789
+    return string()
+      .matches(/^[0-9]{5}(-[0-9]{4})?$/, 'Enter valid ZIP code (e.g., 12345 or 12345-6789)')
+      .transform(transformEmptyString);
+  }
+  
+  // Fallback for other countries - just require a string
+  return string()
+    .min(3, 'Postal code must be at least 3 characters')
+    .max(15, 'Postal code must be less than 15 characters')
+    .transform(transformEmptyString);
+};
 
 // Additional Questions Validations
 

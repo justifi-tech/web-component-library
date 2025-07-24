@@ -51,7 +51,7 @@ export class Address implements IAddress {
     this.postal_code = address.postal_code;
     this.city = address.city;
     this.state = getStateAbbreviation(address.state);
-    this.country = address.country || 'USA';
+    this.country = address.country || 'US';
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
   }
