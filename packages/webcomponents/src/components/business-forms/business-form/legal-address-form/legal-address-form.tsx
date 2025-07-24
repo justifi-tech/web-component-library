@@ -42,7 +42,7 @@ export class LegalAddressForm {
       },
     });
 
-    // Handle country change to update region options and clear state if needed
+    // Handle country change to update region options
     if (name === 'country') {
       this.selectedCountry = value;
       // Clear state/province when country changes as the options will be different
@@ -51,7 +51,7 @@ export class LegalAddressForm {
         legal_address: {
           ...this.formController.values.getValue().legal_address,
           [name]: value,
-          state: '', // Clear state when country changes
+          state: '',
         },
       });
     }
