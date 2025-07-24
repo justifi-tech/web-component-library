@@ -34,24 +34,25 @@ export class LegalAddressForm {
   }
 
   inputHandler(name: string, value: string) {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      legal_address: {
-        ...this.formController.values.getValue().legal_address,
-        [name]: value,
-      },
-    });
-
     // Handle country change to update region options
     if (name === 'country') {
       this.selectedCountry = value;
-      // Clear state/province when country changes as the options will be different
+      // Single update that sets country and clears state
       this.formController.setValues({
         ...this.formController.values.getValue(),
         legal_address: {
           ...this.formController.values.getValue().legal_address,
           [name]: value,
           state: '',
+        },
+      });
+    } else {
+      // Regular field update
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        legal_address: {
+          ...this.formController.values.getValue().legal_address,
+          [name]: value,
         },
       });
     }

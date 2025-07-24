@@ -27,14 +27,16 @@ export class IdentityAddressForm {
   }
 
   inputHandler = (name: string, value: string) => {
-    this.address[name] = value;
-    this.address = { ...this.address };
-
     // Handle country change to update region options and clear state if needed
     if (name === 'country') {
       this.selectedCountry = value;
-      // Clear state/province when country changes as the options will be different
+      // Single update that sets country and clears state
+      this.address[name] = value;
       this.address.state = '';
+      this.address = { ...this.address };
+    } else {
+      // Regular field update
+      this.address[name] = value;
       this.address = { ...this.address };
     }
   }

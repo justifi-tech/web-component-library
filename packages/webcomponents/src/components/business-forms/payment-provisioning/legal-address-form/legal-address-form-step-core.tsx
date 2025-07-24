@@ -103,19 +103,20 @@ export class LegalAddressFormStepCore {
   }
 
   inputHandler = (name: string, value: string) => {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      [name]: value,
-    });
-
     // Handle country change to update region options and clear state if needed
     if (name === 'country') {
       this.selectedCountry = value;
-      // Clear state/province when country changes as the options will be different
+      // Single update that sets country and clears state
       this.formController.setValues({
         ...this.formController.values.getValue(),
         [name]: value,
         state: '', // Clear state when country changes
+      });
+    } else {
+      // Regular field update
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        [name]: value,
       });
     }
   }
