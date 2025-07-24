@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
-import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/payment-provisioning-address-options';
+import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/address-form-helpers';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { IAddress } from '../../../../api/Business';
 

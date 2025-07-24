@@ -3,7 +3,7 @@ import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/payment-provisioning-address-options';
+import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/address-form-helpers';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';

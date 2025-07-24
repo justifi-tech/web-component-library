@@ -36,7 +36,7 @@ export function getRegionLabel(countryCode: string) {
 export function getPostalCodeLabel(countryCode: string) {
   switch (countryCode) {
     case 'USA':
-      return 'Postal Code';
+      return 'ZIP Code';
     case 'CA':
       return 'Postal Code';
     default:

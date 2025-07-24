@@ -1,7 +1,7 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../../../components';
 import { IAddress } from '../../../../api/Business';
-import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/payment-provisioning-address-options';
+import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/address-form-helpers';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
 
