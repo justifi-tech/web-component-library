@@ -53,8 +53,8 @@ graph TD;
   form-control-number-masked --> form-control-tooltip
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core
   justifi-legal-address-form-step-core --> form-control-tooltip
-  justifi-legal-address-form-step-core --> form-control-text
   justifi-legal-address-form-step-core --> form-control-select
+  justifi-legal-address-form-step-core --> form-control-text
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-monetary-provisioning

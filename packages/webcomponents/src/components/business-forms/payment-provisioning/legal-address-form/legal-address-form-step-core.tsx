@@ -1,9 +1,9 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { addressSchema } from '../../schemas/business-address-schema';
+import { paymentProvisioningAddressSchema } from '../../schemas/payment-provisioning-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import StateOptions from '../../../../utils/state-options';
+import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/payment-provisioning-address-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
@@ -17,6 +17,7 @@ export class LegalAddressFormStepCore {
   @State() errors: any = {};
   @State() legal_address: IAddress = {};
   @State() isLoading: boolean = false;
+  @State() selectedCountry: string = 'USA'; // Default to USA
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -40,7 +41,7 @@ export class LegalAddressFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(addressSchema(this.allowOptionalFields));
+    this.formController = new FormController(paymentProvisioningAddressSchema(this.allowOptionalFields));
   }
 
   componentDidLoad() {
@@ -55,7 +56,13 @@ export class LegalAddressFormStepCore {
     this.getBusiness({
       onSuccess: (response) => {
         this.legal_address = new Address(response.data.legal_address || {});
-        this.formController.setInitialValues({ ...this.legal_address });
+        // Set the selected country from existing data or default to USA
+        this.selectedCountry = this.legal_address.country || 'USA';
+        this.formController.setInitialValues({ 
+          ...this.legal_address,
+          // Ensure country has a default value
+          country: this.legal_address.country || 'USA'
+        });
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -100,10 +107,38 @@ export class LegalAddressFormStepCore {
       ...this.formController.values.getValue(),
       [name]: value,
     });
+
+    // Handle country change to update region options and clear state if needed
+    if (name === 'country') {
+      this.selectedCountry = value;
+      // Clear state/province when country changes as the options will be different
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        [name]: value,
+        state: '', // Clear state when country changes
+      });
+    }
   }
 
   render() {
     const legalAddressDefaultValue = this.formController.getInitialValues();
+    
+    // Update selected country based on form values or default
+    const currentCountry = this.formController.values.getValue()?.country || this.selectedCountry;
+    
+    // Get dynamic options and labels based on selected country
+    const regionOptions = getRegionOptions(currentCountry);
+    const regionLabel = getRegionLabel(currentCountry);
+    const postalCodeLabel = getPostalCodeLabel(currentCountry);
+    
+    // Configure postal code input based on country
+    const postalCodeConfig = currentCountry === 'CA' ? {
+      maxLength: 7, // A1A 1A1 with space
+      keyDownHandler: undefined, // Allow letters for Canadian postal codes
+    } : {
+      maxLength: 10, // 12345-6789 for US extended zip
+      keyDownHandler: numberOnlyHandler,
+    };
 
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
@@ -118,6 +153,16 @@ export class LegalAddressFormStepCore {
           </div>
           <hr class="mt-2" />
           <div class="row gy-3">
+            <div class="col-12">
+              <form-control-select
+                name="country"
+                label="Country"
+                options={PaymentProvisioningCountryOptions}
+                inputHandler={this.inputHandler}
+                defaultValue={legalAddressDefaultValue?.country || 'USA'}
+                errorText={this.errors?.country}
+              />
+            </div>
             <div class="col-12">
               <form-control-text
                 name="line1"
@@ -148,8 +193,8 @@ export class LegalAddressFormStepCore {
             <div class="col-12">
               <form-control-select
                 name="state"
-                label="State"
-                options={StateOptions}
+                label={regionLabel}
+                options={regionOptions}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.state}
                 errorText={this.errors?.state}
@@ -158,24 +203,13 @@ export class LegalAddressFormStepCore {
             <div class="col-12">
               <form-control-text
                 name="postal_code"
-                label="Postal Code"
+                label={postalCodeLabel}
                 inputHandler={this.inputHandler}
                 defaultValue={legalAddressDefaultValue?.postal_code}
                 errorText={this.errors?.postal_code}
-                maxLength={5}
-                keyDownHandler={numberOnlyHandler}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="country"
-                label="Country"
-                options={[{ label: "United States", value: "USA" }]}
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country}
-                errorText={this.errors?.country}
-                // just for now so we skip handling country specificities
-                disabled={true}
+                maxLength={postalCodeConfig.maxLength}
+                keyDownHandler={postalCodeConfig.keyDownHandler}
+                helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789'}
               />
             </div>
           </div>
