@@ -67,8 +67,8 @@ graph TD;
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
   justifi-business-representative-form-inputs --> justifi-identity-address-form
-  justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
+  justifi-identity-address-form --> form-control-text
   justifi-business-owners-form-step --> justifi-business-owners-form-step-core
   justifi-business-owners-form-step-core --> form-control-tooltip
   justifi-business-owners-form-step-core --> justifi-owner-form

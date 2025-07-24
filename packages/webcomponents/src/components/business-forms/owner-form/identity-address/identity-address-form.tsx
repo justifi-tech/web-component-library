@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
-import StateOptions from '../../../../utils/state-options';
+import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/payment-provisioning-address-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { IAddress } from '../../../../api/Business';
 
@@ -11,21 +11,65 @@ export class IdentityAddressForm {
   @Prop() errors: any;
   @Prop() defaultValues: any;
   @State() address: IAddress = {};
+  @State() selectedCountry: string = 'USA'; // Default to USA
 
   @Watch('address')
   handleAddressChange(newValues: any) {
     this.handleFormUpdate(newValues);
   }
 
+  @Watch('defaultValues')
+  handleDefaultValuesChange(newValues: any) {
+    // Update selected country when default values change
+    if (newValues?.country) {
+      this.selectedCountry = newValues.country;
+    }
+  }
+
   inputHandler = (name: string, value: string) => {
     this.address[name] = value;
     this.address = { ...this.address };
+
+    // Handle country change to update region options and clear state if needed
+    if (name === 'country') {
+      this.selectedCountry = value;
+      // Clear state/province when country changes as the options will be different
+      this.address.state = '';
+      this.address = { ...this.address };
+    }
   }
 
   render() {
+    // Update selected country based on current address values or default
+    const currentCountry = this.address?.country || this.defaultValues?.country || this.selectedCountry;
+    
+    // Get dynamic options and labels based on selected country
+    const regionOptions = getRegionOptions(currentCountry);
+    const regionLabel = getRegionLabel(currentCountry);
+    const postalCodeLabel = getPostalCodeLabel(currentCountry);
+    
+    // Configure postal code input based on country
+    const postalCodeConfig = currentCountry === 'CA' ? {
+      maxLength: 7, // A1A 1A1 with space
+      keyDownHandler: undefined, // Allow letters for Canadian postal codes
+    } : {
+      maxLength: 10, // 12345-6789 for US extended zip
+      keyDownHandler: numberOnlyHandler,
+    };
+
     return (
       <Host>
         <div class="row gy-3">
+          <div class="col-12">
+            <form-control-select
+              name="country"
+              label="Country"
+              options={PaymentProvisioningCountryOptions}
+              inputHandler={this.inputHandler}
+              defaultValue={this.defaultValues?.country || 'USA'}
+              errorText={this.errors?.country}
+            />
+          </div>
           <div class="col-12 col-md-8">
             <form-control-text
               name="line1"
@@ -57,9 +101,9 @@ export class IdentityAddressForm {
           <div class="col-12 col-md-6">
             <form-control-select
               name="state"
-              label="State"
+              label={regionLabel}
               defaultValue={this.defaultValues?.state}
-              options={StateOptions}
+              options={regionOptions}
               errorText={this.errors?.state}
               inputHandler={this.inputHandler}
             />
@@ -67,24 +111,13 @@ export class IdentityAddressForm {
           <div class="col-12 col-md-6">
             <form-control-text
               name="postal_code"
-              label="Postal Code"
+              label={postalCodeLabel}
               defaultValue={this.defaultValues?.postal_code}
               errorText={this.errors?.postal_code}
-              maxLength={5}
-              keyDownHandler={numberOnlyHandler}
+              maxLength={postalCodeConfig.maxLength}
+              keyDownHandler={postalCodeConfig.keyDownHandler}
               inputHandler={this.inputHandler}
-            />
-          </div>
-          <div class="col-12">
-            <form-control-select
-              name="country"
-              label="Country"
-              options={[{ label: 'United States', value: 'USA' }]}
-              inputHandler={this.inputHandler}
-              defaultValue={this.defaultValues?.country}
-              errorText={this.errors?.country}
-              // just for now so we skip handling country specificities
-              disabled={true}
+              helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789'}
             />
           </div>
         </div>

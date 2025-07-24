@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { paymentProvisioningAddressSchema } from '../../schemas/payment-provisioning-address-schema';
+import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
@@ -41,7 +41,7 @@ export class LegalAddressFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(paymentProvisioningAddressSchema(this.allowOptionalFields));
+    this.formController = new FormController(addressSchema(this.allowOptionalFields));
   }
 
   componentDidLoad() {
