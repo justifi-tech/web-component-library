@@ -131,7 +131,6 @@ export class LegalAddressFormStepCore {
 
     return (
       <form>
-        {JSON.stringify(this.values)}
         <fieldset>
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Legal Address of your Business</legend>
@@ -177,7 +176,6 @@ export class LegalAddressFormStepCore {
               />
             </div>
             <div class="col-12">
-              <div>legalAddressDefaultValue?.state: {JSON.stringify(this.values?.state)}</div>
               <form-control-select
                 name="state"
                 label={regionLabel}

@@ -112,7 +112,7 @@ export class LegalAddressForm {
               />
             </div>
             <div class="col-12">
-                              <form-control-text
+              <form-control-text
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
