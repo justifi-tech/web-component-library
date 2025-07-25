@@ -11,7 +11,7 @@ import { heading2 } from '../../../../styles/parts';
 export class LegalAddressForm {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: IAddress;
+  @State() values: IAddress;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -19,10 +19,10 @@ export class LegalAddressForm {
 
   componentDidLoad() {
     this.formController.errors.subscribe(
-      errors => (this.errors = { ...errors }),
+      errors => (this.errors = { ...errors.legal_address }),
     );
     this.formController.values.subscribe(
-      values => (this.legal_address = { ...values.legal_address })
+      values => (this.values = { ...values.legal_address })
     );
   }
 
@@ -32,7 +32,7 @@ export class LegalAddressForm {
       this.formController.setValues({
         ...this.formController.values.getValue(),
         legal_address: {
-          ...this.formController.values.getValue().legal_address,
+          ...this.values,
           [name]: value,
           state: '',
           postal_code: '',
@@ -50,12 +50,9 @@ export class LegalAddressForm {
     }
   }
 
-  render() {
-    const legalAddressDefaultValue =
-      this.formController.getInitialValues().legal_address;
-    
+  render() { 
     // Get current country from form values, defaulting to USA
-    const currentCountry = this.formController.values.getValue()?.legal_address?.country || 'USA';
+    const currentCountry = this.values?.country;
     
     // Get dynamic options and labels based on current country
     const regionOptions = getRegionOptions(currentCountry);
@@ -82,8 +79,8 @@ export class LegalAddressForm {
                 label="Country"
                 options={PaymentProvisioningCountryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country}
-                errorText={this.errors?.legal_address?.country}
+                defaultValue={this.values?.country}
+                errorText={this.errors?.country}
               />
             </div>
             <div class="col-12">
@@ -91,8 +88,8 @@ export class LegalAddressForm {
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line1}
-                errorText={this.errors?.legal_address?.line1}
+                defaultValue={this.values?.line1}
+                errorText={this.errors?.line1}
               />
             </div>
             <div class="col-12">
@@ -100,8 +97,8 @@ export class LegalAddressForm {
                 name="line2"
                 label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line2}
-                errorText={this.errors?.legal_address?.line2}
+                defaultValue={this.values?.line2}
+                errorText={this.errors?.line2}
               />
             </div>
             <div class="col-12">
@@ -109,8 +106,8 @@ export class LegalAddressForm {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.city}
-                errorText={this.errors?.legal_address?.city}
+                defaultValue={this.values?.city}
+                errorText={this.errors?.city}
               />
             </div>
             <div class="col-12">
@@ -119,8 +116,8 @@ export class LegalAddressForm {
                 label={regionLabel}
                 options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.state}
-                errorText={this.errors?.legal_address?.state}
+                defaultValue={this.values?.state}
+                errorText={this.errors?.state}
               />
             </div>
             <div class="col-12">
@@ -128,8 +125,8 @@ export class LegalAddressForm {
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.postal_code}
-                errorText={this.errors?.legal_address?.postal_code}
+                defaultValue={this.values?.postal_code}
+                errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}
                 helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789'}
