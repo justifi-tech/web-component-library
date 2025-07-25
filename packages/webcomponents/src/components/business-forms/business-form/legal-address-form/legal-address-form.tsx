@@ -1,9 +1,9 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../../../components';
 import { IAddress } from '../../../../api/Business';
-import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/address-form-helpers';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
+import { getCountryFormConfig } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form'
@@ -51,22 +51,7 @@ export class LegalAddressForm {
   }
 
   render() { 
-    // Get current country from form values, defaulting to USA
-    const currentCountry = this.values?.country;
-    
-    // Get dynamic options and labels based on current country
-    const regionOptions = getRegionOptions(currentCountry);
-    const regionLabel = getRegionLabel(currentCountry);
-    const postalCodeLabel = getPostalCodeLabel(currentCountry);
-
-    // Configure postal code input based on country
-    const postalCodeConfig = currentCountry === 'CA' ? {
-      maxLength: 7, // A1A 1A1 with space
-      keyDownHandler: undefined, // Allow letters for Canadian postal codes
-    } : {
-      maxLength: 10, // 12345-6789 for US extended zip
-      keyDownHandler: numberOnlyHandler,
-    };
+    const { regionOptions, regionLabel, postalCodeLabel, postalCodeConfig } = getCountryFormConfig(this.values?.country);
 
     return (
       <Host>

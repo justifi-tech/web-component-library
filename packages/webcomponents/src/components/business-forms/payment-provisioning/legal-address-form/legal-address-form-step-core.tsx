@@ -3,11 +3,10 @@ import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/address-form-helpers';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { BusinessFormStep } from '../../utils';
+import { BusinessFormStep, getCountryFormConfig } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -118,21 +117,7 @@ export class LegalAddressFormStepCore {
   }
 
   render() {
-    const currentCountry = this.values.country;
-
-    // Get dynamic options and labels based on selected country
-    const regionOptions = getRegionOptions(currentCountry);
-    const regionLabel = getRegionLabel(currentCountry);
-    const postalCodeLabel = getPostalCodeLabel(currentCountry);
-
-    // Configure postal code input based on country
-    const postalCodeConfig = currentCountry === 'CA' ? {
-      maxLength: 7, // A1A 1A1 with space
-      keyDownHandler: undefined, // Allow letters for Canadian postal codes
-    } : {
-      maxLength: 10, // 12345-6789 for US extended zip
-      keyDownHandler: numberOnlyHandler,
-    };
+    const { regionOptions, regionLabel, postalCodeLabel, postalCodeConfig } = getCountryFormConfig(this.values?.country);
 
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
