@@ -9,6 +9,7 @@ export interface CountryFormConfig {
     maxLength: number;
     keyDownHandler?: (event: KeyboardEvent) => void;
   };
+  postalCodeHelpText: string;
 }
 
 /**
@@ -30,10 +31,14 @@ export function getCountryFormConfig(country?: string): CountryFormConfig {
     keyDownHandler: numberOnlyHandler,
   };
 
+  // Configure help text based on country
+  const postalCodeHelpText = country === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789';
+
   return {
     regionOptions,
     regionLabel,
     postalCodeLabel,
     postalCodeConfig,
+    postalCodeHelpText,
   };
 } 

@@ -51,7 +51,13 @@ export class LegalAddressForm {
   }
 
   render() { 
-    const { regionOptions, regionLabel, postalCodeLabel, postalCodeConfig } = getCountryFormConfig(this.values?.country);
+    const {
+      regionOptions,
+      regionLabel,
+      postalCodeLabel,
+      postalCodeConfig,
+      postalCodeHelpText
+    } = getCountryFormConfig(this.values?.country);
 
     return (
       <Host>
@@ -106,7 +112,7 @@ export class LegalAddressForm {
               />
             </div>
             <div class="col-12">
-              <form-control-text
+                              <form-control-text
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
@@ -114,7 +120,7 @@ export class LegalAddressForm {
                 errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}
-                helpText={this.values?.country === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789'}
+                helpText={postalCodeHelpText}
               />
             </div>
           </div>

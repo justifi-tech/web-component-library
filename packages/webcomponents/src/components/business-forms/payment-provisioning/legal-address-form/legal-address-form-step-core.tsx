@@ -117,7 +117,13 @@ export class LegalAddressFormStepCore {
   }
 
   render() {
-    const { regionOptions, regionLabel, postalCodeLabel, postalCodeConfig } = getCountryFormConfig(this.values?.country);
+    const {
+      regionOptions,
+      regionLabel,
+      postalCodeLabel,
+      postalCodeConfig,
+      postalCodeHelpText
+    } = getCountryFormConfig(this.values?.country);
 
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
@@ -190,7 +196,7 @@ export class LegalAddressFormStepCore {
                 errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}
-                helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789'}
+                helpText={postalCodeHelpText}
               />
             </div>
           </div>
