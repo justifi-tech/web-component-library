@@ -121,7 +121,7 @@ export class PropsManager {
       this.props[componentName] = {};
     }
 
-    // Update each prop with validation
+    // Update each prop without validation (since these are trusted server values)
     Object.entries(props).forEach(([propName, value]) => {
       const schema = this.schemas.get(componentName);
       const propSchema = schema?.find((p) => p.name === propName);
@@ -148,21 +148,7 @@ export class PropsManager {
             break;
         }
 
-        // Validate the value
-        if (propSchema.validation) {
-          const validationResult = this.validateProp(
-            propSchema,
-            convertedValue
-          );
-          if (validationResult !== true) {
-            console.warn(
-              `Validation failed for ${propName}:`,
-              validationResult
-            );
-            return;
-          }
-        }
-
+        // Skip validation for prefilled values since they come from the server
         this.props[componentName][propName] = convertedValue;
       }
     });
@@ -384,6 +370,7 @@ class PropsManager {
             break;
         }
 
+        // Skip validation for prefilled values since they come from the server
         this.props[componentName][propName] = convertedValue;
       }
     });

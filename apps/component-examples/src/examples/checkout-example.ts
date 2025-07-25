@@ -14,6 +14,23 @@ export async function createCheckoutExample(
 ) {
   const componentName = 'checkout';
 
+  // Prefill the props manager with actual values before rendering
+  const { propsManager } = await import('../utils/props-manager');
+  const { getSchema } = await import('../utils/prop-schemas');
+
+  const schema = getSchema(componentName);
+  propsManager.registerSchema(componentName, schema);
+  propsManager.prefillProps(componentName, {
+    authToken: webComponentToken,
+    checkoutId: checkoutId,
+    disableBankAccount: false,
+    disableCreditCard: false,
+    disableBnpl: false,
+    disablePaymentMethodGroup: false,
+    hideCardBillingForm: false,
+    hideBankAccountBillingForm: false,
+  });
+
   // Create the component HTML using the existing CheckoutComponent
   const checkoutProps = {
     webComponentToken: webComponentToken,
@@ -115,6 +132,10 @@ export async function createCheckoutExample(
     navigationContent,
     scripts: [
       `
+        // Store original values for fallback
+        window.originalAuthToken = '${webComponentToken}';
+        window.originalCheckoutId = '${checkoutId}';
+        
         // Event logging functionality
         window.eventLog = [];
         window.maxEvents = 50;
@@ -244,6 +265,10 @@ export async function createCheckoutExample(
           const container = document.querySelector('.column-preview');
           if (!container) return;
           
+          // Get the complete props from the props manager to ensure we have all values
+          const propsManager = window.propsManager;
+          const completeProps = propsManager ? propsManager.getProps('checkout') : props;
+          
           // Find the existing checkout component
           const existingCheckout = container.querySelector('justifi-checkout');
           if (existingCheckout) {
@@ -252,14 +277,37 @@ export async function createCheckoutExample(
             
             // Create a new component with updated props
             const newCheckout = document.createElement('justifi-checkout');
-            newCheckout.authToken = props.authToken || '';
-            newCheckout.checkoutId = props.checkoutId || '';
-            newCheckout.disableCreditCard = props.disableCreditCard || false;
-            newCheckout.disableBankAccount = props.disableBankAccount || false;
-            newCheckout.disableBnpl = props.disableBnpl || false;
-            newCheckout.disablePaymentMethodGroup = props.disablePaymentMethodGroup || false;
-            newCheckout.hideCardBillingForm = props.hideCardBillingForm || false;
-            newCheckout.hideBankAccountBillingForm = props.hideBankAccountBillingForm || false;
+            
+            // Always set the required auth-token and checkout-id attributes
+            // Use the values from props manager, fallback to passed props, then to original values
+            const authToken = completeProps.authToken || props.authToken || window.originalAuthToken || '';
+            const checkoutId = completeProps.checkoutId || props.checkoutId || window.originalCheckoutId || '';
+            
+
+            
+            // Set required attributes
+            newCheckout.setAttribute('auth-token', authToken);
+            newCheckout.setAttribute('checkout-id', checkoutId);
+            
+            // Set optional boolean attributes only if they are true
+            if (completeProps.disableCreditCard) {
+              newCheckout.setAttribute('disable-credit-card', 'true');
+            }
+            if (completeProps.disableBankAccount) {
+              newCheckout.setAttribute('disable-bank-account', 'true');
+            }
+            if (completeProps.disableBnpl) {
+              newCheckout.setAttribute('disable-bnpl', 'true');
+            }
+            if (completeProps.disablePaymentMethodGroup) {
+              newCheckout.setAttribute('disable-payment-method-group', 'true');
+            }
+            if (completeProps.hideCardBillingForm) {
+              newCheckout.setAttribute('hide-card-billing-form', 'true');
+            }
+            if (completeProps.hideBankAccountBillingForm) {
+              newCheckout.setAttribute('hide-bank-account-billing-form', 'true');
+            }
             
             // Add event listeners to the new component
             newCheckout.addEventListener('submit-event', function(event) {
