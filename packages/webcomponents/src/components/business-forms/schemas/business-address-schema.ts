@@ -13,7 +13,8 @@ export const multiCountryRegionValidation = string()
   .test('valid-region', 'Select a valid state/province', function(value) {
     const { country } = this.parent;
     
-    if (!value) return false;
+    // Let yup handle empty values - return true to allow .nullable() and .required() to work properly
+    if (!value) return true;
     
     if (country === 'USA') {
       return StateOptions.some(option => option.value === value);
@@ -31,7 +32,8 @@ export const multiCountryPostalValidation = string()
   .test('valid-postal', 'Enter valid postal code', function(value) {
     const { country } = this.parent;
     
-    if (!value) return false;
+    // Let yup handle empty values - return true to allow .nullable() and .required() to work properly
+    if (!value) return true;
     
     if (country === 'USA') {
       // US postal code: 12345 or 12345-6789
