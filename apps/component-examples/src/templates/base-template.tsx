@@ -37,8 +37,7 @@ export function BaseTemplate(data: BaseTemplateData) {
         ${stylesHtml}
         ${headContent}
         <script>
-          // Initialize props manager and live props client
-          window.propsManager = window.propsManager || {};
+          // Initialize live props client
           window.registerLiveComponent = window.registerLiveComponent || function() {};
         </script>
       </head>
