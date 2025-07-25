@@ -3,11 +3,10 @@ import { addressSchema } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import StateOptions from '../../../../utils/state-options';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { BusinessFormStep } from '../../utils';
+import { BusinessFormStep, getCountryFormConfig } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -15,7 +14,7 @@ import { BusinessFormStep } from '../../utils';
 export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: IAddress = {};
+  @State() values: IAddress = {};
   @State() isLoading: boolean = false;
 
   @Prop() getBusiness: Function;
@@ -44,9 +43,12 @@ export class LegalAddressFormStepCore {
   }
 
   componentDidLoad() {
-    this.formController.errors.subscribe(errors => {
-      this.errors = { ...errors };
-    });
+    this.formController.errors.subscribe(
+      errors => (this.errors = { ...errors }),
+    );
+    this.formController.values.subscribe(
+      values => (this.values = { ...values })
+    );
   }
 
   private getData = () => {
@@ -54,8 +56,9 @@ export class LegalAddressFormStepCore {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
-        this.legal_address = new Address(response.data.legal_address || {});
-        this.formController.setInitialValues({ ...this.legal_address });
+        const legalAddress = new Address(response.data.legal_address || {});
+        this.formController.setInitialValues({ ...legalAddress });
+        this.values = legalAddress;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -96,14 +99,31 @@ export class LegalAddressFormStepCore {
   }
 
   inputHandler = (name: string, value: string) => {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      [name]: value,
-    });
+    if (name === 'country') {
+      // Clear `state` and `postal_code` fields when country changes
+      this.formController.setValues({
+        ...this.values,
+        [name]: value,
+        state: '',
+        postal_code: '',
+      });
+    } else {
+      // Regular field update
+      this.formController.setValues({
+        ...this.values,
+        [name]: value,
+      });
+    }
   }
 
   render() {
-    const legalAddressDefaultValue = this.formController.getInitialValues();
+    const {
+      regionOptions,
+      regionLabel,
+      postalCodeLabel,
+      postalCodeConfig,
+      postalCodeHelpText
+    } = getCountryFormConfig(this.values?.country);
 
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
@@ -119,11 +139,21 @@ export class LegalAddressFormStepCore {
           <hr class="mt-2" />
           <div class="row gy-3">
             <div class="col-12">
+              <form-control-select
+                name="country"
+                label="Country"
+                options={PaymentProvisioningCountryOptions}
+                inputHandler={this.inputHandler}
+                defaultValue={this.values.country}
+                errorText={this.errors?.country}
+              />
+            </div>
+            <div class="col-12">
               <form-control-text
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line1}
+                defaultValue={this.values.line1}
                 errorText={this.errors?.line1}
               />
             </div>
@@ -132,7 +162,7 @@ export class LegalAddressFormStepCore {
                 name="line2"
                 label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line2}
+                defaultValue={this.values.line2}
                 errorText={this.errors?.line2}
               />
             </div>
@@ -141,41 +171,30 @@ export class LegalAddressFormStepCore {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.city}
+                defaultValue={this.values.city}
                 errorText={this.errors?.city}
               />
             </div>
             <div class="col-12">
               <form-control-select
                 name="state"
-                label="State"
-                options={StateOptions}
+                label={regionLabel}
+                options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.state}
+                defaultValue={this.values.state}
                 errorText={this.errors?.state}
               />
             </div>
             <div class="col-12">
               <form-control-text
                 name="postal_code"
-                label="Postal Code"
+                label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.postal_code}
+                defaultValue={this.values.postal_code}
                 errorText={this.errors?.postal_code}
-                maxLength={5}
-                keyDownHandler={numberOnlyHandler}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="country"
-                label="Country"
-                options={[{ label: "United States", value: "USA" }]}
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country}
-                errorText={this.errors?.country}
-                // just for now so we skip handling country specificities
-                disabled={true}
+                maxLength={postalCodeConfig.maxLength}
+                keyDownHandler={postalCodeConfig.keyDownHandler}
+                helpText={postalCodeHelpText}
               />
             </div>
           </div>

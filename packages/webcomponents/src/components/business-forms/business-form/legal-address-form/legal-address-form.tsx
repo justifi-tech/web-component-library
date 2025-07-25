@@ -1,9 +1,9 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 import { FormController } from '../../../../components';
 import { IAddress } from '../../../../api/Business';
-import StateOptions from '../../../../utils/state-options';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
+import { getCountryFormConfig } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form'
@@ -11,7 +11,7 @@ import { heading2 } from '../../../../styles/parts';
 export class LegalAddressForm {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: IAddress;
+  @State() values: IAddress;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -19,26 +19,45 @@ export class LegalAddressForm {
 
   componentDidLoad() {
     this.formController.errors.subscribe(
-      errors => (this.errors = { ...errors }),
+      errors => (this.errors = { ...errors.legal_address }),
     );
     this.formController.values.subscribe(
-      values => (this.legal_address = { ...values.legal_address })
+      values => (this.values = { ...values.legal_address })
     );
   }
 
   inputHandler(name: string, value: string) {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      legal_address: {
-        ...this.formController.values.getValue().legal_address,
-        [name]: value,
-      },
-    });
+    if (name === 'country') {
+       // Clear `state` and `postal_code` fields when country changes
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        legal_address: {
+          ...this.values,
+          [name]: value,
+          state: '',
+          postal_code: '',
+        },
+      });
+    } else {
+      // Regular field update
+      this.formController.setValues({
+        ...this.formController.values.getValue(),
+        legal_address: {
+          ...this.values,
+          [name]: value,
+        },
+      });
+    }
   }
 
-  render() {
-    const legalAddressDefaultValue =
-      this.formController.getInitialValues().legal_address;
+  render() { 
+    const {
+      regionOptions,
+      regionLabel,
+      postalCodeLabel,
+      postalCodeConfig,
+      postalCodeHelpText
+    } = getCountryFormConfig(this.values?.country);
 
     return (
       <Host>
@@ -46,21 +65,31 @@ export class LegalAddressForm {
           <legend part={heading2}>Business Legal Address</legend>
           <div class="row gy-3">
             <div class="col-12">
+              <form-control-select
+                name="country"
+                label="Country"
+                options={PaymentProvisioningCountryOptions}
+                inputHandler={this.inputHandler}
+                defaultValue={this.values?.country}
+                errorText={this.errors?.country}
+              />
+            </div>
+            <div class="col-12">
               <form-control-text
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line1}
-                errorText={this.errors?.legal_address?.line1}
+                defaultValue={this.values?.line1}
+                errorText={this.errors?.line1}
               />
             </div>
             <div class="col-12">
               <form-control-text
                 name="line2"
-                label="Address Line 2"
+                label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line2}
-                errorText={this.errors?.legal_address?.line2}
+                defaultValue={this.values?.line2}
+                errorText={this.errors?.line2}
               />
             </div>
             <div class="col-12">
@@ -68,41 +97,30 @@ export class LegalAddressForm {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.city}
-                errorText={this.errors?.legal_address?.city}
+                defaultValue={this.values?.city}
+                errorText={this.errors?.city}
               />
             </div>
             <div class="col-12">
               <form-control-select
                 name="state"
-                label="State"
-                options={StateOptions}
+                label={regionLabel}
+                options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.state}
-                errorText={this.errors?.legal_address?.state}
+                defaultValue={this.values?.state}
+                errorText={this.errors?.state}
               />
             </div>
             <div class="col-12">
               <form-control-text
                 name="postal_code"
-                label="Postal Code"
+                label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.postal_code}
-                errorText={this.errors?.legal_address?.postal_code}
-                maxLength={5}
-                keyDownHandler={numberOnlyHandler}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="country"
-                label="Country"
-                options={[{ label: 'United States', value: 'USA' }]}
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country}
-                errorText={this.errors?.legal_address?.country}
-                // just for now so we skip handling country specificities
-                disabled={true}
+                defaultValue={this.values?.postal_code}
+                errorText={this.errors?.postal_code}
+                maxLength={postalCodeConfig.maxLength}
+                keyDownHandler={postalCodeConfig.keyDownHandler}
+                helpText={postalCodeHelpText}
               />
             </div>
           </div>

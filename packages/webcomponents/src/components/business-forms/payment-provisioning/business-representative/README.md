@@ -65,8 +65,8 @@ graph TD;
   form-control-text --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
+  justifi-identity-address-form --> form-control-text
   form-control-select --> form-control-tooltip
   justifi-business-representative-form-step --> justifi-business-representative-form-step-core
   style justifi-business-representative-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
