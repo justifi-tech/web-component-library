@@ -4,7 +4,7 @@ import { createCheckoutExample } from './examples/checkout-example';
 import { BaseTemplate } from './templates/base-template';
 import { NavigationMenu } from './components/NavigationMenu';
 import { renderToString } from './utils/simple-jsx';
-import { getPropsManagerScript } from './utils/props-manager';
+import { getPropsManagerScript } from './utils/props-manager.js';
 
 // Load environment variables
 require('dotenv').config({ path: '../../.env' });

@@ -1,5 +1,5 @@
 /// <reference path="../jsx.d.ts" />
-import { PropSchema } from './props-manager';
+import { PropSchema } from './props-manager.js';
 
 // Checkout Component Schema (based on actual justifi-checkout component)
 export const CHECKOUT_SCHEMA: PropSchema[] = [
