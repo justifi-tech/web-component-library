@@ -15,9 +15,8 @@ import { BusinessFormStep } from '../../utils';
 export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() legal_address: IAddress = {};
+  @State() values: IAddress = {};
   @State() isLoading: boolean = false;
-  @State() selectedCountry: string = 'USA'; // Default to USA
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -45,9 +44,12 @@ export class LegalAddressFormStepCore {
   }
 
   componentDidLoad() {
-    this.formController.errors.subscribe(errors => {
-      this.errors = { ...errors };
-    });
+    this.formController.errors.subscribe(
+      errors => (this.errors = { ...errors }),
+    );
+    this.formController.values.subscribe(
+      values => (this.values = { ...values })
+    );
   }
 
   private getData = () => {
@@ -55,14 +57,9 @@ export class LegalAddressFormStepCore {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
-        this.legal_address = new Address(response.data.legal_address || {});
-        // Set the selected country from existing data or default to USA
-        this.selectedCountry = this.legal_address.country || 'USA';
-        this.formController.setInitialValues({ 
-          ...this.legal_address,
-          // Ensure country has a default value
-          country: this.legal_address.country || 'USA'
-        });
+        const legalAddress = new Address(response.data.legal_address || {});
+        this.formController.setInitialValues({ ...legalAddress });
+        this.values = legalAddress;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -103,35 +100,31 @@ export class LegalAddressFormStepCore {
   }
 
   inputHandler = (name: string, value: string) => {
-    // Handle country change to update region options and clear state if needed
     if (name === 'country') {
-      this.selectedCountry = value;
-      // Single update that sets country and clears state
+      // Clear `state` and `postal_code` fields when country changes
       this.formController.setValues({
-        ...this.formController.values.getValue(),
+        ...this.values,
         [name]: value,
-        state: '', // Clear state when country changes
+        state: '',
+        postal_code: '',
       });
     } else {
       // Regular field update
       this.formController.setValues({
-        ...this.formController.values.getValue(),
+        ...this.values,
         [name]: value,
       });
     }
   }
 
   render() {
-    const legalAddressDefaultValue = this.formController.getInitialValues();
-    
-    // Update selected country based on form values or default
-    const currentCountry = this.formController.values.getValue()?.country || this.selectedCountry;
-    
+    const currentCountry = this.values.country;
+
     // Get dynamic options and labels based on selected country
     const regionOptions = getRegionOptions(currentCountry);
     const regionLabel = getRegionLabel(currentCountry);
     const postalCodeLabel = getPostalCodeLabel(currentCountry);
-    
+
     // Configure postal code input based on country
     const postalCodeConfig = currentCountry === 'CA' ? {
       maxLength: 7, // A1A 1A1 with space
@@ -147,6 +140,7 @@ export class LegalAddressFormStepCore {
 
     return (
       <form>
+        {JSON.stringify(this.values)}
         <fieldset>
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Legal Address of your Business</legend>
@@ -160,7 +154,7 @@ export class LegalAddressFormStepCore {
                 label="Country"
                 options={PaymentProvisioningCountryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country || 'USA'}
+                defaultValue={this.values.country}
                 errorText={this.errors?.country}
               />
             </div>
@@ -169,7 +163,7 @@ export class LegalAddressFormStepCore {
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line1}
+                defaultValue={this.values.line1}
                 errorText={this.errors?.line1}
               />
             </div>
@@ -178,7 +172,7 @@ export class LegalAddressFormStepCore {
                 name="line2"
                 label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line2}
+                defaultValue={this.values.line2}
                 errorText={this.errors?.line2}
               />
             </div>
@@ -187,17 +181,18 @@ export class LegalAddressFormStepCore {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.city}
+                defaultValue={this.values.city}
                 errorText={this.errors?.city}
               />
             </div>
             <div class="col-12">
+              <div>legalAddressDefaultValue?.state: {JSON.stringify(this.values?.state)}</div>
               <form-control-select
                 name="state"
                 label={regionLabel}
                 options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.state}
+                defaultValue={this.values.state}
                 errorText={this.errors?.state}
               />
             </div>
@@ -206,7 +201,7 @@ export class LegalAddressFormStepCore {
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.postal_code}
+                defaultValue={this.values.postal_code}
                 errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}

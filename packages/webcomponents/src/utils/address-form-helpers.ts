@@ -3,7 +3,6 @@ import CanadianProvinceOptions from './canadian-province-options';
 
 // Focused country options for payment provisioning (US and Canada only)
 export const PaymentProvisioningCountryOptions = [
-  { label: 'Choose country', value: '' },
   { label: 'United States', value: 'USA' },
   { label: 'Canada', value: 'CA' },
 ];

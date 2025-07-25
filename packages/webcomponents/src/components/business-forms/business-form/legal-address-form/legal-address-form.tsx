@@ -12,7 +12,6 @@ export class LegalAddressForm {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress;
-  @State() selectedCountry: string = 'USA'; // Default to USA
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -25,25 +24,18 @@ export class LegalAddressForm {
     this.formController.values.subscribe(
       values => (this.legal_address = { ...values.legal_address })
     );
-    
-    // Set the selected country from initial values if available
-    const initialCountry = this.formController.getInitialValues()?.legal_address?.country;
-    if (initialCountry) {
-      this.selectedCountry = initialCountry;
-    }
   }
 
   inputHandler(name: string, value: string) {
-    // Handle country change to update region options
     if (name === 'country') {
-      this.selectedCountry = value;
-      // Single update that sets country and clears state
+       // Clear `state` and `postal_code` fields when country changes
       this.formController.setValues({
         ...this.formController.values.getValue(),
         legal_address: {
           ...this.formController.values.getValue().legal_address,
           [name]: value,
           state: '',
+          postal_code: '',
         },
       });
     } else {
@@ -62,14 +54,14 @@ export class LegalAddressForm {
     const legalAddressDefaultValue =
       this.formController.getInitialValues().legal_address;
     
-    // Update selected country based on form values or default
-    const currentCountry = this.formController.values.getValue()?.legal_address?.country || this.selectedCountry;
+    // Get current country from form values, defaulting to USA
+    const currentCountry = this.formController.values.getValue()?.legal_address?.country || 'USA';
     
-    // Get dynamic options and labels based on selected country
+    // Get dynamic options and labels based on current country
     const regionOptions = getRegionOptions(currentCountry);
     const regionLabel = getRegionLabel(currentCountry);
     const postalCodeLabel = getPostalCodeLabel(currentCountry);
-    
+
     // Configure postal code input based on country
     const postalCodeConfig = currentCountry === 'CA' ? {
       maxLength: 7, // A1A 1A1 with space
@@ -90,7 +82,7 @@ export class LegalAddressForm {
                 label="Country"
                 options={PaymentProvisioningCountryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country || 'USA'}
+                defaultValue={legalAddressDefaultValue?.country}
                 errorText={this.errors?.legal_address?.country}
               />
             </div>
