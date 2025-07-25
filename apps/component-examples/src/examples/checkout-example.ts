@@ -7,7 +7,6 @@ import { ComponentPreview } from '../components/ComponentPreview';
 import { PropsEditor } from '../components/PropsEditor';
 import { EventLogger } from '../components/EventLogger';
 import { NavigationMenu } from '../components/NavigationMenu';
-import { getPropsManagerScript } from '../utils/props-manager';
 
 export async function createCheckoutExample(
   webComponentToken: string,
@@ -115,7 +114,6 @@ export async function createCheckoutExample(
     eventsContent,
     navigationContent,
     scripts: [
-      getPropsManagerScript(),
       `
         // Event logging functionality
         window.eventLog = [];
