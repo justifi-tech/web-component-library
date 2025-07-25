@@ -165,7 +165,7 @@ export async function createCheckoutExample(
           const propsManager = window.propsManager;
           if (propsManager) {
             propsManager.updateProp(componentName, propName, value, type);
-            console.log(\`Updated \${componentName}.\${propName} = \${value}\`);
+
             
             // Trigger live update immediately when prop changes
             const props = propsManager.getProps(componentName);
@@ -180,7 +180,7 @@ export async function createCheckoutExample(
           const propsManager = window.propsManager;
           if (propsManager) {
             propsManager.resetProps(componentName);
-            console.log(\`Reset props for \${componentName}\`);
+
             
             // Update form fields to reflect reset values
             const props = propsManager.getProps(componentName);

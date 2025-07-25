@@ -192,7 +192,7 @@ server.addRoute({
               const propsManager = window.propsManager;
               if (propsManager) {
                 propsManager.updateProp(componentName, propName, value, type);
-                console.log(\`Updated \${componentName}.\${propName} = \${value}\`);
+
                 
                 // Trigger live update immediately when prop changes
                 const props = propsManager.getProps(componentName);
@@ -207,7 +207,7 @@ server.addRoute({
               const propsManager = window.propsManager;
               if (propsManager) {
                 propsManager.resetProps(componentName);
-                console.log(\`Reset props for \${componentName}\`);
+
                 
                 // Update form fields to reflect reset values
                 const props = propsManager.getProps(componentName);
@@ -250,7 +250,7 @@ server.addRoute({
             
             // Initialize when DOM is loaded
             document.addEventListener('DOMContentLoaded', function() {
-              console.log('Example template initialized');
+
               
               // Register checkout component schema and prefill with actual values
               const checkoutSchema = [
@@ -329,7 +329,7 @@ server.addRoute({
                   checkoutId: '${checkout.id}'
                 });
               
-              console.log('Checkout component schema registered and prefilled with actual values');
+
             });
           `,
         ],
