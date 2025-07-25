@@ -43,7 +43,7 @@ export class LegalAddressForm {
       this.formController.setValues({
         ...this.formController.values.getValue(),
         legal_address: {
-          ...this.formController.values.getValue().legal_address,
+          ...this.values,
           [name]: value,
         },
       });
