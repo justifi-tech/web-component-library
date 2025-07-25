@@ -293,3 +293,138 @@ if (typeof window !== 'undefined') {
     propsManager.resetProps(componentName);
   };
 }
+
+/**
+ * Get the standardized JavaScript PropsManager code for embedding in HTML templates
+ * This eliminates the need for duplicate implementations in example files
+ */
+export function getPropsManagerScript(): string {
+  return `
+// PropsManager for client-side props management
+class PropsManager {
+  constructor() {
+    this.props = {};
+    this.schemas = new Map();
+    this.listeners = new Map();
+  }
+
+  registerSchema(componentName, schema) {
+    this.schemas.set(componentName, schema);
+    if (!this.props[componentName]) {
+      this.props[componentName] = this.getDefaultProps(schema);
+    }
+  }
+
+  getDefaultProps(schema) {
+    const defaults = {};
+    schema.forEach(prop => {
+      defaults[prop.name] = prop.defaultValue;
+    });
+    return defaults;
+  }
+
+  getProps(componentName) {
+    return this.props[componentName] || {};
+  }
+
+  updateProp(componentName, propName, value, type) {
+    if (!this.props[componentName]) {
+      this.props[componentName] = {};
+    }
+
+    let convertedValue = value;
+    switch (type) {
+      case 'number':
+        convertedValue = Number(value);
+        if (isNaN(convertedValue)) return;
+        break;
+      case 'boolean':
+        convertedValue = Boolean(value);
+        break;
+      case 'object':
+        try {
+          convertedValue = typeof value === 'string' ? JSON.parse(value) : value;
+        } catch (e) {
+          console.warn('Invalid JSON for object prop:', value);
+          return;
+        }
+        break;
+    }
+
+    this.props[componentName][propName] = convertedValue;
+    this.notifyListeners(componentName);
+  }
+
+  prefillProps(componentName, props) {
+    if (!this.props[componentName]) {
+      this.props[componentName] = {};
+    }
+
+    Object.entries(props).forEach(([propName, value]) => {
+      const schema = this.schemas.get(componentName);
+      const propSchema = schema?.find(p => p.name === propName);
+      
+      if (propSchema) {
+        let convertedValue = value;
+        switch (propSchema.type) {
+          case 'number':
+            convertedValue = Number(value);
+            if (isNaN(convertedValue)) return;
+            break;
+          case 'boolean':
+            convertedValue = Boolean(value);
+            break;
+          case 'object':
+            try {
+              convertedValue = typeof value === 'string' ? JSON.parse(value) : value;
+            } catch (e) {
+              console.warn('Invalid JSON for object prop:', value);
+              return;
+            }
+            break;
+        }
+
+        this.props[componentName][propName] = convertedValue;
+      }
+    });
+
+    this.notifyListeners(componentName);
+  }
+
+  resetProps(componentName) {
+    const schema = this.schemas.get(componentName);
+    if (schema) {
+      this.props[componentName] = this.getDefaultProps(schema);
+      this.notifyListeners(componentName);
+    }
+  }
+
+  subscribe(componentName, callback) {
+    if (!this.listeners.has(componentName)) {
+      this.listeners.set(componentName, []);
+    }
+    this.listeners.get(componentName).push(callback);
+    return () => {
+      const listeners = this.listeners.get(componentName);
+      if (listeners) {
+        const index = listeners.indexOf(callback);
+        if (index > -1) {
+          listeners.splice(index, 1);
+        }
+      }
+    };
+  }
+
+  notifyListeners(componentName) {
+    const listeners = this.listeners.get(componentName);
+    if (listeners) {
+      const props = this.getProps(componentName);
+      listeners.forEach(callback => callback(props));
+    }
+  }
+}
+
+// Initialize PropsManager globally
+window.propsManager = new PropsManager();
+`;
+}
