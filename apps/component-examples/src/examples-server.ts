@@ -4,6 +4,7 @@ import { createCheckoutExample } from './examples/checkout-example';
 import { BaseTemplate } from './templates/base-template';
 import { NavigationMenu } from './components/NavigationMenu';
 import { renderToString } from './utils/simple-jsx';
+import { getPropsManagerScript } from './utils/props-manager.js';
 
 // Load environment variables
 require('dotenv').config({ path: '../../.env' });
@@ -139,6 +140,7 @@ server.addRoute({
         bodyContent: exampleContent,
         styles: ['/styles/example-app.css'],
         scripts: [
+          getPropsManagerScript(),
           `
             // Event logging functionality
             window.eventLog = [];
@@ -185,52 +187,50 @@ server.addRoute({
               link.click();
             }
             
-            // Props management functionality
-            window.componentProps = {};
-            
-            function updateProp(name, value, type) {
-              if (type === 'number') {
-                value = parseFloat(value);
-              } else if (type === 'boolean') {
-                value = Boolean(value);
-              } else if (type === 'object') {
-                try {
-                  value = JSON.parse(value);
-                } catch (e) {
-                  console.error('Invalid JSON:', e);
-                  return;
-                }
-              }
-              
-              window.componentProps[name] = value;
-              updateComponentDisplay();
-            }
-            
-            function updateComponentDisplay() {
-              // This would be implemented to update the component
-              // with the new props in real-time
-              console.log('Props updated:', window.componentProps);
-            }
-            
-            function resetProps() {
-              window.componentProps = {};
-              // Reset form fields to default values
-              const form = document.querySelector('.props-form');
-              if (form) {
-                form.reset();
+            // Props management functionality using PropsManager
+            function updateProp(componentName, propName, value, type) {
+              const propsManager = window.propsManager;
+              if (propsManager) {
+                propsManager.updateProp(componentName, propName, value, type);
+
+                
+                // Trigger live update immediately when prop changes
+                const props = propsManager.getProps(componentName);
+                const event = new CustomEvent('props-updated', { 
+                  detail: { componentName, props } 
+                });
+                document.dispatchEvent(event);
               }
             }
             
-            function applyProps() {
-              updateComponentDisplay();
+            function resetProps(componentName) {
+              const propsManager = window.propsManager;
+              if (propsManager) {
+                propsManager.resetProps(componentName);
+
+                
+                // Update form fields to reflect reset values
+                const props = propsManager.getProps(componentName);
+                Object.entries(props).forEach(([propName, value]) => {
+                  const field = document.getElementById(\`prop-\${propName}\`);
+                  if (field) {
+                    if (field.type === 'checkbox') {
+                      field.checked = Boolean(value);
+                    } else {
+                      field.value = value;
+                    }
+                  }
+                });
+                
+                // Trigger live update after reset
+                const event = new CustomEvent('props-updated', { 
+                  detail: { componentName, props } 
+                });
+                document.dispatchEvent(event);
+              }
             }
             
-            function copyPropsToClipboard() {
-              const propsStr = JSON.stringify(window.componentProps, null, 2);
-              navigator.clipboard.writeText(propsStr).then(() => {
-                console.log('Props copied to clipboard');
-              });
-            }
+
             
             // Output management
             function clearOutput() {
@@ -250,7 +250,23 @@ server.addRoute({
             
             // Initialize when DOM is loaded
             document.addEventListener('DOMContentLoaded', function() {
-              console.log('Example template initialized');
+              // Update form fields to reflect the prefilled values from server
+              const updateFormFields = () => {
+                const props = window.propsManager.getProps('checkout');
+                Object.entries(props).forEach(([propName, value]) => {
+                  const field = document.getElementById(\`prop-\${propName}\`);
+                  if (field) {
+                    if (field.type === 'checkbox') {
+                      field.checked = Boolean(value);
+                    } else {
+                      field.value = value;
+                    }
+                  }
+                });
+              };
+              
+              // Update form fields after a short delay to ensure DOM is ready
+              setTimeout(updateFormFields, 100);
             });
           `,
         ],
