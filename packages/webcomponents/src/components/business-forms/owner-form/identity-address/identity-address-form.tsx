@@ -11,7 +11,7 @@ export class IdentityAddressForm {
   @Prop() errors: any;
   @Prop() defaultValues: any;
   @State() address: IAddress = {};
-  @State() selectedCountry: string = 'USA'; // Default to USA
+  @State() selectedCountry: string = ''; // Start with empty, no default
 
   @Watch('address')
   handleAddressChange(newValues: any) {
@@ -30,20 +30,24 @@ export class IdentityAddressForm {
     // Handle country change to update region options and clear state if needed
     if (name === 'country') {
       this.selectedCountry = value;
-      // Single update that sets country and clears state
-      this.address[name] = value;
-      this.address.state = '';
-      this.address = { ...this.address };
+      // Single state update that sets country and clears state
+      this.address = {
+        ...this.address,
+        [name]: value,
+        state: '' // Clear state when country changes
+      };
     } else {
-      // Regular field update
-      this.address[name] = value;
-      this.address = { ...this.address };
+      // Regular field update - single state update
+      this.address = {
+        ...this.address,
+        [name]: value
+      };
     }
   }
 
   render() {
-    // Update selected country based on current address values or default
-    const currentCountry = this.address?.country || this.defaultValues?.country || this.selectedCountry;
+    // Use the actual country value from address or default values, without fallback to hardcoded country
+    const currentCountry = this.address?.country || this.defaultValues?.country || '';
     
     // Get dynamic options and labels based on selected country
     const regionOptions = getRegionOptions(currentCountry);
@@ -68,7 +72,7 @@ export class IdentityAddressForm {
               label="Country"
               options={PaymentProvisioningCountryOptions}
               inputHandler={this.inputHandler}
-              defaultValue={this.defaultValues?.country || 'USA'}
+              defaultValue={this.defaultValues?.country || ''}
               errorText={this.errors?.country}
             />
           </div>
@@ -119,7 +123,7 @@ export class IdentityAddressForm {
               maxLength={postalCodeConfig.maxLength}
               keyDownHandler={postalCodeConfig.keyDownHandler}
               inputHandler={this.inputHandler}
-              helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789'}
+              helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : currentCountry === 'USA' ? 'Format: 12345 or 12345-6789' : ''}
             />
           </div>
         </div>
