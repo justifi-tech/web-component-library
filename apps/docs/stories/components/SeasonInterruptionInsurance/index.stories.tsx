@@ -10,7 +10,7 @@ type Story = StoryObj;
 const storyBaseArgs = new StoryBaseArgs(['auth-token', 'checkout-id']);
 
 const meta: Meta = {
-  title: 'Insurance/Season Interruption Insurance',
+  title: 'Modular Checkout/Season Interruption Insurance',
   component: 'justifi-season-interruption-insurance',
   args: {
     ...storyBaseArgs.args,
