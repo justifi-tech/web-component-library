@@ -23,9 +23,10 @@ export class LegalAddressForm {
 
   componentDidLoad() {
     this.formController.errors.subscribe(
-      errors => (this.errors = { ...errors.legal_address }),
+      errors => (this.errors = { ...errors.legal_address || {} }),
     );
-    this.defaultValues = this.formController.getInitialValues();
+    const initialValues = this.formController.getInitialValues();
+    this.defaultValues = initialValues.legal_address || {};
     this.currentCountry = this.defaultValues?.country || '';
   }
 
