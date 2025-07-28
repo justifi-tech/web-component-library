@@ -99,10 +99,11 @@ export class LegalAddressFormStepCore {
   }
 
   inputHandler = (name: string, value: string) => {
+    const currentValues = this.formController.values.getValue();
     if (name === 'country') {
       // Clear `state` and `postal_code` fields when country changes
       this.formController.setValues({
-        ...this.values,
+        ...currentValues,
         [name]: value,
         state: '',
         postal_code: '',
@@ -110,7 +111,7 @@ export class LegalAddressFormStepCore {
     } else {
       // Regular field update
       this.formController.setValues({
-        ...this.values,
+        ...currentValues,
         [name]: value,
       });
     }
