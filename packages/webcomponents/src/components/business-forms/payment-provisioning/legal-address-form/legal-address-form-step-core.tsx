@@ -14,8 +14,12 @@ import { BusinessFormStep, getCountryFormConfig } from '../../utils';
 export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() values: IAddress = {};
+  @State() defaultValues: IAddress = {};
   @State() isLoading: boolean = false;
+  @State() currentCountry: string = '';
+
+  private stateControlRef!: HTMLElement;
+  private postalCodeControlRef!: HTMLElement;
 
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
@@ -46,9 +50,6 @@ export class LegalAddressFormStepCore {
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors }),
     );
-    this.formController.values.subscribe(
-      values => (this.values = { ...values })
-    );
   }
 
   private getData = () => {
@@ -58,7 +59,8 @@ export class LegalAddressFormStepCore {
       onSuccess: (response) => {
         const legalAddress = new Address(response.data.legal_address || {});
         this.formController.setInitialValues({ ...legalAddress });
-        this.values = legalAddress;
+        this.defaultValues = this.formController.getInitialValues();
+        this.currentCountry = this.defaultValues.country || '';
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -98,16 +100,31 @@ export class LegalAddressFormStepCore {
     });
   }
 
+  private handleCountryChange = (currentValues: any, value: string) => {
+    // Clear `state` and `postal_code` fields when country changes
+    this.formController.setValues({
+      ...currentValues,
+      country: value,
+      state: '',
+      postal_code: '',
+    });
+    
+    // Update state to trigger re-render for labels
+    this.currentCountry = value;
+    
+    // Force update the form controls to show cleared values
+    if (this.stateControlRef && (this.stateControlRef as any).updateInput) {
+      (this.stateControlRef as any).updateInput('');
+    }
+    if (this.postalCodeControlRef && (this.postalCodeControlRef as any).updateInput) {
+      (this.postalCodeControlRef as any).updateInput('');
+    }
+  }
+
   inputHandler = (name: string, value: string) => {
     const currentValues = this.formController.values.getValue();
     if (name === 'country') {
-      // Clear `state` and `postal_code` fields when country changes
-      this.formController.setValues({
-        ...currentValues,
-        [name]: value,
-        state: '',
-        postal_code: '',
-      });
+      this.handleCountryChange(currentValues, value);
     } else {
       // Regular field update
       this.formController.setValues({
@@ -124,7 +141,7 @@ export class LegalAddressFormStepCore {
       postalCodeLabel,
       postalCodeConfig,
       postalCodeHelpText
-    } = getCountryFormConfig(this.values?.country);
+    } = getCountryFormConfig(this.currentCountry);
 
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
@@ -145,7 +162,7 @@ export class LegalAddressFormStepCore {
                 label="Country"
                 options={PaymentProvisioningCountryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={this.values.country}
+                defaultValue={this.defaultValues.country}
                 errorText={this.errors?.country}
               />
             </div>
@@ -154,7 +171,7 @@ export class LegalAddressFormStepCore {
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={this.values.line1}
+                defaultValue={this.defaultValues.line1}
                 errorText={this.errors?.line1}
               />
             </div>
@@ -163,7 +180,7 @@ export class LegalAddressFormStepCore {
                 name="line2"
                 label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={this.values.line2}
+                defaultValue={this.defaultValues.line2}
                 errorText={this.errors?.line2}
               />
             </div>
@@ -172,26 +189,28 @@ export class LegalAddressFormStepCore {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={this.values.city}
+                defaultValue={this.defaultValues.city}
                 errorText={this.errors?.city}
               />
             </div>
             <div class="col-12">
               <form-control-select
+                ref={(el) => this.stateControlRef = el}
                 name="state"
                 label={regionLabel}
                 options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={this.values.state}
+                defaultValue={this.defaultValues.state}
                 errorText={this.errors?.state}
               />
             </div>
             <div class="col-12">
               <form-control-text
+                ref={(el) => this.postalCodeControlRef = el}
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={this.values.postal_code}
+                defaultValue={this.defaultValues.postal_code}
                 errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}

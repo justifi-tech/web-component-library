@@ -11,7 +11,11 @@ import { getCountryFormConfig } from '../../utils';
 export class LegalAddressForm {
   @Prop() formController: FormController;
   @State() errors: any = {};
-  @State() values: IAddress;
+  @State() defaultValues: IAddress;
+  @State() currentCountry: string = '';
+
+  private stateControlRef!: HTMLElement;
+  private postalCodeControlRef!: HTMLElement;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -21,24 +25,38 @@ export class LegalAddressForm {
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors.legal_address }),
     );
-    this.formController.values.subscribe(
-      values => (this.values = { ...values.legal_address })
-    );
+    this.defaultValues = this.formController.getInitialValues();
+    this.currentCountry = this.defaultValues?.country || '';
+  }
+
+  private handleCountryChange = (currentValues: any, value: string) => {
+    // Clear `state` and `postal_code` fields when country changes
+    this.formController.setValues({
+      ...currentValues,
+      legal_address: {
+        ...currentValues.legal_address,
+        country: value,
+        state: '',
+        postal_code: '',
+      },
+    });
+    
+    // Update state to trigger re-render for labels
+    this.currentCountry = value;
+    
+    // Force update the form controls to show cleared values
+    if (this.stateControlRef && (this.stateControlRef as any).updateInput) {
+      (this.stateControlRef as any).updateInput('');
+    }
+    if (this.postalCodeControlRef && (this.postalCodeControlRef as any).updateInput) {
+      (this.postalCodeControlRef as any).updateInput('');
+    }
   }
 
   inputHandler(name: string, value: string) {
     const currentValues = this.formController.values.getValue();
     if (name === 'country') {
-       // Clear `state` and `postal_code` fields when country changes
-      this.formController.setValues({
-        ...currentValues,
-        legal_address: {
-          ...currentValues.legal_address,
-          [name]: value,
-          state: '',
-          postal_code: '',
-        },
-      });
+      this.handleCountryChange(currentValues, value);
     } else {
       // Regular field update
       this.formController.setValues({
@@ -51,14 +69,14 @@ export class LegalAddressForm {
     }
   }
 
-  render() { 
+  render() {
     const {
       regionOptions,
       regionLabel,
       postalCodeLabel,
       postalCodeConfig,
       postalCodeHelpText
-    } = getCountryFormConfig(this.values?.country);
+    } = getCountryFormConfig(this.currentCountry);
 
     return (
       <Host>
@@ -71,7 +89,7 @@ export class LegalAddressForm {
                 label="Country"
                 options={PaymentProvisioningCountryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={this.values?.country}
+                defaultValue={this.defaultValues?.country}
                 errorText={this.errors?.country}
               />
             </div>
@@ -80,7 +98,7 @@ export class LegalAddressForm {
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={this.values?.line1}
+                defaultValue={this.defaultValues?.line1}
                 errorText={this.errors?.line1}
               />
             </div>
@@ -89,7 +107,7 @@ export class LegalAddressForm {
                 name="line2"
                 label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={this.values?.line2}
+                defaultValue={this.defaultValues?.line2}
                 errorText={this.errors?.line2}
               />
             </div>
@@ -98,26 +116,28 @@ export class LegalAddressForm {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={this.values?.city}
+                defaultValue={this.defaultValues?.city}
                 errorText={this.errors?.city}
               />
             </div>
             <div class="col-12">
               <form-control-select
+                ref={(el) => this.stateControlRef = el}
                 name="state"
                 label={regionLabel}
                 options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={this.values?.state}
+                defaultValue={this.defaultValues?.state}
                 errorText={this.errors?.state}
               />
             </div>
             <div class="col-12">
               <form-control-text
+                ref={(el) => this.postalCodeControlRef = el}
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={this.values?.postal_code}
+                defaultValue={this.defaultValues?.postal_code}
                 errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}
