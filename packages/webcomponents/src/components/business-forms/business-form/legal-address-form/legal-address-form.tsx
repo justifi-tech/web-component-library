@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { FormController } from '../../../../components';
-import { Address,IAddress } from '../../../../api/Business';
+import { Address, IAddress } from '../../../../api/Business';
 import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
 import { getCountryFormConfig } from '../../utils';
@@ -10,52 +10,33 @@ import { getCountryFormConfig } from '../../utils';
 })
 export class LegalAddressForm {
   @Prop() formController: FormController;
+  @Prop() defaultValues: IAddress;
   @State() errors: any = {};
-  @State() address: IAddress = new Address({});
   @State() currentCountry: string = '';
 
   private stateControlRef!: HTMLElement;
   private postalCodeControlRef!: HTMLElement;
 
-
   componentDidLoad() {
     this.formController.errors.subscribe(
       errors => (this.errors = { ...errors.legal_address || {} }),
     );
-    // Initialize currentCountry from defaultValues
-    const defaultValues = this.formController.getInitialValues().legal_address || {};
-    this.currentCountry = defaultValues?.country;
   }
 
-  @Watch('address')
-  handleAddressChange(newValues: any) {
-    const currentValues = this.formController.values.getValue();
+  @Watch('defaultValues')
+  handleDefaultValuesChange(newValues: any) {
+    this.defaultValues = new Address(newValues);
+    this.currentCountry = this.defaultValues.country;
+  }
+
+  private handleCountryChange = (currentValues: any, value: string) => {
+    // Clear `state` and `postal_code` fields when country changes
     this.formController.setValues({
       ...currentValues,
-      legal_address: {
-        ...currentValues.legal_address,
-        ...newValues,
-      },
-    });
-  }
-
-  @Watch('formController')
-  handleFormControllerChange() {
-    // Update current country when form controller changes (e.g., after API call)
-    const defaultValues = this.formController.getInitialValues().legal_address || {};
-    if (defaultValues?.country && !this.currentCountry) {
-      this.currentCountry = defaultValues.country;
-    }
-  }
-
-  private handleCountryChange = (value: string) => {
-    // Clear `state` and `postal_code` fields when country changes
-    this.address = {
-      ...this.address,
       country: value,
       state: '',
       postal_code: '',
-    };
+    });
     
     // Update state to trigger re-render for labels
     this.currentCountry = value;
@@ -70,20 +51,19 @@ export class LegalAddressForm {
   }
 
   inputHandler = (name: string, value: string) => {
+    const currentValues = this.formController.values.getValue();
     if (name === 'country') {
-      this.handleCountryChange(value);
+      this.handleCountryChange(currentValues, value);
     } else {
       // Regular field update
-      this.address = {
-        ...this.address,
-        [name]: value
-      };
+      this.formController.setValues({
+        ...currentValues,
+        [name]: value,
+      });
     }
   }
 
   render() {
-    const defaultValues = this.formController.getInitialValues().legal_address || {};
-    
     const {
       regionOptions,
       regionLabel,
@@ -96,6 +76,7 @@ export class LegalAddressForm {
       <Host>
         <fieldset>
           <legend part={heading2}>Business Legal Address</legend>
+
           <div class="row gy-3">
             <div class="col-12">
               <form-control-select
@@ -103,7 +84,7 @@ export class LegalAddressForm {
                 label="Country"
                 options={PaymentProvisioningCountryOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={defaultValues?.country}
+                defaultValue={this.defaultValues?.country}
                 errorText={this.errors?.country}
               />
             </div>
@@ -112,7 +93,7 @@ export class LegalAddressForm {
                 name="line1"
                 label="Legal Address"
                 inputHandler={this.inputHandler}
-                defaultValue={defaultValues?.line1}
+                defaultValue={this.defaultValues?.line1}
                 errorText={this.errors?.line1}
               />
             </div>
@@ -121,7 +102,7 @@ export class LegalAddressForm {
                 name="line2"
                 label="Address Line 2 (optional)"
                 inputHandler={this.inputHandler}
-                defaultValue={defaultValues?.line2}
+                defaultValue={this.defaultValues?.line2}
                 errorText={this.errors?.line2}
               />
             </div>
@@ -130,7 +111,7 @@ export class LegalAddressForm {
                 name="city"
                 label="City"
                 inputHandler={this.inputHandler}
-                defaultValue={defaultValues?.city}
+                defaultValue={this.defaultValues?.city}
                 errorText={this.errors?.city}
               />
             </div>
@@ -141,7 +122,7 @@ export class LegalAddressForm {
                 label={regionLabel}
                 options={regionOptions}
                 inputHandler={this.inputHandler}
-                defaultValue={defaultValues?.state}
+                defaultValue={this.defaultValues?.state}
                 errorText={this.errors?.state}
               />
             </div>
@@ -151,7 +132,7 @@ export class LegalAddressForm {
                 name="postal_code"
                 label={postalCodeLabel}
                 inputHandler={this.inputHandler}
-                defaultValue={defaultValues?.postal_code}
+                defaultValue={this.defaultValues?.postal_code}
                 errorText={this.errors?.postal_code}
                 maxLength={postalCodeConfig.maxLength}
                 keyDownHandler={postalCodeConfig.keyDownHandler}

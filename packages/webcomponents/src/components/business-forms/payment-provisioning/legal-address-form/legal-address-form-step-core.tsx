@@ -14,9 +14,9 @@ import { BusinessFormStep, getCountryFormConfig } from '../../utils';
 export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() defaultValues: IAddress = new Address({});
   @State() isLoading: boolean = false;
   @State() currentCountry: string = '';
+  @State() defaultValues: IAddress = new Address({});
 
   private stateControlRef!: HTMLElement;
   private postalCodeControlRef!: HTMLElement;
