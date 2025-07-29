@@ -21,7 +21,7 @@ const meta: Meta = {
         <!-- Header -->
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid #e0e0e0;">
           <div style="font-size: 24px; font-weight: bold;">
-            <span style="color: #2d5a27;">nordic</span>
+            <span style="color: #2d5a27;">JustiFi</span>
             <span style="color: #4a7c59;">BREW</span>
           </div>
           <div style="display: flex; align-items: center; gap: 30px;">
@@ -40,6 +40,8 @@ const meta: Meta = {
           <div style="flex: 2;">
             <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 30px; color: #000000;">Checkout</h1>
             
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;" />
+            
             <!-- Shipping Section -->
             <div style="margin-bottom: 30px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -47,12 +49,14 @@ const meta: Meta = {
                 <a href="#" style="color: #2d5a27; text-decoration: none; font-size: 14px; cursor: pointer;">Edit</a>
               </div>
               <div style="line-height: 1.6; color: #000000;">
-                <div>Rowena Benivedez</div>
-                <div>29181 West River Drive, Sacramento, CA 95833</div>
+                <div>John Doe</div>
+                <div>123 Main St, Anytown, USA</div>
                 <div>Standard Shipping: Free</div>
                 <div style="font-weight: bold;">Arrive Thursday, October 31st</div>
               </div>
             </div>
+
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;" />
 
             <!-- Payment Method Section -->
             <div style="margin-bottom: 30px;">
@@ -63,12 +67,15 @@ const meta: Meta = {
               </button>
               
               <div style="text-align: center; margin: 20px 0; position: relative;">
-                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background-color: #e0e0e0;"></div>
+                <div style="position: absolute; top: 50%; left: 15%; height: 1px; background-color: #e0e0e0; width: 30%;"></div>
                 <span style="background-color: #ffffff; padding: 0 15px; color: #666666; font-size: 14px;">or</span>
+                <div style="position: absolute; top: 50%; right: 15%; height: 1px; background-color: #e0e0e0; width: 30%;"></div>
               </div>
 
-              <justifi-card-form />
-              <justifi-postal-code-form />
+              <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                <justifi-card-form></justifi-card-form>
+                <justifi-postal-code-form></justifi-postal-code-form>
+              </div>
 
               <button style="width: 100%; background-color: #2d5a27; border: none; padding: 15px; border-radius: 4px; color: #ffffff; font-size: 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 20px;" id="submit-button">
                 PLACE ORDER
