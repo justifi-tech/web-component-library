@@ -16,6 +16,11 @@ export class IdentityAddressForm {
   private stateControlRef!: HTMLElement;
   private postalCodeControlRef!: HTMLElement;
 
+  componentDidLoad() {
+    // Initialize currentCountry from defaultValues
+    this.currentCountry = this.defaultValues?.country || '';
+  }
+
   @Watch('address')
   handleAddressChange(newValues: any) {
     this.handleFormUpdate(newValues);
