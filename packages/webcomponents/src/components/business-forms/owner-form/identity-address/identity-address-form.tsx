@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
-import { IAddress } from '../../../../api/Business';
+import { Address, IAddress } from '../../../../api/Business';
 import { getCountryFormConfig } from '../../utils';
 
 @Component({
@@ -10,15 +10,19 @@ export class IdentityAddressForm {
   @Prop() handleFormUpdate: (values: any) => void;
   @Prop() errors: any;
   @Prop() defaultValues: any;
-  @State() address: IAddress = {};
+  @State() address: IAddress = new Address({});
   @State() currentCountry: string = '';
 
   private stateControlRef!: HTMLElement;
   private postalCodeControlRef!: HTMLElement;
 
+  constructor() {
+    this.inputHandler = this.inputHandler.bind(this);
+  }
+
   componentDidLoad() {
     // Initialize currentCountry from defaultValues
-    this.currentCountry = this.defaultValues?.country || '';
+    this.currentCountry = this.defaultValues?.country;
   }
 
   @Watch('address')
@@ -74,7 +78,7 @@ export class IdentityAddressForm {
       postalCodeLabel,
       postalCodeConfig,
       postalCodeHelpText
-    } = getCountryFormConfig(this.currentCountry || this.address?.country || this.defaultValues?.country);
+    } = getCountryFormConfig(this.currentCountry);
 
     return (
       <Host>
@@ -85,7 +89,7 @@ export class IdentityAddressForm {
               label="Country"
               options={PaymentProvisioningCountryOptions}
               inputHandler={this.inputHandler}
-              defaultValue={this.defaultValues?.country || ''}
+              defaultValue={this.defaultValues?.country}
               errorText={this.errors?.country}
             />
           </div>

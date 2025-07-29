@@ -14,7 +14,7 @@ import { BusinessFormStep, getCountryFormConfig } from '../../utils';
 export class LegalAddressFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() defaultValues: IAddress = {};
+  @State() defaultValues: IAddress = new Address({});
   @State() isLoading: boolean = false;
   @State() currentCountry: string = '';
 
@@ -60,7 +60,7 @@ export class LegalAddressFormStepCore {
         const legalAddress = new Address(response.data.legal_address || {});
         this.formController.setInitialValues({ ...legalAddress });
         this.defaultValues = this.formController.getInitialValues();
-        this.currentCountry = this.defaultValues.country || '';
+        this.currentCountry = this.defaultValues.country;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
