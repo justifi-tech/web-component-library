@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
 import { FormController } from '../../../../components';
-import { Address, IAddress } from '../../../../api/Business';
+import { IAddress } from '../../../../api/Business';
 import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
 import { getCountryFormConfig } from '../../utils';
@@ -26,7 +26,6 @@ export class LegalAddressForm {
   @Watch('defaultValues')
   handleDefaultValuesChange(newValues: any) {
     if (newValues) {
-      this.defaultValues = new Address(newValues);
       this.currentCountry = this.defaultValues.country;
     }
   }
