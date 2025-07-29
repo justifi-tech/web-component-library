@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
-import { PaymentProvisioningCountryOptions, getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../../utils/address-form-helpers';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { PaymentProvisioningCountryOptions } from '../../../../utils/address-form-helpers';
 import { IAddress } from '../../../../api/Business';
+import { getCountryFormConfig } from '../../utils';
 
 @Component({
   tag: 'justifi-identity-address-form'
@@ -11,7 +11,10 @@ export class IdentityAddressForm {
   @Prop() errors: any;
   @Prop() defaultValues: any;
   @State() address: IAddress = {};
-  @State() selectedCountry: string = ''; // Start with empty, no default
+  @State() currentCountry: string = '';
+
+  private stateControlRef!: HTMLElement;
+  private postalCodeControlRef!: HTMLElement;
 
   @Watch('address')
   handleAddressChange(newValues: any) {
@@ -20,24 +23,38 @@ export class IdentityAddressForm {
 
   @Watch('defaultValues')
   handleDefaultValuesChange(newValues: any) {
-    // Update selected country when default values change
+    // Update current country when default values change
     if (newValues?.country) {
-      this.selectedCountry = newValues.country;
+      this.currentCountry = newValues.country;
+    }
+  }
+
+  private handleCountryChange = (value: string) => {
+    // Clear `state` and `postal_code` fields when country changes
+    this.address = {
+      ...this.address,
+      country: value,
+      state: '',
+      postal_code: '',
+    };
+    
+    // Update state to trigger re-render for labels
+    this.currentCountry = value;
+    
+    // Force update the form controls to show cleared values
+    if (this.stateControlRef && (this.stateControlRef as any).updateInput) {
+      (this.stateControlRef as any).updateInput('');
+    }
+    if (this.postalCodeControlRef && (this.postalCodeControlRef as any).updateInput) {
+      (this.postalCodeControlRef as any).updateInput('');
     }
   }
 
   inputHandler = (name: string, value: string) => {
-    // Handle country change to update region options and clear state if needed
     if (name === 'country') {
-      this.selectedCountry = value;
-      // Single state update that sets country and clears state
-      this.address = {
-        ...this.address,
-        [name]: value,
-        state: '' // Clear state when country changes
-      };
+      this.handleCountryChange(value);
     } else {
-      // Regular field update - single state update
+      // Regular field update
       this.address = {
         ...this.address,
         [name]: value
@@ -46,22 +63,13 @@ export class IdentityAddressForm {
   }
 
   render() {
-    // Use the actual country value from address or default values, without fallback to hardcoded country
-    const currentCountry = this.address?.country || this.defaultValues?.country || '';
-    
-    // Get dynamic options and labels based on selected country
-    const regionOptions = getRegionOptions(currentCountry);
-    const regionLabel = getRegionLabel(currentCountry);
-    const postalCodeLabel = getPostalCodeLabel(currentCountry);
-    
-    // Configure postal code input based on country
-    const postalCodeConfig = currentCountry === 'CA' ? {
-      maxLength: 7, // A1A 1A1 with space
-      keyDownHandler: undefined, // Allow letters for Canadian postal codes
-    } : {
-      maxLength: 10, // 12345-6789 for US extended zip
-      keyDownHandler: numberOnlyHandler,
-    };
+    const {
+      regionOptions,
+      regionLabel,
+      postalCodeLabel,
+      postalCodeConfig,
+      postalCodeHelpText
+    } = getCountryFormConfig(this.currentCountry || this.address?.country || this.defaultValues?.country);
 
     return (
       <Host>
@@ -106,6 +114,7 @@ export class IdentityAddressForm {
           </div>
           <div class="col-12 col-md-6">
             <form-control-select
+              ref={(el) => this.stateControlRef = el}
               name="state"
               label={regionLabel}
               defaultValue={this.defaultValues?.state}
@@ -116,6 +125,7 @@ export class IdentityAddressForm {
           </div>
           <div class="col-12 col-md-6">
             <form-control-text
+              ref={(el) => this.postalCodeControlRef = el}
               name="postal_code"
               label={postalCodeLabel}
               defaultValue={this.defaultValues?.postal_code}
@@ -123,7 +133,7 @@ export class IdentityAddressForm {
               maxLength={postalCodeConfig.maxLength}
               keyDownHandler={postalCodeConfig.keyDownHandler}
               inputHandler={this.inputHandler}
-              helpText={currentCountry === 'CA' ? 'Format: A1A 1A1' : currentCountry === 'USA' ? 'Format: 12345 or 12345-6789' : ''}
+              helpText={postalCodeHelpText}
             />
           </div>
         </div>
