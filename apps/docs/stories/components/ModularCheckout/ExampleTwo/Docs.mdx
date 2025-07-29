@@ -1,0 +1,381 @@
+import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../../utils';
+import { codeExampleFull } from './example';
+import { ComponentBox } from '../../../utils/documentation-components';
+import * as JustifiModularCheckoutExampleTwo from './index.stories';
+import { setUpMocks } from '../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Examples/Layout 2"
+  Components="justifi-modular-checkout"
+  of={JustifiModularCheckoutExampleTwo}
+/>
+
+<Title />
+
+---
+
+A complete checkout page example featuring a modern e-commerce layout with a two-column design. This example demonstrates how to integrate the modular checkout components within a full page layout including header, shipping information, payment methods, and shopping cart summary.
+
+The layout includes:
+
+- **Header**: Brand logo and navigation with shopping cart icon
+- **Shipping Section**: Pre-filled shipping information with edit functionality
+- **Payment Method Section**: PayPal button and credit card form with postal code
+- **Shopping Cart**: Order summary with item details and totals
+
+This example uses the `justifi-card-form` and `justifi-postal-code-form` components within the `justifi-modular-checkout` wrapper, styled with CSS parts to match the design system.
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <div style={{
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    margin: 0,
+    padding: 0,
+    backgroundColor: '#ffffff',
+    color: '#000000'
+  }}>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '20px 40px',
+      borderBottom: '1px solid #e0e0e0'
+    }}>
+      <div style={{
+        fontSize: '24px',
+        fontWeight: 'bold'
+      }}>
+        <span style={{color: '#2d5a27'}}>JustiFi</span>
+        <span style={{color: '#4a7c59'}}>BREW</span>
+      </div>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '30px'
+      }}>
+        <a href="#" style={{
+          textDecoration: 'none',
+          color: '#000000',
+          fontWeight: 500,
+          textTransform: 'uppercase',
+          fontSize: '14px'
+        }}>SHOP</a>
+        <a href="#" style={{
+          textDecoration: 'none',
+          color: '#000000',
+          fontWeight: 500,
+          textTransform: 'uppercase',
+          fontSize: '14px'
+        }}>LEARN</a>
+        <div style={{
+          position: 'relative',
+          cursor: 'pointer'
+        }}>
+          🛒
+          <div style={{
+            position: 'absolute',
+            top: '-8px',
+            right: '-8px',
+            backgroundColor: '#000000',
+            color: '#ffffff',
+            borderRadius: '50%',
+            width: '18px',
+            height: '18px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '12px',
+            fontWeight: 'bold'
+          }}>1</div>
+        </div>
+      </div>
+    </div>
+
+    <div style={{
+      display: 'flex',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '40px 20px',
+      gap: '40px'
+    }}>
+      <div style={{flex: 2}}>
+        <h1 style={{
+          fontSize: '28px',
+          fontWeight: 'bold',
+          marginBottom: '30px',
+          color: '#000000'
+        }}>Checkout</h1>
+
+        <hr style={{
+          margin: '30px 0',
+          border: 'none',
+          borderTop: '1px solid #e0e0e0'
+        }} />
+
+        <div style={{marginBottom: '30px'}}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '15px'
+          }}>
+            <h2 style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: '#000000'
+            }}>Shipping</h2>
+            <a href="#" style={{
+              color: '#2d5a27',
+              textDecoration: 'none',
+              fontSize: '14px',
+              cursor: 'pointer'
+            }}>Edit</a>
+          </div>
+          <div style={{
+            lineHeight: 1.6,
+            color: '#000000'
+          }}>
+            <div>John Doe</div>
+            <div>123 Main St, Anytown, USA</div>
+            <div>Standard Shipping: Free</div>
+            <div style={{fontWeight: 'bold'}}>Arrive Thursday, October 31st</div>
+          </div>
+        </div>
+
+        <hr style={{
+          margin: '30px 0',
+          border: 'none',
+          borderTop: '1px solid #e0e0e0'
+        }} />
+
+        <div style={{marginBottom: '30px'}}>
+          <h2 style={{
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: '#000000',
+            border: 'none'
+          }}>Payment Method</h2>
+
+          <button style={{
+            width: '100%',
+            backgroundColor: '#ffc439',
+            border: 'none',
+            padding: '15px',
+            borderRadius: '4px',
+            color: '#ffffff',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px'
+          }}>
+            <span>PayPal</span>
+          </button>
+
+          <div style={{
+            textAlign: 'center',
+            margin: '20px 0',
+            position: 'relative'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '15%',
+              height: '1px',
+              backgroundColor: '#e0e0e0',
+              width: '30%'
+            }}></div>
+            <span style={{
+              backgroundColor: '#ffffff',
+              padding: '0 15px',
+              color: '#666666',
+              fontSize: '14px'
+            }}>or</span>
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              right: '15%',
+              height: '1px',
+              backgroundColor: '#e0e0e0',
+              width: '30%'
+            }}></div>
+          </div>
+
+          <justifi-modular-checkout
+            auth-token="authToken"
+            account-id="acc_123"
+            checkout-id="cho_123"
+          >
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '15px',
+              marginBottom: '20px'
+            }}>
+              <justifi-card-form />
+              <justifi-postal-code-form />
+            </div>
+          </justifi-modular-checkout>
+
+          <button style={{
+            width: '100%',
+            backgroundColor: '#2d5a27',
+            border: 'none',
+            padding: '15px',
+            borderRadius: '4px',
+            color: '#ffffff',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            marginTop: '20px'
+          }} id="submit-button">
+            <span>PLACE ORDER</span>
+          </button>
+
+          <div style={{
+            fontSize: '12px',
+            color: '#666666',
+            marginTop: '10px',
+            textAlign: 'center'
+          }}>
+            By clicking Place Order you agree to the <a href="#" style={{
+              color: '#2d5a27',
+              textDecoration: 'none'
+            }}>Terms & Conditions.</a>
+          </div>
+        </div>
+      </div>
+
+      <div style={{flex: 1}}>
+        <div style={{
+          border: '1px solid #e0e0e0',
+          borderRadius: '4px',
+          padding: '20px',
+          backgroundColor: '#ffffff'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '20px'
+          }}>
+            <h2 style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: '#000000'
+            }}>Shopping Cart</h2>
+            <a href="#" style={{
+              color: '#2d5a27',
+              textDecoration: 'none',
+              fontSize: '14px',
+              cursor: 'pointer'
+            }}>Edit</a>
+          </div>
+
+          <div style={{marginBottom: '20px'}}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '8px',
+              fontSize: '14px'
+            }}>
+              <span>Subtotal</span>
+              <span>$38.00</span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '8px',
+              fontSize: '14px'
+            }}>
+              <span>Shipping Fee</span>
+              <span>Free</span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '8px',
+              fontSize: '14px'
+            }}>
+              <span>Tax</span>
+              <span>$4.00</span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontWeight: 'bold',
+              fontSize: '16px',
+              borderTop: '1px solid #e0e0e0',
+              paddingTop: '10px',
+              marginTop: '10px'
+            }}>
+              <span>Order Total</span>
+              <span>$42.00</span>
+            </div>
+          </div>
+
+          <div style={{
+            borderTop: '1px solid #e0e0e0',
+            paddingTop: '15px'
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '2fr 1fr 1fr',
+              gap: '10px',
+              marginBottom: '15px',
+              fontSize: '12px',
+              color: '#666666',
+              textTransform: 'uppercase',
+              fontWeight: 500
+            }}>
+              <span>ITEM</span>
+              <span style={{textAlign: 'center'}}>QTY</span>
+              <span style={{textAlign: 'right'}}>PRICE</span>
+            </div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '2fr 1fr 1fr',
+              gap: '10px',
+              alignItems: 'start'
+            }}>
+              <div>
+                <div style={{
+                  fontWeight: 500,
+                  color: '#000000'
+                }}>Drip Coffee Funnel</div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#666666',
+                  marginTop: '2px'
+                }}>8 cups / 64 ounces</div>
+              </div>
+              <div style={{
+                textAlign: 'center',
+                color: '#000000'
+              }}>1</div>
+              <div style={{
+                textAlign: 'right',
+                color: '#000000'
+              }}>$38.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ComponentBox>
+
+---
+
+<Source dark language="html" code={codeExampleFull} />
