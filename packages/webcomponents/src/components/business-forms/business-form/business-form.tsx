@@ -108,6 +108,7 @@ export class BusinessForm {
     const values = this.formController.values.getValue();
     const initialValues = this.formController.getInitialValues();
     const payload = new Business({ ...initialValues, ...values }).payload;
+
     this.patchBusiness({
       payload,
       onSuccess: (response) => {
@@ -151,7 +152,6 @@ export class BusinessForm {
               <justifi-business-core-info formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <div>defaultValues = {JSON.stringify(this.defaultValues.legal_address)}</div>
               <justifi-legal-address-form 
                 formController={this.formController}
                 defaultValues={this.defaultValues.legal_address}
