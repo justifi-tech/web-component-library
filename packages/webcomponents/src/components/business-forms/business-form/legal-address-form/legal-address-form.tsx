@@ -25,18 +25,20 @@ export class LegalAddressForm {
 
   @Watch('defaultValues')
   handleDefaultValuesChange(newValues: any) {
-    this.defaultValues = new Address(newValues);
-    this.currentCountry = this.defaultValues.country;
+    if (newValues) {
+      this.defaultValues = new Address(newValues);
+      this.currentCountry = this.defaultValues.country;
+    }
   }
 
   private handleCountryChange = (currentValues: any, value: string) => {
     // Clear `state` and `postal_code` fields when country changes
-    this.formController.setValues({
-      ...currentValues,
+    this.formController.setValues({ legal_address: {
+      ...currentValues.legal_address,
       country: value,
       state: '',
       postal_code: '',
-    });
+    }});
     
     // Update state to trigger re-render for labels
     this.currentCountry = value;
@@ -56,10 +58,10 @@ export class LegalAddressForm {
       this.handleCountryChange(currentValues, value);
     } else {
       // Regular field update
-      this.formController.setValues({
-        ...currentValues,
+      this.formController.setValues({ legal_address: {
+        ...currentValues.legal_address,
         [name]: value,
-      });
+      }});
     }
   }
 
