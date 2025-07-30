@@ -20,7 +20,8 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
-  
+  @State() defaultValues: any = {};
+
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() hideErrors?: boolean = false;
@@ -63,7 +64,8 @@ export class BusinessForm {
 
   instantiateBusiness = (data: IBusiness) => {
     const business = new Business(data);
-    this.formController.setInitialValues({ ...business });
+    this.defaultValues = { ...business };
+    this.formController.setInitialValues(this.defaultValues);
   }
 
   private initializeApi() {
@@ -106,6 +108,7 @@ export class BusinessForm {
     const values = this.formController.values.getValue();
     const initialValues = this.formController.getInitialValues();
     const payload = new Business({ ...initialValues, ...values }).payload;
+
     this.patchBusiness({
       payload,
       onSuccess: (response) => {
@@ -149,7 +152,10 @@ export class BusinessForm {
               <justifi-business-core-info formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-legal-address-form formController={this.formController} />
+              <justifi-legal-address-form 
+                formController={this.formController}
+                defaultValues={this.defaultValues.legal_address}
+              />
             </div>
             <div class="col-12 mb-4">
               <justifi-additional-questions formController={this.formController} />

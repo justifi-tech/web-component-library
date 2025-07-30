@@ -24,17 +24,17 @@
 
 ### Depends on
 
-- [form-control-text](../../../../ui-components/form)
 - [form-control-select](../../../../ui-components/form)
+- [form-control-text](../../../../ui-components/form)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-identity-address-form --> form-control-text
   justifi-identity-address-form --> form-control-select
-  form-control-text --> form-control-tooltip
-  form-control-tooltip --> custom-popper
+  justifi-identity-address-form --> form-control-text
   form-control-select --> form-control-tooltip
+  form-control-tooltip --> custom-popper
+  form-control-text --> form-control-tooltip
   justifi-business-representative --> justifi-identity-address-form
   justifi-business-representative-form-inputs --> justifi-identity-address-form
   owner-form-inputs --> justifi-identity-address-form
