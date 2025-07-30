@@ -1,4 +1,5 @@
 import { codeExampleHead } from '../../../utils';
+import { getSlotContent } from './slot-content';
 
 export const codeExampleFull = `<!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -373,117 +374,7 @@ ${codeExampleHead(
 )}
 
 <body>
-  <!-- Header -->
-  <div class="header">
-    <div class="logo">
-      <span>nordic</span><span>BREW</span>
-    </div>
-    <div class="nav">
-      <a href="#">SHOP</a>
-      <a href="#">LEARN</a>
-      <div class="cart-icon">
-        🛒
-        <div class="cart-badge">1</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Container -->
-  <div class="main-container">
-    <!-- Checkout Section -->
-    <div class="checkout-section">
-      <h1 class="checkout-title">Checkout</h1>
-      
-      <!-- Shipping Section -->
-      <div class="section">
-        <div class="section-header">
-          <h2 class="section-title">Shipping</h2>
-          <a href="#" class="edit-link">Edit</a>
-        </div>
-        <div class="shipping-info">
-          <div>Rowena Benivedez</div>
-          <div>29181 West River Drive, Sacramento, CA 95833</div>
-          <div>Standard Shipping: Free</div>
-          <div class="delivery-date">Arrive Thursday, October 31st</div>
-        </div>
-      </div>
-
-      <!-- Payment Method Section -->
-      <div class="section">
-        <h2 class="section-title">Payment Method</h2>
-        
-        <button class="paypal-button">
-          <span>PayPal</span>
-        </button>
-        
-        <div class="divider">
-          <span>or</span>
-        </div>
-
-        <justifi-modular-checkout
-          auth-token="authToken"
-          account-id="acc_123"
-          checkout-id="cho_123"
-        >
-          <justifi-card-form />
-          <justifi-postal-code-form />
-        </justifi-modular-checkout>
-
-        <button class="place-order-button" id="submit-button">
-          PLACE ORDER
-        </button>
-        
-        <div class="terms-text">
-          By clicking Place Order you agree to the <a href="#" class="terms-link">Terms & Conditions.</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Shopping Cart Section -->
-    <div class="cart-section">
-      <div class="cart-box">
-        <div class="cart-header">
-          <h2 class="cart-title">Shopping Cart</h2>
-          <a href="#" class="edit-link">Edit</a>
-        </div>
-        
-        <div class="order-summary">
-          <div class="summary-row">
-            <span>Subtotal</span>
-            <span>$38.00</span>
-          </div>
-          <div class="summary-row">
-            <span>Shipping Fee</span>
-            <span>Free</span>
-          </div>
-          <div class="summary-row">
-            <span>Tax</span>
-            <span>$4.00</span>
-          </div>
-          <div class="summary-row total">
-            <span>Order Total</span>
-            <span>$42.00</span>
-          </div>
-        </div>
-        
-        <div class="item-list">
-          <div class="item-header">
-            <span>ITEM</span>
-            <span style="text-align: center;">QTY</span>
-            <span style="text-align: right;">PRICE</span>
-          </div>
-          <div class="item-row">
-            <div>
-              <div class="item-name">Drip Coffee Funnel</div>
-              <div class="item-description">8 cups / 64 ounces</div>
-            </div>
-            <div class="item-qty">1</div>
-            <div class="item-price">$38.00</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  ${getSlotContent()}
 </body>
 
 <script>
