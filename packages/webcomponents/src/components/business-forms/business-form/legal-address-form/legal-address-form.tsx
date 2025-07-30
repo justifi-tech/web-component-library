@@ -18,8 +18,13 @@ export class LegalAddressForm {
   private postalCodeControlRef!: HTMLElement;
 
   componentDidLoad() {
+    // Initialize currentCountry from defaultValues if available
+    if (this.defaultValues?.country) {
+      this.currentCountry = this.defaultValues.country;
+    }
+    
     this.formController.errors.subscribe(
-      errors => (this.errors = { ...errors.legal_address || {} }),
+      errors => (this.errors = { ...errors?.legal_address || {} }),
     );
   }
 
