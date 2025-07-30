@@ -51,6 +51,150 @@ ${codeExampleHead(
       font-weight: 500;
       margin-bottom: 8px;
     }
+
+    /* Additional styles for the example */
+    .donation-container {
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: sans-serif;
+      color: #333;
+    }
+
+    .donation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #666;
+    }
+
+    .payment-form-container {
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .radio-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #28a745;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radio-button-inner {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: white;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .payment-method-card {
+      flex: 1;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .payment-method-card-inactive {
+      flex: 1;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .payment-method-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #007bff;
+    }
+
+    .payment-method-icon-cash {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #00d632;
+    }
+
+    .payment-method-icon-bank {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #666;
+    }
+
+    .payment-method-label {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .card-form-container {
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .form-field {
+      flex: 1;
+    }
+
+    .country-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .country-select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      font-size: 14px;
+      background-color: white;
+      color: #333;
+    }
+
+    .donate-button {
+      width: 100%;
+      padding: 15px;
+      background-color: #28a745;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>`
 )}
 
@@ -61,145 +205,49 @@ ${codeExampleHead(
     checkout-id="cho_123"
     save-payment-method="true"
   >
-    <div style={{
-      maxWidth: '600px',
-      margin: '0 auto',
-      fontFamily: 'sans-serif',
-      color: '#333'
-    }}>
+    <div class="donation-container">
       <!-- Donation Total Header -->
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '20px',
-        fontSize: '16px',
-        color: '#666'
-      }}>
+      <div class="donation-header">
         <span>Donation Total</span>
         <span>$10.00</span>
       </div>
 
       <!-- Main Payment Form Container -->
-      <div style={{
-        backgroundColor: 'white',
-        border: '1px solid #e0e0e0',
-        borderRadius: '8px',
-        padding: '20px',
-        marginBottom: '20px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
+      <div class="payment-form-container">
         <!-- Header with Radio Button -->
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '20px',
-          fontSize: '16px',
-          color: '#333'
-        }}>
-          <div style={{
-            width: '20px',
-            height: '20px',
-            borderRadius: '50%',
-            backgroundColor: '#28a745',
-            marginRight: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              backgroundColor: 'white'
-            }}></div>
+        <div class="payment-header">
+          <div class="radio-button">
+            <div class="radio-button-inner"></div>
           </div>
           <span>Donate with Stripe Payment Element</span>
         </div>
 
         <!-- Payment Method Selection -->
-        <div style={{
-          display: 'flex',
-          gap: '15px',
-          marginBottom: '20px'
-        }}>
-          <div style={{
-            flex: '1',
-            border: '2px solid #007bff',
-            borderRadius: '8px',
-            padding: '15px',
-            textAlign: 'center',
-            backgroundColor: 'white',
-            cursor: 'pointer'
-          }}>
-            <div style={{
-              fontSize: '24px',
-              marginBottom: '8px',
-              color: '#007bff'
-            }}>💳</div>
-            <div style={{ fontSize: '14px', color: '#333' }}>Card</div>
+        <div class="payment-methods">
+          <div class="payment-method-card">
+            <div class="payment-method-icon">💳</div>
+            <div class="payment-method-label">Card</div>
           </div>
-          <div style={{
-            flex: '1',
-            border: '1px solid #e0e0e0',
-            borderRadius: '8px',
-            padding: '15px',
-            textAlign: 'center',
-            backgroundColor: 'white',
-            cursor: 'pointer'
-          }}>
-            <div style={{
-              fontSize: '24px',
-              marginBottom: '8px',
-              color: '#00d632'
-            }}>$</div>
-            <div style={{ fontSize: '14px', color: '#333' }}>Cash App Pay</div>
+          <div class="payment-method-card-inactive">
+            <div class="payment-method-icon-cash">$</div>
+            <div class="payment-method-label">Cash App Pay</div>
           </div>
-          <div style={{
-            flex: '1',
-            border: '1px solid #e0e0e0',
-            borderRadius: '8px',
-            padding: '15px',
-            textAlign: 'center',
-            backgroundColor: 'white',
-            cursor: 'pointer'
-          }}>
-            <div style={{
-              fontSize: '24px',
-              marginBottom: '8px',
-              color: '#666'
-            }}>🏦</div>
-            <div style={{ fontSize: '14px', color: '#333' }}>US bank account</div>
+          <div class="payment-method-card-inactive">
+            <div class="payment-method-icon-bank">🏦</div>
+            <div class="payment-method-label">US bank account</div>
           </div>
         </div>
 
         <!-- Card Form -->
-        <div style={{ marginBottom: '20px' }}>
+        <div class="card-form-container">
           <justifi-card-form />
         </div>
 
         <!-- Country and ZIP Fields -->
-        <div style={{
-          display: 'flex',
-          gap: '15px'
-        }}>
-          <div style={{ flex: '1' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '8px',
-              fontSize: '14px',
-              color: '#333',
-              fontWeight: '500'
-            }}>Country</label>
-            <select style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #e0e0e0',
-              borderRadius: '4px',
-              fontSize: '14px',
-              backgroundColor: 'white',
-              color: '#333'
-            }}>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="country-label">Country</label>
+            <select class="country-select">
               <option>United States</option>
               <option>Canada</option>
               <option>United Kingdom</option>
@@ -208,27 +256,14 @@ ${codeExampleHead(
               <option>Other</option>
             </select>
           </div>
-          <div style={{ flex: '1' }}>
+          <div class="form-field">
             <justifi-postal-code-form />
           </div>
         </div>
       </div>
 
       <!-- Submit Button -->
-      <button 
-        id="submit-button"
-        style={{
-          width: '100%',
-          padding: '15px',
-          backgroundColor: '#28a745',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '16px',
-          fontWeight: '600',
-          cursor: 'pointer'
-        }}
-      >
+      <button id="submit-button" class="donate-button">
         Donate Now
       </button>
     </div>
