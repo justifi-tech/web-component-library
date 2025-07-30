@@ -26,7 +26,7 @@ export class LegalAddressForm {
   @Watch('defaultValues')
   handleDefaultValuesChange(newValues: any) {
     if (newValues) {
-      this.currentCountry = this.defaultValues.country;
+      this.currentCountry = newValues.country;
     }
   }
 
