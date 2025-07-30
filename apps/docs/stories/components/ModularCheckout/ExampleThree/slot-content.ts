@@ -71,7 +71,6 @@ export const getSlotContent = () => `
 
         <!-- Card Information -->
         <div class="checkout-form-field">
-          <label class="checkout-form-label">Debit/Credit Card information</label>
           <justifi-modular-checkout
             auth-token="authToken"
             account-id="acc_123"
