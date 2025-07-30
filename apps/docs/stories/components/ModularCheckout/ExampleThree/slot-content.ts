@@ -113,7 +113,7 @@ export const getSlotContent = () => `
             <input type="checkbox" class="checkout-checkbox-input" />
             <div>
               <div class="checkout-checkbox-text">Save my info for secure 1-click checkout</div>
-              <div class="checkout-checkbox-subtext">Pay faster on StakNine and thousands of sites.</div>
+              <div class="checkout-checkbox-subtext">Pay faster here and thousands of sites.</div>
             </div>
           </label>
         </div>
