@@ -18,7 +18,7 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
-    "slot": getSlotContent()
+    "slot": getSlotContent
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
