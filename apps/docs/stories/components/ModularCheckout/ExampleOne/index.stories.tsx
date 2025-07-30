@@ -5,6 +5,7 @@ import { withActions } from "@storybook/addon-actions/decorator";
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
 import "@justifi/webcomponents/dist/module/justifi-postal-code-form";
+import "./example.css";
 
 type Story = StoryObj;
 
@@ -17,158 +18,49 @@ const meta: Meta = {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
     "slot": () => `
-      <div style="
-        max-width: 600px;
-        margin: 0 auto;
-        font-family: sans-serif;
-        color: #333;
-      ">
+      <div class="donation-container">
         <!-- Donation Total Header -->
-        <div style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-          font-size: 16px;
-          color: #666;
-        ">
+        <div class="donation-header">
           <span>Donation Total</span>
           <span>$10.00</span>
         </div>
 
         <!-- Main Payment Form Container -->
-        <div style="
-          background-color: white;
-          border: 1px solid #e0e0e0;
-          border-radius: 8px;
-          padding: 20px;
-          margin-bottom: 20px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        ">
+        <div class="payment-form-container">
           <!-- Header with Radio Button -->
-          <div style="
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #333;
-          ">
-            <div style="
-              width: 20px;
-              height: 20px;
-              border-radius: 50%;
-              background-color: #28a745;
-              margin-right: 10px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            ">
-              <div style="
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background-color: white;
-              "></div>
+          <div class="payment-header">
+            <div class="radio-button">
+              <div class="radio-button-inner"></div>
             </div>
             <span>Donate with Stripe Payment Element</span>
           </div>
 
           <!-- Payment Method Selection -->
-          <div style="
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-          ">
-            <div style="
-              flex: 1;
-              border: 2px solid #007bff;
-              border-radius: 8px;
-              padding: 15px;
-              text-align: center;
-              background-color: white;
-              cursor: pointer;
-            ">
-              <div style="
-                font-size: 24px;
-                margin-bottom: 8px;
-                color: #007bff;
-              ">💳</div>
-              <div style="
-                font-size: 14px;
-                color: #333;
-              ">Card</div>
+          <div class="payment-methods">
+            <div class="payment-method-card">
+              <div class="payment-method-icon">💳</div>
+              <div class="payment-method-label">Card</div>
             </div>
-            <div style="
-              flex: 1;
-              border: 1px solid #e0e0e0;
-              border-radius: 8px;
-              padding: 15px;
-              text-align: center;
-              background-color: white;
-              cursor: pointer;
-            ">
-              <div style="
-                font-size: 24px;
-                margin-bottom: 8px;
-                color: #00d632;
-              ">$</div>
-              <div style="
-                font-size: 14px;
-                color: #333;
-              ">Cash App Pay</div>
+            <div class="payment-method-card-inactive">
+              <div class="payment-method-icon-cash">$</div>
+              <div class="payment-method-label">Cash App Pay</div>
             </div>
-            <div style="
-              flex: 1;
-              border: 1px solid #e0e0e0;
-              border-radius: 8px;
-              padding: 15px;
-              text-align: center;
-              background-color: white;
-              cursor: pointer;
-            ">
-              <div style="
-                font-size: 24px;
-                margin-bottom: 8px;
-                color: #666;
-              ">🏦</div>
-              <div style="
-                font-size: 14px;
-                color: #333;
-              ">US bank account</div>
+            <div class="payment-method-card-inactive">
+              <div class="payment-method-icon-bank">🏦</div>
+              <div class="payment-method-label">US bank account</div>
             </div>
           </div>
 
           <!-- Card Form -->
-          <div style="
-            margin-bottom: 20px;
-          ">
+          <div class="card-form-container">
             <justifi-card-form />
           </div>
 
           <!-- Country and ZIP Fields -->
-          <div style="
-            display: flex;
-            gap: 15px;
-          ">
-            <div style="
-              flex: 1;
-            ">
-              <label style="
-                display: block;
-                margin-bottom: 12px;
-                font-size: 1.1rem;
-                color: #333;
-                font-weight: 500;
-              ">Country</label>
-              <select style="
-                width: 100%;
-                padding: 0.475rem 0.75rem;
-                border: 1px solid #e0e0e0;
-                border-radius: 6px;
-                font-size: 1rem;
-                background-color: white;
-                color: #333;
-              ">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Country</label>
+              <select class="form-select">
                 <option>United States</option>
                 <option>Canada</option>
                 <option>United Kingdom</option>
@@ -177,26 +69,14 @@ const meta: Meta = {
                 <option>Other</option>
               </select>
             </div>
-            <div style="
-              flex: 1;
-            ">
+            <div class="form-field">
               <justifi-postal-code-form />
             </div>
           </div>
         </div>
 
         <!-- Submit Button -->
-        <button style=" 
-          width: 100%;
-          padding: 15px;
-          background-color: #28a745;
-          color: #ffffff;
-          border: none;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-        ">
+        <button class="donate-button">
           Donate Now
         </button>
       </div>
