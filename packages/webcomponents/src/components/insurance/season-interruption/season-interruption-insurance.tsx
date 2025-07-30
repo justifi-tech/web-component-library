@@ -5,6 +5,18 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/Compon
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
+import {
+  text,
+  textDanger,
+  insuranceContainer,
+  insuranceForm,
+  insuranceRadioGroup,
+  insuranceHeaderSection,
+  insuranceDescriptionSection,
+  insuranceFormSection,
+  insuranceLegalDisclaimerSection,
+  insuranceLoading,
+} from '../../../styles/parts';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -71,6 +83,20 @@ export class SeasonInterruptionInsurance {
     });
   }
 
+  // Join the parts (some of which have spaces) and then split them to remove the spaces
+  private usedPartsString = [
+    text,
+    textDanger,
+    insuranceContainer,
+    insuranceForm,
+    insuranceRadioGroup,
+    insuranceHeaderSection,
+    insuranceDescriptionSection,
+    insuranceFormSection,
+    insuranceLegalDisclaimerSection,
+    insuranceLoading,
+  ].join(', ').split(' ').join(', ');
+
   render() {
     return (
       <justifi-season-interruption-insurance-core
@@ -89,6 +115,7 @@ export class SeasonInterruptionInsurance {
         policy-attributes-end-date={this.policyAttributesEndDate}
         covered-identity-first-name={this.coveredIdentityFirstName}
         covered-identity-last-name={this.coveredIdentityLastName}
+        exportparts={this.usedPartsString}
       >
       </justifi-season-interruption-insurance-core>
     );

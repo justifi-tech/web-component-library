@@ -53,7 +53,7 @@ export class SeasonInterruptionInsuranceCore {
     return processHTML(html, [
       (html) => removeAttribute(html, 'style'),
       (html) => addAttribute(html, 'a', 'part', text),
-      (html) => addAttribute(html, 'p', 'part', text)
+      (html) => addAttribute(html, 'p', 'part', text),
     ]);
   }
 
@@ -146,7 +146,7 @@ export class SeasonInterruptionInsuranceCore {
             <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
           </div>
           <div part={insuranceDescriptionSection}>
-            <small innerHTML={this.quote?.product.description} part={text}></small>
+            <small innerHTML={this.quote?.product.description}></small>
           </div>
           <div part={insuranceFormSection}>
             <form part={insuranceForm}>
@@ -179,7 +179,7 @@ export class SeasonInterruptionInsuranceCore {
             </form>
           </div>
           <div part={insuranceLegalDisclaimerSection}>
-            <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
+            <small innerHTML={this.quote?.product.legal_disclaimer}></small>
           </div>
         </div >
       </StyledHost>
