@@ -6,7 +6,6 @@ export const getSlotContent = () => `
         <span class="checkout-back-arrow">←</span>
         <span class="checkout-brand-name">JustiFi Store</span>
       </div>
-      <div class="checkout-test-mode">TEST MODE</div>
     </div>
 
     <!-- Main Container -->

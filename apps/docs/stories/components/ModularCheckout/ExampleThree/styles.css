@@ -33,15 +33,6 @@
   font-weight: 500;
 }
 
-.checkout-test-mode {
-  background-color: #ff6b35;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
 /* Main Container */
 .checkout-main-container {
   display: flex;
