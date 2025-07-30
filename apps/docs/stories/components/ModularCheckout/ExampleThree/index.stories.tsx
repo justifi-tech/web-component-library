@@ -18,80 +18,80 @@ const meta: Meta = {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
     "slot": () => `
-      <div class="checkout-page">
+      <div class="checkout-container">
         <!-- Header Bar -->
-        <div class="header-bar">
-          <div class="header-left">
-            <span class="back-arrow">←</span>
-            <span class="store-name">JustiFi Store</span>
+        <div class="checkout-header">
+          <div class="checkout-brand">
+            <span class="checkout-back-arrow">←</span>
+            <span class="checkout-brand-name">JustiFi Store</span>
           </div>
-          <div class="test-mode-badge">TEST MODE</div>
+          <div class="checkout-test-mode">TEST MODE</div>
         </div>
 
         <!-- Main Container -->
-        <div class="main-container">
+        <div class="checkout-main-container">
           <!-- Left Column - Order Summary -->
-          <div class="order-summary">
+          <div class="checkout-order-summary">
             <!-- Pay Header -->
-            <div class="pay-header">
-              <h1 class="pay-title">Pay JustiFi Store</h1>
-              <div class="pay-amount">$39.99</div>
+            <div class="checkout-pay-header">
+              <h1 class="checkout-pay-title">Pay JustiFi Store</h1>
+              <div class="checkout-pay-amount">$39.99</div>
             </div>
 
             <!-- Product Item -->
-            <div class="product-item">
-              <div class="product-image">📚</div>
-              <div class="product-details">
-                <div class="product-name">Fintech Deployhandbook Test</div>
-                <div class="product-description">How to deploy Fintech app...</div>
+            <div class="checkout-product-item">
+              <div class="checkout-product-image">📚</div>
+              <div class="checkout-product-details">
+                <div class="checkout-product-name">Fintech Deployhandbook Test</div>
+                <div class="checkout-product-description">How to deploy Fintech app...</div>
               </div>
-              <div class="product-price">$39.99</div>
+              <div class="checkout-product-price">$39.99</div>
             </div>
 
             <!-- Summary Breakdown -->
-            <div class="summary-breakdown">
-              <div class="summary-row">
+            <div class="checkout-summary-breakdown">
+              <div class="checkout-summary-row">
                 <span>Subtotal</span>
                 <span>$39.99</span>
               </div>
-              <div class="summary-row-with-icon">
-                <div class="tax-info">
+              <div class="checkout-summary-row tax">
+                <div class="checkout-tax-info">
                   <span>Tax</span>
-                  <span class="info-icon">ⓘ</span>
+                  <span class="checkout-tax-icon">ⓘ</span>
                 </div>
-                <span class="tax-placeholder">Enter address to calculate</span>
+                <span class="checkout-tax-placeholder">Enter address to calculate</span>
               </div>
-              <div class="summary-row-total">
+              <div class="checkout-summary-row total">
                 <span>Total due</span>
                 <span>$39.99</span>
               </div>
             </div>
 
             <!-- Footer -->
-            <div class="summary-footer">
-              <div class="powered-by">
-                Powered by <span class="powered-by-brand">JustiFi</span>
+            <div class="checkout-footer">
+              <div class="checkout-powered-by">
+                Powered by <span class="checkout-stripe-text">JustiFi</span>
               </div>
-              <div class="footer-links">
-                <a href="#" class="footer-link">Terms</a>
-                <a href="#" class="footer-link">Privacy</a>
+              <div class="checkout-footer-links">
+                <a href="#" class="checkout-footer-link">Terms</a>
+                <a href="#" class="checkout-footer-link">Privacy</a>
               </div>
             </div>
           </div>
 
           <!-- Right Column - Payment Form -->
-          <div class="payment-form">
-            <h2 class="payment-title">Pay with card</h2>
+          <div class="checkout-payment-form">
+            <h2 class="checkout-form-title">Pay with card</h2>
 
             <!-- Email Field -->
-            <div class="form-field">
-              <label class="form-label">Email</label>
-              <input type="email" placeholder="Enter your email" class="form-input" />
+            <div class="checkout-form-field">
+              <label class="checkout-form-label">Email</label>
+              <input type="email" placeholder="Enter your email" class="checkout-form-input" />
             </div>
 
             <!-- Card Information -->
-            <div class="form-field">
-              <label class="form-label">Debit/Credit Card information</label>
+            <div class="checkout-form-field">
+              <label class="checkout-form-label">Debit/Credit Card information</label>
               <justifi-modular-checkout
                 auth-token="authToken"
                 account-id="acc_123"
@@ -104,16 +104,16 @@ const meta: Meta = {
             </div>
 
             <!-- Name on Card -->
-            <div class="form-field">
-              <label class="form-label">Name on card</label>
-              <input type="text" placeholder="Enter cardholder name" class="form-input" />
+            <div class="checkout-form-field">
+              <label class="checkout-form-label">Name on card</label>
+              <input type="text" placeholder="Enter cardholder name" class="checkout-form-input" />
             </div>
 
             <!-- Billing Address -->
-            <div class="form-field">
-              <label class="form-label">Billing address</label>
+            <div class="checkout-form-field">
+              <label class="checkout-form-label">Billing address</label>
               <div style="margin-bottom: 15px;">
-                <select class="form-select">
+                <select class="checkout-form-select">
                   <option>United States</option>
                   <option>Canada</option>
                   <option>United Kingdom</option>
@@ -121,24 +121,24 @@ const meta: Meta = {
                 </select>
               </div>
               <div style="margin-bottom: 10px;">
-                <input type="text" placeholder="Address" class="form-input" />
+                <input type="text" placeholder="Address" class="checkout-form-input" />
               </div>
-              <a href="#" class="manual-address-link">Enter address manually</a>
+              <a href="#" class="checkout-manual-link">Enter address manually</a>
             </div>
 
             <!-- Save Info Checkbox -->
-            <div class="checkbox-container">
-              <label class="checkbox-label">
-                <input type="checkbox" class="checkbox-input" />
+            <div class="checkout-checkbox-container">
+              <label class="checkout-checkbox-label">
+                <input type="checkbox" class="checkout-checkbox-input" />
                 <div>
-                  <div class="checkbox-text">Save my info for secure 1-click checkout</div>
-                  <div class="checkbox-description">Pay faster on StakNine and thousands of sites.</div>
+                  <div class="checkout-checkbox-text">Save my info for secure 1-click checkout</div>
+                  <div class="checkout-checkbox-subtext">Pay faster on StakNine and thousands of sites.</div>
                 </div>
               </label>
             </div>
 
             <!-- Pay Button -->
-            <button class="pay-button" id="submit-button">
+            <button class="checkout-pay-button" id="submit-button">
               Pay
             </button>
           </div>
