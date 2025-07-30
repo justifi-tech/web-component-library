@@ -20,6 +20,10 @@ const dark = `
     color: #fdfdec;
   }
 
+  ::part(text-danger) {
+    color: #ff6b6b;
+  }
+
   ::part(background-color) {
     background-color: transparent;
   }

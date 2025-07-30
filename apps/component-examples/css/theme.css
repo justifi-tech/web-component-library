@@ -19,6 +19,14 @@ body {
   color: darkslategray;
 }
 
+::part(text) {
+  color: darkslategray;
+}
+
+::part(text) * {
+  color: inherit !important;
+}
+
 ::part(text-danger) {
   color: #8a2a35;
 }

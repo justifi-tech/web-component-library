@@ -3,7 +3,18 @@ import { ComponentErrorEvent } from "../../../api/ComponentEvents";
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
 import { StyledHost, Header2 } from "../../../ui-components";
-import { text, textDanger } from "../../../styles/parts";
+import { 
+  text, 
+  textDanger, 
+  insuranceContainer,
+  insuranceForm,
+  insuranceRadioGroup,
+  insuranceHeaderSection,
+  insuranceDescriptionSection,
+  insuranceFormSection,
+  insuranceLegalDisclaimerSection,
+  insuranceLoading
+} from "../../../styles/parts";
 import SeasonInterruptionInsuranceLoading from "./season-interruption-insurance-loading";
 
 @Component({
@@ -36,6 +47,14 @@ export class SeasonInterruptionInsuranceCore {
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
     return validateInsuranceValues();
+  }
+
+  processHTML(html: string) {
+    return processHTML(html, [
+      (html) => removeAttribute(html, 'style'),
+      (html) => addAttribute(html, 'a', 'part', text),
+      (html) => addAttribute(html, 'p', 'part', text)
+    ]);
   }
 
   componentWillLoad() {
@@ -71,14 +90,8 @@ export class SeasonInterruptionInsuranceCore {
       },
       onSuccess: ({ quote }) => {
         this.quote = quote;
-        this.quote.product.description = processHTML(this.quote.product.description, [
-          (html) => removeAttribute(html, 'style'),
-          (html) => addAttribute(html, 'a', 'part', text)
-        ]);
-        this.quote.product.legal_disclaimer = processHTML(this.quote.product.legal_disclaimer, [
-          (html) => removeAttribute(html, 'style'),
-          (html) => addAttribute(html, 'a', 'part', text)
-        ]);
+        this.quote.product.description = this.processHTML(this.quote.product.description);
+        this.quote.product.legal_disclaimer = this.processHTML(this.quote.product.legal_disclaimer);
         insuranceValues[quote.policy_type] = quote.accepted;
         this.isLoading = false;
       },
@@ -120,40 +133,54 @@ export class SeasonInterruptionInsuranceCore {
   render() {
     if (this.isLoading) return (
       <StyledHost>
-        <SeasonInterruptionInsuranceLoading />
+        <div part={insuranceLoading}>
+          <SeasonInterruptionInsuranceLoading />
+        </div>
       </StyledHost>
     );
 
     return (
       <StyledHost>
-        <div>
-          <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
-          <small innerHTML={this.quote?.product.description} part={text}></small>
-          <form-control-radio
-            label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
-            name="opt-in"
-            value={'true'}
-            checked={this.accepted === 'true'}
-            inputHandler={this.onChangeHandler.bind(this)}
-            // don't wanna show error message, but need to show the red border
-            errorText={this.error ? ' ' : undefined}
-          />
-          <form-control-radio
-            label="Decline coverage"
-            name="opt-in"
-            value={'false'}
-            checked={this.accepted === 'false'}
-            inputHandler={this.onChangeHandler.bind(this)}
-            errorText={this.error ? ' ' : undefined}
-          />
-          <div
-            class="invalid-feedback"
-            style={{ display: this.error ? 'block' : 'none' }}
-            part={textDanger}
-          >
-            Please select an option
+        <div part={insuranceContainer}>
+          <div part={insuranceHeaderSection}>
+            <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
           </div>
-          <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
+          <div part={insuranceDescriptionSection}>
+            <small innerHTML={this.quote?.product.description} part={text}></small>
+          </div>
+          <div part={insuranceFormSection}>
+            <form part={insuranceForm}>
+              <div part={insuranceRadioGroup}>
+                <form-control-radio
+                  label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
+                  name="opt-in"
+                  value={'true'}
+                  checked={this.accepted === 'true'}
+                  inputHandler={this.onChangeHandler.bind(this)}
+                  // don't wanna show error message, but need to show the red border
+                  errorText={this.error ? ' ' : undefined}
+                />
+                <form-control-radio
+                  label="Decline coverage"
+                  name="opt-in"
+                  value={'false'}
+                  checked={this.accepted === 'false'}
+                  inputHandler={this.onChangeHandler.bind(this)}
+                  errorText={this.error ? ' ' : undefined}
+                />
+              </div>
+              <div
+                class="invalid-feedback"
+                style={{ display: this.error ? 'block' : 'none' }}
+                part={textDanger}
+              >
+                Please select an option
+              </div>
+            </form>
+          </div>
+          <div part={insuranceLegalDisclaimerSection}>
+            <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
+          </div>
         </div >
       </StyledHost>
     );
