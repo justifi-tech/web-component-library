@@ -42,9 +42,7 @@ This example uses CSS parts to style the web components consistently with the ov
     checkout-id="cho_123"
     save-payment-method="true"
   >
-    <div
-      dangerouslySetInnerHTML={{ __html: getSlotContent({ variant: 'JSX' }) }}
-    />
+    <div dangerouslySetInnerHTML={{ __html: getSlotContent() }} />
   </justifi-modular-checkout>
 </ComponentBox>
 

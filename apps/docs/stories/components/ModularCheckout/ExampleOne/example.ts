@@ -1,4 +1,5 @@
 import { codeExampleHead } from '../../../utils';
+import { getSlotContent } from './slot-content';
 
 export const codeExampleFull = `
 <!DOCTYPE html>
@@ -205,68 +206,7 @@ ${codeExampleHead(
     checkout-id="cho_123"
     save-payment-method="true"
   >
-    <div class="donation-container">
-      <!-- Donation Total Header -->
-      <div class="donation-header">
-        <span>Donation Total</span>
-        <span>$10.00</span>
-      </div>
-
-      <!-- Main Payment Form Container -->
-      <div class="payment-form-container">
-        <!-- Header with Radio Button -->
-        <div class="payment-header">
-          <div class="radio-button">
-            <div class="radio-button-inner"></div>
-          </div>
-          <span>Donate with Stripe Payment Element</span>
-        </div>
-
-        <!-- Payment Method Selection -->
-        <div class="payment-methods">
-          <div class="payment-method-card">
-            <div class="payment-method-icon">💳</div>
-            <div class="payment-method-label">Card</div>
-          </div>
-          <div class="payment-method-card-inactive">
-            <div class="payment-method-icon-cash">$</div>
-            <div class="payment-method-label">Cash App Pay</div>
-          </div>
-          <div class="payment-method-card-inactive">
-            <div class="payment-method-icon-bank">🏦</div>
-            <div class="payment-method-label">US bank account</div>
-          </div>
-        </div>
-
-        <!-- Card Form -->
-        <div class="card-form-container">
-          <justifi-card-form />
-        </div>
-
-        <!-- Country and ZIP Fields -->
-        <div class="form-row">
-          <div class="form-field">
-            <label class="country-label">Country</label>
-            <select class="country-select">
-              <option>United States</option>
-              <option>Canada</option>
-              <option>United Kingdom</option>
-              <option>Australia</option>
-              <option>New Zealand</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <justifi-postal-code-form />
-          </div>
-        </div>
-      </div>
-
-      <!-- Submit Button -->
-      <button id="submit-button" class="donate-button">
-        Donate Now
-      </button>
-    </div>
+    ${getSlotContent()}
   </justifi-modular-checkout>
 </body>
 
