@@ -18,116 +18,116 @@ const meta: Meta = {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
     "slot": () => `
-      <div class="checkout-container">
+      <div class="checkout-page">
         <!-- Header -->
         <div class="checkout-header">
-          <div class="brand-logo">
-            <span class="brand-logo-primary">JustiFi</span>
-            <span class="brand-logo-secondary">BREW</span>
+          <div class="checkout-brand">
+            <span class="checkout-brand-primary">JustiFi</span>
+            <span class="checkout-brand-secondary">BREW</span>
           </div>
-          <div class="header-nav">
-            <a href="#" class="nav-link">SHOP</a>
-            <a href="#" class="nav-link">LEARN</a>
-            <div class="cart-icon">
+          <div class="checkout-nav">
+            <a href="#" class="checkout-nav-link">SHOP</a>
+            <a href="#" class="checkout-nav-link">LEARN</a>
+            <div class="checkout-cart-icon">
               🛒
-              <div class="cart-badge">1</div>
+              <div class="checkout-cart-badge">1</div>
             </div>
           </div>
         </div>
 
         <!-- Main Container -->
-        <div class="main-container">
+        <div class="checkout-main">
           <!-- Checkout Section -->
-          <div class="checkout-section">
+          <div class="checkout-left-column">
             <h1 class="checkout-title">Checkout</h1>
             
-            <hr class="divider" />
+            <hr class="checkout-divider" />
             
             <!-- Shipping Section -->
-            <div class="section">
-              <div class="section-header">
-                <h2 class="section-title">Shipping</h2>
-                <a href="#" class="edit-link">Edit</a>
+            <div class="checkout-section">
+              <div class="checkout-section-header">
+                <h2 class="checkout-section-title">Shipping</h2>
+                <a href="#" class="checkout-edit-link">Edit</a>
               </div>
-              <div class="section-content">
+              <div class="checkout-shipping-info">
                 <div>John Doe</div>
                 <div>123 Main St, Anytown, USA</div>
                 <div>Standard Shipping: Free</div>
-                <div class="section-content-bold">Arrive Thursday, October 31st</div>
+                <div class="checkout-shipping-arrival">Arrive Thursday, October 31st</div>
               </div>
             </div>
 
-            <hr class="divider" />
+            <hr class="checkout-divider" />
 
             <!-- Payment Method Section -->
-            <div class="section">
-              <h2 class="section-title">Payment Method</h2>
+            <div class="checkout-section">
+              <h2 class="checkout-section-title">Payment Method</h2>
               
-              <button class="paypal-button">
+              <button class="checkout-paypal-button">
                 <span>PayPal</span>
               </button>
               
-              <div class="divider-container">
-                <div class="divider-line divider-line-left"></div>
-                <span class="divider-text">or</span>
-                <div class="divider-line divider-line-right"></div>
+              <div class="checkout-or-divider">
+                <div class="checkout-or-line left"></div>
+                <span class="checkout-or-text">or</span>
+                <div class="checkout-or-line right"></div>
               </div>
 
-              <div class="payment-forms">
+              <div class="checkout-form-container">
                 <justifi-card-form></justifi-card-form>
                 <justifi-postal-code-form></justifi-postal-code-form>
               </div>
 
-              <button class="place-order-button" id="submit-button">
+              <button class="checkout-submit-button" id="submit-button">
                 PLACE ORDER
               </button>
               
-              <div class="terms-text">
-                By clicking Place Order you agree to the <a href="#" class="terms-link">Terms & Conditions.</a>
+              <div class="checkout-terms">
+                By clicking Place Order you agree to the <a href="#" class="checkout-terms-link">Terms & Conditions.</a>
               </div>
             </div>
           </div>
 
           <!-- Shopping Cart Section -->
-          <div class="cart-section">
-            <div class="cart-container">
-              <div class="cart-header">
-                <h2 class="cart-title">Shopping Cart</h2>
-                <a href="#" class="edit-link">Edit</a>
+          <div class="checkout-right-column">
+            <div class="checkout-cart-container">
+              <div class="checkout-cart-header">
+                <h2 class="checkout-cart-title">Shopping Cart</h2>
+                <a href="#" class="checkout-edit-link">Edit</a>
               </div>
               
-              <div class="cart-summary">
-                <div class="summary-row">
+              <div class="checkout-summary">
+                <div class="checkout-summary-row">
                   <span>Subtotal</span>
                   <span>$38.00</span>
                 </div>
-                <div class="summary-row">
+                <div class="checkout-summary-row">
                   <span>Shipping Fee</span>
                   <span>Free</span>
                 </div>
-                <div class="summary-row">
+                <div class="checkout-summary-row">
                   <span>Tax</span>
                   <span>$4.00</span>
                 </div>
-                <div class="summary-row-total">
+                <div class="checkout-summary-total">
                   <span>Order Total</span>
                   <span>$42.00</span>
                 </div>
               </div>
               
-              <div class="cart-items">
-                <div class="items-header">
+              <div class="checkout-items-section">
+                <div class="checkout-items-header">
                   <span>ITEM</span>
-                  <span class="items-header-center">QTY</span>
-                  <span class="items-header-right">PRICE</span>
+                  <span class="checkout-items-header-qty">QTY</span>
+                  <span class="checkout-items-header-price">PRICE</span>
                 </div>
-                <div class="item-row">
+                <div class="checkout-item">
                   <div>
-                    <div class="item-name">Drip Coffee Funnel</div>
-                    <div class="item-description">8 cups / 64 ounces</div>
+                    <div class="checkout-item-name">Drip Coffee Funnel</div>
+                    <div class="checkout-item-description">8 cups / 64 ounces</div>
                   </div>
-                  <div class="item-quantity">1</div>
-                  <div class="item-price">$38.00</div>
+                  <div class="checkout-item-qty">1</div>
+                  <div class="checkout-item-price">$38.00</div>
                 </div>
               </div>
             </div>
