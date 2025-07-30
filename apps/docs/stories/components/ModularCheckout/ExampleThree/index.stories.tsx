@@ -5,7 +5,7 @@ import { withActions } from "@storybook/addon-actions/decorator";
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
 import "@justifi/webcomponents/dist/module/justifi-postal-code-form";
-import "./example.css";
+import "./styles.css";
 
 type Story = StoryObj;
 

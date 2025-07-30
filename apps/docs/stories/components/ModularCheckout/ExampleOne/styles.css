@@ -1,5 +1,8 @@
 /* ExampleOne Styles */
 .donation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   max-width: 600px;
   margin: 0 auto;
   font-family: sans-serif;
@@ -16,6 +19,9 @@
 }
 
 .payment-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   background-color: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -26,6 +32,7 @@
 
 .payment-header {
   display: flex;
+  gap: 10px;
   align-items: center;
   margin-bottom: 20px;
   font-size: 16px;

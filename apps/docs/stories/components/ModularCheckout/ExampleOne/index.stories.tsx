@@ -5,7 +5,7 @@ import { withActions } from "@storybook/addon-actions/decorator";
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
 import "@justifi/webcomponents/dist/module/justifi-postal-code-form";
-import "./example.css";
+import "./styles.css";
 
 type Story = StoryObj;
 
@@ -36,18 +36,18 @@ const meta: Meta = {
           </div>
 
           <!-- Payment Method Selection -->
-          <div class="payment-methods">
-            <div class="payment-method-card">
+          <div class="payment-method-selection">
+            <div class="payment-method-card selected">
               <div class="payment-method-icon">💳</div>
-              <div class="payment-method-label">Card</div>
+              <div class="payment-method-text">Card</div>
             </div>
-            <div class="payment-method-card-inactive">
-              <div class="payment-method-icon-cash">$</div>
-              <div class="payment-method-label">Cash App Pay</div>
+            <div class="payment-method-card">
+              <div class="payment-method-icon cash-app">$</div>
+              <div class="payment-method-text">Cash App Pay</div>
             </div>
-            <div class="payment-method-card-inactive">
-              <div class="payment-method-icon-bank">🏦</div>
-              <div class="payment-method-label">US bank account</div>
+            <div class="payment-method-card">
+              <div class="payment-method-icon bank">🏦</div>
+              <div class="payment-method-text">US bank account</div>
             </div>
           </div>
 
@@ -57,8 +57,8 @@ const meta: Meta = {
           </div>
 
           <!-- Country and ZIP Fields -->
-          <div class="form-row">
-            <div class="form-field">
+          <div class="country-zip-container">
+            <div class="country-field">
               <label class="form-label">Country</label>
               <select class="form-select">
                 <option>United States</option>
@@ -69,14 +69,14 @@ const meta: Meta = {
                 <option>Other</option>
               </select>
             </div>
-            <div class="form-field">
+            <div class="zip-field">
               <justifi-postal-code-form />
             </div>
           </div>
         </div>
 
         <!-- Submit Button -->
-        <button class="donate-button">
+        <button class="submit-button">
           Donate Now
         </button>
       </div>
