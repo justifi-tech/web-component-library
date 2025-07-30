@@ -3,6 +3,7 @@ import { codeExampleFull } from './example';
 import { ComponentBox } from '../../../utils/documentation-components';
 import * as JustifiModularCheckoutExampleOne from './index.stories';
 import { setUpMocks } from '../../../utils/mockAllServices';
+import { getSlotContent } from './slot-content';
 import './styles.css';
 
 {setUpMocks()}
@@ -41,69 +42,9 @@ This example uses CSS parts to style the web components consistently with the ov
     checkout-id="cho_123"
     save-payment-method="true"
   >
-    <div className="donation-container">
-      {/* Donation Total Header */}
-      <div className="donation-header">
-        <span>Donation Total</span>
-        <span>$10.00</span>
-      </div>
-
-      {/* Main Payment Form Container */}
-      <div className="payment-form-container">
-        {/* Header with Radio Button */}
-        <div className="payment-header">
-          <div className="radio-button">
-            <div className="radio-button-inner"></div>
-          </div>
-          <span>Donate with Stripe Payment Element</span>
-        </div>
-
-        {/* Payment Method Selection */}
-        <div className="payment-method-selection">
-          <div className="payment-method-card selected">
-            <div className="payment-method-icon">💳</div>
-            <div className="payment-method-text">Card</div>
-          </div>
-          <div className="payment-method-card">
-            <div className="payment-method-icon cash-app">$</div>
-            <div className="payment-method-text">Cash App Pay</div>
-          </div>
-          <div className="payment-method-card">
-            <div className="payment-method-icon bank">🏦</div>
-            <div className="payment-method-text">US bank account</div>
-          </div>
-        </div>
-
-        {/* Card Form */}
-        <div className="card-form-container">
-          <justifi-card-form />
-        </div>
-
-        {/* Country and ZIP Fields */}
-        <div className="country-zip-container">
-          <div className="country-field">
-            <label className="form-label">Country</label>
-            <select className="form-select">
-              <option>United States</option>
-              <option>Canada</option>
-              <option>United Kingdom</option>
-              <option>Australia</option>
-              <option>New Zealand</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div className="zip-field">
-            <justifi-postal-code-form />
-          </div>
-        </div>
-      </div>
-
-      {/* Submit Button */}
-      <button className="submit-button">
-        <span>Donate Now</span>
-      </button>
-    </div>
-
+    <div
+      dangerouslySetInnerHTML={{ __html: getSlotContent({ variant: 'JSX' }) }}
+    />
   </justifi-modular-checkout>
 </ComponentBox>
 
