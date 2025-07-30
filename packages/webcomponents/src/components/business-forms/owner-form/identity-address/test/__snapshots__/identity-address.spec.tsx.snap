@@ -4,7 +4,7 @@ exports[`identity-address should render IdentityAddressForm component 1`] = `
 <justifi-identity-address-form>
   <div class="gy-3 row">
     <div class="col-12">
-      <form-control-select defaultvalue="" label="Country" name="country"></form-control-select>
+      <form-control-select label="Country" name="country"></form-control-select>
     </div>
     <div class="col-12 col-md-8">
       <form-control-text helptext="​​Enter your address exactly as stated on your driver's license. No PO Boxes." label="Street Address" name="line1"></form-control-text>
@@ -29,7 +29,7 @@ exports[`identity-address should render IdentityAddressForm component with defau
 <justifi-identity-address-form>
   <div class="gy-3 row">
     <div class="col-12">
-      <form-control-select defaultvalue="Country" label="Country" name="country"></form-control-select>
+      <form-control-select defaultvalue="USA" label="Country" name="country"></form-control-select>
     </div>
     <div class="col-12 col-md-8">
       <form-control-text defaultvalue="Street 1" helptext="​​Enter your address exactly as stated on your driver's license. No PO Boxes." label="Street Address" name="line1"></form-control-text>
@@ -44,7 +44,7 @@ exports[`identity-address should render IdentityAddressForm component with defau
       <form-control-select defaultvalue="State" label="State" name="state"></form-control-select>
     </div>
     <div class="col-12 col-md-6">
-      <form-control-text defaultvalue="12345" helptext="Format: 12345 or 12345-6789" label="Postal Code" maxlength="10" name="postal_code"></form-control-text>
+      <form-control-text defaultvalue="12345" helptext="Format: 12345 or 12345-6789" label="ZIP Code" maxlength="10" name="postal_code"></form-control-text>
     </div>
   </div>
 </justifi-identity-address-form>
