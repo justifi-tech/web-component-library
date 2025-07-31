@@ -7,15 +7,16 @@ export const codeExampleFull = `<!DOCTYPE html>
 ${codeExampleHead(
   'justifi-modular-checkout',
   `<style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* ExampleTwo Styles */
+    .checkout-page {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #ffffff;
       color: #000000;
     }
 
-    .header {
+    .checkout-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -23,26 +24,26 @@ ${codeExampleHead(
       border-bottom: 1px solid #e0e0e0;
     }
 
-    .logo {
+    .checkout-brand {
       font-size: 24px;
       font-weight: bold;
     }
 
-    .logo span:first-child {
+    .checkout-brand-primary {
       color: #2d5a27;
     }
 
-    .logo span:last-child {
+    .checkout-brand-secondary {
       color: #4a7c59;
     }
 
-    .nav {
+    .checkout-nav {
       display: flex;
       align-items: center;
       gap: 30px;
     }
 
-    .nav a {
+    .checkout-nav-link {
       text-decoration: none;
       color: #000000;
       font-weight: 500;
@@ -50,12 +51,12 @@ ${codeExampleHead(
       font-size: 14px;
     }
 
-    .cart-icon {
+    .checkout-cart-icon {
       position: relative;
       cursor: pointer;
     }
 
-    .cart-badge {
+    .checkout-cart-badge {
       position: absolute;
       top: -8px;
       right: -8px;
@@ -71,7 +72,7 @@ ${codeExampleHead(
       font-weight: bold;
     }
 
-    .main-container {
+    .checkout-main {
       display: flex;
       max-width: 1200px;
       margin: 0 auto;
@@ -79,12 +80,8 @@ ${codeExampleHead(
       gap: 40px;
     }
 
-    .checkout-section {
+    .checkout-left-column {
       flex: 2;
-    }
-
-    .cart-section {
-      flex: 1;
     }
 
     .checkout-title {
@@ -94,40 +91,46 @@ ${codeExampleHead(
       color: #000000;
     }
 
-    .section {
+    .checkout-divider {
+      margin: 30px 0;
+      border: none;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .checkout-section {
       margin-bottom: 30px;
     }
 
-    .section-header {
+    .checkout-section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 15px;
     }
 
-    .section-title {
+    .checkout-section-title {
       font-size: 18px;
       font-weight: bold;
       color: #000000;
     }
 
-    .edit-link {
+    .checkout-edit-link {
       color: #2d5a27;
       text-decoration: none;
       font-size: 14px;
       cursor: pointer;
     }
 
-    .shipping-info {
+    .checkout-shipping-info {
       line-height: 1.6;
       color: #000000;
     }
 
-    .delivery-date {
+    .checkout-shipping-arrival {
       font-weight: bold;
     }
 
-    .paypal-button {
+    .checkout-paypal-button {
       width: 100%;
       background-color: #ffc439;
       border: none;
@@ -144,62 +147,43 @@ ${codeExampleHead(
       gap: 10px;
     }
 
-    .divider {
+    .checkout-or-divider {
       text-align: center;
       margin: 20px 0;
       position: relative;
     }
 
-    .divider::before {
-      content: '';
+    .checkout-or-line {
       position: absolute;
       top: 50%;
-      left: 0;
-      right: 0;
       height: 1px;
       background-color: #e0e0e0;
+      width: 30%;
     }
 
-    .divider span {
+    .checkout-or-line.left {
+      left: 15%;
+    }
+
+    .checkout-or-line.right {
+      right: 15%;
+    }
+
+    .checkout-or-text {
       background-color: #ffffff;
       padding: 0 15px;
       color: #666666;
       font-size: 14px;
     }
 
-    .form-row {
+    .checkout-form-container {
       display: flex;
+      flex-direction: column;
       gap: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
-    .form-field {
-      flex: 1;
-    }
-
-    .form-field.full-width {
-      width: 100%;
-    }
-
-    .card-icons {
-      display: flex;
-      gap: 5px;
-      margin-top: 5px;
-    }
-
-    .card-icon {
-      width: 30px;
-      height: 20px;
-      background-color: #f0f0f0;
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: bold;
-    }
-
-    .place-order-button {
+    .checkout-submit-button {
       width: 100%;
       background-color: #2d5a27;
       border: none;
@@ -213,50 +197,56 @@ ${codeExampleHead(
       margin-top: 20px;
     }
 
-    .terms-text {
+    .checkout-terms {
       font-size: 12px;
       color: #666666;
       margin-top: 10px;
       text-align: center;
     }
 
-    .terms-link {
+    .checkout-terms-link {
       color: #2d5a27;
       text-decoration: none;
     }
 
-    .cart-box {
+    .checkout-right-column {
+      flex: 1;
+    }
+
+    .checkout-cart-container {
       border: 1px solid #e0e0e0;
       border-radius: 4px;
       padding: 20px;
       background-color: #ffffff;
     }
 
-    .cart-header {
+    .checkout-cart-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
     }
 
-    .cart-title {
+    .checkout-cart-title {
       font-size: 18px;
       font-weight: bold;
       color: #000000;
     }
 
-    .order-summary {
+    .checkout-summary {
       margin-bottom: 20px;
     }
 
-    .summary-row {
+    .checkout-summary-row {
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
       font-size: 14px;
     }
 
-    .summary-row.total {
+    .checkout-summary-total {
+      display: flex;
+      justify-content: space-between;
       font-weight: bold;
       font-size: 16px;
       border-top: 1px solid #e0e0e0;
@@ -264,12 +254,12 @@ ${codeExampleHead(
       margin-top: 10px;
     }
 
-    .item-list {
+    .checkout-items-section {
       border-top: 1px solid #e0e0e0;
       padding-top: 15px;
     }
 
-    .item-header {
+    .checkout-items-header {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       gap: 10px;
@@ -280,95 +270,40 @@ ${codeExampleHead(
       font-weight: 500;
     }
 
-    .item-row {
+    .checkout-items-header-qty {
+      text-align: center;
+    }
+
+    .checkout-items-header-price {
+      text-align: right;
+    }
+
+    .checkout-item {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       gap: 10px;
       align-items: start;
     }
 
-    .item-name {
+    .checkout-item-name {
       font-weight: 500;
       color: #000000;
     }
 
-    .item-description {
+    .checkout-item-description {
       font-size: 12px;
       color: #666666;
       margin-top: 2px;
     }
 
-    .item-qty {
+    .checkout-item-qty {
       text-align: center;
       color: #000000;
     }
 
-    .item-price {
+    .checkout-item-price {
       text-align: right;
       color: #000000;
-    }
-
-    ::part(font-family) {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    ::part(color) {
-      color: #000000;
-    }
-
-    ::part(background-color) {
-      background-color: #ffffff;
-    }
-
-    ::part(input) {
-      border-color: #e0e0e0;
-      border-width: 1px;
-      border-radius: 4px;
-      border-style: solid;
-      box-shadow: none;
-      font-size: 14px;
-      font-weight: normal;
-      line-height: 1.5;
-      padding: 12px 15px;
-      background-color: #ffffff;
-    }
-
-    ::part(input-focused) {
-      border-color: #2d5a27;
-      box-shadow: 0 0 0 2px rgba(45, 90, 39, 0.1);
-    }
-
-    ::part(input-invalid) {
-      border-color: #dc3545;
-      box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
-    }
-
-    ::part(label) {
-      font-size: 14px;
-      font-weight: 500;
-      color: #000000;
-      margin-bottom: 5px;
-    }
-
-    ::part(button) {
-      padding: 12px 15px;
-      font-size: 14px;
-      box-shadow: none;
-      border-radius: 4px;
-      line-height: 1.5;
-      text-transform: none;
-    }
-
-    ::part(button-primary) {
-      color: #ffffff;
-      background-color: #2d5a27;
-      border-color: #2d5a27;
-    }
-
-    ::part(button-primary):hover {
-      background-color: #1e3d1a;
-      border-color: #1e3d1a;
-      color: #ffffff;
     }
   </style>`
 )}

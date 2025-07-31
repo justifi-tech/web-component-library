@@ -7,8 +7,15 @@ export const codeExampleFull = `<!DOCTYPE html>
 ${codeExampleHead(
   'justifi-modular-checkout',
   `<style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Checkout Layout Styles */
+
+    .checkout-container * {
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .checkout-container {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f8f9fa;
@@ -16,7 +23,8 @@ ${codeExampleHead(
       min-height: 100vh;
     }
 
-    .header {
+    /* Header Bar */
+    .checkout-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -25,31 +33,23 @@ ${codeExampleHead(
       border-bottom: 1px solid #e0e0e0;
     }
 
-    .brand {
+    .checkout-brand {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .back-arrow {
+    .checkout-back-arrow {
       font-size: 20px;
     }
 
-    .brand-name {
+    .checkout-brand-name {
       font-size: 18px;
       font-weight: 500;
     }
 
-    .test-mode {
-      background-color: #ff6b35;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .main-container {
+    /* Main Container */
+    .checkout-main-container {
       display: flex;
       max-width: 1200px;
       margin: 0 auto;
@@ -57,40 +57,33 @@ ${codeExampleHead(
       gap: 40px;
     }
 
-    .order-summary {
-      flex: 0 0 40%;
-      background-color: white;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* Left Column - Order Summary */
+    .checkout-order-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      flex: 0 0 45%;
+      padding: 15px;
     }
 
-    .payment-form {
-      flex: 0 0 60%;
-      background-color: white;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .pay-header {
+    .checkout-pay-header {
       margin-bottom: 30px;
     }
 
-    .pay-title {
+    .checkout-pay-title {
       font-size: 24px;
       font-weight: 600;
       color: #333;
       margin: 0 0 10px 0;
     }
 
-    .pay-amount {
+    .checkout-pay-amount {
       font-size: 32px;
       font-weight: bold;
       color: #333;
     }
 
-    .product-item {
+    .checkout-product-item {
       display: flex;
       align-items: center;
       gap: 15px;
@@ -99,7 +92,7 @@ ${codeExampleHead(
       border-bottom: 1px solid #e0e0e0;
     }
 
-    .product-image {
+    .checkout-product-image {
       width: 60px;
       height: 80px;
       background-color: #f8f9fa;
@@ -112,57 +105,60 @@ ${codeExampleHead(
       color: #666;
     }
 
-    .product-details {
+    .checkout-product-details {
       flex: 1;
     }
 
-    .product-name {
+    .checkout-product-name {
       font-weight: 500;
       color: #333;
       margin-bottom: 5px;
     }
 
-    .product-description {
+    .checkout-product-description {
       font-size: 14px;
       color: #666;
     }
 
-    .product-price {
+    .checkout-product-price {
       font-weight: 600;
       color: #333;
     }
 
-    .summary-breakdown {
+    .checkout-summary-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       margin-bottom: 30px;
     }
 
-    .summary-row {
+    .checkout-summary-row {
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
       font-size: 14px;
     }
 
-    .summary-row.tax {
+    .checkout-summary-row.tax {
       align-items: center;
     }
 
-    .tax-info {
+    .checkout-tax-info {
       display: flex;
       align-items: center;
       gap: 5px;
     }
 
-    .tax-icon {
+    .checkout-tax-icon {
       font-size: 12px;
       color: #666;
     }
 
-    .tax-placeholder {
+    .checkout-tax-placeholder {
       color: #666;
     }
 
-    .summary-row.total {
+    .checkout-summary-row.total {
       font-size: 16px;
       font-weight: bold;
       color: #333;
@@ -170,42 +166,58 @@ ${codeExampleHead(
       border-top: 1px solid #e0e0e0;
     }
 
-    .footer {
+    .checkout-footer {
       margin-top: auto;
       font-size: 12px;
       color: #666;
     }
 
-    .powered-by {
+    .checkout-powered-by {
       margin-bottom: 10px;
     }
 
-    .stripe-text {
+    .checkout-stripe-text {
       font-weight: 600;
     }
 
-    .footer-links {
+    .checkout-footer-links {
       display: flex;
       gap: 20px;
     }
 
-    .footer-link {
+    .checkout-footer-link {
       color: #007bff;
       text-decoration: none;
     }
 
-    .form-title {
+    /* Right Column - Payment Form */
+    .checkout-form-field justifi-card-form {
+      margin-bottom: 15px;
+    }
+
+    .checkout-payment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex: 0 0 50%;
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkout-form-title {
       font-size: 24px;
       font-weight: 600;
       color: #333;
       margin: 0 0 30px 0;
     }
 
-    .form-field {
+    .checkout-form-field {
       margin-bottom: 25px;
     }
 
-    .form-label {
+    .checkout-form-label {
       display: block;
       margin-bottom: 8px;
       font-size: 14px;
@@ -213,7 +225,7 @@ ${codeExampleHead(
       color: #333;
     }
 
-    .form-input {
+    .checkout-form-input {
       width: 100%;
       padding: 12px 15px;
       border: 1px solid #e0e0e0;
@@ -222,7 +234,7 @@ ${codeExampleHead(
       background-color: white;
     }
 
-    .form-select {
+    .checkout-form-select {
       width: 100%;
       padding: 12px 15px;
       border: 1px solid #e0e0e0;
@@ -232,117 +244,39 @@ ${codeExampleHead(
       color: #333;
     }
 
-    .card-input-container {
-      position: relative;
-      margin-bottom: 15px;
-    }
-
-    .card-input {
-      width: 100%;
-      padding: 12px 15px;
-      padding-right: 120px;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      font-size: 14px;
-      background-color: white;
-    }
-
-    .card-icons {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      gap: 5px;
-    }
-
-    .card-icon {
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .visa {
-      color: #1a1f71;
-    }
-
-    .mastercard {
-      color: #eb001b;
-    }
-
-    .amex {
-      color: #006fcf;
-    }
-
-    .unionpay {
-      color: #e60012;
-    }
-
-    .card-row {
-      display: flex;
-      gap: 15px;
-    }
-
-    .card-field {
-      flex: 1;
-    }
-
-    .cvv-field {
-      flex: 1;
-      position: relative;
-    }
-
-    .cvv-input {
-      width: 100%;
-      padding: 12px 15px;
-      padding-right: 40px;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      font-size: 14px;
-      background-color: white;
-    }
-
-    .cvv-icon {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 12px;
-      color: #666;
-    }
-
-    .manual-link {
+    .checkout-manual-link {
       color: #007bff;
       text-decoration: none;
       font-size: 14px;
     }
 
-    .checkbox-container {
+    .checkout-checkbox-container {
       margin-bottom: 30px;
     }
 
-    .checkbox-label {
+    .checkout-checkbox-label {
       display: flex;
       align-items: flex-start;
       gap: 10px;
       cursor: pointer;
     }
 
-    .checkbox-input {
+    .checkout-checkbox-input {
       margin-top: 2px;
     }
 
-    .checkbox-text {
+    .checkout-checkbox-text {
       font-size: 14px;
       color: #333;
       margin-bottom: 5px;
     }
 
-    .checkbox-subtext {
+    .checkout-checkbox-subtext {
       font-size: 12px;
       color: #666;
     }
 
-    .pay-button {
+    .checkout-pay-button {
       width: 100%;
       background-color: #007bff;
       color: white;
@@ -354,6 +288,11 @@ ${codeExampleHead(
       cursor: pointer;
     }
 
+    .checkout-pay-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Web Component Parts Styling */
     ::part(font-family) {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }

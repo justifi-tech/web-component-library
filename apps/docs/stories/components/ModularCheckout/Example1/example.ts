@@ -8,53 +8,11 @@ export const codeExampleFull = `
 ${codeExampleHead(
   'justifi-modular-checkout',
   `<style>
-    ::part(font-family) {
-      font-family: sans-serif;
-    }
-
-    ::part(color) {
-      color: #333;
-    }
-
-    ::part(background-color) {
-      background-color: transparent;
-    }
-
-    ::part(input) {
-      border-color: #e0e0e0;
-      border-width: 1px;
-      border-radius: 4px;
-      box-shadow: none;
-      font-size: 14px;
-      font-weight: normal;
-      line-height: 1.5;
-      padding: 12px;
-    }
-
-    ::part(input-focused) {
-      border-color: #007bff;
-      box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-    }
-
-    ::part(input-invalid) {
-      border-color: #dc3545;
-      box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-    }
-
-    ::part(input-invalid-and-focused) {
-      box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-      border-color: #dc3545;
-    }
-
-    ::part(label) {
-      font-size: 14px;
-      color: #333;
-      font-weight: 500;
-      margin-bottom: 8px;
-    }
-
-    /* Additional styles for the example */
+    /* ExampleOne Styles */
     .donation-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
       max-width: 600px;
       margin: 0 auto;
       font-family: sans-serif;
@@ -71,6 +29,9 @@ ${codeExampleHead(
     }
 
     .payment-form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
       background-color: white;
       border: 1px solid #e0e0e0;
       border-radius: 8px;
@@ -81,6 +42,7 @@ ${codeExampleHead(
 
     .payment-header {
       display: flex;
+      gap: 10px;
       align-items: center;
       margin-bottom: 20px;
       font-size: 16px;
@@ -105,7 +67,7 @@ ${codeExampleHead(
       background-color: white;
     }
 
-    .payment-methods {
+    .payment-method-selection {
       display: flex;
       gap: 15px;
       margin-bottom: 20px;
@@ -121,14 +83,12 @@ ${codeExampleHead(
       cursor: pointer;
     }
 
-    .payment-method-card-inactive {
-      flex: 1;
+    .payment-method-card.selected {
+      border: 2px solid #007bff;
+    }
+
+    .payment-method-card:not(.selected) {
       border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 15px;
-      text-align: center;
-      background-color: white;
-      cursor: pointer;
     }
 
     .payment-method-icon {
@@ -137,19 +97,15 @@ ${codeExampleHead(
       color: #007bff;
     }
 
-    .payment-method-icon-cash {
-      font-size: 24px;
-      margin-bottom: 8px;
+    .payment-method-icon.cash-app {
       color: #00d632;
     }
 
-    .payment-method-icon-bank {
-      font-size: 24px;
-      margin-bottom: 8px;
+    .payment-method-icon.bank {
       color: #666;
     }
 
-    .payment-method-label {
+    .payment-method-text {
       font-size: 14px;
       color: #333;
     }
@@ -158,34 +114,38 @@ ${codeExampleHead(
       margin-bottom: 20px;
     }
 
-    .form-row {
+    .country-zip-container {
       display: flex;
       gap: 15px;
     }
 
-    .form-field {
+    .country-field {
       flex: 1;
     }
 
-    .country-label {
+    .zip-field {
+      flex: 1;
+    }
+
+    .form-label {
       display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
       color: #333;
       font-weight: 500;
     }
 
-    .country-select {
+    .form-select {
       width: 100%;
-      padding: 12px;
+      padding: 0.475rem 0.75rem;
       border: 1px solid #e0e0e0;
-      border-radius: 4px;
-      font-size: 14px;
+      border-radius: 6px;
+      font-size: 1rem;
       background-color: white;
       color: #333;
     }
 
-    .donate-button {
+    .submit-button {
       width: 100%;
       padding: 15px;
       background-color: #28a745;
