@@ -70,61 +70,76 @@ export class BillingForm {
     const billingFormDefaultValue = this.formController.getInitialValues();
     const showHeader = !this.isPostalOnlyMode && !this.hideAllBillingFields;
 
+    // Don't render anything if all fields should be hidden
+    if (this.hideAllBillingFields) {
+      return <Host></Host>;
+    }
+
     return (
       <Host>
-        <div part={billingForm} class="mt-4" hidden={this.hideAllBillingFields}>
+        <div part={billingForm} class="mt-4">
           {showHeader && <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />}
           <form>
             <fieldset>
               {this.legend && <legend>{this.legend}</legend>}
               <div class="row gy-3">
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
-                  <form-control-text
-                    name='name'
-                    label='Full Name'
-                    defaultValue={billingFormDefaultValue.name}
-                    errorText={this.errors.name}
-                    inputHandler={this.inputHandler}
-                  />
-                </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
-                  <form-control-text
-                    name='address_line1'
-                    label='Street Address'
-                    defaultValue={billingFormDefaultValue.address_line1}
-                    errorText={this.errors.address_line1}
-                    inputHandler={this.inputHandler}
-                  />
-                </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
-                  <form-control-text
-                    name='address_line2'
-                    label="Apartment, Suite, etc. (optional)"
-                    defaultValue={billingFormDefaultValue.address_line2}
-                    errorText={this.errors.address_line2}
-                    inputHandler={this.inputHandler}
-                  />
-                </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
-                  <form-control-text
-                    name='address_city'
-                    label="City"
-                    defaultValue={billingFormDefaultValue.address_city}
-                    errorText={this.errors.address_city}
-                    inputHandler={this.inputHandler}
-                  />
-                </div>
-                <div class="col-12" hidden={this.isPostalOnlyMode}>
-                  <form-control-select
-                    name='address_state'
-                    label='State'
-                    options={StateOptions}
-                    defaultValue={billingFormDefaultValue.address_state}
-                    errorText={this.errors.address_state}
-                    inputHandler={this.inputHandler}
-                  />
-                </div>
-                <div class="col-12" hidden={this.hideAllBillingFields}>
+                {!this.isPostalOnlyMode && (
+                  <div class="col-12">
+                    <form-control-text
+                      name='name'
+                      label='Full Name'
+                      defaultValue={billingFormDefaultValue.name}
+                      errorText={this.errors.name}
+                      inputHandler={this.inputHandler}
+                    />
+                  </div>
+                )}
+                {!this.isPostalOnlyMode && (
+                  <div class="col-12">
+                    <form-control-text
+                      name='address_line1'
+                      label='Street Address'
+                      defaultValue={billingFormDefaultValue.address_line1}
+                      errorText={this.errors.address_line1}
+                      inputHandler={this.inputHandler}
+                    />
+                  </div>
+                )}
+                {!this.isPostalOnlyMode && (
+                  <div class="col-12">
+                    <form-control-text
+                      name='address_line2'
+                      label="Apartment, Suite, etc. (optional)"
+                      defaultValue={billingFormDefaultValue.address_line2}
+                      errorText={this.errors.address_line2}
+                      inputHandler={this.inputHandler}
+                    />
+                  </div>
+                )}
+                {!this.isPostalOnlyMode && (
+                  <div class="col-12">
+                    <form-control-text
+                      name='address_city'
+                      label="City"
+                      defaultValue={billingFormDefaultValue.address_city}
+                      errorText={this.errors.address_city}
+                      inputHandler={this.inputHandler}
+                    />
+                  </div>
+                )}
+                {!this.isPostalOnlyMode && (
+                  <div class="col-12">
+                    <form-control-select
+                      name='address_state'
+                      label='State'
+                      options={StateOptions}
+                      defaultValue={billingFormDefaultValue.address_state}
+                      errorText={this.errors.address_state}
+                      inputHandler={this.inputHandler}
+                    />
+                  </div>
+                )}
+                <div class="col-12">
                   <form-control-text
                     name='address_postal_code'
                     label="ZIP"
