@@ -49,7 +49,7 @@ export class SeasonInterruptionInsuranceCore {
     return validateInsuranceValues();
   }
 
-  processHTML(html: string) {
+  processHTMLContent(html: string) {
     return processHTML(html, [
       (html) => removeAttribute(html, 'style'),
       (html) => addAttribute(html, 'a', 'part', text),
@@ -90,8 +90,8 @@ export class SeasonInterruptionInsuranceCore {
       },
       onSuccess: ({ quote }) => {
         this.quote = quote;
-        this.quote.product.description = this.processHTML(this.quote.product.description);
-        this.quote.product.legal_disclaimer = this.processHTML(this.quote.product.legal_disclaimer);
+        this.quote.product.description = this.processHTMLContent(this.quote.product.description);
+        this.quote.product.legal_disclaimer = this.processHTMLContent(this.quote.product.legal_disclaimer);
         insuranceValues[quote.policy_type] = quote.accepted;
         this.isLoading = false;
       },
