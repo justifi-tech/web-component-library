@@ -215,5 +215,47 @@ describe('billing-form', () => {
     const validation = await instance.validate();
     expect(validation).toHaveProperty('isValid');
     expect(validation).toHaveProperty('errors');
+    // When all fields are hidden, validation should pass since no fields are required
+    expect(validation.isValid).toBe(true);
+  });
+
+  it('should use fullBillingSchema for bank account when hide-bank-account-billing-form is false', async () => {
+    const page = await newSpecPage({
+      components: [BillingForm],
+      html: `<justifi-billing-form hide-bank-account-billing-form="false" payment-method-type="bankAccount"></justifi-billing-form>`,
+    });
+
+    const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+
+    // Should require all billing fields when bank account form is not hidden
+    const validation = await instance.validate();
+    expect(validation.isValid).toBe(false);
+    expect(validation.errors).toHaveProperty('name');
+    expect(validation.errors).toHaveProperty('address_line1');
+    expect(validation.errors).toHaveProperty('address_city');
+    expect(validation.errors).toHaveProperty('address_state');
+    expect(validation.errors).toHaveProperty('address_postal_code');
+  });
+
+  it('should use fullBillingSchema for bank account when hide prop is not set', async () => {
+    const page = await newSpecPage({
+      components: [BillingForm],
+      html: `<justifi-billing-form payment-method-type="bankAccount"></justifi-billing-form>`,
+    });
+
+    const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+
+    // Should require all billing fields when bank account form is not hidden
+    const validation = await instance.validate();
+    expect(validation.isValid).toBe(false);
+    expect(validation.errors).toHaveProperty('name');
+    expect(validation.errors).toHaveProperty('address_line1');
+    expect(validation.errors).toHaveProperty('address_city');
+    expect(validation.errors).toHaveProperty('address_state');
+    expect(validation.errors).toHaveProperty('address_postal_code');
   });
 });

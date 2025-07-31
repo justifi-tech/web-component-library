@@ -1,5 +1,5 @@
 import { Component, h, State, Prop, Method, Host, Fragment } from '@stencil/core';
-import { BillingFormFields, billingFormSchema } from './billing-form-schema';
+import { BillingFormFields, fullBillingSchema, postalOnlySchema, emptyBillingSchema } from './billing-form-schema';
 import { billingForm } from '../../../styles/parts';
 import { Header3 } from '../../../ui-components';
 import { numberOnlyHandler } from '../../../ui-components/form/utils';
@@ -20,8 +20,13 @@ export class BillingForm {
   @Prop() paymentMethodType?: string;
 
   componentWillLoad() {
-    const postalOnly = this.isPostalOnlyMode
-    this.formController = new FormController(billingFormSchema(postalOnly));
+    if (this.hideAllBillingFields) {
+      this.formController = new FormController(emptyBillingSchema());
+    } else if (this.isPostalOnlyMode) {
+      this.formController = new FormController(postalOnlySchema());
+    } else {
+      this.formController = new FormController(fullBillingSchema());
+    }
   }
 
   componentDidLoad() {
