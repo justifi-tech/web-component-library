@@ -3,27 +3,29 @@
 exports[`justifi-season-interruption-insurance renders loading 1`] = `
 <justifi-season-interruption-insurance auth-token="123">
   <template shadowrootmode="open">
-    <justifi-season-interruption-insurance-core class="body" style="display: block;">
+    <justifi-season-interruption-insurance-core class="body" exportparts="text, color, font-family, text-danger, text, color, font-family, insurance-container, insurance-form, insurance-radio-group, insurance-header-section, insurance-description-section, insurance-form-section, insurance-legal-disclaimer-section, insurance-loading" style="display: block;">
       <template shadowrootmode="open">
         <style></style>
-        <div class="gap-3 row">
-          <div class="col-12">
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%; height: 30px;"></div>
-          </div>
-          <div class="col-12">
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 70%;"></div>
-          </div>
-          <div class="col-12">
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
-          </div>
-          <div class="col-12">
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
-          </div>
-          <div class="col-12">
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
-          </div>
-          <div class="col-12">
-            <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80%;"></div>
+        <div part="insurance-loading">
+          <div class="gap-3 row">
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%; height: 30px;"></div>
+            </div>
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 70%;"></div>
+            </div>
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
+            </div>
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%;"></div>
+            </div>
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+            </div>
+            <div class="col-12">
+              <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 80%;"></div>
+            </div>
           </div>
         </div>
       </template>
