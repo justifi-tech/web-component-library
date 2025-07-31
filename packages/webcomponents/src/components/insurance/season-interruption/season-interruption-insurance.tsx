@@ -83,7 +83,8 @@ export class SeasonInterruptionInsurance {
     });
   }
 
-  // Join the parts (some of which have spaces) and then split them to remove the spaces
+  // Join the parts, split on spaces to get individual part names,
+  // filter out any extra spaces to be safe, then rejoin properly
   private usedPartsString = [
     text,
     textDanger,
@@ -95,7 +96,7 @@ export class SeasonInterruptionInsurance {
     insuranceFormSection,
     insuranceLegalDisclaimerSection,
     insuranceLoading,
-  ].join(', ').split(' ').join(', ');
+  ].join(' ').split(' ').filter(part => part.length > 0).join(', ');
 
   render() {
     return (
