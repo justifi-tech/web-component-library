@@ -182,6 +182,10 @@
 }
 
 /* Right Column - Payment Form */
+.checkout-form-field justifi-card-form {
+  margin-bottom: 15px;
+}
+
 .checkout-payment-form {
   display: flex;
   flex-direction: column;
