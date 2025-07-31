@@ -1,4 +1,4 @@
-export const getSlotContent = (): string => {
+export const getSlotContentExample1 = (): string => {
   return `
     <div class="donation-container">
       <!-- Donation Total Header -->
@@ -35,7 +35,7 @@ export const getSlotContent = (): string => {
 
         <!-- Card Form -->
         <div class="card-form-container">
-          <justifi-card-form />
+          <justifi-card-form></justifi-card-form>
         </div>
 
         <!-- Country and ZIP Fields -->
@@ -52,7 +52,7 @@ export const getSlotContent = (): string => {
             </select>
           </div>
           <div class="zip-field">
-            <justifi-postal-code-form />
+            <justifi-postal-code-form></justifi-postal-code-form>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/web-components";
 import { customStoryDecorator, StoryBaseArgs } from "../../../utils";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { getSlotContentExample2 } from "./slot-content";
+import { getSlotContentExample3 } from "./slot-content";
 
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
@@ -13,12 +13,12 @@ type Story = StoryObj;
 const storyBaseArgs = new StoryBaseArgs(["auth-token", "account-id", "checkout-id"]);
 
 const meta: Meta = {
-  title: "Modular Checkout/Examples/Layout 2",
+  title: "Modular Checkout/Examples/Layout 3",
   component: "justifi-modular-checkout",
   args: {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
-    "slot": getSlotContentExample2
+    "slot": getSlotContentExample3
   },
   argTypes: {
     ...storyBaseArgs.argTypes,

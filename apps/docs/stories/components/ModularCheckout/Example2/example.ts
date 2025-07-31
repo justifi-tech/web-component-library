@@ -1,5 +1,5 @@
 import { codeExampleHead } from '../../../utils';
-import { getSlotContent } from './slot-content';
+import { getSlotContentExample2 } from './slot-content';
 
 export const codeExampleFull = `<!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -374,7 +374,14 @@ ${codeExampleHead(
 )}
 
 <body>
-  ${getSlotContent()}
+  <justifi-modular-checkout
+    auth-token="authToken"
+    account-id="acc_123"
+    checkout-id="cho_123"
+    save-payment-method="true"
+  >
+    ${getSlotContentExample2()}
+  </justifi-modular-checkout>
 </body>
 
 <script>

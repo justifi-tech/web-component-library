@@ -1,10 +1,9 @@
-import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
-import { filterDocsByTag, ExportedParts } from '../../../utils';
+import { Meta, Title, Source } from '@storybook/blocks';
 import { codeExampleFull } from './example';
 import { ComponentBox } from '../../../utils/documentation-components';
 import * as JustifiModularCheckoutExampleTwo from './index.stories';
 import { setUpMocks } from '../../../utils/mockAllServices';
-import { getSlotContent } from './slot-content';
+import { getSlotContentExample2 } from './slot-content';
 import './styles.css';
 
 {setUpMocks()}
@@ -35,7 +34,13 @@ This example uses the `justifi-card-form` and `justifi-postal-code-form` compone
 ---
 
 <ComponentBox>
-  <div dangerouslySetInnerHTML={{ __html: getSlotContent() }} />
+  <justifi-modular-checkout
+    auth-token="authToken"
+    account-id="acc_123"
+    checkout-id="cho_123"
+  >
+    <div dangerouslySetInnerHTML={{ __html: getSlotContentExample2() }} />
+  </justifi-modular-checkout>
 </ComponentBox>
 
 ---

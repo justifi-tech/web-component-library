@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/web-components";
 import { customStoryDecorator, StoryBaseArgs } from "../../../utils";
 import { withActions } from "@storybook/addon-actions/decorator";
-import { getSlotContent } from "./slot-content";
+import { getSlotContentExample1 } from "./slot-content";
 
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
@@ -18,7 +18,7 @@ const meta: Meta = {
   args: {
     ...storyBaseArgs.args,
     "save-payment-method": "true",
-    "slot": getSlotContent
+    "slot": getSlotContentExample1
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
