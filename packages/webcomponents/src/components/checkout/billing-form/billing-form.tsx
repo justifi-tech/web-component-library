@@ -1,4 +1,4 @@
-import { Component, h, State, Prop, Method, Host } from '@stencil/core';
+import { Component, h, State, Prop, Method, Host, Fragment } from '@stencil/core';
 import { BillingFormFields, billingFormSchema } from './billing-form-schema';
 import { billingForm } from '../../../styles/parts';
 import { Header3 } from '../../../ui-components';
@@ -81,63 +81,59 @@ export class BillingForm {
           {showHeader && <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />}
           <form>
             <fieldset>
-              {this.legend && <legend>{this.legend}</legend>}
+              {this.legend && (
+                <legend>{this.legend}</legend>
+              )}
               <div class="row gy-3">
                 {!this.isPostalOnlyMode && (
-                  <div class="col-12">
-                    <form-control-text
-                      name='name'
-                      label='Full Name'
-                      defaultValue={billingFormDefaultValue.name}
-                      errorText={this.errors.name}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                )}
-                {!this.isPostalOnlyMode && (
-                  <div class="col-12">
-                    <form-control-text
-                      name='address_line1'
-                      label='Street Address'
-                      defaultValue={billingFormDefaultValue.address_line1}
-                      errorText={this.errors.address_line1}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                )}
-                {!this.isPostalOnlyMode && (
-                  <div class="col-12">
-                    <form-control-text
-                      name='address_line2'
-                      label="Apartment, Suite, etc. (optional)"
-                      defaultValue={billingFormDefaultValue.address_line2}
-                      errorText={this.errors.address_line2}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                )}
-                {!this.isPostalOnlyMode && (
-                  <div class="col-12">
-                    <form-control-text
-                      name='address_city'
-                      label="City"
-                      defaultValue={billingFormDefaultValue.address_city}
-                      errorText={this.errors.address_city}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
-                )}
-                {!this.isPostalOnlyMode && (
-                  <div class="col-12">
-                    <form-control-select
-                      name='address_state'
-                      label='State'
-                      options={StateOptions}
-                      defaultValue={billingFormDefaultValue.address_state}
-                      errorText={this.errors.address_state}
-                      inputHandler={this.inputHandler}
-                    />
-                  </div>
+                  <Fragment>
+                    <div class="col-12">
+                      <form-control-text
+                        name='name'
+                        label='Full Name'
+                        defaultValue={billingFormDefaultValue.name}
+                        errorText={this.errors.name}
+                        inputHandler={this.inputHandler}
+                      />
+                    </div>
+                    <div class="col-12">
+                      <form-control-text
+                        name='address_line1'
+                        label='Street Address'
+                        defaultValue={billingFormDefaultValue.address_line1}
+                        errorText={this.errors.address_line1}
+                        inputHandler={this.inputHandler}
+                      />
+                    </div>
+                    <div class="col-12">
+                      <form-control-text
+                        name='address_line2'
+                        label="Apartment, Suite, etc. (optional)"
+                        defaultValue={billingFormDefaultValue.address_line2}
+                        errorText={this.errors.address_line2}
+                        inputHandler={this.inputHandler}
+                      />
+                    </div>
+                    <div class="col-12">
+                      <form-control-text
+                        name='address_city'
+                        label="City"
+                        defaultValue={billingFormDefaultValue.address_city}
+                        errorText={this.errors.address_city}
+                        inputHandler={this.inputHandler}
+                      />
+                    </div>
+                    <div class="col-12">
+                      <form-control-select
+                        name='address_state'
+                        label='State'
+                        options={StateOptions}
+                        defaultValue={billingFormDefaultValue.address_state}
+                        errorText={this.errors.address_state}
+                        inputHandler={this.inputHandler}
+                      />
+                    </div>
+                  </Fragment>
                 )}
                 <div class="col-12">
                   <form-control-text

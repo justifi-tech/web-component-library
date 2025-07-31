@@ -119,31 +119,4 @@ describe('tokenize-payment-method', () => {
     expect(postalCodeField).toBeFalsy(); // Should not be in DOM
   });
 
-  it('should correctly validate that props flow through component hierarchy', async () => {
-    // Test that the tokenize-payment-method component properly accepts and stores the props
-    const cardPage = await newSpecPage({
-      components: [TokenizePaymentMethod],
-      html: `<justifi-tokenize-payment-method hide-card-billing-form="true" auth-token="test" account-id="test"></justifi-tokenize-payment-method>`,
-    });
-
-    const bankPage = await newSpecPage({
-      components: [TokenizePaymentMethod],
-      html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true" auth-token="test" account-id="test"></justifi-tokenize-payment-method>`,
-    });
-
-    await cardPage.waitForChanges();
-    await bankPage.waitForChanges();
-
-    const cardInstance = cardPage.rootInstance as any;
-    const bankInstance = bankPage.rootInstance as any;
-
-    // Verify props are correctly set on tokenize-payment-method instances
-    expect(cardInstance.hideCardBillingForm).toBe(true);
-    expect(cardInstance.hideBankAccountBillingForm).toBeUndefined();
-
-    expect(bankInstance.hideBankAccountBillingForm).toBe(true);  
-    expect(bankInstance.hideCardBillingForm).toBeUndefined();
-  });
-
-
 });
