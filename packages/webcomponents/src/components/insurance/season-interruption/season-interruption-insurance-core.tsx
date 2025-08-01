@@ -132,7 +132,7 @@ export class SeasonInterruptionInsuranceCore {
       <StyledHost>
         <div>
           <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
-          <small innerHTML={this.quote?.product.description}></small>
+          <small part={text} innerHTML={this.quote?.product.description}></small>
           <form-control-radio
             label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
             name="opt-in"
@@ -157,7 +157,7 @@ export class SeasonInterruptionInsuranceCore {
           >
             Please select an option
           </div>
-          <small innerHTML={this.quote?.product.legal_disclaimer}></small>
+          <small part={text} innerHTML={this.quote?.product.legal_disclaimer}></small>
         </div>
       </StyledHost>
     );
