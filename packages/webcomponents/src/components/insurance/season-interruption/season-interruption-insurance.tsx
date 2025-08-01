@@ -16,6 +16,12 @@ import {
   insuranceFormSection,
   insuranceLegalDisclaimerSection,
   insuranceLoading,
+  inputRadio,
+  inputRadioChecked,
+  inputRadioCheckedFocused,
+  inputRadioFocused,
+  inputRadioInvalid,
+  label,
 } from '../../../styles/parts';
 
 @Component({
@@ -96,6 +102,12 @@ export class SeasonInterruptionInsurance {
     insuranceFormSection,
     insuranceLegalDisclaimerSection,
     insuranceLoading,
+    inputRadio,
+    inputRadioChecked,
+    inputRadioCheckedFocused,
+    inputRadioFocused,
+    inputRadioInvalid,
+    label,
   ].join(' ').split(' ').filter(part => part.length > 0).join(', ');
 
   render() {
