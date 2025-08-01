@@ -32,7 +32,7 @@ export class ApplePay {
   @Prop() merchantIdentifier: string = "merchant.com.justifi.checkout";
   @Prop() merchantDisplayName: string = "JustiFi Checkout";
   @Prop() initiativeContext: string = "checkout.justifi.tech";
-  @Prop() apiBaseUrl: string = "https://ahalaburda.zapto.org/api/v1";
+  @Prop() apiBaseUrl: string = "https://api.justifi-staging.com";
   @Prop() buttonType: ApplePayButtonType = ApplePayButtonType.PLAIN;
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;

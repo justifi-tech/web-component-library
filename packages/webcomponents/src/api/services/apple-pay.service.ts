@@ -45,7 +45,7 @@ export class ApplePayService implements IApplePayService {
   private applePayConfig?: ApplePayConfig;
   private currentSession?: IApplePaySession;
   private currentPaymentRequest?: ApplePayPaymentRequest;
-  private apiBaseUrl: string = 'https://ahalaburda.zapto.org/api/v1';
+  private apiBaseUrl: string = 'https://api.justifi-staging.com';
 
   /**
    * Set custom API base URL
@@ -71,7 +71,7 @@ export class ApplePayService implements IApplePayService {
   async validateMerchant(
     payload: IApplePayMerchantValidationRequest
   ): Promise<IMerchantSession> {
-    const endpoint = `${this.apiBaseUrl}/apple_pay/validate_merchant_session`;
+    const endpoint = `${this.apiBaseUrl}/apple_pay/merchant_session`;
     const body = payload;
   
     const response = await fetch(endpoint, {
