@@ -5,16 +5,6 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/Compon
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
-import {
-  text,
-  textDanger,
-  inputRadio,
-  inputRadioChecked,
-  inputRadioCheckedFocused,
-  inputRadioFocused,
-  inputRadioInvalid,
-  label,
-} from '../../../styles/parts';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -81,19 +71,6 @@ export class SeasonInterruptionInsurance {
     });
   }
 
-  // Join the parts, split on spaces to get individual part names,
-  // filter out any extra spaces to be safe, then rejoin properly
-  private usedPartsString = [
-    text,
-    textDanger,
-    inputRadio,
-    inputRadioChecked,
-    inputRadioCheckedFocused,
-    inputRadioFocused,
-    inputRadioInvalid,
-    label,
-  ].join(' ').split(' ').filter(part => part.length > 0).join(', ');
-
   render() {
     return (
       <justifi-season-interruption-insurance-core
@@ -112,7 +89,6 @@ export class SeasonInterruptionInsurance {
         policy-attributes-end-date={this.policyAttributesEndDate}
         covered-identity-first-name={this.coveredIdentityFirstName}
         covered-identity-last-name={this.coveredIdentityLastName}
-        exportparts={this.usedPartsString}
       >
       </justifi-season-interruption-insurance-core>
     );

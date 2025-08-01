@@ -162,9 +162,6 @@ const light = `
     color: #fff;
   }
 
-  ::part(insurance-radio-group) {
-    margin-bottom: 16px;
-  }
 `;
 
 export default light;

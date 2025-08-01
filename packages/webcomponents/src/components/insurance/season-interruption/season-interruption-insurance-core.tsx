@@ -10,8 +10,7 @@ import {
 import SeasonInterruptionInsuranceLoading from "./season-interruption-insurance-loading";
 
 @Component({
-  tag: 'justifi-season-interruption-insurance-core',
-  shadow: true,
+  tag: 'justifi-season-interruption-insurance-core'
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
