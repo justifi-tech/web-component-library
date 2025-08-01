@@ -126,15 +126,6 @@ export const image = `image`;
 export const billingForm = `billing-form`;
 export const checkoutSummary = `checkout-summary`;
 
-// Insurance
-export const insuranceForm = `insurance-form`;
-export const insuranceRadioGroup = `insurance-radio-group`;
-export const insuranceHeaderSection = `insurance-header-section`;
-export const insuranceDescriptionSection = `insurance-description-section`;
-export const insuranceFormSection = `insurance-form-section`;
-export const insuranceLegalDisclaimerSection = `insurance-legal-disclaimer-section`;
-export const insuranceLoading = `insurance-loading`;
-
 // Filters
 export const filterMenu = `filter-menu`;
 

@@ -5,14 +5,7 @@ import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../in
 import { StyledHost, Header2 } from "../../../ui-components";
 import { 
   text, 
-  textDanger, 
-  insuranceForm,
-  insuranceRadioGroup,
-  insuranceHeaderSection,
-  insuranceDescriptionSection,
-  insuranceFormSection,
-  insuranceLegalDisclaimerSection,
-  insuranceLoading
+  textDanger
 } from "../../../styles/parts";
 import SeasonInterruptionInsuranceLoading from "./season-interruption-insurance-loading";
 
@@ -132,7 +125,7 @@ export class SeasonInterruptionInsuranceCore {
   render() {
     if (this.isLoading) return (
       <StyledHost>
-        <div part={insuranceLoading}>
+        <div>
           <SeasonInterruptionInsuranceLoading />
         </div>
       </StyledHost>
@@ -140,15 +133,15 @@ export class SeasonInterruptionInsuranceCore {
 
     return (
       <StyledHost>
-        <div part={insuranceHeaderSection}>
+        <div>
           <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
         </div>
-        <div part={insuranceDescriptionSection}>
+        <div>
           <small innerHTML={this.quote?.product.description}></small>
         </div>
-        <div part={insuranceFormSection}>
-          <form part={insuranceForm}>
-            <div part={insuranceRadioGroup}>
+        <div>
+          <form>
+            <div>
               <form-control-radio
                 label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
                 name="opt-in"
@@ -176,7 +169,7 @@ export class SeasonInterruptionInsuranceCore {
             </div>
           </form>
         </div>
-        <div part={insuranceLegalDisclaimerSection}>
+        <div>
           <small innerHTML={this.quote?.product.legal_disclaimer}></small>
         </div>
       </StyledHost>
