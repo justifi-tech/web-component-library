@@ -130,6 +130,10 @@ const dark = `
     background-color: #333;
   }
 
+  ::part(insurance-radio-group) {
+    margin-bottom: 16px;
+  }
+
 `;
 
 export default dark;
