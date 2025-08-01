@@ -124,9 +124,7 @@ export class SeasonInterruptionInsuranceCore {
   render() {
     if (this.isLoading) return (
       <StyledHost>
-        <div>
-          <SeasonInterruptionInsuranceLoading />
-        </div>
+        <SeasonInterruptionInsuranceLoading />
       </StyledHost>
     );
 
