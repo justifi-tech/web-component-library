@@ -71,7 +71,6 @@ export class BillingForm {
   }
 
   render() {
-
     const billingFormDefaultValue = this.formController.getInitialValues();
     const showHeader = !this.isPostalOnlyMode && !this.hideAllBillingFields;
 
