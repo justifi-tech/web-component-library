@@ -41,7 +41,7 @@ const initialState: IInitialState = {
   disableBnpl: false,
   disableCreditCard: false,
   disablePaymentMethodGroup: false,
-  paymentAmount: 0,
+  paymentAmount: 1000,
   paymentCurrency: 'USD',
   paymentDescription: '',
   paymentMethodGroupId: '',
