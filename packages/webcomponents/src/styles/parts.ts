@@ -127,7 +127,6 @@ export const billingForm = `billing-form`;
 export const checkoutSummary = `checkout-summary`;
 
 // Insurance
-export const insuranceContainer = `insurance-container`;
 export const insuranceForm = `insurance-form`;
 export const insuranceRadioGroup = `insurance-radio-group`;
 export const insuranceHeaderSection = `insurance-header-section`;

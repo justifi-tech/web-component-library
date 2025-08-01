@@ -8,7 +8,6 @@ import { ComponentErrorEvent } from '../../../api/ComponentEvents';
 import {
   text,
   textDanger,
-  insuranceContainer,
   insuranceForm,
   insuranceRadioGroup,
   insuranceHeaderSection,
@@ -94,7 +93,6 @@ export class SeasonInterruptionInsurance {
   private usedPartsString = [
     text,
     textDanger,
-    insuranceContainer,
     insuranceForm,
     insuranceRadioGroup,
     insuranceHeaderSection,
