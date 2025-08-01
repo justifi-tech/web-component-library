@@ -134,41 +134,31 @@ export class SeasonInterruptionInsuranceCore {
       <StyledHost>
         <div>
           <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
-        </div>
-        <div>
           <small innerHTML={this.quote?.product.description}></small>
-        </div>
-        <div>
-          <form>
-            <div>
-              <form-control-radio
-                label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
-                name="opt-in"
-                value={'true'}
-                checked={this.accepted === 'true'}
-                inputHandler={this.onChangeHandler.bind(this)}
-                // don't wanna show error message, but need to show the red border
-                errorText={this.error ? ' ' : undefined}
-              />
-              <form-control-radio
-                label="Decline coverage"
-                name="opt-in"
-                value={'false'}
-                checked={this.accepted === 'false'}
-                inputHandler={this.onChangeHandler.bind(this)}
-                errorText={this.error ? ' ' : undefined}
-              />
-            </div>
-            <div
-              class="invalid-feedback"
-              style={{ display: this.error ? 'block' : 'none' }}
-              part={textDanger}
-            >
-              Please select an option
-            </div>
-          </form>
-        </div>
-        <div>
+          <form-control-radio
+            label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
+            name="opt-in"
+            value={'true'}
+            checked={this.accepted === 'true'}
+            inputHandler={this.onChangeHandler.bind(this)}
+            // don't wanna show error message, but need to show the red border
+            errorText={this.error ? ' ' : undefined}
+          />
+          <form-control-radio
+            label="Decline coverage"
+            name="opt-in"
+            value={'false'}
+            checked={this.accepted === 'false'}
+            inputHandler={this.onChangeHandler.bind(this)}
+            errorText={this.error ? ' ' : undefined}
+          />
+          <div
+            class="invalid-feedback"
+            style={{ display: this.error ? 'block' : 'none' }}
+            part={textDanger}
+          >
+            Please select an option
+          </div>
           <small innerHTML={this.quote?.product.legal_disclaimer}></small>
         </div>
       </StyledHost>
