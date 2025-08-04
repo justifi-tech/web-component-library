@@ -138,11 +138,31 @@ ${codeExampleHead(
     .form-select {
       width: 100%;
       padding: 0.475rem 0.75rem;
+      padding-right: 2.5rem;
       border: 1px solid #e0e0e0;
       border-radius: 6px;
       font-size: 1rem;
       background-color: white;
       color: #333;
+      /* Reset Safari default styles */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      /* Ensure consistent styling */
+      font-family: inherit;
+      line-height: 1.5;
+      /* Remove Safari's default focus outline */
+      outline: none;
+      /* Custom dropdown arrow */
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1em;
+    }
+
+    /* Custom dropdown arrow for webkit browsers */
+    .form-select::-ms-expand {
+      display: none;
     }
 
     .submit-button {
