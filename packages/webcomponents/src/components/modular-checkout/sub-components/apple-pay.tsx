@@ -29,9 +29,9 @@ import { checkoutStore, onChange } from "../../../store/checkout.store";
 export class ApplePay {
   private applePayService: ApplePayService;
   @Prop() countryCode: string = "US";
-  @Prop() merchantIdentifier: string = "merchant.tech.justifi.checkout";
+  @Prop() merchantIdentifier: string = "merchant.com.staging-justifi.checkout-dev";
   @Prop() merchantDisplayName: string = "JustiFi Checkout";
-  @Prop() initiativeContext: string = "checkout.justifi.tech";
+  @Prop() initiativeContext: string = "dev-checkout.justifi-staging.com";
   @Prop() apiBaseUrl: string = "https://api.justifi-staging.com";
   @Prop() buttonType: ApplePayButtonType = ApplePayButtonType.PLAIN;
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
