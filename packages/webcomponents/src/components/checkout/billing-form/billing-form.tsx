@@ -10,7 +10,7 @@ export class BillingForm {
   @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() paymentMethodType?: string;
 
-  private selectedFormRef?: HTMLJustifiBillingFormFullElement | HTMLJustifiCardBillingFormSimpleElement | HTMLJustifiBankAccountBillingFormSimpleElement;
+  private selectedFormRef?: any;
 
   private get showSimpleCardBillingForm() {
     return this.paymentMethodType === 'card' && this.hideCardBillingForm;
@@ -41,7 +41,7 @@ export class BillingForm {
         <Host>
           <justifi-bank-account-billing-form-simple
             legend={this.legend}
-            ref={(el) => (this.selectedFormRef = el)}
+            ref={(el: any) => (this.selectedFormRef = el)}
           />
         </Host>
       );
@@ -52,7 +52,7 @@ export class BillingForm {
         <Host>
           <justifi-card-billing-form-simple
             legend={this.legend}
-            ref={(el) => (this.selectedFormRef = el)}
+            ref={(el: any) => (this.selectedFormRef = el)}
           />
         </Host>
       );

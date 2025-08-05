@@ -3,11 +3,14 @@ import { TokenizePaymentMethod } from '../tokenize-payment-method';
 import { PaymentMethodOptions } from '../../checkout/payment-method-options';
 import { NewPaymentMethod } from '../../checkout/new-payment-method';
 import { BillingForm } from '../../checkout/billing-form/billing-form';
+import { BillingFormFull } from '../../checkout/billing-form/billing-form-full';
+import { CardBillingFormSimple } from '../../checkout/billing-form/card-billing-form-simple';
+import { BankAccountBillingFormSimple } from '../../checkout/billing-form/bank-account-billing-form-simple';
 
 describe('tokenize-payment-method', () => {
   it('should pass hideCardBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm],
+      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-tokenize-payment-method hide-card-billing-form="true"></justifi-tokenize-payment-method>`,
     });
 
@@ -22,7 +25,7 @@ describe('tokenize-payment-method', () => {
 
   it('should pass hideBankAccountBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm],
+      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true"></justifi-tokenize-payment-method>`,
     });
 
@@ -37,7 +40,7 @@ describe('tokenize-payment-method', () => {
 
   it('should pass hideCardBillingForm prop to billing form through the chain', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm],
+      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-tokenize-payment-method hide-card-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
@@ -53,7 +56,7 @@ describe('tokenize-payment-method', () => {
 
   it('should pass hideBankAccountBillingForm prop to billing form through the chain', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm],
+      components: [TokenizePaymentMethod, PaymentMethodOptions, NewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true" disable-credit-card="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
@@ -70,7 +73,7 @@ describe('tokenize-payment-method', () => {
   it('should not render billing form fields except postal_code when hideCardBillingForm is true', async () => {
     // Test the billing form behavior directly (since integration tests have shadow DOM complexities)
     const page = await newSpecPage({
-      components: [BillingForm],
+      components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="card"></justifi-billing-form>`,
     });
 
@@ -81,8 +84,8 @@ describe('tokenize-payment-method', () => {
     // Verify the component is configured correctly for postal-only mode
     expect(instance.hideCardBillingForm).toBe(true);
     expect(instance.paymentMethodType).toBe('card');
-    expect(instance.isPostalOnlyMode).toBe(true);
-    expect(instance.hideAllBillingFields).toBe(false);
+    expect(instance.showSimpleCardBillingForm).toBe(true);
+    expect(instance.showSimpleBankAccountBillingForm).toBe(false);
 
     // Verify only ZIP field is rendered
     const nameField = page.root?.querySelector('[name="name"]');
@@ -94,10 +97,10 @@ describe('tokenize-payment-method', () => {
     expect(postalCodeField).toBeTruthy(); // Should be in DOM
   });
 
-  it('should not render billing form fields when hideBankAccountBillingForm is true', async () => {
+  it('should render only name field when hideBankAccountBillingForm is true', async () => {
     // Test the billing form behavior directly (since integration tests have shadow DOM complexities)
     const page = await newSpecPage({
-      components: [BillingForm],
+      components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
     });
 
@@ -105,17 +108,19 @@ describe('tokenize-payment-method', () => {
 
     const instance: any = page.rootInstance;
     
-    // Verify the component is configured correctly to hide all fields
+    // Verify the component is configured correctly for name-only mode
     expect(instance.hideBankAccountBillingForm).toBe(true);
     expect(instance.paymentMethodType).toBe('bankAccount');
-    expect(instance.isPostalOnlyMode).toBe(false);
-    expect(instance.hideAllBillingFields).toBe(true);
+    expect(instance.showSimpleCardBillingForm).toBe(false);
+    expect(instance.showSimpleBankAccountBillingForm).toBe(true);
 
-    // Verify no billing form content is rendered
-    const billingFormDiv = page.root?.querySelector('[part="billing-form"]');
+    // Verify only name field is rendered
+    const nameField = page.root?.querySelector('[name="name"]');
+    const addressField = page.root?.querySelector('[name="address_line1"]');
     const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
 
-    expect(billingFormDiv).toBeFalsy(); // Should not be in DOM
+    expect(nameField).toBeTruthy(); // Should be in DOM
+    expect(addressField).toBeFalsy(); // Should not be in DOM
     expect(postalCodeField).toBeFalsy(); // Should not be in DOM
   });
 
