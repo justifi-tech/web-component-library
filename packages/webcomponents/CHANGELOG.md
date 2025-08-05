@@ -1,5 +1,13 @@
 ### Changelog
 
+## 5.7.6
+
+### Patch Changes
+
+- e425859: Fix CSS parts implementation for `justifi-season-interruption-insurance` component. Redundant shadow DOM has been removed allowing custom styles to be applied.
+- 7099d91: Fixes issues with hide billing form props on `tokenize-payment-method component`. The `hide-card-billing-form` and `hide-bank-account-billing-form` props now properly control field visibility by using conditional rendering instead of hidden attributes, and added comprehensive test coverage for all billing form scenarios. The `postal_code` field is required for tokenizing cards and `account_owner_name` ("Full Name") is required for tokenizing bank accounts, and required fields will always be displayed.
+- 48af167: Fixes issue where SSN values entered with dashes (e.g., 345-54-6622) in representative forms appear to submit successfully but are not saved
+
 ## 5.7.5
 
 ### Patch Changes
