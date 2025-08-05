@@ -120,6 +120,7 @@ export class ApplePay {
         buttonStyle: this.buttonStyle,
       };
 
+      this.applePayService.setAccountId(checkoutStore.accountId)
       this.applePayService.initialize(applePayConfig);
 
       const hasActiveCard =
