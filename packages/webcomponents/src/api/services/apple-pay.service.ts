@@ -57,6 +57,7 @@ export class ApplePayService implements IApplePayService {
   private currentPaymentRequest?: ApplePayPaymentRequest;
   private apiBaseUrl: string = 'https://api.justifi-staging.com';
   private authToken?: string;
+  private accountId?: string;
 
   /**
    * Set custom API base URL
@@ -70,6 +71,10 @@ export class ApplePayService implements IApplePayService {
    */
   public setAuthToken(authToken: string): void {
     this.authToken = authToken;
+  }
+
+  public setAccountId(accountId: string) {
+    this.accountId = accountId
   }
 
   /**
@@ -88,7 +93,7 @@ export class ApplePayService implements IApplePayService {
    */
   async validateMerchant(
     authToken: string,
-    payload: IApplePayMerchantValidationRequest
+    payload: IApplePayMerchantValidationRequest,
   ): Promise<IMerchantSession> {
     const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
     const body = payload;
@@ -99,6 +104,7 @@ export class ApplePayService implements IApplePayService {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: `Bearer ${authToken}`,
+        "Sub-Account": this.accountId
       },
       body: JSON.stringify(body),
     });
@@ -138,6 +144,7 @@ export class ApplePayService implements IApplePayService {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: `Bearer ${authToken}`,
+        "Sub-Account": this.accountId
       },
       body: JSON.stringify(body),
     });
@@ -265,7 +272,7 @@ export class ApplePayService implements IApplePayService {
         }
         const merchantSession = await this.validateMerchant(
           this.authToken,
-          validationPayload
+          validationPayload,
         );
 
         if (merchantSession && isValidMerchantSession(merchantSession)) {

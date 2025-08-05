@@ -57,6 +57,7 @@ export class ApplePay {
     this.applePayService = new ApplePayService();
     this.applePayService.setApiBaseUrl(this.apiBaseUrl);
     this.applePayService.setAuthToken(checkoutStore.authToken);
+    this.applePayService.setAccountId(checkoutStore.accountId)
     this.initializeApplePay();
   }
 
