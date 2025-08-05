@@ -56,12 +56,19 @@ export class ApplePay {
   componentWillLoad() {
     this.applePayService = new ApplePayService();
     this.applePayService.setApiBaseUrl(this.apiBaseUrl);
+    this.applePayService.setAuthToken(checkoutStore.authToken);
     this.initializeApplePay();
   }
 
   componentDidLoad() {
     onChange('paymentAmount', () => {
       this.initializeApplePay();
+    });
+
+    onChange('authToken', () => {
+      if (this.applePayService) {
+        this.applePayService.setAuthToken(checkoutStore.authToken);
+      }
     });
   }
 
@@ -73,6 +80,7 @@ export class ApplePay {
   watchPropsChange() {
     if (this.applePayService) {
       this.applePayService.setApiBaseUrl(this.apiBaseUrl);
+      this.applePayService.setAuthToken(checkoutStore.authToken);
     }
     this.initializeApplePay();
   }

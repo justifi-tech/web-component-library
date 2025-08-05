@@ -56,12 +56,20 @@ export class ApplePayService implements IApplePayService {
   private currentSession?: IApplePaySession;
   private currentPaymentRequest?: ApplePayPaymentRequest;
   private apiBaseUrl: string = 'https://api.justifi-staging.com';
+  private authToken?: string;
 
   /**
    * Set custom API base URL
    */
   public setApiBaseUrl(url: string): void {
     this.apiBaseUrl = url;
+  }
+
+  /**
+   * Set authentication token
+   */
+  public setAuthToken(authToken: string): void {
+    this.authToken = authToken;
   }
 
   /**
@@ -79,6 +87,7 @@ export class ApplePayService implements IApplePayService {
    * Validate merchant with Apple Pay servers via API (fixed to match original logic)
    */
   async validateMerchant(
+    authToken: string,
     payload: IApplePayMerchantValidationRequest
   ): Promise<IMerchantSession> {
     const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
@@ -89,6 +98,7 @@ export class ApplePayService implements IApplePayService {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify(body),
     });
@@ -116,6 +126,7 @@ export class ApplePayService implements IApplePayService {
    * Process Apple Pay payment via API (fixed to match original logic)
    */
   async processPayment(
+    authToken: string,
     payload: IApplePayPaymentProcessRequest
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }> {
     const endpoint = `${this.apiBaseUrl}/apple_pay/process_token`;
@@ -126,6 +137,7 @@ export class ApplePayService implements IApplePayService {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify(body),
     });
@@ -246,7 +258,15 @@ export class ApplePayService implements IApplePayService {
           validation_url: event.validationURL,
         };
 
-        const merchantSession = await this.validateMerchant(validationPayload);
+        if (!this.authToken) {
+          throw new Error(
+            'Authentication token not set. Call setAuthToken() first.'
+          );
+        }
+        const merchantSession = await this.validateMerchant(
+          this.authToken,
+          validationPayload
+        );
 
         if (merchantSession && isValidMerchantSession(merchantSession)) {
           try {
@@ -301,7 +321,15 @@ export class ApplePayService implements IApplePayService {
           },
         };
 
-        const paymentResult = await this.processPayment(paymentPayload);
+        if (!this.authToken) {
+          throw new Error(
+            'Authentication token not set. Call setAuthToken() first.'
+          );
+        }
+        const paymentResult = await this.processPayment(
+          this.authToken,
+          paymentPayload
+        );
         if (paymentResult.success) {
           this.currentSession!.completePayment({
             status: ApplePaySessionStatus.STATUS_SUCCESS,

@@ -1,6 +1,6 @@
 export enum ApplePaySessionStatus {
   STATUS_SUCCESS = 'STATUS_SUCCESS',
-  STATUS_FAILURE = 'STATUS_FAILURE'
+  STATUS_FAILURE = 'STATUS_FAILURE',
 }
 
 export enum ApplePayButtonType {
@@ -10,20 +10,20 @@ export enum ApplePayButtonType {
   DONATE = 'donate',
   CHECK_OUT = 'check-out',
   BOOK = 'book',
-  SUBSCRIBE = 'subscribe'
+  SUBSCRIBE = 'subscribe',
 }
 
 export enum ApplePayButtonStyle {
   BLACK = 'black',
   WHITE = 'white',
-  WHITE_OUTLINE = 'white-outline'
+  WHITE_OUTLINE = 'white-outline',
 }
 
 export enum ApplePayMerchantCapability {
   SUPPORTS_3DS = 'supports3DS',
   SUPPORTS_EMV = 'supportsEMV',
   SUPPORTS_CREDIT = 'supportsCredit',
-  SUPPORTS_DEBIT = 'supportsDebit'
+  SUPPORTS_DEBIT = 'supportsDebit',
 }
 
 export interface IApplePayLineItem {
@@ -61,7 +61,7 @@ export interface IApplePaySession {
   completePayment(result: { status: ApplePaySessionStatus }): void;
   completeShippingMethodSelection(update: any): void;
   completePaymentMethodSelection(update: any): void;
-  
+
   // Event handlers
   onvalidatemerchant?: (event: IApplePayValidateEvent) => void;
   onpaymentmethodselected?: (event: IApplePayMethodSelectedEvent) => void;
@@ -162,10 +162,12 @@ export interface IApplePayPaymentResponse {
 
 export interface IApplePayService {
   validateMerchant(
+    authToken: string,
     payload: IApplePayMerchantValidationRequest
   ): Promise<IMerchantSession>;
-  
+
   processPayment(
+    authToken: string,
     payload: IApplePayPaymentProcessRequest
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }>;
 }
@@ -236,9 +238,11 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
 
 export class ApplePayHelpers {
   static isApplePaySupported(): boolean {
-    return typeof window !== 'undefined' && 
-           'ApplePaySession' in window && 
-           window.ApplePaySession?.supportsVersion(3);
+    return (
+      typeof window !== 'undefined' &&
+      'ApplePaySession' in window &&
+      window.ApplePaySession?.supportsVersion(3)
+    );
   }
 
   static canMakePayments(): boolean {
@@ -248,13 +252,19 @@ export class ApplePayHelpers {
     return window.ApplePaySession?.canMakePayments() || false;
   }
 
-  static async canMakePaymentsWithActiveCard(merchantIdentifier: string): Promise<boolean> {
+  static async canMakePaymentsWithActiveCard(
+    merchantIdentifier: string
+  ): Promise<boolean> {
     if (!this.isApplePaySupported()) {
       return false;
     }
-    
+
     try {
-      return await window.ApplePaySession?.canMakePaymentsWithActiveCard(merchantIdentifier) || false;
+      return (
+        (await window.ApplePaySession?.canMakePaymentsWithActiveCard(
+          merchantIdentifier
+        )) || false
+      );
     } catch (error) {
       console.error('Error checking Apple Pay active card:', error);
       return false;
@@ -269,21 +279,20 @@ export class ApplePayHelpers {
     return Math.round(parseFloat(amount) * 100);
   }
 
-  static createLineItem(label: string, amount: number, type: 'final' | 'pending' = 'final'): IApplePayLineItem {
+  static createLineItem(
+    label: string,
+    amount: number,
+    type: 'final' | 'pending' = 'final'
+  ): IApplePayLineItem {
     return {
       label,
       amount: this.formatAmount(amount),
-      type
+      type,
     };
   }
 
   static getDefaultSupportedNetworks(): string[] {
-    return [
-      'amex',
-      'discover',
-      'masterCard',
-      'visa'
-    ];
+    return ['amex', 'discover', 'masterCard', 'visa'];
   }
 
   static getDefaultMerchantCapabilities(): ApplePayMerchantCapability[] {
@@ -291,7 +300,7 @@ export class ApplePayHelpers {
       ApplePayMerchantCapability.SUPPORTS_3DS,
       ApplePayMerchantCapability.SUPPORTS_EMV,
       ApplePayMerchantCapability.SUPPORTS_CREDIT,
-      ApplePayMerchantCapability.SUPPORTS_DEBIT
+      ApplePayMerchantCapability.SUPPORTS_DEBIT,
     ];
   }
 }
@@ -299,9 +308,14 @@ export class ApplePayHelpers {
 declare global {
   interface Window {
     ApplePaySession?: {
-      new (version: number, paymentRequest: IApplePayPaymentRequest): IApplePaySession;
+      new (
+        version: number,
+        paymentRequest: IApplePayPaymentRequest
+      ): IApplePaySession;
       canMakePayments(): boolean;
-      canMakePaymentsWithActiveCard(merchantIdentifier: string): Promise<boolean>;
+      canMakePaymentsWithActiveCard(
+        merchantIdentifier: string
+      ): Promise<boolean>;
       supportsVersion(version: number): boolean;
       STATUS_SUCCESS: number;
       STATUS_FAILURE: number;
