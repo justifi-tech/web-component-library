@@ -35,8 +35,8 @@ export const postalOnlySchema = () => object({
   address_postal_code: postalValidation.required('Enter postal code')
 });
 
-export const emptyBillingSchema = () => object({
-  name: identityNameValidation.nullable(),
+export const nameOnlySchema = () => object({
+  name: identityNameValidation.required('Enter full name'),
   address_line1: lineOneValidation.nullable(),
   address_line2: lineTwoValidation.nullable(),
   address_city: cityValidation.nullable(),
