@@ -405,6 +405,7 @@ export class ApplePayService implements IApplePayService {
 
     this.currentSession.oncancel = (event: IApplePayCancelEvent) => {
       if (event.sessionError) {
+        console.error(event.sessionError);
         switch (event.sessionError.code) {
           case 'unknown':
             console.error('Unknown error - likely merchant validation issue');
