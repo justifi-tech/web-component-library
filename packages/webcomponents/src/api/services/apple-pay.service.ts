@@ -81,7 +81,7 @@ export class ApplePayService implements IApplePayService {
   async validateMerchant(
     payload: IApplePayMerchantValidationRequest
   ): Promise<IMerchantSession> {
-    const endpoint = `${this.apiBaseUrl}/apple_pay/merchant_session`;
+    const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
     const body = payload;
 
     const response = await fetch(endpoint, {
