@@ -221,6 +221,7 @@ export class ApplePay {
 
     return (
       <StyledHost>
+        <script src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
         <div class='apple-pay-container'>
           <ApplePaySkeleton isReady={isReady} />
 
