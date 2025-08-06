@@ -79,15 +79,16 @@ export class ApplePay {
   @Watch("buttonStyle")
   @Watch("disabled")
   watchPropsChange() {
-    if (this.applePayService) {
-      this.applePayService.setApiBaseUrl(this.apiBaseUrl);
-      this.applePayService.setAuthToken(checkoutStore.authToken);
-    }
     this.initializeApplePay();
   }
 
   private async initializeApplePay() {
+    console.log('Initializing Apple Pay');
     try {
+      if (this.applePayService) {
+        this.applePayService.setApiBaseUrl(this.apiBaseUrl);
+        this.applePayService.setAuthToken(checkoutStore.authToken);
+      }
       this.isLoading = true;
       this.error = null;
       if (!checkoutStore.paymentAmount) {
@@ -221,7 +222,10 @@ export class ApplePay {
 
     return (
       <StyledHost>
-        <script src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
+        <script async onLoad={() => {
+          console.log('Apple Pay SDK loaded');
+          this.initializeApplePay();
+        }} src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
         <div class='apple-pay-container'>
           <ApplePaySkeleton isReady={isReady} />
 
