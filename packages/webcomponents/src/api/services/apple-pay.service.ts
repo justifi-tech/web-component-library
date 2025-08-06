@@ -74,7 +74,7 @@ export class ApplePayService implements IApplePayService {
   }
 
   public setAccountId(accountId: string) {
-    this.accountId = accountId
+    this.accountId = accountId;
   }
 
   /**
@@ -93,10 +93,16 @@ export class ApplePayService implements IApplePayService {
    */
   async validateMerchant(
     authToken: string,
-    payload: IApplePayMerchantValidationRequest,
+    payload: IApplePayMerchantValidationRequest
   ): Promise<IMerchantSession> {
     const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
     const body = payload;
+
+    console.log('=== MERCHANT VALIDATION REQUEST ===');
+    console.log('Endpoint:', endpoint);
+    console.log('Payload:', body);
+    console.log('Auth token present:', !!authToken);
+    console.log('Account ID:', this.accountId);
 
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -104,10 +110,12 @@ export class ApplePayService implements IApplePayService {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: `Bearer ${authToken}`,
-        "Sub-Account": this.accountId
+        'Sub-Account': this.accountId,
       },
       body: JSON.stringify(body),
     });
+
+    console.log('Response status:', response.status);
 
     if (!response.ok) {
       const errorData = await response.text();
@@ -124,6 +132,7 @@ export class ApplePayService implements IApplePayService {
     }
 
     const merchantSession: IMerchantSession = await response.json();
+    console.log('Merchant session received:', merchantSession);
 
     return merchantSession;
   }
@@ -144,7 +153,7 @@ export class ApplePayService implements IApplePayService {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: `Bearer ${authToken}`,
-        "Sub-Account": this.accountId
+        'Sub-Account': this.accountId,
       },
       body: JSON.stringify(body),
     });
@@ -272,7 +281,7 @@ export class ApplePayService implements IApplePayService {
         }
         const merchantSession = await this.validateMerchant(
           this.authToken,
-          validationPayload,
+          validationPayload
         );
 
         if (merchantSession && isValidMerchantSession(merchantSession)) {

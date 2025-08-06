@@ -121,6 +121,11 @@ export class ApplePay {
         buttonStyle: this.buttonStyle,
       };
 
+      console.log('=== APPLE PAY CONFIG ===');
+      console.log('Config:', applePayConfig);
+      console.log('Auth token present:', !!checkoutStore.authToken);
+      console.log('Account ID:', checkoutStore.accountId);
+
       this.applePayService.setAccountId(checkoutStore.accountId)
       this.applePayService.initialize(applePayConfig);
 
@@ -222,10 +227,7 @@ export class ApplePay {
 
     return (
       <StyledHost>
-        <script async onLoad={() => {
-          console.log('Apple Pay SDK loaded');
-          this.initializeApplePay();
-        }} src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
+        <script async src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
         <div class='apple-pay-container'>
           <ApplePaySkeleton isReady={isReady} />
 
