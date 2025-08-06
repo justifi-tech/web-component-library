@@ -9,14 +9,6 @@ export const getSlotContentExample1 = (): string => {
 
       <!-- Main Payment Form Container -->
       <div class="payment-form-container">
-        <!-- Header with Radio Button -->
-        <div class="payment-header">
-          <div class="radio-button">
-            <div class="radio-button-inner"></div>
-          </div>
-          <span>Donate with Stripe Payment Element</span>
-        </div>
-
         <!-- Payment Method Selection -->
         <div class="payment-method-selection">
           <div class="payment-method-card selected">
@@ -24,12 +16,12 @@ export const getSlotContentExample1 = (): string => {
             <div class="payment-method-text">Card</div>
           </div>
           <div class="payment-method-card">
-            <div class="payment-method-icon cash-app">$</div>
-            <div class="payment-method-text">Cash App Pay</div>
+            <div class="payment-method-icon bank">🏦</div>
+            <div class="payment-method-text">Bank account</div>
           </div>
           <div class="payment-method-card">
-            <div class="payment-method-icon bank">🏦</div>
-            <div class="payment-method-text">US bank account</div>
+            <div class="payment-method-icon apple-pay">🍎</div>
+            <div class="payment-method-text">Apple Pay</div>
           </div>
         </div>
 

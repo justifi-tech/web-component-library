@@ -45,8 +45,8 @@ export const getSlotContentExample2 = (): string => {
           <div class="checkout-section">
             <h2 class="checkout-section-title">Payment Method</h2>
             
-            <button class="checkout-paypal-button">
-              <span>PayPal</span>
+            <button class="checkout-apple-pay-button">
+              <span>Apple Pay</span>
             </button>
             
             <div class="checkout-or-divider">

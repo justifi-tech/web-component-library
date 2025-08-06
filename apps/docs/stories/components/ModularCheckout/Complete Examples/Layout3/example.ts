@@ -176,7 +176,7 @@ ${codeExampleHead(
       margin-bottom: 10px;
     }
 
-    .checkout-stripe-text {
+    .checkout-justifi-text {
       font-weight: 600;
     }
 

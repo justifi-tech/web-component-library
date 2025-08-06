@@ -51,7 +51,7 @@ export const getSlotContentExample3 = (): string => {
           <!-- Footer -->
           <div class="checkout-footer">
             <div class="checkout-powered-by">
-              Powered by <span class="checkout-stripe-text">JustiFi</span>
+              Powered by <span class="checkout-justifi-text">JustiFi</span>
             </div>
             <div class="checkout-footer-links">
               <a href="#" class="checkout-footer-link">Terms</a>

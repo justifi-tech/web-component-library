@@ -121,9 +121,9 @@
   font-weight: bold;
 }
 
-.checkout-paypal-button {
+.checkout-apple-pay-button {
   width: 100%;
-  background-color: #ffc439;
+  background-color: #000000;
   border: none;
   padding: 15px;
   border-radius: 4px;
