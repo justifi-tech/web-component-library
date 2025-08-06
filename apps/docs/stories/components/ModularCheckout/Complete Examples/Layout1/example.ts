@@ -83,6 +83,15 @@ ${codeExampleHead(
       cursor: pointer;
     }
 
+    .payment-method-card.dark {
+      background-color: #333;
+    }
+
+    .payment-method-card.dark .payment-method-text {
+      color: white;
+      font-weight: 600;
+    }
+
     .payment-method-card.selected {
       border: 2px solid #007bff;
     }
@@ -111,6 +120,10 @@ ${codeExampleHead(
     }
 
     .card-form-container {
+      margin-bottom: 20px;
+    }
+
+    .bank-account-form-container {
       margin-bottom: 20px;
     }
 
@@ -193,7 +206,39 @@ ${codeExampleHead(
 <script>
   (function() {
     const modularCheckout = document.querySelector('justifi-modular-checkout');
-    const submitButton = document.querySelector('#submit-button');
+    const submitButton = document.querySelector('.submit-button');
+    
+    // Payment method toggle functionality
+    const container = document.querySelector('.donation-container');
+    if (container) {
+      const paymentMethodCards = container.querySelectorAll('.payment-method-card');
+      const cardFormContainer = container.querySelector('[data-form-type="card"]');
+      const bankFormContainer = container.querySelector('[data-form-type="bank"]');
+      
+      paymentMethodCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const paymentMethod = card.getAttribute('data-payment-method');
+          
+          // Skip Apple Pay for now
+          if (paymentMethod === 'apple') {
+            return;
+          }
+          
+          // Update selected state
+          paymentMethodCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          
+          // Toggle form visibility
+          if (paymentMethod === 'card') {
+            cardFormContainer?.setAttribute('style', 'display: block;');
+            bankFormContainer?.setAttribute('style', 'display: none;');
+          } else if (paymentMethod === 'bank') {
+            cardFormContainer?.setAttribute('style', 'display: none;');
+            bankFormContainer?.setAttribute('style', 'display: block;');
+          }
+        });
+      });
+    }
     
     // Submit checkout
     submitButton.addEventListener('click', async () => {

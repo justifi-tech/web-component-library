@@ -5,12 +5,54 @@ import { getSlotContentExample1 } from "./slot-content";
 
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
+import "@justifi/webcomponents/dist/module/justifi-bank-account-form";
 import "@justifi/webcomponents/dist/module/justifi-postal-code-form";
 import "./styles.css";
 
 type Story = StoryObj;
 
 const storyBaseArgs = new StoryBaseArgs(["auth-token", "account-id", "checkout-id"]);
+
+// Custom decorator to handle payment method toggle
+const withPaymentMethodToggle = (storyFn: any) => {
+  const story = storyFn();
+
+  // Wait for the component to be rendered
+  setTimeout(() => {
+    const container = document.querySelector('.donation-container');
+    if (container) {
+      const paymentMethodCards = container.querySelectorAll('.payment-method-card');
+      const cardFormContainer = container.querySelector('[data-form-type="card"]');
+      const bankFormContainer = container.querySelector('[data-form-type="bank"]');
+
+      paymentMethodCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const paymentMethod = card.getAttribute('data-payment-method');
+
+          // Skip Apple Pay for now
+          if (paymentMethod === 'apple') {
+            return;
+          }
+
+          // Update selected state
+          paymentMethodCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+
+          // Toggle form visibility
+          if (paymentMethod === 'card') {
+            cardFormContainer?.setAttribute('style', 'display: block;');
+            bankFormContainer?.setAttribute('style', 'display: none;');
+          } else if (paymentMethod === 'bank') {
+            cardFormContainer?.setAttribute('style', 'display: none;');
+            bankFormContainer?.setAttribute('style', 'display: block;');
+          }
+        });
+      });
+    }
+  }, 100);
+
+  return story;
+};
 
 const meta: Meta = {
   title: "Modular Checkout/Complete Examples/Layout 1",
@@ -86,6 +128,7 @@ const meta: Meta = {
   decorators: [
     customStoryDecorator,
     withActions,
+    withPaymentMethodToggle,
   ]
 };
 

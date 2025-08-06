@@ -71,6 +71,12 @@
   text-align: center;
   background-color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-method-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .payment-method-card.dark {
@@ -84,6 +90,7 @@
 
 .payment-method-card.selected {
   border: 2px solid #007bff;
+  background-color: #f8f9ff;
 }
 
 .payment-method-card:not(.selected) {
@@ -93,9 +100,14 @@
 .payment-method-text {
   font-size: 14px;
   color: #333;
+  font-weight: 500;
 }
 
 .card-form-container {
+  margin-bottom: 20px;
+}
+
+.bank-account-form-container {
   margin-bottom: 20px;
 }
 
@@ -166,4 +178,9 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #218838;
 }

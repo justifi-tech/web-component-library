@@ -11,20 +11,25 @@ export const getSlotContentExample1 = (): string => {
       <div class="payment-form-container">
         <!-- Payment Method Selection -->
         <div class="payment-method-selection">
-          <div class="payment-method-card selected">
+          <div class="payment-method-card selected" data-payment-method="card">
             <div class="payment-method-text">Card</div>
           </div>
-          <div class="payment-method-card">
+          <div class="payment-method-card" data-payment-method="bank">
             <div class="payment-method-text">Bank account</div>
           </div>
-          <div class="payment-method-card dark">
+          <div class="payment-method-card dark" data-payment-method="apple">
             <div class="payment-method-text">Apple Pay</div>
           </div>
         </div>
 
         <!-- Card Form -->
-        <div class="card-form-container">
+        <div class="card-form-container" data-form-type="card">
           <justifi-card-form></justifi-card-form>
+        </div>
+
+        <!-- Bank Account Form -->
+        <div class="bank-account-form-container" data-form-type="bank" style="display: none;">
+          <justifi-bank-account-form></justifi-bank-account-form>
         </div>
 
         <!-- Country and ZIP Fields -->
