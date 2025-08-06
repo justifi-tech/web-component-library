@@ -12,15 +12,12 @@ export const getSlotContentExample1 = (): string => {
         <!-- Payment Method Selection -->
         <div class="payment-method-selection">
           <div class="payment-method-card selected">
-            <div class="payment-method-icon">💳</div>
             <div class="payment-method-text">Card</div>
           </div>
           <div class="payment-method-card">
-            <div class="payment-method-icon bank">🏦</div>
             <div class="payment-method-text">Bank account</div>
           </div>
-          <div class="payment-method-card">
-            <div class="payment-method-icon apple-pay">🍎</div>
+          <div class="payment-method-card dark">
             <div class="payment-method-text">Apple Pay</div>
           </div>
         </div>

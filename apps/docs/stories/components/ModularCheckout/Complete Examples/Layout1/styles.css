@@ -73,26 +73,21 @@
   cursor: pointer;
 }
 
+.payment-method-card.dark {
+  background-color: #333;
+}
+
+.payment-method-card.dark .payment-method-text {
+  color: white;
+  font-weight: 600;
+}
+
 .payment-method-card.selected {
   border: 2px solid #007bff;
 }
 
 .payment-method-card:not(.selected) {
   border: 1px solid #e0e0e0;
-}
-
-.payment-method-icon {
-  font-size: 24px;
-  margin-bottom: 8px;
-  color: #007bff;
-}
-
-.payment-method-icon.cash-app {
-  color: #00d632;
-}
-
-.payment-method-icon.bank {
-  color: #666;
 }
 
 .payment-method-text {
