@@ -96,8 +96,8 @@ export class ApplePay {
         return;
       }
 
-      this.isAvailable = ApplePayHelpers.isApplePaySupported();
-      this.canMakePayments = ApplePayHelpers.canMakePayments();
+      this.isAvailable = true // ApplePayHelpers.isApplePaySupported();
+      this.canMakePayments = true // ApplePayHelpers.canMakePayments();
 
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
