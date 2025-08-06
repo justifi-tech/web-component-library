@@ -193,9 +193,9 @@ export class ApplePayService implements IApplePayService {
       throw new Error('Apple Pay not initialized. Call initialize() first.');
     }
 
-    if (!this.isAvailable()) {
-      throw new Error('Apple Pay is not available on this device/browser');
-    }
+    // if (!this.isAvailable()) {
+    //   throw new Error('Apple Pay is not available on this device/browser');
+    // }
 
     const request = new ApplePayPaymentRequest(paymentRequest);
 
