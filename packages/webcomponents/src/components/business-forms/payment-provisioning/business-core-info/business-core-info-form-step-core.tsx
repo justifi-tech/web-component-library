@@ -16,6 +16,9 @@ export class BusinessCoreInfoFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
+  @State() country: string = 'USA';
+  @State() taxIdLabel: string = 'Tax ID (EIN or SSN)';
+  @State() taxIdHelpText: string = 'Enter your EIN or SSN (9 digits, no dashes)';
   @State() isLoading: boolean = false;
 
   @Prop() businessId: string;
@@ -39,37 +42,58 @@ export class BusinessCoreInfoFormStepCore {
     return formValues;
   }
 
-  componentWillLoad() {
-    this.getBusiness && this.getData();
-    this.formController = new FormController(businessCoreInfoSchema(this.allowOptionalFields));
+  async componentWillLoad() {
+    if (this.getBusiness) {
+      await this.getData();
+    }
+    this.setupFormController();
+    this.setLabelsForCountry();
   }
 
-  componentDidLoad() {
+  private setupFormController() {
+    this.formController = new FormController(businessCoreInfoSchema(this.allowOptionalFields, this.country));
+    this.formController.setInitialValues({ ...this.coreInfo });
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
   }
 
-  private getData = () => {
-    this.formLoading.emit(true);
-    this.isLoading = true;
-    this.getBusiness({
-      onSuccess: (response) => {
-        this.coreInfo = new CoreBusinessInfo(response.data);
-        this.formController.setInitialValues({ ...this.coreInfo });
-      },
-      onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
-          message: error,
-          errorCode: code,
-          severity: severity
-        });
-      },
-      final: () => {
-        this.formLoading.emit(false);
-        this.isLoading = false;
-      }
+  private getData = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      this.formLoading.emit(true);
+      this.isLoading = true;
+      this.getBusiness({
+        onSuccess: (response) => {
+          this.country = response.data.legal_address?.country || 'USA';
+          this.coreInfo = new CoreBusinessInfo(response.data);
+          resolve();
+        },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+          reject(error);
+        },
+        final: () => {
+          this.formLoading.emit(false);
+          this.isLoading = false;
+        }
+      });
     });
+  }
+
+  private setLabelsForCountry() {
+    const isCanadian = this.country.toUpperCase() === 'CAN';
+    
+    if (isCanadian) {
+      this.taxIdLabel = 'Business Number';
+      this.taxIdHelpText = 'Enter your Business Number (9 digits)';
+    } else {
+      this.taxIdLabel = 'Tax ID (EIN or SSN)';
+      this.taxIdHelpText = 'Enter your EIN or SSN (9 digits, no dashes)';
+    }
   }
 
   private sendData = (onSuccess: () => void) => {
@@ -170,13 +194,13 @@ export class BusinessCoreInfoFormStepCore {
             <div class="col-12 col-md-6">
               <form-control-text
                 name="tax_id"
-                label="Tax ID (EIN or SSN)"
+                label={this.taxIdLabel}
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 maxLength={9}
-                helpText="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes."
+                helpText={this.taxIdHelpText}
               />
             </div>
             <div class="col-12">

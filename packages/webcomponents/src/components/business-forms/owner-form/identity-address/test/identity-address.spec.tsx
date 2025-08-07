@@ -24,7 +24,7 @@ describe('identity-address', () => {
       city: 'City',
       state: 'State',
       postal_code: '12345',
-      country: 'Country',
+      country: 'USA',
     } as IAddress;
     const page = await newSpecPage({
       components: [IdentityAddressForm],

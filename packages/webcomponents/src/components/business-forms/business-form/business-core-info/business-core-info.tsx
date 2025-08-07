@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../../ui-components/form/form';
-import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
 
@@ -95,13 +95,14 @@ export class BusinessCoreInfo {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-number-masked
+              <form-control-text
                 name="tax_id"
-                label="Tax ID"
+                label="Tax ID / Business Number"
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
-                mask={TAX_ID_MASKS.US}
+                maxLength={9}
+                helpText="Enter your tax identification number (9 digits, no dashes)"
               />
             </div>
             <div class="col-12">

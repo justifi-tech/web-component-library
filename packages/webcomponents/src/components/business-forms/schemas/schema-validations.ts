@@ -56,14 +56,32 @@ export const industryValidation = string()
   .transform(transformEmptyString);
 
 export const taxIdValidation = string()
-  .matches(numbersOnlyRegex, 'Enter valid tax id, SSN, or EIN')
-  .test('not-repeat', 'Enter valid tax id, SSN, or EIN', (value) => {
+  .matches(numbersOnlyRegex, 'Enter valid tax ID or business number')
+  .test('not-repeat', 'Enter valid tax ID or business number', (value) => {
     return !/^(\d)\1+$/.test(value);
   })
-  .test('not-seq', 'Enter valid tax id, SSN, or EIN', (value) => {
+  .test('not-seq', 'Enter valid tax ID or business number', (value) => {
     return value !== '123456789';
   })
   .transform(transformEmptyString);
+
+export const createCountrySpecificTaxIdValidation = (country?: string) => {
+  const isCanadian = country?.toUpperCase() === 'CAN' || country?.toUpperCase() === 'CANADA';
+  
+  const errorMessage = isCanadian 
+    ? 'Enter valid Business Number'
+    : 'Enter valid tax ID (SSN or EIN)';
+
+  return string()
+    .matches(numbersOnlyRegex, errorMessage)
+    .test('not-repeat', errorMessage, (value) => {
+      return !/^(\d)\1+$/.test(value);
+    })
+    .test('not-seq', errorMessage, (value) => {
+      return value !== '123456789';
+    })
+    .transform(transformEmptyString);
+};
 
 export const dateOfIncorporationValidation = string()
   .test(
