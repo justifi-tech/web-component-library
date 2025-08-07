@@ -3,12 +3,14 @@ import { ComponentErrorEvent } from "../../../api/ComponentEvents";
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from "../../../utils/utils";
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from "../insurance-state";
 import { StyledHost, Header2 } from "../../../ui-components";
-import { text, textDanger } from "../../../styles/parts";
+import {
+  text,
+  textDanger
+} from "../../../styles/parts";
 import SeasonInterruptionInsuranceLoading from "./season-interruption-insurance-loading";
 
 @Component({
-  tag: 'justifi-season-interruption-insurance-core',
-  shadow: true,
+  tag: 'justifi-season-interruption-insurance-core'
 })
 export class SeasonInterruptionInsuranceCore {
   @Prop() checkoutId: string;
@@ -36,6 +38,14 @@ export class SeasonInterruptionInsuranceCore {
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
     return validateInsuranceValues();
+  }
+
+  processHTMLContent(html: string) {
+    return processHTML(html, [
+      (html) => removeAttribute(html, 'style'),
+      (html) => addAttribute(html, 'a', 'part', text),
+      (html) => addAttribute(html, 'p', 'part', text),
+    ]);
   }
 
   componentWillLoad() {
@@ -71,14 +81,8 @@ export class SeasonInterruptionInsuranceCore {
       },
       onSuccess: ({ quote }) => {
         this.quote = quote;
-        this.quote.product.description = processHTML(this.quote.product.description, [
-          (html) => removeAttribute(html, 'style'),
-          (html) => addAttribute(html, 'a', 'part', text)
-        ]);
-        this.quote.product.legal_disclaimer = processHTML(this.quote.product.legal_disclaimer, [
-          (html) => removeAttribute(html, 'style'),
-          (html) => addAttribute(html, 'a', 'part', text)
-        ]);
+        this.quote.product.description = this.processHTMLContent(this.quote.product.description);
+        this.quote.product.legal_disclaimer = this.processHTMLContent(this.quote.product.legal_disclaimer);
         insuranceValues[quote.policy_type] = quote.accepted;
         this.isLoading = false;
       },
@@ -126,33 +130,35 @@ export class SeasonInterruptionInsuranceCore {
 
     return (
       <StyledHost>
-        <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
-        <small innerHTML={this.quote?.product.description} part={text}></small>
-        <form-control-radio
-          label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
-          name="opt-in"
-          value={'true'}
-          checked={this.accepted === 'true'}
-          inputHandler={this.onChangeHandler.bind(this)}
-          // don't wanna show error message, but need to show the red border
-          errorText={this.error ? ' ' : undefined}
-        />
-        <form-control-radio
-          label="Decline coverage"
-          name="opt-in"
-          value={'false'}
-          checked={this.accepted === 'false'}
-          inputHandler={this.onChangeHandler.bind(this)}
-          errorText={this.error ? ' ' : undefined}
-        />
-        <div
-          class="invalid-feedback"
-          style={{ display: this.error ? 'block' : 'none' }}
-          part={textDanger}
-        >
-          Please select an option
+        <div>
+          <Header2 text={this.quote?.product.title} class="fs-5 fw-bold pb-3" />
+          <small part={text} innerHTML={this.quote?.product.description}></small>
+          <form-control-radio
+            label={`Accept coverage for ${formatCurrency(this.quote?.total_cents)}`}
+            name="opt-in"
+            value={'true'}
+            checked={this.accepted === 'true'}
+            inputHandler={this.onChangeHandler.bind(this)}
+            // don't wanna show error message, but need to show the red border
+            errorText={this.error ? ' ' : undefined}
+          />
+          <form-control-radio
+            label="Decline coverage"
+            name="opt-in"
+            value={'false'}
+            checked={this.accepted === 'false'}
+            inputHandler={this.onChangeHandler.bind(this)}
+            errorText={this.error ? ' ' : undefined}
+          />
+          <div
+            class="invalid-feedback"
+            style={{ display: this.error ? 'block' : 'none' }}
+            part={textDanger}
+          >
+            Please select an option
+          </div>
+          <small part={text} innerHTML={this.quote?.product.legal_disclaimer}></small>
         </div>
-        <small innerHTML={this.quote?.product.legal_disclaimer} part={text}></small>
       </StyledHost>
     );
   }
