@@ -21,6 +21,7 @@ import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore, onChange } from "../../../store/checkout.store";
+import { configState } from "../../config-provider/config-state";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -32,7 +33,7 @@ export class ApplePay {
   @Prop() merchantIdentifier: string = "merchant.com.staging-justifi.checkout-dev";
   @Prop() merchantDisplayName: string = "JustiFi Checkout";
   @Prop() initiativeContext: string = "dev-checkout.justifi-staging.com";
-  @Prop() apiBaseUrl: string = "https://api.justifi-staging.com";
+  @Prop() apiBaseUrl: string = configState.apiOrigin;
   @Prop() buttonType: ApplePayButtonType = ApplePayButtonType.PLAIN;
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;

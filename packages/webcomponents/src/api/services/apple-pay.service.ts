@@ -1,3 +1,4 @@
+import { configState } from '../../components/config-provider/config-state';
 import {
   IApplePayConfig,
   IApplePayPaymentRequest,
@@ -55,7 +56,7 @@ export class ApplePayService implements IApplePayService {
   private applePayConfig?: ApplePayConfig;
   private currentSession?: IApplePaySession;
   private currentPaymentRequest?: ApplePayPaymentRequest;
-  private apiBaseUrl: string = 'https://api.justifi-staging.com';
+  private apiBaseUrl: string = configState.apiOrigin;
   private authToken?: string;
   private accountId?: string;
 
@@ -144,7 +145,7 @@ export class ApplePayService implements IApplePayService {
     authToken: string,
     payload: IApplePayPaymentProcessRequest
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }> {
-    const endpoint = `${this.apiBaseUrl}/v1/apple_pay/process_token`;
+    const endpoint = `${this.apiBaseUrl}/apple_pay/process_token`;
     const body = payload;
 
     const response = await fetch(endpoint, {
