@@ -144,7 +144,7 @@ export class ApplePayService implements IApplePayService {
     authToken: string,
     payload: IApplePayPaymentProcessRequest
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }> {
-    const endpoint = `${this.apiBaseUrl}/apple_pay/process_token`;
+    const endpoint = `${this.apiBaseUrl}/v1/apple_pay/process_token`;
     const body = payload;
 
     const response = await fetch(endpoint, {
