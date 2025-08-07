@@ -85,7 +85,7 @@ export const getSlotContentExample3 = (): string => {
           <!-- Billing Address -->
           <div class="checkout-form-field">
             <label class="checkout-form-label">Billing address</label>
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 45px;">
               <select class="checkout-form-select">
                 <option>United States</option>
                 <option>Canada</option>
@@ -93,7 +93,7 @@ export const getSlotContentExample3 = (): string => {
                 <option>Australia</option>
               </select>
             </div>
-            <div style="margin-bottom: 10px;">
+            <div style="margin-bottom: 15px;">
               <input type="text" placeholder="Address" class="checkout-form-input" />
             </div>
             <a href="#" class="checkout-manual-link">Enter address manually</a>
@@ -101,13 +101,7 @@ export const getSlotContentExample3 = (): string => {
 
           <!-- Save Info Checkbox -->
           <div class="checkout-checkbox-container">
-            <label class="checkout-checkbox-label">
-              <input type="checkbox" class="checkout-checkbox-input" />
-              <div>
-                <div class="checkout-checkbox-text">Save my info for secure 1-click checkout</div>
-                <div class="checkout-checkbox-subtext">Pay faster here and thousands of sites.</div>
-              </div>
-            </label>
+            <justifi-save-new-payment-method></justifi-save-new-payment-method>
           </div>
 
           <!-- Pay Button -->

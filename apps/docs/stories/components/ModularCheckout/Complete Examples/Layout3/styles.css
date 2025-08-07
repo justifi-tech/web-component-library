@@ -189,7 +189,6 @@
 .checkout-payment-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
   flex: 0 0 50%;
   background-color: white;
   border-radius: 8px;
@@ -204,7 +203,7 @@
   margin: 0 0 30px 0;
 }
 
-.checkout-form-field {
+.checkout-form-field:not(:first-of-type) {
   margin-bottom: 25px;
 }
 
@@ -241,32 +240,6 @@
   font-size: 14px;
 }
 
-.checkout-checkbox-container {
-  margin-bottom: 30px;
-}
-
-.checkout-checkbox-label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.checkout-checkbox-input {
-  margin-top: 2px;
-}
-
-.checkout-checkbox-text {
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.checkout-checkbox-subtext {
-  font-size: 12px;
-  color: #666;
-}
-
 .checkout-pay-button {
   width: 100%;
   background-color: #007bff;
@@ -281,6 +254,10 @@
 
 .checkout-pay-button:hover {
   background-color: #0056b3;
+}
+
+.checkout-checkbox-container {
+  margin-bottom: 45px;
 }
 
 /* Web Component Parts Styling */
