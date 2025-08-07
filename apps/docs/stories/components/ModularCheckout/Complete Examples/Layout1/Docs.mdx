@@ -1,0 +1,52 @@
+import { Meta, Title, Source } from '@storybook/blocks';
+import { codeExampleFull } from './example';
+import { ComponentBox } from '../../../../utils/documentation-components';
+import * as JustifiModularCheckoutExampleOne from './index.stories';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+import { getSlotContentExample1 } from './slot-content';
+import './styles.css';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Complete Examples/Layout 1"
+  Components="justifi-modular-checkout"
+  of={JustifiModularCheckoutExampleOne}
+/>
+
+<Title />
+
+---
+
+A complete checkout form example that demonstrates a donation payment flow with a clean, modern design. This example showcases how to combine the `justifi-modular-checkout` wrapper with `justifi-card-form`, `justifi-bank-account-form`, and `justifi-postal-code-form` components to create a professional payment experience.
+
+The layout includes:
+
+- A donation total header
+- A main payment form container
+- Payment method selection buttons (Card, Bank account, Apple Pay) with toggle functionality
+- Card form with secure iframe inputs
+- Bank account form for ACH payments
+- Country dropdown and ZIP code form
+- A prominent "Donate Now" submit button
+
+This example uses CSS parts to style the web components consistently with the overall design theme. The payment method cards allow users to switch between card and bank account payment methods, with the Apple Pay option available for future implementation.
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-modular-checkout
+    account-id="acc_123"
+    auth-token="123abc"
+    checkout-id="cho_123"
+    save-payment-method="true"
+  >
+    <div dangerouslySetInnerHTML={{ __html: getSlotContentExample1() }} />
+  </justifi-modular-checkout>
+</ComponentBox>
+
+---
+
+<Source dark language="html" code={codeExampleFull} />
