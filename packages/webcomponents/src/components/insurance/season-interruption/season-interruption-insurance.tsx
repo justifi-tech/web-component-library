@@ -17,6 +17,7 @@ import SeasonInterruptionInsuranceLoading from './season-interruption-insurance-
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
+  shadow: true,
 })
 export class SeasonInterruptionInsurance {
   @Prop() authToken?: string;
