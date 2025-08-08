@@ -143,7 +143,9 @@ describe('billing-form', () => {
     await page.waitForChanges();
 
     // When hideBankAccountBillingForm is true, only name field should be rendered
-    const nameField = page.root?.querySelector('[name="name"]');
+    // Since BankAccountBillingFormSimple uses shadow DOM, we need to access shadow root
+    const bankAccountForm = page.root?.querySelector('justifi-bank-account-billing-form-simple');
+    const nameField = bankAccountForm?.shadowRoot?.querySelector('[name="name"]');
     const addressField = page.root?.querySelector('[name="address_line1"]');
     const zipField = page.root?.querySelector('[name="address_postal_code"]');
 
