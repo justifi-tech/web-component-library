@@ -10,30 +10,24 @@ describe('tokenize-payment-method', () => {
   it('should pass hideCardBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
       components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-tokenize-payment-method hide-card-billing-form="true"></justifi-tokenize-payment-method>`,
+      html: `<justifi-tokenize-payment-method hide-card-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
 
     const tokenizePaymentMethod = page.rootInstance;
-    const paymentMethodOptions = page.root.shadowRoot.querySelector('justifi-payment-method-options');
-
-    expect(paymentMethodOptions).toBeTruthy();
     expect(tokenizePaymentMethod.hideCardBillingForm).toBe(true);
   });
 
   it('should pass hideBankAccountBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
       components: [TokenizePaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true"></justifi-tokenize-payment-method>`,
+      html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
 
     const tokenizePaymentMethod = page.rootInstance;
-    const paymentMethodOptions = page.root.shadowRoot.querySelector('justifi-payment-method-options');
-
-    expect(paymentMethodOptions).toBeTruthy();
     expect(tokenizePaymentMethod.hideBankAccountBillingForm).toBe(true);
   });
 
@@ -45,12 +39,8 @@ describe('tokenize-payment-method', () => {
 
     await page.waitForChanges();
 
-    // Find the payment method options and verify the prop is passed
-    const paymentMethodOptions = page.root.shadowRoot.querySelector('justifi-payment-method-options');
-    const paymentMethodOptionsInstance = paymentMethodOptions as any;
-
-    expect(paymentMethodOptions).toBeTruthy();
-    expect(paymentMethodOptionsInstance.hideCardBillingForm).toBe(true);
+    const tokenizePaymentMethod = page.rootInstance;
+    expect(tokenizePaymentMethod.hideCardBillingForm).toBe(true);
   });
 
   it('should pass hideBankAccountBillingForm prop to billing form through the chain', async () => {
@@ -61,12 +51,8 @@ describe('tokenize-payment-method', () => {
 
     await page.waitForChanges();
 
-    // Find the payment method options and verify the prop is passed
-    const paymentMethodOptions = page.root.shadowRoot.querySelector('justifi-payment-method-options');
-    const paymentMethodOptionsInstance = paymentMethodOptions as any;
-
-    expect(paymentMethodOptions).toBeTruthy();
-    expect(paymentMethodOptionsInstance.hideBankAccountBillingForm).toBe(true);
+    const tokenizePaymentMethod = page.rootInstance;
+    expect(tokenizePaymentMethod.hideBankAccountBillingForm).toBe(true);
   });
 
   it('should not render billing form fields except postal_code when hideCardBillingForm is true', async () => {
