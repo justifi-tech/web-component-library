@@ -14,6 +14,9 @@ describe('billing-form', () => {
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
+    // Wait for component to be fully rendered
+    await page.waitForChanges();
+
     const fields = {
       name: 'John Doe',
       address_line1: 'Street Address',
@@ -38,6 +41,9 @@ describe('billing-form', () => {
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
+    // Wait for component to be fully rendered
+    await page.waitForChanges();
+
     const fields = {
       name: 'John Doe',
       address_line1: 'Street Address',
@@ -60,6 +66,9 @@ describe('billing-form', () => {
     });
 
     const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    // Wait for component to be fully rendered
     await page.waitForChanges();
 
     const fields = {
@@ -117,7 +126,7 @@ describe('billing-form', () => {
 
     // In postal-only mode, only ZIP field should be rendered
     const nameField = page.root?.querySelector('[name="name"]');
-    const addressField = page.root?.querySelector('[name="address_line1"]'); 
+    const addressField = page.root?.querySelector('[name="address_line1"]');
     const zipField = page.root?.querySelector('[name="address_postal_code"]');
 
     expect(nameField).toBeFalsy(); // Should not be rendered at all
@@ -134,10 +143,12 @@ describe('billing-form', () => {
     await page.waitForChanges();
 
     // When hideBankAccountBillingForm is true, only name field should be rendered
-    const nameField = page.root?.querySelector('[name="name"]');
+    // Since BankAccountBillingFormSimple uses shadow DOM, we need to access shadow root
+    const bankAccountForm = page.root?.querySelector('justifi-bank-account-billing-form-simple');
+    const nameField = bankAccountForm?.shadowRoot?.querySelector('[name="name"]');
     const addressField = page.root?.querySelector('[name="address_line1"]');
     const zipField = page.root?.querySelector('[name="address_postal_code"]');
-    
+
     expect(nameField).toBeTruthy(); // Should be rendered
     expect(addressField).toBeFalsy(); // Should not be rendered at all
     expect(zipField).toBeFalsy(); // Should not be rendered at all
@@ -209,7 +220,7 @@ describe('billing-form', () => {
     // Form methods should still work even in postal-only mode
     const testData = { address_postal_code: '12345' };
     await instance.fill(testData);
-    
+
     const values = await instance.getValues();
     expect(values.address_postal_code).toBe('12345');
 
@@ -220,7 +231,7 @@ describe('billing-form', () => {
 
   it('should handle form methods correctly in name-only mode', async () => {
     const page = await newSpecPage({
-      components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],  
+      components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
     });
 
