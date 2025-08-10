@@ -58,7 +58,7 @@ export class CardBillingFormSimple {
 
     return (
       <StyledHost>
-        <div part={billingForm} class="mt-4">
+        <div part={billingForm}>
           <form>
             <fieldset>
               {this.legend && (

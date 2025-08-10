@@ -334,12 +334,14 @@ export class TokenizePaymentMethod {
     return (
       <div class="mt-4 pb-4">
         {this.renderPaymentMethodForm(paymentMethodId)}
-        <justifi-billing-form
-          ref={(el) => (this.billingFormRef = el)}
-          hideCardBillingForm={this.hideCardBillingForm}
-          hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-          paymentMethodType={paymentMethodId}
-        />
+        <div class="mt-4">
+          <justifi-billing-form
+            ref={(el) => (this.billingFormRef = el)}
+            hideCardBillingForm={this.hideCardBillingForm}
+            hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+            paymentMethodType={paymentMethodId}
+          />
+        </div>
         <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
       </div>
     );

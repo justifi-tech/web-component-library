@@ -131,6 +131,7 @@ app.get('/', async (req, res) => {
           <justifi-checkout
             auth-token="${webComponentToken}"
             checkout-id="${checkout.id}"
+            hide-card-billing-form="true"
           >
             <div slot="insurance">
               <justifi-season-interruption-insurance
