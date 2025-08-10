@@ -21,7 +21,7 @@ Renders a form for collecting credit and debit card details as part of a checkou
 
 This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
 
-> **Note:** If you are using the card payment method, you also need to provide billing information. This can be done by using either the `justifi-billing-information-form` component or the `justifi-postal-code-form` component, or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper. The `billingInfo` object can contain all the fields or just the `address_postal_code` field.
+> **Note:** If you are using the card payment method, you also need to provide billing information. This can be done by using either the `justifi-billing-form-full` component for complete billing address, the `justifi-card-billing-form-simple` component for ZIP code only, or by passing the `billingInfo` object as an argument to the `submitCheckout` method called on the wrapper. The `billingInfo` object can contain all the fields or just the `address_postal_code` field.
 
 ```javascript
 checkoutWrapper.submitCheckout({

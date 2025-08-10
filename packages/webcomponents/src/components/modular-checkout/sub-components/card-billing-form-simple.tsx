@@ -1,17 +1,19 @@
-import { Component, h, State, Prop, Method, Host } from '@stencil/core';
-import { BillingFormFields, postalOnlySchema } from './billing-form-schema';
+import { Component, h, State, Prop, Method } from '@stencil/core';
+import { BillingFormFields, postalOnlySchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
 import { numberOnlyHandler } from '../../../ui-components/form/utils';
 import { FormController } from '../../../ui-components/form/form';
+import { StyledHost } from '../../../ui-components';
 
 @Component({
   tag: 'justifi-card-billing-form-simple',
+  shadow: true,
 })
 export class CardBillingFormSimple {
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
-  
+
   @Prop({ mutable: true }) legend?: string;
 
   componentWillLoad() {
@@ -55,7 +57,7 @@ export class CardBillingFormSimple {
     const billingFormDefaultValue = this.formController.getInitialValues();
 
     return (
-      <Host>
+      <StyledHost>
         <div part={billingForm} class="mt-4">
           <form>
             <fieldset>
@@ -78,7 +80,7 @@ export class CardBillingFormSimple {
             </fieldset>
           </form>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }

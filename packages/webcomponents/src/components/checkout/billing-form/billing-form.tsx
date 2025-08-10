@@ -1,4 +1,4 @@
-import { Component, h, Prop, Method, Host } from '@stencil/core';
+import { Component, h, Prop, Method } from '@stencil/core';
 import { BillingFormFields } from './billing-form-schema';
 
 @Component({
@@ -38,33 +38,27 @@ export class BillingForm {
   render() {
     if (this.showSimpleBankAccountBillingForm) {
       return (
-        <Host>
-          <justifi-bank-account-billing-form-simple
-            legend={this.legend}
-            ref={(el: any) => (this.selectedFormRef = el)}
-          />
-        </Host>
+        <justifi-bank-account-billing-form-simple
+          legend={this.legend}
+          ref={(el: any) => (this.selectedFormRef = el)}
+        />
       );
     }
 
     if (this.showSimpleCardBillingForm) {
       return (
-        <Host>
-          <justifi-card-billing-form-simple
-            legend={this.legend}
-            ref={(el: any) => (this.selectedFormRef = el)}
-          />
-        </Host>
+        <justifi-card-billing-form-simple
+          legend={this.legend}
+          ref={(el: any) => (this.selectedFormRef = el)}
+        />
       );
     }
 
     return (
-      <Host>
-        <justifi-billing-form-full
-          legend={this.legend}
-          ref={(el) => (this.selectedFormRef = el)}
-        />
-      </Host>
+      <justifi-billing-form-full
+        legend={this.legend}
+        ref={(el) => (this.selectedFormRef = el)}
+      />
     );
   }
 }

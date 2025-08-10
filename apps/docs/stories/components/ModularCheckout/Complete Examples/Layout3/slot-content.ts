@@ -73,7 +73,7 @@ export const getSlotContentExample3 = (): string => {
           <!-- Card Information -->
           <div class="checkout-form-field">
             <justifi-card-form></justifi-card-form>
-            <justifi-postal-code-form></justifi-postal-code-form>
+            <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
           </div>
 
           <!-- Name on Card -->

@@ -57,7 +57,7 @@ export const getSlotContentExample2 = (): string => {
 
             <div class="checkout-form-container">
               <justifi-card-form></justifi-card-form>
-              <justifi-postal-code-form></justifi-postal-code-form>
+              <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
             </div>
 
             <button class="checkout-submit-button" id="submit-button">

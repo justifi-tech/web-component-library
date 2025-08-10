@@ -46,7 +46,7 @@ export const getSlotContentExample1 = (): string => {
             </select>
           </div>
           <div class="zip-field">
-            <justifi-postal-code-form></justifi-postal-code-form>
+            <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
           </div>
         </div>
       </div>

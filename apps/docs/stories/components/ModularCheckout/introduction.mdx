@@ -32,8 +32,9 @@ The Modular Checkout system is built around the `justifi-modular-checkout` wrapp
 
 ### Information Collection Components
 
-- **[`justifi-billing-information-form`](/docs/modular-checkout-billing-information-form--docs)**: Complete billing address collection
-- **[`justifi-postal-code-form`](/docs/modular-checkout-postal-code-form--docs)**: Simplified postal code only billing form
+- **[`justifi-billing-form-full`](/docs/modular-checkout-billing-form-full--docs)**: Complete billing address collection
+- **[`justifi-card-billing-form-simple`](/docs/modular-checkout-card-billing-form-simple--docs)**: ZIP code only billing form for card payments
+- **[`justifi-bank-account-billing-form-simple`](/docs/modular-checkout-bank-account-billing-form-simple--docs)**: Account owner name only billing form for ACH payments
 - **[`justifi-checkout-summary`](/docs/modular-checkout-checkout-summary--docs)**: Display checkout amount and description as passed with the [create checkout](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) API request
 
 ### Specialized Components
@@ -111,7 +112,7 @@ New payment methods or features can be added as individual components without mo
 >
   <justifi-checkout-summary />
   <justifi-card-form />
-  <justifi-billing-information-form />
+  <justifi-billing-form-full />
 </justifi-modular-checkout>
 ```
 
@@ -126,7 +127,7 @@ New payment methods or features can be added as individual components without mo
   <justifi-checkout-summary />
   <justifi-saved-payment-methods />
   <justifi-card-form />
-  <justifi-postal-code-form />
+  <justifi-card-billing-form-simple />
 </justifi-modular-checkout>
 ```
 
@@ -143,7 +144,7 @@ New payment methods or features can be added as individual components without mo
   <justifi-card-form />
   <justifi-bank-account-form />
   <justifi-sezzle-payment-method />
-  <justifi-billing-information-form />
+  <justifi-billing-form-full />
   <justifi-season-interruption-insurance />
 </justifi-modular-checkout>
 ```

@@ -5,7 +5,7 @@ import { getSlotContentExample3 } from "./slot-content";
 
 import "@justifi/webcomponents/dist/module/justifi-modular-checkout";
 import "@justifi/webcomponents/dist/module/justifi-card-form";
-import "@justifi/webcomponents/dist/module/justifi-postal-code-form";
+import "@justifi/webcomponents/dist/module/justifi-card-billing-form-simple";
 import "@justifi/webcomponents/dist/module/justifi-save-new-payment-method";
 import "./styles.css";
 
