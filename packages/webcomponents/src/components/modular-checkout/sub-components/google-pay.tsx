@@ -35,11 +35,12 @@ export class GooglePay {
   @Prop() merchantId?: string;
   @Prop() merchantName: string = "JustiFi Checkout";
   @Prop() gatewayMerchantId: string = "";
-  @Prop() gateway: string = "stripe";
+  @Prop() gateway: string = "example";
   @Prop() apiBaseUrl: string = "https://ahalaburda.zapto.org/api/v1";
   @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
   @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
-  @Prop() buttonSizeMode: GooglePayButtonSizeMode = GooglePayButtonSizeMode.STATIC;
+  @Prop() buttonSizeMode: GooglePayButtonSizeMode =
+    GooglePayButtonSizeMode.STATIC;
   @Prop() disabled: boolean = false;
   @Prop() showSkeleton: boolean = true;
 
@@ -65,7 +66,7 @@ export class GooglePay {
   }
 
   componentDidLoad() {
-    onChange('paymentAmount', () => {
+    onChange("paymentAmount", () => {
       this.initializeGooglePay();
     });
   }
@@ -129,7 +130,7 @@ export class GooglePay {
 
       // Check if payments can be made
       this.canMakePayments = await this.googlePayService.canMakePayments();
-      
+
       if (!this.canMakePayments) {
         this.error = "Google Pay is not available for payments";
         this.isLoading = false;
@@ -139,7 +140,6 @@ export class GooglePay {
       // Prefetch payment data for faster loading
       const paymentDataRequest = this.createPaymentDataRequest();
       this.googlePayService.prefetchPaymentData(paymentDataRequest);
-
     } catch (error) {
       console.error("Google Pay initialization error:", error);
       this.error =
@@ -171,7 +171,12 @@ export class GooglePay {
    * Handle Google Pay button click
    */
   private handleGooglePayClick = async () => {
-    if (this.isProcessing || this.disabled || !this.isAvailable || !this.canMakePayments) {
+    if (
+      this.isProcessing ||
+      this.disabled ||
+      !this.isAvailable ||
+      !this.canMakePayments
+    ) {
       return;
     }
 
@@ -179,9 +184,16 @@ export class GooglePay {
       this.isProcessing = true;
       this.error = null;
       this.googlePayStarted.emit();
+      console.log("Payment data request:", {
+        paymentAmount: checkoutStore.paymentAmount,
+        paymentDescription: checkoutStore.paymentDescription,
+        paymentCurrency: checkoutStore.paymentCurrency,
+        gatewayMerchantId: this.gatewayMerchantId,
+      });
 
       const paymentDataRequest = this.createPaymentDataRequest();
-      const result = await this.googlePayService.startPaymentSession(paymentDataRequest);
+      const result =
+        await this.googlePayService.startPaymentSession(paymentDataRequest);
 
       if (result.success) {
         this.googlePayCompleted.emit({
@@ -193,9 +205,9 @@ export class GooglePay {
           success: false,
           error: result.error,
         });
-        
+
         // Handle user cancellation differently
-        if (result.error?.code === 'USER_CANCELLED') {
+        if (result.error?.code === "USER_CANCELLED") {
           this.googlePayCancelled.emit();
         } else {
           this.googlePayError.emit({
@@ -244,7 +256,7 @@ export class GooglePay {
     if (!this.isAvailable || !this.canMakePayments) {
       return;
     }
-    
+
     const paymentDataRequest = this.createPaymentDataRequest();
     this.googlePayService.prefetchPaymentData(paymentDataRequest);
   }
@@ -276,13 +288,16 @@ export class GooglePay {
             </div>
           )}
 
-          {!this.isLoading && !this.error && this.isAvailable && !this.canMakePayments && (
-            <div class='google-pay-unavailable'>
-              <span class='unavailable-message'>
-                Google Pay is not available for payments
-              </span>
-            </div>
-          )}
+          {!this.isLoading &&
+            !this.error &&
+            this.isAvailable &&
+            !this.canMakePayments && (
+              <div class='google-pay-unavailable'>
+                <span class='unavailable-message'>
+                  Google Pay is not available for payments
+                </span>
+              </div>
+            )}
 
           {!this.isLoading &&
             !this.error &&

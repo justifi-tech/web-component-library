@@ -214,7 +214,7 @@ export class GooglePayConfig implements IGooglePayConfig {
     this.buttonSizeMode = data.buttonSizeMode || GooglePayButtonSizeMode.STATIC;
     this.buttonLocale = data.buttonLocale || 'en';
     this.gatewayMerchantId = data.gatewayMerchantId;
-    this.gateway = data.gateway || 'stripe';
+    this.gateway = data.gateway || 'TestJustiFi';
   }
 
   public get isValid(): boolean {
@@ -383,7 +383,7 @@ export class GooglePayHelpers {
     return {
       apiVersion: 2,
       apiVersionMinor: 0,
-      allowedPaymentMethods: [this.createPaymentMethodData('stripe', 'dummy')]
+      allowedPaymentMethods: [this.createPaymentMethodData('justifi', 'dummy')]
     };
   }
 }

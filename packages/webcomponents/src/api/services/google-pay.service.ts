@@ -109,12 +109,14 @@ export class GooglePayService implements IGooglePayService {
 
     const request = new GooglePayPaymentDataRequest(paymentDataRequest);
     
-    if (!request.isValid) {
-      throw new Error('Invalid payment data request provided');
-    }
-
-    try {
+    // if (!request.isValid) {
+      //   throw new Error('Invalid payment data request provided');
+      // }
+      
+      try {
+      console.log('request!', request)
       const paymentData = await this.googlePayClient.loadPaymentData(request);
+      console.log('payment data', paymentData)
       
       // Process the payment token
       const tokenProcessRequest: IGooglePayTokenProcessRequest = {
@@ -249,7 +251,7 @@ export class GooglePayService implements IGooglePayService {
     label: string,
     countryCode: string = 'US',
     currencyCode: string = 'USD',
-    gateway: string = 'stripe',
+    gateway: string = 'TestJustiFi',
     gatewayMerchantId: string,
     merchantName: string,
     merchantId?: string

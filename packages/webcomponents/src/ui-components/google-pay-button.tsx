@@ -98,7 +98,7 @@ export const GooglePayButton: FunctionalComponent<GooglePayButtonElementProps> =
       styles.width = props.width || '200px';
     }
     
-    styles.height = props.height || '48px';
+    styles.height = props.height || '56px';
     
     return styles;
   };
@@ -127,17 +127,13 @@ export const GooglePayButton: FunctionalComponent<GooglePayButtonElementProps> =
       >
         {props.isProcessing && ProcessingSpinner()}
         <div class='google-pay-button-content'>
-          <svg class='google-pay-logo' viewBox='0 0 41 17' xmlns='http://www.w3.org/2000/svg'>
-            <g fill='none' fill-rule='evenodd'>
-              <path d='M19.526 2.635v4.083h2.518c.6 0 1.096-.202 1.488-.605.403-.402.605-.882.605-1.438 0-.544-.202-1.018-.605-1.43-.392-.413-.888-.61-1.488-.61h-2.518zm0 5.52v4.736h-1.504V1.198h4.022c1.024 0 1.915.365 2.673 1.1.757.723 1.136 1.65 1.136 2.78 0 1.119-.379 2.04-1.136 2.781-.758.735-1.649 1.1-2.673 1.1h-2.518v-.004z' fill='#4285F4'/>
-              <path d='M33.644 7.39c0-.48-.144-.895-.433-1.246-.289-.334-.701-.501-1.235-.501-.544 0-.96.173-1.246.52-.286.334-.429.738-.429 1.227 0 .48.149.895.447 1.246.298.334.708.501 1.228.501.533 0 .951-.173 1.257-.52.297-.334.445-.738.445-1.227h-.034zm1.423 0c0 .987-.306 1.794-.918 2.42-.612.627-1.423.94-2.433.94-.992 0-1.797-.313-2.414-.94-.617-.626-.926-1.433-.926-2.42 0-.999.309-1.811.926-2.438.617-.627 1.422-.94 2.414-.94 1.01 0 1.821.313 2.433.94.612.627.918 1.439.918 2.438z' fill='#34A853'/>
-              <path d='M25.6 7.39c0-.48-.144-.895-.433-1.246-.289-.334-.701-.501-1.235-.501-.544 0-.96.173-1.246.52-.286.334-.429.738-.429 1.227 0 .48.149.895.447 1.246.298.334.708.501 1.228.501.533 0 .951-.173 1.257-.52.297-.334.445-.738.445-1.227h-.034zm1.423 0c0 .987-.306 1.794-.918 2.42-.612.627-1.423.94-2.433.94-.992 0-1.797-.313-2.414-.94-.617-.626-.926-1.433-.926-2.42 0-.999.309-1.811.926-2.438.617-.627 1.422-.94 2.414-.94 1.01 0 1.821.313 2.433.94.612.627.918 1.439.918 2.438z' fill='#FBBC05'/>
-              <path d='M35.947 1.198v11.553h-1.504V1.198h1.504z' fill='#EA4335'/>
-              <path d='M40.74 7.39c0-.48-.144-.895-.433-1.246-.289-.334-.701-.501-1.235-.501-.544 0-.96.173-1.246.52-.286.334-.429.738-.429 1.227 0 .48.149.895.447 1.246.298.334.708.501 1.228.501.533 0 .951-.173 1.257-.52.297-.334.445-.738.445-1.227h-.034zm1.423 0c0 .987-.306 1.794-.918 2.42-.612.627-1.423.94-2.433.94-.992 0-1.797-.313-2.414-.94-.617-.626-.926-1.433-.926-2.42 0-.999.309-1.811.926-2.438.617-.627 1.422-.94 2.414-.94 1.01 0 1.821.313 2.433.94.612.627.918 1.439.918 2.438z' fill='#34A853'/>
-              <path d='M8.517 7.39c0-.48-.144-.895-.433-1.246-.289-.334-.701-.501-1.235-.501-.544 0-.96.173-1.246.52-.286.334-.429.738-.429 1.227 0 .48.149.895.447 1.246.298.334.708.501 1.228.501.533 0 .951-.173 1.257-.52.297-.334.445-.738.445-1.227h-.034zm1.423 0c0 .987-.306 1.794-.918 2.42-.612.627-1.423.94-2.433.94-.992 0-1.797-.313-2.414-.94-.617-.626-.926-1.433-.926-2.42 0-.999.309-1.811.926-2.438.617-.627 1.422-.94 2.414-.94 1.01 0 1.821.313 2.433.94.612.627.918 1.439.918 2.438z' fill='#EA4335'/>
-              <path d='M16.25 7.39c0-.48-.144-.895-.433-1.246-.289-.334-.701-.501-1.235-.501-.544 0-.96.173-1.246.52-.286.334-.429.738-.429 1.227 0 .48.149.895.447 1.246.298.334.708.501 1.228.501.533 0 .951-.173 1.257-.52.297-.334.445-.738.445-1.227h-.034zm1.423 0c0 .987-.306 1.794-.918 2.42-.612.627-1.423.94-2.433.94-.992 0-1.797-.313-2.414-.94-.617-.626-.926-1.433-.926-2.42 0-.999.309-1.811.926-2.438.617-.627 1.422-.94 2.414-.94 1.01 0 1.821.313 2.433.94.612.627.918 1.439.918 2.438z' fill='#4285F4'/>
-            </g>
+          <svg class='google-g-logo' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+            <path d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z' fill='#4285F4'/>
+            <path d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z' fill='#34A853'/>
+            <path d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z' fill='#FBBC05'/>
+            <path d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z' fill='#EA4335'/>
           </svg>
+          <span class='pay-text'>Pay</span>
         </div>
       </button>
 
@@ -165,7 +161,7 @@ export const GooglePayButton: FunctionalComponent<GooglePayButtonElementProps> =
             position: relative;
             transition: box-shadow 0.2s ease;
             min-width: 140px;
-            min-height: 40px;
+            min-height: 48px;
           }
 
           /* Button styles */
@@ -190,46 +186,53 @@ export const GooglePayButton: FunctionalComponent<GooglePayButtonElementProps> =
             white-space: nowrap;
           }
 
-          .google-pay-logo {
-            width: 41px;
-            height: 17px;
+          .google-g-logo {
+            width: 20px;
+            height: 20px;
             flex-shrink: 0;
           }
 
-          /* Button types - text content handled by ::after pseudo-element */
-          .google-pay-button-type-buy .google-pay-button-content::after {
+          .pay-text {
+            font-family: 'Google Sans', arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 8px;
+          }
+
+          /* Button types - text content handled by ::before pseudo-element */
+          .google-pay-button-type-buy .google-pay-button-content::before {
             content: 'Buy with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
-          .google-pay-button-type-book .google-pay-button-content::after {
+          .google-pay-button-type-book .google-pay-button-content::before {
             content: 'Book with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
-          .google-pay-button-type-checkout .google-pay-button-content::after {
+          .google-pay-button-type-checkout .google-pay-button-content::before {
             content: 'Checkout with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
-          .google-pay-button-type-donate .google-pay-button-content::after {
+          .google-pay-button-type-donate .google-pay-button-content::before {
             content: 'Donate with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
-          .google-pay-button-type-order .google-pay-button-content::after {
+          .google-pay-button-type-order .google-pay-button-content::before {
             content: 'Order with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
-          .google-pay-button-type-pay .google-pay-button-content::after {
+          .google-pay-button-type-pay .google-pay-button-content::before {
             content: 'Pay with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
-          .google-pay-button-type-subscribe .google-pay-button-content::after {
+          .google-pay-button-type-subscribe .google-pay-button-content::before {
             content: 'Subscribe with';
-            margin-right: 4px;
+            margin-right: 8px;
           }
 
           /* Size modes */
