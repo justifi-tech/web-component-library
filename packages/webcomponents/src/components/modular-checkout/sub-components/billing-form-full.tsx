@@ -29,10 +29,6 @@ export class BillingFormFull {
     });
   }
 
-  componentDidLoad() {
-    // Removed subscriptions from here to prevent warnings
-  }
-
   inputHandler = (name: string, value: string) => {
     this.formController.setValues({
       ...this.formController.values.getValue(),
