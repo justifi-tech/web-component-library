@@ -18,7 +18,7 @@ export const multiCountryRegionValidation = string()
     
     if (country === 'USA') {
       return StateOptions.some(option => option.value === value);
-    } else if (country === 'CA') {
+    } else if (country === 'CAN') {
       return CanadianProvinceOptions.some(option => option.value === value);
     }
     
@@ -38,7 +38,7 @@ export const multiCountryPostalValidation = string()
     if (country === 'USA') {
       // US postal code: 12345 or 12345-6789
       return /^[0-9]{5}(-[0-9]{4})?$/.test(value);
-    } else if (country === 'CA') {
+    } else if (country === 'CAN') {
       // Canadian postal code: A1A 1A1 or A1A1A1
       return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(value);
     }

@@ -14,7 +14,7 @@ export interface CountryFormConfig {
 
 /**
  * Gets country-specific form configuration including region options, labels, and postal code settings
- * @param country - The country code (e.g., 'US', 'CA')
+ * @param country - The country code (e.g., 'USA', 'CAN')
  * @returns Object containing regionOptions, regionLabel, postalCodeLabel, and postalCodeConfig
  */
 export function getCountryFormConfig(country?: string): CountryFormConfig {
@@ -23,7 +23,7 @@ export function getCountryFormConfig(country?: string): CountryFormConfig {
   const postalCodeLabel = getPostalCodeLabel(country);
 
   // Configure postal code input based on country
-  const postalCodeConfig = country === 'CA' ? {
+  const postalCodeConfig = country === 'CAN' ? {
     maxLength: 7, // A1A 1A1 with space
     keyDownHandler: undefined, // Allow letters for Canadian postal codes
   } : {
@@ -32,7 +32,7 @@ export function getCountryFormConfig(country?: string): CountryFormConfig {
   };
 
   // Configure help text based on country
-  const postalCodeHelpText = country === 'CA' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789';
+  const postalCodeHelpText = country === 'CAN' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789';
 
   return {
     regionOptions,

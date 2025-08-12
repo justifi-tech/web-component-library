@@ -4,7 +4,7 @@ import CanadianProvinceOptions from './canadian-province-options';
 // Focused country options for payment provisioning (US and Canada only)
 export const PaymentProvisioningCountryOptions = [
   { label: 'United States', value: 'USA' },
-  { label: 'Canada', value: 'CA' },
+  { label: 'Canada', value: 'CAN' },
 ];
 
 // Get appropriate state/province options based on selected country
@@ -12,7 +12,7 @@ export function getRegionOptions(countryCode: string) {
   switch (countryCode) {
     case 'USA':
       return StateOptions;
-    case 'CA':
+    case 'CAN':
       return CanadianProvinceOptions;
     default:
       return StateOptions; // Default to US states
@@ -24,7 +24,7 @@ export function getRegionLabel(countryCode: string) {
   switch (countryCode) {
     case 'USA':
       return 'State';
-    case 'CA':
+    case 'CAN':
       return 'Province/Territory';
     default:
       return 'State';
@@ -36,7 +36,7 @@ export function getPostalCodeLabel(countryCode: string) {
   switch (countryCode) {
     case 'USA':
       return 'ZIP Code';
-    case 'CA':
+    case 'CAN':
       return 'Postal Code';
     default:
       return 'Postal Code';

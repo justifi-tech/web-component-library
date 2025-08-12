@@ -12,7 +12,7 @@ import {
 } from './schema-validations';
 
 export const businessCoreInfoSchema = (allowOptionalFields?: boolean, country?: string) => {
-  const isCanadian = country?.toUpperCase() === 'CAN' || country?.toUpperCase() === 'CANADA';
+  const isCanadian = country === 'CAN';
   const taxIdRequiredMessage = isCanadian
     ? 'Enter valid Business Number without dashes'
     : 'Enter valid tax ID (SSN or EIN) without dashes';

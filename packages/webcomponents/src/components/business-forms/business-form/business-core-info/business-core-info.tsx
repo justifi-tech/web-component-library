@@ -1,9 +1,15 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../../ui-components/form/form';
-import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
+
+// Tax ID / Business Number labels and help text
+const TAX_ID_LABEL_US = 'Tax ID (EIN or SSN)';
+const TAX_ID_HELP_US = 'Enter your EIN or SSN (9 digits, no dashes)';
+const TAX_ID_LABEL_CAN = 'Business Number';
+const TAX_ID_HELP_CAN = 'Enter your Business Number (9 digits, no dashes)';
 
 /**
  *
@@ -19,6 +25,10 @@ export class BusinessCoreInfo {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
+  @State() country: string = 'USA';
+  @State() taxIdLabel: string = TAX_ID_LABEL_US;
+  @State() taxIdHelpText: string = TAX_ID_HELP_US;
+  @State() taxIdMask: string = TAX_ID_MASKS.US;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -26,11 +36,36 @@ export class BusinessCoreInfo {
 
   componentDidLoad() {
     this.formController.values.subscribe(
-      values => (this.coreInfo = { ...new CoreBusinessInfo(values) }),
+      values => {
+        this.coreInfo = { ...new CoreBusinessInfo(values) };
+        const nextCountry = values?.legal_address?.country || 'USA';
+        if (nextCountry !== this.country) {
+          this.country = nextCountry;
+          this.setLabelsAndMaskForCountry();
+        }
+      },
     );
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
+
+    // Initialize once with initial values
+    const initial = this.formController.getInitialValues();
+    this.country = initial?.legal_address?.country || 'USA';
+    this.setLabelsAndMaskForCountry();
+  }
+
+  private setLabelsAndMaskForCountry() {
+    const isCanadian = this.country === 'CAN';
+    if (isCanadian) {
+      this.taxIdLabel = TAX_ID_LABEL_CAN;
+      this.taxIdHelpText = TAX_ID_HELP_CAN;
+      this.taxIdMask = TAX_ID_MASKS.CA;
+    } else {
+      this.taxIdLabel = TAX_ID_LABEL_US;
+      this.taxIdHelpText = TAX_ID_HELP_US;
+      this.taxIdMask = TAX_ID_MASKS.US;
+    }
   }
 
   inputHandler(name: string, value: string) {
@@ -95,14 +130,14 @@ export class BusinessCoreInfo {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-text
+              <form-control-number-masked
                 name="tax_id"
-                label="Tax ID / Business Number"
+                label={this.taxIdLabel}
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
-                maxLength={9}
-                helpText="Enter your tax identification number (9 digits, no dashes)"
+                mask={this.taxIdMask}
+                helpText={this.taxIdHelpText}
               />
             </div>
             <div class="col-12">

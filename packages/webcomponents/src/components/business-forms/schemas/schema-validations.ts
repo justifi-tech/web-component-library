@@ -66,7 +66,7 @@ export const taxIdValidation = string()
   .transform(transformEmptyString);
 
 export const createCountrySpecificTaxIdValidation = (country?: string) => {
-  const isCanadian = country?.toUpperCase() === 'CAN' || country?.toUpperCase() === 'CANADA';
+  const isCanadian = country === 'CAN';
   
   const errorMessage = isCanadian 
     ? 'Enter valid Business Number'
