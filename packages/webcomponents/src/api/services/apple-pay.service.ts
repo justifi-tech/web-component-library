@@ -162,7 +162,7 @@ export class ApplePayService implements IApplePayService {
     const result: IApplePayPaymentResponse = await response.json();
 
     return {
-      success: response.ok && result.status === 'success',
+      success: result.id && !!result.data.token,
       data: result,
     };
   }

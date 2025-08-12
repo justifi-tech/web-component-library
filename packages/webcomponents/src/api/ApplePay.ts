@@ -1,3 +1,5 @@
+import { PagingInfo } from "./Pagination";
+
 export enum ApplePaySessionStatus {
   STATUS_SUCCESS = 'STATUS_SUCCESS',
   STATUS_FAILURE = 'STATUS_FAILURE',
@@ -154,10 +156,13 @@ export interface IApplePayPaymentProcessRequest {
 }
 
 export interface IApplePayPaymentResponse {
-  transaction_id: string;
-  status: string;
-  amount: number;
-  currency: string;
+  id: string;
+  type: string;
+  page_info: PagingInfo | null;
+  data: {
+    account_id: string;
+    token: string;
+  }
 }
 
 export interface IApplePayService {
