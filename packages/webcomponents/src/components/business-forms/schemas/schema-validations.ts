@@ -1,4 +1,5 @@
 import { string } from 'yup';
+import { CountryCode } from '../../../utils/address-form-helpers';
 import StateOptions from '../../../utils/state-options';
 import {
   businessServiceReceivedOptions,
@@ -66,13 +67,13 @@ export const taxIdValidation = string()
   .transform(transformEmptyString);
 
 export const createCountrySpecificTaxIdValidation = (country?: string) => {
-  const isCanadian = country === 'CAN';
-  
-  const errorMessage = isCanadian 
+  const isCanadian = country === CountryCode.CAN;
+  const errorMessage = isCanadian
     ? 'Enter valid Business Number'
     : 'Enter valid tax ID (SSN or EIN)';
 
   return string()
+    .length(9, errorMessage)
     .matches(numbersOnlyRegex, errorMessage)
     .test('not-repeat', errorMessage, (value) => {
       return !/^(\d)\1+$/.test(value);

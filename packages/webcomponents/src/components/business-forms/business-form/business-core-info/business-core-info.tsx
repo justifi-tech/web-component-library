@@ -1,7 +1,8 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../../ui-components/form/form';
-import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { DEFAULT_COUNTRY, CountryCode } from '../../../../utils/address-form-helpers';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
@@ -29,7 +30,7 @@ export class BusinessCoreInfo {
   @State() country: string = DEFAULT_COUNTRY;
   @State() taxIdLabel: string = TAX_ID_LABEL_US;
   @State() taxIdHelpText: string = TAX_ID_HELP_US;
-  @State() taxIdMask: string = TAX_ID_MASKS.US;
+  // No mask for tax ID; enforce digits-only via key handlers and schema
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -61,11 +62,11 @@ export class BusinessCoreInfo {
     if (isCanadian) {
       this.taxIdLabel = TAX_ID_LABEL_CAN;
       this.taxIdHelpText = TAX_ID_HELP_CAN;
-      this.taxIdMask = TAX_ID_MASKS.CA;
+      // No input mask; handled via number-only and validation
     } else {
       this.taxIdLabel = TAX_ID_LABEL_US;
       this.taxIdHelpText = TAX_ID_HELP_US;
-      this.taxIdMask = TAX_ID_MASKS.US;
+      // No input mask; handled via number-only and validation
     }
   }
 
@@ -131,14 +132,15 @@ export class BusinessCoreInfo {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-number-masked
+              <form-control-text
                 name="tax_id"
                 label={this.taxIdLabel}
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
-                mask={this.taxIdMask}
                 helpText={this.taxIdHelpText}
+                maxLength={9}
+                keyDownHandler={numberOnlyHandler}
               />
             </div>
             <div class="col-12">

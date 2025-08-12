@@ -4,7 +4,8 @@ import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormStep, businessClassificationOptions } from '../../utils';
-import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS } from '../../../../utils/form-input-masks';
+import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { DEFAULT_COUNTRY, CountryCode } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
@@ -19,7 +20,7 @@ export class BusinessCoreInfoFormStepCore {
   @State() country: string = DEFAULT_COUNTRY;
   @State() taxIdLabel: string = 'Tax ID (EIN or SSN)';
   @State() taxIdHelpText: string = 'Enter your EIN or SSN (9 digits, no dashes)';
-  @State() taxIdMask: string = TAX_ID_MASKS.US;
+  // No mask for tax ID; enforce digits-only via key handlers and schema
   @State() isLoading: boolean = false;
 
   @Prop() businessId: string;
@@ -91,11 +92,9 @@ export class BusinessCoreInfoFormStepCore {
     if (isCanadian) {
       this.taxIdLabel = 'Business Number';
       this.taxIdHelpText = 'Enter your Business Number (9 digits)';
-      this.taxIdMask = TAX_ID_MASKS.CA;
     } else {
       this.taxIdLabel = 'Tax ID (EIN or SSN)';
       this.taxIdHelpText = 'Enter your EIN or SSN (9 digits, no dashes)';
-      this.taxIdMask = TAX_ID_MASKS.US;
     }
   }
 
@@ -195,14 +194,15 @@ export class BusinessCoreInfoFormStepCore {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-number-masked
+              <form-control-text
                 name="tax_id"
                 label={this.taxIdLabel}
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
-                mask={this.taxIdMask}
                 helpText={this.taxIdHelpText}
+                maxLength={9}
+                keyDownHandler={numberOnlyHandler}
               />
             </div>
             <div class="col-12">
