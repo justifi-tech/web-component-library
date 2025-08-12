@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../../ui-components/form/form';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { DEFAULT_COUNTRY } from '../../../../utils/constants';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
 
@@ -25,7 +26,7 @@ export class BusinessCoreInfo {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
-  @State() country: string = 'USA';
+  @State() country: string = DEFAULT_COUNTRY;
   @State() taxIdLabel: string = TAX_ID_LABEL_US;
   @State() taxIdHelpText: string = TAX_ID_HELP_US;
   @State() taxIdMask: string = TAX_ID_MASKS.US;
@@ -38,7 +39,7 @@ export class BusinessCoreInfo {
     this.formController.values.subscribe(
       values => {
         this.coreInfo = { ...new CoreBusinessInfo(values) };
-        const nextCountry = values?.legal_address?.country || 'USA';
+        const nextCountry = values?.legal_address?.country || DEFAULT_COUNTRY;
         if (nextCountry !== this.country) {
           this.country = nextCountry;
           this.setLabelsAndMaskForCountry();
@@ -51,7 +52,7 @@ export class BusinessCoreInfo {
 
     // Initialize once with initial values
     const initial = this.formController.getInitialValues();
-    this.country = initial?.legal_address?.country || 'USA';
+    this.country = initial?.legal_address?.country || DEFAULT_COUNTRY;
     this.setLabelsAndMaskForCountry();
   }
 

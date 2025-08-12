@@ -2,6 +2,7 @@ import { Identity, Representative } from './Identity';
 import { IDocument } from './Document';
 import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
+import { DEFAULT_COUNTRY } from '../utils/constants';
 
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',
@@ -51,7 +52,7 @@ export class Address implements IAddress {
     this.postal_code = address.postal_code;
     this.city = address.city;
     this.state = getStateAbbreviation(address.state);
-    this.country = address.country || 'USA';
+    this.country = address.country || DEFAULT_COUNTRY;
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
   }

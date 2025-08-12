@@ -5,6 +5,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormStep, businessClassificationOptions } from '../../utils';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { DEFAULT_COUNTRY } from '../../../../utils/constants';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
@@ -15,7 +16,7 @@ export class BusinessCoreInfoFormStepCore {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
-  @State() country: string = 'USA';
+  @State() country: string = DEFAULT_COUNTRY;
   @State() taxIdLabel: string = 'Tax ID (EIN or SSN)';
   @State() taxIdHelpText: string = 'Enter your EIN or SSN (9 digits, no dashes)';
   @State() taxIdMask: string = TAX_ID_MASKS.US;
@@ -64,7 +65,7 @@ export class BusinessCoreInfoFormStepCore {
       this.isLoading = true;
       this.getBusiness({
         onSuccess: (response) => {
-          this.country = response.data.legal_address?.country || 'USA';
+          this.country = response.data.legal_address?.country || DEFAULT_COUNTRY;
           this.coreInfo = new CoreBusinessInfo(response.data);
           resolve();
         },
