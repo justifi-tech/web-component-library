@@ -2,7 +2,7 @@ import { Identity, Representative } from './Identity';
 import { IDocument } from './Document';
 import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
-import { DEFAULT_COUNTRY } from '../utils/constants';
+import { DEFAULT_COUNTRY } from '../utils/address-form-helpers';
 
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',

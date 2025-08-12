@@ -6,6 +6,7 @@ import {
 } from './schema-validations';
 import StateOptions from '../../../utils/state-options';
 import CanadianProvinceOptions from '../../../utils/canadian-province-options';
+import { CountryCode } from '../../../utils/address-form-helpers';
 import { transformEmptyString } from './schema-helpers';
 
 // Multi-country state/province validation
@@ -16,9 +17,9 @@ export const multiCountryRegionValidation = string()
     // Let yup handle empty values - return true to allow .nullable() and .required() to work properly
     if (!value) return true;
     
-    if (country === 'USA') {
+    if (country === CountryCode.USA) {
       return StateOptions.some(option => option.value === value);
-    } else if (country === 'CAN') {
+    } else if (country === CountryCode.CAN) {
       return CanadianProvinceOptions.some(option => option.value === value);
     }
     
@@ -35,10 +36,10 @@ export const multiCountryPostalValidation = string()
     // Let yup handle empty values - return true to allow .nullable() and .required() to work properly
     if (!value) return true;
     
-    if (country === 'USA') {
+    if (country === CountryCode.USA) {
       // US postal code: 12345 or 12345-6789
       return /^[0-9]{5}(-[0-9]{4})?$/.test(value);
-    } else if (country === 'CAN') {
+    } else if (country === CountryCode.CAN) {
       // Canadian postal code: A1A 1A1 or A1A1A1
       return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(value);
     }

@@ -1,4 +1,4 @@
-import { getRegionOptions, getRegionLabel, getPostalCodeLabel } from '../../../utils/address-form-helpers';
+import { getRegionOptions, getRegionLabel, getPostalCodeLabel, CountryCode } from '../../../utils/address-form-helpers';
 import { numberOnlyHandler } from '../../../ui-components/form/utils';
 
 export interface CountryFormConfig {
@@ -23,7 +23,7 @@ export function getCountryFormConfig(country?: string): CountryFormConfig {
   const postalCodeLabel = getPostalCodeLabel(country);
 
   // Configure postal code input based on country
-  const postalCodeConfig = country === 'CAN' ? {
+  const postalCodeConfig = country === CountryCode.CAN ? {
     maxLength: 7, // A1A 1A1 with space
     keyDownHandler: undefined, // Allow letters for Canadian postal codes
   } : {
@@ -32,7 +32,7 @@ export function getCountryFormConfig(country?: string): CountryFormConfig {
   };
 
   // Configure help text based on country
-  const postalCodeHelpText = country === 'CAN' ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789';
+  const postalCodeHelpText = country === CountryCode.CAN ? 'Format: A1A 1A1' : 'Format: 12345 or 12345-6789';
 
   return {
     regionOptions,

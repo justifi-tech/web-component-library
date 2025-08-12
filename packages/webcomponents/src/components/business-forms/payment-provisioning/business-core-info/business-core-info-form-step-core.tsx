@@ -5,7 +5,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormStep, businessClassificationOptions } from '../../utils';
 import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
-import { DEFAULT_COUNTRY } from '../../../../utils/constants';
+import { DEFAULT_COUNTRY, CountryCode } from '../../../../utils/address-form-helpers';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 
@@ -86,7 +86,7 @@ export class BusinessCoreInfoFormStepCore {
   }
 
   private setLabelsForCountry() {
-    const isCanadian = this.country === 'CAN';
+    const isCanadian = this.country === CountryCode.CAN;
     
     if (isCanadian) {
       this.taxIdLabel = 'Business Number';
