@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "5.7.6-rc-20",
+  "version": "5.7.6-rc-21",
   "description": "JustiFi Web Components",
   "collection": "dist/collection/collection-manifest.json",
   "main": "dist/index.cjs.js",
