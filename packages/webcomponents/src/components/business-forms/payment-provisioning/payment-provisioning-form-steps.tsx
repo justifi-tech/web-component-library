@@ -1,4 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
+import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-payment-provisioning-form-steps'
@@ -9,7 +10,7 @@ export class PaymentProvisioningFormSteps {
   @Prop() refs: any[];
   @Prop() currentStep: number;
   @Prop() allowOptionalFields?: boolean = false;
-  @Prop() country?: 'USA' | 'CAN' = 'USA';
+  @Prop() country?: CountryCode = CountryCode.USA;
   @Prop() handleFormLoading: (e: CustomEvent) => void
 
   get currentStepComponent() {

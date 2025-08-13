@@ -1,5 +1,4 @@
-export type CountryCode = 'USA' | 'CAN';
-
+import { CountryCode } from '../../../utils/country-codes';
 import StateOptions from '../../../utils/state-options';
 import ProvinceOptions from '../../../utils/province-options';
 

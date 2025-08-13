@@ -5,6 +5,7 @@ import { Header1, StyledHost } from '../../../ui-components';
 import { text } from '../../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
 import { BusinessFormClickActions } from '../utils/event-types';
+import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
@@ -14,7 +15,7 @@ export class PaymentProvisioningCore {
   @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
-  @State() country: 'USA' | 'CAN' = 'USA';
+  @State() country: CountryCode = CountryCode.USA;
 
   @Prop() businessId: string;
   @Prop() authToken: string;
@@ -43,10 +44,10 @@ export class PaymentProvisioningCore {
       onSuccess: (response) => {
         this.businessProvisioned = checkProvisioningStatus(response.data);
         const biz = response?.data;
-        if (biz?.country_of_establishment === 'CAN' || biz?.country_of_establishment === 'USA') {
+        if (biz?.country_of_establishment === CountryCode.CAN || biz?.country_of_establishment === CountryCode.USA) {
           this.country = biz.country_of_establishment;
         } else {
-          this.country = 'USA';
+          this.country = CountryCode.USA;
         }
         if (this.businessProvisioned) {
           this.errorEvent.emit({
