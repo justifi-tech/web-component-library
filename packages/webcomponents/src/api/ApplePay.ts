@@ -139,9 +139,6 @@ export interface IApplePayMethodSelectedEvent {
   paymentMethod: IApplePayTokenPaymentMethod;
 }
 
-export interface IApplePayMerchantValidationRequest {
-  validation_url: string;
-}
 
 export interface IApplePayPaymentProcessRequest {
   paymentData: IApplePayTokenData;
@@ -166,10 +163,7 @@ export interface IApplePayPaymentResponse {
 }
 
 export interface IApplePayService {
-  validateMerchant(
-    authToken: string,
-    payload: IApplePayMerchantValidationRequest
-  ): Promise<IMerchantSession>;
+  validateMerchant(authToken: string): Promise<IMerchantSession>;
 
   processPayment(
     authToken: string,

@@ -10,7 +10,6 @@ import {
   ApplePayPaymentRequest,
   IMerchantSession,
   IApplePayService,
-  IApplePayMerchantValidationRequest,
   IApplePayPaymentProcessRequest,
   IApplePayPaymentResponse,
   IApplePayValidateEvent,
@@ -18,39 +17,6 @@ import {
   IApplePayToken,
 } from '../ApplePay';
 
-const isValidMerchantSession = (merchantSession: IMerchantSession): boolean => {
-  const requiredFields: (keyof IMerchantSession)[] = [
-    'merchantSessionIdentifier',
-    'nonce',
-    'merchantIdentifier',
-    'epochTimestamp',
-    'expiresAt',
-  ];
-  const missingFields = requiredFields.filter(
-    (field) => !merchantSession[field]
-  );
-
-  if (missingFields.length > 0) {
-    console.error(
-      'Missing required fields in merchant session:',
-      missingFields
-    );
-    console.error('Available fields:', Object.keys(merchantSession));
-    return false;
-  }
-
-  const now = Date.now();
-  if (merchantSession.expiresAt && merchantSession.expiresAt < now) {
-    console.error('Merchant session is expired:', {
-      expiresAt: merchantSession.expiresAt,
-      currentTime: now,
-      expired: merchantSession.expiresAt < now,
-    });
-    return false;
-  }
-
-  return true;
-};
 
 export class ApplePayService implements IApplePayService {
   private applePayConfig?: ApplePayConfig;
@@ -90,18 +56,13 @@ export class ApplePayService implements IApplePayService {
   }
 
   /**
-   * Validate merchant with Apple Pay servers via API (fixed to match original logic)
+   * Validate merchant with Apple Pay servers via API 
    */
-  async validateMerchant(
-    authToken: string,
-    payload: IApplePayMerchantValidationRequest
-  ): Promise<IMerchantSession> {
+  async validateMerchant(authToken: string): Promise<IMerchantSession> {
     const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
-    const body = payload;
 
     console.log('=== MERCHANT VALIDATION REQUEST ===');
     console.log('Endpoint:', endpoint);
-    console.log('Payload:', body);
     console.log('Auth token present:', !!authToken);
     console.log('Account ID:', this.accountId);
 
@@ -113,7 +74,6 @@ export class ApplePayService implements IApplePayService {
         Authorization: `Bearer ${authToken}`,
         'Sub-Account': this.accountId,
       },
-      body: JSON.stringify(body),
     });
 
     console.log('Response status:', response.status);
@@ -271,39 +231,22 @@ export class ApplePayService implements IApplePayService {
       event: IApplePayValidateEvent
     ) => {
       try {
-        const validationPayload: IApplePayMerchantValidationRequest = {
-          validation_url: event.validationURL,
-        };
-
         if (!this.authToken) {
           throw new Error(
             'Authentication token not set. Call setAuthToken() first.'
           );
         }
-        const merchantSession = await this.validateMerchant(
-          this.authToken,
-          validationPayload
-        );
 
-        if (merchantSession && isValidMerchantSession(merchantSession)) {
-          try {
-            this.currentSession!.completeMerchantValidation(merchantSession);
-          } catch (completionError) {
-            console.error(
-              'Error calling completeMerchantValidation:',
-              completionError
-            );
-            throw completionError;
-          }
-        } else {
-          this.currentSession!.abort();
-          reject({
-            success: false,
-            error: {
-              code: 'MERCHANT_VALIDATION_ERROR',
-              message: 'Merchant validation failed',
-            },
-          });
+        const merchantSession = await this.validateMerchant(this.authToken);
+
+        try {
+          this.currentSession!.completeMerchantValidation(merchantSession);
+        } catch (completionError) {
+          console.error(
+            'Error calling completeMerchantValidation:',
+            completionError
+          );
+          throw completionError;
         }
       } catch (error) {
         console.error('=== MERCHANT VALIDATION ERROR ===');
