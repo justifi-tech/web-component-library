@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop } from "@stencil/core";
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from "@stencil/core";
 import { checkoutStore, onChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
@@ -7,7 +7,7 @@ import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/ch
 import { CheckoutService } from "../../api/services/checkout.service";
 import { IApplePayToken } from "../../api/ApplePay";
 import { BillingFormFields } from "../../components";
-import { insuranceValues, insuranceValuesOn } from "../insurance/insurance-state";
+import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -17,7 +17,7 @@ export class ModularCheckout {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
-  private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
+  private billingFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiBankAccountBillingFormSimpleElement | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
   private applePayRef?: HTMLJustifiApplePayElement;
@@ -34,6 +34,11 @@ export class ModularCheckout {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter;
   @Event({ eventName: 'payment-method-changed' }) paymentMethodChangedEvent: EventEmitter<string>;
+
+  @Watch('savePaymentMethod')
+  savePaymentMethodChanged(newValue: boolean) {
+    checkoutStore.savePaymentMethod = newValue;
+  }
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -74,12 +79,13 @@ export class ModularCheckout {
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
+    checkoutStore.savePaymentMethod = this.savePaymentMethod;
     this.fetchCheckout();
 
-    // Refresh the checkout data when insurance is added or removed
-    insuranceValuesOn('set', (key) => {
+    // Refresh the checkout data when insurance values actually change (not on initial load)
+    insuranceValuesOn('set', (key: string) => {
       const value = insuranceValues[key];
-      if (value !== undefined) {
+      if (value !== undefined && hasInsuranceValueChanged(key, value)) {
         this.fetchCheckout();
       }
     });
@@ -144,7 +150,7 @@ export class ModularCheckout {
 
   private queryFormRefs() {
     this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
-    this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
+    this.billingFormRef = this.hostEl.querySelector('justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full');
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
     this.applePayRef = this.hostEl.querySelector('justifi-apple-pay');
@@ -168,7 +174,7 @@ export class ModularCheckout {
 
   private handleApplePayCompleted = (event: CustomEvent) => {
     const { success, token, error } = event.detail;
-    
+
     if (success && token) {
       this.applePayToken = token;
       // Complete the checkout with Apple Pay token
@@ -233,7 +239,7 @@ export class ModularCheckout {
   }
 
   private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
-    const billingInfoValues = await this.billingInformationFormRef?.getValues() ?? {};
+    const billingInfoValues = await this.billingFormRef?.getValues() ?? {};
 
     const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
 
@@ -243,11 +249,11 @@ export class ModularCheckout {
       ...combinedBillingInfo
     };
 
-    if (this.savePaymentMethod) {
+    if (checkoutStore.savePaymentMethod) {
       paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
     }
 
-    return this.paymentMethodFormRef.tokenize({
+    return this.paymentMethodFormRef?.tokenize({
       clientId: this.authToken,
       paymentMethodMetadata,
       account: checkoutStore.accountId,
@@ -260,6 +266,12 @@ export class ModularCheckout {
       return 'apple_pay_token';
     }
 
+    // If we have a payment token from the store (set by tokenize-payment-method), use it
+    if (checkoutStore.paymentToken) {
+      return checkoutStore.paymentToken;
+    }
+
+    // Fallback to the original tokenization logic for backward compatibility
     if (!this.paymentMethodFormRef) {
       return checkoutStore.selectedPaymentMethod;
     }
@@ -287,7 +299,7 @@ export class ModularCheckout {
 
     const promises = [
       this.paymentMethodFormRef?.validate(),
-      this.billingInformationFormRef?.validate()
+      this.billingFormRef?.validate()
     ];
 
     if (this.insuranceFormRef) {

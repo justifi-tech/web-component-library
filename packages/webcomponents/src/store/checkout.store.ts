@@ -19,8 +19,10 @@ interface IInitialState {
   paymentAmount: number;
   paymentCurrency: string;
   paymentDescription: string;
-  paymentMethodGroupId: string;
+  paymentMethodGroupId: string | undefined;
   paymentMethods: ICheckoutPaymentMethod[];
+  paymentToken?: string;
+  savePaymentMethod: boolean;
   selectedPaymentMethod: string;
   totalAmount: number;
 }
@@ -44,8 +46,10 @@ const initialState: IInitialState = {
   paymentAmount: 0,
   paymentCurrency: 'USD',
   paymentDescription: '',
-  paymentMethodGroupId: '',
+  paymentMethodGroupId: undefined,
   paymentMethods: [],
+  paymentToken: undefined,
+  savePaymentMethod: false,
   selectedPaymentMethod: '',
   totalAmount: 0,
 };

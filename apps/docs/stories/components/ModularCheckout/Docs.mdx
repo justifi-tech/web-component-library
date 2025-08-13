@@ -15,7 +15,7 @@ import { setUpMocks } from '../../utils/mockAllServices';
 {setUpMocks()}
 
 <Meta
-  title="Modular Checkout/Modular Checkout"
+  title="Modular Checkout"
   Components="justifi-modular-checkout"
   of={JustifiCheckoutWrapper}
 />
@@ -36,6 +36,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 - [Validation](#validation)
 - [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
 - [Payment Method Change Events](#payment-method-change-events)
+- [Insurance Integration](#insurance-integration)
 - [Props, events and methods](#props-events-and-methods)
 - [Authorization](#authorization)
 - [Example Usage](#example-usage)
@@ -53,8 +54,9 @@ Optional:
 
 - [justifi-checkout-summary](/docs/modular-checkout-checkout-summary--docs)
 - [justifi-season-interruption-insurance](/docs/modular-checkout-season-interruption-insurance--docs)
-- [justifi-billing-information-form](/docs/modular-checkout-billing-information-form--docs)
-- [justifi-postal-code-form](/docs/modular-checkout-postal-code-form--docs)
+- [justifi-billing-form-full](/docs/modular-checkout-billing-form-full--docs)
+- [justifi-card-billing-form-simple](/docs/modular-checkout-card-billing-form-simple--docs)
+- [justifi-bank-account-billing-form-simple](/docs/modular-checkout-bank-account-billing-form-simple--docs)
 
 > **Note:** In addition to the supported sub components, you can add any custom HTML elements or markup inside the justifi-modular-checkout. This allows you to render headings, descriptions, disclaimers, or other layout elements as needed.
 
@@ -62,10 +64,9 @@ Optional:
 
 Billing information **is required** for checkout completion and can be provided in one of the following ways:
 
-- Using the `<justifi-billing-information-form />` sub component
-
-- Using the `<justifi-postal-code-form />` sub component
-
+- Using the `<justifi-billing-form-full />` sub component for complete billing address collection
+- Using the `<justifi-card-billing-form-simple />` sub component for ZIP code only (card payments)
+- Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)
 - Passing a `billingInformation` object directly to the `submitCheckout` method
 
 The `billingInformation` object can take one of two forms:
@@ -95,20 +96,17 @@ The `billingInformation` object can take one of two forms:
 
 When using `<justifi-card-form />`, billing information **must be provided** through either:
 
-- `<justifi-billing-information-form />` sub component
-
-- `<justifi-postal-code-form />` sub component
-
+- `<justifi-billing-form-full />` sub component for complete billing address
+- `<justifi-card-billing-form-simple />` sub component for ZIP code only
 - Passing the full `billingInformation` object directly to the `submitCheckout` method
-
 - Passing the `billingFormInformation` object with only `address_postal_code` to the `submitCheckout` method
 
 ### Bank Account Form Billing Information:
 
 When using `<justifi-bank-account-form />`, billing information **must be provided** through either:
 
-- `<justifi-billing-information-form />` sub component
-
+- `<justifi-billing-form-full />` sub component for complete billing address
+- `<justifi-bank-account-billing-form-simple />` sub component for account owner name only
 - Passing the full `billingInformation` object directly to the `submitCheckout` method
 
 ## Completing Checkout
@@ -161,6 +159,25 @@ modularCheckout.addEventListener('payment-method-changed', (event) => {
 });
 ```
 
+## Insurance Integration
+
+The `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.
+
+- **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated
+
+```html
+<justifi-modular-checkout
+  auth-token="123xyz"
+  account-id="acc_1234567890"
+  checkout-id="cho_1234567890"
+>
+  <justifi-checkout-summary />
+  <justifi-card-form />
+  <justifi-billing-form-full />
+  <justifi-season-interruption-insurance />
+</justifi-modular-checkout>
+```
+
 # Props, events and methods
 
 ---
@@ -200,7 +217,7 @@ modularCheckout.addEventListener('payment-method-changed', (event) => {
     save-payment-method="true"
   >
     <justifi-card-form />
-    <justifi-billing-information-form />
+    <justifi-billing-form-full />
     <button
       id="submit-button"
       style={{

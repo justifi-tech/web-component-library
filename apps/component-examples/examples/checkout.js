@@ -93,7 +93,7 @@ app.get('/', async (req, res) => {
   const checkout = await makeCheckout(token);
   const webComponentToken = await getWebComponentToken(token, checkout.id);
 
-  const disableBankAccount = true;
+  const disableBankAccount = false;
   const disableCreditCard = false;
   const hideCardBillingForm = true;
   const hideBankAccountBillingForm = false;
