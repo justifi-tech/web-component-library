@@ -19,14 +19,12 @@ export class SaveNewPaymentMethod {
   render() {
     return (
       <StyledHost>
-        <div class="mt-4 form-check">
-          <form-control-checkbox
-            label="Save new payment method"
-            name="saveNewPaymentMethod"
-            checked={this.isChecked}
-            inputHandler={this.handleCheckboxChange}
-          />
-        </div>
+        <form-control-checkbox
+          label="Save New Payment Method"
+          name="saveNewPaymentMethod"
+          checked={this.isChecked}
+          inputHandler={this.handleCheckboxChange}
+        />
       </StyledHost>
     );
   }
