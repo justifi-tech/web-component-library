@@ -5,6 +5,7 @@ import { checkPkgVersion } from "../../utils/check-pkg-version";
 import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity, ICheckout, ICheckoutStatus } from "../../api";
 import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
+import { IApplePayToken } from "../../api/ApplePay";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 
@@ -19,8 +20,10 @@ export class ModularCheckout {
   private billingFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiBankAccountBillingFormSimpleElement | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
+  private applePayRef?: HTMLJustifiApplePayElement;
   private getCheckout: Function;
   private completeCheckout: Function;
+  private applePayToken?: IApplePayToken;
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -40,6 +43,7 @@ export class ModularCheckout {
   connectedCallback() {
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
+      this.setupApplePayListeners(); // set up again listeners when DOM changes
     });
 
     this.observer.observe(this.hostEl, {
@@ -89,10 +93,12 @@ export class ModularCheckout {
 
   componentDidLoad() {
     this.queryFormRefs();
+    this.setupApplePayListeners();
   }
 
   disconnectedCallback() {
     this.observer?.disconnect();
+    this.removeApplePayListeners();
   }
 
   private fetchCheckout() {
@@ -147,6 +153,89 @@ export class ModularCheckout {
     this.billingFormRef = this.hostEl.querySelector('justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full');
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
+    this.applePayRef = this.hostEl.querySelector('justifi-apple-pay');
+  }
+
+  private setupApplePayListeners() {
+    if (this.applePayRef) {
+      this.applePayRef.addEventListener('applePayCompleted', this.handleApplePayCompleted);
+      this.applePayRef.addEventListener('applePayError', this.handleApplePayError);
+      this.applePayRef.addEventListener('applePayCancelled', this.handleApplePayCancelled);
+    }
+  }
+
+  private removeApplePayListeners() {
+    if (this.applePayRef) {
+      this.applePayRef.removeEventListener('applePayCompleted', this.handleApplePayCompleted);
+      this.applePayRef.removeEventListener('applePayError', this.handleApplePayError);
+      this.applePayRef.removeEventListener('applePayCancelled', this.handleApplePayCancelled);
+    }
+  }
+
+  private handleApplePayCompleted = (event: CustomEvent) => {
+    const { success, token, error } = event.detail;
+
+    if (success && token) {
+      this.applePayToken = token;
+      // Complete the checkout with Apple Pay token
+      this.submitCheckoutWithApplePay();
+    } else {
+      console.error('Apple Pay completed but failed:', error);
+      this.errorEvent.emit({
+        message: error?.message || 'Apple Pay payment failed',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  };
+
+  private handleApplePayError = (event: CustomEvent) => {
+    const { error } = event.detail;
+    console.error('Apple Pay error:', error);
+    this.errorEvent.emit({
+      message: error || 'Apple Pay error occurred',
+      errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+      severity: ComponentErrorSeverity.ERROR,
+    });
+  };
+
+  private handleApplePayCancelled = () => {
+    console.log('Apple Pay cancelled by user');
+    // Reset the token if cancelled
+    this.applePayToken = undefined;
+  };
+
+  private async submitCheckoutWithApplePay(): Promise<void> {
+    if (!this.applePayToken) {
+      this.errorEvent.emit({
+        message: 'No Apple Pay token available',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
+    const payment = {
+      payment_mode: 'apple_pay',
+      payment_token: this.applePayToken,
+    };
+
+    this.completeCheckout({
+      payment,
+      onSuccess: ({ checkout }) => {
+        this.submitEvent.emit({
+          checkout,
+          message: 'Apple Pay checkout completed successfully',
+        });
+      },
+      onError: (error) => {
+        this.errorEvent.emit({
+          message: error.message,
+          errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      },
+    });
   }
 
   private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
@@ -172,6 +261,11 @@ export class ModularCheckout {
   }
 
   private async getPaymentMethod(submitCheckoutArgs: BillingFormFields): Promise<string | undefined> {
+    // If Apple Pay token is available, return a placeholder since we handle it differently
+    if (this.applePayToken) {
+      return 'apple_pay_token';
+    }
+
     // If we have a payment token from the store (set by tokenize-payment-method), use it
     if (checkoutStore.paymentToken) {
       return checkoutStore.paymentToken;
@@ -198,10 +292,10 @@ export class ModularCheckout {
 
   @Method()
   async validate(): Promise<boolean> {
-    console.log('billing information form', this.billingFormRef);
-    console.log('payment method form', this.paymentMethodFormRef);
-    console.log('insurance form', this.insuranceFormRef);
-    console.log('sezzle payment method', this.sezzlePaymentMethodRef);
+    // If Apple Pay token is available, validation is already complete
+    if (this.applePayToken) {
+      return true;
+    }
 
     const promises = [
       this.paymentMethodFormRef?.validate(),
@@ -219,6 +313,12 @@ export class ModularCheckout {
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
+    // If Apple Pay token is available, use Apple Pay flow
+    if (this.applePayToken) {
+      await this.submitCheckoutWithApplePay();
+      return;
+    }
+
     const isValid = await this.validate();
     if (!isValid) {
       this.errorEvent.emit({

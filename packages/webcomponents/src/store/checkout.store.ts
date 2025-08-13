@@ -17,6 +17,7 @@ interface IInitialState {
   disableCreditCard: boolean;
   disablePaymentMethodGroup: boolean;
   paymentAmount: number;
+  paymentCurrency: string;
   paymentDescription: string;
   paymentMethodGroupId: string | undefined;
   paymentMethods: ICheckoutPaymentMethod[];
@@ -43,6 +44,7 @@ const initialState: IInitialState = {
   disableCreditCard: false,
   disablePaymentMethodGroup: false,
   paymentAmount: 0,
+  paymentCurrency: 'USD',
   paymentDescription: '',
   paymentMethodGroupId: undefined,
   paymentMethods: [],
