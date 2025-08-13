@@ -342,7 +342,9 @@ export class TokenizePaymentMethod {
             paymentMethodType={paymentMethodId}
           />
         </div>
-        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
+        <div class="mt-4">
+          <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
+        </div>
       </div>
     );
   }
