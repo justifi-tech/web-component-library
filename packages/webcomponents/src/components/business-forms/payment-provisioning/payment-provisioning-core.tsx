@@ -14,6 +14,7 @@ export class PaymentProvisioningCore {
   @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
+  @State() country: 'USA' | 'CAN' = 'USA';
 
   @Prop() businessId: string;
   @Prop() authToken: string;
@@ -41,6 +42,12 @@ export class PaymentProvisioningCore {
     this.getBusiness({
       onSuccess: (response) => {
         this.businessProvisioned = checkProvisioningStatus(response.data);
+        const biz = response?.data;
+        if (biz?.country_of_establishment === 'CAN' || biz?.country_of_establishment === 'USA') {
+          this.country = biz.country_of_establishment;
+        } else {
+          this.country = 'USA';
+        }
         if (this.businessProvisioned) {
           this.errorEvent.emit({
             message: 'A request to provision payments for this business has already been submitted.',
@@ -137,6 +144,7 @@ export class PaymentProvisioningCore {
             refs={this.refs}
             currentStep={this.currentStep}
             allowOptionalFields={this.allowOptionalFields}
+            country={this.country}
             handleFormLoading={this.handleFormLoading}
           />
           <div class='d-flex justify-content-between align-items-center'>

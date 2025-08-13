@@ -198,6 +198,7 @@ export interface IBusiness {
   updated_at: string;
   website_url: string;
   date_of_incorporation?: string;
+  country_of_establishment?: 'USA' | 'CAN';
 }
 
 export class Business implements IBusiness {
@@ -224,6 +225,7 @@ export class Business implements IBusiness {
   public website_url: string;
   public date_of_incorporation?: string;
   public product_categories: ProductCategories;
+  public country_of_establishment?: 'USA' | 'CAN';
 
   constructor(business: IBusiness) {
     this.additional_questions = business.additional_questions
@@ -255,6 +257,7 @@ export class Business implements IBusiness {
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
+    this.country_of_establishment = business.country_of_establishment || 'USA';
   }
 
   public get payload() {
@@ -275,6 +278,7 @@ export class Business implements IBusiness {
       tax_id: this.tax_id || '',
       website_url: this.website_url || '',
       date_of_incorporation: this.date_of_incorporation || '',
+      country_of_establishment: this.country_of_establishment || 'USA',
     };
   }
 }

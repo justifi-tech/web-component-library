@@ -10,6 +10,7 @@
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                       | `false`     |
 | `authToken`           | `auth-token`            |             | `string`                        | `undefined` |
 | `businessId`          | `business-id`           |             | `string`                        | `undefined` |
+| `country`             | `country`               |             | `"CAN" \| "USA"`                | `'USA'`     |
 | `currentStep`         | `current-step`          |             | `number`                        | `undefined` |
 | `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void` | `undefined` |
 | `refs`                | --                      |             | `any[]`                         | `undefined` |

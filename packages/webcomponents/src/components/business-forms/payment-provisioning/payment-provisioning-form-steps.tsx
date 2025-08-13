@@ -9,6 +9,7 @@ export class PaymentProvisioningFormSteps {
   @Prop() refs: any[];
   @Prop() currentStep: number;
   @Prop() allowOptionalFields?: boolean = false;
+  @Prop() country?: 'USA' | 'CAN' = 'USA';
   @Prop() handleFormLoading: (e: CustomEvent) => void
 
   get currentStepComponent() {
