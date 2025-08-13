@@ -1,14 +1,15 @@
 import { Component, h, State, Prop, Method } from '@stencil/core';
-import { BillingFormFields, nameOnlySchema } from './billing-form-schema';
+import { BillingFormFields, postalOnlySchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
+import { numberOnlyHandler } from '../../../ui-components/form/utils';
 import { FormController } from '../../../ui-components/form/form';
 import { StyledHost } from '../../../ui-components';
 
 @Component({
-  tag: 'justifi-bank-account-billing-form-simple',
+  tag: 'justifi-card-billing-form-simple',
   shadow: true,
 })
-export class BankAccountBillingFormSimple {
+export class CardBillingFormSimple {
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
@@ -16,7 +17,7 @@ export class BankAccountBillingFormSimple {
   @Prop({ mutable: true }) legend?: string;
 
   componentWillLoad() {
-    this.formController = new FormController(nameOnlySchema());
+    this.formController = new FormController(postalOnlySchema());
   }
 
   componentDidLoad() {
@@ -57,7 +58,7 @@ export class BankAccountBillingFormSimple {
 
     return (
       <StyledHost>
-        <div part={billingForm} class="mt-4">
+        <div part={billingForm}>
           <form>
             <fieldset>
               {this.legend && (
@@ -66,11 +67,13 @@ export class BankAccountBillingFormSimple {
               <div class="row gy-3">
                 <div class="col-12">
                   <form-control-text
-                    name='name'
-                    label='Full Name'
-                    defaultValue={billingFormDefaultValue.name}
-                    errorText={this.errors.name}
+                    name='address_postal_code'
+                    label="ZIP"
+                    defaultValue={billingFormDefaultValue.address_postal_code}
+                    errorText={this.errors.address_postal_code}
                     inputHandler={this.inputHandler}
+                    maxLength={5}
+                    keyDownHandler={numberOnlyHandler}
                   />
                 </div>
               </div>

@@ -96,7 +96,7 @@ app.get('/', async (req, res) => {
   const disableBankAccount = false;
   const disableCreditCard = false;
   const hideCardBillingForm = true;
-  const hideBankAccountBillingForm = true;
+  const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
     name: 'John Doe',

@@ -16,7 +16,7 @@ export class ModularCheckout {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
-  private billingInformationFormRef?: HTMLJustifiBillingInformationFormElement | HTMLJustifiPostalCodeFormElement;
+  private billingInformationFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiBankAccountBillingFormSimpleElement | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
   private getCheckout: Function;
@@ -144,7 +144,7 @@ export class ModularCheckout {
 
   private queryFormRefs() {
     this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
-    this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-information-form, justifi-postal-code-form');
+    this.billingInformationFormRef = this.hostEl.querySelector('justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple');
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
   }
@@ -172,6 +172,12 @@ export class ModularCheckout {
   }
 
   private async getPaymentMethod(submitCheckoutArgs: BillingFormFields): Promise<string | undefined> {
+    // If we have a payment token from the store (set by tokenize-payment-method), use it
+    if (checkoutStore.paymentToken) {
+      return checkoutStore.paymentToken;
+    }
+
+    // Fallback to the original tokenization logic for backward compatibility
     if (!this.paymentMethodFormRef) {
       return checkoutStore.selectedPaymentMethod;
     }
@@ -192,10 +198,14 @@ export class ModularCheckout {
 
   @Method()
   async validate(): Promise<boolean> {
-    const promises = [
-      this.paymentMethodFormRef?.validate(),
+    const promises: Promise<any>[] = [
       this.billingInformationFormRef?.validate()
     ];
+
+    // Only validate payment method form if we don't have a payment token from tokenize-payment-method
+    if (!checkoutStore.paymentToken && this.paymentMethodFormRef) {
+      promises.push(this.paymentMethodFormRef.validate());
+    }
 
     if (this.insuranceFormRef) {
       promises.push(this.insuranceFormRef.validate());
@@ -203,7 +213,16 @@ export class ModularCheckout {
 
     const validationResults = await Promise.all(promises);
 
-    return validationResults.every(result => result?.isValid !== false);
+    return validationResults.every(result => {
+      // Handle different return types from different form components
+      if (typeof result === 'boolean') {
+        return result;
+      }
+      if (result && typeof result === 'object' && 'isValid' in result) {
+        return result.isValid;
+      }
+      return result !== false;
+    });
   }
 
   @Method()

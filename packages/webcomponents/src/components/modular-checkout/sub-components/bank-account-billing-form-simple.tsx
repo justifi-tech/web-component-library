@@ -1,21 +1,22 @@
-import { Component, h, State, Prop, Method, Host } from '@stencil/core';
-import { BillingFormFields, postalOnlySchema } from './billing-form-schema';
+import { Component, h, State, Prop, Method } from '@stencil/core';
+import { BillingFormFields, nameOnlySchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
-import { numberOnlyHandler } from '../../../ui-components/form/utils';
 import { FormController } from '../../../ui-components/form/form';
+import { StyledHost } from '../../../ui-components';
 
 @Component({
-  tag: 'justifi-card-billing-form-simple',
+  tag: 'justifi-bank-account-billing-form-simple',
+  shadow: true,
 })
-export class CardBillingFormSimple {
+export class BankAccountBillingFormSimple {
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
-  
+
   @Prop({ mutable: true }) legend?: string;
 
   componentWillLoad() {
-    this.formController = new FormController(postalOnlySchema());
+    this.formController = new FormController(nameOnlySchema());
   }
 
   componentDidLoad() {
@@ -55,7 +56,7 @@ export class CardBillingFormSimple {
     const billingFormDefaultValue = this.formController.getInitialValues();
 
     return (
-      <Host>
+      <StyledHost>
         <div part={billingForm} class="mt-4">
           <form>
             <fieldset>
@@ -65,20 +66,18 @@ export class CardBillingFormSimple {
               <div class="row gy-3">
                 <div class="col-12">
                   <form-control-text
-                    name='address_postal_code'
-                    label="ZIP"
-                    defaultValue={billingFormDefaultValue.address_postal_code}
-                    errorText={this.errors.address_postal_code}
+                    name='name'
+                    label='Full Name'
+                    defaultValue={billingFormDefaultValue.name}
+                    errorText={this.errors.name}
                     inputHandler={this.inputHandler}
-                    maxLength={5}
-                    keyDownHandler={numberOnlyHandler}
                   />
                 </div>
               </div>
             </fieldset>
           </form>
         </div>
-      </Host>
+      </StyledHost >
     );
   }
 }

@@ -4,16 +4,11 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
-import { PaymentMethodTypes } from '../../api/Payment';
-import { PaymentMethodOption } from './payment-method-option-utils';
+import { PaymentMethodPayload } from './payment-method-payload';
 import { StyledHost } from '../../ui-components';
-
-const PaymentMethodTypeLabels = {
-  bankAccount: 'New bank account',
-  card: 'New credit or debit card',
-};
 
 @Component({
   tag: 'justifi-checkout',
@@ -21,16 +16,15 @@ const PaymentMethodTypeLabels = {
 export class Checkout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  selectedPaymentMethodOptionRef?: HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
+  tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
 
   @State() checkout: ICheckout;
   @State() complete: Function;
   @State() errorMessage: string = '';
   @State() insuranceToggled: boolean = false;
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
-  @State() paymentMethodOptions: PaymentMethodOption[] = [];
-  @State() savePaymentMethod: boolean = false;
   @State() serverError: string;
+  @State() tokenizedPaymentMethod?: PaymentMethodPayload;
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -70,11 +64,6 @@ export class Checkout {
     this.analytics?.cleanup();
   }
 
-  @Listen('checkboxChanged')
-  savePaymentMethodChanged(event: CustomEvent<boolean>) {
-    this.savePaymentMethod = event.detail;
-  }
-
   @Listen('submit-event')
   checkoutComplete(_event: CustomEvent<any>) {
     this.isSubmitting = false;
@@ -86,19 +75,38 @@ export class Checkout {
     console.error('checkout error', event.detail);
   }
 
-  @Listen('paymentMethodOptionSelected')
-  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
-    checkoutStore.selectedPaymentMethod = event.detail.id;
+  @Listen('submit-event')
+  async handleTokenizeSubmit(event: CustomEvent<{ response: PaymentMethodPayload }>) {
+    this.tokenizedPaymentMethod = event.detail.response;
+
+    if (event.detail.response.error) {
+      this.isSubmitting = false;
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        message: event.detail.response.error.message,
+        severity: ComponentErrorSeverity.ERROR
+      });
+      return;
+    }
+
+    // Now submit the checkout with the tokenized payment method
+    await this.submitCheckoutWithToken();
   }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;
+    this.tokenizePaymentMethodRef?.fillBillingForm(fields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    return { isValid: await this.modularCheckoutRef?.validate() };
+    const tokenizeValidation = await this.tokenizePaymentMethodRef?.validate();
+    const modularValidation = await this.modularCheckoutRef?.validate();
+
+    return {
+      isValid: (tokenizeValidation?.isValid ?? true) && (modularValidation ?? true)
+    };
   }
 
   private updateStore() {
@@ -112,28 +120,25 @@ export class Checkout {
 
   private async submit(_event) {
     this.isSubmitting = true;
+    // Trigger the tokenize payment method submission
+    this.tokenizePaymentMethodRef?.tokenizePaymentMethod();
+  }
+
+  private async submitCheckoutWithToken() {
+    if (!this.tokenizedPaymentMethod || this.tokenizedPaymentMethod.error) {
+      this.isSubmitting = false;
+      return;
+    }
+
+    // Set the payment token in the store for the modular checkout to use
+    checkoutStore.paymentToken = this.tokenizedPaymentMethod.token;
+
+    // Submit the checkout
     this.modularCheckoutRef.submitCheckout(checkoutStore.billingFormFields);
-  }
-
-  private get canSavePaymentMethod() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
-  }
-
-  private get showBillingForm() {
-    return (checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && !this.hideCardBillingForm)
-      || (checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && !this.hideBankAccountBillingForm);
-  }
-
-  private get showBillingFormSection() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
   }
 
   private get showPaymentTypeHeader() {
     return !this.disableCreditCard && !this.disableBankAccount;
-  }
-
-  private get showPostalCodeForm() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && this.hideCardBillingForm;
   }
 
   render() {
@@ -143,7 +148,7 @@ export class Checkout {
           ref={(el) => (this.modularCheckoutRef = el)}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
-          savePaymentMethod={this.canSavePaymentMethod && this.savePaymentMethod}
+          savePaymentMethod={checkoutStore.savePaymentMethod}
         >
           <div class="row gy-3 jfi-checkout-core">
             <div class="col-12" part={checkoutSummary}>
@@ -165,59 +170,20 @@ export class Checkout {
                   <div>
                     <justifi-saved-payment-methods />
                     <justifi-sezzle-payment-method />
-                    {!this.disableCreditCard && (
-                      <div>
-                        <payment-method-option
-                          paymentMethodOptionId={PaymentMethodTypes.card}
-                          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
-                          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
-                          radioButtonHidden={this.disableCreditCard}
-                          label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
-                        />
-                        {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
-                          <div class="mt-4 mb-4">
-                            <justifi-card-form />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {!this.disableBankAccount && (
-                      <div>
-                        <payment-method-option
-                          paymentMethodOptionId={PaymentMethodTypes.bankAccount}
-                          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
-                          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
-                          radioButtonHidden={this.disableBankAccount}
-                          label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
-                        />
-                        {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
-                          <div class="mt-4 mb-4">
-                            <justifi-bank-account-form />
-                          </div>
-                        )}
-                      </div>
-                    )}
+                    <justifi-tokenize-payment-method
+                      ref={(el) => (this.tokenizePaymentMethodRef = el)}
+                      authToken={this.authToken}
+                      accountId={checkoutStore.accountId}
+                      disableCreditCard={this.disableCreditCard}
+                      disableBankAccount={this.disableBankAccount}
+                      hideCardBillingForm={this.hideCardBillingForm}
+                      hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+                      hideSubmitButton={true}
+                      paymentMethodGroupId={checkoutStore.paymentMethodGroupId}
+                    />
                   </div>
                 </section>
               </div>
-            </div>
-            {this.showBillingFormSection && (
-              <div class="col-12 mt-4">
-                {this.showBillingForm && (
-                  <justifi-header text="Billing Address" level="h2" class="fs-5 fw-bold pb-3" />
-                )}
-                {this.showPostalCodeForm && (
-                  <justifi-postal-code-form />
-                )}
-                {this.showBillingForm && (
-                  <justifi-billing-information-form />
-                )}
-              </div>
-            )}
-            <div class="col-12">
-              {this.canSavePaymentMethod && (
-                <justifi-save-new-payment-method />
-              )}
             </div>
             <div class="mt-4">
               <justifi-button

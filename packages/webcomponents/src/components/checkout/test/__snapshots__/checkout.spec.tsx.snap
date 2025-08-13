@@ -21,17 +21,11 @@ exports[`justifi-checkout renders loading 1`] = `
             <div>
               <justifi-saved-payment-methods></justifi-saved-payment-methods>
               <justifi-sezzle-payment-method></justifi-sezzle-payment-method>
-              <div>
-                <payment-method-option label="New credit or debit card" paymentmethodoptionid="card"></payment-method-option>
-              </div>
-              <div>
-                <payment-method-option label="New bank account" paymentmethodoptionid="bankAccount"></payment-method-option>
-              </div>
+              <justifi-tokenize-payment-method accountid="" hidesubmitbutton=""></justifi-tokenize-payment-method>
             </div>
           </section>
         </div>
       </div>
-      <div class="col-12"></div>
       <div class="mt-4">
         <justifi-button text="Pay" type="submit" variant="primary"></justifi-button>
       </div>

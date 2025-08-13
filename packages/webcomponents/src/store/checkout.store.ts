@@ -20,6 +20,7 @@ interface IInitialState {
   paymentDescription: string;
   paymentMethodGroupId: string | undefined;
   paymentMethods: ICheckoutPaymentMethod[];
+  paymentToken?: string;
   savePaymentMethod: boolean;
   selectedPaymentMethod: string;
   totalAmount: number;
@@ -45,6 +46,7 @@ const initialState: IInitialState = {
   paymentDescription: '',
   paymentMethodGroupId: undefined,
   paymentMethods: [],
+  paymentToken: undefined,
   savePaymentMethod: false,
   selectedPaymentMethod: '',
   totalAmount: 0,

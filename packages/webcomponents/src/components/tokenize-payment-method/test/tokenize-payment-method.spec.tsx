@@ -1,9 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { TokenizePaymentMethod } from '../tokenize-payment-method';
 import { BillingForm } from '../../checkout/billing-form/billing-form';
-import { BillingFormFull } from '../../checkout/billing-form/billing-form-full';
-import { CardBillingFormSimple } from '../../checkout/billing-form/card-billing-form-simple';
-import { BankAccountBillingFormSimple } from '../../checkout/billing-form/bank-account-billing-form-simple';
+import { BillingFormFull } from '../../modular-checkout/sub-components/billing-form-full';
+import { CardBillingFormSimple } from '../../modular-checkout/sub-components/card-billing-form-simple';
+import { BankAccountBillingFormSimple } from '../../modular-checkout/sub-components/bank-account-billing-form-simple';
 import { SaveNewPaymentMethod } from '../../checkout/save-new-payment-method';
 
 describe('tokenize-payment-method', () => {
@@ -73,13 +73,28 @@ describe('tokenize-payment-method', () => {
     expect(instance.showSimpleBankAccountBillingForm).toBe(false);
 
     // Verify only ZIP field is rendered
-    const nameField = page.root?.querySelector('[name="name"]');
-    const addressField = page.root?.querySelector('[name="address_line1"]');
-    const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
+    // CardBillingFormSimple uses shadow DOM, so we need to access the shadow root
+    const cardBillingFormSimpleElement = page.root?.querySelector('justifi-card-billing-form-simple');
+    const shadowRoot = cardBillingFormSimpleElement?.shadowRoot;
 
-    expect(nameField).toBeFalsy(); // Should not be in DOM
-    expect(addressField).toBeFalsy(); // Should not be in DOM  
-    expect(postalCodeField).toBeTruthy(); // Should be in DOM
+    if (shadowRoot) {
+      const nameField = shadowRoot.querySelector('[name="name"]');
+      const addressField = shadowRoot.querySelector('[name="address_line1"]');
+      const postalCodeField = shadowRoot.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeFalsy(); // Should not be in DOM
+      expect(addressField).toBeFalsy(); // Should not be in DOM  
+      expect(postalCodeField).toBeTruthy(); // Should be in DOM
+    } else {
+      // Fallback to direct querying if no shadow root
+      const nameField = page.root?.querySelector('[name="name"]');
+      const addressField = page.root?.querySelector('[name="address_line1"]');
+      const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeFalsy(); // Should not be in DOM
+      expect(addressField).toBeFalsy(); // Should not be in DOM  
+      expect(postalCodeField).toBeTruthy(); // Should be in DOM
+    }
   });
 
   it('should render only name field when hideBankAccountBillingForm is true', async () => {
@@ -100,15 +115,28 @@ describe('tokenize-payment-method', () => {
     expect(instance.showSimpleBankAccountBillingForm).toBe(true);
 
     // Verify only name field is rendered
-    // Since BankAccountBillingFormSimple uses shadow DOM, we need to access shadow root
-    const bankAccountForm = page.root?.querySelector('justifi-bank-account-billing-form-simple');
-    const nameField = bankAccountForm?.shadowRoot?.querySelector('[name="name"]');
-    const addressField = page.root?.querySelector('[name="address_line1"]');
-    const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
+    // BankAccountBillingFormSimple uses shadow DOM, so we need to access the shadow root
+    const bankAccountBillingFormSimpleElement = page.root?.querySelector('justifi-bank-account-billing-form-simple');
+    const shadowRoot = bankAccountBillingFormSimpleElement?.shadowRoot;
 
-    expect(nameField).toBeTruthy(); // Should be in DOM
-    expect(addressField).toBeFalsy(); // Should not be in DOM
-    expect(postalCodeField).toBeFalsy(); // Should not be in DOM
+    if (shadowRoot) {
+      const nameField = shadowRoot.querySelector('[name="name"]');
+      const addressField = shadowRoot.querySelector('[name="address_line1"]');
+      const postalCodeField = shadowRoot.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeTruthy(); // Should be in DOM
+      expect(addressField).toBeFalsy(); // Should not be in DOM
+      expect(postalCodeField).toBeFalsy(); // Should not be in DOM
+    } else {
+      // Fallback to direct querying if no shadow root
+      const nameField = page.root?.querySelector('[name="name"]');
+      const addressField = page.root?.querySelector('[name="address_line1"]');
+      const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeTruthy(); // Should be in DOM
+      expect(addressField).toBeFalsy(); // Should not be in DOM
+      expect(postalCodeField).toBeFalsy(); // Should not be in DOM
+    }
   });
 
 });

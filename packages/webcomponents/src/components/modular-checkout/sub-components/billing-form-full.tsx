@@ -1,38 +1,26 @@
-import { Component, h, State, Method } from '@stencil/core';
-import { BillingFormFields, billingFormSchema } from './billing-form-schema';
+import { Component, h, State, Prop, Method } from '@stencil/core';
+import { BillingFormFields, fullBillingSchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
+import { Header3, StyledHost } from '../../../ui-components';
 import { numberOnlyHandler } from '../../../ui-components/form/utils';
 import StateOptions from '../../../utils/state-options';
 import { FormController } from '../../../ui-components/form/form';
-import { StyledHost } from '../../../ui-components';
-import { onChange } from '../../../store/checkout.store';
 
 @Component({
-  tag: 'justifi-billing-information-form',
-  shadow: true
+  tag: 'justifi-billing-form-full',
+  shadow: true,
 })
-export class BillingInformationForm {
-  unsubscribe: () => void;
-
+export class BillingFormFull {
   @State() formController: FormController;
   @State() billingInfo: {}
   @State() errors: any = {};
 
-  connectedCallback() {
-    this.unsubscribe = onChange('billingFormFields', (newValue: BillingFormFields) => {
-      this.formController.setInitialValues(newValue);
-    });
-  }
-
-  disconnectedCallback() {
-    this.unsubscribe?.();
-  }
+  @Prop({ mutable: true }) legend?: string;
 
   componentWillLoad() {
-    this.formController = new FormController(billingFormSchema());
-  }
+    this.formController = new FormController(fullBillingSchema());
 
-  componentDidLoad() {
+    // Set up subscriptions here to avoid warnings about setting state during componentDidLoad
     this.formController.values.subscribe(values =>
       this.billingInfo = { ...values }
     );
@@ -49,33 +37,39 @@ export class BillingInformationForm {
   }
 
   @Method()
-  async fill(values: BillingFormFields) {
-    this.formController.setInitialValues(values);
+  async getValues(): Promise<BillingFormFields> {
     return this.formController.values.getValue();
   }
 
   @Method()
-  async getValues(): Promise<BillingFormFields> {
-    return this.formController.values.getValue();
+  async fill(fields: BillingFormFields) {
+    this.formController.setInitialValues(fields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean, errors: any }> {
     const isValid: boolean = await this.formController.validate();
     const errors = this.formController.errors.getValue();
-
     return { isValid, errors };
   }
 
   render() {
+    // Guard clause to ensure formController is initialized before rendering
+    if (!this.formController) {
+      return null;
+    }
 
     const billingFormDefaultValue = this.formController.getInitialValues();
 
     return (
       <StyledHost>
-        <div part={billingForm}>
+        <div part={billingForm} class="mt-4">
+          <Header3 text="Billing address" class="fs-6 fw-bold lh-lg mb-4" />
           <form>
             <fieldset>
+              {this.legend && (
+                <legend>{this.legend}</legend>
+              )}
               <div class="row gy-3">
                 <div class="col-12">
                   <form-control-text
