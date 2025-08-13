@@ -251,8 +251,6 @@ export class GooglePayService implements IGooglePayService {
     label: string,
     countryCode: string = 'US',
     currencyCode: string = 'USD',
-    gateway: string = 'TestJustiFi',
-    gatewayMerchantId: string,
     merchantName: string,
     merchantId?: string
   ): IGooglePayPaymentDataRequest {
@@ -260,17 +258,14 @@ export class GooglePayService implements IGooglePayService {
       apiVersion: 2,
       apiVersionMinor: 0,
       allowedPaymentMethods: [
-        GooglePayHelpers.createPaymentMethodData(gateway, gatewayMerchantId)
+        GooglePayHelpers.createPaymentMethodData()
       ],
       transactionInfo: {
         countryCode,
         currencyCode,
         totalPriceStatus: 'FINAL',
         totalPrice: GooglePayHelpers.formatAmount(amount),
-        totalPriceLabel: label,
-        displayItems: [
-          GooglePayHelpers.createLineItem(label, amount, 'LINE_ITEM')
-        ]
+        totalPriceLabel: label
       },
       merchantInfo: {
         merchantId,

@@ -32,10 +32,8 @@ export class GooglePay {
   private googlePayService: GooglePayService;
   @Prop() countryCode: string = "US";
   @Prop() environment: GooglePayEnvironment = GooglePayEnvironment.TEST;
-  @Prop() merchantId?: string;
-  @Prop() merchantName: string = "JustiFi Checkout";
-  @Prop() gatewayMerchantId: string = "";
-  @Prop() gateway: string = "example";
+  @Prop() merchantId: string = "BCR2DN7TZDEZJ4JC";
+  @Prop() merchantName: string = "Test.JustiFi";
   @Prop() apiBaseUrl: string = "https://ahalaburda.zapto.org/api/v1";
   @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
   @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
@@ -72,8 +70,6 @@ export class GooglePay {
   }
 
   @Watch("merchantId")
-  @Watch("gatewayMerchantId")
-  @Watch("gateway")
   @Watch("environment")
   @Watch("apiBaseUrl")
   @Watch("buttonType")
@@ -101,12 +97,6 @@ export class GooglePay {
         return;
       }
 
-      if (!this.gatewayMerchantId) {
-        this.error = "Gateway merchant ID is required";
-        this.isLoading = false;
-        return;
-      }
-
       this.isAvailable = GooglePayHelpers.isGooglePaySupported();
 
       if (!this.isAvailable) {
@@ -114,13 +104,13 @@ export class GooglePay {
         this.isLoading = false;
         return;
       }
+      console.log("merchant name", this.merchantName);
+      console.log("merchant id", this.merchantId);
 
       const googlePayConfig: IGooglePayConfig = {
         environment: this.environment,
         merchantId: this.merchantId,
         merchantName: this.merchantName,
-        gatewayMerchantId: this.gatewayMerchantId,
-        gateway: this.gateway,
         buttonType: this.buttonType,
         buttonStyle: this.buttonStyle,
         buttonSizeMode: this.buttonSizeMode,
@@ -160,8 +150,6 @@ export class GooglePay {
       checkoutStore.paymentDescription,
       this.countryCode,
       checkoutStore.paymentCurrency,
-      this.gateway,
-      this.gatewayMerchantId,
       this.merchantName,
       this.merchantId
     );
@@ -188,7 +176,6 @@ export class GooglePay {
         paymentAmount: checkoutStore.paymentAmount,
         paymentDescription: checkoutStore.paymentDescription,
         paymentCurrency: checkoutStore.paymentCurrency,
-        gatewayMerchantId: this.gatewayMerchantId,
       });
 
       const paymentDataRequest = this.createPaymentDataRequest();

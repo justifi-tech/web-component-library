@@ -93,8 +93,6 @@ export interface IGooglePayConfig {
   buttonStyle?: GooglePayButtonStyle;
   buttonSizeMode?: GooglePayButtonSizeMode;
   buttonLocale?: string;
-  gatewayMerchantId?: string;
-  gateway?: string;
 }
 
 export interface IGooglePayError {
@@ -202,8 +200,6 @@ export class GooglePayConfig implements IGooglePayConfig {
   public buttonStyle?: GooglePayButtonStyle;
   public buttonSizeMode?: GooglePayButtonSizeMode;
   public buttonLocale?: string;
-  public gatewayMerchantId?: string;
-  public gateway?: string;
 
   constructor(data: IGooglePayConfig) {
     this.environment = data.environment;
@@ -213,15 +209,12 @@ export class GooglePayConfig implements IGooglePayConfig {
     this.buttonStyle = data.buttonStyle || GooglePayButtonStyle.BLACK;
     this.buttonSizeMode = data.buttonSizeMode || GooglePayButtonSizeMode.STATIC;
     this.buttonLocale = data.buttonLocale || 'en';
-    this.gatewayMerchantId = data.gatewayMerchantId;
-    this.gateway = data.gateway || 'TestJustiFi';
   }
 
   public get isValid(): boolean {
     return !!(
       this.environment &&
-      this.merchantName &&
-      this.gatewayMerchantId
+      this.merchantName
     );
   }
 }
@@ -324,8 +317,6 @@ export class GooglePayHelpers {
    */
   static getDefaultSupportedNetworks(): string[] {
     return [
-      'AMEX',
-      'DISCOVER',
       'MASTERCARD',
       'VISA'
     ];
@@ -355,12 +346,12 @@ export class GooglePayHelpers {
   /**
    * Create default tokenization specification
    */
-  static createTokenizationSpecification(gateway: string, gatewayMerchantId: string): IGooglePayTokenizationSpecification {
+  static createTokenizationSpecification(): IGooglePayTokenizationSpecification {
     return {
-      type: 'PAYMENT_GATEWAY',
+      type: 'DIRECT',
       parameters: {
-        gateway,
-        gatewayMerchantId
+        'protocolVersion': 'ECv2',
+        'publicKey': 'BHaQr3iRmzQE1j2VhPQwupiSz+5K+QTxhktS1nJlJZbIUYTHyIttX8CBPVkRgC56rAv6uYifyiiLhi2tXCZHLIk='
       }
     };
   }
@@ -368,11 +359,11 @@ export class GooglePayHelpers {
   /**
    * Create default payment method data
    */
-  static createPaymentMethodData(gateway: string, gatewayMerchantId: string): IGooglePayPaymentMethodData {
+  static createPaymentMethodData(): IGooglePayPaymentMethodData {
     return {
       type: 'CARD',
       parameters: this.createDefaultCardParameters(),
-      tokenizationSpecification: this.createTokenizationSpecification(gateway, gatewayMerchantId)
+      tokenizationSpecification: this.createTokenizationSpecification()
     };
   }
 
@@ -383,7 +374,7 @@ export class GooglePayHelpers {
     return {
       apiVersion: 2,
       apiVersionMinor: 0,
-      allowedPaymentMethods: [this.createPaymentMethodData('justifi', 'dummy')]
+      allowedPaymentMethods: [this.createPaymentMethodData()]
     };
   }
 }
