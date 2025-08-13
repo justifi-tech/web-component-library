@@ -12,11 +12,9 @@ import {
   IApplePayService,
   IApplePayPaymentProcessRequest,
   IApplePayPaymentResponse,
-  IApplePayValidateEvent,
   IApplePayCancelEvent,
   IApplePayToken,
 } from '../ApplePay';
-
 
 export class ApplePayService implements IApplePayService {
   private applePayConfig?: ApplePayConfig;
@@ -56,7 +54,7 @@ export class ApplePayService implements IApplePayService {
   }
 
   /**
-   * Validate merchant with Apple Pay servers via API 
+   * Validate merchant with Apple Pay servers via API
    */
   async validateMerchant(authToken: string): Promise<IMerchantSession> {
     const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
@@ -227,9 +225,7 @@ export class ApplePayService implements IApplePayService {
       return;
     }
 
-    this.currentSession.onvalidatemerchant = async (
-      event: IApplePayValidateEvent
-    ) => {
+    this.currentSession.onvalidatemerchant = async () => {
       try {
         if (!this.authToken) {
           throw new Error(
