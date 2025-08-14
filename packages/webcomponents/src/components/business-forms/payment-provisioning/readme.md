@@ -5,14 +5,15 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                            | Default     |
-| --------------------- | ----------------------- | ----------- | ------------------------------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                       | `false`     |
-| `authToken`           | `auth-token`            |             | `string`                        | `undefined` |
-| `businessId`          | `business-id`           |             | `string`                        | `undefined` |
-| `currentStep`         | `current-step`          |             | `number`                        | `undefined` |
-| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void` | `undefined` |
-| `refs`                | --                      |             | `any[]`                         | `undefined` |
+| Property              | Attribute               | Description | Type                                 | Default           |
+| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `false`           |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined`       |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined`       |
+| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
+| `currentStep`         | `current-step`          |             | `number`                             | `undefined`       |
+| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
+| `refs`                | --                      |             | `any[]`                              | `undefined`       |
 
 
 ## Dependencies

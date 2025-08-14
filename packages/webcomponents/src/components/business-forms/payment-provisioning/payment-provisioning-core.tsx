@@ -5,6 +5,8 @@ import { Header1, StyledHost } from '../../../ui-components';
 import { text } from '../../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
 import { BusinessFormClickActions } from '../utils/event-types';
+import { CountryCode } from '../../../utils/country-codes';
+import { Business } from '../../../api/Business';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
@@ -14,6 +16,7 @@ export class PaymentProvisioningCore {
   @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
+  @State() country: CountryCode = CountryCode.USA;
 
   @Prop() businessId: string;
   @Prop() authToken: string;
@@ -40,7 +43,9 @@ export class PaymentProvisioningCore {
   setBusinessProvisioned = () => {
     this.getBusiness({
       onSuccess: (response) => {
-        this.businessProvisioned = checkProvisioningStatus(response.data);
+        const business = new Business(response.data);
+        this.businessProvisioned = checkProvisioningStatus(business);
+        this.country = business.country_of_establishment;
         if (this.businessProvisioned) {
           this.errorEvent.emit({
             message: 'A request to provision payments for this business has already been submitted.',
@@ -137,6 +142,7 @@ export class PaymentProvisioningCore {
             refs={this.refs}
             currentStep={this.currentStep}
             allowOptionalFields={this.allowOptionalFields}
+            country={this.country}
             handleFormLoading={this.handleFormLoading}
           />
           <div class='d-flex justify-content-between align-items-center'>
