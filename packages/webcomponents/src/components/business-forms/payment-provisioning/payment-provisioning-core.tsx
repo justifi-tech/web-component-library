@@ -6,6 +6,7 @@ import { text } from '../../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
 import { BusinessFormClickActions } from '../utils/event-types';
 import { CountryCode } from '../../../utils/country-codes';
+import { Business } from '../../../api/Business';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
@@ -42,13 +43,9 @@ export class PaymentProvisioningCore {
   setBusinessProvisioned = () => {
     this.getBusiness({
       onSuccess: (response) => {
-        this.businessProvisioned = checkProvisioningStatus(response.data);
-        const biz = response?.data;
-        if (biz?.country_of_establishment === CountryCode.CAN || biz?.country_of_establishment === CountryCode.USA) {
-          this.country = biz.country_of_establishment;
-        } else {
-          this.country = CountryCode.USA;
-        }
+        const business = new Business(response.data);
+        this.businessProvisioned = checkProvisioningStatus(business);
+        this.country = business.country_of_establishment;
         if (this.businessProvisioned) {
           this.errorEvent.emit({
             message: 'A request to provision payments for this business has already been submitted.',
