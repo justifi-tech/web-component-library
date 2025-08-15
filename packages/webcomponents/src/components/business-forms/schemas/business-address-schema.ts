@@ -32,3 +32,10 @@ export const addressSchema = (allowOptionalFields?: boolean, country?: CountryCo
 
   return allowOptionalFields ? easySchema : schema;
 };
+
+// Country-specific schema convenience wrappers
+export const addressSchemaUSA = (allowOptionalFields?: boolean) =>
+  addressSchema(allowOptionalFields, CountryCode.USA);
+
+export const addressSchemaCAN = (allowOptionalFields?: boolean) =>
+  addressSchema(allowOptionalFields, CountryCode.CAN);

@@ -47,3 +47,10 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean, country?: 
 
   return allowOptionalFields ? easySchema : schema;
 };
+
+// Country-specific schema convenience wrappers
+export const businessCoreInfoSchemaUSA = (allowOptionalFields?: boolean) =>
+  businessCoreInfoSchema(allowOptionalFields, CountryCode.USA);
+
+export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
+  businessCoreInfoSchema(allowOptionalFields, CountryCode.CAN);
