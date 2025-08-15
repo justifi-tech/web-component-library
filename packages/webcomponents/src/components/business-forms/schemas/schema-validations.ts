@@ -62,7 +62,6 @@ export const taxIdValidation = string()
   .transform(transformEmptyString);
 
 // Country-aware helpers (backward compatible)
-// state validation helper removed; state is select-backed and only required at schema level
 
 export const makePostalValidation = (country: CountryCode) =>
   string()
