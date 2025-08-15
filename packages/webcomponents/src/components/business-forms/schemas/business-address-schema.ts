@@ -16,8 +16,8 @@ export const baseAddressSchema = (allowOptionalFields?: boolean) => {
     line1: lineOneValidation.required('Enter street address'),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.required('Enter city'),
-    state: string().transform((v) => (v === '' ? undefined : v)).required('Select state'),
-    postal_code: string().transform((v) => (v === '' ? undefined : v)).required('Enter postal code'),
+    state: string().required('Select state'),
+    postal_code: string().required('Enter postal code'),
     country: string().required('Select country')
   });
 
@@ -25,8 +25,8 @@ export const baseAddressSchema = (allowOptionalFields?: boolean) => {
     line1: lineOneValidation.nullable(),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.nullable(),
-    state: string().transform((v) => (v === '' ? undefined : v)).nullable(),
-    postal_code: string().transform((v) => (v === '' ? undefined : v)).nullable(),
+    state: string().nullable(),
+    postal_code: string().nullable(),
     country: string().required('Select country')
   });
 
