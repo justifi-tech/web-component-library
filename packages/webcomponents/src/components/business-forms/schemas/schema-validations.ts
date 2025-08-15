@@ -1,5 +1,8 @@
 import { string } from 'yup';
 import StateOptions from '../../../utils/state-options';
+import { CountryCode } from '../../../utils/country-codes';
+import { countryValidation, getStateValues } from '../utils/country-config';
+import { businessClassificationOptions as businessClassificationOptionsUSAOnly } from '../utils/business-form-options';
 import {
   businessServiceReceivedOptions,
   recurringPaymentsOptions,
@@ -45,7 +48,7 @@ export const websiteUrlValidation = string()
 
 export const businessClassificationValidation = string()
   .oneOf(
-    businessClassificationOptions.map((option) => option.value),
+    businessClassificationOptionsUSAOnly.map((option) => option.value),
     'Select business classification'
   )
   .transform(transformEmptyString);
@@ -64,6 +67,65 @@ export const taxIdValidation = string()
     return value !== '123456789';
   })
   .transform(transformEmptyString);
+
+// Country-aware helpers (backward compatible)
+export const makeStateValidation = (country: CountryCode) =>
+  string()
+    .oneOf(
+      getStateValues(country),
+      'Enter a 2-letter state abbreviation, such as CA'
+    )
+    .transform(transformEmptyString);
+
+export const makePostalValidation = (country: CountryCode) =>
+  string()
+    .matches(
+      countryValidation[country].postalRegex,
+      'Enter valid postal code'
+    )
+    .transform(transformEmptyString);
+
+export const makeIdentityNumberValidation = (country: CountryCode) => {
+  if (country === CountryCode.CAN) {
+    return string()
+      .matches(numbersOnlyRegex, 'Enter valid SIN')
+      .length(countryValidation[country].identityDigits, 'Enter valid SIN')
+      .test('not-repeat', 'Enter valid SIN', (value) => {
+        return !/^(\d)\1+$/.test(value);
+      })
+      .test('not-seq', 'Enter valid SIN', (value) => {
+        return value !== '123456789';
+      })
+      .transform(transformEmptyString);
+  }
+  // USA default (SSN)
+  return ssnValidation;
+};
+
+export const makeTaxIdValidation = (country: CountryCode) => {
+  if (country === CountryCode.CAN) {
+    return string()
+      .matches(numbersOnlyRegex, 'Enter valid Business Number (BN)')
+      .length(countryValidation[country].taxIdDigits, 'Enter valid Business Number (BN)')
+      .test('not-repeat', 'Enter valid Business Number (BN)', (value) => {
+        return !/^(\d)\1+$/.test(value);
+      })
+      .test('not-seq', 'Enter valid Business Number (BN)', (value) => {
+        return value !== '123456789';
+      })
+      .transform(transformEmptyString);
+  }
+  // USA default
+  return taxIdValidation;
+};
+
+export const makeBusinessClassificationValidation = (country: CountryCode) => {
+  // CAN placeholder duplicates USA options for now
+  const allowedValues = businessClassificationOptionsUSAOnly.map((option) => option.value);
+  return string()
+    .oneOf(allowedValues, 'Select business classification')
+    .transform(transformEmptyString);
+};
 
 export const dateOfIncorporationValidation = string()
   .test(

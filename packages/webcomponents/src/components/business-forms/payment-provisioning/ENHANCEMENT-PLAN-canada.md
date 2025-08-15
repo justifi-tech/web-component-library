@@ -36,7 +36,7 @@ Acceptance:
 Acceptance:
 - Importing config returns correct labels/options per country.
 
-### 3) Validation refactor (backward compatible)
+### 3) Validation refactor (backward compatible) — Status: Complete
 - In `schema-validations.ts`, extract country-aware helpers:
   - `makeStateValidation(country)` uses `stateValues` from config.
   - `makePostalValidation(country)` uses `postalRegex` from config (USA: 5 digits; CAN: A1A 1A1).

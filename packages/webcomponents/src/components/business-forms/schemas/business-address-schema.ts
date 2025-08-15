@@ -4,16 +4,20 @@ import {
   lineOneValidation, 
   lineTwoValidation,
   postalValidation,
-  stateValidation
+  stateValidation,
+  makePostalValidation,
+  makeStateValidation
 } from './schema-validations';
+import { CountryCode } from '../../../utils/country-codes';
 
-export const addressSchema = (allowOptionalFields?: boolean) => {
+export const addressSchema = (allowOptionalFields?: boolean, country?: CountryCode) => {
+  const effectiveCountry = country || CountryCode.USA;
   const schema = object({
     line1: lineOneValidation.required('Enter street address'),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.required('Enter city'),
-    state: stateValidation.required('Select state'),
-    postal_code: postalValidation.required('Enter postal code'),
+    state: (country ? makeStateValidation(effectiveCountry) : stateValidation).required('Select state'),
+    postal_code: (country ? makePostalValidation(effectiveCountry) : postalValidation).required('Enter postal code'),
     country: string().required('Select country')
   });
 
@@ -21,8 +25,8 @@ export const addressSchema = (allowOptionalFields?: boolean) => {
     line1: lineOneValidation.nullable(),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.nullable(),
-    state: stateValidation.nullable(),
-    postal_code: postalValidation.nullable(),
+    state: (country ? makeStateValidation(effectiveCountry) : stateValidation).nullable(),
+    postal_code: (country ? makePostalValidation(effectiveCountry) : postalValidation).nullable(),
     country: string().required('Select country')
   });
 
