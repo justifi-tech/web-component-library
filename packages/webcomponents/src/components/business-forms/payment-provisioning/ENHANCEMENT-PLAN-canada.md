@@ -16,7 +16,7 @@ Add Canada (CAN) support to `@payment-provisioning` with minimal branching by in
 
 ## Incremental Plan
 
-### 1) Data model plumbing (no UI change)
+### 1) Data model plumbing (no UI change) — Status: Complete
 - Add `country_of_establishment?: 'USA' | 'CAN'` to:
   - `packages/webcomponents/src/api/Business.ts` → `IBusiness` and `Business` class (constructor, `payload`). Default to `USA` if missing.
 - Ensure `justifi-payment-provisioning` fetches the business and exposes `country_of_establishment` to form steps via prop/context.
@@ -24,7 +24,7 @@ Add Canada (CAN) support to `@payment-provisioning` with minimal branching by in
 Acceptance:
 - Business load works for existing USA data, no UI changes.
 
-### 2) Country configuration module
+### 2) Country configuration module — Status: Complete
 - Create `packages/webcomponents/src/components/business-forms/utils/country-config.ts`:
   - `CountryCode = 'USA' | 'CAN'`
   - Labels: state/province, zip/postal, SSN/SIN, Tax ID/Business Number (BN)
