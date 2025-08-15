@@ -9,7 +9,6 @@ import {
   websiteUrlValidation,
   dateOfIncorporationValidation,
   businessClassificationValidation,
-  makeBusinessClassificationValidation,
   makeTaxIdValidation
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
@@ -47,13 +46,13 @@ export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
 // Country-specific schema convenience wrappers
 export const businessCoreInfoSchemaUSA = (allowOptionalFields?: boolean) =>
   baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
-    classification: makeBusinessClassificationValidation(CountryCode.USA).required('Select business classification'),
+    classification: string().required('Select business classification'),
     tax_id: makeTaxIdValidation(CountryCode.USA).required('Enter valid tax ID (SSN or EIN) without dashes'),
   } as any));
 
 export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
   baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
-    classification: makeBusinessClassificationValidation(CountryCode.CAN).required('Select business classification'),
+    classification: string().required('Select business classification'),
     tax_id: makeTaxIdValidation(CountryCode.CAN).required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
   } as any));
 

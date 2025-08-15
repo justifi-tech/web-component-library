@@ -4,9 +4,7 @@ import {
   lineOneValidation, 
   lineTwoValidation,
   postalValidation,
-  stateValidation,
   makePostalValidation,
-  makeStateValidation
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
 
@@ -36,13 +34,11 @@ export const baseAddressSchema = (allowOptionalFields?: boolean) => {
 // Country-specific schema convenience wrappers
 export const addressSchemaUSA = (allowOptionalFields?: boolean) =>
   baseAddressSchema(allowOptionalFields).concat(object({
-    state: stateValidation,
     postal_code: postalValidation,
   } as any));
 
 export const addressSchemaCAN = (allowOptionalFields?: boolean) =>
   baseAddressSchema(allowOptionalFields).concat(object({
-    state: makeStateValidation(CountryCode.CAN),
     postal_code: makePostalValidation(CountryCode.CAN),
   } as any));
 

@@ -1,14 +1,12 @@
 import { string } from 'yup';
 import StateOptions from '../../../utils/state-options';
 import { CountryCode } from '../../../utils/country-codes';
-import { countryValidation, getStateValues } from '../utils/country-config';
-import { businessClassificationOptions as businessClassificationOptionsUSAOnly } from '../utils/business-form-options';
+import { countryValidation } from '../utils/country-config';
 import {
   businessServiceReceivedOptions,
   recurringPaymentsOptions,
   seasonalBusinessOptions,
   bankAccountTypeOptions,
-  businessClassificationOptions,
 } from '../utils/business-form-options';
 import {
   numbersOnlyRegex,
@@ -46,12 +44,7 @@ export const websiteUrlValidation = string()
   .matches(urlRegex, 'Enter valid website url')
   .transform(transformEmptyString);
 
-export const businessClassificationValidation = string()
-  .oneOf(
-    businessClassificationOptionsUSAOnly.map((option) => option.value),
-    'Select business classification'
-  )
-  .transform(transformEmptyString);
+export const businessClassificationValidation = string().transform(transformEmptyString);
 
 export const industryValidation = string()
   .min(2, 'Industry must be at least 2 characters')
@@ -69,13 +62,8 @@ export const taxIdValidation = string()
   .transform(transformEmptyString);
 
 // Country-aware helpers (backward compatible)
-export const makeStateValidation = (country: CountryCode) =>
-  string()
-    .oneOf(
-      getStateValues(country),
-      'Enter a 2-letter state abbreviation, such as CA'
-    )
-    .transform(transformEmptyString);
+export const makeStateValidation = (_country: CountryCode) =>
+  string().transform(transformEmptyString);
 
 export const makePostalValidation = (country: CountryCode) =>
   string()
@@ -119,13 +107,8 @@ export const makeTaxIdValidation = (country: CountryCode) => {
   return taxIdValidation;
 };
 
-export const makeBusinessClassificationValidation = (country: CountryCode) => {
-  // CAN placeholder duplicates USA options for now
-  const allowedValues = businessClassificationOptionsUSAOnly.map((option) => option.value);
-  return string()
-    .oneOf(allowedValues, 'Select business classification')
-    .transform(transformEmptyString);
-};
+export const makeBusinessClassificationValidation = (_country: CountryCode) =>
+  string().transform(transformEmptyString);
 
 export const dateOfIncorporationValidation = string()
   .test(
