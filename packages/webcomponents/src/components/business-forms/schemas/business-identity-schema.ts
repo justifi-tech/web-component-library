@@ -1,15 +1,18 @@
 import { object, string } from 'yup';
-import { addressSchema } from './business-address-schema';
+import { addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
 import { 
   dobValidation, 
   emailValidation, 
   identityNameValidation, 
   identityTitleValidation, 
   phoneValidation, 
-  ssnValidation
+  ssnValidation,
+  makeIdentityNumberValidation
 } from './schema-validations';
+import { CountryCode } from '../../../utils/country-codes';
 
-export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
+// Base identity schema (no country-specific id/address rules)
+export const baseIdentitySchema = (role: string, allowOptionalFields?: boolean) => {
   const schema = object({
     name: identityNameValidation.required(`Enter ${role} name`),
     title: identityTitleValidation.required(`Enter ${role} title`),
@@ -18,7 +21,7 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
     dob_full: dobValidation(role).required('Enter date of birth'),
     ssn_last4: string().nullable(),
     identification_number: ssnValidation,
-    address: addressSchema(allowOptionalFields),
+    address: addressSchemaUSA(allowOptionalFields),
   });
 
   const easySchema = object({
@@ -29,8 +32,21 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
     dob_full: dobValidation(role).nullable(),
     ssn_last4: string().nullable(),
     identification_number: ssnValidation.nullable(),
-    address: addressSchema(allowOptionalFields),
+    address: addressSchemaUSA(allowOptionalFields),
   });
 
   return allowOptionalFields ? easySchema : schema;
 }
+
+// Country-specific schema convenience wrappers
+export const identitySchemaUSA = (role: string, allowOptionalFields?: boolean) =>
+  baseIdentitySchema(role, allowOptionalFields).concat(object({
+    identification_number: makeIdentityNumberValidation(CountryCode.USA),
+    address: addressSchemaUSA(allowOptionalFields),
+  } as any));
+
+export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =>
+  baseIdentitySchema(role, allowOptionalFields).concat(object({
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN),
+    address: addressSchemaCAN(allowOptionalFields),
+  } as any));

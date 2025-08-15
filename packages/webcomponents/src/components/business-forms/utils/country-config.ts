@@ -1,6 +1,7 @@
 import { CountryCode } from '../../../utils/country-codes';
 import StateOptions from '../../../utils/state-options';
 import ProvinceOptions from '../../../utils/province-options';
+import { businessClassificationOptions } from './business-form-options';
 
 export const countryLabels = {
 	USA: {
@@ -41,3 +42,7 @@ export const countryValidation = {
 
 export const getStateValues = (country: CountryCode): string[] =>
 	(countryOptions[country].stateOptions || []).map((o: any) => o.value);
+
+// Business structures (placeholder for CAN duplicates USA for now)
+export const businessClassificationOptionsUSA = businessClassificationOptions;
+export const businessClassificationOptionsCAN = businessClassificationOptions;
