@@ -10,14 +10,14 @@ import {
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
 
-export const addressSchema = (allowOptionalFields?: boolean, country?: CountryCode) => {
-  const effectiveCountry = country || CountryCode.USA;
+// Base address schema (no country-specific constraints on state/postal)
+export const baseAddressSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     line1: lineOneValidation.required('Enter street address'),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.required('Enter city'),
-    state: (country ? makeStateValidation(effectiveCountry) : stateValidation).required('Select state'),
-    postal_code: (country ? makePostalValidation(effectiveCountry) : postalValidation).required('Enter postal code'),
+    state: string().transform((v) => (v === '' ? undefined : v)).required('Select state'),
+    postal_code: string().transform((v) => (v === '' ? undefined : v)).required('Enter postal code'),
     country: string().required('Select country')
   });
 
@@ -25,8 +25,8 @@ export const addressSchema = (allowOptionalFields?: boolean, country?: CountryCo
     line1: lineOneValidation.nullable(),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.nullable(),
-    state: (country ? makeStateValidation(effectiveCountry) : stateValidation).nullable(),
-    postal_code: (country ? makePostalValidation(effectiveCountry) : postalValidation).nullable(),
+    state: string().transform((v) => (v === '' ? undefined : v)).nullable(),
+    postal_code: string().transform((v) => (v === '' ? undefined : v)).nullable(),
     country: string().required('Select country')
   });
 
@@ -35,7 +35,16 @@ export const addressSchema = (allowOptionalFields?: boolean, country?: CountryCo
 
 // Country-specific schema convenience wrappers
 export const addressSchemaUSA = (allowOptionalFields?: boolean) =>
-  addressSchema(allowOptionalFields, CountryCode.USA);
+  baseAddressSchema(allowOptionalFields).concat(object({
+    state: stateValidation.required('Select state'),
+    postal_code: postalValidation.required('Enter postal code'),
+  } as any));
 
 export const addressSchemaCAN = (allowOptionalFields?: boolean) =>
-  addressSchema(allowOptionalFields, CountryCode.CAN);
+  baseAddressSchema(allowOptionalFields).concat(object({
+    state: makeStateValidation(CountryCode.CAN).required('Select state'),
+    postal_code: makePostalValidation(CountryCode.CAN).required('Enter postal code'),
+  } as any));
+
+// Back-compat default: USA
+export const addressSchema = (allowOptionalFields?: boolean) => addressSchemaUSA(allowOptionalFields);

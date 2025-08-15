@@ -15,21 +15,17 @@ import {
 import { CountryCode } from '../../../utils/country-codes';
 import { countryLabels } from '../utils/country-config';
 
-export const businessCoreInfoSchema = (allowOptionalFields?: boolean, country?: CountryCode) => {
-  const effectiveCountry = country || CountryCode.USA;
+// Base schema (no country-specific rules for classification/tax id)
+export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     legal_name: businessNameValidation.required('Enter legal name'),
     website_url: websiteUrlValidation.required('Enter business website url'),
     email: emailValidation.required('Enter business email'),
     phone: phoneValidation.required('Enter phone number'),
     doing_business_as: doingBusinessAsValidation.nullable(),
-    classification: (country ? makeBusinessClassificationValidation(effectiveCountry) : businessClassificationValidation).required('Select business classification'),
+    classification: businessClassificationValidation.required('Select business classification'),
     industry: industryValidation.required('Enter a business industry'),
-    tax_id: (country ? makeTaxIdValidation(effectiveCountry) : taxIdValidation).required(
-      effectiveCountry === CountryCode.CAN
-        ? `Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`
-        : 'Enter valid tax ID (SSN or EIN) without dashes'
-    ),
+    tax_id: taxIdValidation.required('Enter valid tax ID (SSN or EIN) without dashes'),
     date_of_incorporation: dateOfIncorporationValidation.required('Enter date of incorporation'),
   });
 
@@ -39,9 +35,9 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean, country?: 
     email: emailValidation.nullable(),
     phone: phoneValidation.nullable(),
     doing_business_as: doingBusinessAsValidation.nullable(),
-    classification: (country ? makeBusinessClassificationValidation(effectiveCountry) : businessClassificationValidation).nullable(),
+    classification: businessClassificationValidation.nullable(),
     industry: industryValidation.nullable(),
-    tax_id: (country ? makeTaxIdValidation(effectiveCountry) : taxIdValidation).nullable(),
+    tax_id: taxIdValidation.nullable(),
     date_of_incorporation: dateOfIncorporationValidation.nullable(),
   });
 
@@ -50,7 +46,16 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean, country?: 
 
 // Country-specific schema convenience wrappers
 export const businessCoreInfoSchemaUSA = (allowOptionalFields?: boolean) =>
-  businessCoreInfoSchema(allowOptionalFields, CountryCode.USA);
+  baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
+    classification: makeBusinessClassificationValidation(CountryCode.USA).required('Select business classification'),
+    tax_id: makeTaxIdValidation(CountryCode.USA).required('Enter valid tax ID (SSN or EIN) without dashes'),
+  } as any));
 
 export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
-  businessCoreInfoSchema(allowOptionalFields, CountryCode.CAN);
+  baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
+    classification: makeBusinessClassificationValidation(CountryCode.CAN).required('Select business classification'),
+    tax_id: makeTaxIdValidation(CountryCode.CAN).required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
+  } as any));
+
+// Back-compat default: USA
+export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => businessCoreInfoSchemaUSA(allowOptionalFields);

@@ -1,5 +1,5 @@
 import { object, string } from 'yup';
-import { addressSchema, addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
+import { addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
 import { 
   dobValidation, 
   emailValidation, 
@@ -11,7 +11,8 @@ import {
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
 
-export const identitySchema = (role: string, allowOptionalFields?: boolean, country?: CountryCode) => {
+// Base identity schema (no country-specific id/address rules)
+export const baseIdentitySchema = (role: string, allowOptionalFields?: boolean) => {
   const schema = object({
     name: identityNameValidation.required(`Enter ${role} name`),
     title: identityTitleValidation.required(`Enter ${role} title`),
@@ -19,12 +20,8 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean, coun
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
     ssn_last4: string().nullable(),
-    identification_number: country ? makeIdentityNumberValidation(country) : ssnValidation,
-    address: country === CountryCode.CAN
-      ? addressSchemaCAN(allowOptionalFields)
-      : country === CountryCode.USA
-        ? addressSchemaUSA(allowOptionalFields)
-        : addressSchema(allowOptionalFields),
+    identification_number: ssnValidation,
+    address: addressSchemaUSA(allowOptionalFields),
   });
 
   const easySchema = object({
@@ -34,12 +31,8 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean, coun
     phone: phoneValidation.nullable(),
     dob_full: dobValidation(role).nullable(),
     ssn_last4: string().nullable(),
-    identification_number: country ? makeIdentityNumberValidation(country).nullable() : ssnValidation.nullable(),
-    address: country === CountryCode.CAN
-      ? addressSchemaCAN(allowOptionalFields)
-      : country === CountryCode.USA
-        ? addressSchemaUSA(allowOptionalFields)
-        : addressSchema(allowOptionalFields),
+    identification_number: ssnValidation.nullable(),
+    address: addressSchemaUSA(allowOptionalFields),
   });
 
   return allowOptionalFields ? easySchema : schema;
@@ -47,7 +40,13 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean, coun
 
 // Country-specific schema convenience wrappers
 export const identitySchemaUSA = (role: string, allowOptionalFields?: boolean) =>
-  identitySchema(role, allowOptionalFields, CountryCode.USA);
+  baseIdentitySchema(role, allowOptionalFields).concat(object({
+    identification_number: makeIdentityNumberValidation(CountryCode.USA),
+    address: addressSchemaUSA(allowOptionalFields),
+  } as any));
 
 export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =>
-  identitySchema(role, allowOptionalFields, CountryCode.CAN);
+  baseIdentitySchema(role, allowOptionalFields).concat(object({
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN),
+    address: addressSchemaCAN(allowOptionalFields),
+  } as any));
