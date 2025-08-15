@@ -36,14 +36,14 @@ export const baseAddressSchema = (allowOptionalFields?: boolean) => {
 // Country-specific schema convenience wrappers
 export const addressSchemaUSA = (allowOptionalFields?: boolean) =>
   baseAddressSchema(allowOptionalFields).concat(object({
-    state: stateValidation.required('Select state'),
-    postal_code: postalValidation.required('Enter postal code'),
+    state: stateValidation,
+    postal_code: postalValidation,
   } as any));
 
 export const addressSchemaCAN = (allowOptionalFields?: boolean) =>
   baseAddressSchema(allowOptionalFields).concat(object({
-    state: makeStateValidation(CountryCode.CAN).required('Select state'),
-    postal_code: makePostalValidation(CountryCode.CAN).required('Enter postal code'),
+    state: makeStateValidation(CountryCode.CAN),
+    postal_code: makePostalValidation(CountryCode.CAN),
   } as any));
 
 // Back-compat default: USA
