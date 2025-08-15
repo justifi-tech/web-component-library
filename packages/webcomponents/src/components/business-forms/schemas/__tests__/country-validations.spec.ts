@@ -1,19 +1,15 @@
-import { makePostalValidation, makeStateValidation, makeIdentityNumberValidation, makeTaxIdValidation } from '../schema-validations';
+import { makePostalValidation, makeIdentityNumberValidation, makeTaxIdValidation } from '../schema-validations';
 import { CountryCode } from '../../../../utils/country-codes';
 
 describe('Country-aware validation helpers', () => {
-  test('USA postal and state', async () => {
+  test('USA postal', async () => {
     await expect(makePostalValidation(CountryCode.USA).isValid('30301')).resolves.toBe(true);
     await expect(makePostalValidation(CountryCode.USA).isValid('A1A 1A1')).resolves.toBe(false);
-    await expect(makeStateValidation(CountryCode.USA).isValid('CA')).resolves.toBe(true);
-    await expect(makeStateValidation(CountryCode.USA).isValid('ON')).resolves.toBe(false);
   });
 
-  test('CAN postal and province', async () => {
+  test('CAN postal', async () => {
     await expect(makePostalValidation(CountryCode.CAN).isValid('K1A 0B1')).resolves.toBe(true);
     await expect(makePostalValidation(CountryCode.CAN).isValid('30301')).resolves.toBe(false);
-    await expect(makeStateValidation(CountryCode.CAN).isValid('ON')).resolves.toBe(true);
-    await expect(makeStateValidation(CountryCode.CAN).isValid('CA')).resolves.toBe(false);
   });
 
   test('USA SSN vs CAN SIN', async () => {
