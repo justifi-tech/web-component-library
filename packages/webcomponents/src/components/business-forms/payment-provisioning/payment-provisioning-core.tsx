@@ -36,8 +36,15 @@ export class PaymentProvisioningCore {
 
   componentWillLoad() {
     this.getBusiness && this.setBusinessProvisioned();
-
-    this.refs = [this.coreInfoRef, this.legalAddressRef, this.additionalQuestionsRef, this.representativeRef, this.ownersRef, this.bankAccountRef, this.termsRef];
+    this.refs = [
+      this.coreInfoRef,
+      this.legalAddressRef,
+      this.additionalQuestionsRef,
+      this.representativeRef,
+      this.ownersRef,
+      this.bankAccountRef,
+      this.termsRef,
+    ];
   }
 
   setBusinessProvisioned = () => {
