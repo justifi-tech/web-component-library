@@ -26,7 +26,7 @@ export class BusinessOwnerFormCore {
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
-  @Prop() country?: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
 
   @Watch('isLoading')
   loadingWatcher() {

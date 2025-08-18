@@ -24,7 +24,7 @@ export class BusinessCoreInfoFormStepCore {
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country?: CountryCode;
+  @Prop() country: CountryCode;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -176,15 +176,13 @@ export class BusinessCoreInfoFormStepCore {
             <div class="col-12 col-md-6">
               <form-control-text
                 name="tax_id"
-                label={this.country === CountryCode.CAN ? countryLabels.CAN.taxIdLabel : 'Tax ID (EIN or SSN)'}
+                label={countryLabels[this.country].taxIdLabel}
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
                 keyDownHandler={numberOnlyHandler}
                 maxLength={9}
-                helpText={this.country === CountryCode.CAN
-                  ? 'Business Numbers (BN) are nine digits. Enter value without spaces or dashes.'
-                  : 'Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes.'}
+                helpText={countryLabels[this.country].taxIdHelpText}
               />
             </div>
             <div class="col-12">

@@ -21,7 +21,7 @@ export class BusinessOwnerForm {
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
-  @Prop() country?: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
