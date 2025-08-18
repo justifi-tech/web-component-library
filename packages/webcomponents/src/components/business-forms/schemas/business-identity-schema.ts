@@ -70,3 +70,9 @@ export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =
 // For backward compatibility, default to USA
 export const identitySchema = (role: string, allowOptionalFields?: boolean) =>
   identitySchemaUSA(role, allowOptionalFields);
+
+// Country-keyed mapping
+export const identitySchemaByCountry = {
+  [CountryCode.USA]: identitySchemaUSA,
+  [CountryCode.CAN]: identitySchemaCAN,
+} as const;

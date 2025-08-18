@@ -29,6 +29,7 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[1] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     2: () => <justifi-additional-questions-form-step
       businessId={this.businessId}
@@ -41,6 +42,7 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[3] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     4: () => <justifi-business-owners-form-step
       businessId={this.businessId}

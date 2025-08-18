@@ -5,6 +5,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
+import { CountryCode } from '../../../utils/country-codes';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { BusinessFormLoading } from './business-form-loading';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
@@ -139,6 +140,9 @@ export class BusinessForm {
       return <StyledHost><BusinessFormLoading /></StyledHost>;
     }
 
+    const initial = this.formController.getInitialValues();
+    const country: CountryCode = (initial as any)?.country_of_establishment || CountryCode.USA;
+
     return (
       <StyledHost>
         <form onSubmit={this.validateAndSubmit}>
@@ -149,13 +153,13 @@ export class BusinessForm {
               <justifi-business-core-info formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-legal-address-form formController={this.formController} />
+              <justifi-legal-address-form formController={this.formController} country={country} />
             </div>
             <div class="col-12 mb-4">
               <justifi-additional-questions formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-business-representative formController={this.formController} />
+              <justifi-business-representative formController={this.formController} country={country} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <Button

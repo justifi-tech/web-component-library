@@ -37,39 +37,40 @@ Acceptance:
 - Importing config returns correct labels/options per country.
 
 ### 3) Validation refactor (backward compatible) — Status: Complete
-- In `schema-validations.ts`, extract country-aware helpers:
-  - `makeStateValidation(country)` uses `stateValues` from config.
+- In `schema-validations.ts`, added country-aware helpers:
   - `makePostalValidation(country)` uses `postalRegex` from config (USA: 5 digits; CAN: A1A 1A1).
   - `makeIdentityNumberValidation(country)` for SSN (USA) vs SIN (CAN) 9-digit checks.
   - `makeTaxIdValidation(country)` for Tax ID (USA) vs BN (CAN) 9-digit checks.
-- Update schemas to accept a `country` param:
-  - `business-address-schema.ts` → `addressSchema(country, allowOptionalFields?)`.
-  - `business-core-info-schema.ts` → select classification options by country; set tax id field label/validation via config.
+- Schemas updated with explicit USA/CAN variants (backward compatible defaults retained):
+  - `business-address-schema.ts` → `addressSchemaUSA`/`addressSchemaCAN` plus `addressSchema` alias defaulting to USA.
+  - `business-core-info-schema.ts` → `businessCoreInfoSchemaUSA`/`businessCoreInfoSchemaCAN` with BN label for CAN via config.
+  - Added country-keyed schema mappings to simplify selection:
+    - `addressSchemaByCountry` and `identitySchemaByCountry` keyed by `CountryCode`.
 
 Acceptance:
 - Existing USA flows still validate as before.
 - Unit tests added for CAN postal/state and SIN/BN minimal rules.
 
-### 4) Country-aware address subcomponent
-- Create `form-address-fields` reusable component rendering: line1, line2, city, state/province, postal, country (disabled).
+### 4) Country-aware address subcomponent — Status: Complete
+- Create `form-address-fields` reusable component rendering: line1, line2, city, state/province, postal, country (disabled). (Created: `justifi-form-address-fields`)
 - Replace hardcoded labels/options in:
   - `payment-provisioning/legal-address-form-step-core.tsx`
   - `owner-form/identity-address/identity-address-form.tsx`
   - `business-form/legal-address-form/legal-address-form.tsx`
-- Read `country` from business or step controller; pass to `form-address-fields`.
+- Read `country` from top-level and pass to `form-address-fields`; do not default or allow selecting in child components.
 
 Acceptance:
 - USA shows "State" and "Zip Code" with numeric postal mask.
 - CAN shows "Province" and "Postal Code" with alphanumeric pattern; country select remains disabled with "CAN".
 
-### 5) Country-aware identity and core info fields
+### 5) Country-aware identity and core info fields — Status: Not started
 - Representative/owner forms: switch SSN → SIN label and 9-digit validation via config.
 - Core info: show "Business Number (BN)" for CAN with 9-digit validation; keep USA Tax ID logic.
 
 Acceptance:
 - USA unchanged; CAN shows SIN and BN fields as specified.
 
-### 6) Bank account step split
+### 6) Bank account step split — Status: Not started
 - Create `justifi-business-bank-account-form-step-core-canada` with CAN-specific fields and validations.
 - In `payment-provisioning-form-steps.tsx`, derive step 5 component from country via a small factory to avoid inline branching, e.g., `getBankAccountStepFor(country)`.
 
@@ -77,16 +78,16 @@ Acceptance:
 - USA continues using existing `justifi-business-bank-account-form-step-core`.
 - CAN uses the new Canada-specific bank account step.
 
-### 7) Terms and conditions split
+### 7) Terms and conditions split — Status: Not started
 - Create `justifi-business-terms-conditions-form-step-canada` that reuses existing structure with CAN content placeholder.
 - In `payment-provisioning-form-steps.tsx`, derive step 6 from country via `getTermsStepFor(country)`.
 
 Acceptance:
 - USA unchanged; CAN renders separate terms component (content can be updated later).
 
-### 8) Tests and stories
-- Add unit tests for validators and schemas (USA and CAN).
-- Add story variants for USA vs CAN in Docs to demonstrate labels/validation behavior and country-specific steps (bank account, terms).
+### 8) Tests and stories — Status: In progress
+- Unit tests added for country-aware validators (USA and CAN).
+- Story variants for USA vs CAN still pending (docs updates TBD).
 
 Acceptance:
 - CI green; stories render in docs build.
@@ -99,6 +100,8 @@ Acceptance:
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/legal-address-form/legal-address-form-step-core.tsx`
 - `packages/webcomponents/src/components/business-forms/owner-form/identity-address/identity-address-form.tsx`
 - `packages/webcomponents/src/components/business-forms/business-form/legal-address-form/legal-address-form.tsx`
+ - `packages/webcomponents/src/components/business-forms/business-form/business-form.tsx`
+ - `packages/webcomponents/src/components/business-forms/business-form/business-representative/business-representative.tsx`
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/business-core-info/business-core-info-form-step-core.tsx`
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/bank-account/business-bank-account-form-step-core.tsx` (USA)
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/bank-account/business-bank-account-form-step-core-canada.tsx` (new)
@@ -107,11 +110,13 @@ Acceptance:
 - `packages/webcomponents/src/utils/province-options.ts` (new)
 - `packages/webcomponents/src/components/business-forms/utils/country-config.ts` (new)
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/form-address-fields/` (new)
+ - `packages/webcomponents/src/components/business-forms/schemas/business-address-schema.ts` (added `addressSchemaByCountry`)
+ - `packages/webcomponents/src/components/business-forms/schemas/business-identity-schema.ts` (added `identitySchemaByCountry`)
 
 ## Rollout Plan (small PRs)
-- PR 1: Add `country_of_establishment` to model, wire through provisioning root, add province options + country-config scaffolding (unused).
-- PR 2: Refactor validations to be country-aware; keep USA default; add unit tests.
-- PR 3: Introduce `form-address-fields` and replace in legal/identity address forms.
+- PR 1: Add `country_of_establishment` to model, wire through provisioning root, add province options + country-config scaffolding (unused). (Complete)
+- PR 2: Refactor validations to be country-aware; keep USA default; add unit tests. (Complete)
+- PR 3: Introduce `form-address-fields` and replace in legal/identity address forms. (Complete)
 - PR 4: Add CAN-specific bank account form and wire step factory; add tests/stories.
 - PR 5: Add CAN-specific terms component and wire step factory; add tests/stories.
 - PR 6: Docs/stories polish and follow-ups.
