@@ -55,11 +55,8 @@ export class BusinessRepresentativeFormStepCore {
     this.getBusiness({
       onSuccess: (response) => {
         this.representative = new Representative(response.data.representative || {});
-        const initialValues = {
-          ...this.representative,
-          address: { ...(this.representative as any).address, country: this.country }
-        } as any;
-        this.formController.setInitialValues(initialValues);
+        this.representative.address.country = this.country;
+        this.formController.setInitialValues({ ...this.representative });
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
