@@ -3,6 +3,7 @@ import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-business-representative-form-inputs',
@@ -11,6 +12,7 @@ export class RepresentativeFormInputs {
   @Prop() representativeDefaultValue: any;
   @Prop() errors: any;
   @Prop() formController: FormController;
+  @Prop() country?: CountryCode;
 
   inputHandler = (name: string, value: string) => {
     updateFormValues(this.formController, { [name]: value });
@@ -98,6 +100,7 @@ export class RepresentativeFormInputs {
                 errors={this.errors.address}
                 defaultValues={this.representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}
+                country={this.country}
               />
             </div>
           </div>

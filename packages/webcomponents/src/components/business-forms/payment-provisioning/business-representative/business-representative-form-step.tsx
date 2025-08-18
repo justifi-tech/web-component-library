@@ -16,6 +16,7 @@ export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country?: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -61,6 +62,7 @@ export class BusinessRepresentativeFormStep {
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
+        country={this.country}
         ref={el => this.coreComponent = el}
       />
     );

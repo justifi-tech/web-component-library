@@ -2,7 +2,8 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { Identity, Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import { identitySchema } from '../../schemas/business-identity-schema';
+import { identitySchemaByCountry } from '../../schemas/business-identity-schema';
+import { CountryCode } from '../../../../utils/country-codes';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep } from '../../utils';
 
@@ -18,6 +19,7 @@ export class BusinessRepresentativeFormStepCore {
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country: CountryCode;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -37,7 +39,8 @@ export class BusinessRepresentativeFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(identitySchema('representative', this.allowOptionalFields));
+    const schemaFactory = identitySchemaByCountry[this.country];
+    this.formController = new FormController(schemaFactory('representative', this.allowOptionalFields));
   }
 
   componentDidLoad() {
@@ -52,7 +55,11 @@ export class BusinessRepresentativeFormStepCore {
     this.getBusiness({
       onSuccess: (response) => {
         this.representative = new Representative(response.data.representative || {});
-        this.formController.setInitialValues({ ...this.representative });
+        const initialValues = {
+          ...this.representative,
+          address: { ...(this.representative as any).address, country: this.country }
+        } as any;
+        this.formController.setInitialValues(initialValues);
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -104,6 +111,7 @@ export class BusinessRepresentativeFormStepCore {
         representativeDefaultValue={this.formController.getInitialValues()}
         errors={this.errors}
         formController={this.formController}
+        country={this.country}
       />
     );
   }

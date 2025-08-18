@@ -55,3 +55,9 @@ export const addressSchemaCAN = (allowOptionalFields?: boolean) =>
 
 // For Backward compatibility
 export const addressSchema = (allowOptionalFields?: boolean) => addressSchemaUSA(allowOptionalFields);
+
+// Country-keyed mapping
+export const addressSchemaByCountry = {
+  [CountryCode.USA]: addressSchemaUSA,
+  [CountryCode.CAN]: addressSchemaCAN,
+} as const;
