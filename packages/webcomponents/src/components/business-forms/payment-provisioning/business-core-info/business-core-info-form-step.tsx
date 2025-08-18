@@ -3,6 +3,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/Com
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-business-core-info-form-step'
@@ -16,6 +17,7 @@ export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country?: CountryCode = CountryCode.USA;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -62,6 +64,7 @@ export class BusinessCoreInfoFormStep {
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
+        country={this.country}
         ref={el => this.coreComponent = el}
       />
     );

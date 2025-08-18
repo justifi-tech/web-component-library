@@ -87,12 +87,14 @@ export class RepresentativeFormInputs {
             <div class="col-12 col-md-8">
               <form-control-number-masked
                 name="identification_number"
-                label="SSN"
+                label={this.country === CountryCode.CAN ? 'SIN' : 'SSN'}
                 defaultValue={this.representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
                 mask={SSN_MASK}
-                helpText="Enter your full Social Security Number. It is required for Federal OFAC check."
+                helpText={this.country === CountryCode.CAN
+                  ? 'Enter your full Social Insurance Number.'
+                  : 'Enter your full Social Security Number. It is required for Federal OFAC check.'}
               />
             </div>
             <div class="col-12">

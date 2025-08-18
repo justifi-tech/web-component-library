@@ -4,6 +4,7 @@ import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
+import { CountryCode } from '../../../../utils/country-codes';
 
 interface ownerPayloadItem { id: string; }
 
@@ -21,6 +22,7 @@ export class BusinessOwnersFormStepCore {
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country?: CountryCode = CountryCode.USA;
 
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
@@ -167,6 +169,7 @@ export class BusinessOwnersFormStepCore {
                 removeOwner={this.removeOwnerForm}
                 newFormOpen={this.newFormOpen}
                 ownersLength={this.ownersPayload.length}
+                country={this.country}
                 allowOptionalFields={this.allowOptionalFields}
                 ref={(ref) => this.matchRef(ref, owner.id)}
               />
