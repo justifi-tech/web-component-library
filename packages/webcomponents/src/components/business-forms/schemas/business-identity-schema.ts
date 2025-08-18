@@ -56,7 +56,8 @@ const strictSchemaCAN = (role: string) =>
     email: emailValidation.required(`Enter ${role} email`),
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
-    identification_number: makeIdentityNumberValidation(CountryCode.CAN).required('Enter identification number'),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN)
+      .required('Enter identification number'),
     address: addressSchemaCAN(false),
   });
 
@@ -65,3 +66,7 @@ export const identitySchemaUSA = (role: string, allowOptionalFields?: boolean) =
 
 export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =>
   allowOptionalFields ? schemaCAN(role) : strictSchemaCAN(role);
+
+// For Backward compatibility
+export const identitySchema = (role: string, allowOptionalFields?: boolean) =>
+  identitySchemaUSA(role, allowOptionalFields);
