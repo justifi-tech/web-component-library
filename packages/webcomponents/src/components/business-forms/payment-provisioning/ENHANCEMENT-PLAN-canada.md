@@ -44,22 +44,24 @@ Acceptance:
 - Schemas updated with explicit USA/CAN variants (backward compatible defaults retained):
   - `business-address-schema.ts` → `addressSchemaUSA`/`addressSchemaCAN` plus `addressSchema` alias defaulting to USA.
   - `business-core-info-schema.ts` → `businessCoreInfoSchemaUSA`/`businessCoreInfoSchemaCAN` with BN label for CAN via config.
+  - Added country-keyed schema mappings to simplify selection:
+    - `addressSchemaByCountry` and `identitySchemaByCountry` keyed by `CountryCode`.
 
 Acceptance:
 - Existing USA flows still validate as before.
 - Unit tests added for CAN postal/state and SIN/BN minimal rules.
 
-### 4) Country-aware address subcomponent — Status: In progress
+### 4) Country-aware address subcomponent — Status: Complete
 - Create `form-address-fields` reusable component rendering: line1, line2, city, state/province, postal, country (disabled). (Created: `justifi-form-address-fields`)
 - Replace hardcoded labels/options in:
   - `payment-provisioning/legal-address-form-step-core.tsx`
   - `owner-form/identity-address/identity-address-form.tsx`
   - `business-form/legal-address-form/legal-address-form.tsx`
-- Read `country` from business or step controller; pass to `form-address-fields`.
+- Read `country` from top-level and pass to `form-address-fields`; do not default or allow selecting in child components.
 
 Acceptance:
-- USA shows "State" and "Zip Code" with numeric postal mask. (WIP: wired for legal address and identity address forms)
-- CAN shows "Province" and "Postal Code" with alphanumeric pattern; country select remains disabled with "CAN". (WIP)
+- USA shows "State" and "Zip Code" with numeric postal mask.
+- CAN shows "Province" and "Postal Code" with alphanumeric pattern; country select remains disabled with "CAN".
 
 ### 5) Country-aware identity and core info fields — Status: Not started
 - Representative/owner forms: switch SSN → SIN label and 9-digit validation via config.
@@ -98,6 +100,8 @@ Acceptance:
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/legal-address-form/legal-address-form-step-core.tsx`
 - `packages/webcomponents/src/components/business-forms/owner-form/identity-address/identity-address-form.tsx`
 - `packages/webcomponents/src/components/business-forms/business-form/legal-address-form/legal-address-form.tsx`
+ - `packages/webcomponents/src/components/business-forms/business-form/business-form.tsx`
+ - `packages/webcomponents/src/components/business-forms/business-form/business-representative/business-representative.tsx`
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/business-core-info/business-core-info-form-step-core.tsx`
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/bank-account/business-bank-account-form-step-core.tsx` (USA)
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/bank-account/business-bank-account-form-step-core-canada.tsx` (new)
@@ -106,11 +110,13 @@ Acceptance:
 - `packages/webcomponents/src/utils/province-options.ts` (new)
 - `packages/webcomponents/src/components/business-forms/utils/country-config.ts` (new)
 - `packages/webcomponents/src/components/business-forms/payment-provisioning/form-address-fields/` (new)
+ - `packages/webcomponents/src/components/business-forms/schemas/business-address-schema.ts` (added `addressSchemaByCountry`)
+ - `packages/webcomponents/src/components/business-forms/schemas/business-identity-schema.ts` (added `identitySchemaByCountry`)
 
 ## Rollout Plan (small PRs)
 - PR 1: Add `country_of_establishment` to model, wire through provisioning root, add province options + country-config scaffolding (unused). (Complete)
 - PR 2: Refactor validations to be country-aware; keep USA default; add unit tests. (Complete)
-- PR 3: Introduce `form-address-fields` and replace in legal/identity address forms.
+- PR 3: Introduce `form-address-fields` and replace in legal/identity address forms. (Complete)
 - PR 4: Add CAN-specific bank account form and wire step factory; add tests/stories.
 - PR 5: Add CAN-specific terms component and wire step factory; add tests/stories.
 - PR 6: Docs/stories polish and follow-ups.
