@@ -67,6 +67,6 @@ export const identitySchemaUSA = (role: string, allowOptionalFields?: boolean) =
 export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =>
   allowOptionalFields ? schemaCAN(role) : strictSchemaCAN(role);
 
-// For Backward compatibility
+// For backward compatibility, default to USA
 export const identitySchema = (role: string, allowOptionalFields?: boolean) =>
   identitySchemaUSA(role, allowOptionalFields);

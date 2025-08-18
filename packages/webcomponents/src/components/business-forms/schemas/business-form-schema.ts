@@ -3,7 +3,6 @@ import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from './business
 import { additionalQuestionsSchema } from './business-additional-questions-schema';
 import { identitySchemaUSA, identitySchemaCAN } from './business-identity-schema';
 import { addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
-import { CountryCode } from '../../../utils/country-codes';
 
 export const businessFormSchemaUSA = object({
   ...businessCoreInfoSchemaUSA().fields,
@@ -19,5 +18,5 @@ export const businessFormSchemaCAN = object({
   representative: identitySchemaCAN('representative'),
 });
 
-// Back-compat: default schema remains USA
+// For backward compatibility, default to USA
 export const businessFormSchema = businessFormSchemaUSA;
