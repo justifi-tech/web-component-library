@@ -53,7 +53,6 @@ export class PaymentProvisioningCore {
         const business = new Business(response.data);
         this.businessProvisioned = checkProvisioningStatus(business);
         this.country = business.country_of_establishment;
-        this.country = CountryCode.USA;
         if (this.businessProvisioned) {
           this.errorEvent.emit({
             message: 'A request to provision payments for this business has already been submitted.',
