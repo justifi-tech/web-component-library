@@ -64,19 +64,8 @@ export class FormAddressFields {
 							inputHandler={this.inputHandler}
 							defaultValue={this.defaultValues?.postal_code}
 							errorText={this.errors?.postal_code}
-							maxLength={this.country === CountryCode.USA ? 5 : undefined}
+							maxLength={this.country === CountryCode.USA ? 5 : 7}
 							keyDownHandler={this.country === CountryCode.USA ? numberOnlyHandler : undefined}
-						/>
-					</div>
-					<div class="col-12">
-						<form-control-select
-							name="country"
-							label="Country"
-							options={this.country === CountryCode.USA ? [{ label: 'United States', value: 'USA' }] : [{ label: 'Canada', value: 'CAN' }]}
-							inputHandler={this.inputHandler}
-							defaultValue={this.defaultValues?.country}
-							errorText={this.errors?.country}
-							disabled={true}
 						/>
 					</div>
 				</div>

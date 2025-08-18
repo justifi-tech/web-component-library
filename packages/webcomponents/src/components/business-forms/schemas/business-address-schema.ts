@@ -42,7 +42,7 @@ const strictSchemaCAN = () =>
     line1: lineOneValidation.required('Enter street address'),
     line2: lineTwoValidation.nullable(),
     city: cityValidation.required('Enter city'),
-    state: string().required('Select state'),
+    state: string().required('Select province'),
     postal_code: makePostalValidation(CountryCode.CAN).required('Enter postal code'),
   });
 

@@ -52,7 +52,8 @@ export class PaymentProvisioningCore {
       onSuccess: (response) => {
         const business = new Business(response.data);
         this.businessProvisioned = checkProvisioningStatus(business);
-        this.country = business.country_of_establishment;
+        // this.country = business.country_of_establishment;
+        this.country = CountryCode.CAN; // temporary for testing
         if (this.businessProvisioned) {
           this.errorEvent.emit({
             message: 'A request to provision payments for this business has already been submitted.',
