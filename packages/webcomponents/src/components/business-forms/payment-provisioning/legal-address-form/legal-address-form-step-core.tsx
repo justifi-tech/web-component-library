@@ -22,8 +22,10 @@ export class LegalAddressFormStepCore {
   @Prop() allowOptionalFields?: boolean;
   @Prop() country: CountryCode;
 
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true })
+    stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true })
+    errorEvent: EventEmitter<ComponentErrorEvent>;
 
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
