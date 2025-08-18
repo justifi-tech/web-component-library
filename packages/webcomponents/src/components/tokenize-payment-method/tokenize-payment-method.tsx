@@ -68,7 +68,6 @@ export class TokenizePaymentMethod {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.validateRequiredProps();
   }
 
   connectedCallback() {
@@ -100,6 +99,7 @@ export class TokenizePaymentMethod {
   @Method()
   async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
     event?.preventDefault();
+    this.validateRequiredProps();
     this.isLoading = true;
 
     try {
