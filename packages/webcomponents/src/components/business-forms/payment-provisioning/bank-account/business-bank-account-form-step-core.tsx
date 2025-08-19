@@ -93,12 +93,7 @@ export class BusinessBankAccountFormStepCore {
 
   get postPayload() {
     const values = this.formController.values.getValue();
-    let payloadValues = { ...values };
-    if (this.country === CountryCode.CAN) {
-      const routing_number = `0${(values.institution_number || '').toString()}${(values.transit_number || '').toString()}`;
-      payloadValues = { ...values, routing_number };
-    }
-    const formValues = new BankAccount(payloadValues).payload;
+    const formValues = new BankAccount(values).payload;
     return formValues;
   }
 
