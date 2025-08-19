@@ -50,6 +50,7 @@ The current checkout system supports multiple payment methods including credit c
 
 - Create the Plaid payment method component structure
 - Implement Plaid Link SDK integration
+- Implement Plaid service layer following existing patterns
 - Add basic styling and visual design
 - Implement payment method selection logic
 
@@ -69,7 +70,7 @@ The current checkout system supports multiple payment methods including credit c
 
 ## Detailed Task Breakdown
 
-### Day 1: Foundation & Component Structure
+### Day 1: Foundation & Component Structure (10 hours total)
 
 #### Task 1.1: Create Plaid Payment Method Component (4 hours) - 100% complete
 
@@ -92,7 +93,7 @@ The current checkout system supports multiple payment methods including credit c
 
 - `packages/webcomponents/src/components/modular-checkout/sub-components/plaid-payment-method.tsx`
 
-#### Task 1.2: Implement Plaid Link SDK Integration (4 hours)
+#### Task 1.2: Implement Plaid Link SDK Integration (4 hours) - 100% complete
 
 **Description**: Set up Plaid Link SDK and basic initialization
 
@@ -111,6 +112,30 @@ The current checkout system supports multiple payment methods including credit c
 
 **Files to Create/Modify**:
 
+- `packages/webcomponents/src/components/modular-checkout/sub-components/plaid-payment-method.tsx`
+
+#### Task 1.3: Implement Plaid Service Layer (2 hours) - 100% complete
+
+**Description**: Create a Plaid service following existing project patterns and refactor component to use it
+
+**Acceptance Criteria**:
+
+- Plaid service follows existing service patterns
+- Component uses service instead of direct API calls
+- Service uses proxy API origin from environment configuration
+- Error handling follows existing patterns
+
+**Implementation Details**:
+
+- Create `PlaidService` class following existing service patterns
+- Implement `getLinkToken` and `tokenizeBankAccount` methods
+- Use existing `Api()` utility with proper error handling
+- Refactor component to use service instead of direct fetch calls
+- Ensure service uses proxy API origin from config
+
+**Files to Create/Modify**:
+
+- `packages/webcomponents/src/api/services/plaid.service.ts` (new)
 - `packages/webcomponents/src/components/modular-checkout/sub-components/plaid-payment-method.tsx`
 
 ### Day 2: Core Functionality & Integration
@@ -471,6 +496,7 @@ export class PlaidPaymentMethod {
 - Existing modular checkout system
 - Checkout store and state management
 - Existing payment method components
+- Existing API service patterns and utilities
 - Testing framework and utilities
 
 ## Risk Assessment & Mitigation
@@ -529,6 +555,7 @@ export class PlaidPaymentMethod {
 
 - Component structure created
 - Plaid SDK integration started
+- Plaid service layer implemented
 - Basic functionality working
 
 ### Day 2: Core Functionality Complete

@@ -4,6 +4,7 @@ import { radioListItem } from '../../../styles/parts';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
+import { PlaidService } from '../../../api/services/plaid.service';
 
 const plaidLogo = (
   <img
@@ -34,6 +35,7 @@ export class PlaidPaymentMethod {
 
   private scriptRef: HTMLScriptElement;
   private paymentMethodOptionId = 'plaid';
+  private plaidService = new PlaidService();
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
   @Event({ bubbles: true }) plaidError: EventEmitter;
@@ -42,9 +44,22 @@ export class PlaidPaymentMethod {
     if (!this.scriptRef) return;
 
     this.scriptRef.onload = () => {
-      this.initializePlaidLink();
+      // Wait for store to be populated before initializing
+      this.waitForStoreAndInitialize();
     };
   }
+
+  waitForStoreAndInitialize = () => {
+    // Check if store has necessary data
+    if (checkoutStore.authToken && checkoutStore.accountId && checkoutStore.checkoutId) {
+      this.initializePlaidLink();
+    } else {
+      // Wait a bit and try again
+      setTimeout(() => {
+        this.waitForStoreAndInitialize();
+      }, 100);
+    }
+  };
 
   @Method()
   async resolvePaymentMethod(): Promise<PaymentMethodPayload> {
@@ -70,12 +85,90 @@ export class PlaidPaymentMethod {
     e.preventDefault();
     checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
     this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
+
+    // If there's an error, clear it and try to initialize again
+    if (this.error) {
+      this.error = null;
+      this.waitForStoreAndInitialize();
+      return;
+    }
+
+    // If Plaid Link is ready and no public token exists, open Plaid Link
+    if (this.plaidLink && !this.publicToken && !this.isAuthenticating) {
+      this.openPlaidLink();
+    }
   };
 
-  initializePlaidLink = () => {
-    // TODO: Implement Plaid Link initialization
-    // This will be completed in Task 1.2
-    console.log('Plaid Link initialization - to be implemented');
+  initializePlaidLink = async () => {
+    try {
+      // Check if Plaid is available globally
+      if (typeof (window as any).Plaid === 'undefined') {
+        console.error('Plaid SDK not loaded');
+        this.error = 'Unable to load Plaid. Please refresh the page and try again.';
+        return;
+      }
+
+      // Get link token from backend
+      await this.getLinkToken();
+
+      if (!this.linkToken) {
+        console.error('Failed to get link token');
+        this.error = 'Unable to initialize bank connection. Please try again.';
+        return;
+      }
+
+      // Initialize Plaid Link
+      const Plaid = (window as any).Plaid;
+      this.plaidLink = Plaid.create({
+        token: this.linkToken,
+        onSuccess: this.handlePlaidSuccess,
+        onExit: this.handlePlaidExit,
+        onEvent: this.handlePlaidEvent,
+        onLoad: this.handlePlaidLoad,
+      });
+
+      console.log('Plaid Link initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize Plaid Link:', error);
+      this.error = 'Unable to initialize bank connection. Please try again.';
+    }
+  };
+
+  getLinkToken = async () => {
+    try {
+      if (!checkoutStore.authToken || !checkoutStore.accountId) {
+        console.error('Missing auth token or account ID from store');
+        this.error = 'Unable to initialize bank connection. Please try again.';
+        return;
+      }
+
+      const response = await this.plaidService.getLinkToken(
+        checkoutStore.authToken,
+        checkoutStore.accountId,
+        checkoutStore.checkoutId
+      );
+
+      if (response.error) {
+        const errorMessage = typeof response.error === 'string'
+          ? response.error
+          : response.error.message || 'Failed to get link token';
+        throw new Error(errorMessage);
+      }
+
+      this.linkToken = response.data.link_token;
+      console.log('Link token received:', this.linkToken);
+    } catch (error) {
+      console.error('Error getting link token:', error);
+      this.error = error.message || 'Unable to connect to bank service. Please try again.';
+    }
+  };
+
+  openPlaidLink = () => {
+    if (this.plaidLink && this.linkToken) {
+      this.isAuthenticating = true;
+      this.error = null;
+      this.plaidLink.open();
+    }
   };
 
   handlePlaidSuccess = (publicToken: string, metadata: any) => {
@@ -83,6 +176,38 @@ export class PlaidPaymentMethod {
     this.isAuthenticating = false;
     this.error = null;
     console.log('Plaid authentication successful:', { publicToken, metadata });
+  };
+
+  handlePlaidExit = (err: any, _metadata: any) => {
+    this.isAuthenticating = false;
+
+    if (err) {
+      this.handlePlaidError(err);
+    } else {
+      // User closed the modal without error
+      console.log('Plaid Link closed by user');
+    }
+  };
+
+  handlePlaidEvent = (eventName: string, metadata: any) => {
+    console.log('Plaid event:', eventName, metadata);
+
+    // Handle specific events if needed
+    switch (eventName) {
+      case 'OPEN':
+        this.isAuthenticating = true;
+        break;
+      case 'CLOSE':
+        this.isAuthenticating = false;
+        break;
+      case 'ERROR':
+        this.handlePlaidError(metadata);
+        break;
+    }
+  };
+
+  handlePlaidLoad = () => {
+    console.log('Plaid Link loaded');
   };
 
   handlePlaidError = (error: any) => {
@@ -117,12 +242,11 @@ export class PlaidPaymentMethod {
             label={
               <div>
                 <div>Pay with Bank Account {plaidLogo} </div>
-                {/* <small class="text-muted">
-                  Securely connect your bank account through Plaid
-                </small> */}
                 {this.error && (
                   <div class="text-danger mt-2">
                     <small>{this.error}</small>
+                    <br />
+                    <small class="text-muted">Click to try again</small>
                   </div>
                 )}
                 {this.isAuthenticating && (

@@ -19,6 +19,7 @@ export class ModularCheckout {
   private billingFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiBankAccountBillingFormSimpleElement | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
+  private plaidPaymentMethodRef?: any; // Will be properly typed after build
   private getCheckout: Function;
   private completeCheckout: Function;
 
@@ -143,10 +144,18 @@ export class ModularCheckout {
   }
 
   private queryFormRefs() {
-    this.paymentMethodFormRef = this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
-    this.billingFormRef = this.hostEl.querySelector('justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full');
+    this.paymentMethodFormRef =
+      this.hostEl.querySelector('justifi-card-form') ||
+      this.hostEl.querySelector('justifi-bank-account-form');
+
+    this.billingFormRef =
+      this.hostEl.querySelector('justifi-billing-form-full') ||
+      this.hostEl.querySelector('justifi-card-billing-form-simple') ||
+      this.hostEl.querySelector('justifi-bank-account-billing-form-simple');
+
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
+    this.plaidPaymentMethodRef = this.hostEl.querySelector('justifi-plaid-payment-method');
   }
 
   private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
@@ -202,6 +211,7 @@ export class ModularCheckout {
     console.log('payment method form', this.paymentMethodFormRef);
     console.log('insurance form', this.insuranceFormRef);
     console.log('sezzle payment method', this.sezzlePaymentMethodRef);
+    console.log('plaid payment method', this.plaidPaymentMethodRef);
 
     const promises = [
       this.paymentMethodFormRef?.validate(),
@@ -210,6 +220,11 @@ export class ModularCheckout {
 
     if (this.insuranceFormRef) {
       promises.push(this.insuranceFormRef.validate());
+    }
+
+    // Add Plaid validation if it's the selected payment method
+    if (checkoutStore.selectedPaymentMethod === 'plaid' && this.plaidPaymentMethodRef) {
+      promises.push(this.plaidPaymentMethodRef.validate());
     }
 
     const validationResults = await Promise.all(promises);
@@ -247,6 +262,33 @@ export class ModularCheckout {
           payment_token: undefined,
         };
       }
+    } else if (checkoutStore.selectedPaymentMethod === 'plaid') {
+      // Handle Plaid payment method
+      if (!this.plaidPaymentMethodRef) {
+        this.errorEvent.emit({
+          message: 'Plaid payment method not found.',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+
+      const plaidResult = await this.plaidPaymentMethodRef.resolvePaymentMethod();
+      if (plaidResult.validationError) {
+        this.errorEvent.emit({
+          message: 'Please complete Plaid bank authentication.',
+          errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+
+      // For Plaid, we need to tokenize the bank account on the backend
+      // The public token is already stored in the component
+      payment = {
+        payment_mode: 'ecom',
+        payment_token: plaidResult.token,
+      };
     } else {
       const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
       if (!paymentMethod) {
