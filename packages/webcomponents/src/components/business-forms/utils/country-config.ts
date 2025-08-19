@@ -8,13 +8,17 @@ export const countryLabels = {
 		stateLabel: 'State',
 		postalLabel: 'Zip Code',
 		identityLabel: 'SSN',
-		taxIdLabel: 'Tax ID',
+		identityHelpText: 'Enter your full Social Security Number. It is required for Federal OFAC check.',
+		taxIdLabel: 'Tax ID (EIN or SSN)',
+		taxIdHelpText: "Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes.",
 	},
 	CAN: {
 		stateLabel: 'Province',
 		postalLabel: 'Postal Code',
 		identityLabel: 'SIN',
+		identityHelpText: 'Enter your full Social Insurance Number.',
 		taxIdLabel: 'Business Number (BN)',
+		taxIdHelpText: 'Business Numbers (BN) are nine digits. Enter value without spaces or dashes.',
 	},
 } as const;
 

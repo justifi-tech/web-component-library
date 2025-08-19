@@ -2,10 +2,11 @@ import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@
 import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../../api/ComponentEvents';
-import { identitySchema } from '../schemas/business-identity-schema';
+import { identitySchemaByCountry } from '../schemas/business-identity-schema';
 import { Button } from '../../../ui-components';
 import { heading3 } from '../../../styles/parts';
 import { BusinessFormClickActions } from '../utils/event-types';
+import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
   tag: 'owner-form-core'
@@ -25,6 +26,7 @@ export class BusinessOwnerFormCore {
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
+  @Prop() country: CountryCode;
 
   @Watch('isLoading')
   loadingWatcher() {
@@ -102,7 +104,8 @@ export class BusinessOwnerFormCore {
   }
 
   componentWillLoad() {
-    this.formController = new FormController(identitySchema('owner', this.allowOptionalFields));
+    const schemaFactory = identitySchemaByCountry[this.country];
+    this.formController = new FormController(schemaFactory('owner', this.allowOptionalFields));
     this.ownerId ? this.getData() : this.instantiateOwner({});
   }
 
@@ -199,6 +202,7 @@ export class BusinessOwnerFormCore {
               ownerDefaultValue={this.formController.getInitialValues()}
               errors={this.errors}
               formController={this.formController}
+              country={this.country}
             />
             <div class="d-flex gap-2 justify-content-start">
               <Button

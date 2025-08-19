@@ -2,6 +2,8 @@ import { Component, h, Prop } from '@stencil/core';
 import { PHONE_MASKS, SSN_MASK } from '../../../utils/form-input-masks';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../utils/input-handlers';
 import { FormController } from '../../../components';
+import { CountryCode } from '../../../utils/country-codes';
+import { countryLabels } from '../utils/country-config';
 
 @Component({
   tag: 'owner-form-inputs'
@@ -10,6 +12,7 @@ export class BusinessOwnerFormInputs {
   @Prop() ownerDefaultValue: any;
   @Prop() errors: any;
   @Prop() formController: FormController;
+  @Prop() country: CountryCode;
 
   inputHandler = (name: string, value: string) => {
     updateFormValues(this.formController, { [name]: value });
@@ -77,12 +80,12 @@ export class BusinessOwnerFormInputs {
         <div class="col-12 col-md-8">
           <form-control-number-masked
             name="identification_number"
-            label={"SSN"}
+            label={countryLabels[this.country].identityLabel}
             defaultValue={this.ownerDefaultValue.identification_number}
             errorText={this.errors.identification_number}
             inputHandler={this.inputHandler}
             mask={SSN_MASK}
-            helpText="Enter your full Social Security Number. It is required for Federal OFAC check."
+            helpText={countryLabels[this.country].identityHelpText}
           />
         </div>
         <div class="col-12">
@@ -90,6 +93,7 @@ export class BusinessOwnerFormInputs {
             errors={this.errors.address}
             defaultValues={this.ownerDefaultValue.address}
             handleFormUpdate={this.onAddressFormUpdate}
+            country={this.country}
           />
         </div>
       </div>

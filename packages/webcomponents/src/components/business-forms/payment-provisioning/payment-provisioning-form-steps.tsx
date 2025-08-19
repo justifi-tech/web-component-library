@@ -23,6 +23,7 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     1: () => <justifi-legal-address-form-step
       businessId={this.businessId}
@@ -49,6 +50,7 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[4] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     5: () => <justifi-business-bank-account-form-step
       businessId={this.businessId}
