@@ -47,6 +47,13 @@ export class BusinessBankAccountFormStepCore {
     this.formLoading.emit(newValue);
   }
 
+  private getSchema = () => {
+    if (this.country === CountryCode.CAN) {
+      return businessBankAccountSchemaCanada(this.existingDocuments, this.allowOptionalFields);
+    }
+    return businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields);
+  }
+
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.existingBankAccount) {
@@ -322,10 +329,3 @@ export class BusinessBankAccountFormStepCore {
   }
 }
 
-// Helper to select schema based on country
-BusinessBankAccountFormStepCore.prototype.getSchema = function(this: any) {
-  if (this.country === CountryCode.CAN) {
-    return businessBankAccountSchemaCanada(this.existingDocuments, this.allowOptionalFields);
-  }
-  return businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields);
-};
