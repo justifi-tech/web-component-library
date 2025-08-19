@@ -151,7 +151,10 @@ export class ModularCheckout {
     this.billingFormRef =
       this.hostEl.querySelector('justifi-billing-form-full') ||
       this.hostEl.querySelector('justifi-card-billing-form-simple') ||
-      this.hostEl.querySelector('justifi-bank-account-billing-form-simple');
+      this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
+
+    this.billingFormRef =
+      this.hostEl.querySelector('justifi-billing-form-full, justifi-card-billing-form-simple, justifi-bank-account-billing-form-simple');
 
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
