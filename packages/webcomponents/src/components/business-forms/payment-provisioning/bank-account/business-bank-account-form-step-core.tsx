@@ -46,11 +46,6 @@ export class BusinessBankAccountFormStepCore {
     this.formLoading.emit(newValue);
   }
 
-  private getSchema = () => {
-    const factory = bankAccountSchemaByCountry[this.country];
-    return factory(this.allowOptionalFields, this.existingDocuments);
-  }
-
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.existingBankAccount) {
@@ -64,7 +59,11 @@ export class BusinessBankAccountFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(this.getSchema());
+
+    const schema = bankAccountSchemaByCountry[this.country];
+    this.formController = new FormController(
+      schema(this.allowOptionalFields, this.existingDocuments)
+    );
   }
 
   componentDidLoad() {
