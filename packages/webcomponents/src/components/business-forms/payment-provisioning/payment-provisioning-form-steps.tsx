@@ -52,12 +52,7 @@ export class PaymentProvisioningFormSteps {
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    5: () => <justifi-business-bank-account-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[5] = el}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
+    5: () => this.getBankAccountStepFor(this.country),
     6: () => <justifi-business-terms-conditions-form-step
       businessId={this.businessId}
       authToken={this.authToken}
@@ -66,6 +61,27 @@ export class PaymentProvisioningFormSteps {
       allowOptionalFields={this.allowOptionalFields}
     />,
   };
+
+  getBankAccountStepFor = (country: CountryCode) => {
+    if (country === CountryCode.CAN) {
+      return (
+        <justifi-business-bank-account-form-step-canada
+          businessId={this.businessId}
+          authToken={this.authToken}
+          ref={(el) => this.refs[5] = el}
+          allowOptionalFields={this.allowOptionalFields}
+        />
+      );
+    }
+    return (
+      <justifi-business-bank-account-form-step
+        businessId={this.businessId}
+        authToken={this.authToken}
+        ref={(el) => this.refs[5] = el}
+        allowOptionalFields={this.allowOptionalFields}
+      />
+    );
+  }
 
   render() {
     return (
