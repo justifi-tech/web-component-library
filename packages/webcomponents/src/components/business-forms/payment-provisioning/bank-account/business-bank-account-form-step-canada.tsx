@@ -4,7 +4,7 @@ import { makeGetBusiness, makePostBankAccount, makePostDocumentRecord } from '..
 import { BusinessService, BusinessBankAccountService, DocumentRecordService } from '../../../../api/services/business.service';
 
 @Component({
-  tag: 'justifi-business-bank-account-form-step-canada'
+  tag: 'DEPRECATED-justifi-business-bank-account-form-step-canada'
 })
 export class BusinessBankAccountFormStepCanada {
   coreComponent: HTMLJustifiBusinessBankAccountFormStepCoreCanadaElement;

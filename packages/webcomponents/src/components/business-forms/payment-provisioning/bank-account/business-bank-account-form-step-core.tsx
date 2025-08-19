@@ -1,5 +1,7 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
+import { businessBankAccountSchemaCanada } from '../../schemas/business-bank-account-schema-canada';
+import { CountryCode } from '../../../../utils/country-codes';
 import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep } from '../../utils';
 import { heading2 } from '../../../../styles/parts';
@@ -32,6 +34,7 @@ export class BusinessBankAccountFormStepCore {
   @Prop() postBankAccount: Function;
   @Prop() postDocumentRecord: Function;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country?: CountryCode = CountryCode.USA;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -57,7 +60,7 @@ export class BusinessBankAccountFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields));
+    this.formController = new FormController(this.getSchema());
   }
 
   componentDidLoad() {
@@ -67,7 +70,7 @@ export class BusinessBankAccountFormStepCore {
   }
 
   initializeFormController = () => {
-    this.formController = new FormController(businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields));
+    this.formController = new FormController(this.getSchema());
     this.formController.setInitialValues({ ...this.bankAccount });
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
@@ -89,7 +92,13 @@ export class BusinessBankAccountFormStepCore {
   }
 
   get postPayload() {
-    let formValues = new BankAccount(this.formController.values.getValue()).payload;
+    const values = this.formController.values.getValue();
+    let payloadValues = { ...values };
+    if (this.country === CountryCode.CAN) {
+      const routing_number = `0${(values.institution_number || '').toString()}${(values.transit_number || '').toString()}`;
+      payloadValues = { ...values, routing_number };
+    }
+    const formValues = new BankAccount(payloadValues).payload;
     return formValues;
   }
 
@@ -284,12 +293,21 @@ export class BusinessBankAccountFormStepCore {
             <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
-          <bank-account-form-inputs
-            defaultValue={bankAccountDefaultValue}
-            errors={this.errors}
-            inputHandler={this.inputHandler}
-            formDisabled={this.existingBankAccount}
-          />
+          {this.country === CountryCode.CAN ? (
+            <bank-account-form-inputs-canada
+              defaultValue={bankAccountDefaultValue}
+              errors={this.errors}
+              inputHandler={this.inputHandler}
+              formDisabled={this.existingBankAccount}
+            />
+          ) : (
+            <bank-account-form-inputs
+              defaultValue={bankAccountDefaultValue}
+              errors={this.errors}
+              inputHandler={this.inputHandler}
+              formDisabled={this.existingBankAccount}
+            />
+          )}
         </fieldset>
         <fieldset class="mt-4">
           <div class="d-flex align-items-center gap-2">
@@ -308,3 +326,11 @@ export class BusinessBankAccountFormStepCore {
     );
   }
 }
+
+// Helper to select schema based on country
+BusinessBankAccountFormStepCore.prototype.getSchema = function(this: any) {
+  if (this.country === CountryCode.CAN) {
+    return businessBankAccountSchemaCanada(this.existingDocuments, this.allowOptionalFields);
+  }
+  return businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields);
+};

@@ -17,7 +17,7 @@ import {
 } from '../../../../api';
 
 @Component({
-  tag: 'justifi-business-bank-account-form-step-core-canada',
+  tag: 'DEPRECATED-justifi-business-bank-account-form-step-core-canada',
 })
 export class BusinessBankAccountFormStepCoreCanada {
   @State() formController: FormController;
