@@ -6,22 +6,6 @@ import { StyledHost } from '../../../ui-components';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
 import { PlaidService } from '../../../api/services/plaid.service';
 
-const plaidLogo = (
-  <img
-    class="plaid-logo-img"
-    src={plaidLogoSvg}
-    alt="Plaid"
-    title="Plaid"
-    style={{
-      display: 'inline',
-      width: '20px',
-      height: '20px',
-      marginLeft: '5px',
-      marginTop: '-2px',
-    }}
-  />
-);
-
 @Component({
   tag: 'justifi-plaid-payment-method',
   shadow: true
@@ -328,6 +312,22 @@ export class PlaidPaymentMethod {
   }
 
   render() {
+    const plaidLogo = (
+      <img
+        class="plaid-logo-img"
+        src={plaidLogoSvg}
+        alt="Plaid"
+        title="Plaid"
+        style={{
+          display: 'inline',
+          width: '20px',
+          height: '20px',
+          marginLeft: '5px',
+          marginTop: '-2px',
+        }}
+      />
+    );
+
     return (
       <StyledHost class="payment-method">
         <script
