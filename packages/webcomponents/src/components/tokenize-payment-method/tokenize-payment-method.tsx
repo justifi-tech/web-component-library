@@ -11,7 +11,7 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity
 } from '../../api';
-import { checkoutStore } from '../../store/checkout.store';
+import { checkoutStore, onChange } from '../../store/checkout.store';
 
 // Constants
 const PAYMENT_METHOD_TYPE_LABELS = {
@@ -49,7 +49,7 @@ export class TokenizePaymentMethod {
   @Element() host: HTMLElement;
 
   @State() isLoading: boolean = false;
-  @State() selectedPaymentMethodId: string;
+  @State() selectedPaymentMethodId?: string;
   @State() computedHideSubmitButton: boolean = false;
 
   @Prop() accountId?: string;
@@ -73,10 +73,16 @@ export class TokenizePaymentMethod {
   connectedCallback() {
     this.setDefaultSelectedPaymentMethod();
     this.setComputedHideSubmitButton();
+    // Sync initial state with store and subscribe to future changes
+    this.syncWithStore();
+    this.unsubscribeFromStore = onChange('selectedPaymentMethod', this.syncWithStore);
   }
 
   disconnectedCallback() {
     this.analytics?.cleanup();
+    if (this.unsubscribeFromStore) {
+      this.unsubscribeFromStore();
+    }
   }
 
   @Watch('disableCreditCard')
@@ -182,6 +188,18 @@ export class TokenizePaymentMethod {
       this.selectedPaymentMethodId = PaymentMethodTypes.bankAccount;
     }
   }
+
+  // Keep the component selection in sync with the global checkout store
+  private unsubscribeFromStore?: () => void;
+  private syncWithStore = () => {
+    const selection = checkoutStore.selectedPaymentMethod;
+    if (selection === PaymentMethodTypes.card || selection === PaymentMethodTypes.bankAccount) {
+      this.selectedPaymentMethodId = selection;
+    } else {
+      // If selection is not card or bank account, clear local selection so forms are hidden
+      this.selectedPaymentMethodId = undefined;
+    }
+  };
 
   private setComputedHideSubmitButton() {
     // If hideSubmitButton prop is explicitly set, use that value
