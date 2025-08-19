@@ -68,7 +68,6 @@ export class TokenizePaymentMethod {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.validateRequiredProps();
   }
 
   connectedCallback() {
@@ -100,6 +99,7 @@ export class TokenizePaymentMethod {
   @Method()
   async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
     event?.preventDefault();
+    this.validateRequiredProps();
     this.isLoading = true;
 
     try {
@@ -342,7 +342,9 @@ export class TokenizePaymentMethod {
             paymentMethodType={paymentMethodId}
           />
         </div>
-        <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
+        <div class="mt-4">
+          <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
+        </div>
       </div>
     );
   }
