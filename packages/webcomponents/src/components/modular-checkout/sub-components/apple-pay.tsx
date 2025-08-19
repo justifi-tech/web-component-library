@@ -49,6 +49,7 @@ export class ApplePay {
   @Event() applePayCompleted: EventEmitter<{
     success: boolean;
     token?: IApplePayToken;
+    paymentMethodId?: string;
     error?: any;
   }>;
   @Event() applePayCancelled: EventEmitter<void>;
@@ -174,6 +175,7 @@ export class ApplePay {
         this.applePayCompleted.emit({
           success: true,
           token: result.token,
+          paymentMethodId: result.paymentMethodId,
         });
       } else {
         this.applePayCompleted.emit({

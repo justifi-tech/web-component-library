@@ -152,11 +152,7 @@ export class ApplePayService implements IApplePayService {
    */
   public async startPaymentSession(
     paymentRequest: IApplePayPaymentRequest
-  ): Promise<{
-    success: boolean;
-    token?: IApplePayToken;
-    error?: IApplePayError;
-  }> {
+  ): Promise<{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: IApplePayError }> {
     if (!this.applePayConfig) {
       throw new Error('Apple Pay not initialized. Call initialize() first.');
     }
@@ -210,11 +206,7 @@ export class ApplePayService implements IApplePayService {
    * Setup Apple Pay session event handlers
    */
   private setupSessionEventHandlers(
-    resolve: (value: {
-      success: boolean;
-      token?: IApplePayToken;
-      error?: IApplePayError;
-    }) => void,
+    resolve: (value: { success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: IApplePayError }) => void,
     reject: (reason: { success: boolean; error: IApplePayError }) => void
   ): void {
     if (
@@ -293,6 +285,7 @@ export class ApplePayService implements IApplePayService {
           resolve({
             success: true,
             token: payment.token,
+            paymentMethodId: paymentResult.data.id,
           });
         } else {
           console.error('PSP reported payment failure:', paymentResult.data);
