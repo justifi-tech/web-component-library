@@ -57,13 +57,14 @@ export class BusinessBankAccountFormStepCore {
     }
   }
 
+  private getSchema = () => {
+    const schema = bankAccountSchemaByCountry[this.country];
+    return schema(this.allowOptionalFields, this.existingDocuments);
+  }
+
   componentWillLoad() {
     this.getBusiness && this.getData();
-
-    const schema = bankAccountSchemaByCountry[this.country];
-    this.formController = new FormController(
-      schema(this.allowOptionalFields, this.existingDocuments)
-    );
+    this.formController = new FormController(this.getSchema());
   }
 
   componentDidLoad() {
