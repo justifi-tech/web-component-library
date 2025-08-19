@@ -34,6 +34,7 @@ Component to render a formated list of season interruption insurance for the req
 - [Events usage](#events-usage)
 - [CSS Parts for Styling](#css-parts-for-styling)
 - [Example usage](#example-usage)
+- [Behavior when disabled](#behavior-when-disabled)
 
 # Props, events and methods
 
@@ -96,7 +97,7 @@ The Season Interruption Insurance component exposes several CSS parts for custom
 ## Content Section Parts
 
 - `insurance-header-section` - The header/title section
-- `insurance-description-section` - The product description section  
+- `insurance-description-section` - The product description section
 - `insurance-form-section` - The form section containing radio buttons
 - `insurance-legal-disclaimer-section` - The legal disclaimer section
 
@@ -113,30 +114,30 @@ The Season Interruption Insurance component exposes several CSS parts for custom
   language="css"
   code={`/* Style the main container */
 
-/* Style radio buttons */
+/_ Style radio buttons _/
 ::part(input-radio) {
-  border: 2px solid #007bff;
+border: 2px solid #007bff;
 }
 
 ::part(input-radio-checked) {
-  background-color: #007bff;
+background-color: #007bff;
 }
 
-/* Style text elements with proper inheritance */
+/_ Style text elements with proper inheritance _/
 ::part(text) {
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: #333;
+font-size: 0.875rem;
+line-height: 1.4;
+color: #333;
 }
 
-::part(text) * {
-  color: inherit !important;
+::part(text) \* {
+color: inherit !important;
 }
 
-/* Style error text */
+/_ Style error text _/
 ::part(text-danger) {
-  color: #dc3545;
-  font-weight: 500;
+color: #dc3545;
+font-weight: 500;
 }`}
 />
 
@@ -154,3 +155,7 @@ The Season Interruption Insurance component exposes several CSS parts for custom
 ---
 
 <Source dark language="html" code={codeExampleFull} />
+
+# Behavior when disabled
+
+If the parent checkout's `payment_settings.insurance_payments` is `false`, this component will render nothing and emit a console warning to help with debugging. This allows you to include the component unconditionally without needing to hide it when the feature is disabled for a given checkout.

@@ -136,6 +136,7 @@ export class ModularCheckout {
     checkoutStore.totalAmount = checkout.total_amount;
     checkoutStore.paymentAmount = checkout.payment_amount;
     checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
+    checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
     checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
@@ -208,7 +209,7 @@ export class ModularCheckout {
       this.billingFormRef?.validate()
     ];
 
-    if (this.insuranceFormRef) {
+    if (this.insuranceFormRef && checkoutStore.insuranceEnabled) {
       promises.push(this.insuranceFormRef.validate());
     }
 
