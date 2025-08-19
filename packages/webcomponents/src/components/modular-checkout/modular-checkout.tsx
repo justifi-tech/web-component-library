@@ -232,9 +232,15 @@ export class ModularCheckout {
   private handleApplePayCompleted = (event: CustomEvent) => {
     const { success, token, paymentMethodId, error } = event.detail;
 
+    console.log('=== APPLE PAY COMPLETED EVENT ===');
+    console.log('Event detail:', event.detail);
+    console.log('Payment Method ID received:', paymentMethodId);
+
     if (success && token) {
       this.applePayToken = token;
       this.applePayPaymentMethodId = paymentMethodId;
+      console.log('=== STORED PAYMENT METHOD ID ===');
+      console.log('Stored paymentMethodId:', this.applePayPaymentMethodId);
       // Complete the checkout with Apple Pay token
       this.submitCheckoutWithApplePay();
     } else {
@@ -274,20 +280,30 @@ export class ModularCheckout {
       return;
     }
 
+    console.log('=== SUBMITTING CHECKOUT WITH APPLE PAY ===');
+    console.log('Payment method ID to send:', this.applePayPaymentMethodId);
+
     const payment = {
       payment_mode: "apple_pay",
       payment_token: this.applePayPaymentMethodId,
     };
 
+    console.log('=== CHECKOUT COMPLETE PAYLOAD ===');
+    console.log('Payment object:', payment);
+
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
+        console.log('=== CHECKOUT COMPLETE SUCCESS ===');
+        console.log('Checkout result:', checkout);
         this.submitEvent.emit({
           checkout,
           message: "Apple Pay checkout completed successfully",
         });
       },
       onError: (error) => {
+        console.error('=== CHECKOUT COMPLETE ERROR ===');
+        console.error('Error:', error);
         this.errorEvent.emit({
           message: error.message,
           errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,

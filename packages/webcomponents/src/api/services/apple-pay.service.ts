@@ -278,6 +278,11 @@ export class ApplePayService implements IApplePayService {
           this.authToken,
           paymentPayload
         );
+        console.log('=== APPLE PAY PROCESS PAYMENT RESULT ===');
+        console.log('Payment result:', paymentResult);
+        console.log('Payment result data:', paymentResult.data);
+        console.log('Payment method ID:', paymentResult.data.id);
+        
         if (paymentResult.success) {
           this.currentSession!.completePayment({
             status: ApplePaySessionStatus.STATUS_SUCCESS,
