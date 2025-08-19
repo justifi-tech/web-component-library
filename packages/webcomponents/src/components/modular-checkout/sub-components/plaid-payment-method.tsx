@@ -1,7 +1,7 @@
-import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core';
+import { Component, h, Method, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { radioListItem } from '../../../styles/parts';
-import { checkoutStore } from '../../../store/checkout.store';
+import { checkoutStore, onChange } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
 import { PlaidService } from '../../../api/services/plaid.service';
@@ -32,13 +32,23 @@ export class PlaidPaymentMethod {
   @State() linkToken: string | null = null;
   @State() error: string | null = null;
   @State() plaidLink: any = null;
+  @State() isSelected: boolean = false;
 
   private scriptRef: HTMLScriptElement;
   private paymentMethodOptionId = 'plaid';
   private plaidService = new PlaidService();
+  private unsubscribeFromStore: () => void;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
   @Event({ bubbles: true }) plaidError: EventEmitter;
+
+  @Watch('isSelected')
+  onSelectionChange(newValue: boolean) {
+    // Ensure store is updated when component selection changes
+    if (newValue && checkoutStore.selectedPaymentMethod !== this.paymentMethodOptionId) {
+      checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    }
+  }
 
   componentDidRender() {
     if (!this.scriptRef) return;
@@ -47,6 +57,11 @@ export class PlaidPaymentMethod {
       // Wait for store to be populated before initializing
       this.waitForStoreAndInitialize();
     };
+  }
+
+  componentWillLoad() {
+    // Initialize selection state based on store
+    this.isSelected = checkoutStore.selectedPaymentMethod === this.paymentMethodOptionId;
   }
 
   waitForStoreAndInitialize = () => {
@@ -83,7 +98,14 @@ export class PlaidPaymentMethod {
 
   onPaymentMethodOptionClick = (e) => {
     e.preventDefault();
+
+    // Update local selection state
+    this.isSelected = true;
+
+    // Update store selection
     checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+
+    // Emit selection event
     this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
 
     // If there's an error, clear it and try to initialize again
@@ -176,6 +198,12 @@ export class PlaidPaymentMethod {
     this.isAuthenticating = false;
     this.error = null;
     console.log('Plaid authentication successful:', { publicToken, metadata });
+
+    // Ensure the component remains selected after successful authentication
+    if (!this.isSelected) {
+      this.isSelected = true;
+      checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    }
   };
 
   handlePlaidExit = (err: any, _metadata: any) => {
@@ -186,6 +214,13 @@ export class PlaidPaymentMethod {
     } else {
       // User closed the modal without error
       console.log('Plaid Link closed by user');
+
+      // If user closed without completing authentication, ensure component remains selected
+      // but clear any existing tokens to force re-authentication
+      if (this.isSelected && !this.publicToken) {
+        // Component is selected but no token, this is expected state
+        console.log('Plaid Link closed without completion, component remains selected');
+      }
     }
   };
 
@@ -213,12 +248,84 @@ export class PlaidPaymentMethod {
   handlePlaidError = (error: any) => {
     this.error = error.error_message || 'Bank authentication failed. Please try again.';
     this.isAuthenticating = false;
+
+    // Even with an error, the component should remain selected to allow retry
+    if (this.isSelected) {
+      console.log('Plaid authentication error, component remains selected for retry');
+    }
+
     this.plaidError.emit({
       code: error.error_code,
       message: this.error
     });
     console.error('Plaid authentication error:', error);
   };
+
+  // Method to handle external selection changes (e.g., from other payment methods)
+  @Method()
+  async setSelected(selected: boolean): Promise<void> {
+    this.isSelected = selected;
+    if (selected) {
+      checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    }
+  }
+
+  // Method to check if component is currently selected
+  @Method()
+  async isCurrentlySelected(): Promise<boolean> {
+    return this.isSelected;
+  }
+
+  // Method to handle external deselection (when another payment method is selected)
+  @Method()
+  async deselect(): Promise<void> {
+    this.isSelected = false;
+    // Don't clear the public token or error state as they might be needed if user reselects
+    console.log('Plaid payment method deselected');
+  }
+
+  // Method to reset component state (useful for testing or error recovery)
+  @Method()
+  async reset(): Promise<void> {
+    this.publicToken = null;
+    this.error = null;
+    this.isAuthenticating = false;
+    this.linkToken = null;
+    this.plaidLink = null;
+    console.log('Plaid payment method state reset');
+  }
+
+  // Method to check if component is ready for authentication
+  @Method()
+  async isReadyForAuthentication(): Promise<boolean> {
+    return !!(this.plaidLink && this.linkToken && !this.isAuthenticating);
+  }
+
+  // Watch for store changes to sync component state
+  private syncWithStore = () => {
+    const storeSelection = checkoutStore.selectedPaymentMethod;
+    const shouldBeSelected = storeSelection === this.paymentMethodOptionId;
+
+    if (this.isSelected !== shouldBeSelected) {
+      this.isSelected = shouldBeSelected;
+      console.log(`Plaid payment method selection synced with store: ${shouldBeSelected}`);
+    }
+  };
+
+  componentDidLoad() {
+    // Set up store change listener to keep component in sync
+    const unsubscribe = onChange('selectedPaymentMethod', this.syncWithStore);
+
+    // Store unsubscribe function for cleanup
+    this.unsubscribeFromStore = unsubscribe;
+  }
+
+  disconnectedCallback() {
+    // Clean up store subscription
+    if (this.unsubscribeFromStore) {
+      this.unsubscribeFromStore();
+    }
+  }
 
   render() {
     return (
@@ -238,7 +345,7 @@ export class PlaidPaymentMethod {
           <form-control-radio
             name="paymentMethodType"
             value={this.paymentMethodOptionId}
-            checked={checkoutStore.selectedPaymentMethod === this.paymentMethodOptionId}
+            checked={this.isSelected}
             label={
               <div>
                 <div>Pay with Bank Account {plaidLogo} </div>
@@ -257,6 +364,11 @@ export class PlaidPaymentMethod {
                 {this.publicToken && (
                   <div class="text-success mt-2">
                     <small>✓ Bank account connected successfully</small>
+                  </div>
+                )}
+                {this.isSelected && !this.publicToken && !this.error && !this.isAuthenticating && (
+                  <div class="text-muted mt-2">
+                    <small>Click to connect your bank account</small>
                   </div>
                 )}
               </div>
