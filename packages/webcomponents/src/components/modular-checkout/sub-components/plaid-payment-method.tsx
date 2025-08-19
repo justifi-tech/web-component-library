@@ -75,7 +75,7 @@ export class PlaidPaymentMethod {
   initializePlaidLink = () => {
     // TODO: Implement Plaid Link initialization
     // This will be completed in Task 1.2
-    console.log('Plaid Link initialization - to be implemented');
+    // Plaid Link initialization logic to be implemented.
   };
 
   handlePlaidSuccess = (publicToken: string, metadata: any) => {
