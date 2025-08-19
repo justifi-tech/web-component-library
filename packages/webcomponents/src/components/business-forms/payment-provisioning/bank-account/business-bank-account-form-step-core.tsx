@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
-import { businessBankAccountSchema } from '../../schemas/business-bank-account-schema';
-import { businessBankAccountSchemaCanada } from '../../schemas/business-bank-account-schema-canada';
+import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { CountryCode } from '../../../../utils/country-codes';
 import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep } from '../../utils';
@@ -48,10 +47,8 @@ export class BusinessBankAccountFormStepCore {
   }
 
   private getSchema = () => {
-    if (this.country === CountryCode.CAN) {
-      return businessBankAccountSchemaCanada(this.existingDocuments, this.allowOptionalFields);
-    }
-    return businessBankAccountSchema(this.existingDocuments, this.allowOptionalFields);
+    const factory = bankAccountSchemaByCountry[this.country];
+    return factory(this.allowOptionalFields, this.existingDocuments);
   }
 
   @Method()

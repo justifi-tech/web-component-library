@@ -1,4 +1,6 @@
 import { object, mixed } from 'yup';
+import { CountryCode } from '../../../utils/country-codes';
+import { businessBankAccountSchemaCanada } from './business-bank-account-schema-canada';
 import { EntityDocumentType } from '../../../api/Document';
 import { 
   accountNumberValidation,
@@ -66,3 +68,8 @@ export const businessBankAccountSchema = (documents: any[], allowOptionalFields?
 
   return allowOptionalFields ? easySchema : schema;
 }
+
+export const bankAccountSchemaByCountry: Record<CountryCode, (allowOptionalFields?: boolean, documents?: any[]) => any> = {
+  [CountryCode.USA]: (allowOptionalFields?: boolean, documents: any[] = []) => businessBankAccountSchema(documents, allowOptionalFields),
+  [CountryCode.CAN]: (allowOptionalFields?: boolean, documents: any[] = []) => businessBankAccountSchemaCanada(documents, allowOptionalFields),
+};
