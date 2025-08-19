@@ -34,7 +34,7 @@ export class BusinessBankAccountFormStepCore {
   @Prop() postBankAccount: Function;
   @Prop() postDocumentRecord: Function;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country?: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
