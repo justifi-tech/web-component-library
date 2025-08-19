@@ -92,7 +92,12 @@ describe('PlaidPaymentMethod', () => {
 
     it('should provide reset method', async () => {
       component.publicToken = 'test-token';
-      component.error = 'test-error';
+      component.error = {
+        code: 'plaid-sdk-load-failed' as any,
+        message: 'test-error',
+        severity: 'error' as any,
+        retryable: true
+      };
 
       await component.reset();
 
