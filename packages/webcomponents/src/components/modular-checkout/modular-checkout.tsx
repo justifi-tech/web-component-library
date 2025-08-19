@@ -19,7 +19,7 @@ export class ModularCheckout {
   private billingFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiBankAccountBillingFormSimpleElement | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
-  private plaidPaymentMethodRef?: any; // Will be properly typed after build
+  private plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
   private getCheckout: Function;
   private completeCheckout: Function;
 
