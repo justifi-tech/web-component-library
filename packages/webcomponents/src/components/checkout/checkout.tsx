@@ -170,6 +170,7 @@ export class Checkout {
                   <div>
                     <justifi-saved-payment-methods />
                     <justifi-sezzle-payment-method />
+                    <justifi-plaid-payment-method />
                     <justifi-tokenize-payment-method
                       ref={(el) => (this.tokenizePaymentMethodRef = el)}
                       authToken={this.authToken}
