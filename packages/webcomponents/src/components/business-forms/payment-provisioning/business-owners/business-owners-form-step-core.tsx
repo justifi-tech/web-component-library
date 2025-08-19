@@ -22,7 +22,7 @@ export class BusinessOwnersFormStepCore {
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country?: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
 
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;

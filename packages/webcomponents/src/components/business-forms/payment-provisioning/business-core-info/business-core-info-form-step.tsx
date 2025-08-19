@@ -17,7 +17,7 @@ export class BusinessCoreInfoFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country?: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')
