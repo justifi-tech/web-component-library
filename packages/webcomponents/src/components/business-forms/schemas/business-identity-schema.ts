@@ -1,27 +1,19 @@
 import { object, string } from 'yup';
-import { addressSchema } from './business-address-schema';
-import { 
-  dobValidation, 
-  emailValidation, 
-  identityNameValidation, 
-  identityTitleValidation, 
-  phoneValidation, 
-  ssnValidation
+import { addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
+import {
+  dobValidation,
+  emailValidation,
+  identityNameValidation,
+  identityTitleValidation,
+  phoneValidation,
+  ssnValidation,
+  makeIdentityNumberValidation,
 } from './schema-validations';
+import { CountryCode } from '../../../utils/country-codes';
 
-export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
-  const schema = object({
-    name: identityNameValidation.required(`Enter ${role} name`),
-    title: identityTitleValidation.required(`Enter ${role} title`),
-    email: emailValidation.required(`Enter ${role} email`),
-    phone: phoneValidation.required('Enter phone number'),
-    dob_full: dobValidation(role).required('Enter date of birth'),
-    ssn_last4: string().nullable(),
-    identification_number: ssnValidation,
-    address: addressSchema(allowOptionalFields),
-  });
-
-  const easySchema = object({
+// Internal USA schemas
+const schemaUSA = (role: string) =>
+  object({
     name: identityNameValidation.required(`Enter ${role} name`),
     title: identityTitleValidation.nullable(),
     email: emailValidation.nullable(),
@@ -29,8 +21,58 @@ export const identitySchema = (role: string, allowOptionalFields?: boolean) => {
     dob_full: dobValidation(role).nullable(),
     ssn_last4: string().nullable(),
     identification_number: ssnValidation.nullable(),
-    address: addressSchema(allowOptionalFields),
+    address: addressSchemaUSA(true),
   });
 
-  return allowOptionalFields ? easySchema : schema;
-}
+const strictSchemaUSA = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.required(`Enter ${role} title`),
+    email: emailValidation.required(`Enter ${role} email`),
+    phone: phoneValidation.required('Enter phone number'),
+    dob_full: dobValidation(role).required('Enter date of birth'),
+    ssn_last4: string().nullable(),
+    // ssn required unless last4 provided (handled inside ssnValidation)
+    identification_number: ssnValidation,
+    address: addressSchemaUSA(false),
+  });
+
+// Internal CAN schemas
+const schemaCAN = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.nullable(),
+    email: emailValidation.nullable(),
+    phone: phoneValidation.nullable(),
+    dob_full: dobValidation(role).nullable(),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
+    address: addressSchemaCAN(true),
+  });
+
+const strictSchemaCAN = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.required(`Enter ${role} title`),
+    email: emailValidation.required(`Enter ${role} email`),
+    phone: phoneValidation.required('Enter phone number'),
+    dob_full: dobValidation(role).required('Enter date of birth'),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN)
+      .required('Enter identification number'),
+    address: addressSchemaCAN(false),
+  });
+
+export const identitySchemaUSA = (role: string, allowOptionalFields?: boolean) =>
+  allowOptionalFields ? schemaUSA(role) : strictSchemaUSA(role);
+
+export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =>
+  allowOptionalFields ? schemaCAN(role) : strictSchemaCAN(role);
+
+// For backward compatibility, default to USA
+export const identitySchema = (role: string, allowOptionalFields?: boolean) =>
+  identitySchemaUSA(role, allowOptionalFields);
+
+// Country-keyed mapping
+export const identitySchemaByCountry = {
+  [CountryCode.USA]: identitySchemaUSA,
+  [CountryCode.CAN]: identitySchemaCAN,
+} as const;

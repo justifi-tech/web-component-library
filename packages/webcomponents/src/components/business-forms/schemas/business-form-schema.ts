@@ -1,12 +1,22 @@
 import { object } from 'yup';
-import { businessCoreInfoSchema } from './business-core-info-schema';
+import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from './business-core-info-schema';
 import { additionalQuestionsSchema } from './business-additional-questions-schema';
-import { identitySchema } from './business-identity-schema';
-import { addressSchema } from './business-address-schema';
+import { identitySchemaUSA, identitySchemaCAN } from './business-identity-schema';
+import { addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
 
-export const businessFormSchema = object({
-  ...businessCoreInfoSchema().fields,
-  legal_address: addressSchema(),
+export const businessFormSchemaUSA = object({
+  ...businessCoreInfoSchemaUSA().fields,
+  legal_address: addressSchemaUSA(),
   additional_questions: additionalQuestionsSchema(),
-  representative: identitySchema('representative'),
+  representative: identitySchemaUSA('representative'),
 });
+
+export const businessFormSchemaCAN = object({
+  ...businessCoreInfoSchemaCAN().fields,
+  legal_address: addressSchemaCAN(),
+  additional_questions: additionalQuestionsSchema(),
+  representative: identitySchemaCAN('representative'),
+});
+
+// For backward compatibility, default to USA
+export const businessFormSchema = businessFormSchemaUSA;

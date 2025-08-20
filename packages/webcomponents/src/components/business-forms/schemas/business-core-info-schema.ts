@@ -1,4 +1,4 @@
-import { object } from 'yup';
+import { object, string } from 'yup';
 import { 
   doingBusinessAsValidation,
   emailValidation,
@@ -8,10 +8,14 @@ import {
   taxIdValidation, 
   websiteUrlValidation,
   dateOfIncorporationValidation,
-  businessClassificationValidation
+  businessClassificationValidation,
+  makeTaxIdValidation
 } from './schema-validations';
+import { CountryCode } from '../../../utils/country-codes';
+import { countryLabels } from '../utils/country-config';
 
-export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
+// Base schema (no country-specific rules for classification/tax id)
+export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
   const schema = object({
     legal_name: businessNameValidation.required('Enter legal name'),
     website_url: websiteUrlValidation.required('Enter business website url'),
@@ -38,3 +42,19 @@ export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => {
 
   return allowOptionalFields ? easySchema : schema;
 };
+
+// Country-specific schema convenience wrappers
+export const businessCoreInfoSchemaUSA = (allowOptionalFields?: boolean) =>
+  baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
+    classification: string().required('Select business classification'),
+    tax_id: makeTaxIdValidation(CountryCode.USA).required('Enter valid tax ID (SSN or EIN) without dashes'),
+  } as any));
+
+export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
+  baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
+    classification: string().required('Select business classification'),
+    tax_id: makeTaxIdValidation(CountryCode.CAN).required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
+  } as any));
+
+// For backward compatibility, default to USA
+export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => businessCoreInfoSchemaUSA(allowOptionalFields);

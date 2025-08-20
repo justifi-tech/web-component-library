@@ -3,6 +3,8 @@ import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 import { PHONE_MASKS, getIdentityMask } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
+import { CountryCode } from '../../../../utils/country-codes';
+import { countryLabels } from '../../utils/country-config';
 
 @Component({
   tag: 'justifi-business-representative-form-inputs',
@@ -11,6 +13,7 @@ export class RepresentativeFormInputs {
   @Prop() representativeDefaultValue: any;
   @Prop() errors: any;
   @Prop() formController: FormController;
+  @Prop() country: CountryCode;
 
   inputHandler = (name: string, value: string) => {
     updateFormValues(this.formController, { [name]: value });
@@ -85,12 +88,12 @@ export class RepresentativeFormInputs {
             <div class="col-12 col-md-8">
               <form-control-number-masked
                 name="identification_number"
-                label="SSN"
+                label={countryLabels[this.country].identityLabel}
                 defaultValue={this.representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
-                mask={getIdentityMask(this.representativeDefaultValue?.address?.country)}
-                helpText="Enter your full Social Security Number. It is required for Federal OFAC check."
+                mask={getIdentityMask(this.country)}
+                helpText={countryLabels[this.country].identityHelpText}
               />
             </div>
             <div class="col-12">
@@ -98,6 +101,7 @@ export class RepresentativeFormInputs {
                 errors={this.errors.address}
                 defaultValues={this.representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}
+                country={this.country}
               />
             </div>
           </div>

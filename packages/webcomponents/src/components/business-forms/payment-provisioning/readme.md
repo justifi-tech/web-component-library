@@ -5,14 +5,15 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                            | Default     |
-| --------------------- | ----------------------- | ----------- | ------------------------------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                       | `false`     |
-| `authToken`           | `auth-token`            |             | `string`                        | `undefined` |
-| `businessId`          | `business-id`           |             | `string`                        | `undefined` |
-| `currentStep`         | `current-step`          |             | `number`                        | `undefined` |
-| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void` | `undefined` |
-| `refs`                | --                      |             | `any[]`                         | `undefined` |
+| Property              | Attribute               | Description | Type                                 | Default           |
+| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `false`           |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined`       |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined`       |
+| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
+| `currentStep`         | `current-step`          |             | `number`                             | `undefined`       |
+| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
+| `refs`                | --                      |             | `any[]`                              | `undefined`       |
 
 
 ## Dependencies
@@ -53,8 +54,9 @@ graph TD;
   form-control-number-masked --> form-control-tooltip
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core
   justifi-legal-address-form-step-core --> form-control-tooltip
-  justifi-legal-address-form-step-core --> form-control-text
-  justifi-legal-address-form-step-core --> form-control-select
+  justifi-legal-address-form-step-core --> justifi-form-address-fields
+  justifi-form-address-fields --> form-control-text
+  justifi-form-address-fields --> form-control-select
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-monetary-provisioning
@@ -67,8 +69,7 @@ graph TD;
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
   justifi-business-representative-form-inputs --> justifi-identity-address-form
-  justifi-identity-address-form --> form-control-text
-  justifi-identity-address-form --> form-control-select
+  justifi-identity-address-form --> justifi-form-address-fields
   justifi-business-owners-form-step --> justifi-business-owners-form-step-core
   justifi-business-owners-form-step-core --> form-control-tooltip
   justifi-business-owners-form-step-core --> justifi-owner-form
@@ -80,9 +81,12 @@ graph TD;
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> justifi-business-bank-account-form-step-core
   justifi-business-bank-account-form-step-core --> form-control-tooltip
+  justifi-business-bank-account-form-step-core --> bank-account-form-inputs-canada
   justifi-business-bank-account-form-step-core --> bank-account-form-inputs
   justifi-business-bank-account-form-step-core --> business-documents-on-file
   justifi-business-bank-account-form-step-core --> bank-account-document-form-inputs
+  bank-account-form-inputs-canada --> form-control-text
+  bank-account-form-inputs-canada --> form-control-select
   bank-account-form-inputs --> form-control-text
   bank-account-form-inputs --> form-control-select
   bank-account-document-form-inputs --> form-control-file

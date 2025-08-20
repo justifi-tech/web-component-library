@@ -3,6 +3,7 @@ import { FormController } from '../../../../components';
 import { PHONE_MASKS, getIdentityMask } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
 import { heading2 } from '../../../../styles/parts';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-business-representative'
@@ -11,6 +12,7 @@ export class BusinessRepresentative {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
+  @Prop() country: CountryCode;
 
   get identificationNumberLabel() {
     return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
@@ -133,6 +135,7 @@ export class BusinessRepresentative {
                 errors={this.errors.address}
                 defaultValues={representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}
+                country={this.country}
               />
             </div>
           </div>
