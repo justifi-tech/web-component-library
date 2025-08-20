@@ -197,10 +197,6 @@ export class ModularCheckout {
     const { error, id: token } = await this.tokenizePaymentMethod(submitCheckoutArgs);
 
     if (error) {
-      console.error('[ModularCheckout] getPaymentMethod: tokenization error', {
-        code: error.code,
-        message: error.message,
-      });
       this.errorEvent.emit({
         errorCode: error.code as ComponentErrorCodes,
         message: error.message,
@@ -238,16 +234,6 @@ export class ModularCheckout {
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
     const isValid = await this.validate();
     if (!isValid) {
-      console.warn('[ModularCheckout] submitCheckout: validation failed', {
-        refs: {
-          billingFormRef: !!this.billingFormRef,
-          paymentMethodFormRef: !!this.paymentMethodFormRef,
-          insuranceFormRef: !!this.insuranceFormRef,
-          sezzlePaymentMethodRef: !!this.sezzlePaymentMethodRef,
-          plaidPaymentMethodRef: !!this.plaidPaymentMethodRef,
-        },
-        selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
-      });
       this.errorEvent.emit({
         message: 'Please fill in all required fields.',
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
@@ -288,7 +274,6 @@ export class ModularCheckout {
       // Ensure we have a backend payment token (not the Plaid public_token)
       const plaidPaymentToken: string | undefined = await this.plaidPaymentMethodRef.getPaymentToken();
       if (!plaidPaymentToken) {
-        console.error('[ModularCheckout] submitCheckout: missing Plaid payment token after exchange');
         this.errorEvent.emit({
           message: 'Unable to tokenize bank account. Please try again.',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -307,7 +292,6 @@ export class ModularCheckout {
     } else {
       const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
       if (!paymentMethod) {
-        console.error('[ModularCheckout] submitCheckout: missing payment method token after tokenization');
         this.errorEvent.emit({
           message: 'Payment method tokenization failed.',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,

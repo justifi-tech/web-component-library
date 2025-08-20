@@ -90,11 +90,6 @@ export class Checkout {
 
     if (event.detail.response.error) {
       this.isSubmitting = false;
-      console.error('[Checkout] handleTokenizeSubmit: tokenization error', {
-        code: event.detail.response.error.code,
-        message: event.detail.response.error.message,
-        decline_code: event.detail.response.error.decline_code,
-      });
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         message: event.detail.response.error.message,
@@ -105,7 +100,6 @@ export class Checkout {
 
     if (event.detail.response.validationError) {
       this.isSubmitting = false;
-      console.warn('[Checkout] handleTokenizeSubmit: validationError flagged on tokenization response');
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
         message: 'Validation error during tokenization',
