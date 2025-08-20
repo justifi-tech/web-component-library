@@ -18,6 +18,8 @@ export interface IPlaidService {
     authToken: string,
     accountId: string,
     publicToken: string,
+    linkTokenId?: string,
+    paymentMethodGroupId?: string,
     signal?: AbortSignal
   ): Promise<IApiResponse<any>>;
 }
@@ -38,10 +40,18 @@ export class PlaidService implements IPlaidService {
     authToken: string,
     accountId: string,
     publicToken: string,
+    linkTokenId?: string,
+    paymentMethodGroupId?: string,
     signal?: AbortSignal
   ): Promise<IApiResponse<any>> {
     const endpoint = `plaid/${accountId}/tokenize`;
-    const body = { public_token: publicToken };
+    const body: any = { public_token: publicToken };
+    if (linkTokenId) {
+      body.link_token_id = linkTokenId;
+    }
+    if (paymentMethodGroupId) {
+      body.payment_method_group_id = paymentMethodGroupId;
+    }
     return api.post({ endpoint, body, authToken, signal });
   }
 }

@@ -329,27 +329,25 @@ export class ModularCheckout {
         return;
       }
 
-      const plaidResult = await this.plaidPaymentMethodRef.resolvePaymentMethod();
-      console.debug('[ModularCheckout] submitCheckout: plaid resolvePaymentMethod result', {
-        validationError: !!plaidResult?.validationError,
-        hasToken: !!plaidResult?.token,
-        hasError: !!plaidResult?.error,
-      });
-      if (plaidResult.validationError) {
-        console.debug('[ModularCheckout] submitCheckout: plaid validation error');
+      // Ensure we have a backend payment token (not the Plaid public_token)
+      const plaidPaymentToken: string | undefined = await this.plaidPaymentMethodRef.getPaymentToken();
+      console.debug('[ModularCheckout] submitCheckout: plaid getPaymentToken result', { hasToken: !!plaidPaymentToken });
+      if (!plaidPaymentToken) {
+        console.error('[ModularCheckout] submitCheckout: missing Plaid payment token after exchange');
         this.errorEvent.emit({
-          message: 'Please complete Plaid bank authentication.',
-          errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+          message: 'Unable to tokenize bank account. Please try again.',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
         });
         return;
       }
 
-      // For Plaid, we need to tokenize the bank account on the backend
-      // The public token is already stored in the component
+      // Save for consistency with other flows
+      checkoutStore.paymentToken = plaidPaymentToken;
+
       payment = {
         payment_mode: 'ecom',
-        payment_token: plaidResult.token,
+        payment_token: plaidPaymentToken,
       };
     } else {
       const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);

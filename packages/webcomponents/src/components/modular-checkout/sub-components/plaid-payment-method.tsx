@@ -75,6 +75,7 @@ export class PlaidPaymentMethod {
   @State() isAuthenticating: boolean = false;
   @State() publicToken: string | null = null;
   @State() linkToken: string | null = null;
+  @State() linkTokenId: string | null = null;
   @State() error: PlaidError | null = null;
   @State() plaidLink: any = null;
   @State() isSelected: boolean = false;
@@ -152,6 +153,19 @@ export class PlaidPaymentMethod {
         plaid_public_token: this.publicToken
       } as any
     };
+  }
+
+  // Returns a usable payment method token for checkout completion.
+  // Will perform the backend exchange if the token is not yet present in the store.
+  @Method()
+  async getPaymentToken(): Promise<string | undefined> {
+    if (checkoutStore.paymentToken) {
+      console.debug('[PlaidPaymentMethod] getPaymentToken: returning stored token');
+      return checkoutStore.paymentToken;
+    }
+    console.debug('[PlaidPaymentMethod] getPaymentToken: no stored token; attempting exchange');
+    await this.exchangePublicTokenForPaymentMethod();
+    return checkoutStore.paymentToken;
   }
 
   @Method()
@@ -277,8 +291,15 @@ export class PlaidPaymentMethod {
         throw new Error(errorMessage);
       }
 
+      // Some backends may return an id along with the link token
       this.linkToken = response.data.link_token;
-      console.log('Link token received:', this.linkToken);
+      // Try to capture link token id if present in envelope
+      this.linkTokenId = (response as any)?.id || (response as any)?.data?.id || null;
+      console.log('[PlaidPaymentMethod] Link token received:', {
+        hasLinkToken: !!this.linkToken,
+        linkTokenPreview: this.linkToken?.slice(0, 10),
+        linkTokenId: this.linkTokenId,
+      });
     } catch (error) {
       // Clear timeout
       if (this.timeoutId) {
@@ -344,13 +365,16 @@ export class PlaidPaymentMethod {
     }
   };
 
-  handlePlaidSuccess = (publicToken: string, metadata: any) => {
+  handlePlaidSuccess = (publicToken: string, _metadata: any) => {
     this.publicToken = publicToken;
-    console.log('[PlaidPaymentMethod] handlePlaidSuccess: publicToken =', publicToken);
+    console.log('[PlaidPaymentMethod] handlePlaidSuccess: received publicToken', {
+      hasPublicToken: !!publicToken,
+      publicTokenPreview: publicToken?.slice(0, 10),
+    });
     this.isAuthenticating = false;
     this.clearError();
     this.retryCount = 0; // Reset retry count on success
-    console.log('Plaid authentication successful:', { publicToken, metadata });
+    console.log('[PlaidPaymentMethod] Plaid authentication successful');
 
     // Ensure the component remains selected after successful authentication
     if (!this.isSelected) {
@@ -364,6 +388,67 @@ export class PlaidPaymentMethod {
       message: 'Bank account connected successfully',
       severity: ComponentErrorSeverity.INFO
     });
+
+    // Immediately exchange the public token for a payment method token via backend
+    this.exchangePublicTokenForPaymentMethod();
+  };
+
+  private exchangePublicTokenForPaymentMethod = async () => {
+    if (!this.publicToken) {
+      console.error('[PlaidPaymentMethod] exchange: missing publicToken');
+      return;
+    }
+    if (!checkoutStore.authToken || !checkoutStore.accountId) {
+      console.error('[PlaidPaymentMethod] exchange: missing auth/account context');
+      return;
+    }
+
+    try {
+      console.log('[PlaidPaymentMethod] exchange: calling tokenizeBankAccount', {
+        hasPublicToken: !!this.publicToken,
+        linkTokenId: this.linkTokenId,
+        includePaymentMethodGroup: !!checkoutStore.paymentMethodGroupId,
+      });
+      const response = await this.plaidService.tokenizeBankAccount(
+        checkoutStore.authToken,
+        checkoutStore.accountId,
+        this.publicToken,
+        this.linkTokenId || undefined,
+        checkoutStore.savePaymentMethod ? checkoutStore.paymentMethodGroupId : undefined
+      );
+
+      console.log('[PlaidPaymentMethod] exchange: response', {
+        hasError: !!response?.error,
+        hasData: !!response?.data,
+        id: response?.id,
+        type: response?.type,
+      });
+
+      if (response?.error) {
+        console.error('[PlaidPaymentMethod] exchange: backend error', response.error);
+        return;
+      }
+
+      // Extract token from payment method response
+      const paymentMethod = response?.data;
+      const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
+      console.log('[PlaidPaymentMethod] exchange: extracted token', {
+        hasToken: !!token,
+      });
+
+      if (!token) {
+        console.error('[PlaidPaymentMethod] exchange: no token in response');
+        return;
+      }
+
+      // Save for downstream submit flows
+      checkoutStore.paymentToken = token;
+      console.log('[PlaidPaymentMethod] exchange: saved token to checkoutStore.paymentToken');
+    } catch (err) {
+      console.error('[PlaidPaymentMethod] exchange: exception', {
+        message: (err as any)?.message || String(err),
+      });
+    }
   };
 
   handlePlaidExit = (err: any, _metadata: any) => {
