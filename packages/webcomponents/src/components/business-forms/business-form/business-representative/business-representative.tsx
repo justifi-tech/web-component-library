@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../../components';
-import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, getIdentityMask } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
 import { heading2 } from '../../../../styles/parts';
 
@@ -125,7 +125,7 @@ export class BusinessRepresentative {
                 defaultValue={representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
-                mask={SSN_MASK}
+                mask={getIdentityMask(representativeDefaultValue?.address?.country)}
               />
             </div>
             <div class="col-12">

@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
-import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, getIdentityMask } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
 
 @Component({
@@ -89,7 +89,7 @@ export class RepresentativeFormInputs {
                 defaultValue={this.representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
-                mask={SSN_MASK}
+                mask={getIdentityMask(this.representativeDefaultValue?.address?.country)}
                 helpText="Enter your full Social Security Number. It is required for Federal OFAC check."
               />
             </div>
