@@ -40,6 +40,34 @@ describe('justifi-modular-checkout', () => {
     expect(arg.payment.payment_mode).toBe('ecom');
     expect(arg.payment.payment_token).toBe('pm_123');
   });
+
+  it('sets bankAccountVerification from checkout.payment_settings', async () => {
+    const page = await newSpecPage({
+      components: [ModularCheckout],
+      html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+    });
+
+    const instance: any = page.rootInstance;
+
+    // Simulate checkout payload
+    const checkout: any = {
+      account_id: 'acc_123',
+      payment_methods: [],
+      payment_method_group_id: 'pmg_123',
+      payment_description: 'desc',
+      total_amount: 100,
+      payment_amount: 100,
+      payment_settings: {
+        bnpl_payments: false,
+        bank_account_verification: false,
+      },
+    };
+
+    // Call private method directly for unit test purposes
+    instance['updateStore'](checkout);
+
+    expect(checkoutStore.bankAccountVerification).toBe(false);
+  });
 });
 
 

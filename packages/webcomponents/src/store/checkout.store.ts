@@ -12,6 +12,7 @@ interface IInitialState {
   bnplProviderClientId: string;
   bnplProviderMode: string;
   checkoutId: string;
+  bankAccountVerification?: boolean;
   disableBankAccount: boolean;
   disableBnpl: boolean;
   disableCreditCard: boolean;
@@ -38,6 +39,7 @@ const initialState: IInitialState = {
   bnplProviderClientId: '',
   bnplProviderMode: '',
   checkoutId: '',
+  bankAccountVerification: undefined,
   disableBankAccount: false,
   disableBnpl: false,
   disableCreditCard: false,

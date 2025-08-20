@@ -90,6 +90,7 @@ export class PlaidPaymentMethod {
   private retryDelay = 2000; // 2 seconds
   private timeoutId: NodeJS.Timeout | null = null;
   private abortController: AbortController | null = null;
+  private hasLoggedDisabledWarning: boolean = false;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
   @Event({ bubbles: true }) plaidError: EventEmitter;
@@ -692,6 +693,16 @@ export class PlaidPaymentMethod {
   }
 
   render() {
+    // Only allow use if enabled in checkout settings
+    if (checkoutStore.bankAccountVerification !== true) {
+      if (!this.hasLoggedDisabledWarning) {
+        // Log once per component lifecycle
+        console.warn('[PlaidPaymentMethod] bank_account_verification is disabled. Component will not render.');
+        this.hasLoggedDisabledWarning = true;
+      }
+      return null;
+    }
+
     const plaidLogo = (
       <img
         class="plaid-logo-img"
