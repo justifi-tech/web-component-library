@@ -192,7 +192,6 @@ export class ModularCheckout {
   private async getPaymentMethod(submitCheckoutArgs: BillingFormFields): Promise<string | undefined> {
     // If a saved payment method is selected, return its id directly
     if (this.isSavedPaymentMethodSelected()) {
-      console.debug('[ModularCheckout] Using saved payment method, skipping tokenization');
       return checkoutStore.selectedPaymentMethod;
     }
 
@@ -222,7 +221,6 @@ export class ModularCheckout {
 
   @Method()
   async validate(): Promise<boolean> {
-    console.debug('[ModularCheckout] validate() selectedPaymentMethod:', checkoutStore.selectedPaymentMethod, 'isSaved:', this.isSavedPaymentMethodSelected());
 
     const promises = [] as Array<Promise<any> | undefined>;
 
@@ -306,7 +304,6 @@ export class ModularCheckout {
         payment_token: plaidPaymentToken,
       };
     } else {
-      console.debug('[ModularCheckout] submitCheckout() selectedPaymentMethod:', checkoutStore.selectedPaymentMethod);
       const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
       if (!paymentMethod) {
         this.errorEvent.emit({

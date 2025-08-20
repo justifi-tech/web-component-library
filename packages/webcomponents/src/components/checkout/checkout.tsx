@@ -92,7 +92,6 @@ export class Checkout {
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    console.debug('[Checkout] validate() delegating to modular checkout');
     const modularValidation = await this.modularCheckoutRef?.validate();
     return { isValid: !!modularValidation };
   }
@@ -108,7 +107,6 @@ export class Checkout {
 
   private async submit(_event) {
     this.isSubmitting = true;
-    console.debug('[Checkout] submit() delegating to modular checkout submitCheckout');
     this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
   }
 
