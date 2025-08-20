@@ -4,7 +4,6 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
-// Removed ComponentError imports as errors are handled by modular checkout
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
 import { StyledHost } from '../../ui-components';
@@ -82,8 +81,6 @@ export class Checkout {
     });
   }
 
-  // Removed tokenize-payment-method submission listener; we delegate submission to modular checkout
-
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;
@@ -109,8 +106,6 @@ export class Checkout {
     this.isSubmitting = true;
     this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
   }
-
-  // Removed submitCheckoutWithToken flow; modular checkout handles saved PMs, tokenization and validation
 
   private get showPaymentTypeHeader() {
     return !this.disableCreditCard && !this.disableBankAccount;
