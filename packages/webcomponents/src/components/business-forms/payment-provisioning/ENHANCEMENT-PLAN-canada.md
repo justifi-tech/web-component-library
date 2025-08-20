@@ -66,7 +66,7 @@ Acceptance:
 - USA shows "State" and "Zip Code" with numeric postal mask.
 - CAN shows "Province" and "Postal Code" with alphanumeric pattern; country select remains disabled with "CAN".
 
-### 5) Country-aware identity and core info fields — Status: Not started
+### 5) Country-aware identity and core info fields — Status: Complete
 - Representative/owner forms: switch SSN → SIN label and 9-digit validation via config.
 - Core info: show "Business Number (BN)" for CAN with 9-digit validation; keep USA Tax ID logic.
 
@@ -90,7 +90,17 @@ Acceptance:
 Acceptance:
 - USA unchanged; CAN renders separate terms component (content can be updated later).
 
-### 8) Tests and stories — Status: In progress
+### 8) Identity input masking — Status: Not started
+- Apply country-specific input masks for identity numbers in owner/representative forms:
+  - USA SSN: `xxx-xx-xxxx`
+  - CAN SIN: `xxx-xxx-xxx`
+- Introduce a country-driven mask helper and replace current `SSN_MASK` usage to select per country.
+- Wire to `packages/webcomponents/src/components/business-forms/owner-form/owner-form-inputs.tsx` and `packages/webcomponents/src/components/business-forms/payment-provisioning/business-representative/business-representative-form-inputs.tsx`.
+
+Acceptance:
+- Identity number inputs display the appropriate mask per country; validation remains as in Step 5.
+
+### 9) Tests and stories — Status: In progress
 - Unit tests added for country-aware validators (USA and CAN).
 - Story variants for USA vs CAN still pending (docs updates TBD).
 
