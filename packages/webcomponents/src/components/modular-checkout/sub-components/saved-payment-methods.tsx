@@ -18,14 +18,25 @@ export class SavedPaymentMethods {
     if (checkoutStore.disablePaymentMethodGroup) {
       console.warn('Payment method group is disabled.');
     }
+    console.debug('[SavedPaymentMethods] componentWillLoad', {
+      methodsCount: checkoutStore.paymentMethods.length,
+      disablePaymentMethodGroup: checkoutStore.disablePaymentMethodGroup,
+    });
   }
 
   onPaymentMethodOptionClick = (paymentMethodId: string) => (e: Event) => {
     e.preventDefault();
+    console.debug('[SavedPaymentMethods] option clicked', { paymentMethodId });
     checkoutStore.selectedPaymentMethod = paymentMethodId;
   };
 
   isAllowedPaymentMethod = (paymentMethod: ICheckoutPaymentMethod) => {
+    console.debug('[SavedPaymentMethods] checking allowed payment method', {
+      id: paymentMethod?.id,
+      type: paymentMethod?.type,
+      disableCreditCard: checkoutStore.disableCreditCard,
+      disableBankAccount: checkoutStore.disableBankAccount,
+    });
     if (paymentMethod.type === 'card' && checkoutStore.disableCreditCard) {
       return false;
     }
@@ -39,6 +50,7 @@ export class SavedPaymentMethods {
 
   render() {
     if (checkoutStore.disablePaymentMethodGroup) {
+      console.debug('[SavedPaymentMethods] render: payment method group disabled, returning null');
       return null;
     }
 
