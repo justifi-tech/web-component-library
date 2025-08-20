@@ -4,10 +4,9 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+// Removed ComponentError imports as errors are handled by modular checkout
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
-import { PaymentMethodPayload } from './payment-method-payload';
 import { StyledHost } from '../../ui-components';
 
 @Component({
@@ -24,7 +23,6 @@ export class Checkout {
   @State() insuranceToggled: boolean = false;
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() serverError: string;
-  @State() tokenizedPaymentMethod?: PaymentMethodPayload;
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -84,33 +82,7 @@ export class Checkout {
     });
   }
 
-  @Listen('submit-event')
-  async handleTokenizeSubmit(event: CustomEvent<{ response: PaymentMethodPayload }>) {
-    this.tokenizedPaymentMethod = event.detail.response;
-
-    if (event.detail.response.error) {
-      this.isSubmitting = false;
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        message: event.detail.response.error.message,
-        severity: ComponentErrorSeverity.ERROR
-      });
-      return;
-    }
-
-    if (event.detail.response.validationError) {
-      this.isSubmitting = false;
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
-        message: 'Validation error during tokenization',
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    }
-
-    // Now submit the checkout with the tokenized payment method
-    await this.submitCheckoutWithToken();
-  }
+  // Removed tokenize-payment-method submission listener; we delegate submission to modular checkout
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
@@ -120,12 +92,9 @@ export class Checkout {
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    const tokenizeValidation = await this.tokenizePaymentMethodRef?.validate();
+    console.debug('[Checkout] validate() delegating to modular checkout');
     const modularValidation = await this.modularCheckoutRef?.validate();
-
-    return {
-      isValid: (tokenizeValidation?.isValid ?? true) && (modularValidation ?? true)
-    };
+    return { isValid: !!modularValidation };
   }
 
   private updateStore() {
@@ -139,22 +108,11 @@ export class Checkout {
 
   private async submit(_event) {
     this.isSubmitting = true;
-    // Trigger the tokenize payment method submission
-    this.tokenizePaymentMethodRef?.tokenizePaymentMethod();
+    console.debug('[Checkout] submit() delegating to modular checkout submitCheckout');
+    this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
   }
 
-  private async submitCheckoutWithToken() {
-    if (!this.tokenizedPaymentMethod || this.tokenizedPaymentMethod.error) {
-      this.isSubmitting = false;
-      return;
-    }
-
-    // Set the payment token in the store for the modular checkout to use
-    checkoutStore.paymentToken = this.tokenizedPaymentMethod.token;
-
-    // Submit the checkout
-    this.modularCheckoutRef.submitCheckout(checkoutStore.billingFormFields);
-  }
+  // Removed submitCheckoutWithToken flow; modular checkout handles saved PMs, tokenization and validation
 
   private get showPaymentTypeHeader() {
     return !this.disableCreditCard && !this.disableBankAccount;
