@@ -1,9 +1,12 @@
 // Mock the store before importing the component
-const mockCheckoutStore = {
+const mockCheckoutStore: any = {
   selectedPaymentMethod: '',
   authToken: 'test-token',
   accountId: 'test-account',
   checkoutId: 'test-checkout',
+  paymentToken: undefined,
+  paymentMethodGroupId: undefined,
+  savePaymentMethod: false,
 };
 
 jest.mock('../../../store/checkout.store', () => ({
@@ -15,7 +18,23 @@ jest.mock('../../../store/checkout.store', () => ({
 jest.mock('../../../assets/plaid-icon.svg', () => 'mocked-svg-path');
 
 // Mock the PlaidService
-jest.mock('../../../api/services/plaid.service');
+// Provide a concrete mock for PlaidService with expected method signatures
+jest.mock('../../../api/services/plaid.service', () => {
+  return {
+    PlaidService: jest.fn().mockImplementation(() => ({
+      getLinkToken: jest.fn().mockResolvedValue({
+        id: 'plt_123',
+        type: 'link_token',
+        data: { link_token: 'link-sandbox-abc', id: 'plt_123' },
+      }),
+      tokenizeBankAccount: jest.fn().mockResolvedValue({
+        id: 'pm_123',
+        type: 'payment_method',
+        data: { bank_account: { token: 'tok_pm_456' } },
+      }),
+    })),
+  };
+});
 
 import { newSpecPage } from '@stencil/core/testing';
 import { PlaidPaymentMethod } from './plaid-payment-method';
@@ -92,13 +111,36 @@ describe('PlaidPaymentMethod', () => {
 
     it('should provide reset method', async () => {
       component.publicToken = 'test-token';
-      component.error = 'test-error';
+      component.error = {
+        code: 'plaid-sdk-load-failed' as any,
+        message: 'test-error',
+        severity: 'error' as any,
+        retryable: true
+      };
 
       await component.reset();
 
       expect(component.publicToken).toBeNull();
       expect(component.error).toBeNull();
       expect(component.isAuthenticating).toBe(false);
+    });
+  });
+
+  describe('Plaid exchange flow', () => {
+    it('exchanges public token and saves payment token to store', async () => {
+      // Arrange
+      mockCheckoutStore.selectedPaymentMethod = 'plaid';
+      const instance: any = page.rootInstance as PlaidPaymentMethod;
+
+      // Act: simulate Plaid success
+      instance.handlePlaidSuccess('public-sandbox-xyz', {});
+      await page.waitForChanges();
+
+      // Allow any async exchange to complete
+      await new Promise((r) => setTimeout(r, 0));
+
+      // Assert
+      expect(mockCheckoutStore.paymentToken).toBe('tok_pm_456');
     });
   });
 });
