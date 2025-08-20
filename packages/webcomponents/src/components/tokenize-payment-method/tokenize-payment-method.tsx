@@ -113,7 +113,6 @@ export class TokenizePaymentMethod {
       const plaidToken = checkoutStore.paymentToken;
 
       if (!plaidToken) {
-        console.error('[TokenizePaymentMethod] tokenizePaymentMethod: plaid selected but payment token is missing');
         const errorResponse = this.createErrorResponse(
           ComponentErrorCodes.TOKENIZE_ERROR,
           'Missing payment token for plaid'
@@ -137,9 +136,6 @@ export class TokenizePaymentMethod {
     try {
       const validation = await this.validate();
       if (!validation.isValid) {
-        console.error('[TokenizePaymentMethod] tokenizePaymentMethod: validation error', {
-          validation,
-        });
         this.errorEvent.emit({
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           message: ERROR_MESSAGES.VALIDATION_ERROR,
@@ -152,11 +148,6 @@ export class TokenizePaymentMethod {
       const tokenizeResponse = await this.resolvePaymentMethod({ isValid: true });
 
       if (tokenizeResponse.error) {
-        console.error('[TokenizePaymentMethod] tokenizePaymentMethod: error', {
-          code: tokenizeResponse.error.code,
-          message: tokenizeResponse.error.message,
-          decline_code: tokenizeResponse.error.decline_code,
-        });
         this.emitError({
           errorCode: tokenizeResponse.error.code as ComponentErrorCodes,
           message: tokenizeResponse.error.message,
@@ -213,7 +204,6 @@ export class TokenizePaymentMethod {
   }
 
   private setDefaultSelectedPaymentMethod() {
-    console.debug('[TokenizePaymentMethod] setDefaultSelectedPaymentMethod');
     if (this.selectedPaymentMethodId) {
       return;
     }
@@ -278,12 +268,6 @@ export class TokenizePaymentMethod {
   }
 
   private emitError(errorData: { errorCode: ComponentErrorCodes; message: string }) {
-    console.error('[TokenizePaymentMethod] emitError', {
-      ...errorData,
-      selectedPaymentMethodId: this.selectedPaymentMethodId,
-      hasBillingFormRef: !!this.billingFormRef,
-      hasPaymentMethodFormRef: !!this.paymentMethodFormRef,
-    });
     this.errorEvent.emit({
       ...errorData,
       severity: ComponentErrorSeverity.ERROR,
@@ -301,7 +285,6 @@ export class TokenizePaymentMethod {
   }
 
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    console.debug('[TokenizePaymentMethod] resolvePaymentMethod: start', { insuranceValidation });
     if (!this.areFormsReady()) {
       return this.createErrorResponse('form_not_ready' as ComponentErrorCodes, ERROR_MESSAGES.FORM_NOT_READY);
     }
@@ -322,13 +305,8 @@ export class TokenizePaymentMethod {
       }
 
       const result = await this.performTokenization();
-      console.debug('[TokenizePaymentMethod] resolvePaymentMethod: performTokenization result', {
-        hasError: !!result?.error,
-        hasToken: !!result?.token,
-      });
       return result;
     } catch (error) {
-      console.debug('[TokenizePaymentMethod] resolvePaymentMethod: exception', { message: error.message });
       return { error };
     }
   }
@@ -337,11 +315,6 @@ export class TokenizePaymentMethod {
     const tokenizeResponse = await this.tokenize();
 
     if (tokenizeResponse.error) {
-      console.error('[TokenizePaymentMethod] performTokenization: error', {
-        code: tokenizeResponse.error?.code,
-        message: tokenizeResponse.error?.message,
-        decline_code: tokenizeResponse.error?.decline_code,
-      });
       return { error: tokenizeResponse.error };
     }
 
@@ -362,9 +335,6 @@ export class TokenizePaymentMethod {
       };
       return await this.paymentMethodFormRef.tokenize(config);
     } catch (error) {
-      console.error('[TokenizePaymentMethod] tokenize: exception', {
-        message: error?.message || String(error),
-      });
       return error;
     }
   }
