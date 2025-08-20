@@ -160,10 +160,8 @@ export class PlaidPaymentMethod {
   @Method()
   async getPaymentToken(): Promise<string | undefined> {
     if (checkoutStore.paymentToken) {
-      console.debug('[PlaidPaymentMethod] getPaymentToken: returning stored token');
       return checkoutStore.paymentToken;
     }
-    console.debug('[PlaidPaymentMethod] getPaymentToken: no stored token; attempting exchange');
     await this.exchangePublicTokenForPaymentMethod();
     return checkoutStore.paymentToken;
   }
@@ -235,8 +233,6 @@ export class PlaidPaymentMethod {
         onEvent: this.handlePlaidEvent,
         onLoad: this.handlePlaidLoad,
       });
-
-      console.log('Plaid Link initialized successfully');
     } catch (error) {
       this.handleError({
         code: PlaidErrorCodes.PLAID_LINK_INIT_FAILED,
@@ -295,11 +291,6 @@ export class PlaidPaymentMethod {
       this.linkToken = response.data.link_token;
       // Try to capture link token id if present in envelope
       this.linkTokenId = (response as any)?.id || (response as any)?.data?.id || null;
-      console.log('[PlaidPaymentMethod] Link token received:', {
-        hasLinkToken: !!this.linkToken,
-        linkTokenPreview: this.linkToken?.slice(0, 10),
-        linkTokenId: this.linkTokenId,
-      });
     } catch (error) {
       // Clear timeout
       if (this.timeoutId) {
@@ -367,14 +358,9 @@ export class PlaidPaymentMethod {
 
   handlePlaidSuccess = (publicToken: string, _metadata: any) => {
     this.publicToken = publicToken;
-    console.log('[PlaidPaymentMethod] handlePlaidSuccess: received publicToken', {
-      hasPublicToken: !!publicToken,
-      publicTokenPreview: publicToken?.slice(0, 10),
-    });
     this.isAuthenticating = false;
     this.clearError();
     this.retryCount = 0; // Reset retry count on success
-    console.log('[PlaidPaymentMethod] Plaid authentication successful');
 
     // Ensure the component remains selected after successful authentication
     if (!this.isSelected) {
@@ -404,11 +390,6 @@ export class PlaidPaymentMethod {
     }
 
     try {
-      console.log('[PlaidPaymentMethod] exchange: calling tokenizeBankAccount', {
-        hasPublicToken: !!this.publicToken,
-        linkTokenId: this.linkTokenId,
-        includePaymentMethodGroup: !!checkoutStore.paymentMethodGroupId,
-      });
       const response = await this.plaidService.tokenizeBankAccount(
         checkoutStore.authToken,
         checkoutStore.accountId,
@@ -416,13 +397,6 @@ export class PlaidPaymentMethod {
         this.linkTokenId || undefined,
         checkoutStore.savePaymentMethod ? checkoutStore.paymentMethodGroupId : undefined
       );
-
-      console.log('[PlaidPaymentMethod] exchange: response', {
-        hasError: !!response?.error,
-        hasData: !!response?.data,
-        id: response?.id,
-        type: response?.type,
-      });
 
       if (response?.error) {
         console.error('[PlaidPaymentMethod] exchange: backend error', response.error);
@@ -432,9 +406,6 @@ export class PlaidPaymentMethod {
       // Extract token from payment method response
       const paymentMethod = response?.data;
       const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
-      console.log('[PlaidPaymentMethod] exchange: extracted token', {
-        hasToken: !!token,
-      });
 
       if (!token) {
         console.error('[PlaidPaymentMethod] exchange: no token in response');
@@ -443,7 +414,6 @@ export class PlaidPaymentMethod {
 
       // Save for downstream submit flows
       checkoutStore.paymentToken = token;
-      console.log('[PlaidPaymentMethod] exchange: saved token to checkoutStore.paymentToken');
     } catch (err) {
       console.error('[PlaidPaymentMethod] exchange: exception', {
         message: (err as any)?.message || String(err),
@@ -458,19 +428,16 @@ export class PlaidPaymentMethod {
       this.handlePlaidError(err);
     } else {
       // User closed the modal without error
-      console.log('Plaid Link closed by user');
 
       // If user closed without completing authentication, ensure component remains selected
       // but clear any existing tokens to force re-authentication
       if (this.isSelected && !this.publicToken) {
         // Component is selected but no token, this is expected state
-        console.log('Plaid Link closed without completion, component remains selected');
       }
     }
   };
 
   handlePlaidEvent = (eventName: string, metadata: any) => {
-    console.log('Plaid event:', eventName, metadata);
 
     // Handle specific events if needed
     switch (eventName) {
@@ -485,17 +452,14 @@ export class PlaidPaymentMethod {
         break;
       case 'HANDOFF':
         // User is being redirected to their bank
-        console.log('User redirected to bank for authentication');
         break;
       case 'TRANSITION_VIEW':
         // Plaid Link view transition
-        console.log('Plaid Link view transition:', metadata.view_name);
         break;
     }
   };
 
   handlePlaidLoad = () => {
-    console.log('Plaid Link loaded');
   };
 
   handlePlaidError = (error: any) => {
@@ -580,7 +544,6 @@ export class PlaidPaymentMethod {
 
     // Even with an error, the component should remain selected to allow retry
     if (this.isSelected) {
-      console.log('Plaid authentication error, component remains selected for retry');
     }
   };
 
@@ -613,8 +576,6 @@ export class PlaidPaymentMethod {
 
     this.isRetrying = true;
     this.retryCount++;
-
-    console.log(`Scheduling retry ${this.retryCount}/${this.maxRetries} in ${this.retryDelay}ms`);
 
     setTimeout(() => {
       this.isRetrying = false;
@@ -650,7 +611,6 @@ export class PlaidPaymentMethod {
   async deselect(): Promise<void> {
     this.isSelected = false;
     // Don't clear the public token or error state as they might be needed if user reselects
-    console.log('Plaid payment method deselected');
   }
 
   // Method to reset component state (useful for testing or error recovery)
@@ -675,8 +635,6 @@ export class PlaidPaymentMethod {
       this.abortController.abort();
       this.abortController = null;
     }
-
-    console.log('Plaid payment method state reset');
   }
 
   // Method to check if component is ready for authentication
@@ -707,7 +665,6 @@ export class PlaidPaymentMethod {
 
     if (this.isSelected !== shouldBeSelected) {
       this.isSelected = shouldBeSelected;
-      console.log(`Plaid payment method selection synced with store: ${shouldBeSelected}`);
     }
   };
 

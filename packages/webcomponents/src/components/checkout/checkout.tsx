@@ -42,16 +42,6 @@ export class Checkout {
   @Watch('disableBnpl')
   @Watch('disablePaymentMethodGroup')
   propChanged() {
-    console.debug('[Checkout] props changed', {
-      checkoutId: this.checkoutId,
-      hasAuthToken: !!this.authToken,
-      disableCreditCard: this.disableCreditCard,
-      disableBankAccount: this.disableBankAccount,
-      disableBnpl: this.disableBnpl,
-      disablePaymentMethodGroup: this.disablePaymentMethodGroup,
-      hideCardBillingForm: this.hideCardBillingForm,
-      hideBankAccountBillingForm: this.hideBankAccountBillingForm,
-    });
     this.updateStore();
   }
 
@@ -60,10 +50,6 @@ export class Checkout {
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
   connectedCallback() {
-    console.debug('[Checkout] connectedCallback', {
-      checkoutId: this.checkoutId,
-      hasAuthToken: !!this.authToken,
-    });
     if (this.authToken && this.checkoutId) {
       this.updateStore();
     }
@@ -72,18 +58,15 @@ export class Checkout {
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    console.debug('[Checkout] componentWillLoad: analytics initialized');
   }
 
   disconnectedCallback() {
     this.analytics?.cleanup();
-    console.debug('[Checkout] disconnectedCallback: analytics cleaned up');
   }
 
   @Listen('submit-event')
   checkoutComplete(_event: CustomEvent<any>) {
     this.isSubmitting = false;
-    console.debug('[Checkout] submit-event received: checkout complete');
   }
 
   @Listen('error-event')
@@ -99,15 +82,10 @@ export class Checkout {
       data: detail.data,
       selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
     });
-    console.debug('[Checkout] error-event received (raw detail)', { detail });
   }
 
   @Listen('submit-event')
   async handleTokenizeSubmit(event: CustomEvent<{ response: PaymentMethodPayload }>) {
-    console.debug('[Checkout] handleTokenizeSubmit: received tokenization response', {
-      hasError: !!event.detail.response?.error,
-      hasToken: !!event.detail.response?.token,
-    });
     this.tokenizedPaymentMethod = event.detail.response;
 
     if (event.detail.response.error) {
@@ -122,7 +100,6 @@ export class Checkout {
         message: event.detail.response.error.message,
         severity: ComponentErrorSeverity.ERROR
       });
-      console.debug('[Checkout] handleTokenizeSubmit: emitted TOKENIZE_ERROR');
       return;
     }
 
@@ -138,26 +115,19 @@ export class Checkout {
     }
 
     // Now submit the checkout with the tokenized payment method
-    console.debug('[Checkout] handleTokenizeSubmit: proceeding to submitCheckoutWithToken');
     await this.submitCheckoutWithToken();
   }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    console.debug('[Checkout] fillBillingForm called', { providedFieldKeys: Object.keys(fields || {}) });
     checkoutStore.billingFormFields = fields;
     this.tokenizePaymentMethodRef?.fillBillingForm(fields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    console.debug('[Checkout] validate: starting child component validation');
     const tokenizeValidation = await this.tokenizePaymentMethodRef?.validate();
     const modularValidation = await this.modularCheckoutRef?.validate();
-    console.debug('[Checkout] validate: results', {
-      tokenizeValidation,
-      modularValidation,
-    });
 
     return {
       isValid: (tokenizeValidation?.isValid ?? true) && (modularValidation ?? true)
@@ -165,14 +135,6 @@ export class Checkout {
   }
 
   private updateStore() {
-    console.debug('[Checkout] updateStore', {
-      checkoutId: this.checkoutId,
-      hasAuthToken: !!this.authToken,
-      disableCreditCard: this.disableCreditCard,
-      disableBankAccount: this.disableBankAccount,
-      disableBnpl: this.disableBnpl,
-      disablePaymentMethodGroup: this.disablePaymentMethodGroup,
-    });
     checkoutStore.checkoutId = this.checkoutId;
     checkoutStore.authToken = this.authToken;
     checkoutStore.disableCreditCard = this.disableCreditCard;
@@ -182,30 +144,21 @@ export class Checkout {
   }
 
   private async submit(_event) {
-    console.debug('[Checkout] submit clicked', { isSubmitting: this.isSubmitting });
     this.isSubmitting = true;
     // Trigger the tokenize payment method submission
-    console.debug('[Checkout] triggering tokenizePaymentMethod on child');
     this.tokenizePaymentMethodRef?.tokenizePaymentMethod();
   }
 
   private async submitCheckoutWithToken() {
-    console.debug('[Checkout] submitCheckoutWithToken: start', {
-      hasTokenizedPaymentMethod: !!this.tokenizedPaymentMethod,
-      hasError: !!this.tokenizedPaymentMethod?.error,
-    });
     if (!this.tokenizedPaymentMethod || this.tokenizedPaymentMethod.error) {
       this.isSubmitting = false;
-      console.debug('[Checkout] submitCheckoutWithToken: aborting due to missing token or error');
       return;
     }
 
     // Set the payment token in the store for the modular checkout to use
     checkoutStore.paymentToken = this.tokenizedPaymentMethod.token;
-    console.debug('[Checkout] submitCheckoutWithToken: payment token set in store');
 
     // Submit the checkout
-    console.debug('[Checkout] submitCheckoutWithToken: calling modularCheckoutRef.submitCheckout');
     this.modularCheckoutRef.submitCheckout(checkoutStore.billingFormFields);
   }
 

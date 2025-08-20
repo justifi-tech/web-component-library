@@ -39,13 +39,8 @@ export class ModularCheckout {
   }
 
   connectedCallback() {
-    console.debug('[ModularCheckout] connectedCallback', {
-      checkoutId: this.checkoutId,
-      hasAuthToken: !!this.authToken,
-    });
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
-      console.debug('[ModularCheckout] DOM mutated: re-queried form refs');
     });
 
     this.observer.observe(this.hostEl, {
@@ -65,7 +60,6 @@ export class ModularCheckout {
     this.completeCheckout = makeCheckoutComplete(config);
 
     onChange('selectedPaymentMethod', (newValue: string) => {
-      console.debug('[ModularCheckout] selectedPaymentMethod changed', { newValue });
       this.paymentMethodChangedEvent.emit(newValue);
     });
   }
@@ -77,21 +71,18 @@ export class ModularCheckout {
         errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
         severity: ComponentErrorSeverity.ERROR,
       });
-      console.debug('[ModularCheckout] componentWillLoad: missing authToken or checkoutId, emitted NOT_AUTHENTICATED');
       return;
     }
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
     checkoutStore.savePaymentMethod = this.savePaymentMethod;
-    console.debug('[ModularCheckout] componentWillLoad: initialized analytics and store, fetching checkout');
     this.fetchCheckout();
 
     // Refresh the checkout data when insurance values actually change (not on initial load)
     insuranceValuesOn('set', (key: string) => {
       const value = insuranceValues[key];
       if (value !== undefined && hasInsuranceValueChanged(key, value)) {
-        console.debug('[ModularCheckout] insurance value changed, refreshing checkout', { key, value });
         this.fetchCheckout();
       }
     });
@@ -99,27 +90,22 @@ export class ModularCheckout {
 
   componentDidLoad() {
     this.queryFormRefs();
-    console.debug('[ModularCheckout] componentDidLoad: queried form refs');
   }
 
   disconnectedCallback() {
     this.observer?.disconnect();
-    console.debug('[ModularCheckout] disconnectedCallback: observer disconnected');
   }
 
   private fetchCheckout() {
     if (this.getCheckout) {
-      console.debug('[ModularCheckout] fetchCheckout: calling getCheckout');
       this.getCheckout({
         onSuccess: ({ checkout }) => {
-          console.debug('[ModularCheckout] fetchCheckout: success', { status: checkout.status, total_amount: checkout.total_amount });
           if (checkout.status === ICheckoutStatus.completed) {
             this.errorEvent.emit({
               message: ComponentErrorMessages.CHECKOUT_ALREADY_COMPLETED,
               errorCode: ComponentErrorCodes.CHECKOUT_ALREADY_COMPLETED,
               severity: ComponentErrorSeverity.ERROR,
             });
-            console.debug('[ModularCheckout] fetchCheckout: emitted CHECKOUT_ALREADY_COMPLETED');
             return;
           } else if (checkout.status === ICheckoutStatus.expired) {
             this.errorEvent.emit({
@@ -127,14 +113,12 @@ export class ModularCheckout {
               errorCode: ComponentErrorCodes.CHECKOUT_EXPIRED,
               severity: ComponentErrorSeverity.ERROR,
             });
-            console.debug('[ModularCheckout] fetchCheckout: emitted CHECKOUT_EXPIRED');
             return;
           }
 
           this.updateStore(checkout);
         },
         onError: (error) => {
-          console.debug('[ModularCheckout] fetchCheckout: error', { message: error.message });
           this.errorEvent.emit({
             message: error.message,
             errorCode: ComponentErrorCodes.FETCH_ERROR,
@@ -146,13 +130,6 @@ export class ModularCheckout {
   }
 
   private updateStore(checkout: ICheckout) {
-    console.debug('[ModularCheckout] updateStore with checkout data', {
-      account_id: checkout.account_id,
-      payment_method_group_id: checkout.payment_method_group_id,
-      total_amount: checkout.total_amount,
-      payment_amount: checkout.payment_amount,
-      bnpl_enabled: checkout.payment_settings?.bnpl_payments,
-    });
     checkoutStore.accountId = checkout.account_id;
     checkoutStore.paymentMethods = checkout.payment_methods;
     checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
@@ -182,13 +159,6 @@ export class ModularCheckout {
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
     this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
     this.plaidPaymentMethodRef = this.hostEl.querySelector('justifi-plaid-payment-method');
-    console.debug('[ModularCheckout] queryFormRefs', {
-      hasPaymentMethodForm: !!this.paymentMethodFormRef,
-      hasBillingForm: !!this.billingFormRef,
-      hasInsuranceForm: !!this.insuranceFormRef,
-      hasSezzle: !!this.sezzlePaymentMethodRef,
-      hasPlaid: !!this.plaidPaymentMethodRef,
-    });
   }
 
   private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
@@ -225,10 +195,6 @@ export class ModularCheckout {
     }
 
     const { error, id: token } = await this.tokenizePaymentMethod(submitCheckoutArgs);
-    console.debug('[ModularCheckout] getPaymentMethod: tokenize response', {
-      hasError: !!error,
-      hasToken: !!token,
-    });
 
     if (error) {
       console.error('[ModularCheckout] getPaymentMethod: tokenization error', {
@@ -248,13 +214,6 @@ export class ModularCheckout {
 
   @Method()
   async validate(): Promise<boolean> {
-    console.debug('[ModularCheckout] validate: refs', {
-      billingFormRef: !!this.billingFormRef,
-      paymentMethodFormRef: !!this.paymentMethodFormRef,
-      insuranceFormRef: !!this.insuranceFormRef,
-      sezzlePaymentMethodRef: !!this.sezzlePaymentMethodRef,
-      plaidPaymentMethodRef: !!this.plaidPaymentMethodRef,
-    });
 
     const promises = [
       this.paymentMethodFormRef?.validate(),
@@ -272,13 +231,11 @@ export class ModularCheckout {
 
     const validationResults = await Promise.all(promises);
     const isValid = validationResults.every(result => result?.isValid !== false);
-    console.debug('[ModularCheckout] validate: results', { validationResults, isValid });
     return isValid;
   }
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
-    console.debug('[ModularCheckout] submitCheckout: start');
     const isValid = await this.validate();
     if (!isValid) {
       console.warn('[ModularCheckout] submitCheckout: validation failed', {
@@ -302,11 +259,9 @@ export class ModularCheckout {
     let payment: { payment_mode: string; payment_token: string | undefined };
 
     if (checkoutStore.selectedPaymentMethod === 'sezzle') {
-      console.debug('[ModularCheckout] submitCheckout: sezzle selected');
       const insuranceValidation = this.insuranceFormRef ? await this.insuranceFormRef.validate() : { isValid: true };
       const sezzleResult = await this.sezzlePaymentMethodRef.resolvePaymentMethod(insuranceValidation);
       if (sezzleResult.error) {
-        console.debug('[ModularCheckout] submitCheckout: sezzle error', { message: sezzleResult.error.message });
         this.errorEvent.emit({
           message: sezzleResult.error.message,
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -314,14 +269,12 @@ export class ModularCheckout {
         });
         return;
       } else if (sezzleResult.bnpl?.status === 'success') {
-        console.debug('[ModularCheckout] submitCheckout: sezzle success');
         payment = {
           payment_mode: 'bnpl',
           payment_token: undefined,
         };
       }
     } else if (checkoutStore.selectedPaymentMethod === 'plaid') {
-      console.debug('[ModularCheckout] submitCheckout: plaid selected');
       // Handle Plaid payment method
       if (!this.plaidPaymentMethodRef) {
         this.errorEvent.emit({
@@ -334,7 +287,6 @@ export class ModularCheckout {
 
       // Ensure we have a backend payment token (not the Plaid public_token)
       const plaidPaymentToken: string | undefined = await this.plaidPaymentMethodRef.getPaymentToken();
-      console.debug('[ModularCheckout] submitCheckout: plaid getPaymentToken result', { hasToken: !!plaidPaymentToken });
       if (!plaidPaymentToken) {
         console.error('[ModularCheckout] submitCheckout: missing Plaid payment token after exchange');
         this.errorEvent.emit({
@@ -354,7 +306,6 @@ export class ModularCheckout {
       };
     } else {
       const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
-      console.debug('[ModularCheckout] submitCheckout: ecom selected, token result', { hasToken: !!paymentMethod });
       if (!paymentMethod) {
         console.error('[ModularCheckout] submitCheckout: missing payment method token after tokenization');
         this.errorEvent.emit({
@@ -370,19 +321,15 @@ export class ModularCheckout {
       };
     }
 
-
-    console.debug('[ModularCheckout] submitCheckout: invoking completeCheckout');
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
-        console.debug('[ModularCheckout] submitCheckout: completeCheckout success');
         this.submitEvent.emit({
           checkout,
           message: 'Checkout completed successfully',
         });
       },
       onError: (error) => {
-        console.debug('[ModularCheckout] submitCheckout: completeCheckout error', { message: error.message });
         this.errorEvent.emit({
           message: error.message,
           errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
