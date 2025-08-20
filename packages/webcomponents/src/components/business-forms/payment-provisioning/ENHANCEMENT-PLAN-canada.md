@@ -6,6 +6,7 @@ Add Canada (CAN) support to `@payment-provisioning` with minimal branching by in
 - Avoid sprawling `if (country === 'CAN')` checks. Prefer config-driven labels/validators/options and small, reusable subcomponents.
 - Use country codes strictly as 'USA' and 'CAN' within the provisioning component.
 - Ship in small, incremental PRs that remain backward compatible with USA.
+- Do NOT set a `country` default in any child/sub-component. The `country` defaulting logic lives ONLY in `payment-provisioning-core` (from the loaded `Business`). All children must receive `country` via props and must not fall back to `USA` locally.
 
 ## Decisions from product
 - Placeholder CAN business structures: duplicate the USA business classification options for now.
@@ -59,6 +60,8 @@ Acceptance:
   - `business-form/legal-address-form/legal-address-form.tsx`
 - Read `country` from top-level and pass to `form-address-fields`; do not default or allow selecting in child components.
 
+Note: This rule applies broadly across all steps/components. Do not add `country = CountryCode.USA` defaults in child components; only the top-level core determines and passes `country`.
+
 Acceptance:
 - USA shows "State" and "Zip Code" with numeric postal mask.
 - CAN shows "Province" and "Postal Code" with alphanumeric pattern; country select remains disabled with "CAN".
@@ -73,6 +76,8 @@ Acceptance:
 ### 6) Bank account step split — Status: Not started
 - Create `justifi-business-bank-account-form-step-core-canada` with CAN-specific fields and validations.
 - In `payment-provisioning-form-steps.tsx`, derive step 5 component from country via a small factory to avoid inline branching, e.g., `getBankAccountStepFor(country)`.
+
+Update: We will reuse the existing core step and toggle inputs/schema by `country`. The core receives `country` from the parent; do not set a local default in the core or its subcomponents.
 
 Acceptance:
 - USA continues using existing `justifi-business-bank-account-form-step-core`.
@@ -134,3 +139,4 @@ Acceptance:
 ## Notes
 - Country codes must be 'USA' and 'CAN' in this component; do not use 'US' or 'CA'.
 - Keep `country` immutable in UI (read-only from Business), matching requirement that it is set before onboarding.
+- Do not default `country` in any child/sub-component (including schemas, inputs, and step cores). Defaulting happens in `payment-provisioning-core` only.

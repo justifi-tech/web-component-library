@@ -2,6 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@
 import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api';
 import { makeGetBusiness, makePostBankAccount, makePostDocumentRecord } from '../payment-provisioning-actions';
 import { BusinessService, BusinessBankAccountService, DocumentRecordService } from '../../../../api/services/business.service';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step'
@@ -17,6 +18,7 @@ export class BusinessBankAccountFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -67,6 +69,7 @@ export class BusinessBankAccountFormStep {
         postBankAccount={this.postBankAccount}
         postDocumentRecord={this.postDocumentRecord}
         allowOptionalFields={this.allowOptionalFields}
+        country={this.country}
         ref={el => this.coreComponent = el}
       />
     )

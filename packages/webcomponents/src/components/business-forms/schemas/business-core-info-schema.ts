@@ -56,5 +56,5 @@ export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
     tax_id: makeTaxIdValidation(CountryCode.CAN).required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
   } as any));
 
-// Back-compat default: USA
+// For backward compatibility, default to USA
 export const businessCoreInfoSchema = (allowOptionalFields?: boolean) => businessCoreInfoSchemaUSA(allowOptionalFields);

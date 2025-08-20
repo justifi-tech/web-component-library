@@ -57,6 +57,7 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     6: () => <justifi-business-terms-conditions-form-step
       businessId={this.businessId}
@@ -66,6 +67,8 @@ export class PaymentProvisioningFormSteps {
       allowOptionalFields={this.allowOptionalFields}
     />,
   };
+
+  
 
   render() {
     return (
