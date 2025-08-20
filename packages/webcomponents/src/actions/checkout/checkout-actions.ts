@@ -6,6 +6,7 @@ export const makeGetCheckout =
   async ({ onSuccess, onError }) => {
     try {
       const response = await service.fetchCheckout(authToken, checkoutId);
+
       if (!response.error) {
         const checkout = response.data;
         onSuccess({ checkout });
@@ -33,6 +34,7 @@ export const makeCheckoutComplete =
   async ({ payment, onSuccess, onError }) => {
     try {
       const response = await service.complete(authToken, checkoutId, payment);
+
       if (!response.error) {
         const checkout = response.data;
         onSuccess({ checkout });
