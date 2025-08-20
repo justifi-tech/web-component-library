@@ -346,6 +346,7 @@ export class PlaidPaymentMethod {
 
   handlePlaidSuccess = (publicToken: string, metadata: any) => {
     this.publicToken = publicToken;
+    console.log('[PlaidPaymentMethod] handlePlaidSuccess: publicToken =', publicToken);
     this.isAuthenticating = false;
     this.clearError();
     this.retryCount = 0; // Reset retry count on success
