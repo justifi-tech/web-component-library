@@ -55,20 +55,20 @@ export class BankAccountFormInputsCanada {
             disabled={this.formDisabled}
           />
         </div>
-        <div class="col-12">
+        <div class="col-3">
           <form-control-text
-            name="account_number"
-            label="Account Number"
-            defaultValue={this.defaultValue.account_number}
-            maxLength={17}
-            errorText={this.errors.account_number}
+            name="transit_number"
+            label="Transit Number"
+            defaultValue={this.defaultValue.transit_number}
+            maxLength={5}
+            errorText={this.errors.transit_number}
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            helpText="Please copy the account number as shown on your statement. Do not include spaces or dashes."
+            helpText="5 digits"
           />
         </div>
-        <div class="col-6">
+        <div class="col-3">
           <form-control-text
             name="institution_number"
             label="Institution Number"
@@ -83,15 +83,15 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-6">
           <form-control-text
-            name="transit_number"
-            label="Transit Number"
-            defaultValue={this.defaultValue.transit_number}
-            maxLength={5}
-            errorText={this.errors.transit_number}
+            name="account_number"
+            label="Account Number"
+            defaultValue={this.defaultValue.account_number}
+            maxLength={17}
+            errorText={this.errors.account_number}
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            helpText="5 digits"
+            helpText="Please copy the account number as shown on your statement. Do not include spaces or dashes."
           />
         </div>
       </div>
