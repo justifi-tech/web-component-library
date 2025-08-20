@@ -30,6 +30,7 @@
 - [justifi-business-representative-form-step](business-representative)
 - [justifi-business-owners-form-step](business-owners)
 - [justifi-business-bank-account-form-step](bank-account)
+- [justifi-business-terms-conditions-form-step-canada](terms-and-conditions)
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
@@ -41,6 +42,7 @@ graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
+  justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step-canada
   justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
   justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
   justifi-business-core-info-form-step-core --> form-control-text
@@ -91,6 +93,7 @@ graph TD;
   bank-account-form-inputs --> form-control-select
   bank-account-document-form-inputs --> form-control-file
   form-control-file --> form-control-tooltip
+  justifi-business-terms-conditions-form-step-canada --> form-control-checkbox
   justifi-business-terms-conditions-form-step --> form-control-checkbox
   justifi-payment-provisioning-core --> justifi-payment-provisioning-form-steps
   style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px

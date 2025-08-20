@@ -73,7 +73,7 @@ Acceptance:
 Acceptance:
 - USA unchanged; CAN shows SIN and BN fields as specified.
 
-### 6) Bank account step split — Status: Not started
+### 6) Bank account step split — Status: Completed
 - Create `justifi-business-bank-account-form-step-core-canada` with CAN-specific fields and validations.
 - In `payment-provisioning-form-steps.tsx`, derive step 5 component from country via a small factory to avoid inline branching, e.g., `getBankAccountStepFor(country)`.
 

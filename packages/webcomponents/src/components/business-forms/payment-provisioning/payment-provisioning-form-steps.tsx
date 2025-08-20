@@ -59,13 +59,23 @@ export class PaymentProvisioningFormSteps {
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    6: () => <justifi-business-terms-conditions-form-step
-      businessId={this.businessId}
-      authToken={this.authToken}
-      ref={(el) => this.refs[6] = el}
-      onFormLoading={this.handleFormLoading}
-      allowOptionalFields={this.allowOptionalFields}
-    />,
+    6: () => this.country === CountryCode.CAN ? (
+      <justifi-business-terms-conditions-form-step-canada
+        businessId={this.businessId}
+        authToken={this.authToken}
+        ref={(el) => this.refs[6] = el}
+        onFormLoading={this.handleFormLoading}
+        allowOptionalFields={this.allowOptionalFields}
+      />
+    ) : (
+      <justifi-business-terms-conditions-form-step
+        businessId={this.businessId}
+        authToken={this.authToken}
+        ref={(el) => this.refs[6] = el}
+        onFormLoading={this.handleFormLoading}
+        allowOptionalFields={this.allowOptionalFields}
+      />
+    ),
   };
 
   
