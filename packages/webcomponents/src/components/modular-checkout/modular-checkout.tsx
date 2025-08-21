@@ -7,6 +7,7 @@ import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/ch
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
+import { PAYMENT_METHOD, PAYMENT_MODE } from "./ModularCheckout";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -259,7 +260,7 @@ export class ModularCheckout {
 
     let payment: { payment_mode: string; payment_token: string | undefined };
 
-    if (checkoutStore.selectedPaymentMethod === 'sezzle') {
+    if (checkoutStore.selectedPaymentMethod === PAYMENT_METHOD.SEZZLE) {
       const insuranceValidation = this.insuranceFormRef ? await this.insuranceFormRef.validate() : { isValid: true };
       const sezzleResult = await this.sezzlePaymentMethodRef.resolvePaymentMethod(insuranceValidation);
       if (sezzleResult.error) {
@@ -271,11 +272,11 @@ export class ModularCheckout {
         return;
       } else if (sezzleResult.bnpl?.status === 'success') {
         payment = {
-          payment_mode: 'bnpl',
+          payment_mode: PAYMENT_MODE.BNPL,
           payment_token: undefined,
         };
       }
-    } else if (checkoutStore.selectedPaymentMethod === 'plaid') {
+    } else if (checkoutStore.selectedPaymentMethod === PAYMENT_METHOD.PLAID) {
       // Handle Plaid payment method
       if (!this.plaidPaymentMethodRef) {
         this.errorEvent.emit({
@@ -301,7 +302,7 @@ export class ModularCheckout {
       checkoutStore.paymentToken = plaidPaymentToken;
 
       payment = {
-        payment_mode: 'ecom',
+        payment_mode: PAYMENT_MODE.PLAID,
         payment_token: plaidPaymentToken,
       };
     } else {
@@ -315,7 +316,7 @@ export class ModularCheckout {
         return;
       };
       payment = {
-        payment_mode: 'ecom',
+        payment_mode: PAYMENT_MODE.ECOM,
         payment_token: paymentMethod,
       };
     }
