@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
-import { PHONE_MASKS, getIdentityMask } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, IDENTITY_MASKS } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
@@ -88,11 +88,11 @@ export class RepresentativeFormInputs {
             <div class="col-12 col-md-8">
               <form-control-number-masked
                 name="identification_number"
-                label={countryLabels[this.country].identityLabel}
+                label={countryLabels[this.country].idNumberLabel}
                 defaultValue={this.representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
-                mask={getIdentityMask(this.country)}
+                mask={IDENTITY_MASKS[this.country]}
                 helpText={countryLabels[this.country].identityHelpText}
               />
             </div>
