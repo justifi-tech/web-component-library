@@ -7,7 +7,7 @@ interface IInitialState {
   authToken: string;
   billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
-  insuranceEnabled: boolean | undefined;
+  insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
   bnplProviderClientId: string;
