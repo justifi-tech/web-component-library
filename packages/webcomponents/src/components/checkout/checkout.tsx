@@ -66,21 +66,6 @@ export class Checkout {
     this.isSubmitting = false;
   }
 
-  @Listen('error-event')
-  checkoutError(event: CustomEvent<any>) {
-    this.isSubmitting = false;
-    const origin = (event.target as HTMLElement)?.tagName || 'UNKNOWN-ORIGIN';
-    const detail = event.detail || {};
-    console.error('[Checkout] error-event', {
-      origin,
-      errorCode: detail.errorCode,
-      message: detail.message,
-      severity: detail.severity,
-      data: detail.data,
-      selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
-    });
-  }
-
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;
@@ -90,7 +75,7 @@ export class Checkout {
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
     const modularValidation = await this.modularCheckoutRef?.validate();
-    return { isValid: !!modularValidation };
+    return { isValid: modularValidation };
   }
 
   private updateStore() {
