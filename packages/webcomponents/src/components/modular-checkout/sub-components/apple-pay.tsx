@@ -85,7 +85,6 @@ export class ApplePay {
   }
 
   private async initializeApplePay() {
-    console.log('Initializing Apple Pay');
     try {
       if (this.applePayService) {
         this.applePayService.setApiBaseUrl(this.apiBaseUrl);
@@ -123,10 +122,6 @@ export class ApplePay {
         buttonStyle: this.buttonStyle,
       };
 
-      console.log('=== APPLE PAY CONFIG ===');
-      console.log('Config:', applePayConfig);
-      console.log('Auth token present:', !!checkoutStore.authToken);
-      console.log('Account ID:', checkoutStore.accountId);
 
       this.applePayService.setAccountId(checkoutStore.accountId)
       this.applePayService.initialize(applePayConfig);
