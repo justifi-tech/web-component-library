@@ -15,12 +15,6 @@ export const IDENTITY_MASKS: Record<string, string> = {
   CA: '000-000-000',
 };
 
-export const getIdentityMask = (country?: string): string => {
-  if (!country) return SSN_MASK;
-  const normalized = country.toUpperCase();
-  return IDENTITY_MASKS[normalized] || SSN_MASK;
-};
-
 export const CURRENCY_MASK = {
   WHOLE: {
     mask: Number,
