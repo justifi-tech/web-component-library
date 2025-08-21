@@ -237,7 +237,7 @@ export class ModularCheckout {
     }
 
     // Add Plaid validation if it's the selected payment method
-    if (checkoutStore.selectedPaymentMethod === 'plaid' && this.plaidPaymentMethodRef) {
+    if (checkoutStore.selectedPaymentMethod === PAYMENT_METHOD.PLAID && this.plaidPaymentMethodRef) {
       promises.push(this.plaidPaymentMethodRef.validate());
     }
 
