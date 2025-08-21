@@ -1,9 +1,10 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../../components';
-import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, IDENTITY_MASKS } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
 import { heading2 } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
+import { countryLabels } from '../../utils/country-config';
 
 @Component({
   tag: 'justifi-business-representative'
@@ -15,7 +16,9 @@ export class BusinessRepresentative {
   @Prop() country: CountryCode;
 
   get identificationNumberLabel() {
-    return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
+    const label = countryLabels[this.country].idNumberLabel;
+    const labelOptional = countryLabels[this.country].idNumberLabelOptional;
+    return this.representative?.ssn_last4 ? labelOptional : label;
   }
 
   componentDidLoad() {
@@ -127,7 +130,7 @@ export class BusinessRepresentative {
                 defaultValue={representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
-                mask={SSN_MASK}
+                mask={IDENTITY_MASKS[this.country]}
               />
             </div>
             <div class="col-12">

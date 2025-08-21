@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property           | Attribute        | Description | Type                                 | Default           |
-| ------------------ | ---------------- | ----------- | ------------------------------------ | ----------------- |
-| `country`          | `country`        |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
-| `defaultValues`    | `default-values` |             | `any`                                | `undefined`       |
-| `errors`           | `errors`         |             | `any`                                | `undefined`       |
-| `handleFormUpdate` | --               |             | `(values: any) => void`              | `undefined`       |
+| Property           | Attribute        | Description | Type                                 | Default     |
+| ------------------ | ---------------- | ----------- | ------------------------------------ | ----------- |
+| `country`          | `country`        |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `defaultValues`    | `default-values` |             | `any`                                | `undefined` |
+| `errors`           | `errors`         |             | `any`                                | `undefined` |
+| `handleFormUpdate` | --               |             | `(values: any) => void`              | `undefined` |
 
 
 ## Dependencies

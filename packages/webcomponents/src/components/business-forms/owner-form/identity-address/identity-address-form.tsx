@@ -9,7 +9,7 @@ export class IdentityAddressForm {
   @Prop() handleFormUpdate: (values: any) => void;
   @Prop() errors: any;
   @Prop() defaultValues: any;
-  @Prop() country?: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
   @State() address: IAddress = {};
 
   @Watch('address')

@@ -2,12 +2,12 @@
 
 exports[`identity-address should render IdentityAddressForm component 1`] = `
 <justifi-identity-address-form>
-  <justifi-form-address-fields country="USA"></justifi-form-address-fields>
+  <justifi-form-address-fields></justifi-form-address-fields>
 </justifi-identity-address-form>
 `;
 
 exports[`identity-address should render IdentityAddressForm component with defaults 1`] = `
 <justifi-identity-address-form>
-  <justifi-form-address-fields country="USA"></justifi-form-address-fields>
+  <justifi-form-address-fields></justifi-form-address-fields>
 </justifi-identity-address-form>
 `;
