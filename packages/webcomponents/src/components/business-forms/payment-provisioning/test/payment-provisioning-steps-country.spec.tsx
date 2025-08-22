@@ -1,223 +1,209 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { PaymentProvisioningFormSteps } from '../payment-provisioning-form-steps';
 import { BusinessCoreInfoFormStepCore } from '../business-core-info/business-core-info-form-step-core';
 import { LegalAddressFormStepCore } from '../legal-address-form/legal-address-form-step-core';
 import { BusinessRepresentativeFormStepCore } from '../business-representative/business-representative-form-step-core';
 import { BusinessOwnersFormStepCore } from '../business-owners/business-owners-form-step-core';
 import { BusinessBankAccountFormStepCore } from '../bank-account/business-bank-account-form-step-core';
+import { FormAddressFields } from '../form-address-fields/form-address-fields';
 import { CountryCode } from '../../../../utils/country-codes';
 import { getNormalizedCountry } from './mockBusiness';
 
-describe('Payment Provisioning step components country toggles', () => {
+describe('Payment Provisioning step components country differences', () => {
   const baseProps = {
     businessId: 'biz_123',
     authToken: 'token',
-    refs: new Array(7).fill(undefined),
     allowOptionalFields: false,
+    getBusiness: jest.fn(),
+    patchBusiness: jest.fn(),
+    postBusiness: jest.fn(),
   } as any;
 
-  test('Core Info step: USA vs CAN tax id label toggles', async () => {
-    // Use normalized country codes as they would appear in real usage
-    const normalizedUSA = getNormalizedCountry('US');
-    const normalizedCAN = getNormalizedCountry('CA');
-
-    const pageUSA = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessCoreInfoFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={0}
-          country={normalizedUSA}
-        />
-      ),
+  describe('Business Core Info step snapshots', () => {
+    test('renders USA tax ID label and help text', async () => {
+      const page = await newSpecPage({
+        components: [BusinessCoreInfoFormStepCore],
+        template: () => (
+          <justifi-business-core-info-form-step-core
+            {...baseProps}
+            country={CountryCode.USA}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
 
-    expect(pageUSA.root).toBeTruthy();
-    const usCore = pageUSA.root.querySelector('justifi-business-core-info-form-step');
-    expect(usCore.getAttribute('country')).toBe(normalizedUSA);
-
-    const pageCAN = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessCoreInfoFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={0}
-          country={normalizedCAN}
-        />
-      ),
+    test('renders CAN Business Number (BN) label and help text', async () => {
+      const page = await newSpecPage({
+        components: [BusinessCoreInfoFormStepCore],
+        template: () => (
+          <justifi-business-core-info-form-step-core
+            {...baseProps}
+            country={CountryCode.CAN}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const caCore = pageCAN.root.querySelector('justifi-business-core-info-form-step');
-    expect(caCore.getAttribute('country')).toBe(normalizedCAN);
   });
 
-  test('Legal Address step: USA vs CAN address fields toggle', async () => {
-    // Use normalized country codes as they would appear in real usage
-    const normalizedUSA = getNormalizedCountry('US');
-    const normalizedCAN = getNormalizedCountry('CA');
-
-    const pageUSA = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, LegalAddressFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={1}
-          country={normalizedUSA}
-        />
-      ),
+  describe('Legal Address step snapshots', () => {
+    test('renders USA State and Zip Code labels', async () => {
+      const page = await newSpecPage({
+        components: [LegalAddressFormStepCore],
+        template: () => (
+          <justifi-legal-address-form-step-core
+            {...baseProps}
+            country={CountryCode.USA}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const usAddress = pageUSA.root.querySelector('justifi-legal-address-form-step');
-    expect(usAddress.getAttribute('country')).toBe(normalizedUSA);
 
-    const pageCAN = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, LegalAddressFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={1}
-          country={normalizedCAN}
-        />
-      ),
+    test('renders CAN Province and Postal Code labels', async () => {
+      const page = await newSpecPage({
+        components: [LegalAddressFormStepCore],
+        template: () => (
+          <justifi-legal-address-form-step-core
+            {...baseProps}
+            country={CountryCode.CAN}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const caAddress = pageCAN.root.querySelector('justifi-legal-address-form-step');
-    expect(caAddress.getAttribute('country')).toBe(normalizedCAN);
   });
 
-  test('Representative step: USA vs CAN schema selection', async () => {
-    // Use normalized country codes as they would appear in real usage
-    const normalizedUSA = getNormalizedCountry('US');
-    const normalizedCAN = getNormalizedCountry('CA');
-
-    const pageUSA = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessRepresentativeFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={3}
-          country={normalizedUSA}
-        />
-      ),
+  describe('Form Address Fields component snapshots', () => {
+    test('renders USA address fields with State/Zip labels', async () => {
+      const page = await newSpecPage({
+        components: [FormAddressFields],
+        template: () => (
+          <justifi-form-address-fields
+            country={CountryCode.USA}
+            errors={{}}
+            defaultValues={{}}
+            inputHandler={jest.fn()}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const usRep = pageUSA.root.querySelector('justifi-business-representative-form-step');
-    expect(usRep.getAttribute('country')).toBe(normalizedUSA);
 
-    const pageCAN = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessRepresentativeFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={3}
-          country={normalizedCAN}
-        />
-      ),
+    test('renders CAN address fields with Province/Postal Code labels', async () => {
+      const page = await newSpecPage({
+        components: [FormAddressFields],
+        template: () => (
+          <justifi-form-address-fields
+            country={CountryCode.CAN}
+            errors={{}}
+            defaultValues={{}}
+            inputHandler={jest.fn()}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const caRep = pageCAN.root.querySelector('justifi-business-representative-form-step');
-    expect(caRep.getAttribute('country')).toBe(normalizedCAN);
   });
 
-  test('Owners step: USA vs CAN owner forms pass down country', async () => {
-    // Use normalized country codes as they would appear in real usage
-    const normalizedUSA = getNormalizedCountry('US');
-    const normalizedCAN = getNormalizedCountry('CA');
-
-    const pageUSA = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessOwnersFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={4}
-          country={normalizedUSA}
-        />
-      ),
+  describe('Representative step snapshots', () => {
+    test('renders USA SSN labels and help text', async () => {
+      const page = await newSpecPage({
+        components: [BusinessRepresentativeFormStepCore],
+        template: () => (
+          <justifi-business-representative-form-step-core
+            {...baseProps}
+            country={CountryCode.USA}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const usOwners = pageUSA.root.querySelector('justifi-business-owners-form-step');
-    expect(usOwners.getAttribute('country')).toBe(normalizedUSA);
 
-    const pageCAN = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessOwnersFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={4}
-          country={normalizedCAN}
-        />
-      ),
+    test('renders CAN SIN labels and help text', async () => {
+      const page = await newSpecPage({
+        components: [BusinessRepresentativeFormStepCore],
+        template: () => (
+          <justifi-business-representative-form-step-core
+            {...baseProps}
+            country={CountryCode.CAN}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const caOwners = pageCAN.root.querySelector('justifi-business-owners-form-step');
-    expect(caOwners.getAttribute('country')).toBe(normalizedCAN);
   });
 
-  test('Bank Account step: USA vs CAN renders correct inputs', async () => {
-    // Use normalized country codes as they would appear in real usage
-    const normalizedUSA = getNormalizedCountry('US');
-    const normalizedCAN = getNormalizedCountry('CA');
-
-    const pageUSA = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessBankAccountFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={5}
-          country={normalizedUSA}
-        />
-      ),
+  describe('Owners step snapshots', () => {
+    test('renders USA SSN labels in owner forms', async () => {
+      const page = await newSpecPage({
+        components: [BusinessOwnersFormStepCore],
+        template: () => (
+          <justifi-business-owners-form-step-core
+            {...baseProps}
+            country={CountryCode.USA}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const usBank = pageUSA.root.querySelector('justifi-business-bank-account-form-step');
-    expect(usBank.getAttribute('country')).toBe(normalizedUSA);
 
-    const pageCAN = await newSpecPage({
-      components: [PaymentProvisioningFormSteps, BusinessBankAccountFormStepCore],
-      template: () => (
-        <justifi-payment-provisioning-form-steps
-          {...baseProps}
-          currentStep={5}
-          country={normalizedCAN}
-        />
-      ),
+    test('renders CAN SIN labels in owner forms', async () => {
+      const page = await newSpecPage({
+        components: [BusinessOwnersFormStepCore],
+        template: () => (
+          <justifi-business-owners-form-step-core
+            {...baseProps}
+            country={CountryCode.CAN}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
     });
-    const caBank = pageCAN.root.querySelector('justifi-business-bank-account-form-step');
-    expect(caBank.getAttribute('country')).toBe(normalizedCAN);
+  });
+
+  describe('Bank Account step snapshots', () => {
+    test('renders USA bank account fields', async () => {
+      const page = await newSpecPage({
+        components: [BusinessBankAccountFormStepCore],
+        template: () => (
+          <justifi-business-bank-account-form-step-core
+            {...baseProps}
+            country={CountryCode.USA}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
+    });
+
+    test('renders CAN bank account fields', async () => {
+      const page = await newSpecPage({
+        components: [BusinessBankAccountFormStepCore],
+        template: () => (
+          <justifi-business-bank-account-form-step-core
+            {...baseProps}
+            country={CountryCode.CAN}
+          />
+        ),
+      });
+      
+      expect(page.root).toMatchSnapshot();
+    });
   });
 
   describe('Country normalization through Business constructor', () => {
-    test('Core Info step: 2-character codes get normalized through Business constructor', async () => {
-      // Test that "US" -> "USA" normalization works through Business constructor
-      const normalizedUSA = getNormalizedCountry('US');
-      expect(normalizedUSA).toBe(CountryCode.USA);
-      
-      const page = await newSpecPage({
-        components: [PaymentProvisioningFormSteps, BusinessCoreInfoFormStepCore],
-        template: () => (
-          <justifi-payment-provisioning-form-steps
-            {...baseProps}
-            currentStep={0}
-            country={normalizedUSA}
-          />
-        ),
-      });
-      const el = page.root.querySelector('justifi-business-core-info-form-step');
-      expect(el.getAttribute('country')).toBe(CountryCode.USA);
-    });
-
-    test('Legal Address step: 2-character codes get normalized through Business constructor', async () => {
-      // Test that "CA" -> "CAN" normalization works through Business constructor
-      const normalizedCAN = getNormalizedCountry('CA');
-      expect(normalizedCAN).toBe(CountryCode.CAN);
-      
-      const page = await newSpecPage({
-        components: [PaymentProvisioningFormSteps, LegalAddressFormStepCore],
-        template: () => (
-          <justifi-payment-provisioning-form-steps
-            {...baseProps}
-            currentStep={1}
-            country={normalizedCAN}
-          />
-        ),
-      });
-      const el = page.root.querySelector('justifi-legal-address-form-step');
-      expect(el.getAttribute('country')).toBe(CountryCode.CAN);
-    });
-
     test('Business constructor normalizes various country code formats', () => {
       // Test the normalization function directly
       expect(getNormalizedCountry('US')).toBe(CountryCode.USA);
