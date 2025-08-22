@@ -21,7 +21,6 @@ import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore, onChange } from "../../../store/checkout.store";
-import { configState } from "../../config-provider/config-state";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -30,10 +29,10 @@ import { configState } from "../../config-provider/config-state";
 export class ApplePay {
   private applePayService: ApplePayService;
   @Prop() countryCode: string = "US";
-  @Prop() merchantIdentifier: string = "merchant.com.staging-justifi.checkout-dev";
+  @Prop() merchantIdentifier: string =
+    "merchant.com.staging-justifi.checkout-dev";
   @Prop() merchantDisplayName: string = "JustiFi Checkout";
   @Prop() initiativeContext: string = "dev-checkout.justifi-staging.com";
-  @Prop() apiBaseUrl: string = configState.apiOrigin;
   @Prop() buttonType: ApplePayButtonType = ApplePayButtonType.PLAIN;
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;
@@ -57,26 +56,20 @@ export class ApplePay {
 
   componentWillLoad() {
     this.applePayService = new ApplePayService();
-    this.applePayService.setApiBaseUrl(this.apiBaseUrl);
-    this.applePayService.setAuthToken(checkoutStore.authToken);
-    this.applePayService.setAccountId(checkoutStore.accountId)
     this.initializeApplePay();
   }
 
   componentDidLoad() {
-    onChange('paymentAmount', () => {
+    onChange("paymentAmount", () => {
       this.initializeApplePay();
     });
 
-    onChange('authToken', () => {
-      if (this.applePayService) {
-        this.applePayService.setAuthToken(checkoutStore.authToken);
-      }
+    onChange("authToken", () => {
+      this.initializeApplePay();
     });
   }
 
   @Watch("merchantIdentifier")
-  @Watch("apiBaseUrl")
   @Watch("buttonType")
   @Watch("buttonStyle")
   @Watch("disabled")
@@ -86,10 +79,6 @@ export class ApplePay {
 
   private async initializeApplePay() {
     try {
-      if (this.applePayService) {
-        this.applePayService.setApiBaseUrl(this.apiBaseUrl);
-        this.applePayService.setAuthToken(checkoutStore.authToken);
-      }
       this.isLoading = true;
       this.error = null;
       if (!checkoutStore.paymentAmount) {
@@ -98,8 +87,8 @@ export class ApplePay {
         return;
       }
 
-      this.isAvailable = true // ApplePayHelpers.isApplePaySupported();
-      this.canMakePayments = true // ApplePayHelpers.canMakePayments();
+      this.isAvailable = ApplePayHelpers.isApplePaySupported();
+      this.canMakePayments = ApplePayHelpers.canMakePayments();
 
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
@@ -122,8 +111,6 @@ export class ApplePay {
         buttonStyle: this.buttonStyle,
       };
 
-
-      this.applePayService.setAccountId(checkoutStore.accountId)
       this.applePayService.initialize(applePayConfig);
 
       const hasActiveCard =
@@ -163,8 +150,11 @@ export class ApplePay {
         ),
       };
 
-      const result =
-        await this.applePayService.startPaymentSession(paymentRequest);
+      const result = await this.applePayService.startPaymentSession(
+        paymentRequest,
+        checkoutStore.authToken,
+        checkoutStore.accountId
+      );
 
       if (result.success) {
         this.applePayCompleted.emit({
@@ -225,7 +215,10 @@ export class ApplePay {
 
     return (
       <StyledHost>
-        <script async src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
+        <script
+          async
+          src='https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js'
+        ></script>
         <div class='apple-pay-container'>
           <ApplePaySkeleton isReady={isReady} />
 

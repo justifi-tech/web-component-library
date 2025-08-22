@@ -163,10 +163,11 @@ export interface IApplePayPaymentResponse {
 }
 
 export interface IApplePayService {
-  validateMerchant(authToken: string): Promise<IMerchantSession>;
+  validateMerchant(authToken: string, accountId: string): Promise<IMerchantSession>;
 
   processPayment(
     authToken: string,
+    accountId: string,
     payload: IApplePayPaymentProcessRequest
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }>;
 }

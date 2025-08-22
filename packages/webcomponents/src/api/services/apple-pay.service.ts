@@ -1,4 +1,4 @@
-import { configState } from '../../components/config-provider/config-state';
+import { Api } from '../Api';
 import {
   IApplePayConfig,
   IApplePayPaymentRequest,
@@ -20,27 +20,8 @@ export class ApplePayService implements IApplePayService {
   private applePayConfig?: ApplePayConfig;
   private currentSession?: IApplePaySession;
   private currentPaymentRequest?: ApplePayPaymentRequest;
-  private apiBaseUrl: string = configState.apiOrigin;
-  private authToken?: string;
-  private accountId?: string;
+  private api = Api();
 
-  /**
-   * Set custom API base URL
-   */
-  public setApiBaseUrl(url: string): void {
-    this.apiBaseUrl = url;
-  }
-
-  /**
-   * Set authentication token
-   */
-  public setAuthToken(authToken: string): void {
-    this.authToken = authToken;
-  }
-
-  public setAccountId(accountId: string) {
-    this.accountId = accountId;
-  }
 
   /**
    * Initialize Apple Pay configuration
@@ -56,38 +37,23 @@ export class ApplePayService implements IApplePayService {
   /**
    * Validate merchant with Apple Pay servers via API
    */
-  async validateMerchant(authToken: string): Promise<IMerchantSession> {
-    const endpoint = `${this.apiBaseUrl}/v1/apple_pay/merchant_session`;
+  async validateMerchant(authToken: string, accountId: string): Promise<IMerchantSession> {
+    const endpoint = 'apple_pay/merchant_session';
 
+    try {
+      const response = await this.api.post({
+        endpoint,
+        authToken,
+        headers: {
+          'Sub-Account': accountId,
+        },
+      });
 
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${authToken}`,
-        'Sub-Account': this.accountId,
-      },
-    });
-
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error('Backend validation failed - Raw response:', errorData);
-
-      try {
-        const jsonError = JSON.parse(errorData);
-        console.error('Backend validation failed - Parsed error:', jsonError);
-      } catch (parseError) {
-        console.error('Could not parse error response as JSON:', parseError);
-      }
-
-      throw new Error(`Merchant validation failed: ${response.status}`);
+      return response;
+    } catch (error) {
+      console.error('Backend validation failed:', error);
+      throw new Error('Merchant validation failed');
     }
-
-    const merchantSession: IMerchantSession = await response.json();
-
-    return merchantSession;
   }
 
   /**
@@ -95,23 +61,19 @@ export class ApplePayService implements IApplePayService {
    */
   async processPayment(
     authToken: string,
+    accountId: string,
     payload: IApplePayPaymentProcessRequest
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }> {
-    const endpoint = `${this.apiBaseUrl}/v1/apple_pay/process_token`;
-    const body = payload;
+    const endpoint = 'apple_pay/process_token';
 
-    const response = await fetch(endpoint, {
-      method: 'POST',
+    const result: IApplePayPaymentResponse = await this.api.post({
+      endpoint,
+      authToken,
+      body: payload,
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${authToken}`,
-        'Sub-Account': this.accountId,
+        'Sub-Account': accountId,
       },
-      body: JSON.stringify(body),
     });
-
-    const result: IApplePayPaymentResponse = await response.json();
 
     return {
       success: result.id && !!result.data.token,
@@ -145,7 +107,9 @@ export class ApplePayService implements IApplePayService {
    * Start Apple Pay session
    */
   public async startPaymentSession(
-    paymentRequest: IApplePayPaymentRequest
+    paymentRequest: IApplePayPaymentRequest,
+    authToken: string,
+    accountId: string
   ): Promise<{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: IApplePayError }> {
     if (!this.applePayConfig) {
       throw new Error('Apple Pay not initialized. Call initialize() first.');
@@ -167,7 +131,7 @@ export class ApplePayService implements IApplePayService {
       try {
         this.currentSession = new window.ApplePaySession!(3, request);
 
-        this.setupSessionEventHandlers(resolve, reject);
+        this.setupSessionEventHandlers(resolve, reject, authToken, accountId);
 
         this.currentSession.begin();
       } catch (error) {
@@ -201,7 +165,9 @@ export class ApplePayService implements IApplePayService {
    */
   private setupSessionEventHandlers(
     resolve: (value: { success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: IApplePayError }) => void,
-    reject: (reason: { success: boolean; error: IApplePayError }) => void
+    reject: (reason: { success: boolean; error: IApplePayError }) => void,
+    authToken: string,
+    accountId: string
   ): void {
     if (
       !this.currentSession ||
@@ -213,13 +179,13 @@ export class ApplePayService implements IApplePayService {
 
     this.currentSession.onvalidatemerchant = async () => {
       try {
-        if (!this.authToken) {
+        if (!authToken) {
           throw new Error(
-            'Authentication token not set. Call setAuthToken() first.'
+            'Authentication token not provided.'
           );
         }
 
-        const merchantSession = await this.validateMerchant(this.authToken);
+        const merchantSession = await this.validateMerchant(authToken, accountId);
 
         try {
           this.currentSession!.completeMerchantValidation(merchantSession);
@@ -263,13 +229,9 @@ export class ApplePayService implements IApplePayService {
           },
         };
 
-        if (!this.authToken) {
-          throw new Error(
-            'Authentication token not set. Call setAuthToken() first.'
-          );
-        }
         const paymentResult = await this.processPayment(
-          this.authToken,
+          authToken,
+          accountId,
           paymentPayload
         );
         
