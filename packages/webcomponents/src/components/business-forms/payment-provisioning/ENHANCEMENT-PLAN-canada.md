@@ -73,7 +73,7 @@ Acceptance:
 Acceptance:
 - USA unchanged; CAN shows SIN and BN fields as specified.
 
-### 6) Bank account step split — Status: Not started
+### 6) Bank account step split — Status: Complete
 - Create `justifi-business-bank-account-form-step-core-canada` with CAN-specific fields and validations.
 - In `payment-provisioning-form-steps.tsx`, derive step 5 component from country via a small factory to avoid inline branching, e.g., `getBankAccountStepFor(country)`.
 
@@ -90,7 +90,7 @@ Acceptance:
 Acceptance:
 - USA unchanged; CAN renders separate terms component (content can be updated later).
 
-### 8) Identity input masking — Status: Not started
+### 8) Identity input masking — Status: Complete
 - Apply country-specific input masks for identity numbers in owner/representative forms:
   - USA SSN: `xxx-xx-xxxx`
   - CAN SIN: `xxx-xxx-xxx`
