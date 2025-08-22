@@ -21,6 +21,7 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
+  @State() country: CountryCode;
   
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -64,6 +65,7 @@ export class BusinessForm {
 
   instantiateBusiness = (data: IBusiness) => {
     const business = new Business(data);
+    this.country = business.country_of_establishment;
     this.formController.setInitialValues({ ...business });
   }
 
@@ -140,9 +142,6 @@ export class BusinessForm {
       return <StyledHost><BusinessFormLoading /></StyledHost>;
     }
 
-    const initial = this.formController.getInitialValues();
-    const country: CountryCode = (initial as any)?.country_of_establishment || CountryCode.USA;
-
     return (
       <StyledHost>
         <form onSubmit={this.validateAndSubmit}>
@@ -150,16 +149,16 @@ export class BusinessForm {
             <Header1 text={this.title} />
             <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
             <div class="col-12 mb-4">
-              <justifi-business-core-info formController={this.formController} />
+              <justifi-business-core-info formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-legal-address-form formController={this.formController} country={country} />
+              <justifi-legal-address-form formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 mb-4">
               <justifi-additional-questions formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-business-representative formController={this.formController} country={country} />
+              <justifi-business-representative formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <Button
