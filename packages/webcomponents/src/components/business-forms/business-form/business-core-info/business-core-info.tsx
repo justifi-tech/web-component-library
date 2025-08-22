@@ -20,7 +20,7 @@ import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 })
 export class BusinessCoreInfo {
   @Prop() formController: FormController;
-  @Prop() country: CountryCode = CountryCode.USA;
+  @Prop() country: CountryCode;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
 
