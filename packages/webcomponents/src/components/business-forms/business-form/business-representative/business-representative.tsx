@@ -131,6 +131,7 @@ export class BusinessRepresentative {
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}
                 mask={IDENTITY_MASKS[this.country]}
+                helpText={countryLabels[this.country].identityHelpText}
               />
             </div>
             <div class="col-12">
