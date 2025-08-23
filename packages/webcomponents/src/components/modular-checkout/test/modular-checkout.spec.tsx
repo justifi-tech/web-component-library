@@ -23,7 +23,7 @@ describe('justifi-modular-checkout', () => {
     checkoutStore.paymentMethods = [
       { id: 'pm_123', type: 'card', acct_last_four: '4242', brand: 'visa' } as any,
     ];
-    checkoutStore.selectedPaymentMethod = 'pm_123';
+    checkoutStore.paymentToken = 'pm_123';
 
     // Prevent real network/action calls
     instance.completeCheckout = jest.fn();

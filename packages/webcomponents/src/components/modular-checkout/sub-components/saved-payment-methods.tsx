@@ -3,7 +3,8 @@ import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { ICheckoutPaymentMethod } from '../../../api';
+import { ICheckoutPaymentMethod, PaymentMethodTypes } from '../../../api';
+import { PAYMENT_METHOD_TYPES } from "../ModularCheckout";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -20,17 +21,23 @@ export class SavedPaymentMethods {
     }
   }
 
-  onPaymentMethodOptionClick = (paymentMethodId: string) => (e: Event) => {
+  onPaymentMethodOptionClick = (paymentMethod: ICheckoutPaymentMethod) => (e: Event) => {
     e.preventDefault();
-    checkoutStore.selectedPaymentMethod = paymentMethodId;
+    const SELECTED_PAYMENT_METHODS = {
+      [PAYMENT_METHOD_TYPES.CARD]: PaymentMethodTypes.savedCard,
+      [PAYMENT_METHOD_TYPES.BANK_ACCOUNT]: PaymentMethodTypes.savedBankAccount,
+    }
+
+    checkoutStore.selectedPaymentMethod = SELECTED_PAYMENT_METHODS[paymentMethod.type];
+    checkoutStore.paymentToken = paymentMethod.id;
   };
 
   isAllowedPaymentMethod = (paymentMethod: ICheckoutPaymentMethod) => {
-    if (paymentMethod.type === 'card' && checkoutStore.disableCreditCard) {
+    if (paymentMethod.type === PAYMENT_METHOD_TYPES.CARD && checkoutStore.disableCreditCard) {
       return false;
     }
 
-    if (paymentMethod.type === 'bank_account' && checkoutStore.disableBankAccount) {
+    if (paymentMethod.type === PAYMENT_METHOD_TYPES.BANK_ACCOUNT && checkoutStore.disableBankAccount) {
       return false;
     }
 
@@ -51,12 +58,12 @@ export class SavedPaymentMethods {
               <div
                 class="radio-list-item p-3"
                 part={radioListItem}
-                onClick={this.onPaymentMethodOptionClick(paymentMethod?.id)}
+                onClick={this.onPaymentMethodOptionClick(paymentMethod)}
               >
                 <form-control-radio
                   name="paymentMethodType"
                   value={paymentMethod?.id}
-                  checked={checkoutStore.selectedPaymentMethod === paymentMethod?.id}
+                  checked={checkoutStore.paymentToken === paymentMethod?.id}
                   label={`${CardBrandLabels[paymentMethod?.brand] || ''} *${paymentMethod?.acct_last_four}`}
                 />
               </div>

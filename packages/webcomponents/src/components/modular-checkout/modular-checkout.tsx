@@ -7,7 +7,7 @@ import { makeCheckoutComplete, makeGetCheckout } from "../../actions/checkout/ch
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_METHOD, PAYMENT_MODE } from "./ModularCheckout";
+import { PAYMENT_METHOD_TYPES, PAYMENT_METHODS, PAYMENT_MODE } from "./ModularCheckout";
 
 @Component({
   tag: 'justifi-modular-checkout',
@@ -19,8 +19,6 @@ export class ModularCheckout {
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
   private billingFormRef?: HTMLJustifiBillingFormElement | HTMLJustifiBankAccountBillingFormSimpleElement | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
-  private sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
-  private plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
   private getCheckout: Function;
   private completeCheckout: Function;
 
@@ -66,14 +64,6 @@ export class ModularCheckout {
   }
 
   componentWillLoad() {
-    if (!this.authToken || !this.checkoutId) {
-      this.errorEvent.emit({
-        message: ComponentErrorMessages.NOT_AUTHENTICATED,
-        errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    }
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
@@ -98,6 +88,15 @@ export class ModularCheckout {
   }
 
   private fetchCheckout() {
+    if (!this.authToken || !this.checkoutId) {
+      this.errorEvent.emit({
+        message: ComponentErrorMessages.NOT_AUTHENTICATED,
+        errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
     if (this.getCheckout) {
       this.getCheckout({
         onSuccess: ({ checkout }) => {
@@ -138,6 +137,7 @@ export class ModularCheckout {
     checkoutStore.totalAmount = checkout.total_amount;
     checkoutStore.paymentAmount = checkout.payment_amount;
     checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
+    checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments;
     checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
@@ -147,20 +147,12 @@ export class ModularCheckout {
 
   private queryFormRefs() {
     this.paymentMethodFormRef =
-      this.hostEl.querySelector('justifi-card-form') ||
-      this.hostEl.querySelector('justifi-bank-account-form');
-
-    this.billingFormRef =
-      this.hostEl.querySelector('justifi-billing-form-full') ||
-      this.hostEl.querySelector('justifi-card-billing-form-simple') ||
-      this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form');
+      this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method');
 
     this.billingFormRef =
       this.hostEl.querySelector('justifi-billing-form-full, justifi-card-billing-form-simple, justifi-bank-account-billing-form-simple');
 
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
-    this.sezzlePaymentMethodRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
-    this.plaidPaymentMethodRef = this.hostEl.querySelector('justifi-plaid-payment-method');
   }
 
   private async tokenizePaymentMethod(tokenizeArgs: BillingFormFields): Promise<any> {
@@ -178,77 +170,88 @@ export class ModularCheckout {
       paymentMethodMetadata.payment_method_group_id = checkoutStore.paymentMethodGroupId;
     }
 
-    return this.paymentMethodFormRef?.tokenize({
+
+    const tokenizeResult = await this.paymentMethodFormRef?.tokenize({
       clientId: this.authToken,
       paymentMethodMetadata,
       account: checkoutStore.accountId,
     });
+
+    if (tokenizeResult.error) {
+      return tokenizeResult;
+    }
+
+    checkoutStore.paymentToken = tokenizeResult.id;
+
+    return tokenizeResult.id;
   }
 
-  private isSavedPaymentMethodSelected(): boolean {
-    const selectedId = checkoutStore.selectedPaymentMethod;
-    const isSaved = !!checkoutStore.paymentMethods?.some((pm) => pm?.id === selectedId);
-    return isSaved;
-  }
-
-  private async getPaymentMethod(submitCheckoutArgs: BillingFormFields): Promise<string | undefined> {
-    // If a saved payment method is selected, return its id directly
-    if (this.isSavedPaymentMethodSelected()) {
-      return checkoutStore.selectedPaymentMethod;
-    }
-
-    // If we have a payment token from the store (set by tokenize-payment-method), use it
-    if (checkoutStore.paymentToken) {
-      return checkoutStore.paymentToken;
-    }
-
-    // Fallback to the original tokenization logic for backward compatibility
-    if (!this.paymentMethodFormRef) {
-      return checkoutStore.selectedPaymentMethod;
-    }
-
-    const { error, id: token } = await this.tokenizePaymentMethod(submitCheckoutArgs);
-
-    if (error) {
-      this.errorEvent.emit({
-        errorCode: error.code as ComponentErrorCodes,
-        message: error.message,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return undefined;
-    }
-
-    return token;
-  }
-
+  // if validation fails, the error will be emitted by the component
   @Method()
   async validate(): Promise<boolean> {
+    const promises: Promise<any>[] = [];
 
-    const promises = [] as Array<Promise<any> | undefined>;
-
-    // Only validate payment and billing forms when NOT using a saved payment method
-    if (!this.isSavedPaymentMethodSelected()) {
-      promises.push(this.paymentMethodFormRef?.validate());
-      promises.push(this.billingFormRef?.validate());
-    }
-
-    if (this.insuranceFormRef) {
+    if (checkoutStore.insuranceEnabled && this.insuranceFormRef) {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    // Add Plaid validation if it's the selected payment method
-    if (checkoutStore.selectedPaymentMethod === PAYMENT_METHOD.PLAID && this.plaidPaymentMethodRef) {
-      promises.push(this.plaidPaymentMethodRef.validate());
+    // For new card/bank account, validate payment method + billing.
+    if (
+      checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.NEW_CARD ||
+      checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.NEW_BANK_ACCOUNT
+    ) {
+      if (this.paymentMethodFormRef) promises.push(this.paymentMethodFormRef.validate());
+      if (this.billingFormRef) promises.push(this.billingFormRef.validate());
     }
 
-    const validationResults = await Promise.all(promises);
-    const isValid = validationResults.every(result => result?.isValid !== false);
-    return isValid;
+    if (promises.length === 0) return true;
+
+    try {
+      const results = await Promise.all(promises);
+
+      // Normalize different validator return shapes:
+      // - boolean -> use it directly
+      // - object  -> look for isValid; treat missing isValid as falsey only if explicitly false
+      const resultsAreValid = results.every(r =>
+        typeof r === 'boolean' ? r : r?.isValid !== false
+      );
+
+      if (!resultsAreValid) {
+        console.log('resultsAreValid', resultsAreValid);
+        this.errorEvent.emit({
+          message: 'Validation error',
+          errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return false;
+      }
+
+      return true;
+    } catch {
+      // If any validator throws/rejects, consider the whole validation failed.
+      return false;
+    }
   }
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
     const isValid = await this.validate();
+
+    const shouldTokenize = checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.NEW_CARD || checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+
+    if (shouldTokenize) {
+      const tokenizeResult = await this.tokenizePaymentMethod(submitCheckoutArgs);
+
+      if (tokenizeResult.error) {
+        this.errorEvent.emit({
+          message: tokenizeResult.error.message,
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+    }
+
     if (!isValid) {
       this.errorEvent.emit({
         message: 'Please fill in all required fields.',
@@ -258,68 +261,29 @@ export class ModularCheckout {
       return;
     }
 
+    if (!checkoutStore.paymentToken) {
+      this.errorEvent.emit({
+        message: 'Payment token not found.',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+
     let payment: { payment_mode: string; payment_token: string | undefined };
 
-    if (checkoutStore.selectedPaymentMethod === PAYMENT_METHOD.SEZZLE) {
-      const insuranceValidation = this.insuranceFormRef ? await this.insuranceFormRef.validate() : { isValid: true };
-      const sezzleResult = await this.sezzlePaymentMethodRef.resolvePaymentMethod(insuranceValidation);
-      if (sezzleResult.error) {
-        this.errorEvent.emit({
-          message: sezzleResult.error.message,
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      } else if (sezzleResult.bnpl?.status === 'success') {
-        payment = {
-          payment_mode: PAYMENT_MODE.BNPL,
-          payment_token: undefined,
-        };
-      }
-    } else if (checkoutStore.selectedPaymentMethod === PAYMENT_METHOD.PLAID) {
-      // Handle Plaid payment method
-      if (!this.plaidPaymentMethodRef) {
-        this.errorEvent.emit({
-          message: 'Plaid payment method not found.',
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      }
-
-      // Ensure we have a backend payment token (not the Plaid public_token)
-      const plaidPaymentToken: string | undefined = await this.plaidPaymentMethodRef.getPaymentToken();
-      if (!plaidPaymentToken) {
-        this.errorEvent.emit({
-          message: 'Unable to tokenize bank account. Please try again.',
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      }
-
-      // Save for consistency with other flows
-      checkoutStore.paymentToken = plaidPaymentToken;
-
-      payment = {
-        payment_mode: PAYMENT_MODE.PLAID,
-        payment_token: plaidPaymentToken,
-      };
-    } else {
-      const paymentMethod = await this.getPaymentMethod(submitCheckoutArgs);
-      if (!paymentMethod) {
-        this.errorEvent.emit({
-          message: 'Payment method tokenization failed.',
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      };
-      payment = {
-        payment_mode: PAYMENT_MODE.ECOM,
-        payment_token: paymentMethod,
-      };
+    const MAP_PAYMENT_METHOD_TO_PAYMENT_MODE: Record<string, string> = {
+      [PAYMENT_METHODS.NEW_CARD]: PAYMENT_MODE.ECOM,
+      [PAYMENT_METHODS.NEW_BANK_ACCOUNT]: PAYMENT_MODE.ECOM,
+      [PAYMENT_METHODS.SAVED_BANK_ACCOUNT]: PAYMENT_MODE.ECOM,
+      [PAYMENT_METHODS.SAVED_CARD]: PAYMENT_MODE.ECOM,
+      [PAYMENT_METHOD_TYPES.SEZZLE]: PAYMENT_MODE.BNPL,
+      [PAYMENT_METHOD_TYPES.PLAID]: PAYMENT_MODE.ECOM,
     }
+
+    payment = {
+      payment_mode: MAP_PAYMENT_METHOD_TO_PAYMENT_MODE[checkoutStore.selectedPaymentMethod],
+      payment_token: checkoutStore.paymentToken,
+    };
 
     this.completeCheckout({
       payment,
@@ -337,11 +301,6 @@ export class ModularCheckout {
         });
       },
     });
-  }
-
-  @Method()
-  async setSelectedPaymentMethod(paymentMethodId: string): Promise<void> {
-    checkoutStore.selectedPaymentMethod = paymentMethodId;
   }
 
   render() {

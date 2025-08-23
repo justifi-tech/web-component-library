@@ -66,6 +66,11 @@ export class Checkout {
     this.isSubmitting = false;
   }
 
+  @Listen('error-event')
+  checkoutError(_event: CustomEvent<any>) {
+    this.isSubmitting = false;
+  }
+
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;

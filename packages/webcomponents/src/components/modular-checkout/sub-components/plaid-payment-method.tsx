@@ -6,6 +6,7 @@ import { StyledHost } from '../../../ui-components';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
 import { PlaidService } from '../../../api/services/plaid.service';
 import { ComponentErrorSeverity } from '../../../api/ComponentError';
+import { PAYMENT_METHODS } from '../ModularCheckout';
 
 // Plaid-specific error codes
 export enum PlaidErrorCodes {
@@ -83,7 +84,6 @@ export class PlaidPaymentMethod {
   @State() isRetrying: boolean = false;
 
   private scriptRef: HTMLScriptElement;
-  private paymentMethodOptionId = 'plaid';
   private plaidService = new PlaidService();
   private unsubscribeFromStore: () => void;
   private maxRetries = 3;
@@ -99,8 +99,8 @@ export class PlaidPaymentMethod {
   @Watch('isSelected')
   onSelectionChange(newValue: boolean) {
     // Ensure store is updated when component selection changes
-    if (newValue && checkoutStore.selectedPaymentMethod !== this.paymentMethodOptionId) {
-      checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    if (newValue && checkoutStore.selectedPaymentMethod !== PAYMENT_METHODS.PLAID) {
+      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.PLAID;
     }
   }
 
@@ -126,7 +126,7 @@ export class PlaidPaymentMethod {
 
   componentWillLoad() {
     // Initialize selection state based on store
-    this.isSelected = checkoutStore.selectedPaymentMethod === this.paymentMethodOptionId;
+    this.isSelected = checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.PLAID;
   }
 
   waitForStoreAndInitialize = () => {
@@ -167,11 +167,6 @@ export class PlaidPaymentMethod {
     return checkoutStore.paymentToken;
   }
 
-  @Method()
-  async validate(): Promise<boolean> {
-    return this.publicToken !== null && this.error === null;
-  }
-
   onPaymentMethodOptionClick = (e) => {
     e.preventDefault();
 
@@ -179,10 +174,10 @@ export class PlaidPaymentMethod {
     this.isSelected = true;
 
     // Update store selection
-    checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.PLAID;
 
     // Emit selection event
-    this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
+    this.paymentMethodOptionSelected.emit(PAYMENT_METHODS.PLAID);
 
     // If there's an error, clear it and try to initialize again
     if (this.error) {
@@ -366,7 +361,7 @@ export class PlaidPaymentMethod {
     // Ensure the component remains selected after successful authentication
     if (!this.isSelected) {
       this.isSelected = true;
-      checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.PLAID;
     }
 
     // Emit success event for parent components
@@ -597,7 +592,7 @@ export class PlaidPaymentMethod {
   async setSelected(selected: boolean): Promise<void> {
     this.isSelected = selected;
     if (selected) {
-      checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.PLAID;
     }
   }
 
@@ -661,8 +656,7 @@ export class PlaidPaymentMethod {
 
   // Watch for store changes to sync component state
   private syncWithStore = () => {
-    const storeSelection = checkoutStore.selectedPaymentMethod;
-    const shouldBeSelected = storeSelection === this.paymentMethodOptionId;
+    const shouldBeSelected = checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.PLAID;
 
     if (this.isSelected !== shouldBeSelected) {
       this.isSelected = shouldBeSelected;
@@ -788,7 +782,7 @@ export class PlaidPaymentMethod {
         >
           <form-control-radio
             name="paymentMethodType"
-            value={this.paymentMethodOptionId}
+            value={PAYMENT_METHODS.PLAID}
             checked={this.isSelected}
             label={
               <div>

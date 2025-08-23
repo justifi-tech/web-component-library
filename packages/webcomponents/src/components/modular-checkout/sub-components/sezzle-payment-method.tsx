@@ -4,6 +4,7 @@ import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { radioListItem } from '../../../styles/parts';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
+import { PAYMENT_METHODS } from '../ModularCheckout';
 
 const sezzleLogo = (
   <img
@@ -30,7 +31,7 @@ export class SezzlePaymentMethod {
 
   private scriptRef: HTMLScriptElement;
   private sezzleButtonRef: HTMLButtonElement;
-  private paymentMethodOptionId = 'sezzle';
+  private paymentMethodOptionId = PAYMENT_METHODS.SEZZLE;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
@@ -107,7 +108,7 @@ export class SezzlePaymentMethod {
           <form-control-radio
             name="paymentMethodType"
             value={this.paymentMethodOptionId}
-            checked={checkoutStore.selectedPaymentMethod === this.paymentMethodOptionId}
+            checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.SEZZLE}
             label={<div><div>Buy now, pay later with {sezzleLogo}</div>
               {this.installmentPlan && (
                 <small>
