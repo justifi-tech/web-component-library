@@ -11,8 +11,6 @@ export enum PaymentMethodTypes {
   card = 'card',
   bankAccount = 'bankAccount',
   sezzle = 'sezzle',
-  savedCard = 'savedCard',
-  savedBankAccount = 'savedBankAccount',
 }
 
 export enum PaymentTypes {
