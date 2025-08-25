@@ -1,108 +1,204 @@
-import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
-import { makeGetCheckout, makeCheckoutComplete } from '../../actions/checkout/checkout-actions';
-import { CheckoutService } from '../../api/services/checkout.service';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen } from '@stencil/core';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
-import { ILoadedEventResponse } from '../../api';
+import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { checkoutStore } from '../../store/checkout.store';
+import { checkoutSummary } from '../../styles/parts';
+import { PaymentMethodPayload } from './payment-method-payload';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-checkout',
 })
 export class Checkout {
-  @Prop() authToken: string;
-  @Prop() checkoutId: string;
-  @Prop() disableCreditCard?: boolean;
-  @Prop() disableBankAccount?: boolean;
-  @Prop() disableBnpl?: boolean;
-  @Prop() disablePaymentMethodGroup?: boolean;
-  @Prop() hideCardBillingForm?: boolean;
-  @Prop() hideBankAccountBillingForm?: boolean;
+  analytics: JustifiAnalytics;
+  modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
+  tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
 
-  @State() getCheckout: Function;
+  @State() checkout: ICheckout;
   @State() complete: Function;
   @State() errorMessage: string = '';
+  @State() insuranceToggled: boolean = false;
+  @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
+  @State() serverError: string;
+  @State() tokenizedPaymentMethod?: PaymentMethodPayload;
+
+  @Prop() authToken: string;
+  @Prop() checkoutId: string;
+  @Prop() disableBankAccount?: boolean = false;
+  @Prop() disableBnpl?: boolean = false;
+  @Prop() disableCreditCard?: boolean = false;
+  @Prop() disablePaymentMethodGroup?: boolean = false;
+  @Prop() hideBankAccountBillingForm?: boolean = false;
+  @Prop() hideCardBillingForm?: boolean = false;
+
+  @Watch('authToken')
+  @Watch('checkoutId')
+  @Watch('disableCreditCard')
+  @Watch('disableBankAccount')
+  @Watch('disableBnpl')
+  @Watch('disablePaymentMethodGroup')
+  propChanged() {
+    this.updateStore();
+  }
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  // The original event is emitted from the core component, 
-  // but we want to expose it here so it's documented in the storybook
   @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
+  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
-  private checkoutCoreRef?: HTMLJustifiCheckoutCoreElement;
-
-  analytics: JustifiAnalytics;
+  connectedCallback() {
+    if (this.authToken && this.checkoutId) {
+      this.updateStore();
+    }
+  }
 
   componentWillLoad() {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
-    this.initializeGetCheckout();
   }
 
   disconnectedCallback() {
     this.analytics?.cleanup();
-  };
-
-  private initializeGetCheckout() {
-    if (this.authToken && this.checkoutId) {
-      this.getCheckout = makeGetCheckout({
-        authToken: this.authToken,
-        checkoutId: this.checkoutId,
-        service: new CheckoutService()
-      });
-      this.complete = makeCheckoutComplete({
-        authToken: this.authToken,
-        checkoutId: this.checkoutId,
-        service: new CheckoutService()
-      });
-    } else {
-      this.errorEvent.emit({
-        message: 'auth-token and checkout-id are required',
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
   }
 
-  @Watch('authToken')
-  @Watch('checkoutId')
-  propChanged() {
-    this.initializeGetCheckout();
+  @Listen('submit-event')
+  checkoutComplete(_event: CustomEvent<any>) {
+    this.isSubmitting = false;
+  }
+
+  @Listen('error-event')
+  checkoutError(event: CustomEvent<any>) {
+    this.isSubmitting = false;
+    console.error('checkout error', event.detail);
+  }
+
+  @Listen('submit-event')
+  async handleTokenizeSubmit(event: CustomEvent<{ response: PaymentMethodPayload }>) {
+    this.tokenizedPaymentMethod = event.detail.response;
+
+    if (event.detail.response.error) {
+      this.isSubmitting = false;
+      this.errorEvent.emit({
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        message: event.detail.response.error.message,
+        severity: ComponentErrorSeverity.ERROR
+      });
+      return;
+    }
+
+    // Now submit the checkout with the tokenized payment method
+    await this.submitCheckoutWithToken();
   }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
-    this.checkoutCoreRef.fillBillingForm(fields);
+    checkoutStore.billingFormFields = fields;
+    this.tokenizePaymentMethodRef?.fillBillingForm(fields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    const { isValid } = await this.checkoutCoreRef.validate();
-    return { isValid };
+    const tokenizeValidation = await this.tokenizePaymentMethodRef?.validate();
+    const modularValidation = await this.modularCheckoutRef?.validate();
+
+    return {
+      isValid: (tokenizeValidation?.isValid ?? true) && (modularValidation ?? true)
+    };
+  }
+
+  private updateStore() {
+    checkoutStore.checkoutId = this.checkoutId;
+    checkoutStore.authToken = this.authToken;
+    checkoutStore.disableCreditCard = this.disableCreditCard;
+    checkoutStore.disableBankAccount = this.disableBankAccount;
+    checkoutStore.disableBnpl = this.disableBnpl;
+    checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
+  }
+
+  private async submit(_event) {
+    this.isSubmitting = true;
+    // Trigger the tokenize payment method submission
+    this.tokenizePaymentMethodRef?.tokenizePaymentMethod();
+  }
+
+  private async submitCheckoutWithToken() {
+    if (!this.tokenizedPaymentMethod || this.tokenizedPaymentMethod.error) {
+      this.isSubmitting = false;
+      return;
+    }
+
+    // Set the payment token in the store for the modular checkout to use
+    checkoutStore.paymentToken = this.tokenizedPaymentMethod.token;
+
+    // Submit the checkout
+    this.modularCheckoutRef.submitCheckout(checkoutStore.billingFormFields);
+  }
+
+  private get showPaymentTypeHeader() {
+    return !this.disableCreditCard && !this.disableBankAccount;
   }
 
   render() {
     return (
-      <justifi-checkout-core
-        getCheckout={this.getCheckout}
-        authToken={this.authToken}
-        complete={this.complete}
-        disableCreditCard={this.disableCreditCard}
-        disableBankAccount={this.disableBankAccount}
-        disableBnpl={this.disableBnpl}
-        disablePaymentMethodGroup={this.disablePaymentMethodGroup}
-        hideCardBillingForm={this.hideCardBillingForm}
-        hideBankAccountBillingForm={this.hideBankAccountBillingForm}
-        ref={el => {
-          if (el) {
-            this.checkoutCoreRef = el;
-          }
-        }}>
-        <div slot="insurance">
-          <slot name="insurance"></slot>
-        </div>
-      </justifi-checkout-core>
+      <StyledHost>
+        <justifi-modular-checkout
+          ref={(el) => (this.modularCheckoutRef = el)}
+          authToken={this.authToken}
+          checkoutId={this.checkoutId}
+          savePaymentMethod={checkoutStore.savePaymentMethod}
+        >
+          <div class="row gy-3 jfi-checkout-core">
+            <div class="col-12" part={checkoutSummary}>
+              <justifi-header text="Summary" level="h2" class="fs-5 fw-bold pb-3" />
+              <section>
+                <justifi-checkout-summary />
+              </section>
+            </div>
+            <div class="col-12 mt-4">
+              <slot name="insurance"></slot>
+            </div>
+            <div class="col-12 mt-4">
+              <justifi-header text="Payment" level="h2" class="fs-5 fw-bold pb-3" />
+              {this.showPaymentTypeHeader && (
+                <justifi-header text="Select payment type" level="h3" class="fs-6 fw-bold lh-lg" />
+              )}
+              <div class="d-flex flex-column">
+                <section>
+                  <div>
+                    <justifi-saved-payment-methods />
+                    <justifi-sezzle-payment-method />
+                    <justifi-tokenize-payment-method
+                      ref={(el) => (this.tokenizePaymentMethodRef = el)}
+                      authToken={this.authToken}
+                      accountId={checkoutStore.accountId}
+                      disableCreditCard={this.disableCreditCard}
+                      disableBankAccount={this.disableBankAccount}
+                      hideCardBillingForm={this.hideCardBillingForm}
+                      hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+                      hideSubmitButton={true}
+                      paymentMethodGroupId={checkoutStore.paymentMethodGroupId}
+                    />
+                  </div>
+                </section>
+              </div>
+            </div>
+            <div class="mt-4">
+              <justifi-button
+                text="Pay"
+                type="submit"
+                variant="primary"
+                clickHandler={(e) => this.submit(e)}
+                disabled={this.isSubmitting}
+                isLoading={this.isSubmitting}
+                customStyle={{ width: '100%', textAlign: "center" }}
+              />
+            </div>
+          </div>
+        </justifi-modular-checkout>
+      </StyledHost>
     );
   }
 }

@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { BillingForm } from '../billing-form';
-import { BillingFormFull } from '../billing-form-full';
-import { CardBillingFormSimple } from '../card-billing-form-simple';
-import { BankAccountBillingFormSimple } from '../bank-account-billing-form-simple';
+import { BillingFormFull } from '../../../modular-checkout/sub-components/billing-form-full';
+import { CardBillingFormSimple } from '../../../modular-checkout/sub-components/card-billing-form-simple';
+import { BankAccountBillingFormSimple } from '../../../modular-checkout/sub-components/bank-account-billing-form-simple';
 
 describe('billing-form', () => {
   it('fills the form', async () => {
@@ -12,6 +12,9 @@ describe('billing-form', () => {
     });
 
     const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    // Wait for component to be fully rendered
     await page.waitForChanges();
 
     const fields = {
@@ -38,6 +41,9 @@ describe('billing-form', () => {
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
+    // Wait for component to be fully rendered
+    await page.waitForChanges();
+
     const fields = {
       name: 'John Doe',
       address_line1: 'Street Address',
@@ -60,6 +66,9 @@ describe('billing-form', () => {
     });
 
     const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    // Wait for component to be fully rendered
     await page.waitForChanges();
 
     const fields = {
@@ -116,13 +125,28 @@ describe('billing-form', () => {
     await page.waitForChanges();
 
     // In postal-only mode, only ZIP field should be rendered
-    const nameField = page.root?.querySelector('[name="name"]');
-    const addressField = page.root?.querySelector('[name="address_line1"]'); 
-    const zipField = page.root?.querySelector('[name="address_postal_code"]');
+    // CardBillingFormSimple uses shadow DOM, so we need to access the shadow root
+    const cardBillingFormSimpleElement = page.root?.querySelector('justifi-card-billing-form-simple');
+    const shadowRoot = cardBillingFormSimpleElement?.shadowRoot;
 
-    expect(nameField).toBeFalsy(); // Should not be rendered at all
-    expect(addressField).toBeFalsy(); // Should not be rendered at all
-    expect(zipField).toBeTruthy(); // Should be rendered
+    if (shadowRoot) {
+      const nameField = shadowRoot.querySelector('[name="name"]');
+      const addressField = shadowRoot.querySelector('[name="address_line1"]');
+      const zipField = shadowRoot.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeFalsy(); // Should not be rendered at all
+      expect(addressField).toBeFalsy(); // Should not be rendered at all
+      expect(zipField).toBeTruthy(); // Should be rendered
+    } else {
+      // Fallback to direct querying if no shadow root
+      const nameField = page.root?.querySelector('[name="name"]');
+      const addressField = page.root?.querySelector('[name="address_line1"]');
+      const zipField = page.root?.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeFalsy(); // Should not be rendered at all
+      expect(addressField).toBeFalsy(); // Should not be rendered at all
+      expect(zipField).toBeTruthy(); // Should be rendered
+    }
   });
 
   it('should render only name field when hideBankAccountBillingForm is true', async () => {
@@ -134,13 +158,28 @@ describe('billing-form', () => {
     await page.waitForChanges();
 
     // When hideBankAccountBillingForm is true, only name field should be rendered
-    const nameField = page.root?.querySelector('[name="name"]');
-    const addressField = page.root?.querySelector('[name="address_line1"]');
-    const zipField = page.root?.querySelector('[name="address_postal_code"]');
-    
-    expect(nameField).toBeTruthy(); // Should be rendered
-    expect(addressField).toBeFalsy(); // Should not be rendered at all
-    expect(zipField).toBeFalsy(); // Should not be rendered at all
+    // BankAccountBillingFormSimple uses shadow DOM, so we need to access the shadow root
+    const bankAccountBillingFormSimpleElement = page.root?.querySelector('justifi-bank-account-billing-form-simple');
+    const shadowRoot = bankAccountBillingFormSimpleElement?.shadowRoot;
+
+    if (shadowRoot) {
+      const nameField = shadowRoot.querySelector('[name="name"]');
+      const addressField = shadowRoot.querySelector('[name="address_line1"]');
+      const zipField = shadowRoot.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeTruthy(); // Should be rendered
+      expect(addressField).toBeFalsy(); // Should not be rendered at all
+      expect(zipField).toBeFalsy(); // Should not be rendered at all
+    } else {
+      // Fallback to direct querying if no shadow root
+      const nameField = page.root?.querySelector('[name="name"]');
+      const addressField = page.root?.querySelector('[name="address_line1"]');
+      const zipField = page.root?.querySelector('[name="address_postal_code"]');
+
+      expect(nameField).toBeTruthy(); // Should be rendered
+      expect(addressField).toBeFalsy(); // Should not be rendered at all
+      expect(zipField).toBeFalsy(); // Should not be rendered at all
+    }
   });
 
   it('should render all fields by default when no hide props are set', async () => {
@@ -151,24 +190,52 @@ describe('billing-form', () => {
 
     await page.waitForChanges();
 
-    // All fields should be present when no hide props are set
-    const nameField = page.root?.querySelector('[name="name"]');
-    const addressField = page.root?.querySelector('[name="address_line1"]');
-    const address2Field = page.root?.querySelector('[name="address_line2"]');
-    const cityField = page.root?.querySelector('[name="address_city"]');
-    const stateField = page.root?.querySelector('[name="address_state"]');
-    const zipField = page.root?.querySelector('[name="address_postal_code"]');
-    const billingFormDiv = page.root?.querySelector('[part="billing-form"]');
-    const header = page.root?.querySelector('h3');
+    // Wait for component to be fully rendered
+    await page.waitForChanges();
 
-    expect(billingFormDiv).toBeTruthy();
-    expect(header).toBeTruthy(); // Header should be visible
-    expect(nameField).toBeTruthy();
-    expect(addressField).toBeTruthy();
-    expect(address2Field).toBeTruthy();
-    expect(cityField).toBeTruthy();
-    expect(stateField).toBeTruthy();
-    expect(zipField).toBeTruthy();
+    // Since BillingFormFull has shadow: true, we need to access the shadow root
+    const billingFormFullElement = page.root?.querySelector('justifi-billing-form-full');
+    const shadowRoot = billingFormFullElement?.shadowRoot;
+
+    if (shadowRoot) {
+      // All fields should be present when no hide props are set
+      const nameField = shadowRoot.querySelector('[name="name"]');
+      const addressField = shadowRoot.querySelector('[name="address_line1"]');
+      const address2Field = shadowRoot.querySelector('[name="address_line2"]');
+      const cityField = shadowRoot.querySelector('[name="address_city"]');
+      const stateField = shadowRoot.querySelector('[name="address_state"]');
+      const zipField = shadowRoot.querySelector('[name="address_postal_code"]');
+      const billingFormDiv = shadowRoot.querySelector('[part="billing-form"]');
+      const header = shadowRoot.querySelector('h3');
+
+      expect(billingFormDiv).toBeTruthy();
+      expect(header).toBeTruthy(); // Header should be visible
+      expect(nameField).toBeTruthy();
+      expect(addressField).toBeTruthy();
+      expect(address2Field).toBeTruthy();
+      expect(cityField).toBeTruthy();
+      expect(stateField).toBeTruthy();
+      expect(zipField).toBeTruthy();
+    } else {
+      // Fallback to direct querying if no shadow root
+      const nameField = page.root?.querySelector('[name="name"]');
+      const addressField = page.root?.querySelector('[name="address_line1"]');
+      const address2Field = page.root?.querySelector('[name="address_line2"]');
+      const cityField = page.root?.querySelector('[name="address_city"]');
+      const stateField = page.root?.querySelector('[name="address_state"]');
+      const zipField = page.root?.querySelector('[name="address_postal_code"]');
+      const billingFormDiv = page.root?.querySelector('[part="billing-form"]');
+      const header = page.root?.querySelector('h3');
+
+      expect(billingFormDiv).toBeTruthy();
+      expect(header).toBeTruthy(); // Header should be visible
+      expect(nameField).toBeTruthy();
+      expect(addressField).toBeTruthy();
+      expect(address2Field).toBeTruthy();
+      expect(cityField).toBeTruthy();
+      expect(stateField).toBeTruthy();
+      expect(zipField).toBeTruthy();
+    }
   });
 
   it('should not render billing address header in postal-only mode', async () => {
@@ -209,7 +276,7 @@ describe('billing-form', () => {
     // Form methods should still work even in postal-only mode
     const testData = { address_postal_code: '12345' };
     await instance.fill(testData);
-    
+
     const values = await instance.getValues();
     expect(values.address_postal_code).toBe('12345');
 
@@ -220,7 +287,7 @@ describe('billing-form', () => {
 
   it('should handle form methods correctly in name-only mode', async () => {
     const page = await newSpecPage({
-      components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],  
+      components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
     });
 

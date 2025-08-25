@@ -63,7 +63,8 @@
     "payment_settings": {
       "ach_payments": true,
       "bnpl_payments": true,
-      "credit_card_payments": true
+      "credit_card_payments": true,
+      "insurance_payments": true
     },
     "successful_payment_id": null,
     "statement_descriptor": null,
