@@ -9,6 +9,13 @@ const latestVersion = async (packageName) => {
 };
 
 export const checkPkgVersion = async () => {
+  // Skip version check in test environments to avoid async logs after tests complete
+  if (
+    typeof process !== 'undefined' &&
+    (process.env?.NODE_ENV === 'test' || process.env?.JEST_WORKER_ID)
+  ) {
+    return;
+  }
   const version = packageJson.version;
   const packageName = packageJson.name;
 
