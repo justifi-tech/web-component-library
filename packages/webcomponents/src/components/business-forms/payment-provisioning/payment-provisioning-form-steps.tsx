@@ -1,4 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
+import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-payment-provisioning-form-steps'
@@ -9,6 +10,7 @@ export class PaymentProvisioningFormSteps {
   @Prop() refs: any[];
   @Prop() currentStep: number;
   @Prop() allowOptionalFields?: boolean = false;
+  @Prop() country?: CountryCode = CountryCode.USA;
   @Prop() handleFormLoading: (e: CustomEvent) => void
 
   get currentStepComponent() {
@@ -21,12 +23,14 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     1: () => <justifi-legal-address-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[1] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     2: () => <justifi-additional-questions-form-step
       businessId={this.businessId}
@@ -39,18 +43,21 @@ export class PaymentProvisioningFormSteps {
       authToken={this.authToken}
       ref={(el) => this.refs[3] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     4: () => <justifi-business-owners-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[4] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     5: () => <justifi-business-bank-account-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
       allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
     />,
     6: () => <justifi-business-terms-conditions-form-step
       businessId={this.businessId}
@@ -60,6 +67,8 @@ export class PaymentProvisioningFormSteps {
       allowOptionalFields={this.allowOptionalFields}
     />,
   };
+
+  
 
   render() {
     return (

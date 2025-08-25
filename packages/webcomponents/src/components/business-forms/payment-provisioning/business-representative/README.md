@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type       | Default     |
-| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
-| `getBusiness`         | --                      |             | `Function` | `undefined` |
-| `patchBusiness`       | --                      |             | `Function` | `undefined` |
+| Property              | Attribute               | Description | Type                                 | Default     |
+| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
+| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -65,8 +66,9 @@ graph TD;
   form-control-text --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  justifi-identity-address-form --> form-control-text
-  justifi-identity-address-form --> form-control-select
+  justifi-identity-address-form --> justifi-form-address-fields
+  justifi-form-address-fields --> form-control-text
+  justifi-form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
   justifi-business-representative-form-step --> justifi-business-representative-form-step-core
   style justifi-business-representative-form-step-core fill:#f9f,stroke:#333,stroke-width:4px

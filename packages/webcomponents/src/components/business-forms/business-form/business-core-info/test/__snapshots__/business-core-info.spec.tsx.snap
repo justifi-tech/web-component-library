@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-business-core-info Country-specific tax ID label and help text renders CAN Business Number (BN) label and help text 1`] = `
+<justifi-business-core-info>
+  <fieldset>
+    <legend part="heading-2 heading text color font-family">
+      General Info
+    </legend>
+    <div class="gy-3 row">
+      <div class="col-12">
+        <form-control-text label="Legal Name" name="legal_name"></form-control-text>
+      </div>
+      <div class="col-12">
+        <form-control-text label="Doing Business As (DBA)" name="doing_business_as"></form-control-text>
+      </div>
+      <div class="col-12 col-md-8">
+        <form-control-select label="Business Classification" name="classification"></form-control-select>
+      </div>
+      <div class="col-12 col-md-4">
+        <form-control-date label="Date of Incorporation" name="date_of_incorporation"></form-control-date>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-text label="Industry" name="industry"></form-control-text>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-text helptext="Business Numbers (BN) are nine digits. Enter value without spaces or dashes." label="Business Number (BN)" maxlength="9" name="tax_id"></form-control-text>
+      </div>
+      <div class="col-12">
+        <form-control-text label="Website URL" name="website_url"></form-control-text>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-text label="Email Address" name="email"></form-control-text>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-number-masked label="Phone Number" mask="(000) 000-0000" name="phone"></form-control-number-masked>
+      </div>
+    </div>
+  </fieldset>
+</justifi-business-core-info>
+`;
+
+exports[`justifi-business-core-info Country-specific tax ID label and help text renders USA tax ID label and help text 1`] = `
+<justifi-business-core-info>
+  <fieldset>
+    <legend part="heading-2 heading text color font-family">
+      General Info
+    </legend>
+    <div class="gy-3 row">
+      <div class="col-12">
+        <form-control-text label="Legal Name" name="legal_name"></form-control-text>
+      </div>
+      <div class="col-12">
+        <form-control-text label="Doing Business As (DBA)" name="doing_business_as"></form-control-text>
+      </div>
+      <div class="col-12 col-md-8">
+        <form-control-select label="Business Classification" name="classification"></form-control-select>
+      </div>
+      <div class="col-12 col-md-4">
+        <form-control-date label="Date of Incorporation" name="date_of_incorporation"></form-control-date>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-text label="Industry" name="industry"></form-control-text>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-text helptext="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes." label="Tax ID (EIN or SSN)" maxlength="9" name="tax_id"></form-control-text>
+      </div>
+      <div class="col-12">
+        <form-control-text label="Website URL" name="website_url"></form-control-text>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-text label="Email Address" name="email"></form-control-text>
+      </div>
+      <div class="col-12 col-md-6">
+        <form-control-number-masked label="Phone Number" mask="(000) 000-0000" name="phone"></form-control-number-masked>
+      </div>
+    </div>
+  </fieldset>
+</justifi-business-core-info>
+`;

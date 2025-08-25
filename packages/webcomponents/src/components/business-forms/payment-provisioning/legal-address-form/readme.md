@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type       | Default     |
-| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
-| `getBusiness`         | --                      |             | `Function` | `undefined` |
-| `patchBusiness`       | --                      |             | `Function` | `undefined` |
+| Property              | Attribute               | Description | Type                                 | Default     |
+| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
+| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -51,16 +52,16 @@ Type: `Promise<void>`
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
-- [form-control-text](../../../../ui-components/form)
-- [form-control-select](../../../../ui-components/form)
+- [justifi-form-address-fields](../form-address-fields)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-legal-address-form-step-core --> form-control-tooltip
-  justifi-legal-address-form-step-core --> form-control-text
-  justifi-legal-address-form-step-core --> form-control-select
+  justifi-legal-address-form-step-core --> justifi-form-address-fields
   form-control-tooltip --> custom-popper
+  justifi-form-address-fields --> form-control-text
+  justifi-form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-select --> form-control-tooltip
   justifi-legal-address-form-step --> justifi-legal-address-form-step-core

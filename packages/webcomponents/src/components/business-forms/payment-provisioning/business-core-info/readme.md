@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type       | Default     |
-| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
-| `businessId`          | `business-id`           |             | `string`   | `undefined` |
-| `getBusiness`         | --                      |             | `Function` | `undefined` |
-| `patchBusiness`       | --                      |             | `Function` | `undefined` |
+| Property              | Attribute               | Description | Type                                 | Default     |
+| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined` |
+| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
+| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events

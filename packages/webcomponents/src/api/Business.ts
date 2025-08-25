@@ -2,6 +2,15 @@ import { Identity, Representative } from './Identity';
 import { IDocument } from './Document';
 import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
+import { CountryCode } from '../utils/country-codes';
+
+// Normalize various incoming country representations to strict CountryCode values
+const normalizeCountry = (value?: string | CountryCode): CountryCode => {
+  const v = (value || '').toString().trim().toUpperCase();
+  if (v === 'US' || v === 'USA' || v === CountryCode.USA) return CountryCode.USA;
+  if (v === 'CA' || v === 'CAN' || v === CountryCode.CAN) return CountryCode.CAN;
+  return CountryCode.USA;
+}
 
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',
@@ -51,7 +60,7 @@ export class Address implements IAddress {
     this.postal_code = address.postal_code;
     this.city = address.city;
     this.state = getStateAbbreviation(address.state);
-    this.country = address.country || 'USA';
+    this.country = normalizeCountry(address.country);
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
   }
@@ -198,6 +207,7 @@ export interface IBusiness {
   updated_at: string;
   website_url: string;
   date_of_incorporation?: string;
+  country_of_establishment?: CountryCode;
 }
 
 export class Business implements IBusiness {
@@ -224,6 +234,7 @@ export class Business implements IBusiness {
   public website_url: string;
   public date_of_incorporation?: string;
   public product_categories: ProductCategories;
+  public country_of_establishment?: CountryCode;
 
   constructor(business: IBusiness) {
     this.additional_questions = business.additional_questions
@@ -255,6 +266,7 @@ export class Business implements IBusiness {
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
+    this.country_of_establishment = normalizeCountry(business.country_of_establishment);
   }
 
   public get payload() {
@@ -275,6 +287,7 @@ export class Business implements IBusiness {
       tax_id: this.tax_id || '',
       website_url: this.website_url || '',
       date_of_incorporation: this.date_of_incorporation || '',
+      country_of_establishment: this.country_of_establishment || CountryCode.USA,
     };
   }
 }

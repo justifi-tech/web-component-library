@@ -3,6 +3,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/Com
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-business-owners-form-step'
@@ -16,6 +17,7 @@ export class BusinessOwnersFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -64,6 +66,7 @@ export class BusinessOwnersFormStep {
           getBusiness={this.getBusiness}
           patchBusiness={this.patchBusiness}
           allowOptionalFields={this.allowOptionalFields}
+          country={this.country}
           ref={(el) => this.coreComponent = el}
         />
       </Host>

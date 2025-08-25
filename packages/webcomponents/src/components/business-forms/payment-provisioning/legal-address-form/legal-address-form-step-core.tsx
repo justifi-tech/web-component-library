@@ -1,13 +1,12 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { addressSchema } from '../../schemas/business-address-schema';
+import { addressSchemaByCountry } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
-import StateOptions from '../../../../utils/state-options';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep } from '../../utils';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-legal-address-form-step-core'
@@ -21,9 +20,12 @@ export class LegalAddressFormStepCore {
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country: CountryCode;
 
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true })
+    stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'error-event', bubbles: true })
+    errorEvent: EventEmitter<ComponentErrorEvent>;
 
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
@@ -40,7 +42,8 @@ export class LegalAddressFormStepCore {
 
   componentWillLoad() {
     this.getBusiness && this.getData();
-    this.formController = new FormController(addressSchema(this.allowOptionalFields));
+    const schemaFactory = addressSchemaByCountry[this.country];
+    this.formController = new FormController(schemaFactory(this.allowOptionalFields));
   }
 
   componentDidLoad() {
@@ -54,7 +57,9 @@ export class LegalAddressFormStepCore {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
-        this.legal_address = new Address(response.data.legal_address || {});
+        const business = response.data || {};
+        const address = new Address(business.legal_address || {});
+        this.legal_address = { ...address, country: this.country };
         this.formController.setInitialValues({ ...this.legal_address });
       },
       onError: ({ error, code, severity }) => {
@@ -117,68 +122,12 @@ export class LegalAddressFormStepCore {
             <form-control-tooltip helpText="No PO Boxes." />
           </div>
           <hr class="mt-2" />
-          <div class="row gy-3">
-            <div class="col-12">
-              <form-control-text
-                name="line1"
-                label="Legal Address"
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line1}
-                errorText={this.errors?.line1}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="line2"
-                label="Address Line 2 (optional)"
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.line2}
-                errorText={this.errors?.line2}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="city"
-                label="City"
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.city}
-                errorText={this.errors?.city}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="state"
-                label="State"
-                options={StateOptions}
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.state}
-                errorText={this.errors?.state}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-text
-                name="postal_code"
-                label="Postal Code"
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.postal_code}
-                errorText={this.errors?.postal_code}
-                maxLength={5}
-                keyDownHandler={numberOnlyHandler}
-              />
-            </div>
-            <div class="col-12">
-              <form-control-select
-                name="country"
-                label="Country"
-                options={[{ label: "United States", value: "USA" }]}
-                inputHandler={this.inputHandler}
-                defaultValue={legalAddressDefaultValue?.country}
-                errorText={this.errors?.country}
-                // just for now so we skip handling country specificities
-                disabled={true}
-              />
-            </div>
-          </div>
+          <justifi-form-address-fields
+            country={this.country}
+            errors={this.errors}
+            defaultValues={legalAddressDefaultValue}
+            inputHandler={this.inputHandler}
+          />
         </fieldset>
       </form>
     );
