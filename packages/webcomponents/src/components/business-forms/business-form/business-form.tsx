@@ -66,7 +66,6 @@ export class BusinessForm {
   instantiateBusiness = (data: IBusiness) => {
     const business = new Business(data);
     this.country = business.country_of_establishment;
-    this.country = CountryCode.CAN;
     this.formController.setInitialValues({ ...business });
   }
 
