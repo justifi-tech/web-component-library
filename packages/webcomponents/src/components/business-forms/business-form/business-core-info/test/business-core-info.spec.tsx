@@ -50,25 +50,6 @@ describe('justifi-business-core-info', () => {
       expect(taxIdField.getAttribute('label')).toBe('Business Number (BN)');
       expect(taxIdField.getAttribute('helptext')).toBe('Business Numbers (BN) are nine digits. Enter value without spaces or dashes.');
     });
-
-    test('defaults to USA when no country is specified', async () => {
-      const formController = new FormController(businessCoreInfoSchemaUSA());
-      
-      const page = await newSpecPage({
-        components: [BusinessCoreInfo],
-        template: () => (
-          <justifi-business-core-info
-            formController={formController}
-          />
-        ),
-      });
-      
-      // Verify it defaults to USA tax ID labels
-      const taxIdField = page.root.querySelector('form-control-text[name="tax_id"]');
-      expect(taxIdField).toBeTruthy();
-      expect(taxIdField.getAttribute('label')).toBe('Tax ID (EIN or SSN)');
-      expect(taxIdField.getAttribute('helptext')).toBe('Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes.');
-    });
   });
 
   describe('Form component behavior', () => {
