@@ -4,6 +4,14 @@ import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
 import { CountryCode } from '../utils/country-codes';
 
+// Normalize various incoming country representations to strict CountryCode values
+const normalizeCountry = (value?: string | CountryCode): CountryCode => {
+  const v = (value || '').toString().trim().toUpperCase();
+  if (v === 'US' || v === 'USA' || v === CountryCode.USA) return CountryCode.USA;
+  if (v === 'CA' || v === 'CAN' || v === CountryCode.CAN) return CountryCode.CAN;
+  return CountryCode.USA;
+}
+
 export enum BusinessFormServerErrors {
   fetchData = 'Error retrieving business data',
   patchData = 'Error updating business data',
@@ -52,7 +60,7 @@ export class Address implements IAddress {
     this.postal_code = address.postal_code;
     this.city = address.city;
     this.state = getStateAbbreviation(address.state);
-    this.country = address.country || 'USA';
+    this.country = normalizeCountry(address.country);
     this.created_at = address.created_at;
     this.updated_at = address.updated_at;
   }
@@ -258,7 +266,7 @@ export class Business implements IBusiness {
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
-    this.country_of_establishment = business.country_of_establishment || CountryCode.USA;
+    this.country_of_establishment = normalizeCountry(business.country_of_establishment);
   }
 
   public get payload() {
