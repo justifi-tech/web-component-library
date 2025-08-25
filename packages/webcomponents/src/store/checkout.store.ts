@@ -7,6 +7,7 @@ interface IInitialState {
   authToken: string;
   billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
+  insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
   bnplProviderClientId: string;
@@ -33,6 +34,7 @@ const initialState: IInitialState = {
     address_postal_code: '',
   },
   bnplEnabled: false,
+  insuranceEnabled: undefined,
   bnplProviderApiVersion: '',
   bnplProviderCheckoutUrl: '',
   bnplProviderClientId: '',

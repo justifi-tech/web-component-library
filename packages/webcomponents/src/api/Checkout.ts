@@ -86,6 +86,7 @@ export interface ICheckout {
     ach_payments: boolean;
     bnpl_payments: boolean;
     credit_card_payments: boolean;
+    insurance_payments: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
@@ -116,6 +117,7 @@ export class Checkout implements ICheckout {
     ach_payments: boolean;
     bnpl_payments: boolean;
     credit_card_payments: boolean;
+    insurance_payments: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;

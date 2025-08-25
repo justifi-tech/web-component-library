@@ -164,6 +164,7 @@ modularCheckout.addEventListener('payment-method-changed', (event) => {
 The `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.
 
 - **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated
+- **Feature Flag**: If the checkout's `payment_settings.insurance_payments` is `false`, the wrapper will skip validating the insurance component. The `justifi-season-interruption-insurance` component will also render nothing and log a console warning indicating that insurance is disabled for the checkout.
 
 ```html
 <justifi-modular-checkout
