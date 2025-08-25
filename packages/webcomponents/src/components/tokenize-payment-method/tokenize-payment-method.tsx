@@ -4,7 +4,6 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
-import { PaymentMethodTypes } from '../../api/Payment';
 import {
   ComponentSubmitEvent,
   ComponentErrorEvent,
@@ -12,11 +11,12 @@ import {
   ComponentErrorSeverity
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
+import { PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 // Constants
 const PAYMENT_METHOD_TYPE_LABELS = {
-  [PaymentMethodTypes.bankAccount]: 'New bank account',
-  [PaymentMethodTypes.card]: 'New credit or debit card',
+  [PAYMENT_METHODS.NEW_BANK_ACCOUNT]: 'New bank account',
+  [PAYMENT_METHODS.NEW_CARD]: 'New credit or debit card',
 } as const;
 
 const ERROR_MESSAGES = {
@@ -45,12 +45,13 @@ export class TokenizePaymentMethod {
   analytics: JustifiAnalytics;
   private billingFormRef?: HTMLJustifiBillingFormElement;
   private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
+  private unsubscribeFromStore?: () => void;
 
   @Element() host: HTMLElement;
 
-  @State() isLoading: boolean = false;
-  @State() selectedPaymentMethodId: string;
   @State() computedHideSubmitButton: boolean = false;
+  @State() isLoading: boolean = false;
+  @State() selectedPaymentMethod?: PAYMENT_METHODS.NEW_CARD | PAYMENT_METHODS.NEW_BANK_ACCOUNT;
 
   @Prop() accountId?: string;
   @Prop() authToken?: string;
@@ -62,13 +63,14 @@ export class TokenizePaymentMethod {
   @Prop() paymentMethodGroupId?: string;
   @Prop() submitButtonText?: string = 'Submit';
 
+  @Watch('disableCreditCard')
+  @Watch('disableBankAccount')
+  paymentMethodsChanged() {
+    this.setDefaultSelectedPaymentMethod();
+  }
+
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
-
-  componentWillLoad() {
-    checkPkgVersion();
-    this.analytics = new JustifiAnalytics(this);
-  }
 
   connectedCallback() {
     this.setDefaultSelectedPaymentMethod();
@@ -77,19 +79,21 @@ export class TokenizePaymentMethod {
 
   disconnectedCallback() {
     this.analytics?.cleanup();
+    if (this.unsubscribeFromStore) {
+      this.unsubscribeFromStore();
+    }
   }
 
-  @Watch('disableCreditCard')
-  @Watch('disableBankAccount')
-  paymentMethodsChanged() {
-    this.setDefaultSelectedPaymentMethod();
+  componentWillLoad() {
+    checkPkgVersion();
+    this.analytics = new JustifiAnalytics(this);
   }
 
   @Listen('radio-click')
   handleRadioClick(event: CustomEvent<string>) {
-    this.selectedPaymentMethodId = event.detail;
+    this.selectedPaymentMethod = event.detail as PAYMENT_METHODS.NEW_CARD | PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+    checkoutStore.selectedPaymentMethod = event.detail as PAYMENT_METHODS;
   }
-
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
@@ -126,10 +130,10 @@ export class TokenizePaymentMethod {
       this.submitEvent.emit({ response: tokenizeResponse });
       return tokenizeResponse;
     } catch (error) {
-      const errorResponse = this.createErrorResponse(ComponentErrorCodes.TOKENIZE_ERROR, error.message);
+      const errorResponse = this.createErrorResponse(ComponentErrorCodes.TOKENIZE_ERROR, error.message as string);
       this.emitError({
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        message: error.message,
+        message: (error as any).message,
       });
       this.submitEvent.emit({ response: errorResponse });
       return errorResponse;
@@ -149,12 +153,29 @@ export class TokenizePaymentMethod {
       this.paymentMethodFormRef.validate(),
     ]);
 
-    return {
+    const result = {
       isValid: billingValidation.isValid && paymentMethodValidation.isValid,
       errors: { ...billingValidation.errors, ...paymentMethodValidation.errors },
     };
+    return result;
   }
 
+  @Method()
+  async tokenize() {
+    try {
+      const billingFormFieldValues = await this.billingFormRef.getValues();
+      const config: TokenizeConfig = {
+        clientId: this.authToken || checkoutStore.authToken,
+        account: this.accountId || checkoutStore.accountId,
+        paymentMethodMetadata: this.buildPaymentMethodMetadata(billingFormFieldValues),
+      };
+      return await this.paymentMethodFormRef.tokenize(config);
+    } catch (error) {
+      return error as any;
+    }
+  }
+
+  // 9. Local methods
   private validateRequiredProps() {
     if (!this.authToken && !checkoutStore.authToken) {
       this.emitError({
@@ -172,14 +193,14 @@ export class TokenizePaymentMethod {
   }
 
   private setDefaultSelectedPaymentMethod() {
-    if (this.selectedPaymentMethodId) {
+    if (this.selectedPaymentMethod) {
       return;
     }
 
     if (!this.disableCreditCard) {
-      this.selectedPaymentMethodId = PaymentMethodTypes.card;
+      this.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
     } else if (!this.disableBankAccount) {
-      this.selectedPaymentMethodId = PaymentMethodTypes.bankAccount;
+      this.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
     }
   }
 
@@ -208,13 +229,13 @@ export class TokenizePaymentMethod {
     return false;
   }
 
-  private get availablePaymentMethods(): PaymentMethodTypes[] {
-    const methods: PaymentMethodTypes[] = [];
+  private get availablePaymentMethods(): PAYMENT_METHODS[] {
+    const methods: PAYMENT_METHODS[] = [];
     if (!this.disableCreditCard) {
-      methods.push(PaymentMethodTypes.card);
+      methods.push(PAYMENT_METHODS.NEW_CARD);
     }
     if (!this.disableBankAccount) {
-      methods.push(PaymentMethodTypes.bankAccount);
+      methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
     }
     return methods;
   }
@@ -260,9 +281,10 @@ export class TokenizePaymentMethod {
         };
       }
 
-      return await this.performTokenization();
+      const result = await this.performTokenization();
+      return result;
     } catch (error) {
-      return { error };
+      return { error } as any;
     }
   }
 
@@ -278,21 +300,6 @@ export class TokenizePaymentMethod {
       token: tokenizeResponseData.card?.token || tokenizeResponseData.bank_account?.token,
       data: tokenizeResponseData,
     };
-  }
-
-  private async tokenize() {
-    try {
-      const billingFormFieldValues = await this.billingFormRef.getValues();
-      const config: TokenizeConfig = {
-        clientId: this.authToken || checkoutStore.authToken,
-        account: this.accountId || checkoutStore.accountId,
-        paymentMethodMetadata: this.buildPaymentMethodMetadata(billingFormFieldValues),
-      };
-
-      return await this.paymentMethodFormRef.tokenize(config);
-    } catch (error) {
-      return error;
-    }
   }
 
   private buildPaymentMethodMetadata(billingFormFieldValues: any) {
@@ -313,8 +320,8 @@ export class TokenizePaymentMethod {
     return this.disableCreditCard || this.disableBankAccount;
   }
 
-  private renderPaymentMethodOption(paymentMethodType: PaymentMethodTypes) {
-    const isSelected = this.selectedPaymentMethodId === paymentMethodType;
+  private renderPaymentMethodOption(paymentMethodType: PAYMENT_METHODS) {
+    const isSelected = this.selectedPaymentMethod === paymentMethodType;
 
     return (
       <div class="payment-method">
@@ -350,7 +357,7 @@ export class TokenizePaymentMethod {
   }
 
   private renderPaymentMethodForm(paymentMethodId: string) {
-    return paymentMethodId === PaymentMethodTypes.card ? (
+    return paymentMethodId === PAYMENT_METHODS.NEW_CARD ? (
       <justifi-card-form ref={(el) => (this.paymentMethodFormRef = el)} />
     ) : (
       <justifi-bank-account-form ref={(el) => (this.paymentMethodFormRef = el)} />
@@ -364,7 +371,7 @@ export class TokenizePaymentMethod {
           <fieldset>
             <div class="row gy-3">
               <div class="col-12">
-                {this.availablePaymentMethods.map((method) => this.renderPaymentMethodOption(method))}
+                {this.availablePaymentMethods.map((method: PAYMENT_METHODS) => this.renderPaymentMethodOption(method))}
               </div>
               <div class="col-12">
                 <justifi-button

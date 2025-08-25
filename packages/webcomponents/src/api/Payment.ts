@@ -1,6 +1,6 @@
-import { formatCurrency } from "../utils/utils";
-import { DisputeStatus } from "./Dispute";
-import { IRefund } from ".";
+import { formatCurrency } from '../utils/utils';
+import { DisputeStatus } from './Dispute';
+import { IRefund } from '.';
 
 export enum CaptureStrategy {
   automatic = 'automatic',
@@ -11,13 +11,12 @@ export enum PaymentMethodTypes {
   card = 'card',
   bankAccount = 'bankAccount',
   sezzle = 'sezzle',
-  saved = 'saved',
 }
 
 export enum PaymentTypes {
   card = 'Card',
   bankAccount = 'ACH',
-  unknown = 'Unknown'
+  unknown = 'Unknown',
 }
 
 export enum PaymentStatuses {
@@ -34,7 +33,7 @@ export enum PaymentStatuses {
 
 export enum CurrencyTypes {
   usd = 'usd',
-  cad = 'cad'
+  cad = 'cad',
 }
 
 export interface IPaymentMethod {
@@ -227,7 +226,7 @@ export class Payment implements IPayment {
     this.id = payment.id;
     this.account_id = payment.account_id;
     this.currency = payment.currency;
-    this.amount = payment.amount
+    this.amount = payment.amount;
     this.amount_disputed = payment.amount_disputed;
     this.amount_refundable = payment.amount_refundable;
     this.amount_refunded = payment.amount_refunded;
@@ -270,7 +269,9 @@ export class Payment implements IPayment {
 
   get payment_type(): PaymentTypes {
     if (this.payment_method) {
-      return this.payment_method.card ? PaymentTypes.card : PaymentTypes.bankAccount;
+      return this.payment_method.card
+        ? PaymentTypes.card
+        : PaymentTypes.bankAccount;
     } else {
       return PaymentTypes.unknown;
     }

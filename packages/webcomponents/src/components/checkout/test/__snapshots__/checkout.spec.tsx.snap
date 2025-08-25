@@ -21,6 +21,7 @@ exports[`justifi-checkout renders loading 1`] = `
             <div>
               <justifi-saved-payment-methods></justifi-saved-payment-methods>
               <justifi-sezzle-payment-method></justifi-sezzle-payment-method>
+              <justifi-plaid-payment-method></justifi-plaid-payment-method>
               <justifi-tokenize-payment-method accountid="" hidesubmitbutton=""></justifi-tokenize-payment-method>
             </div>
           </section>
