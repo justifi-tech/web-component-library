@@ -10,7 +10,7 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity
 } from '../../api';
-import { checkoutStore, onChange } from '../../store/checkout.store';
+import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 // Constants
@@ -75,9 +75,6 @@ export class TokenizePaymentMethod {
   connectedCallback() {
     this.setDefaultSelectedPaymentMethod();
     this.setComputedHideSubmitButton();
-    // Sync initial state with store and subscribe to future changes
-    this.syncWithStore();
-    this.unsubscribeFromStore = onChange('selectedPaymentMethod', this.syncWithStore);
   }
 
   disconnectedCallback() {
@@ -206,17 +203,6 @@ export class TokenizePaymentMethod {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
     }
   }
-
-  // Keep the component selection in sync with the global checkout store
-  private syncWithStore = () => {
-    const selection = checkoutStore.selectedPaymentMethod;
-    if (selection === PAYMENT_METHODS.NEW_CARD || selection === PAYMENT_METHODS.NEW_BANK_ACCOUNT) {
-      this.selectedPaymentMethod = selection;
-    } else {
-      // If selection is not card or bank account, clear local selection so forms are hidden
-      this.selectedPaymentMethod = undefined;
-    }
-  };
 
   private setComputedHideSubmitButton() {
     // If hideSubmitButton prop is explicitly set, use that value
