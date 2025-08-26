@@ -199,8 +199,10 @@ export class TokenizePaymentMethod {
 
     if (!this.disableCreditCard) {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
+      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
     } else if (!this.disableBankAccount) {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
     }
   }
 
