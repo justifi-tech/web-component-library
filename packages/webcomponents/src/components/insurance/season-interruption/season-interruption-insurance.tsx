@@ -157,6 +157,10 @@ export class SeasonInterruptionInsurance {
   }
 
   render() {
+    if (checkoutStore && checkoutStore.insuranceEnabled === false) {
+      console.warn('[justifi-season-interruption-insurance] Insurance is disabled for this checkout (payment_settings.insurance_payments=false).');
+      return null;
+    }
     if (this.isLoading) return (
       <StyledHost>
         <SeasonInterruptionInsuranceLoading />

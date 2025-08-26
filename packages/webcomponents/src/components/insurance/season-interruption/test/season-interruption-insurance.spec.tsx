@@ -4,6 +4,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SeasonInterruptionInsurance } from '../season-interruption-insurance';
 import { insuranceValuesStore, insuranceErrorsStore } from '../../insurance-state';
+import { checkoutStore } from '../../../../store/checkout.store';
 
 describe('justifi-season-interruption-insurance', () => {
   beforeEach(() => insuranceValuesStore.dispose());
@@ -68,5 +69,29 @@ describe('justifi-season-interruption-insurance', () => {
 
     expect(isValid).toBe(true); // The validation should pass when no selection is made initially
     expect(page.root).toMatchSnapshot();
+  });
+
+  it('does not render and logs a warning when insurance is disabled', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { });
+    checkoutStore.insuranceEnabled = false;
+
+    const page = await newSpecPage({
+      components: [SeasonInterruptionInsurance],
+      template: () => <justifi-season-interruption-insurance auth-token="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[justifi-season-interruption-insurance] Insurance is disabled for this checkout (payment_settings.insurance_payments=false).'
+    );
+
+    // Should render no content when disabled
+    expect(page.root.shadowRoot?.innerHTML).toBe('');
+
+    warnSpy.mockRestore();
+
+    // reset global store for other tests
+    checkoutStore.insuranceEnabled = undefined;
   });
 });

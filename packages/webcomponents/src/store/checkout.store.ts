@@ -1,17 +1,20 @@
 import { createStore } from '@stencil/store';
 import { ICheckoutPaymentMethod } from '../api';
 import { BillingFormFields } from '../components';
+import { PAYMENT_METHODS } from '../components/modular-checkout/ModularCheckout';
 
 interface IInitialState {
   accountId: string;
   authToken: string;
   billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
+  insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
   bnplProviderClientId: string;
   bnplProviderMode: string;
   checkoutId: string;
+  bankAccountVerification?: boolean;
   disableBankAccount: boolean;
   disableBnpl: boolean;
   disableCreditCard: boolean;
@@ -23,7 +26,7 @@ interface IInitialState {
   paymentMethods: ICheckoutPaymentMethod[];
   paymentToken?: string;
   savePaymentMethod: boolean;
-  selectedPaymentMethod: string;
+  selectedPaymentMethod: PAYMENT_METHODS | undefined;
   totalAmount: number;
 }
 
@@ -34,11 +37,13 @@ const initialState: IInitialState = {
     address_postal_code: '',
   },
   bnplEnabled: false,
+  insuranceEnabled: false,
   bnplProviderApiVersion: '',
   bnplProviderCheckoutUrl: '',
   bnplProviderClientId: '',
   bnplProviderMode: '',
   checkoutId: '',
+  bankAccountVerification: undefined,
   disableBankAccount: false,
   disableBnpl: false,
   disableCreditCard: false,
@@ -50,7 +55,7 @@ const initialState: IInitialState = {
   paymentMethods: [],
   paymentToken: undefined,
   savePaymentMethod: false,
-  selectedPaymentMethod: '',
+  selectedPaymentMethod: undefined,
   totalAmount: 0,
 };
 
