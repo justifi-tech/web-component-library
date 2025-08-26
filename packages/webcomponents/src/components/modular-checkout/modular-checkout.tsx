@@ -26,7 +26,7 @@ import {
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_METHOD_TYPES, PAYMENT_METHODS, PAYMENT_MODE } from "./ModularCheckout";
+import { PAYMENT_METHODS, PAYMENT_MODE } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -221,11 +221,10 @@ export class ModularCheckout {
   }
 
   private handleApplePayCompleted = (event: CustomEvent) => {
-    const { success, token, error } = event.detail;
-
+    const { success, token, paymentMethodId, error } = event.detail;
 
     if (success && token) {
-      checkoutStore.paymentToken = token;
+      checkoutStore.paymentToken = paymentMethodId;
       checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.APPLE_PAY;
       this.submitCheckout();
     } else {
@@ -376,9 +375,9 @@ export class ModularCheckout {
       [PAYMENT_METHODS.NEW_BANK_ACCOUNT]: PAYMENT_MODE.ECOM,
       [PAYMENT_METHODS.SAVED_BANK_ACCOUNT]: PAYMENT_MODE.ECOM,
       [PAYMENT_METHODS.SAVED_CARD]: PAYMENT_MODE.ECOM,
-      [PAYMENT_METHOD_TYPES.SEZZLE]: PAYMENT_MODE.BNPL,
-      [PAYMENT_METHOD_TYPES.PLAID]: PAYMENT_MODE.ECOM,
-      [PAYMENT_METHOD_TYPES.APPLE_PAY]: PAYMENT_MODE.APPLE_PAY,
+      [PAYMENT_METHODS.SEZZLE]: PAYMENT_MODE.BNPL,
+      [PAYMENT_METHODS.PLAID]: PAYMENT_MODE.ECOM,
+      [PAYMENT_METHODS.APPLE_PAY]: PAYMENT_MODE.APPLE_PAY,
     }
 
     payment = {
