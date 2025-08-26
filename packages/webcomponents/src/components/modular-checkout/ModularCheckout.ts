@@ -1,6 +1,7 @@
 export enum PAYMENT_MODE {
   ECOM = 'ecom',
   BNPL = 'bnpl',
+  APPLE_PAY = 'apple_pay',
 }
 
 // Maps the backend payment method types to the frontend payment method types
