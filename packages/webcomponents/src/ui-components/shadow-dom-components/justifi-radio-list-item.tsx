@@ -9,7 +9,7 @@ import { radioListItem } from "../../styles/parts";
 export class JustifiRadioListItem {
   @Prop() name!: string;
   @Prop() value!: string;
-  @Prop() label!: string;
+  @Prop() label!: any;
   @Prop() checked?: boolean = false;
   @Prop() hidden?: boolean = false;
   @Prop() class?: string;

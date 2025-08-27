@@ -20,12 +20,8 @@ exports[`justifi-checkout renders loading 1`] = `
           <section>
             <div>
               <justifi-saved-payment-methods></justifi-saved-payment-methods>
-              <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
-                <form-control-radio name="paymentMethodType" value="sezzle"></form-control-radio>
-              </div>
-              <div class="p-3 radio-list-item" part="radio-list-item text color font-family">
-                <form-control-radio name="paymentMethodType" value="plaid"></form-control-radio>
-              </div>
+              <justifi-radio-list-item name="paymentMethodType" value="sezzle"></justifi-radio-list-item>
+              <justifi-radio-list-item name="paymentMethodType" value="plaid"></justifi-radio-list-item>
               <justifi-tokenize-payment-method accountid="" hidesubmitbutton=""></justifi-tokenize-payment-method>
             </div>
           </section>

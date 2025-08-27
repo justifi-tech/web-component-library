@@ -24,7 +24,7 @@ export class RadioInput {
 
   @State() isFocused: boolean = false;
 
-  @Prop() label: string;
+  @Prop() label: any;
   @Prop() name: any;
   @Prop() value: string;
   @Prop() helpText?: string;
