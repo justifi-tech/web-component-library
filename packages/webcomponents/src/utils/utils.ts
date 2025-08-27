@@ -223,7 +223,8 @@ export function formatPhoneNumber(number) {
 }
 
 export function generateId(length = 10): string {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const chars =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let result = '';
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -231,3 +232,9 @@ export function generateId(length = 10): string {
   return result;
 }
 
+export function generateTabId(): string {
+  return (
+    crypto.randomUUID?.() ||
+    `${Date.now()}-${Math.random().toString(36).slice(2)}`
+  );
+}
