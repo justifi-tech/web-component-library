@@ -132,25 +132,16 @@ You can also trigger validation manually by calling the `validate` method on the
 
 ## Setting Payment Method Programmatically
 
-You can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method takes a payment method ID as a string parameter.
+You can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method takes a payment method type as a string parameter.
 
 ```javascript
 const modularCheckout = document.querySelector('justifi-modular-checkout');
 
 // Set to new card payment method
-modularCheckout.setSelectedPaymentMethod('card');
+modularCheckout.setSelectedPaymentMethod('new_card');
 
 // Set to new bank account payment method
-modularCheckout.setSelectedPaymentMethod('bankAccount');
-
-// Set to Sezzle BNPL payment method
-modularCheckout.setSelectedPaymentMethod('sezzle');
-
-// Set to Plaid bank account payment method
-modularCheckout.setSelectedPaymentMethod('plaid');
-
-// Set to a specific saved payment method by ID
-modularCheckout.setSelectedPaymentMethod('pm_1234567890');
+modularCheckout.setSelectedPaymentMethod('new_bank_account');
 ```
 
 ## Payment Method Change Events

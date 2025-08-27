@@ -286,6 +286,12 @@ export class ModularCheckout {
     return tokenizeResult.id;
   }
 
+  // set the selected payment method to the checkout store from outside the component
+  @Method()
+  async setSelectedPaymentMethod(paymentMethod: PAYMENT_METHODS) {
+    checkoutStore.selectedPaymentMethod = paymentMethod;
+  }
+
   // if validation fails, the error will be emitted by the component
   @Method()
   async validate(): Promise<boolean> {
