@@ -1,5 +1,11 @@
 ### Changelog
 
+## 5.7.7
+
+### Patch Changes
+
+- 9d0e83b: Fix: Correct cross-tab iframe communication issue.
+
 ## 5.7.6
 
 ### Patch Changes
