@@ -36,6 +36,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 - [Validation](#validation)
 - [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
 - [Payment Method Change Events](#payment-method-change-events)
+- [Reading Available Payment Methods](#reading-available-payment-methods)
 - [Insurance Integration](#insurance-integration)
 - [Props, events and methods](#props-events-and-methods)
 - [Authorization](#authorization)
@@ -143,6 +144,23 @@ modularCheckout.setSelectedPaymentMethod('new_card');
 // Set to new bank account payment method
 modularCheckout.setSelectedPaymentMethod('new_bank_account');
 ```
+
+## Reading Available Payment Methods
+
+You can retrieve the list of currently available payment methods based on the checkout's `payment_settings` and component flags using the `getAvailablePaymentMethods` method. This returns a promise that resolves to an array of method IDs.
+
+```javascript
+const modularCheckout = document.querySelector('justifi-modular-checkout');
+const available = await modularCheckout.getAvailablePaymentMethods();
+// Example result: ['saved_card', 'new_card', 'new_bank_account', 'sezzle']
+```
+
+The returned values map to:
+
+- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).
+- `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).
+- `sezzle`: BNPL is available when enabled by the account and not disabled.
+- `plaid`: Plaid is available when bank account verification is enabled for the checkout.
 
 ## Payment Method Change Events
 

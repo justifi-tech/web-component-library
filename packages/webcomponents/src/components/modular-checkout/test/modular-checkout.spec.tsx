@@ -80,6 +80,95 @@ describe('justifi-modular-checkout', () => {
 
     expect(checkoutStore.bankAccountVerification).toBe(false);
   });
+
+  describe('getAvailablePaymentMethods', () => {
+    beforeEach(() => {
+      // Reset store to defaults that matter for these tests
+      checkoutStore.disableCreditCard = false;
+      checkoutStore.disableBankAccount = false;
+      checkoutStore.disableBnpl = false;
+      checkoutStore.disablePaymentMethodGroup = false;
+      checkoutStore.bnplEnabled = false;
+      checkoutStore.bankAccountVerification = undefined;
+      checkoutStore.paymentMethods = [] as any;
+    });
+
+    it('returns new card and new bank when neither is disabled', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+      const instance: any = page.rootInstance as ModularCheckout;
+
+      const methods = await instance.getAvailablePaymentMethods();
+      expect(methods).toEqual(expect.arrayContaining(['new_card', 'new_bank_account']));
+    });
+
+    it('excludes credit card when disabled', async () => {
+      checkoutStore.disableCreditCard = true;
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+      const instance: any = page.rootInstance as ModularCheckout;
+
+      const methods = await instance.getAvailablePaymentMethods();
+      expect(methods).not.toContain('new_card');
+      expect(methods).toContain('new_bank_account');
+    });
+
+    it('includes saved methods when present and group enabled', async () => {
+      checkoutStore.paymentMethods = [
+        { id: 'pm1', type: 'card' } as any,
+        { id: 'pm2', type: 'bank_account' } as any,
+      ];
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+      const instance: any = page.rootInstance as ModularCheckout;
+
+      const methods = await instance.getAvailablePaymentMethods();
+      expect(methods).toEqual(expect.arrayContaining(['saved_card', 'saved_bank_account']));
+    });
+
+    it('excludes saved card when credit card is disabled', async () => {
+      checkoutStore.paymentMethods = [{ id: 'pm1', type: 'card' } as any];
+      checkoutStore.disableCreditCard = true;
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+      const instance: any = page.rootInstance as ModularCheckout;
+
+      const methods = await instance.getAvailablePaymentMethods();
+      expect(methods).not.toContain('saved_card');
+    });
+
+    it('includes SEZZLE when bnpl is enabled and not disabled', async () => {
+      checkoutStore.bnplEnabled = true;
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+      const instance: any = page.rootInstance as ModularCheckout;
+
+      const methods = await instance.getAvailablePaymentMethods();
+      expect(methods).toContain('sezzle');
+    });
+
+    it('includes PLAID when bankAccountVerification is true and bank account not disabled', async () => {
+      checkoutStore.bankAccountVerification = true;
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+      const instance: any = page.rootInstance as ModularCheckout;
+
+      const methods = await instance.getAvailablePaymentMethods();
+      expect(methods).toContain('plaid');
+    });
+  });
 });
 
 
