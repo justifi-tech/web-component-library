@@ -1,0 +1,48 @@
+import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../../../utils';
+import { codeExampleFull } from './example';
+import { ComponentBox } from '../../../../utils/documentation-components';
+import * as JustifiPlaidPaymentMethod from './index.stories';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Sub-components/Plaid Payment Method"
+  Components="justifi-plaid-payment-method"
+  of={JustifiPlaidPaymentMethod}
+/>
+
+<Title />
+
+---
+
+Renders a radio input for selecting the Plaid bank account payment method, and orchestrates the Plaid Link flow to securely connect a bank account when selected.
+
+This component is designed to be used within the `justifi-modular-checkout` and does not accept props directly. It relies on the shared state and context managed by `justifi-modular-checkout` (auth token, account ID, checkout ID, and save-payment-method).
+
+It exposes no public properties for configuration, but does emit Plaid-specific events for error handling and recovery.
+
+- **Events**:
+  - **`plaidError`**: Emitted when a Plaid error occurs. The event detail includes a rich error payload with `code`, `message`, `severity`, and additional data such as `retryable` and `userAction`.
+  - **`plaidErrorRecovered`**: Emitted when an error condition is resolved (e.g., after successful authentication).
+
+The component automatically loads the Plaid Link SDK script and initializes the flow when selected. It handles token exchange with your backend to create a payment token for checkout completion.
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-modular-checkout
+    account-id="acc_123"
+    auth-token="123abc"
+    checkout-id="cho_123"
+  >
+    <justifi-plaid-payment-method />
+  </justifi-modular-checkout>
+</ComponentBox>
+
+---
+
+<Source dark language="html" code={codeExampleFull} />

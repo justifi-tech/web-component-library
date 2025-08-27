@@ -49,6 +49,7 @@ Required for checkout completion (add at least one of the following sub componen
 - [justifi-bank-account-form](/docs/modular-checkout-bank-account-form--docs)
 - [justifi-saved-payment-methods](/docs/modular-checkout-saved-payment-methods--docs)
 - [justifi-sezzle-payment-method](/docs/modular-checkout-sezzle-payment-method--docs)
+- [justifi-plaid-payment-method](/docs/modular-checkout-plaid-payment-method--docs)
 
 Optional:
 
@@ -144,6 +145,9 @@ modularCheckout.setSelectedPaymentMethod('bankAccount');
 
 // Set to Sezzle BNPL payment method
 modularCheckout.setSelectedPaymentMethod('sezzle');
+
+// Set to Plaid bank account payment method
+modularCheckout.setSelectedPaymentMethod('plaid');
 
 // Set to a specific saved payment method by ID
 modularCheckout.setSelectedPaymentMethod('pm_1234567890');
