@@ -2,4 +2,4 @@
 "@justifi/webcomponents": patch
 ---
 
-Fix: Format is invalid for parameter: month.
+Fix: Correct cross-tab iframe communication issue.
