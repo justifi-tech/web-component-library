@@ -25,6 +25,7 @@ export class Checkout {
   @State() insuranceToggled: boolean = false;
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() serverError: string;
+  @State() availablePaymentMethods: PAYMENT_METHODS[] = [];
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -43,6 +44,7 @@ export class Checkout {
   @Watch('disablePaymentMethodGroup')
   propChanged() {
     this.updateStore();
+    this.refreshAvailablePaymentMethods();
   }
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -95,6 +97,17 @@ export class Checkout {
     checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
   }
 
+  private async refreshAvailablePaymentMethods() {
+    try {
+      const methods = await this.modularCheckoutRef?.getAvailablePaymentMethods?.();
+      if (methods) {
+        this.availablePaymentMethods = methods;
+      }
+    } catch (_e) {
+      // noop: if not available yet, we'll try again later
+    }
+  }
+
   private async submit(_event) {
     this.isSubmitting = true;
     this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
@@ -108,7 +121,10 @@ export class Checkout {
     return (
       <StyledHost>
         <justifi-modular-checkout
-          ref={(el) => (this.modularCheckoutRef = el)}
+          ref={(el) => {
+            this.modularCheckoutRef = el;
+            this.refreshAvailablePaymentMethods();
+          }}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
           savePaymentMethod={checkoutStore.savePaymentMethod}
@@ -132,29 +148,33 @@ export class Checkout {
                 <section>
                   <div>
                     <justifi-saved-payment-methods />
-                    <justifi-radio-list-item
-                      name="paymentMethodType"
-                      value={PAYMENT_METHODS.SEZZLE}
-                      checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.SEZZLE}
-                      label={
-                        <justifi-sezzle-payment-method
-                          ref={(el) => (this.sezzlePaymentMethodRef = el)}
-                        />
-                      }
-                      onRadio-click={() => { this.sezzlePaymentMethodRef?.handleSelectionClick(); }}
-                    />
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
+                      <justifi-radio-list-item
+                        name="paymentMethodType"
+                        value={PAYMENT_METHODS.SEZZLE}
+                        checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.SEZZLE}
+                        label={
+                          <justifi-sezzle-payment-method
+                            ref={(el) => (this.sezzlePaymentMethodRef = el)}
+                          />
+                        }
+                        onRadio-click={() => { this.sezzlePaymentMethodRef?.handleSelectionClick(); }}
+                      />
+                    )}
 
-                    <justifi-radio-list-item
-                      name="paymentMethodType"
-                      value={PAYMENT_METHODS.PLAID}
-                      checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.PLAID}
-                      label={
-                        <justifi-plaid-payment-method
-                          ref={(el) => (this.plaidPaymentMethodRef = el)}
-                        />
-                      }
-                      onRadio-click={() => { this.plaidPaymentMethodRef?.handleSelectionClick(); }}
-                    />
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
+                      <justifi-radio-list-item
+                        name="paymentMethodType"
+                        value={PAYMENT_METHODS.PLAID}
+                        checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.PLAID}
+                        label={
+                          <justifi-plaid-payment-method
+                            ref={(el) => (this.plaidPaymentMethodRef = el)}
+                          />
+                        }
+                        onRadio-click={() => { this.plaidPaymentMethodRef?.handleSelectionClick(); }}
+                      />
+                    )}
                     <justifi-tokenize-payment-method
                       ref={(el) => (this.tokenizePaymentMethodRef = el)}
                       authToken={this.authToken}
