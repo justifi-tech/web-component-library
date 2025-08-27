@@ -129,6 +129,7 @@ export class ModularCheckout {
     if (this.getCheckout) {
       this.getCheckout({
         onSuccess: ({ checkout }) => {
+          this.updateStore(checkout);
           if (checkout.status === ICheckoutStatus.completed) {
             this.errorEvent.emit({
               message: ComponentErrorMessages.CHECKOUT_ALREADY_COMPLETED,
@@ -144,8 +145,6 @@ export class ModularCheckout {
             });
             return;
           }
-
-          this.updateStore(checkout);
         },
         onError: (error) => {
           this.errorEvent.emit({
