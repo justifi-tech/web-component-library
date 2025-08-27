@@ -1,6 +1,7 @@
 import { Component, h, Host, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
+import { generateTabId } from "../../../utils/utils";
 
 @Component({
   tag: "card-form",
@@ -18,7 +19,7 @@ export class CardForm {
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
-    this.tabId = crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    this.tabId = generateTabId();
   }
 
   componentDidRender() {
