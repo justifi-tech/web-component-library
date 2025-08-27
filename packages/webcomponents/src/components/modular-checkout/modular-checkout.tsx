@@ -291,6 +291,47 @@ export class ModularCheckout {
     checkoutStore.selectedPaymentMethod = paymentMethod;
   }
 
+  // Returns the list of available payment methods based on checkout store flags
+  @Method()
+  async getAvailablePaymentMethods(): Promise<PAYMENT_METHODS[]> {
+    const availableMethods: PAYMENT_METHODS[] = [];
+
+    // Saved payment methods (if any) and payment method group is enabled
+    if (!checkoutStore.disablePaymentMethodGroup && checkoutStore.paymentMethods?.length) {
+      const hasSavedCard = checkoutStore.paymentMethods.some((pm) => pm.type === 'card');
+      const hasSavedBank = checkoutStore.paymentMethods.some((pm) => pm.type === 'bank_account');
+
+      if (hasSavedCard && !checkoutStore.disableCreditCard) {
+        availableMethods.push(PAYMENT_METHODS.SAVED_CARD);
+      }
+      if (hasSavedBank && !checkoutStore.disableBankAccount) {
+        availableMethods.push(PAYMENT_METHODS.SAVED_BANK_ACCOUNT);
+      }
+    }
+
+    // New card
+    if (!checkoutStore.disableCreditCard) {
+      availableMethods.push(PAYMENT_METHODS.NEW_CARD);
+    }
+
+    // New bank account
+    if (!checkoutStore.disableBankAccount) {
+      availableMethods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
+    }
+
+    // BNPL (Sezzle)
+    if (checkoutStore.bnplEnabled && !checkoutStore.disableBnpl) {
+      availableMethods.push(PAYMENT_METHODS.SEZZLE);
+    }
+
+    // Plaid (requires bank account verification to be enabled)
+    if (checkoutStore.bankAccountVerification === true && !checkoutStore.disableBankAccount) {
+      availableMethods.push(PAYMENT_METHODS.PLAID);
+    }
+
+    return availableMethods;
+  }
+
   // if validation fails, the error will be emitted by the component
   @Method()
   async validate(): Promise<boolean> {
