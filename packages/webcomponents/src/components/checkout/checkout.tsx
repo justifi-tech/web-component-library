@@ -5,8 +5,9 @@ import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { checkoutStore } from '../../store/checkout.store';
-import { checkoutSummary } from '../../styles/parts';
+import { checkoutSummary, radioListItem } from '../../styles/parts';
 import { StyledHost } from '../../ui-components';
+import { PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 @Component({
   tag: 'justifi-checkout',
@@ -15,6 +16,8 @@ export class Checkout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
   tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
+  plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
+  sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
 
   @State() checkout: ICheckout;
   @State() complete: Function;
@@ -129,8 +132,39 @@ export class Checkout {
                 <section>
                   <div>
                     <justifi-saved-payment-methods />
-                    <justifi-sezzle-payment-method />
-                    <justifi-plaid-payment-method />
+                    <div
+                      class="radio-list-item p-3"
+                      part={radioListItem}
+                      onClick={(e) => { e.preventDefault(); this.sezzlePaymentMethodRef?.handleSelectionClick(); }}
+                    >
+                      <form-control-radio
+                        name="paymentMethodType"
+                        value={PAYMENT_METHODS.SEZZLE}
+                        checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.SEZZLE}
+                        label={
+                          <justifi-sezzle-payment-method
+                            ref={(el) => (this.sezzlePaymentMethodRef = el)}
+                          />
+                        }
+                      />
+                    </div>
+
+                    <div
+                      class="radio-list-item p-3"
+                      part={radioListItem}
+                      onClick={(e) => { e.preventDefault(); this.plaidPaymentMethodRef?.handleSelectionClick(); }}
+                    >
+                      <form-control-radio
+                        name="paymentMethodType"
+                        value={PAYMENT_METHODS.PLAID}
+                        checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.PLAID}
+                        label={
+                          <justifi-plaid-payment-method
+                            ref={(el) => (this.plaidPaymentMethodRef = el)}
+                          />
+                        }
+                      />
+                    </div>
                     <justifi-tokenize-payment-method
                       ref={(el) => (this.tokenizePaymentMethodRef = el)}
                       authToken={this.authToken}

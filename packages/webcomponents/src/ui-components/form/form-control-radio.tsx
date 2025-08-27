@@ -17,7 +17,7 @@ import {
 } from '../../styles/parts';
 
 @Component({
-  tag: 'form-control-radio'
+  tag: 'form-control-radio',
 })
 export class RadioInput {
   radioElement!: HTMLInputElement;

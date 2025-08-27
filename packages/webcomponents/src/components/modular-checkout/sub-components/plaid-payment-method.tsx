@@ -1,6 +1,5 @@
 import { Component, h, Method, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
-import { radioListItem } from '../../../styles/parts';
 import { checkoutStore, onChange } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
@@ -102,6 +101,17 @@ export class PlaidPaymentMethod {
     if (newValue && checkoutStore.selectedPaymentMethod !== PAYMENT_METHODS.PLAID) {
       checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.PLAID;
     }
+
+    // Auto-start Plaid flow when selected and ready
+    if (
+      newValue &&
+      this.plaidLink &&
+      !this.publicToken &&
+      !this.isAuthenticating &&
+      !this.error
+    ) {
+      this.openPlaidLink();
+    }
   }
 
   componentDidRender() {
@@ -167,9 +177,8 @@ export class PlaidPaymentMethod {
     return checkoutStore.paymentToken;
   }
 
-  onPaymentMethodOptionClick = (e) => {
-    e.preventDefault();
-
+  @Method()
+  async handleSelectionClick(): Promise<void> {
     // Update local selection state
     this.isSelected = true;
 
@@ -190,7 +199,7 @@ export class PlaidPaymentMethod {
     if (this.plaidLink && !this.publicToken && !this.isAuthenticating) {
       this.openPlaidLink();
     }
-  };
+  }
 
   initializePlaidLink = async () => {
     try {
@@ -774,24 +783,10 @@ export class PlaidPaymentMethod {
           ref={(el) => (this.scriptRef = el)}>
         </script>
 
-        <div
-          class="radio-list-item p-3"
-          part={radioListItem}
-          onClick={this.onPaymentMethodOptionClick}
-          title="Pay with Plaid"
-        >
-          <form-control-radio
-            name="paymentMethodType"
-            value={PAYMENT_METHODS.PLAID}
-            checked={this.isSelected}
-            label={
-              <div>
-                <div>Pay with Bank Account {plaidLogo} </div>
-                {renderErrorState()}
-                {renderStatusState()}
-              </div>
-            }
-          />
+        <div title="Pay with Plaid">
+          <div>Pay with Bank Account {plaidLogo} </div>
+          {renderErrorState()}
+          {renderStatusState()}
         </div>
       </StyledHost>
     );

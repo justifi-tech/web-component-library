@@ -1,7 +1,6 @@
 import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core';
 import { formatCurrency } from '../../../utils/utils';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
-import { radioListItem } from '../../../styles/parts';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import { PAYMENT_METHODS } from '../ModularCheckout';
@@ -53,11 +52,11 @@ export class SezzlePaymentMethod {
     return this.sezzlePromise;
   }
 
-  onPaymentMethodOptionClick = (e) => {
-    e.preventDefault();
+  @Method()
+  async handleSelectionClick(): Promise<void> {
     checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
     this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
-  };
+  }
 
   initializeSezzleCheckout = () => {
     let resolveSezzlePromise;
@@ -100,24 +99,15 @@ export class SezzlePaymentMethod {
           ref={(el) => (this.scriptRef = el)}>
         </script>
 
-        <div
-          class="radio-list-item p-3"
-          part={radioListItem}
-          onClick={this.onPaymentMethodOptionClick}
-        >
-          <form-control-radio
-            name="paymentMethodType"
-            value={this.paymentMethodOptionId}
-            checked={checkoutStore.selectedPaymentMethod === PAYMENT_METHODS.SEZZLE}
-            label={<div><div>Buy now, pay later with {sezzleLogo}</div>
-              {this.installmentPlan && (
-                <small>
-                  <span>{this.installmentPlan?.installments.length}</span>&nbsp;
-                  <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
-                  <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
-                </small>
-              )}</div>}
-          />
+        <div>
+          <div>Buy now, pay later with {sezzleLogo}</div>
+          {this.installmentPlan && (
+            <small>
+              <span>{this.installmentPlan?.installments.length}</span>&nbsp;
+              <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
+              <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
+            </small>
+          )}
         </div>
       </StyledHost>
     );
