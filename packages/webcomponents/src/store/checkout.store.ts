@@ -122,3 +122,15 @@ type CheckoutStoreWithComputed = typeof checkoutStore & {
 const checkoutStoreTyped = checkoutStore as CheckoutStoreWithComputed;
 
 export { checkoutStoreTyped as checkoutStore, onChange };
+
+// Subscribe to all store key changes with a single helper
+// The callback is invoked for every key defined in the initial state whenever it changes.
+type StoreKey = keyof typeof initialState;
+export function onAnyChange(
+  callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void
+): void {
+  (Object.keys(initialState) as StoreKey[]).forEach((key) => {
+    // @ts-ignore - onChange is generically typed by stencil/store but not exported here
+    onChange(key as any, (newValue: any) => callback(key, newValue));
+  });
+}

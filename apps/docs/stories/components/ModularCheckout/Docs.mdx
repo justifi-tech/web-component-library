@@ -36,7 +36,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 - [Validation](#validation)
 - [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
 - [Payment Method Change Events](#payment-method-change-events)
-- [Reading Available Payment Methods](#reading-available-payment-methods)
+- [Checkout Changed Event](#checkout-changed-event)
 - [Insurance Integration](#insurance-integration)
 - [Props, events and methods](#props-events-and-methods)
 - [Authorization](#authorization)
@@ -145,17 +145,19 @@ modularCheckout.setSelectedPaymentMethod('new_card');
 modularCheckout.setSelectedPaymentMethod('new_bank_account');
 ```
 
-## Reading Available Payment Methods
+## Checkout Changed Event
 
-You can retrieve the list of currently available payment methods based on the checkout's `payment_settings` and component flags using the `getAvailablePaymentMethods` method. This returns a promise that resolves to an array of method IDs.
+The `justifi-modular-checkout` wrapper component emits a `checkout-changed` event whenever any internal checkout state changes. The event detail includes the currently computed `availablePaymentMethods`.
 
 ```javascript
 const modularCheckout = document.querySelector('justifi-modular-checkout');
-const available = await modularCheckout.getAvailablePaymentMethods();
-// Example result: ['saved_card', 'new_card', 'new_bank_account', 'sezzle']
+modularCheckout.addEventListener('checkout-changed', (event) => {
+  const { availablePaymentMethods } = event.detail;
+  console.log('Available payment methods:', availablePaymentMethods);
+});
 ```
 
-The returned values map to:
+`availablePaymentMethods` includes:
 
 - `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).
 - `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).

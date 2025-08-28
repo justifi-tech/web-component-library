@@ -25,7 +25,6 @@ export class Checkout {
   @State() insuranceToggled: boolean = false;
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() serverError: string;
-  @State() availablePaymentMethods: PAYMENT_METHODS[] = [];
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -44,7 +43,6 @@ export class Checkout {
   @Watch('disablePaymentMethodGroup')
   propChanged() {
     this.updateStore();
-    this.refreshAvailablePaymentMethods();
   }
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -97,17 +95,6 @@ export class Checkout {
     checkoutStore.disablePaymentMethodGroup = this.disablePaymentMethodGroup;
   }
 
-  private async refreshAvailablePaymentMethods() {
-    try {
-      const methods = await this.modularCheckoutRef?.getAvailablePaymentMethods?.();
-      if (methods) {
-        this.availablePaymentMethods = methods;
-      }
-    } catch (_e) {
-      // noop: if not available yet, we'll try again later
-    }
-  }
-
   private async submit(_event) {
     this.isSubmitting = true;
     this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
@@ -123,7 +110,6 @@ export class Checkout {
         <justifi-modular-checkout
           ref={(el) => {
             this.modularCheckoutRef = el;
-            this.refreshAvailablePaymentMethods();
           }}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
@@ -148,7 +134,7 @@ export class Checkout {
                 <section>
                   <div>
                     <justifi-saved-payment-methods />
-                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
+                    {checkoutStore.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.SEZZLE}
@@ -162,7 +148,7 @@ export class Checkout {
                       />
                     )}
 
-                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
+                    {checkoutStore.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.PLAID}

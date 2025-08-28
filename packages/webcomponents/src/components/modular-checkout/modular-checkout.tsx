@@ -9,7 +9,7 @@ import {
   Prop,
   Watch,
 } from "@stencil/core";
-import { checkoutStore, onChange } from "../../store/checkout.store";
+import { checkoutStore, onChange, onAnyChange } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import {
@@ -26,7 +26,7 @@ import {
 import { CheckoutService } from "../../api/services/checkout.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_METHODS, PAYMENT_MODE } from "./ModularCheckout";
+import { PAYMENT_METHODS, PAYMENT_MODE, CheckoutChangedEventDetail } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -57,6 +57,8 @@ export class ModularCheckout {
   @Event({ eventName: "submit-event" }) submitEvent: EventEmitter;
   @Event({ eventName: "payment-method-changed" })
   paymentMethodChangedEvent: EventEmitter<string>;
+  @Event({ eventName: "checkout-changed" })
+  checkoutChangedEvent: EventEmitter<CheckoutChangedEventDetail>;
 
   @Watch("savePaymentMethod")
   savePaymentMethodChanged(newValue: boolean) {
@@ -87,6 +89,11 @@ export class ModularCheckout {
 
     onChange("selectedPaymentMethod", (newValue: string) => {
       this.paymentMethodChangedEvent.emit(newValue);
+    });
+
+    // Emit checkout-changed whenever any store key changes
+    onAnyChange(() => {
+      this.emitCheckoutChanged();
     });
   }
 
@@ -172,6 +179,13 @@ export class ModularCheckout {
     checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
     checkoutStore.bnplProviderCheckoutUrl =
       checkout?.bnpl?.provider_checkout_url;
+  }
+
+  private emitCheckoutChanged() {
+    const detail: CheckoutChangedEventDetail = {
+      availablePaymentMethods: checkoutStore.availablePaymentMethods,
+    };
+    this.checkoutChangedEvent.emit(detail);
   }
 
   private queryFormRefs() {
@@ -291,11 +305,7 @@ export class ModularCheckout {
     checkoutStore.selectedPaymentMethod = paymentMethod;
   }
 
-  // Returns the list of available payment methods based on checkout store flags
-  @Method()
-  async getAvailablePaymentMethods(): Promise<PAYMENT_METHODS[]> {
-    return checkoutStore.availablePaymentMethods;
-  }
+  // getAvailablePaymentMethods removed in favor of checkout-changed event
 
   // if validation fails, the error will be emitted by the component
   @Method()

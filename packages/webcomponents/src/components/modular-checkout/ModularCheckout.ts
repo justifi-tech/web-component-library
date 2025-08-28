@@ -25,3 +25,8 @@ export enum PAYMENT_METHODS {
   SEZZLE = 'sezzle',
   PLAID = 'plaid',
 }
+
+// Event detail payload for the checkout-changed event
+export interface CheckoutChangedEventDetail {
+  availablePaymentMethods: PAYMENT_METHODS[];
+}
