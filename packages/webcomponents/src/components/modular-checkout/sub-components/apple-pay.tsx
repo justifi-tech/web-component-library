@@ -42,6 +42,7 @@ export class ApplePay {
   @State() isProcessing: boolean = false;
   @State() isAvailable: boolean = false;
   @State() canMakePayments: boolean = false;
+  @State() isConfigValid: boolean = true;
   @State() error: string | null = null;
 
   @Event() applePayStarted: EventEmitter<void>;
@@ -81,8 +82,22 @@ export class ApplePay {
     try {
       this.isLoading = true;
       this.error = null;
-      if (!checkoutStore.paymentAmount) {
+      this.isConfigValid = true;
+
+      const hasRequiredConfig =
+        Boolean(checkoutStore.paymentAmount) &&
+        Boolean(checkoutStore.paymentCurrency) &&
+        Boolean(checkoutStore.authToken);
+
+      if (!hasRequiredConfig) {
         this.error = "Missing required Apple Pay configuration";
+        this.isConfigValid = false;
+        console.error("Apple Pay config error: missing required values", {
+          paymentAmount: checkoutStore.paymentAmount,
+          paymentCurrency: checkoutStore.paymentCurrency,
+          hasAuthToken: Boolean(checkoutStore.authToken),
+        });
+        this.applePayError.emit({ error: this.error });
         this.isLoading = false;
         return;
       }
@@ -92,12 +107,16 @@ export class ApplePay {
 
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
+        console.error(this.error);
+        this.applePayError.emit({ error: this.error });
         this.isLoading = false;
         return;
       }
 
       if (!this.canMakePayments) {
         this.error = "Apple Pay is not available";
+        console.error(this.error);
+        this.applePayError.emit({ error: this.error });
         this.isLoading = false;
         return;
       }
@@ -124,6 +143,7 @@ export class ApplePay {
         error instanceof Error
           ? error.message
           : "Failed to initialize Apple Pay";
+      this.applePayError.emit({ error: this.error });
     } finally {
       this.isLoading = false;
     }
@@ -207,11 +227,19 @@ export class ApplePay {
   }
 
   render() {
+    const shouldHide =
+      !this.isLoading &&
+      (!this.isConfigValid || !this.isAvailable || !this.canMakePayments);
+
+    if (shouldHide) {
+      return null;
+    }
+
     const isReady =
       !this.isLoading &&
       this.isAvailable &&
       this.canMakePayments &&
-      !this.error;
+      this.isConfigValid;
 
     return (
       <StyledHost>
@@ -222,23 +250,7 @@ export class ApplePay {
         <div class='apple-pay-container'>
           <ApplePaySkeleton isReady={isReady} />
 
-          {!this.isLoading && this.error && (
-            <div class='apple-pay-error' role='alert'>
-              <span class='error-icon'>⚠️</span>
-              <span class='error-message'>{this.error}</span>
-            </div>
-          )}
-
-          {!this.isLoading && !this.error && !this.isAvailable && (
-            <div class='apple-pay-unavailable'>
-              <span class='unavailable-message'>
-                Apple Pay is not available on this device
-              </span>
-            </div>
-          )}
-
           {!this.isLoading &&
-            !this.error &&
             this.isAvailable &&
             this.canMakePayments && (
               <ApplePayButton
@@ -256,34 +268,6 @@ export class ApplePay {
           {`
             .apple-pay-container {
               width: 100%;
-            }
-
-            .apple-pay-error {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              padding: 12px;
-              background: #fef2f2;
-              border: 1px solid #fecaca;
-              border-radius: 8px;
-              color: #dc2626;
-              font-size: 14px;
-            }
-
-            .apple-pay-unavailable {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 12px;
-              background: #f9fafb;
-              border: 1px solid #e5e7eb;
-              border-radius: 8px;
-              color: #6b7280;
-              font-size: 14px;
-            }
-
-            .error-icon {
-              font-size: 16px;
             }
           `}
         </style>
