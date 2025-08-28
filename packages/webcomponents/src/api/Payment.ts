@@ -11,6 +11,8 @@ export enum PaymentMethodTypes {
   card = 'card',
   bankAccount = 'bankAccount',
   sezzle = 'sezzle',
+  plaid = 'plaid',
+  applePay = 'applePay',
 }
 
 export enum PaymentTypes {

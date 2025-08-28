@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import { ICheckoutPaymentMethod } from '../api';
+import { ICheckoutPaymentMethod, PaymentMethodTypes } from '../api';
 import { BillingFormFields } from '../components';
 import { PAYMENT_METHODS } from '../components/modular-checkout/ModularCheckout';
 
@@ -26,7 +26,7 @@ interface IInitialState {
   paymentMethods: ICheckoutPaymentMethod[];
   paymentToken?: string;
   savePaymentMethod: boolean;
-  selectedPaymentMethod: PAYMENT_METHODS;
+  selectedPaymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes };
   totalAmount: number;
 }
 
@@ -55,7 +55,7 @@ const initialState: IInitialState = {
   paymentMethods: [],
   paymentToken: undefined,
   savePaymentMethod: false,
-  selectedPaymentMethod: PAYMENT_METHODS.NEW_CARD,
+  selectedPaymentMethod: { type: PaymentMethodTypes.card },
   totalAmount: 0,
 };
 
@@ -111,6 +111,10 @@ export function getAvailablePaymentMethods(): PAYMENT_METHODS[] {
   }
 
   return methods;
+}
+
+export function isNewCardSelected(): boolean {
+  return checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card;
 }
 
 export { checkoutStore as checkoutStore, onChange };

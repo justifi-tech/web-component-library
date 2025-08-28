@@ -8,7 +8,8 @@ import {
   ComponentSubmitEvent,
   ComponentErrorEvent,
   ComponentErrorCodes,
-  ComponentErrorSeverity
+  ComponentErrorSeverity,
+  PaymentMethodTypes
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
@@ -92,7 +93,7 @@ export class TokenizePaymentMethod {
   @Listen('radio-click')
   handleRadioClick(event: CustomEvent<string>) {
     this.selectedPaymentMethod = event.detail as PAYMENT_METHODS.NEW_CARD | PAYMENT_METHODS.NEW_BANK_ACCOUNT;
-    checkoutStore.selectedPaymentMethod = event.detail as PAYMENT_METHODS;
+    checkoutStore.selectedPaymentMethod = { type: event.detail as PaymentMethodTypes };
   }
 
   @Method()
@@ -199,10 +200,10 @@ export class TokenizePaymentMethod {
 
     if (!this.disableCreditCard) {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
-      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
+      checkoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.card };
     } else if (!this.disableBankAccount) {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
-      checkoutStore.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+      checkoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.bankAccount };
     }
   }
 

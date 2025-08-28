@@ -4,6 +4,7 @@ import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import { PAYMENT_METHODS } from '../ModularCheckout';
+import { PaymentMethodTypes } from '../../../api';
 
 const sezzleLogo = (
   <img
@@ -54,7 +55,7 @@ export class SezzlePaymentMethod {
 
   @Method()
   async handleSelectionClick(): Promise<void> {
-    checkoutStore.selectedPaymentMethod = this.paymentMethodOptionId;
+    checkoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.sezzle };
     this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
   }
 
