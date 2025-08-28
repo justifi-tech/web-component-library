@@ -68,4 +68,57 @@ Object.keys(initialState).forEach((key) => {
   });
 });
 
-export { checkoutStore, onChange };
+// Computed: available payment methods based on store flags
+Object.defineProperty(checkoutStore, 'availablePaymentMethods', {
+  get() {
+    const methods: PAYMENT_METHODS[] = [];
+
+    if (
+      !checkoutStore.disablePaymentMethodGroup &&
+      checkoutStore.paymentMethods?.length
+    ) {
+      const hasSavedCard = checkoutStore.paymentMethods.some(
+        (pm) => pm.type === 'card'
+      );
+      const hasSavedBank = checkoutStore.paymentMethods.some(
+        (pm) => pm.type === 'bank_account'
+      );
+
+      if (hasSavedCard && !checkoutStore.disableCreditCard) {
+        methods.push(PAYMENT_METHODS.SAVED_CARD);
+      }
+      if (hasSavedBank && !checkoutStore.disableBankAccount) {
+        methods.push(PAYMENT_METHODS.SAVED_BANK_ACCOUNT);
+      }
+    }
+
+    if (!checkoutStore.disableCreditCard) {
+      methods.push(PAYMENT_METHODS.NEW_CARD);
+    }
+
+    if (!checkoutStore.disableBankAccount) {
+      methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
+    }
+
+    if (checkoutStore.bnplEnabled && !checkoutStore.disableBnpl) {
+      methods.push(PAYMENT_METHODS.SEZZLE);
+    }
+
+    if (
+      checkoutStore.bankAccountVerification === true &&
+      !checkoutStore.disableBankAccount
+    ) {
+      methods.push(PAYMENT_METHODS.PLAID);
+    }
+
+    return methods;
+  },
+});
+
+type CheckoutStoreWithComputed = typeof checkoutStore & {
+  readonly availablePaymentMethods: PAYMENT_METHODS[];
+};
+
+const checkoutStoreTyped = checkoutStore as CheckoutStoreWithComputed;
+
+export { checkoutStoreTyped as checkoutStore, onChange };
