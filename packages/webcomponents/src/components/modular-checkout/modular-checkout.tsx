@@ -9,7 +9,7 @@ import {
   Prop,
   Watch,
 } from "@stencil/core";
-import { checkoutStore, onChange, onAnyChange } from "../../store/checkout.store";
+import { checkoutStore, onChange, onAnyChange, getAvailablePaymentMethods } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import {
@@ -183,7 +183,7 @@ export class ModularCheckout {
 
   private emitCheckoutChanged() {
     const detail: CheckoutChangedEventDetail = {
-      availablePaymentMethods: checkoutStore.availablePaymentMethods,
+      availablePaymentMethods: getAvailablePaymentMethods(),
     };
     this.checkoutChangedEvent.emit(detail);
   }

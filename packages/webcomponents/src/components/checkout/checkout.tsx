@@ -7,7 +7,7 @@ import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEv
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
 import { StyledHost } from '../../ui-components';
-import { PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
+import { CheckoutChangedEventDetail, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 @Component({
   tag: 'justifi-checkout',
@@ -18,7 +18,7 @@ export class Checkout {
   tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
   plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
   sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
-
+  @State() availablePaymentMethods: PAYMENT_METHODS[] = [];
   @State() checkout: ICheckout;
   @State() complete: Function;
   @State() errorMessage: string = '';
@@ -72,6 +72,11 @@ export class Checkout {
   @Listen('error-event')
   checkoutError(_event: CustomEvent<any>) {
     this.isSubmitting = false;
+  }
+
+  @Listen('checkout-changed')
+  checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
+    this.availablePaymentMethods = event.detail.availablePaymentMethods;
   }
 
   @Method()
@@ -134,7 +139,7 @@ export class Checkout {
                 <section>
                   <div>
                     <justifi-saved-payment-methods />
-                    {checkoutStore.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.SEZZLE}
@@ -148,7 +153,7 @@ export class Checkout {
                       />
                     )}
 
-                    {checkoutStore.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.PLAID}

@@ -68,60 +68,52 @@ Object.keys(initialState).forEach((key) => {
   });
 });
 
-// Computed: available payment methods based on store flags
-Object.defineProperty(checkoutStore, 'availablePaymentMethods', {
-  get() {
-    const methods: PAYMENT_METHODS[] = [];
+// Helper: compute available payment methods based on store flags
+export function getAvailablePaymentMethods(): PAYMENT_METHODS[] {
+  const methods: PAYMENT_METHODS[] = [];
 
-    if (
-      !checkoutStore.disablePaymentMethodGroup &&
-      checkoutStore.paymentMethods?.length
-    ) {
-      const hasSavedCard = checkoutStore.paymentMethods.some(
-        (pm) => pm.type === 'card'
-      );
-      const hasSavedBank = checkoutStore.paymentMethods.some(
-        (pm) => pm.type === 'bank_account'
-      );
+  if (
+    !checkoutStore.disablePaymentMethodGroup &&
+    checkoutStore.paymentMethods?.length
+  ) {
+    const hasSavedCard = checkoutStore.paymentMethods.some(
+      (pm) => pm.type === 'card'
+    );
+    const hasSavedBank = checkoutStore.paymentMethods.some(
+      (pm) => pm.type === 'bank_account'
+    );
 
-      if (hasSavedCard && !checkoutStore.disableCreditCard) {
-        methods.push(PAYMENT_METHODS.SAVED_CARD);
-      }
-      if (hasSavedBank && !checkoutStore.disableBankAccount) {
-        methods.push(PAYMENT_METHODS.SAVED_BANK_ACCOUNT);
-      }
+    if (hasSavedCard && !checkoutStore.disableCreditCard) {
+      methods.push(PAYMENT_METHODS.SAVED_CARD);
     }
-
-    if (!checkoutStore.disableCreditCard) {
-      methods.push(PAYMENT_METHODS.NEW_CARD);
+    if (hasSavedBank && !checkoutStore.disableBankAccount) {
+      methods.push(PAYMENT_METHODS.SAVED_BANK_ACCOUNT);
     }
+  }
 
-    if (!checkoutStore.disableBankAccount) {
-      methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
-    }
+  if (!checkoutStore.disableCreditCard) {
+    methods.push(PAYMENT_METHODS.NEW_CARD);
+  }
 
-    if (checkoutStore.bnplEnabled && !checkoutStore.disableBnpl) {
-      methods.push(PAYMENT_METHODS.SEZZLE);
-    }
+  if (!checkoutStore.disableBankAccount) {
+    methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
+  }
 
-    if (
-      checkoutStore.bankAccountVerification === true &&
-      !checkoutStore.disableBankAccount
-    ) {
-      methods.push(PAYMENT_METHODS.PLAID);
-    }
+  if (checkoutStore.bnplEnabled && !checkoutStore.disableBnpl) {
+    methods.push(PAYMENT_METHODS.SEZZLE);
+  }
 
-    return methods;
-  },
-});
+  if (
+    checkoutStore.bankAccountVerification === true &&
+    !checkoutStore.disableBankAccount
+  ) {
+    methods.push(PAYMENT_METHODS.PLAID);
+  }
 
-type CheckoutStoreWithComputed = typeof checkoutStore & {
-  readonly availablePaymentMethods: PAYMENT_METHODS[];
-};
+  return methods;
+}
 
-const checkoutStoreTyped = checkoutStore as CheckoutStoreWithComputed;
-
-export { checkoutStoreTyped as checkoutStore, onChange };
+export { checkoutStore as checkoutStore, onChange };
 
 // Subscribe to all store key changes with a single helper
 // The callback is invoked for every key defined in the initial state whenever it changes.
