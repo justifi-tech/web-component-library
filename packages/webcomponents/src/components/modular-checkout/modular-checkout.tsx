@@ -181,7 +181,7 @@ export class ModularCheckout {
     const detail: CheckoutChangedEventDetail = {
       availablePaymentMethodTypes: getAvailablePaymentMethodTypes(),
       selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
-      paymentMethods: checkoutStore.paymentMethods,
+      savedPaymentMethods: checkoutStore.paymentMethods,
     };
     this.checkoutChangedEvent.emit(detail);
   }

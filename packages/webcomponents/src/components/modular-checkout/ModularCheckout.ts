@@ -32,5 +32,5 @@ export enum PAYMENT_METHODS {
 export interface CheckoutChangedEventDetail {
   availablePaymentMethodTypes: PAYMENT_METHODS[];
   selectedPaymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes };
-  paymentMethods: ICheckoutPaymentMethod[];
+  savedPaymentMethods: ICheckoutPaymentMethod[];
 }
