@@ -391,16 +391,23 @@ export class ModularCheckout {
 
     let payment: { payment_mode: string; payment_token: string | undefined };
 
-    const MAP_PAYMENT_METHOD_TO_PAYMENT_MODE: Record<string, string> = {
-      [PaymentMethodTypes.card]: PAYMENT_MODE.ECOM,
-      [PaymentMethodTypes.bankAccount]: PAYMENT_MODE.ECOM,
-      [PaymentMethodTypes.plaid]: PAYMENT_MODE.ECOM,
-      [PaymentMethodTypes.sezzle]: PAYMENT_MODE.BNPL,
-      [PaymentMethodTypes.applePay]: PAYMENT_MODE.APPLE_PAY,
-    }
+    const mapTypeToPaymentMode = (type: string | undefined): string | undefined => {
+      switch (type) {
+        case PaymentMethodTypes.card:
+        case PaymentMethodTypes.bankAccount:
+        case PaymentMethodTypes.plaid:
+          return PAYMENT_MODE.ECOM;
+        case PaymentMethodTypes.sezzle:
+          return PAYMENT_MODE.BNPL;
+        case PaymentMethodTypes.applePay:
+          return PAYMENT_MODE.APPLE_PAY;
+        default:
+          return undefined;
+      }
+    };
 
     payment = {
-      payment_mode: MAP_PAYMENT_METHOD_TO_PAYMENT_MODE[checkoutStore.selectedPaymentMethod.type],
+      payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod.type) as string,
       payment_token: checkoutStore.paymentToken,
     };
 
