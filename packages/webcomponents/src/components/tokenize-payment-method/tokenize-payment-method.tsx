@@ -9,15 +9,15 @@ import {
   ComponentErrorEvent,
   ComponentErrorCodes,
   ComponentErrorSeverity,
-  PaymentMethodTypes
+  PaymentMethodTypes,
+  ICheckoutPaymentMethod
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
-import { PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 // Constants
 const PAYMENT_METHOD_TYPE_LABELS = {
-  [PAYMENT_METHODS.NEW_BANK_ACCOUNT]: 'New bank account',
-  [PAYMENT_METHODS.NEW_CARD]: 'New credit or debit card',
+  [PaymentMethodTypes.bankAccount]: 'New bank account',
+  [PaymentMethodTypes.card]: 'New credit or debit card',
 } as const;
 
 const ERROR_MESSAGES = {
@@ -52,7 +52,7 @@ export class TokenizePaymentMethod {
 
   @State() computedHideSubmitButton: boolean = false;
   @State() isLoading: boolean = false;
-  @State() selectedPaymentMethod?: PAYMENT_METHODS.NEW_CARD | PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+  @State() selectedPaymentMethod?: PaymentMethodTypes;
 
   @Prop() accountId?: string;
   @Prop() authToken?: string;
@@ -92,7 +92,7 @@ export class TokenizePaymentMethod {
 
   @Listen('radio-click')
   handleRadioClick(event: CustomEvent<string>) {
-    this.selectedPaymentMethod = event.detail as PAYMENT_METHODS.NEW_CARD | PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+    this.selectedPaymentMethod = event.detail as PaymentMethodTypes;
     checkoutStore.selectedPaymentMethod = { type: event.detail as PaymentMethodTypes };
   }
 
@@ -199,10 +199,10 @@ export class TokenizePaymentMethod {
     }
 
     if (!this.disableCreditCard) {
-      this.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
+      this.selectedPaymentMethod = PaymentMethodTypes.card;
       checkoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.card };
     } else if (!this.disableBankAccount) {
-      this.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+      this.selectedPaymentMethod = PaymentMethodTypes.bankAccount;
       checkoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.bankAccount };
     }
   }
@@ -232,13 +232,13 @@ export class TokenizePaymentMethod {
     return false;
   }
 
-  private get availablePaymentMethods(): PAYMENT_METHODS[] {
-    const methods: PAYMENT_METHODS[] = [];
+  private get availablePaymentMethods(): PaymentMethodTypes[] {
+    const methods: PaymentMethodTypes[] = [];
     if (!this.disableCreditCard) {
-      methods.push(PAYMENT_METHODS.NEW_CARD);
+      methods.push(PaymentMethodTypes.card);
     }
     if (!this.disableBankAccount) {
-      methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
+      methods.push(PaymentMethodTypes.bankAccount);
     }
     return methods;
   }
@@ -323,8 +323,8 @@ export class TokenizePaymentMethod {
     return this.disableCreditCard || this.disableBankAccount;
   }
 
-  private renderPaymentMethodOption(paymentMethodType: PAYMENT_METHODS) {
-    const isSelected = this.selectedPaymentMethod === paymentMethodType;
+  private renderPaymentMethodOption(paymentMethodType: PaymentMethodTypes) {
+    const isSelected = this.selectedPaymentMethod === paymentMethodType && (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
 
     return (
       <div class="payment-method">
@@ -360,7 +360,7 @@ export class TokenizePaymentMethod {
   }
 
   private renderPaymentMethodForm(paymentMethodId: string) {
-    return paymentMethodId === PAYMENT_METHODS.NEW_CARD ? (
+    return paymentMethodId === PaymentMethodTypes.card ? (
       <justifi-card-form ref={(el) => (this.paymentMethodFormRef = el)} />
     ) : (
       <justifi-bank-account-form ref={(el) => (this.paymentMethodFormRef = el)} />
@@ -374,7 +374,7 @@ export class TokenizePaymentMethod {
           <fieldset>
             <div class="row gy-3">
               <div class="col-12">
-                {this.availablePaymentMethods.map((method: PAYMENT_METHODS) => this.renderPaymentMethodOption(method))}
+                {this.availablePaymentMethods.map((method: PaymentMethodTypes) => this.renderPaymentMethodOption(method))}
               </div>
               <div class="col-12">
                 <justifi-button
