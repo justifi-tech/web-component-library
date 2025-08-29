@@ -781,7 +781,7 @@ export class PlaidPaymentMethod {
         </script>
 
         <div title="Pay with Plaid">
-          <div>Pay with Bank Account {plaidLogo} </div>
+          <div onClick={(event) => { event.preventDefault(); this.handleSelectionClick(); }}>Pay with Bank Account {plaidLogo} </div>
           {renderErrorState()}
           {renderStatusState()}
         </div>

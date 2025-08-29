@@ -155,8 +155,8 @@ app.get('/', async (req, res) => {
           justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
 
-        justifiCheckout.addEventListener('payment-method-changed', (event) => {
-          console.log('Payment method changed', event);
+        justifiCheckout.addEventListener('checkout-changed', (event) => {
+          console.log('Checkout changed', event);
           writeOutputToPage(event);
         });
 
