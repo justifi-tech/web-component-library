@@ -29,16 +29,14 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 
 The component automatically loads the Plaid Link SDK script and initializes the flow when selected. It handles token exchange with your backend to create a payment token for checkout completion.
 
+> Note: This component renders nothing and logs a console warning when bank account verification is not enabled for the checkout (`payment_settings.bank_account_verification !== true`).
+
 # Example Usage
 
 ---
 
 <ComponentBox>
-  <justifi-modular-checkout
-    account-id="acc_123"
-    auth-token="123abc"
-    checkout-id="cho_123"
-  >
+  <justifi-modular-checkout auth-token="123abc" checkout-id="cho_123">
     <justifi-plaid-payment-method />
   </justifi-modular-checkout>
 </ComponentBox>

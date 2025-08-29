@@ -10,7 +10,7 @@ import "./styles.css";
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(["auth-token", "account-id", "checkout-id"]);
+const storyBaseArgs = new StoryBaseArgs(["auth-token", "checkout-id"]);
 
 const meta: Meta = {
   title: "Modular Checkout/Complete Examples/Layout 2",
@@ -46,8 +46,8 @@ const meta: Meta = {
         category: "events",
       },
     },
-    "payment-method-changed": {
-      description: "Emitted when the selected payment method changes. Returns the selected payment method ID as a string.",
+    "checkout-changed": {
+      description: "Emitted when the checkout state changes. Includes available payment methods, selected payment method, and saved methods.",
       table: {
         category: "events",
       },
@@ -79,7 +79,7 @@ const meta: Meta = {
       handles: [
         "error-event",
         "submit-event",
-        "payment-method-changed",
+        "checkout-changed",
       ]
     }
   },

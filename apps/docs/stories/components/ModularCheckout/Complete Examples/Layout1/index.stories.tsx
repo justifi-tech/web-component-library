@@ -11,7 +11,7 @@ import "./styles.css";
 
 type Story = StoryObj;
 
-const storyBaseArgs = new StoryBaseArgs(["auth-token", "account-id", "checkout-id"]);
+const storyBaseArgs = new StoryBaseArgs(["auth-token", "checkout-id"]);
 
 // Custom decorator to handle payment method toggle
 const withPaymentMethodToggle = (storyFn: any) => {
@@ -88,8 +88,8 @@ const meta: Meta = {
         category: "events",
       },
     },
-    "payment-method-changed": {
-      description: "Emitted when the selected payment method changes. Returns the selected payment method ID as a string.",
+    "checkout-changed": {
+      description: "Emitted when the checkout state changes. Includes available payment methods, selected payment method, and saved methods.",
       table: {
         category: "events",
       },
@@ -109,10 +109,10 @@ const meta: Meta = {
       },
     },
     setSelectedPaymentMethod: {
-      description: "Programmatically set the selected payment method by ID",
+      description: "Programmatically set the selected payment method",
       table: {
         category: "methods",
-        defaultValue: { summary: "setSelectedPaymentMethod(paymentMethodId: string) => Promise<void>" }
+        defaultValue: { summary: "setSelectedPaymentMethod(paymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes }) => Promise<void>" }
       },
     }
   },
@@ -121,7 +121,7 @@ const meta: Meta = {
       handles: [
         "error-event",
         "submit-event",
-        "payment-method-changed",
+        "checkout-changed",
       ]
     }
   },

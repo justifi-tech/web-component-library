@@ -311,7 +311,6 @@ ${codeExampleHead(
 <body>
   <justifi-modular-checkout
     auth-token="authToken"
-    account-id="acc_123"
     checkout-id="cho_123"
     save-payment-method="true"
   >
@@ -339,9 +338,9 @@ ${codeExampleHead(
       console.error('Checkout error:', event.detail);
     });
 
-    // Handle payment method changes
-    modularCheckout.addEventListener('payment-method-changed', (event) => {
-      console.log('Selected payment method changed to:', event.detail);
+    // Handle checkout changes
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
     });
   })();
 </script>

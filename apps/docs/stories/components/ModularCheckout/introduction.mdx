@@ -41,6 +41,7 @@ The Modular Checkout system is built around the `justifi-modular-checkout` wrapp
 ### Specialized Components
 
 - **[`justifi-season-interruption-insurance`](/docs/modular-checkout-season-interruption-insurance--docs)**: Insurance options integration that allows the user to sign up and pay for a specified insurance policy as part of the checkout
+- **[`justifi-apple-pay`](/docs/modular-checkout-apple-pay--docs)**: Apple Pay button and flow for eligible devices
 
 ## How It Works
 
@@ -49,7 +50,6 @@ The Modular Checkout system is built around the `justifi-modular-checkout` wrapp
 The `justifi-modular-checkout` wrapper component requires basic configuration:
 
 - `auth-token`: Your JustiFi authentication token
-- `account-id`: The account identifier
 - `checkout-id`: The specific checkout session identifier
 - `save-payment-method`: Optional flag to enable payment method saving
 
@@ -106,11 +106,7 @@ New payment methods or features can be added as individual components without mo
 ### Basic Card Checkout
 
 ```html
-<justifi-modular-checkout
-  auth-token="123xyz"
-  account-id="acc_1234567890"
-  checkout-id="cho_1234567890"
->
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
   <justifi-checkout-summary />
   <justifi-card-form />
   <justifi-billing-form-full />
@@ -120,11 +116,7 @@ New payment methods or features can be added as individual components without mo
 ### Saved Payment Methods with New Card Option
 
 ```html
-<justifi-modular-checkout
-  auth-token="123xyz"
-  account-id="acc_1234567890"
-  checkout-id="cho_1234567890"
->
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
   <justifi-checkout-summary />
   <justifi-saved-payment-methods />
   <justifi-card-form />
@@ -135,11 +127,7 @@ New payment methods or features can be added as individual components without mo
 ### Multi-Payment Method Checkout
 
 ```html
-<justifi-modular-checkout
-  auth-token="123xyz"
-  account-id="acc_1234567890"
-  checkout-id="cho_1234567890"
->
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
   <justifi-checkout-summary />
   <justifi-saved-payment-methods />
   <justifi-card-form />
@@ -157,13 +145,13 @@ New payment methods or features can be added as individual components without mo
 
 - **`error-event`**: Emitted when validation fails or errors occur during processing
 - **`submit-event`**: Emitted when checkout is successfully completed
-- **`payment-method-changed`**: Emitted when the selected payment method changes, containing the payment method ID
+- **`checkout-changed`**: Emitted when the checkout state changes; includes available payment methods and the selected method
 
 ### Methods
 
 - **`validate()`**: Validates all sub components and returns a boolean result
 - **`submitCheckout(billingInformation?)`**: Submits the checkout with optional billing information override
-- **`setSelectedPaymentMethod(paymentMethodId)`**: Programmatically sets the selected payment method by ID
+- **`setSelectedPaymentMethod(paymentMethod)`**: Programmatically sets the selected payment method; accepts `{ type: 'card' | 'bankAccount' | ... }` or a saved method object
 
 ## Getting Started
 

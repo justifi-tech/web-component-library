@@ -45,7 +45,6 @@ ${codeExampleHead(
 <body>
   <justifi-modular-checkout
     auth-token="authToken"
-    account-id="acc_123"
     checkout-id="ch_123"  
     save-payment-method="true"
   >

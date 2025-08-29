@@ -4,13 +4,12 @@ export const codeExample = `
 
 <justifi-modular-checkout
   auth-token="authToken"
-  account-id="acc_123"
   checkout-id="cho_123"  
   save-payment-method="true"
 >
   <justifi-checkout-summary />
   <justifi-card-form />
-  <justifi-billing-information-form />
+  <justifi-billing-form-full />
   <button id="submit-button">
     Submit Checkout
   </button>
@@ -54,16 +53,16 @@ export const codeExample = `
       console.error('Checkout error:', event.detail);
     });
 
-    // Handle payment method changes
-    modularCheckout.addEventListener('payment-method-changed', (event) => {
-      console.log('Selected payment method changed to:', event.detail);
+    // Handle checkout changes
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
     });
 
     // Examples of programmatically setting payment method
-    // modularCheckout.setSelectedPaymentMethod('card');        // New card
-    // modularCheckout.setSelectedPaymentMethod('bankAccount'); // New bank account
-    // modularCheckout.setSelectedPaymentMethod('sezzle');      // Sezzle BNPL
-    // modularCheckout.setSelectedPaymentMethod('pm_12345');    // Saved payment method by ID
+    // modularCheckout.setSelectedPaymentMethod({ type: 'card' });        // New card
+    // modularCheckout.setSelectedPaymentMethod({ type: 'bankAccount' }); // New bank account
+    // modularCheckout.setSelectedPaymentMethod({ type: 'sezzle' });      // Sezzle BNPL
+    // modularCheckout.setSelectedPaymentMethod({ id: 'pm_12345', type: 'card' });    // Saved method by ID
   })();
 </script>
 `;
