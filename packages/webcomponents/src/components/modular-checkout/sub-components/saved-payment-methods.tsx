@@ -4,7 +4,7 @@ import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
 import { ICheckoutPaymentMethod } from '../../../api';
-import { PAYMENT_METHOD_TYPES, PAYMENT_METHODS } from "../ModularCheckout";
+import { PAYMENT_METHOD_TYPES } from "../ModularCheckout";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -23,12 +23,7 @@ export class SavedPaymentMethods {
 
   onPaymentMethodOptionClick = (paymentMethod: ICheckoutPaymentMethod) => (e: Event) => {
     e.preventDefault();
-    const SELECTED_PAYMENT_METHODS = {
-      [PAYMENT_METHOD_TYPES.CARD]: PAYMENT_METHODS.SAVED_CARD,
-      [PAYMENT_METHOD_TYPES.BANK_ACCOUNT]: PAYMENT_METHODS.SAVED_BANK_ACCOUNT,
-    }
-
-    checkoutStore.selectedPaymentMethod = SELECTED_PAYMENT_METHODS[paymentMethod.type];
+    checkoutStore.selectedPaymentMethod = paymentMethod;
     checkoutStore.paymentToken = paymentMethod.id;
   };
 

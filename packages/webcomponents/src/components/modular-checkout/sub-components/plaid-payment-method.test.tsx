@@ -38,6 +38,7 @@ jest.mock('../../../api/services/plaid.service', () => {
 
 import { newSpecPage } from '@stencil/core/testing';
 import { PlaidPaymentMethod } from './plaid-payment-method';
+import { PaymentMethodTypes } from '../../../api';
 
 describe('PlaidPaymentMethod', () => {
   let component: PlaidPaymentMethod;
@@ -89,7 +90,7 @@ describe('PlaidPaymentMethod', () => {
   describe('Store Integration', () => {
     it('should initialize selection state from store', () => {
       // Set store value before creating component
-      mockCheckoutStore.selectedPaymentMethod = 'plaid';
+      mockCheckoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.plaid };
 
       // Recreate component to test initialization
       return newSpecPage({
