@@ -357,14 +357,21 @@ export class ModularCheckout {
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
     const isValid = await this.validate();
 
-    const shouldTokenize = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount;
+    const isNewCard =
+      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card &&
+      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
+    const isNewBankAccount =
+      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount &&
+      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
+
+    const shouldTokenize = isNewCard || isNewBankAccount;
 
     if (shouldTokenize) {
       const tokenizeResult = await this.tokenizePaymentMethod(submitCheckoutArgs);
 
-      if (tokenizeResult.error) {
+      if ((tokenizeResult as any)?.error) {
         this.errorEvent.emit({
-          message: tokenizeResult.error.message,
+          message: (tokenizeResult as any).error.message,
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
         });
