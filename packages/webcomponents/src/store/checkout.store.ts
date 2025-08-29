@@ -69,7 +69,7 @@ Object.keys(initialState).forEach((key) => {
 });
 
 // Helper: compute available payment methods based on store flags
-export function getAvailablePaymentMethods(): PAYMENT_METHODS[] {
+export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
   const methods: PAYMENT_METHODS[] = [];
 
   if (

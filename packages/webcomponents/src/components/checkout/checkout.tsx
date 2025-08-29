@@ -76,7 +76,7 @@ export class Checkout {
 
   @Listen('checkout-changed')
   checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
-    this.availablePaymentMethods = event.detail.availablePaymentMethods;
+    this.availablePaymentMethods = event.detail.availablePaymentMethodTypes;
   }
 
   @Method()

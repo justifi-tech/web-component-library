@@ -92,7 +92,7 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.paymentMethods = [] as any;
     });
 
-    it('emits checkout-changed with availablePaymentMethods on store updates', async () => {
+    it('emits checkout-changed with availablePaymentMethodTypes on store updates', async () => {
       const page = await newSpecPage({
         components: [ModularCheckout],
         html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
@@ -116,7 +116,7 @@ describe('justifi-modular-checkout', () => {
       expect(handler).toHaveBeenCalled();
       const lastCall = handler.mock.calls[handler.mock.calls.length - 1][0];
       const detail = (lastCall as CustomEvent).detail as any;
-      expect(detail.availablePaymentMethods).toEqual(
+      expect(detail.availablePaymentMethodTypes).toEqual(
         expect.arrayContaining(['saved_card', 'saved_bank_account', 'new_card', 'new_bank_account', 'sezzle'])
       );
     });
