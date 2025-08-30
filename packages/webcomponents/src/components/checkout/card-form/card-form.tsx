@@ -1,6 +1,7 @@
 import { Component, h, Host, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
+import { generateTabId } from "../../../utils/utils";
 
 @Component({
   tag: "card-form",
@@ -8,6 +9,7 @@ import { configState, waitForConfig } from "../../config-provider/config-state";
 export class CardForm {
   @State() isReady: boolean = false;
   @State() iframeOrigin: string;
+  @State() tabId: string;
 
   private cardNumberIframeElement!: HTMLIframeInputElement;
   private expirationMonthIframeElement!: HTMLIframeInputElement;
@@ -17,6 +19,7 @@ export class CardForm {
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
+    this.tabId = generateTabId();
   }
 
   componentDidRender() {
@@ -71,7 +74,7 @@ export class CardForm {
               inputId="cardNumber"
               ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
               label="Card Number"
-              iframeOrigin={`${this.iframeOrigin}/v2/cardNumber`}
+              iframeOrigin={`${this.iframeOrigin}/v2/cardNumber?tabId=${this.tabId}`}
             />
           </div>
           <div class="d-flex align-items-start">
@@ -80,7 +83,7 @@ export class CardForm {
                 inputId="expirationMonth"
                 ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
                 label="Exp. Month"
-                iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth`}
+                iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth?tabId=${this.tabId}`}
               />
             </div>
             <div class="flex-fill me-3">
@@ -88,7 +91,7 @@ export class CardForm {
                 inputId="expirationYear"
                 ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
                 label="Exp. Year"
-                iframeOrigin={`${this.iframeOrigin}/v2/expirationYear`}
+                iframeOrigin={`${this.iframeOrigin}/v2/expirationYear?tabId=${this.tabId}`}
               />
             </div>
             <div class="flex-fill">
@@ -96,7 +99,7 @@ export class CardForm {
                 inputId="CVV"
                 ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
                 label="CVV"
-                iframeOrigin={`${this.iframeOrigin}/v2/CVV`}
+                iframeOrigin={`${this.iframeOrigin}/v2/CVV?tabId=${this.tabId}`}
               />
             </div>
           </div>

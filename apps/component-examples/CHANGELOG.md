@@ -1,5 +1,12 @@
 # @repo/component-examples
 
+## 1.0.25
+
+### Patch Changes
+
+- Updated dependencies [9d0e83b]
+  - @justifi/webcomponents@5.7.7
+
 ## 1.0.24
 
 ### Patch Changes
