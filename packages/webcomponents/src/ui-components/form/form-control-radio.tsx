@@ -17,14 +17,14 @@ import {
 } from '../../styles/parts';
 
 @Component({
-  tag: 'form-control-radio'
+  tag: 'form-control-radio',
 })
 export class RadioInput {
   radioElement!: HTMLInputElement;
 
   @State() isFocused: boolean = false;
 
-  @Prop() label: string;
+  @Prop() label: any;
   @Prop() name: any;
   @Prop() value: string;
   @Prop() helpText?: string;
