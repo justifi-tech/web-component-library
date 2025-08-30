@@ -229,15 +229,19 @@ export interface CheckoutsQueryParams {
   payment_mode?: ICheckoutPaymentMode;
 }
 
+export type CardBrand = 'visa' | 'mastercard' | 'american_express' | 'discover' | 'jcb' | 'diners_club' | 'unionpay';
+
+export type AccountType = 'checking' | 'savings';
+
 export interface ICheckoutPaymentMethod {
   id: string;
   type?: string;
   status: string;
   invalid_reason: null;
   name: string;
-  brand: string;
+  brand: CardBrand;
   acct_last_four: string;
-  account_type: string;
+  account_type: AccountType;
   month: string;
   year: string;
   address_line1_check: string;
