@@ -127,21 +127,22 @@ describe('PlaidPaymentMethod', () => {
     });
   });
 
-  describe('Plaid exchange flow', () => {
-    it('exchanges public token and saves payment token to store', async () => {
+  describe('Plaid success flow', () => {
+    it('stores public token in store and does not set payment token', async () => {
       // Arrange
-      mockCheckoutStore.selectedPaymentMethod = 'plaid';
+      mockCheckoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.plaid } as any;
       const instance: any = page.rootInstance as PlaidPaymentMethod;
 
       // Act: simulate Plaid success
       instance.handlePlaidSuccess('public-sandbox-xyz', {});
       await page.waitForChanges();
 
-      // Allow any async exchange to complete
+      // Allow any async handlers to complete
       await new Promise((r) => setTimeout(r, 0));
 
       // Assert
-      expect(mockCheckoutStore.paymentToken).toBe('tok_pm_456');
+      expect(mockCheckoutStore.plaidPublicToken).toBe('public-sandbox-xyz');
+      expect(mockCheckoutStore.paymentToken).toBeUndefined();
     });
   });
 });
