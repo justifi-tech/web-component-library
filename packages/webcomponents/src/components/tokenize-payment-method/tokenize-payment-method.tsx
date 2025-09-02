@@ -63,6 +63,7 @@ export class TokenizePaymentMethod {
   @Prop() hideSubmitButton?: boolean;
   @Prop() paymentMethodGroupId?: string;
   @Prop() submitButtonText?: string = 'Submit';
+  @Prop() savePaymentMethodLabel?: string;
 
   @Watch('disableCreditCard')
   @Watch('disableBankAccount')
@@ -353,7 +354,7 @@ export class TokenizePaymentMethod {
           />
         </div>
         <div class="mt-4">
-          <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} />
+          <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} label={this.savePaymentMethodLabel} />
         </div>
       </div>
     );

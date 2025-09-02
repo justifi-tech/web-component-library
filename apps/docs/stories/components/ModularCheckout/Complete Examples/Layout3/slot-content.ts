@@ -101,7 +101,7 @@ export const getSlotContentExample3 = (): string => {
 
           <!-- Save Info Checkbox -->
           <div class="checkout-checkbox-container">
-            <justifi-save-new-payment-method></justifi-save-new-payment-method>
+            <justifi-save-new-payment-method label="Save this for next time"></justifi-save-new-payment-method>
           </div>
 
           <!-- Pay Button -->

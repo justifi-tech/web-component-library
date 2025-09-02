@@ -139,4 +139,30 @@ describe('tokenize-payment-method', () => {
     }
   });
 
+  it('forwards savePaymentMethodLabel to justifi-save-new-payment-method', async () => {
+    const page = await newSpecPage({
+      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123" save-payment-method-label="Keep this on file"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const checkbox = page.root?.querySelector('justifi-save-new-payment-method') as any;
+    expect(checkbox).toBeTruthy();
+    expect((checkbox as any).label).toBe('Keep this on file');
+  });
+
+  it('uses default save checkbox label when savePaymentMethodLabel is not provided', async () => {
+    const page = await newSpecPage({
+      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const checkbox = page.root?.querySelector('justifi-save-new-payment-method') as any;
+    expect(checkbox).toBeTruthy();
+    expect((checkbox as any).label).toBe('Save New Payment Method');
+  });
+
 });

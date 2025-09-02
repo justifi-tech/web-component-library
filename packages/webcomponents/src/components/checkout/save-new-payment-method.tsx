@@ -1,4 +1,4 @@
-import { Component, h, State, Event, EventEmitter } from '@stencil/core';
+import { Component, h, State, Event, EventEmitter, Prop } from '@stencil/core';
 import { StyledHost } from '../../ui-components';
 import { checkoutStore } from '../../store/checkout.store';
 
@@ -7,6 +7,7 @@ import { checkoutStore } from '../../store/checkout.store';
   shadow: true
 })
 export class SaveNewPaymentMethod {
+  @Prop() label?: string = 'Save New Payment Method';
   @State() isChecked: boolean = false;
   @Event({ bubbles: true }) checkboxChanged: EventEmitter<boolean>;
 
@@ -20,7 +21,7 @@ export class SaveNewPaymentMethod {
     return (
       <StyledHost>
         <form-control-checkbox
-          label="Save New Payment Method"
+          label={this.label || 'Save New Payment Method'}
           name="saveNewPaymentMethod"
           checked={this.isChecked}
           inputHandler={this.handleCheckboxChange}
