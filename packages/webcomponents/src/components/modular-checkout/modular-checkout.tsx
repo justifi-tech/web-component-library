@@ -297,6 +297,7 @@ export class ModularCheckout {
   @Method()
   async setSelectedPaymentMethod(paymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes }) {
     checkoutStore.selectedPaymentMethod = paymentMethod;
+    checkoutStore.paymentToken = (paymentMethod as ICheckoutPaymentMethod).id || undefined;
   }
 
   // getAvailablePaymentMethods removed in favor of checkout-changed event
