@@ -6,7 +6,6 @@ import {
   Event,
   EventEmitter,
   Method,
-  // Watch,
 } from "@stencil/core";
 import { ApplePayService } from "../../../api/services/apple-pay.service";
 import {
@@ -55,32 +54,7 @@ export class ApplePay {
   @Event() applePayCancelled: EventEmitter<void>;
   @Event() applePayError: EventEmitter<{ error: string }>;
 
-  // private unsubscribeCheckoutLoaded?: () => void;
-
-  // componentWillLoad() {
-  //   this.unsubscribeCheckoutLoaded = onChange("checkoutLoaded", (loaded) => {
-  //     console.log("checkoutLoaded", loaded);
-  //     if (loaded) {
-  //       this.initializeApplePay();
-  //     }
-  //   });
-  // }
-
-  // disconnectedCallback() {
-  //   this.unsubscribeCheckoutLoaded?.();
-  //   this.unsubscribeCheckoutLoaded = undefined;
-  // }
-
-  // @Watch("merchantIdentifier")
-  // @Watch("buttonType")
-  // @Watch("buttonStyle")
-  // @Watch("disabled")
-  // watchPropsChange() {
-  //   this.initializeApplePay();
-  // }
-
   private async initializeApplePay() {
-    console.log("initializeApplePay", checkoutStore.checkoutLoaded);
     try {
       this.isLoading = true;
       this.error = null;
@@ -92,9 +66,9 @@ export class ApplePay {
         Boolean(checkoutStore.authToken);
 
       if (!hasRequiredConfig) {
-        this.error = "Missing required Apple Pay configuration blabla blabla 2";
+        this.error = "Missing required Apple Pay configuration";
         this.isConfigValid = false;
-        console.error("Apple Pay config error: missing required values blabla blabla 2", {
+        console.error("Apple Pay config error: missing required values", {
           paymentAmount: checkoutStore.paymentAmount,
           paymentCurrency: checkoutStore.paymentCurrency,
           hasAuthToken: Boolean(checkoutStore.authToken),
@@ -230,14 +204,6 @@ export class ApplePay {
   }
 
   render() {
-    // const shouldHide =
-    //   !this.isLoading &&
-    //   (!this.isConfigValid || !this.isAvailable || !this.canMakePayments || !checkoutStore.checkoutLoaded);
-
-    // if (shouldHide) {
-    //   return null;
-    // }
-
     const isReady =
       !this.isLoading &&
       this.isAvailable &&
