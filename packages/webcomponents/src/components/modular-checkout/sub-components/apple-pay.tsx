@@ -55,16 +55,22 @@ export class ApplePay {
   @Event() applePayCancelled: EventEmitter<void>;
   @Event() applePayError: EventEmitter<{ error: string }>;
 
+  private unsubscribeCheckoutLoaded?: () => void;
+
   componentWillLoad() {
     this.applePayService = new ApplePayService();
+    this.unsubscribeCheckoutLoaded = onChange("checkoutLoaded", (loaded) => {
+      console.log("checkoutLoaded", loaded);
+      if (loaded) {
+        this.initializeApplePay();
+      }
+    });
     this.initializeApplePay();
   }
 
-  componentDidLoad() {
-    onChange("checkoutLoaded", () => {
-      console.log("checkoutLoaded", checkoutStore.checkoutLoaded);
-      this.initializeApplePay();
-    });
+  disconnectedCallback() {
+    this.unsubscribeCheckoutLoaded?.();
+    this.unsubscribeCheckoutLoaded = undefined;
   }
 
   @Watch("merchantIdentifier")
