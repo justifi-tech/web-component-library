@@ -26,6 +26,7 @@ import {
   makeGetCheckout,
 } from "../../actions/checkout/checkout-actions";
 import { CheckoutService } from "../../api/services/checkout.service";
+import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 import { PAYMENT_MODE, CheckoutChangedEventDetail } from "./ModularCheckout";
@@ -48,6 +49,7 @@ export class ModularCheckout {
   private applePayRef?: HTMLJustifiApplePayElement;
   private getCheckout: Function;
   private completeCheckout: Function;
+  private plaidService = new PlaidService();
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
@@ -364,6 +366,7 @@ export class ModularCheckout {
     const isNewBankAccount =
       checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount &&
       (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
+    const isPlaid = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.plaid;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
 
@@ -373,6 +376,51 @@ export class ModularCheckout {
       if ((tokenizeResult as any)?.error) {
         this.errorEvent.emit({
           message: (tokenizeResult as any).error.message,
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+    }
+
+    // For Plaid, perform exchange at submit time using stored public token and link token id
+    if (isPlaid && !checkoutStore.paymentToken) {
+      const publicToken = checkoutStore.plaidPublicToken;
+      const linkTokenId = checkoutStore.plaidLinkTokenId;
+
+      if (!publicToken) {
+        this.errorEvent.emit({
+          message: 'Missing Plaid public token. Please connect your bank.',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+
+      try {
+        const response = await this.plaidService.tokenizeBankAccount(
+          checkoutStore.authToken,
+          checkoutStore.accountId,
+          publicToken,
+          linkTokenId || undefined,
+          checkoutStore.savePaymentMethod ? checkoutStore.paymentMethodGroupId : undefined
+        );
+
+        if (response?.error) {
+          this.errorEvent.emit({
+            message: typeof response.error === 'string' ? response.error : response.error.message || 'Failed to tokenize bank account',
+            errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+            severity: ComponentErrorSeverity.ERROR,
+          });
+          return;
+        }
+
+        const paymentMethod = response?.data;
+        const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
+        checkoutStore.paymentToken = token;
+      } catch (err) {
+        this.errorEvent.emit({
+          message: (err as any)?.message || 'Plaid exchange error',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
         });
@@ -395,6 +443,7 @@ export class ModularCheckout {
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
       });
+      return;
     }
 
     let payment: { payment_mode: string; payment_token: string | undefined };

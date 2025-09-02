@@ -170,10 +170,6 @@ export class PlaidPaymentMethod {
   // Will perform the backend exchange if the token is not yet present in the store.
   @Method()
   async getPaymentToken(): Promise<string | undefined> {
-    if (checkoutStore.paymentToken) {
-      return checkoutStore.paymentToken;
-    }
-    await this.exchangePublicTokenForPaymentMethod();
     return checkoutStore.paymentToken;
   }
 
@@ -293,6 +289,9 @@ export class PlaidPaymentMethod {
       this.linkToken = response.data.link_token;
       // Try to capture link token id if present in envelope
       this.linkTokenId = (response as any)?.id || (response as any)?.data?.id || null;
+      if (this.linkTokenId) {
+        checkoutStore.plaidLinkTokenId = this.linkTokenId;
+      }
     } catch (error) {
       // Clear timeout
       if (this.timeoutId) {
@@ -377,51 +376,11 @@ export class PlaidPaymentMethod {
       severity: ComponentErrorSeverity.INFO
     });
 
-    // Immediately exchange the public token for a payment method token via backend
-    this.exchangePublicTokenForPaymentMethod();
+    // Store public token in checkout store; exchange will be handled on submit
+    checkoutStore.plaidPublicToken = publicToken;
   };
 
-  private exchangePublicTokenForPaymentMethod = async () => {
-    if (!this.publicToken) {
-      console.error('[PlaidPaymentMethod] exchange: missing publicToken');
-      return;
-    }
-    if (!checkoutStore.authToken || !checkoutStore.accountId) {
-      console.error('[PlaidPaymentMethod] exchange: missing auth/account context');
-      return;
-    }
-
-    try {
-      const response = await this.plaidService.tokenizeBankAccount(
-        checkoutStore.authToken,
-        checkoutStore.accountId,
-        this.publicToken,
-        this.linkTokenId || undefined,
-        checkoutStore.savePaymentMethod ? checkoutStore.paymentMethodGroupId : undefined
-      );
-
-      if (response?.error) {
-        console.error('[PlaidPaymentMethod] exchange: backend error', response.error);
-        return;
-      }
-
-      // Extract token from payment method response
-      const paymentMethod = response?.data;
-      const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
-
-      if (!token) {
-        console.error('[PlaidPaymentMethod] exchange: no token in response');
-        return;
-      }
-
-      // Save for downstream submit flows
-      checkoutStore.paymentToken = token;
-    } catch (err) {
-      console.error('[PlaidPaymentMethod] exchange: exception', {
-        message: (err as any)?.message || String(err),
-      });
-    }
-  };
+  // Exchange logic moved to Modular Checkout submit flow.
 
   handlePlaidExit = (err: any, _metadata: any) => {
     this.isAuthenticating = false;

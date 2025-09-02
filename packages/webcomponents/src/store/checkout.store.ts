@@ -28,6 +28,8 @@ interface IInitialState {
   savePaymentMethod: boolean;
   selectedPaymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes };
   totalAmount: number;
+  plaidPublicToken?: string;
+  plaidLinkTokenId?: string;
 }
 
 const initialState: IInitialState = {
@@ -57,6 +59,8 @@ const initialState: IInitialState = {
   savePaymentMethod: false,
   selectedPaymentMethod: { type: PaymentMethodTypes.card },
   totalAmount: 0,
+  plaidPublicToken: undefined,
+  plaidLinkTokenId: undefined,
 };
 
 const { state: checkoutStore, onChange } = createStore(initialState);
