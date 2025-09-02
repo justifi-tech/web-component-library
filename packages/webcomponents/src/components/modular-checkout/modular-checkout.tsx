@@ -60,9 +60,8 @@ export class ModularCheckout {
   @Event({ eventName: "checkout-changed" })
   checkoutChangedEvent: EventEmitter<CheckoutChangedEventDetail>;
 
-
-
   connectedCallback() {
+    console.log("connectedCallback", checkoutStore.checkoutLoaded);
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
       this.setupApplePayListeners(); // set up again listeners when DOM changes

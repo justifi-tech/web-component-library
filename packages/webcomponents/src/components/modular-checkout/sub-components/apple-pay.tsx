@@ -6,7 +6,7 @@ import {
   Event,
   EventEmitter,
   Method,
-  Watch,
+  // Watch,
 } from "@stencil/core";
 import { ApplePayService } from "../../../api/services/apple-pay.service";
 import {
@@ -20,7 +20,7 @@ import {
 import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
-import { checkoutStore, onChange } from "../../../store/checkout.store";
+import { checkoutStore } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -55,33 +55,33 @@ export class ApplePay {
   @Event() applePayCancelled: EventEmitter<void>;
   @Event() applePayError: EventEmitter<{ error: string }>;
 
-  private unsubscribeCheckoutLoaded?: () => void;
+  // private unsubscribeCheckoutLoaded?: () => void;
 
-  componentWillLoad() {
-    this.applePayService = new ApplePayService();
-    this.unsubscribeCheckoutLoaded = onChange("checkoutLoaded", (loaded) => {
-      console.log("checkoutLoaded", loaded);
-      if (loaded) {
-        this.initializeApplePay();
-      }
-    });
-    this.initializeApplePay();
-  }
+  // componentWillLoad() {
+  //   this.unsubscribeCheckoutLoaded = onChange("checkoutLoaded", (loaded) => {
+  //     this.applePayService = new ApplePayService();
+  //     console.log("checkoutLoaded", loaded);
+  //     if (loaded) {
+  //       this.initializeApplePay();
+  //     }
+  //   });
+  // }
 
-  disconnectedCallback() {
-    this.unsubscribeCheckoutLoaded?.();
-    this.unsubscribeCheckoutLoaded = undefined;
-  }
+  // disconnectedCallback() {
+  //   this.unsubscribeCheckoutLoaded?.();
+  //   this.unsubscribeCheckoutLoaded = undefined;
+  // }
 
-  @Watch("merchantIdentifier")
-  @Watch("buttonType")
-  @Watch("buttonStyle")
-  @Watch("disabled")
-  watchPropsChange() {
-    this.initializeApplePay();
-  }
+  // @Watch("merchantIdentifier")
+  // @Watch("buttonType")
+  // @Watch("buttonStyle")
+  // @Watch("disabled")
+  // watchPropsChange() {
+  //   this.initializeApplePay();
+  // }
 
   private async initializeApplePay() {
+    console.log("initializeApplePay", checkoutStore.checkoutLoaded);
     try {
       this.isLoading = true;
       this.error = null;
@@ -93,9 +93,9 @@ export class ApplePay {
         Boolean(checkoutStore.authToken);
 
       if (!hasRequiredConfig) {
-        this.error = "Missing required Apple Pay configuration";
+        this.error = "Missing required Apple Pay configuration blabla blabla 2";
         this.isConfigValid = false;
-        console.error("Apple Pay config error: missing required values", {
+        console.error("Apple Pay config error: missing required values blabla blabla 2", {
           paymentAmount: checkoutStore.paymentAmount,
           paymentCurrency: checkoutStore.paymentCurrency,
           hasAuthToken: Boolean(checkoutStore.authToken),
@@ -230,13 +230,13 @@ export class ApplePay {
   }
 
   render() {
-    const shouldHide =
-      !this.isLoading &&
-      (!this.isConfigValid || !this.isAvailable || !this.canMakePayments || !checkoutStore.checkoutLoaded);
+    // const shouldHide =
+    //   !this.isLoading &&
+    //   (!this.isConfigValid || !this.isAvailable || !this.canMakePayments || !checkoutStore.checkoutLoaded);
 
-    if (shouldHide) {
-      return null;
-    }
+    // if (shouldHide) {
+    //   return null;
+    // }
 
     const isReady =
       !this.isLoading &&
@@ -246,25 +246,28 @@ export class ApplePay {
 
     return (
       <StyledHost>
-        <script
-          async
-          src='https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js'
-        ></script>
+        {checkoutStore.checkoutLoaded && (
+          <script
+            async
+            src='https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js'
+            onLoad={() => {
+              this.initializeApplePay();
+            }}
+          ></script>
+        )}
         <div class='apple-pay-container'>
           <ApplePaySkeleton isReady={isReady} />
 
-          {!this.isLoading &&
-            this.isAvailable &&
-            this.canMakePayments && (
-              <ApplePayButton
-                buttonType={this.buttonType}
-                buttonStyle={this.buttonStyle}
-                disabled={this.disabled}
-                isProcessing={this.isProcessing}
-                isAvailable={this.isAvailable}
-                clickHandler={this.handleApplePayClick}
-              />
-            )}
+          {isReady && (
+            <ApplePayButton
+              buttonType={this.buttonType}
+              buttonStyle={this.buttonStyle}
+              disabled={this.disabled}
+              isProcessing={this.isProcessing}
+              isAvailable={this.isAvailable}
+              clickHandler={this.handleApplePayClick}
+            />
+          )}
         </div>
 
         <style>
