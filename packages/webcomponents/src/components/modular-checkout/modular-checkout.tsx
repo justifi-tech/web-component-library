@@ -158,6 +158,7 @@ export class ModularCheckout {
 
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
+    checkoutStore.checkoutLoaded = true;
     checkoutStore.paymentMethods = checkout.payment_methods;
     checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
     checkoutStore.paymentDescription = checkout.payment_description;

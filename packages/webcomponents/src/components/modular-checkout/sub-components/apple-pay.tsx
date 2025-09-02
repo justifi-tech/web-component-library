@@ -68,6 +68,10 @@ export class ApplePay {
     onChange("authToken", () => {
       this.initializeApplePay();
     });
+
+    onChange("checkoutLoaded", () => {
+      this.initializeApplePay();
+    });
   }
 
   @Watch("merchantIdentifier")
