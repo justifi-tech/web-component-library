@@ -7,7 +7,6 @@ import {
   Host,
   Method,
   Prop,
-  Watch,
 } from "@stencil/core";
 import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
@@ -53,7 +52,6 @@ export class ModularCheckout {
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
-  @Prop() savePaymentMethod?: boolean = false;
 
   @Element() hostEl: HTMLElement;
 
@@ -62,10 +60,7 @@ export class ModularCheckout {
   @Event({ eventName: "checkout-changed" })
   checkoutChangedEvent: EventEmitter<CheckoutChangedEventDetail>;
 
-  @Watch("savePaymentMethod")
-  savePaymentMethodChanged(newValue: boolean) {
-    checkoutStore.savePaymentMethod = newValue;
-  }
+
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -99,7 +94,6 @@ export class ModularCheckout {
     this.analytics = new JustifiAnalytics(this);
     checkPkgVersion();
     checkoutStore.authToken = this.authToken;
-    checkoutStore.savePaymentMethod = this.savePaymentMethod;
     this.fetchCheckout();
 
     // Refresh the checkout data when insurance values actually change (not on initial load)

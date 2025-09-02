@@ -118,7 +118,6 @@ export class Checkout {
           }}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
-          savePaymentMethod={checkoutStore.savePaymentMethod}
         >
           <div class="row gy-3 jfi-checkout-core">
             <div class="col-12" part={checkoutSummary}>
