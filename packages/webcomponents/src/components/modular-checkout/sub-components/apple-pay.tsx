@@ -61,15 +61,8 @@ export class ApplePay {
   }
 
   componentDidLoad() {
-    onChange("paymentAmount", () => {
-      this.initializeApplePay();
-    });
-
-    onChange("authToken", () => {
-      this.initializeApplePay();
-    });
-
     onChange("checkoutLoaded", () => {
+      console.log("checkoutLoaded", checkoutStore.checkoutLoaded);
       this.initializeApplePay();
     });
   }
@@ -233,7 +226,7 @@ export class ApplePay {
   render() {
     const shouldHide =
       !this.isLoading &&
-      (!this.isConfigValid || !this.isAvailable || !this.canMakePayments);
+      (!this.isConfigValid || !this.isAvailable || !this.canMakePayments || !checkoutStore.checkoutLoaded);
 
     if (shouldHide) {
       return null;
@@ -243,7 +236,7 @@ export class ApplePay {
       !this.isLoading &&
       this.isAvailable &&
       this.canMakePayments &&
-      this.isConfigValid && checkoutStore.checkoutLoaded;
+      this.isConfigValid;
 
     return (
       <StyledHost>
