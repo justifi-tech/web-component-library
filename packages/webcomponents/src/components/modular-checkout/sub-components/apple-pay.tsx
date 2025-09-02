@@ -59,7 +59,6 @@ export class ApplePay {
 
   // componentWillLoad() {
   //   this.unsubscribeCheckoutLoaded = onChange("checkoutLoaded", (loaded) => {
-  //     this.applePayService = new ApplePayService();
   //     console.log("checkoutLoaded", loaded);
   //     if (loaded) {
   //       this.initializeApplePay();
@@ -133,6 +132,7 @@ export class ApplePay {
         buttonStyle: this.buttonStyle,
       };
 
+      this.applePayService = new ApplePayService();
       this.applePayService.initialize(applePayConfig);
 
       const hasActiveCard =
