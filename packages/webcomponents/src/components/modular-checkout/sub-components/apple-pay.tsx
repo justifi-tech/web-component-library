@@ -243,7 +243,7 @@ export class ApplePay {
       !this.isLoading &&
       this.isAvailable &&
       this.canMakePayments &&
-      this.isConfigValid;
+      this.isConfigValid && checkoutStore.checkoutLoaded;
 
     return (
       <StyledHost>
