@@ -155,6 +155,8 @@ export class ApplePay {
         checkoutStore.accountId
       );
 
+      console.log("result", result);
+
       if (result.success) {
         this.applePayCompleted.emit({
           success: true,
