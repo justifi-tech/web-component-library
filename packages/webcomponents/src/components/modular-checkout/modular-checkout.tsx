@@ -147,8 +147,8 @@ export class ModularCheckout {
         onError: (error) => {
           this.errorEvent.emit({
             message: error.message,
-            errorCode: ComponentErrorCodes.FETCH_ERROR,
-            severity: ComponentErrorSeverity.ERROR,
+            errorCode: error.code,
+            severity: error.severity,
           });
         },
       });
