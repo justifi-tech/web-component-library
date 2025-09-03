@@ -22,7 +22,6 @@ export class ApplePayService implements IApplePayService {
   private currentPaymentRequest?: ApplePayPaymentRequest;
   private api = Api();
 
-
   /**
    * Initialize Apple Pay configuration
    */
@@ -37,7 +36,10 @@ export class ApplePayService implements IApplePayService {
   /**
    * Validate merchant with Apple Pay servers via API
    */
-  async validateMerchant(authToken: string, accountId: string): Promise<IMerchantSession> {
+  async validateMerchant(
+    authToken: string,
+    accountId: string
+  ): Promise<IMerchantSession> {
     const endpoint = 'apple_pay/merchant_session';
 
     try {
@@ -110,8 +112,27 @@ export class ApplePayService implements IApplePayService {
     paymentRequest: IApplePayPaymentRequest,
     authToken: string,
     accountId: string
-  ): Promise<{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: IApplePayError }> {
+  ): Promise<{
+    success: boolean;
+    token?: IApplePayToken;
+    paymentMethodId?: string;
+    error?: IApplePayError;
+  }> {
+    // Begin verbose diagnostics for easier debugging in the field
+    console.groupCollapsed('[ApplePayService] startPaymentSession called');
+    console.log(
+      '[ApplePayService] raw paymentRequest:',
+      JSON.stringify(paymentRequest, null, 2)
+    );
+    console.log('[ApplePayService] has authToken:', Boolean(authToken));
+    console.log('[ApplePayService] accountId:', accountId);
+    console.log('[ApplePayService] has config:', Boolean(this.applePayConfig));
+
     if (!this.applePayConfig) {
+      console.error(
+        '[ApplePayService] Missing applePayConfig. Did you call initialize()?'
+      );
+      console.groupEnd();
       throw new Error('Apple Pay not initialized. Call initialize() first.');
     }
 
@@ -120,8 +141,26 @@ export class ApplePayService implements IApplePayService {
     // }
 
     const request = new ApplePayPaymentRequest(paymentRequest);
+    console.log('[ApplePayService] created ApplePayPaymentRequest:', request);
 
     if (!request.isValid) {
+      const missingFields: string[] = [];
+      if (!request.countryCode) missingFields.push('countryCode');
+      if (!request.currencyCode) missingFields.push('currencyCode');
+      if (
+        !request.merchantCapabilities ||
+        request.merchantCapabilities.length === 0
+      )
+        missingFields.push('merchantCapabilities');
+      if (!request.supportedNetworks || request.supportedNetworks.length === 0)
+        missingFields.push('supportedNetworks');
+      if (!request.total || !request.total.label || !request.total.amount)
+        missingFields.push('total');
+      console.error(
+        '[ApplePayService] Payment request is invalid. Missing/invalid:',
+        missingFields
+      );
+      console.groupEnd();
       throw new Error('Invalid payment request provided');
     }
 
@@ -129,12 +168,43 @@ export class ApplePayService implements IApplePayService {
 
     return new Promise((resolve, reject) => {
       try {
+        console.log('[ApplePayService] About to instantiate ApplePaySession');
+        // Defensive checks for Apple Pay environment
+        if (typeof window === 'undefined' || !('ApplePaySession' in window)) {
+          console.error(
+            '[ApplePayService] ApplePaySession not available on window'
+          );
+          console.groupEnd();
+          return reject({
+            success: false,
+            error: {
+              code: 'APPLE_PAY_UNAVAILABLE',
+              message:
+                'ApplePaySession API is not available in this environment',
+            },
+          });
+        }
+
         this.currentSession = new window.ApplePaySession!(3, request);
+        console.log(
+          '[ApplePayService] ApplePaySession instantiated:',
+          this.currentSession
+        );
 
         this.setupSessionEventHandlers(resolve, reject, authToken, accountId);
+        console.log(
+          '[ApplePayService] Event handlers set. Beginning session...'
+        );
 
         this.currentSession.begin();
+        console.log('[ApplePayService] Session.begin() called');
+        console.groupEnd();
       } catch (error) {
+        console.error(
+          '[ApplePayService] Exception while starting session:',
+          error
+        );
+        console.groupEnd();
         reject({
           success: false,
           error: {
@@ -164,7 +234,12 @@ export class ApplePayService implements IApplePayService {
    * Setup Apple Pay session event handlers
    */
   private setupSessionEventHandlers(
-    resolve: (value: { success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: IApplePayError }) => void,
+    resolve: (value: {
+      success: boolean;
+      token?: IApplePayToken;
+      paymentMethodId?: string;
+      error?: IApplePayError;
+    }) => void,
     reject: (reason: { success: boolean; error: IApplePayError }) => void,
     authToken: string,
     accountId: string
@@ -174,21 +249,37 @@ export class ApplePayService implements IApplePayService {
       !this.applePayConfig ||
       !this.currentPaymentRequest
     ) {
+      console.error(
+        '[ApplePayService] setupSessionEventHandlers called without required state',
+        {
+          hasSession: Boolean(this.currentSession),
+          hasConfig: Boolean(this.applePayConfig),
+          hasPaymentRequest: Boolean(this.currentPaymentRequest),
+        }
+      );
       return;
     }
 
     this.currentSession.onvalidatemerchant = async () => {
+      console.groupCollapsed('[ApplePayService] onvalidatemerchant');
       try {
+        console.log('[ApplePayService] accountId:', accountId);
         if (!authToken) {
-          throw new Error(
-            'Authentication token not provided.'
+          console.error(
+            '[ApplePayService] Missing authToken for merchant validation'
           );
+          throw new Error('Authentication token not provided.');
         }
 
-        const merchantSession = await this.validateMerchant(authToken, accountId);
+        const merchantSession = await this.validateMerchant(
+          authToken,
+          accountId
+        );
+        console.log('[ApplePayService] merchantSession received');
 
         try {
           this.currentSession!.completeMerchantValidation(merchantSession);
+          console.log('[ApplePayService] completeMerchantValidation called');
         } catch (completionError) {
           console.error(
             'Error calling completeMerchantValidation:',
@@ -199,7 +290,9 @@ export class ApplePayService implements IApplePayService {
       } catch (error) {
         console.error('=== MERCHANT VALIDATION ERROR ===');
         console.error('Error during merchant validation:', error);
-        console.error('Error stack:', error.stack);
+        if (error && (error as any).stack) {
+          console.error('Error stack:', (error as any).stack);
+        }
         this.currentSession!.abort();
         reject({
           success: false,
@@ -212,11 +305,17 @@ export class ApplePayService implements IApplePayService {
           },
         });
       }
+      console.groupEnd();
     };
 
     this.currentSession.onpaymentauthorized = async (event: any) => {
+      console.groupCollapsed('[ApplePayService] onpaymentauthorized');
       try {
         const payment = event.payment;
+        console.log('[ApplePayService] payment payload snapshot:', {
+          hasToken: Boolean(payment?.token),
+          tokenType: payment?.token?.paymentData ? 'paymentData' : 'raw',
+        });
 
         const paymentPayload: IApplePayPaymentProcessRequest = {
           ...payment.token,
@@ -228,17 +327,20 @@ export class ApplePayService implements IApplePayService {
             description: this.currentPaymentRequest!.total.label,
           },
         };
+        console.log('[ApplePayService] paymentPayload prepared');
 
         const paymentResult = await this.processPayment(
           authToken,
           accountId,
           paymentPayload
         );
-        
+        console.log('[ApplePayService] processPayment result:', paymentResult);
+
         if (paymentResult.success) {
           this.currentSession!.completePayment({
             status: ApplePaySessionStatus.STATUS_SUCCESS,
           });
+          console.log('[ApplePayService] Payment success; resolving');
           resolve({
             success: true,
             token: payment.token,
@@ -260,7 +362,9 @@ export class ApplePayService implements IApplePayService {
       } catch (error) {
         console.error('=== PAYMENT PROCESSING ERROR ===');
         console.error('Error processing payment:', error);
-        console.error('Error stack:', error.stack);
+        if (error && (error as any).stack) {
+          console.error('Error stack:', (error as any).stack);
+        }
         this.currentSession!.completePayment({
           status: ApplePaySessionStatus.STATUS_FAILURE,
         });
@@ -275,12 +379,15 @@ export class ApplePayService implements IApplePayService {
           },
         });
       } finally {
+        console.log('[ApplePayService] Cleaning up session state');
         this.currentSession = undefined;
         this.currentPaymentRequest = undefined;
       }
+      console.groupEnd();
     };
 
     this.currentSession.onpaymentmethodselected = () => {
+      console.groupCollapsed('[ApplePayService] onpaymentmethodselected');
       const paymentUpdate = {
         newTotal: this.currentPaymentRequest!.total,
         newLineItems: this.currentPaymentRequest!.lineItems || [],
@@ -288,21 +395,27 @@ export class ApplePayService implements IApplePayService {
 
       try {
         this.currentSession!.completePaymentMethodSelection(paymentUpdate);
+        console.log('[ApplePayService] completePaymentMethodSelection called');
       } catch (error) {
         console.error('Error completing payment method selection:', error);
         this.currentSession!.abort();
       }
+      console.groupEnd();
     };
 
     this.currentSession.onshippingmethodselected = () => {
+      console.groupCollapsed('[ApplePayService] onshippingmethodselected');
       this.currentSession!.completeShippingMethodSelection({
         status: ApplePaySessionStatus.STATUS_SUCCESS,
         newTotal: this.currentPaymentRequest!.total,
         newLineItems: this.currentPaymentRequest!.lineItems || [],
       });
+      console.log('[ApplePayService] completeShippingMethodSelection called');
+      console.groupEnd();
     };
 
     this.currentSession.oncancel = (event: IApplePayCancelEvent) => {
+      console.groupCollapsed('[ApplePayService] oncancel');
       if (event.sessionError) {
         console.error(event.sessionError);
         switch (event.sessionError.code) {
@@ -336,10 +449,12 @@ export class ApplePayService implements IApplePayService {
           message: 'User cancelled the Apple Pay session',
         },
       });
+      console.groupEnd();
     };
 
     if ('onerror' in this.currentSession) {
       (this.currentSession as any).onerror = (error: Error) => {
+        console.groupCollapsed('[ApplePayService] onerror');
         console.error('=== APPLE PAY SESSION ERROR ===');
         console.error('Session error:', error);
         this.currentSession = undefined;
@@ -351,6 +466,7 @@ export class ApplePayService implements IApplePayService {
             message: 'Apple Pay session error occurred',
           },
         });
+        console.groupEnd();
       };
     }
   }
