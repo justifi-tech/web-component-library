@@ -1,19 +1,13 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen } from '@stencil/core';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
-import { ICheckout, ILoadedEventResponse } from '../../api';
+import { ICheckout, ILoadedEventResponse, PaymentMethodTypes } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
-import { PaymentMethodTypes } from '../../api/Payment';
-import { PaymentMethodOption } from './payment-method-option-utils';
 import { StyledHost } from '../../ui-components';
-
-const PaymentMethodTypeLabels = {
-  bankAccount: 'New bank account',
-  card: 'New credit or debit card',
-};
+import { CheckoutChangedEventDetail, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 @Component({
   tag: 'justifi-checkout',
@@ -21,15 +15,15 @@ const PaymentMethodTypeLabels = {
 export class Checkout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  selectedPaymentMethodOptionRef?: HTMLJustifiNewPaymentMethodElement | HTMLJustifiSavedPaymentMethodElement | HTMLJustifiSezzlePaymentMethodElement;
-
+  tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
+  plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
+  sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
+  @State() availablePaymentMethods: PAYMENT_METHODS[] = [];
   @State() checkout: ICheckout;
   @State() complete: Function;
   @State() errorMessage: string = '';
   @State() insuranceToggled: boolean = false;
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
-  @State() paymentMethodOptions: PaymentMethodOption[] = [];
-  @State() savePaymentMethod: boolean = false;
   @State() serverError: string;
 
   @Prop() authToken: string;
@@ -70,35 +64,31 @@ export class Checkout {
     this.analytics?.cleanup();
   }
 
-  @Listen('checkboxChanged')
-  savePaymentMethodChanged(event: CustomEvent<boolean>) {
-    this.savePaymentMethod = event.detail;
-  }
-
   @Listen('submit-event')
   checkoutComplete(_event: CustomEvent<any>) {
     this.isSubmitting = false;
   }
 
   @Listen('error-event')
-  checkoutError(event: CustomEvent<any>) {
+  checkoutError(_event: CustomEvent<any>) {
     this.isSubmitting = false;
-    console.error('checkout error', event.detail);
   }
 
-  @Listen('paymentMethodOptionSelected')
-  paymentMethodOptionSelected(event: CustomEvent<PaymentMethodOption>) {
-    checkoutStore.selectedPaymentMethod = event.detail.id;
+  @Listen('checkout-changed')
+  checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
+    this.availablePaymentMethods = event.detail.availablePaymentMethodTypes;
   }
 
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;
+    this.tokenizePaymentMethodRef?.fillBillingForm(fields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    return { isValid: await this.modularCheckoutRef?.validate() };
+    const modularValidation = await this.modularCheckoutRef?.validate();
+    return { isValid: modularValidation };
   }
 
   private updateStore() {
@@ -112,38 +102,22 @@ export class Checkout {
 
   private async submit(_event) {
     this.isSubmitting = true;
-    this.modularCheckoutRef.submitCheckout(checkoutStore.billingFormFields);
-  }
-
-  private get canSavePaymentMethod() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
-  }
-
-  private get showBillingForm() {
-    return (checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && !this.hideCardBillingForm)
-      || (checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && !this.hideBankAccountBillingForm);
-  }
-
-  private get showBillingFormSection() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card || checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount;
+    this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
   }
 
   private get showPaymentTypeHeader() {
     return !this.disableCreditCard && !this.disableBankAccount;
   }
 
-  private get showPostalCodeForm() {
-    return checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && this.hideCardBillingForm;
-  }
-
   render() {
     return (
       <StyledHost>
         <justifi-modular-checkout
-          ref={(el) => (this.modularCheckoutRef = el)}
+          ref={(el) => {
+            this.modularCheckoutRef = el;
+          }}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
-          savePaymentMethod={this.canSavePaymentMethod && this.savePaymentMethod}
         >
           <div class="row gy-3 jfi-checkout-core">
             <div class="col-12" part={checkoutSummary}>
@@ -164,60 +138,47 @@ export class Checkout {
                 <section>
                   <div>
                     <justifi-saved-payment-methods />
-                    <justifi-sezzle-payment-method />
-                    {!this.disableCreditCard && (
-                      <div>
-                        <payment-method-option
-                          paymentMethodOptionId={PaymentMethodTypes.card}
-                          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card}
-                          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.card }}
-                          radioButtonHidden={this.disableCreditCard}
-                          label={PaymentMethodTypeLabels[PaymentMethodTypes.card]}
-                        />
-                        {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.card && (
-                          <div class="mt-4 mb-4">
-                            <justifi-card-form />
-                          </div>
-                        )}
-                      </div>
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
+                      <justifi-radio-list-item
+                        name="paymentMethodType"
+                        value={PAYMENT_METHODS.SEZZLE}
+                        checked={checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.sezzle}
+                        label={
+                          <justifi-sezzle-payment-method
+                            ref={(el) => (this.sezzlePaymentMethodRef = el)}
+                          />
+                        }
+                        onRadio-click={() => { this.sezzlePaymentMethodRef?.handleSelectionClick(); }}
+                      />
                     )}
-                    {!this.disableBankAccount && (
-                      <div>
-                        <payment-method-option
-                          paymentMethodOptionId={PaymentMethodTypes.bankAccount}
-                          isSelected={checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount}
-                          clickHandler={() => { checkoutStore.selectedPaymentMethod = PaymentMethodTypes.bankAccount }}
-                          radioButtonHidden={this.disableBankAccount}
-                          label={PaymentMethodTypeLabels[PaymentMethodTypes.bankAccount]}
-                        />
-                        {checkoutStore.selectedPaymentMethod === PaymentMethodTypes.bankAccount && (
-                          <div class="mt-4 mb-4">
-                            <justifi-bank-account-form />
-                          </div>
-                        )}
-                      </div>
+
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
+                      <justifi-radio-list-item
+                        name="paymentMethodType"
+                        value={PAYMENT_METHODS.PLAID}
+                        checked={checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.plaid}
+                        label={
+                          <justifi-plaid-payment-method
+                            ref={(el) => (this.plaidPaymentMethodRef = el)}
+                          />
+                        }
+                        onRadio-click={() => { this.plaidPaymentMethodRef?.handleSelectionClick(); }}
+                      />
                     )}
+                    <justifi-tokenize-payment-method
+                      ref={(el) => (this.tokenizePaymentMethodRef = el)}
+                      authToken={this.authToken}
+                      accountId={checkoutStore.accountId}
+                      disableCreditCard={this.disableCreditCard}
+                      disableBankAccount={this.disableBankAccount}
+                      hideCardBillingForm={this.hideCardBillingForm}
+                      hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+                      hideSubmitButton={true}
+                      paymentMethodGroupId={checkoutStore.paymentMethodGroupId}
+                    />
                   </div>
                 </section>
               </div>
-            </div>
-            {this.showBillingFormSection && (
-              <div class="col-12 mt-4">
-                {this.showBillingForm && (
-                  <justifi-header text="Billing Address" level="h2" class="fs-5 fw-bold pb-3" />
-                )}
-                {this.showPostalCodeForm && (
-                  <justifi-postal-code-form />
-                )}
-                {this.showBillingForm && (
-                  <justifi-billing-information-form />
-                )}
-              </div>
-            )}
-            <div class="col-12">
-              {this.canSavePaymentMethod && (
-                <justifi-save-new-payment-method />
-              )}
             </div>
             <div class="mt-4">
               <justifi-button

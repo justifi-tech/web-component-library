@@ -1,0 +1,41 @@
+permissions:
+  contents: read
+name: Publish Release Candidate Components
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build RC
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Create .env file from secrets
+        shell: bash
+        run: |
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+          echo "API_ORIGIN=${{ secrets.API_ORIGIN }}" >> .env
+
+      - name: Build packages
+        working-directory: ./packages/webcomponents
+        run: pnpm build
+
+      - name: Publish Release Candidate to NPM Registry
+        run: |
+          pnpm version-packages --preid rc
+          pnpm release --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}

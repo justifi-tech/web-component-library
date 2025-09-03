@@ -22,6 +22,7 @@ const meta: Meta = {
     "hide-submit-button": false,
     "hide-card-billing-form": false,
     "hide-bank-account-billing-form": false,
+    "save-payment-method-label": "Save this payment method for next time",
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
@@ -31,6 +32,17 @@ const meta: Meta = {
       options: Object.values(ThemeNames),
       control: {
         type: "select",
+      },
+    },
+    "save-payment-method-label": {
+      type: "string",
+      description: "Custom label text for the 'Save New Payment Method' checkbox (shown when a payment method group is available)",
+      control: {
+        type: "text",
+      },
+      table: {
+        category: "props",
+        defaultValue: { summary: "undefined" },
       },
     },
     "submit-button-text": {
@@ -149,10 +161,10 @@ const meta: Meta = {
       description: "Can be used to call the tokenizePaymentMethod method programmatically with an external button. Ideally used in conjunction with the `hide-submit-button` prop. Returns a promise with the tokenized payment method",
       table: {
         category: "methods",
-        defaultValue: { 
+        defaultValue: {
           summary: "`tokenizePaymentMethod() => Promise<PaymentMethodPayload>`",
           detail: "PaymentMethodPayload: { data?: CreatePaymentMethodResponse; token?: string; bnpl?: { order_uuid: string; status: string; session_uuid: string; }; error?: { code: string; message: string; decline_code: string; }; validationError?: boolean; }"
-         }
+        }
       },
     },
   },

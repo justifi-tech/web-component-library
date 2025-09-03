@@ -68,24 +68,14 @@ export interface ICheckout {
   payment_amount: number;
   payment_client_id: string;
   payment_description: string;
-  payment_methods: {
-    id: string;
-    status: string;
-    invalid_reason: null;
-    name: string;
-    brand: string;
-    acct_last_four: string;
-    month: string;
-    year: string;
-    address_line1_check: string;
-    address_postal_code_check: string;
-    bin_details: null;
-  }[];
+  payment_methods: ICheckoutPaymentMethod[];
   payment_method_group_id: string;
   payment_settings: {
     ach_payments: boolean;
     bnpl_payments: boolean;
     credit_card_payments: boolean;
+    insurance_payments?: boolean;
+    bank_account_verification?: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
@@ -116,6 +106,8 @@ export class Checkout implements ICheckout {
     ach_payments: boolean;
     bnpl_payments: boolean;
     credit_card_payments: boolean;
+    insurance_payments?: boolean;
+    bank_account_verification?: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
@@ -237,14 +229,19 @@ export interface CheckoutsQueryParams {
   payment_mode?: ICheckoutPaymentMode;
 }
 
+export type CardBrand = 'visa' | 'mastercard' | 'american_express' | 'discover' | 'jcb' | 'diners_club' | 'unionpay';
+
+export type AccountType = 'checking' | 'savings';
+
 export interface ICheckoutPaymentMethod {
   id: string;
   type?: string;
   status: string;
   invalid_reason: null;
   name: string;
-  brand: string;
+  brand: CardBrand;
   acct_last_four: string;
+  account_type: AccountType;
   month: string;
   year: string;
   address_line1_check: string;

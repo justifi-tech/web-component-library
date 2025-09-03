@@ -1,0 +1,37 @@
+import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { ComponentBox } from '../../../../utils/documentation-components';
+import * as Story from './index.stories';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Sub-components/Apple Pay"
+  Components="justifi-apple-pay"
+  of={Story}
+/>
+
+<Title />
+
+---
+
+Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay flow. Designed to be used within `justifi-modular-checkout`.
+
+## Props
+
+<ArgTypes of={Story} />
+
+## Events
+
+- `applePayStarted`
+- `applePayCompleted`
+- `applePayCancelled`
+- `applePayError`
+
+## Example
+
+<ComponentBox>
+  <justifi-modular-checkout auth-token="123abc" checkout-id="cho_123">
+    <justifi-apple-pay />
+  </justifi-modular-checkout>
+</ComponentBox>

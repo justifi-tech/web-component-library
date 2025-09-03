@@ -29,16 +29,19 @@ The Modular Checkout system is built around the `justifi-modular-checkout` wrapp
 - **[`justifi-bank-account-form`](/docs/modular-checkout-bank-account-form--docs)**: Bank account payment method collection for ACH payments
 - **[`justifi-saved-payment-methods`](/docs/modular-checkout-saved-payment-methods--docs)**: Display and select from previously saved payment methods
 - **[`justifi-sezzle-payment-method`](/docs/modular-checkout-sezzle-payment-method--docs)**: BNPL (Buy Now, Pay Later) integration with Sezzle
+- **[`justifi-plaid-payment-method`](/docs/modular-checkout-plaid-payment-method--docs)**: Bank account payment via Plaid Link
 
 ### Information Collection Components
 
-- **[`justifi-billing-information-form`](/docs/modular-checkout-billing-information-form--docs)**: Complete billing address collection
-- **[`justifi-postal-code-form`](/docs/modular-checkout-postal-code-form--docs)**: Simplified postal code only billing form
+- **[`justifi-billing-form-full`](/docs/modular-checkout-billing-form-full--docs)**: Complete billing address collection
+- **[`justifi-card-billing-form-simple`](/docs/modular-checkout-card-billing-form-simple--docs)**: ZIP code only billing form for card payments
+- **[`justifi-bank-account-billing-form-simple`](/docs/modular-checkout-bank-account-billing-form-simple--docs)**: Account owner name only billing form for ACH payments
 - **[`justifi-checkout-summary`](/docs/modular-checkout-checkout-summary--docs)**: Display checkout amount and description as passed with the [create checkout](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) API request
 
 ### Specialized Components
 
 - **[`justifi-season-interruption-insurance`](/docs/modular-checkout-season-interruption-insurance--docs)**: Insurance options integration that allows the user to sign up and pay for a specified insurance policy as part of the checkout
+- **[`justifi-apple-pay`](/docs/modular-checkout-apple-pay--docs)**: Apple Pay button and flow for eligible devices
 
 ## How It Works
 
@@ -47,7 +50,6 @@ The Modular Checkout system is built around the `justifi-modular-checkout` wrapp
 The `justifi-modular-checkout` wrapper component requires basic configuration:
 
 - `auth-token`: Your JustiFi authentication token
-- `account-id`: The account identifier
 - `checkout-id`: The specific checkout session identifier
 - `save-payment-method`: Optional flag to enable payment method saving
 
@@ -104,46 +106,35 @@ New payment methods or features can be added as individual components without mo
 ### Basic Card Checkout
 
 ```html
-<justifi-modular-checkout
-  auth-token="123xyz"
-  account-id="acc_1234567890"
-  checkout-id="cho_1234567890"
->
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
   <justifi-checkout-summary />
   <justifi-card-form />
-  <justifi-billing-information-form />
+  <justifi-billing-form-full />
 </justifi-modular-checkout>
 ```
 
 ### Saved Payment Methods with New Card Option
 
 ```html
-<justifi-modular-checkout
-  auth-token="123xyz"
-  account-id="acc_1234567890"
-  checkout-id="cho_1234567890"
->
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
   <justifi-checkout-summary />
   <justifi-saved-payment-methods />
   <justifi-card-form />
-  <justifi-postal-code-form />
+  <justifi-card-billing-form-simple />
 </justifi-modular-checkout>
 ```
 
 ### Multi-Payment Method Checkout
 
 ```html
-<justifi-modular-checkout
-  auth-token="123xyz"
-  account-id="acc_1234567890"
-  checkout-id="cho_1234567890"
->
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
   <justifi-checkout-summary />
   <justifi-saved-payment-methods />
   <justifi-card-form />
   <justifi-bank-account-form />
   <justifi-sezzle-payment-method />
-  <justifi-billing-information-form />
+  <justifi-plaid-payment-method />
+  <justifi-billing-form-full />
   <justifi-season-interruption-insurance />
 </justifi-modular-checkout>
 ```
@@ -154,13 +145,13 @@ New payment methods or features can be added as individual components without mo
 
 - **`error-event`**: Emitted when validation fails or errors occur during processing
 - **`submit-event`**: Emitted when checkout is successfully completed
-- **`payment-method-changed`**: Emitted when the selected payment method changes, containing the payment method ID
+- **`checkout-changed`**: Emitted when the checkout state changes; includes available payment methods and the selected method
 
 ### Methods
 
 - **`validate()`**: Validates all sub components and returns a boolean result
 - **`submitCheckout(billingInformation?)`**: Submits the checkout with optional billing information override
-- **`setSelectedPaymentMethod(paymentMethodId)`**: Programmatically sets the selected payment method by ID
+- **`setSelectedPaymentMethod(paymentMethod)`**: Programmatically sets the selected payment method; accepts `{ type: 'card' | 'bankAccount' | ... }` or a saved method object
 
 ## Getting Started
 
