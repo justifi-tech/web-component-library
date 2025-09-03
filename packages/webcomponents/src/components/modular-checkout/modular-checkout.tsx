@@ -300,8 +300,6 @@ export class ModularCheckout {
     checkoutStore.paymentToken = (paymentMethod as ICheckoutPaymentMethod).id || undefined;
   }
 
-  // getAvailablePaymentMethods removed in favor of checkout-changed event
-
   // if validation fails, the error will be emitted by the component
   @Method()
   async validate(): Promise<boolean> {

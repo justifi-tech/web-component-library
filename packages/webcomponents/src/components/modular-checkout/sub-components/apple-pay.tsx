@@ -147,6 +147,8 @@ export class ApplePay {
         ),
       };
 
+      console.log("paymentRequest", paymentRequest);
+
       const result = await this.applePayService.startPaymentSession(
         paymentRequest,
         checkoutStore.authToken,
