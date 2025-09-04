@@ -54,6 +54,7 @@ export class ModularCheckout {
     | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private applePayRef?: HTMLJustifiApplePayElement;
+  private googlePayRef?: HTMLJustifiGooglePayElement;
   private getCheckout: Function;
   private completeCheckout: Function;
   private plaidService = new PlaidService();
@@ -73,6 +74,7 @@ export class ModularCheckout {
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
       this.setupApplePayListeners(); // set up again listeners when DOM changes
+      this.setupGooglePayListeners(); // set up again listeners when DOM changes
     });
 
     this.observer.observe(this.hostEl, {
@@ -115,11 +117,13 @@ export class ModularCheckout {
   componentDidLoad() {
     this.queryFormRefs();
     this.setupApplePayListeners();
+    this.setupGooglePayListeners();
   }
 
   disconnectedCallback() {
     this.observer?.disconnect();
     this.removeApplePayListeners();
+    this.removeGooglePayListeners();
   }
 
   private fetchCheckout() {
@@ -197,6 +201,7 @@ export class ModularCheckout {
       "justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full"
     );
     this.applePayRef = this.hostEl.querySelector("justifi-apple-pay");
+    this.googlePayRef = this.hostEl.querySelector("justifi-google-pay");
     this.paymentMethodFormRef = this.hostEl.querySelector(
       "justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method"
     );
@@ -270,6 +275,74 @@ export class ModularCheckout {
   };
 
   private handleApplePayCancelled = () => {
+    checkoutStore.paymentToken = undefined;
+    checkoutStore.selectedPaymentMethod = undefined;
+  };
+
+  private setupGooglePayListeners() {
+    if (this.googlePayRef) {
+      this.googlePayRef.addEventListener(
+        "googlePayCompleted",
+        this.handleGooglePayCompleted
+      );
+      this.googlePayRef.addEventListener(
+        "googlePayError",
+        this.handleGooglePayError
+      );
+      this.googlePayRef.addEventListener(
+        "googlePayCancelled",
+        this.handleGooglePayCancelled
+      );
+    }
+  }
+
+  private removeGooglePayListeners() {
+    if (this.googlePayRef) {
+      this.googlePayRef.removeEventListener(
+        "googlePayCompleted",
+        this.handleGooglePayCompleted
+      );
+      this.googlePayRef.removeEventListener(
+        "googlePayError",
+        this.handleGooglePayError
+      );
+      this.googlePayRef.removeEventListener(
+        "googlePayCancelled",
+        this.handleGooglePayCancelled
+      );
+    }
+  }
+
+  private handleGooglePayCompleted = (event: CustomEvent) => {
+    const { success, paymentData, paymentMethodId, error } = event.detail;
+
+    if (success && paymentMethodId) {
+      checkoutStore.paymentToken = paymentMethodId;
+      checkoutStore.selectedPaymentMethod = {
+        type: PaymentMethodTypes.googlePay,
+      };
+      this.submitCheckout();
+    } else {
+      console.error("Google Pay completed but failed:", error);
+      this.errorEvent.emit({
+        message: error?.message || "Google Pay payment failed",
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  };
+
+  private handleGooglePayError = (event: CustomEvent) => {
+    const { error } = event.detail;
+    console.error("Google Pay error:", error);
+    this.errorEvent.emit({
+      message: error || "Google Pay error occurred",
+      errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+      severity: ComponentErrorSeverity.ERROR,
+    });
+  };
+
+  private handleGooglePayCancelled = () => {
     checkoutStore.paymentToken = undefined;
     checkoutStore.selectedPaymentMethod = undefined;
   };
@@ -373,12 +446,6 @@ export class ModularCheckout {
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
-    // If Apple Pay token is available, use Apple Pay flow
-    if (this.applePayToken) {
-      await this.submitCheckoutWithApplePay();
-      return;
-    }
-
     const isValid = await this.validate();
 
     const isNewCard =

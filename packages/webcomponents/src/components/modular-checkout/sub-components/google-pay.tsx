@@ -34,7 +34,6 @@ export class GooglePay {
   @Prop() environment: GooglePayEnvironment = GooglePayEnvironment.TEST;
   @Prop() merchantId: string = "BCR2DN7TZDEZJ4JC";
   @Prop() merchantName: string = "Test.JustiFi";
-  @Prop() apiBaseUrl: string = "https://ahalaburda.zapto.org/api/v1";
   @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
   @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
   @Prop() buttonSizeMode: GooglePayButtonSizeMode =
@@ -52,6 +51,7 @@ export class GooglePay {
   @Event() googlePayCompleted: EventEmitter<{
     success: boolean;
     paymentData?: IGooglePayPaymentData;
+    paymentMethodId?: string;
     error?: any;
   }>;
   @Event() googlePayCancelled: EventEmitter<void>;
@@ -59,7 +59,6 @@ export class GooglePay {
 
   componentWillLoad() {
     this.googlePayService = new GooglePayService();
-    this.googlePayService.setApiBaseUrl(this.apiBaseUrl);
     this.initializeGooglePay();
   }
 
@@ -71,15 +70,11 @@ export class GooglePay {
 
   @Watch("merchantId")
   @Watch("environment")
-  @Watch("apiBaseUrl")
   @Watch("buttonType")
   @Watch("buttonStyle")
   @Watch("buttonSizeMode")
   @Watch("disabled")
   watchPropsChange() {
-    if (this.googlePayService) {
-      this.googlePayService.setApiBaseUrl(this.apiBaseUrl);
-    }
     this.initializeGooglePay();
   }
 
@@ -180,12 +175,17 @@ export class GooglePay {
 
       const paymentDataRequest = this.createPaymentDataRequest();
       const result =
-        await this.googlePayService.startPaymentSession(paymentDataRequest);
+        await this.googlePayService.startPaymentSession(
+          paymentDataRequest,
+          checkoutStore.authToken,
+          checkoutStore.accountId
+        );
 
       if (result.success) {
         this.googlePayCompleted.emit({
           success: true,
           paymentData: result.paymentData,
+          paymentMethodId: result.paymentMethodId,
         });
       } else {
         this.googlePayCompleted.emit({

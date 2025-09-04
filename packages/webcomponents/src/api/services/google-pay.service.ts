@@ -1,3 +1,4 @@
+import { Api } from '../Api';
 import { 
   IGooglePayConfig,
   IGooglePayPaymentDataRequest,
@@ -15,14 +16,7 @@ import {
 export class GooglePayService implements IGooglePayService {
   private googlePayConfig?: GooglePayConfig;
   private googlePayClient?: IGooglePayClient;
-  private apiBaseUrl: string = 'https://ahalaburda.zapto.org/api/v1';
-
-  /**
-   * Set custom API base URL
-   */
-  public setApiBaseUrl(url: string): void {
-    this.apiBaseUrl = url;
-  }
+  private api = Api();
 
   /**
    * Initialize Google Pay configuration
@@ -46,26 +40,30 @@ export class GooglePayService implements IGooglePayService {
    * Process Google Pay payment via API
    */
   async processPayment(
+    authToken: string,
+    accountId: string,
     payload: IGooglePayTokenProcessRequest
   ): Promise<{ success: boolean; data: IGooglePayTokenResponse }> {
-    const endpoint = `${this.apiBaseUrl}/google_pay/process_token`;
-    const body = payload;
-    
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
+    const endpoint = 'google_pay/process_token';
 
-    const result: IGooglePayTokenResponse = await response.json();
+    try {
+      const result: IGooglePayTokenResponse = await this.api.post({
+        endpoint,
+        authToken,
+        body: payload,
+        headers: {
+          'Sub-Account': accountId,
+        },
+      });
 
-    return {
-      success: response.ok && result.status === 'success',
-      data: result
-    };
+      return {
+        success: result.id && !!result.data.token,
+        data: result,
+      };
+    } catch (error) {
+      console.error('Google Pay payment processing failed:', error);
+      throw new Error('Google Pay payment processing failed');
+    }
   }
 
   /**
@@ -97,8 +95,10 @@ export class GooglePayService implements IGooglePayService {
    * Start Google Pay payment session
    */
   public async startPaymentSession(
-    paymentDataRequest: IGooglePayPaymentDataRequest
-  ): Promise<{ success: boolean; paymentData?: IGooglePayPaymentData; error?: IGooglePayError }> {
+    paymentDataRequest: IGooglePayPaymentDataRequest,
+    authToken: string,
+    accountId: string
+  ): Promise<{ success: boolean; paymentData?: IGooglePayPaymentData; paymentMethodId?: string; error?: IGooglePayError }> {
     if (!this.googlePayConfig || !this.googlePayClient) {
       throw new Error('Google Pay not initialized. Call initialize() first.');
     }
@@ -131,12 +131,13 @@ export class GooglePayService implements IGooglePayService {
         }
       };
 
-      const paymentResult = await this.processPayment(tokenProcessRequest);
+      const paymentResult = await this.processPayment(authToken, accountId, tokenProcessRequest);
       
       if (paymentResult.success) {
         return {
           success: true,
-          paymentData: paymentData
+          paymentData: paymentData,
+          paymentMethodId: paymentResult.data.id
         };
       } else {
         return {

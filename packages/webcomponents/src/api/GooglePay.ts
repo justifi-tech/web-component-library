@@ -1,3 +1,5 @@
+import { PagingInfo } from "./Pagination";
+
 export enum GooglePayButtonType {
   PLAIN = 'plain',
   BUY = 'buy',
@@ -180,14 +182,19 @@ export interface IGooglePayTokenProcessRequest {
 }
 
 export interface IGooglePayTokenResponse {
-  transaction_id: string;
-  status: string;
-  amount: number;
-  currency: string;
+  id: string;
+  type: string;
+  page_info: PagingInfo | null;
+  data: {
+    account_id: string;
+    token: string;
+  }
 }
 
 export interface IGooglePayService {
   processPayment(
+    authToken: string,
+    accountId: string,
     payload: IGooglePayTokenProcessRequest
   ): Promise<{ success: boolean; data: IGooglePayTokenResponse }>;
 }
