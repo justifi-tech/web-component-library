@@ -16,7 +16,6 @@ import {
   ComponentErrorMessages,
   ComponentErrorSeverity,
   ICheckout,
-  ICheckoutPaymentMethod,
   ICheckoutStatus,
   PaymentMethodTypes,
 } from "../../api";
@@ -28,7 +27,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail } from "./ModularCheckout";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -295,9 +294,9 @@ export class ModularCheckout {
 
   // set the selected payment method to the checkout store from outside the component
   @Method()
-  async setSelectedPaymentMethod(paymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes }) {
+  async setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) {
     checkoutStore.selectedPaymentMethod = paymentMethod;
-    checkoutStore.paymentToken = (paymentMethod as ICheckoutPaymentMethod).id || undefined;
+    checkoutStore.paymentToken = paymentMethod.id || undefined;
   }
 
   // if validation fails, the error will be emitted by the component
@@ -309,8 +308,8 @@ export class ModularCheckout {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    const isNewCard = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card && (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
-    const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount && (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
+    const isNewCard = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card && checkoutStore.selectedPaymentMethod.id === undefined;
+    const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount && checkoutStore.selectedPaymentMethod.id === undefined;
 
     // For new card/bank account, validate payment method + billing.
     if (
@@ -355,10 +354,10 @@ export class ModularCheckout {
 
     const isNewCard =
       checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card &&
-      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
+      checkoutStore.selectedPaymentMethod.id === undefined;
     const isNewBankAccount =
       checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount &&
-      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id === undefined;
+      checkoutStore.selectedPaymentMethod.id === undefined;
     const isPlaid = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.plaid;
 
     const shouldTokenize = isNewCard || isNewBankAccount;

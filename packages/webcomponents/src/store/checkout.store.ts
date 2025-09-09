@@ -1,7 +1,10 @@
 import { createStore } from '@stencil/store';
 import { ICheckoutPaymentMethod, PaymentMethodTypes } from '../api';
 import { BillingFormFields } from '../components';
-import { PAYMENT_METHODS } from '../components/modular-checkout/ModularCheckout';
+import {
+  PAYMENT_METHODS,
+  SelectedPaymentMethod,
+} from '../components/modular-checkout/ModularCheckout';
 
 interface IInitialState {
   accountId: string;
@@ -27,7 +30,7 @@ interface IInitialState {
   paymentMethods: ICheckoutPaymentMethod[];
   paymentToken?: string;
   savePaymentMethod: boolean;
-  selectedPaymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes };
+  selectedPaymentMethod: SelectedPaymentMethod;
   totalAmount: number;
   plaidPublicToken?: string;
   plaidLinkTokenId?: string;

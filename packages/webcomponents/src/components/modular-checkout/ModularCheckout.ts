@@ -28,9 +28,11 @@ export enum PAYMENT_METHODS {
   PLAID = 'plaid',
 }
 
+export type SelectedPaymentMethod = { id?: string; type: PaymentMethodTypes };
+
 // Event detail payload for the checkout-changed event
 export interface CheckoutChangedEventDetail {
   availablePaymentMethodTypes: PAYMENT_METHODS[];
-  selectedPaymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes };
+  selectedPaymentMethod: SelectedPaymentMethod;
   savedPaymentMethods: ICheckoutPaymentMethod[];
 }

@@ -3,8 +3,8 @@ import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { ICheckoutPaymentMethod } from '../../../api';
-import { PAYMENT_METHOD_TYPES } from "../ModularCheckout";
+import { PaymentMethodTypes } from '../../../api';
+import { SelectedPaymentMethod } from "../ModularCheckout";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -21,18 +21,18 @@ export class SavedPaymentMethods {
     }
   }
 
-  onPaymentMethodOptionClick = (paymentMethod: ICheckoutPaymentMethod) => (e: Event) => {
+  onPaymentMethodOptionClick = (paymentMethod: SelectedPaymentMethod) => (e: Event) => {
     e.preventDefault();
     checkoutStore.selectedPaymentMethod = paymentMethod;
     checkoutStore.paymentToken = paymentMethod.id;
   };
 
-  isAllowedPaymentMethod = (paymentMethod: ICheckoutPaymentMethod) => {
-    if (paymentMethod.type === PAYMENT_METHOD_TYPES.CARD && checkoutStore.disableCreditCard) {
+  isAllowedPaymentMethod = (paymentMethodType: PaymentMethodTypes) => {
+    if (paymentMethodType === PaymentMethodTypes.card && checkoutStore.disableCreditCard) {
       return false;
     }
 
-    if (paymentMethod.type === PAYMENT_METHOD_TYPES.BANK_ACCOUNT && checkoutStore.disableBankAccount) {
+    if (paymentMethodType === PaymentMethodTypes.bankAccount && checkoutStore.disableBankAccount) {
       return false;
     }
 
@@ -48,12 +48,12 @@ export class SavedPaymentMethods {
       <StyledHost>
         <div class="saved-payment-methods">
           {checkoutStore.paymentMethods.length ? checkoutStore.paymentMethods
-            .filter(this.isAllowedPaymentMethod)
+            .filter((paymentMethod) => this.isAllowedPaymentMethod(paymentMethod.type as PaymentMethodTypes))
             .map((paymentMethod) => (
               <div
                 class="radio-list-item p-3"
                 part={radioListItem}
-                onClick={this.onPaymentMethodOptionClick(paymentMethod)}
+                onClick={this.onPaymentMethodOptionClick({ id: paymentMethod.id, type: paymentMethod.type as PaymentMethodTypes })}
               >
                 <form-control-radio
                   name="paymentMethodType"
