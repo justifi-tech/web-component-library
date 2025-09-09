@@ -1,4 +1,4 @@
-import { ICheckoutPaymentMethod, PaymentMethodTypes } from '../../api';
+import { ICheckoutPaymentMethod } from '../../api';
 
 export enum PAYMENT_MODE {
   ECOM = 'ecom',
@@ -28,7 +28,7 @@ export enum PAYMENT_METHODS {
   PLAID = 'plaid',
 }
 
-export type SelectedPaymentMethod = { id?: string; type: PaymentMethodTypes };
+export type SelectedPaymentMethod = { id?: string; type: PAYMENT_METHODS };
 
 // Event detail payload for the checkout-changed event
 export interface CheckoutChangedEventDetail {

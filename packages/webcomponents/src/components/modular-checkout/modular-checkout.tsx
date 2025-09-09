@@ -27,7 +27,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod } from "./ModularCheckout";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -231,7 +231,7 @@ export class ModularCheckout {
 
     if (success && token) {
       checkoutStore.paymentToken = paymentMethodId;
-      checkoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.applePay };
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.APPLE_PAY };
       this.submitCheckout();
     } else {
       console.error("Apple Pay completed but failed:", error);
@@ -308,13 +308,15 @@ export class ModularCheckout {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    const isNewCard = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card && checkoutStore.selectedPaymentMethod.id === undefined;
-    const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount && checkoutStore.selectedPaymentMethod.id === undefined;
+    // const isNewCard = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card && checkoutStore.selectedPaymentMethod.id === undefined;
+    // const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount && checkoutStore.selectedPaymentMethod.id === undefined;
+
+
+    const isNewPaymentMethod = checkoutStore.selectedPaymentMethod.id === undefined;
 
     // For new card/bank account, validate payment method + billing.
     if (
-      isNewCard ||
-      isNewBankAccount
+      isNewPaymentMethod
     ) {
       if (this.paymentMethodFormRef) promises.push(this.paymentMethodFormRef.validate());
       if (this.billingFormRef) promises.push(this.billingFormRef.validate());
@@ -353,12 +355,12 @@ export class ModularCheckout {
     const isValid = await this.validate();
 
     const isNewCard =
-      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card &&
+      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD &&
       checkoutStore.selectedPaymentMethod.id === undefined;
     const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount &&
+      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT &&
       checkoutStore.selectedPaymentMethod.id === undefined;
-    const isPlaid = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.plaid;
+    const isPlaid = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
 

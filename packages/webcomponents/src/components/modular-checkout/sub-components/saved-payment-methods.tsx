@@ -3,8 +3,7 @@ import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { PaymentMethodTypes } from '../../../api';
-import { SelectedPaymentMethod } from "../ModularCheckout";
+import { PAYMENT_METHODS, SelectedPaymentMethod } from "../ModularCheckout";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -27,12 +26,12 @@ export class SavedPaymentMethods {
     checkoutStore.paymentToken = paymentMethod.id;
   };
 
-  isAllowedPaymentMethod = (paymentMethodType: PaymentMethodTypes) => {
-    if (paymentMethodType === PaymentMethodTypes.card && checkoutStore.disableCreditCard) {
+  isAllowedPaymentMethod = (paymentMethodType: PAYMENT_METHODS) => {
+    if (paymentMethodType === PAYMENT_METHODS.NEW_CARD && checkoutStore.disableCreditCard) {
       return false;
     }
 
-    if (paymentMethodType === PaymentMethodTypes.bankAccount && checkoutStore.disableBankAccount) {
+    if (paymentMethodType === PAYMENT_METHODS.NEW_BANK_ACCOUNT && checkoutStore.disableBankAccount) {
       return false;
     }
 
@@ -48,12 +47,12 @@ export class SavedPaymentMethods {
       <StyledHost>
         <div class="saved-payment-methods">
           {checkoutStore.paymentMethods.length ? checkoutStore.paymentMethods
-            .filter((paymentMethod) => this.isAllowedPaymentMethod(paymentMethod.type as PaymentMethodTypes))
+            .filter((paymentMethod) => this.isAllowedPaymentMethod(paymentMethod.type as PAYMENT_METHODS))
             .map((paymentMethod) => (
               <div
                 class="radio-list-item p-3"
                 part={radioListItem}
-                onClick={this.onPaymentMethodOptionClick({ id: paymentMethod.id, type: paymentMethod.type as PaymentMethodTypes })}
+                onClick={this.onPaymentMethodOptionClick({ id: paymentMethod.id, type: paymentMethod.type as PAYMENT_METHODS })}
               >
                 <form-control-radio
                   name="paymentMethodType"

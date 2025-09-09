@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import { ICheckoutPaymentMethod, PaymentMethodTypes } from '../api';
+import { ICheckoutPaymentMethod } from '../api';
 import { BillingFormFields } from '../components';
 import {
   PAYMENT_METHODS,
@@ -62,7 +62,7 @@ const initialState: IInitialState = {
   paymentMethods: [],
   paymentToken: undefined,
   savePaymentMethod: false,
-  selectedPaymentMethod: { type: PaymentMethodTypes.card },
+  selectedPaymentMethod: { type: PAYMENT_METHODS.NEW_CARD },
   totalAmount: 0,
   plaidPublicToken: undefined,
   plaidLinkTokenId: undefined,
@@ -123,7 +123,7 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 }
 
 export function isNewCardSelected(): boolean {
-  return checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card;
+  return checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD;
 }
 
 export { checkoutStore as checkoutStore, onChange };
