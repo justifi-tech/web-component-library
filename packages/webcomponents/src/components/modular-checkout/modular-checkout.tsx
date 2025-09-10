@@ -17,7 +17,6 @@ import {
   ComponentErrorSeverity,
   ICheckout,
   ICheckoutStatus,
-  PaymentMethodTypes,
 } from "../../api";
 import {
   makeCheckoutComplete,
@@ -297,6 +296,8 @@ export class ModularCheckout {
   async setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) {
     checkoutStore.selectedPaymentMethod = paymentMethod;
     checkoutStore.paymentToken = paymentMethod.id || undefined;
+    console.log({paymentMethod}, checkoutStore.selectedPaymentMethod)
+
   }
 
   // if validation fails, the error will be emitted by the component
@@ -308,15 +309,12 @@ export class ModularCheckout {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    // const isNewCard = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card && checkoutStore.selectedPaymentMethod.id === undefined;
-    // const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.bankAccount && checkoutStore.selectedPaymentMethod.id === undefined;
-
-
-    const isNewPaymentMethod = checkoutStore.selectedPaymentMethod.id === undefined;
+    const isNewCard = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD
+    const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
     // For new card/bank account, validate payment method + billing.
     if (
-      isNewPaymentMethod
+      isNewCard || isNewBankAccount
     ) {
       if (this.paymentMethodFormRef) promises.push(this.paymentMethodFormRef.validate());
       if (this.billingFormRef) promises.push(this.billingFormRef.validate());
@@ -355,11 +353,10 @@ export class ModularCheckout {
     const isValid = await this.validate();
 
     const isNewCard =
-      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD &&
-      checkoutStore.selectedPaymentMethod.id === undefined;
+      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD
     const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT &&
-      checkoutStore.selectedPaymentMethod.id === undefined;
+      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
+
     const isPlaid = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
@@ -444,13 +441,15 @@ export class ModularCheckout {
 
     const mapTypeToPaymentMode = (type: string | undefined): string | undefined => {
       switch (type) {
-        case PaymentMethodTypes.card:
-        case PaymentMethodTypes.bankAccount:
-        case PaymentMethodTypes.plaid:
+        case PAYMENT_METHODS.NEW_CARD:
+        case PAYMENT_METHODS.SAVED_CARD:
+        case PAYMENT_METHODS.NEW_BANK_ACCOUNT:
+        case PAYMENT_METHODS.SAVED_BANK_ACCOUNT:
+        case PAYMENT_METHODS.PLAID:
           return PAYMENT_MODE.ECOM;
-        case PaymentMethodTypes.sezzle:
+        case PAYMENT_METHODS.SEZZLE:
           return PAYMENT_MODE.BNPL;
-        case PaymentMethodTypes.applePay:
+        case PAYMENT_METHODS.APPLE_PAY:
           return PAYMENT_MODE.APPLE_PAY;
         default:
           return undefined;
