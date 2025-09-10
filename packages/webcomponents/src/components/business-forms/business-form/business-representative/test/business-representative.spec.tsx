@@ -2,12 +2,12 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessRepresentative } from '../business-representative';
 import { FormController } from '../../../../../ui-components/form/form';
-import { businessIdentitySchemaUSA, businessIdentitySchemaCANADA } from '../../../schemas/business-identity-schema';
+import { identitySchemaUSA, identitySchemaCAN } from '../../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('justifi-business-representative', () => {
   const mockFormController = (initialValues = {}) => {
-    const formController = new FormController(businessIdentitySchemaUSA());
+    const formController = new FormController(identitySchemaUSA('representative'));
     formController.setInitialValues({ representative: initialValues });
     return formController;
   };
@@ -36,7 +36,7 @@ describe('justifi-business-representative', () => {
     });
 
     test('renders CAN SIN label and help text', async () => {
-      const formController = new FormController(businessIdentitySchemaCANADA());
+      const formController = new FormController(identitySchemaCAN('representative'));
       formController.setInitialValues({ representative: {} });
       
       const page = await newSpecPage({

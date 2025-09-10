@@ -1,4 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
+import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
 
 @Component({
   tag: 'toggleable-field',
@@ -38,17 +39,23 @@ export class ToggleableField {
 
     return (
       <div>
-        <label class="form-label">
+        <label class="form-label" part={label}>
           {this.label}
         </label>
-        <div class="d-flex align-items-center gap-2">
-          <span>****{this.readOnlyValue}</span>
-          <button 
-            type="button" 
-            class="btn btn-link p-0 text-decoration-underline" 
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            part={inputDisabled}
+            value={`****${this.readOnlyValue}`}
+            disabled />
+          <button
+            class="btn btn-secondary"
+            type="button"
+            part={buttonSecondary}
             onClick={this.handleUpdateClick}
           >
-            Update
+            Change
           </button>
         </div>
       </div>

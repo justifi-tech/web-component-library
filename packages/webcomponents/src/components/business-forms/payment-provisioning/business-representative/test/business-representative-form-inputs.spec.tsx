@@ -58,7 +58,7 @@ describe('justifi-business-representative-form-inputs', () => {
       const idField = page.root.querySelector('toggleable-field[fieldname="identification_number"]');
       expect(idField).toBeTruthy();
       expect(idField.getAttribute('label')).toBe('SIN');
-      expect(idField.getAttribute('helptext')).toBe('Enter your full Social Insurance Number. It is required for Federal OFAC check.');
+      expect(idField.getAttribute('helptext')).toBe('Enter your full Social Insurance Number.');
     });
   });
 
