@@ -124,9 +124,10 @@ export class BusinessRepresentative {
               />
             </div>
             <div class="col-12 col-md-8">
-              <form-control-number-masked
-                name="identification_number"
+              <toggleable-field
+                fieldName="identification_number"
                 label={this.identificationNumberLabel}
+                readOnlyValue={this.representative?.ssn_last4}
                 defaultValue={representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}

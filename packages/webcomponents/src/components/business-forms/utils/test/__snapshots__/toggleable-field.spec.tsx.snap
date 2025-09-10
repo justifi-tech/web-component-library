@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toggleable-field when no readOnlyValue is provided should render as regular input field 1`] = `
+<toggleable-field>
+  <form-control-number-masked defaultvalue="initial value" helptext="Help text" label="Test Field" name="test_field"></form-control-number-masked>
+</toggleable-field>
+`;
+
+exports[`toggleable-field when readOnlyValue is provided should render read-only display with Update button 1`] = `
+<toggleable-field>
+  <div>
+    <label class="form-label">
+      Tax ID
+    </label>
+    <div class="align-items-center d-flex gap-2">
+      <span>
+        ****1234
+      </span>
+      <button class="btn btn-link p-0 text-decoration-underline" type="button">
+        Update
+      </button>
+    </div>
+  </div>
+</toggleable-field>
+`;

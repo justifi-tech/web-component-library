@@ -23,7 +23,7 @@ exports[`justifi-business-core-info Country-specific tax ID label and help text 
         <form-control-text label="Industry" name="industry"></form-control-text>
       </div>
       <div class="col-12 col-md-6">
-        <form-control-text helptext="Business Numbers (BN) are nine digits. Enter value without spaces or dashes." label="Business Number (BN)" maxlength="9" name="tax_id"></form-control-text>
+        <toggleable-field fieldname="tax_id" helptext="Business Numbers (BN) are nine digits. Enter value without spaces or dashes." label="Business Number (BN)" maxlength="9"></toggleable-field>
       </div>
       <div class="col-12">
         <form-control-text label="Website URL" name="website_url"></form-control-text>
@@ -62,7 +62,7 @@ exports[`justifi-business-core-info Country-specific tax ID label and help text 
         <form-control-text label="Industry" name="industry"></form-control-text>
       </div>
       <div class="col-12 col-md-6">
-        <form-control-text helptext="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes." label="Tax ID (EIN or SSN)" maxlength="9" name="tax_id"></form-control-text>
+        <toggleable-field fieldname="tax_id" helptext="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes." label="Tax ID (EIN or SSN)" maxlength="9"></toggleable-field>
       </div>
       <div class="col-12">
         <form-control-text label="Website URL" name="website_url"></form-control-text>

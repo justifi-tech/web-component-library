@@ -46,11 +46,13 @@ graph TD;
   justifi-business-core-info --> form-control-text
   justifi-business-core-info --> form-control-select
   justifi-business-core-info --> form-control-date
+  justifi-business-core-info --> toggleable-field
   justifi-business-core-info --> form-control-number-masked
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
+  toggleable-field --> form-control-number-masked
   form-control-number-masked --> form-control-tooltip
   justifi-legal-address-form --> justifi-form-address-fields
   justifi-form-address-fields --> form-control-text
@@ -61,6 +63,7 @@ graph TD;
   justifi-business-representative --> form-control-text
   justifi-business-representative --> form-control-number-masked
   justifi-business-representative --> form-control-date
+  justifi-business-representative --> toggleable-field
   justifi-business-representative --> justifi-identity-address-form
   justifi-identity-address-form --> justifi-form-address-fields
   style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px

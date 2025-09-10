@@ -86,9 +86,10 @@ export class RepresentativeFormInputs {
               />
             </div>
             <div class="col-12 col-md-8">
-              <form-control-number-masked
-                name="identification_number"
+              <toggleable-field
+                fieldName="identification_number"
                 label={countryLabels[this.country].idNumberLabel}
+                readOnlyValue={this.representativeDefaultValue?.ssn_last4}
                 defaultValue={this.representativeDefaultValue?.identification_number}
                 errorText={this.errors.identification_number}
                 inputHandler={this.inputHandler}

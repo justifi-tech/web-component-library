@@ -174,9 +174,10 @@ export class BusinessCoreInfoFormStepCore {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-text
-                name="tax_id"
+              <toggleable-field
+                fieldName="tax_id"
                 label={countryLabels[this.country].taxIdLabel}
+                readOnlyValue={this.coreInfo?.tax_id_last4}
                 defaultValue={coreInfoDefaultValue.tax_id}
                 errorText={this.errors.tax_id}
                 inputHandler={this.inputHandler}
