@@ -26,7 +26,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS } from "./ModularCheckout";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -156,7 +156,7 @@ export class ModularCheckout {
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
     checkoutStore.checkoutLoaded = true;
-    checkoutStore.paymentMethods = checkout.payment_methods;
+    checkoutStore.paymentMethods = checkout.payment_methods.map((paymentMethod) => new PaymentMethod(paymentMethod));
     checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
     checkoutStore.paymentDescription = checkout.payment_description;
     checkoutStore.totalAmount = checkout.total_amount;
@@ -296,8 +296,6 @@ export class ModularCheckout {
   async setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) {
     checkoutStore.selectedPaymentMethod = paymentMethod;
     checkoutStore.paymentToken = paymentMethod.id || undefined;
-    console.log({paymentMethod}, checkoutStore.selectedPaymentMethod)
-
   }
 
   // if validation fails, the error will be emitted by the component

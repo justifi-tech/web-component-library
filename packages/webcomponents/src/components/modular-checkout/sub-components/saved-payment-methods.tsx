@@ -3,8 +3,7 @@ import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { PAYMENT_METHODS, PAYMENT_METHOD_TYPES } from "../ModularCheckout";
-import { ICheckoutPaymentMethod } from "../../../api";
+import { PAYMENT_METHODS, SavedPaymentMethod } from "../ModularCheckout";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -21,24 +20,21 @@ export class SavedPaymentMethods {
     }
   }
 
-  onPaymentMethodOptionClick = (paymentMethod: ICheckoutPaymentMethod) => (e: Event) => {
+  onPaymentMethodOptionClick = (paymentMethod: SavedPaymentMethod) => (e: Event) => {
     e.preventDefault();
-    const TYPE = {
-      card: PAYMENT_METHODS.SAVED_CARD,
-      bank_account: PAYMENT_METHODS.SAVED_BANK_ACCOUNT,
-    }
-  
-    checkoutStore.selectedPaymentMethod = { id: paymentMethod.id, type: TYPE[paymentMethod.type] }
-
+    checkoutStore.selectedPaymentMethod = { id: paymentMethod.id, type: paymentMethod.type }
     checkoutStore.paymentToken = paymentMethod.id;
   };
 
-  isAllowedPaymentMethod = (paymentMethodType: PAYMENT_METHOD_TYPES) => {
-    if (paymentMethodType === PAYMENT_METHOD_TYPES.CARD && checkoutStore.disableCreditCard) {
+  isAllowedPaymentMethod = (paymentMethodType: PAYMENT_METHODS) => {
+    const isCard = paymentMethodType === PAYMENT_METHODS.SAVED_CARD || paymentMethodType === PAYMENT_METHODS.NEW_CARD;
+    const isBankAccount = paymentMethodType === PAYMENT_METHODS.SAVED_BANK_ACCOUNT || paymentMethodType === PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+
+    if (isCard && checkoutStore.disableCreditCard) {
       return false;
     }
 
-    if (paymentMethodType === PAYMENT_METHOD_TYPES.BANK_ACCOUNT && checkoutStore.disableBankAccount) {
+    if (isBankAccount && checkoutStore.disableBankAccount) {
       return false;
     }
 

@@ -1,8 +1,8 @@
 import { createStore } from '@stencil/store';
-import { ICheckoutPaymentMethod } from '../api';
 import { BillingFormFields } from '../components';
 import {
   PAYMENT_METHODS,
+  SavedPaymentMethod,
   SelectedPaymentMethod,
 } from '../components/modular-checkout/ModularCheckout';
 
@@ -27,7 +27,7 @@ interface IInitialState {
   paymentCurrency: string;
   paymentDescription: string;
   paymentMethodGroupId: string | undefined;
-  paymentMethods: ICheckoutPaymentMethod[];
+  paymentMethods: SavedPaymentMethod[];
   paymentToken?: string;
   savePaymentMethod: boolean;
   selectedPaymentMethod: SelectedPaymentMethod;
@@ -86,10 +86,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     checkoutStore.paymentMethods?.length
   ) {
     const hasSavedCard = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === 'card'
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_CARD
     );
     const hasSavedBank = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === 'bank_account'
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_BANK_ACCOUNT
     );
 
     if (hasSavedCard && !checkoutStore.disableCreditCard) {

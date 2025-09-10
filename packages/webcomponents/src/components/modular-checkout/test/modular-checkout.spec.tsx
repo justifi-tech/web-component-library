@@ -2,6 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { ModularCheckout } from '../modular-checkout';
 import { checkoutStore } from '../../../store/checkout.store';
 import { SavedPaymentMethods } from '../sub-components/saved-payment-methods';
+import { PAYMENT_METHODS } from '../ModularCheckout';
 
 describe('justifi-modular-checkout', () => {
   beforeAll(() => {
@@ -24,7 +25,7 @@ describe('justifi-modular-checkout', () => {
 
     // Provide saved payment methods in store
     checkoutStore.paymentMethods = [
-      { id: 'pm_123', type: 'card', acct_last_four: '4242', brand: 'visa' } as any,
+      { id: 'pm_123', type: PAYMENT_METHODS.SAVED_CARD, acct_last_four: '4242', brand: 'visa' } as any,
     ];
 
     await page.waitForChanges();
@@ -108,8 +109,8 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.bnplEnabled = true;
       await page.waitForChanges();
       checkoutStore.paymentMethods = [
-        { id: 'pm1', type: 'card' } as any,
-        { id: 'pm2', type: 'bank_account' } as any,
+        { id: 'pm1', type: PAYMENT_METHODS.SAVED_CARD } as any,
+        { id: 'pm2', type: PAYMENT_METHODS.SAVED_BANK_ACCOUNT } as any,
       ];
       await page.waitForChanges();
 
