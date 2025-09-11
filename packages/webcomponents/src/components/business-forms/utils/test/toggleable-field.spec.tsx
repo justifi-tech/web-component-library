@@ -35,7 +35,7 @@ describe('toggleable-field', () => {
       expect(inputField.getAttribute('helptext')).toBe('Help text');
 
       // Should not show read-only display
-      const readOnlyDisplay = page.root.querySelector('span');
+      const readOnlyDisplay = page.root.querySelector('input[disabled=""]');
       expect(readOnlyDisplay).toBeNull();
 
       // Should not show Update button
@@ -63,7 +63,7 @@ describe('toggleable-field', () => {
   });
 
   describe('when readOnlyValue is provided', () => {
-    it('should render read-only display with Update button', async () => {
+    it('should render read-only display with Change button', async () => {
       const page = await newSpecPage({
         components: [ToggleableField],
         template: () => (
@@ -84,14 +84,14 @@ describe('toggleable-field', () => {
       expect(label.textContent).toBe('Tax ID');
 
       // Should show masked value
-      const valueDisplay = page.root.querySelector('span');
+      const valueDisplay = page.root.querySelector('input');
       expect(valueDisplay).toBeTruthy();
-      expect(valueDisplay.textContent).toBe('****1234');
+      expect(valueDisplay.value).toBe('****1234');
 
       // Should show Update button
       const updateButton = page.root.querySelector('button');
       expect(updateButton).toBeTruthy();
-      expect(updateButton.textContent.trim()).toBe('Update');
+      expect(updateButton.textContent.trim()).toBe('Change');
       expect(updateButton.type).toBe('button');
 
       // Should not show input field initially
@@ -134,7 +134,7 @@ describe('toggleable-field', () => {
       });
 
       // Initially in read-only mode
-      expect(page.root.querySelector('span')).toBeTruthy();
+      expect(page.root.querySelector('input[disabled=""]')).toBeTruthy();
       expect(page.root.querySelector('form-control-number-masked')).toBeNull();
 
       // Click Update button
@@ -152,7 +152,7 @@ describe('toggleable-field', () => {
       expect(inputField.getAttribute('helptext')).toBe('Help text should show in edit mode');
 
       // Should not show read-only display anymore
-      expect(page.root.querySelector('span')).toBeNull();
+      expect(page.root.querySelector('input[disabled=""]')).toBeNull();
       expect(page.root.querySelector('button')).toBeNull();
     });
 
@@ -177,7 +177,7 @@ describe('toggleable-field', () => {
         expect(inputField).toBeTruthy();
 
         // Should not show read-only display
-        const readOnlyDisplay = page.root.querySelector('span');
+        const readOnlyDisplay = page.root.querySelector('input[disabled=""]');
         expect(readOnlyDisplay).toBeNull();
       }
     });

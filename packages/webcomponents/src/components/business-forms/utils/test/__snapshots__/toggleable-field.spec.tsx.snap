@@ -6,6 +6,22 @@ exports[`toggleable-field when no readOnlyValue is provided should render as reg
 </toggleable-field>
 `;
 
+exports[`toggleable-field when readOnlyValue is provided should render read-only display with Change button 1`] = `
+<toggleable-field>
+  <div>
+    <label class="form-label" part="label text color font-family">
+      Tax ID
+    </label>
+    <div class="input-group mb-3">
+      <input class="form-control" disabled="" part="input-disabled input text color font-family background-color" type="text" value="****1234">
+      <button class="btn btn-secondary" part="button-secondary button text color font-family" type="button">
+        Change
+      </button>
+    </div>
+  </div>
+</toggleable-field>
+`;
+
 exports[`toggleable-field when readOnlyValue is provided should render read-only display with Update button 1`] = `
 <toggleable-field>
   <div>

@@ -55,7 +55,7 @@ describe('justifi-business-representative', () => {
       const idField = page.root.querySelector('toggleable-field[fieldname="identification_number"]');
       expect(idField).toBeTruthy();
       expect(idField.getAttribute('label')).toBe('SIN');
-      expect(idField.getAttribute('helptext')).toBe('Enter your full Social Insurance Number. It is required for Federal OFAC check.');
+      expect(idField.getAttribute('helptext')).toBe('Enter your full Social Insurance Number.');
     });
   });
 
@@ -79,7 +79,7 @@ describe('justifi-business-representative', () => {
       const idField = page.root.querySelector('toggleable-field[fieldname="identification_number"]');
       expect(idField).toBeTruthy();
       expect(idField.getAttribute('readonlyvalue')).toBe(null);
-      expect(idField.getAttribute('mask')).toBe('999-99-9999');
+      expect(idField.getAttribute('mask')).toBe('000-00-0000');
     });
 
     test('shows read-only display when ssn_last4 is present', async () => {
