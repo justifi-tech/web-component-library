@@ -27,8 +27,8 @@ export class SavedPaymentMethods {
   };
 
   isAllowedPaymentMethod = (paymentMethodType: PAYMENT_METHODS) => {
-    const isCard = paymentMethodType === PAYMENT_METHODS.SAVED_CARD || paymentMethodType === PAYMENT_METHODS.NEW_CARD;
-    const isBankAccount = paymentMethodType === PAYMENT_METHODS.SAVED_BANK_ACCOUNT || paymentMethodType === PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+    const isCard = paymentMethodType === PAYMENT_METHODS.SAVED_CARD;
+    const isBankAccount = paymentMethodType === PAYMENT_METHODS.SAVED_BANK_ACCOUNT;
 
     if (isCard && checkoutStore.disableCreditCard) {
       return false;
