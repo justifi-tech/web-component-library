@@ -43,11 +43,11 @@ export class BusinessCoreInfoFormStepCore {
   }
 
   componentWillLoad() {
-    this.getBusiness && this.getData();
     const schema = (this.country === CountryCode.CAN)
       ? businessCoreInfoSchemaCAN(this.allowOptionalFields)
       : businessCoreInfoSchemaUSA(this.allowOptionalFields);
     this.formController = new FormController(schema);
+    this.getData();
   }
 
   componentDidLoad() {
@@ -57,6 +57,8 @@ export class BusinessCoreInfoFormStepCore {
   }
 
   private getData = () => {
+    if (!this.getBusiness) return;
+
     this.formLoading.emit(true);
     this.isLoading = true;
     this.getBusiness({
