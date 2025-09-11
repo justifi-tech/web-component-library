@@ -98,7 +98,7 @@ export class PlaidPaymentMethod {
   @Watch('isSelected')
   onSelectionChange(newValue: boolean) {
     // Ensure store is updated when component selection changes
-    if (newValue && checkoutStore.selectedPaymentMethod.type !== PAYMENT_METHODS.PLAID) {
+    if (newValue && checkoutStore.selectedPaymentMethod?.type !== PAYMENT_METHODS.PLAID) {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
     }
 
@@ -136,7 +136,7 @@ export class PlaidPaymentMethod {
 
   componentWillLoad() {
     // Initialize selection state based on store
-    this.isSelected = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
+    this.isSelected = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
   }
 
   waitForStoreAndInitialize = () => {
@@ -621,7 +621,7 @@ export class PlaidPaymentMethod {
 
   // Watch for store changes to sync component state
   private syncWithStore = () => {
-    const shouldBeSelected = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
+    const shouldBeSelected = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
 
     if (this.isSelected !== shouldBeSelected) {
       this.isSelected = shouldBeSelected;

@@ -93,6 +93,6 @@ export class PaymentMethod implements SavedPaymentMethod {
 // Event detail payload for the checkout-changed event
 export interface CheckoutChangedEventDetail {
   availablePaymentMethodTypes: PAYMENT_METHODS[];
-  selectedPaymentMethod: SelectedPaymentMethod;
+  selectedPaymentMethod: SelectedPaymentMethod | undefined;
   savedPaymentMethods: SavedPaymentMethod[];
 }

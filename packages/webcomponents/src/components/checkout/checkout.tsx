@@ -142,7 +142,7 @@ export class Checkout {
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.SEZZLE}
-                        checked={checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.SEZZLE}
+                        checked={checkoutStore?.selectedPaymentMethod?.type === PAYMENT_METHODS.SEZZLE}
                         label={
                           <justifi-sezzle-payment-method
                             ref={(el) => (this.sezzlePaymentMethodRef = el)}
@@ -156,7 +156,7 @@ export class Checkout {
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.PLAID}
-                        checked={checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID}
+                        checked={checkoutStore?.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID}
                         label={
                           <justifi-plaid-payment-method
                             ref={(el) => (this.plaidPaymentMethodRef = el)}

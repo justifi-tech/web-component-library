@@ -30,7 +30,7 @@ interface IInitialState {
   paymentMethods: SavedPaymentMethod[];
   paymentToken?: string;
   savePaymentMethod: boolean;
-  selectedPaymentMethod: SelectedPaymentMethod;
+  selectedPaymentMethod: SelectedPaymentMethod | undefined;
   totalAmount: number;
   plaidPublicToken?: string;
   plaidLinkTokenId?: string;
@@ -62,7 +62,7 @@ const initialState: IInitialState = {
   paymentMethods: [],
   paymentToken: undefined,
   savePaymentMethod: false,
-  selectedPaymentMethod: { type: PAYMENT_METHODS.NEW_CARD },
+  selectedPaymentMethod: undefined,
   totalAmount: 0,
   plaidPublicToken: undefined,
   plaidLinkTokenId: undefined,
@@ -123,7 +123,7 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 }
 
 export function isNewCardSelected(): boolean {
-  return checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD;
+  return checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD;
 }
 
 export { checkoutStore as checkoutStore, onChange };

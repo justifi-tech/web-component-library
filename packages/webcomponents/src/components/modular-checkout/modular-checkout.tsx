@@ -306,8 +306,8 @@ export class ModularCheckout {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    const isNewCard = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD
-    const isNewBankAccount = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
+    const isNewCard = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
+    const isNewBankAccount = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
     // For new card/bank account, validate payment method + billing.
     if (
@@ -350,9 +350,9 @@ export class ModularCheckout {
     const isValid = await this.validate();
 
     const isNewCard =
-      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_CARD
+      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
     const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
+      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
     const isPlaid = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
 
@@ -454,7 +454,7 @@ export class ModularCheckout {
     };
 
     payment = {
-      payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod.type) as string,
+      payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
       payment_token: checkoutStore.paymentToken,
     };
 
