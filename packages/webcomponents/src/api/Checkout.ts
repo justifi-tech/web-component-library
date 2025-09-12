@@ -1,6 +1,7 @@
 import { IApiResponse } from './Api';
 import { CurrencyTypes } from './Payment';
 import { formatCurrency } from '../utils/utils';
+import { PAYMENT_METHOD_TYPES } from '../components/modular-checkout/ModularCheckout';
 
 export interface IBnpl {
   provider: string;
@@ -235,7 +236,7 @@ export type AccountType = 'checking' | 'savings';
 
 export interface ICheckoutPaymentMethod {
   id: string;
-  type?: string;
+  type: PAYMENT_METHOD_TYPES;
   status: string;
   invalid_reason: null;
   name: string;

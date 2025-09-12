@@ -1,7 +1,10 @@
 import { createStore } from '@stencil/store';
-import { ICheckoutPaymentMethod, PaymentMethodTypes } from '../api';
 import { BillingFormFields } from '../components';
-import { PAYMENT_METHODS } from '../components/modular-checkout/ModularCheckout';
+import {
+  PAYMENT_METHODS,
+  SavedPaymentMethod,
+  SelectedPaymentMethod,
+} from '../components/modular-checkout/ModularCheckout';
 
 interface IInitialState {
   accountId: string;
@@ -24,10 +27,10 @@ interface IInitialState {
   paymentCurrency: string;
   paymentDescription: string;
   paymentMethodGroupId: string | undefined;
-  paymentMethods: ICheckoutPaymentMethod[];
+  paymentMethods: SavedPaymentMethod[];
   paymentToken?: string;
   savePaymentMethod: boolean;
-  selectedPaymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes };
+  selectedPaymentMethod: SelectedPaymentMethod | undefined;
   totalAmount: number;
   plaidPublicToken?: string;
   plaidLinkTokenId?: string;
@@ -59,7 +62,7 @@ const initialState: IInitialState = {
   paymentMethods: [],
   paymentToken: undefined,
   savePaymentMethod: false,
-  selectedPaymentMethod: { type: PaymentMethodTypes.card },
+  selectedPaymentMethod: undefined,
   totalAmount: 0,
   plaidPublicToken: undefined,
   plaidLinkTokenId: undefined,
@@ -83,10 +86,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     checkoutStore.paymentMethods?.length
   ) {
     const hasSavedCard = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === 'card'
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_CARD
     );
     const hasSavedBank = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === 'bank_account'
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_BANK_ACCOUNT
     );
 
     if (hasSavedCard && !checkoutStore.disableCreditCard) {
@@ -120,7 +123,7 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 }
 
 export function isNewCardSelected(): boolean {
-  return checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card;
+  return checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD;
 }
 
 export { checkoutStore as checkoutStore, onChange };
