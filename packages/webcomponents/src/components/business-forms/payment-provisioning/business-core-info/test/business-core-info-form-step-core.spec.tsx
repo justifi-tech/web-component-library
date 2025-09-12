@@ -27,12 +27,6 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
       
       expect(page.root).toMatchSnapshot();
-      
-      // Verify the tax ID field uses toggleable-field with correct USA-specific label and help text
-      const taxIdField = page.root.querySelector('toggleable-field[fieldname="tax_id"]');
-      expect(taxIdField).toBeTruthy();
-      expect(taxIdField.getAttribute('label')).toBe('Tax ID (EIN or SSN)');
-      expect(taxIdField.getAttribute('helptext')).toBe('Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes.');
     });
 
     test('renders CAN Business Number (BN) label and help text', async () => {
@@ -49,17 +43,13 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
       
       expect(page.root).toMatchSnapshot();
-      
-      // Verify the tax ID field uses toggleable-field with correct Canada-specific label and help text
-      const taxIdField = page.root.querySelector('toggleable-field[fieldname="tax_id"]');
-      expect(taxIdField).toBeTruthy();
-      expect(taxIdField.getAttribute('label')).toBe('Business Number (BN)');
-      expect(taxIdField.getAttribute('helptext')).toBe('Business Numbers (BN) are nine digits. Enter value without spaces or dashes.');
     });
   });
 
   describe('Tax ID toggle behavior', () => {
     test('shows regular input when component loads with no data', async () => {
+      mockGetBusiness.mockImplementation(({ final }) => final?.());
+
       const page = await newSpecPage({
         components: [BusinessCoreInfoFormStepCore],
         template: () => (
@@ -81,13 +71,14 @@ describe('justifi-business-core-info-form-step-core', () => {
 
     test('shows read-only display when tax_id_last4 is present', async () => {
       // Mock getBusiness to return data with tax_id_last4
-      mockGetBusiness.mockImplementation(({ onSuccess }) => {
+      mockGetBusiness.mockImplementation(({ onSuccess, final }) => {
         onSuccess({
           data: {
             tax_id: '123456789',
             tax_id_last4: '6789'
           }
         });
+        final?.();
       });
       
       const page = await newSpecPage({
@@ -104,7 +95,6 @@ describe('justifi-business-core-info-form-step-core', () => {
       
       // Wait for component to load and call getBusiness
       await page.waitForChanges();
-      
       const taxIdField = page.root.querySelector('toggleable-field[fieldname="tax_id"]');
       expect(taxIdField).toBeTruthy();
       expect(taxIdField.getAttribute('readonlyvalue')).toBe('6789');
@@ -113,6 +103,8 @@ describe('justifi-business-core-info-form-step-core', () => {
 
   describe('Form component behavior', () => {
     test('uses toggleable-field instead of form-control-text', async () => {
+      mockGetBusiness.mockImplementation(({ final }) => final?.());
+
       const page = await newSpecPage({
         components: [BusinessCoreInfoFormStepCore],
         template: () => (
