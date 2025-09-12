@@ -27,10 +27,10 @@ const meta: Meta = {
     disabled: { table: { category: "props" } },
     showSkeleton: { table: { category: "props", defaultValue: { summary: "true" } } },
 
-    applePayStarted: { table: { category: "events" } },
-    applePayCompleted: { table: { category: "events" } },
-    applePayCancelled: { table: { category: "events" } },
-    applePayError: { table: { category: "events" } },
+    applePayStarted: { table: { category: "events", type: { summary: '() => void' } } },
+    applePayCompleted: { table: { category: "events", type: { summary: '{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: any }' } } },
+    applePayCancelled: { table: { category: "events", type: { summary: '() => void' } } },
+    applePayError: { table: { category: "events", type: { summary: '{ error: string; code: string }' } } },
   },
   parameters: {
     actions: {

@@ -16,6 +16,15 @@ import {
   IApplePayToken,
 } from '../ApplePay';
 
+// Centralized error codes for Apple Pay service
+export enum ApplePayServiceErrorCode {
+  APPLE_PAY_UNAVAILABLE = 'APPLE_PAY_UNAVAILABLE',
+  SESSION_ERROR = 'SESSION_ERROR',
+  MERCHANT_VALIDATION_ERROR = 'MERCHANT_VALIDATION_ERROR',
+  PAYMENT_PROCESSING_ERROR = 'PAYMENT_PROCESSING_ERROR',
+  USER_CANCELLED = 'USER_CANCELLED',
+}
+
 export class ApplePayService implements IApplePayService {
   private applePayConfig?: ApplePayConfig;
   private currentSession?: IApplePaySession;
@@ -178,7 +187,7 @@ export class ApplePayService implements IApplePayService {
           return reject({
             success: false,
             error: {
-              code: 'APPLE_PAY_UNAVAILABLE',
+              code: ApplePayServiceErrorCode.APPLE_PAY_UNAVAILABLE,
               message:
                 'ApplePaySession API is not available in this environment',
             },
@@ -208,7 +217,7 @@ export class ApplePayService implements IApplePayService {
         reject({
           success: false,
           error: {
-            code: 'SESSION_ERROR',
+            code: ApplePayServiceErrorCode.SESSION_ERROR,
             message:
               error instanceof Error
                 ? error.message
@@ -297,7 +306,7 @@ export class ApplePayService implements IApplePayService {
         reject({
           success: false,
           error: {
-            code: 'MERCHANT_VALIDATION_ERROR',
+            code: ApplePayServiceErrorCode.MERCHANT_VALIDATION_ERROR,
             message:
               error instanceof Error
                 ? error.message
@@ -354,7 +363,7 @@ export class ApplePayService implements IApplePayService {
           reject({
             success: false,
             error: {
-              code: 'PAYMENT_PROCESSING_ERROR',
+              code: ApplePayServiceErrorCode.PAYMENT_PROCESSING_ERROR,
               message: 'Payment processing failed',
             },
           });
@@ -371,7 +380,7 @@ export class ApplePayService implements IApplePayService {
         reject({
           success: false,
           error: {
-            code: 'PAYMENT_PROCESSING_ERROR',
+            code: ApplePayServiceErrorCode.PAYMENT_PROCESSING_ERROR,
             message:
               error instanceof Error
                 ? error.message
@@ -445,7 +454,7 @@ export class ApplePayService implements IApplePayService {
       reject({
         success: false,
         error: {
-          code: 'USER_CANCELLED',
+          code: ApplePayServiceErrorCode.USER_CANCELLED,
           message: 'User cancelled the Apple Pay session',
         },
       });
@@ -462,7 +471,7 @@ export class ApplePayService implements IApplePayService {
         reject({
           success: false,
           error: {
-            code: 'SESSION_ERROR',
+            code: ApplePayServiceErrorCode.SESSION_ERROR,
             message: 'Apple Pay session error occurred',
           },
         });

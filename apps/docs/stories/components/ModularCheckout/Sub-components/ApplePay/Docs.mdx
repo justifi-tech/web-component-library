@@ -28,6 +28,36 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 - `applePayCancelled`
 - `applePayError`
 
+### Event detail shapes
+
+- `applePayCompleted`
+  - Detail: `{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: any }`
+- `applePayError`
+  - Detail: `{ error: string; code: string }`
+  - `code` values: `CONFIG_ERROR`, `NOT_SUPPORTED`, `NOT_AVAILABLE`, `INITIALIZATION_ERROR`, `PAYMENT_FAILED`
+
+### Listening for events
+
+```ts
+const applePay = document.querySelector('justifi-apple-pay');
+
+applePay.addEventListener(
+  'applePayError',
+  (event: CustomEvent<{ error: string; code: string }>) => {
+    console.error('Apple Pay error', event.detail.error, event.detail.code);
+  }
+);
+
+applePay.addEventListener(
+  'applePayCompleted',
+  (event: CustomEvent<{ success: boolean; paymentMethodId?: string }>) => {
+    if (event.detail.success) {
+      console.log('Apple Pay tokenized', event.detail.paymentMethodId);
+    }
+  }
+);
+```
+
 ## Example
 
 <ComponentBox>
