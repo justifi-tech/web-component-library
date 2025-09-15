@@ -1,5 +1,5 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
-import { ComponentBox } from '../../../../utils/documentation-components';
+import { ComponentBox, Banner } from '../../../../utils/documentation-components';
 import * as Story from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
 
@@ -12,6 +12,8 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 />
 
 <Title />
+
+<Banner title="Coming soon!" message="This is a preview of what is to come in an upcoming version." />
 
 ---
 
@@ -28,10 +30,3 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 - `applePayCancelled`
 - `applePayError`
 
-## Example
-
-<ComponentBox>
-  <justifi-modular-checkout auth-token="123abc" checkout-id="cho_123">
-    <justifi-apple-pay />
-  </justifi-modular-checkout>
-</ComponentBox>

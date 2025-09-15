@@ -74,3 +74,37 @@ export const ComponentBox = ({ children }: { children: any }) => {
     </div>
   );
 }
+
+
+export const Banner = ({ title, message }: { title?: string; message?: string }) => {
+  return (
+    <div style={{
+      backgroundColor: '#FFF7DB',
+      padding: '16px',
+      marginBottom: '16px',
+      marginTop: '20px',
+      borderRadius: '4px',
+      border: '1px solidrgb(24, 20, 20)'
+    }}>
+      {title && (
+        <h3 style={{
+          margin: '0 0 8px 0',
+          fontSize: '18px',
+          fontWeight: 'bold',
+          color: '#2E3438'
+        }}>
+          {title}
+        </h3>
+      )}
+      {message && (
+        <p style={{
+          margin: '0',
+          fontSize: '14px',
+          color: '#2E3438'
+        }}>
+          {message}
+        </p>
+      )}
+    </div>
+  );
+}
