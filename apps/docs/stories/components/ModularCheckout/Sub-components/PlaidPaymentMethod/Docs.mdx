@@ -1,7 +1,7 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../../../utils';
 import { codeExampleFull } from './example';
-import { ComponentBox } from '../../../../utils/documentation-components';
+import { ComponentBox, Banner } from '../../../../utils/documentation-components';
 import * as JustifiPlaidPaymentMethod from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
 
@@ -14,6 +14,8 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 />
 
 <Title />
+
+<Banner title="Coming soon!" message="This is a preview of what is to come in an upcoming version." />
 
 ---
 
@@ -30,17 +32,5 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 The component automatically loads the Plaid Link SDK script and initializes the flow when selected. It handles token exchange with your backend to create a payment token for checkout completion.
 
 > Note: This component renders nothing and logs a console warning when bank account verification is not enabled for the checkout (`payment_settings.bank_account_verification !== true`).
-
-# Example Usage
-
----
-
-<ComponentBox>
-  <justifi-modular-checkout auth-token="123abc" checkout-id="cho_123">
-    <justifi-plaid-payment-method />
-  </justifi-modular-checkout>
-</ComponentBox>
-
----
 
 <Source dark language="html" code={codeExampleFull} />

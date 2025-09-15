@@ -2,15 +2,15 @@ import { FunctionalComponent, h } from "@stencil/core";
 import { Skeleton } from "../../../ui-components";
 
 interface ApplePaySkeletonProps {
-  isReady: boolean;
+  isLoading: boolean;
 }
 
 const ApplePaySkeleton: FunctionalComponent<ApplePaySkeletonProps> = (
   props
 ) => {
-  const { isReady } = props;
+  const { isLoading } = props;
 
-  if (isReady) {
+  if (!isLoading) {
     return null;
   }
 

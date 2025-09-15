@@ -3,8 +3,7 @@ import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { ICheckoutPaymentMethod } from '../../../api';
-import { PAYMENT_METHOD_TYPES } from "../ModularCheckout";
+import { PAYMENT_METHODS, SavedPaymentMethod } from "../ModularCheckout";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
@@ -21,18 +20,21 @@ export class SavedPaymentMethods {
     }
   }
 
-  onPaymentMethodOptionClick = (paymentMethod: ICheckoutPaymentMethod) => (e: Event) => {
+  onPaymentMethodOptionClick = (paymentMethod: SavedPaymentMethod) => (e: Event) => {
     e.preventDefault();
-    checkoutStore.selectedPaymentMethod = paymentMethod;
+    checkoutStore.selectedPaymentMethod = { id: paymentMethod.id, type: paymentMethod.type }
     checkoutStore.paymentToken = paymentMethod.id;
   };
 
-  isAllowedPaymentMethod = (paymentMethod: ICheckoutPaymentMethod) => {
-    if (paymentMethod.type === PAYMENT_METHOD_TYPES.CARD && checkoutStore.disableCreditCard) {
+  isAllowedPaymentMethod = (paymentMethodType: PAYMENT_METHODS) => {
+    const isCard = paymentMethodType === PAYMENT_METHODS.SAVED_CARD;
+    const isBankAccount = paymentMethodType === PAYMENT_METHODS.SAVED_BANK_ACCOUNT;
+
+    if (isCard && checkoutStore.disableCreditCard) {
       return false;
     }
 
-    if (paymentMethod.type === PAYMENT_METHOD_TYPES.BANK_ACCOUNT && checkoutStore.disableBankAccount) {
+    if (isBankAccount && checkoutStore.disableBankAccount) {
       return false;
     }
 
@@ -48,7 +50,7 @@ export class SavedPaymentMethods {
       <StyledHost>
         <div class="saved-payment-methods">
           {checkoutStore.paymentMethods.length ? checkoutStore.paymentMethods
-            .filter(this.isAllowedPaymentMethod)
+            .filter((paymentMethod) => this.isAllowedPaymentMethod(paymentMethod.type))
             .map((paymentMethod) => (
               <div
                 class="radio-list-item p-3"

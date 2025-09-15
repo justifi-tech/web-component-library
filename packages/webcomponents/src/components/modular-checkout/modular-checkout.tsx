@@ -20,9 +20,7 @@ import {
   ComponentErrorMessages,
   ComponentErrorSeverity,
   ICheckout,
-  ICheckoutPaymentMethod,
   ICheckoutStatus,
-  PaymentMethodTypes,
 } from "../../api";
 import {
   makeCheckoutComplete,
@@ -31,12 +29,8 @@ import {
 import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
-import {
-  insuranceValues,
-  insuranceValuesOn,
-  hasInsuranceValueChanged,
-} from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail } from "./ModularCheckout";
+import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -70,7 +64,6 @@ export class ModularCheckout {
   checkoutChangedEvent: EventEmitter<CheckoutChangedEventDetail>;
 
   connectedCallback() {
-    console.log("connectedCallback", checkoutStore.checkoutLoaded);
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
       this.setupApplePayListeners(); // set up again listeners when DOM changes
@@ -170,7 +163,7 @@ export class ModularCheckout {
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
     checkoutStore.checkoutLoaded = true;
-    checkoutStore.paymentMethods = checkout.payment_methods;
+    checkoutStore.paymentMethods = checkout.payment_methods.map((paymentMethod) => new PaymentMethod(paymentMethod));
     checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
     checkoutStore.paymentDescription = checkout.payment_description;
     checkoutStore.totalAmount = checkout.total_amount;
@@ -250,9 +243,7 @@ export class ModularCheckout {
 
     if (success && token) {
       checkoutStore.paymentToken = paymentMethodId;
-      checkoutStore.selectedPaymentMethod = {
-        type: PaymentMethodTypes.applePay,
-      };
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.APPLE_PAY };
       this.submitCheckout();
     } else {
       console.error("Apple Pay completed but failed:", error);
@@ -314,12 +305,12 @@ export class ModularCheckout {
   }
 
   private handleGooglePayCompleted = (event: CustomEvent) => {
-    const { success, paymentData, paymentMethodId, error } = event.detail;
+    const { success, paymentMethodId, error } = event.detail;
 
     if (success && paymentMethodId) {
       checkoutStore.paymentToken = paymentMethodId;
       checkoutStore.selectedPaymentMethod = {
-        type: PaymentMethodTypes.googlePay,
+        type: PAYMENT_METHODS.GOOGLE_PAY,
       };
       this.submitCheckout();
     } else {
@@ -382,12 +373,9 @@ export class ModularCheckout {
 
   // set the selected payment method to the checkout store from outside the component
   @Method()
-  async setSelectedPaymentMethod(
-    paymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes }
-  ) {
+  async setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) {
     checkoutStore.selectedPaymentMethod = paymentMethod;
-    checkoutStore.paymentToken =
-      (paymentMethod as ICheckoutPaymentMethod).id || undefined;
+    checkoutStore.paymentToken = paymentMethod.id || undefined;
   }
 
   // if validation fails, the error will be emitted by the component
@@ -399,20 +387,14 @@ export class ModularCheckout {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    const isNewCard =
-      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card &&
-      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id ===
-        undefined;
-    const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod.type ===
-        PaymentMethodTypes.bankAccount &&
-      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id ===
-        undefined;
+    const isNewCard = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
+    const isNewBankAccount = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
     // For new card/bank account, validate payment method + billing.
-    if (isNewCard || isNewBankAccount) {
-      if (this.paymentMethodFormRef)
-        promises.push(this.paymentMethodFormRef.validate());
+    if (
+      isNewCard || isNewBankAccount
+    ) {
+      if (this.paymentMethodFormRef) promises.push(this.paymentMethodFormRef.validate());
       if (this.billingFormRef) promises.push(this.billingFormRef.validate());
     }
 
@@ -449,16 +431,11 @@ export class ModularCheckout {
     const isValid = await this.validate();
 
     const isNewCard =
-      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.card &&
-      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id ===
-        undefined;
+      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
     const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod.type ===
-        PaymentMethodTypes.bankAccount &&
-      (checkoutStore.selectedPaymentMethod as ICheckoutPaymentMethod).id ===
-        undefined;
-    const isPlaid =
-      checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.plaid;
+      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
+
+    const isPlaid = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
 
@@ -553,13 +530,15 @@ export class ModularCheckout {
       type: string | undefined
     ): string | undefined => {
       switch (type) {
-        case PaymentMethodTypes.card:
-        case PaymentMethodTypes.bankAccount:
-        case PaymentMethodTypes.plaid:
+        case PAYMENT_METHODS.NEW_CARD:
+        case PAYMENT_METHODS.SAVED_CARD:
+        case PAYMENT_METHODS.NEW_BANK_ACCOUNT:
+        case PAYMENT_METHODS.SAVED_BANK_ACCOUNT:
+        case PAYMENT_METHODS.PLAID:
           return PAYMENT_MODE.ECOM;
-        case PaymentMethodTypes.sezzle:
+        case PAYMENT_METHODS.SEZZLE:
           return PAYMENT_MODE.BNPL;
-        case PaymentMethodTypes.applePay:
+        case PAYMENT_METHODS.APPLE_PAY:
           return PAYMENT_MODE.APPLE_PAY;
         default:
           return undefined;
@@ -567,9 +546,7 @@ export class ModularCheckout {
     };
 
     payment = {
-      payment_mode: mapTypeToPaymentMode(
-        checkoutStore.selectedPaymentMethod.type
-      ) as string,
+      payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
       payment_token: checkoutStore.paymentToken,
     };
 

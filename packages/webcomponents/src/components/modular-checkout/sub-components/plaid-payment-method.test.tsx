@@ -38,7 +38,7 @@ jest.mock('../../../api/services/plaid.service', () => {
 
 import { newSpecPage } from '@stencil/core/testing';
 import { PlaidPaymentMethod } from './plaid-payment-method';
-import { PaymentMethodTypes } from '../../../api';
+import { PAYMENT_METHODS } from '../ModularCheckout';
 
 describe('PlaidPaymentMethod', () => {
   let component: PlaidPaymentMethod;
@@ -90,7 +90,7 @@ describe('PlaidPaymentMethod', () => {
   describe('Store Integration', () => {
     it('should initialize selection state from store', () => {
       // Set store value before creating component
-      mockCheckoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.plaid };
+      mockCheckoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
 
       // Recreate component to test initialization
       return newSpecPage({
@@ -130,7 +130,7 @@ describe('PlaidPaymentMethod', () => {
   describe('Plaid success flow', () => {
     it('stores public token in store and does not set payment token', async () => {
       // Arrange
-      mockCheckoutStore.selectedPaymentMethod = { type: PaymentMethodTypes.plaid } as any;
+      mockCheckoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID } as any;
       const instance: any = page.rootInstance as PlaidPaymentMethod;
 
       // Act: simulate Plaid success

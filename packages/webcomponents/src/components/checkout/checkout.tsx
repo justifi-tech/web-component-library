@@ -1,7 +1,7 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen } from '@stencil/core';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
-import { ICheckout, ILoadedEventResponse, PaymentMethodTypes } from '../../api';
+import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { checkoutStore } from '../../store/checkout.store';
@@ -142,7 +142,7 @@ export class Checkout {
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.SEZZLE}
-                        checked={checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.sezzle}
+                        checked={checkoutStore?.selectedPaymentMethod?.type === PAYMENT_METHODS.SEZZLE}
                         label={
                           <justifi-sezzle-payment-method
                             ref={(el) => (this.sezzlePaymentMethodRef = el)}
@@ -156,7 +156,7 @@ export class Checkout {
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.PLAID}
-                        checked={checkoutStore.selectedPaymentMethod.type === PaymentMethodTypes.plaid}
+                        checked={checkoutStore?.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID}
                         label={
                           <justifi-plaid-payment-method
                             ref={(el) => (this.plaidPaymentMethodRef = el)}
