@@ -267,7 +267,7 @@ export class ApplePay {
           ></script>
         )}
         <div class='apple-pay-container'>
-          <ApplePaySkeleton isReady={isReady} />
+          <ApplePaySkeleton isLoading={this.isLoading} />
 
           {isReady && (
             <ApplePayButton
