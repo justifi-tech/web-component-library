@@ -79,7 +79,7 @@ export const ComponentBox = ({ children }: { children: any }) => {
 export const Banner = ({ title, message }: { title?: string; message?: string }) => {
   return (
     <div style={{
-      backgroundColor: '#FFD700',
+      backgroundColor: '#FFF7DB',
       padding: '16px',
       marginBottom: '16px',
       marginTop: '20px',
