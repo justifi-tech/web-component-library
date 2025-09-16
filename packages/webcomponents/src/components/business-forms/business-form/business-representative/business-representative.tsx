@@ -151,7 +151,18 @@ export class BusinessRepresentative {
                       class="btn btn-secondary"
                       type="button"
                       part={buttonSecondary}
-                      onClick={() => { this.isEditingIdentification = true; }}
+                      onClick={() => {
+                        this.isEditingIdentification = true;
+                        // Clear last4 and current value to force validation
+                        this.formController.setValues({
+                          ...this.formController.values.getValue(),
+                          representative: {
+                            ...this.formController.values.getValue().representative,
+                            ssn_last4: null,
+                            identification_number: ''
+                          }
+                        });
+                      }}
                     >
                       Change
                     </button>

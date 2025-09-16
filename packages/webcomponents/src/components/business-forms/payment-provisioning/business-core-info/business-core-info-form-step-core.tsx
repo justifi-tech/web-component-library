@@ -204,7 +204,14 @@ export class BusinessCoreInfoFormStepCore {
                       class="btn btn-secondary"
                       type="button"
                       part={buttonSecondary}
-                      onClick={() => { this.isEditingTaxId = true; }}
+                      onClick={() => {
+                        this.isEditingTaxId = true;
+                        // Clear last4-equivalent and current value if any future conditional validation depends on it
+                        this.formController.setValues({
+                          ...this.formController.values.getValue(),
+                          tax_id: ''
+                        });
+                      }}
                     >
                       Change
                     </button>

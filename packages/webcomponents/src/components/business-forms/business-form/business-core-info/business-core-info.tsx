@@ -125,7 +125,13 @@ export class BusinessCoreInfo {
                       class="btn btn-secondary"
                       type="button"
                       part={buttonSecondary}
-                      onClick={() => { this.isEditingTaxId = true; }}
+                      onClick={() => {
+                        this.isEditingTaxId = true;
+                        this.formController.setValues({
+                          ...this.formController.values.getValue(),
+                          tax_id: ''
+                        });
+                      }}
                     >
                       Change
                     </button>
