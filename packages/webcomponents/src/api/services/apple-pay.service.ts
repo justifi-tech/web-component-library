@@ -27,7 +27,6 @@ export class ApplePayService implements IApplePayService {
    */
   public initialize(applePayConfig: IApplePayConfig): void {
     this.applePayConfig = new ApplePayConfig(applePayConfig);
-
     if (!this.applePayConfig.isValid) {
       throw new Error('Invalid Apple Pay configuration provided');
     }

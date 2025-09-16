@@ -59,8 +59,8 @@ export class ApplePay {
       this.isLoading = true;
       this.error = null;
       this.isConfigValid = true;
-      console.groupCollapsed('[ApplePay Component] initializeApplePay');
-      console.log('[ApplePay Component] checkout state snapshot:', {
+      console.groupCollapsed("[ApplePay Component] initializeApplePay");
+      console.log("[ApplePay Component] checkout state snapshot:", {
         paymentAmount: checkoutStore.paymentAmount,
         paymentCurrency: checkoutStore.paymentCurrency,
         hasAuthToken: Boolean(checkoutStore.authToken),
@@ -89,10 +89,11 @@ export class ApplePay {
 
       this.isAvailable = ApplePayHelpers.isApplePaySupported();
       this.canMakePayments = ApplePayHelpers.canMakePayments();
-      console.log('[ApplePay Component] support check:', {
+      console.log("[ApplePay Component] support check:", {
         isAvailable: this.isAvailable,
         canMakePayments: this.canMakePayments,
-        hasApplePaySessionOnWindow: typeof window !== 'undefined' && 'ApplePaySession' in window,
+        hasApplePaySessionOnWindow:
+          typeof window !== "undefined" && "ApplePaySession" in window,
       });
 
       if (!this.isAvailable) {
@@ -121,7 +122,10 @@ export class ApplePay {
         buttonType: this.buttonType,
         buttonStyle: this.buttonStyle,
       };
-      console.log('[ApplePay Component] initializing service with config:', applePayConfig);
+      console.log(
+        "[ApplePay Component] initializing service with config:",
+        applePayConfig
+      );
 
       this.applePayService = new ApplePayService();
       this.applePayService.initialize(applePayConfig);
@@ -153,8 +157,8 @@ export class ApplePay {
       this.isProcessing = true;
       this.error = null;
       this.applePayStarted.emit();
-      console.groupCollapsed('[ApplePay Component] handleApplePayClick');
-      console.log('[ApplePay Component] click context:', {
+      console.groupCollapsed("[ApplePay Component] handleApplePayClick");
+      console.log("[ApplePay Component] click context:", {
         isProcessing: this.isProcessing,
         disabled: this.disabled,
         isAvailable: this.isAvailable,
@@ -174,8 +178,10 @@ export class ApplePay {
       };
 
       console.log("[ApplePay Component] paymentRequest", paymentRequest);
-      console.log('[ApplePay Component] identifiers snapshot:', {
-        authTokenLength: checkoutStore.authToken ? String(checkoutStore.authToken).length : 0,
+      console.log("[ApplePay Component] identifiers snapshot:", {
+        authTokenLength: checkoutStore.authToken
+          ? String(checkoutStore.authToken).length
+          : 0,
         accountId: checkoutStore.accountId,
       });
 
@@ -252,7 +258,7 @@ export class ApplePay {
             async
             src='https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js'
             onLoad={() => {
-              console.log('[ApplePay Component] Apple Pay SDK script loaded');
+              console.log("[ApplePay Component] Apple Pay SDK script loaded");
               this.initializeApplePay();
             }}
           ></script>

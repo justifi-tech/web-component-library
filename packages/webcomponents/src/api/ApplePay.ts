@@ -63,7 +63,6 @@ export interface IApplePaySession {
   completePayment(result: { status: ApplePaySessionStatus }): void;
   completeShippingMethodSelection(update: any): void;
   completePaymentMethodSelection(update: any): void;
-
   // Event handlers
   onvalidatemerchant?: (event: IApplePayValidateEvent) => void;
   onpaymentmethodselected?: (event: IApplePayMethodSelectedEvent) => void;
