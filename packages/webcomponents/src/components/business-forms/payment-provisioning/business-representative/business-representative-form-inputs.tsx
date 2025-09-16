@@ -1,8 +1,8 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 import { PHONE_MASKS, IDENTITY_MASKS } from '../../../../utils/form-input-masks';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
 
@@ -14,6 +14,7 @@ export class RepresentativeFormInputs {
   @Prop() errors: any;
   @Prop() formController: FormController;
   @Prop() country: CountryCode;
+  @State() isEditingIdentification: boolean = false;
 
   inputHandler = (name: string, value: string) => {
     updateFormValues(this.formController, { [name]: value });
@@ -86,16 +87,39 @@ export class RepresentativeFormInputs {
               />
             </div>
             <div class="col-12 col-md-8">
-              <toggleable-field
-                fieldName="identification_number"
-                label={countryLabels[this.country].idNumberLabel}
-                readOnlyValue={this.representativeDefaultValue?.ssn_last4}
-                defaultValue={this.representativeDefaultValue?.identification_number}
-                errorText={this.errors.identification_number}
-                inputHandler={this.inputHandler}
-                mask={IDENTITY_MASKS[this.country]}
-                helpText={countryLabels[this.country].identityHelpText}
-              />
+              {(!this.representativeDefaultValue?.ssn_last4 || this.isEditingIdentification) ? (
+                <form-control-number-masked
+                  name="identification_number"
+                  label={countryLabels[this.country].idNumberLabel}
+                  defaultValue={this.isEditingIdentification ? '' : this.representativeDefaultValue?.identification_number}
+                  errorText={this.errors.identification_number}
+                  inputHandler={this.inputHandler}
+                  mask={IDENTITY_MASKS[this.country]}
+                  helpText={countryLabels[this.country].identityHelpText}
+                />
+              ) : (
+                <div>
+                  <label class="form-label" part={label}>
+                    {countryLabels[this.country].idNumberLabel}
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      part={inputDisabled}
+                      value={`****${this.representativeDefaultValue?.ssn_last4}`}
+                      disabled />
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      part={buttonSecondary}
+                      onClick={() => { this.isEditingIdentification = true; }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div class="col-12">
               <justifi-identity-address-form

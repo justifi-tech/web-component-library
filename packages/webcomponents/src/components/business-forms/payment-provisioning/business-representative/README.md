@@ -61,13 +61,12 @@ graph TD;
   justifi-business-representative-form-inputs --> form-control-text
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
-  justifi-business-representative-form-inputs --> toggleable-field
+  justifi-business-representative-form-inputs --> form-control-number-masked + read-only view
   justifi-business-representative-form-inputs --> justifi-identity-address-form
   form-control-tooltip --> custom-popper
   form-control-text --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  toggleable-field --> form-control-number-masked
   justifi-identity-address-form --> justifi-form-address-fields
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select

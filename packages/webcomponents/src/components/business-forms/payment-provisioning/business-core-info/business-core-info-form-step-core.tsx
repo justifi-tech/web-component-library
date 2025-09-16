@@ -5,8 +5,7 @@ import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormStep, businessClassificationOptions } from '../../utils';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
@@ -19,6 +18,7 @@ export class BusinessCoreInfoFormStepCore {
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
   @State() isLoading: boolean = false;
+  @State() isEditingTaxId: boolean = false;
 
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
@@ -88,6 +88,8 @@ export class BusinessCoreInfoFormStepCore {
       onSuccess: (response) => {
         submittedData = response;
         onSuccess();
+        // after successful patch, revert back to read-only for tax id
+        this.isEditingTaxId = false;
       },
       onError: ({ error, code, severity }) => {
         submittedData = error;
@@ -176,17 +178,39 @@ export class BusinessCoreInfoFormStepCore {
               />
             </div>
             <div class="col-12 col-md-6">
-              <toggleable-field
-                fieldName="tax_id"
-                label={countryLabels[this.country].taxIdLabel}
-                readOnlyValue={this.coreInfo?.tax_id_last4}
-                defaultValue={coreInfoDefaultValue.tax_id}
-                errorText={this.errors.tax_id}
-                inputHandler={this.inputHandler}
-                keyDownHandler={numberOnlyHandler}
-                maxLength={9}
-                helpText={countryLabels[this.country].taxIdHelpText}
-              />
+              {(!this.coreInfo?.tax_id_last4 || this.isEditingTaxId) ? (
+                <form-control-number-masked
+                  name="tax_id"
+                  label={countryLabels[this.country].taxIdLabel}
+                  defaultValue={this.isEditingTaxId ? '' : coreInfoDefaultValue.tax_id}
+                  errorText={this.errors.tax_id}
+                  inputHandler={this.inputHandler}
+                  mask={'000000000'}
+                  helpText={countryLabels[this.country].taxIdHelpText}
+                />
+              ) : (
+                <div>
+                  <label class="form-label" part={label}>
+                    {countryLabels[this.country].taxIdLabel}
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      part={inputDisabled}
+                      value={`****${this.coreInfo?.tax_id_last4}`}
+                      disabled />
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      part={buttonSecondary}
+                      onClick={() => { this.isEditingTaxId = true; }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div class="col-12">
               <form-control-text
