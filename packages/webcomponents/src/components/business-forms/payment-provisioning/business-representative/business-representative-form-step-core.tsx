@@ -38,9 +38,9 @@ export class BusinessRepresentativeFormStepCore {
   }
 
   componentWillLoad() {
-    this.getBusiness && this.getData();
     const schemaFactory = identitySchemaByCountry[this.country];
     this.formController = new FormController(schemaFactory('representative', this.allowOptionalFields));
+    this.getData();
   }
 
   componentDidLoad() {
@@ -50,6 +50,8 @@ export class BusinessRepresentativeFormStepCore {
   }
 
   private getData = () => {
+    if (!this.getBusiness) return;
+
     this.formLoading.emit(true);
     this.isLoading = true;
     this.getBusiness({

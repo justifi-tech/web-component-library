@@ -139,6 +139,7 @@ export interface ICoreBusinessInfo {
   doing_business_as?: string;
   industry?: string;
   tax_id?: string;
+  tax_id_last4?: string;
   website_url?: string;
   email?: string;
   phone?: string;
@@ -151,6 +152,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
   public doing_business_as: string;
   public industry: string;
   public tax_id: string;
+  public tax_id_last4: string;
   public website_url: string;
   public email: string;
   public phone: string;
@@ -162,6 +164,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
     this.doing_business_as = coreBusinessInfo.doing_business_as;
     this.industry = coreBusinessInfo.industry;
     this.tax_id = coreBusinessInfo.tax_id;
+    this.tax_id_last4 = coreBusinessInfo.tax_id_last4;
     this.website_url = coreBusinessInfo.website_url;
     this.email = coreBusinessInfo.email;
     this.phone = coreBusinessInfo.phone;
@@ -203,6 +206,7 @@ export interface IBusiness {
   product_categories: ProductCategories;
   representative?: Identity | null;
   tax_id: string;
+  tax_id_last4: string;
   terms_conditions_accepted: boolean;
   updated_at: string;
   website_url: string;
@@ -229,6 +233,7 @@ export class Business implements IBusiness {
   public platform_account_id: string;
   public representative?: Identity | null;
   public tax_id: string;
+  public tax_id_last4: string;
   public terms_conditions_accepted: boolean;
   public updated_at: string;
   public website_url: string;
@@ -262,6 +267,7 @@ export class Business implements IBusiness {
       ? new Representative(business.representative)
       : null;
     this.tax_id = business.tax_id;
+    this.tax_id_last4 = business.tax_id_last4;
     this.terms_conditions_accepted = business.terms_conditions_accepted;
     this.updated_at = business.updated_at;
     this.website_url = business.website_url;
@@ -285,6 +291,7 @@ export class Business implements IBusiness {
       platform_account_id: this.platform_account_id || '',
       representative: new Representative(this.representative).payload,
       tax_id: this.tax_id || '',
+      tax_id_last4: this.tax_id_last4 || '',
       website_url: this.website_url || '',
       date_of_incorporation: this.date_of_incorporation || '',
       country_of_establishment: this.country_of_establishment || CountryCode.USA,

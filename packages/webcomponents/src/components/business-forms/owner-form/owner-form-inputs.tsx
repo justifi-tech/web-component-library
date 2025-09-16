@@ -1,9 +1,10 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { IDENTITY_MASKS, PHONE_MASKS } from '../../../utils/form-input-masks';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../utils/input-handlers';
 import { FormController } from '../../../components';
 import { CountryCode } from '../../../utils/country-codes';
 import { countryLabels } from '../utils/country-config';
+import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
 
 @Component({
   tag: 'owner-form-inputs'
@@ -13,6 +14,7 @@ export class BusinessOwnerFormInputs {
   @Prop() errors: any;
   @Prop() formController: FormController;
   @Prop() country: CountryCode;
+  @State() isEditingIdentification: boolean = false;
 
   inputHandler = (name: string, value: string) => {
     updateFormValues(this.formController, { [name]: value });
@@ -78,15 +80,46 @@ export class BusinessOwnerFormInputs {
           />
         </div>
         <div class="col-12 col-md-8">
-          <form-control-number-masked
-            name="identification_number"
-            label={countryLabels[this.country].idNumberLabel}
-            defaultValue={this.ownerDefaultValue.identification_number}
-            errorText={this.errors.identification_number}
-            inputHandler={this.inputHandler}
-            mask={IDENTITY_MASKS[this.country]}
-            helpText={countryLabels[this.country].identityHelpText}
-          />
+          {(!this.ownerDefaultValue?.ssn_last4 || this.isEditingIdentification) ? (
+            <form-control-number-masked
+              name="identification_number"
+              label={countryLabels[this.country].idNumberLabel}
+              defaultValue={this.isEditingIdentification ? '' : this.ownerDefaultValue.identification_number}
+              errorText={this.errors.identification_number}
+              inputHandler={this.inputHandler}
+              mask={IDENTITY_MASKS[this.country]}
+              helpText={countryLabels[this.country].identityHelpText}
+            />
+          ) : (
+            <div>
+              <label class="form-label" part={label}>
+                {countryLabels[this.country].idNumberLabel}
+              </label>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  part={inputDisabled}
+                  value={`****${this.ownerDefaultValue?.ssn_last4}`}
+                  disabled />
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                  part={buttonSecondary}
+                  onClick={() => {
+                    this.isEditingIdentification = true;
+                    // Clear last4 and current value to force validation
+                    updateFormValues(this.formController, {
+                      ssn_last4: null,
+                      identification_number: ''
+                    });
+                  }}
+                >
+                  Change
+                </button>
+              </div>
+            </div>
+          )}
         </div>
         <div class="col-12">
           <justifi-identity-address-form
