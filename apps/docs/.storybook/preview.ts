@@ -27,6 +27,7 @@ export const parameters = {
           'Billing Information Form',
           'Postal Code Form',
         ],
+        'Payment Facilitation',
         '*',
       ],
     },
