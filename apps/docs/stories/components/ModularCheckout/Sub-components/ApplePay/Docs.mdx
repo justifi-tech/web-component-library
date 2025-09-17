@@ -1,0 +1,75 @@
+import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import {
+  ComponentBox,
+  Banner,
+} from '../../../../utils/documentation-components';
+import * as Story from './index.stories';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Sub-components/Apple Pay"
+  Components="justifi-apple-pay"
+  of={Story}
+/>
+
+<Title />
+
+<Banner
+  title="Coming soon!"
+  message="This is a preview of what is to come in an upcoming version."
+/>
+
+---
+
+Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay flow. Designed to be used within `justifi-modular-checkout`.
+
+## Props
+
+<ArgTypes of={Story} />
+
+## Events
+
+- `applePayStarted`
+- `applePayCompleted`
+- `applePayCancelled`
+- `applePayError`
+
+### Event detail shapes
+
+- `applePayCompleted`
+  - Detail: `{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: any }`
+- `applePayError`
+  - Detail: `{ error: string; code: string }`
+  - `code` values: `APPLE_PAY_CONFIG_ERROR`, `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_NOT_AVAILABLE`, `APPLE_PAY_INITIALIZATION_ERROR`, `APPLE_PAY_PAYMENT_FAILED`
+
+### Listening for events
+
+```ts
+const applePay = document.querySelector('justifi-apple-pay');
+
+applePay.addEventListener(
+  'applePayError',
+  (event: CustomEvent<{ error: string; code: string }>) => {
+    console.error('Apple Pay error', event.detail.error, event.detail.code);
+  }
+);
+
+applePay.addEventListener(
+  'applePayCompleted',
+  (event: CustomEvent<{ success: boolean; paymentMethodId?: string }>) => {
+    if (event.detail.success) {
+      console.log('Apple Pay tokenized', event.detail.paymentMethodId);
+    }
+  }
+);
+```
+
+## Example
+
+<ComponentBox>
+  <justifi-modular-checkout auth-token="123abc" checkout-id="cho_123">
+    <justifi-apple-pay />
+  </justifi-modular-checkout>
+</ComponentBox>

@@ -96,7 +96,7 @@ app.get('/', async (req, res) => {
   const disableBankAccount = false;
   const disableCreditCard = false;
   const hideCardBillingForm = true;
-  const hideBankAccountBillingForm = true;
+  const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
     name: 'John Doe',
@@ -153,6 +153,11 @@ app.get('/', async (req, res) => {
         
         fillBillingFormButton.addEventListener('click', () => {
           justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
+        });
+
+        justifiCheckout.addEventListener('checkout-changed', (event) => {
+          console.log('Checkout changed', event);
+          writeOutputToPage(event);
         });
 
         testValidateButton.addEventListener('click', async () => {

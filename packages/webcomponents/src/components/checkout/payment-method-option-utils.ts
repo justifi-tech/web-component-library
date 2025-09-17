@@ -1,4 +1,4 @@
-import { snakeToCamel } from "../../utils/utils";
+import { snakeToCamel } from '../../utils/utils';
 
 export class PaymentMethodOption {
   id: string;
@@ -12,7 +12,7 @@ export class PaymentMethodOption {
     this.acct_last_four = paymentMethod.acct_last_four;
     this.type = snakeToCamel(paymentMethod.type);
   }
-};
+}
 
 export enum CardBrandLabels {
   'american_express' = 'American Express',
@@ -22,5 +22,5 @@ export enum CardBrandLabels {
   'mastercard' = 'Mastercard',
   'china_unionpay' = 'UnionPay',
   'visa' = 'Visa',
-  'unknown' = 'Unknown'
+  'unknown' = 'Unknown',
 }
