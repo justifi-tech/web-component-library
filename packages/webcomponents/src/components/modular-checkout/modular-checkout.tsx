@@ -242,11 +242,12 @@ export class ModularCheckout {
   };
 
   private handleApplePayError = (event: CustomEvent) => {
-    const { error } = event.detail;
+    const { error, code } = event.detail;
     console.error("Apple Pay error:", error);
     this.errorEvent.emit({
       message: error || "Apple Pay error occurred",
-      errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+      // prefix with APPLE_PAY_
+      errorCode: `APPLE_PAY_${code}`,
       severity: ComponentErrorSeverity.ERROR,
     });
   };

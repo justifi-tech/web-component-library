@@ -205,6 +205,8 @@ The `justifi-modular-checkout` wrapper component automatically integrates the `j
 
 - **`error-event`**: Emitted when validation fails or an error occurs.
   Detail shape: `{ message: string; errorCode: string; severity: 'error' | 'warning' }`
+  When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
+
 - **`submit-event`**: Emitted when checkout completes successfully.
   Detail shape: `{ checkout: any; message: string }`
 - **`checkout-changed`**: Emitted when checkout state changes.
