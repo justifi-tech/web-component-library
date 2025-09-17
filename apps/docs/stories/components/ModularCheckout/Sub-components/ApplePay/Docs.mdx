@@ -1,5 +1,8 @@
 import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
-import { ComponentBox, Banner } from '../../../../utils/documentation-components';
+import {
+  ComponentBox,
+  Banner,
+} from '../../../../utils/documentation-components';
 import * as Story from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
 
@@ -13,7 +16,10 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 
 <Title />
 
-<Banner title="Coming soon!" message="This is a preview of what is to come in an upcoming version." />
+<Banner
+  title="Coming soon!"
+  message="This is a preview of what is to come in an upcoming version."
+/>
 
 ---
 
@@ -36,7 +42,7 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
   - Detail: `{ success: boolean; token?: IApplePayToken; paymentMethodId?: string; error?: any }`
 - `applePayError`
   - Detail: `{ error: string; code: string }`
-  - `code` values: `CONFIG_ERROR`, `NOT_SUPPORTED`, `NOT_AVAILABLE`, `INITIALIZATION_ERROR`, `PAYMENT_FAILED`
+  - `code` values: `APPLE_PAY_CONFIG_ERROR`, `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_NOT_AVAILABLE`, `APPLE_PAY_INITIALIZATION_ERROR`, `APPLE_PAY_PAYMENT_FAILED`
 
 ### Listening for events
 
