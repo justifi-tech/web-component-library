@@ -187,7 +187,7 @@ export class ApplePayService implements IApplePayService {
           return reject({
             success: false,
             error: {
-              code: ApplePayServiceErrorCode.APPLE_PAY_UNAVAILABLE,
+              code: ApplePayServiceErrorCode.UNAVAILABLE,
               message:
                 'ApplePaySession API is not available in this environment',
             },
