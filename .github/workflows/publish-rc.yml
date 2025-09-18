@@ -34,8 +34,8 @@ jobs:
         run: pnpm build
 
       - name: Publish Release Candidate to NPM Registry
+        working-directory: ./packages/webcomponents
         run: |
-          pnpm version-packages --preid rc
-          pnpm release --tag next
+          npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
