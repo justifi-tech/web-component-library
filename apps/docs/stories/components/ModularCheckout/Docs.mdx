@@ -134,6 +134,8 @@ You can also trigger validation manually by calling the `validate` method on the
 
 You can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method accepts either a saved payment method object or an object with a `type` field.
 
+> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `checkout-changed` event).
+
 ```javascript
 import { PAYMENT_METHODS } from '@justifi/webcomponents';
 
