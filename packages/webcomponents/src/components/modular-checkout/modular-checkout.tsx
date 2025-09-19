@@ -350,12 +350,21 @@ export class ModularCheckout {
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
     const isValid = await this.validate();
 
+    if (!checkoutStore.selectedPaymentMethod) {
+      this.errorEvent.emit({
+        message: 'No payment method selected.',
+        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
     const isNewCard =
       checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
     const isNewBankAccount =
       checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
-    const isPlaid = checkoutStore.selectedPaymentMethod.type === PAYMENT_METHODS.PLAID;
+    const isPlaid = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
 
