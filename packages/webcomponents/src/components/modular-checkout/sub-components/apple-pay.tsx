@@ -15,6 +15,7 @@ import {
   ApplePayButtonStyle,
   ApplePayHelpers,
   IApplePayToken,
+  ApplePayMerchantCapability,
 } from "../../../api/ApplePay";
 import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
@@ -174,7 +175,11 @@ export class ApplePay {
       const paymentRequest: IApplePayPaymentRequest = {
         countryCode: this.countryCode,
         currencyCode: checkoutStore.paymentCurrency,
-        merchantCapabilities: ApplePayHelpers.getDefaultMerchantCapabilities(),
+        merchantCapabilities: [
+          ApplePayMerchantCapability.SUPPORTS_3DS,
+          ApplePayMerchantCapability.SUPPORTS_CREDIT,
+          ApplePayMerchantCapability.SUPPORTS_DEBIT,
+        ],
         supportedNetworks: ApplePayHelpers.getDefaultSupportedNetworks(),
         total: ApplePayHelpers.createLineItem(
           checkoutStore.paymentDescription,
