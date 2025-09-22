@@ -1,5 +1,20 @@
 ### Changelog
 
+## 6.0.0
+
+### Major Changes
+
+- Added new component: `justifi-modular-checkout` which allows for a more flexible checkout experience.
+- Added new sub component: `justifi-saved-payment-methods` which allows for the selection of a saved payment method.
+- Added new sub component: `justifi-save-new-payment-method` which allows for the selection of a new payment method.
+- Added new sub component: `justifi-card-form` which allows for the collection of card payment method information.
+- Added new sub component: `justifi-bank-account-form` which allows for the collection of bank account payment method information.
+- Added new sub component: `justifi-sezzle-payment-method` which allows for the collection of sezzle payment method information.
+- Added new sub component: `justifi-plaid-payment-method` which allows for the collection of plaid payment method information.
+- Added new sub component: `justifi-billing-form-full` which allows for the collection of billing information.
+- Added new sub component: `justifi-card-billing-form-simple` which allows for the collection of card billing information.
+- Added new sub component: `justifi-bank-account-billing-form-simple` which allows for the collection of bank account billing information.
+
 ## 5.7.7
 
 ### Patch Changes
