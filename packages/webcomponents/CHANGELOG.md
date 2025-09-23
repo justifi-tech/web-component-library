@@ -1,5 +1,12 @@
 ### Changelog
 
+## 6.0.2
+
+### Patch Changes
+
+- 19d9b05: Add missing changelog for v6.0.1
+- 6784705: Fix justifi-modular-checkout to prevent submitting a checkout without a selected payment method
+
 ## 6.0.0
 
 ### Major Changes
