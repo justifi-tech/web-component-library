@@ -27,21 +27,18 @@ exports[`payments-list-core render and events displays an error state on failed 
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The brand and last 4 digits of the payment method">
             Payment Method
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The brand of the payment method">
-            Card Brand
-          </th>
         </tr>
       </thead>
       <tbody class="table-body">
         <tr>
-          <td class="error-state" colspan="8" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
+          <td class="error-state" colspan="7" data-test-id="table-error-state" part="table-error text color font-family background-color" style="text-align: center;">
             An unexpected error occurred: Fetch error
           </td>
         </tr>
       </tbody>
       <tfoot class="sticky-bottom" part="table-foot">
         <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
-          <td colspan="8" part="table-foot-cell table-cell text color font-family background-color">
+          <td colspan="7" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">
@@ -103,9 +100,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The brand and last 4 digits of the payment method">
             Payment Method
           </th>
-          <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The brand of the payment method">
-            Card Brand
-          </th>
         </tr>
       </thead>
       <tbody class="table-body">
@@ -138,9 +132,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           <td part="table-cell-odd table-cell text color font-family background-color">
             **** 1234
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            VISA
-          </td>
         </tr>
         <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -170,9 +161,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
             **** 5678
-          </td>
-          <td part="table-cell-even table-cell text color font-family background-color">
-            Test Bank
           </td>
         </tr>
         <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row" part="table-row text color font-family background-color">
@@ -204,9 +192,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           <td part="table-cell-odd table-cell text color font-family background-color">
             **** 9101
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            Mastercard
-          </td>
         </tr>
         <tr data-row-entity-id="py_1A2B3C4D5E6F7G8H9I0J" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -236,9 +221,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
             **** 1234
-          </td>
-          <td part="table-cell-even table-cell text color font-family background-color">
-            VISA
           </td>
         </tr>
         <tr data-row-entity-id="py_2B3C4D5E6F7G8H9I0J1K" data-test-id="table-row" part="table-row text color font-family background-color">
@@ -270,9 +252,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           <td part="table-cell-odd table-cell text color font-family background-color">
             **** 5678
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            Test Bank
-          </td>
         </tr>
         <tr data-row-entity-id="py_3C4D5E6F7G8H9I0J1K2L" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -302,9 +281,6 @@ exports[`payments-list-core render and events renders properly with fetched data
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
             **** 9101
-          </td>
-          <td part="table-cell-even table-cell text color font-family background-color">
-            Mastercard
           </td>
         </tr>
         <tr data-row-entity-id="py_4D5E6F7G8H9I0J1K2L3M" data-test-id="table-row" part="table-row text color font-family background-color">
@@ -336,14 +312,11 @@ exports[`payments-list-core render and events renders properly with fetched data
           <td part="table-cell-odd table-cell text color font-family background-color">
             **** 1122
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            American Express
-          </td>
         </tr>
       </tbody>
       <tfoot class="sticky-bottom" part="table-foot">
         <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">
-          <td colspan="8" part="table-foot-cell table-cell text color font-family background-color">
+          <td colspan="7" part="table-foot-cell table-cell text color font-family background-color">
             <pagination-menu>
               <nav aria-label="Table pagination" class="d-flex gap-3 justify-content-end">
                 <ul class="m-0 pagination">

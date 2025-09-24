@@ -2,26 +2,9 @@ import { h } from '@stencil/core';
 import { MapPaymentStatusToBadge } from './payments-status';
 import { convertToLocal } from '../../utils/utils';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
-import { Payment, CardBrand } from '../../api/Payment';
+import { Payment } from '../../api/Payment';
 
-export const mapCardBrandToDisplayName = (brand: CardBrand | string | undefined): string => {
-  if (!brand) return 'N/A';
-  
-  const brandMap: Record<string, string> = {
-    'visa': 'VISA',
-    'mastercard': 'Mastercard',
-    'american_express': 'American Express',
-    'discover': 'Discover',
-    'diners_club': 'Diners Club',
-    'jcb': 'JCB',
-    'china_unionpay': 'China UnionPay',
-    'unknown': 'Unknown'
-  };
-  
-  return brandMap[brand.toLowerCase()] || brand;
-};
-
-export const defaultColumnsKeys = 'created_at,amount,status,payment_type,description,payers_name,last_four_digits,card_brand';
+export const defaultColumnsKeys = 'created_at,amount,status,payment_type,description,payers_name,last_four_digits';
 
 export const paymentTableColumns = {
   created_at: () => (
@@ -59,11 +42,6 @@ export const paymentTableColumns = {
       Payment Method
     </th>
   ),
-  card_brand: () => (
-    <th part={tableHeadCell} scope="col" title="The brand of the payment method">
-      Card Brand
-    </th>
-  ),
 };
 
 export const paymentTableCells = {
@@ -90,10 +68,5 @@ export const paymentTableCells = {
   ),
   last_four_digits: (payment: Payment, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{payment.last_four_digits}</td>
-  ),
-  card_brand: (payment: Payment, index: number) => (
-    <td part={getAlternateTableCellPart(index)}>
-      {mapCardBrandToDisplayName(payment.payment_method.card?.brand || payment.payment_method.bank_account?.brand)}
-    </td>
   ),
 };
