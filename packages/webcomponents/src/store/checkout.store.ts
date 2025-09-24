@@ -20,7 +20,6 @@ interface IInitialState {
   checkoutLoaded: boolean;
   bankAccountVerification?: boolean;
   disableBankAccount: boolean;
-  disableBnpl: boolean;
   disableCreditCard: boolean;
   disablePaymentMethodGroup: boolean;
   paymentAmount: number;
@@ -52,7 +51,6 @@ const initialState: IInitialState = {
   checkoutLoaded: false,
   bankAccountVerification: undefined,
   disableBankAccount: false,
-  disableBnpl: false,
   disableCreditCard: false,
   disablePaymentMethodGroup: false,
   paymentAmount: 0,
@@ -108,7 +106,7 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
   }
 
-  if (checkoutStore.bnplEnabled && !checkoutStore.disableBnpl) {
+  if (checkoutStore.bnplEnabled) {
     methods.push(PAYMENT_METHODS.SEZZLE);
   }
 
