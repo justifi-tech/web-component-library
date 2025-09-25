@@ -6,7 +6,6 @@ import { PAYMENT_METHODS } from '../ModularCheckout';
 describe('justifi-sezzle-payment-method', () => {
   beforeEach(() => {
     checkoutStore.bnplEnabled = true;
-    checkoutStore.disableBnpl = false;
     checkoutStore.paymentAmount = 1000;
     checkoutStore.bnplProviderClientId = 'client';
     checkoutStore.bnplProviderMode = 'sandbox';
@@ -14,7 +13,7 @@ describe('justifi-sezzle-payment-method', () => {
     checkoutStore.bnplProviderCheckoutUrl = 'https://checkout';
   });
 
-  it('does not render when BNPL is disabled or flagged off', async () => {
+  it('does not render when BNPL is disabled', async () => {
     checkoutStore.bnplEnabled = false;
 
     const page = await newSpecPage({
@@ -23,16 +22,6 @@ describe('justifi-sezzle-payment-method', () => {
     });
 
     expect(page.root?.shadowRoot?.innerHTML).toBe('');
-
-    checkoutStore.bnplEnabled = true;
-    checkoutStore.disableBnpl = true;
-
-    const page2 = await newSpecPage({
-      components: [SezzlePaymentMethod],
-      html: `<justifi-sezzle-payment-method></justifi-sezzle-payment-method>`,
-    });
-
-    expect(page2.root?.shadowRoot?.innerHTML).toBe('');
   });
 
   it('emits selection and sets store when handleSelectionClick called', async () => {
