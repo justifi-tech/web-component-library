@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
 const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
-const subAccountId = process.env.SUB_ACCOUNT_ID_CAN;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
