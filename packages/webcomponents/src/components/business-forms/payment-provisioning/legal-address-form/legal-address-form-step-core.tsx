@@ -41,9 +41,9 @@ export class LegalAddressFormStepCore {
   }
 
   componentWillLoad() {
-    this.getBusiness && this.getData();
     const schemaFactory = addressSchemaByCountry[this.country];
     this.formController = new FormController(schemaFactory(this.allowOptionalFields));
+    this.getData();
   }
 
   componentDidLoad() {
@@ -53,6 +53,8 @@ export class LegalAddressFormStepCore {
   }
 
   private getData = () => {
+    if (!this.getBusiness) return;
+
     this.formLoading.emit(true);
     this.isLoading = true;
     this.getBusiness({

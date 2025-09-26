@@ -24,7 +24,6 @@ export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     doing_business_as: doingBusinessAsValidation.nullable(),
     classification: businessClassificationValidation.required('Select business classification'),
     industry: industryValidation.required('Enter a business industry'),
-    tax_id: taxIdValidation.required('Enter valid tax ID (SSN or EIN) without dashes'),
     date_of_incorporation: dateOfIncorporationValidation.required('Enter date of incorporation'),
   });
 
@@ -47,7 +46,7 @@ export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
 export const businessCoreInfoSchemaUSA = (allowOptionalFields?: boolean) =>
   baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
     classification: string().required('Select business classification'),
-    tax_id: makeTaxIdValidation(CountryCode.USA).required('Enter valid tax ID (SSN or EIN) without dashes'),
+    tax_id: makeTaxIdValidation(CountryCode.USA).required(`Enter valid ${countryLabels.USA.taxIdLabel} without dashes`),
   } as any));
 
 export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
