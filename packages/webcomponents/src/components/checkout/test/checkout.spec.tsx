@@ -2,7 +2,6 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { newSpecPage } from '@stencil/core/testing';
 import { Checkout } from '../checkout';
-import { CheckoutCore } from '../checkout-core';
 import JustifiAnalytics from '../../../api/Analytics';
 
 beforeEach(() => {
@@ -15,7 +14,7 @@ beforeEach(() => {
 describe('justifi-checkout', () => {
   it('renders loading', async () => {
     const page = await newSpecPage({
-      components: [Checkout, CheckoutCore],
+      components: [Checkout],
       html: '<justifi-checkout></justifi-checkout>',
     });
 

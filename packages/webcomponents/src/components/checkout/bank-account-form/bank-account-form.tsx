@@ -1,6 +1,7 @@
 import { Component, h, Host, Method, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
+import { generateTabId } from "../../../utils/utils";
 
 @Component({
   tag: "bank-account-form",
@@ -8,6 +9,7 @@ import { configState, waitForConfig } from "../../config-provider/config-state";
 export class BankAccountForm {
   @State() isReady: boolean = false;
   @State() iframeOrigin: string;
+  @State() tabId: string;
 
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
@@ -15,8 +17,9 @@ export class BankAccountForm {
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
+    this.tabId = generateTabId();
   }
-  
+
   componentDidRender() {
     const elements = [
       this.accountNumberIframeElement,
@@ -66,7 +69,7 @@ export class BankAccountForm {
               inputId="accountNumber"
               ref={(el) => (this.accountNumberIframeElement = el as HTMLIframeInputElement)}
               label="Account Number"
-              iframeOrigin={`${this.iframeOrigin}/v2/accountNumber`}
+              iframeOrigin={`${this.iframeOrigin}/v2/accountNumber?tabId=${this.tabId}`}
             />
           </div>
           <div class="row">
@@ -74,7 +77,7 @@ export class BankAccountForm {
               inputId="routingNumber"
               ref={(el) => (this.routingNumberIframeElement = el as HTMLIframeInputElement)}
               label="Routing Number"
-              iframeOrigin={`${this.iframeOrigin}/v2/routingNumber`}
+              iframeOrigin={`${this.iframeOrigin}/v2/routingNumber?tabId=${this.tabId}`}
             />
           </div>
         </div>

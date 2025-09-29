@@ -32,5 +32,8 @@ export const config: Config = {
   sourceMap: false,
   testing: {
     setupFiles: ['./setupTests.js'],
+    moduleNameMapper: {
+      '\\.(svg|png|jpg|jpeg|gif|webp)$': '<rootDir>/src/__mocks__/fileMock.js',
+    },
   },
 };
