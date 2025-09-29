@@ -56,36 +56,44 @@ export class BankAccountFormInputs {
           />
         </div>
         <div class="col-12">
-          <form-control-text
-            name="account_number"
-            label="Account Number"
-            defaultValue={this.defaultValue.account_number}
-            maxLength={17}
-            errorText={this.errors.account_number}
-            inputHandler={this.inputHandler}
-            keyDownHandler={numberOnlyHandler}
-            disabled={this.formDisabled}
-            helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
-          />
-          {this.formDisabled && this.defaultValue?.acct_last_four ? (
-            <form-control-help-text name="account_number" helpText={`**** ${this.defaultValue.acct_last_four}`} />
-          ) : null}
+          {this.formDisabled ? (
+            <div class="form-group d-flex flex-column">
+              <label class="form-label">Account Number</label>
+              <div>{this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''}</div>
+            </div>
+          ) : (
+            <form-control-text
+              name="account_number"
+              label="Account Number"
+              defaultValue={this.defaultValue.account_number}
+              maxLength={17}
+              errorText={this.errors.account_number}
+              inputHandler={this.inputHandler}
+              keyDownHandler={numberOnlyHandler}
+              disabled={this.formDisabled}
+              helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
+            />
+          )}
         </div>
         <div class="col-12">
-          <form-control-text
-            name="routing_number"
-            label="Routing Number"
-            defaultValue={this.defaultValue.routing_number}
-            maxLength={9}
-            errorText={this.errors.routing_number}
-            inputHandler={this.inputHandler}
-            keyDownHandler={numberOnlyHandler}
-            disabled={this.formDisabled}
-            helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
-          />
-          {this.formDisabled && this.defaultValue?.routing_number ? (
-            <form-control-help-text name="routing_number" helpText={this.defaultValue.routing_number} />
-          ) : null}
+          {this.formDisabled ? (
+            <div class="form-group d-flex flex-column">
+              <label class="form-label">Routing Number</label>
+              <div>{this.defaultValue?.routing_number || ''}</div>
+            </div>
+          ) : (
+            <form-control-text
+              name="routing_number"
+              label="Routing Number"
+              defaultValue={this.defaultValue.routing_number}
+              maxLength={9}
+              errorText={this.errors.routing_number}
+              inputHandler={this.inputHandler}
+              keyDownHandler={numberOnlyHandler}
+              disabled={this.formDisabled}
+              helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
+            />
+          )}
         </div>
       </div>
     );

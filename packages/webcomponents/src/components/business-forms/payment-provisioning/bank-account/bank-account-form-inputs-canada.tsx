@@ -56,52 +56,64 @@ export class BankAccountFormInputsCanada {
           />
         </div>
         <div class="col-3">
-          <form-control-text
-            name="transit_number"
-            label="Transit Number"
-            defaultValue={this.defaultValue.transit_number}
-            maxLength={5}
-            errorText={this.errors.transit_number}
-            inputHandler={this.inputHandler}
-            keyDownHandler={numberOnlyHandler}
-            disabled={this.formDisabled}
-            helpText="5 digits"
-          />
-          {this.formDisabled && this.defaultValue?.transit_number ? (
-            <form-control-help-text name="transit_number" helpText={this.defaultValue.transit_number} />
-          ) : null}
+          {this.formDisabled ? (
+            <div class="form-group d-flex flex-column">
+              <label class="form-label">Transit Number</label>
+              <div>{this.defaultValue?.transit_number || ''}</div>
+            </div>
+          ) : (
+            <form-control-text
+              name="transit_number"
+              label="Transit Number"
+              defaultValue={this.defaultValue.transit_number}
+              maxLength={5}
+              errorText={this.errors.transit_number}
+              inputHandler={this.inputHandler}
+              keyDownHandler={numberOnlyHandler}
+              disabled={this.formDisabled}
+              helpText="5 digits"
+            />
+          )}
         </div>
         <div class="col-3">
-          <form-control-text
-            name="institution_number"
-            label="Institution Number"
-            defaultValue={this.defaultValue.institution_number}
-            maxLength={3}
-            errorText={this.errors.institution_number}
-            inputHandler={this.inputHandler}
-            keyDownHandler={numberOnlyHandler}
-            disabled={this.formDisabled}
-            helpText="3 digits"
-          />
-          {this.formDisabled && this.defaultValue?.institution_number ? (
-            <form-control-help-text name="institution_number" helpText={this.defaultValue.institution_number} />
-          ) : null}
+          {this.formDisabled ? (
+            <div class="form-group d-flex flex-column">
+              <label class="form-label">Institution Number</label>
+              <div>{this.defaultValue?.institution_number || ''}</div>
+            </div>
+          ) : (
+            <form-control-text
+              name="institution_number"
+              label="Institution Number"
+              defaultValue={this.defaultValue.institution_number}
+              maxLength={3}
+              errorText={this.errors.institution_number}
+              inputHandler={this.inputHandler}
+              keyDownHandler={numberOnlyHandler}
+              disabled={this.formDisabled}
+              helpText="3 digits"
+            />
+          )}
         </div>
         <div class="col-6">
-          <form-control-text
-            name="account_number"
-            label="Account Number"
-            defaultValue={this.defaultValue.account_number}
-            maxLength={17}
-            errorText={this.errors.account_number}
-            inputHandler={this.inputHandler}
-            keyDownHandler={numberOnlyHandler}
-            disabled={this.formDisabled}
-            helpText="Please copy the account number as shown on your statement. Do not include spaces or dashes."
-          />
-          {this.formDisabled && this.defaultValue?.acct_last_four ? (
-            <form-control-help-text name="account_number" helpText={`**** ${this.defaultValue.acct_last_four}`} />
-          ) : null}
+          {this.formDisabled ? (
+            <div class="form-group d-flex flex-column">
+              <label class="form-label">Account Number</label>
+              <div>{this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''}</div>
+            </div>
+          ) : (
+            <form-control-text
+              name="account_number"
+              label="Account Number"
+              defaultValue={this.defaultValue.account_number}
+              maxLength={17}
+              errorText={this.errors.account_number}
+              inputHandler={this.inputHandler}
+              keyDownHandler={numberOnlyHandler}
+              disabled={this.formDisabled}
+              helpText="Please copy the account number as shown on your statement. Do not include spaces or dashes."
+            />
+          )}
         </div>
       </div>
     );
