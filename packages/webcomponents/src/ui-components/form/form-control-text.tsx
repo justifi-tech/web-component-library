@@ -10,7 +10,7 @@ import {
   State,
 } from '@stencil/core';
 import { FormControlErrorText } from '../../ui-components';
-import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../styles/parts';
+import { input, inputDisabled, inputFocused, inputInvalid, label, text } from '../../styles/parts';
 
 @Component({
   tag: 'form-control-text'
@@ -29,6 +29,7 @@ export class TextInput {
   @Prop() maxLength?: number;
   @Prop() keyDownHandler?: (event: any) => void;
   @Prop() disabled?: boolean;
+  @Prop() readOnlyText?: string;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
@@ -79,6 +80,11 @@ export class TextInput {
             </label>
             <form-control-tooltip helpText={this.helpText} />
           </div>
+          {this.readOnlyText ? (
+            <small class='form-text text-muted' part={text}>
+              {this.readOnlyText}
+            </small>
+          ) : null}
           <input
             id={this.name}
             name={this.name}

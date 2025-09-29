@@ -65,6 +65,7 @@ export class BankAccountFormInputsCanada {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
+            readOnlyText={this.formDisabled && this.defaultValue?.transit_number ? this.defaultValue.transit_number : undefined}
             helpText="5 digits"
           />
         </div>
@@ -78,6 +79,7 @@ export class BankAccountFormInputsCanada {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
+            readOnlyText={this.formDisabled && this.defaultValue?.institution_number ? this.defaultValue.institution_number : undefined}
             helpText="3 digits"
           />
         </div>
@@ -91,6 +93,7 @@ export class BankAccountFormInputsCanada {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
+            readOnlyText={this.formDisabled && this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : undefined}
             helpText="Please copy the account number as shown on your statement. Do not include spaces or dashes."
           />
         </div>
