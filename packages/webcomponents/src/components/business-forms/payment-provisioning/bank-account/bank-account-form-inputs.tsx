@@ -65,9 +65,11 @@ export class BankAccountFormInputs {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            readOnlyText={this.formDisabled && this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : undefined}
             helpText="Please copy the account number as shown on your statement/check. Do not include spaces or dashes."
           />
+          {this.formDisabled && this.defaultValue?.acct_last_four ? (
+            <form-control-help-text name="account_number" helpText={`**** ${this.defaultValue.acct_last_four}`} />
+          ) : null}
         </div>
         <div class="col-12">
           <form-control-text
@@ -79,9 +81,11 @@ export class BankAccountFormInputs {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            readOnlyText={this.formDisabled && this.defaultValue?.routing_number ? this.defaultValue.routing_number : undefined}
             helpText="A valid routing number is nine digits. Please include any leading or trailing zeroes."
           />
+          {this.formDisabled && this.defaultValue?.routing_number ? (
+            <form-control-help-text name="routing_number" helpText={this.defaultValue.routing_number} />
+          ) : null}
         </div>
       </div>
     );

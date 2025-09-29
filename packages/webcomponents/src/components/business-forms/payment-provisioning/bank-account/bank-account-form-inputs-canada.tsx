@@ -65,9 +65,11 @@ export class BankAccountFormInputsCanada {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            readOnlyText={this.formDisabled && this.defaultValue?.transit_number ? this.defaultValue.transit_number : undefined}
             helpText="5 digits"
           />
+          {this.formDisabled && this.defaultValue?.transit_number ? (
+            <form-control-help-text name="transit_number" helpText={this.defaultValue.transit_number} />
+          ) : null}
         </div>
         <div class="col-3">
           <form-control-text
@@ -79,9 +81,11 @@ export class BankAccountFormInputsCanada {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            readOnlyText={this.formDisabled && this.defaultValue?.institution_number ? this.defaultValue.institution_number : undefined}
             helpText="3 digits"
           />
+          {this.formDisabled && this.defaultValue?.institution_number ? (
+            <form-control-help-text name="institution_number" helpText={this.defaultValue.institution_number} />
+          ) : null}
         </div>
         <div class="col-6">
           <form-control-text
@@ -93,9 +97,11 @@ export class BankAccountFormInputsCanada {
             inputHandler={this.inputHandler}
             keyDownHandler={numberOnlyHandler}
             disabled={this.formDisabled}
-            readOnlyText={this.formDisabled && this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : undefined}
             helpText="Please copy the account number as shown on your statement. Do not include spaces or dashes."
           />
+          {this.formDisabled && this.defaultValue?.acct_last_four ? (
+            <form-control-help-text name="account_number" helpText={`**** ${this.defaultValue.acct_last_four}`} />
+          ) : null}
         </div>
       </div>
     );
