@@ -75,6 +75,11 @@ export class Checkout {
 
   @Listen('checkout-changed')
   checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
+    // if disabled bnpl, remove sezzle from available payment methods
+    if (this.disableBnpl) {
+      this.availablePaymentMethods = this.availablePaymentMethods.filter((method) => method !== PAYMENT_METHODS.SEZZLE);
+      return;
+    }
     this.availablePaymentMethods = event.detail.availablePaymentMethodTypes;
   }
 
