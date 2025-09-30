@@ -1,7 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { bankAccountTypeOptions } from '../../utils';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
-import { text } from '../../../../styles/parts';
 
 @Component({
   tag: 'bank-account-form-inputs'
@@ -70,12 +69,7 @@ export class BankAccountFormInputs {
         </div>
         <div class="col-6">
           {this.formDisabled ? (
-            <div>
-              <label class="form-label" part={text}>Account Number</label>
-              <div part={text}>
-                {this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''}
-              </div>
-            </div>
+            <bank-account-read-only-value label="Account Number" value={this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''} />
           ) : (
             <form-control-text
               name="account_number"
@@ -91,12 +85,7 @@ export class BankAccountFormInputs {
         </div>
         <div class="col-6">
           {this.formDisabled ? (
-            <div>
-            <label class="form-label" part={text}>Routing Number</label>
-              <div part={text}>
-                {this.defaultValue?.routing_number || ''}
-              </div>
-            </div>
+            <bank-account-read-only-value label="Routing Number" value={this.defaultValue?.routing_number || ''} />
           ) : (
             <form-control-text
               name="routing_number"

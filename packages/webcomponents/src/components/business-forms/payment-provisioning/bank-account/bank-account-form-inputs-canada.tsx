@@ -1,7 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { bankAccountTypeOptions } from '../../utils';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
-import { text } from '../../../../styles/parts';
 
 @Component({
   tag: 'bank-account-form-inputs-canada'
@@ -70,10 +69,7 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-3">
           {this.formDisabled ? (
-            <div>
-              <label class="form-label" part={text}>Transit Number</label>
-              <div part={text}>{this.defaultValue?.transit_number || ''}</div>
-            </div>
+            <bank-account-read-only-value label="Transit Number" value={this.defaultValue?.transit_number || ''} />
           ) : (
             <form-control-text
               name="transit_number"
@@ -89,10 +85,7 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-3">
           {this.formDisabled ? (
-            <div>
-              <label class="form-label" part={text}>Institution Number</label>
-              <div part={text}>{this.defaultValue?.institution_number || ''}</div>
-            </div>
+            <bank-account-read-only-value label="Institution Number" value={this.defaultValue?.institution_number || ''} />
           ) : (
             <form-control-text
               name="institution_number"
@@ -108,10 +101,7 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-6">
           {this.formDisabled ? (
-            <div>
-              <label class="form-label" part={text}>Account Number</label>
-              <div part={text}>{this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''}</div>
-            </div>
+            <bank-account-read-only-value label="Account Number" value={this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''} />
           ) : (
             <form-control-text
               name="account_number"
