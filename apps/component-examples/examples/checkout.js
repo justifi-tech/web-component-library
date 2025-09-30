@@ -93,7 +93,7 @@ app.get('/', async (req, res) => {
   const checkout = await makeCheckout(token);
   const webComponentToken = await getWebComponentToken(token, checkout.id);
 
-  const disableBankAccount = true;
+  const disableBankAccount = false;
   const disableCreditCard = false;
   const hideCardBillingForm = true;
   const hideBankAccountBillingForm = false;
@@ -153,6 +153,11 @@ app.get('/', async (req, res) => {
         
         fillBillingFormButton.addEventListener('click', () => {
           justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
+        });
+
+        justifiCheckout.addEventListener('checkout-changed', (event) => {
+          console.log('Checkout changed', event);
+          writeOutputToPage(event);
         });
 
         testValidateButton.addEventListener('click', async () => {

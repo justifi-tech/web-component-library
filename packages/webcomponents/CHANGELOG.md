@@ -1,5 +1,47 @@
 ### Changelog
 
+## 6.0.2
+
+### Patch Changes
+
+- 19d9b05: Add missing changelog for v6.0.1
+- 6784705: Fix justifi-modular-checkout to prevent submitting a checkout without a selected payment method
+
+## 6.0.0
+
+### Major Changes
+
+- Added new component: `justifi-modular-checkout` which allows for a more flexible checkout experience.
+- Added new sub component: `justifi-saved-payment-methods` which allows for the selection of a saved payment method.
+- Added new sub component: `justifi-save-new-payment-method` which allows for the selection of a new payment method.
+- Added new sub component: `justifi-card-form` which allows for the collection of card payment method information.
+- Added new sub component: `justifi-bank-account-form` which allows for the collection of bank account payment method information.
+- Added new sub component: `justifi-sezzle-payment-method` which allows for the collection of sezzle payment method information.
+- Added new sub component: `justifi-plaid-payment-method` which allows for the collection of plaid payment method information.
+- Added new sub component: `justifi-billing-form-full` which allows for the collection of billing information.
+- Added new sub component: `justifi-card-billing-form-simple` which allows for the collection of card billing information.
+- Added new sub component: `justifi-bank-account-billing-form-simple` which allows for the collection of bank account billing information.
+
+## 5.7.7
+
+### Patch Changes
+
+- 9d0e83b: Fix: Correct cross-tab iframe communication issue.
+
+## 5.7.6
+
+### Patch Changes
+
+- e425859: Fix CSS parts implementation for `justifi-season-interruption-insurance` component. Redundant shadow DOM has been removed allowing custom styles to be applied.
+- 7099d91: Fixes issues with hide billing form props on `tokenize-payment-method component`. The `hide-card-billing-form` and `hide-bank-account-billing-form` props now properly control field visibility by using conditional rendering instead of hidden attributes, and added comprehensive test coverage for all billing form scenarios. The `postal_code` field is required for tokenizing cards and `account_owner_name` ("Full Name") is required for tokenizing bank accounts, and required fields will always be displayed.
+- 48af167: Fixes issue where SSN values entered with dashes (e.g., 345-54-6622) in representative forms appear to submit successfully but are not saved
+
+## 5.7.5
+
+### Patch Changes
+
+- ad59f97: Fix: improve document uploading from `justifi-payment-provisioning` and `justifi-dispute-management` components. Ensures correct encoding when uploading files.
+
 ## 5.7.4
 
 ### Patch Changes

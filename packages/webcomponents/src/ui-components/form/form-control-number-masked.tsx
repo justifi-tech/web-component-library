@@ -70,7 +70,8 @@ export class NumberInputMasked {
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.formControlInput.emit({ name: name, value: target.value });
+    const rawValue = this.imask?.unmaskedValue || target.value;
+    this.formControlInput.emit({ name: name, value: rawValue });
   }
 
   updateInput = (newValue: any) => {

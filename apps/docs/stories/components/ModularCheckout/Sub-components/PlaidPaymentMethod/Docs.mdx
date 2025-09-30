@@ -1,0 +1,42 @@
+import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { filterDocsByTag, ExportedParts } from '../../../../utils';
+import { codeExampleFull } from './example';
+import {
+  ComponentBox,
+  Banner,
+} from '../../../../utils/documentation-components';
+import * as JustifiPlaidPaymentMethod from './index.stories';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Sub-components/Plaid Payment Method"
+  Components="justifi-plaid-payment-method"
+  of={JustifiPlaidPaymentMethod}
+/>
+
+<Title />
+
+<Banner
+  title="Coming soon!"
+  message="This is a preview of what is to come in an upcoming version."
+/>
+
+---
+
+Renders a radio input for selecting the Plaid bank account payment method, and orchestrates the Plaid Link flow to securely connect a bank account when selected.
+
+This component is designed to be used within the `justifi-modular-checkout` and does not accept props directly. It relies on the shared state and context managed by `justifi-modular-checkout` (auth token, account ID, and checkout ID). Saving a new payment method is controlled via the `justifi-save-new-payment-method` checkbox when a payment method group is available.
+
+It exposes no public properties for configuration, but does emit Plaid-specific events for error handling and recovery.
+
+- **Events**:
+  - **`plaidError`**: Emitted when a Plaid error occurs. The event detail includes a rich error payload with `code`, `message`, `severity`, and additional data such as `retryable` and `userAction`.
+  - **`plaidErrorRecovered`**: Emitted when an error condition is resolved (e.g., after successful authentication).
+
+The component automatically loads the Plaid Link SDK script and initializes the flow when selected. It handles token exchange with your backend to create a payment token for checkout completion.
+
+> Note: This component renders nothing and logs a console warning when bank account verification is not enabled for the checkout (`payment_settings.bank_account_verification !== true`).
+
+<Source dark language="html" code={codeExampleFull} />
