@@ -50,11 +50,10 @@ async function createBusiness(token) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'Sub-Account': subAccountId
     },
     body: JSON.stringify({
       legal_name: randomLegalName,
-      country_of_establishment: 'CAN',
+      country_of_establishment: 'USA',
     }),
   });
   const res = await response.json();
