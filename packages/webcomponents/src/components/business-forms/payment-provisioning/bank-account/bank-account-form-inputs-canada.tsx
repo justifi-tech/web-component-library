@@ -16,7 +16,9 @@ export class BankAccountFormInputsCanada {
       <div class="row gy-3">
         <div class="col-12">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Bank Name" value={this.defaultValue?.bank_name} />
+            <bank-account-read-only-value
+              label="Bank Name"
+              value={this.defaultValue?.bank_name} />
           ) : (
             <form-control-text
               name="bank_name"
@@ -29,7 +31,9 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-12">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Nickname" value={this.defaultValue?.nickname} />
+            <bank-account-read-only-value
+              label="Nickname"
+              value={this.defaultValue?.nickname} />
           ) : (
             <form-control-text
               name="nickname"
@@ -42,7 +46,9 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-12">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Account Owner Name" value={this.defaultValue?.account_owner_name} />
+            <bank-account-read-only-value
+              label="Account Owner Name"
+              value={this.defaultValue?.account_owner_name} />
           ) : (
             <form-control-text
               name="account_owner_name"
@@ -55,7 +61,9 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-12">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Account Type" value={this.defaultValue?.account_type} />
+            <bank-account-read-only-value
+              label="Account Type"
+              value={this.defaultValue?.account_type} />
           ) : (
             <form-control-select
               name="account_type"
@@ -69,7 +77,9 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-3">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Transit Number" value={this.defaultValue?.transit_number || ''} />
+            <bank-account-read-only-value
+              label="Transit Number"
+              value={this.defaultValue?.transit_number || ''} />
           ) : (
             <form-control-text
               name="transit_number"
@@ -85,7 +95,9 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-3">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Institution Number" value={this.defaultValue?.institution_number || ''} />
+            <bank-account-read-only-value
+              label="Institution Number"
+              value={this.defaultValue?.institution_number || ''} />
           ) : (
             <form-control-text
               name="institution_number"
@@ -101,7 +113,9 @@ export class BankAccountFormInputsCanada {
         </div>
         <div class="col-6">
           {this.formDisabled ? (
-            <bank-account-read-only-value label="Account Number" value={this.defaultValue?.acct_last_four ? `**** ${this.defaultValue.acct_last_four}` : ''} />
+            <bank-account-read-only-value
+              label="Account Number"
+              value={this.defaultValue?.account_last_four ? `**** ${this.defaultValue.account_last_four}` : ''} />
           ) : (
             <form-control-text
               name="account_number"

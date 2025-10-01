@@ -85,12 +85,12 @@ graph TD;
   justifi-business-bank-account-form-step-core --> bank-account-form-inputs
   justifi-business-bank-account-form-step-core --> business-documents-on-file
   justifi-business-bank-account-form-step-core --> bank-account-document-form-inputs
+  bank-account-form-inputs-canada --> bank-account-read-only-value
   bank-account-form-inputs-canada --> form-control-text
   bank-account-form-inputs-canada --> form-control-select
-  bank-account-form-inputs-canada --> form-control-help-text
+  bank-account-form-inputs --> bank-account-read-only-value
   bank-account-form-inputs --> form-control-text
   bank-account-form-inputs --> form-control-select
-  bank-account-form-inputs --> form-control-help-text
   bank-account-document-form-inputs --> form-control-file
   form-control-file --> form-control-tooltip
   justifi-business-terms-conditions-form-step --> form-control-checkbox
