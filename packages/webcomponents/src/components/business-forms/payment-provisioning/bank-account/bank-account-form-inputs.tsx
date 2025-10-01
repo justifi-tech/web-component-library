@@ -79,7 +79,7 @@ export class BankAccountFormInputs {
           {this.formDisabled ? (
             <bank-account-read-only-value
               label="Account Number"
-              value={this.defaultValue?.account_last_four ? `**** ${this.defaultValue.account_last_four}` : ''} />
+              value={this.defaultValue?.account_number_last4 ? `**** ${this.defaultValue.account_number_last4}` : ''} />
           ) : (
             <form-control-text
               name="account_number"
