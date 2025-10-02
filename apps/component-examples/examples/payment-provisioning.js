@@ -50,11 +50,10 @@ async function createBusiness(token) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'Sub-Account': subAccountId
     },
     body: JSON.stringify({
       legal_name: randomLegalName,
-      country_of_establishment: 'CAN',
+      country_of_establishment: 'USA',
     }),
   });
   const res = await response.json();
@@ -82,7 +81,7 @@ async function getWebComponentToken(token, businessId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const businessId = await createBusiness(token);
+  const businessId = 'biz_2cNAE2Oev1Dg48jlcRtpQj'; //await createBusiness(token);
   const webComponentToken = await getWebComponentToken(token, businessId);
 
   res.send(`

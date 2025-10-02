@@ -46,13 +46,23 @@ export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
 export const businessCoreInfoSchemaUSA = (allowOptionalFields?: boolean) =>
   baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
     classification: string().required('Select business classification'),
-    tax_id: makeTaxIdValidation(CountryCode.USA).required(`Enter valid ${countryLabels.USA.taxIdLabel} without dashes`),
+    tax_id: makeTaxIdValidation(CountryCode.USA)
+      .when('tax_id_last4', {
+        is: (val: string | undefined | null) => !val,
+        then: (schema) => schema.required(`Enter valid ${countryLabels.USA.taxIdLabel} without dashes`),
+        otherwise: (schema) => schema.nullable(),
+      }),
   } as any));
 
 export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
   baseBusinessCoreInfoSchema(allowOptionalFields).concat(object({
     classification: string().required('Select business classification'),
-    tax_id: makeTaxIdValidation(CountryCode.CAN).required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
+    tax_id: makeTaxIdValidation(CountryCode.CAN)
+      .when('tax_id_last4', {
+        is: (val: string | undefined | null) => !val,
+        then: (schema) => schema.required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
+        otherwise: (schema) => schema.nullable(),
+      }),
   } as any));
 
 // For backward compatibility, default to USA

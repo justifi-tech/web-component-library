@@ -209,7 +209,8 @@ export class BusinessCoreInfoFormStepCore {
                         // Clear last4-equivalent and current value if any future conditional validation depends on it
                         this.formController.setValues({
                           ...this.formController.values.getValue(),
-                          tax_id: ''
+                          tax_id: '',
+                          tax_id_last4: null
                         });
                       }}
                     >
