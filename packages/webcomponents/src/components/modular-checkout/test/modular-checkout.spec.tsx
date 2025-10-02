@@ -86,7 +86,6 @@ describe('justifi-modular-checkout', () => {
     beforeEach(() => {
       checkoutStore.disableCreditCard = false;
       checkoutStore.disableBankAccount = false;
-      checkoutStore.disableBnpl = false;
       checkoutStore.disablePaymentMethodGroup = false;
       checkoutStore.bnplEnabled = false;
       checkoutStore.bankAccountVerification = undefined;
@@ -133,7 +132,6 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.selectedPaymentMethod = undefined;
       checkoutStore.paymentToken = undefined;
       checkoutStore.bnplEnabled = false;
-      checkoutStore.disableBnpl = false;
     });
 
     it('emits error when submit called without selected payment method', async () => {
