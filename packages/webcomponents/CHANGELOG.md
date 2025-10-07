@@ -1,5 +1,15 @@
 ### Changelog
 
+## 6.0.3
+
+### Minor Changes
+
+- Adds the card brand column to the payments list
+
+### Patch Changes
+
+- Remove EMV from Apple Pay
+
 ## 6.0.2
 
 ### Patch Changes
