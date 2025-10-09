@@ -1,11 +1,10 @@
-import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { Meta, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../../../utils';
 import { codeExampleFull } from './example';
 import {
   ComponentBox,
   Banner,
 } from '../../../../utils/documentation-components';
-import * as JustifiPlaidPaymentMethod from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
 
 {setUpMocks()}
@@ -13,10 +12,9 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 <Meta
   title="Modular Checkout/Sub-components/Plaid Payment Method"
   Components="justifi-plaid-payment-method"
-  of={JustifiPlaidPaymentMethod}
 />
 
-<Title />
+# Plaid Payment Method
 
 <Banner
   title="Coming soon!"

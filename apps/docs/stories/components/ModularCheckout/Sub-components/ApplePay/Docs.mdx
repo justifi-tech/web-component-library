@@ -1,9 +1,8 @@
-import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { Meta, Source } from '@storybook/blocks';
 import {
   ComponentBox,
   Banner,
 } from '../../../../utils/documentation-components';
-import * as Story from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
 
 {setUpMocks()}
@@ -11,10 +10,9 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 <Meta
   title="Modular Checkout/Sub-components/Apple Pay"
   Components="justifi-apple-pay"
-  of={Story}
 />
 
-<Title />
+# Apple Pay
 
 <Banner
   title="Coming soon!"
@@ -26,8 +24,6 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay flow. Designed to be used within `justifi-modular-checkout`.
 
 ## Props
-
-<ArgTypes of={Story} />
 
 ## Events
 
@@ -74,5 +70,3 @@ applePay.addEventListener(
 - Firefox (iOS)
 
 > **Note:** Browser support for Apple Pay is determined by Apple's implementation and may vary based on device capabilities and Apple Pay availability in your region.
-
-
