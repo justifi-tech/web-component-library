@@ -1,20 +1,18 @@
-import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { Meta, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../../../utils';
 import { codeExampleFull } from './example';
 import { ComponentBox } from '../../../../utils/documentation-components';
-import * as JustifiSavedPaymentMethods from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
+import "@justifi/webcomponents/dist/module/justifi-saved-payment-methods";
 
 {setUpMocks()}
 
 <Meta
   title="Modular Checkout/Sub-components/Saved Payment Methods"
   Components="justifi-saved-payment-methods"
-  of={JustifiSavedPaymentMethods}
 />
 
-<Title />
-
+# Saved Payment Methods
 ---
 
 Renders a radio input list of saved payment methods as part of a checkout flow.
@@ -28,14 +26,6 @@ This component is **designed to be used within** the `justifi-modular-checkout` 
 This component exposes **no public methods or properties** and is not intended for standalone use.
 
 # Example Usage
-
----
-
-<ComponentBox>
-  <justifi-modular-checkout auth-token="123abc" checkout-id="cho_123">
-    <justifi-saved-payment-methods />
-  </justifi-modular-checkout>
-</ComponentBox>
 
 ---
 
