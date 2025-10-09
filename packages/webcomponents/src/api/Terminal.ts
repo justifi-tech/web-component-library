@@ -10,7 +10,8 @@ export enum ITerminalStatus {
   connected = 'connected',
   disconnected = 'disconnected',
   unknown = 'unknown',
-  pending_configuration = 'pending_configuration'
+  pending_configuration = 'pending_configuration',
+  archived = 'archived'
 }
 
 export interface ITerminal {
