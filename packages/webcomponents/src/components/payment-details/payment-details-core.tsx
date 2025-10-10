@@ -1,8 +1,8 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Payment } from '../../api';
+import { DisputeStatus, Payment, PaymentStatuses } from '../../api';
 import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
-import { MapPaymentStatusToBadge } from '../payments-list/payments-status';
+import { MapPaymentStatusToBadge, PaymentStatusBadge } from '../payments-list/payments-status';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { StyledHost } from '../../ui-components';
 import PaymentDetailsLoading from './payment-details-loading';
@@ -54,6 +54,18 @@ export class PaymentDetailsCore {
     });
   }
 
+  get PaymentStatus() {
+    if (this.payment.status === PaymentStatuses.disputed) {
+      const disputeWasLost = this.payment.disputes.some(
+        (dispute) => dispute.status === DisputeStatus.lost
+      );
+      if (disputeWasLost) {
+        return PaymentStatusBadge.DISPUTE_LOST;
+      }
+    }
+    return this.payment.status;
+  }
+
   render() {
     return (
       <StyledHost>
@@ -66,14 +78,14 @@ export class PaymentDetailsCore {
                 slot="head-info"
                 badge={(
                   <div class="d-flex gap-1">
-                  {MapPaymentStatusToBadge(this.payment.status)}
-                  {this.payment.expedited ? (
-                    <Badge
-                      variant={BadgeVariant.WARNING}
-                      title="Expedited"
-                      text="Expedited"
-                    />
-                  ) : null}
+                    {MapPaymentStatusToBadge(this.PaymentStatus)}
+                    {this.payment.expedited ? (
+                      <Badge
+                        variant={BadgeVariant.WARNING}
+                        title="Expedited"
+                        text="Expedited"
+                      />
+                    ) : null}
                   </div>
                 )}
                 title={this.payment.formattedPaymentAmount(this.payment.amount)}
@@ -97,7 +109,7 @@ export class PaymentDetailsCore {
                   <DetailItem title="Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
                   <DetailItem title="Refunded" value={this.payment.formattedPaymentAmount(this.payment.amount_refunded)} />
                   <DetailItem title="Net" value={this.payment.formattedPaymentAmount(this.payment.balance)} />
-                  <DetailItem title="Status" value={MapPaymentStatusToBadge(this.payment.status)} />
+                  <DetailItem title="Status" value={MapPaymentStatusToBadge(this.PaymentStatus)} />
                   <DetailItem title="Payment ID" value={this.payment.id} />
                   <DetailItem title="Processing Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
                   <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />

@@ -165,7 +165,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             438-128-999
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
-            <span class="badge bg-warning" part="badge font-family badge-warning" title="This terminal is archived">
+            <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This terminal is archived">
               Archived
             </span>
           </td>

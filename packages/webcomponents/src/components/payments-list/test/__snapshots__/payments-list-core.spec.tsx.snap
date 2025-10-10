@@ -287,7 +287,7 @@ exports[`payments-list-core render and events renders properly with fetched data
             $345.67 USD
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
-            <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The account holder disputed this payment. The amount has been returned and a fee assessed.">
+            <span class="badge bg-danger" part="badge font-family badge-danger" title="The account holder disputed this payment. The amount has been returned and a fee assessed.">
               Disputed
             </span>
           </td>
