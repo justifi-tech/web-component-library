@@ -86,7 +86,7 @@ export class TerminalsListFilters {
                 label="Status"
                 options={this.terminalStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.terminalStatus || filterParams.status}
+                defaultValue={this.terminalStatus || filterParams.status || ''}
                 disabled={!!this.terminalStatus}
                 part={terminalStatusTerminalsListFilterParam}
               />
