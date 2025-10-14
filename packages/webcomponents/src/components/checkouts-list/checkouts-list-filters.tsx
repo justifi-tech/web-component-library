@@ -60,7 +60,7 @@ export class CheckoutsListFilters {
                 label="Status"
                 options={this.checkoutStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.checkoutStatus || filterParams.status}
+                defaultValue={this.checkoutStatus || filterParams.status || ''}
                 disabled={!!this.checkoutStatus}
                 part={statusCheckoutsListFilterParam}
               />
@@ -71,7 +71,7 @@ export class CheckoutsListFilters {
                 label="Payment Mode"
                 options={this.checkoutPaymentModeOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.paymentMode || filterParams.payment_mode}
+                defaultValue={this.paymentMode || filterParams.payment_mode || ''}
                 disabled={!!this.paymentMode}
                 part={paymentModeCheckoutsListFilterParam}
               />

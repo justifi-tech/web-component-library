@@ -98,7 +98,7 @@ export class PaymentsListFilters {
                 label="Status"
                 options={this.paymentStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.paymentStatus || filterParams.payment_status}
+                defaultValue={this.paymentStatus || filterParams.payment_status || ''}
                 disabled={!!this.paymentStatus}
                 part={paymentStatusPaymentsListFilterParam}
               />
