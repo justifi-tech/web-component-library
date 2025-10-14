@@ -15,6 +15,7 @@ import {
   ApplePayButtonStyle,
   ApplePayHelpers,
   IApplePayToken,
+  ApplePayMerchantCapability,
 } from "../../../api/ApplePay";
 import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
@@ -52,15 +53,24 @@ export class ApplePay {
     error?: any;
   }>;
   @Event() applePayCancelled: EventEmitter<void>;
-  @Event() applePayError: EventEmitter<{ error: string }>;
+  @Event() applePayError: EventEmitter<{ error: string, code: string }>;
+
+  // Centralized error codes for the Apple Pay component layer
+  static ErrorCode = {
+    CONFIG_ERROR: 'CONFIG_ERROR',
+    NOT_SUPPORTED: 'NOT_SUPPORTED',
+    NOT_AVAILABLE: 'NOT_AVAILABLE',
+    INITIALIZATION_ERROR: 'INITIALIZATION_ERROR',
+    PAYMENT_FAILED: 'PAYMENT_FAILED',
+  } as const;
 
   private async initializeApplePay() {
     try {
       this.isLoading = true;
       this.error = null;
       this.isConfigValid = true;
-      console.groupCollapsed("[ApplePay Component] initializeApplePay");
-      console.log("[ApplePay Component] checkout state snapshot:", {
+      console.groupCollapsed('[ApplePay Component] initializeApplePay');
+      console.log('[ApplePay Component] checkout state snapshot:', {
         paymentAmount: checkoutStore.paymentAmount,
         paymentCurrency: checkoutStore.paymentCurrency,
         hasAuthToken: Boolean(checkoutStore.authToken),
@@ -81,7 +91,7 @@ export class ApplePay {
           hasAuthToken: Boolean(checkoutStore.authToken),
           accountId: checkoutStore.accountId,
         });
-        this.applePayError.emit({ error: this.error });
+        this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.CONFIG_ERROR });
         this.isLoading = false;
         console.groupEnd();
         return;
@@ -89,17 +99,16 @@ export class ApplePay {
 
       this.isAvailable = ApplePayHelpers.isApplePaySupported();
       this.canMakePayments = ApplePayHelpers.canMakePayments();
-      console.log("[ApplePay Component] support check:", {
+      console.log('[ApplePay Component] support check:', {
         isAvailable: this.isAvailable,
         canMakePayments: this.canMakePayments,
-        hasApplePaySessionOnWindow:
-          typeof window !== "undefined" && "ApplePaySession" in window,
+        hasApplePaySessionOnWindow: typeof window !== 'undefined' && 'ApplePaySession' in window,
       });
 
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
         console.error(this.error);
-        this.applePayError.emit({ error: this.error });
+        this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.NOT_SUPPORTED });
         this.isLoading = false;
         console.groupEnd();
         return;
@@ -108,7 +117,7 @@ export class ApplePay {
       if (!this.canMakePayments) {
         this.error = "Apple Pay is not available";
         console.error(this.error);
-        this.applePayError.emit({ error: this.error });
+        this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.NOT_AVAILABLE });
         this.isLoading = false;
         console.groupEnd();
         return;
@@ -122,10 +131,7 @@ export class ApplePay {
         buttonType: this.buttonType,
         buttonStyle: this.buttonStyle,
       };
-      console.log(
-        "[ApplePay Component] initializing service with config:",
-        applePayConfig
-      );
+      console.log('[ApplePay Component] initializing service with config:', applePayConfig);
 
       this.applePayService = new ApplePayService();
       this.applePayService.initialize(applePayConfig);
@@ -141,7 +147,7 @@ export class ApplePay {
         error instanceof Error
           ? error.message
           : "Failed to initialize Apple Pay";
-      this.applePayError.emit({ error: this.error });
+      this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.INITIALIZATION_ERROR });
     } finally {
       this.isLoading = false;
       console.groupEnd();
@@ -157,8 +163,8 @@ export class ApplePay {
       this.isProcessing = true;
       this.error = null;
       this.applePayStarted.emit();
-      console.groupCollapsed("[ApplePay Component] handleApplePayClick");
-      console.log("[ApplePay Component] click context:", {
+      console.groupCollapsed('[ApplePay Component] handleApplePayClick');
+      console.log('[ApplePay Component] click context:', {
         isProcessing: this.isProcessing,
         disabled: this.disabled,
         isAvailable: this.isAvailable,
@@ -169,7 +175,11 @@ export class ApplePay {
       const paymentRequest: IApplePayPaymentRequest = {
         countryCode: this.countryCode,
         currencyCode: checkoutStore.paymentCurrency,
-        merchantCapabilities: ApplePayHelpers.getDefaultMerchantCapabilities(),
+        merchantCapabilities: [
+          ApplePayMerchantCapability.SUPPORTS_3DS,
+          ApplePayMerchantCapability.SUPPORTS_CREDIT,
+          ApplePayMerchantCapability.SUPPORTS_DEBIT,
+        ],
         supportedNetworks: ApplePayHelpers.getDefaultSupportedNetworks(),
         total: ApplePayHelpers.createLineItem(
           checkoutStore.paymentDescription,
@@ -178,10 +188,8 @@ export class ApplePay {
       };
 
       console.log("[ApplePay Component] paymentRequest", paymentRequest);
-      console.log("[ApplePay Component] identifiers snapshot:", {
-        authTokenLength: checkoutStore.authToken
-          ? String(checkoutStore.authToken).length
-          : 0,
+      console.log('[ApplePay Component] identifiers snapshot:', {
+        authTokenLength: checkoutStore.authToken ? String(checkoutStore.authToken).length : 0,
         accountId: checkoutStore.accountId,
       });
 
@@ -206,14 +214,14 @@ export class ApplePay {
         });
         this.applePayError.emit({
           error: result.error?.message || "Payment failed",
+          code: result.error?.code || ApplePay.ErrorCode.PAYMENT_FAILED,
         });
       }
     } catch (error) {
-      console.error("Apple Pay payment error:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Payment failed";
       this.error = errorMessage;
-      this.applePayError.emit({ error: errorMessage });
+      this.applePayError.emit({ error: errorMessage, code: ApplePay.ErrorCode.PAYMENT_FAILED });
       this.applePayCompleted.emit({
         success: false,
         error: errorMessage,
@@ -258,7 +266,7 @@ export class ApplePay {
             async
             src='https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js'
             onLoad={() => {
-              console.log("[ApplePay Component] Apple Pay SDK script loaded");
+              console.log('[ApplePay Component] Apple Pay SDK script loaded');
               this.initializeApplePay();
             }}
           ></script>

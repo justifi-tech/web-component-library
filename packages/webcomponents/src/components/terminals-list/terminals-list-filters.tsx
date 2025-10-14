@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './terminals-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { ITerminalStatus } from '../../api';
-import { 
+import {
   terminalsListFilterMenu,
   terminalIdTerminalsListFilterParam,
   terminalOrderIdTerminalsListFilterParam,
@@ -48,7 +48,8 @@ export class TerminalsListFilters {
       { label: 'Connected', value: ITerminalStatus.connected },
       { label: 'Disconnected', value: ITerminalStatus.disconnected },
       { label: 'Unknown', value: ITerminalStatus.unknown },
-      { label: 'Pending Configuration', value: ITerminalStatus.pending_configuration }
+      { label: 'Pending Configuration', value: ITerminalStatus.pending_configuration },
+      { label: 'Archived', value: ITerminalStatus.archived }
     ]
   }
 
@@ -60,7 +61,7 @@ export class TerminalsListFilters {
         <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={terminalsListFilterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
-              <form-control-text 
+              <form-control-text
                 name="terminal_id"
                 label="Terminal ID"
                 inputHandler={this.debouncedSetParamsOnChange}
@@ -70,7 +71,7 @@ export class TerminalsListFilters {
               />
             </div>
             <div class="p-2">
-              <form-control-text 
+              <form-control-text
                 name="terminal_order_id"
                 label="Terminal Order ID"
                 inputHandler={this.debouncedSetParamsOnChange}
@@ -80,12 +81,12 @@ export class TerminalsListFilters {
               />
             </div>
             <div class="p-2">
-              <form-control-select 
+              <form-control-select
                 name="status"
                 label="Status"
                 options={this.terminalStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.terminalStatus || filterParams.status}
+                defaultValue={this.terminalStatus || filterParams.status || ''}
                 disabled={!!this.terminalStatus}
                 part={terminalStatusTerminalsListFilterParam}
               />

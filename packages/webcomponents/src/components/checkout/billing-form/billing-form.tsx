@@ -1,5 +1,6 @@
 import { Component, h, Prop, Method, Host } from '@stencil/core';
 import { BillingFormFields } from './billing-form-schema';
+import { PAYMENT_METHODS } from '../../..';
 
 @Component({
   tag: 'justifi-billing-form',
@@ -13,11 +14,11 @@ export class BillingForm {
   private selectedFormRef?: any;
 
   private get showSimpleCardBillingForm() {
-    return this.paymentMethodType === 'card' && this.hideCardBillingForm;
+    return this.paymentMethodType === PAYMENT_METHODS.NEW_CARD && this.hideCardBillingForm;
   }
 
   private get showSimpleBankAccountBillingForm() {
-    return this.paymentMethodType === 'bankAccount' && this.hideBankAccountBillingForm;
+    return this.paymentMethodType === PAYMENT_METHODS.NEW_BANK_ACCOUNT && this.hideBankAccountBillingForm;
   }
 
   @Method()

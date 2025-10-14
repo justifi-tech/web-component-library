@@ -24,6 +24,11 @@ export const MapTerminalStatusToBadge = (status: ITerminalStatus) => {
       title: 'This terminal is pending configuration',
       text: 'Pending configuration',
     },
+    archived: {
+      variant: BadgeVariant.SECONDARY,
+      title: 'This terminal is archived',
+      text: 'Archived',
+    }
   }
 
   const badgeProps = statusToBadgeProps[status];

@@ -78,7 +78,7 @@ export class TerminalOrdersListFilters {
                 label="Order Status"
                 options={this.terminalOrderStatusOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.orderStatus || filterParams.order_status}
+                defaultValue={this.orderStatus || filterParams.order_status || ''}
                 disabled={!!this.orderStatus}
                 part={orderStatusTerminalOrdersListFilterParam}
               />
@@ -89,7 +89,7 @@ export class TerminalOrdersListFilters {
                 label="Order Type"
                 options={this.terminalOrderTypeOptions}
                 inputHandler={this.setParamsOnChange}
-                defaultValue={this.orderType || filterParams.order_type}
+                defaultValue={this.orderType || filterParams.order_type || ''}
                 disabled={!!this.orderType}
                 part={orderTypeTerminalOrdersListFilterParam}
               />

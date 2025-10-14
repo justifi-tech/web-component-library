@@ -13,7 +13,6 @@ export enum PaymentMethodTypes {
   sezzle = 'sezzle',
   plaid = 'plaid',
   applePay = 'applePay',
-  googlePay = 'googlePay',
 }
 
 export enum PaymentTypes {

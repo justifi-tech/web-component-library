@@ -196,7 +196,6 @@ ${codeExampleHead(
   <justifi-modular-checkout
     auth-token="authToken"
     checkout-id="cho_123"
-    save-payment-method="true"
   >
     ${getSlotContentExample1()}
   </justifi-modular-checkout>

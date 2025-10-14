@@ -14,23 +14,10 @@ const meta: Meta = {
   component: "justifi-modular-checkout",
   args: {
     ...storyBaseArgs.args,
-    "save-payment-method": "true",
     "slot": () => `<justifi-card-form />`
   },
   argTypes: {
     ...storyBaseArgs.argTypes,
-    "save-payment-method": {
-      description: "Enables the save payment method option, if there is a `payment_method_group_id` associated with the checkout.",
-      table: {
-        category: "props",
-        defaultValue: {
-          summary: "false",
-        }
-      },
-      control: {
-        type: "boolean",
-      },
-    },
     "error-event": {
       description: "`ComponentError`",
       table: {
@@ -67,7 +54,7 @@ const meta: Meta = {
       description: "Programmatically set the selected payment method",
       table: {
         category: "methods",
-        defaultValue: { summary: "setSelectedPaymentMethod(paymentMethod: ICheckoutPaymentMethod | { type: PaymentMethodTypes }) => Promise<void>" }
+        defaultValue: { summary: "setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) => Promise<void>" }
       },
     }
   },

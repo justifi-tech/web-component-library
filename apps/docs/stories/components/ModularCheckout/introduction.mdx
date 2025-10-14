@@ -51,7 +51,6 @@ The `justifi-modular-checkout` wrapper component requires basic configuration:
 
 - `auth-token`: Your JustiFi authentication token
 - `checkout-id`: The specific checkout session identifier
-- `save-payment-method`: Optional flag to enable payment method saving
 
 ### 2. Component Discovery
 
@@ -151,7 +150,7 @@ New payment methods or features can be added as individual components without mo
 
 - **`validate()`**: Validates all sub components and returns a boolean result
 - **`submitCheckout(billingInformation?)`**: Submits the checkout with optional billing information override
-- **`setSelectedPaymentMethod(paymentMethod)`**: Programmatically sets the selected payment method; accepts `{ type: 'card' | 'bankAccount' | ... }` or a saved method object
+- **`setSelectedPaymentMethod(paymentMethod)`**: Programmatically sets the selected payment method; accepts `{ type: 'card' | 'bankAccount' | ... }` or a saved method object. Note: no default is selected automatically; call this to set a default.
 
 ## Getting Started
 
