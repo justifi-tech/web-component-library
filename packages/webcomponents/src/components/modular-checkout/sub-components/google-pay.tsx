@@ -249,16 +249,10 @@ export class GooglePay {
   }
 
   render() {
-    const isReady =
-      !this.isLoading &&
-      this.isAvailable &&
-      this.canMakePayments &&
-      !this.error;
-
     return (
       <StyledHost>
         <div class='google-pay-container'>
-          <GooglePaySkeleton isReady={isReady} />
+          <GooglePaySkeleton isLoading={this.isLoading} />
 
           {!this.isLoading && this.error && (
             <div class='google-pay-error' role='alert'>
