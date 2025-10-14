@@ -47,7 +47,7 @@ export const MapPaymentStatusToBadge = (status: string) => {
       text: 'Canceled',
     },
     disputed: {
-      variant: BadgeVariant.DANGER,
+      variant: BadgeVariant.WARNING,
       title: 'The account holder disputed this payment. The amount has been returned and a fee assessed.',
       text: 'Disputed',
     },
