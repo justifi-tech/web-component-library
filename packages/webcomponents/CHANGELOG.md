@@ -1,5 +1,14 @@
 ### Changelog
 
+## 6.0.4
+
+### Patch Changes
+
+- 58f9252: Fix bug with the `justifi-tokenize-payment-method` component. `hideCardBillingForm` and `hideBankAccountBillingForm` were not switching to the simpler forms as expected.
+- 88ff768: Fixed the default status for status filters on payments, terminals, and terminals orders lists
+- 7697ed7: Added a `Dispute lost` status badge to the PaymentDetails component.
+- 71ff15a: Added new terminal status `archived` to `terminals-list-filters`
+
 ## 6.0.3
 
 ### Minor Changes
