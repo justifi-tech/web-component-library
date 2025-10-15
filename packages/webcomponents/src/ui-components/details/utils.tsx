@@ -28,14 +28,14 @@ export const DetailItem = ({
 }) =>
   title && value ? (
     <div class="row justify-content-between">
-      <div class="col-12 col-md-3">
-        <span class="fw-bold px-2" part={text}>
+      <div class="col-12 col-md-4">
+        <span class="fw-bold" part={text}>
           {title}
         </span>
       </div>
-      <div class="col-12 col-md-9">
+      <div class="col-12 col-md-8">
         <span
-          class="flex-1 px-2 text-wrap"
+          class="text-wrap"
           part={text}>
           {value}
         </span>
