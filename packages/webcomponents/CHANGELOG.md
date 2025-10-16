@@ -1,5 +1,12 @@
 ### Changelog
 
+## 6.0.5
+
+### Patch Changes
+
+- c1437c4: Fix column alignment for Payments and Payouts details
+- Fix dispute notification to display due date instead of dispute ID
+
 ## 6.0.4
 
 ### Patch Changes
