@@ -104,7 +104,7 @@ export class PaymentDetailsCore {
               </EntityHeadInfo>
               <div slot='detail-sections'>
                 <DetailSectionTitle sectionTitle="Details" />
-                <div class="d-table gap-2 w-100">
+                <div class="d-flex flex-column gap-2 w-100">
                   <DetailItem title="Amount" value={this.payment.formattedPaymentAmount(this.payment.amount)} />
                   <DetailItem title="Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
                   <DetailItem title="Refunded" value={this.payment.formattedPaymentAmount(this.payment.amount_refunded)} />
@@ -118,7 +118,7 @@ export class PaymentDetailsCore {
                 </div>
                 {this.payment.payment_method.card && [
                   <DetailSectionTitle sectionTitle="Payment Method" />,
-                  <div class="d-table gap-2 w-100">
+                  <div class="d-flex flex-column gap-2 w-100">
                     <DetailItem title="ID" value={this.payment.payment_method.card.id} />
                     <DetailItem title="Payment Type" value="Card" />
                     <DetailItem title="Last 4 Numbers" value={this.payment.payment_method.lastFourDigits} />
@@ -128,7 +128,7 @@ export class PaymentDetailsCore {
                 ]}
                 {this.payment.payment_method.bank_account && [
                   <DetailSectionTitle sectionTitle="Payment Method" />,
-                  <div class="d-table gap-2 w-100">
+                  <div class="d-flex flex-column gap-2 w-100">
                     <DetailItem title="ID" value={this.payment.payment_method.bank_account.id} />
                     <DetailItem title="Last 4 Numbers" value={this.payment.last_four_digits} />
                     <DetailItem title="Bank Name" value={this.payment.payment_method.bank_account.brand} />

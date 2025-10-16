@@ -116,7 +116,7 @@ export class PayoutDetailsCore {
             </EntityHeadInfo>
             <div slot='detail-sections'>
               <DetailSectionTitle sectionTitle="Details" />
-              <div class="d-table gap-2 w-100">
+              <div class="d-flex flex-column gap-2 w-100">
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
                 <DetailItem title="Payout Method" value={this.payout.delivery_method} />
@@ -124,7 +124,7 @@ export class PayoutDetailsCore {
                 <DetailItem title="Fee" value={this.payout.formattedPaymentAmount(this.payout.fees_total)} />
               </div>
               <DetailSectionTitle sectionTitle="Account" />
-              <div class="d-table gap-2 w-100">
+              <div class="d-flex flex-column gap-2 w-100">
                 <DetailItem title="ID" value={this.payout.account_id} />
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
