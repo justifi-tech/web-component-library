@@ -82,10 +82,10 @@ export class DisputeNotification {
               </div>
               <div class="d-table-row gap-2">
                 <span part="detail-section-item-title" class="fw-bold d-table-cell pe-4">
-                  Dispute ID
+                  Due Date
                 </span>
                 <span part="detail-section-item-data" class="flex-1 d-table-cell text-wrap">
-                  {this.dispute?.id}
+                  {this.dispute?.due_date}
                 </span>
               </div>
             </div>
