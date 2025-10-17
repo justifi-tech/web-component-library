@@ -238,3 +238,8 @@ export function generateTabId(): string {
     `${Date.now()}-${Math.random().toString(36).slice(2)}`
   );
 }
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
