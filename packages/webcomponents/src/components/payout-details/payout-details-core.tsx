@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Payout } from '../../api';
 import { formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentClickEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';
@@ -21,6 +21,8 @@ export class PayoutDetailsCore {
   @State() errorMessage: string = null;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<ComponentClickEvent>;
+  
 
   componentWillLoad() {
     if (this.getPayout) {
@@ -66,6 +68,18 @@ export class PayoutDetailsCore {
         });
       },
     });
+  }
+
+  handleRecordClick = (id: string) => {
+    if (this.payout) {
+      this.recordClickEvent.emit({
+        name: 'recordClick' as any,
+        data: {
+          id,
+          type: 'account'
+        }
+      });
+    }
   }
 
   render() {
@@ -125,7 +139,9 @@ export class PayoutDetailsCore {
               </div>
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-flex flex-column gap-2 w-100">
-                <DetailItem title="ID" value={this.payout.account_id} />
+                <div onClick={() => this.handleRecordClick('account_id')}>
+                  <DetailItem title="ID" value={this.payout.account_id} />
+                </div>
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />

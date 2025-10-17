@@ -84,6 +84,10 @@ app.get('/', async (req, res) => {
           justifiPayoutDetails.addEventListener('error-event', (event) => {
             console.log(event);
           });
+
+          justifiPayoutDetails.addEventListener('record-click-event', ({detail}) => {
+            console.log('record-click-event', detail);
+          });
         </script>
       </body>
     </html>
