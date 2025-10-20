@@ -6,7 +6,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/Component
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent, ComponentClickEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentClickEvent, RecordClickEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -68,8 +68,12 @@ export class PayoutDetails {
     this.errorEvent.emit(event.detail);
   };
 
-  handleRecordClickEvent = (event: CustomEvent<ComponentClickEvent>) => {
-    this.recordClickEvent.emit(event.detail);
+  handleRecordClickEvent = (event: CustomEvent<RecordClickEvent>) => {
+    console.log(event)
+    // this.recordClickEvent.emit({
+    //   id: event.detail.id,
+    //   data: event.detail
+    // });
   };
 
   render() {

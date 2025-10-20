@@ -33,3 +33,7 @@ export interface ComponentErrorEvent {
   severity?: ComponentErrorSeverity; // Optional severity level
   data?: any; // Additional data pertinent to the error (optional)
 }
+export interface RecordClickEvent {
+  id: string;
+  type: 'account' | 'payment' | 'metadata';
+}

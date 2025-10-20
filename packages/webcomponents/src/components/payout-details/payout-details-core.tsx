@@ -2,11 +2,12 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Payout } from '../../api';
 import { formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorEvent, ComponentClickEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';
 import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
+
 
 @Component({
   tag: 'payout-details-core',
@@ -21,7 +22,7 @@ export class PayoutDetailsCore {
   @State() errorMessage: string = null;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
   
 
   componentWillLoad() {
@@ -73,11 +74,8 @@ export class PayoutDetailsCore {
   handleRecordClick = (id: string) => {
     if (this.payout) {
       this.recordClickEvent.emit({
-        name: 'recordClick' as any,
-        data: {
-          id,
-          type: 'account'
-        }
+        id,
+        type: 'account'
       });
     }
   }
@@ -139,7 +137,7 @@ export class PayoutDetailsCore {
               </div>
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-flex flex-column gap-2 w-100">
-                <div onClick={() => this.handleRecordClick('account_id')}>
+                <div onClick={() => this.handleRecordClick(this.payout.account_id)}>
                   <DetailItem title="ID" value={this.payout.account_id} />
                 </div>
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
