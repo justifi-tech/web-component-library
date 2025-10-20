@@ -33,10 +33,17 @@ const meta: Meta = {
       },
       action: true,
     },
+    "record-click-event": {
+      description: "`RecordClickEvent` - Emitted when a clickable record is clicked",
+      table: {
+        category: "events",
+      },
+      action: true,
+    },
   },
   parameters: {
     actions: {
-      handles: ["error-event"],
+      handles: ["error-event", "record-click-event"],
     },
     chromatic: {
       delay: 2000,

@@ -25,6 +25,7 @@ Component to display detailed information about a specific payout.
 
 - [Props and methods](#props-and-methods)
 - [Authorization](#authorization)
+- [Record Click Functionality](#record-click-functionality)
 - [Example usage](#example-usage)
 
 # Props and methods
@@ -53,6 +54,46 @@ Component to display detailed information about a specific payout.
     the prop you also pass separately.
   </li>
 </ul>
+
+# Record Click Functionality
+
+---
+
+The PayoutDetails component supports making certain records clickable to enable navigation or additional actions. This functionality is controlled by the `enableRecordClick` prop and emits `record-click-event` when a clickable record is clicked.
+
+## Props
+
+- **`enableRecordClick`** (boolean, default: `false`): When set to `true`, enables click functionality on the Account ID field in the Account section.
+
+## Events
+
+- **`record-click-event`**: Emitted when a clickable record is clicked. The event detail contains:
+  - `id` (string): The ID of the clicked record
+  - `type` (string): The type of record clicked (e.g., 'account')
+
+## Usage Example
+
+```html
+<justifi-payout-details 
+  payout-id="po_123" 
+  auth-token="authToken"
+  enable-record-click="true"
+/>
+
+<script>
+  const payoutDetails = document.querySelector('justifi-payout-details');
+  
+  payoutDetails.addEventListener('record-click-event', (event) => {
+    // Handle the record click event
+    console.log('Record clicked:', event.detail);
+    // event.detail.id contains the account ID
+    // event.detail.type contains 'account'
+    
+    // Example: Navigate to account details page
+    window.location.href = `/accounts/${event.detail.id}`;
+  });
+</script>
+```
 
 # Example Usage
 
