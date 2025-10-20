@@ -16,6 +16,7 @@ import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 export class PayoutDetailsCore {
   @Prop() getPayout: Function;
   @Prop() getPayoutCSV: Function;
+  @Prop() enableRecordClick: boolean = false;
 
   @State() payout: Payout;
   @State() loading: boolean = true;
@@ -137,7 +138,7 @@ export class PayoutDetailsCore {
               </div>
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-flex flex-column gap-2 w-100">
-                <DetailItem title="ID" value={this.payout.account_id} onClick={() => this.handleRecordClick(this.payout.account_id)} />
+                <DetailItem title="ID" value={this.payout.account_id} onClick={this.enableRecordClick ? () => this.handleRecordClick(this.payout.account_id) : undefined} />
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />

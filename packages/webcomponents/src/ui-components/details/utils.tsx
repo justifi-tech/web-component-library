@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "@stencil/core";
-import { heading1, heading2, text } from "../../styles/parts";
+import { heading1, heading2, link, text } from "../../styles/parts";
 
 export const ErrorState = (errorMessage: string) => (
   <main
@@ -39,7 +39,7 @@ export const DetailItem = ({
         style={{ cursor: onClick ? "pointer" : "default" }}
         onClick={() => onClick && onClick()}
       >
-        <span class="text-wrap" part={text}>
+        <span class="text-wrap" part={onClick ? link : text}>
           {value}
         </span>
       </div>
