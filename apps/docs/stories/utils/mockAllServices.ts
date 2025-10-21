@@ -21,6 +21,7 @@ import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.jso
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
 import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
 import mockOrderModels from '../../../../mockData/mockOrderModelsSuccess.json';
+import mockPaymentTransactions from '../../../../mockData/mockPaymentTransactionsSuccess.json';
 
 const handleMockGrossVolumeChartMock = () => {
   // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
@@ -73,6 +74,7 @@ export const API_PATHS = {
   DISPUTE_RESPONSE: '/disputes/:id/response',
   ORDER_MODELS: '/terminals/order_models',
   ORDER_TERMINALS: '/terminals/orders',
+  PAYMENT_TRANSACTIONS: '/payments/:id/payment_balance_transactions',
 };
 
 export const setUpMocks = () => {
@@ -138,6 +140,9 @@ export const setUpMocks = () => {
 
       // PaymentsList
       this.get(API_PATHS.PAYMENTS_LIST, () => mockPayments);
+
+      // PaymentTransactions
+      this.get(API_PATHS.PAYMENT_TRANSACTIONS, () => mockPaymentTransactions);
 
       // Post Refund
       this.post(API_PATHS.REFUND, () => mockRefundResponse);
