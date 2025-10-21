@@ -15,7 +15,7 @@ exports[`additional-questions-details should render additional-questions-details
                 Business Revenue
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 84220
               </span>
@@ -27,7 +27,7 @@ exports[`additional-questions-details should render additional-questions-details
                 Business Payment Volume
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 1000000
               </span>

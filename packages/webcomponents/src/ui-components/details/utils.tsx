@@ -36,7 +36,7 @@ export const DetailItem = ({
       </div>
       <div
         class={`col-12 col-md-8 ${onClick ? "text-decoration-underline text-primary" : ""}`}
-        style={{ cursor: onClick ? "pointer" : "default" }}
+        style={{ cursor: onClick ? "pointer" : "auto" }}
         onClick={() => onClick && onClick()}
       >
         <span class="text-wrap" part={onClick ? link : text}>
