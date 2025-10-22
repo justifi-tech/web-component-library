@@ -48,5 +48,3 @@ jobs:
         working-directory: ./packages/webcomponents
         run: |
           npm publish --tag next --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
