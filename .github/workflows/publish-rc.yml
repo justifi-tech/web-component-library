@@ -1,8 +1,10 @@
-permissions:
-  contents: read
 name: Publish Release Candidate Components
 on:
   workflow_dispatch:
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
 
 jobs:
   build:
