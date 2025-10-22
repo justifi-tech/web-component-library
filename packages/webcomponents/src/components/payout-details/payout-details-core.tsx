@@ -73,12 +73,10 @@ export class PayoutDetailsCore {
   }
 
   handleRecordClick = (id: string) => {
-    if (this.payout) {
-      this.recordClickEvent.emit({
-        id,
-        type: 'account'
-      });
-    }
+    this.recordClickEvent.emit({
+      id,
+      type: 'account'
+    });
   }
 
   render() {
