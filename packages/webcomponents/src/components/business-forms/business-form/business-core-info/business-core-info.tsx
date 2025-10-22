@@ -1,9 +1,11 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { businessClassificationOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../../ui-components/form/form';
-import { PHONE_MASKS, TAX_ID_MASKS } from '../../../../utils/form-input-masks';
+import { IDENTITY_MASKS, PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
+import { CountryCode } from '../../../../utils/country-codes';
+import { countryLabels } from '../../utils/country-config';
 
 /**
  *
@@ -17,8 +19,10 @@ import { heading2 } from '../../../../styles/parts';
 })
 export class BusinessCoreInfo {
   @Prop() formController: FormController;
+  @Prop() country: CountryCode;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
+  @State() isEditingTaxId: boolean = false;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);
@@ -95,14 +99,45 @@ export class BusinessCoreInfo {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-number-masked
-                name="tax_id"
-                label="Tax ID"
-                defaultValue={coreInfoDefaultValue.tax_id}
-                errorText={this.errors.tax_id}
-                inputHandler={this.inputHandler}
-                mask={TAX_ID_MASKS.US}
-              />
+              {(!this.coreInfo?.tax_id_last4 || this.isEditingTaxId) ? (
+                <form-control-number-masked
+                  name="tax_id"
+                  label={countryLabels[this.country].taxIdLabel}
+                  defaultValue={this.isEditingTaxId ? '' : coreInfoDefaultValue.tax_id}
+                  errorText={this.errors.tax_id}
+                  inputHandler={this.inputHandler}
+                  mask={IDENTITY_MASKS[this.country]}
+                  helpText={countryLabels[this.country].taxIdHelpText}
+                />
+              ) : (
+                <div>
+                  <label class="form-label" part={label}>
+                    {countryLabels[this.country].taxIdLabel}
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      part={inputDisabled}
+                      value={`****${this.coreInfo?.tax_id_last4}`}
+                      disabled />
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      part={buttonSecondary}
+                      onClick={() => {
+                        this.isEditingTaxId = true;
+                        this.formController.setValues({
+                          ...this.formController.values.getValue(),
+                          tax_id: ''
+                        });
+                      }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div class="col-12">
               <form-control-text

@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-business-representative-form-inputs Country-specific identification number label renders CAN SIN label and help text 1`] = `
+<justifi-business-representative-form-inputs>
+  <form>
+    <fieldset>
+      <div class="align-items-center d-flex gap-2">
+        <legend class="mb-0" part="heading-2 heading text color font-family">
+          Representative
+        </legend>
+        <form-control-tooltip helptext="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form."></form-control-tooltip>
+      </div>
+      <hr class="mt-2">
+      <div class="gy-3 row">
+        <div class="col-12 col-md-8">
+          <form-control-text label="Full Name" name="name"></form-control-text>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-text label="Email Address" name="email"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-number-masked label="Phone Number" mask="(000) 000-0000" name="phone"></form-control-number-masked>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-date helptext="Must be 18 or older." label="Birth Date" name="dob_full"></form-control-date>
+        </div>
+        <div class="col-12 col-md-8">
+          <form-control-number-masked defaultvalue="" helptext="Enter your full Social Insurance Number." label="SIN" mask="000-000-000" name="identification_number"></form-control-number-masked>
+        </div>
+        <div class="col-12">
+          <justifi-identity-address-form country="CAN"></justifi-identity-address-form>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</justifi-business-representative-form-inputs>
+`;
+
+exports[`justifi-business-representative-form-inputs Country-specific identification number label renders USA SSN label and help text 1`] = `
+<justifi-business-representative-form-inputs>
+  <form>
+    <fieldset>
+      <div class="align-items-center d-flex gap-2">
+        <legend class="mb-0" part="heading-2 heading text color font-family">
+          Representative
+        </legend>
+        <form-control-tooltip helptext="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form."></form-control-tooltip>
+      </div>
+      <hr class="mt-2">
+      <div class="gy-3 row">
+        <div class="col-12 col-md-8">
+          <form-control-text label="Full Name" name="name"></form-control-text>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-text label="Email Address" name="email"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-number-masked label="Phone Number" mask="(000) 000-0000" name="phone"></form-control-number-masked>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-date helptext="Must be 18 or older." label="Birth Date" name="dob_full"></form-control-date>
+        </div>
+        <div class="col-12 col-md-8">
+          <form-control-number-masked defaultvalue="" helptext="Enter your full Social Security Number. It is required for Federal OFAC check." label="SSN" mask="000-00-0000" name="identification_number"></form-control-number-masked>
+        </div>
+        <div class="col-12">
+          <justifi-identity-address-form country="USA"></justifi-identity-address-form>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</justifi-business-representative-form-inputs>
+`;
+
+exports[`justifi-business-representative-form-inputs Form component behavior uses toggleable-field instead of form-control-number-masked 1`] = `
+<justifi-business-representative-form-inputs>
+  <form>
+    <fieldset>
+      <div class="align-items-center d-flex gap-2">
+        <legend class="mb-0" part="heading-2 heading text color font-family">
+          Representative
+        </legend>
+        <form-control-tooltip helptext="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form."></form-control-tooltip>
+      </div>
+      <hr class="mt-2">
+      <div class="gy-3 row">
+        <div class="col-12 col-md-8">
+          <form-control-text label="Full Name" name="name"></form-control-text>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-text label="Email Address" name="email"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-number-masked label="Phone Number" mask="(000) 000-0000" name="phone"></form-control-number-masked>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-date helptext="Must be 18 or older." label="Birth Date" name="dob_full"></form-control-date>
+        </div>
+        <div class="col-12 col-md-8">
+          <form-control-number-masked helptext="Enter your full Social Security Number. It is required for Federal OFAC check." label="SSN" mask="000-00-0000" name="identification_number"></form-control-number-masked>
+        </div>
+        <div class="col-12">
+          <justifi-identity-address-form country="USA"></justifi-identity-address-form>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</justifi-business-representative-form-inputs>
+`;
