@@ -1,20 +1,19 @@
-import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { Meta, ArgTypes, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../../../utils';
 import { codeExampleFull } from './example';
 import { ComponentBox } from '../../../../utils/documentation-components';
-import * as JustifiCheckoutSummary from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
+import "@justifi/webcomponents/dist/module/justifi-checkout-summary";
+
 
 {setUpMocks()}
 
 <Meta
   title="Modular Checkout/Sub-components/Checkout Summary"
   Components="justifi-checkout-summary"
-  of={JustifiCheckoutSummary}
 />
 
-<Title />
-
+# Checkout Summary
 ---
 
 Renders a summary of checkout details consisting of the checkout description and amount passed in the [create checkout API request](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) as part of a checkout flow.

@@ -27,15 +27,19 @@ export const DetailItem = ({
   value: string;
 }) =>
   title && value ? (
-    <div class="d-table-row gap-2">
-      <span class="fw-bold d-table-cell px-2" part={text}>
-        {title}
-      </span>
-      <span
-        class="flex-1 d-table-cell px-2 text-wrap"
-        part={text}>
-        {value}
-      </span>
+    <div class="row justify-content-between">
+      <div class="col-12 col-md-4">
+        <span class="fw-bold" part={text}>
+          {title}
+        </span>
+      </div>
+      <div class="col-12 col-md-8">
+        <span
+          class="text-wrap"
+          part={text}>
+          {value}
+        </span>
+      </div>
     </div>
   ) : null;
 

@@ -157,6 +157,19 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
             </span>
           </td>
         </tr>
+        <tr data-row-entity-id="trm_3I5QFcX420XQP59zOMAbH7" data-test-id="table-row" part="table-row text color font-family background-color">
+          <td part="table-cell-odd table-cell text color font-family background-color">
+            Terminal 7
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color">
+            438-128-999
+          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color">
+            <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This terminal is archived">
+              Archived
+            </span>
+          </td>
+        </tr>
       </tbody>
       <tfoot class="sticky-bottom" part="table-foot">
         <tr class="align-middle table-light" part="table-foot-row text color font-family background-color">

@@ -89,14 +89,14 @@ describe('billing-form', () => {
   it('should show simple card billing form when hideCardBillingForm is true and paymentMethodType is card', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="card"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
     expect(instance.hideCardBillingForm).toBe(true);
-    expect(instance.paymentMethodType).toBe('card');
+    expect(instance.paymentMethodType).toBe('new_card');
     expect(instance.showSimpleCardBillingForm).toBe(true);
     expect(instance.showSimpleBankAccountBillingForm).toBe(false);
   });
@@ -104,14 +104,14 @@ describe('billing-form', () => {
   it('should show simple bank account billing form when hideBankAccountBillingForm is true and paymentMethodType is bankAccount', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
     expect(instance.hideBankAccountBillingForm).toBe(true);
-    expect(instance.paymentMethodType).toBe('bankAccount');
+    expect(instance.paymentMethodType).toBe('new_bank_account');
     expect(instance.showSimpleCardBillingForm).toBe(false);
     expect(instance.showSimpleBankAccountBillingForm).toBe(true);
   });
@@ -119,7 +119,7 @@ describe('billing-form', () => {
   it('should render only ZIP field when hideCardBillingForm is true (postal-only mode)', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="card"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -152,7 +152,7 @@ describe('billing-form', () => {
   it('should render only name field when hideBankAccountBillingForm is true', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -185,7 +185,7 @@ describe('billing-form', () => {
   it('should render all fields by default when no hide props are set', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form payment-method-type="card"></justifi-billing-form>`,
+      html: `<justifi-billing-form payment-method-type="new_card"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -241,7 +241,7 @@ describe('billing-form', () => {
   it('should not render billing address header in postal-only mode', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="card"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -254,7 +254,7 @@ describe('billing-form', () => {
   it('should not render billing address header in name-only mode', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -267,7 +267,7 @@ describe('billing-form', () => {
   it('should handle form methods correctly in postal-only mode', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="card"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -288,7 +288,7 @@ describe('billing-form', () => {
   it('should handle form methods correctly in name-only mode', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -309,7 +309,7 @@ describe('billing-form', () => {
   it('should use fullBillingSchema for bank account when hide-bank-account-billing-form is false', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="false" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="false" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -328,7 +328,7 @@ describe('billing-form', () => {
   it('should use fullBillingSchema for bank account when hide prop is not set', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;
@@ -347,7 +347,7 @@ describe('billing-form', () => {
   it('should require only name field in name-only mode', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     const instance: any = page.rootInstance;

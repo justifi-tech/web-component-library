@@ -1,11 +1,10 @@
-import { Meta, Title, ArgTypes, Source } from '@storybook/blocks';
+import { Meta, Source } from '@storybook/blocks';
 import { filterDocsByTag, ExportedParts } from '../../../../utils';
 import { codeExampleFull } from './example';
 import {
   ComponentBox,
   Banner,
 } from '../../../../utils/documentation-components';
-import * as JustifiPlaidPaymentMethod from './index.stories';
 import { setUpMocks } from '../../../../utils/mockAllServices';
 
 {setUpMocks()}
@@ -13,17 +12,9 @@ import { setUpMocks } from '../../../../utils/mockAllServices';
 <Meta
   title="Modular Checkout/Sub-components/Plaid Payment Method"
   Components="justifi-plaid-payment-method"
-  of={JustifiPlaidPaymentMethod}
 />
 
-<Title />
-
-<Banner
-  title="Coming soon!"
-  message="This is a preview of what is to come in an upcoming version."
-/>
-
----
+# Plaid Payment Method
 
 Renders a radio input for selecting the Plaid bank account payment method, and orchestrates the Plaid Link flow to securely connect a bank account when selected.
 

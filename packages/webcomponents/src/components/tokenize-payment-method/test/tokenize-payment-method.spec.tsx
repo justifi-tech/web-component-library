@@ -59,7 +59,7 @@ describe('tokenize-payment-method', () => {
     // Test the billing form behavior directly (since integration tests have shadow DOM complexities)
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="card"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -68,7 +68,7 @@ describe('tokenize-payment-method', () => {
 
     // Verify the component is configured correctly for postal-only mode
     expect(instance.hideCardBillingForm).toBe(true);
-    expect(instance.paymentMethodType).toBe('card');
+    expect(instance.paymentMethodType).toBe('new_card');
     expect(instance.showSimpleCardBillingForm).toBe(true);
     expect(instance.showSimpleBankAccountBillingForm).toBe(false);
 
@@ -101,7 +101,7 @@ describe('tokenize-payment-method', () => {
     // Test the billing form behavior directly (since integration tests have shadow DOM complexities)
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="bankAccount"></justifi-billing-form>`,
+      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
     });
 
     await page.waitForChanges();
@@ -110,7 +110,7 @@ describe('tokenize-payment-method', () => {
 
     // Verify the component is configured correctly for name-only mode
     expect(instance.hideBankAccountBillingForm).toBe(true);
-    expect(instance.paymentMethodType).toBe('bankAccount');
+    expect(instance.paymentMethodType).toBe('new_bank_account');
     expect(instance.showSimpleCardBillingForm).toBe(false);
     expect(instance.showSimpleBankAccountBillingForm).toBe(true);
 
