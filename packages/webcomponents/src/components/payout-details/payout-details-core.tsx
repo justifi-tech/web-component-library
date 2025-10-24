@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payout } from '../../api';
-import { formatDate, formatTime } from '../../utils/utils';
+import { capitalizeFirstLetter, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
@@ -72,6 +72,13 @@ export class PayoutDetailsCore {
     });
   }
 
+  formatMethod(deliveryMethod: string): string {
+    if (deliveryMethod === "ach") return "ACH";
+
+    return capitalizeFirstLetter(deliveryMethod);
+  }
+
+
   handleRecordClick = (id: string) => {
     this.recordClickEvent.emit({
       id,
@@ -130,7 +137,7 @@ export class PayoutDetailsCore {
               <div class="d-flex flex-column gap-2 w-100">
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
-                <DetailItem title="Payout Method" value={this.payout.delivery_method} />
+                <DetailItem title="Payout Method" value={this.formatMethod(this.payout.delivery_method)} />
                 <DetailItem title="Amount" value={this.payout.formattedPaymentAmount(this.payout.amount)} />
                 <DetailItem title="Fee" value={this.payout.formattedPaymentAmount(this.payout.fees_total)} />
               </div>
@@ -140,7 +147,7 @@ export class PayoutDetailsCore {
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
-                <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
+                <DetailItem title="Account Number" value={`**** ${this.payout.bank_account.account_number_last4}`} />
               </div>
               {this.payout.metadata && [
                 <DetailSectionTitle sectionTitle='Metadata' />,
