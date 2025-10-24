@@ -61,6 +61,7 @@ async function getWebComponentToken(token) {
 app.get('/', async (req, res) => {
   const token = await getToken();
   const webComponentToken = await getWebComponentToken(token);
+  const enableRecordClick = true;
 
   res.send(`
     <!DOCTYPE html>
@@ -76,6 +77,7 @@ app.get('/', async (req, res) => {
           <justifi-payout-details
             auth-token="${webComponentToken}"
             payout-id="${payoutId}"
+            enable-record-click="${enableRecordClick}"
           />
         </div>
         <script>
@@ -83,6 +85,10 @@ app.get('/', async (req, res) => {
 
           justifiPayoutDetails.addEventListener('error-event', (event) => {
             console.log(event);
+          });
+
+          justifiPayoutDetails.addEventListener('record-click-event', ({detail}) => {
+            console.log('record-click-event', detail);
           });
         </script>
       </body>

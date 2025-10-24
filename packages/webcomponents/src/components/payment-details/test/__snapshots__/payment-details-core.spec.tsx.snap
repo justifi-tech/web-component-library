@@ -70,7 +70,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Amount
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $234.56 USD
                 </span>
@@ -82,7 +82,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Fees
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $2.00 USD
                 </span>
@@ -94,7 +94,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Refunded
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $0.00 USD
                 </span>
@@ -106,7 +106,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Net
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $232.56 USD
                 </span>
@@ -118,7 +118,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Status
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   <span class="badge bg-success" part="badge font-family badge-success" title="This payment was successfully captured">
                     Succeeded
@@ -132,7 +132,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Payment ID
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   py_1NNeEnf4FbelxDCQN2RHcE
                 </span>
@@ -144,7 +144,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Processing Fees
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $2.00 USD
                 </span>
@@ -156,7 +156,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Description
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   payment
                 </span>
@@ -168,7 +168,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Expedited
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   Yes
                 </span>
@@ -185,7 +185,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   ID
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   pm_uICmv8696AatL4gRwa0Wq
                 </span>
@@ -197,7 +197,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Last 4 Numbers
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   **** 6789
                 </span>
@@ -209,7 +209,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Bank Name
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   Altra
                 </span>
@@ -221,7 +221,7 @@ exports[`payment-details-core it renders properly with fetched data 1`] = `
                   Account Owner
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   Julia Garnett
                 </span>
@@ -294,7 +294,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Amount
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $234.56 USD
                 </span>
@@ -306,7 +306,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Fees
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $2.00 USD
                 </span>
@@ -318,7 +318,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Refunded
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $0.00 USD
                 </span>
@@ -330,7 +330,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Net
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $232.56 USD
                 </span>
@@ -342,7 +342,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Status
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The cardholder has won the dispute.">
                     Dispute Lost
@@ -356,7 +356,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Payment ID
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   py_1NNeEnf4FbelxDCQN2RHcE
                 </span>
@@ -368,7 +368,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Processing Fees
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   $2.00 USD
                 </span>
@@ -380,7 +380,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Description
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   payment
                 </span>
@@ -392,7 +392,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Expedited
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   Yes
                 </span>
@@ -409,7 +409,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   ID
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   pm_uICmv8696AatL4gRwa0Wq
                 </span>
@@ -421,7 +421,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Last 4 Numbers
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   **** 6789
                 </span>
@@ -433,7 +433,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Bank Name
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   Altra
                 </span>
@@ -445,7 +445,7 @@ exports[`payment-details-core renders Dispute Lost badge when payment is dispute
                   Account Owner
                 </span>
               </div>
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8" style="cursor: auto;">
                 <span class="text-wrap" part="text color font-family">
                   Julia Garnett
                 </span>

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/web-components";
 import { withActions } from "@storybook/addon-actions/decorator";
 import { StoryBaseArgs, customStoryDecorator } from "../../utils";
 
-import "@justifi/webcomponents/dist/module/justifi-payout-details";
+import "@justifi/webcomponents/dist/module/justifi-payout-transactions-list";
 import { ThemeNames } from "../../themes";
 
 type Story = StoryObj;
@@ -10,8 +10,8 @@ type Story = StoryObj;
 const storyBaseArgs = new StoryBaseArgs(["payout-id", "auth-token"]);
 
 const meta: Meta = {
-  title: "Merchant Tools/Payout Details",
-  component: "justifi-payout-details",
+  title: "Merchant Tools/Payout Transactions List",
+  component: "justifi-payout-transactions-list",
   args: {
     ...storyBaseArgs.args,
     Theme: ThemeNames.Light,
@@ -26,15 +26,15 @@ const meta: Meta = {
         type: "select",
       },
     },
-    "error-event": {
-      description: "`ComponentError`",
+    "click-event": {
+      description: "`ComponentClickEvent`",
       table: {
         category: "events",
       },
       action: true,
     },
-    "record-click-event": {
-      description: "`RecordClickEvent` - Emitted when a clickable record is clicked",
+    "error-event": {
+      description: "`ComponentError`",
       table: {
         category: "events",
       },
@@ -43,7 +43,7 @@ const meta: Meta = {
   },
   parameters: {
     actions: {
-      handles: ["error-event", "record-click-event"],
+      handles: ["click-event", "error-event"],
     },
     chromatic: {
       delay: 2000,
