@@ -15,7 +15,7 @@ exports[`LegalAddressDetails should render 1`] = `
                 Country
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 USA
               </span>
@@ -27,7 +27,7 @@ exports[`LegalAddressDetails should render 1`] = `
                 Legal Address
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 123 Example St
               </span>
@@ -39,7 +39,7 @@ exports[`LegalAddressDetails should render 1`] = `
                 Address Line 2
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 Suite 101
               </span>
@@ -53,7 +53,7 @@ exports[`LegalAddressDetails should render 1`] = `
                 City
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 Minneapolis
               </span>
@@ -65,7 +65,7 @@ exports[`LegalAddressDetails should render 1`] = `
                 State
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 MN
               </span>
@@ -77,7 +77,7 @@ exports[`LegalAddressDetails should render 1`] = `
                 Postal Code
               </span>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8" style="cursor: auto;">
               <span class="text-wrap" part="text color font-family">
                 55555
               </span>

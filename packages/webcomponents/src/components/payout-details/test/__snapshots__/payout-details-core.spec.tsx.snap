@@ -61,7 +61,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Date paid
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               Dec 28, 2023
             </span>
@@ -73,7 +73,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Statement Description
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               Payout
             </span>
@@ -85,7 +85,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Payout Method
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               standard
             </span>
@@ -97,7 +97,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Amount
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               $220.15 USD
             </span>
@@ -109,7 +109,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Fee
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               $14.85 USD
             </span>
@@ -126,7 +126,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               ID
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               acc_5Et9iXrSSAZR2KSouQGAWi
             </span>
@@ -138,7 +138,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Account Type
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               checking
             </span>
@@ -150,7 +150,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Institution
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               checking
             </span>
@@ -162,7 +162,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Routing Number
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               110000000
             </span>
@@ -174,7 +174,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
               Account Number
             </span>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
               6789
             </span>

@@ -16,6 +16,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 export class PayoutDetails {
   @Prop() payoutId: string;
   @Prop() authToken: string;
+  @Prop() enableRecordClick: boolean = false;
 
   @State() getPayout: Function;
   @State() getPayoutCSV: Function;
@@ -77,6 +78,7 @@ export class PayoutDetails {
         getPayout={this.getPayout}
         getPayoutCSV={this.getPayoutCSV}
         onError-event={this.handleErrorEvent}
+        enableRecordClick={this.enableRecordClick}
       />
     );
   }
