@@ -87,7 +87,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </div>
           <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
-              standard
+              Standard
             </span>
           </div>
         </div>
@@ -176,7 +176,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </div>
           <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
-              6789
+              **** 6789
             </span>
           </div>
         </div>
