@@ -141,6 +141,11 @@ export class Checkout {
                 <section>
                   <div>
                     <justifi-saved-payment-methods />
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.APPLE_PAY) && (
+                      <div class="mb-3">
+                        <justifi-apple-pay />
+                      </div>
+                    )}
                     {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"

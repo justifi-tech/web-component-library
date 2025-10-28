@@ -1,9 +1,9 @@
+permissions:
+  contents: read
+
 name: Publish Release Candidate Components
 on:
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
   build:
