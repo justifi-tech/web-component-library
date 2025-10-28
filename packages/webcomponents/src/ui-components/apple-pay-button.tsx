@@ -62,13 +62,6 @@ export const ApplePayButton: FunctionalComponent<ApplePayButtonElementProps> = (
     return classes;
   };
 
-  const getButtonStyles = (): { [key: string]: string } => {
-    return {
-      width: props.width || "200px",
-      height: props.height || "48px",
-    };
-  };
-
   const handleClick = () => {
     if (
       !props.disabled &&
@@ -84,7 +77,10 @@ export const ApplePayButton: FunctionalComponent<ApplePayButtonElementProps> = (
     <div class='apple-pay-button-container'>
       <button
         class={getApplePayButtonClass()}
-        style={getButtonStyles()}
+        style={{
+          width: props.width,
+          height: props.height,
+        }}
         onClick={handleClick}
         disabled={props.disabled || props.isProcessing || !props.isAvailable}
         aria-label='Pay with Apple Pay'
