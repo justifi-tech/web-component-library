@@ -95,6 +95,7 @@ export const ApplePayButton: FunctionalComponent<ApplePayButtonElementProps> = (
           .apple-pay-button-container {
             display: inline-block;
             position: relative;
+            width: 100%;
           }
 
           /* Apple Pay CSS classes - these are the official Apple Pay button styles */
