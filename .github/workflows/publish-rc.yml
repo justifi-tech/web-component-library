@@ -1,10 +1,9 @@
+permissions:
+  contents: read
+
 name: Publish Release Candidate Components
 on:
   workflow_dispatch:
-
-permissions:
-  id-token: write  # Required for OIDC
-  contents: read
 
 jobs:
   build:
@@ -48,3 +47,5 @@ jobs:
         working-directory: ./packages/webcomponents
         run: |
           npm publish --tag next --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
