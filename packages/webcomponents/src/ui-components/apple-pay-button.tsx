@@ -93,7 +93,7 @@ export const ApplePayButton: FunctionalComponent<ApplePayButtonElementProps> = (
       <style>
         {`
           .apple-pay-button-container {
-            display: inline-block;
+            display: block;
             position: relative;
             width: 100%;
           }
