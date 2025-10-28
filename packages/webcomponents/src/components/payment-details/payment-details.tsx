@@ -5,7 +5,7 @@ import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 
 @Component({
   tag: 'justifi-payment-details',
@@ -20,6 +20,7 @@ export class PaymentDetails {
   @State() errorMessage: string = null;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -63,6 +64,13 @@ export class PaymentDetails {
     this.errorEvent.emit(event.detail);
   }
 
+  handleRecordClickEvent = (event: CustomEvent<RecordClickEvent>) => {
+    this.recordClickEvent.emit({
+      id: event.detail.id,
+      type: event.detail.type,
+    });
+  }
+
   render() {
     if (this.errorMessage) {
       return ErrorState(this.errorMessage);
@@ -72,6 +80,8 @@ export class PaymentDetails {
       <payment-details-core
         getPaymentDetails={this.getPaymentDetails}
         onError-event={this.handleErrorEvent}
+        onRecord-click-event={this.handleRecordClickEvent}
+        enable-record-click="true"
       ></payment-details-core>
     );
   }

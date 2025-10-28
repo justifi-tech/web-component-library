@@ -1,12 +1,13 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payout } from '../../api';
-import { formatDate, formatTime } from '../../utils/utils';
+import { capitalizeFirstLetter, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';
 import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
+
 
 @Component({
   tag: 'payout-details-core',
@@ -15,12 +16,15 @@ import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 export class PayoutDetailsCore {
   @Prop() getPayout: Function;
   @Prop() getPayoutCSV: Function;
+  @Prop() enableRecordClick: boolean = false;
 
   @State() payout: Payout;
   @State() loading: boolean = true;
   @State() errorMessage: string = null;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
+  
 
   componentWillLoad() {
     if (this.getPayout) {
@@ -65,6 +69,20 @@ export class PayoutDetailsCore {
           severity,
         });
       },
+    });
+  }
+
+  formatMethod(deliveryMethod: string): string {
+    if (deliveryMethod === "ach") return "ACH";
+
+    return capitalizeFirstLetter(deliveryMethod);
+  }
+
+
+  handleRecordClick = (id: string) => {
+    this.recordClickEvent.emit({
+      id,
+      type: 'account'
     });
   }
 
@@ -119,17 +137,17 @@ export class PayoutDetailsCore {
               <div class="d-flex flex-column gap-2 w-100">
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
-                <DetailItem title="Payout Method" value={this.payout.delivery_method} />
+                <DetailItem title="Payout Method" value={this.formatMethod(this.payout.delivery_method)} />
                 <DetailItem title="Amount" value={this.payout.formattedPaymentAmount(this.payout.amount)} />
                 <DetailItem title="Fee" value={this.payout.formattedPaymentAmount(this.payout.fees_total)} />
               </div>
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-flex flex-column gap-2 w-100">
-                <DetailItem title="ID" value={this.payout.account_id} />
+                <DetailItem title="ID" value={this.payout.account_id} onClick={this.enableRecordClick ? () => this.handleRecordClick(this.payout.account_id) : undefined} />
                 <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
                 <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
-                <DetailItem title="Account Number" value={this.payout.bank_account.account_number_last4} />
+                <DetailItem title="Account Number" value={`**** ${this.payout.bank_account.account_number_last4}`} />
               </div>
               {this.payout.metadata && [
                 <DetailSectionTitle sectionTitle='Metadata' />,
