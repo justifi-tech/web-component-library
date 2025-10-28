@@ -253,6 +253,12 @@ export class ApplePay {
   }
 
   render() {
+    if (!checkoutStore.applePayEnabled) {
+      // Render nothing when Apple Pay is disabled at the checkout settings level
+      console.log('[ApplePay Component] Apple Pay disabled in checkout settings; not rendering');
+      return null;
+    }
+
     const isReady =
       !this.isLoading &&
       this.isAvailable &&

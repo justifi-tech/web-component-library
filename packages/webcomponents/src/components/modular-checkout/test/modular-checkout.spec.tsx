@@ -73,6 +73,7 @@ describe('justifi-modular-checkout', () => {
       payment_settings: {
         bnpl_payments: false,
         bank_account_verification: false,
+        apple_payments: true,
       },
     };
 
@@ -80,6 +81,7 @@ describe('justifi-modular-checkout', () => {
     instance['updateStore'](checkout);
 
     expect(checkoutStore.bankAccountVerification).toBe(false);
+    expect(checkoutStore.applePayEnabled).toBe(true);
   });
 
   describe('checkout-changed event', () => {
@@ -107,6 +109,8 @@ describe('justifi-modular-checkout', () => {
       // Trigger store changes that affect availablePaymentMethods
       checkoutStore.bnplEnabled = true;
       await page.waitForChanges();
+      checkoutStore.applePayEnabled = true;
+      await page.waitForChanges();
       checkoutStore.paymentMethods = [
         { id: 'pm1', type: PAYMENT_METHODS.SAVED_CARD } as any,
         { id: 'pm2', type: PAYMENT_METHODS.SAVED_BANK_ACCOUNT } as any,
@@ -117,7 +121,7 @@ describe('justifi-modular-checkout', () => {
       const lastCall = handler.mock.calls[handler.mock.calls.length - 1][0];
       const detail = (lastCall as CustomEvent).detail as any;
       expect(detail.availablePaymentMethodTypes).toEqual(
-        expect.arrayContaining(['saved_card', 'saved_bank_account', 'new_card', 'new_bank_account', 'sezzle'])
+        expect.arrayContaining(['saved_card', 'saved_bank_account', 'new_card', 'new_bank_account', 'sezzle', 'apple_pay'])
       );
     });
   });
