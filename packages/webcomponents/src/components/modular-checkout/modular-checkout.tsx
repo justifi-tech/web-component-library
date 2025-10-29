@@ -163,6 +163,7 @@ export class ModularCheckout {
     checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
     checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments;
     checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
+    checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
     checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;

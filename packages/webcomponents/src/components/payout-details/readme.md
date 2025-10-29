@@ -7,17 +7,19 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type       | Default     |
-| -------------- | --------- | ----------- | ---------- | ----------- |
-| `getPayout`    | --        |             | `Function` | `undefined` |
-| `getPayoutCSV` | --        |             | `Function` | `undefined` |
+| Property            | Attribute             | Description | Type       | Default     |
+| ------------------- | --------------------- | ----------- | ---------- | ----------- |
+| `enableRecordClick` | `enable-record-click` |             | `boolean`  | `false`     |
+| `getPayout`         | --                    |             | `Function` | `undefined` |
+| `getPayoutCSV`      | --                    |             | `Function` | `undefined` |
 
 
 ## Events
 
-| Event         | Description | Type                               |
-| ------------- | ----------- | ---------------------------------- |
-| `error-event` |             | `CustomEvent<ComponentErrorEvent>` |
+| Event                | Description | Type                               |
+| -------------------- | ----------- | ---------------------------------- |
+| `error-event`        |             | `CustomEvent<ComponentErrorEvent>` |
+| `record-click-event` |             | `CustomEvent<RecordClickEvent>`    |
 
 
 ## Dependencies
