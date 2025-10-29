@@ -1,6 +1,6 @@
 {
   "name": "@repo/docs",
-  "version": "0.3.26",
+  "version": "0.4.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -36,6 +36,6 @@
     "serve": "^14.2.1",
     "storybook": "^8.6.14",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.4.1"
   }
 }
