@@ -38,11 +38,25 @@ You will need to first create a checkout via [Checkout API](https://docs.justifi
 - [Security](#security)
 - [Example usage](#example-usage)
 
+- [Payment methods](#payment-methods)
+
 # Props, events and methods
 
 ---
 
 <ArgTypes exclude={['Theme']} />
+
+# Payment methods
+
+---
+
+The Unified Checkout automatically displays additional payment options when they are enabled in your account settings and when device/browser or other eligibility constraints are met:
+
+- **Apple Pay**: Must be enabled in account settings. It renders automatically only on eligible devices/browsers; otherwise it will not appear.
+- **Sezzle (BNPL)**: Must be enabled in account settings. It displays automatically when available for the account.
+- **Plaid (Bank account verification)**: Must be enabled in account settings. It displays automatically when bank account payments with Plaid verification are enabled.
+
+No extra component configuration is required beyond enabling these features on the account. When unavailable or ineligible, these options are simply not shown.
 
 # Authorization
 
