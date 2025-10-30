@@ -11,6 +11,7 @@ interface IInitialState {
   authToken: string;
   billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
+  applePayEnabled: boolean;
   insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
@@ -42,6 +43,7 @@ const initialState: IInitialState = {
     address_postal_code: '',
   },
   bnplEnabled: false,
+  applePayEnabled: false,
   insuranceEnabled: false,
   bnplProviderApiVersion: '',
   bnplProviderCheckoutUrl: '',
@@ -108,6 +110,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 
   if (checkoutStore.bnplEnabled) {
     methods.push(PAYMENT_METHODS.SEZZLE);
+  }
+
+  if (checkoutStore.applePayEnabled) {
+    methods.push(PAYMENT_METHODS.APPLE_PAY);
   }
 
   if (

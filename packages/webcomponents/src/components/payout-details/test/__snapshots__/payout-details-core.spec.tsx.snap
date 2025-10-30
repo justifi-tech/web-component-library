@@ -54,91 +54,131 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
       <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
         Details
       </h2>
-      <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Date paid
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            Dec 28, 2023
-          </span>
+      <div class="d-flex flex-column gap-2 w-100">
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Date paid
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              Dec 28, 2023
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Statement Description
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            Payout
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Statement Description
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              Payout
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Payout Method
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            standard
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Payout Method
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              Standard
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Amount
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            $220.15 USD
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Amount
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              $220.15 USD
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Fee
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            $14.85 USD
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Fee
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              $14.85 USD
+            </span>
+          </div>
         </div>
       </div>
       <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
         Account
       </h2>
-      <div class="d-table gap-2 w-100">
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            ID
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            acc_5Et9iXrSSAZR2KSouQGAWi
-          </span>
+      <div class="d-flex flex-column gap-2 w-100">
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              ID
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              acc_5Et9iXrSSAZR2KSouQGAWi
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Account Type
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            checking
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Account Type
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              checking
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Institution
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            checking
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Institution
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              checking
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Routing Number
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            110000000
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Routing Number
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              110000000
+            </span>
+          </div>
         </div>
-        <div class="d-table-row gap-2">
-          <span class="d-table-cell fw-bold px-2" part="text color font-family">
-            Account Number
-          </span>
-          <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-            6789
-          </span>
+        <div class="justify-content-between row">
+          <div class="col-12 col-md-4">
+            <span class="fw-bold" part="text color font-family">
+              Account Number
+            </span>
+          </div>
+          <div class="col-12 col-md-8" style="cursor: auto;">
+            <span class="text-wrap" part="text color font-family">
+              **** 6789
+            </span>
+          </div>
         </div>
       </div>
       <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">

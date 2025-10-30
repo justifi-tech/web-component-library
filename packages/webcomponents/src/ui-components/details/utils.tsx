@@ -1,20 +1,19 @@
-import { FunctionalComponent, h } from '@stencil/core';
-import { heading1, heading2, text } from '../../styles/parts';
+import { FunctionalComponent, h } from "@stencil/core";
+import { heading1, heading2, link, text } from "../../styles/parts";
 
 export const ErrorState = (errorMessage: string) => (
   <main
     class="p-4 d-flex justify-content-center text-center"
-    style={{ fontSize: '1.2rem' }}
+    style={{ fontSize: "1.2rem" }}
   >
     <p part={text}>{errorMessage}</p>
   </main>
 );
 
-export const DetailSectionTitle: FunctionalComponent<{ sectionTitle: string }> = (props) => (
-  <h2
-    part={heading2}
-    class="mt-4 fs-5 border-bottom pb-3"
-  >
+export const DetailSectionTitle: FunctionalComponent<{
+  sectionTitle: string;
+}> = (props) => (
+  <h2 part={heading2} class="mt-4 fs-5 border-bottom pb-3">
     {props.sectionTitle}
   </h2>
 );
@@ -22,20 +21,28 @@ export const DetailSectionTitle: FunctionalComponent<{ sectionTitle: string }> =
 export const DetailItem = ({
   title,
   value,
+  onClick,
 }: {
   title: string;
   value: string;
+  onClick?: () => void;
 }) =>
   title && value ? (
-    <div class="d-table-row gap-2">
-      <span class="fw-bold d-table-cell px-2" part={text}>
-        {title}
-      </span>
-      <span
-        class="flex-1 d-table-cell px-2 text-wrap"
-        part={text}>
-        {value}
-      </span>
+    <div class="row justify-content-between">
+      <div class="col-12 col-md-4">
+        <span class="fw-bold" part={text}>
+          {title}
+        </span>
+      </div>
+      <div
+        class={`col-12 col-md-8 ${onClick ? "text-decoration-underline text-primary" : ""}`}
+        style={{ cursor: onClick ? "pointer" : "auto" }}
+        onClick={() => onClick && onClick()}
+      >
+        <span class="text-wrap" part={onClick ? link : text}>
+          {value}
+        </span>
+      </div>
     </div>
   ) : null;
 
@@ -49,10 +56,7 @@ export const EntityHeadInfoItem = ({
   classes?: string;
 }) => (
   <div class={`d-flex flex-column ${classes}`}>
-    <span
-      class="fw-bold border-1 border-bottom ps-2 pe-2"
-      part={heading2}
-    >
+    <span class="fw-bold border-1 border-bottom ps-2 pe-2" part={heading2}>
       {title}
     </span>
     <span class="pt-2 ps-2 pe-2" part={text}>
@@ -77,11 +81,9 @@ export const EntityHeadInfo = ({ title, slot, badge }, children) => (
 
 export const CodeBlock = ({ metadata }: { metadata: {} }) =>
   metadata && Object.keys(metadata).length ? (
-    <div class='mt-4'>
+    <div class="mt-4">
       <pre class="p-2" aria-label="metadata content">
-        <code>
-          {JSON.stringify(metadata, null, 2)}
-        </code>
+        <code>{JSON.stringify(metadata, null, 2)}</code>
       </pre>
     </div>
   ) : null;

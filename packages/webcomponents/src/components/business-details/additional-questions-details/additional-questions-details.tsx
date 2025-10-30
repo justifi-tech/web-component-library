@@ -15,7 +15,7 @@ export class AdditionalQuestionsDetails {
     return (
       <div>
         <DetailSectionTitle sectionTitle="Additional Questions" />
-        <div class="d-table gap-2 w-100 mt-3">
+        <div class="d-flex flex-column gap-2 w-100 mt-3">
           <div class="row gy-3">
             <div class="col-12 col-md-6">
               <DetailItem

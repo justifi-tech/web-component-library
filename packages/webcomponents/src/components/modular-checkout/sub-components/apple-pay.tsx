@@ -37,6 +37,8 @@ export class ApplePay {
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;
   @Prop() showSkeleton: boolean = true;
+  @Prop() width: string = "100%";
+  @Prop() height: string = "48px";
 
   @State() isLoading: boolean = true;
   @State() isProcessing: boolean = false;
@@ -253,6 +255,12 @@ export class ApplePay {
   }
 
   render() {
+    if (!checkoutStore.applePayEnabled) {
+      // Render nothing when Apple Pay is disabled at the checkout settings level
+      console.log('[ApplePay Component] Apple Pay disabled in checkout settings; not rendering');
+      return null;
+    }
+
     const isReady =
       !this.isLoading &&
       this.isAvailable &&
@@ -282,6 +290,8 @@ export class ApplePay {
               isProcessing={this.isProcessing}
               isAvailable={this.isAvailable}
               clickHandler={this.handleApplePayClick}
+              width={this.width}
+              height={this.height}
             />
           )}
         </div>

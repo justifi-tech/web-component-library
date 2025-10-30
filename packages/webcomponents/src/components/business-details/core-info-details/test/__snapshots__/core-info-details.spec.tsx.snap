@@ -9,71 +9,103 @@ exports[`CoreInfoDetails should render 1`] = `
     <div class="d-table gap-2 mt-3 w-100">
       <div class="gy-3 row">
         <div class="col-12 col-md-6">
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Legal Name
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Business Name
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Legal Name
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                Business Name
+              </span>
+            </div>
           </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Doing Business As (DBA)
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Best Business
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Doing Business As (DBA)
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                Best Business
+              </span>
+            </div>
           </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Business Classification
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Corporation
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Business Classification
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                Corporation
+              </span>
+            </div>
           </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Industry
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              Big Business
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Industry
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                Big Business
+              </span>
+            </div>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Tax ID
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              895249796
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Tax ID
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                895249796
+              </span>
+            </div>
           </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Website URL
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              https://justifi.ai
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Website URL
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                https://justifi.ai
+              </span>
+            </div>
           </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Email Address
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              business@justifi.ai
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Email Address
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                business@justifi.ai
+              </span>
+            </div>
           </div>
-          <div class="d-table-row gap-2">
-            <span class="d-table-cell fw-bold px-2" part="text color font-family">
-              Phone Number
-            </span>
-            <span class="d-table-cell flex-1 px-2 text-wrap" part="text color font-family">
-              6124011111
-            </span>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Phone Number
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                6124011111
+              </span>
+            </div>
           </div>
         </div>
       </div>

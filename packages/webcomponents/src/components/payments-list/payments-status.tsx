@@ -1,6 +1,19 @@
 import { h } from "@stencil/core";
 import { Badge, BadgeVariant } from "../../ui-components/badge/badge";
 
+export enum PaymentStatusBadge {
+  SUCCEEDED = 'succeeded',
+  AUTHORIZED = 'authorized',
+  PENDING = 'pending',
+  ACH_FAILED = 'achFailed',
+  FAILED = 'failed',
+  CANCELED = 'canceled',
+  DISPUTED = 'disputed',
+  DISPUTE_LOST = 'dispute_lost',
+  FULLY_REFUNDED = 'fully_refunded',
+  PARTIALLY_REFUNDED = 'partially_refunded',
+}
+
 export const MapPaymentStatusToBadge = (status: string) => {
   const statusToBadgeProps = {
     succeeded: {
@@ -34,9 +47,14 @@ export const MapPaymentStatusToBadge = (status: string) => {
       text: 'Canceled',
     },
     disputed: {
-      variant: BadgeVariant.SECONDARY,
+      variant: BadgeVariant.WARNING,
       title: 'The account holder disputed this payment. The amount has been returned and a fee assessed.',
       text: 'Disputed',
+    },
+    dispute_lost: {
+      variant: BadgeVariant.SECONDARY,
+      title: 'The cardholder has won the dispute.',
+      text: 'Dispute Lost',
     },
     fully_refunded: {
       variant: BadgeVariant.SECONDARY,

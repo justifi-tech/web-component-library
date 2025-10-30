@@ -111,4 +111,43 @@ describe('payment-details-core', () => {
       }
     }));
   });
+
+  it('renders Dispute Lost badge when payment is disputed and a dispute was lost', async () => {
+    const disputedLostResponse = JSON.parse(JSON.stringify(mockPaymentDetailsResponse));
+
+    disputedLostResponse.data.status = 'disputed';
+    disputedLostResponse.data.disputed = true;
+    disputedLostResponse.data.disputes = [
+      {
+        amount_cents: 1000,
+        created_at: disputedLostResponse.data.created_at,
+        currency: disputedLostResponse.data.currency,
+        gateway_ref_id: 'gw_test_1',
+        id: 'dp_test_1',
+        payment_id: disputedLostResponse.data.id,
+        reason: null,
+        status: 'lost',
+        updated_at: disputedLostResponse.data.updated_at,
+      },
+    ];
+
+    const mockPaymentService = {
+      fetchPayment: jest.fn().mockResolvedValue(disputedLostResponse),
+    };
+
+    const getPaymentDetails = makeGetPaymentDetails({
+      id: '123',
+      authToken: '123',
+      service: mockPaymentService,
+    });
+
+    const page = await newSpecPage({
+      components,
+      template: () => <payment-details-core getPaymentDetails={getPaymentDetails} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
 });

@@ -77,6 +77,7 @@ export interface ICheckout {
     credit_card_payments: boolean;
     insurance_payments?: boolean;
     bank_account_verification?: boolean;
+    apple_payments?: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
@@ -109,6 +110,7 @@ export class Checkout implements ICheckout {
     credit_card_payments: boolean;
     insurance_payments?: boolean;
     bank_account_verification?: boolean;
+    apple_payments?: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
@@ -230,7 +232,14 @@ export interface CheckoutsQueryParams {
   payment_mode?: ICheckoutPaymentMode;
 }
 
-export type CardBrand = 'visa' | 'mastercard' | 'american_express' | 'discover' | 'jcb' | 'diners_club' | 'unionpay';
+export type CardBrand =
+  | 'visa'
+  | 'mastercard'
+  | 'american_express'
+  | 'discover'
+  | 'jcb'
+  | 'diners_club'
+  | 'unionpay';
 
 export type AccountType = 'checking' | 'savings';
 
