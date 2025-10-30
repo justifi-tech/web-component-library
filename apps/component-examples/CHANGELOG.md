@@ -1,5 +1,20 @@
 # @repo/component-examples
 
+## 1.1.0
+
+### Minor Changes
+
+- 9132704: Added the ability to enable cliks on account IDs on payout details for easier navigation control.
+
+### Patch Changes
+
+- Updated dependencies [c123348]
+- Updated dependencies [c123348]
+- Updated dependencies [9132704]
+- Updated dependencies [70404ea]
+- Updated dependencies [4aac018]
+  - @justifi/webcomponents@6.1.0
+
 ## 1.0.28
 
 ### Patch Changes

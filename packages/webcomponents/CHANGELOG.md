@@ -1,5 +1,23 @@
 ### Changelog
 
+## 6.1.0
+
+### Minor Changes
+
+- c123348: feat(UFC): Apple Pay support
+
+  - Apple Pay now appears as a payment option in the Unified Fintech Checkout when supported and enabled.
+  - The Apple Pay button is shown only on eligible devices/browsers; otherwise it won’t render.
+  - No changes required to existing UFC integrations; other payment methods are unaffected.
+
+- 9132704: Added the ability to enable cliks on account IDs on payout details for easier navigation control.
+- 4aac018: Changed: Make Apple Pay button full-width by default in Modular Checkout, updating apple-pay-button styling and its usage in modular-checkout for consistent layout. No API changes or breaking changes.
+
+### Patch Changes
+
+- c123348: Pass domain to Apple Pay `/merchant_session` endpoint
+- 70404ea: Enhance the display of information in payout details
+
 ## 6.0.5
 
 ### Patch Changes
