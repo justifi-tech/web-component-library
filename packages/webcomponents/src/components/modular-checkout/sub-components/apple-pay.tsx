@@ -125,7 +125,7 @@ export class ApplePay {
       const hasActiveCard =
         await this.applePayService.canMakePaymentsWithActiveCard();
       if (!hasActiveCard) {
-        // proceed without console warning
+        console.warn("No Apple Pay cards available, but continuing...");
       }
     } catch (error) {
       console.error("Apple Pay initialization error:", error);
