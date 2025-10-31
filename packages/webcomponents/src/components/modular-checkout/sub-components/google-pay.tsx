@@ -23,6 +23,7 @@ import { StyledHost } from "../../../ui-components";
 import GooglePaySkeleton from "./google-pay-skeleton";
 import { GooglePayButton } from "../../../ui-components/google-pay-button";
 import { checkoutStore, onChange } from "../../../store/checkout.store";
+import { PAYMENT_METHODS } from "../ModularCheckout";
 
 @Component({
   tag: "justifi-google-pay",
@@ -37,7 +38,7 @@ export class GooglePay {
   @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
   @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
   @Prop() buttonSizeMode: GooglePayButtonSizeMode =
-    GooglePayButtonSizeMode.STATIC;
+    GooglePayButtonSizeMode.FILL;
   @Prop() disabled: boolean = false;
   @Prop() showSkeleton: boolean = true;
 
@@ -86,21 +87,28 @@ export class GooglePay {
       this.isLoading = true;
       this.error = null;
 
+
       if (!checkoutStore.paymentAmount) {
         this.error = "Missing required Google Pay configuration";
         this.isLoading = false;
+
         return;
       }
 
       this.isAvailable = GooglePayHelpers.isGooglePaySupported();
 
       if (!this.isAvailable) {
-        this.error = "Google Pay is not supported on this device";
-        this.isLoading = false;
-        return;
+
+        await this.waitForGooglePay(3000);
+        this.isAvailable = GooglePayHelpers.isGooglePaySupported();
+        if (!this.isAvailable) {
+          this.error = "Google Pay is not supported on this device";
+          this.isLoading = false;
+
+          return;
+        }
       }
-      console.log("merchant name", this.merchantName);
-      console.log("merchant id", this.merchantId);
+
 
       const googlePayConfig: IGooglePayConfig = {
         environment: this.environment,
@@ -110,6 +118,7 @@ export class GooglePay {
         buttonStyle: this.buttonStyle,
         buttonSizeMode: this.buttonSizeMode,
       };
+
 
       this.googlePayService.initialize(googlePayConfig);
 
@@ -133,6 +142,7 @@ export class GooglePay {
           : "Failed to initialize Google Pay";
     } finally {
       this.isLoading = false;
+
     }
   }
 
@@ -167,11 +177,6 @@ export class GooglePay {
       this.isProcessing = true;
       this.error = null;
       this.googlePayStarted.emit();
-      console.log("Payment data request:", {
-        paymentAmount: checkoutStore.paymentAmount,
-        paymentDescription: checkoutStore.paymentDescription,
-        paymentCurrency: checkoutStore.paymentCurrency,
-      });
 
       const paymentDataRequest = this.createPaymentDataRequest();
       const result =
@@ -180,6 +185,7 @@ export class GooglePay {
           checkoutStore.authToken,
           checkoutStore.accountId
         );
+
 
       if (result.success) {
         this.googlePayCompleted.emit({
@@ -214,8 +220,34 @@ export class GooglePay {
       });
     } finally {
       this.isProcessing = false;
+
     }
   };
+
+  @Method()
+  async handleSelectionClick(): Promise<void> {
+    checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
+  }
+
+  private waitForGooglePay(timeoutMs: number = 3000): Promise<void> {
+    return new Promise((resolve) => {
+      const start = Date.now();
+      const check = () => {
+        if (GooglePayHelpers.isGooglePaySupported()) {
+          resolve();
+          return;
+        }
+        if (Date.now() - start > timeoutMs) {
+          resolve();
+          return;
+        }
+        setTimeout(check, 50);
+      };
+      check();
+    });
+  }
+
+  // no-op: using custom button component
 
   @Method()
   async isSupported(): Promise<boolean> {
@@ -251,6 +283,15 @@ export class GooglePay {
   render() {
     return (
       <StyledHost>
+        {checkoutStore.checkoutLoaded && (
+          <script
+            async
+            src='https://pay.google.com/gp/p/js/pay.js'
+            onLoad={() => {
+              this.initializeGooglePay();
+            }}
+          ></script>
+        )}
         <div class='google-pay-container'>
           <GooglePaySkeleton isLoading={this.isLoading} />
 
@@ -329,6 +370,7 @@ export class GooglePay {
             .error-icon {
               font-size: 16px;
             }
+            
           `}
         </style>
       </StyledHost>

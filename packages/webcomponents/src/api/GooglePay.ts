@@ -1,4 +1,4 @@
-import { PagingInfo } from "./Pagination";
+import { PagingInfo } from './Pagination';
 
 export enum GooglePayButtonType {
   PLAIN = 'plain',
@@ -8,22 +8,22 @@ export enum GooglePayButtonType {
   DONATE = 'donate',
   ORDER = 'order',
   PAY = 'pay',
-  SUBSCRIBE = 'subscribe'
+  SUBSCRIBE = 'subscribe',
 }
 
 export enum GooglePayButtonStyle {
   BLACK = 'black',
-  WHITE = 'white'
+  WHITE = 'white',
 }
 
 export enum GooglePayButtonSizeMode {
   STATIC = 'static',
-  FILL = 'fill'
+  FILL = 'fill',
 }
 
 export enum GooglePayEnvironment {
   PRODUCTION = 'PRODUCTION',
-  TEST = 'TEST'
+  TEST = 'TEST',
 }
 
 export interface IGooglePayLineItem {
@@ -156,8 +156,14 @@ export interface IGooglePayPaymentData {
 }
 
 export interface IGooglePayClient {
-  isReadyToPay(request: { apiVersion: number; apiVersionMinor: number; allowedPaymentMethods: IGooglePayPaymentMethodData[] }): Promise<{ result: boolean; paymentMethodPresent?: boolean }>;
-  loadPaymentData(request: IGooglePayPaymentDataRequest): Promise<IGooglePayPaymentData>;
+  isReadyToPay(request: {
+    apiVersion: number;
+    apiVersionMinor: number;
+    allowedPaymentMethods: IGooglePayPaymentMethodData[];
+  }): Promise<{ result: boolean; paymentMethodPresent?: boolean }>;
+  loadPaymentData(
+    request: IGooglePayPaymentDataRequest
+  ): Promise<IGooglePayPaymentData>;
   createButton(options: {
     onClick: () => void;
     buttonType?: GooglePayButtonType;
@@ -188,7 +194,7 @@ export interface IGooglePayTokenResponse {
   data: {
     account_id: string;
     token: string;
-  }
+  };
 }
 
 export interface IGooglePayService {
@@ -219,14 +225,13 @@ export class GooglePayConfig implements IGooglePayConfig {
   }
 
   public get isValid(): boolean {
-    return !!(
-      this.environment &&
-      this.merchantName
-    );
+    return !!(this.environment && this.merchantName);
   }
 }
 
-export class GooglePayPaymentDataRequest implements IGooglePayPaymentDataRequest {
+export class GooglePayPaymentDataRequest
+  implements IGooglePayPaymentDataRequest
+{
   public apiVersion: number;
   public apiVersionMinor: number;
   public allowedPaymentMethods: IGooglePayPaymentMethodData[];
@@ -253,14 +258,26 @@ export class GooglePayPaymentDataRequest implements IGooglePayPaymentDataRequest
   }
 
   public get isValid(): boolean {
-    return !!(
-      this.apiVersion &&
-      this.apiVersionMinor &&
-      this.allowedPaymentMethods?.length &&
-      this.transactionInfo?.countryCode &&
-      this.transactionInfo?.currencyCode &&
-      this.transactionInfo?.totalPrice &&
-      this.merchantInfo?.merchantName
+    const hasApiVersion =
+      typeof this.apiVersion === 'number' && this.apiVersion > 0;
+    const hasApiVersionMinor =
+      typeof this.apiVersionMinor === 'number' && this.apiVersionMinor >= 0;
+    const hasAllowedMethods =
+      Array.isArray(this.allowedPaymentMethods) &&
+      this.allowedPaymentMethods.length > 0;
+    const hasTxnCountry = Boolean(this.transactionInfo?.countryCode);
+    const hasTxnCurrency = Boolean(this.transactionInfo?.currencyCode);
+    const hasTxnTotal = Boolean(this.transactionInfo?.totalPrice);
+    const hasMerchantName = Boolean(this.merchantInfo?.merchantName);
+
+    return (
+      hasApiVersion &&
+      hasApiVersionMinor &&
+      hasAllowedMethods &&
+      hasTxnCountry &&
+      hasTxnCurrency &&
+      hasTxnTotal &&
+      hasMerchantName
     );
   }
 }
@@ -270,23 +287,30 @@ export class GooglePayHelpers {
    * Check if Google Pay is supported in the current environment
    */
   static isGooglePaySupported(): boolean {
-    return typeof window !== 'undefined' && 
-           'google' in window && 
-           'payments' in (window as any).google &&
-           'api' in (window as any).google.payments;
+    return (
+      typeof window !== 'undefined' &&
+      'google' in window &&
+      'payments' in (window as any).google &&
+      'api' in (window as any).google.payments
+    );
   }
 
   /**
    * Create a Google Pay client instance
    */
-  static createGooglePayClient(environment: GooglePayEnvironment): IGooglePayClient | null {
+  static createGooglePayClient(
+    environment: GooglePayEnvironment
+  ): IGooglePayClient | null {
     if (!this.isGooglePaySupported()) {
       return null;
     }
 
     try {
       return new (window as any).google.payments.api.PaymentsClient({
-        environment: environment === GooglePayEnvironment.PRODUCTION ? 'PRODUCTION' : 'TEST'
+        environment:
+          environment === GooglePayEnvironment.PRODUCTION
+            ? 'PRODUCTION'
+            : 'TEST',
       });
     } catch (error) {
       console.error('Failed to create Google Pay client:', error);
@@ -311,11 +335,15 @@ export class GooglePayHelpers {
   /**
    * Create a line item for Google Pay
    */
-  static createLineItem(label: string, amount: number, type: 'LINE_ITEM' | 'SUBTOTAL' = 'LINE_ITEM'): IGooglePayLineItem {
+  static createLineItem(
+    label: string,
+    amount: number,
+    type: 'LINE_ITEM' | 'SUBTOTAL' = 'LINE_ITEM'
+  ): IGooglePayLineItem {
     return {
       label,
       price: this.formatAmount(amount),
-      type
+      type,
     };
   }
 
@@ -323,20 +351,14 @@ export class GooglePayHelpers {
    * Get default supported card networks
    */
   static getDefaultSupportedNetworks(): string[] {
-    return [
-      'MASTERCARD',
-      'VISA'
-    ];
+    return ['VISA', 'MASTERCARD', 'AMEX', 'DISCOVER', 'JCB'];
   }
 
   /**
    * Get default allowed authentication methods
    */
   static getDefaultAuthMethods(): string[] {
-    return [
-      'PAN_ONLY',
-      'CRYPTOGRAM_3DS'
-    ];
+    return ['PAN_ONLY', 'CRYPTOGRAM_3DS'];
   }
 
   /**
@@ -346,7 +368,7 @@ export class GooglePayHelpers {
     return {
       allowedAuthMethods: this.getDefaultAuthMethods(),
       allowedCardNetworks: this.getDefaultSupportedNetworks(),
-      billingAddressRequired: false
+      billingAddressRequired: false,
     };
   }
 
@@ -357,9 +379,10 @@ export class GooglePayHelpers {
     return {
       type: 'DIRECT',
       parameters: {
-        'protocolVersion': 'ECv2',
-        'publicKey': 'BHaQr3iRmzQE1j2VhPQwupiSz+5K+QTxhktS1nJlJZbIUYTHyIttX8CBPVkRgC56rAv6uYifyiiLhi2tXCZHLIk='
-      }
+        protocolVersion: 'ECv2',
+        publicKey:
+          'BHaQr3iRmzQE1j2VhPQwupiSz+5K+QTxhktS1nJlJZbIUYTHyIttX8CBPVkRgC56rAv6uYifyiiLhi2tXCZHLIk=',
+      },
     };
   }
 
@@ -370,19 +393,29 @@ export class GooglePayHelpers {
     return {
       type: 'CARD',
       parameters: this.createDefaultCardParameters(),
-      tokenizationSpecification: this.createTokenizationSpecification()
+      tokenizationSpecification: this.createTokenizationSpecification(),
     };
   }
 
   /**
    * Create base payment data request check
    */
-  static createBasePaymentDataRequest(): { apiVersion: number; apiVersionMinor: number; allowedPaymentMethods: IGooglePayPaymentMethodData[] } {
-    return {
+  static createBasePaymentDataRequest(): {
+    apiVersion: number;
+    apiVersionMinor: number;
+    allowedPaymentMethods: IGooglePayPaymentMethodData[];
+  } {
+    const base: any = {
       apiVersion: 2,
       apiVersionMinor: 0,
-      allowedPaymentMethods: [this.createPaymentMethodData()]
+      allowedPaymentMethods: [this.createPaymentMethodData()],
     };
+
+    // For development and broader availability of the button, do not require an existing card
+    // This allows isReadyToPay to return true on supported browsers even without a saved payment method
+    base.existingPaymentMethodRequired = false;
+
+    return base;
   }
 }
 
@@ -392,7 +425,9 @@ declare global {
       payments?: {
         api?: {
           PaymentsClient: {
-            new (options: { environment: 'PRODUCTION' | 'TEST' }): IGooglePayClient;
+            new (options: {
+              environment: 'PRODUCTION' | 'TEST';
+            }): IGooglePayClient;
           };
         };
       };
