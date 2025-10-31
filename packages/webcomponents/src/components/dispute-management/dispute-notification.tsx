@@ -50,13 +50,12 @@ export class DisputeNotification {
     if (!this.dispute?.due_date) {
       return false;
     }
-    
+
     const dueDate = new Date(this.dispute.due_date);
     const today = new Date();
     // Reset time to compare only dates
     today.setHours(0, 0, 0, 0);
     dueDate.setHours(0, 0, 0, 0);
-    console.log(dueDate, today);
     return dueDate < today;
   }
 
