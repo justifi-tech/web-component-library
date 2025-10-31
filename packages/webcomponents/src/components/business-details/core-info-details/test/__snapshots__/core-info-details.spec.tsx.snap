@@ -62,18 +62,6 @@ exports[`CoreInfoDetails should render 1`] = `
           <div class="justify-content-between row">
             <div class="col-12 col-md-4">
               <span class="fw-bold" part="text color font-family">
-                Tax ID
-              </span>
-            </div>
-            <div class="col-12 col-md-8" style="cursor: auto;">
-              <span class="text-wrap" part="text color font-family">
-                895249796
-              </span>
-            </div>
-          </div>
-          <div class="justify-content-between row">
-            <div class="col-12 col-md-4">
-              <span class="fw-bold" part="text color font-family">
                 Website URL
               </span>
             </div>

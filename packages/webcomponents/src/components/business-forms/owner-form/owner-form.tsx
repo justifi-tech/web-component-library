@@ -2,6 +2,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
 import { makeGetIdentity, makePatchIdentity, makePostIdentity } from '../payment-provisioning/payment-provisioning-actions';
 import { IdentityService } from '../../../api/services/business.service';
+import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-owner-form'
@@ -20,6 +21,7 @@ export class BusinessOwnerForm {
   @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
+  @Prop() country: CountryCode;
 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
@@ -72,6 +74,7 @@ export class BusinessOwnerForm {
         removeOwner={this.removeOwner}
         newFormOpen={this.newFormOpen}
         ownersLength={this.ownersLength}
+        country={this.country}
         ref={ref => this.coreComponent = ref}
       />
     )
