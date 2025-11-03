@@ -344,7 +344,7 @@ export class GooglePayHelpers {
    * Get default supported card networks
    */
   static getDefaultSupportedNetworks(): string[] {
-    return ['VISA', 'MASTERCARD', 'AMEX', 'DISCOVER', 'JCB'];
+    return ['VISA', 'MASTERCARD', 'AMEX', 'DISCOVER'];
   }
 
   /**
@@ -370,11 +370,10 @@ export class GooglePayHelpers {
    */
   static createTokenizationSpecification(): IGooglePayTokenizationSpecification {
     return {
-      type: 'DIRECT',
+      type: 'PAYMENT_GATEWAY',
       parameters: {
-        protocolVersion: 'ECv2',
-        publicKey:
-          'BHaQr3iRmzQE1j2VhPQwupiSz+5K+QTxhktS1nJlJZbIUYTHyIttX8CBPVkRgC56rAv6uYifyiiLhi2tXCZHLIk=',
+        gateway: 'justifi',
+        gatewayMerchantId: 'gateway:justifi',
       },
     };
   }

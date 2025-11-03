@@ -327,7 +327,6 @@ export class GooglePayService implements IGooglePayService {
         totalPriceLabel: label,
       },
       merchantInfo: {
-        merchantId,
         merchantName,
       },
     };

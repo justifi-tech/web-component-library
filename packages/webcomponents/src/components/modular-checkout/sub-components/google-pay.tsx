@@ -33,8 +33,8 @@ export class GooglePay {
   private googlePayService: GooglePayService;
   @Prop() countryCode: string = "US";
   @Prop() environment: GooglePayEnvironment = GooglePayEnvironment.TEST;
-  @Prop() merchantId: string = "BCR2DN7TZDEZJ4JC";
-  @Prop() merchantName: string = "Test.JustiFi";
+  @Prop() merchantId: string = "gateway:justifi";
+  @Prop() merchantName: string = "justifi";
   @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
   @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
   @Prop() buttonSizeMode: GooglePayButtonSizeMode =
