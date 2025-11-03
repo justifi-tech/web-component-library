@@ -59,7 +59,8 @@ export class ApplePayService implements IApplePayService {
           'Sub-Account': accountId,
         },
         body: {
-          domain: window.location.host
+          domain: window.location.host,
+          display_name: this.applePayConfig.displayName
         }
       });
 
