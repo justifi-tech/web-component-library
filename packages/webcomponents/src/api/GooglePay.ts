@@ -105,10 +105,6 @@ export interface IGooglePayError {
 export interface IGooglePayTokenData {
   protocolVersion: string;
   signature: string;
-  intermediateSigningKey?: {
-    signedKey: string;
-    signatures: string[];
-  };
   signedMessage: string;
 }
 
@@ -175,16 +171,13 @@ export interface IGooglePayClient {
 }
 
 export interface IGooglePayTokenProcessRequest {
-  tokenizationData: IGooglePayTokenData;
-  paymentMethodData: IGooglePayPaymentMethod;
-  email?: string;
-  shippingAddress?: any;
-  product_details?: {
-    name: string;
-    price: number;
-    description: string;
+  protocolVersion?: string;
+  signature: string;
+  intermediateSigningKey?: {
+    signedKey: string;
+    signatures: string[];
   };
-  description?: string;
+  signedMessage?: string;
 }
 
 export interface IGooglePayTokenResponse {

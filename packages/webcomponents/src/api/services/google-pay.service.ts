@@ -36,6 +36,19 @@ export class GooglePayService implements IGooglePayService {
     if (!this.googlePayClient) {
       throw new Error('Failed to create Google Pay client');
     }
+
+    // Browser-capturable initialization log
+    try {
+      console.info('[JustiFi][GooglePay] Initialized', {
+        environment: this.googlePayConfig.environment,
+        merchantId: this.googlePayConfig.merchantId,
+        merchantName: this.googlePayConfig.merchantName,
+        buttonType: this.googlePayConfig.buttonType,
+        buttonStyle: this.googlePayConfig.buttonStyle,
+        buttonSizeMode: this.googlePayConfig.buttonSizeMode,
+        buttonLocale: this.googlePayConfig.buttonLocale,
+      });
+    } catch (_e) {}
   }
 
   /**
@@ -54,7 +67,7 @@ export class GooglePayService implements IGooglePayService {
         authToken,
         body: payload,
         headers: {
-          'Sub-Account': accountId,
+          'sub-account': accountId,
         },
       });
 
@@ -124,19 +137,33 @@ export class GooglePayService implements IGooglePayService {
     try {
       const paymentData = await this.googlePayClient.loadPaymentData(request);
 
-      // Process the payment token
+      // Build top-level snake_case fields from Google Pay tokenizationData
+      const tokenizationData = (paymentData as any)?.paymentMethodData
+        ?.tokenizationData;
+      const tokenObj = ((): any => {
+        if (
+          tokenizationData?.token &&
+          typeof tokenizationData.token === 'string'
+        ) {
+          try {
+            return JSON.parse(tokenizationData.token);
+          } catch (_e) {
+            return tokenizationData;
+          }
+        }
+        return tokenizationData;
+      })();
+
       const tokenProcessRequest: IGooglePayTokenProcessRequest = {
-        tokenizationData: paymentData.paymentMethodData.tokenizationData,
-        paymentMethodData: paymentData.paymentMethodData,
-        email: paymentData.email,
-        shippingAddress: paymentData.shippingAddress,
-        product_details: {
-          name: request.transactionInfo.totalPriceLabel || 'Payment',
-          price: GooglePayHelpers.parseAmount(
-            request.transactionInfo.totalPrice
-          ),
-          description: request.transactionInfo.totalPriceLabel || 'Payment',
-        },
+        protocolVersion: tokenObj?.protocolVersion,
+        signature: tokenObj?.signature,
+        intermediateSigningKey: tokenObj?.intermediateSigningKey
+          ? {
+              signedKey: tokenObj.intermediateSigningKey.signedKey,
+              signatures: tokenObj.intermediateSigningKey.signatures,
+            }
+          : undefined,
+        signedMessage: tokenObj?.signedMessage,
       };
 
       const paymentResult = await this.processPayment(
@@ -288,7 +315,7 @@ export class GooglePayService implements IGooglePayService {
     merchantName: string,
     merchantId?: string
   ): IGooglePayPaymentDataRequest {
-    return {
+    const request: IGooglePayPaymentDataRequest = {
       apiVersion: 2,
       apiVersionMinor: 0,
       allowedPaymentMethods: [GooglePayHelpers.createPaymentMethodData()],
@@ -304,6 +331,20 @@ export class GooglePayService implements IGooglePayService {
         merchantName,
       },
     };
+
+    // Browser-capturable request construction log (sanitized)
+    try {
+      console.info('[JustiFi][GooglePay] PaymentDataRequest', {
+        amount: GooglePayHelpers.formatAmount(amount),
+        label,
+        countryCode,
+        currencyCode,
+        merchantName,
+        merchantId,
+      });
+    } catch (_e) {}
+
+    return request;
   }
 
   /**
