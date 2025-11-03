@@ -51,8 +51,12 @@ export class DisputeNotification {
       return false;
     }
 
-    const dueDate = new Date(this.dispute.due_date);
+    // Fix for JavaScript Date object parsing
+    // https://stackoverflow.com/a/31732581
+    const dueDate = new Date(this.dispute.due_date.replace(/-/g, '\/').replace(/T.+/, ''));
+
     const today = new Date();
+
     // Reset time to compare only dates
     today.setHours(0, 0, 0, 0);
     dueDate.setHours(0, 0, 0, 0);
