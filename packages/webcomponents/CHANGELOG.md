@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.1.1
+
+### Patch Changes
+
+- Use display name prop to create merchant session
+
 ## 6.1.0
 
 ### Minor Changes
