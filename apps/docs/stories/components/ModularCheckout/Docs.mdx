@@ -154,15 +154,7 @@ checkout.preCompleteHook = (state, next, cancel) => {
 };
 ```
 
-The `CheckoutState` object includes:
-- `selectedPaymentMethod`: Currently selected payment method
-- `paymentAmount`: Payment amount in cents
-- `totalAmount`: Total amount including fees in cents
-- `paymentCurrency`: Currency code (e.g., 'USD')
-- `paymentDescription`: Payment description
-- `savedPaymentMethods`: Array of saved payment methods
-- `savePaymentMethod`: Whether to save the payment method
-- Payment method availability flags (`bnplEnabled`, `applePayEnabled`, etc.)
+See the `CheckoutState` type definition in the [Public Types](#public-types) section below for the complete structure of the state object.
 
 ## Validation
 
