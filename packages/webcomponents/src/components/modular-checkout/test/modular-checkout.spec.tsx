@@ -245,7 +245,7 @@ describe('justifi-modular-checkout', () => {
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn();
 
-      const hookFn = jest.fn((state, next, cancel) => {
+      const hookFn = jest.fn((state, next, _cancel) => {
         next(state);
       });
       instance.preSubmitHook = hookFn;
@@ -265,7 +265,7 @@ describe('justifi-modular-checkout', () => {
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn();
 
-      const hookFn = jest.fn((state, next, cancel) => {
+      const hookFn = jest.fn((_state, _next, cancel) => {
         cancel();
       });
       instance.preSubmitHook = hookFn;
