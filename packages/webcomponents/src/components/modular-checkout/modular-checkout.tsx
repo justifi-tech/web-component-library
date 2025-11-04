@@ -8,7 +8,7 @@ import {
   Method,
   Prop,
 } from "@stencil/core";
-import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes } from "../../store/checkout.store";
+import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState, CheckoutState } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import {
@@ -26,7 +26,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod } from "./ModularCheckout";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -50,6 +50,7 @@ export class ModularCheckout {
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
+  @Prop() preCompleteHook?: Hook<CheckoutState>;
 
   @Element() hostEl: HTMLElement;
 
@@ -468,6 +469,22 @@ export class ModularCheckout {
       payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
       payment_token: checkoutStore.paymentToken,
     };
+
+    if (this.preCompleteHook) {
+      const state = getCheckoutState();
+
+      try {
+        await new Promise<void>((resolve, reject) => {
+          this.preCompleteHook(
+            state,
+            () => resolve(),
+            () => reject()
+          );
+        });
+      } catch {
+        return;
+      }
+    }
 
     this.completeCheckout({
       payment,
