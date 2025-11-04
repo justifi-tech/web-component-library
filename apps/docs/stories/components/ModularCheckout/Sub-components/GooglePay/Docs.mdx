@@ -1,0 +1,53 @@
+import { Meta, Source } from '@storybook/blocks';
+import {
+  ComponentBox,
+  Banner,
+} from '../../../../utils/documentation-components';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Sub-components/Google Pay"
+  Components="justifi-google-pay"
+/>
+
+# Google Pay
+
+---
+
+Renders a Google Pay button for eligible devices and orchestrates the Google Pay flow. Designed to be used within `justifi-modular-checkout`.
+
+## Props
+
+- **countryCode** (string, default: `"US"`): Two-letter ISO country code used in the payment data request.
+- **merchantId** (string, default: `"gateway:justifi"`): Merchant or gateway identifier passed to Google Pay.
+- **merchantName** (string, default: `"justifi"`): Display name shown in Google Pay sheets.
+- **buttonType** (`GooglePayButtonType`, default: `PLAIN`): Button label/type variant.
+- **buttonStyle** (`GooglePayButtonStyle`, default: `BLACK`): Button color scheme.
+- **buttonSizeMode** (`GooglePayButtonSizeMode`, default: `FILL`): Button sizing behavior.
+- **disabled** (boolean, default: `false`): Disables the Google Pay button and prevents interaction.
+- **showSkeleton** (boolean, default: `true`): Shows a loading skeleton while availability is being determined.
+
+## Events
+
+- `googlePayStarted`
+- `googlePayCompleted`
+- `googlePayCancelled`
+- `googlePayError`
+
+### Event detail shapes
+
+- `googlePayCompleted`
+  - Detail: `{ success: boolean; paymentData?: IGooglePayPaymentData; paymentMethodId?: string; error?: any }`
+- `googlePayError`
+  - Detail: `{ error: string }`
+
+## Supported Browsers
+
+- Chrome (Android)
+- Edge (Android)
+- Firefox (Android)
+- Chrome (Desktop) when Google Pay is available for the user
+
+> Note: Availability depends on device capability, region, and whether the user has Google Pay set up. The component automatically detects support and gracefully handles unsupported environments.
