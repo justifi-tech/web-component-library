@@ -1,5 +1,7 @@
 import { CardBrand, ICheckoutPaymentMethod } from '../../api';
 
+export type { CheckoutState } from '../../store/checkout.store';
+
 export enum PAYMENT_MODE {
   ECOM = 'ecom',
   BNPL = 'bnpl',
