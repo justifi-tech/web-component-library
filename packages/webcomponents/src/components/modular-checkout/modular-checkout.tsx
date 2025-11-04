@@ -8,13 +8,7 @@ import {
   Method,
   Prop,
 } from "@stencil/core";
-import {
-  checkoutStore,
-  onAnyChange,
-  getAvailablePaymentMethodTypes,
-  getCheckoutState,
-  CheckoutState,
-} from "../../store/checkout.store";
+import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState, CheckoutState } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import {
@@ -31,19 +25,8 @@ import {
 import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
-import {
-  insuranceValues,
-  insuranceValuesOn,
-  hasInsuranceValueChanged,
-} from "../insurance/insurance-state";
-import {
-  PAYMENT_MODE,
-  CheckoutChangedEventDetail,
-  SelectedPaymentMethod,
-  PAYMENT_METHODS,
-  PaymentMethod,
-  Hook,
-} from "./ModularCheckout";
+import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -173,18 +156,14 @@ export class ModularCheckout {
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
     checkoutStore.checkoutLoaded = true;
-    checkoutStore.paymentMethods = checkout.payment_methods.map(
-      (paymentMethod) => new PaymentMethod(paymentMethod),
-    );
+    checkoutStore.paymentMethods = checkout.payment_methods.map((paymentMethod) => new PaymentMethod(paymentMethod));
     checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
     checkoutStore.paymentDescription = checkout.payment_description;
     checkoutStore.totalAmount = checkout.total_amount;
     checkoutStore.paymentAmount = checkout.payment_amount;
     checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
-    checkoutStore.insuranceEnabled =
-      checkout.payment_settings.insurance_payments;
-    checkoutStore.bankAccountVerification =
-      checkout.payment_settings?.bank_account_verification;
+    checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments;
+    checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
     checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
@@ -204,31 +183,28 @@ export class ModularCheckout {
 
   private queryFormRefs() {
     this.billingFormRef = this.hostEl.querySelector(
-      "justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full",
+      "justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full"
     );
     this.applePayRef = this.hostEl.querySelector("justifi-apple-pay");
-    this.paymentMethodFormRef = this.hostEl.querySelector(
-      "justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method",
-    );
+    this.paymentMethodFormRef =
+      this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method');
 
-    this.insuranceFormRef = this.hostEl.querySelector(
-      "justifi-season-interruption-insurance",
-    );
+    this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
   }
 
   private setupApplePayListeners() {
     if (this.applePayRef) {
       this.applePayRef.addEventListener(
         "applePayCompleted",
-        this.handleApplePayCompleted,
+        this.handleApplePayCompleted
       );
       this.applePayRef.addEventListener(
         "applePayError",
-        this.handleApplePayError,
+        this.handleApplePayError
       );
       this.applePayRef.addEventListener(
         "applePayCancelled",
-        this.handleApplePayCancelled,
+        this.handleApplePayCancelled
       );
     }
   }
@@ -237,15 +213,15 @@ export class ModularCheckout {
     if (this.applePayRef) {
       this.applePayRef.removeEventListener(
         "applePayCompleted",
-        this.handleApplePayCompleted,
+        this.handleApplePayCompleted
       );
       this.applePayRef.removeEventListener(
         "applePayError",
-        this.handleApplePayError,
+        this.handleApplePayError
       );
       this.applePayRef.removeEventListener(
         "applePayCancelled",
-        this.handleApplePayCancelled,
+        this.handleApplePayCancelled
       );
     }
   }
@@ -284,7 +260,7 @@ export class ModularCheckout {
   };
 
   private async tokenizePaymentMethod(
-    tokenizeArgs: BillingFormFields,
+    tokenizeArgs: BillingFormFields
   ): Promise<any> {
     const billingInfoValues = (await this.billingFormRef?.getValues()) ?? {};
 
@@ -300,6 +276,7 @@ export class ModularCheckout {
       paymentMethodMetadata.payment_method_group_id =
         checkoutStore.paymentMethodGroupId;
     }
+
 
     const tokenizeResult = await this.paymentMethodFormRef?.tokenize({
       clientId: this.authToken,
@@ -332,16 +309,14 @@ export class ModularCheckout {
       promises.push(this.insuranceFormRef.validate());
     }
 
-    const isNewCard =
-      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD;
-    const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod?.type ===
-      PAYMENT_METHODS.NEW_BANK_ACCOUNT;
+    const isNewCard = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
+    const isNewBankAccount = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
     // For new card/bank account, validate payment method + billing.
-    if (isNewCard || isNewBankAccount) {
-      if (this.paymentMethodFormRef)
-        promises.push(this.paymentMethodFormRef.validate());
+    if (
+      isNewCard || isNewBankAccount
+    ) {
+      if (this.paymentMethodFormRef) promises.push(this.paymentMethodFormRef.validate());
       if (this.billingFormRef) promises.push(this.billingFormRef.validate());
     }
 
@@ -353,13 +328,13 @@ export class ModularCheckout {
       // Normalize different validator return shapes:
       // - boolean -> use it directly
       // - object  -> look for isValid; treat missing isValid as falsey only if explicitly false
-      const resultsAreValid = results.every((r) =>
-        typeof r === "boolean" ? r : r?.isValid !== false,
+      const resultsAreValid = results.every(r =>
+        typeof r === 'boolean' ? r : r?.isValid !== false
       );
 
       if (!resultsAreValid) {
         this.errorEvent.emit({
-          message: "Validation error",
+          message: 'Validation error',
           errorCode: ComponentErrorCodes.VALIDATION_ERROR,
           severity: ComponentErrorSeverity.ERROR,
         });
@@ -379,12 +354,121 @@ export class ModularCheckout {
 
     if (!checkoutStore.selectedPaymentMethod) {
       this.errorEvent.emit({
-        message: "No payment method selected.",
+        message: 'No payment method selected.',
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
         severity: ComponentErrorSeverity.ERROR,
       });
       return;
     }
+
+    const isNewCard =
+      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
+    const isNewBankAccount =
+      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
+
+    const isPlaid = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
+
+    const shouldTokenize = isNewCard || isNewBankAccount;
+
+    if (shouldTokenize) {
+      const tokenizeResult = await this.tokenizePaymentMethod(submitCheckoutArgs);
+
+      if ((tokenizeResult as any)?.error) {
+        this.errorEvent.emit({
+          message: (tokenizeResult as any).error.message,
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+    }
+
+    // For Plaid, perform exchange at submit time using stored public token and link token id
+    if (isPlaid && !checkoutStore.paymentToken) {
+      const publicToken = checkoutStore.plaidPublicToken;
+      const linkTokenId = checkoutStore.plaidLinkTokenId;
+
+      if (!publicToken) {
+        this.errorEvent.emit({
+          message: 'Missing Plaid public token. Please connect your bank.',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+
+      try {
+        const response = await this.plaidService.tokenizeBankAccount(
+          checkoutStore.authToken,
+          checkoutStore.accountId,
+          publicToken,
+          linkTokenId || undefined,
+          checkoutStore.savePaymentMethod ? checkoutStore.paymentMethodGroupId : undefined
+        );
+
+        if (response?.error) {
+          this.errorEvent.emit({
+            message: typeof response.error === 'string' ? response.error : response.error.message || 'Failed to tokenize bank account',
+            errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+            severity: ComponentErrorSeverity.ERROR,
+          });
+          return;
+        }
+
+        const paymentMethod = response?.data;
+        const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
+        checkoutStore.paymentToken = token;
+      } catch (err) {
+        this.errorEvent.emit({
+          message: (err as any)?.message || 'Plaid exchange error',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+    }
+
+    if (!isValid) {
+      this.errorEvent.emit({
+        message: "Please fill in all required fields.",
+        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
+    if (!checkoutStore.paymentToken) {
+      this.errorEvent.emit({
+        message: 'Payment token not found.',
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
+    let payment: { payment_mode: string; payment_token: string | undefined };
+
+    const mapTypeToPaymentMode = (type: string | undefined): string | undefined => {
+      switch (type) {
+        case PAYMENT_METHODS.NEW_CARD:
+        case PAYMENT_METHODS.SAVED_CARD:
+        case PAYMENT_METHODS.NEW_BANK_ACCOUNT:
+        case PAYMENT_METHODS.SAVED_BANK_ACCOUNT:
+        case PAYMENT_METHODS.PLAID:
+          return PAYMENT_MODE.ECOM;
+        case PAYMENT_METHODS.SEZZLE:
+          return PAYMENT_MODE.BNPL;
+        case PAYMENT_METHODS.APPLE_PAY:
+          return PAYMENT_MODE.APPLE_PAY;
+        default:
+          return undefined;
+      }
+    };
+
+    payment = {
+      payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
+      payment_token: checkoutStore.paymentToken,
+    };
 
     if (this.preSubmitHook) {
       const state = getCheckoutState();
@@ -408,130 +492,6 @@ export class ModularCheckout {
         return;
       }
     }
-
-    const isNewCard =
-      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD;
-    const isNewBankAccount =
-      checkoutStore.selectedPaymentMethod?.type ===
-      PAYMENT_METHODS.NEW_BANK_ACCOUNT;
-
-    const isPlaid =
-      checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
-
-    const shouldTokenize = isNewCard || isNewBankAccount;
-
-    if (shouldTokenize) {
-      const tokenizeResult =
-        await this.tokenizePaymentMethod(submitCheckoutArgs);
-
-      if ((tokenizeResult as any)?.error) {
-        this.errorEvent.emit({
-          message: (tokenizeResult as any).error.message,
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      }
-    }
-
-    // For Plaid, perform exchange at submit time using stored public token and link token id
-    if (isPlaid && !checkoutStore.paymentToken) {
-      const publicToken = checkoutStore.plaidPublicToken;
-      const linkTokenId = checkoutStore.plaidLinkTokenId;
-
-      if (!publicToken) {
-        this.errorEvent.emit({
-          message: "Missing Plaid public token. Please connect your bank.",
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      }
-
-      try {
-        const response = await this.plaidService.tokenizeBankAccount(
-          checkoutStore.authToken,
-          checkoutStore.accountId,
-          publicToken,
-          linkTokenId || undefined,
-          checkoutStore.savePaymentMethod
-            ? checkoutStore.paymentMethodGroupId
-            : undefined,
-        );
-
-        if (response?.error) {
-          this.errorEvent.emit({
-            message:
-              typeof response.error === "string"
-                ? response.error
-                : response.error.message || "Failed to tokenize bank account",
-            errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-            severity: ComponentErrorSeverity.ERROR,
-          });
-          return;
-        }
-
-        const paymentMethod = response?.data;
-        const token =
-          paymentMethod?.bank_account?.token ||
-          paymentMethod?.token ||
-          paymentMethod?.id;
-        checkoutStore.paymentToken = token;
-      } catch (err) {
-        this.errorEvent.emit({
-          message: (err as any)?.message || "Plaid exchange error",
-          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-          severity: ComponentErrorSeverity.ERROR,
-        });
-        return;
-      }
-    }
-
-    if (!isValid) {
-      this.errorEvent.emit({
-        message: "Please fill in all required fields.",
-        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    }
-
-    if (!checkoutStore.paymentToken) {
-      this.errorEvent.emit({
-        message: "Payment token not found.",
-        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
-    }
-
-    let payment: { payment_mode: string; payment_token: string | undefined };
-
-    const mapTypeToPaymentMode = (
-      type: string | undefined,
-    ): string | undefined => {
-      switch (type) {
-        case PAYMENT_METHODS.NEW_CARD:
-        case PAYMENT_METHODS.SAVED_CARD:
-        case PAYMENT_METHODS.NEW_BANK_ACCOUNT:
-        case PAYMENT_METHODS.SAVED_BANK_ACCOUNT:
-        case PAYMENT_METHODS.PLAID:
-          return PAYMENT_MODE.ECOM;
-        case PAYMENT_METHODS.SEZZLE:
-          return PAYMENT_MODE.BNPL;
-        case PAYMENT_METHODS.APPLE_PAY:
-          return PAYMENT_MODE.APPLE_PAY;
-        default:
-          return undefined;
-      }
-    };
-
-    payment = {
-      payment_mode: mapTypeToPaymentMode(
-        checkoutStore.selectedPaymentMethod?.type,
-      ) as string,
-      payment_token: checkoutStore.paymentToken,
-    };
 
     this.completeCheckout({
       payment,
