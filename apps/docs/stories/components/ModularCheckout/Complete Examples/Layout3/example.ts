@@ -372,8 +372,8 @@ ${codeExampleHead(
     const modularCheckout = document.querySelector('justifi-modular-checkout');
     const submitButton = document.querySelector('#submit-button');
 
-    // Set up pre-submit hook
-    modularCheckout.preSubmitHook = (state, next, cancel) => {
+    // Set up pre-complete hook
+    modularCheckout.preCompleteHook = (state, next, cancel) => {
       // You could check the payment method type
       // if (state.selectedPaymentMethod?.type === 'new_card') { ... }
 

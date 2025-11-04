@@ -50,7 +50,7 @@ export class ModularCheckout {
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
-  @Prop() preSubmitHook?: Hook<CheckoutState>;
+  @Prop() preCompleteHook?: Hook<CheckoutState>;
 
   @Element() hostEl: HTMLElement;
 
@@ -470,12 +470,12 @@ export class ModularCheckout {
       payment_token: checkoutStore.paymentToken,
     };
 
-    if (this.preSubmitHook) {
+    if (this.preCompleteHook) {
       const state = getCheckoutState();
       let shouldContinue = false;
 
       await new Promise<void>((resolve) => {
-        this.preSubmitHook(
+        this.preCompleteHook(
           state,
           () => {
             shouldContinue = true;

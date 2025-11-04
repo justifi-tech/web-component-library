@@ -33,7 +33,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
   - [Card Form Billing](#card-form-billing)
   - [Bank Account Form Billing](#bank-account-form-billing)
 - [Completing Checkout](#completing-checkout)
-- [Pre-Submit Hook](#pre-submit-hook)
+- [Pre-Complete Hook](#pre-complete-hook)
 - [Validation](#validation)
 - [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
 - [Checkout Changed Event](#checkout-changed-event)
@@ -125,9 +125,9 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 > If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.
 
-## Pre-Submit Hook
+## Pre-Complete Hook
 
-You can provide a `preSubmitHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.
+You can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.
 
 The hook receives three parameters:
 - `state`: A `CheckoutState` object containing the current checkout information
@@ -137,7 +137,7 @@ The hook receives three parameters:
 ```javascript
 const checkout = document.querySelector('justifi-modular-checkout');
 
-checkout.preSubmitHook = (state, next, cancel) => {
+checkout.preCompleteHook = (state, next, cancel) => {
   // Example: Require confirmation for large payments
   if (state.totalAmount > 100000) {
     const confirmed = confirm(

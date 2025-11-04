@@ -224,7 +224,7 @@ describe('justifi-modular-checkout', () => {
     });
   });
 
-  describe('preSubmitHook', () => {
+  describe('preCompleteHook', () => {
     beforeEach(() => {
       checkoutStore.checkoutLoaded = true;
       checkoutStore.authToken = 'auth';
@@ -248,7 +248,7 @@ describe('justifi-modular-checkout', () => {
       const hookFn = jest.fn((state, next, _cancel) => {
         next(state);
       });
-      instance.preSubmitHook = hookFn;
+      instance.preCompleteHook = hookFn;
 
       await instance.submitCheckout();
 
@@ -268,7 +268,7 @@ describe('justifi-modular-checkout', () => {
       const hookFn = jest.fn((_state, _next, cancel) => {
         cancel();
       });
-      instance.preSubmitHook = hookFn;
+      instance.preCompleteHook = hookFn;
 
       await instance.submitCheckout();
 
