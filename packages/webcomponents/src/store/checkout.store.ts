@@ -36,6 +36,22 @@ interface IInitialState {
   plaidLinkTokenId?: string;
 }
 
+export interface CheckoutState {
+  selectedPaymentMethod: SelectedPaymentMethod | undefined;
+  paymentAmount: number;
+  totalAmount: number;
+  paymentCurrency: string;
+  paymentDescription: string;
+  savedPaymentMethods: SavedPaymentMethod[];
+  savePaymentMethod: boolean;
+  bnplEnabled: boolean;
+  applePayEnabled: boolean;
+  insuranceEnabled: boolean;
+  disableBankAccount: boolean;
+  disableCreditCard: boolean;
+  disablePaymentMethodGroup: boolean;
+}
+
 const initialState: IInitialState = {
   accountId: '',
   authToken: '',
@@ -128,6 +144,24 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 
 export function isNewCardSelected(): boolean {
   return checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD;
+}
+
+export function getCheckoutState(): CheckoutState {
+  return {
+    selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
+    paymentAmount: checkoutStore.paymentAmount,
+    totalAmount: checkoutStore.totalAmount,
+    paymentCurrency: checkoutStore.paymentCurrency,
+    paymentDescription: checkoutStore.paymentDescription,
+    savedPaymentMethods: checkoutStore.paymentMethods,
+    savePaymentMethod: checkoutStore.savePaymentMethod,
+    bnplEnabled: checkoutStore.bnplEnabled,
+    applePayEnabled: checkoutStore.applePayEnabled,
+    insuranceEnabled: checkoutStore.insuranceEnabled,
+    disableBankAccount: checkoutStore.disableBankAccount,
+    disableCreditCard: checkoutStore.disableCreditCard,
+    disablePaymentMethodGroup: checkoutStore.disablePaymentMethodGroup,
+  };
 }
 
 export { checkoutStore as checkoutStore, onChange };
