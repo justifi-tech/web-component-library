@@ -223,6 +223,73 @@ describe('justifi-modular-checkout', () => {
       expect(handler).toHaveBeenCalled();
     });
   });
+
+  describe('preCompleteHook', () => {
+    beforeEach(() => {
+      checkoutStore.checkoutLoaded = true;
+      checkoutStore.authToken = 'auth';
+      checkoutStore.accountId = 'acc_1';
+      checkoutStore.paymentAmount = 1000;
+      checkoutStore.totalAmount = 1050;
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
+      checkoutStore.paymentToken = 'pm_123';
+    });
+
+    it('proceeds with submission when hook calls resolve()', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      const hookFn = jest.fn((state, resolve, _reject) => {
+        resolve(state);
+      });
+      instance.preCompleteHook = hookFn;
+
+      await instance.submitCheckout();
+
+      expect(hookFn).toHaveBeenCalledTimes(1);
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+
+    it('cancels submission when hook calls reject()', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      const hookFn = jest.fn((_state, _resolve, reject) => {
+        reject();
+      });
+      instance.preCompleteHook = hookFn;
+
+      await instance.submitCheckout();
+
+      expect(hookFn).toHaveBeenCalledTimes(1);
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+    });
+
+    it('proceeds with submission when no hook is provided', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      await instance.submitCheckout();
+
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+  });
 });
 
 
