@@ -472,23 +472,16 @@ export class ModularCheckout {
 
     if (this.preCompleteHook) {
       const state = getCheckoutState();
-      let shouldContinue = false;
 
-      await new Promise<void>((resolve) => {
-        this.preCompleteHook(
-          state,
-          () => {
-            shouldContinue = true;
-            resolve();
-          },
-          () => {
-            shouldContinue = false;
-            resolve();
-          },
-        );
-      });
-
-      if (!shouldContinue) {
+      try {
+        await new Promise<void>((resolve, reject) => {
+          this.preCompleteHook(
+            state,
+            () => resolve(),
+            () => reject()
+          );
+        });
+      } catch {
         return;
       }
     }
