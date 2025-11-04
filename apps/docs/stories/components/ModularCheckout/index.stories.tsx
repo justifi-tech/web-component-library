@@ -58,7 +58,7 @@ const meta: Meta = {
       },
     },
     preCompleteHook: {
-      description: "Optional hook that executes before payment submission. Receives checkout state and allows inspection before proceeding or canceling.",
+      description: "Optional hook that executes before payment submission. Receives checkout state and allows inspection before resolving or rejecting.",
       table: {
         category: "props",
         type: { summary: "Hook<CheckoutState>" }

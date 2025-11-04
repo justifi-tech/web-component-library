@@ -50,8 +50,8 @@ export type SavedPaymentMethod = {
 
 export type Hook<T = any> = (
   data: T,
-  next: (data: T) => void,
-  cancel: () => void,
+  resolve: (data: T) => void,
+  reject: () => void,
 ) => void;
 
 const mapPaymentMethodType = (type: PAYMENT_METHOD_TYPES): PAYMENT_METHODS => {

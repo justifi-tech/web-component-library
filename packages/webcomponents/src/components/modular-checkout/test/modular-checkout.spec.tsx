@@ -236,7 +236,7 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.paymentToken = 'pm_123';
     });
 
-    it('proceeds with submission when hook calls next()', async () => {
+    it('proceeds with submission when hook calls resolve()', async () => {
       const page = await newSpecPage({
         components: [ModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
@@ -245,8 +245,8 @@ describe('justifi-modular-checkout', () => {
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn();
 
-      const hookFn = jest.fn((state, next, _cancel) => {
-        next(state);
+      const hookFn = jest.fn((state, resolve, _reject) => {
+        resolve(state);
       });
       instance.preCompleteHook = hookFn;
 
@@ -256,7 +256,7 @@ describe('justifi-modular-checkout', () => {
       expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
     });
 
-    it('cancels submission when hook calls cancel()', async () => {
+    it('cancels submission when hook calls reject()', async () => {
       const page = await newSpecPage({
         components: [ModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
@@ -265,8 +265,8 @@ describe('justifi-modular-checkout', () => {
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn();
 
-      const hookFn = jest.fn((_state, _next, cancel) => {
-        cancel();
+      const hookFn = jest.fn((_state, _resolve, reject) => {
+        reject();
       });
       instance.preCompleteHook = hookFn;
 

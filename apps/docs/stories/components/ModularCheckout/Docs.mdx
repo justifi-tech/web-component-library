@@ -131,25 +131,25 @@ You can provide a `preCompleteHook` function to inspect the checkout state befor
 
 The hook receives three parameters:
 - `state`: A `CheckoutState` object containing the current checkout information
-- `next`: A function to call to proceed with submission
-- `cancel`: A function to call to stop submission
+- `resolve`: A function to call to proceed with submission
+- `reject`: A function to call to stop submission
 
 ```javascript
 const checkout = document.querySelector('justifi-modular-checkout');
 
-checkout.preCompleteHook = (state, next, cancel) => {
+checkout.preCompleteHook = (state, resolve, reject) => {
   // Example: Require confirmation for large payments
   if (state.totalAmount > 100000) {
     const confirmed = confirm(
       `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`
     );
     if (confirmed) {
-      next(state);
+      resolve(state);
     } else {
-      cancel();
+      reject();
     }
   } else {
-    next(state);
+    resolve(state);
   }
 };
 ```

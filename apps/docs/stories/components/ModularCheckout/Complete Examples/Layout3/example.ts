@@ -373,7 +373,7 @@ ${codeExampleHead(
     const submitButton = document.querySelector('#submit-button');
 
     // Set up pre-complete hook
-    modularCheckout.preCompleteHook = (state, next, cancel) => {
+    modularCheckout.preCompleteHook = (state, resolve, reject) => {
       // You could check the payment method type
       // if (state.selectedPaymentMethod?.type === 'new_card') { ... }
 
@@ -385,10 +385,10 @@ ${codeExampleHead(
 
       // You could perform custom validation
       // const isValid = myCustomValidation(state);
-      // if (isValid) { next(state); } else { cancel(); }
+      // if (isValid) { resolve(state); } else { reject(); }
 
       // For this example, always proceed
-      next(state);
+      resolve(state);
     };
 
     // Submit checkout
