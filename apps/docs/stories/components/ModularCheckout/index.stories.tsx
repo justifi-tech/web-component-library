@@ -56,6 +56,13 @@ const meta: Meta = {
         category: "methods",
         defaultValue: { summary: "setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) => Promise<void>" }
       },
+    },
+    preSubmitHook: {
+      description: "Optional hook that executes before payment submission. Receives checkout state and allows inspection before proceeding or canceling.",
+      table: {
+        category: "props",
+        type: { summary: "Hook<CheckoutState>" }
+      },
     }
   },
   parameters: {

@@ -33,6 +33,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
   - [Card Form Billing](#card-form-billing)
   - [Bank Account Form Billing](#bank-account-form-billing)
 - [Completing Checkout](#completing-checkout)
+- [Pre-Submit Hook](#pre-submit-hook)
 - [Validation](#validation)
 - [Setting Payment Method Programmatically](#setting-payment-method-programmatically)
 - [Checkout Changed Event](#checkout-changed-event)
@@ -123,6 +124,45 @@ To finalize the checkout process, include a submit button that calls the `submit
 - returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion
 
 > If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.
+
+## Pre-Submit Hook
+
+You can provide a `preSubmitHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.
+
+The hook receives three parameters:
+- `state`: A `CheckoutState` object containing the current checkout information
+- `next`: A function to call to proceed with submission
+- `cancel`: A function to call to stop submission
+
+```javascript
+const checkout = document.querySelector('justifi-modular-checkout');
+
+checkout.preSubmitHook = (state, next, cancel) => {
+  // Example: Require confirmation for large payments
+  if (state.totalAmount > 100000) {
+    const confirmed = confirm(
+      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`
+    );
+    if (confirmed) {
+      next(state);
+    } else {
+      cancel();
+    }
+  } else {
+    next(state);
+  }
+};
+```
+
+The `CheckoutState` object includes:
+- `selectedPaymentMethod`: Currently selected payment method
+- `paymentAmount`: Payment amount in cents
+- `totalAmount`: Total amount including fees in cents
+- `paymentCurrency`: Currency code (e.g., 'USD')
+- `paymentDescription`: Payment description
+- `savedPaymentMethods`: Array of saved payment methods
+- `savePaymentMethod`: Whether to save the payment method
+- Payment method availability flags (`bnplEnabled`, `applePayEnabled`, etc.)
 
 ## Validation
 
