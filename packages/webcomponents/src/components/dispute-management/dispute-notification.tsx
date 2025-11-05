@@ -46,6 +46,23 @@ export class DisputeNotification {
     this.clickEvent.emit({ name: DisputeManagementClickActions.respondToDispute });
   }
 
+  isDueDatePassed(): boolean {
+    if (!this.dispute?.due_date) {
+      return false;
+    }
+
+    // Fix for JavaScript Date object parsing
+    // https://stackoverflow.com/a/31732581
+    const dueDate = new Date(this.dispute.due_date.replace(/-/g, '\/').replace(/T.+/, ''));
+
+    const today = new Date();
+
+    // Reset time to compare only dates
+    today.setHours(0, 0, 0, 0);
+    dueDate.setHours(0, 0, 0, 0);
+    return dueDate < today;
+  }
+
   render() {
     return (
       <StyledHost>
@@ -57,7 +74,14 @@ export class DisputeNotification {
           </div>
         )}
 
-        {this.dispute?.needsResponse && (
+        {this.dispute?.needsResponse && this.isDueDatePassed() && (
+          <div part={text}>
+            <h1 class="h4" part={heading4}>The due date ({this.dispute?.due_date}) for this dispute has passed</h1>
+            <p>You can no longer submit evidence to counter this dispute.</p>
+          </div>
+        )}
+
+        {this.dispute?.needsResponse && !this.isDueDatePassed() && (
           <div part={text}>
             <h1 class="h4" part={heading4}>This payment is disputed</h1>
             <p>The cardholder is disputing this payment. You may accept this dispute, or proceed to provide evidence in a counter dispute.</p>
