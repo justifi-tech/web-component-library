@@ -1,3 +1,4 @@
+import { checkoutStore } from '../store/checkout.store';
 import { PagingInfo } from './Pagination';
 
 export enum GooglePayButtonType {
@@ -373,7 +374,7 @@ export class GooglePayHelpers {
       type: 'PAYMENT_GATEWAY',
       parameters: {
         gateway: 'justifi',
-        gatewayMerchantId: 'gateway:justifi',
+        gatewayMerchantId: checkoutStore.accountId,
       },
     };
   }
