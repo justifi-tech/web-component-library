@@ -371,7 +371,26 @@ ${codeExampleHead(
   (function() {
     const modularCheckout = document.querySelector('justifi-modular-checkout');
     const submitButton = document.querySelector('#submit-button');
-    
+
+    // Set up pre-complete hook
+    modularCheckout.preCompleteHook = (state, resolve, reject) => {
+      // You could check the payment method type
+      // if (state.selectedPaymentMethod?.type === 'new_card') { ... }
+
+      // You could update records on your server before submission
+      // await fetch('/api/pre-checkout', {
+      //   method: 'POST',
+      //   body: JSON.stringify(state)
+      // });
+
+      // You could perform custom validation
+      // const isValid = myCustomValidation(state);
+      // if (isValid) { resolve(state); } else { reject(); }
+
+      // For this example, always proceed
+      resolve(state);
+    };
+
     // Submit checkout
     submitButton.addEventListener('click', async () => {
       await modularCheckout.submitCheckout();
