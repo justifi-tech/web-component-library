@@ -45,6 +45,7 @@ const schemaCAN = (role: string) =>
     email: emailValidation.nullable(),
     phone: phoneValidation.nullable(),
     dob_full: dobValidation(role).nullable(),
+    ssn_last4: string().nullable(),
     identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
     address: addressSchemaCAN(true),
   });
@@ -56,8 +57,8 @@ const strictSchemaCAN = (role: string) =>
     email: emailValidation.required(`Enter ${role} email`),
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
-    identification_number: makeIdentityNumberValidation(CountryCode.CAN)
-      .required('Enter identification number'),
+    ssn_last4: string().nullable(),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN),
     address: addressSchemaCAN(false),
   });
 

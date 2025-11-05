@@ -115,10 +115,10 @@ export class RepresentativeFormInputs {
                       part={buttonSecondary}
                       onClick={() => {
                         this.isEditingIdentification = true;
-                        // Clear last4 and current value to force validation
+                        // Clear current value to force validation
                         updateFormValues(this.formController, {
-                          ssn_last4: null,
-                          identification_number: ''
+                          identification_number: '',
+                          ssn_last4: null
                         });
                       }}
                     >

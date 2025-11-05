@@ -76,6 +76,11 @@ export const makeIdentityNumberValidation = (country: CountryCode) => {
     return string()
       .matches(numbersOnlyRegex, 'Enter valid SIN')
       .length(countryValidation[country].identityDigits, 'Enter valid SIN')
+      .when('ssn_last4', {
+        is: (val: string) => !val || val.length === 0,
+        then: (schema) => schema.required('Enter SIN'),
+        otherwise: (schema) => schema.nullable(),
+      })
       .test('not-repeat', 'Enter valid SIN', (value) => {
         return !/^(\d)\1+$/.test(value);
       })
