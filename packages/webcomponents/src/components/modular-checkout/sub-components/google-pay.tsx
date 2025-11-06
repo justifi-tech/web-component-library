@@ -31,32 +31,42 @@ import { PAYMENT_METHODS } from "../ModularCheckout";
 })
 export class GooglePay {
   private googlePayService: GooglePayService;
+
+  @State() canMakePayments: boolean = false;
+  @State() error: string | null = null;
+  @State() isAvailable: boolean = false;
+  @State() isLoading: boolean = true;
+  @State() isProcessing: boolean = false;
+
+  @Prop() buttonSizeMode: GooglePayButtonSizeMode = GooglePayButtonSizeMode.FILL;
+  @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
+  @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
   @Prop() countryCode: string = "US";
+  @Prop() disabled: boolean = false;
   @Prop() environment: GooglePayEnvironment = GooglePayEnvironment.TEST;
   @Prop() merchantId: string = "gateway:justifi";
   @Prop() merchantName: string = "justifi";
-  @Prop() buttonType: GooglePayButtonType = GooglePayButtonType.PLAIN;
-  @Prop() buttonStyle: GooglePayButtonStyle = GooglePayButtonStyle.BLACK;
-  @Prop() buttonSizeMode: GooglePayButtonSizeMode =
-    GooglePayButtonSizeMode.FILL;
-  @Prop() disabled: boolean = false;
   @Prop() showSkeleton: boolean = true;
 
-  @State() isLoading: boolean = true;
-  @State() isProcessing: boolean = false;
-  @State() isAvailable: boolean = false;
-  @State() canMakePayments: boolean = false;
-  @State() error: string | null = null;
+  @Watch("merchantId")
+  @Watch("environment")
+  @Watch("buttonType")
+  @Watch("buttonStyle")
+  @Watch("buttonSizeMode")
+  @Watch("disabled")
+  watchPropsChange() {
+    this.initializeGooglePay();
+  }
 
-  @Event() googlePayStarted: EventEmitter<void>;
+  @Event() googlePayCancelled: EventEmitter<void>;
   @Event() googlePayCompleted: EventEmitter<{
     success: boolean;
     paymentData?: IGooglePayPaymentData;
     paymentMethodId?: string;
     error?: any;
   }>;
-  @Event() googlePayCancelled: EventEmitter<void>;
   @Event() googlePayError: EventEmitter<{ error: string }>;
+  @Event() googlePayStarted: EventEmitter<void>;
 
   componentWillLoad() {
     this.googlePayService = new GooglePayService();
@@ -69,46 +79,64 @@ export class GooglePay {
     });
   }
 
-  @Watch("merchantId")
-  @Watch("environment")
-  @Watch("buttonType")
-  @Watch("buttonStyle")
-  @Watch("buttonSizeMode")
-  @Watch("disabled")
-  watchPropsChange() {
-    this.initializeGooglePay();
+  @Method()
+  async getAuthMethods(): Promise<string[]> {
+    if (!this.isAvailable) {
+      return [];
+    }
+    return GooglePayHelpers.getDefaultAuthMethods();
   }
 
-  /**
-   * Initialize Google Pay service and check availability
-   */
+  @Method()
+  async getPaymentMethods(): Promise<string[]> {
+    if (!this.isAvailable) {
+      return [];
+    }
+    return GooglePayHelpers.getDefaultSupportedNetworks();
+  }
+
+  @Method()
+  async handleSelectionClick(): Promise<void> {
+    checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
+  }
+
+  @Method()
+  async isSupported(): Promise<boolean> {
+    return this.isAvailable && this.canMakePayments;
+  }
+
+  @Method()
+  async prefetchPaymentData(): Promise<void> {
+    if (!this.isAvailable || !this.canMakePayments) {
+      return;
+    }
+
+    const paymentDataRequest = this.createPaymentDataRequest();
+    this.googlePayService.prefetchPaymentData(paymentDataRequest);
+  }
+
   private async initializeGooglePay() {
     try {
       this.isLoading = true;
       this.error = null;
 
-
       if (!checkoutStore.paymentAmount) {
         this.error = "Missing required Google Pay configuration";
         this.isLoading = false;
-
         return;
       }
 
       this.isAvailable = GooglePayHelpers.isGooglePaySupported();
 
       if (!this.isAvailable) {
-
         await this.waitForGooglePay(3000);
         this.isAvailable = GooglePayHelpers.isGooglePaySupported();
         if (!this.isAvailable) {
           this.error = "Google Pay is not supported on this device";
           this.isLoading = false;
-
           return;
         }
       }
-
 
       const googlePayConfig: IGooglePayConfig = {
         environment: this.environment,
@@ -119,10 +147,8 @@ export class GooglePay {
         buttonSizeMode: this.buttonSizeMode,
       };
 
-
       this.googlePayService.initialize(googlePayConfig);
 
-      // Check if payments can be made
       this.canMakePayments = await this.googlePayService.canMakePayments();
 
       if (!this.canMakePayments) {
@@ -131,7 +157,6 @@ export class GooglePay {
         return;
       }
 
-      // Prefetch payment data for faster loading
       const paymentDataRequest = this.createPaymentDataRequest();
       this.googlePayService.prefetchPaymentData(paymentDataRequest);
     } catch (error) {
@@ -141,13 +166,9 @@ export class GooglePay {
           : "Failed to initialize Google Pay";
     } finally {
       this.isLoading = false;
-
     }
   }
 
-  /**
-   * Create payment data request for Google Pay
-   */
   private createPaymentDataRequest(): IGooglePayPaymentDataRequest {
     return GooglePayService.createPaymentDataRequest(
       checkoutStore.paymentAmount,
@@ -158,9 +179,6 @@ export class GooglePay {
     );
   }
 
-  /**
-   * Handle Google Pay button click
-   */
   private handleGooglePayClick = async () => {
     if (
       this.isProcessing ||
@@ -184,7 +202,6 @@ export class GooglePay {
           checkoutStore.accountId
         );
 
-
       if (result.success) {
         this.googlePayCompleted.emit({
           success: true,
@@ -197,7 +214,6 @@ export class GooglePay {
           error: result.error,
         });
 
-        // Handle user cancellation differently
         if (result.error?.code === "USER_CANCELLED") {
           this.googlePayCancelled.emit();
         } else {
@@ -217,14 +233,8 @@ export class GooglePay {
       });
     } finally {
       this.isProcessing = false;
-
     }
   };
-
-  @Method()
-  async handleSelectionClick(): Promise<void> {
-    checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
-  }
 
   private waitForGooglePay(timeoutMs: number = 3000): Promise<void> {
     return new Promise((resolve) => {
@@ -242,39 +252,6 @@ export class GooglePay {
       };
       check();
     });
-  }
-
-  // no-op: using custom button component
-
-  @Method()
-  async isSupported(): Promise<boolean> {
-    return this.isAvailable && this.canMakePayments;
-  }
-
-  @Method()
-  async getPaymentMethods(): Promise<string[]> {
-    if (!this.isAvailable) {
-      return [];
-    }
-    return GooglePayHelpers.getDefaultSupportedNetworks();
-  }
-
-  @Method()
-  async getAuthMethods(): Promise<string[]> {
-    if (!this.isAvailable) {
-      return [];
-    }
-    return GooglePayHelpers.getDefaultAuthMethods();
-  }
-
-  @Method()
-  async prefetchPaymentData(): Promise<void> {
-    if (!this.isAvailable || !this.canMakePayments) {
-      return;
-    }
-
-    const paymentDataRequest = this.createPaymentDataRequest();
-    this.googlePayService.prefetchPaymentData(paymentDataRequest);
   }
 
   render() {
