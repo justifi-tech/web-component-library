@@ -68,11 +68,11 @@ export class CardBillingFormSimple {
                 <div class="col-12">
                   <form-control-text
                     name='address_postal_code'
-                    label="ZIP"
+                    label="Postal Code"
                     defaultValue={billingFormDefaultValue.address_postal_code}
                     errorText={this.errors.address_postal_code}
                     inputHandler={this.inputHandler}
-                    maxLength={5}
+                    maxLength={7}
                     keyDownHandler={numberOnlyHandler}
                   />
                 </div>
