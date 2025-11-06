@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type             | Default     |
-| ---------------- | ----------------- | ----------- | ---------------- | ----------- |
-| `formController` | `form-controller` |             | `FormController` | `undefined` |
+| Property         | Attribute         | Description | Type                                 | Default     |
+| ---------------- | ----------------- | ----------- | ------------------------------------ | ----------- |
+| `country`        | `country`         |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `formController` | `form-controller` |             | `FormController`                     | `undefined` |
 
 
 ## Dependencies
@@ -20,14 +21,14 @@
 
 ### Depends on
 
-- [form-control-text](../../../../ui-components/form)
-- [form-control-select](../../../../ui-components/form)
+- [justifi-form-address-fields](../../payment-provisioning/form-address-fields)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-legal-address-form --> form-control-text
-  justifi-legal-address-form --> form-control-select
+  justifi-legal-address-form --> justifi-form-address-fields
+  justifi-form-address-fields --> form-control-text
+  justifi-form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip

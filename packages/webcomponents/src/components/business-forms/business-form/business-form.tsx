@@ -5,6 +5,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
+import { CountryCode } from '../../../utils/country-codes';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { BusinessFormLoading } from './business-form-loading';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
@@ -20,6 +21,7 @@ export class BusinessForm {
   @State() isLoading: boolean = false;
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
+  @State() country: CountryCode = CountryCode.USA;
   
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -63,6 +65,7 @@ export class BusinessForm {
 
   instantiateBusiness = (data: IBusiness) => {
     const business = new Business(data);
+    this.country = business.country_of_establishment;
     this.formController.setInitialValues({ ...business });
   }
 
@@ -146,16 +149,16 @@ export class BusinessForm {
             <Header1 text={this.title} />
             <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
             <div class="col-12 mb-4">
-              <justifi-business-core-info formController={this.formController} />
+              <justifi-business-core-info formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-legal-address-form formController={this.formController} />
+              <justifi-legal-address-form formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 mb-4">
               <justifi-additional-questions formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-business-representative formController={this.formController} />
+              <justifi-business-representative formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <Button

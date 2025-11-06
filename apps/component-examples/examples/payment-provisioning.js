@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
 const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
 const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
+const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -52,6 +53,7 @@ async function createBusiness(token) {
     },
     body: JSON.stringify({
       legal_name: randomLegalName,
+      country_of_establishment: 'USA',
     }),
   });
   const res = await response.json();
@@ -79,7 +81,7 @@ async function getWebComponentToken(token, businessId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const businessId = await createBusiness(token);
+  const businessId = 'biz_2cNAE2Oev1Dg48jlcRtpQj'; //await createBusiness(token);
   const webComponentToken = await getWebComponentToken(token, businessId);
 
   res.send(`

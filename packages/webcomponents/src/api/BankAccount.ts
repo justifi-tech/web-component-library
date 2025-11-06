@@ -7,6 +7,8 @@ export interface IBankAccount {
   acct_last_four?: string;
   account_number_last4?: string;
   routing_number?: string;
+  institution_number?: string;
+  transit_number?: string;
   bank_name?: string;
   country?: string;
   currency?: string;
@@ -27,6 +29,8 @@ export class BankAccount implements IBankAccount {
   public acct_last_four?: string;
   public account_number_last4?: string;
   public routing_number?: string;
+  public institution_number?: string;
+  public transit_number?: string;
   public bank_name?: string;
   public country?: string;
   public currency?: string;
@@ -46,6 +50,8 @@ export class BankAccount implements IBankAccount {
     this.acct_last_four = data.acct_last_four;
     this.account_number_last4 = data.account_number_last4;
     this.routing_number = data.routing_number;
+    this.institution_number = data.institution_number;
+    this.transit_number = data.transit_number;
     this.bank_name = data.bank_name;
     this.country = data.country;
     this.currency = data.currency;
@@ -63,6 +69,8 @@ export class BankAccount implements IBankAccount {
       account_type: this.account_type || '',
       account_number: this.account_number || '',
       routing_number: this.routing_number || '',
+      institution_number: this.institution_number || '',
+      transit_number: this.transit_number || '',
       bank_name: this.bank_name || '',
       nickname: this.nickname || '',
       business_id: this.business_id || '',
