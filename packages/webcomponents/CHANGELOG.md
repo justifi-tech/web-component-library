@@ -1,5 +1,15 @@
 ### Changelog
 
+## 6.2.0
+
+### Minor Changes
+
+- 527d031: Support onboarding of Canadian businesses in justifi-payment-provisioning component (updates to terminology and bank account fields)
+- 8c9af69: - Improve justifi-payment-provisioning bank account entry UX by showing read-only values that have been saved previously
+- 2739dc0: Adds a preCompleteHook prop to justifi-modular-checkout for implementing custom validation or confirmation logic before payment submission. The hook receives checkout state and callbacks to proceed or cancel.
+- eabf7a4: - Add read-only tax ID masking with inline editing. Tax IDs now display as masked values (e.g., last 4 digits only) with a "Change" button to enable inline editing that clears the field for new entry.
+  - Support dynamic tax ID fields that are based on country
+
 ## 6.1.1
 
 ### Patch Changes
