@@ -306,8 +306,7 @@ export class GooglePayHelpers {
             ? 'PRODUCTION'
             : 'TEST',
       });
-    } catch (error) {
-      console.error('Failed to create Google Pay client:', error);
+    } catch (_error) {
       return null;
     }
   }

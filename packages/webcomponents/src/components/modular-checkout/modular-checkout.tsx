@@ -273,7 +273,6 @@ export class ModularCheckout {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
       this.submitCheckout();
     } else {
-      console.error("Google Pay completed but failed:", error);
       this.errorEvent.emit({
         message: (error && error.message) || "Google Pay payment failed",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -284,7 +283,6 @@ export class ModularCheckout {
 
   private handleGooglePayError = (event: CustomEvent) => {
     const { error } = event.detail || {};
-    console.error("Google Pay error:", error);
     this.errorEvent.emit({
       message: error || "Google Pay error occurred",
       errorCode: `GOOGLE_PAY_ERROR`,

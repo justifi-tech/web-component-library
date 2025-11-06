@@ -135,7 +135,6 @@ export class GooglePay {
       const paymentDataRequest = this.createPaymentDataRequest();
       this.googlePayService.prefetchPaymentData(paymentDataRequest);
     } catch (error) {
-      console.error("Google Pay initialization error:", error);
       this.error =
         error instanceof Error
           ? error.message
@@ -156,7 +155,6 @@ export class GooglePay {
       this.countryCode,
       checkoutStore.paymentCurrency,
       this.merchantName,
-      this.merchantId
     );
   }
 
@@ -209,7 +207,6 @@ export class GooglePay {
         }
       }
     } catch (error) {
-      console.error("Google Pay payment error:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Payment failed";
       this.error = errorMessage;
