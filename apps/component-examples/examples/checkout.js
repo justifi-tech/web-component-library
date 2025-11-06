@@ -1,6 +1,8 @@
 require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const { API_PATHS } = require('../utils/api-paths');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -169,6 +171,13 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+const options = {
+  key: fs.readFileSync('../../local_cert/client-key.pem'),
+  cert: fs.readFileSync('../../local_cert/client-cert.pem')
+};
+
+https.createServer(options, app).listen(443);
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
