@@ -13,6 +13,8 @@ import {
   IGooglePayTokenResponse,
 } from '../GooglePay';
 
+const PROCESS_TOKEN_ENDPOINT = 'google_pay/process_token';
+
 export class GooglePayService implements IGooglePayService {
   private googlePayConfig?: GooglePayConfig;
   private googlePayClient?: IGooglePayClient;
@@ -48,7 +50,7 @@ export class GooglePayService implements IGooglePayService {
     accountId: string,
     payload: IGooglePayTokenProcessRequest
   ): Promise<{ success: boolean; data: IGooglePayTokenResponse }> {
-    const endpoint = 'google_pay/process_token';
+    const endpoint = PROCESS_TOKEN_ENDPOINT;
 
     try {
       const result: IGooglePayTokenResponse = await this.api.post({
@@ -117,9 +119,9 @@ export class GooglePayService implements IGooglePayService {
 
     const request = new GooglePayPaymentDataRequest(paymentDataRequest);
 
-    // if (!request.isValid) {
-    //   throw new Error('Invalid payment data request provided');
-    // }
+    if (!request.isValid) {
+      throw new Error('Invalid payment data request provided');
+    }
 
     try {
       const paymentData = await this.googlePayClient.loadPaymentData(request);

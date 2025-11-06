@@ -239,10 +239,6 @@ export class ModularCheckout {
         this.handleGooglePayCompleted
       );
       this.googlePayRef.addEventListener(
-        "googlePayError",
-        this.handleGooglePayError
-      );
-      this.googlePayRef.addEventListener(
         "googlePayCancelled",
         this.handleGooglePayCancelled
       );
@@ -254,10 +250,6 @@ export class ModularCheckout {
       this.googlePayRef.removeEventListener(
         "googlePayCompleted",
         this.handleGooglePayCompleted
-      );
-      this.googlePayRef.removeEventListener(
-        "googlePayError",
-        this.handleGooglePayError
       );
       this.googlePayRef.removeEventListener(
         "googlePayCancelled",
@@ -279,15 +271,6 @@ export class ModularCheckout {
         severity: ComponentErrorSeverity.ERROR,
       });
     }
-  };
-
-  private handleGooglePayError = (event: CustomEvent) => {
-    const { error } = event.detail || {};
-    this.errorEvent.emit({
-      message: error || "Google Pay error occurred",
-      errorCode: `GOOGLE_PAY_ERROR`,
-      severity: ComponentErrorSeverity.ERROR,
-    });
   };
 
   private handleGooglePayCancelled = () => {

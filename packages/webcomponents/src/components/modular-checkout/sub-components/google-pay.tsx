@@ -18,6 +18,7 @@ import {
   GooglePayEnvironment,
   GooglePayHelpers,
   IGooglePayPaymentData,
+  IGooglePayError,
 } from "../../../api/GooglePay";
 import { StyledHost } from "../../../ui-components";
 import GooglePaySkeleton from "./google-pay-skeleton";
@@ -31,6 +32,7 @@ import { PAYMENT_METHODS } from "../ModularCheckout";
 })
 export class GooglePay {
   private googlePayService: GooglePayService;
+  private unsubscribes: Array<() => void> = [];
 
   @State() canMakePayments: boolean = false;
   @State() error: string | null = null;
@@ -50,61 +52,93 @@ export class GooglePay {
 
   @Watch("merchantId")
   @Watch("environment")
-  @Watch("buttonType")
-  @Watch("buttonStyle")
-  @Watch("buttonSizeMode")
-  @Watch("disabled")
-  watchPropsChange() {
+  watchConfigChange() {
     this.initializeGooglePay();
   }
 
   @Event() googlePayCancelled: EventEmitter<void>;
+  /**
+   * Emitted when Google Pay flow completes. On failure, `success=false` and `error` is populated.
+   */
   @Event() googlePayCompleted: EventEmitter<{
     success: boolean;
     paymentData?: IGooglePayPaymentData;
     paymentMethodId?: string;
-    error?: any;
+    error?: IGooglePayError | string;
   }>;
-  @Event() googlePayError: EventEmitter<{ error: string }>;
   @Event() googlePayStarted: EventEmitter<void>;
 
   componentWillLoad() {
     this.googlePayService = new GooglePayService();
-    this.initializeGooglePay();
   }
 
   componentDidLoad() {
-    onChange("paymentAmount", () => {
-      this.initializeGooglePay();
+    const unsub = onChange("paymentAmount", () => {
+      this.prefetchPaymentData();
     });
+    if (typeof unsub === 'function') this.unsubscribes.push(unsub);
+
+    const unsubCurrency = onChange("paymentCurrency", () => {
+      this.prefetchPaymentData();
+    });
+    if (typeof unsubCurrency === 'function') this.unsubscribes.push(unsubCurrency);
+
+    const unsubDesc = onChange("paymentDescription", () => {
+      this.prefetchPaymentData();
+    });
+    if (typeof unsubDesc === 'function') this.unsubscribes.push(unsubDesc);
   }
 
+  disconnectedCallback() {
+    this.unsubscribes.forEach((fn) => {
+      try { fn(); } catch { }
+    });
+    this.unsubscribes = [];
+  }
+
+  /**
+   * Returns supported authentication methods when Google Pay is available.
+   */
   @Method()
-  async getAuthMethods(): Promise<string[]> {
+  async getSupportedAuthMethods(): Promise<string[]> {
     if (!this.isAvailable) {
       return [];
     }
     return GooglePayHelpers.getDefaultAuthMethods();
   }
 
+
+  /**
+   * Returns supported card networks when Google Pay is available.
+   */
   @Method()
-  async getPaymentMethods(): Promise<string[]> {
+  async getSupportedNetworks(): Promise<string[]> {
     if (!this.isAvailable) {
       return [];
     }
     return GooglePayHelpers.getDefaultSupportedNetworks();
   }
 
+
+  /**
+   * Select Google Pay in the modular checkout parent.
+   */
   @Method()
   async handleSelectionClick(): Promise<void> {
     checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
   }
 
+  /**
+   * Returns whether Google Pay is both available and can make payments.
+   */
   @Method()
   async isSupported(): Promise<boolean> {
     return this.isAvailable && this.canMakePayments;
   }
 
+  /**
+   * Prefetch payment data for faster load times of the Google Pay sheet.
+   */
   @Method()
   async prefetchPaymentData(): Promise<void> {
     if (!this.isAvailable || !this.canMakePayments) {
@@ -126,18 +160,6 @@ export class GooglePay {
         return;
       }
 
-      this.isAvailable = GooglePayHelpers.isGooglePaySupported();
-
-      if (!this.isAvailable) {
-        await this.waitForGooglePay(3000);
-        this.isAvailable = GooglePayHelpers.isGooglePaySupported();
-        if (!this.isAvailable) {
-          this.error = "Google Pay is not supported on this device";
-          this.isLoading = false;
-          return;
-        }
-      }
-
       const googlePayConfig: IGooglePayConfig = {
         environment: this.environment,
         merchantId: this.merchantId,
@@ -148,6 +170,14 @@ export class GooglePay {
       };
 
       this.googlePayService.initialize(googlePayConfig);
+
+      this.isAvailable = this.googlePayService.isAvailable();
+
+      if (!this.isAvailable) {
+        this.error = "Google Pay is not supported on this device";
+        this.isLoading = false;
+        return;
+      }
 
       this.canMakePayments = await this.googlePayService.canMakePayments();
 
@@ -217,16 +247,13 @@ export class GooglePay {
         if (result.error?.code === "USER_CANCELLED") {
           this.googlePayCancelled.emit();
         } else {
-          this.googlePayError.emit({
-            error: result.error?.message || "Payment failed",
-          });
+          // Error will be conveyed via googlePayCompleted with success:false
         }
       }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Payment failed";
       this.error = errorMessage;
-      this.googlePayError.emit({ error: errorMessage });
       this.googlePayCompleted.emit({
         success: false,
         error: errorMessage,
@@ -236,25 +263,16 @@ export class GooglePay {
     }
   };
 
-  private waitForGooglePay(timeoutMs: number = 3000): Promise<void> {
-    return new Promise((resolve) => {
-      const start = Date.now();
-      const check = () => {
-        if (GooglePayHelpers.isGooglePaySupported()) {
-          resolve();
-          return;
-        }
-        if (Date.now() - start > timeoutMs) {
-          resolve();
-          return;
-        }
-        setTimeout(check, 50);
-      };
-      check();
-    });
-  }
+
 
   render() {
+    const showError = !this.isLoading && !!this.error;
+    const showDeviceUnavailable = !this.isLoading && !this.error && !this.isAvailable;
+    const showPaymentsUnavailable =
+      !this.isLoading && !this.error && this.isAvailable && !this.canMakePayments;
+    const showButton =
+      !this.isLoading && !this.error && this.isAvailable && this.canMakePayments;
+
     return (
       <StyledHost>
         {checkoutStore.checkoutLoaded && (
@@ -269,46 +287,41 @@ export class GooglePay {
         <div class='google-pay-container'>
           <GooglePaySkeleton isLoading={this.isLoading} />
 
-          {!this.isLoading && this.error && (
-            <div class='google-pay-error' role='alert'>
+          {showError && (
+            <div class='google-pay-error' role='alert' data-testid='gp-error'>
               <span class='error-icon'>⚠️</span>
               <span class='error-message'>{this.error}</span>
             </div>
           )}
 
-          {!this.isLoading && !this.error && !this.isAvailable && (
-            <div class='google-pay-unavailable'>
+          {showDeviceUnavailable && (
+            <div class='google-pay-unavailable' data-testid='gp-device-unavailable'>
               <span class='unavailable-message'>
                 Google Pay is not available on this device
               </span>
             </div>
           )}
 
-          {!this.isLoading &&
-            !this.error &&
-            this.isAvailable &&
-            !this.canMakePayments && (
-              <div class='google-pay-unavailable'>
-                <span class='unavailable-message'>
-                  Google Pay is not available for payments
-                </span>
-              </div>
-            )}
+          {showPaymentsUnavailable && (
+            <div class='google-pay-unavailable' data-testid='gp-payments-unavailable'>
+              <span class='unavailable-message'>
+                Google Pay is not available for payments
+              </span>
+            </div>
+          )}
 
-          {!this.isLoading &&
-            !this.error &&
-            this.isAvailable &&
-            this.canMakePayments && (
-              <GooglePayButton
-                buttonType={this.buttonType}
-                buttonStyle={this.buttonStyle}
-                buttonSizeMode={this.buttonSizeMode}
-                disabled={this.disabled}
-                isProcessing={this.isProcessing}
-                isAvailable={this.isAvailable}
-                clickHandler={this.handleGooglePayClick}
-              />
-            )}
+          {showButton && (
+            <GooglePayButton
+              data-testid='gp-button'
+              buttonType={this.buttonType}
+              buttonStyle={this.buttonStyle}
+              buttonSizeMode={this.buttonSizeMode}
+              disabled={this.disabled}
+              isProcessing={this.isProcessing}
+              isAvailable={this.isAvailable}
+              clickHandler={this.handleGooglePayClick}
+            />
+          )}
         </div>
 
         <style>
