@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-business-core-info-form-step-core Country-specific tax ID label renders CAN Business Number (BN) label and help text 1`] = `
+<justifi-business-core-info-form-step-core>
+  <div class="gap-5 row">
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+  </div>
+</justifi-business-core-info-form-step-core>
+`;
+
+exports[`justifi-business-core-info-form-step-core Country-specific tax ID label renders USA tax ID label and help text 1`] = `
+<justifi-business-core-info-form-step-core>
+  <div class="gap-5 row">
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+  </div>
+</justifi-business-core-info-form-step-core>
+`;
+
+exports[`justifi-business-core-info-form-step-core Form component behavior uses toggleable-field instead of form-control-text 1`] = `
+<justifi-business-core-info-form-step-core>
+  <form>
+    <fieldset>
+      <div class="align-items-center d-flex gap-2">
+        <legend class="mb-0" part="heading-2 heading text color font-family">
+          Business Information
+        </legend>
+      </div>
+      <hr class="mt-2">
+      <div class="gy-3 row">
+        <div class="col-12">
+          <form-control-text helptext="Enter this exactly as it appears on your tax records (don't use acronyms or abbreviations unless you registered that way)." label="Business Name" name="legal_name"></form-control-text>
+        </div>
+        <div class="col-12">
+          <form-control-text helptext="Enter this exactly as it appears on your tax records (leave blank if you don't have a registered DBA/trade name)" label="Doing Business As (DBA)" name="doing_business_as"></form-control-text>
+        </div>
+        <div class="col-12 col-md-8">
+          <form-control-select label="Business Classification" name="classification"></form-control-select>
+        </div>
+        <div class="col-12 col-md-4">
+          <form-control-date label="Date of Incorporation" name="date_of_incorporation"></form-control-date>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-text helptext="Describe what you sell" label="Industry" name="industry"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-number-masked helptext="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes." label="Tax ID (EIN or SSN)" mask="000000000" name="tax_id"></form-control-number-masked>
+        </div>
+        <div class="col-12">
+          <form-control-text helptext="Don't have a live website? You can use your social media business page, app store link, or staging site URL." label="Business Website URL" name="website_url"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-text label="Business Email Address" name="email"></form-control-text>
+        </div>
+        <div class="col-12 col-md-6">
+          <form-control-number-masked label="Business Phone Number" mask="(000) 000-0000" name="phone"></form-control-number-masked>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</justifi-business-core-info-form-step-core>
+`;

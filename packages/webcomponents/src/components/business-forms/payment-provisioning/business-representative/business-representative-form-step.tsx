@@ -3,6 +3,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/Com
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
+import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
   tag: 'justifi-business-representative-form-step'
@@ -16,6 +17,7 @@ export class BusinessRepresentativeFormStep {
   @Prop() authToken: string;
   @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country?: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -23,7 +25,8 @@ export class BusinessRepresentativeFormStep {
     this.initializeApi();
   }
   
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'error-event', bubbles: true })
+    errorEvent: EventEmitter<ComponentErrorEvent>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -61,6 +64,7 @@ export class BusinessRepresentativeFormStep {
         getBusiness={this.getBusiness}
         patchBusiness={this.patchBusiness}
         allowOptionalFields={this.allowOptionalFields}
+        country={this.country}
         ref={el => this.coreComponent = el}
       />
     );
