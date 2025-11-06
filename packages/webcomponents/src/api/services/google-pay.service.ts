@@ -13,6 +13,8 @@ import {
   IGooglePayTokenResponse,
 } from '../GooglePay';
 
+const PROCESS_TOKEN_ENDPOINT = 'google_pay/process_token';
+
 export class GooglePayService implements IGooglePayService {
   private googlePayConfig?: GooglePayConfig;
   private googlePayClient?: IGooglePayClient;
@@ -37,18 +39,7 @@ export class GooglePayService implements IGooglePayService {
       throw new Error('Failed to create Google Pay client');
     }
 
-    // Browser-capturable initialization log
-    try {
-      console.info('[JustiFi][GooglePay] Initialized', {
-        environment: this.googlePayConfig.environment,
-        merchantId: this.googlePayConfig.merchantId,
-        merchantName: this.googlePayConfig.merchantName,
-        buttonType: this.googlePayConfig.buttonType,
-        buttonStyle: this.googlePayConfig.buttonStyle,
-        buttonSizeMode: this.googlePayConfig.buttonSizeMode,
-        buttonLocale: this.googlePayConfig.buttonLocale,
-      });
-    } catch (_e) {}
+    // No debug logs
   }
 
   /**
@@ -59,7 +50,7 @@ export class GooglePayService implements IGooglePayService {
     accountId: string,
     payload: IGooglePayTokenProcessRequest
   ): Promise<{ success: boolean; data: IGooglePayTokenResponse }> {
-    const endpoint = 'google_pay/process_token';
+    const endpoint = PROCESS_TOKEN_ENDPOINT;
 
     try {
       const result: IGooglePayTokenResponse = await this.api.post({
@@ -75,8 +66,7 @@ export class GooglePayService implements IGooglePayService {
         success: result.id && !!result.data.token,
         data: result,
       };
-    } catch (error) {
-      console.error('Google Pay payment processing failed:', error);
+    } catch (_error) {
       throw new Error('Google Pay payment processing failed');
     }
   }
@@ -101,8 +91,7 @@ export class GooglePayService implements IGooglePayService {
       const response = await this.googlePayClient.isReadyToPay(baseRequest);
 
       return response.result;
-    } catch (error) {
-      console.error('Error checking Google Pay readiness:', error);
+    } catch (_error) {
       return false;
     }
   }
@@ -130,9 +119,9 @@ export class GooglePayService implements IGooglePayService {
 
     const request = new GooglePayPaymentDataRequest(paymentDataRequest);
 
-    // if (!request.isValid) {
-    //   throw new Error('Invalid payment data request provided');
-    // }
+    if (!request.isValid) {
+      throw new Error('Invalid payment data request provided');
+    }
 
     try {
       const paymentData = await this.googlePayClient.loadPaymentData(request);
@@ -188,8 +177,6 @@ export class GooglePayService implements IGooglePayService {
         };
       }
     } catch (error) {
-      console.error('Google Pay payment error:', error);
-
       // Handle different types of errors
       if (error && typeof error === 'object' && 'statusCode' in error) {
         const googlePayError = error as any;
@@ -246,7 +233,6 @@ export class GooglePayService implements IGooglePayService {
     buttonLocale?: string;
   }): HTMLElement | null {
     if (!this.googlePayClient || !this.googlePayConfig) {
-      console.error('Google Pay not initialized');
       return null;
     }
 
@@ -258,8 +244,7 @@ export class GooglePayService implements IGooglePayService {
         buttonColor: options.buttonColor as any,
         buttonLocale: options.buttonLocale,
       });
-    } catch (error) {
-      console.error('Error creating Google Pay button:', error);
+    } catch (_error) {
       return null;
     }
   }
@@ -271,37 +256,18 @@ export class GooglePayService implements IGooglePayService {
     paymentDataRequest: IGooglePayPaymentDataRequest
   ): void {
     if (!this.googlePayClient) {
-      console.warn('Google Pay client not initialized');
       return;
     }
 
     const request = new GooglePayPaymentDataRequest(paymentDataRequest);
 
     if (!request.isValid) {
-      const missingFields: string[] = [];
-      if (!request.apiVersion) missingFields.push('apiVersion');
-      if (!request.apiVersionMinor) missingFields.push('apiVersionMinor');
-      if (!request.allowedPaymentMethods?.length)
-        missingFields.push('allowedPaymentMethods');
-      if (!request.transactionInfo?.countryCode)
-        missingFields.push('transactionInfo.countryCode');
-      if (!request.transactionInfo?.currencyCode)
-        missingFields.push('transactionInfo.currencyCode');
-      if (!request.transactionInfo?.totalPrice)
-        missingFields.push('transactionInfo.totalPrice');
-      if (!request.merchantInfo?.merchantName)
-        missingFields.push('merchantInfo.merchantName');
-      console.warn('Invalid payment data request for prefetch', {
-        missingFields,
-      });
       return;
     }
 
     try {
       this.googlePayClient.prefetchPaymentData(request);
-    } catch (error) {
-      console.error('Error prefetching Google Pay data:', error);
-    }
+    } catch (_error) {}
   }
 
   /**
@@ -312,8 +278,7 @@ export class GooglePayService implements IGooglePayService {
     label: string,
     countryCode: string = 'US',
     currencyCode: string = 'USD',
-    merchantName: string,
-    merchantId?: string
+    merchantName: string
   ): IGooglePayPaymentDataRequest {
     const request: IGooglePayPaymentDataRequest = {
       apiVersion: 2,
@@ -331,17 +296,7 @@ export class GooglePayService implements IGooglePayService {
       },
     };
 
-    // Browser-capturable request construction log (sanitized)
-    try {
-      console.info('[JustiFi][GooglePay] PaymentDataRequest', {
-        amount: GooglePayHelpers.formatAmount(amount),
-        label,
-        countryCode,
-        currencyCode,
-        merchantName,
-        merchantId,
-      });
-    } catch (_e) {}
+    // No debug logs
 
     return request;
   }

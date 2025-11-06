@@ -1,5 +1,7 @@
 import { CardBrand, ICheckoutPaymentMethod } from '../../api';
 
+export type { CheckoutState } from '../../store/checkout.store';
+
 export enum PAYMENT_MODE {
   ECOM = 'ecom',
   BNPL = 'bnpl',
@@ -46,6 +48,12 @@ export type SavedPaymentMethod = {
   address_postal_code_check: string;
   bin_details: null;
 };
+
+export type Hook<T = any> = (
+  data: T,
+  resolve: (data: T) => void,
+  reject: () => void,
+) => void;
 
 const mapPaymentMethodType = (type: PAYMENT_METHOD_TYPES): PAYMENT_METHODS => {
   switch (type) {

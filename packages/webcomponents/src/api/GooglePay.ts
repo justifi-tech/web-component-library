@@ -1,3 +1,4 @@
+import { checkoutStore } from '../store/checkout.store';
 import { PagingInfo } from './Pagination';
 
 export enum GooglePayButtonType {
@@ -305,8 +306,7 @@ export class GooglePayHelpers {
             ? 'PRODUCTION'
             : 'TEST',
       });
-    } catch (error) {
-      console.error('Failed to create Google Pay client:', error);
+    } catch (_error) {
       return null;
     }
   }
@@ -373,7 +373,7 @@ export class GooglePayHelpers {
       type: 'PAYMENT_GATEWAY',
       parameters: {
         gateway: 'justifi',
-        gatewayMerchantId: 'gateway:justifi',
+        gatewayMerchantId: checkoutStore.accountId,
       },
     };
   }

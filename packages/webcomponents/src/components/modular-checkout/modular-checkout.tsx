@@ -8,7 +8,7 @@ import {
   Method,
   Prop,
 } from "@stencil/core";
-import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes } from "../../store/checkout.store";
+import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState, CheckoutState } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import {
@@ -26,7 +26,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod } from "./ModularCheckout";
+import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -51,6 +51,7 @@ export class ModularCheckout {
 
   @Prop() authToken: string;
   @Prop() checkoutId: string;
+  @Prop() preCompleteHook?: Hook<CheckoutState>;
 
   @Element() hostEl: HTMLElement;
 
@@ -238,10 +239,6 @@ export class ModularCheckout {
         this.handleGooglePayCompleted
       );
       this.googlePayRef.addEventListener(
-        "googlePayError",
-        this.handleGooglePayError
-      );
-      this.googlePayRef.addEventListener(
         "googlePayCancelled",
         this.handleGooglePayCancelled
       );
@@ -253,10 +250,6 @@ export class ModularCheckout {
       this.googlePayRef.removeEventListener(
         "googlePayCompleted",
         this.handleGooglePayCompleted
-      );
-      this.googlePayRef.removeEventListener(
-        "googlePayError",
-        this.handleGooglePayError
       );
       this.googlePayRef.removeEventListener(
         "googlePayCancelled",
@@ -272,23 +265,12 @@ export class ModularCheckout {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
       this.submitCheckout();
     } else {
-      console.error("Google Pay completed but failed:", error);
       this.errorEvent.emit({
         message: (error && error.message) || "Google Pay payment failed",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
       });
     }
-  };
-
-  private handleGooglePayError = (event: CustomEvent) => {
-    const { error } = event.detail || {};
-    console.error("Google Pay error:", error);
-    this.errorEvent.emit({
-      message: error || "Google Pay error occurred",
-      errorCode: `GOOGLE_PAY_ERROR`,
-      severity: ComponentErrorSeverity.ERROR,
-    });
   };
 
   private handleGooglePayCancelled = () => {
@@ -541,6 +523,22 @@ export class ModularCheckout {
       payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
       payment_token: checkoutStore.paymentToken,
     };
+
+    if (this.preCompleteHook) {
+      const state = getCheckoutState();
+
+      try {
+        await new Promise<void>((resolve, reject) => {
+          this.preCompleteHook(
+            state,
+            () => resolve(),
+            () => reject()
+          );
+        });
+      } catch {
+        return;
+      }
+    }
 
     this.completeCheckout({
       payment,
