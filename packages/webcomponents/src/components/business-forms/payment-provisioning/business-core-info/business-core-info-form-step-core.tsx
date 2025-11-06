@@ -1,13 +1,14 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
-import { businessCoreInfoSchema } from '../../schemas/business-core-info-schema';
+import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../schemas/business-core-info-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormStep, businessClassificationOptions } from '../../utils';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { CountryCode } from '../../../../utils/country-codes';
+import { countryLabels } from '../../utils/country-config';
 
 @Component({
   tag: 'justifi-business-core-info-form-step-core',
@@ -17,11 +18,13 @@ export class BusinessCoreInfoFormStepCore {
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
   @State() isLoading: boolean = false;
+  @State() isEditingTaxId: boolean = false;
 
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
   @Prop() patchBusiness: Function;
   @Prop() allowOptionalFields?: boolean;
+  @Prop() country: CountryCode;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -40,8 +43,11 @@ export class BusinessCoreInfoFormStepCore {
   }
 
   componentWillLoad() {
-    this.getBusiness && this.getData();
-    this.formController = new FormController(businessCoreInfoSchema(this.allowOptionalFields));
+    const schema = (this.country === CountryCode.CAN)
+      ? businessCoreInfoSchemaCAN(this.allowOptionalFields)
+      : businessCoreInfoSchemaUSA(this.allowOptionalFields);
+    this.formController = new FormController(schema);
+    this.getData();
   }
 
   componentDidLoad() {
@@ -51,6 +57,8 @@ export class BusinessCoreInfoFormStepCore {
   }
 
   private getData = () => {
+    if (!this.getBusiness) return;
+
     this.formLoading.emit(true);
     this.isLoading = true;
     this.getBusiness({
@@ -80,6 +88,8 @@ export class BusinessCoreInfoFormStepCore {
       onSuccess: (response) => {
         submittedData = response;
         onSuccess();
+        // after successful patch, revert back to read-only for tax id
+        this.isEditingTaxId = false;
       },
       onError: ({ error, code, severity }) => {
         submittedData = error;
@@ -168,16 +178,47 @@ export class BusinessCoreInfoFormStepCore {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-text
-                name="tax_id"
-                label="Tax ID (EIN or SSN)"
-                defaultValue={coreInfoDefaultValue.tax_id}
-                errorText={this.errors.tax_id}
-                inputHandler={this.inputHandler}
-                keyDownHandler={numberOnlyHandler}
-                maxLength={9}
-                helpText="Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes."
-              />
+              {(!this.coreInfo?.tax_id_last4 || this.isEditingTaxId) ? (
+                <form-control-number-masked
+                  name="tax_id"
+                  label={countryLabels[this.country].taxIdLabel}
+                  defaultValue={this.isEditingTaxId ? '' : coreInfoDefaultValue.tax_id}
+                  errorText={this.errors.tax_id}
+                  inputHandler={this.inputHandler}
+                  mask={'000000000'}
+                  helpText={countryLabels[this.country].taxIdHelpText}
+                />
+              ) : (
+                <div>
+                  <label class="form-label" part={label}>
+                    {countryLabels[this.country].taxIdLabel}
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      part={inputDisabled}
+                      value={`****${this.coreInfo?.tax_id_last4}`}
+                      disabled />
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      part={buttonSecondary}
+                      onClick={() => {
+                        this.isEditingTaxId = true;
+                        // Clear last4-equivalent and current value if any future conditional validation depends on it
+                        this.formController.setValues({
+                          ...this.formController.values.getValue(),
+                          tax_id: '',
+                          tax_id_last4: null
+                        });
+                      }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div class="col-12">
               <form-control-text

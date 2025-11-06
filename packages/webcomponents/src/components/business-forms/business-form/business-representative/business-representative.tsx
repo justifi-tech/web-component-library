@@ -1,8 +1,10 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import { FormController } from '../../../../components';
-import { PHONE_MASKS, SSN_MASK } from '../../../../utils/form-input-masks';
+import { PHONE_MASKS, IDENTITY_MASKS } from '../../../../utils/form-input-masks';
 import { deconstructDate } from '../../utils/helpers';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
+import { CountryCode } from '../../../../utils/country-codes';
+import { countryLabels } from '../../utils/country-config';
 
 @Component({
   tag: 'justifi-business-representative'
@@ -11,9 +13,13 @@ export class BusinessRepresentative {
   @Prop() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
+  @Prop() country: CountryCode;
+  @State() isEditingIdentification: boolean = false;
 
   get identificationNumberLabel() {
-    return this.representative.ssn_last4 ? 'Update SSN (optional)' : 'SSN';
+    const label = countryLabels[this.country].idNumberLabel;
+    const labelOptional = countryLabels[this.country].idNumberLabelOptional;
+    return this.representative?.ssn_last4 ? labelOptional : label;
   }
 
   componentDidLoad() {
@@ -119,20 +125,57 @@ export class BusinessRepresentative {
               />
             </div>
             <div class="col-12 col-md-8">
-              <form-control-number-masked
-                name="identification_number"
-                label={this.identificationNumberLabel}
-                defaultValue={representativeDefaultValue?.identification_number}
-                errorText={this.errors.identification_number}
-                inputHandler={this.inputHandler}
-                mask={SSN_MASK}
-              />
+              {(!this.representative?.ssn_last4 || this.isEditingIdentification) ? (
+                <form-control-number-masked
+                  name="identification_number"
+                  label={this.identificationNumberLabel}
+                  defaultValue={this.isEditingIdentification ? '' : representativeDefaultValue?.identification_number}
+                  errorText={this.errors.identification_number}
+                  inputHandler={this.inputHandler}
+                  mask={IDENTITY_MASKS[this.country]}
+                  helpText={countryLabels[this.country].identityHelpText}
+                />
+              ) : (
+                <div>
+                  <label class="form-label" part={label}>
+                    {this.identificationNumberLabel}
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      part={inputDisabled}
+                      value={`****${this.representative?.ssn_last4}`}
+                      disabled />
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      part={buttonSecondary}
+                      onClick={() => {
+                        this.isEditingIdentification = true;
+                        // Clear last4 and current value to force validation
+                        this.formController.setValues({
+                          ...this.formController.values.getValue(),
+                          representative: {
+                            ...this.formController.values.getValue().representative,
+                            ssn_last4: null,
+                            identification_number: ''
+                          }
+                        });
+                      }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div class="col-12">
               <justifi-identity-address-form
                 errors={this.errors.address}
                 defaultValues={representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}
+                country={this.country}
               />
             </div>
           </div>
