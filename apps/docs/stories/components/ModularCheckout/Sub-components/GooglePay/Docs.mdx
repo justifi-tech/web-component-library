@@ -23,6 +23,7 @@ Renders a Google Pay button for provisioned accounts on eligible devices and orc
 - **countryCode** (string, default: `"US"`): Two-letter ISO country code used in the payment data request.
 - **merchantId** (string, default: `"gateway:justifi"`): Merchant or gateway identifier passed to Google Pay.
 - **merchantName** (string, default: `"justifi"`): Display name shown in Google Pay sheets.
+- **environment** (`GooglePayEnvironment`, default: `TEST`): Google Pay environment to use (`TEST` or `PRODUCTION`).
 - **buttonType** (`GooglePayButtonType`, default: `PLAIN`): Button label/type variant.
 - **buttonStyle** (`GooglePayButtonStyle`, default: `BLACK`): Button color scheme.
 - **buttonSizeMode** (`GooglePayButtonSizeMode`, default: `FILL`): Button sizing behavior.
@@ -34,14 +35,13 @@ Renders a Google Pay button for provisioned accounts on eligible devices and orc
 - `googlePayStarted`
 - `googlePayCompleted`
 - `googlePayCancelled`
-- `googlePayError`
 
 ### Event detail shapes
 
 - `googlePayCompleted`
-  - Detail: `{ success: boolean; paymentData?: IGooglePayPaymentData; paymentMethodId?: string; error?: any }`
-- `googlePayError`
-  - Detail: `{ error: string }`
+  - Detail: `{ success: boolean; paymentData?: IGooglePayPaymentData; paymentMethodId?: string; error?: IGooglePayError | string }`
+
+> Note: Errors are surfaced via `googlePayCompleted` with `success: false`. A standalone `googlePayError` event is not emitted.
 
 ## Supported Browsers
 
