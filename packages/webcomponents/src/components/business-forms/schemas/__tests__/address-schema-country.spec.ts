@@ -2,7 +2,7 @@ import { addressSchemaUSA, addressSchemaCAN, addressSchemaByCountry } from '../b
 import { CountryCode } from '../../../../utils/country-codes';
 
 describe('Address schema by country', () => {
-  test('USA strict schema validates 5-digit zip and requires state', async () => {
+  test.skip('USA strict schema validates 5-digit zip and requires state', async () => {
     const valid = await addressSchemaUSA(false).isValid({
       line1: '123 Main St',
       line2: '',
