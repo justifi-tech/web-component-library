@@ -120,6 +120,8 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 - optionally accepts a `billingInformation` object (useful when not using a billing component)
 
+- executes `preCompleteHook` (if provided) after validation and tokenization (including Plaid exchange) and before checkout completion
+
 - emits a `submit-event` when the submission is successful
 - returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion
 
@@ -129,7 +131,10 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 You can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.
 
+The hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.
+
 The hook receives three parameters:
+
 - `state`: A `CheckoutState` object containing the current checkout information
 - `resolve`: A function to call to proceed with submission
 - `reject`: A function to call to stop submission
