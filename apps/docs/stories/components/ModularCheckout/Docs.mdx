@@ -159,6 +159,8 @@ checkout.preCompleteHook = (state, resolve, reject) => {
 };
 ```
 
+> Important: Assign the hook as a JavaScript property on the element (e.g., `checkout.preCompleteHook = fn`). Do not pass it as an HTML attribute (e.g., `pre-complete-hook="..."`); functions must be set on properties, not attributes.
+
 See the `CheckoutState` type definition in the [Public Types](#public-types) section below for the complete structure of the state object.
 
 ## Validation
