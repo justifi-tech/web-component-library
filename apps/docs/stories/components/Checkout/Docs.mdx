@@ -52,7 +52,7 @@ You will need to first create a checkout via [Checkout API](https://docs.justifi
 
 ---
 
-You can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.
+You can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds.
 
 The hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.
 
