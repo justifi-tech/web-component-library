@@ -40,6 +40,7 @@ interface TokenizeConfig {
 
 @Component({
   tag: 'justifi-tokenize-payment-method',
+  shadow: true,
 })
 export class TokenizePaymentMethod {
   analytics: JustifiAnalytics;
