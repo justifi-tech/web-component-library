@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ModularCheckout } from '../modular-checkout';
-import { checkoutStore } from '../../../store/checkout.store';
+import { checkoutStore, getCheckoutState } from '../../../store/checkout.store';
 import { SavedPaymentMethods } from '../sub-components/saved-payment-methods';
 import { PAYMENT_METHODS, SavedPaymentMethod } from '../ModularCheckout';
 
@@ -288,6 +288,130 @@ describe('justifi-modular-checkout', () => {
       await instance.submitCheckout();
 
       expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+
+    it('passes full CheckoutState (including paymentToken) to hook for saved method', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      // Populate store to cover CheckoutState fields
+      checkoutStore.paymentAmount = 2500;
+      checkoutStore.totalAmount = 2500;
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.paymentDescription = 'desc';
+      checkoutStore.savePaymentMethod = true;
+      checkoutStore.bnplEnabled = true;
+      checkoutStore.applePayEnabled = true;
+      checkoutStore.insuranceEnabled = false;
+      checkoutStore.disableBankAccount = false;
+      checkoutStore.disableCreditCard = false;
+      checkoutStore.disablePaymentMethodGroup = false;
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' } as any;
+      checkoutStore.paymentToken = 'pm_123';
+
+      let capturedState: any;
+      const hookFn = jest.fn((state, resolve, _reject) => {
+        capturedState = state;
+        resolve(state);
+      });
+      instance.preCompleteHook = hookFn;
+
+      await instance.submitCheckout();
+
+      expect(hookFn).toHaveBeenCalledTimes(1);
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+      expect(capturedState).toMatchObject({
+        selectedPaymentMethod: { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' },
+        paymentAmount: 2500,
+        totalAmount: 2500,
+        paymentCurrency: 'USD',
+        paymentDescription: 'desc',
+        savePaymentMethod: true,
+        bnplEnabled: true,
+        applePayEnabled: true,
+        insuranceEnabled: false,
+        disableBankAccount: false,
+        disableCreditCard: false,
+        disablePaymentMethodGroup: false,
+        paymentToken: 'pm_123',
+      });
+    });
+
+    it('provides paymentToken in hook state after tokenization for new card', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      // Avoid real tokenize path; ensure tokenization sets the token before hook
+      (instance as any).tokenizePaymentMethod = jest.fn().mockImplementation(async () => {
+        checkoutStore.paymentToken = 'tok_999';
+        return 'tok_999';
+      });
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD } as any;
+
+      let capturedToken: string | undefined;
+      const hookFn = jest.fn((state, resolve, _reject) => {
+        capturedToken = state.paymentToken;
+        resolve(state);
+      });
+      instance.preCompleteHook = hookFn;
+
+      await instance.submitCheckout();
+
+      expect(hookFn).toHaveBeenCalledTimes(1);
+      expect(capturedToken).toBe('tok_999');
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getCheckoutState shape', () => {
+    it('returns expected fields including optional paymentToken', () => {
+      // Reset and populate store
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT } as any;
+      checkoutStore.paymentAmount = 1234;
+      checkoutStore.totalAmount = 1500;
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.paymentDescription = 'Payment';
+      checkoutStore.paymentMethods = [] as any;
+      checkoutStore.savePaymentMethod = false;
+      checkoutStore.bnplEnabled = false;
+      checkoutStore.applePayEnabled = false;
+      checkoutStore.insuranceEnabled = true;
+      checkoutStore.disableBankAccount = false;
+      checkoutStore.disableCreditCard = false;
+      checkoutStore.disablePaymentMethodGroup = true;
+      checkoutStore.paymentToken = undefined;
+
+      const state = getCheckoutState();
+
+      expect(state).toMatchObject({
+        selectedPaymentMethod: { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT },
+        paymentAmount: 1234,
+        totalAmount: 1500,
+        paymentCurrency: 'USD',
+        paymentDescription: 'Payment',
+        savedPaymentMethods: [],
+        savePaymentMethod: false,
+        bnplEnabled: false,
+        applePayEnabled: false,
+        insuranceEnabled: true,
+        disableBankAccount: false,
+        disableCreditCard: false,
+        disablePaymentMethodGroup: true,
+      });
+
+      // Optional field can be undefined
+      expect(state.paymentToken).toBeUndefined();
     });
   });
 });

@@ -106,6 +106,13 @@ const meta: Meta = {
         defaultValue: { summary: "false" },
       },
     },
+    preCompleteHook: {
+      description: "Optional hook that executes before payment submission. Receives checkout state and allows inspection before resolving or rejecting.",
+      table: {
+        category: "props",
+        type: { summary: "Hook<CheckoutState>" }
+      },
+    },
     fillBillingForm: {
       description:
         "`fillBillingForm(fields: BillingFormFields) => Promise<void>`",
