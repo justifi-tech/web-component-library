@@ -12,7 +12,19 @@ import {
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS, SelectedPaymentMethod } from '../modular-checkout/ModularCheckout';
-import { ERROR_MESSAGES, PAYMENT_METHOD_TYPE_LABELS } from '../checkout/message-event-types';
+
+// Constants
+const PAYMENT_METHOD_TYPE_LABELS = {
+  [PAYMENT_METHODS.NEW_BANK_ACCOUNT]: 'New bank account',
+  [PAYMENT_METHODS.NEW_CARD]: 'New credit or debit card',
+} as const;
+
+const ERROR_MESSAGES = {
+  AUTH_TOKEN_REQUIRED: 'Auth token is required when using the tokenize-payment-method component not slotted in justifi-modular-checkout',
+  ACCOUNT_ID_REQUIRED: 'Account ID is required when using the tokenize-payment-method component not slotted in justifi-modular-checkout',
+  FORM_NOT_READY: 'Payment form not ready',
+  VALIDATION_ERROR: 'Validation error',
+} as const;
 
 // Types
 interface ValidationResult {
