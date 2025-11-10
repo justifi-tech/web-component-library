@@ -33,7 +33,6 @@ jobs:
 
       - name: Publish to NPM Registry
         run: |
-          pnpm version-packages
           pnpm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
