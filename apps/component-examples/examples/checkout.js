@@ -137,6 +137,13 @@ app.get('/', async (req, res) => {
         const fillBillingFormButton = document.getElementById('fill-billing-form-button');
         const testValidateButton = document.getElementById('test-validate-button');
 
+        function preCompleteHook(state, resolve, reject) {
+          resolve(state);
+        }
+
+        // Assign function as a DOM property (functions cannot be passed via HTML attributes)
+        justifiCheckout.preCompleteHook = preCompleteHook;
+
         function writeOutputToPage(event) {
           document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }

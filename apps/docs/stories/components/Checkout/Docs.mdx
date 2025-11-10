@@ -39,6 +39,8 @@ You will need to first create a checkout via [Checkout API](https://docs.justifi
 - [Security](#security)
 - [Example usage](#example-usage)
 
+- [Pre-Complete Hook](#pre-complete-hook)
+
 - [Payment methods](#payment-methods)
 
 # Props, events and methods
@@ -46,6 +48,47 @@ You will need to first create a checkout via [Checkout API](https://docs.justifi
 ---
 
 <ArgTypes exclude={['Theme']} />
+
+# Pre-Complete Hook
+
+---
+
+You can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds.
+
+The hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.
+
+The hook receives three parameters:
+
+- `state`: A `CheckoutState` object containing the current checkout information
+- `resolve`: Call to proceed with submission
+- `reject`: Call to cancel submission
+
+Example:
+
+```html
+<justifi-checkout auth-token="123abc" checkout-id="chk_123"></justifi-checkout>
+
+<script>
+  const checkout = document.querySelector('justifi-checkout');
+  checkout.preCompleteHook = (state, resolve, reject) => {
+    // For example, require confirmation for large payments
+    if (state.totalAmount > 100000) {
+      const confirmed = confirm(
+        `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`
+      );
+      if (confirmed) {
+        resolve(state);
+      } else {
+        reject();
+      }
+    } else {
+      resolve(state);
+    }
+  };
+</script>
+```
+
+> Important: Assign the hook as a JavaScript property on the element (e.g., `checkout.preCompleteHook = fn`). Do not pass it as an HTML attribute (e.g., `pre-complete-hook="..."`); functions must be set on properties, not attributes.
 
 # Payment methods
 

@@ -1,5 +1,18 @@
 ### Changelog
 
+## 6.4.0
+
+### Minor Changes
+
+- Adds the card brand column to the payments list
+- Support Canadian payment provisioning by displaying Canadian labels and collecting alternate fields such as `institution_number` and `transit_number` for bank accounts
+- Added `paymentToken` to state for `preCompleteHook`
+
+### Patch Changes
+
+- Show banner disputes where the due date has already passed
+- Update billing form postal code to accept Canadian postal codes.
+
 ## 6.2.0
 
 ### Minor Changes
