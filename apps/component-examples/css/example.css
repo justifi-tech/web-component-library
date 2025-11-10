@@ -25,6 +25,8 @@
   border-left: 1px solid #ccc;
   padding: 20px;
   width: 50%;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .list-component-wrapper {

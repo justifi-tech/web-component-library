@@ -1,5 +1,17 @@
 ### Changelog
 
+## 6.4.0
+
+### Minor Changes
+
+- Adds the card brand column to the payments list
+- Support Canadian payment provisioning by displaying Canadian labels and collecting alternate fields such as `institution_number` and `transit_number` for bank accounts
+
+### Patch Changes
+
+- Show banner disputes where the due date has already passed
+- Remove EMV from Apple Pay
+
 ## 6.2.0
 
 ### Minor Changes

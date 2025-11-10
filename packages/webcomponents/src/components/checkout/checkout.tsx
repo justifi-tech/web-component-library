@@ -35,7 +35,6 @@ interface TokenizeConfig {
   paymentMethodMetadata: any;
   account: string;
 }
-
 @Component({
   tag: 'justifi-checkout',
 })
