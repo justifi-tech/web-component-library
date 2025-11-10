@@ -51,6 +51,7 @@ export interface CheckoutState {
   disableBankAccount: boolean;
   disableCreditCard: boolean;
   disablePaymentMethodGroup: boolean;
+  paymentToken?: string;
 }
 
 const initialState: IInitialState = {
@@ -167,6 +168,7 @@ export function getCheckoutState(): CheckoutState {
     disableBankAccount: checkoutStore.disableBankAccount,
     disableCreditCard: checkoutStore.disableCreditCard,
     disablePaymentMethodGroup: checkoutStore.disablePaymentMethodGroup,
+    paymentToken: checkoutStore.paymentToken ?? undefined,
   };
 }
 

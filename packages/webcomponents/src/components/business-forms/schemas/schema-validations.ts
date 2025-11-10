@@ -198,7 +198,7 @@ export const stateValidation = string()
   .transform(transformEmptyString);
 
 export const postalValidation = string()
-  .matches(/^[0-9]{5}$/, 'Enter valid postal code')
+  .matches(/^((\d{5}-\d{4})|(\d{5})|([A-Z]\d[A-Z]\s\d[A-Z]\d))$/, 'Enter valid postal code')
   .transform(transformEmptyString);
 
 // Additional Questions Validations

@@ -4,10 +4,10 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
-import { checkoutStore } from '../../store/checkout.store';
+import { CheckoutState, checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
 import { StyledHost } from '../../ui-components';
-import { CheckoutChangedEventDetail, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
+import { CheckoutChangedEventDetail, Hook, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
 @Component({
   tag: 'justifi-checkout',
@@ -35,6 +35,7 @@ export class Checkout {
   @Prop() disablePaymentMethodGroup?: boolean = false;
   @Prop() hideBankAccountBillingForm?: boolean = false;
   @Prop() hideCardBillingForm?: boolean = false;
+  @Prop() preCompleteHook?: Hook<CheckoutState>;
 
   @Watch('authToken')
   @Watch('checkoutId')
@@ -71,6 +72,7 @@ export class Checkout {
 
   @Listen('error-event')
   checkoutError(_event: CustomEvent<any>) {
+    console.error('[justifi-checkout] error-event received', _event?.detail);
     this.isSubmitting = false;
   }
 
@@ -122,6 +124,7 @@ export class Checkout {
           }}
           authToken={this.authToken}
           checkoutId={this.checkoutId}
+          preCompleteHook={this.preCompleteHook}
         >
           <div class="row gy-3 jfi-checkout-core">
             <div class="col-12" part={checkoutSummary}>

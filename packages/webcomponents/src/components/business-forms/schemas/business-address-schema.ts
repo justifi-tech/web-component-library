@@ -3,7 +3,6 @@ import {
   cityValidation,
   lineOneValidation,
   lineTwoValidation,
-  postalValidation,
   makePostalValidation,
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
@@ -24,7 +23,7 @@ const strictSchemaUSA = () =>
     line2: lineTwoValidation.nullable(),
     city: cityValidation.required('Enter city'),
     state: string().required('Select state'),
-    postal_code: postalValidation.required('Enter postal code'),
+    postal_code: makePostalValidation(CountryCode.USA).required('Enter postal code'),
   });
 
 // Internal CAN schemas

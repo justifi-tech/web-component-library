@@ -1,4 +1,4 @@
-import { makePostalValidation, makeIdentityNumberValidation, makeTaxIdValidation } from '../schema-validations';
+import { makePostalValidation, makeIdentityNumberValidation, makeTaxIdValidation, postalValidation } from '../schema-validations';
 import { CountryCode } from '../../../../utils/country-codes';
 
 describe('Country-aware validation helpers', () => {
@@ -30,6 +30,15 @@ describe('Country-aware validation helpers', () => {
     await expect(makeTaxIdValidation(CountryCode.CAN).isValid('123456789')).resolves.toBe(false);
     await expect(makeTaxIdValidation(CountryCode.CAN).isValid('111111111')).resolves.toBe(false);
     await expect(makeTaxIdValidation(CountryCode.CAN).isValid('862397791')).resolves.toBe(true);
+  });
+
+  test('postalValidation', async () => {
+    await expect(postalValidation.isValid('12345')).resolves.toBe(true);
+    await expect(postalValidation.isValid('A1A 1A1')).resolves.toBe(true);
+    await expect(postalValidation.isValid('44240-5555')).resolves.toBe(true);
+    await expect(postalValidation.isValid('A1A1A1')).resolves.toBe(false);
+    await expect(postalValidation.isValid('AAAAAA1')).resolves.toBe(false);
+    await expect(postalValidation.isValid('44240ddd')).resolves.toBe(false);
   });
 });
 

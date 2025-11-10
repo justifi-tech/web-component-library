@@ -1,7 +1,6 @@
 import { Component, h, State, Prop, Method } from '@stencil/core';
 import { BillingFormFields, postalOnlySchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
-import { numberOnlyHandler } from '../../../ui-components/form/utils';
 import { FormController } from '../../../ui-components/form/form';
 import { StyledHost } from '../../../ui-components';
 
@@ -68,12 +67,11 @@ export class CardBillingFormSimple {
                 <div class="col-12">
                   <form-control-text
                     name='address_postal_code'
-                    label="ZIP"
+                    label="Postal Code"
                     defaultValue={billingFormDefaultValue.address_postal_code}
                     errorText={this.errors.address_postal_code}
                     inputHandler={this.inputHandler}
-                    maxLength={5}
-                    keyDownHandler={numberOnlyHandler}
+                    maxLength={7}
                   />
                 </div>
               </div>
