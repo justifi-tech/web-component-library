@@ -147,7 +147,7 @@ describe('tokenize-payment-method', () => {
 
     await page.waitForChanges();
 
-    const checkbox = page.root?.querySelector('justifi-save-new-payment-method') as any;
+    const checkbox = page.root?.shadowRoot?.querySelector('justifi-save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Keep this on file');
   });
@@ -160,7 +160,7 @@ describe('tokenize-payment-method', () => {
 
     await page.waitForChanges();
 
-    const checkbox = page.root?.querySelector('justifi-save-new-payment-method') as any;
+    const checkbox = page.root?.shadowRoot?.querySelector('justifi-save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Save New Payment Method');
   });
