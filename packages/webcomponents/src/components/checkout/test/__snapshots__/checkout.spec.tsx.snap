@@ -20,21 +20,7 @@ exports[`justifi-checkout renders loading 1`] = `
           <section>
             <div>
               <justifi-saved-payment-methods></justifi-saved-payment-methods>
-              <div class="payment-method">
-                <justifi-radio-list-item checked="" label="New credit or debit card" name="paymentMethodType" value="new_card"></justifi-radio-list-item>
-                <div class="mt-4 pb-4">
-                  <justifi-card-form></justifi-card-form>
-                  <div class="mt-4">
-                    <justifi-billing-form paymentmethodtype="new_card"></justifi-billing-form>
-                  </div>
-                  <div class="mt-4">
-                    <justifi-save-new-payment-method hidden=""></justifi-save-new-payment-method>
-                  </div>
-                </div>
-              </div>
-              <div class="payment-method">
-                <justifi-radio-list-item label="New bank account" name="paymentMethodType" value="new_bank_account"></justifi-radio-list-item>
-              </div>
+              <internal-tokenize-payment-method accountid="" hidesubmitbutton=""></internal-tokenize-payment-method>
             </div>
           </section>
         </div>
