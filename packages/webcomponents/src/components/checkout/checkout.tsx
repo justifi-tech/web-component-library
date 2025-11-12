@@ -15,7 +15,7 @@ import { CheckoutChangedEventDetail, Hook, PAYMENT_METHODS } from '../modular-ch
 export class Checkout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
+  tokenizePaymentMethodRef?: HTMLInternalTokenizePaymentMethodElement;
   plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
   sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
   @State() availablePaymentMethods: PAYMENT_METHODS[] = [];
