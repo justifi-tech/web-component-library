@@ -144,6 +144,7 @@ export interface ICoreBusinessInfo {
   email?: string;
   phone?: string;
   date_of_incorporation?: string;
+  donations_percentage?: string;
 }
 
 export class CoreBusinessInfo implements ICoreBusinessInfo {
@@ -157,6 +158,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
   public email: string;
   public phone: string;
   public date_of_incorporation: string;
+  public donations_percentage: string;
 
   constructor(coreBusinessInfo: ICoreBusinessInfo) {
     this.classification = coreBusinessInfo.classification;
@@ -169,6 +171,7 @@ export class CoreBusinessInfo implements ICoreBusinessInfo {
     this.email = coreBusinessInfo.email;
     this.phone = coreBusinessInfo.phone;
     this.date_of_incorporation = coreBusinessInfo.date_of_incorporation;
+    this.donations_percentage = coreBusinessInfo.donations_percentage;
   }
 
   public get payload() {

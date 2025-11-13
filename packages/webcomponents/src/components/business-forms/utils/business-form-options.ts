@@ -95,3 +95,11 @@ export const bankAccountTypeOptions: BusinessFormOption[] = [
     value: 'savings',
   }
 ];
+
+export const industryOptions: BusinessFormOption[] = [
+  {
+    label: 'Choose industry',
+    value: '',
+  },
+  // Add industry options here
+];

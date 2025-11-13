@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { businessClassificationOptions } from '../../utils/business-form-options';
+import { businessClassificationOptions, industryOptions } from '../../utils/business-form-options';
 import { FormController } from '../../../../ui-components/form/form';
 import { IDENTITY_MASKS, PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
@@ -83,16 +83,17 @@ export class BusinessCoreInfo {
             <div class="col-12 col-md-4">
               <form-control-date
                 name="date_of_incorporation"
-                label="Date of Incorporation"
+                label="Date of Registration"
                 defaultValue={coreInfoDefaultValue.date_of_incorporation}
                 errorText={this.errors.date_of_incorporation}
                 inputHandler={this.inputHandler}
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-text
+              <form-control-select
                 name="industry"
                 label="Industry"
+                options={industryOptions}
                 defaultValue={coreInfoDefaultValue.industry}
                 errorText={this.errors.industry}
                 inputHandler={this.inputHandler}

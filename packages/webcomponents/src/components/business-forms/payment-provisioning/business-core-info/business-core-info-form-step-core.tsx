@@ -4,6 +4,7 @@ import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
 import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { BusinessFormStep, businessClassificationOptions } from '../../utils';
+import { industryOptions } from '../../utils/business-form-options';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
@@ -168,9 +169,10 @@ export class BusinessCoreInfoFormStepCore {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-text
+              <form-control-select
                 name="industry"
                 label="Industry"
+                options={industryOptions}
                 defaultValue={coreInfoDefaultValue.industry}
                 errorText={this.errors.industry}
                 inputHandler={this.inputHandler}
@@ -219,6 +221,15 @@ export class BusinessCoreInfoFormStepCore {
                   </div>
                 </div>
               )}
+            </div>
+            <div class="col-6">
+              <form-control-text
+                name="donations_percentage"
+                label="What % of processing volume is generated from donations"
+                defaultValue={coreInfoDefaultValue.donations_percentage}
+                errorText={this.errors.donations_percentage}
+                inputHandler={this.inputHandler}
+              />
             </div>
             <div class="col-12">
               <form-control-text
