@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.4.1
+
+### Patch Changes
+
+- 3e2ca85: Add missing shadow DOM encapsulation to `justifi-tokenize-payment-method`
+
 ## 6.4.0
 
 ### Minor Changes

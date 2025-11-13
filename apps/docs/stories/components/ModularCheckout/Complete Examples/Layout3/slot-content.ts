@@ -89,8 +89,6 @@ export const getSlotContentExample3 = (): string => {
               <select class="checkout-form-select">
                 <option>United States</option>
                 <option>Canada</option>
-                <option>United Kingdom</option>
-                <option>Australia</option>
               </select>
             </div>
             <div style="margin-bottom: 15px;">
