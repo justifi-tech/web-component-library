@@ -44,6 +44,7 @@ export class ModularCheckout {
     | HTMLJustifiCardBillingFormSimpleElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private applePayRef?: HTMLJustifiApplePayElement;
+  private googlePayRef?: HTMLJustifiGooglePayElement;
   private getCheckout: Function;
   private completeCheckout: Function;
   private plaidService = new PlaidService();
@@ -63,6 +64,7 @@ export class ModularCheckout {
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
       this.setupApplePayListeners(); // set up again listeners when DOM changes
+      this.setupGooglePayListeners();
     });
 
     this.observer.observe(this.hostEl, {
@@ -105,11 +107,13 @@ export class ModularCheckout {
   componentDidLoad() {
     this.queryFormRefs();
     this.setupApplePayListeners();
+    this.setupGooglePayListeners();
   }
 
   disconnectedCallback() {
     this.observer?.disconnect();
     this.removeApplePayListeners();
+    this.removeGooglePayListeners();
   }
 
   private fetchCheckout() {
@@ -165,6 +169,7 @@ export class ModularCheckout {
     checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments;
     checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
     checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments;
+    checkoutStore.googlePayEnabled = checkout.payment_settings?.google_payments;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
     checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
@@ -186,6 +191,7 @@ export class ModularCheckout {
       "justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full"
     );
     this.applePayRef = this.hostEl.querySelector("justifi-apple-pay");
+    this.googlePayRef = this.hostEl.querySelector("justifi-google-pay");
     this.paymentMethodFormRef =
       this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method');
 
@@ -225,6 +231,52 @@ export class ModularCheckout {
       );
     }
   }
+
+  private setupGooglePayListeners() {
+    if (this.googlePayRef) {
+      this.googlePayRef.addEventListener(
+        "googlePayCompleted",
+        this.handleGooglePayCompleted
+      );
+      this.googlePayRef.addEventListener(
+        "googlePayCancelled",
+        this.handleGooglePayCancelled
+      );
+    }
+  }
+
+  private removeGooglePayListeners() {
+    if (this.googlePayRef) {
+      this.googlePayRef.removeEventListener(
+        "googlePayCompleted",
+        this.handleGooglePayCompleted
+      );
+      this.googlePayRef.removeEventListener(
+        "googlePayCancelled",
+        this.handleGooglePayCancelled
+      );
+    }
+  }
+
+  private handleGooglePayCompleted = (event: CustomEvent) => {
+    const { success, paymentMethodId, error } = event.detail || {};
+    if (success && paymentMethodId) {
+      checkoutStore.paymentToken = paymentMethodId;
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
+      this.submitCheckout();
+    } else {
+      this.errorEvent.emit({
+        message: (error && error.message) || "Google Pay payment failed",
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  };
+
+  private handleGooglePayCancelled = () => {
+    checkoutStore.paymentToken = undefined;
+    checkoutStore.selectedPaymentMethod = undefined;
+  };
 
   private handleApplePayCompleted = (event: CustomEvent) => {
     const { success, token, paymentMethodId, error } = event.detail;
@@ -460,6 +512,8 @@ export class ModularCheckout {
           return PAYMENT_MODE.BNPL;
         case PAYMENT_METHODS.APPLE_PAY:
           return PAYMENT_MODE.APPLE_PAY;
+        case PAYMENT_METHODS.GOOGLE_PAY:
+          return PAYMENT_MODE.GOOGLE_PAY;
         default:
           return undefined;
       }
