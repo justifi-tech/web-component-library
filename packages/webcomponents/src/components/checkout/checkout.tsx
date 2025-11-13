@@ -15,7 +15,7 @@ import { CheckoutChangedEventDetail, Hook, PAYMENT_METHODS } from '../modular-ch
 export class Checkout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
-  tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;
+  tokenizePaymentMethodRef?: HTMLInternalTokenizePaymentMethodElement;
   plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
   sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
   googlePayRef?: HTMLJustifiGooglePayElement;
@@ -182,7 +182,7 @@ export class Checkout {
                         onRadio-click={() => { this.plaidPaymentMethodRef?.handleSelectionClick(); }}
                       />
                     )}
-                    <justifi-tokenize-payment-method
+                    <internal-tokenize-payment-method
                       ref={(el) => (this.tokenizePaymentMethodRef = el)}
                       authToken={this.authToken}
                       accountId={checkoutStore.accountId}

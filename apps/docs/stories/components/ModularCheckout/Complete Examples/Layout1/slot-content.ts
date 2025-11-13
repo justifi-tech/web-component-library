@@ -39,10 +39,6 @@ export const getSlotContentExample1 = (): string => {
             <select class="form-select">
               <option>United States</option>
               <option>Canada</option>
-              <option>United Kingdom</option>
-              <option>Australia</option>
-              <option>New Zealand</option>
-              <option>Other</option>
             </select>
           </div>
           <div class="zip-field">
